@@ -6,48 +6,31 @@ export const SDM = {};
  * The set of Ability Scores used within the system.
  * @type {Object}
  */
+
 SDM.abilities = {
   str: 'SDM.Ability.Str.long',
-  dex: 'SDM.Ability.Dex.long',
-  con: 'SDM.Ability.Con.long',
-  int: 'SDM.Ability.Int.long',
-  wis: 'SDM.Ability.Wis.long',
+  end: 'SDM.Ability.End.long',
+  agi: 'SDM.Ability.Agi.long',
   cha: 'SDM.Ability.Cha.long',
-};
-
-SDM.abilityAbbreviations = {
-  str: 'SDM.Ability.Str.abbr',
-  dex: 'SDM.Ability.Dex.abbr',
-  con: 'SDM.Ability.Con.abbr',
-  int: 'SDM.Ability.Int.abbr',
-  wis: 'SDM.Ability.Wis.abbr',
-  cha: 'SDM.Ability.Cha.abbr',
-};
-
-SDM.stats = {
-  str: 'SDM.Stat.Str.long',
-  end: 'SDM.Stat.End.long',
-  agi: 'SDM.Stat.Agi.long',
-  cha: 'SDM.Stat.Cha.long',
-  aur: 'SDM.Stat.Aur.long',
-  tho: 'SDM.Stat.Tho.long',
+  aur: 'SDM.Ability.Aur.long',
+  tho: 'SDM.Ability.Tho.long',
 }
 
 SDM.statAbbreviations = {
-  str: 'SDM.Stat.Str.abbr',
-  end: 'SDM.Stat.End.abbr',
-  agi: 'SDM.Stat.Agi.abbr',
-  cha: 'SDM.Stat.Cha.abbr',
-  aur: 'SDM.Stat.Aur.abbr',
-  tho: 'SDM.Stat.Tho.abbr',
+  str: 'SDM.Ability.Str.abbr',
+  end: 'SDM.Ability.End.abbr',
+  agi: 'SDM.Ability.Agi.abbr',
+  cha: 'SDM.Ability.Cha.abbr',
+  aur: 'SDM.Ability.Aur.abbr',
+  tho: 'SDM.Ability.Tho.abbr',
 };
 
 SDM.fatigue = 'SDM.Actor.Character.FIELDS.fatigue.label';
 SDM.versatile = 'SDM.Item.Features.versatile.label';
 
-SDM.statsOrder = {
+SDM.abilitiesOrder = {
   "en": ["str", "end","agi", "cha", "aur", "tho"],
-  "x": ["cha", "tho", "str", "agi", "aur", "end"],
+  "pt-br": ["cha", "tho", "str", "agi", "aur", "end"],
 };
 
 SDM.pullModes = Object.values(PullMode).reduce((acc, pullMode) => {
@@ -66,9 +49,9 @@ SDM.sizeUnits = Object.values(SizeUnit).reduce((acc, unit) => {
 }, {});
 
 
-const statsLabel = 'SDM.Actor.Character.FIELDS.stats.label';
+const abilitiesLabel = 'SDM.Actor.Character.FIELDS.abilities.label';
 
-SDM.statsLabel = statsLabel;
+SDM.abilitiesLabel = abilitiesLabel;
 SDM.modifierLabel = 'SDM.Rolls.modifier.label';
 SDM.rollTypeLabel = 'SDM.Rolls.rollType.label';
 
@@ -80,7 +63,7 @@ SDM.rollType = {
 };
 
 SDM.rollSource = {
-  'stat': statsLabel,
+  'ability': abilitiesLabel,
   'skill': 'SDM.Actor.Character.FIELDS.skills.label',
   'gear': 'TYPES.Item.gear',
   'weapon': 'TYPES.Item.weapon'

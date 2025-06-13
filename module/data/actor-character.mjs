@@ -36,6 +36,7 @@ export default class SdmCharacter extends SdmActorBase {
         min: 0,
       }),
       max: new fields.NumberField({ ...requiredInteger, initial: 5, min: 5 }),
+      min: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0, max: 0 }),
       bonus: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 }),
       reserved: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 }),
     });
@@ -54,7 +55,18 @@ export default class SdmCharacter extends SdmActorBase {
         ...requiredInteger,
         initial: 1,
         min: 0,
-      })
+      }),
+      max: new fields.NumberField({
+        ...requiredInteger,
+        initial: 1,
+        min: 1,
+      }),
+      min: new fields.NumberField({
+        ...requiredInteger,
+        initial: 0,
+        min: 0,
+        max: 0,
+      }),
     });
 
     schema.skills = new fields.ArrayField(
@@ -123,28 +135,10 @@ export default class SdmCharacter extends SdmActorBase {
       })
     });
 
-    schema.abilities = new fields.ArrayField(
-      new fields.EmbeddedDataField(AbilityDataModel), {
-        initial: [{
-          name: 'Some ability 1',
-          sources: 4,
-        },
-        {
-          name: 'Some ability 2',
-          sources: 3,
-        },
-        {
-          name: 'Some ability 3',
-          sources: 0,
-        }
-        ]
-    }
-    );
-
-    // Iterate over stats names and create a new SchemaField for each.
-    schema.stats = new fields.SchemaField(
-      Object.keys(CONFIG.SDM.stats).reduce((obj, stat) => {
-        obj[stat] = new fields.SchemaField({
+    // Iterate over abilities names and create a new SchemaField for each.
+    schema.abilities = new fields.SchemaField(
+      Object.keys(CONFIG.SDM.abilities).reduce((obj, ability) => {
+        obj[ability] = new fields.SchemaField({
           enhanced: new fields.BooleanField({
             required: true,
             initial: false,
@@ -183,27 +177,16 @@ export default class SdmCharacter extends SdmActorBase {
   }
 
   prepareDerivedData() {
-    // Loop through ability scores, and add their modifiers to our sheet output.
-    // for (const key in this.abilities) {
-    //   // Calculate the modifier using d20 rules.
-    //   this.abilities[key].mod = Math.floor(
-    //     (this.abilities[key].value - 10) / 2
-    //   );
-    //   // Handle ability label localization.
-    //   this.abilities[key].label =
-    //     game.i18n.localize(CONFIG.SDM.abilities[key]) ?? key;
-    // }
-
-    for (const key in this.stats) {
-      if (this.stats[key].current !== null) {
-        this.stats[key].final = this.stats[key].current;
+    for (const key in this.abilities) {
+      if (this.abilities[key].current !== null) {
+        this.abilities[key].final = this.abilities[key].current;
       } else {
-        this.stats[key].final = this.stats[key].full;
+        this.abilities[key].final = this.abilities[key].full;
       }
 
-      // Handle stats label localization.
-      this.stats[key].label =
-        game.i18n.localize(CONFIG.SDM.stats[key]) ?? key;
+      // Handle abilities label localization.
+      this.abilities[key].label =
+        game.i18n.localize(CONFIG.SDM.abilities[key]) ?? key;
     }
 
     this.life.final_max = Math.max(1, this.life.max - this.life.reserved + this.life.bonus);
@@ -214,16 +197,8 @@ export default class SdmCharacter extends SdmActorBase {
   getRollData() {
     const data = {};
 
-    // Copy the stats scores to the top level, so that rolls can use
-    // formulas like `@str.final + 1`.
-    // if (this.abilities) {
-    //   for (let [k, v] of Object.entries(this.abilities)) {
-    //     data[k] = foundry.utils.deepClone(v);
-    //   }
-    // }
-
-    if (this.stats) {
-      for (let [k, v] of Object.entries(this.stats)) {
+    if (this.abilities) {
+      for (let [k, v] of Object.entries(this.abilities)) {
         data[k] = foundry.utils.deepClone(v);
       }
     }
@@ -233,7 +208,7 @@ export default class SdmCharacter extends SdmActorBase {
     data.lvl = this.level;
     data.bonus = this.bonus;
     data.armor = this.armor;
-
+    data.heroics = this.heroics;
 
     return data;
   }

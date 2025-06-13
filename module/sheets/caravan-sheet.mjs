@@ -78,7 +78,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
   };
 
   _getStatSelectOptions(skill, useDefaultStat = true) {
-    const statsOrder = CONFIG.SDM.statsOrder;
+    const abilitiesOrder = CONFIG.SDM.abilitiesOrder;
     const currentLanguage = game.i18n.lang;
     const { defaultStat = 'str' } = skill;
     let result = '';
@@ -86,9 +86,9 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     if (!useDefaultStat) {
       result += '<option value=""}></option>';
     }
-    for (let orderedStat of statsOrder['en']) {
-      result += `<option value="${orderedStat}"${(orderedStat === defaultStat) ? 'selected' : ''}>
-      ${game.i18n.localize(CONFIG.SDM.stats[orderedStat])}</option>\n`
+    for (let orderedAbility of abilitiesOrder['en']) {
+      result += `<option value="${orderedAbility}"${(orderedAbility === defaultStat) ? 'selected' : ''}>
+      ${game.i18n.localize(CONFIG.SDM.abilities[orderedAbility])}</option>\n`
     }
 
     return result;
@@ -114,8 +114,8 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
       <div class="custom-roll-modal">
         <h2>Roll for ${title}</h2>
         <form class="custom-roll-form">
-        ${rolledFrom !== 'Stats' ? `<div class="form-group">
-            <label>${game.i18n.localize(CONFIG.SDM.statsLabel)}</label>
+        ${rolledFrom !== 'Abilities' ? `<div class="form-group">
+            <label>${game.i18n.localize(CONFIG.SDM.abilitiesLabel)}</label>
             <select name="selectedAttribute">
               ${skill ? this._getStatSelectOptions(actorSkill) :
           item ? this._getStatSelectOptions({ defaultStat: item?.system?.damage?.statBonus }, false) : this._getStatSelectOptions({}, false)}
@@ -195,9 +195,9 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
       return
     }
 
-    const stat = key ? key : selectedAttribute;
+    const ability = key ? key : selectedAttribute;
     const skillData = (skill && isDefaultSkill(skill)) ? this.actor.system[skill] : this.actor.system.skills.find(s => s.name === skill);
-    let label = skill ? skillData.name : (attribute ? attribute : (stat ? game.i18n.localize(CONFIG.SDM.stats[stat]) : ''));
+    let label = skill ? skillData.name : (attribute ? attribute : (ability ? game.i18n.localize(CONFIG.SDM.abilities[ability]) : ''));
 
     if (item) {
       label = item.name;
@@ -208,13 +208,13 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
         rollType,
         heroicDice,
         skill: '',
-        addStat: stat,
+        addAbility: ability,
         explode: shouldExplode,
         versatile,
       });
     }
 
-    return RollHandler.performRoll(this.actor, stat, label, {
+    return RollHandler.performRoll(this.actor, ability, label, {
       modifier,
       rollType,
       skill,
@@ -271,23 +271,23 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     };
 
     if (this.actor.type === 'character') {
-      // Reorder stats based on the current language
-      const statsOrder = CONFIG.SDM.statsOrder;
+      // Reorder abilities based on the current language
+      const abilitiesOrder = CONFIG.SDM.abilitiesOrder;
       const currentLanguage = game.i18n.lang;
 
       // Get the order for the current language, defaulting to English if not found
-      const order = statsOrder["en"];
+      const order = abilitiesOrder["en"];
 
-      // Reorder the stats in the system object
-      const reorderedStats = {};
+      // Reorder the abilities in the system object
+      const reorderedAbilities = {};
       order.forEach(key => {
-        if (context.system?.stats[key]) {
-          reorderedStats[key] = context.system.stats[key];
+        if (context.system?.abilities[key]) {
+          reorderedAbilities[key] = context.system.abilities[key];
         }
       });
 
-      // Replace the stats in the system object with the reordered stats
-      context.system.stats = reorderedStats;
+      // Replace the abilities in the system object with the reordered abilities
+      context.system.abilities = reorderedAbilities;
     }
 
     // Offloading context prep to a helper function
@@ -731,9 +731,9 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
       //if (item) return item.roll(event, versatile);
     }
 
-    const statsLabel = game.i18n.localize(CONFIG.SDM.statsLabel);
+    const abilitiesLabel = game.i18n.localize(CONFIG.SDM.abilitiesLabel);
 
-    const ChatLabel = dataset.label ? `[${statsLabel}] ${dataset.label}` : '';
+    const ChatLabel = dataset.label ? `[${abilitiesLabel}] ${dataset.label}` : '';
 
     // Handle rolls that supply the formula directly.
     if (dataset.roll) {
@@ -742,7 +742,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
       })
     }
 
-    const rolledFrom = dataset.rollType ?? 'stat';
+    const rolledFrom = dataset.rollType ?? 'ability';
     const rolledFromlabel = game.i18n.localize(CONFIG.SDM.rollSource[rolledFrom]);
 
     this._openCustomRollModal(key, label, skill, rolledFromlabel);

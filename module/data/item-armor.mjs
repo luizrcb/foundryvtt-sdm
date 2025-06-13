@@ -27,7 +27,7 @@ export default class SdmArmor extends SdmItemBase {
         }, {}),
     });
 
-    schema.equipped = new fields.BooleanField({ initial: false });
+    schema.equipped = new fields.BooleanField({ initial: true });
 
     schema.size = new fields.EmbeddedDataField(ItemSizeDataModel);
 

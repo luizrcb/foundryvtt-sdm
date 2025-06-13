@@ -59,7 +59,7 @@ export class RollHandler {
       versatile = false,
       rolledFrom = ItemType.WEAPON,
       explode = false,
-      addStat = '',
+      addAbility = '',
     } = options;
 
     try {
@@ -78,7 +78,7 @@ export class RollHandler {
       const dieFaces = baseFormulaRoll?.dice[0]?.faces;
       const ignoreEncumbered = true;
 
-      const { rollFormula, flavor } = await this.prepareRollComponents(actor, addStat, label, {
+      const { rollFormula, flavor } = await this.prepareRollComponents(actor, addAbility, label, {
         modifier,
         multiplier,
         rollType,
@@ -104,10 +104,10 @@ export class RollHandler {
     }
   }
 
-  static combineStatWithModifier(actor, addStat, modifier) {
-    if (!addStat) return modifier.trim();
+  static combineStatWithModifier(actor, addAbility, modifier) {
+    if (!addAbility) return modifier.trim();
 
-    const statPath = `stats.${addStat}.final`;
+    const statPath = `abilities.${addAbility}.final`;
     const statProperty = AdvancedRollModifier._getActorProperty(actor, statPath);
 
     const combined = statProperty === 0
@@ -250,7 +250,7 @@ export class RollHandler {
     const versatileLabel = game.i18n.localize(CONFIG.SDM.versatile);
     const rollModifierLabel = game.i18n.localize(`SDM.Rolls.${resultingRollType}.abbr`);
     const parts = [`[${capitalizeFirstLetter(rolledFrom)}] ${hasExpertise ? '<b>*' : ''}${label}${hasExpertise ? '</b>' : ''}`];
-    if ((skill || isDamageRoll) && key) parts.push(`(${game.i18n.localize(SDM.stats[key])})`);
+    if ((skill || isDamageRoll) && key) parts.push(`(${game.i18n.localize(SDM.abilities[key])})`);
     if (isDamageRoll && versatile) parts.push(`(${versatileLabel})`);
     if (rollModifier !== 0) parts.push(`(${rollModifierLabel}${fatigueDisadvantage ? ` ${fatigueLabel}` : ''})`);
     if (heroicDice > 0) parts.push(`(hero ${heroicDice}d6)`)
@@ -302,15 +302,15 @@ export class RollHandler {
       expertise = hasExpertise ? actor.system.bonus * 2 : actor.system.bonus;
     }
     const fixedValuesTotal = fixedValues.reduce((acc, fixVal) => acc + fixVal, 0);
-    let baseStat;
+    let baseAbility;
     if (actor.type === ActorType.CHARACTER) {
-      baseStat = actor.system.stats[key]?.final || 0;
+      baseAbility = actor.system.abilities[key]?.final || 0;
     } else if (actor.type === ActorType.NPC) {
-      baseStat = actor.system.bonus.major;
+      baseAbility = actor.system.bonus.major;
     }
 
     return {
-      cappedStat: Math.min(baseStat + expertise + fixedValuesTotal, MAX_MODIFIER),
+      cappedStat: Math.min(baseAbility + expertise + fixedValuesTotal, MAX_MODIFIER),
       hasExpertise,
       diceTerms: diceTerms.join(''),
       fixedValues: fixedValuesTotal,

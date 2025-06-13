@@ -25,7 +25,7 @@ export default class SdmWeapon extends SdmItemBase {
         validationError: "must be a valid Roll formula",
       }),
       versatile: new StringField({
-        required: false, nullabe: true, blank: true, initial: '',
+        required: false, nullabe: true, blank: true, initial: '1d6',
         validate: v => !v || foundry.dice.Roll.validate(v),
         validationError: "must be a valid Roll formula",
       }),
@@ -46,7 +46,7 @@ export default class SdmWeapon extends SdmItemBase {
         }, {}),
     });
 
-    schema.versatile = new BooleanField({ required: true, initial: false });
+    schema.versatile = new BooleanField({ required: true, initial: true });
 
     return schema;
   }

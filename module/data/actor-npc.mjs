@@ -57,7 +57,7 @@ export default class SdmNPC extends SdmActorBase {
     );
 
     schema.isWarrior = new fields.BooleanField({
-      required: true, initial: true,
+      required: true, initial: false,
     });
 
     schema.isHelper = new fields.BooleanField({

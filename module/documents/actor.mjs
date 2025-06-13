@@ -30,34 +30,35 @@ export class SdmActor extends Actor {
       await this.update({
         "system.experience": resultingExperience,
         "system.level": newLevel,
+        "system.heroics.max": Math.max(newLevel, 1),
         "system.life.max": maxLife,
         "system.life.value": remainingLife < 1 ? 1 : remainingLife, // Cap current health
       });
     }
 
-    if (changed.system?.stats) {
-      const stats = changed.system.stats;
+    if (changed.system?.abilities) {
+      const abilities = changed.system.abilities;
 
-      // Iterate over updated stats
-      for (const [statKey, statData] of Object.entries(stats)) {
-        const currentEnhanced = statData.enhanced ?? this.system.stats[statKey]?.enhanced ?? false;
+      // Iterate over updated abilities
+      for (const [abilityKey, abilityData] of Object.entries(abilities)) {
+        const currentEnhanced = abilityData.enhanced ?? this.system.abilities[abilityKey]?.enhanced ?? false;
         const max = currentEnhanced ? 7 : 5;
 
         // Clamp "full" to the current max
-        if (statData.full !== undefined) {
-          statData.full = Math.min(statData.full, max);
+        if (abilityData.full !== undefined) {
+          abilityData.full = Math.min(abilityData.full, max);
         }
 
-        if (statData.current !== undefined && statData.current !== null) {
-          const currentMax = Math.min(this.system.stats[statKey].full, max);
-          const currentMin = Math.max(statData.current, 0);
-          statData.current = Math.min(currentMin, currentMax);
+        if (abilityData.current !== undefined && abilityData.current !== null) {
+          const currentMax = Math.min(this.system.abilities[abilityKey].full, max);
+          const currentMin = Math.max(abilityData.current, 0);
+          abilityData.current = Math.min(currentMin, currentMax);
         }
 
         await this.update({
-          [`system.stats.${statKey}`]: {
-            ...this.system.stats[statKey],
-            ...statData
+          [`system.abilities.${abilityKey}`]: {
+            ...this.system.abilities[abilityKey],
+            ...abilityData
           },
         });
       }
@@ -306,10 +307,9 @@ export class SdmActor extends Actor {
     if (this.type === ActorType.CHARACTER) {
       data.armor = this.getArmor();
       const BASE_DEFENSE = game.settings.get("sdm", "baseDefense") || BASE_DEFENSE_VALUE;
-      const calculatedDefense = BASE_DEFENSE + data.stats['agi'].final + data.armor;
+      const calculatedDefense = BASE_DEFENSE + data.abilities['agi'].final + data.armor;
       data.defense = Math.min(calculatedDefense, MAX_ATTRIBUTE_VALUE);
       data.bonus = getBonus(data.level);
-      data.heroics.max = Math.max(data.level, 1);
       data.heroics.min = 0;
       data.life.min = 0;
     }

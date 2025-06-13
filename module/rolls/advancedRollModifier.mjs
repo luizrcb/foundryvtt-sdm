@@ -72,25 +72,25 @@ export class AdvancedRollModifier {
     try {
       foundry.dice.Roll.validate(formula);
       const statPattern = /@([a-zA-Z0-9_.]+)/g;
-      const stats = [];
+      const abilities = [];
 
       const resolvedFormula = formula.replace(statPattern, (match, path) => {
-        stats.push(path);
-        return `{${stats.length - 1}}`;
+        abilities.push(path);
+        return `{${abilities.length - 1}}`;
       });
 
-      const resolvedStats = await Promise.all(
-        stats.map(path => this._getActorProperty(actor, path))
+      const resolvedAbilities = await Promise.all(
+        abilities.map(path => this._getActorProperty(actor, path))
       );
 
       const finalFormula = resolvedFormula.replace(/{(\d+)}/g, (_, index) => {
-        return resolvedStats[index] ?? 0;
+        return resolvedAbilities[index] ?? 0;
       });
 
       foundry.dice.Roll.validate(finalFormula);
       return finalFormula;
     } catch (error) {
-      console.error("Stat resolution failed:", error);
+      console.error("Ability resolution failed:", error);
       throw error;
     }
   }

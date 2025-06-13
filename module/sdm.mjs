@@ -40,7 +40,7 @@ globalThis.sdm = {
 };
 
 Hooks.on("renderChatMessageHTML", (message, html, data) => {
-  const isInitiativeRoll = message.getFlag("core", 'initiativeRoll');
+  const isInitiativeRoll = message?.getFlag("core", 'initiativeRoll');
   if (isInitiativeRoll) return;
 
   if (message.isRoll) {
@@ -91,7 +91,7 @@ Hooks.on("renderChatMessageHTML", (message, html, data) => {
   // Find message content and append
   const messageContent = html.querySelector('.message-content');
   if (messageContent) {
-      messageContent.appendChild(container);
+    messageContent.appendChild(container);
   }
 
   // Add event listener
@@ -118,7 +118,7 @@ Hooks.once('init', function () {
    * @type {String}
    */
   CONFIG.Combat.initiative = {
-    formula: '1d6 + @stats.agi.final',
+    formula: '1d6 + @abilities.agi.final',
     decimals: 2,
   };
 

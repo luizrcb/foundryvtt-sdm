@@ -10,26 +10,26 @@
           use both the "grid" and "grid-Ncol" class where "N" can be any number
           from 1 to 12 and will create that number of columns.  }}
       <div class='abilities flexcol'>
-        {{#each system.stats as |stat key|}}
+        {{#each system.abilities as |ability key|}}
           <div class='ability flexrow flex-group-center'>
             <span
               class='resource-label rollable flexlarge align-left'
               data-action='roll'
               data-context='rollable'
               data-key="{{key}}"
-              data-label='{{localize (lookup @root.config.stats key)}}'
-            >{{localize (lookup @root.config.stats key)}}</span>
+              data-label='{{localize (lookup @root.config.abilities key)}}'
+            >{{localize (lookup @root.config.abilities key)}}</span>
             <input
               type='text'
-              name='system.stats.{{key}}.full'
-              value='{{stat.full}}'
+              name='system.abilities.{{key}}.full'
+              value='{{ability.full}}'
               class="ability-score"
               data-dtype='Number'
             />
              <input
               type='text'
-              name='system.stats.{{key}}.current'
-              value='{{stat.current}}'
+              name='system.abilities.{{key}}.current'
+              value='{{ability.current}}'
               class="ability-score"
               data-dtype='Number'
             />
@@ -38,8 +38,8 @@
               data-action='roll'
               data-context='rollable'
               data-key='{{key}}'
-              data-label='{{localize (lookup @root.config.stats key)}}'
-            >{{numberFormat stat.final decimals=0}}</span> --}}
+              data-label='{{localize (lookup @root.config.abilities key)}}'
+            >{{numberFormat ability.final decimals=0}}</span> --}}
           </div>
         {{/each}}
       </div>
