@@ -1,0 +1,96 @@
+<div class="dice-roll" data-action="expandRoll">
+  <div class="dice-result">
+    <div class="dice-formula">{{heroicTotal.length}}d6 (heroic)</div>
+    <div class="dice-tooltip">
+      <div class="wrapper">
+        <section class="tooltip-part">
+          <div class="dice">
+            <header class="part-header">
+              <span class="part-formula">Original roll</span>
+            </header>
+            <ol class="dice-rolls">
+              {{#each dice}}
+              <li class="roll die d{{../dieFaces}} 
+              {{#if (eq original ../dieFaces)}}exploded max{{/if}}
+              {{#unless isKept}}discarded{{/unless}}">
+                {{original}}
+              </li>
+              {{/each}}
+            </ol>
+
+          </div>
+        </section>
+
+        <!-- Heroic Dice -->
+        {{#if heroicTotal.length}}
+        <section class="tooltip-part">
+          <div class="dice">
+            <header class="part-header">
+              <span class="part-formula">Heroic dice {{heroicTotal.length}}d6</span>
+            </header>
+            <ol class="dice-rolls">
+              {{#each heroicTotal as |heroicDice|}}
+              <li class="roll die d6 
+                {{#unless (contains ../heroicUsed heroicDice.index)}}discarded{{/unless}}">
+                {{heroicDice.result}}
+              </li>
+              {{/each}}
+            </ol>
+          </div>
+        </section>
+        {{/if}}
+        {{#if shouldExplode }}
+        <!-- Explosions -->
+        {{#each explosions as |explosion|}}
+        <div class="dice">
+          <header class="part-header">
+            <span class="part-formula">Explosion {{addOne @index}}</span>
+          </header>
+          <ol class="dice-rolls">
+            {{#each explosion.chain as |chain|}}
+            <li
+              class="roll die d{{@root.dieFaces}} {{#if (eq chain @root.dieFaces)}}exploded max{{/if}}{{#unless explosion.isKept}} discarded{{/unless}}">
+              {{chain}}
+            </li>
+            {{/each}}
+          </ol>
+        </div>
+        {{/each}}
+        {{/if}}
+
+        {{#if diceTotal}}
+        {{#unless (eq diceTotal total)}}
+        <section class="tooltip-part">
+          <div class="dice">
+            <header class="part-header">
+              <span class="part-formula">Dice Total {{#if multiplier}}({{multiplier}}){{/if}}</span>
+            </header>
+            <ol class="dice-rolls">
+              <li><b>{{numberFormat diceTotal}}</b></li>
+            </ol>
+          </div>
+        </section>
+        {{/unless}}
+        {{/if}}
+
+        {{#if modifiers.formula}}
+        {{#unless (eq modifiers.result 0)}}
+        <section class="tooltip-part">
+          <div class="dice">
+            <header class="part-header">
+              <span class="part-formula">Modifiers ({{modifiers.formula}})</span>
+            </header>
+            <ol class="dice-rolls">
+              <li><b>{{numberFormat modifiers.result sign=true}}</b></li>
+            </ol>
+          </div>
+        </section>
+        {{/unless}}
+        {{/if}}
+      </div>
+    </div>
+    <h4 class="dice-total">
+      {{total}}
+    </h4>
+  </div>
+</div>

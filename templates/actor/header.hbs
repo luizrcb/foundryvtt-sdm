@@ -1,0 +1,100 @@
+{{! Sheet Header }}
+<header class='sheet-header'>
+  <img class='profile-img' src='{{actor.img}}' data-edit='img' data-action='onEditImage' title='{{actor.name}}'
+    height='100' width='100' />
+  <div class='header-fields'>
+    <div class='document-name'>
+      <input name='name' type='text' value='{{actor.name}}' placeholder='Name' />
+    </div>
+    {{! The grid classes are defined in scss/global/_grid.scss. To use,
+    use both the "grid" and "grid-Ncol" class where "N" can be any number
+    from 1 to 12 and will create that number of columns. }}
+    <div class='resources grid grid-3col'>
+
+      {{! "flex-group-center" is also defined in the _grid.scss file
+      and it will add a small amount of padding, a border, and will
+      center all of its child elements content and text. }}
+      <div class='resource flex-group-center'>
+        {{#if (isCharacter actor.type)}}
+        <label for='system.life.max' class='resource-label'>
+          {{localize 'SDM.Actor.base.FIELDS.life.max.label'}}
+        </label>
+        <div class='resource-content flexrow flex-center flex-between'>
+          <input type='text' name='system.life.value' value='{{system.life.final_remaining}}' data-dtype='Number' />
+          <span> / </span>
+          <input type='text' name='system.life.max' value='{{system.life.final_max}}' data-dtype='Number' disabled />
+        </div>
+        {{/if}}
+      </div>
+
+      {{#if (eq actor.type 'character')}}
+      <div class='resource flex-group-center'>
+        <label for="system.level" class='resource-label'>
+          {{localize 'SDM.Actor.Character.FIELDS.level.label'}}
+        </label>
+        <div class='resource-content flexrow flex-center flex-between'>
+          <input type='text' name='system.level' value='{{system.level}}' data-dtype='Number' disabled />
+        </div>
+      </div>
+      {{/if}}
+
+      <div class='resource flex-group-center'>
+        {{#if (eq actor.type 'character')}}
+        <label for="system.experience" class='resource-label'>
+          {{localize 'SDM.Actor.Character.FIELDS.experience.label'}}
+        </label>
+        <div class='resource-content flexrow flex-center flex-between'>
+          {{#if isGM}}
+            <input type='text' name='system.experience' value='{{system.experience}}' data-dtype='Text' />
+          {{else}}
+            <input type='text' name='system.experience' value='{{system.experience}}' data-dtype='Text' disabled />
+          {{/if}}
+        </div>
+        {{/if}}
+
+        {{#if (eq actor.type 'npc')}}
+        <label class='resource-label'>
+          {{localize 'SDM.Actor.NPC.FIELDS.cr.label'}} / {{localize 'SDM.Actor.NPC.xp.label'}}
+        </label>
+        <div class='resource-content flexrow flex-center flex-between'>
+          <input type='text' name='system.cr' value='{{system.cr}}' data-dtype='Number' />
+          <span></span>
+          <input type='text' disabled='true' name='system.xp' value='{{system.xp}}' data-dtype='Number' />
+        </div>
+        {{/if}}
+      </div>
+
+      {{#if (eq actor.type 'character')}}
+      <div class='resource flex-group-center'>
+        <label for="system.bonus" class='resource-label'>
+          {{localize 'SDM.Actor.Character.FIELDS.bonus.label'}}
+        </label>
+        <div class='resource-content flexrow flex-center flex-between'>
+          <input type='text' name='system.bonus' value='{{system.bonus}}' data-dtype='Number' disabled />
+        </div>
+      </div>
+      {{/if}}
+
+      {{#if (eq actor.type 'character')}}
+      <div class='resource flex-group-center'>
+        <label for="system.armor" class='resource-label'>
+          {{localize 'SDM.Actor.Character.FIELDS.armor.label'}}
+        </label>
+        <div class='resource-content flexrow flex-center flex-between'>
+          <input type='text' name='system.armor' value='{{system.armor}}' data-dtype='Number' disabled />
+        </div>
+      </div>
+      {{/if}}
+
+      {{#if (eq actor.type 'character')}}
+      <div class='resource flex-group-center'>
+        <label for="system.defense" class='resource-label'>
+          {{localize 'SDM.Actor.Character.FIELDS.defense.label'}}
+        </label>
+        <div class='resource-content flexrow flex-center flex-between'>
+          <input type='text' name='system.defense' value='{{system.defense}}' data-dtype='Number' disabled />
+        </div>
+      </div>
+      {{/if}}
+    </div>
+</header>

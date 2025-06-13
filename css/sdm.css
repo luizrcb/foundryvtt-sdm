@@ -1,0 +1,569 @@
+@charset "UTF-8";
+:root {
+  --sdm-c-dark: #191813;
+  --sdm-c-faint: #c9c7b8;
+  --sdm-c-beige: #b5b3a4;
+  --sdm-c-tan: #444444;
+  --sdm-c-white: #ffffff;
+  --sdm-c-black: #000000;
+  --sdm-c-groove: #eeede0;
+}
+
+.theme-dark {
+  --sdm-c-dark: #c9c7b8;
+  --sdm-c-faint: #191813;
+  --sdm-c-beige: #444444;
+  --sdm-c-tan: #b5b3a4;
+  --sdm-c-white: #000000;
+  --sdm-c-black: #ffffff;
+  --sdm-c-groove: #11121f;
+}
+
+:root {
+  --sdm-c-dark: #191813;
+  --sdm-c-faint: #c9c7b8;
+  --sdm-c-beige: #b5b3a4;
+  --sdm-c-tan: #444444;
+  --sdm-c-white: #ffffff;
+  --sdm-c-black: #000000;
+  --sdm-c-groove: #eeede0;
+}
+
+.theme-dark {
+  --sdm-c-dark: #c9c7b8;
+  --sdm-c-faint: #191813;
+  --sdm-c-beige: #444444;
+  --sdm-c-tan: #b5b3a4;
+  --sdm-c-white: #000000;
+  --sdm-c-black: #ffffff;
+  --sdm-c-groove: #11121f;
+}
+
+.window-app {
+  font-family: "Roboto", sans-serif;
+}
+
+.rollable:hover, .rollable:focus {
+  color: #000000;
+  text-shadow: 0 0 10px red;
+  cursor: pointer;
+}
+
+.sheet.sdm {
+  min-width: 600px;
+  min-height: 600px;
+  max-width: 1000px;
+  max-height: 1500px;
+}
+
+.grid,
+.grid-2col {
+  display: grid;
+  grid-column: span 2/span 2;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin: 10px 0;
+  padding: 0;
+}
+
+.grid-3col {
+  grid-column: span 3/span 3;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.grid-4col {
+  grid-column: span 4/span 4;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.grid-5col {
+  grid-column: span 5/span 5;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+
+.grid-6col {
+  grid-column: span 6/span 6;
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.grid-7col {
+  grid-column: span 7/span 7;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+}
+
+.grid-8col {
+  grid-column: span 8/span 8;
+  grid-template-columns: repeat(8, minmax(0, 1fr));
+}
+
+.grid-9col {
+  grid-column: span 9/span 9;
+  grid-template-columns: repeat(9, minmax(0, 1fr));
+}
+
+.grid-10col {
+  grid-column: span 10/span 10;
+  grid-template-columns: repeat(10, minmax(0, 1fr));
+}
+
+.grid-11col {
+  grid-column: span 11/span 11;
+  grid-template-columns: repeat(11, minmax(0, 1fr));
+}
+
+.grid-12col {
+  grid-column: span 12/span 12;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+}
+
+.grid-start-2 {
+  grid-column-start: 2;
+}
+
+.grid-start-3 {
+  grid-column-start: 3;
+}
+
+.grid-start-4 {
+  grid-column-start: 4;
+}
+
+.grid-start-5 {
+  grid-column-start: 5;
+}
+
+.grid-start-6 {
+  grid-column-start: 6;
+}
+
+.grid-start-7 {
+  grid-column-start: 7;
+}
+
+.grid-start-8 {
+  grid-column-start: 8;
+}
+
+.grid-start-9 {
+  grid-column-start: 9;
+}
+
+.grid-start-10 {
+  grid-column-start: 10;
+}
+
+.grid-start-11 {
+  grid-column-start: 11;
+}
+
+.grid-start-12 {
+  grid-column-start: 12;
+}
+
+.grid-span-2 {
+  grid-column-end: span 2;
+}
+
+.grid-span-3 {
+  grid-column-end: span 3;
+}
+
+.grid-span-4 {
+  grid-column-end: span 4;
+}
+
+.grid-span-5 {
+  grid-column-end: span 5;
+}
+
+.grid-span-6 {
+  grid-column-end: span 6;
+}
+
+.grid-span-7 {
+  grid-column-end: span 7;
+}
+
+.grid-span-8 {
+  grid-column-end: span 8;
+}
+
+.grid-span-9 {
+  grid-column-end: span 9;
+}
+
+.grid-span-10 {
+  grid-column-end: span 10;
+}
+
+.grid-span-11 {
+  grid-column-end: span 11;
+}
+
+.grid-span-12 {
+  grid-column-end: span 12;
+}
+
+.flex-group-center,
+.flex-group-left,
+.flex-group-right {
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+.flex-group-left {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.flex-group-right {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.flexshrink {
+  flex: 0;
+}
+
+.flex-between {
+  justify-content: space-between;
+}
+
+.flexlarge {
+  flex: 2;
+}
+
+.align-left {
+  justify-content: flex-start;
+  text-align: left;
+}
+
+.align-right {
+  justify-content: flex-end;
+  text-align: right;
+}
+
+.align-center {
+  justify-content: center;
+  text-align: center;
+}
+
+/* Estilos específicos para sheets .sdm */
+.sdm :root {
+  --sdm-c-dark: #191813;
+  --sdm-c-faint: #c9c7b8;
+  --sdm-c-beige: #b5b3a4;
+  --sdm-c-tan: #444444;
+  --sdm-c-white: #ffffff;
+  --sdm-c-black: #000000;
+  --sdm-c-groove: #eeede0;
+}
+.sdm .theme-dark {
+  --sdm-c-dark: #c9c7b8;
+  --sdm-c-faint: #191813;
+  --sdm-c-beige: #444444;
+  --sdm-c-tan: #b5b3a4;
+  --sdm-c-white: #000000;
+  --sdm-c-black: #ffffff;
+  --sdm-c-groove: #11121f;
+}
+.sdm .item-form {
+  font-family: "Roboto", sans-serif;
+}
+.sdm .sheet-header {
+  flex: 0 auto;
+  overflow: hidden;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: flex-start;
+  margin-bottom: 10px;
+}
+.sdm .sheet-header .profile-img {
+  flex: 0 0 100px;
+  height: 100px;
+  margin-right: 10px;
+}
+.sdm .sheet-header .header-fields {
+  flex: 1;
+}
+.sdm .sheet-tabs {
+  flex: 0;
+}
+.sdm .sheet-body,
+.sdm .sheet-body .tab,
+.sdm .sheet-body .tab .editor {
+  height: 100%;
+}
+.sdm .tab.biography {
+  flex: 1;
+}
+.sdm .tab.biography .editor {
+  height: 100%;
+}
+.sdm .tox .tox-editor-container {
+  background: #ffffff;
+}
+.sdm .tox .tox-edit-area {
+  padding: 0 8px;
+}
+.sdm .resource-label {
+  font-weight: bold;
+}
+.sdm .ability {
+  margin-bottom: 2px;
+}
+.sdm .ability-score,
+.sdm .ability-mod {
+  flex: 0 0 44px;
+}
+.sdm :root {
+  --sdm-c-dark: #191813;
+  --sdm-c-faint: #c9c7b8;
+  --sdm-c-beige: #b5b3a4;
+  --sdm-c-tan: #444444;
+  --sdm-c-white: #ffffff;
+  --sdm-c-black: #000000;
+  --sdm-c-groove: #eeede0;
+}
+.sdm .theme-dark {
+  --sdm-c-dark: #c9c7b8;
+  --sdm-c-faint: #191813;
+  --sdm-c-beige: #444444;
+  --sdm-c-tan: #b5b3a4;
+  --sdm-c-white: #000000;
+  --sdm-c-black: #ffffff;
+  --sdm-c-groove: #11121f;
+}
+.sdm .items-header {
+  height: 28px;
+  margin: 2px 0;
+  padding: 0;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.05);
+  border: 2px groove #eeede0;
+  font-weight: bold;
+}
+.sdm .items-header > * {
+  font-size: 14px;
+  text-align: center;
+}
+.sdm .items-header .item-name {
+  font-weight: bold;
+  padding-left: 5px;
+  text-align: left;
+  display: flex;
+}
+.sdm .items-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  color: #444444;
+}
+.sdm .items-list .item-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sdm .items-list .item-name {
+  flex: 2;
+  margin: 0;
+  overflow: hidden;
+  font-size: 13px;
+  text-align: left;
+  align-items: center;
+  display: flex;
+}
+.sdm .items-list .item-name h3, .sdm .items-list .item-name h4 {
+  margin: 0;
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+.sdm .items-list .item-controls {
+  display: flex;
+  flex: 0 0 100px;
+  justify-content: flex-end;
+}
+.sdm .items-list .item-controls a {
+  font-size: 12px;
+  text-align: center;
+  margin: 0 6px;
+}
+.sdm .items-list .item {
+  align-items: center;
+  padding: 0 2px;
+  border-bottom: 1px solid #c9c7b8;
+}
+.sdm .items-list .item:last-child {
+  border-bottom: none;
+}
+.sdm .items-list .item .item-name {
+  color: #191813;
+}
+.sdm .items-list .item .item-name .item-image {
+  flex: 0 0 30px;
+  height: 30px;
+  background-size: 30px;
+  border: none;
+  margin-right: 5px;
+}
+.sdm .items-list .item-prop {
+  text-align: center;
+  border-left: 1px solid #c9c7b8;
+  border-right: 1px solid #c9c7b8;
+  font-size: 12px;
+}
+.sdm .items-list .items-header {
+  height: 28px;
+  margin: 2px 0;
+  padding: 0;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.05);
+  border: 2px groove #eeede0;
+  font-weight: bold;
+}
+.sdm .items-list .items-header > * {
+  font-size: 12px;
+  text-align: center;
+}
+.sdm .items-list .items-header .item-name {
+  padding-left: 5px;
+  text-align: left;
+}
+.sdm .item-formula {
+  flex: 0 0 200px;
+  padding: 0 8px;
+}
+.sdm :root {
+  --sdm-c-dark: #191813;
+  --sdm-c-faint: #c9c7b8;
+  --sdm-c-beige: #b5b3a4;
+  --sdm-c-tan: #444444;
+  --sdm-c-white: #ffffff;
+  --sdm-c-black: #000000;
+  --sdm-c-groove: #eeede0;
+}
+.sdm .theme-dark {
+  --sdm-c-dark: #c9c7b8;
+  --sdm-c-faint: #191813;
+  --sdm-c-beige: #444444;
+  --sdm-c-tan: #b5b3a4;
+  --sdm-c-white: #000000;
+  --sdm-c-black: #ffffff;
+  --sdm-c-groove: #11121f;
+}
+.sdm .effects-header {
+  height: 28px;
+  margin: 2px 0;
+  padding: 0;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.05);
+  border: 2px groove #eeede0;
+  font-weight: bold;
+}
+.sdm .effects-header > * {
+  font-size: 14px;
+  text-align: center;
+}
+.sdm .effects-header .effect-name {
+  font-weight: bold;
+  padding-left: 5px;
+  text-align: left;
+  display: flex;
+}
+.sdm .effects-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  overflow-y: auto;
+  scrollbar-width: thin;
+  color: #444444;
+}
+.sdm .effects-list .effect-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.sdm .effects-list .effect-name {
+  flex: 2;
+  margin: 0;
+  overflow: hidden;
+  font-size: 13px;
+  text-align: left;
+  align-items: center;
+  display: flex;
+}
+.sdm .effects-list .effect-name h3, .sdm .effects-list .effect-name h4 {
+  margin: 0;
+  white-space: nowrap;
+  overflow-x: hidden;
+}
+.sdm .effects-list .effect-controls {
+  display: flex;
+  flex: 0 0 100px;
+  justify-content: flex-end;
+}
+.sdm .effects-list .effect-controls a {
+  font-size: 12px;
+  text-align: center;
+  margin: 0 6px;
+}
+.sdm .effects-list .effect {
+  align-items: center;
+  padding: 0 2px;
+  border-bottom: 1px solid #c9c7b8;
+}
+.sdm .effects-list .effect:last-child {
+  border-bottom: none;
+}
+.sdm .effects-list .effect .effect-name {
+  color: #191813;
+}
+.sdm .effects-list .effect .effect-name .effect-image {
+  flex: 0 0 30px;
+  height: 30px;
+  background-size: 30px;
+  border: none;
+  margin-right: 5px;
+}
+.sdm .effects-list .effect-prop {
+  text-align: center;
+  border-left: 1px solid #c9c7b8;
+  border-right: 1px solid #c9c7b8;
+  font-size: 12px;
+}
+.sdm .effects-list .effects-header {
+  height: 28px;
+  margin: 2px 0;
+  padding: 0;
+  align-items: center;
+  background: rgba(0, 0, 0, 0.05);
+  border: 2px groove #eeede0;
+  font-weight: bold;
+}
+.sdm .effects-list .effects-header > * {
+  font-size: 12px;
+  text-align: center;
+}
+.sdm .effects-list .effects-header .effect-name {
+  padding-left: 5px;
+  text-align: left;
+}
+.sdm .effect-formula {
+  flex: 0 0 200px;
+  padding: 0 8px;
+}
+.sdm .effects .item .effect-source,
+.sdm .effects .item .effect-duration,
+.sdm .effects .item .effect-controls {
+  text-align: center;
+  border-left: 1px solid #c9c7b8;
+  border-right: 1px solid #c9c7b8;
+  font-size: 12px;
+}
+.sdm .effects .item .effect-controls {
+  border: none;
+}

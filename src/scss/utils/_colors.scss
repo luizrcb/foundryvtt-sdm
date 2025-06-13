@@ -1,0 +1,36 @@
+// _colors.scss
+
+// Defina primeiro as variáveis Sass
+$c-white: #ffffff;
+$c-black: #000000;
+$c-dark: #191813;
+$c-faint: #c9c7b8;
+$c-beige: #b5b3a4;
+$c-tan: #444444;
+$c-groove: #eeede0;
+
+// Depois mapeie para variáveis CSS
+:root {
+  --sdm-c-dark: #{$c-dark};
+  --sdm-c-faint: #{$c-faint};
+  --sdm-c-beige: #{$c-beige};
+  --sdm-c-tan: #{$c-tan};
+  --sdm-c-white: #{$c-white};
+  --sdm-c-black: #{$c-black};
+  --sdm-c-groove: #{$c-groove};
+  // --color-shadow-primary: rgb(193, 4, 250);
+  // --color-shadow-highlight: rgb(193, 4, 250);
+  // --color-border-highlight: rgb(193, 4, 250);
+  // --color-border-highlight-alt: rgb(193, 4, 250);
+  // --color-scrollbar:rgb(193, 4, 250);
+}
+
+.theme-dark {
+  --sdm-c-dark: #{$c-faint};
+  --sdm-c-faint: #{$c-dark};
+  --sdm-c-beige: #{$c-tan};
+  --sdm-c-tan: #{$c-beige};
+  --sdm-c-white: #{$c-black};
+  --sdm-c-black: #{$c-white};
+  --sdm-c-groove: #11121f;
+}

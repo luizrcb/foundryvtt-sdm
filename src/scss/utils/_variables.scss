@@ -1,0 +1,7 @@
+@use './colors' as colors;
+
+$padding-sm: 5px;
+$padding-md: 10px;
+$padding-lg: 20px;
+
+$border-groove: 2px groove colors.$c-groove;

@@ -1,0 +1,27 @@
+// Utilitários (usando forwarding)
+@use 'utils/typography' as typo;
+@use 'utils/colors' as colors;
+@use 'utils/mixins' as mx;
+@use 'utils/variables' as vars;
+
+// Estilos globais (carregamento condicional)
+@use 'sass:meta';
+
+@include meta.load-css('global/window');
+@include meta.load-css('global/grid');
+@include meta.load-css('global/flex');
+
+/* Estilos específicos para sheets .sdm */
+.sdm {
+  // Components com escopo
+  @include meta.load-css('components/forms');
+  @include meta.load-css('components/resource');
+  @include meta.load-css('components/items');
+  @include meta.load-css('components/effects');
+
+  // // Exemplo de uso de mixins com namespace
+  // .special-item {
+  //   @include mx.hover-effect(10%);
+  //   color: colors.$text-primary;
+  // }
+}

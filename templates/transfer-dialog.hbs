@@ -1,0 +1,18 @@
+<form>
+  <div class="grid grid-2col">
+    {{#if (eq item.system.size.unit "cash")}}
+    <div class="form-group">
+      <label>Amount:</label>
+      <input type="number" name="cashAmount" min="1" max="{{item.system.quantity}}"
+        required data-type="Number">
+    </div>
+    {{/if}}
+     <div class="form-group">
+      <label>Transfer to:</label>
+      <select name="targetActor" style="width: 100%">
+        <option value=""></option>
+        {{selectOptions actors valueAttr="id" labelAttr="name"}}
+      </select>
+    </div>
+  </div>
+</form>

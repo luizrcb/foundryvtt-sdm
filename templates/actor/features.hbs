@@ -1,0 +1,146 @@
+{{! Features Tab }}
+<section
+  class='tab features {{tab.cssClass}}'
+  data-group='primary'
+  data-tab='features'
+>
+  <section class='grid grid-3col'>
+    <aside class='sidebar'>
+      {{! The grid classes are defined in scss/global/_grid.scss. To use,
+          use both the "grid" and "grid-Ncol" class where "N" can be any number
+          from 1 to 12 and will create that number of columns.  }}
+      <div class='abilities flexcol'>
+        {{#each system.stats as |stat key|}}
+          <div class='ability flexrow flex-group-center'>
+            <span
+              class='resource-label rollable flexlarge align-left'
+              data-action='roll'
+              data-context='rollable'
+              data-key="{{key}}"
+              data-label='{{localize (lookup @root.config.stats key)}}'
+            >{{localize (lookup @root.config.stats key)}}</span>
+            <input
+              type='text'
+              name='system.stats.{{key}}.full'
+              value='{{stat.full}}'
+              class="ability-score"
+              data-dtype='Number'
+            />
+             <input
+              type='text'
+              name='system.stats.{{key}}.current'
+              value='{{stat.current}}'
+              class="ability-score"
+              data-dtype='Number'
+            />
+            {{!-- <span
+              class='ability-mod rollable'
+              data-action='roll'
+              data-context='rollable'
+              data-key='{{key}}'
+              data-label='{{localize (lookup @root.config.stats key)}}'
+            >{{numberFormat stat.final decimals=0}}</span> --}}
+          </div>
+        {{/each}}
+      </div>
+    </aside>
+    <section class="main grid-span-1">
+      <ol class='items-list'>
+      <li
+        class='item flexrow'
+        data-item-id='close_combat'
+      >
+        <div class='item-name rollable' data-roll-type='skill' data-action='roll' data-skill="close_combat">
+          <div>{{localize 'SDM.defaultSkill.close_combat'}}</div>
+        </div>
+      </li>
+      <li
+        class='item flexrow'
+        data-item-id='ranged_combat'
+      >
+        <div class='item-name rollable' data-roll-type='skill' data-action='roll' data-skill="ranged_combat">
+          <div>{{localize 'SDM.defaultSkill.ranged_combat'}}</div>
+        </div>
+      </li>
+      <li
+        class='item flexrow'
+        data-item-id='magic_combat'
+      >
+        <div class='item-name rollable' data-roll-type='skill' data-action='roll' data-skill="magic_combat">
+          <div>{{localize 'SDM.defaultSkill.magic_combat'}}</div>
+        </div>
+      </li>
+      </ol>
+    </section>
+    {{! For the main features list, span the right two columns }}
+    <section class='main grid-span-1'>
+      <ol class='items-list'>
+        <li class='item flexrow items-header'>
+          <div class='item-name'>{{localize 'Name'}}</div>
+            <span>{{numberFormat carriedWeight}}</span>
+            <span>{{system.heroics.value}}</span>
+        </li>
+        {{#each skills as |skill|}}
+          <li
+            class='item flexrow'
+            data-item-id='{{skill.name}}'
+          >
+            <div class='item-name rollable' data-roll-type='skill' data-action='roll' data-skill="{{skill.name}}">
+              <div class='item-image'>
+                <a class='rollable'>
+                  <img
+                    src='{{item.img}}'
+                    title='{{item.name}}'
+                    width='24'
+                    height='24'
+                  />
+                </a>
+              </div>
+              <div>{{skill.name}}</div>
+            </div>
+          </li>
+        {{/each}}
+        {{!-- {{#each features as |item id|}}
+          <li
+            class='item flexrow'
+            data-item-id='{{item._id}}'
+            data-drag='true'
+            data-document-class='Item'
+          >
+            <div class='item-name'>
+              <div class='item-image'>
+                <a class='rollable' data-roll-type='item' data-action='roll'>
+                  <img
+                    src='{{item.img}}'
+                    title='{{item.name}}'
+                    width='24'
+                    height='24'
+                  />
+                </a>
+              </div>
+              <div>{{item.name}}</div>
+            </div>
+            <div class='item-controls'>
+              <a
+                class='item-control item-edit'
+                title='{{localize "DOCUMENT.Update" type='feature'}}'
+                data-action='viewDoc'
+              >
+                <i class='fas fa-edit'></i>
+              </a>
+              {{#if @root.editable}}
+                <a
+                  class='item-control item-delete'
+                  title='{{localize "DOCUMENT.Delete" type='feature'}}'
+                  data-action='deleteDoc'
+                >
+                  <i class='fas fa-trash'></i>
+                </a>
+              {{/if}}
+            </div>
+          </li>
+        {{/each}} --}}
+      </ol>
+    </section>
+  </section>
+</section>

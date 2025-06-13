@@ -1,0 +1,143 @@
+{
+  "id": "sdm",
+  "title": "SDM",
+  "description": "The SDM system for FoundryVTT!",
+  "authors": [
+    {
+      "name": "Luiz Bertoni",
+      "discord": "nightlybuild_"
+    }
+  ],
+  "documentTypes": {
+    "Actor": {
+      "character": {
+        "htmlFields": [
+          "biography",
+          "notes"
+        ]
+      },
+      "caravan": {
+        "htmlFields": [
+          "biography"
+        ]
+      },
+      "npc": {
+        "htmlFields": [
+          "biography"
+        ]
+      }
+    },
+    "Item": {
+      "gear": {
+        "htmlFields": [
+          "description",
+          "features"
+
+        ]
+      },
+      "weapon": {
+        "htmlFields": [
+          "description",
+          "features"
+        ]
+      },
+      "armor": {
+        "htmlFields": [
+          "description",
+          "features"
+        ]
+      },
+      "mount": {
+        "htmlFields": [
+          "description",
+          "features"
+        ]
+      },
+      "motor": {
+        "htmlFields": [
+          "description",
+          "features"
+        ]
+      },
+      "spell": {
+        "htmlFields": [
+          "description",
+          "features"
+        ]
+      },
+      "trait": {
+        "htmlFields": [
+          "description",
+          "features"
+        ]
+      }
+    }
+  },
+  "flags": {
+    "hotReload": {
+      "extensions": [
+        "css",
+        "html",
+        "hbs",
+        "json"
+      ],
+      "paths": [
+        "css",
+        "lang",
+        "templates"
+      ]
+    }
+  },
+  "url": "Replace this with a link to your public repository",
+  "license": "LICENSE.txt",
+  "readme": "README.md",
+  "bugs": "Replace this with a link to file issues or tickets",
+  "changelog": "CHANGELOG.md",
+  "media": [
+    {
+      "type": "setup",
+      "url": "systems/sdm/assets/anvil-impact.png",
+      "thumbnail": "systems/sdm/assets/anvil-impact.png"
+    }
+  ],
+  "version": "1.0.0",
+  "compatibility": {
+    "minimum": "12",
+    "verified": "13.345"
+  },
+  "esmodules": [
+    "module/sdm.mjs"
+  ],
+  "styles": [
+    "css/sdm.css"
+  ],
+  "languages": [
+    {
+      "lang": "en",
+      "name": "English",
+      "path": "lang/en.json"
+    }
+  ],
+  "packs": [
+    {
+      "name": "macros",
+      "label": "SDM Macros",
+      "path": "./packs/macros.db",
+      "type": "Macro",
+      "system": "sdm"
+    }
+  ],
+  "packFolders": [],
+  "socket": false,
+  "manifest": "Replace this with a link to the /latest release system.json so people can receive updates after they've installed the system",
+  "download": "This must link to a .zip file of the current version",
+  "background": "systems/sdm/assets/anvil-impact.png",
+  "grid": {
+    "type": 1,
+    "distance": 5,
+    "units": "ft",
+    "diagonals": 0
+  },
+  "primaryTokenAttribute": "life",
+  "secondaryTokenAttribute": "heroics"
+}

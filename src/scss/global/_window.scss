@@ -1,0 +1,22 @@
+@use '../utils/typography' as typo;
+@use '../utils/colors' as colors;
+
+.window-app {
+  font-family: typo.$font-primary;
+}
+
+.rollable {
+  &:hover,
+  &:focus {
+    color: colors.$c-black;
+    text-shadow: 0 0 10px red;
+    cursor: pointer;
+  }
+}
+
+.sheet.sdm {
+  min-width: 600px;
+  min-height: 600px;
+  max-width: 1000px;
+  max-height: 1500px;
+}
