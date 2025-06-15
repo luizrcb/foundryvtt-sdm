@@ -1,8 +1,8 @@
 import { MAX_CARRY_WEIGHT_CASH, UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
+import { getDefaultAbility } from '../helpers/globalUtils.mjs';
+
 import SdmActorBase from './base-actor.mjs';
-import AbilityDataModel from './character-ability.mjs';
 import CharacterPetModel from './character-pet.mjs';
-import SkillDataModel, { getDefaultStat } from './character-skill.mjs';
 
 export default class SdmCharacter extends SdmActorBase {
   static LOCALIZATION_PREFIXES = [
@@ -21,8 +21,53 @@ export default class SdmCharacter extends SdmActorBase {
       validationError: "must be a valid Roll formula",
     });
 
+    schema.initiative_bonus = new fields.NumberField({
+      ...requiredInteger, initial: 0,
+    });
+
+    schema.defense_bonus = new fields.NumberField({
+      ...requiredInteger, initial: 0,
+    });
+
+    schema.trait_slots_bonus = new fields.NumberField({
+      ...requiredInteger, initial: 0,
+    });
+
+    schema.item_slots_bonus = new fields.NumberField({
+      ...requiredInteger, initial: 0,
+    });
+
+    // allows having extra SOAP sized readied items
+    schema.small_item_slots_bonus = new fields.NumberField({
+      ...requiredInteger, initial: 0,
+    });
+
+    schema.packed_item_slots_bonus = new fields.NumberField({
+      ...requiredInteger, initial: 0,
+    });
+
+    schema.burden_slots_bonus = new fields.NumberField({
+      ...requiredInteger, initial: 0,
+    });
+
+    schema.physical_save_bonus = new fields.NumberField({
+      ...requiredInteger, initial: 0,
+    });
+
+    schema.mental_save_bonus = new fields.NumberField({
+      ...requiredInteger, initial: 0,
+    });
+
+    schema.reaction_bonus = new fields.NumberField({
+      ...requiredInteger, initial: 0,
+    });
+
+    schema.save_target = new fields.NumberField({
+      ...requiredInteger, initial: 13,
+    });
+
     // in CASH
-    schema.carryWeight = new fields.SchemaField({
+    schema.carry_weight = new fields.SchemaField({
       unencumbered: new fields.NumberField({ ...requiredInteger, initial: UNENCUMBERED_THRESHOLD_CASH }),
       max: new fields.NumberField({ ...requiredInteger, initial: MAX_CARRY_WEIGHT_CASH }),
     });
@@ -37,8 +82,8 @@ export default class SdmCharacter extends SdmActorBase {
       }),
       max: new fields.NumberField({ ...requiredInteger, initial: 5, min: 5 }),
       min: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0, max: 0 }),
-      bonus: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 }),
-      reserved: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 }),
+      bonus: new fields.NumberField({ ...requiredInteger, initial: 0 }),
+      imbued: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 }),
     });
 
     schema.level = new fields.NumberField({ ...requiredInteger, min: 0, initial: 0, max: 9 });
@@ -69,70 +114,58 @@ export default class SdmCharacter extends SdmActorBase {
       }),
     });
 
-    schema.skills = new fields.ArrayField(
-      new fields.EmbeddedDataField(SkillDataModel), {
-        initial: [{
-          name: 'Swordfighting',
-          expertise: true,
-          defaultStat: 'str',
-          sources: 4,
-        },
-        {
-          name: 'Shooting',
-          expertise: false,
-          defaultStat: 'agi',
-          sources: 4,
-        },
-        {
-          name: 'Technomagic',
-          expertise: false,
-          defaultStat: 'tho',
-          sources: 4,
-        }
-        ]
-    }
-    );
-
-    schema.close_combat = new fields.SchemaField({
+    schema.melee = new fields.SchemaField({
       name: new foundry.data.fields.StringField({
         required: true,
         blank: false,
-        initial: game.i18n.localize('SDM.defaultSkill.close_combat'),
+        initial: game.i18n.localize('SDM.attacks.melee'),
       }),
-      expertise: new foundry.data.fields.BooleanField({
-        required: true,
-        initial: false,
+      bonus: new fields.NumberField({
+        ...requiredInteger, initial: 0,
       }),
-      defaultStat: getDefaultStat('str'),
+      defaultStat: getDefaultAbility('str'),
     });
 
-    schema.ranged_combat = new fields.SchemaField({
+    schema.ranged = new fields.SchemaField({
       name: new foundry.data.fields.StringField({
         required: true,
         blank: false,
-        initial: game.i18n.localize('SDM.defaultSkill.ranged_combat'),
+        initial: game.i18n.localize('SDM.attacks.ranged'),
       }),
-      expertise: new foundry.data.fields.BooleanField({
-        required: true,
-        initial: false,
+      bonus: new fields.NumberField({
+        ...requiredInteger, initial: 0,
       }),
-      defaultStat: getDefaultStat('agi'),
-    })
+      defaultStat: getDefaultAbility('agi'),
+    });
 
-    schema.magic_combat = new fields.SchemaField({
+    schema.oldtech = new fields.SchemaField({
       name: new foundry.data.fields.StringField({
         required: true,
         blank: false,
-        initial: game.i18n.localize('SDM.defaultSkill.magic_combat'),
+        initial: game.i18n.localize('SDM.attacks.oldtech'),
       }),
-      expertise: new foundry.data.fields.BooleanField({
-        required: true,
-        initial: false,
+      bonus: new fields.NumberField({
+        ...requiredInteger, initial: 0,
       }),
-      defaultStat: getDefaultStat('tho'),
+      defaultStat: getDefaultAbility('tho'),
       magic_cost: new fields.NumberField({
         ...requiredInteger, min: 1, max: 3, initial: 2,
-      })
+      }),
+    });
+
+    schema.fantascience = new fields.SchemaField({
+      name: new foundry.data.fields.StringField({
+        required: true,
+        blank: false,
+        initial: game.i18n.localize('SDM.attacks.fantascience'),
+      }),
+      bonus: new fields.NumberField({
+        ...requiredInteger, initial: 0,
+      }),
+      defaultStat: getDefaultAbility('cha'),
+      magic_cost: new fields.NumberField({
+        ...requiredInteger, min: 1, max: 3, initial: 2,
+      }),
     });
 
     // Iterate over abilities names and create a new SchemaField for each.
@@ -149,11 +182,12 @@ export default class SdmCharacter extends SdmActorBase {
             min: 0,
           }),
           current: new fields.NumberField({
-            required: true,
-            nullable: true,
-            integer: true,
-            initial: null,
+            ...requiredInteger,
+            initial: 0,
             min: 0,
+          }),
+          bonus: new fields.NumberField({
+            ...requiredInteger, initial: 0,
           }),
         });
         return obj;
@@ -178,20 +212,16 @@ export default class SdmCharacter extends SdmActorBase {
 
   prepareDerivedData() {
     for (const key in this.abilities) {
-      if (this.abilities[key].current !== null) {
-        this.abilities[key].final = this.abilities[key].current;
-      } else {
-        this.abilities[key].final = this.abilities[key].full;
-      }
+      this.abilities[key].final_current = this.abilities[key].current + this.abilities[key].bonus;
+      this.abilities[key].final_full = this.abilities[key].full + this.abilities[key].bonus;
 
       // Handle abilities label localization.
       this.abilities[key].label =
         game.i18n.localize(CONFIG.SDM.abilities[key]) ?? key;
     }
 
-    this.life.final_max = Math.max(1, this.life.max - this.life.reserved + this.life.bonus);
-    this.life.final_remaining = Math.max(0, this.life.value - this.life.reserved + this.life.bonus);
-
+    this.life.final_max = Math.max(1, this.life.max - this.life.imbued + this.life.bonus);
+    this.life.final_remaining = Math.max(0, this.life.value - this.life.imbued + this.life.bonus);
   }
 
   getRollData() {
@@ -204,12 +234,11 @@ export default class SdmCharacter extends SdmActorBase {
     }
 
     data.life = this.life
-    data.skills = this.skills;
-    data.lvl = this.level;
+    data.lvl = this.level;;
     data.bonus = this.bonus;
     data.armor = this.armor;
     data.heroics = this.heroics;
-
+    data.initiative_bonus = this.initiative_bonus;
     return data;
   }
 }

@@ -1,146 +1,35 @@
 {{! Features Tab }}
-<section
-  class='tab features {{tab.cssClass}}'
-  data-group='primary'
-  data-tab='features'
->
+<section class='tab features {{tab.cssClass}}' data-group='primary' data-tab='features'>
   <section class='grid grid-3col'>
     <aside class='sidebar'>
       {{! The grid classes are defined in scss/global/_grid.scss. To use,
-          use both the "grid" and "grid-Ncol" class where "N" can be any number
-          from 1 to 12 and will create that number of columns.  }}
-      <div class='abilities flexcol'>
-        {{#each system.abilities as |ability key|}}
-          <div class='ability flexrow flex-group-center'>
-            <span
-              class='resource-label rollable flexlarge align-left'
-              data-action='roll'
-              data-context='rollable'
-              data-key="{{key}}"
-              data-label='{{localize (lookup @root.config.abilities key)}}'
-            >{{localize (lookup @root.config.abilities key)}}</span>
-            <input
-              type='text'
-              name='system.abilities.{{key}}.full'
-              value='{{ability.full}}'
-              class="ability-score"
-              data-dtype='Number'
-            />
-             <input
-              type='text'
-              name='system.abilities.{{key}}.current'
-              value='{{ability.current}}'
-              class="ability-score"
-              data-dtype='Number'
-            />
-            {{!-- <span
-              class='ability-mod rollable'
-              data-action='roll'
-              data-context='rollable'
-              data-key='{{key}}'
-              data-label='{{localize (lookup @root.config.abilities key)}}'
-            >{{numberFormat ability.final decimals=0}}</span> --}}
-          </div>
-        {{/each}}
+      use both the "grid" and "grid-Ncol" class where "N" can be any number
+      from 1 to 12 and will create that number of columns. }}
+     
       </div>
     </aside>
-    <section class="main grid-span-1">
-      <ol class='items-list'>
-      <li
-        class='item flexrow'
-        data-item-id='close_combat'
-      >
-        <div class='item-name rollable' data-roll-type='skill' data-action='roll' data-skill="close_combat">
-          <div>{{localize 'SDM.defaultSkill.close_combat'}}</div>
-        </div>
-      </li>
-      <li
-        class='item flexrow'
-        data-item-id='ranged_combat'
-      >
-        <div class='item-name rollable' data-roll-type='skill' data-action='roll' data-skill="ranged_combat">
-          <div>{{localize 'SDM.defaultSkill.ranged_combat'}}</div>
-        </div>
-      </li>
-      <li
-        class='item flexrow'
-        data-item-id='magic_combat'
-      >
-        <div class='item-name rollable' data-roll-type='skill' data-action='roll' data-skill="magic_combat">
-          <div>{{localize 'SDM.defaultSkill.magic_combat'}}</div>
-        </div>
-      </li>
-      </ol>
-    </section>
+   
     {{! For the main features list, span the right two columns }}
-    <section class='main grid-span-1'>
+    {{!-- <section class='main grid-span-1'>
       <ol class='items-list'>
         <li class='item flexrow items-header'>
-          <div class='item-name'>{{localize 'Name'}}</div>
-            <span>{{numberFormat carriedWeight}}</span>
-            <span>{{system.heroics.value}}</span>
+          <div class='item-name'>{{localize 'Skills'}}</div>
         </li>
         {{#each skills as |skill|}}
-          <li
-            class='item flexrow'
-            data-item-id='{{skill.name}}'
-          >
-            <div class='item-name rollable' data-roll-type='skill' data-action='roll' data-skill="{{skill.name}}">
-              <div class='item-image'>
-                <a class='rollable'>
-                  <img
-                    src='{{item.img}}'
-                    title='{{item.name}}'
-                    width='24'
-                    height='24'
-                  />
-                </a>
-              </div>
-              <div>{{skill.name}}</div>
-            </div>
-          </li>
+        <li class='item flexrow' data-item-id='{{skill.name}}'>
+          <div class='item-name rollable' data-roll-type='skill' data-action='roll' data-skill="{{skill.name}}">
+            <div>{{skill.name}}</div>
+          </div>
+        </li>
         {{/each}}
-        {{!-- {{#each features as |item id|}}
-          <li
-            class='item flexrow'
-            data-item-id='{{item._id}}'
-            data-drag='true'
-            data-document-class='Item'
-          >
-            <div class='item-name'>
-              <div class='item-image'>
-                <a class='rollable' data-roll-type='item' data-action='roll'>
-                  <img
-                    src='{{item.img}}'
-                    title='{{item.name}}'
-                    width='24'
-                    height='24'
-                  />
-                </a>
-              </div>
-              <div>{{item.name}}</div>
-            </div>
-            <div class='item-controls'>
-              <a
-                class='item-control item-edit'
-                title='{{localize "DOCUMENT.Update" type='feature'}}'
-                data-action='viewDoc'
-              >
-                <i class='fas fa-edit'></i>
-              </a>
-              {{#if @root.editable}}
-                <a
-                  class='item-control item-delete'
-                  title='{{localize "DOCUMENT.Delete" type='feature'}}'
-                  data-action='deleteDoc'
-                >
-                  <i class='fas fa-trash'></i>
-                </a>
-              {{/if}}
-            </div>
-          </li>
-        {{/each}} --}}
       </ol>
-    </section>
+    </section> --}}
   </section>
+  <div class="grid grid-3col">
+    <div class="main grid-span-1">{{> "systems/sdm/templates/actor/gear.hbs"}}</div>
+    <div class="main grid-span-1">{{> "systems/sdm/templates/actor/traits.hbs"}}</div>
+    <div class="main grid-span-1">{{> "systems/sdm/templates/actor/traits.hbs"}}</div>
+  </div>
+  </div>
+</section>
 </section>

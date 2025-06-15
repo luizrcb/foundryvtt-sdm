@@ -18,7 +18,7 @@
   @include meta.load-css('components/resource');
   @include meta.load-css('components/items');
   @include meta.load-css('components/effects');
-
+  @include meta.load-css('components/sheet');
   // // Exemplo de uso de mixins com namespace
   // .special-item {
   //   @include mx.hover-effect(10%);

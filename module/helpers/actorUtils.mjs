@@ -4,7 +4,7 @@ export const MAX_MODIFIER = 13;
 export const PHYSICAL_KEYS = ['str', 'end', 'agi'];
 export const CHARACTER_DEFAULT_WEIGHT_IN_CASH = 2500;
 
-export const DEFAULT_SKILLS = ['close_combat', 'ranged_combat', 'magic_combat'];
+export const ATTACKS = ['melee', 'ranged', 'oldtech', 'fantascience'];
 
 const MIN_LEVEL = 0;
 const MAX_CREATURE_LEVEL = 17;
@@ -32,18 +32,12 @@ export function getMaxLife(level = MIN_LEVEL) {
   }
 }
 
-export function getBonus(level = MIN_LEVEL) {
-  const thresholds = [1, 5, 9]; // Thresholds where bonus increases
-  const index = thresholds.findIndex(threshold => level < threshold);
-  return index === -1 ? 4 : index + 1;
-}
-
 export function isPhysicalAction(key) {
   return PHYSICAL_KEYS.includes(key);
 }
 
-export function isDefaultSkill(skillName) {
-  return DEFAULT_SKILLS.includes(skillName);
+export function isAttack(attackName) {
+  return ATTACKS.includes(attackName);
 }
 
 export function getCreatureStatsByLevel(level = MIN_LEVEL) {
@@ -83,18 +77,9 @@ export function getCreatureStatsByLevel(level = MIN_LEVEL) {
 }
 
 export function getActorOptions(actorType = 'character') {
-  const actors =  game.actors.filter((actor) => actor.type === actorType);
+  const actors = game.actors.filter((actor) => actor.type === actorType);
   return actors.map((actor) => ({
     id: actor.id,
     name: actor.name,
   }));
-}
-
-export function  getCharacterMaxSkills(characterLevel = 0) {
-  const progressions = [3, 4, 4, 5, 5, 6, 6, 7, 8, 9, 10];
-  const maxLevel = progressions.length - 1; // 9
-
-  if (level >= MIN_LEVEL && level <= maxLevel) {
-    return progressions[level];
-  }
 }

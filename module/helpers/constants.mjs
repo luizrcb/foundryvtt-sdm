@@ -1,8 +1,8 @@
 export const RangeOption = Object.freeze({
-  CLOSE: 'close',
-  NEAR: 'near',
-  FAR: 'far',
-  DISTANT: 'distant'
+  MELEE: 'melee',
+  SHORT: 'short',
+  LONG: 'long',
+  EXTREME: 'extreme'
 });
 
 export const SizeUnit = Object.freeze({
@@ -61,4 +61,11 @@ export const Die = Object.freeze({
   D10: 10,
   D12: 12,
   D20: 20,
+});
+
+export const SkillMod = Object.freeze({
+  '': 0,
+  SKILLED: 3,
+  EXPERT: 6,
+  MASTER: 9,
 });

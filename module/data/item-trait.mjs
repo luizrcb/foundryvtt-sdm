@@ -1,3 +1,5 @@
+import { SkillMod } from '../helpers/constants.mjs';
+import { getDefaultAbility } from '../helpers/globalUtils.mjs';
 import SdmItemBase from './base-item.mjs';
 
 export default class SdmTrait extends SdmItemBase {
@@ -5,4 +7,54 @@ export default class SdmTrait extends SdmItemBase {
     'SDM.Item.base',
     'SDM.Item.Trait',
   ];
+
+  static defineSchema() {
+    const fields = foundry.data.fields;
+    const requiredInteger = { required: true, nullable: false, integer: true };
+    const schema = super.defineSchema();
+
+    schema.is_skill = new fields.BooleanField({
+      required: true, initial: false,
+    });
+
+    schema.skill_mod = new fields.NumberField({
+      required: false, initial: 0, min: 0,
+      choices: Object.entries(SkillMod).reduce((acc, [key, value]) => {
+        acc[value] = key;
+        return acc;
+      }, {}),
+    });
+
+    schema.skill_mod_bonus = new fields.NumberField({
+      ...requiredInteger, initial: 0,
+    });
+
+    schema.default_ability = getDefaultAbility();
+
+    schema.is_spell = new fields.BooleanField({
+      required: true, initial: false,
+    });
+
+    schema.power = new fields.NumberField({
+      required: true,
+      nullable: false,
+      integer: true,
+      initial: 1,
+      min: 1,
+      max: 15,
+    });
+
+    schema.formula = new fields.StringField({
+      required: false, blank: true, initial: '',
+      validate: v => !v || (v && foundry.dice.Roll.validate(v)),
+      validationError: "must be a valid Roll formula",
+    });
+
+    return schema;
+  }
+
+
+  prepareDerivedData() {
+    this.skill_mod_final = this.skill_mod + this.skill_mod_bonus;
+  }
 }

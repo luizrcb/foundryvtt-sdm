@@ -33,7 +33,7 @@
     "Actor": {
       "Tabs": {
         "Biography": "Biography",
-        "Features": "Features",
+        "Features": "Inventory",
         "Gear": "Gear",
         "Spells": "Spells",
         "Effects": "Effects"
@@ -194,10 +194,10 @@
         }
       },
       "Range": {
-        "close": "close",
-        "near": "near",
-        "far": "far",
-        "distant": "distant"
+        "melee": "melee",
+        "short": "short",
+        "long": "long",
+        "extreme": "extreme"
       },
       "Features": {
         "versatile": {
@@ -237,10 +237,11 @@
       },
       "useHeroicDice": "Use Heroic Dice"
     },
-    "defaultSkill": {
-      "close_combat": "Close Combat",
-      "ranged_combat": "Ranged Combat",
-      "magic_combat": "Magic Combat"
+    "attacks": {
+      "melee": "Melee",
+      "ranged": "Ranged",
+      "oldtech": "Oldtech",
+      "fantascience": "Fantascience"
     },
     "SpeedType": {
       "very_slow": "Very Slow",
@@ -253,7 +254,8 @@
     "EscalatorDieControl": "Escalator Die Control",
     "Increment": "Increase by 1",
     "Reset": "Reset to 0",
-    "EscalatorDieHint": "Current bonus added to all rolls"
+    "EscalatorDieHint": "Current bonus added to all rolls",
+    "HealingHouseRuleHint": "Rolls twice the amount of heroic dice spent and keep the highest result"
   },
   "TYPES": {
     "Actor": {

@@ -14,7 +14,7 @@ export default class SdmWeapon extends SdmItemBase {
     const fields = foundry.data.fields;
     const { BooleanField, SchemaField, EmbeddedDataField, StringField, HTMLField } = fields;
 
-    schema.equipped = new BooleanField({ initial: false });
+    schema.readied = new BooleanField({ initial: true });
 
     schema.size = new EmbeddedDataField(ItemSizeDataModel);
 
@@ -29,17 +29,22 @@ export default class SdmWeapon extends SdmItemBase {
         validate: v => !v || foundry.dice.Roll.validate(v),
         validationError: "must be a valid Roll formula",
       }),
-      statBonus: new StringField({
+      default_ability: new StringField({
         required: false, initial: 'str', blank: true,
-        choices: Object.keys(CONFIG.SDM.statAbbreviations).reduce((acc, key) => {
-          acc[key] = game.i18n.localize(CONFIG.SDM.statAbbreviations[key]);
+        choices: Object.keys(CONFIG.SDM.abilityAbbreviations).reduce((acc, key) => {
+          acc[key] = game.i18n.localize(CONFIG.SDM.abilityAbbreviations[key]);
           return acc;
         }, {}),
-      })
+      }),
+      bonus: new StringField({
+        required: false, nullabe: true, blank: true, initial: '1d6',
+        validate: v => !v || foundry.dice.Roll.validate(v),
+        validationError: "must be a valid Roll formula",
+      }),
     });
 
     schema.range = new StringField({
-      required: true, initial: RangeOption.CLOSE, choices:
+      required: true, initial: RangeOption.MELEE, choices:
         Object.values(RangeOption).reduce((acc, key) => {
           acc[key] = game.i18n.localize(`SDM.Item.Range.${key}`);
           return acc;
@@ -49,5 +54,14 @@ export default class SdmWeapon extends SdmItemBase {
     schema.versatile = new BooleanField({ required: true, initial: true });
 
     return schema;
+  }
+
+
+  getRollData() {
+    const data = {};
+
+    data.damage = this.damage;
+
+    return data;
   }
 }

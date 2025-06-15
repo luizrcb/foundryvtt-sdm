@@ -58,5 +58,7 @@ export function preciseRound(value, decimals = 4) {
   return Math.round(value * factor) / factor;
 }
 
-export const GEAR_ITEM_TYPES = ['gear', 'weapon', 'armor', 'spell', 'trait'];
+export const GEAR_ITEM_TYPES = ['gear', 'weapon', 'armor'];
+export const TRAIT_ITEM_TYPES = ['trait'];
+export const BURDEN_ITEM_TYPES = ['burden']
 export const ITEMS_NOT_ALLOWED_IN_CHARACTERS = ['mount', 'motor'];

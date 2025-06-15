@@ -1,3 +1,5 @@
+import { ActorType } from "../helpers/constants.mjs";
+
 const { renderTemplate } = foundry.applications.handlebars;
 
 export async function openItemTransferDialog(item, sourceActor) {
@@ -21,6 +23,7 @@ export async function openItemTransferDialog(item, sourceActor) {
     }
 
     const validActors = game.actors.filter(a =>
+      a.type !== ActorType.NPC &&
       a.id !== sourceActor.id &&
       a.testUserPermission(game.user, "OWNER") &&
       !a.items.has(item.id)
@@ -51,11 +54,11 @@ export async function openItemTransferDialog(item, sourceActor) {
       }
 
       const freshItem = sourceActor.items.get(item.id);
-      if (!freshItem || freshItem.getFlag("sdm", "transferring") !== transferKey) {
+      if (!freshItem || freshItem?.getFlag("sdm", "transferring") !== transferKey) {
         throw new Error("Item state changed during transfer");
       }
 
-      if (Date.now() - freshItem.getFlag("sdm", "transferInitiated") > 30000) {
+      if (Date.now() - freshItem?.getFlag("sdm", "transferInitiated") > 30000) {
         throw new Error("Transfer session expired");
       }
 

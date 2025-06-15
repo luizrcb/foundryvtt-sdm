@@ -70,7 +70,7 @@ export class HeroicDiceProcessor {
     const nonExplosiveDice = originalRoll.dice.filter(d => d.faces !== dieFaces);
 
     // 2. Roll heroic dice
-    const heroicRoll = await this._rollHeroicDice(heroicDiceQty, 6,
+    const heroicRoll = await this._rollHeroicDice(heroicDiceQty
       // force heroic dice results for testing
       // {dice: [{ results: [{result: 1, index: 0}]}]},
     );
@@ -137,9 +137,16 @@ export class HeroicDiceProcessor {
     };
   };
 
-  static async _rollHeroicDice(qty, heroicDieFaces = Die.D6, fixedResult) {
-    const roll = await new Roll(`${qty}d${heroicDieFaces}`).evaluate();
-    if (game.dice3d) await game.dice3d.showForRoll(roll);
+  static async _rollHeroicDice(qty, displayDice = true, healingHouseRule = false, heroicDieFaces = Die.D6, fixedResult) {
+    let roll = new Roll(`${qty}d${heroicDieFaces}`);
+
+    if (healingHouseRule) {
+      roll = new Roll(`{${qty}d${heroicDieFaces}, ${qty}d${heroicDieFaces}}kh`);
+    }
+
+    await roll.evaluate();
+
+    if (displayDice && game.dice3d) await game.dice3d.showForRoll(roll);
     if (fixedResult) return Promise.resolve(fixedResult);
     return roll;
   }
@@ -462,7 +469,7 @@ export class HeroicDiceProcessor {
   }
 }
 
-export function getHeroicDiceSelect(actor, includeZero = false, isDamageRoll = false) {
+export function getHeroicDiceSelect(actor, includeZero = false, isDamageRoll = false, healingHouseRuleEnabled = false) {
   const maxHeroicDice = actor.system.heroics?.value ?? 0;
 
   const options = Array.from({ length: maxHeroicDice }, (_, i) =>
@@ -482,8 +489,30 @@ export function getHeroicDiceSelect(actor, includeZero = false, isDamageRoll = f
         <input id="shouldExplode" type="checkbox" name="shouldExplode" />
       </div>
       `: ''}
+      ${healingHouseRuleEnabled ? `
+      <div class="form-group">
+        <label for="healingHouseRule">${game.i18n.localize("SDM.HealingHouseRule")}</label>
+        <input id="healingHouseRule" type="checkbox" name="healingHouseRule" checked />
+        <p>${game.i18n.localize("SDM.HealingHouseRuleHint")}</p>
+      </div>
+      `: ''}
     `;
   return heroicDiceSelect;
+}
+
+
+export async function sendRollToChat(roll, actor, flavor, flags) {
+  try {
+    await roll.toMessage({
+      speaker: ChatMessage.getSpeaker({ actor }),
+      flavor,
+      rollMode: game.settings.get('core', 'rollMode'),
+      flags,
+    });
+  } catch (error) {
+    console.error("Chat message failed:", error);
+    throw error;
+  }
 }
 
 // Integração com o handler original
@@ -492,8 +521,8 @@ export async function handleHeroicDice(event, message, actor) {
   if (maxDice < 1) return ui.notifications.error("No Heroic Dice available!");
 
   const originalRoll = message.rolls[0];
-  const isDamageRoll = !!message.getFlag('sdm', 'isDamageRoll');
-  const isTraitRoll = !!message.getFlag('sdm', 'isTraitRoll');
+  const isDamageRoll = !!message?.getFlag('sdm', 'isDamageRoll');
+  const isTraitRoll = !!message?.getFlag('sdm', 'isTraitRoll');
 
   const heroicDiceOptions = await foundry.applications.api.DialogV2.prompt({
     window: {
@@ -516,3 +545,35 @@ export async function handleHeroicDice(event, message, actor) {
   const keepRule = HeroicDiceProcessor.getKeepRule(originalRoll);
   HeroicDiceProcessor.process(originalRoll, heroicQty, actor, keepRule, shouldExplode);
 }
+
+export async function healingHeroicDice(event, actor) {
+  const healingHouseRuleEnabled = !!game.settings.get('sdm', 'healingHouseRule');
+  const maxDice = actor.system.heroics.value;
+  if (maxDice < 1) return ui.notifications.error("No Heroic Dice available!");
+
+  const heroicDiceOptions = await foundry.applications.api.DialogV2.prompt({
+    window: {
+      title: game.i18n.localize("SDM.UseHeroicDice"),
+    },
+    content: getHeroicDiceSelect(actor, false, false, healingHouseRuleEnabled),
+    ok: {
+      icon: 'fas fa-dice-d6',
+      label: game.i18n.localize("SDM.Roll"),
+      callback: (event, button) => new foundry.applications.ux.FormDataExtended(button.form).object,
+    },
+  });
+
+  const {
+    heroicQty = '0',
+    healingHouseRule = false,
+  } = heroicDiceOptions;
+  const heroicDiceQty = parseInt(heroicQty || 0, 10);
+  const currentHeroics = actor.system.heroics.value;
+  if (heroicDiceQty > currentHeroics) return;
+
+  const roll = await HeroicDiceProcessor._rollHeroicDice(heroicDiceQty, false, healingHouseRule);
+  await sendRollToChat(roll, actor, 'Heroic dice healing', {
+    "sdm.isHeroicResult": true,
+  });
+  await HeroicDiceProcessor.updateHeroicDice(actor, heroicDiceQty);
+};

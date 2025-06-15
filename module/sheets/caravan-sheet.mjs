@@ -4,7 +4,7 @@ import { convertToCash, GEAR_ITEM_TYPES, ITEMS_NOT_ALLOWED_IN_CHARACTERS } from 
 import { openItemTransferDialog } from '../items/transferItem.mjs';
 import { ItemType, SizeUnit } from '../helpers/constants.mjs';
 import { getHeroicDiceSelect } from '../rolls/heroicDice.mjs';
-import { isDefaultSkill, UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
+import { UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
 
 const { api, sheets } = foundry.applications;
 const TextEditor = foundry.applications.ux.TextEditor.implementation;
@@ -105,7 +105,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
 
   // Open the custom roll modal
   async _openCustomRollModal(key, attribute, skill, rolledFrom, item, versatile = false) {
-    const actorSkill = skill ? (isDefaultSkill(skill) ? this.actor.system[skill] : this.actor.system.skills.find(sk => sk.name === skill)) : {};
+    const actorSkill = skill ? this.actor.system[skill] : {};
     const versatileLabel = game.i18n.localize(CONFIG.SDM.versatile)
     const title = attribute ?? actorSkill.name ?? `${item?.name}${versatile ? ` (${versatileLabel})` : ''}`;
     const isTraitRoll = !!(skill || key);
@@ -196,7 +196,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     }
 
     const ability = key ? key : selectedAttribute;
-    const skillData = (skill && isDefaultSkill(skill)) ? this.actor.system[skill] : this.actor.system.skills.find(s => s.name === skill);
+    const skillData = skill ? this.actor.system[skill] : {};
     let label = skill ? skillData.name : (attribute ? attribute : (ability ? game.i18n.localize(CONFIG.SDM.abilities[ability]) : ''));
 
     if (item) {
@@ -497,7 +497,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
 
     const newWeight = convertToCash(newSizeValue * newQuantity, newSizeUnit);
     const currentCarriedWeight = this.actor.getCarriedGear() - originalWeight + newWeight;
-    const maxCarryWeight = this.actor.system.carryWeight.max;
+    const maxCarryWeight = this.actor.system.carry_weight.max;
 
     // Only error if EXCEEDING max (not when equal)
     if (currentCarriedWeight > maxCarryWeight) {
@@ -516,7 +516,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     const newWeight = convertToCash(sizeValue * quantity, sizeUnit);
 
     const currentCarriedWeight = this.actor.getCarriedGear();
-    const maxCarryWeight = this.actor.system.carryWeight.max;
+    const maxCarryWeight = this.actor.system.carry_weight.max;
     const newCarryWeight = currentCarriedWeight + newWeight;
     if (newCarryWeight > maxCarryWeight) {
       ui.notifications.error("Adding this item would exceed your carry weight limit.");
@@ -564,7 +564,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     // Calculate current encumbrance (SDM-specific calculation)
 
     const carriedWeight = this.actor.getCarriedGear();
-    const encumbranceThreshold = this.actor.system.carryWeight.unencumbered ?? UNENCUMBERED_THRESHOLD_CASH;
+    const encumbranceThreshold = this.actor.system.carry_weight.unencumbered ?? UNENCUMBERED_THRESHOLD_CASH;
     const encumberedEffect = actor.effects.getName('encumbered');
     const encumberedSlow = actor.effects.getName('slow (encumbered)')
 
@@ -668,7 +668,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     const newWeight = convertToCash(sizeValue * quantity, sizeUnit);
 
     const currentCarriedWeight = this.actor.getCarriedGear();
-    const maxCarryWeight = this.actor.system.carryWeight.max;
+    const maxCarryWeight = this.actor.system.carry_weight.max;
 
     const newCarryWeight = currentCarriedWeight + newWeight;
 
@@ -1008,7 +1008,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     }, 0);
 
     const currentCarriedWeight = this.actor.getCarriedGear();
-    const maxCarryWeight = this.actor.system.carryWeight.max;
+    const maxCarryWeight = this.actor.system.carry_weight.max;
 
     if (currentCarriedWeight + totalNewWeight > maxCarryWeight) {
       ui.notifications.error("Adding this item would exceed your carry weight limit.");

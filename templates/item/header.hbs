@@ -25,6 +25,10 @@
           {{selectOptions sizeUnits localize=true selected=system.size.unit}}
         </select>
       </div>
+      <div class='resource'>
+        <label class='resource-label'>{{'Damage'}}</label>
+        {{system.damage.base}}
+      </div>
     </div>
     {{! You may prefer to have a separate header file instead of this if statement}}
     {{!-- {{#if (eq item.type 'base')}}

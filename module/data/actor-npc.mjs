@@ -72,5 +72,10 @@ export default class SdmNPC extends SdmActorBase {
   }
 
   prepareDerivedData() {
+    const data = {};
+
+    data.morale = 3 + Math.ceil(this.level / 2);
+
+    return data;
   }
 }

@@ -1,7 +1,6 @@
 import {
   BASE_DEFENSE_VALUE,
   MAX_ATTRIBUTE_VALUE,
-  getBonus,
   getMaxLife,
   getLevel,
   CHARACTER_DEFAULT_WEIGHT_IN_CASH,
@@ -47,6 +46,9 @@ export class SdmActor extends Actor {
         // Clamp "full" to the current max
         if (abilityData.full !== undefined) {
           abilityData.full = Math.min(abilityData.full, max);
+          if (this.system.abilities[abilityKey].current === 0) {
+            abilityData.current = abilityData.full;
+          }
         }
 
         if (abilityData.current !== undefined && abilityData.current !== null) {
@@ -64,25 +66,25 @@ export class SdmActor extends Actor {
       }
     }
 
-    if (changed.system?.fatigue?.halfSpeed) {
-      const halfSpeed = changed?.system.fatigue.halfSpeed;
-      if (halfSpeed === true) {
-          await this.addFatigueSlow();
-      } else {
-        const fatigueSlowEffec = actor.effects.getName('slow (fatigue)');
-        await fatigueSlowEffec.delete();
-      }
-    }
+    // if (changed.system?.fatigue?.halfSpeed) {
+    //   const halfSpeed = changed?.system.fatigue.halfSpeed;
+    //   if (halfSpeed === true) {
+    //     await this.addFatigueSlow();
+    //   } else {
+    //     const fatigueSlowEffec = actor.effects.getName('slow (fatigue)');
+    //     await fatigueSlowEffec.delete();
+    //   }
+    // }
 
-    if (changed.system?.fatigue?.halfLife) {
-      const halfLife = changed?.system.fatigue.halfLife;
-      if (halfLife === true) {
-          await this.addFatigueHalfLife();
-      } else {
-        const fatigueHalfLifeEffect = actor.effects.getName('half life (fatigue)');
-        await fatigueHalfLifeEffect.delete();
-      }
-    }
+    // if (changed.system?.fatigue?.halfLife) {
+    //   const halfLife = changed?.system.fatigue.halfLife;
+    //   if (halfLife === true) {
+    //     await this.addFatigueHalfLife();
+    //   } else {
+    //     const fatigueHalfLifeEffect = actor.effects.getName('half life (fatigue)');
+    //     await fatigueHalfLifeEffect.delete();
+    //   }
+    // }
   }
 
   // Helper: Create encumbered effect
@@ -166,7 +168,7 @@ export class SdmActor extends Actor {
         value: halfMaxLife.toString(), // Ensure value is a string
         mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE
       },
-    ],
+      ],
       flags: {
         sdm: {
           effectType: "halfLife",
@@ -199,11 +201,25 @@ export class SdmActor extends Actor {
   prepareBaseData() {
     // Data modifications in this step occur before processing embedded
     // documents or derived data.
+    // if (this.type === ActorType.NPC) this._prepareNpcData();
+    // if (this.type === ActorType.CARAVAN) this._prepareCharavanData();
+  }
+
+  _prepareCharacterData() {
+    const data = this.system;
+
+    data.armor = this.getArmor();
+    const baseDefense = game.settings.get("sdm", "baseDefense");
+    const bonusDefense = data.defense_bonus || 0;
+    const BASE_DEFENSE = baseDefense || BASE_DEFENSE_VALUE;
+    const agility = data.abilities['agi'];
+    const calculatedDefense = BASE_DEFENSE + agility.current + agility.bonus + data.armor + bonusDefense;
+    data.defense = Math.min(calculatedDefense, MAX_ATTRIBUTE_VALUE);
   }
 
 
   getTotalWeight() {
-    switch(this.type) {
+    switch (this.type) {
       case ActorType.CHARACTER:
         return this.getCarriedGear() + CHARACTER_DEFAULT_WEIGHT_IN_CASH;
       case ActorType.CARAVAN:
@@ -213,7 +229,6 @@ export class SdmActor extends Actor {
       default:
         return 0;
     }
-
   }
 
   getCarriedGear() {
@@ -267,12 +282,9 @@ export class SdmActor extends Actor {
 
 
   getArmor() {
-    if (!this.type === ActorType.CHARACTER) {
-      return;
-    }
     // Filter for equipped armor items
     const itemsArray = this.items.contents;
-    const equippedArmor = itemsArray.filter(item => item.type === ItemType.ARMOR && item.system.equipped);
+    const equippedArmor = itemsArray.filter(item => item.type === ItemType.ARMOR && item.system.readied);
 
     // Sum the armor values
     return equippedArmor.reduce((sum, item) => sum + (item.system.armor || 0), 0);
@@ -300,20 +312,8 @@ export class SdmActor extends Actor {
    * is queried and has a roll executed directly from it).
    */
   prepareDerivedData() {
-    const actorData = this;
-    const data = actorData.system;
-    const flags = actorData.flags.sdm || {};
-
-    if (this.type === ActorType.CHARACTER) {
-      data.armor = this.getArmor();
-      const BASE_DEFENSE = game.settings.get("sdm", "baseDefense") || BASE_DEFENSE_VALUE;
-      const calculatedDefense = BASE_DEFENSE + data.abilities['agi'].final + data.armor;
-      data.defense = Math.min(calculatedDefense, MAX_ATTRIBUTE_VALUE);
-      data.bonus = getBonus(data.level);
-      data.heroics.min = 0;
-      data.life.min = 0;
-    }
-
+    super.prepareDerivedData();
+    if (this.type === ActorType.CHARACTER) this._prepareCharacterData();
   }
 
   /**

@@ -16,7 +16,7 @@ SDM.abilities = {
   tho: 'SDM.Ability.Tho.long',
 }
 
-SDM.statAbbreviations = {
+SDM.abilityAbbreviations = {
   str: 'SDM.Ability.Str.abbr',
   end: 'SDM.Ability.End.abbr',
   agi: 'SDM.Ability.Agi.abbr',
@@ -29,7 +29,7 @@ SDM.fatigue = 'SDM.Actor.Character.FIELDS.fatigue.label';
 SDM.versatile = 'SDM.Item.Features.versatile.label';
 
 SDM.abilitiesOrder = {
-  "en": ["str", "end","agi", "cha", "aur", "tho"],
+  "en": ["str", "end", "agi", "cha", "aur", "tho"],
   "pt-br": ["cha", "tho", "str", "agi", "aur", "end"],
 };
 

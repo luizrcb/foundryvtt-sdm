@@ -40,17 +40,20 @@ globalThis.sdm = {
 };
 
 Hooks.on("renderChatMessageHTML", (message, html, data) => {
+  if (!message) return;
+
   const isInitiativeRoll = message?.getFlag("core", 'initiativeRoll');
+  const isHeroicResult = message?.getFlag("sdm", 'isHeroicResult');
   if (isInitiativeRoll) return;
 
-  if (message.isRoll) {
-    // $('button.heroic-dice-btn').remove();
+  if (isHeroicResult) {
+    $('button.heroic-dice-btn').remove();
   }
 
   // Find the most recent roll message in chat
   const lastRollMessage = [...game.messages.contents]
     .reverse()
-    .find(m => m.isRoll || m.getFlag("sdm", "isHeroicResult"));
+    .find(m => m.isRoll || m?.getFlag("sdm", "isHeroicResult"));
 
   if (lastRollMessage.getFlag("sdm", "isHeroicResult")) {
     $('button.heroic-dice-btn').remove();
@@ -104,7 +107,7 @@ Hooks.on("renderChatMessageHTML", (message, html, data) => {
 
 // Add safety hook to prevent concurrent transfers
 Hooks.on("preUpdateItem", (item, data) => {
-  if (data.flags?.sdm?.transferring && item.getFlag("sdm", "transferring")) {
+  if (data.flags?.sdm?.transferring && item?.getFlag("sdm", "transferring")) {
     throw new Error("Item is already being transferred");
   }
 });
@@ -118,7 +121,7 @@ Hooks.once('init', function () {
    * @type {String}
    */
   CONFIG.Combat.initiative = {
-    formula: '1d6 + @abilities.agi.final',
+    formula: '1d6 + @abilities.agi.final_current + @initiative_bonus',
     decimals: 2,
   };
 
@@ -139,7 +142,6 @@ Hooks.once('init', function () {
   CONFIG.Item.dataModels = {
     gear: models.SdmGear,
     trait: models.SdmTrait,
-    spell: models.SdmSpell,
     armor: models.SdmArmor,
     mount: models.SdmMount,
     motor: models.SdmMotor,
@@ -199,6 +201,56 @@ Hooks.once('init', function () {
     config: true, // Show in configuration view
     type: Number, // Data type: String, Number, Boolean, etc
     default: 10,
+  });
+
+  game.settings.register("sdm", "baseTraitSlots", {
+    name: "Base Trait Slots",
+    hint: "Base number of trait slots for a character",
+    scope: "world", // "world" = GM only, "client" = per user
+    restricted: true,
+    config: true, // Show in configuration view
+    type: Number, // Data type: String, Number, Boolean, etc
+    default: 7,
+  });
+
+  game.settings.register("sdm", "baseItemSlots", {
+    name: "Base Item Slots",
+    hint: "Base number of item slots for a character",
+    scope: "world", // "world" = GM only, "client" = per user
+    restricted: true,
+    config: true, // Show in configuration view
+    type: Number, // Data type: String, Number, Boolean, etc
+    default: 7,
+  });
+
+  game.settings.register("sdm", "baseBurdenSlots", {
+    name: "Base Burden Slots",
+    hint: "Base number of burden slots for a character",
+    scope: "world", // "world" = GM only, "client" = per user
+    restricted: true,
+    config: true, // Show in configuration view
+    type: Number, // Data type: String, Number, Boolean, etc
+    default: 20,
+  });
+
+  game.settings.register("sdm", "npcBaseMorale", {
+    name: "NPC Base Morale",
+    hint: "Base number for NPCs morale value",
+    scope: "world", // "world" = GM only, "client" = per user
+    restricted: true,
+    config: true, // Show in configuration view
+    type: Number, // Data type: String, Number, Boolean, etc
+    default: 3,
+  });
+
+   game.settings.register("sdm", "healingHouseRule", {
+    name: "Healing House Rule",
+    hint: "Allows for rolling healing heroic dice with advantage (roll twice and keep the highest result)",
+    scope: "world", // "world" = GM only, "client" = per user
+    restricted: true,
+    config: true, // Show in configuration view
+    type: Boolean, // Data type: String, Number, Boolean, etc
+    default: true,
   });
 
   //Preload Handlebars templates.

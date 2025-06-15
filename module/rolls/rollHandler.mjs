@@ -1,5 +1,5 @@
 import { AdvancedRollModifier } from './advancedRollModifier.mjs';
-import { isDefaultSkill, isPhysicalAction, MAX_MODIFIER } from '../helpers/actorUtils.mjs';
+import { isAttack, isPhysicalAction, MAX_MODIFIER } from '../helpers/actorUtils.mjs';
 import { ActorType, Die, ItemType, RollType } from '../helpers/constants.mjs';
 import { SDM } from '../helpers/config.mjs';
 import { capitalizeFirstLetter } from '../helpers/globalUtils.mjs';
@@ -68,13 +68,16 @@ export class RollHandler {
         return;
       }
 
-      const baseFormula = versatile ? item.system.damage.versatile : item.system.damage.base;
-      if (!baseFormula && !foundry.dice.Roll.validate(baseFormula)) {
+      let baseFormula = versatile ? item.system.damage.versatile : item.system.damage.base;
+      const damageBonus = item.system.damage.bonus;
+      const isNegativeBonus = damageBonus[0] === '-';
+      const finalFormula = `${baseFormula}${damageBonus ? `${isNegativeBonus ? '' : '+'}${damageBonus}` : ''}`
+      if (!finalFormula && !foundry.dice.Roll.validate(finalFormula)) {
         ui.notifications.error("Item doens't have configured damage roll formula");
         return;
       }
 
-      const baseFormulaRoll = new Roll(baseFormula, actor);
+      const baseFormulaRoll = new Roll(finalFormula, actor);
       const dieFaces = baseFormulaRoll?.dice[0]?.faces;
       const ignoreEncumbered = true;
 
@@ -89,6 +92,7 @@ export class RollHandler {
         ignoreEncumbered,
         dieFaces,
         versatile,
+        itemFormula: finalFormula,
       });
 
       const rollInstance = new Roll(rollFormula, actor.system);
@@ -107,7 +111,7 @@ export class RollHandler {
   static combineStatWithModifier(actor, addAbility, modifier) {
     if (!addAbility) return modifier.trim();
 
-    const statPath = `abilities.${addAbility}.final`;
+    const statPath = `abilities.${addAbility}.final_current`;
     const statProperty = AdvancedRollModifier._getActorProperty(actor, statPath);
 
     const combined = statProperty === 0
@@ -165,13 +169,14 @@ export class RollHandler {
       dieFaces = Die.D20,
       ignoreEncumbered = false,
       versatile = false,
+      itemFormula = '',
     } = options;
 
     try {
       const encumberedMod = !ignoreEncumbered ? this.getEncumberanceModifier(actor, key) : 0;
       const fatigueDisadvantage = actor.system.fatigue?.disadvantage ?? false;
       const rollModifier = this.calculateRollModifier(encumberedMod, fatigueDisadvantage, rollType, heroicDice);
-      const diceFormula = this.buildDiceFormula({ modifier: rollModifier, explode, dieFaces });
+      const diceFormula = this.buildDiceFormula({ modifier: rollModifier, explode, dieFaces, formula: itemFormula });
       const { cappedStat, hasExpertise, diceTerms, fixedValues } = this.calculateStatModifier(actor, key, skill, modifier);
       const multipliedDiceFormula = multiplier ? `(${diceFormula})${multiplier}` : diceFormula;
 
@@ -210,6 +215,7 @@ export class RollHandler {
   }
 
   static buildDiceFormula({
+    formula = '',
     modifier = 0,
     dieFaces = Die.D20,
     explode = true,
@@ -222,10 +228,17 @@ export class RollHandler {
     const diceCount = Math.abs(modifier) + 1;
     const keepModifier = modifier > 0 ? 'kh' : (modifier < 0 ? 'kl' : '');
     const explodeMod = explode ? `x${dieFaces}` : '';
+    let final_formula = `${diceCount}d${dieFaces}${keepModifier}${explodeMod}`;
 
-    const formula = `${diceCount}d${dieFaces}${keepModifier}${explodeMod}`;
-    foundry.dice.Roll.validate(formula);
-    return formula;
+    if (formula) {
+      final_formula = `${formula}`;
+      if (keepModifier) {
+        final_formula = `{${formula}, ${formula}}${keepModifier}`;
+      }
+    }
+
+    foundry.dice.Roll.validate(final_formula);
+    return final_formula;
   }
 
   static buildFlavorText(params) {
@@ -297,14 +310,13 @@ export class RollHandler {
     const { fixedValues, diceTerms } = this.separateFixedAndDice(components);
 
     if (skill) {
-      const skillData = isDefaultSkill(skill) ? actor.system[skill] : actor.system.skills.find(s => s.name === skill);
-      hasExpertise = skillData?.expertise;
-      expertise = hasExpertise ? actor.system.bonus * 2 : actor.system.bonus;
+      const skillData = actor.system[skill];
+      expertise = skillData.bonus;
     }
     const fixedValuesTotal = fixedValues.reduce((acc, fixVal) => acc + fixVal, 0);
     let baseAbility;
     if (actor.type === ActorType.CHARACTER) {
-      baseAbility = actor.system.abilities[key]?.final || 0;
+      baseAbility = actor.system.abilities[key]?.final_current || 0;
     } else if (actor.type === ActorType.NPC) {
       baseAbility = actor.system.bonus.major;
     }

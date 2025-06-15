@@ -87,7 +87,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(
         break;
     }
 
-    options.parts.push('description');
+    options.parts.push('description', 'effects');
   }
 
   /* -------------------------------------------- */

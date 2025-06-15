@@ -1,10 +1,10 @@
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { RollHandler } from '../rolls/rollHandler.mjs';
-import { convertToCash, GEAR_ITEM_TYPES, ITEMS_NOT_ALLOWED_IN_CHARACTERS } from '../helpers/itemUtils.mjs';
+import { convertToCash, GEAR_ITEM_TYPES, ITEMS_NOT_ALLOWED_IN_CHARACTERS, TRAIT_ITEM_TYPES } from '../helpers/itemUtils.mjs';
 import { openItemTransferDialog } from '../items/transferItem.mjs';
 import { ItemType, SizeUnit } from '../helpers/constants.mjs';
-import { getHeroicDiceSelect } from '../rolls/heroicDice.mjs';
-import { isDefaultSkill, MAX_CARRY_WEIGHT_CASH, UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
+import { healingHeroicDice } from '../rolls/heroicDice.mjs';
+import { MAX_CARRY_WEIGHT_CASH, UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
 
 const { api, sheets } = foundry.applications;
 const TextEditor = foundry.applications.ux.TextEditor.implementation;
@@ -41,7 +41,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       toggleEffect: this._toggleEffect,
       roll: {
         handler: this._onRoll,
-        buttons: [0, 2]
+        buttons: [0, 2],
+      },
+      heroicHealing: {
+        handler: this._onHeroicHealing,
+        buttons: [0, 2],
       }
     },
     // Custom property that's merged into `this.options`
@@ -65,9 +69,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     },
     biography: {
       template: 'systems/sdm/templates/actor/biography.hbs',
-    },
-    gear: {
-      template: 'systems/sdm/templates/actor/gear.hbs',
     },
     spells: {
       template: 'systems/sdm/templates/actor/spells.hbs',
@@ -105,11 +106,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
 
   // Open the custom roll modal
   async _openCustomRollModal(key, attribute, skill, rolledFrom, item, versatile = false) {
-    const actorSkill = skill ? (isDefaultSkill(skill) ? this.actor.system[skill] : this.actor.system.skills.find(sk => sk.name === skill)) : {};
+    const actorSkill = skill ? this.actor.system[skill] : {};
     const versatileLabel = game.i18n.localize(CONFIG.SDM.versatile)
     const title = attribute ?? actorSkill.name ?? `${item?.name}${versatile ? ` (${versatileLabel})` : ''}`;
     const isTraitRoll = !!(skill || key);
-    const minHeroicDiceZero = true;
     const content = `
       <div class="custom-roll-modal">
         <h2>Roll for ${title}</h2>
@@ -153,11 +153,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
               </div>
             </div>
           </div>
-          ${getHeroicDiceSelect(this.actor, minHeroicDiceZero)}
-          <div class="form-group">
+          ${rolledFrom !== 'Weapon' ? `<div class="form-group">
             <label for="shouldExplode">${game.i18n.localize("SDM.ExplodingDice")}</label>
             <input id="shouldExplode" type="checkbox" name="shouldExplode" ${isTraitRoll ? "checked" : ""} />
-          </div>
+          </div>` : ''}
         </form>
         <br/><br/>
       </div>
@@ -196,7 +195,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     }
 
     const ability = key ? key : selectedAttribute;
-    const skillData = (skill && isDefaultSkill(skill)) ? this.actor.system[skill] : this.actor.system.skills.find(s => s.name === skill);
+    const skillData = skill  ? this.actor.system[skill] : {};
     let label = skill ? skillData.name : (attribute ? attribute : (ability ? game.i18n.localize(CONFIG.SDM.abilities[ability]) : ''));
 
     if (item) {
@@ -234,10 +233,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     // Control which parts show based on document subtype
     switch (this.document.type) {
       case 'character':
-        options.parts.push('features', 'gear', 'effects');
+        options.parts.push('features', 'effects');
         break;
       case 'npc':
-        options.parts.push('gear', 'effects');
+        options.parts.push('effects');
         break;
     }
     options.parts.push('biography')
@@ -300,8 +299,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
   async _preparePartContext(partId, context) {
     switch (partId) {
       case 'features':
-      case 'spells':
-      case 'gear':
         context.tab = context.tabs[partId];
         break;
       case 'biography':
@@ -364,14 +361,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
           tab.id = 'features';
           tab.label += 'Features';
           break;
-        case 'gear':
-          tab.id = 'gear';
-          tab.label += 'Gear';
-          break;
-        // case 'spells':
-        //   tab.id = 'spells';
-        //   tab.label += 'Spells';
-        //   break;
         case 'effects':
           tab.id = 'effects';
           tab.label += 'Effects';
@@ -397,24 +386,29 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     // You can just use `this.document.itemTypes` instead
     // if you don't need to subdivide a given type like
     // this sheet does with spells
-    const gear = [];
+    const inventory = [];
     const transport = [];
+    const traits = [];
+    const burden = [];
 
     const isCaravan = this.actor.type === 'caravan';
 
     // Iterate through items, allocating to containers
     for (let i of this.document.items) {
-      // Append to gear.
+      // Append to inventory.
       if (GEAR_ITEM_TYPES.includes(i.type)) {
-        gear.push(i);
+        inventory.push(i);
+      } else if (TRAIT_ITEM_TYPES.includes(i.type)) {
+        traits.push(i);
       } else if (ITEMS_NOT_ALLOWED_IN_CHARACTERS.includes(i.type) && isCaravan) {
         transport.push(i);
       }
     }
 
     // Sort then assign
-    context.gear = gear.sort((a, b) => (a.sort || 0) - (b.sort || 0));
-
+    context.gear = inventory.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+    context.traits = traits.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+  
     if (isCaravan) {
       context.transport = transport;
     }
@@ -497,7 +491,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
 
     const newWeight = convertToCash(newSizeValue * newQuantity, newSizeUnit);
     const currentCarriedWeight = this.actor.getCarriedGear() - originalWeight + newWeight;
-    const maxCarryWeight = this.actor.system.carryWeight?.max ?? MAX_CARRY_WEIGHT_CASH;
+    const maxCarryWeight = this.actor.system.carry_weight?.max ?? MAX_CARRY_WEIGHT_CASH;
 
     // Only error if EXCEEDING max (not when equal)
     if (currentCarriedWeight > maxCarryWeight) {
@@ -516,7 +510,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     const newWeight = convertToCash(sizeValue * quantity, sizeUnit);
 
     const currentCarriedWeight = this.actor.getCarriedGear();
-    const maxCarryWeight = this.actor.system.carryWeight.max;
+    const maxCarryWeight = this.actor.system.carry_weight.max;
     const newCarryWeight = currentCarriedWeight + newWeight;
     if (newCarryWeight > maxCarryWeight) {
       ui.notifications.error("Adding this item would exceed your carry weight limit.");
@@ -561,12 +555,12 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
   async _checkEncumbrance() {
     const actor = this.actor;
     const cumbersomeArmor = this.actor.items.contents.filter(
-      (item) => item.type === ItemType.ARMOR && item.system.cumbersome && item.system.equipped,
+      (item) => item.type === ItemType.ARMOR && item.system.cumbersome && item.system.readied,
     ).length > 0;
     // Calculate current encumbrance (SDM-specific calculation)
 
     const carriedWeight = this.actor.getCarriedGear()
-    const encumbranceThreshold = this.actor.system.carryWeight?.unencumbered ?? UNENCUMBERED_THRESHOLD_CASH;
+    const encumbranceThreshold = this.actor.system.carry_weight?.unencumbered ?? UNENCUMBERED_THRESHOLD_CASH;
     const encumberedEffect = actor.effects.getName('encumbered');
     const encumberedSlow = actor.effects.getName('slow (encumbered)');
     const cumbersomeArmorEffect = actor.effects.getName('cumbersome (armor)');
@@ -677,7 +671,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     const newWeight = convertToCash(sizeValue * quantity, sizeUnit);
 
     const currentCarriedWeight = this.actor.getCarriedGear();
-    const maxCarryWeight = this.actor.system.carryWeight.max;
+    const maxCarryWeight = this.actor.system.carry_weight.max;
 
     const newCarryWeight = currentCarriedWeight + newWeight;
 
@@ -755,6 +749,16 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     const rolledFromlabel = game.i18n.localize(CONFIG.SDM.rollSource[rolledFrom]);
 
     this._openCustomRollModal(key, label, skill, rolledFromlabel);
+  }
+
+
+  static async _onHeroicHealing(event, target) {
+    event.preventDefault(); // Don't open context menu
+    event.stopPropagation(); // Don't trigger other events
+    if (event.detail > 1) return; // Ignore repeated clicks
+
+    // Get common data attributes
+    await healingHeroicDice(event, this.actor);
   }
 
   /** Helper Functions */
@@ -1017,7 +1021,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     }, 0);
 
     const currentCarriedWeight = this.actor.getCarriedGear();
-    const maxCarryWeight = this.actor.system.carryWeight.max;
+    const maxCarryWeight = this.actor.system.carry_weight.max;
 
     if (currentCarriedWeight + totalNewWeight > maxCarryWeight) {
       ui.notifications.error("Adding this item would exceed your carry weight limit.");
