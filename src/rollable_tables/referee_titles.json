@@ -1,0 +1,16 @@
+{
+  "name": "Referee Titles",
+  "description": "To remind everyone that the referee is also a player, they can get a different title and playful power every session.",
+  "results": [
+    "<b>Title</b>: Boss Cat<br> <b>Session Powers</b>: All must acclaim the local house cat. Give extra xp for cat-themed treats.",
+    "<b>Title</b>: The Cleaner<br> <b>Session Powers</b>: Award xp to players who help clean up after the session.",
+    "<b>Title</b>: Electric Ghost<br> <b>Session Powers</b>: Summon a hero’s annoying ancestor ghost for advice or moral lessons.",
+    "<b>Title</b>: Glitch Golem<br> <b>Session Powers</b>: Move a random location on the map. Swap place names.",
+    "<b>Title</b>: Judging Muse<br> <b>Session Powers</b>: Give xp for good background music choices. Veto bad ones by group vote.",
+    "<b>Title</b>: Nine Lifer<br> <b>Session Powers</b>: Grant up to nine extra life points to characters.",
+    "<b>Title</b>: Prismatic Priest<br> <b>Session Powers</b>: Randomly recolor locations.<br><b>Roll d6</b>:<br> <b>(1)</b> monochrome,<br> <b>(2)</b> desaturated,<br> <b>(3)</b> cool hues,<br> <b>(4)</b> warm hues,<br> <b>(5)</b> bright, harmonious colors,<br> <b>(6)</b> a brutal riot of neon and day-glo.",
+    "<b>Title</b>: Rail Plotter<br> <b>Session Powers</b>: Draw a visible path linking prepared locations. Players can choose to follow or ignore it.",
+    "<b>Title</b>: Sky Bringer<br> <b>Session Powers</b>: Create dramatic weather effects in-game. No complaints about tired clichés allowed.",
+    "<b>Title</b>: Snack Warden<br> <b>Session Powers</b>: Give 1d4 re-rolls to players who bring food or music."
+  ]
+}

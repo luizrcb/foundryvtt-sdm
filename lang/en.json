@@ -55,6 +55,9 @@
       },
       "Character": {
         "FIELDS": {
+          "name": {
+            "label": "Name"
+          },
           "armor": {
             "label": "Armor"
           },
@@ -65,16 +68,37 @@
             "label": "Defense"
           },
           "experience": {
-            "label": "Experience"
+            "label": "Character Experience"
+          },
+          "player_experience": {
+            "label": "Player Experience"
           },
           "level": {
             "label": "Level"
+          },
+          "save_target": {
+            "label": "Save"
           },
           "skills": {
             "label": "Skills"
           },
           "abilities": {
             "label": "Abilities"
+          },
+          "friends": {
+            "label": "Friends"
+          },
+          "enemies": {
+            "label": "Enemies"
+          },
+          "likes": {
+            "label": "Likes"
+          },
+          "species": {
+            "label": "Species"
+          },
+          "looks": {
+            "label": "Looks"
           },
           "fatigue": {
             "label": "Fatigue"
@@ -255,7 +279,8 @@
     "Increment": "Increase by 1",
     "Reset": "Reset to 0",
     "EscalatorDieHint": "Current bonus added to all rolls",
-    "HealingHouseRuleHint": "Rolls twice the amount of heroic dice spent and keep the highest result"
+    "HealingHouseRuleHint": "Rolls twice the amount of heroic dice spent and keep the highest result",
+    "AbilityScoreGeneration": "Roll Ability Scores"
   },
   "TYPES": {
     "Actor": {

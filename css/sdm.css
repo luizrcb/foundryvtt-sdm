@@ -7,6 +7,11 @@
   --sdm-c-white: #ffffff;
   --sdm-c-black: #000000;
   --sdm-c-groove: #eeede0;
+  --color-shadow-primary: rgb(193, 4, 250);
+  --color-shadow-highlight: rgb(193, 4, 250);
+  --color-border-highlight: rgb(193, 4, 250);
+  --color-border-highlight-alt: rgb(193, 4, 250);
+  --color-scrollbar:rgb(193, 4, 250);
 }
 
 .theme-dark {
@@ -27,6 +32,11 @@
   --sdm-c-white: #ffffff;
   --sdm-c-black: #000000;
   --sdm-c-groove: #eeede0;
+  --color-shadow-primary: rgb(193, 4, 250);
+  --color-shadow-highlight: rgb(193, 4, 250);
+  --color-border-highlight: rgb(193, 4, 250);
+  --color-border-highlight-alt: rgb(193, 4, 250);
+  --color-scrollbar:rgb(193, 4, 250);
 }
 
 .theme-dark {
@@ -49,11 +59,25 @@
   cursor: pointer;
 }
 
-.sheet.sdm {
-  min-width: 600px;
-  min-height: 600px;
-  max-width: 1000px;
+.application.sheet.sdm.actor {
+  min-width: 850px;
+  min-height: 820px;
+  max-width: 1500px;
   max-height: 1500px;
+}
+
+.application.sheet.sdm.actor.minimized {
+  min-width: 0px;
+  min-height: 0px;
+  max-width: 0px;
+  max-height: 0px;
+}
+
+.sheet.sdm.item {
+  min-width: 500px;
+  min-height: 500px;
+  max-width: 800px;
+  max-height: 800px;
 }
 
 .grid,
@@ -249,6 +273,10 @@
   text-align: center;
 }
 
+.flex-around {
+  justify-content: space-around;
+}
+
 /* Estilos específicos para sheets .sdm */
 .sdm :root {
   --sdm-c-dark: #191813;
@@ -258,6 +286,11 @@
   --sdm-c-white: #ffffff;
   --sdm-c-black: #000000;
   --sdm-c-groove: #eeede0;
+  --color-shadow-primary: rgb(193, 4, 250);
+  --color-shadow-highlight: rgb(193, 4, 250);
+  --color-border-highlight: rgb(193, 4, 250);
+  --color-border-highlight-alt: rgb(193, 4, 250);
+  --color-scrollbar:rgb(193, 4, 250);
 }
 .sdm .theme-dark {
   --sdm-c-dark: #c9c7b8;
@@ -278,18 +311,19 @@
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: flex-start;
-  margin-bottom: 10px;
 }
 .sdm .sheet-header .profile-img {
   flex: 0 0 100px;
   height: 100px;
   margin-right: 10px;
+  margin-top: 10px;
 }
 .sdm .sheet-header .header-fields {
   flex: 1;
 }
 .sdm .sheet-tabs {
   flex: 0;
+  height: 30px;
 }
 .sdm .sheet-body,
 .sdm .sheet-body .tab,
@@ -307,6 +341,9 @@
 }
 .sdm .tox .tox-edit-area {
   padding: 0 8px;
+}
+.sdm .margin-bottom-10 {
+  margin-bottom: 10px;
 }
 .sdm .resource-label {
   font-weight: bold;
@@ -326,6 +363,11 @@
   --sdm-c-white: #ffffff;
   --sdm-c-black: #000000;
   --sdm-c-groove: #eeede0;
+  --color-shadow-primary: rgb(193, 4, 250);
+  --color-shadow-highlight: rgb(193, 4, 250);
+  --color-border-highlight: rgb(193, 4, 250);
+  --color-border-highlight-alt: rgb(193, 4, 250);
+  --color-scrollbar:rgb(193, 4, 250);
 }
 .sdm .theme-dark {
   --sdm-c-dark: #c9c7b8;
@@ -359,6 +401,7 @@
   list-style: none;
   margin: 0;
   padding: 0;
+  max-height: 380px;
   overflow-y: auto;
   scrollbar-width: thin;
   color: #444444;
@@ -434,7 +477,7 @@
   text-align: left;
 }
 .sdm .item-formula {
-  flex: 0 0 200px;
+  flex: 0 0 80px;
   padding: 0 8px;
 }
 .sdm :root {
@@ -445,6 +488,11 @@
   --sdm-c-white: #ffffff;
   --sdm-c-black: #000000;
   --sdm-c-groove: #eeede0;
+  --color-shadow-primary: rgb(193, 4, 250);
+  --color-shadow-highlight: rgb(193, 4, 250);
+  --color-border-highlight: rgb(193, 4, 250);
+  --color-border-highlight-alt: rgb(193, 4, 250);
+  --color-scrollbar:rgb(193, 4, 250);
 }
 .sdm .theme-dark {
   --sdm-c-dark: #c9c7b8;
@@ -567,3 +615,28 @@
 .sdm .effects .item .effect-controls {
   border: none;
 }
+.sdm :root {
+  --sdm-c-dark: #191813;
+  --sdm-c-faint: #c9c7b8;
+  --sdm-c-beige: #b5b3a4;
+  --sdm-c-tan: #444444;
+  --sdm-c-white: #ffffff;
+  --sdm-c-black: #000000;
+  --sdm-c-groove: #eeede0;
+  --color-shadow-primary: rgb(193, 4, 250);
+  --color-shadow-highlight: rgb(193, 4, 250);
+  --color-border-highlight: rgb(193, 4, 250);
+  --color-border-highlight-alt: rgb(193, 4, 250);
+  --color-scrollbar:rgb(193, 4, 250);
+}
+.sdm .theme-dark {
+  --sdm-c-dark: #c9c7b8;
+  --sdm-c-faint: #191813;
+  --sdm-c-beige: #444444;
+  --sdm-c-tan: #b5b3a4;
+  --sdm-c-white: #000000;
+  --sdm-c-black: #ffffff;
+  --sdm-c-groove: #11121f;
+}
+
+/*# sourceMappingURL=sdm.css.map */

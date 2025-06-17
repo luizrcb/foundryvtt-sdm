@@ -14,9 +14,22 @@
   }
 }
 
-.sheet.sdm {
-  min-width: 600px;
-  min-height: 600px;
-  max-width: 1000px;
+.application.sheet.sdm.actor {
+  min-width: 850px;
+  min-height: 820px;
+  max-width: 1500px;
   max-height: 1500px;
+  &.minimized {
+    min-width: 0px;
+    min-height: 0px;
+    max-width: 0px;
+    max-height: 0px;
+  }
+}
+
+.sheet.sdm.item {
+  min-width: 500px;
+  min-height: 500px;
+  max-width: 800px;
+  max-height: 800px;
 }

@@ -55,7 +55,7 @@ Hooks.on("renderChatMessageHTML", (message, html, data) => {
     .reverse()
     .find(m => m.isRoll || m?.getFlag("sdm", "isHeroicResult"));
 
-  if (lastRollMessage.getFlag("sdm", "isHeroicResult")) {
+  if (lastRollMessage?.getFlag("sdm", "isHeroicResult")) {
     $('button.heroic-dice-btn').remove();
     return;
   };
@@ -142,10 +142,8 @@ Hooks.once('init', function () {
   CONFIG.Item.dataModels = {
     gear: models.SdmGear,
     trait: models.SdmTrait,
-    armor: models.SdmArmor,
     mount: models.SdmMount,
     motor: models.SdmMotor,
-    weapon: models.SdmWeapon,
   };
 
   // Active Effects are never copied to the Actor,
@@ -243,7 +241,7 @@ Hooks.once('init', function () {
     default: 3,
   });
 
-   game.settings.register("sdm", "healingHouseRule", {
+  game.settings.register("sdm", "healingHouseRule", {
     name: "Healing House Rule",
     hint: "Allows for rolling healing heroic dice with advantage (roll twice and keep the highest result)",
     scope: "world", // "world" = GM only, "client" = per user
@@ -298,6 +296,13 @@ Handlebars.registerHelper('checkOriginalDie', function (index, options) {
   const context = options.data.root;
   return index === 0 && context.firstDiceExploded;
 });
+
+Handlebars.registerHelper('getReadiedStyle', function (readied, options) {
+  const booleanReadied = !!readied;
+  const style = `font-weight: ${booleanReadied == true ? 900 : ''}; color: ${booleanReadied == true ? 'black' : 'grey'};`;
+  return style;
+});
+
 
 /* -------------------------------------------- */
 /*  Ready Hook                                  */

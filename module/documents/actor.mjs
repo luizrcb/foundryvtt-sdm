@@ -19,7 +19,18 @@ export class SdmActor extends Actor {
   async _onUpdate(changed, options, userId) {
     await super._onUpdate(changed, options, userId);
 
+    if (changed.system?.player_experience !== undefined) {
+      let resultingExperience = eval(`${changed.system?.player_experience}`.trim());
+      resultingExperience = parseInt(resultingExperience, 10);
+       await this.update({
+        "system.player_experience": `${resultingExperience}`,
+      });
+    }
+
     if (changed.system?.experience !== undefined) {
+      //TODO: add a better library to safely evaluate expressions
+
+      // TODO: let's add the additional life to max and current values, but taking bonuses into account
       let resultingExperience = eval(`${changed.system?.experience}`.trim());
       resultingExperience = parseInt(resultingExperience, 10);
       const newLevel = getLevel(resultingExperience);
@@ -27,7 +38,7 @@ export class SdmActor extends Actor {
       const currentLostLife = this.system.life.max - this.system.life.value; // Preserve lost health
       const remainingLife = maxLife - currentLostLife;
       await this.update({
-        "system.experience": resultingExperience,
+        "system.experience": `${resultingExperience}`,
         "system.level": newLevel,
         "system.heroics.max": Math.max(newLevel, 1),
         "system.life.max": maxLife,
@@ -215,6 +226,12 @@ export class SdmActor extends Actor {
     const agility = data.abilities['agi'];
     const calculatedDefense = BASE_DEFENSE + agility.current + agility.bonus + data.armor + bonusDefense;
     data.defense = Math.min(calculatedDefense, MAX_ATTRIBUTE_VALUE);
+
+    this.update({
+      "prototypeToken.actorLink": true,
+      "prototypeToken.disposition": 1, // friendly
+
+    });
   }
 
 

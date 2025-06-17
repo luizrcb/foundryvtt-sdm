@@ -67,7 +67,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
       template: 'systems/sdm/templates/actor/biography.hbs',
     },
     gear: {
-      template: 'systems/sdm/templates/actor/gear.hbs',
+      template: 'systems/sdm/templates/actor/gears.hbs',
     },
     spells: {
       template: 'systems/sdm/templates/actor/spells.hbs',
@@ -413,7 +413,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     }
 
     // Sort then assign
-    context.gear = gear.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+    context.gears = gear.sort((a, b) => (a.sort || 0) - (b.sort || 0));
 
     if (isCaravan) {
       context.transport = transport;

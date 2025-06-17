@@ -35,18 +35,6 @@
 
         ]
       },
-      "weapon": {
-        "htmlFields": [
-          "description",
-          "features"
-        ]
-      },
-      "armor": {
-        "htmlFields": [
-          "description",
-          "features"
-        ]
-      },
       "mount": {
         "htmlFields": [
           "description",
@@ -54,12 +42,6 @@
         ]
       },
       "motor": {
-        "htmlFields": [
-          "description",
-          "features"
-        ]
-      },
-      "spell": {
         "htmlFields": [
           "description",
           "features"
@@ -139,5 +121,5 @@
     "diagonals": 0
   },
   "primaryTokenAttribute": "life",
-  "secondaryTokenAttribute": "heroics"
+  "secondaryTokenAttribute": "defense"
 }

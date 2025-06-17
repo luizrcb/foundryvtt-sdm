@@ -20,16 +20,8 @@ export function getLevel(xp = 0) {
 }
 
 export function getMaxLife(level = MIN_LEVEL) {
-  const progressions = [5, 8, 14, 20, 26, 32, 38, 40, 42, 44];
-  const maxLevel = progressions.length - 1; // 9
-
-  if (level >= MIN_LEVEL && level <= maxLevel) {
-    return progressions[level];
-  } else if (level > maxLevel) {
-    return progressions[maxLevel]; // Return the max value
-  } else {
-    return 0; // Handle levels below 0
-  }
+  const maxLife = (level + 1) * 4;
+  return maxLife;
 }
 
 export function isPhysicalAction(key) {

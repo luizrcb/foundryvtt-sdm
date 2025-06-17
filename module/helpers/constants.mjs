@@ -25,11 +25,23 @@ export const ActorType = Object.freeze({
 });
 
 export const ItemType = Object.freeze({
-  WEAPON: 'weapon',
-  ARMOR: 'armor',
   GEAR: 'gear',
+  TRAIT: 'trait',
+  BURDEN: 'burden',
   MOUNT: 'mount',
   MOTOR: 'motor',
+});
+
+export const GearType = Object.freeze({
+  GEAR: 'gear',
+  WEAPON: 'weapon',
+  ARMOR: 'armor',
+  SPELL: 'spell',
+});
+
+export const TraitType = Object.freeze({
+  TRAIT: 'trait',
+  SKILL: 'skill',
   SPELL: 'spell',
 });
 

@@ -35,18 +35,14 @@ export default class SdmTrait extends SdmItemBase {
       required: true, initial: false,
     });
 
-    schema.power = new fields.NumberField({
-      required: true,
-      nullable: false,
-      integer: true,
-      initial: 1,
-      min: 1,
-      max: 15,
+    schema.spell_power = new fields.NumberField({
+      required: false,
+      nullable: true,
     });
 
-    schema.formula = new fields.StringField({
+    schema.roll_formula = new fields.StringField({
       required: false, blank: true, initial: '',
-      validate: v => !v || (v && foundry.dice.Roll.validate(v)),
+      validate: v => !v || v && foundry.dice.Roll.validate(v),
       validationError: "must be a valid Roll formula",
     });
 

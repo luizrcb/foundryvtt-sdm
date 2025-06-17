@@ -25,6 +25,10 @@ export default class SdmCharacter extends SdmActorBase {
       ...requiredInteger, initial: 0,
     });
 
+    schema.defense = new fields.NumberField({
+      ...requiredInteger, initial: 0,
+    });
+
     schema.defense_bonus = new fields.NumberField({
       ...requiredInteger, initial: 0,
     });
@@ -66,20 +70,29 @@ export default class SdmCharacter extends SdmActorBase {
       ...requiredInteger, initial: 13,
     });
 
+    //TODO: remove total carry weight and encumbered active effects, to use slots system and burden penalties
     // in CASH
     schema.carry_weight = new fields.SchemaField({
       unencumbered: new fields.NumberField({ ...requiredInteger, initial: UNENCUMBERED_THRESHOLD_CASH }),
       max: new fields.NumberField({ ...requiredInteger, initial: MAX_CARRY_WEIGHT_CASH }),
     });
 
+    schema.burden_penalty = new fields.NumberField({
+      ...requiredInteger, initial: 0, max:0,
+    });
+
+    // character experience
     schema.experience = new fields.StringField({ required: true, initial: '0' });
+    schema.player_experience = new fields.StringField({ required: true, initial: '0' });
 
     schema.life = new fields.SchemaField({
       value: new fields.NumberField({
         ...requiredInteger,
-        initial: 5,
+        initial: 4,
         min: 0,
       }),
+
+      //TODO how to handle life and life bonuses?
       max: new fields.NumberField({ ...requiredInteger, initial: 5, min: 5 }),
       min: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0, max: 0 }),
       bonus: new fields.NumberField({ ...requiredInteger, initial: 0 }),
@@ -89,11 +102,15 @@ export default class SdmCharacter extends SdmActorBase {
     schema.level = new fields.NumberField({ ...requiredInteger, min: 0, initial: 0, max: 9 });
     schema.friends = new fields.StringField({ required: false, blank: true, initial: '' });
     schema.enemies = new fields.StringField({ required: false, blank: true, initial: '' });
-    schema.title = new fields.StringField({ required: false, blank: true, initial: '' });
+    schema.likes = new fields.StringField({ required: false, blank: true, initial: '' });
     schema.species = new fields.StringField({ required: false, blank: true, initial: '' });
     schema.looks = new fields.StringField({ required: false, blank: true, initial: '' });
+
     schema.debt = new fields.StringField({ required: false, blank: true, initial: '' });
-    schema.likes = new fields.StringField({ required: false, blank: true, initial: '' });
+    schema.wealth = new fields.StringField({ required: false, blank: true, initial: '' });
+    schema.revenue = new fields.StringField({ required: false, blank: true, initial: '' });
+    schema.expense = new fields.StringField({ required: false, blank: true, initial: '' });
+
 
     schema.heroics = new fields.SchemaField({
       value: new fields.NumberField({
@@ -194,14 +211,14 @@ export default class SdmCharacter extends SdmActorBase {
       }, {})
     );
 
-    schema.fatigue = new fields.SchemaField({
-      grumpy: new fields.BooleanField({ required: true, initial: false }),
-      disadvantage: new fields.BooleanField({ required: true, initial: false }),
-      halfSpeed: new fields.BooleanField({ required: true, initial: false }),
-      halfLife: new fields.BooleanField({ required: true, initial: false }),
-      coma: new fields.BooleanField({ required: true, initial: false }),
-      death: new fields.BooleanField({ required: true, initial: false }),
-    });
+    // schema.fatigue = new fields.SchemaField({
+    //   grumpy: new fields.BooleanField({ required: true, initial: false }),
+    //   disadvantage: new fields.BooleanField({ required: true, initial: false }),
+    //   halfSpeed: new fields.BooleanField({ required: true, initial: false }),
+    //   halfLife: new fields.BooleanField({ required: true, initial: false }),
+    //   coma: new fields.BooleanField({ required: true, initial: false }),
+    //   death: new fields.BooleanField({ required: true, initial: false }),
+    // });
 
     schema.pet = new fields.EmbeddedDataField(CharacterPetModel, {
       required: false, nullable: true, initial: null,
@@ -220,8 +237,8 @@ export default class SdmCharacter extends SdmActorBase {
         game.i18n.localize(CONFIG.SDM.abilities[key]) ?? key;
     }
 
-    this.life.final_max = Math.max(1, this.life.max - this.life.imbued + this.life.bonus);
-    this.life.final_remaining = Math.max(0, this.life.value - this.life.imbued + this.life.bonus);
+    // this.life.max = Math.max(1, this.life.base_max - this.life.imbued + this.life.bonus);
+    // this.life.value = Math.max(0, this.life.base_value - this.life.imbued + this.life.bonus);
   }
 
   getRollData() {

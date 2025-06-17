@@ -30,6 +30,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(
       createDoc: this._createEffect,
       deleteDoc: this._deleteEffect,
       toggleEffect: this._toggleEffect,
+      toggleReadied: this._toggleReadied,
     },
     form: {
       submitOnChange: true,
@@ -322,6 +323,11 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(
     const effect = this._getEffect(target);
     await effect.update({ disabled: !effect.disabled });
   }
+
+  static async _toggleReadied(event, target) {
+    await this.item.update({ 'system.readied': !this.item.system.readied });
+  }
+
 
   /** Helper Functions */
 
