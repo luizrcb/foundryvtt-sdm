@@ -1,4 +1,4 @@
-import { SizeUnit } from "./constants.mjs";
+import { ItemType, SizeUnit } from "./constants.mjs";
 /**
  * Convert any size unit to sacks.
  * @param {number} size - The size value.
@@ -62,3 +62,32 @@ export const GEAR_ITEM_TYPES = ['gear', 'weapon', 'armor'];
 export const TRAIT_ITEM_TYPES = ['trait'];
 export const BURDEN_ITEM_TYPES = ['burden']
 export const ITEMS_NOT_ALLOWED_IN_CHARACTERS = ['mount', 'motor'];
+
+
+// Add this method to handle item updates
+export async function onItemUpdate(item, updateData) {
+  if (item.type === ItemType.GEAR) {
+    if (updateData.system.readied !== undefined) {
+      for (const effect of item.effects) {
+        await toggleEffectTransfer(effect, updateData.system.readied);
+      }
+    }
+  }
+}
+
+async function toggleEffectTransfer(effect, shouldBeActive) {
+  const effectUpdates = {};
+
+  if (shouldBeActive) {
+    // Enable transfer and activate effect
+    effectUpdates.disabled = false;
+    effectUpdates["flags.core.statusId"] = null; // Clear disabled status
+    effectUpdates.transfer = true;
+  } else {
+    // Disable transfer and deactivate effect
+    effectUpdates.disabled = true;
+    effectUpdates.transfer = false;
+  }
+
+  await effect.update(effectUpdates);
+}

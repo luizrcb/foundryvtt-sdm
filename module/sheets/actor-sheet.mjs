@@ -1,6 +1,6 @@
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { RollHandler } from '../rolls/rollHandler.mjs';
-import { convertToCash, GEAR_ITEM_TYPES, ITEMS_NOT_ALLOWED_IN_CHARACTERS, TRAIT_ITEM_TYPES } from '../helpers/itemUtils.mjs';
+import { onItemUpdate, convertToCash, GEAR_ITEM_TYPES, ITEMS_NOT_ALLOWED_IN_CHARACTERS, TRAIT_ITEM_TYPES } from '../helpers/itemUtils.mjs';
 import { openItemTransferDialog } from '../items/transferItem.mjs';
 import { ItemType, SizeUnit } from '../helpers/constants.mjs';
 import { healingHeroicDice } from '../rolls/heroicDice.mjs';
@@ -10,7 +10,7 @@ const { api, sheets } = foundry.applications;
 const TextEditor = foundry.applications.ux.TextEditor.implementation;
 const DragDrop = foundry.applications.ux.DragDrop.implementation;
 const FilePicker = foundry.applications.apps.FilePicker.implementation;
-
+const { DialogV2 } = foundry.applications.api;
 /**
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheetV2}
@@ -39,14 +39,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       createDoc: this._createDoc,
       deleteDoc: this._deleteDoc,
       toggleEffect: this._toggleEffect,
-      roll: {
-        handler: this._onRoll,
-        buttons: [0, 2],
-      },
-      heroicHealing: {
-        handler: this._onHeroicHealing,
-        buttons: [0, 2],
-      }
+      roll: this._onRoll,
+      heroicHealing: this._onHeroicHealing,
+      transferItem: this._onTransferItem,
+      toggleReadied: this._toggleReadied,
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
@@ -195,7 +191,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     }
 
     const ability = key ? key : selectedAttribute;
-    const skillData = skill  ? this.actor.system[skill] : {};
+    const skillData = skill ? this.actor.system[skill] : {};
     let label = skill ? skillData.name : (attribute ? attribute : (ability ? game.i18n.localize(CONFIG.SDM.abilities[ability]) : ''));
 
     if (item) {
@@ -406,9 +402,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     }
 
     // Sort then assign
-    context.gear = inventory.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+    context.gears = inventory.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     context.traits = traits.sort((a, b) => (a.sort || 0) - (b.sort || 0));
-  
+    context.burdens = [];
+
     if (isCaravan) {
       context.transport = transport;
     }
@@ -453,12 +450,15 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       }),
       preUpdate: Hooks.on('preUpdateItem', (item, updateData, options, userId) => {
         if (item.parent?.id === actorId) {
-          const shouldAllow = this._onItemUpdate(item, updateData);
+          const shouldAllow = this._checkCarriedWeight(item, updateData);
           if (!shouldAllow) return false;
         }
       }),
       update: Hooks.on('updateItem', (item, changes, options, userId) => {
-        if (item.parent?.id === actorId) this._checkEncumbrance();
+        if (item.parent?.id === actorId) {
+          this._checkEncumbrance();
+          return onItemUpdate(item, changes);
+        }
       }),
       delete: Hooks.on('deleteItem', (item, options, userId) => {
         if (item.parent?.id === actorId) this._checkEncumbrance();
@@ -466,8 +466,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     };
   }
 
-  // Add this method to handle item updates
-  _onItemUpdate(item, updateData) {
+  _checkCarriedWeight(item, updateData) {
     // Calculate potential new weight
     const originalWeight = convertToCash(
       item.system.size.value * item.system.quantity,
@@ -638,7 +637,12 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
    */
   static async _deleteDoc(event, target) {
     const doc = this._getEmbeddedDocument(target);
-    await doc.delete();
+    const proceed = await DialogV2.confirm({
+      content: `<b>Delete ${doc.name} permanently?</b>`,
+      modal: true,
+      rejectClose: false,
+    });
+    if (proceed) await doc.delete();
   }
 
   /**
@@ -697,6 +701,27 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
   }
 
   /**
+   * Determines effect parent to pass to helper
+   *
+   * @this SdmActorSheet
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @private
+   */
+  static async _toggleReadied(event, target) {
+    const item = this._getEmbeddedDocument(target);
+    await item.update({ 'system.readied': !item.system.readied });
+  }
+
+  static async _onTransferItem(event, target) {
+    event.preventDefault(); // Don't open context menu
+    event.stopPropagation(); // Don't trigger other events
+    if (event.detail > 1) return; // Ignore repeated clicks
+    const item = this._getEmbeddedDocument(target);
+    return openItemTransferDialog(item, this.actor);
+  }
+
+  /**
    * Handle clickable rolls.
    *
    * @this SdmActorSheet
@@ -717,12 +742,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     const versatile = !!dataset.versatile;
     const rollType = dataset.rollType;
     const clickedButton = event.button;
-
-    if (clickedButton === 2) {
-      if (rollType !== 'item') return;
-      const item = this._getEmbeddedDocument(target);
-      return openItemTransferDialog(item, this.actor);
-    }
 
     // Handle item rolls.
     switch (dataset.rollType) {
