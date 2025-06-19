@@ -1,9 +1,9 @@
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { RollHandler } from '../rolls/rollHandler.mjs';
-import { onItemUpdate, convertToCash, GEAR_ITEM_TYPES, ITEMS_NOT_ALLOWED_IN_CHARACTERS, TRAIT_ITEM_TYPES } from '../helpers/itemUtils.mjs';
+import { onItemUpdate, convertToCash, GEAR_ITEM_TYPES, ITEMS_NOT_ALLOWED_IN_CHARACTERS, TRAIT_ITEM_TYPES, BURDEN_ITEM_TYPES } from '../helpers/itemUtils.mjs';
 import { openItemTransferDialog } from '../items/transferItem.mjs';
 import { ItemType, SizeUnit } from '../helpers/constants.mjs';
-import { healingHeroicDice } from '../rolls/heroicDice.mjs';
+import { healingHeroDice } from '../rolls/heroDice.mjs';
 import { MAX_CARRY_WEIGHT_CASH, UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
 
 const { api, sheets } = foundry.applications;
@@ -40,7 +40,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       deleteDoc: this._deleteDoc,
       toggleEffect: this._toggleEffect,
       roll: this._onRoll,
-      heroicHealing: this._onHeroicHealing,
+      heroicHealing: this._onHeroHealing,
       transferItem: this._onTransferItem,
       toggleReadied: this._toggleReadied,
     },
@@ -74,17 +74,16 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     },
   };
 
-  _getStatSelectOptions(skill, useDefaultStat = true) {
+  _getStatSelectOptions(source) {
     const abilitiesOrder = CONFIG.SDM.abilitiesOrder;
     const currentLanguage = game.i18n.lang;
-    const { defaultStat = 'str' } = skill;
+    const { default_ability = '' } = source;
     let result = '';
 
-    if (!useDefaultStat) {
-      result += '<option value=""}></option>';
-    }
+
+    result += '<option value=""}></option>';
     for (let orderedAbility of abilitiesOrder['en']) {
-      result += `<option value="${orderedAbility}"${(orderedAbility === defaultStat) ? 'selected' : ''}>
+      result += `<option value="${orderedAbility}"${(orderedAbility === default_ability) ? 'selected' : ''}>
       ${game.i18n.localize(CONFIG.SDM.abilities[orderedAbility])}</option>\n`
     }
 
@@ -114,7 +113,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
             <label>${game.i18n.localize(CONFIG.SDM.abilitiesLabel)}</label>
             <select name="selectedAttribute">
               ${skill ? this._getStatSelectOptions(actorSkill) :
-          item ? this._getStatSelectOptions({ defaultStat: item?.system?.damage?.statBonus }, false) : this._getStatSelectOptions({}, false)}
+          item ? this._getStatSelectOptions({ defaultStat: item?.system?.default_ability }) : this._getStatSelectOptions({})}
             </select>
           </div>
         `: ''}
@@ -134,12 +133,12 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
             <div class="roll-type-select">
               <div>
                 <label>
-                  <input type="radio" name="rollType" value="normal" checked> ${game.i18n.localize(CONFIG.SDM.rollType.normal)}
+                  <input type="radio" name="rollType" value="advantage"> ${game.i18n.localize(CONFIG.SDM.rollType.advantage)}
                 </label>
               </div>
               <div>
                 <label>
-                  <input type="radio" name="rollType" value="advantage"> ${game.i18n.localize(CONFIG.SDM.rollType.advantage)}
+                  <input type="radio" name="rollType" value="normal" checked> ${game.i18n.localize(CONFIG.SDM.rollType.normal)}
                 </label>
               </div>
               <div>
@@ -183,10 +182,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       return
     }
     const heroicDice = parseInt(heroicQty || 0, 10);
-    const currentHeroics = this.actor.system.heroics?.value ?? 0;
+    const currentHeroDice = this.actor.system.hero_dice?.value ?? 0;
 
-    if (heroicDice > currentHeroics) {
-      ui.notifications.error("Not enough heroic dice for this roll");
+    if (heroicDice > currentHeroDice) {
+      ui.notifications.error("Not enough hero dice for this roll");
       return
     }
 
@@ -382,34 +381,69 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     // You can just use `this.document.itemTypes` instead
     // if you don't need to subdivide a given type like
     // this sheet does with spells
-    const inventory = [];
-    const transport = [];
-    const traits = [];
-    const burden = [];
+    const gears = {
+      slotsTaken: 0,
+      gears: [],
+    };
 
+    const traits = {
+      slotsTaken: 0,
+      traits: [],
+    };
+
+    const burdens = {
+      slotsTaken: 0,
+      burdens: []
+    };
+
+    const transport = [];
     const isCaravan = this.actor.type === 'caravan';
+
+    const itemSlotsLimit = this.actor.system.item_slots;
+    const traitSlotsLimit = this.actor.system.trait_slots;
 
     // Iterate through items, allocating to containers
     for (let i of this.document.items) {
+      const itemSlots = i.system.slots_taken || 1;
+
       // Append to inventory.
       if (GEAR_ITEM_TYPES.includes(i.type)) {
-        inventory.push(i);
+        if (gears.slotsTaken + itemSlots <= itemSlotsLimit) {
+          gears.gears.push(i);
+          gears.slotsTaken += itemSlots;
+        } else {
+          burdens.burdens.push(i);
+          burdens.slotsTaken += itemSlots;
+        }
       } else if (TRAIT_ITEM_TYPES.includes(i.type)) {
-        traits.push(i);
+        if (traits.slotsTaken + itemSlots <= traitSlotsLimit) {
+          traits.traits.push(i);
+          traits.slotsTaken += itemSlots;
+        } else {
+          burdens.burdens.push(i);
+          burdens.slotsTaken += itemSlots;
+        }
+      } else if (BURDEN_ITEM_TYPES.includes(i.type)) {
+        burdens.burdens.push(i);
+        burdens.slotsTaken += itemSlots;
       } else if (ITEMS_NOT_ALLOWED_IN_CHARACTERS.includes(i.type) && isCaravan) {
         transport.push(i);
       }
     }
 
     // Sort then assign
-    context.gears = inventory.sort((a, b) => (a.sort || 0) - (b.sort || 0));
-    context.traits = traits.sort((a, b) => (a.sort || 0) - (b.sort || 0));
-    context.burdens = [];
+    context.gears = gears.gears.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+    context.gearSlotsTaken = gears.slotsTaken;
+
+    context.traits = traits.traits.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+    context.traitSlotsTaken = traits.slotsTaken;
+
+    context.burdens = burdens.burdens.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+    context.burdenSlotsTaken = burdens.slotsTaken;
 
     if (isCaravan) {
       context.transport = transport;
     }
-
   }
 
   /**
@@ -747,7 +781,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     switch (dataset.rollType) {
       case 'item':
         const item = this._getEmbeddedDocument(target);
-        if (!item || item?.type !== ItemType.WEAPON) return;
+        if (!item || !item?.system?.is_weapon) return;
         const weaponLabel = game.i18n.localize(`TYPES.Item.${item.type}`);
         return this._openCustomRollModal(key, label, skill, weaponLabel, item, versatile);
       //if (item) return item.roll(event, versatile);
@@ -771,13 +805,13 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
   }
 
 
-  static async _onHeroicHealing(event, target) {
+  static async _onHeroHealing(event, target) {
     event.preventDefault(); // Don't open context menu
     event.stopPropagation(); // Don't trigger other events
     if (event.detail > 1) return; // Ignore repeated clicks
 
     // Get common data attributes
-    await healingHeroicDice(event, this.actor);
+    await healingHeroDice(event, this.actor);
   }
 
   /** Helper Functions */

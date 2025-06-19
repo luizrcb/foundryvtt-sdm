@@ -6,7 +6,7 @@ import {
   CHARACTER_DEFAULT_WEIGHT_IN_CASH,
 } from '../helpers/actorUtils.mjs';
 import { ActorType, ItemType, SizeUnit } from '../helpers/constants.mjs';
-import { convertToCash, GEAR_ITEM_TYPES } from '../helpers/itemUtils.mjs';
+import { BURDEN_ITEM_TYPES, convertToCash, GEAR_ITEM_TYPES, TRAIT_ITEM_TYPES } from '../helpers/itemUtils.mjs';
 
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
@@ -22,7 +22,7 @@ export class SdmActor extends Actor {
     if (changed.system?.player_experience !== undefined) {
       let resultingExperience = eval(`${changed.system?.player_experience}`.trim());
       resultingExperience = parseInt(resultingExperience, 10);
-       await this.update({
+      await this.update({
         "system.player_experience": `${resultingExperience}`,
       });
     }
@@ -36,11 +36,17 @@ export class SdmActor extends Actor {
       const newLevel = getLevel(resultingExperience);
       const maxLife = getMaxLife(newLevel);
       const currentLostLife = this.system.life.max - this.system.life.value; // Preserve lost health
+
+      const maxHeroDice = Math.max(newLevel + this.system.hero_dice.bonus, 1);
+      const currentHeroDiceSpent = this.system.hero_dice.max - this.system.hero_dice.value;
+      const remainingHeroDice = maxHeroDice - currentHeroDiceSpent;
+
       const remainingLife = maxLife - currentLostLife;
       await this.update({
         "system.experience": `${resultingExperience}`,
         "system.level": newLevel,
-        "system.heroics.max": Math.max(newLevel, 1),
+        "system.hero_dice.max": Math.max(maxHeroDice, 1),
+        "system.hero_dice.value": Math.min(remainingHeroDice, maxHeroDice),
         "system.life.max": maxLife,
         "system.life.value": remainingLife < 1 ? 1 : remainingLife, // Cap current health
       });
@@ -226,6 +232,19 @@ export class SdmActor extends Actor {
     const agility = data.abilities['agi'];
     const calculatedDefense = BASE_DEFENSE + agility.current + agility.bonus + data.armor + bonusDefense;
     data.defense = Math.min(calculatedDefense, MAX_ATTRIBUTE_VALUE);
+    const burdenPenalty = this.getBurdenPenalty();
+
+    this.update({
+      "system.burden_penalty": burdenPenalty,
+      "prototypeToken.actorLink": true,
+      "prototypeToken.disposition": 1, // friendly
+
+    });
+  }
+
+  _prepareNpcData() {
+    const data = this.system;
+    data.defense = Math.min(calculatedDefense, MAX_ATTRIBUTE_VALUE);
 
     this.update({
       "prototypeToken.actorLink": true,
@@ -246,6 +265,57 @@ export class SdmActor extends Actor {
       default:
         return 0;
     }
+  }
+
+  getBurdenPenalty() {
+    const gears = {
+      slotsTaken: 0,
+      gears: [],
+    };
+
+    const traits = {
+      slotsTaken: 0,
+      traits: [],
+    };
+
+    const burdens = {
+      slotsTaken: 0,
+      burdens: []
+    };
+
+    const itemsArray = this.items.contents;
+
+    const itemSlotsLimit = this.system.item_slots;
+    const traitSlotsLimit = this.system.trait_slots;
+
+    // Iterate through items, allocating to containers
+    for (let i of itemsArray) {
+      const itemSlots = i.system.slots_taken || 1;
+
+      // Append to inventory.
+      if (GEAR_ITEM_TYPES.includes(i.type)) {
+        if (gears.slotsTaken + itemSlots <= itemSlotsLimit) {
+          gears.gears.push(i);
+          gears.slotsTaken += itemSlots;
+        } else {
+          burdens.burdens.push(i);
+          burdens.slotsTaken += itemSlots;
+        }
+      } else if (TRAIT_ITEM_TYPES.includes(i.type)) {
+        if (traits.slotsTaken + itemSlots <= traitSlotsLimit) {
+          traits.traits.push(i);
+          traits.slotsTaken += itemSlots;
+        } else {
+          burdens.burdens.push(i);
+          burdens.slotsTaken += itemSlots;
+        }
+      } else if (BURDEN_ITEM_TYPES.includes(i.type)) {
+        burdens.burdens.push(i);
+        burdens.slotsTaken += itemSlots;
+      }
+    }
+
+    return burdens.slotsTaken;
   }
 
   getCarriedGear() {
@@ -331,6 +401,7 @@ export class SdmActor extends Actor {
   prepareDerivedData() {
     super.prepareDerivedData();
     if (this.type === ActorType.CHARACTER) this._prepareCharacterData();
+    if (this.type === ActorType.NPC) this._prepareNpcData();
   }
 
   /**
@@ -345,13 +416,13 @@ export class SdmActor extends Actor {
     return { ...super.getRollData(), ...(this.system.getRollData?.() ?? null) };
   }
 
-  async updateHeroicDice(usedHeroicDice = 0) {
-    if (!usedHeroicDice) return;
+  async updateHeroDice(usedHeroDice = 0) {
+    if (!usedHeroDice) return;
 
-    const current = Math.max(0, this.system.heroics?.value || 0);
-    const newHeroicsValue = Math.max(current - usedHeroicDice, 0);
+    const current = Math.max(0, this.system.hero_dice?.value || 0);
+    const newHeroDiceValue = Math.max(current - usedHeroDice, 0);
     await this.update({
-      'system.heroics.value': newHeroicsValue,
+      'system.hero_dice.value': newHeroDiceValue,
     });
   }
 }

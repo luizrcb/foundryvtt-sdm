@@ -58,18 +58,18 @@ export function preciseRound(value, decimals = 4) {
   return Math.round(value * factor) / factor;
 }
 
-export const GEAR_ITEM_TYPES = ['gear', 'weapon', 'armor'];
+export const GEAR_ITEM_TYPES = ['gear'];
 export const TRAIT_ITEM_TYPES = ['trait'];
-export const BURDEN_ITEM_TYPES = ['burden']
+export const BURDEN_ITEM_TYPES = ['burden'];
 export const ITEMS_NOT_ALLOWED_IN_CHARACTERS = ['mount', 'motor'];
 
 
 // Add this method to handle item updates
 export async function onItemUpdate(item, updateData) {
   if (item.type === ItemType.GEAR) {
-    if (updateData.system.readied !== undefined) {
+    if (updateData?.system?.readied !== undefined) {
       for (const effect of item.effects) {
-        await toggleEffectTransfer(effect, updateData.system.readied);
+        await toggleEffectTransfer(effect, updateData?.system?.readied);
       }
     }
   }

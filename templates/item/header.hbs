@@ -6,9 +6,9 @@
     </div>
     <div class='grid grid-2col'>
       <div class='resource'>
-        <label class='resource-label'>{{localize 'SDM.Item.base.FIELDS.quantity.label'}}
-          <input type='text' name='system.quantity' value='{{system.quantity}}' data-dtype='Number' />
-        </label>
+        <label class='resource-label' for="system.quantity">{{localize 'SDM.Item.base.FIELDS.quantity.label'}}</label>
+        <input type='text' id="system.quantity" name='system.quantity' value='{{system.quantity}}'
+          data-dtype='Number' />
       </div>
       <div class='resource'>
         <label class='resource-label'>{{localize 'SDM.Item.base.FIELDS.cost.label'}}</label>
@@ -29,10 +29,26 @@
         <label class='resource-label'>{{'Damage'}}</label>
         {{system.damage.base}}
       </div>
-       <div class='resource'>
+      <div class='resource'>
         <label class='resource-label'>Readied</label>
-        <i class="fa-regular fa-shield" style="{{getReadiedStyle system.readied}}" data-action="toggleReadied" data-tooltip="toggle readied"></i>
+        <i class="fa-regular fa-shield" style="{{getReadiedStyle system.readied}}" data-action="toggleReadied"
+          data-tooltip="toggle readied"></i>
       </div>
+      <div class='resource'>
+        <label class="resource-label">Is Weapon</label>
+        <label class="switch">
+          <input type="checkbox" {{checked system.is_weapon}} name="system.is_weapon">
+          <span class="slider round"></span>
+        </label>
+      </div>
+    </div>
+    <div class='grid grid-4col'>
+      {{#if system.is_weapon}}
+      <fieldset>
+        <legend>Weapon Damage</legend>
+        <input type='text' name='system.weapon_damage.base' value='{{system.weapon_damage.base}}' data-dtype='Text' />
+      </fieldset>
+      {{/if}}
     </div>
     {{! You may prefer to have a separate header file instead of this if statement}}
     {{!-- {{#if (eq item.type 'base')}}

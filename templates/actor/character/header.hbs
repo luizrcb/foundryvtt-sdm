@@ -5,9 +5,9 @@
       <img class='profile-img' src='{{actor.img}}' data-edit='img' data-action='onEditImage' title='{{actor.name}}'
         height='100' width='100' />
       <div class="flexcol flexrow flex-group-center rollable margin-bottom-10" data-context='rollable' data-action='heroicHealing'>
-        <label class='resource-label'>Heroic Dice <i class="fas fa-dice-d6"></i></label>
+        <label class='resource-label'>Hero Dice <i class="fas fa-dice-{{system.hero_dice.dice_type}}"></i></label>
         <div class='resource-content flexrow flex-center'>
-          {{system.heroics.value}}
+          {{system.hero_dice.value}} / {{system.hero_dice.max}}
         </div>
       </div>
     </div>
@@ -177,9 +177,9 @@
                 <span class='resource-label rollable' data-action='roll' data-context='rollable'
                   data-key="{{key}}" data-label='{{localize (lookup @root.config.abilities key)}}'>{{localize (lookup
                   @root.config.abilities key)}}</span>
-                <input type='text' name='system.abilities.{{key}}.full' value='{{ability.full}}' class="ability-score"
+                <input type='text' name='system.abilities.{{key}}.full' value='{{ability.final_full}}' class="ability-score"
                   data-dtype='Number' />
-                <input type='text' name='system.abilities.{{key}}.current' value='{{ability.current}}'
+                <input type='text' name='system.abilities.{{key}}.current' value='{{ability.final_current}}'
                   class="ability-score" data-dtype='Number' />
               </div>
             </div>

@@ -52,6 +52,12 @@
           "description",
           "features"
         ]
+      },
+      "burden": {
+        "htmlFields": [
+          "description",
+          "features"
+        ]
       }
     }
   },

@@ -1,4 +1,5 @@
 import { MAX_CARRY_WEIGHT_CASH, UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
+import { DieScale } from '../helpers/constants.mjs';
 import { getDefaultAbility } from '../helpers/globalUtils.mjs';
 
 import SdmActorBase from './base-actor.mjs';
@@ -78,7 +79,7 @@ export default class SdmCharacter extends SdmActorBase {
     });
 
     schema.burden_penalty = new fields.NumberField({
-      ...requiredInteger, initial: 0, max:0,
+      ...requiredInteger, initial: 0, min: 0,
     });
 
     // character experience
@@ -112,7 +113,7 @@ export default class SdmCharacter extends SdmActorBase {
     schema.expense = new fields.StringField({ required: false, blank: true, initial: '' });
 
 
-    schema.heroics = new fields.SchemaField({
+    schema.hero_dice = new fields.SchemaField({
       value: new fields.NumberField({
         ...requiredInteger,
         initial: 1,
@@ -129,6 +130,16 @@ export default class SdmCharacter extends SdmActorBase {
         min: 0,
         max: 0,
       }),
+      dice_type: new fields.StringField({      //d6
+        required: true, blank: false, initial: DieScale[1], choices:
+          DieScale.reduce((acc, die) => {
+            acc[die] = die;
+            return acc;
+          }, {}),
+      }),
+      bonus: new fields.NumberField({
+      ...requiredInteger, initial: 0,
+      }),
     });
 
     schema.melee = new fields.SchemaField({
@@ -140,7 +151,7 @@ export default class SdmCharacter extends SdmActorBase {
       bonus: new fields.NumberField({
         ...requiredInteger, initial: 0,
       }),
-      defaultStat: getDefaultAbility('str'),
+      default_ability: getDefaultAbility('str'),
     });
 
     schema.ranged = new fields.SchemaField({
@@ -152,7 +163,7 @@ export default class SdmCharacter extends SdmActorBase {
       bonus: new fields.NumberField({
         ...requiredInteger, initial: 0,
       }),
-      defaultStat: getDefaultAbility('agi'),
+      default_ability: getDefaultAbility('agi'),
     });
 
     schema.oldtech = new fields.SchemaField({
@@ -164,7 +175,7 @@ export default class SdmCharacter extends SdmActorBase {
       bonus: new fields.NumberField({
         ...requiredInteger, initial: 0,
       }),
-      defaultStat: getDefaultAbility('tho'),
+      default_ability: getDefaultAbility('tho'),
       magic_cost: new fields.NumberField({
         ...requiredInteger, min: 1, max: 3, initial: 2,
       }),
@@ -179,7 +190,7 @@ export default class SdmCharacter extends SdmActorBase {
       bonus: new fields.NumberField({
         ...requiredInteger, initial: 0,
       }),
-      defaultStat: getDefaultAbility('cha'),
+      default_ability: getDefaultAbility('cha'),
       magic_cost: new fields.NumberField({
         ...requiredInteger, min: 1, max: 3, initial: 2,
       }),
@@ -239,6 +250,13 @@ export default class SdmCharacter extends SdmActorBase {
 
     // this.life.max = Math.max(1, this.life.base_max - this.life.imbued + this.life.bonus);
     // this.life.value = Math.max(0, this.life.base_value - this.life.imbued + this.life.bonus);
+    const baseItemSlots = game.settings.get("sdm", "baseItemSlots") || 7;
+    const baseTraitSlots = game.settings.get("sdm", "baseTraitSlots") || 7;
+    const baseBurdenSlots = game.settings.get("sdm", "baseBurdenSlots") || 20;
+
+    this.item_slots = baseItemSlots + this.abilities['str'].final_current + this.item_slots_bonus;
+    this.trait_slots = baseTraitSlots + this.abilities['tho'].final_current + this.trait_slots_bonus;
+    this.burden_slots = baseBurdenSlots + this.burden_slots_bonus;
   }
 
   getRollData() {
@@ -254,8 +272,9 @@ export default class SdmCharacter extends SdmActorBase {
     data.lvl = this.level;;
     data.bonus = this.bonus;
     data.armor = this.armor;
-    data.heroics = this.heroics;
+    data.hero_dice = this.hero_dice;
     data.initiative_bonus = this.initiative_bonus;
+    data.burden_penalty = this.burden_penalty;
     return data;
   }
 }

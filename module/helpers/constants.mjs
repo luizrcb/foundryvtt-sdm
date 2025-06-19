@@ -67,13 +67,15 @@ export const SpeedType = Object.freeze({
 });
 
 export const Die = Object.freeze({
-  D4: 4,
-  D6: 6,
-  D8: 8,
-  D10: 10,
-  D12: 12,
-  D20: 20,
+  d4: 4,
+  d6: 6,
+  d8: 8,
+  d10: 10,
+  d12: 12,
+  d20: 20,
 });
+
+export const DieScale = Object.keys(Die);
 
 export const SkillMod = Object.freeze({
   '': 0,

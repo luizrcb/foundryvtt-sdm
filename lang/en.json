@@ -259,7 +259,7 @@
       "rollType": {
         "label": "Roll Type"
       },
-      "useHeroicDice": "Use Heroic Dice"
+      "useHeroDice": "Use Hero Dice"
     },
     "attacks": {
       "melee": "Melee",
@@ -279,7 +279,7 @@
     "Increment": "Increase by 1",
     "Reset": "Reset to 0",
     "EscalatorDieHint": "Current bonus added to all rolls",
-    "HealingHouseRuleHint": "Rolls twice the amount of heroic dice spent and keep the highest result",
+    "HealingHouseRuleHint": "Rolls twice the amount of hero dice spent and keep the highest result",
     "AbilityScoreGeneration": "Roll Ability Scores"
   },
   "TYPES": {
@@ -290,6 +290,7 @@
     },
     "Item": {
       "armor": "Armor",
+      "burden": "Burden",
       "trait": "Trait",
       "gear": "Gear",
       "mount": "Mount",

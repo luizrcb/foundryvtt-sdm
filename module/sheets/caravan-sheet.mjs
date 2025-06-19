@@ -3,7 +3,7 @@ import { RollHandler } from '../rolls/rollHandler.mjs';
 import { convertToCash, GEAR_ITEM_TYPES, ITEMS_NOT_ALLOWED_IN_CHARACTERS } from '../helpers/itemUtils.mjs';
 import { openItemTransferDialog } from '../items/transferItem.mjs';
 import { ItemType, SizeUnit } from '../helpers/constants.mjs';
-import { getHeroicDiceSelect } from '../rolls/heroicDice.mjs';
+import { getHeroDiceSelect } from '../rolls/heroDice.mjs';
 import { UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
 
 const { api, sheets } = foundry.applications;
@@ -77,17 +77,16 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     },
   };
 
-  _getStatSelectOptions(skill, useDefaultStat = true) {
+  _getStatSelectOptions(source) {
     const abilitiesOrder = CONFIG.SDM.abilitiesOrder;
     const currentLanguage = game.i18n.lang;
-    const { defaultStat = 'str' } = skill;
+    const { default_ability = '' } = source;
     let result = '';
 
-    if (!useDefaultStat) {
-      result += '<option value=""}></option>';
-    }
+
+    result += '<option value=""}></option>';
     for (let orderedAbility of abilitiesOrder['en']) {
-      result += `<option value="${orderedAbility}"${(orderedAbility === defaultStat) ? 'selected' : ''}>
+      result += `<option value="${orderedAbility}"${(orderedAbility === default_ability) ? 'selected' : ''}>
       ${game.i18n.localize(CONFIG.SDM.abilities[orderedAbility])}</option>\n`
     }
 
@@ -109,7 +108,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     const versatileLabel = game.i18n.localize(CONFIG.SDM.versatile)
     const title = attribute ?? actorSkill.name ?? `${item?.name}${versatile ? ` (${versatileLabel})` : ''}`;
     const isTraitRoll = !!(skill || key);
-    const minHeroicDiceZero = true;
+    const minHeroDiceZero = true;
     const content = `
       <div class="custom-roll-modal">
         <h2>Roll for ${title}</h2>
@@ -118,7 +117,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
             <label>${game.i18n.localize(CONFIG.SDM.abilitiesLabel)}</label>
             <select name="selectedAttribute">
               ${skill ? this._getStatSelectOptions(actorSkill) :
-          item ? this._getStatSelectOptions({ defaultStat: item?.system?.damage?.statBonus }, false) : this._getStatSelectOptions({}, false)}
+          item ? this._getStatSelectOptions({ default_ability: item?.system?.default_ability }, false) : this._getStatSelectOptions({}, false)}
             </select>
           </div>
         `: ''}
@@ -153,7 +152,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
               </div>
             </div>
           </div>
-          ${getHeroicDiceSelect(this.actor, minHeroicDiceZero)}
+          ${getHeroDiceSelect(this.actor, minHeroDiceZero)}
           <div class="form-group">
             <label for="shouldExplode">${game.i18n.localize("SDM.ExplodingDice")}</label>
             <input id="shouldExplode" type="checkbox" name="shouldExplode" ${isTraitRoll ? "checked" : ""} />
@@ -188,10 +187,10 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
       return
     }
     const heroicDice = parseInt(heroicQty || 0, 10);
-    const currentHeroics = this.actor.system.heroics?.value ?? 0;
+    const currentHeroDice = this.actor.system.hero_dice?.value ?? 0;
 
-    if (heroicDice > currentHeroics) {
-      ui.notifications.error("Not enough heroic dice for this roll");
+    if (heroicDice > currentHeroDice) {
+      ui.notifications.error("Not enough hero dice for this roll");
       return
     }
 

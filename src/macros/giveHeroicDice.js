@@ -12,7 +12,7 @@ const characterOptions = [
 ].join('');
 
 const content = `
-  <form class="heroic-dice-adjustment">
+  <form class="hero-dice-adjustment">
     <div class="form-group">
       <label>Select Character</label>
       <select name="character" class="form-control">
@@ -25,7 +25,7 @@ const content = `
 // Show dialog with properly configured buttons
 const data = await DialogV2.wait({
   window: {
-    title: "Adjust Heroic Dice",
+    title: "Adjust Hero Dice",
     resizable: false
   },
   rejectClose: false,
@@ -34,7 +34,7 @@ const data = await DialogV2.wait({
   buttons: [
     {
       action: "increment",
-      label: "1 Heroic",
+      label: "1 Hero",
       icon: "fas fa-plus",
       type: "button",
       callback: (event, button, dialog) => ({
@@ -44,7 +44,7 @@ const data = await DialogV2.wait({
     },
     {
       action: "decrement",
-      label: "1 Heroic",
+      label: "1 Hero",
       icon: "fas fa-minus",
       type: "button",
       callback: (event, button, dialog) => ({
@@ -71,13 +71,13 @@ if (!targets.length) {
 // Prepare updates with validation
 const updates = targets.map(actor => {
   try {
-    const current = Math.max(0, actor.system.heroics?.value || 0);
+    const current = Math.max(0, actor.system.hero_dice?.value || 0);
     const maxLevel = Math.max(1, actor.system.level || 1);
     const newValue = Math.clamp(current + data.adjustment, 0, maxLevel);
     console.log(current, maxLevel, newValue);
     return newValue !== current ? {
       _id: actor.id,
-      "system.heroics.value": newValue
+      "system.hero_dice.value": newValue
     } : null;
   } catch (e) {
     console.error(`Error processing ${actor.name}:`, e);
@@ -88,7 +88,7 @@ const updates = targets.map(actor => {
 // Apply changes
 if (updates.length > 0) {
   await Actor.updateDocuments(updates);
-  ui.notifications.info(`Updated heroic dice for ${updates.length} character(s)!`);
+  ui.notifications.info(`Updated hero dice for ${updates.length} character(s)!`);
 } else {
   ui.notifications.warn("No changes were needed.");
 }

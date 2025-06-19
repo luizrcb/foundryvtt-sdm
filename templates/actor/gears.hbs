@@ -3,7 +3,7 @@
   <ol class='items-list'>
     <li class='item flexrow items-header'>
       <div class='item-name'></div>
-      <div class='item-formula'>Items ({{gears.length}})</div>
+      <div class='item-formula'>Items [{{@root.gearSlotsTaken}}/{{@root.system.item_slots}}]</div>
       <div class='item-controls'>
         {{#if @root.editable}}
         <a class='item-control item-create' title='{{localize "DOCUMENT.Create" type=' item'}}' data-action='createDoc'
@@ -16,19 +16,30 @@
     </li>
     {{#each gears as |item id|}}
     <li class='item flexrow' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
-      <div class='item-name align-left'>
+      <div class='item-name'>
         <div class='item-image'>
           <img src='{{item.img}}' title='{{item.name}}' width='24' height='24' />
         </div>
-        <div>{{item.name}}</div>
+        <div class="flexrow">
+          {{#if item.system.is_weapon}}
+          {{#if item.system.readied}}
+          <div class='rollable flexrow' data-roll-type='item' data-action='roll'>
+            <i class="fa-solid fa-dice-d20 roll-icon" title="{{item.name}}"></i>
+          </div>
+          {{/if}}
+          {{/if}}
+          {{#if (gt item.system.slots_taken 1)}}[{{item.system.slots_taken}}] {{/if}}
+          {{#if (eq item.system.size.unit 'cash')}} €{{item.system.quantity}} {{/if}}
+          {{item.name}}
+          {{#if (notEq item.system.size.unit 'cash')}}
+          {{#if (gt item.system.quantity 1)}}
+           x{{item.system.quantity}}
+          {{/if}}
+          {{/if}}
+        </div>
         <div class='flexrow align-center'>
           <div>
-            {{#if (eq item.type 'weapon')}}
-            <div class='rollable' data-roll-type='item' data-action='roll'>
-              <img src='icons/weapons/swords/sword-simple-white.webp' title='{{item.name}}' width='24' height='24' />
-            </div>
-            {{/if}}
-             {{#if item.system.versatile}}
+            {{#if item.system.versatile}}
             <div class='rollable' data-roll-type='item' data-action='roll' data-versatile="versatile">
               <img src='icons/weapons/swords/swords-short.webp' title='{{item.name}}' width='24' height='24' />
             </div>

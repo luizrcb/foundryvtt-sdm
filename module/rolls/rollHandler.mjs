@@ -26,7 +26,7 @@ export class RollHandler {
         return;
       }
 
-      // const availableHeroic = actor.system.heroics?.value ?? 0;
+      // const availableHero = actor.system.hero_dice?.value ?? 0;
 
       const { rollFormula, flavor } = await this.prepareRollComponents(actor, key, label, {
         modifier,
@@ -39,7 +39,7 @@ export class RollHandler {
 
       const rollInstance = new Roll(rollFormula, actor.system);
       await rollInstance.evaluate();
-      await actor.updateHeroicDice(heroicDice);
+      await actor.updateHeroDice(heroicDice);
       await this.sendRollToChat(rollInstance, actor, flavor, {
         "sdm.isTraitRoll": true,
       });
@@ -57,7 +57,7 @@ export class RollHandler {
       rollType = RollType.NORMAL,
       heroicDice = 0,
       versatile = false,
-      rolledFrom = ItemType.WEAPON,
+      rolledFrom = ItemType.GEAR,
       explode = false,
       addAbility = '',
     } = options;
@@ -68,10 +68,10 @@ export class RollHandler {
         return;
       }
 
-      let baseFormula = versatile ? item.system.damage.versatile : item.system.damage.base;
-      const damageBonus = item.system.damage.bonus;
+      let baseFormula = versatile ? item.system.weapon_damage.versatile : item.system.weapon_damage.base;
+      const damageBonus = item.system.weapon_damage.bonus;
       const isNegativeBonus = damageBonus[0] === '-';
-      const finalFormula = `${baseFormula}${damageBonus ? `${isNegativeBonus ? '' : '+'}${damageBonus}` : ''}`
+      const finalFormula = `(${baseFormula})${damageBonus ? `${isNegativeBonus ? '' : '+'}${damageBonus}` : ''}`
       if (!finalFormula && !foundry.dice.Roll.validate(finalFormula)) {
         ui.notifications.error("Item doens't have configured damage roll formula");
         return;
@@ -97,7 +97,7 @@ export class RollHandler {
 
       const rollInstance = new Roll(rollFormula, actor.system);
       await rollInstance.evaluate();
-      await actor.updateHeroicDice(heroicDice);
+      await actor.updateHeroDice(heroicDice);
       await this.sendRollToChat(rollInstance, actor, flavor, {
         "sdm.isDamageRoll": true,
       });
@@ -141,7 +141,7 @@ export class RollHandler {
 
     try {
       foundry.dice.Roll.validate(baseFormula);
-      const sanitizedFormula = this.sanitizeFormula([baseFormula, modifier].join("+"));
+      const sanitizedFormula = this.sanitizeFormula([`(${baseFormula})`, modifier].join("+"));
 
       const roll = await AdvancedRollModifier.create(sanitizedFormula, actor)
         .setExplosion(explode)
@@ -166,18 +166,17 @@ export class RollHandler {
       heroicDice,
       rolledFrom,
       explode,
-      dieFaces = Die.D20,
+      dieFaces = Die.d20,
       ignoreEncumbered = false,
       versatile = false,
       itemFormula = '',
     } = options;
 
     try {
-      const encumberedMod = !ignoreEncumbered ? this.getEncumberanceModifier(actor, key) : 0;
-      const fatigueDisadvantage = actor.system.fatigue?.disadvantage ?? false;
-      const rollModifier = this.calculateRollModifier(encumberedMod, fatigueDisadvantage, rollType, heroicDice);
+      const burdenPenalTy = actor.system.burden_penalty || 0;
+      const rollModifier = this.calculateRollModifier(rollType, heroicDice);
       const diceFormula = this.buildDiceFormula({ modifier: rollModifier, explode, dieFaces, formula: itemFormula });
-      const { cappedStat, hasExpertise, diceTerms, fixedValues } = this.calculateStatModifier(actor, key, skill, modifier);
+      const { cappedStat, hasExpertise, diceTerms, fixedValues } = this.calculateStatModifier(actor, key, skill, modifier, burdenPenalTy);
       const multipliedDiceFormula = multiplier ? `(${diceFormula})${multiplier}` : diceFormula;
 
       const formulaComponents = [multipliedDiceFormula, diceTerms, cappedStat];
@@ -203,7 +202,6 @@ export class RollHandler {
           rolledFrom,
           explode,
           rollModifier,
-          fatigueDisadvantage,
           heroicDice,
           versatile,
         })
@@ -217,7 +215,7 @@ export class RollHandler {
   static buildDiceFormula({
     formula = '',
     modifier = 0,
-    dieFaces = Die.D20,
+    dieFaces = Die.d20,
     explode = true,
   }) {
     // Validate inputs
@@ -252,12 +250,11 @@ export class RollHandler {
       rolledFrom,
       explode,
       rollModifier,
-      fatigueDisadvantage,
       heroicDice,
       versatile = false,
     } = params;
 
-    const isDamageRoll = rolledFrom === ItemType.WEAPON;
+    const isDamageRoll = rolledFrom === ItemType.GEAR;
     const resultingRollType = rollModifier > 0 ? RollType.ADVANTAGE : (rollModifier < 0) ? RollType.DISADVANTAGE : RollType.NORMAL;
     const fatigueLabel = game.i18n.localize(CONFIG.SDM.fatigue);
     const versatileLabel = game.i18n.localize(CONFIG.SDM.versatile);
@@ -265,7 +262,7 @@ export class RollHandler {
     const parts = [`[${capitalizeFirstLetter(rolledFrom)}] ${hasExpertise ? '<b>*' : ''}${label}${hasExpertise ? '</b>' : ''}`];
     if ((skill || isDamageRoll) && key) parts.push(`(${game.i18n.localize(SDM.abilities[key])})`);
     if (isDamageRoll && versatile) parts.push(`(${versatileLabel})`);
-    if (rollModifier !== 0) parts.push(`(${rollModifierLabel}${fatigueDisadvantage ? ` ${fatigueLabel}` : ''})`);
+    if (rollModifier !== 0) parts.push(`(${rollModifierLabel})`);
     if (heroicDice > 0) parts.push(`(hero ${heroicDice}d6)`)
     if (isDamageRoll && multiplier) parts.push(`(${SDM.damageMultiplier[multiplier]})`);
     if (modifier) parts.push(`(${modifier >= 0 ? '+' : ''}${modifier})`);
@@ -294,20 +291,19 @@ export class RollHandler {
     return isPhysicalAction(key) && (encumbered || cumbersomeArmor) ? -1 : 0;
   }
 
-  static calculateRollModifier(encumberedMod, fatigueDisadvantage, rollType, heroicDice) {
-    let mod = encumberedMod;
+  static calculateRollModifier(rollType, heroicDice) {
+    let mod = 0;
     if (rollType === RollType.ADVANTAGE) mod += 1;
     if (rollType === RollType.DISADVANTAGE) mod -= 1;
-    if (fatigueDisadvantage) mod -= 1;
     return mod + heroicDice;
   }
 
-  static calculateStatModifier(actor, key, skill, modifier = '') {
+  static calculateStatModifier(actor, key, skill, modifier = '', burdenPenalTy = 0) {
     let expertise = 0;
     let hasExpertise = false;
 
     const components = this.parseModifierString(modifier);
-    const { fixedValues, diceTerms } = this.separateFixedAndDice(components);
+    const { fixedValues, diceTerms } = this.separateFixedAndDice([...components, `${-burdenPenalTy}`]);
 
     if (skill) {
       const skillData = actor.system[skill];

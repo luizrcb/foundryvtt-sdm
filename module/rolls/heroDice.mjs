@@ -1,5 +1,5 @@
 import { SDM } from '../helpers/config.mjs';
-import { Die } from '../helpers/constants.mjs';
+import { ActorType, Die } from '../helpers/constants.mjs';
 
 const { renderTemplate } = foundry.applications.handlebars;
 
@@ -16,9 +16,9 @@ class ExplosiveDie {
   }
 }
 
-export class HeroicDiceProcessor {
+export class HeroDiceProcessor {
   static async process(originalRoll, heroicDiceQty, actor, keepRule, shouldExplode = true) {
-    const dieFaces = originalRoll?.dice[0]?.faces || Die.D20;
+    const dieFaces = originalRoll?.dice[0]?.faces || Die.d20;
     const modifier = {
       formula: '',
       result: 0,
@@ -68,18 +68,18 @@ export class HeroicDiceProcessor {
           new ExplosiveDie({ ...r, dieIndex, resultIndex }, d.faces)));
 
     const nonExplosiveDice = originalRoll.dice.filter(d => d.faces !== dieFaces);
-
-    // 2. Roll heroic dice
-    const heroicRoll = await this._rollHeroicDice(heroicDiceQty
-      // force heroic dice results for testing
+    const heroDiceType = actor.system.hero_dice.dice_type;
+    // 2. Roll hero dice
+    const heroicRoll = await this._rollHeroDice(heroicDiceQty, true, false, Die[heroDiceType],
+      // force hero dice results for testing
       // {dice: [{ results: [{result: 1, index: 0}]}]},
     );
-    await this.updateHeroicDice(actor, heroicDiceQty);
+    await this.updateHeroDice(actor, heroicDiceQty);
 
     const heroicResults = heroicRoll.dice[0].results.map(hr => hr.result);
 
     // 3. Distribuir d6s otimizadamente
-    const distribution = this._distributeHeroicDice(
+    const distribution = this._distributeHeroDice(
       explosiveDice,
       heroicResults,
       keepRule,
@@ -105,11 +105,11 @@ export class HeroicDiceProcessor {
     return this._createChatMessage(result, dieFaces, actor);
   }
 
-  static async updateHeroicDice(actor, heroicDiceQty) {
-    const current = Math.max(0, actor.system.heroics?.value || 0);
-    const newHeroicsValue = Math.max(current - heroicDiceQty, 0);
+  static async updateHeroDice(actor, heroicDiceQty) {
+    const current = Math.max(0, actor.system.hero_dice?.value || 0);
+    const newHeroDiceValue = Math.max(current - heroicDiceQty, 0);
     await actor.update({
-      'system.heroics.value': newHeroicsValue,
+      'system.hero_dice.value': newHeroDiceValue,
     });
   }
 
@@ -137,7 +137,7 @@ export class HeroicDiceProcessor {
     };
   };
 
-  static async _rollHeroicDice(qty, displayDice = true, healingHouseRule = false, heroicDieFaces = Die.D6, fixedResult) {
+  static async _rollHeroDice(qty, displayDice = true, healingHouseRule = false, heroicDieFaces = Die.d6, fixedResult) {
     let roll = new Roll(`${qty}d${heroicDieFaces}`);
 
     if (healingHouseRule) {
@@ -151,7 +151,7 @@ export class HeroicDiceProcessor {
     return roll;
   }
 
-  static _distributeHeroicDice(explosiveDice, heroicResults, keepRule) {
+  static _distributeHeroDice(explosiveDice, heroicResults, keepRule) {
     // Converte resultados para objetos simulados
     const heroicResultsObjects = heroicResults.map((result, index) => ({
       result,
@@ -159,8 +159,8 @@ export class HeroicDiceProcessor {
     }));
 
     const strategy = keepRule.type === 'kh' ?
-      HeroicDiceProcessor._khDistributionStrategy :
-      HeroicDiceProcessor._klDistributionStrategy;
+      HeroDiceProcessor._khDistributionStrategy :
+      HeroDiceProcessor._klDistributionStrategy;
 
     return strategy(explosiveDice, heroicResultsObjects);
   }
@@ -170,7 +170,7 @@ export class HeroicDiceProcessor {
     const sortedDice = [...explosiveDice].sort((a, b) =>
       (b.faces - b.original) - (a.faces - a.original));
 
-    const sortedHeroic = [...heroicResults].sort((a, b) => b.result - a.result);
+    const sortedHero = [...heroicResults].sort((a, b) => b.result - a.result);
     const distribution = new Map();
 
     for (const die of sortedDice) {
@@ -180,9 +180,9 @@ export class HeroicDiceProcessor {
       let found = false;
 
       // Fase 1: Busca por combinação exata
-      for (let i = 0; i < sortedHeroic.length; i++) {
-        if (sortedHeroic[i].result === needed) {
-          HeroicDiceProcessor._allocateHeroic(die, sortedHeroic, i, distribution);
+      for (let i = 0; i < sortedHero.length; i++) {
+        if (sortedHero[i].result === needed) {
+          HeroDiceProcessor._allocateHero(die, sortedHero, i, distribution);
           found = true;
           break;
         }
@@ -193,9 +193,9 @@ export class HeroicDiceProcessor {
         let bestFitIndex = -1;
         let minExcess = Infinity;
 
-        for (let i = 0; i < sortedHeroic.length; i++) {
-          if (sortedHeroic[i].result >= needed) {
-            const excess = sortedHeroic[i].result - needed;
+        for (let i = 0; i < sortedHero.length; i++) {
+          if (sortedHero[i].result >= needed) {
+            const excess = sortedHero[i].result - needed;
             if (excess < minExcess) {
               minExcess = excess;
               bestFitIndex = i;
@@ -204,37 +204,37 @@ export class HeroicDiceProcessor {
         }
 
         if (bestFitIndex !== -1) {
-          HeroicDiceProcessor._allocateHeroic(die, sortedHeroic, bestFitIndex, distribution);
+          HeroDiceProcessor._allocateHero(die, sortedHero, bestFitIndex, distribution);
           found = true;
         }
       }
 
       // Fase 3: Usar combinações de múltiplos dados se necessário
-      if (!found && sortedHeroic.length > 0) {
-        const combination = HeroicDiceProcessor._findOptimizedCombination(sortedHeroic, needed);
+      if (!found && sortedHero.length > 0) {
+        const combination = HeroDiceProcessor._findOptimizedCombination(sortedHero, needed);
         if (combination) {
           combination.reverse().forEach(index =>
-            HeroicDiceProcessor._allocateHeroic(die, sortedHeroic, index, distribution));
+            HeroDiceProcessor._allocateHero(die, sortedHero, index, distribution));
           found = true;
         }
       }
 
       if (found) {
-        sortedHeroic.sort((a, b) => b.result - a.result); // Re-sort após remoções
+        sortedHero.sort((a, b) => b.result - a.result); // Re-sort após remoções
       }
     }
-    let usedHeroicIndexes;
+    let usedHeroIndexes;
 
-    if (!sortedHeroic.length) {
-      usedHeroicIndexes = heroicResults.map(hr => hr.index);
+    if (!sortedHero.length) {
+      usedHeroIndexes = heroicResults.map(hr => hr.index);
     } else {
-      usedHeroicIndexes = sortedHeroic.map(h => h.index);
+      usedHeroIndexes = sortedHero.map(h => h.index);
     }
 
     return {
       distribution: new Map([...distribution]),
       explosionCount: distribution.size,
-      usedHeroicIndexes, // Índices originais
+      usedHeroIndexes, // Índices originais
       keepRule: { type: 'kh', count: 1 }, // Implementar lógica real de keepCount
       heroicResults // Manter resultados completos
     };
@@ -247,18 +247,18 @@ export class HeroicDiceProcessor {
     const sortedDice = [...explosiveDice].sort((a, b) => a.original - b.original);
 
     // 2. Ordenar dados heroicos do maior para menor
-    const sortedHeroic = [...heroicResults].sort((a, b) => b.result - a.result);
+    const sortedHero = [...heroicResults].sort((a, b) => b.result - a.result);
 
     // 3. Alocar para maximizar o mínimo
     let currentMin = Math.min(...sortedDice.map(d => d.original));
 
-    while (sortedHeroic.length > 0 && !sortedDice.every((d => d.modified >= dieFaces))) {
+    while (sortedHero.length > 0 && !sortedDice.every((d => d.modified >= dieFaces))) {
       // Encontrar dado mais baixo que pode ser melhorado
       const targetDie = sortedDice.find(d => d.modified === currentMin);
       if (!targetDie) break;
 
       // Maior dado heroico que não ultrapasse o limite
-      const heroicDie = sortedHeroic.shift();
+      const heroicDie = sortedHero.shift();
       const possibleValue = targetDie.modified + heroicDie.result;
 
       targetDie.modified = Math.min(possibleValue, dieFaces);
@@ -278,13 +278,13 @@ export class HeroicDiceProcessor {
     return {
       distribution: new Map(sortedDice.map(d => [d, d.heroicAllocated])),
       explosionCount: sortedDice.filter(d => d.modified === d.faces).length,
-      usedHeroicIndexes: finalDice?.heroicAllocated.map(h => h.index),
+      usedHeroIndexes: finalDice?.heroicAllocated.map(h => h.index),
       heroicResults,
       keepRule: { type: 'kl', count: 1 }
     };
   }
 
-  static _allocateHeroic(die, heroicPool, index, distribution) {
+  static _allocateHero(die, heroicPool, index, distribution) {
     die.modified = die.faces;
     const allocated = heroicPool.splice(index, 1)[0];
     die.heroicAllocated.push(allocated);
@@ -328,7 +328,7 @@ export class HeroicDiceProcessor {
     }
   }
 
-  static async _processExplosions(distribution, dieFaces = Die.D20) {
+  static async _processExplosions(distribution, dieFaces = Die.d20) {
     const { explosionCount, distribution: explodedDice } = distribution;
 
     for (let [die, _heroicDistribution] of explodedDice.entries()) {
@@ -369,7 +369,7 @@ export class HeroicDiceProcessor {
       });
     }
 
-    const heroicsTotal = heroicResults.reduce((a, b) => a + b, 0);
+    const heroDiceTotal = heroicResults.reduce((a, b) => a + b, 0);
 
     // 2. Ordenar e selecionar os dados mantidos
     const keptDice = diceWithTotals
@@ -392,7 +392,7 @@ export class HeroicDiceProcessor {
     }
 
     if (!heroicDistribution.size) {
-      total += heroicsTotal;
+      total += heroDiceTotal;
       diceTotal = total;
     }
 
@@ -457,27 +457,29 @@ export class HeroicDiceProcessor {
       shouldExplode,
       multiplier: multiplier ? SDM.damageMultiplier[multiplier] : '',
       diceTotal,
+      heroDiceType: actor.system.hero_dice.dice_type,
     };
 
     return ChatMessage.create({
       user: game.user.id,
-      content: await renderTemplate("systems/sdm/templates/chat/heroic-result.hbs", templateData),
+      content: await renderTemplate("systems/sdm/templates/chat/hero-dice-result.hbs", templateData),
       speaker: ChatMessage.getSpeaker({ actor }),
-      flavor: '[Heroic dice roll]',
-      flags: { "sdm.isHeroicResult": true },
+      rollMode: game.settings.get('core', 'rollMode'),
+      flavor: '[Hero dice roll]',
+      flags: { "sdm.isHeroResult": true },
     });
   }
 }
 
-export function getHeroicDiceSelect(actor, includeZero = false, isDamageRoll = false, healingHouseRuleEnabled = false) {
-  const maxHeroicDice = actor.system.heroics?.value ?? 0;
+export function getHeroDiceSelect(actor, includeZero = false, isDamageRoll = false, healingHouseRuleEnabled = false) {
+  const maxHeroDice = actor.system.hero_dice?.value ?? 0;
 
-  const options = Array.from({ length: maxHeroicDice }, (_, i) =>
+  const options = Array.from({ length: maxHeroDice }, (_, i) =>
     `<option value="${i + 1}">${i + 1}</option>`
   ).join('');
   const heroicDiceSelect = `
       <div class="form-group">
-        <label>${game.i18n.localize("SDM.HeroicDice")}</label>
+        <label>${game.i18n.localize("SDM.HeroDice")}</label>
         <select name="heroicQty">
           ${includeZero ? '<option value="0">0</option>' : ''}
           ${options}
@@ -516,48 +518,65 @@ export async function sendRollToChat(roll, actor, flavor, flags) {
 }
 
 // Integração com o handler original
-export async function handleHeroicDice(event, message, actor) {
-  const maxDice = actor.system.heroics.value;
-  if (maxDice < 1) return ui.notifications.error("No Heroic Dice available!");
+export async function handleHeroDice(event, message, messageActor) {
+  const actor = messageActor || game.user?.character || canvas?.tokens?.controlled[0]?.actor;
+
+  if (!actor || actor.type !== ActorType.CHARACTER) {
+    ui.notifications.error("No valid actor was selected!");
+    return;
+  }
+
+  const maxDice = actor.system.hero_dice.value;
+  if (maxDice < 1)  {
+    ui.notifications.error(`${actor.name } has no hero dice available for this roll!`);
+    return;
+  }
 
   const originalRoll = message.rolls[0];
   const isDamageRoll = !!message?.getFlag('sdm', 'isDamageRoll');
   const isTraitRoll = !!message?.getFlag('sdm', 'isTraitRoll');
+  const heroDiceType = actor.system.hero_dice.dice_type;
 
   const heroicDiceOptions = await foundry.applications.api.DialogV2.prompt({
     window: {
-      title: game.i18n.localize("SDM.UseHeroicDice"),
+      title: `${actor.name} ${game.i18n.localize("SDM.UseHeroDice")}`,
     },
-    content: getHeroicDiceSelect(actor, false, isDamageRoll || !isTraitRoll),
+    content: getHeroDiceSelect(actor, false, isDamageRoll || !isTraitRoll),
     ok: {
-      icon: 'fas fa-dice-d6',
+      icon: `fas fa-dice-${heroDiceType}`,
       label: game.i18n.localize("SDM.Roll"),
       callback: (event, button) => new foundry.applications.ux.FormDataExtended(button.form).object,
     }
   });
+
+  if (heroicDiceOptions === null) return;
+
   const {
-    heroicQty = '0',
+    heroicQty = 0,
     shouldExplode = true,
   } = heroicDiceOptions;
   const heroicDiceQty = parseInt(heroicQty || 0, 10);
-  const currentHeroics = actor.system.heroics.value;
-  if (heroicDiceQty > currentHeroics) return;
-  const keepRule = HeroicDiceProcessor.getKeepRule(originalRoll);
-  HeroicDiceProcessor.process(originalRoll, heroicQty, actor, keepRule, shouldExplode);
+  const currentHeroDice = actor?.system?.hero_dice?.value || 0;
+  if (heroicDiceQty > currentHeroDice) return;
+  const keepRule = HeroDiceProcessor.getKeepRule(originalRoll);
+  HeroDiceProcessor.process(originalRoll, heroicDiceQty, actor, keepRule, shouldExplode);
 }
 
-export async function healingHeroicDice(event, actor) {
+export async function healingHeroDice(event, actor) {
   const healingHouseRuleEnabled = !!game.settings.get('sdm', 'healingHouseRule');
-  const maxDice = actor.system.heroics.value;
-  if (maxDice < 1) return ui.notifications.error("No Heroic Dice available!");
+  const maxDice = actor.system.hero_dice.value;
+  if (maxDice < 1) return ui.notifications.error("No Hero Dice available!");
+
+  const heroDiceType = actor.system.hero_dice.dice_type;
+  const heroDiceString = Die[healingHeroDice];
 
   const heroicDiceOptions = await foundry.applications.api.DialogV2.prompt({
     window: {
-      title: game.i18n.localize("SDM.UseHeroicDice"),
+      title: game.i18n.localize("SDM.UseHeroDice"),
     },
-    content: getHeroicDiceSelect(actor, false, false, healingHouseRuleEnabled),
+    content: getHeroDiceSelect(actor, false, false, healingHouseRuleEnabled),
     ok: {
-      icon: 'fas fa-dice-d6',
+      icon: `fas fa-dice-${heroDiceType}`,
       label: game.i18n.localize("SDM.Roll"),
       callback: (event, button) => new foundry.applications.ux.FormDataExtended(button.form).object,
     },
@@ -568,12 +587,14 @@ export async function healingHeroicDice(event, actor) {
     healingHouseRule = false,
   } = heroicDiceOptions;
   const heroicDiceQty = parseInt(heroicQty || 0, 10);
-  const currentHeroics = actor.system.heroics.value;
-  if (heroicDiceQty > currentHeroics) return;
+  const currentHeroDice = actor.system.hero_dice.value;
+  if (heroicDiceQty > currentHeroDice) return;
 
-  const roll = await HeroicDiceProcessor._rollHeroicDice(heroicDiceQty, false, healingHouseRule);
-  await sendRollToChat(roll, actor, 'Heroic dice healing', {
-    "sdm.isHeroicResult": true,
+  const diceType = actor.system.hero_dice.dice_type;
+
+  const roll = await HeroDiceProcessor._rollHeroDice(heroicDiceQty, false, healingHouseRule,  Die[diceType]);
+  await sendRollToChat(roll, actor, 'Hero dice healing', {
+    "sdm.isHeroResult": true,
   });
-  await HeroicDiceProcessor.updateHeroicDice(actor, heroicDiceQty);
+  await HeroDiceProcessor.updateHeroDice(actor, heroicDiceQty);
 };

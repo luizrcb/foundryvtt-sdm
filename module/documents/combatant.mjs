@@ -11,6 +11,11 @@ export class SdmCombatant extends Combatant {
       return formula;
     }
 
+    if (actor.type === ActorType.NPC) {
+      const npcFormula = '2d6 + @bonus'
+      return npcFormula;
+    }
+
     // Fallback to global config
     return super._getInitiativeFormula();
   }

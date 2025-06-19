@@ -10,38 +10,33 @@ export default class SdmNPC extends SdmActorBase {
     const fields = foundry.data.fields;
     const requiredInteger = { required: true, nullable: false, integer: true };
     const schema = super.defineSchema();
- 
+
+    schema.initiative = new fields.StringField({
+      required: true, initial: '2d6kl',
+      validate: v => foundry.dice.Roll.validate(v),
+      validationError: "must be a valid Roll formula",
+    });
+
     schema.level = new fields.NumberField({
       ...requiredInteger,
       initial: 0,
       min: 0,
     });
 
-    schema.target = new fields.NumberField({...requiredInteger, initial: 10, min: 10 });
-
     schema.life = new fields.SchemaField({
       value: new fields.NumberField({
         ...requiredInteger,
-        initial: 4,
+        initial: 1,
         min: 0,
       }),
       max: new fields.NumberField({ ...requiredInteger, initial: 4, min: 4 }),
     });
 
-    schema.initiative = new fields.StringField({
-      required: true, initial: '1d6',
-      validate: v => foundry.dice.Roll.validate(v),
-      validationError: "must be a valid Roll formula",
-    });
+    schema.morale = new fields.NumberField({...requiredInteger, initial: 2, min: 2 });
 
-    schema.bonus = new fields.SchemaField({
-      major: new fields.NumberField({
-        ...requiredInteger,
-        initial: 2,
-        min: 2,
-      }),
-      minor: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 }),
-    });
+    schema.defense = new fields.NumberField({...requiredInteger, initial: 7, min: 1 });
+
+    schema.bonus = new fields.NumberField({...requiredInteger, initial: 1, min: 0 });
 
     schema.damage = new fields.StringField({
       required: true, initial: '1d4',
@@ -50,11 +45,6 @@ export default class SdmNPC extends SdmActorBase {
     });
 
     schema.cost = new fields.StringField({ required: false, nullable: true });
-
-    schema.skills = new fields.ArrayField(
-      new fields.StringField({ required: true, blank: false }),
-      { required: false, initial: [] },
-    );
 
     schema.isWarrior = new fields.BooleanField({
       required: true, initial: false,
@@ -71,10 +61,14 @@ export default class SdmNPC extends SdmActorBase {
     return schema;
   }
 
-  prepareDerivedData() {
+   getRollData() {
     const data = {};
 
-    data.morale = 3 + Math.ceil(this.level / 2);
+    data.level = this.level;
+    data.life = this.life;
+    data.defense = this.defense;
+    data.bonus = this.bonus;
+    data.damage = this.damage;
 
     return data;
   }

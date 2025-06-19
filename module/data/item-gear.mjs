@@ -13,9 +13,6 @@ export default class SdmGear extends SdmItemBase {
     const fields = foundry.data.fields;
     const schema = super.defineSchema();
 
-    // also known as equipped
-    schema.readied = new fields.BooleanField({ initial: false });
-
     schema.default_ability = getDefaultAbility();
 
     schema.is_spell = new fields.BooleanField({

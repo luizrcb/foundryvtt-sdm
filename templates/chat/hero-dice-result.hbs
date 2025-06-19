@@ -1,6 +1,6 @@
 <div class="dice-roll" data-action="expandRoll">
   <div class="dice-result">
-    <div class="dice-formula">{{heroicTotal.length}}d6 (heroic)</div>
+    <div class="dice-formula">{{heroicTotal.length}}{{heroDiceType}} (hero dice)</div>
     <div class="dice-tooltip">
       <div class="wrapper">
         <section class="tooltip-part">
@@ -10,7 +10,7 @@
             </header>
             <ol class="dice-rolls">
               {{#each dice}}
-              <li class="roll die d{{../dieFaces}} 
+              <li class="roll die d{{../dieFaces}}
               {{#if (eq original ../dieFaces)}}exploded max{{/if}}
               {{#unless isKept}}discarded{{/unless}}">
                 {{original}}
@@ -21,16 +21,16 @@
           </div>
         </section>
 
-        <!-- Heroic Dice -->
+        <!-- Hero Dice -->
         {{#if heroicTotal.length}}
         <section class="tooltip-part">
           <div class="dice">
             <header class="part-header">
-              <span class="part-formula">Heroic dice {{heroicTotal.length}}d6</span>
+              <span class="part-formula">Hero dice {{heroicTotal.length}}{{heroDiceType}}</span>
             </header>
             <ol class="dice-rolls">
               {{#each heroicTotal as |heroicDice|}}
-              <li class="roll die d6 
+              <li class="roll die {{@root.heroDiceType}}
                 {{#unless (contains ../heroicUsed heroicDice.index)}}discarded{{/unless}}">
                 {{heroicDice.result}}
               </li>

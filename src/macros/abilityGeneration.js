@@ -6,12 +6,14 @@ const abilitiesOrder = {
 const currentLanguage = game.i18n.lang;
 
 const results = {};
+const rolls = []
 
 // Wrap the logic in an async function
 const rollAttributes = async () => {
   for (const stat of abilitiesOrder[currentLanguage]) {
-    const roll = new Roll("1d100");
-    await roll.evaluate();
+    let roll = new Roll("1d100");
+    roll = await roll.evaluate();
+    rolls.push(roll);
 
     let value;
     if (roll.total <= 30) value = 0;
@@ -37,7 +39,29 @@ const rollAttributes = async () => {
     </ul>
     `;
 
-  ChatMessage.create({ content });
+  const rollMode = game.settings.get('core', 'rollMode');
+
+  const chatData = {
+    content,
+    rollMode,
+    rolls,
+    flags: { "sdm.isAbilityScoreRoll": true },
+  };
+
+
+  if (rollMode === 'selfroll') {
+    chatData.whisper = [game.user.id];
+  }
+
+  if (rollMode === 'blindroll') {
+    chatData.blind = true;
+  }
+
+  if (rollMode === 'gmroll' || rollMode === 'blindroll') {
+    chatData.whisper = ChatMessage.getWhisperRecipients('GM');
+  }
+
+  ChatMessage.create(chatData);
 };
 
 // Execute the function

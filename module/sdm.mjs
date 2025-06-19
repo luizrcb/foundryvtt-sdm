@@ -8,11 +8,11 @@ import { SdmCaravanSheet } from './sheets/caravan-sheet.mjs';
 import { SdmItemSheet } from './sheets/item-sheet.mjs';
 // Import helper/utility classes and constants.
 import { SDM } from './helpers/config.mjs';
-import { getActorFromMessage } from './helpers/chatUtils.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
-import { handleHeroicDice } from './rolls/heroicDice.mjs'
+import { handleHeroDice } from './rolls/heroDice.mjs'
 // Import DataModel classes
 import * as models from './data/_module.mjs';
+import { Die } from './helpers/constants.mjs';
 
 const { Actors, Items } = foundry.documents.collections;
 
@@ -42,21 +42,24 @@ globalThis.sdm = {
 Hooks.on("renderChatMessageHTML", (message, html, data) => {
   if (!message) return;
 
-  const isInitiativeRoll = message?.getFlag("core", 'initiativeRoll');
-  const isHeroicResult = message?.getFlag("sdm", 'isHeroicResult');
-  if (isInitiativeRoll) return;
+  //const isInitiativeRoll = message?.getFlag("core", 'initiativeRoll');
+  const isHeroResult = !!message?.getFlag("sdm", 'isHeroResult');
+  const isRollTableMessage = !!message?.getFlag("core", "RollTable");
+  const isAbilityScoreRoll = !!message?.getFlag("sdm", 'isAbilityScoreRoll');
 
-  if (isHeroicResult) {
-    $('button.heroic-dice-btn').remove();
+  if (isRollTableMessage || isAbilityScoreRoll) return;
+
+  if (isHeroResult) {
+    $('button.hero-dice-btn').remove();
   }
 
   // Find the most recent roll message in chat
   const lastRollMessage = [...game.messages.contents]
     .reverse()
-    .find(m => m.isRoll || m?.getFlag("sdm", "isHeroicResult"));
+    .find(m => m.isRoll || m?.getFlag("sdm", "isHeroResult"));
 
-  if (lastRollMessage?.getFlag("sdm", "isHeroicResult")) {
-    $('button.heroic-dice-btn').remove();
+  if (lastRollMessage?.getFlag("sdm", "isHeroResult")) {
+    $('button.hero-dice-btn').remove();
     return;
   };
 
@@ -64,27 +67,30 @@ Hooks.on("renderChatMessageHTML", (message, html, data) => {
 
   // Only proceed if this is the most recent d20 roll message
   if (!lastRollMessage || message.id !== lastRollMessage.id) return;
-  // Only show if user has a character with heroics
-  const actor = getActorFromMessage(message, game.user);
-  if (!actor) return;
-  if (!actor.testUserPermission(game.user, "OWNER")) return;
+  // Only show if user has a character with hero dice
 
-  // Check heroics
-  const heroics = actor.system?.heroics?.value;
-  if (!heroics || heroics < 1) return;
+  // Get Actor from selected token, or default character for the Actor if none is.
+  const actor = game.user?.character || canvas?.tokens?.controlled[0]?.actor;
+  const isGM = game.user.isGM;
+  if (!actor && !isGM) return;
+
+  // Check hero_dice
+  const hero_dice = actor?.system?.hero_dice?.value;
+  if (!isGM && (!hero_dice || hero_dice < 1)) return;
 
   // Create button element
   const btn = document.createElement('button');
-  btn.classList.add('heroic-dice-btn');
+  btn.classList.add('hero-dice-btn');
   btn.dataset.messageId = message.id;
 
   // Create icon element
   const icon = document.createElement('i');
-  icon.classList.add('fas', 'fa-dice-d6');
+  const actorHeroDice = actor?.system?.hero_dice?.dice_type || 'd6';
+  icon.classList.add('fas', `fa-dice-${actorHeroDice}`);
   btn.appendChild(icon);
 
   // Add localized text
-  btn.append(` ${game.i18n.localize("SDM.Rolls.useHeroicDice")}`);
+  btn.append(` ${game.i18n.localize("SDM.Rolls.useHeroDice")}`);
 
   // Create container div
   const container = document.createElement('div');
@@ -101,7 +107,7 @@ Hooks.on("renderChatMessageHTML", (message, html, data) => {
   btn.addEventListener('click', (ev) => {
     ev.preventDefault();
     ev.stopPropagation();
-    handleHeroicDice(ev, message, actor);
+    handleHeroDice(ev, message, actor);
   });
 });
 
@@ -121,7 +127,7 @@ Hooks.once('init', function () {
    * @type {String}
    */
   CONFIG.Combat.initiative = {
-    formula: '1d6 + @abilities.agi.final_current + @initiative_bonus',
+    formula: '2d6 + @abilities.agi.final_current + @initiative_bonus',
     decimals: 2,
   };
 
@@ -142,6 +148,7 @@ Hooks.once('init', function () {
   CONFIG.Item.dataModels = {
     gear: models.SdmGear,
     trait: models.SdmTrait,
+    burden: models.SdmBurden,
     mount: models.SdmMount,
     motor: models.SdmMotor,
   };
@@ -243,7 +250,7 @@ Hooks.once('init', function () {
 
   game.settings.register("sdm", "healingHouseRule", {
     name: "Healing House Rule",
-    hint: "Allows for rolling healing heroic dice with advantage (roll twice and keep the highest result)",
+    hint: "Allows for rolling healing hero dice with advantage (roll twice and keep the highest result)",
     scope: "world", // "world" = GM only, "client" = per user
     restricted: true,
     config: true, // Show in configuration view
@@ -269,9 +276,9 @@ Handlebars.registerHelper('addOne', function (index) {
   return index + 1;
 });
 
-Handlebars.registerHelper('wasHeroicUsed', function (index, options) {
+Handlebars.registerHelper('wasHeroUsed', function (index, options) {
   const context = options.data.root;
-  return context.usedHeroicIndexes.includes(index) ? '' : 'discarded';
+  return context.usedHeroIndexes.includes(index) ? '' : 'discarded';
 });
 
 Handlebars.registerHelper('contains', function (array, value, options) {
@@ -288,7 +295,7 @@ Handlebars.registerHelper('eq', function (valueA, valueB, options) {
   return valueA === valueB;
 });
 
-Handlebars.registerHelper('nEq', function (valueA, valueB, options) {
+Handlebars.registerHelper('notEq', function (valueA, valueB, options) {
   return valueA !== valueB;
 });
 
@@ -301,6 +308,15 @@ Handlebars.registerHelper('getReadiedStyle', function (readied, options) {
   const booleanReadied = !!readied;
   const style = `font-weight: ${booleanReadied == true ? 900 : ''}; color: ${booleanReadied == true ? 'black' : 'grey'};`;
   return style;
+});
+
+Handlebars.registerHelper('slotsTaken', function (container, options) {
+  if (!container.length) return container.length;
+
+  const slotsTaken = container.reduce((acc, item) => {
+    return acc + (item.system.slots_taken || 1);
+  }, 0);
+  return slotsTaken;
 });
 
 

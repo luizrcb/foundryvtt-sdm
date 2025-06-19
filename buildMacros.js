@@ -10,7 +10,7 @@ const ICON_MAPPING = {
   'escalator': 'icons/svg/d20-highlight.svg',
   'cash': 'icons/svg/coins.svg',
   'experience': 'icons/svg/upgrade.svg',
-  'heroic': 'icons/svg/d6-grey.svg',
+  'hero': 'icons/svg/d6-grey.svg',
   'default': 'icons/svg/mystery-man.svg'
 };
 
