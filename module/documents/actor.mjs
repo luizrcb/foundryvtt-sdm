@@ -52,36 +52,36 @@ export class SdmActor extends Actor {
       });
     }
 
-    if (changed.system?.abilities) {
-      const abilities = changed.system.abilities;
+    // if (changed.system?.abilities) {
+    //   const abilities = changed.system.abilities;
 
-      // Iterate over updated abilities
-      for (const [abilityKey, abilityData] of Object.entries(abilities)) {
-        const currentEnhanced = abilityData.enhanced ?? this.system.abilities[abilityKey]?.enhanced ?? false;
-        const max = currentEnhanced ? 7 : 5;
+    //   // Iterate over updated abilities
+    //   for (const [abilityKey, abilityData] of Object.entries(abilities)) {
+    //     const currentEnhanced = abilityData.enhanced ?? this.system.abilities[abilityKey]?.enhanced ?? false;
+    //     const max = currentEnhanced ? 7 : 5;
 
-        // Clamp "full" to the current max
-        if (abilityData.full !== undefined) {
-          abilityData.full = Math.min(abilityData.full, max);
-          if (this.system.abilities[abilityKey].current === 0) {
-            abilityData.current = abilityData.full;
-          }
-        }
+    //     // Clamp "full" to the current max
+    //     if (abilityData.full !== undefined) {
+    //       abilityData.full = Math.min(abilityData.full, max);
+    //       if (this.system.abilities[abilityKey].current === 0) {
+    //         abilityData.current = abilityData.full;
+    //       }
+    //     }
 
-        if (abilityData.current !== undefined && abilityData.current !== null) {
-          const currentMax = Math.min(this.system.abilities[abilityKey].full, max);
-          const currentMin = Math.max(abilityData.current, 0);
-          abilityData.current = Math.min(currentMin, currentMax);
-        }
+    //     if (abilityData.current !== undefined && abilityData.current !== null) {
+    //       const currentMax = Math.min(this.system.abilities[abilityKey].full, max);
+    //       const currentMin = Math.max(abilityData.current, 0);
+    //       abilityData.current = Math.min(currentMin, currentMax);
+    //     }
 
-        await this.update({
-          [`system.abilities.${abilityKey}`]: {
-            ...this.system.abilities[abilityKey],
-            ...abilityData
-          },
-        });
-      }
-    }
+    //     await this.update({
+    //       [`system.abilities.${abilityKey}`]: {
+    //         ...this.system.abilities[abilityKey],
+    //         ...abilityData
+    //       },
+    //     });
+    //   }
+    // }
 
     // if (changed.system?.fatigue?.halfSpeed) {
     //   const halfSpeed = changed?.system.fatigue.halfSpeed;
@@ -226,12 +226,21 @@ export class SdmActor extends Actor {
     const data = this.system;
 
     data.armor = this.getArmor();
+    // data.prestige = this.getPrestige();
+    // data.ward = this.getWard();
+
     const baseDefense = game.settings.get("sdm", "baseDefense");
     const bonusDefense = data.defense_bonus || 0;
     const BASE_DEFENSE = baseDefense || BASE_DEFENSE_VALUE;
     const agility = data.abilities['agi'];
+    const thought = data.abilities['tho'];
+
     const calculatedDefense = BASE_DEFENSE + agility.current + agility.bonus + data.armor + bonusDefense;
+
     data.defense = Math.min(calculatedDefense, MAX_ATTRIBUTE_VALUE);
+    // data.mental_defense =
+    // data.social_defense =
+
     const burdenPenalty = this.getBurdenPenalty();
 
     this.update({
@@ -243,14 +252,6 @@ export class SdmActor extends Actor {
   }
 
   _prepareNpcData() {
-    const data = this.system;
-    data.defense = Math.min(calculatedDefense, MAX_ATTRIBUTE_VALUE);
-
-    this.update({
-      "prototypeToken.actorLink": true,
-      "prototypeToken.disposition": 1, // friendly
-
-    });
   }
 
 
@@ -265,6 +266,24 @@ export class SdmActor extends Actor {
       default:
         return 0;
     }
+  }
+
+  getAvailableSkills() {
+    const result = {}
+    const itemsArray = this.items.contents;
+
+    const skillTraits = itemsArray.filter((item) => item.type === ItemType.TRAIT &&
+      item.system.is_skill === true);
+
+    skillTraits.forEach((trait) => {
+      result[trait.uuid] = {
+        id: trait.uuid,
+        name: trait.name,
+        mod: trait.system.skill_mod + trait.system.skill_mod_bonus,
+        attack: trait.system.default_attack,
+      };
+    });
+    return result;
   }
 
   getBurdenPenalty() {
@@ -293,7 +312,7 @@ export class SdmActor extends Actor {
       const itemSlots = i.system.slots_taken || 1;
 
       // Append to inventory.
-      if (GEAR_ITEM_TYPES.includes(i.type)) {
+      if (i.type === ItemType.GEAR) {
         if (gears.slotsTaken + itemSlots <= itemSlotsLimit) {
           gears.gears.push(i);
           gears.slotsTaken += itemSlots;
@@ -301,7 +320,7 @@ export class SdmActor extends Actor {
           burdens.burdens.push(i);
           burdens.slotsTaken += itemSlots;
         }
-      } else if (TRAIT_ITEM_TYPES.includes(i.type)) {
+      } else if (i.type === ItemType.TRAIT) {
         if (traits.slotsTaken + itemSlots <= traitSlotsLimit) {
           traits.traits.push(i);
           traits.slotsTaken += itemSlots;
@@ -371,10 +390,10 @@ export class SdmActor extends Actor {
   getArmor() {
     // Filter for equipped armor items
     const itemsArray = this.items.contents;
-    const equippedArmor = itemsArray.filter(item => item.type === ItemType.ARMOR && item.system.readied);
+    const equippedArmor = itemsArray.filter(item => item.type === ItemType.GEAR && item.system.is_armor && item.system.readied);
 
     // Sum the armor values
-    return equippedArmor.reduce((sum, item) => sum + (item.system.armor || 0), 0);
+    return equippedArmor.reduce((sum, item) => sum + (item.system.armor_value || 0), 0);
   }
 
   getCaracanCapacity() {

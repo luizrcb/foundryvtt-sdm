@@ -24,6 +24,13 @@ export const ActorType = Object.freeze({
   CARAVAN: 'caravan',
 });
 
+export const AttackType = Object.freeze({
+  MELEE: 'melee',
+  RANGED: 'ranged',
+  FANTASCIENCE: 'fantascience',
+  OLDTECH: 'oldtech',
+})
+
 export const ItemType = Object.freeze({
   GEAR: 'gear',
   TRAIT: 'trait',

@@ -563,24 +563,27 @@ export async function handleHeroDice(event, message, messageActor) {
 }
 
 export async function healingHeroDice(event, actor) {
-  const healingHouseRuleEnabled = !!game.settings.get('sdm', 'healingHouseRule');
+  // const healingHouseRuleEnabled = !!game.settings.get('sdm', 'healingHouseRule');
   const maxDice = actor.system.hero_dice.value;
   if (maxDice < 1) return ui.notifications.error("No Hero Dice available!");
 
   const heroDiceType = actor.system.hero_dice.dice_type;
-  const heroDiceString = Die[healingHeroDice];
 
   const heroicDiceOptions = await foundry.applications.api.DialogV2.prompt({
     window: {
       title: game.i18n.localize("SDM.UseHeroDice"),
     },
-    content: getHeroDiceSelect(actor, false, false, healingHouseRuleEnabled),
+    content: getHeroDiceSelect(actor, false, false, false),
     ok: {
       icon: `fas fa-dice-${heroDiceType}`,
       label: game.i18n.localize("SDM.Roll"),
       callback: (event, button) => new foundry.applications.ux.FormDataExtended(button.form).object,
     },
   });
+
+  if (heroicDiceOptions === null) {
+    return;
+  }
 
   const {
     heroicQty = '0',
@@ -593,7 +596,7 @@ export async function healingHeroDice(event, actor) {
   const diceType = actor.system.hero_dice.dice_type;
 
   const roll = await HeroDiceProcessor._rollHeroDice(heroicDiceQty, false, healingHouseRule,  Die[diceType]);
-  await sendRollToChat(roll, actor, 'Hero dice healing', {
+  await sendRollToChat(roll, actor, `${actor.name} spent ${heroicDiceQty} hero dice`, {
     "sdm.isHeroResult": true,
   });
   await HeroDiceProcessor.updateHeroDice(actor, heroicDiceQty);

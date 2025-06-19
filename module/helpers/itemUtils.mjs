@@ -75,6 +75,14 @@ export async function onItemUpdate(item, updateData) {
   }
 }
 
+export async function onItemCreateActiveEffects(item) {
+  if (item.type === ItemType.GEAR) {
+    for (const effect of item.effects) {
+      await toggleEffectTransfer(effect, false);
+    }
+  }
+}
+
 async function toggleEffectTransfer(effect, shouldBeActive) {
   const effectUpdates = {};
 

@@ -205,7 +205,7 @@ Hooks.once('init', function () {
     restricted: true,
     config: true, // Show in configuration view
     type: Number, // Data type: String, Number, Boolean, etc
-    default: 10,
+    default: 7,
   });
 
   game.settings.register("sdm", "baseTraitSlots", {

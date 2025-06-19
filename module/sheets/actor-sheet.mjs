@@ -1,6 +1,6 @@
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { RollHandler } from '../rolls/rollHandler.mjs';
-import { onItemUpdate, convertToCash, GEAR_ITEM_TYPES, ITEMS_NOT_ALLOWED_IN_CHARACTERS, TRAIT_ITEM_TYPES, BURDEN_ITEM_TYPES } from '../helpers/itemUtils.mjs';
+import { onItemUpdate, convertToCash, GEAR_ITEM_TYPES, ITEMS_NOT_ALLOWED_IN_CHARACTERS, TRAIT_ITEM_TYPES, BURDEN_ITEM_TYPES, onItemCreateActiveEffects } from '../helpers/itemUtils.mjs';
 import { openItemTransferDialog } from '../items/transferItem.mjs';
 import { ItemType, SizeUnit } from '../helpers/constants.mjs';
 import { healingHeroDice } from '../rolls/heroDice.mjs';
@@ -90,6 +90,15 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     return result;
   }
 
+  getSkillOptions(availableSkills, attack) {
+    let options = '';
+    for (const skill of Object.values(availableSkills)) {
+      options += `<option value="${skill.id}"${(skill.attack === attack) ? 'selected' : ''}>${skill.name} [+${skill.mod}]</option>\n`
+    }
+    return options;
+  }
+
+
   damageMultiplierOptions() {
     let options = '';
     for (const [key, value] of Object.entries(CONFIG.SDM.damageMultiplier)) {
@@ -100,23 +109,32 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
   }
 
   // Open the custom roll modal
-  async _openCustomRollModal(key, attribute, skill, rolledFrom, item, versatile = false) {
-    const actorSkill = skill ? this.actor.system[skill] : {};
-    const versatileLabel = game.i18n.localize(CONFIG.SDM.versatile)
-    const title = attribute ?? actorSkill.name ?? `${item?.name}${versatile ? ` (${versatileLabel})` : ''}`;
-    const isTraitRoll = !!(skill || key);
+  async _openCustomRollModal(key, attribute, attack, rolledFrom, item, versatile = false) {
+    const actorAttack = attack ? this.actor.system[attack] : {};
+    const versatileLabel = game.i18n.localize(CONFIG.SDM.versatile);
+    const availableSkills = this.actor.getAvailableSkills();
+    const title = attribute ?? actorAttack.name ?? `${item?.name}${versatile ? ` (${versatileLabel})` : ''}`;
+    const isTraitRoll = !!(attack || key);
     const content = `
       <div class="custom-roll-modal">
         <h2>Roll for ${title}</h2>
         <form class="custom-roll-form">
-        ${rolledFrom !== 'Abilities' ? `<div class="form-group">
+        ${rolledFrom !== 'Ability' ? `<div class="form-group">
             <label>${game.i18n.localize(CONFIG.SDM.abilitiesLabel)}</label>
             <select name="selectedAttribute">
-              ${skill ? this._getStatSelectOptions(actorSkill) :
-          item ? this._getStatSelectOptions({ defaultStat: item?.system?.default_ability }) : this._getStatSelectOptions({})}
+              ${actorAttack ? this._getStatSelectOptions(actorAttack) :
+          item ? this._getStatSelectOptions({ default_ability: item?.system?.default_ability }) : this._getStatSelectOptions({})}
             </select>
           </div>
         `: ''}
+         ${attack ? `<div class="form-group">
+            <label for="skillMod">Skill</label>
+            <select name="selectedSkill" id="selectedSkill">
+              <option value=""></option>
+             ${this.getSkillOptions(availableSkills, attack)}
+            </select>
+            </div>
+          `: ''}
           <div class="form-group">
             <label for="modifier">${game.i18n.localize(CONFIG.SDM.modifierLabel)}</label>
             <input id="modifier" type="string" name="modifier" value="" />
@@ -133,7 +151,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
             <div class="roll-type-select">
               <div>
                 <label>
-                  <input type="radio" name="rollType" value="advantage"> ${game.i18n.localize(CONFIG.SDM.rollType.advantage)}
+                  <input type="radio" name="rollType" value="disadvantage"> ${game.i18n.localize(CONFIG.SDM.rollType.disadvantage)}
                 </label>
               </div>
               <div>
@@ -141,9 +159,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
                   <input type="radio" name="rollType" value="normal" checked> ${game.i18n.localize(CONFIG.SDM.rollType.normal)}
                 </label>
               </div>
-              <div>
+               <div>
                 <label>
-                  <input type="radio" name="rollType" value="disadvantage"> ${game.i18n.localize(CONFIG.SDM.rollType.disadvantage)}
+                  <input type="radio" name="rollType" value="advantage"> ${game.i18n.localize(CONFIG.SDM.rollType.advantage)}
                 </label>
               </div>
             </div>
@@ -169,6 +187,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
         callback: (event, button) => new foundry.applications.ux.FormDataExtended(button.form).object,
       }
     });
+
+    if (rollOptions === null) {
+      return;
+    }
+
     const {
       selectedAttribute = '',
       modifier = '',
@@ -190,8 +213,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     }
 
     const ability = key ? key : selectedAttribute;
-    const skillData = skill ? this.actor.system[skill] : {};
-    let label = skill ? skillData.name : (attribute ? attribute : (ability ? game.i18n.localize(CONFIG.SDM.abilities[ability]) : ''));
+    const attackData = attack ? this.actor.system[attack] : {};
+    let label = attack ? attackData.name : (attribute ? attribute : (ability ? game.i18n.localize(CONFIG.SDM.abilities[ability]) : ''));
 
     if (item) {
       label = item.name;
@@ -201,7 +224,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
         multiplier,
         rollType,
         heroicDice,
-        skill: '',
+        attack: '',
         addAbility: ability,
         explode: shouldExplode,
         versatile,
@@ -211,7 +234,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     return RollHandler.performRoll(this.actor, ability, label, {
       modifier,
       rollType,
-      skill,
+      attack,
       heroicDice,
       rolledFrom,
       explode: shouldExplode,
@@ -480,7 +503,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
         if (item.parent?.id === actorId && !this._validateItemWeight(item)) return false;
       }),
       create: Hooks.on('createItem', (item, options, userId) => {
-        if (item.parent?.id === actorId) this._checkEncumbrance();
+        if (item.parent?.id === actorId) {
+          return onItemCreateActiveEffects(item);
+        }
       }),
       preUpdate: Hooks.on('preUpdateItem', (item, updateData, options, userId) => {
         if (item.parent?.id === actorId) {
@@ -490,12 +515,12 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       }),
       update: Hooks.on('updateItem', (item, changes, options, userId) => {
         if (item.parent?.id === actorId) {
-          this._checkEncumbrance();
+          // this._checkEncumbrance();
           return onItemUpdate(item, changes);
         }
       }),
       delete: Hooks.on('deleteItem', (item, options, userId) => {
-        if (item.parent?.id === actorId) this._checkEncumbrance();
+        if (item.parent?.id === actorId) return;// this._checkEncumbrance();
       })
     };
   }
@@ -743,6 +768,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
    * @private
    */
   static async _toggleReadied(event, target) {
+    event.preventDefault(); // Don't open context menu
+    event.stopPropagation(); // Don't trigger other events
     const item = this._getEmbeddedDocument(target);
     await item.update({ 'system.readied': !item.system.readied });
   }
@@ -772,10 +799,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     const dataset = target.dataset;
     const key = dataset.key;
     const label = dataset.label || key;
-    const skill = dataset.skill;
+    const attack = dataset.attack;
     const versatile = !!dataset.versatile;
-    const rollType = dataset.rollType;
-    const clickedButton = event.button;
 
     // Handle item rolls.
     switch (dataset.rollType) {
@@ -783,7 +808,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
         const item = this._getEmbeddedDocument(target);
         if (!item || !item?.system?.is_weapon) return;
         const weaponLabel = game.i18n.localize(`TYPES.Item.${item.type}`);
-        return this._openCustomRollModal(key, label, skill, weaponLabel, item, versatile);
+        return this._openCustomRollModal(key, label, attack, weaponLabel, item, versatile);
       //if (item) return item.roll(event, versatile);
     }
 
@@ -801,7 +826,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     const rolledFrom = dataset.rollType ?? 'ability';
     const rolledFromlabel = game.i18n.localize(CONFIG.SDM.rollSource[rolledFrom]);
 
-    this._openCustomRollModal(key, label, skill, rolledFromlabel);
+    this._openCustomRollModal(key, label, attack, rolledFromlabel);
   }
 
 

@@ -83,7 +83,8 @@
             "label": "Skills"
           },
           "abilities": {
-            "label": "Abilities"
+            "label": "Ability",
+            "labelPl": "Abilities"
           },
           "friends": {
             "label": "Friends"

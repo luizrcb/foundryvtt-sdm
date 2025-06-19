@@ -1,4 +1,4 @@
-import { SkillMod } from '../helpers/constants.mjs';
+import { AttackType, SkillMod } from '../helpers/constants.mjs';
 import { getDefaultAbility } from '../helpers/globalUtils.mjs';
 import SdmItemBase from './base-item.mjs';
 
@@ -30,6 +30,12 @@ export default class SdmTrait extends SdmItemBase {
     });
 
     schema.default_ability = getDefaultAbility();
+
+    schema.default_attack = new fields.StringField({
+      required: false,
+      nullable: true,
+      initial: AttackType.MELEE,
+    });
 
     schema.is_spell = new fields.BooleanField({
       required: true, initial: false,

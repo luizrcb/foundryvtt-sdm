@@ -1,4 +1,4 @@
-export const BASE_DEFENSE_VALUE = 10;
+export const BASE_DEFENSE_VALUE = 7;
 export const MAX_ATTRIBUTE_VALUE = 19;
 export const MAX_MODIFIER = 13;
 export const PHYSICAL_KEYS = ['str', 'end', 'agi'];

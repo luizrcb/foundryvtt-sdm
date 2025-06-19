@@ -9,7 +9,7 @@ export class RollHandler {
     const {
       modifier = "",
       rollType = RollType.NORMAL,
-      skill = "",
+      attack = "",
       heroicDice = 0,
       roll = "",
       rolledFrom,
@@ -31,7 +31,7 @@ export class RollHandler {
       const { rollFormula, flavor } = await this.prepareRollComponents(actor, key, label, {
         modifier,
         rollType,
-        skill,
+        attack,
         heroicDice,
         rolledFrom,
         explode
@@ -85,7 +85,7 @@ export class RollHandler {
         modifier,
         multiplier,
         rollType,
-        skill: '',
+        attack: '',
         heroicDice,
         rolledFrom,
         explode,
@@ -162,7 +162,7 @@ export class RollHandler {
       modifier,
       multiplier = '',
       rollType,
-      skill,
+      attack,
       heroicDice,
       rolledFrom,
       explode,
@@ -176,7 +176,7 @@ export class RollHandler {
       const burdenPenalTy = actor.system.burden_penalty || 0;
       const rollModifier = this.calculateRollModifier(rollType, heroicDice);
       const diceFormula = this.buildDiceFormula({ modifier: rollModifier, explode, dieFaces, formula: itemFormula });
-      const { cappedStat, hasExpertise, diceTerms, fixedValues } = this.calculateStatModifier(actor, key, skill, modifier, burdenPenalTy);
+      const { cappedStat, hasExpertise, diceTerms, fixedValues } = this.calculateStatModifier(actor, key, attack, modifier, burdenPenalTy);
       const multipliedDiceFormula = multiplier ? `(${diceFormula})${multiplier}` : diceFormula;
 
       const formulaComponents = [multipliedDiceFormula, diceTerms, cappedStat];
@@ -195,7 +195,7 @@ export class RollHandler {
           key,
           label,
           rollType,
-          skill,
+          attack,
           hasExpertise,
           modifier: fixedValues,
           multiplier,
@@ -243,7 +243,7 @@ export class RollHandler {
     const {
       key,
       label,
-      skill,
+      attack,
       hasExpertise,
       modifier,
       multiplier,
@@ -256,11 +256,10 @@ export class RollHandler {
 
     const isDamageRoll = rolledFrom === ItemType.GEAR;
     const resultingRollType = rollModifier > 0 ? RollType.ADVANTAGE : (rollModifier < 0) ? RollType.DISADVANTAGE : RollType.NORMAL;
-    const fatigueLabel = game.i18n.localize(CONFIG.SDM.fatigue);
     const versatileLabel = game.i18n.localize(CONFIG.SDM.versatile);
     const rollModifierLabel = game.i18n.localize(`SDM.Rolls.${resultingRollType}.abbr`);
     const parts = [`[${capitalizeFirstLetter(rolledFrom)}] ${hasExpertise ? '<b>*' : ''}${label}${hasExpertise ? '</b>' : ''}`];
-    if ((skill || isDamageRoll) && key) parts.push(`(${game.i18n.localize(SDM.abilities[key])})`);
+    if ((attack || isDamageRoll) && key) parts.push(`(${game.i18n.localize(SDM.abilities[key])})`);
     if (isDamageRoll && versatile) parts.push(`(${versatileLabel})`);
     if (rollModifier !== 0) parts.push(`(${rollModifierLabel})`);
     if (heroicDice > 0) parts.push(`(hero ${heroicDice}d6)`)
@@ -298,16 +297,16 @@ export class RollHandler {
     return mod + heroicDice;
   }
 
-  static calculateStatModifier(actor, key, skill, modifier = '', burdenPenalTy = 0) {
+  static calculateStatModifier(actor, key, attack, modifier = '', burdenPenalTy = 0) {
     let expertise = 0;
     let hasExpertise = false;
 
     const components = this.parseModifierString(modifier);
     const { fixedValues, diceTerms } = this.separateFixedAndDice([...components, `${-burdenPenalTy}`]);
 
-    if (skill) {
-      const skillData = actor.system[skill];
-      expertise = skillData.bonus;
+    if (attack) {
+      const attackData = actor.system[attack];
+      expertise = attackData.bonus;
     }
     const fixedValuesTotal = fixedValues.reduce((acc, fixVal) => acc + fixVal, 0);
     let baseAbility;

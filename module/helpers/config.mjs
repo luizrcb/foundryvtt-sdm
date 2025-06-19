@@ -66,7 +66,8 @@ SDM.rollSource = {
   'ability': abilitiesLabel,
   'skill': 'SDM.Actor.Character.FIELDS.skills.label',
   'gear': 'TYPES.Item.gear',
-  'weapon': 'TYPES.Item.weapon'
+  'weapon': 'TYPES.Item.weapon',
+  'attack': 'Attack',
 };
 
 SDM.damageMultiplier = {

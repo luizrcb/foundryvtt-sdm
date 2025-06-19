@@ -34,6 +34,26 @@ export default class SdmCharacter extends SdmActorBase {
       ...requiredInteger, initial: 0,
     });
 
+    schema.mental_defense = new fields.NumberField({
+      ...requiredInteger, initial: 0,
+    });
+
+    schema.mental_defense_bonus = new fields.NumberField({
+      ...requiredInteger, initial: 0,
+    });
+
+    schema.social_defense = new fields.NumberField({
+      ...requiredInteger, initial: 0,
+    });
+
+    schema.social_defense_bonus = new fields.NumberField({
+      ...requiredInteger, initial: 0,
+    });
+
+    schema.ward = new fields.NumberField({
+      ...requiredInteger, initial: 0,
+    }); // bonus to all save rolls
+
     schema.trait_slots_bonus = new fields.NumberField({
       ...requiredInteger, initial: 0,
     });
@@ -92,9 +112,7 @@ export default class SdmCharacter extends SdmActorBase {
         initial: 4,
         min: 0,
       }),
-
-      //TODO how to handle life and life bonuses?
-      max: new fields.NumberField({ ...requiredInteger, initial: 5, min: 5 }),
+      max: new fields.NumberField({ ...requiredInteger, initial: 4, min: 4 }),
       min: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0, max: 0 }),
       bonus: new fields.NumberField({ ...requiredInteger, initial: 0 }),
       imbued: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 }),
@@ -217,6 +235,9 @@ export default class SdmCharacter extends SdmActorBase {
           bonus: new fields.NumberField({
             ...requiredInteger, initial: 0,
           }),
+          save_bonus: new fields.NumberField({
+            ...requiredInteger, initial: 0,
+          }),
         });
         return obj;
       }, {})
@@ -269,9 +290,7 @@ export default class SdmCharacter extends SdmActorBase {
     }
 
     data.life = this.life
-    data.lvl = this.level;;
-    data.bonus = this.bonus;
-    data.armor = this.armor;
+    data.lvl = this.level;
     data.hero_dice = this.hero_dice;
     data.initiative_bonus = this.initiative_bonus;
     data.burden_penalty = this.burden_penalty;
