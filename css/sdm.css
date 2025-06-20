@@ -544,6 +544,9 @@
   font-size: 15px;
   margin-right: 5px;
 }
+.sdm .saveIcon {
+  font-size: 16px;
+}
 .sdm :root {
   --sdm-c-dark: #191813;
   --sdm-c-faint: #c9c7b8;

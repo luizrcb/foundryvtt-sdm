@@ -226,20 +226,26 @@ export class SdmActor extends Actor {
     const data = this.system;
 
     data.armor = this.getArmor();
-    // data.prestige = this.getPrestige();
-    // data.ward = this.getWard();
 
-    const baseDefense = game.settings.get("sdm", "baseDefense");
+    const baseDefense = game.settings.get("sdm", "baseDefense") || BASE_DEFENSE_VALUE;
+    const baseMentalDefense = game.settings.get("sdm", "baseMentalDefense") || BASE_DEFENSE_VALUE;
+    const baseSocialDefense = game.settings.get("sdm", "baseSocialDefense") || BASE_DEFENSE_VALUE;
+
     const bonusDefense = data.defense_bonus || 0;
-    const BASE_DEFENSE = baseDefense || BASE_DEFENSE_VALUE;
+    const mentalDefenseBonus = data.mental_defense_bonus || 0;
+    const socialDefenseBonus = data.social_defense_bonus || 0;
+
     const agility = data.abilities['agi'];
     const thought = data.abilities['tho'];
+    const charisma = data.abilities['cha'];
 
-    const calculatedDefense = BASE_DEFENSE + agility.current + agility.bonus + data.armor + bonusDefense;
+    const calculatedDefense = baseDefense + agility.current + agility.bonus + data.armor + bonusDefense;
+    const calculatedMentalDefense = baseMentalDefense + thought.current + thought.bonus + data.ward + mentalDefenseBonus;
+    const calculatedSocialDefense =  baseSocialDefense + charisma.current + charisma.bonus + data.prestige + socialDefenseBonus;
 
     data.defense = Math.min(calculatedDefense, MAX_ATTRIBUTE_VALUE);
-    // data.mental_defense =
-    // data.social_defense =
+    data.mental_defense = Math.min(calculatedMentalDefense, MAX_ATTRIBUTE_VALUE);
+    data.social_defense = Math.min(calculatedSocialDefense, MAX_ATTRIBUTE_VALUE);
 
     const burdenPenalty = this.getBurdenPenalty();
 

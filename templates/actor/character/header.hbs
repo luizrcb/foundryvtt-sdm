@@ -132,7 +132,18 @@
             {{localize 'SDM.Actor.Character.FIELDS.defense.label'}}
           </label>
           <div class='resource-content flexrow flex-center flex-between'>
-            <input type='text' name='system.defense' value='{{system.defense}}' data-dtype='Number' disabled />
+            <div title="Physical defense">
+              <i class="fas fa-shield-alt"></i>
+              <span id="system.defense">{{system.defense}}</span>
+            </div>
+            <div title="Mental defense">
+              <i class="fas fa-brain-circuit"></i>
+              <span id="system.mental_defense">{{system.mental_defense}}</span>
+            </div>
+            <div title="Social defense">
+              <i class="fas fa-crown"></i>
+              <span id="system.social_defense">{{system.social_defense}}</span>
+            </div>
           </div>
         </div>
         {{/if}}
@@ -175,12 +186,16 @@
             <div class="main grid-span-1">
               <div class='ability flexrow flex-group-center'>
                 <span class='resource-label rollable' data-action='roll' data-context='rollable'
-                  data-key="{{key}}" data-label='{{localize (lookup @root.config.abilities key)}}'>{{localize (lookup
-                  @root.config.abilities key)}}</span>
+                  data-key="{{key}}" data-label='{{localize (lookup @root.config.abilities key)}}' title='{{localize (lookup @root.config.abilities key)}}'>
+                  {{toUpperCase (localize (lookup @root.config.abilityAbbreviations key))}}
+                </span>
                 <input type='text' name='system.abilities.{{key}}.full' value='{{ability.full}}' class="ability-score"
                   data-dtype='Number' />
                 <input type='text' name='system.abilities.{{key}}.current' value='{{ability.current}}'
                   class="ability-score" data-dtype='Number' />
+                <div class='rollable flexrow' data-roll-type='item' data-action='roll' title="{{localize (lookup @root.config.abilities key)}} saving throw">
+                  <i class="fas {{saveIcon key}} saveIcon"></i>
+                </div>
               </div>
             </div>
             {{/each}}

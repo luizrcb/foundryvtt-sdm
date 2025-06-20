@@ -200,7 +200,27 @@ Hooks.once('init', function () {
 
   game.settings.register("sdm", "baseDefense", {
     name: "Base Defense",
-    hint: "Base defense value for characters",
+    hint: "Base physical defense value for characters",
+    scope: "world", // "world" = GM only, "client" = per user
+    restricted: true,
+    config: true, // Show in configuration view
+    type: Number, // Data type: String, Number, Boolean, etc
+    default: 7,
+  });
+
+   game.settings.register("sdm", "baseMentalDefense", {
+    name: "Base Mental Defense",
+    hint: "Base mental defense value for characters",
+    scope: "world", // "world" = GM only, "client" = per user
+    restricted: true,
+    config: true, // Show in configuration view
+    type: Number, // Data type: String, Number, Boolean, etc
+    default: 7,
+  });
+
+   game.settings.register("sdm", "baseSocialDefense", {
+    name: "Base Social Defense",
+    hint: "Base social defense value for characters",
     scope: "world", // "world" = GM only, "client" = per user
     restricted: true,
     config: true, // Show in configuration view
@@ -255,7 +275,7 @@ Hooks.once('init', function () {
     restricted: true,
     config: true, // Show in configuration view
     type: Boolean, // Data type: String, Number, Boolean, etc
-    default: true,
+    default: false,
   });
 
   //Preload Handlebars templates.
@@ -269,6 +289,14 @@ Hooks.once('init', function () {
 // If you need to add Handlebars helpers, here is a useful example:
 Handlebars.registerHelper('toLowerCase', function (str) {
   return str.toLowerCase();
+});
+
+Handlebars.registerHelper('toUpperCase', function (str) {
+  return str.toUpperCase();
+});
+
+Handlebars.registerHelper('saveIcon', function (abilityKey) {
+  return SDM.abilitySaveIcons[abilityKey];
 });
 
 // some one to an index

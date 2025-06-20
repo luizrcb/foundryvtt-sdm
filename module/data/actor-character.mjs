@@ -32,7 +32,7 @@ export default class SdmCharacter extends SdmActorBase {
 
     schema.defense_bonus = new fields.NumberField({
       ...requiredInteger, initial: 0,
-    });
+    }); // skills are applied here
 
     schema.mental_defense = new fields.NumberField({
       ...requiredInteger, initial: 0,
@@ -40,7 +40,7 @@ export default class SdmCharacter extends SdmActorBase {
 
     schema.mental_defense_bonus = new fields.NumberField({
       ...requiredInteger, initial: 0,
-    });
+    }); // skills are applied here
 
     schema.social_defense = new fields.NumberField({
       ...requiredInteger, initial: 0,
@@ -48,9 +48,13 @@ export default class SdmCharacter extends SdmActorBase {
 
     schema.social_defense_bonus = new fields.NumberField({
       ...requiredInteger, initial: 0,
-    });
+    }); // skills are applied here
 
     schema.ward = new fields.NumberField({
+      ...requiredInteger, initial: 0,
+    }); // bonus to all save rolls
+
+    schema.prestige = new fields.NumberField({
       ...requiredInteger, initial: 0,
     }); // bonus to all save rolls
 
@@ -72,14 +76,6 @@ export default class SdmCharacter extends SdmActorBase {
     });
 
     schema.burden_slots_bonus = new fields.NumberField({
-      ...requiredInteger, initial: 0,
-    });
-
-    schema.physical_save_bonus = new fields.NumberField({
-      ...requiredInteger, initial: 0,
-    });
-
-    schema.mental_save_bonus = new fields.NumberField({
       ...requiredInteger, initial: 0,
     });
 

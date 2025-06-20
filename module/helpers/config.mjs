@@ -16,6 +16,21 @@ SDM.abilities = {
   tho: 'SDM.Ability.Tho.long',
 }
 
+SDM.abilitySaveIcons = {
+  str: 'fas fa-fist-raised',
+  end: 'fas fa-heartbeat', //'fas fa-shield-alt',
+  agi: 'fas fa-running',
+  cha: 'fas fa-clover', //'fas fa-crown',
+  aur: 'fas fa-sparkles',
+  tho: 'fas fa-brain',//'fas fa-brain',
+}
+
+SDM.defenseIcons = {
+  physical: 'fas fa-shield-alt',
+  mental: 'fa-brain-circuit',
+  social: 'fas fa-crown',
+}
+
 SDM.abilityAbbreviations = {
   str: 'SDM.Ability.Str.abbr',
   end: 'SDM.Ability.End.abbr',
