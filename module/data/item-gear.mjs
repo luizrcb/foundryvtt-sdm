@@ -27,7 +27,7 @@ export default class SdmGear extends SdmItemBase {
     schema.roll_formula = new fields.StringField({
       required: false, blank: true, initial: '',
       validate: v => !v || v && foundry.dice.Roll.validate(v),
-      validationError: "must be a valid Roll formula",
+      validationError: game.i18n.localize("SDM.ErrorValidationRollFormula"),
     });
 
     schema.is_armor = new fields.BooleanField({
@@ -66,17 +66,17 @@ export default class SdmGear extends SdmItemBase {
       base: new fields.StringField({
         required: false, blank: true, initial: '',
         validate: v => !v || v && foundry.dice.Roll.validate(v),
-        validationError: "must be a valid Roll formula",
+        validationError: game.i18n.localize("SDM.ErrorValidationRollFormula"),
       }),
       versatile: new fields.StringField({
         required: false, blank: true, initial: '',
         validate: v => !v || v && foundry.dice.Roll.validate(v),
-        validationError: "must be a valid Roll formula",
+        validationError: game.i18n.localize("SDM.ErrorValidationRollFormula"),
       }),
       bonus: new fields.StringField({
         required: false, blank: true, initial: '',
         validate: v => !v || v && foundry.dice.Roll.validate(v),
-        validationError: "must be a valid Roll formula",
+        validationError: game.i18n.localize("SDM.ErrorValidationRollFormula"),
       }),
     });
 

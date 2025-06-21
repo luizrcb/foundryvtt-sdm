@@ -49,7 +49,7 @@ export default class SdmTrait extends SdmItemBase {
     schema.roll_formula = new fields.StringField({
       required: false, blank: true, initial: '',
       validate: v => !v || v && foundry.dice.Roll.validate(v),
-      validationError: "must be a valid Roll formula",
+      validationError: game.i18n.localize("SDM.ErrorValidationRollFormula"),
     });
 
     return schema;

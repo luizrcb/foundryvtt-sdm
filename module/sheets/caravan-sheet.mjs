@@ -112,6 +112,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     const content = `
       <div class="custom-roll-modal">
         <h2>Roll for ${title}</h2>
+        <h2>{{localize 'SDM.Roll.Title' prefix='' title='${title}'}}</h2>
         <form class="custom-roll-form">
         ${rolledFrom !== 'Abilities' ? `<div class="form-group">
             <label>${game.i18n.localize(CONFIG.SDM.abilitiesLabel)}</label>

@@ -1,3 +1,5 @@
+import { ActorType } from "./constants.mjs";
+
 export const BASE_DEFENSE_VALUE = 7;
 export const MAX_ATTRIBUTE_VALUE = 19;
 export const MAX_MODIFIER = 13;
@@ -68,7 +70,7 @@ export function getCreatureStatsByLevel(level = MIN_LEVEL) {
   return levelData[level];
 }
 
-export function getActorOptions(actorType = 'character') {
+export function getActorOptions(actorType = ActorType.CHARACTER) {
   const actors = game.actors.filter((actor) => actor.type === actorType);
   return actors.map((actor) => ({
     id: actor.id,

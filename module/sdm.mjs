@@ -90,7 +90,7 @@ Hooks.on("renderChatMessageHTML", (message, html, data) => {
   btn.appendChild(icon);
 
   // Add localized text
-  btn.append(` ${game.i18n.localize("SDM.Rolls.useHeroDice")}`);
+  btn.append(` ${game.i18n.localize("SDM.RollUseHeroDice")}`);
 
   // Create container div
   const container = document.createElement('div');
@@ -208,7 +208,7 @@ Hooks.once('init', function () {
     default: 7,
   });
 
-   game.settings.register("sdm", "baseMentalDefense", {
+  game.settings.register("sdm", "baseMentalDefense", {
     name: "Base Mental Defense",
     hint: "Base mental defense value for characters",
     scope: "world", // "world" = GM only, "client" = per user
@@ -218,7 +218,7 @@ Hooks.once('init', function () {
     default: 7,
   });
 
-   game.settings.register("sdm", "baseSocialDefense", {
+  game.settings.register("sdm", "baseSocialDefense", {
     name: "Base Social Defense",
     hint: "Base social defense value for characters",
     scope: "world", // "world" = GM only, "client" = per user
@@ -295,6 +295,18 @@ Handlebars.registerHelper('toUpperCase', function (str) {
   return str.toUpperCase();
 });
 
+Handlebars.registerHelper('toPascalCase', function (str) {
+  const words = str.match(/[a-zA-Z\u00C0-\u024F\u1E00-\u1EFF]+/gi);
+  if (!words) {
+    return '';
+  }
+  return words
+    .map(function (word) {
+      return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
+    })
+    .join(' ');
+});
+
 Handlebars.registerHelper('saveIcon', function (abilityKey) {
   return SDM.abilitySaveIcons[abilityKey];
 });
@@ -346,6 +358,17 @@ Handlebars.registerHelper('slotsTaken', function (container, options) {
   }, 0);
   return slotsTaken;
 });
+
+
+Handlebars.registerHelper("dynamicHTML", function (context, options) {
+  // Create a safe string from the compiled HTML
+  return new Handlebars.SafeString(
+    Handlebars.compile(context)(this)
+  );
+});
+
+
+
 
 
 /* -------------------------------------------- */

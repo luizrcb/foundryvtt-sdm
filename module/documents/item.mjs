@@ -116,7 +116,7 @@ export class SdmItem extends Item {
       finalRoll = damage?.base || '';
       if (versatile && damageMode === 'versatile' && damage.versatile) {
         finalRoll = damage.versatile;
-        label += ` (${game.i18n.localize('SDM.Item.Features.versatile.label')})`
+        label += ` (${game.i18n.localize('SDM.FeatureVersatile')})`
       }
     }
 

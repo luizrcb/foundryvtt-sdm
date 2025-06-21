@@ -74,7 +74,7 @@ export default class SdmCarvan extends SdmActorBase {
     schema.initiative = new fields.StringField({
       required: true, initial: '',
       validate: v => foundry.dice.Roll.validate(v),
-      validationError: "must be a valid Roll formula",
+      validationError: game.i18n.localize("SDM.ErrorValidationRollFormula"),
     });
 
     schema.assets = new fields.ArrayField(
@@ -124,7 +124,6 @@ export default class SdmCarvan extends SdmActorBase {
 
     for (let hero of this.heroes) {
       const actor = fromUuidSync(hero.heroId);
-      // console.log(actor.getPassengerWeight())
       if (!actor) {
         continue;
       }

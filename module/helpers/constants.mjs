@@ -1,3 +1,8 @@
+export const DocumentType = Object.freeze({
+  ITEM: 'Item',
+  ACTOR: 'Actor',
+});
+
 export const RangeOption = Object.freeze({
   MELEE: 'melee',
   SHORT: 'short',
@@ -29,7 +34,7 @@ export const AttackType = Object.freeze({
   RANGED: 'ranged',
   FANTASCIENCE: 'fantascience',
   OLDTECH: 'oldtech',
-})
+});
 
 export const ItemType = Object.freeze({
   GEAR: 'gear',
@@ -73,6 +78,15 @@ export const SpeedType = Object.freeze({
   VERY_FAST: 'very_fast',
 });
 
+export const DiceType = Object.freeze({
+  d4: 'd4',
+  d6: 'd6',
+  d8: 'd8',
+  d10: 'd10',
+  d12: 'd12',
+  d20: 'd20',
+});
+
 export const Die = Object.freeze({
   d4: 4,
   d6: 6,
@@ -82,7 +96,7 @@ export const Die = Object.freeze({
   d20: 20,
 });
 
-export const DieScale = Object.keys(Die);
+export const DieScale = Object.values(DiceType);
 
 export const SkillMod = Object.freeze({
   '': 0,

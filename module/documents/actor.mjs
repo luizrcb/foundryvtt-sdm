@@ -6,7 +6,8 @@ import {
   CHARACTER_DEFAULT_WEIGHT_IN_CASH,
 } from '../helpers/actorUtils.mjs';
 import { ActorType, ItemType, SizeUnit } from '../helpers/constants.mjs';
-import { BURDEN_ITEM_TYPES, convertToCash, GEAR_ITEM_TYPES, TRAIT_ITEM_TYPES } from '../helpers/itemUtils.mjs';
+import { safeEvaluate } from '../helpers/globalUtils.mjs';
+import { BURDEN_ITEM_TYPES, convertToCash, GEAR_ITEM_TYPES } from '../helpers/itemUtils.mjs';
 
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
@@ -20,10 +21,10 @@ export class SdmActor extends Actor {
     await super._onUpdate(changed, options, userId);
 
     if (changed.system?.player_experience !== undefined) {
-      let resultingExperience = eval(`${changed.system?.player_experience}`.trim());
+      let resultingExperience = safeEvaluate(`${changed.system?.player_experience}`.trim());
       resultingExperience = parseInt(resultingExperience, 10);
       await this.update({
-        "system.player_experience": `${resultingExperience}`,
+        "system.player_experience": `${resultingExperience.toString()}`,
       });
     }
 
@@ -31,7 +32,7 @@ export class SdmActor extends Actor {
       //TODO: add a better library to safely evaluate expressions
 
       // TODO: let's add the additional life to max and current values, but taking bonuses into account
-      let resultingExperience = eval(`${changed.system?.experience}`.trim());
+      let resultingExperience = safeEvaluate(`${changed.system?.experience}`.trim());
       resultingExperience = parseInt(resultingExperience, 10);
       const newLevel = getLevel(resultingExperience);
       const maxLife = getMaxLife(newLevel);
@@ -43,7 +44,7 @@ export class SdmActor extends Actor {
 
       const remainingLife = maxLife - currentLostLife;
       await this.update({
-        "system.experience": `${resultingExperience}`,
+        "system.experience": `${resultingExperience.toString()}`,
         "system.level": newLevel,
         "system.hero_dice.max": Math.max(maxHeroDice, 1),
         "system.hero_dice.value": Math.min(remainingHeroDice, maxHeroDice),

@@ -3,7 +3,7 @@
   <ol class='items-list'>
     <li class='item flexrow items-header'>
       <div class='item-name'></div>
-      <div class='item-formula'>Items [{{@root.gearSlotsTaken}}/{{@root.system.item_slots}}]</div>
+      <div class='item-formula'>{{localize 'SDM.InventoryItems'}} [{{@root.gearSlotsTaken}}/{{@root.system.item_slots}}]</div>
       <div class='item-controls'>
         {{#if @root.editable}}
         <a class='item-control item-create' title='{{localize "DOCUMENT.Create" type=' item'}}' data-action='createDoc'

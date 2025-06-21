@@ -1,0 +1,25 @@
+<div class="custom-roll">
+  <div class="dice-roll" data-action="expandRoll">
+    <div class="dice-result">
+      <div class="dice-formula">{{formula}}</div>
+       {{{dynamicHTML rollTooltip}}}
+      <div class="dice-total">{{total}}</div>
+    </div>
+  </div>
+
+  <div class="custom-result" style="
+    text-align: center;
+    margin-top: 10px;
+    padding: 5px;
+    border: 2px solid;
+    border-radius: 5px;
+    background: rgba(0, 0, 0, 0.1);
+    border-color: {{borderColor}};">
+    <h4 style="margin:0; text-transform: uppercase;">{{outcome}}</h4>
+    <p style="margin:0; font-size: 14px;">{{message}}</p>
+  </div>
+
+  <div style="margin-top: 8px; font-size: 12px; opacity: 0.7;">
+    {{targetLabel}}: {{targetNumber}}
+  </div>
+</div>

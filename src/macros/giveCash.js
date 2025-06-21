@@ -30,7 +30,7 @@ const content = `
 
 const data = await DialogV2.wait({
   window: {
-    title: "Cash Management",
+    title: game.i18n.localize("SDM.CashManagement"),
     resizable: false
   },
   modal: true,

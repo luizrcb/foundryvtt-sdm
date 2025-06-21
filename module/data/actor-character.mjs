@@ -19,7 +19,7 @@ export default class SdmCharacter extends SdmActorBase {
     schema.initiative = new fields.StringField({
       required: false, blank: true, initial: '',
       validate: v => !v || foundry.dice.Roll.validate(v),
-      validationError: "must be a valid Roll formula",
+      validationError: game.i18n.localize("SDM.ErrorValidationRollFormula"),
     });
 
     schema.initiative_bonus = new fields.NumberField({
@@ -160,7 +160,7 @@ export default class SdmCharacter extends SdmActorBase {
       name: new foundry.data.fields.StringField({
         required: true,
         blank: false,
-        initial: game.i18n.localize('SDM.attacks.melee'),
+        initial: game.i18n.localize('SDM.AttackMelee'),
       }),
       bonus: new fields.NumberField({
         ...requiredInteger, initial: 0,
@@ -172,7 +172,7 @@ export default class SdmCharacter extends SdmActorBase {
       name: new foundry.data.fields.StringField({
         required: true,
         blank: false,
-        initial: game.i18n.localize('SDM.attacks.ranged'),
+        initial: game.i18n.localize('SDM.AttackRanged'),
       }),
       bonus: new fields.NumberField({
         ...requiredInteger, initial: 0,
@@ -184,7 +184,7 @@ export default class SdmCharacter extends SdmActorBase {
       name: new foundry.data.fields.StringField({
         required: true,
         blank: false,
-        initial: game.i18n.localize('SDM.attacks.oldtech'),
+        initial: game.i18n.localize('SDM.AttackOldtech'),
       }),
       bonus: new fields.NumberField({
         ...requiredInteger, initial: 0,
@@ -199,7 +199,7 @@ export default class SdmCharacter extends SdmActorBase {
       name: new foundry.data.fields.StringField({
         required: true,
         blank: false,
-        initial: game.i18n.localize('SDM.attacks.fantascience'),
+        initial: game.i18n.localize('SDM.AttackFantascience'),
       }),
       bonus: new fields.NumberField({
         ...requiredInteger, initial: 0,

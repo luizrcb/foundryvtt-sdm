@@ -14,7 +14,7 @@ export default class SdmNPC extends SdmActorBase {
     schema.initiative = new fields.StringField({
       required: true, initial: '2d6kl',
       validate: v => foundry.dice.Roll.validate(v),
-      validationError: "must be a valid Roll formula",
+      validationError: game.i18n.localize("SDM.ErrorValidationRollFormula"),
     });
 
     schema.level = new fields.NumberField({
@@ -41,7 +41,7 @@ export default class SdmNPC extends SdmActorBase {
     schema.damage = new fields.StringField({
       required: true, initial: '1d4',
       validate: v => foundry.dice.Roll.validate(v),
-      validationError: "must be a valid Roll formula",
+      validationError: game.i18n.localize("SDM.ErrorValidationRollFormula"),
     });
 
     schema.cost = new fields.StringField({ required: false, nullable: true });

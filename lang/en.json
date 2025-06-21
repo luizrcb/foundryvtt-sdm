@@ -1,303 +1,187 @@
 {
-  "SDM": {
-    "Ability": {
-      "Str": {
-        "long": "Strength",
-        "abbr": "str"
-      },
-      "End": {
-        "long": "Endurance",
-        "abbr": "end"
-      },
-      "Agi": {
-        "long": "Agility",
-        "abbr": "agi"
-      },
-      "Cha": {
-        "long": "Charisma",
-        "abbr": "cha"
-      },
-      "Aur": {
-        "long": "Aura",
-        "abbr": "aur"
-      },
-      "Tho": {
-        "long": "Thought",
-        "abbr": "tho"
-      }
-    },
-    "SheetLabels": {
-      "Actor": "Sdm Actor Sheet",
-      "Item": "Sdm Item Sheet"
-    },
-    "Actor": {
-      "Tabs": {
-        "Biography": "Biography",
-        "Features": "Inventory",
-        "Gear": "Gear",
-        "Spells": "Spells",
-        "Effects": "Effects"
-      },
-      "base": {
-        "FIELDS": {
-          "biography": {
-            "label": "Biography"
-          },
-          "life": {
-            "value": {
-              "label": "Remaining Life"
-            },
-            "max": {
-              "label": "Life"
-            }
-          }
-        }
-      },
-      "Character": {
-        "FIELDS": {
-          "name": {
-            "label": "Name"
-          },
-          "armor": {
-            "label": "Armor"
-          },
-          "bonus": {
-            "label": "Bonus"
-          },
-          "defense": {
-            "label": "Defense"
-          },
-          "experience": {
-            "label": "Character Experience"
-          },
-          "player_experience": {
-            "label": "Player Experience"
-          },
-          "level": {
-            "label": "Level"
-          },
-          "save_target": {
-            "label": "Save"
-          },
-          "skills": {
-            "label": "Skills"
-          },
-          "abilities": {
-            "label": "Ability",
-            "labelPl": "Abilities"
-          },
-          "friends": {
-            "label": "Friends"
-          },
-          "enemies": {
-            "label": "Enemies"
-          },
-          "likes": {
-            "label": "Likes"
-          },
-          "species": {
-            "label": "Species"
-          },
-          "looks": {
-            "label": "Looks"
-          },
-          "fatigue": {
-            "label": "Fatigue"
-          }
-        },
-        "Skills": {
-          "expertise": "expertise"
-        }
-      },
-      "Caravan": {},
-      "NPC": {
-        "FIELDS": {
-          "cr": {
-            "label": "CR"
-          }
-        },
-        "xp": {
-          "label": "XP"
-        }
-      }
-    },
-    "Item": {
-      "Tabs": {
-        "Attributes": "Attributes",
-        "Description": "Description",
-        "Effects": "Effects"
-      },
-      "base": {
-        "FIELDS": {
-          "cost": {
-            "label": "Cost"
-          },
-          "quantity": {
-            "label": "Quantity"
-          },
-          "size": {
-            "value": {
-              "label": "Size"
-            },
-            "unit": {
-              "label": "Unit"
-            }
-          }
-        }
-      },
-      "Armor": {
-        "FIELDS": {
-          "armor": {
-            "label": "Armor"
-          },
-          "type": {
-            "label": "Type"
-          },
-          "size": {
-            "value": {
-              "label": "Size"
-            },
-            "unit": {
-              "label": "Unit"
-            }
-          }
-        },
-        "Type": {
-          "shield": "shield",
-          "light": "light",
-          "medium": "medium",
-          "heavy": "heavy"
-        }
-      },
-      "Mount": {
-        "FIELDS": {
-          "level": {
-            "label": "Level"
-          },
-          "requires": {
-            "label": "Requires"
-          },
-          "capacity": {
-            "label": "Capacity"
-          },
-          "pulledLoad": {
-            "motorId": {
-              "label": "Pulled Motor"
-            },
-            "mode": {
-              "label": "Mode"
-            }
-          },
-          "riders": {
-            "label": "Riders"
-          }
-        },
-        "PullMode": {
-          "carting": "carting",
-          "dragging": "dragging",
-          "flying": "flying"
-        }
-      },
-      "Motor": {
-        "FIELDS": {}
-      },
-      "Spell": {
-        "FIELDS": {
-          "level": {
-            "label": "Spell Level"
-          }
-        },
-        "SpellLVL": "Level {level} Spells",
-        "AddLVL": "Add LVL {level}"
-      },
-      "Size": {
-        "Unit": {
-          "sacks": "sacks",
-          "stones": "stones",
-          "soaps": "soaps",
-          "cash": "cash"
-        }
-      },
-      "Range": {
-        "melee": "melee",
-        "short": "short",
-        "long": "long",
-        "extreme": "extreme"
-      },
-      "Features": {
-        "versatile": {
-          "label": "versatile"
-        }
-      }
-    },
-    "Effect": {
-      "Source": "Source",
-      "Toggle": "Toggle Effect",
-      "Temporary": "Temporary Effects",
-      "Passive": "Passive Effects",
-      "Inactive": "Inactive Effects"
-    },
-    "Status": {
-      "encumbered": "encumbered",
-      "slow": "slow",
-      "blind": "blind"
-    },
-    "Rolls": {
-      "normal": {
-        "label": "normal"
-      },
-      "advantage": {
-        "label": "advantage",
-        "abbr": "↑a"
-      },
-      "disadvantage": {
-        "label": "disadvantage",
-        "abbr": "↓d"
-      },
-      "modifier": {
-        "label": "Modifier"
-      },
-      "rollType": {
-        "label": "Roll Type"
-      },
-      "useHeroDice": "Use Hero Dice"
-    },
-    "attacks": {
-      "melee": "Melee",
-      "ranged": "Ranged",
-      "oldtech": "Oldtech",
-      "fantascience": "Fantascience"
-    },
-    "SpeedType": {
-      "very_slow": "Very Slow",
-      "slow": "Slow",
-      "standard": "Standard",
-      "fast": "Fast",
-      "very_fast": "Very Fast"
-    },
-    "EscalatorDie": "Escalator Die",
-    "EscalatorDieControl": "Escalator Die Control",
-    "Increment": "Increase by 1",
-    "Reset": "Reset to 0",
-    "EscalatorDieHint": "Current bonus added to all rolls",
-    "HealingHouseRuleHint": "Rolls twice the amount of hero dice spent and keep the highest result",
-    "AbilityScoreGeneration": "Roll Ability Scores"
-  },
-  "TYPES": {
-    "Actor": {
-      "caravan": "Caravan",
-      "character": "Character",
-      "npc": "NPC"
-    },
-    "Item": {
-      "armor": "Armor",
-      "burden": "Burden",
-      "trait": "Trait",
-      "gear": "Gear",
-      "mount": "Mount",
-      "spell": "Spell",
-      "motor": "Motor",
-      "weapon": "Weapon"
-    }
-  }
+  "SDM.AbilityStr": "Strength",
+  "SDM.AbilityStrAbbr": "str",
+  "SDM.AbilityEnd": "Endurance",
+  "SDM.AbilityEndAbbr": "end",
+  "SDM.AbilityAgi": "Agility",
+  "SDM.AbilityAgiAbbr": "agi",
+  "SDM.AbilityCha": "Charisma",
+  "SDM.AbilityChaAbbr": "cha",
+  "SDM.AbilityAur": "Aura",
+  "SDM.AbilityAurAbbr": "aur",
+  "SDM.AbilityTho": "Thought",
+  "SDM.AbilityThoAbbr": "tho",
+
+  "SDM.AttackMelee": "Melee",
+  "SDM.AttackRanged": "Ranged",
+  "SDM.AttackOldtech": "Oldtech",
+  "SDM.AttackFantascience": "Fantascience",
+
+  "SDM.SheetActor": "SDM Actor Sheet",
+  "SDM.SheetItem": "SDM Item Sheet",
+  "SDM.TabBiography": "Biography",
+  "SDM.TabInventory": "Inventory",
+  "SDM.InventoryItems": "Items",
+  "SDM.InventoryTraits": "Traits",
+  "SDM.InventoryBurdens": "Burdens",
+  "SDM.TabEffects": "Effects",
+
+  "SDM.FieldAbilities": "Ability",
+  "SDM.FieldAbilitiesPl": "Abilities",
+  "SDM.FieldArmor": "Armor",
+  "SDM.FieldBiography": "Biography",
+  "SDM.FieldBonus": "Bonus",
+  "SDM.FieldCharXP": "Character XP",
+  "SDM.FieldDefense": "Defense",
+  "SDM.FieldEnemies": "Enemies",
+  "SDM.FieldFatigue": "Fatigue",
+  "SDM.FieldFriends": "Friends",
+  "SDM.FieldHeroDice": "Hero Dice",
+  "SDM.FieldLevel": "Level",
+  "SDM.FieldLife": "Remaining Life",
+  "SDM.FieldLifeMax": "Life",
+  "SDM.FieldLikes": "Likes",
+  "SDM.FieldLooks": "Looks",
+  "SDM.FieldName": "Name",
+  "SDM.FieldPlayerXP": "Player XP",
+  "SDM.FieldSaveTarget": "Save",
+  "SDM.FieldSkills": "Skills",
+  "SDM.FieldSpecies": "Species",
+
+  "SDM.SkillExpertise": "Expertise",
+  "SDM.NpcCr": "CR",
+  "SDM.NpcXp": "XP",
+
+  "SDM.ItemTabAttributes": "Attributes",
+  "SDM.ItemTabDescription": "Description",
+  "SDM.ItemTabEffects": "Effects",
+  "SDM.ItemCost": "Cost",
+  "SDM.ItemQuantity": "Quantity",
+  "SDM.ItemSizeValue": "Size",
+  "SDM.ItemSizeUnit": "Unit",
+  "SDM.ItemArmor": "Armor",
+  "SDM.ItemArmorType": "Type",
+  "SDM.ArmorTypeShield": "shield",
+  "SDM.ArmorTypeLight": "light",
+  "SDM.ArmorTypeMedium": "medium",
+  "SDM.ArmorTypeHeavy": "heavy",
+  "SDM.ItemMountLevel": "Level",
+  "SDM.ItemMountRequires": "Requires",
+  "SDM.ItemMountCapacity": "Capacity",
+  "SDM.ItemMountPulledMotor": "Pulled Motor",
+  "SDM.ItemMountPullMode": "Mode",
+  "SDM.ItemMountRiders": "Riders",
+  "SDM.PullModeCarting": "carting",
+  "SDM.PullModeDragging": "dragging",
+  "SDM.PullModeFlying": "flying",
+
+  "SDM.UnitSacks": "sacks",
+  "SDM.UnitStones": "stones",
+  "SDM.UnitSoaps": "soaps",
+  "SDM.UnitCash": "cash",
+
+  "SDM.RangeMelee": "melee",
+  "SDM.RangeShort": "short",
+  "SDM.RangeLong": "long",
+  "SDM.RangeExtreme": "extreme",
+  "SDM.FeatureVersatile": "versatile",
+  "SDM.EffectSource": "Source",
+  "SDM.EffectToggle": "Toggle Effect",
+  "SDM.EffectTemporary": "Temporary Effects",
+  "SDM.EffectPassive": "Passive Effects",
+  "SDM.EffectInactive": "Inactive Effects",
+  "SDM.StatusEncumbered": "encumbered",
+  "SDM.StatusSlow": "slow",
+  "SDM.StatusBlind": "blind",
+  "SDM.RollNormal": "normal",
+  "SDM.RollAdvantage": "advantage",
+  "SDM.RollAdvantageAbbr": "↑a",
+  "SDM.RollDisadvantage": "disadvantage",
+  "SDM.RollDisadvantageAbbr": "↓d",
+  "SDM.RollModifier": "Modifier",
+  "SMD.RollModifiers": "Modifiers",
+  "SDM.RollExplosion": "Explosion",
+  "SDM.RollDiceTotal": "Dice Total",
+  "SDM.RollType": "Roll Type",
+  "SDM.RollUseHeroDice": "Use Hero Dice",
+  "SDM.SavingThrowRoll": "{ability} Saving Throw Roll",
+
+  "SDM.HeroDiceSpend": "{actor} spent {quantity} {diceLabel}",
+
+  "SDM.HeroDie": "hero die",
+  "SDM.HeroDice": "hero dice",
+
+
+  "SDM.SpeedVerySlow": "Very Slow",
+  "SDM.SpeedSlow": "Slow",
+  "SDM.SpeedStandard": "Standard",
+  "SDM.SpeedFast": "Fast",
+  "SDM.SpeedVeryFast": "Very Fast",
+  "SDM.EscalatorDie": "Escalator Die",
+  "SDM.EscalatorDieControl": "Escalator Die Control",
+  "SDM.EscalatorIncrement": "Increase by 1",
+  "SDM.EscalatorReset": "Reset to 0",
+  "SDM.EscalatorHint": "Current bonus: +{value}",
+  "SDM.HealingHouseRule": "Roll {dice}x2, keep highest",
+  "SDM.AbilityScoreGen": "Roll Ability Scores",
+
+  "SDM.ButtonYes": "Yes",
+  "SDM.ButtonNo": "No",
+  "SDM.ButtonCancel": "Cancel",
+  "SDM.ButtonRoll": "Roll",
+  "SDM.ButtonCreate": "Create New",
+  "SDM.ButtonEdit": "Edit",
+  "SDM.ButtonDelete": "Delete",
+  "SDM.ButtonApply": "Apply",
+  "SDM.ButtonSave": "Save Changes",
+  "SDM.MessageRolling": "Rolling",
+  "SDM.MessageDamage": "Deals {damage} damage!",
+  "SDM.MessageCritical": "Critical hit!",
+
+  "SDM.Transfer": "Transfer {type}",
+
+  "SDM.TransferCashComplete": "Transferred {amount} cash to {target}",
+  "SDM.TransferItemComplete": "{item} transferred to {target}",
+
+  "SDM.Roll.Title": "{prefix}Roll: {title}",
+
+  "SDM.AllCharacters": "All Characters",
+
+  "SDM.CashManagement": "Cash Management",
+
+  "SDM.SavingThrowSacrifice": "SACRIFICE",
+  "SDM.SavingThrowSacrificeMessage": "Lose something precious to save.",
+  "SDM.SavingThrowSave": "SAVE",
+  "SDM.SavingThrowSaveMessage": "Disaster averted, fortune appeased.",
+  "SDM.SavingThrowDoom": "DOOM",
+  "SDM.SavingThrowDoomMessage": "What was, will be. No save.",
+
+  "SDM.ErrorValidationRollFormula": "must be a valid roll formula",
+  "SDM.ErrorNoActorSelected": "No valid actor was selected!",
+  "SDM.ErrorNoHeroDice": "No Hero Dice available!",
+  "SDM.ErrorActorNoHeroDice": "{actor} has no hero dice available for this roll!",
+  "SDM.ErrorInvalidModifier": "Invalid roll modifier",
+  "SDM.ErrorMissingDamageFormula": "Item doesn't have configured damage roll formula",
+  "SDM.ErrorInvalidTarget": "Invalid target actor",
+  "SDM.ErrorTransferItemNotAvailable": "Item is no longer available for transfer",
+  "SDM.ErrorTransferInvalidItemState": "Item state changed during transfer",
+  "SDM.ErrorTransferSessionExperied": "Transfer session expired",
+  "SDM.ErrorTransferTargetHasItem": "Target actor already has this item",
+  "SDM.ErrorTransferAmoutNotPositive": "Amount must be a positive number",
+  "SDM.ErrorTransferExcessCashAmount": "Cannot transfer more cash than available",
+
+  "SDM.DeleteDocConfirmation": "Delete {doc} permanently?",
+
+  "TYPES.Actor.caravan": "Caravan",
+  "TYPES.Actor.character": "Character",
+  "TYPES.Actor.npc": "NPC",
+  "TYPES.Item.armor": "Armor",
+  "TYPES.Item.burden": "Burden",
+  "TYPES.Item.trait": "Trait",
+  "TYPES.Item.gear": "Gear",
+  "TYPES.Item.mount": "Mount",
+  "TYPES.Item.spell": "Spell",
+  "TYPES.Item.motor": "Motor",
+  "TYPES.Item.weapon": "Weapon",
+  "TYPES.Item": "Item"
 }

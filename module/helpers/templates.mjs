@@ -6,10 +6,10 @@
 
 export const preloadHandlebarsTemplates = async function () {
   return foundry.applications.handlebars.loadTemplates([
-      'systems/sdm/templates/actor/gears.hbs',
-      'systems/sdm/templates/actor/traits.hbs',
-      'systems/sdm/templates/actor/burdens.hbs',
-      "systems/sdm/templates/actor/character/header.hbs",
-      "systems/sdm/templates/actor/npc/header.hbs"
+    'systems/sdm/templates/actor/gears.hbs',
+    'systems/sdm/templates/actor/traits.hbs',
+    'systems/sdm/templates/actor/burdens.hbs',
+    "systems/sdm/templates/actor/character/header.hbs",
+    "systems/sdm/templates/actor/npc/header.hbs"
   ]);
 };

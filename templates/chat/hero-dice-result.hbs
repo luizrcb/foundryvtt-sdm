@@ -1,6 +1,6 @@
 <div class="dice-roll" data-action="expandRoll">
   <div class="dice-result">
-    <div class="dice-formula">{{heroicTotal.length}}{{heroDiceType}} (hero dice)</div>
+    <div class="dice-formula">{{heroicTotal.length}}{{heroDiceType}} ({{toLowerCase (localize 'SDM.FieldHeroDice')}})</div>
     <div class="dice-tooltip">
       <div class="wrapper">
         <section class="tooltip-part">
@@ -26,7 +26,7 @@
         <section class="tooltip-part">
           <div class="dice">
             <header class="part-header">
-              <span class="part-formula">Hero dice {{heroicTotal.length}}{{heroDiceType}}</span>
+              <span class="part-formula">{{localize 'SDM.FieldHeroDice'}} {{heroicTotal.length}}{{heroDiceType}}</span>
             </header>
             <ol class="dice-rolls">
               {{#each heroicTotal as |heroicDice|}}
@@ -44,7 +44,7 @@
         {{#each explosions as |explosion|}}
         <div class="dice">
           <header class="part-header">
-            <span class="part-formula">Explosion {{addOne @index}}</span>
+            <span class="part-formula">{{localize 'SDM.RollExplosion'}} {{addOne @index}}</span>
           </header>
           <ol class="dice-rolls">
             {{#each explosion.chain as |chain|}}
@@ -63,7 +63,7 @@
         <section class="tooltip-part">
           <div class="dice">
             <header class="part-header">
-              <span class="part-formula">Dice Total {{#if multiplier}}({{multiplier}}){{/if}}</span>
+              <span class="part-formula">{{localize 'SDM.RollDiceTotal'}} {{#if multiplier}}({{multiplier}}){{/if}}</span>
             </header>
             <ol class="dice-rolls">
               <li><b>{{numberFormat diceTotal}}</b></li>
@@ -78,7 +78,7 @@
         <section class="tooltip-part">
           <div class="dice">
             <header class="part-header">
-              <span class="part-formula">Modifiers ({{modifiers.formula}})</span>
+              <span class="part-formula">{{localize 'SMD.RollModifiers'}} ({{modifiers.formula}})</span>
             </header>
             <ol class="dice-rolls">
               <li><b>{{numberFormat modifiers.result sign=true}}</b></li>

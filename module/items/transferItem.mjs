@@ -1,4 +1,4 @@
-import { ActorType } from "../helpers/constants.mjs";
+import { ActorType, DocumentType, SizeUnit } from "../helpers/constants.mjs";
 
 const { renderTemplate } = foundry.applications.handlebars;
 
@@ -6,7 +6,7 @@ export async function openItemTransferDialog(item, sourceActor) {
   const transferKey = `transfer-${item.id}-${Date.now()}-${foundry.utils.randomID(4)}`;
 
   try {
-    const updated = await sourceActor.updateEmbeddedDocuments("Item", [{
+    const updated = await sourceActor.updateEmbeddedDocuments(DocumentType.ITEM, [{
       _id: item.id,
       flags: {
         sdm: {
@@ -18,7 +18,7 @@ export async function openItemTransferDialog(item, sourceActor) {
     }]);
 
     if (updated.length === 0) {
-      ui.notifications.warn("Item is no longer available for transfer");
+      ui.notifications.warn(game.i18n.localize('SDM.ErrorTransferItemNotAvailable'));
       return;
     }
 
@@ -35,11 +35,11 @@ export async function openItemTransferDialog(item, sourceActor) {
     });
 
     const transferOptions = await foundry.applications.api.DialogV2.prompt({
-      window: { title: "Transfer Item" },
+      window: { title: game.i18n.format('SDM.Transfer', { type: game.i18n.localize('TYPE.Item') }) },
       content: template,
       ok: {
         icon: 'fas fa-share',
-        label: "Transfer",
+        label: game.i18n.format('SDM.Transfer', { type: '' }),
         callback: (event, button) => new foundry.applications.ux.FormDataExtended(button.form).object,
       },
       rejectClose: true,
@@ -50,47 +50,47 @@ export async function openItemTransferDialog(item, sourceActor) {
       const targetActor = game.actors.get(targetActorId);
 
       if (!targetActor?.testUserPermission(game.user, "OWNER")) {
-        throw new Error("Invalid target actor");
+        throw new Error(game.i18n.localize('SDM.ErrorInvalidTarget'));
       }
 
       const freshItem = sourceActor.items.get(item.id);
       if (!freshItem || freshItem?.getFlag("sdm", "transferring") !== transferKey) {
-        throw new Error("Item state changed during transfer");
+        throw new Error(game.i18n.localize('SDM.ErrorTransferInvalidItemState'));
       }
 
       if (Date.now() - freshItem?.getFlag("sdm", "transferInitiated") > 30000) {
-        throw new Error("Transfer session expired");
+        throw new Error(game.i18n.localize('SDM.ErrorTransferSessionExperied'));
       }
 
       if (targetActor.items.has(item.id)) {
-        throw new Error("Target already has this item");
+        throw new Error(game.i18n.localize('SDM.ErrorTransferTargetHasItem'));
       }
 
-      const isCashTransfer = freshItem.system.size?.unit === 'cash';
+      const isCashTransfer = freshItem.system.size?.unit === SizeUnit.CASH;
 
       if (isCashTransfer) {
         const amountInput = transferOptions.cashAmount;
         const amount = parseInt(amountInput, 10);
 
         if (isNaN(amount) || amount <= 0) {
-          throw new Error("Amount must be a positive number");
+          throw new Error(game.i18n.localize('SDM.ErrorTransferAmoutNotPositive'));
         }
 
         if (amount > freshItem.system.quantity) {
-          throw new Error("Cannot transfer more cash than available");
+          throw new Error(game.i18n.localize('SDM.ErrorTransferExcessCashAmount'));
         }
 
         // Update source quantity
-        await sourceActor.updateEmbeddedDocuments("Item", [{
+        await sourceActor.updateEmbeddedDocuments(DocumentType.ITEM, [{
           _id: freshItem.id,
           system: { quantity: freshItem.system.quantity - amount }
         }]);
 
         try {
-          const existingCash = targetActor.items.find(i => i.system.size?.unit === 'cash');
+          const existingCash = targetActor.items.find(i => i.system.size?.unit === SizeUnit.CASH);
 
           if (existingCash) {
-            await targetActor.updateEmbeddedDocuments("Item", [{
+            await targetActor.updateEmbeddedDocuments(DocumentType.ITEM, [{
               _id: existingCash.id,
               system: { quantity: existingCash.system.quantity + amount }
             }]);
@@ -101,13 +101,13 @@ export async function openItemTransferDialog(item, sourceActor) {
             newCashData.system.name = currencyName;
             delete newCashData.flags?.sdm?.transferring;
             delete newCashData.flags?.sdm?.transferInitiated;
-            await targetActor.createEmbeddedDocuments("Item", [newCashData]);
+            await targetActor.createEmbeddedDocuments(DocumentType.ITEM, [newCashData]);
           }
 
-          ui.notifications.info(`Transferred ${amount} cash to ${targetActor.name}`);
+          ui.notifications.info(game.i18n.format('SDM.TransferCashComplete', { amount, target: targetActor.name }));
         } catch (err) {
           // Rollback source quantity on failure
-          await sourceActor.updateEmbeddedDocuments("Item", [{
+          await sourceActor.updateEmbeddedDocuments(DocumentType.ITEM, [{
             _id: freshItem.id,
             system: { quantity: freshItem.system.quantity }
           }]);
@@ -116,7 +116,7 @@ export async function openItemTransferDialog(item, sourceActor) {
       } else {
         let newItem;
         try {
-          newItem = await targetActor.createEmbeddedDocuments("Item", [{
+          newItem = await targetActor.createEmbeddedDocuments(DocumentType.ITEM, [{
             ...freshItem.toObject(),
             flags: {
               sdm: {
@@ -126,11 +126,14 @@ export async function openItemTransferDialog(item, sourceActor) {
             }
           }]);
 
-          await sourceActor.deleteEmbeddedDocuments("Item", [freshItem.id]);
-          ui.notifications.info(`Item transferred to ${targetActor.name}`);
+          await sourceActor.deleteEmbeddedDocuments(DocumentType.ITEM, [freshItem.id]);
+          ui.notifications.info(game.i18n.format('SDM.TransferItemComplete', {
+            item: newItem.name,
+            target: targetActor.name
+          }));
         } catch (err) {
           if (newItem?.length) {
-            await targetActor.deleteEmbeddedDocuments("Item", [newItem[0].id]);
+            await targetActor.deleteEmbeddedDocuments(DocumentType.ITEM, [newItem[0].id]);
           }
           throw err;
         }
@@ -139,7 +142,7 @@ export async function openItemTransferDialog(item, sourceActor) {
       ui.notifications.error(`Transfer failed: ${err.message}`);
     } finally {
       if (sourceActor.items.get(item.id)) {
-        await sourceActor.updateEmbeddedDocuments("Item", [{
+        await sourceActor.updateEmbeddedDocuments(DocumentType.ITEM, [{
           _id: item.id,
           flags: {
             sdm: {
@@ -152,7 +155,7 @@ export async function openItemTransferDialog(item, sourceActor) {
     }
   } catch (err) {
     if (sourceActor.items.get(item.id)) {
-      await sourceActor.updateEmbeddedDocuments("Item", [{
+      await sourceActor.updateEmbeddedDocuments(DocumentType.ITEM, [{
         _id: item.id,
         flags: {
           sdm: {

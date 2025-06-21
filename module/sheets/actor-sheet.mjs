@@ -12,6 +12,8 @@ const TextEditor = foundry.applications.ux.TextEditor.implementation;
 const DragDrop = foundry.applications.ux.DragDrop.implementation;
 const FilePicker = foundry.applications.apps.FilePicker.implementation;
 const { DialogV2 } = foundry.applications.api;
+const { renderTemplate } = foundry.applications.handlebars;
+
 /**
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheetV2}
@@ -700,7 +702,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
   static async _deleteDoc(event, target) {
     const doc = this._getEmbeddedDocument(target);
     const proceed = await DialogV2.confirm({
-      content: `<b>Delete ${doc.name} permanently?</b>`,
+      content: `<b>${game.i18n.format('SDM.DeleteDocConfirmation', { doc: doc.name })}</b>`,
       modal: true,
       rejectClose: false,
     });
@@ -845,7 +847,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     const ward = this.actor.system.ward || 0;
     const saveBonus = this.actor.system.abilities[rollType].save_bonus || 0;
     const finalSavingThrowBonus = Math.min(finalAbility + ward + saveBonus, MAX_MODIFIER);
-    const label = `${game.i18n.localize(CONFIG.SDM.abilities[rollType])} Saving Throw Roll`
+
+    const label = game.i18n.format('SDM.SavingThrowRoll', {
+      ability: game.i18n.localize(CONFIG.SDM.abilities[rollType]),
+    });
 
     const formula = `1d20x20 + ${finalSavingThrowBonus}`;
     const targetNumber = this.actor.system.save_target;
@@ -857,64 +862,37 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     // Determine outcome and message
     let outcome, message;
     if (roll.total === targetNumber) {
-      outcome = "SACRIFICE";
-      message = "Lose something precious to save.";
+      outcome = game.i18n.localize("SDM.SavingThrowSacrifice");
+      message = game.i18n.localize("SDM.SavingThrowSacrificeMessage");
     } else if (roll.total > targetNumber) {
-      outcome = "SAVE";
-      message = "Disaster averted, fortune appeased.";
+      outcome = game.i18n.localize("SDM.SavingThrowSave");
+      message = game.i18n.localize("SDM.SavingThrowSaveMessage");
     } else {
-      outcome = "DOOM";
-      message = "What was, will be. No save.";
+      outcome = game.i18n.localize("SDM.SavingThrowDoom");
+      message = game.i18n.localize("SDM.SavingThrowDoomMessage");
     }
 
+    let borderColor = '#aa0200';
 
-    // TODO: Replace this with a hbs file
+    if (outcome === 'SAVE') {
+      borderColor = '#028f02';
+    } else if (outcome === 'SACRIFICE') {
+      borderColor = '#d4af37';
+    }
 
-    // const templateData = {
-
-    // };
-
-    // return createChatMessage({
-    //   actor,
-    //   content: await renderTemplate("systems/sdm/templates/chat/hero-dice-result.hbs", templateData),
-    //   flavor: '[Hero dice roll]',
-    //   flags: { "sdm.isHeroResult": true },
-    // });
-
-
-
-    // Construct focused chat message
-    const messageContent = `
-<div class="custom-roll">
-  <div class="dice-roll" data-action="expandRoll">
-    <div class="dice-result">
-      <div class="dice-formula">${formula}</div>
-      ${await roll.getTooltip()}
-      <div class="dice-total">${roll.total}</div>
-    </div>
-  </div>
-
-  <div class="custom-result" style="
-        text-align: center;
-        margin-top: 10px;
-        padding: 5px;
-        border: 2px solid;
-        border-radius: 5px;
-        background: rgba(0, 0, 0, 0.1);
-        ${outcome === 'DOOM' ? 'border-color: #aa0200;' : ''}
-        ${outcome === 'SACRIFICE' ? 'border-color: #d4af37;' : ''}
-        ${outcome === 'SAVE' ? 'border-color: #028f02;' : ''}">
-    <h4 style="margin:0; text-transform: uppercase;">${outcome}</h4>
-    <p style="margin:0; font-size: 14px;">${message}</p>
-  </div>
-
-  <div style="margin-top: 8px; font-size: 12px; opacity: 0.7;">
-    Target: ${targetNumber}
-  </div>
-</div>`;
+    const templateData = {
+      outcome,
+      message,
+      formula,
+      total: roll.total,
+      borderColor,
+      targetLabel: 'Target',
+      targetNumber,
+      rollTooltip: await roll.getTooltip(),
+    };
 
     createChatMessage({
-      content: messageContent,
+      content: await renderTemplate("systems/sdm/templates/chat/saving-throw-result.hbs", templateData),
       flavor: label,
       rolls: [roll],
     });

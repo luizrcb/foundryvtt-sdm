@@ -464,7 +464,10 @@ export class HeroDiceProcessor {
     return createChatMessage({
       actor,
       content: await renderTemplate("systems/sdm/templates/chat/hero-dice-result.hbs", templateData),
-      flavor: '[Hero dice roll]',
+      flavor: game.i18n.format('SDM.Roll.Title', {
+        prefix: '',
+        title: game.i18n.localize('SDM.FieldHeroDice'),
+      }),
       flags: { "sdm.isHeroResult": true },
     });
   }
@@ -506,13 +509,13 @@ export async function handleHeroDice(event, message, messageActor) {
   const actor = messageActor || game.user?.character || canvas?.tokens?.controlled[0]?.actor;
 
   if (!actor || actor.type !== ActorType.CHARACTER) {
-    ui.notifications.error("No valid actor was selected!");
+    ui.notifications.error(game.i18n.localize('SDM.ErrorNoActorSelected'));
     return;
   }
 
   const maxDice = actor.system.hero_dice.value;
   if (maxDice < 1) {
-    ui.notifications.error(`${actor.name} has no hero dice available for this roll!`);
+    ui.notifications.error(game.i18n.format('SDM.ErrorActorNoHeroDice', { actor: actor.name }));
     return;
   }
 
@@ -523,7 +526,7 @@ export async function handleHeroDice(event, message, messageActor) {
 
   const heroicDiceOptions = await foundry.applications.api.DialogV2.prompt({
     window: {
-      title: `${actor.name} ${game.i18n.localize("SDM.UseHeroDice")}`,
+      title: `${actor.name} ${game.i18n.localize("SDM.RollUseHeroDice")}`,
     },
     content: getHeroDiceSelect(actor, false, isDamageRoll || !isTraitRoll),
     ok: {
@@ -549,13 +552,13 @@ export async function handleHeroDice(event, message, messageActor) {
 export async function healingHeroDice(event, actor) {
   // const healingHouseRuleEnabled = !!game.settings.get('sdm', 'healingHouseRule');
   const maxDice = actor.system.hero_dice.value;
-  if (maxDice < 1) return ui.notifications.error("No Hero Dice available!");
+  if (maxDice < 1) return ui.notifications.error(game.i18n.localize('SDM.ErrorNoHeroDice'));
 
   const heroDiceType = actor.system.hero_dice.dice_type;
 
   const heroicDiceOptions = await foundry.applications.api.DialogV2.prompt({
     window: {
-      title: game.i18n.localize("SDM.UseHeroDice"),
+      title: game.i18n.localize("SDM.RollUseHeroDice"),
     },
     content: getHeroDiceSelect(actor, false, false, false),
     ok: {
@@ -581,9 +584,19 @@ export async function healingHeroDice(event, actor) {
 
   const roll = await HeroDiceProcessor._rollHeroDice(heroicDiceQty, false, healingHouseRule, Die[diceType]);
 
+  const diceLabel = heroicDiceQty > 1 ?
+    game.i18n.localize("SDM.HeroDice") :
+    game.i18n.localize("SDM.HeroDie");
+
+  const flavor = game.i18n.format("SDM.HeroDiceSpend", {
+    actor: actor.name,
+    quantity: heroicDiceQty,
+    diceLabel: diceLabel,
+  });
+
   await createChatMessage({
     actor,
-    flavor: `${actor.name} spent ${heroicDiceQty} hero ${heroicDiceQty > 1 ? 'dice' : 'die'}`,
+    flavor,
     rolls: [roll],
     flags: { "sdm.isHeroResult": true }
   });

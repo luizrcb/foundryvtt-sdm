@@ -8,12 +8,12 @@ export const SDM = {};
  */
 
 SDM.abilities = {
-  str: 'SDM.Ability.Str.long',
-  end: 'SDM.Ability.End.long',
-  agi: 'SDM.Ability.Agi.long',
-  cha: 'SDM.Ability.Cha.long',
-  aur: 'SDM.Ability.Aur.long',
-  tho: 'SDM.Ability.Tho.long',
+  str: 'SDM.AbilityStr',
+  end: 'SDM.AbilityEnd',
+  agi: 'SDM.AbilityAgi',
+  cha: 'SDM.AbilityCha',
+  aur: 'SDM.AbilityAur',
+  tho: 'SDM.AbilityTho',
 }
 
 SDM.abilitySaveIcons = {
@@ -23,21 +23,28 @@ SDM.abilitySaveIcons = {
   cha: 'fas fa-clover', //'fas fa-crown',
   aur: 'fas fa-sparkles',
   tho: 'fas fa-brain',//'fas fa-brain',
-}
+};
 
 SDM.defenseIcons = {
   physical: 'fas fa-shield-alt',
   mental: 'fa-brain-circuit',
   social: 'fas fa-crown',
-}
+};
 
 SDM.abilityAbbreviations = {
-  str: 'SDM.Ability.Str.abbr',
-  end: 'SDM.Ability.End.abbr',
-  agi: 'SDM.Ability.Agi.abbr',
-  cha: 'SDM.Ability.Cha.abbr',
-  aur: 'SDM.Ability.Aur.abbr',
-  tho: 'SDM.Ability.Tho.abbr',
+  str: 'SDM.AbilityStrAbbr',
+  end: 'SDM.AbilityEndAbbr',
+  agi: 'SDM.AbilityAgiAbbr',
+  cha: 'SDM.AbilityChaAbbr',
+  aur: 'SDM.AbilityAurAbbr',
+  tho: 'SDM.AbilityThoAbbr',
+};
+
+SDM.sizeUnits = {
+  "sacks": "SDM.UnitSacks",
+  "stones": "SDM.UnitStones",
+  "soaps": "SDM.UnitSoaps",
+  "cash": "SDM.UnitCash",
 };
 
 SDM.fatigue = 'SDM.Actor.Character.FIELDS.fatigue.label';
@@ -58,13 +65,7 @@ SDM.speedType = Object.values(SpeedType).reduce((acc, speedType) => {
   return acc;
 }, {});
 
-SDM.sizeUnits = Object.values(SizeUnit).reduce((acc, unit) => {
-  acc[unit] = `SDM.Item.Size.Unit.${unit}`;
-  return acc;
-}, {});
-
-
-const abilitiesLabel = 'SDM.Actor.Character.FIELDS.abilities.label';
+const abilitiesLabel = 'SDM.FieldAbilities';
 
 SDM.abilitiesLabel = abilitiesLabel;
 SDM.modifierLabel = 'SDM.Rolls.modifier.label';

@@ -7,7 +7,7 @@ export default class ItemSizeDataModel extends foundry.abstract.DataModel {
       unit: new foundry.data.fields.StringField({
         required: true, initial: SizeUnit.STONES,
         choices: Object.values(SizeUnit).reduce((acc, key) => {
-          acc[key] = game.i18n.localize(`SDM.Item.Size.Unit.${key}`);
+          acc[key] = game.i18n.localize(CONFIG.SDM.sizeUnits[key]);
           return acc;
         }, {}),
       }),

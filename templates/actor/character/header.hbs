@@ -5,7 +5,7 @@
       <img class='profile-img' src='{{actor.img}}' data-edit='img' data-action='onEditImage' title='{{actor.name}}'
         height='100' width='100' />
       <div class="flexcol flex-group-center rollable margin-bottom-10" data-context='rollable' data-action='heroicHealing'>
-        <label class='resource-label'>Hero Dice <i class="fas fa-dice-{{system.hero_dice.dice_type}}"></i></label>
+        <label class='resource-label'>{{localize 'SDM.FieldHeroDice'}} <i class="fas fa-dice-{{system.hero_dice.dice_type}}"></i></label>
         <div class='resource-content flexrow height-32'>
           {{system.hero_dice.value}} / {{system.hero_dice.max}}
         </div>
@@ -27,8 +27,7 @@
             </label>
             <div class='resource-content flexrow flex-center flex-between'>
               {{#if isGM}}
-              <input type='text' name='system.player_experience' value='{{system.player_experience}}'
-                data-dtype='Text' />
+              <input type='text' name='system.player_experience' value='{{system.player_experience}}' data-dtype='Text' />
               {{else}}
               <input type='text' name='system.player_experience' value='{{system.player_experience}}' data-dtype='Text'
                 disabled />
@@ -205,22 +204,22 @@
           <div class='resources grid grid-2col'>
             <div class="ability grid-span-1 flexrow">
               <div class='resource-label rollable' data-roll-type='attack' data-action='roll' data-attack="melee">
-                <div>{{localize 'SDM.attacks.melee'}}</div>
+                <div>{{localize 'SDM.AttackMelee'}}</div>
               </div>
             </div>
             <div class="ability grid-span-1 flexrow">
               <div class='resource-label rollable' data-roll-type='attack' data-action='roll' data-attack="ranged">
-                <div>{{localize 'SDM.attacks.ranged'}}</div>
+                <div>{{localize 'SDM.AttackRanged'}}</div>
               </div>
             </div>
             <div class="ability grid-span-1 flexrow">
               <div class='resource-label rollable' data-roll-type='attack' data-action='roll' data-attack="fantascience">
-                <div>{{localize 'SDM.attacks.fantascience'}}</div>
+                <div>{{localize 'SDM.AttackFantascience'}}</div>
               </div>
             </div>
             <div class="ability grid-span-1 flexrow">
               <div class='resource-label rollable' data-roll-type='attack' data-action='roll' data-attack="oldtech">
-                <div>{{localize 'SDM.attacks.oldtech'}}</div>
+                <div>{{localize 'SDM.AttackOldtech'}}</div>
               </div>
             </div>
           </div>

@@ -36,7 +36,7 @@ export default class CharacterPetModel extends foundry.abstract.DataModel {
       damage: new fields.StringField({
         required: true, initial: '1d4',
         validate: v => foundry.dice.Roll.validate(v),
-        validationError: "must be a valid Roll formula",
+        validationError: game.i18n.localize("SDM.ErrorValidationRollFormula"),
       }),
 
       features: new fields.HTMLField(),
