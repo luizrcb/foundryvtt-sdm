@@ -354,6 +354,9 @@
 .sdm .margin-bottom-10 {
   margin-bottom: 10px;
 }
+.sdm .height-32 {
+  height: 32px;
+}
 .sdm .resource-label {
   font-weight: bold;
 }
@@ -705,5 +708,3 @@
   --sdm-c-black: #ffffff;
   --sdm-c-groove: #11121f;
 }
-
-/*# sourceMappingURL=sdm.css.map */

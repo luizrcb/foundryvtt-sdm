@@ -4,9 +4,9 @@
     <div class="flexcol flex-between flex-center">
       <img class='profile-img' src='{{actor.img}}' data-edit='img' data-action='onEditImage' title='{{actor.name}}'
         height='100' width='100' />
-      <div class="flexcol flexrow flex-group-center rollable margin-bottom-10" data-context='rollable' data-action='heroicHealing'>
+      <div class="flexcol flex-group-center rollable margin-bottom-10" data-context='rollable' data-action='heroicHealing'>
         <label class='resource-label'>Hero Dice <i class="fas fa-dice-{{system.hero_dice.dice_type}}"></i></label>
-        <div class='resource-content flexrow flex-center'>
+        <div class='resource-content flexrow height-32'>
           {{system.hero_dice.value}} / {{system.hero_dice.max}}
         </div>
       </div>
@@ -127,11 +127,13 @@
         {{/if}}
 
         {{#if (eq actor.type 'character')}}
-        <div class='resource'>
-          <label for="system.defense" class='resource-label'>
+        <div class='resource flexcol'>
+          <div class="flexrow">
+            <label for="system.defense" class='resource-label'>
             {{localize 'SDM.Actor.Character.FIELDS.defense.label'}}
           </label>
-          <div class='resource-content flexrow flex-center flex-between'>
+          </div>
+          <div class='resource-content flexrow align-center height-32'>
             <div title="Physical defense">
               <i class="fas fa-shield-alt"></i>
               <span id="system.defense">{{system.defense}}</span>
@@ -193,7 +195,7 @@
                   data-dtype='Number' />
                 <input type='text' name='system.abilities.{{key}}.current' value='{{ability.current}}'
                   class="ability-score" data-dtype='Number' />
-                <div class='rollable flexrow' data-roll-type='item' data-action='roll' title="{{localize (lookup @root.config.abilities key)}} saving throw">
+                <div class='rollable flexrow' data-roll-type={{key}} data-action='rollSavingThrow' title="{{localize (lookup @root.config.abilities key)}} saving throw">
                   <i class="fas {{saveIcon key}} saveIcon"></i>
                 </div>
               </div>

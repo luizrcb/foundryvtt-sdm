@@ -4,7 +4,8 @@ import { onItemUpdate, convertToCash, GEAR_ITEM_TYPES, ITEMS_NOT_ALLOWED_IN_CHAR
 import { openItemTransferDialog } from '../items/transferItem.mjs';
 import { ItemType, SizeUnit } from '../helpers/constants.mjs';
 import { healingHeroDice } from '../rolls/heroDice.mjs';
-import { MAX_CARRY_WEIGHT_CASH, UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
+import { MAX_CARRY_WEIGHT_CASH, MAX_MODIFIER, UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
+import { createChatMessage } from '../helpers/chatUtils.mjs';
 
 const { api, sheets } = foundry.applications;
 const TextEditor = foundry.applications.ux.TextEditor.implementation;
@@ -40,6 +41,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       deleteDoc: this._deleteDoc,
       toggleEffect: this._toggleEffect,
       roll: this._onRoll,
+      rollSavingThrow: this._onRollSavingThrow,
       heroicHealing: this._onHeroHealing,
       transferItem: this._onTransferItem,
       toggleReadied: this._toggleReadied,
@@ -93,7 +95,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
   getSkillOptions(availableSkills, attack) {
     let options = '';
     for (const skill of Object.values(availableSkills)) {
-      options += `<option value="${skill.id}"${(skill.attack === attack) ? 'selected' : ''}>${skill.name} [+${skill.mod}]</option>\n`
+      options += `<option value="${skill.id}"${(skill.attack === attack) ? 'selected' : ''}>${skill.name} (+${skill.mod})</option>\n`
     }
     return options;
   }
@@ -113,11 +115,12 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     const actorAttack = attack ? this.actor.system[attack] : {};
     const versatileLabel = game.i18n.localize(CONFIG.SDM.versatile);
     const availableSkills = this.actor.getAvailableSkills();
+    const rollTitlePrefix = item ? 'Damage' : attack ? 'Attack' : '';
     const title = attribute ?? actorAttack.name ?? `${item?.name}${versatile ? ` (${versatileLabel})` : ''}`;
     const isTraitRoll = !!(attack || key);
     const content = `
       <div class="custom-roll-modal">
-        <h2>Roll for ${title}</h2>
+        <h4>${rollTitlePrefix ? `${rollTitlePrefix} ` : ''}Roll: ${title}</h4>
         <form class="custom-roll-form">
         ${rolledFrom !== 'Ability' ? `<div class="form-group">
             <label>${game.i18n.localize(CONFIG.SDM.abilitiesLabel)}</label>
@@ -827,6 +830,94 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     const rolledFromlabel = game.i18n.localize(CONFIG.SDM.rollSource[rolledFrom]);
 
     this._openCustomRollModal(key, label, attack, rolledFromlabel);
+  }
+
+
+  static async _onRollSavingThrow(event, target) {
+    event.preventDefault(); // Don't open context menu
+    event.stopPropagation(); // Don't trigger other events
+    if (event.detail > 1) return; // Ignore repeated clicks
+
+    // Get common data attributes
+    const dataset = target.dataset;
+    const { rollType } = dataset;
+    const finalAbility = this.actor.system.abilities[rollType].final_current;
+    const ward = this.actor.system.ward || 0;
+    const saveBonus = this.actor.system.abilities[rollType].save_bonus || 0;
+    const finalSavingThrowBonus = Math.min(finalAbility + ward + saveBonus, MAX_MODIFIER);
+    const label = `${game.i18n.localize(CONFIG.SDM.abilities[rollType])} Saving Throw Roll`
+
+    const formula = `1d20x20 + ${finalSavingThrowBonus}`;
+    const targetNumber = this.actor.system.save_target;
+
+    // Create and evaluate the roll
+    let roll = new Roll(formula);
+    roll = await roll.evaluate();
+
+    // Determine outcome and message
+    let outcome, message;
+    if (roll.total === targetNumber) {
+      outcome = "SACRIFICE";
+      message = "Lose something precious to save.";
+    } else if (roll.total > targetNumber) {
+      outcome = "SAVE";
+      message = "Disaster averted, fortune appeased.";
+    } else {
+      outcome = "DOOM";
+      message = "What was, will be. No save.";
+    }
+
+
+    // TODO: Replace this with a hbs file
+
+    // const templateData = {
+
+    // };
+
+    // return createChatMessage({
+    //   actor,
+    //   content: await renderTemplate("systems/sdm/templates/chat/hero-dice-result.hbs", templateData),
+    //   flavor: '[Hero dice roll]',
+    //   flags: { "sdm.isHeroResult": true },
+    // });
+
+
+
+    // Construct focused chat message
+    const messageContent = `
+<div class="custom-roll">
+  <div class="dice-roll" data-action="expandRoll">
+    <div class="dice-result">
+      <div class="dice-formula">${formula}</div>
+      ${await roll.getTooltip()}
+      <div class="dice-total">${roll.total}</div>
+    </div>
+  </div>
+
+  <div class="custom-result" style="
+        text-align: center;
+        margin-top: 10px;
+        padding: 5px;
+        border: 2px solid;
+        border-radius: 5px;
+        background: rgba(0, 0, 0, 0.1);
+        ${outcome === 'DOOM' ? 'border-color: #aa0200;' : ''}
+        ${outcome === 'SACRIFICE' ? 'border-color: #d4af37;' : ''}
+        ${outcome === 'SAVE' ? 'border-color: #028f02;' : ''}">
+    <h4 style="margin:0; text-transform: uppercase;">${outcome}</h4>
+    <p style="margin:0; font-size: 14px;">${message}</p>
+  </div>
+
+  <div style="margin-top: 8px; font-size: 12px; opacity: 0.7;">
+    Target: ${targetNumber}
+  </div>
+</div>`;
+
+    createChatMessage({
+      content: messageContent,
+      flavor: label,
+      rolls: [roll],
+    });
   }
 
 

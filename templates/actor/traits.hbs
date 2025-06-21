@@ -36,17 +36,8 @@
                 height='24'
               />
           </div>
-          <div >{{trait.name}}</div>
-          {{#if trait.system.is_skill}}
-            <a class='rollable' data-roll-type='attack' data-action='roll'>
-              <img
-                src='icons/weapons/swords/sword-simple-white.webp'
-                title='{{trait.name}}'
-                width='24'
-                height='24'
-              />
-            </a>
-          {{/if}}
+          <div>{{trait.name}} {{#if trait.system.is_skill}} (+{{trait.system.skill_mod_final}}){{/if}}
+          </div>
         </div>
         <div class='item-controls'>
           <a

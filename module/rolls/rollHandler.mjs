@@ -3,6 +3,7 @@ import { isAttack, isPhysicalAction, MAX_MODIFIER } from '../helpers/actorUtils.
 import { ActorType, Die, ItemType, RollType } from '../helpers/constants.mjs';
 import { SDM } from '../helpers/config.mjs';
 import { capitalizeFirstLetter } from '../helpers/globalUtils.mjs';
+import { createChatMessage } from '../helpers/chatUtils.mjs';
 
 export class RollHandler {
   static async performRoll(actor, key, label, options = {}) {
@@ -40,9 +41,13 @@ export class RollHandler {
       const rollInstance = new Roll(rollFormula, actor.system);
       await rollInstance.evaluate();
       await actor.updateHeroDice(heroicDice);
-      await this.sendRollToChat(rollInstance, actor, flavor, {
-        "sdm.isTraitRoll": true,
+      await createChatMessage({
+        actor,
+        flavor,
+        rolls: [rollInstance],
+        flags: { "sdm.isTraitRoll": true },
       });
+
       return rollInstance;
     } catch (error) {
       console.error("Roll execution failed:", error);
@@ -98,9 +103,13 @@ export class RollHandler {
       const rollInstance = new Roll(rollFormula, actor.system);
       await rollInstance.evaluate();
       await actor.updateHeroDice(heroicDice);
-      await this.sendRollToChat(rollInstance, actor, flavor, {
-        "sdm.isDamageRoll": true,
+      await createChatMessage({
+        actor,
+        rolls: [rollInstance],
+        flavor,
+        flags: { "sdm.isDamageRoll": true },
       });
+
       return rollInstance;
     } catch (error) {
       console.error("Item roll failed:", error);
@@ -142,13 +151,13 @@ export class RollHandler {
     try {
       foundry.dice.Roll.validate(baseFormula);
       const sanitizedFormula = this.sanitizeFormula([`(${baseFormula})`, modifier].join("+"));
-
-      const roll = await AdvancedRollModifier.create(sanitizedFormula, actor)
-        .setExplosion(explode)
-        .apply();
-
-      await this.sendRollToChat(roll, actor, label, {
-        "sdm.isTraitRoll": true,
+      const instance = await AdvancedRollModifier.create(sanitizedFormula, actor)
+      const roll = await (instance.setExplosion(explode)).apply();
+      await createChatMessage({
+        actor,
+        flavor: label,
+        rolls: [roll],
+        flags: { "sdm.isTraitRoll": true },
       });
       return roll;
     } catch (error) {
@@ -268,20 +277,6 @@ export class RollHandler {
     if (isDamageRoll && explode) parts.push(`(d*)`);
 
     return parts.join(' ');
-  }
-
-  static async sendRollToChat(roll, actor, flavor, flags) {
-    try {
-      await roll.toMessage({
-        speaker: ChatMessage.getSpeaker({ actor }),
-        flavor,
-        rollMode: game.settings.get('core', 'rollMode'),
-        flags,
-      });
-    } catch (error) {
-      console.error("Chat message failed:", error);
-      throw error;
-    }
   }
 
   static getEncumberanceModifier(actor, key) {

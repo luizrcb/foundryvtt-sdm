@@ -1,3 +1,4 @@
+import { createChatMessage } from '../helpers/chatUtils.mjs';
 import { SDM } from '../helpers/config.mjs';
 import { ActorType, Die } from '../helpers/constants.mjs';
 
@@ -460,11 +461,9 @@ export class HeroDiceProcessor {
       heroDiceType: actor.system.hero_dice.dice_type,
     };
 
-    return ChatMessage.create({
-      user: game.user.id,
+    return createChatMessage({
+      actor,
       content: await renderTemplate("systems/sdm/templates/chat/hero-dice-result.hbs", templateData),
-      speaker: ChatMessage.getSpeaker({ actor }),
-      rollMode: game.settings.get('core', 'rollMode'),
       flavor: '[Hero dice roll]',
       flags: { "sdm.isHeroResult": true },
     });
@@ -502,21 +501,6 @@ export function getHeroDiceSelect(actor, includeZero = false, isDamageRoll = fal
   return heroicDiceSelect;
 }
 
-
-export async function sendRollToChat(roll, actor, flavor, flags) {
-  try {
-    await roll.toMessage({
-      speaker: ChatMessage.getSpeaker({ actor }),
-      flavor,
-      rollMode: game.settings.get('core', 'rollMode'),
-      flags,
-    });
-  } catch (error) {
-    console.error("Chat message failed:", error);
-    throw error;
-  }
-}
-
 // Integração com o handler original
 export async function handleHeroDice(event, message, messageActor) {
   const actor = messageActor || game.user?.character || canvas?.tokens?.controlled[0]?.actor;
@@ -527,8 +511,8 @@ export async function handleHeroDice(event, message, messageActor) {
   }
 
   const maxDice = actor.system.hero_dice.value;
-  if (maxDice < 1)  {
-    ui.notifications.error(`${actor.name } has no hero dice available for this roll!`);
+  if (maxDice < 1) {
+    ui.notifications.error(`${actor.name} has no hero dice available for this roll!`);
     return;
   }
 
@@ -595,9 +579,14 @@ export async function healingHeroDice(event, actor) {
 
   const diceType = actor.system.hero_dice.dice_type;
 
-  const roll = await HeroDiceProcessor._rollHeroDice(heroicDiceQty, false, healingHouseRule,  Die[diceType]);
-  await sendRollToChat(roll, actor, `${actor.name} spent ${heroicDiceQty} hero dice`, {
-    "sdm.isHeroResult": true,
+  const roll = await HeroDiceProcessor._rollHeroDice(heroicDiceQty, false, healingHouseRule, Die[diceType]);
+
+  await createChatMessage({
+    actor,
+    flavor: `${actor.name} spent ${heroicDiceQty} hero ${heroicDiceQty > 1 ? 'dice' : 'die'}`,
+    rolls: [roll],
+    flags: { "sdm.isHeroResult": true }
   });
+
   await HeroDiceProcessor.updateHeroDice(actor, heroicDiceQty);
 };
