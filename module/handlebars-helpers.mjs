@@ -21,7 +21,7 @@ export function registerHandlebarsHelpers() {
   });
 
   Handlebars.registerHelper('saveIcon', function (abilityKey) {
-    return SDM.abilitySaveIcons[abilityKey];
+    return CONFIG.SDM.abilitySaveIcons[abilityKey];
   });
 
   // some one to an index

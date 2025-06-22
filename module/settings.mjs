@@ -1,11 +1,13 @@
-export function registerSystemSettings () {
+import { handleHeroDice } from "./rolls/heroDice.mjs";
+
+export function registerSystemSettings() {
   /* -------------------------------------------- */
   /*  System settings registration                */
   /* -------------------------------------------- */
 
   game.settings.register("sdm", "initiativeFormula", {
-    name: "SMD.settings.initiativeformula",
-    hint: "SMD.settings.initiativeformulahint",
+    name: "SDM.SettingsInitiativeFormula",
+    hint: "SDM.SettingsInitiativeFormulaHint",
     scope: "world", // "world" = GM only, "client" = per user
     restricted: true,
     config: true, // Show in configuration view
@@ -15,8 +17,8 @@ export function registerSystemSettings () {
   });
 
   game.settings.register("sdm", "currencyName", {
-    name: "Currency name",
-    hint: "The primary currency used in the game world",
+    name: "SDM.SettingsCurrencyName",
+    hint: "SDM.SettingsCurrencyNameHint",
     scope: "world", // "world" = GM only, "client" = per user
     restricted: true,
     config: true, // Show in configuration view
@@ -28,8 +30,8 @@ export function registerSystemSettings () {
   });
 
   game.settings.register("sdm", "escalatorDie", {
-    name: "Escalator Die",
-    hint: "Every roll will be increased by this amount",
+    name: "SDM.SettingsEscalatorDie",
+    hint: "SDM.SettingsEscalatorDieHint",
     scope: "world", // "world" = GM only, "client" = per user
     restricted: true,
     config: true, // Show in configuration view
@@ -42,8 +44,8 @@ export function registerSystemSettings () {
   });
 
   game.settings.register("sdm", "baseDefense", {
-    name: "Base Defense",
-    hint: "Base physical defense value for characters",
+    name: "SDM.SettingsBaseDefense",
+    hint: "SDM.SettingsBaseDefenseHint",
     scope: "world", // "world" = GM only, "client" = per user
     restricted: true,
     config: true, // Show in configuration view
@@ -52,8 +54,8 @@ export function registerSystemSettings () {
   });
 
   game.settings.register("sdm", "baseMentalDefense", {
-    name: "Base Mental Defense",
-    hint: "Base mental defense value for characters",
+    name: "SDM.SettingsBaseMentalDefense",
+    hint: "SDM.SettingsBaseMentalDefenseHint",
     scope: "world", // "world" = GM only, "client" = per user
     restricted: true,
     config: true, // Show in configuration view
@@ -62,8 +64,8 @@ export function registerSystemSettings () {
   });
 
   game.settings.register("sdm", "baseSocialDefense", {
-    name: "Base Social Defense",
-    hint: "Base social defense value for characters",
+    name: "SDM.SettingsBaseSocialDefense",
+    hint: "SDM.SettingsBaseSocialDefenseHint",
     scope: "world", // "world" = GM only, "client" = per user
     restricted: true,
     config: true, // Show in configuration view
@@ -72,8 +74,8 @@ export function registerSystemSettings () {
   });
 
   game.settings.register("sdm", "baseTraitSlots", {
-    name: "Base Trait Slots",
-    hint: "Base number of trait slots for a character",
+    name: "SDM.SettingsBaseTraitSlots",
+    hint: "SDM.SettingsBaseTraitSlotsHint",
     scope: "world", // "world" = GM only, "client" = per user
     restricted: true,
     config: true, // Show in configuration view
@@ -82,8 +84,8 @@ export function registerSystemSettings () {
   });
 
   game.settings.register("sdm", "baseItemSlots", {
-    name: "Base Item Slots",
-    hint: "Base number of item slots for a character",
+    name: "SDM.SettingsBaseItemSlots",
+    hint: "SDM.SettingsBaseItemSlotsHint",
     scope: "world", // "world" = GM only, "client" = per user
     restricted: true,
     config: true, // Show in configuration view
@@ -92,8 +94,8 @@ export function registerSystemSettings () {
   });
 
   game.settings.register("sdm", "baseBurdenSlots", {
-    name: "Base Burden Slots",
-    hint: "Base number of burden slots for a character",
+    name: "SDM.SettingsBaseBurdenSlots",
+    hint: "SDM.SettingsBaseBurdenSlotsHint",
     scope: "world", // "world" = GM only, "client" = per user
     restricted: true,
     config: true, // Show in configuration view
@@ -102,8 +104,8 @@ export function registerSystemSettings () {
   });
 
   game.settings.register("sdm", "npcBaseMorale", {
-    name: "NPC Base Morale",
-    hint: "Base number for NPCs morale value",
+    name: "SDM.SettingsBaseNPCMorabel",
+    hint: "SDM.SettingsBaseNPCMorabelHint",
     scope: "world", // "world" = GM only, "client" = per user
     restricted: true,
     config: true, // Show in configuration view
@@ -112,8 +114,8 @@ export function registerSystemSettings () {
   });
 
   game.settings.register("sdm", "healingHouseRule", {
-    name: "Healing House Rule",
-    hint: "Allows for rolling healing hero dice with advantage (roll twice and keep the highest result)",
+    name: "SDM.SettingsHealingHouseRule",
+    hint: "SDM.SettingsHealingHouseRuleHint",
     scope: "world", // "world" = GM only, "client" = per user
     restricted: true,
     config: true, // Show in configuration view
@@ -137,4 +139,149 @@ export function updateEscalatorDisplay() {
   img.style.filter = value > 0
     ? "drop-shadow(0 0 4px #FF0000)"
     : "drop-shadow(0 0 4px rgba(0,0,0,0.5))";
+}
+
+export function createEscalatorDieDisplay() {
+  const escalatorContainer = document.createElement("div");
+  escalatorContainer.id = "escalator-die";
+  escalatorContainer.style.cssText = `
+    position: fixed;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 100;
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+  `;
+
+  // Create header element
+  const headerText = document.createElement("div");
+  headerText.textContent = game.i18n.localize("SDM.EscalatorDie");
+  headerText.style.cssText = `
+    color: white;
+    font-weight: bold;
+    text-shadow: 1px 1px 2px black;
+    font-size: 0.9em;
+    white-space: nowrap;
+    background: rgba(0,0,0,0.7);
+    padding: 2px 8px;
+    border-radius: 3px;
+    text-align: center;
+  `;
+
+  // Create image container
+  const imageContainer = document.createElement("div");
+  imageContainer.style.cssText = `
+    position: relative;
+    width: 50px;
+    height: 50px;
+    margin: 0 auto;
+  `;
+
+  // Create d20 image element
+  const diceImage = document.createElement("img");
+  diceImage.src = "icons/svg/d20-grey.svg";
+  diceImage.style.cssText = `
+    width: 100%;
+    height: 100%;
+    filter: drop-shadow(0 0 4px rgba(0,0,0,0.5));
+    position: absolute;
+    left: 0;
+    top: 0;
+  `;
+
+  // Create value display element
+  const valueDisplay = document.createElement("div");
+  valueDisplay.id = "escalator-value";
+  valueDisplay.style.cssText = `
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-weight: bold;
+    font-size: 1.4em;
+    text-shadow: 1px 1px 2px black;
+    pointer-events: none;
+  `;
+
+  // Assemble elements
+  imageContainer.append(diceImage, valueDisplay);
+  escalatorContainer.append(headerText, imageContainer);
+  document.body.appendChild(escalatorContainer);
+  updateEscalatorDisplay();
+}
+
+export function configureUseHeroDiceButton(message, html, data) {
+  if (!message) return;
+
+    //const isInitiativeRoll = message?.getFlag("core", 'initiativeRoll');
+    const isHeroResult = !!message?.getFlag("sdm", 'isHeroResult');
+    const isRollTableMessage = !!message?.getFlag("core", "RollTable");
+    const isAbilityScoreRoll = !!message?.getFlag("sdm", 'isAbilityScoreRoll');
+
+    if (isRollTableMessage || isAbilityScoreRoll) return;
+
+    if (isHeroResult) {
+      $('button.hero-dice-btn').remove();
+    }
+
+    // Find the most recent roll message in chat
+    const lastRollMessage = [...game.messages.contents]
+      .reverse()
+      .find(m => m.isRoll || m?.getFlag("sdm", "isHeroResult"));
+
+    if (lastRollMessage?.getFlag("sdm", "isHeroResult")) {
+      $('button.hero-dice-btn').remove();
+      return;
+    };
+
+    // if (!lastRollMessage.rolls?.[0]?.dice?.some(d => d.faces === 20)) return;
+
+    // Only proceed if this is the most recent d20 roll message
+    if (!lastRollMessage || message.id !== lastRollMessage.id) return;
+    // Only show if user has a character with hero dice
+
+    // Get Actor from selected token, or default character for the Actor if none is.
+    const actor = game.user?.character || canvas?.tokens?.controlled[0]?.actor;
+    const isGM = game.user.isGM;
+    if (!actor && !isGM) return;
+
+    // Check hero_dice
+    const hero_dice = actor?.system?.hero_dice?.value;
+    if (!isGM && (!hero_dice || hero_dice < 1)) return;
+
+    // Create button element
+    const btn = document.createElement('button');
+    btn.classList.add('hero-dice-btn');
+    btn.dataset.messageId = message.id;
+
+    // Create icon element
+    const icon = document.createElement('i');
+    const actorHeroDice = actor?.system?.hero_dice?.dice_type || 'd6';
+    icon.classList.add('fas', `fa-dice-${actorHeroDice}`);
+    btn.appendChild(icon);
+
+    // Add localized text
+    btn.append(` ${game.i18n.localize("SDM.RollUseHeroDice")}`);
+
+    // Create container div
+    const container = document.createElement('div');
+    container.appendChild(document.createElement('br'));
+    container.appendChild(btn);
+
+    // Find message content and append
+    const messageContent = html.querySelector('.message-content');
+    if (messageContent) {
+      messageContent.appendChild(container);
+    }
+
+    // Add event listener
+    btn.addEventListener('click', (ev) => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      handleHeroDice(ev, message, actor);
+    });
 }

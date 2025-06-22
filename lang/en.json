@@ -11,12 +11,10 @@
   "SDM.AbilityAurAbbr": "aur",
   "SDM.AbilityTho": "Thought",
   "SDM.AbilityThoAbbr": "tho",
-
   "SDM.AttackMelee": "Melee",
   "SDM.AttackRanged": "Ranged",
   "SDM.AttackOldtech": "Oldtech",
   "SDM.AttackFantascience": "Fantascience",
-
   "SDM.SheetActor": "SDM Actor Sheet",
   "SDM.SheetItem": "SDM Item Sheet",
   "SDM.TabBiography": "Biography",
@@ -25,7 +23,6 @@
   "SDM.InventoryTraits": "Traits",
   "SDM.InventoryBurdens": "Burdens",
   "SDM.TabEffects": "Effects",
-
   "SDM.FieldAbilities": "Ability",
   "SDM.FieldAbilitiesPl": "Abilities",
   "SDM.FieldArmor": "Armor",
@@ -47,11 +44,9 @@
   "SDM.FieldSaveTarget": "Save",
   "SDM.FieldSkills": "Skills",
   "SDM.FieldSpecies": "Species",
-
   "SDM.SkillExpertise": "Expertise",
   "SDM.NpcCr": "CR",
   "SDM.NpcXp": "XP",
-
   "SDM.ItemTabAttributes": "Attributes",
   "SDM.ItemTabDescription": "Description",
   "SDM.ItemTabEffects": "Effects",
@@ -74,12 +69,10 @@
   "SDM.PullModeCarting": "carting",
   "SDM.PullModeDragging": "dragging",
   "SDM.PullModeFlying": "flying",
-
   "SDM.UnitSacks": "sacks",
   "SDM.UnitStones": "stones",
   "SDM.UnitSoaps": "soaps",
   "SDM.UnitCash": "cash",
-
   "SDM.RangeMelee": "melee",
   "SDM.RangeShort": "short",
   "SDM.RangeLong": "long",
@@ -99,19 +92,15 @@
   "SDM.RollDisadvantage": "disadvantage",
   "SDM.RollDisadvantageAbbr": "↓d",
   "SDM.RollModifier": "Modifier",
-  "SMD.RollModifiers": "Modifiers",
+  "SDM.RollModifiers": "Modifiers",
   "SDM.RollExplosion": "Explosion",
   "SDM.RollDiceTotal": "Dice Total",
   "SDM.RollType": "Roll Type",
   "SDM.RollUseHeroDice": "Use Hero Dice",
   "SDM.SavingThrowRoll": "{ability} Saving Throw Roll",
-
   "SDM.HeroDiceSpend": "{actor} spent {quantity} {diceLabel}",
-
   "SDM.HeroDie": "hero die",
   "SDM.HeroDice": "hero dice",
-
-
   "SDM.SpeedVerySlow": "Very Slow",
   "SDM.SpeedSlow": "Slow",
   "SDM.SpeedStandard": "Standard",
@@ -124,7 +113,6 @@
   "SDM.EscalatorHint": "Current bonus: +{value}",
   "SDM.HealingHouseRule": "Roll {dice}x2, keep highest",
   "SDM.AbilityScoreGen": "Roll Ability Scores",
-
   "SDM.ButtonYes": "Yes",
   "SDM.ButtonNo": "No",
   "SDM.ButtonCancel": "Cancel",
@@ -137,25 +125,18 @@
   "SDM.MessageRolling": "Rolling",
   "SDM.MessageDamage": "Deals {damage} damage!",
   "SDM.MessageCritical": "Critical hit!",
-
   "SDM.Transfer": "Transfer {type}",
-
   "SDM.TransferCashComplete": "Transferred {amount} cash to {target}",
   "SDM.TransferItemComplete": "{item} transferred to {target}",
-
   "SDM.Roll.Title": "{prefix}Roll: {title}",
-
   "SDM.AllCharacters": "All Characters",
-
   "SDM.CashManagement": "Cash Management",
-
   "SDM.SavingThrowSacrifice": "SACRIFICE",
   "SDM.SavingThrowSacrificeMessage": "Lose something precious to save.",
   "SDM.SavingThrowSave": "SAVE",
   "SDM.SavingThrowSaveMessage": "Disaster averted, fortune appeased.",
   "SDM.SavingThrowDoom": "DOOM",
   "SDM.SavingThrowDoomMessage": "What was, will be. No save.",
-
   "SDM.ErrorValidationRollFormula": "must be a valid roll formula",
   "SDM.ErrorNoActorSelected": "No valid actor was selected!",
   "SDM.ErrorNoHeroDice": "No Hero Dice available!",
@@ -169,9 +150,29 @@
   "SDM.ErrorTransferTargetHasItem": "Target actor already has this item",
   "SDM.ErrorTransferAmoutNotPositive": "Amount must be a positive number",
   "SDM.ErrorTransferExcessCashAmount": "Cannot transfer more cash than available",
-
   "SDM.DeleteDocConfirmation": "Delete {doc} permanently?",
-
+  "SDM.SettingsInitiativeFormula": "Initiative Formula",
+  "SDM.SettingsInitiativeFormulaHint": "",
+  "SDM.SettingsCurrencyName": "Currency name",
+  "SDM.SettingsCurrencyNameHint": "The primary currency used in the game world",
+  "SDM.SettingsEscalatorDie": "Escalator Die",
+  "SDM.SettingsEscalatorDieHint": "Every roll will be increased by this amount",
+  "SDM.SettingsBaseDefense": "Base Defense",
+  "SDM.SettingsBaseDefenseHint": "Base physical defense value for characters",
+  "SDM.SettingsBaseMentalDefense": "Base Mental Defense",
+  "SDM.SettingsBaseMentalDefenseHint": "Base mental defense value for characters",
+  "SDM.SettingsBaseSocialDefense": "Base Social Defense",
+  "SDM.SettingsBaseSocialDefenseHint": "Base social defense value for characters",
+  "SDM.SettingsBaseTraitSlots": "Base Trait Slots",
+  "SDM.SettingsBaseTraitSlotsHint": "Base number of trait slots for a character",
+  "SDM.SettingsBaseItemSlots": "Base Item Slots",
+  "SDM.SettingsBaseItemSlotsHint": "Base number of item slots for a character",
+  "SDM.SettingsBaseBurdenSlots": "Base Burden Slots",
+  "SDM.SettingsBaseBurdenSlotsHint": "Base number of burden slots for a character",
+  "SDM.SettingsBaseNPCMorabel": "NPC Base Morale",
+  "SDM.SettingsBaseNPCMorabelHint": "Base number for NPCs morale value",
+  "SDM.SettingsHealingHouseRule": "Healing House Rule",
+  "SDM.SettingsHealingHouseRuleHint": "Allows for rolling healing hero dice with advantage (roll twice and keep the highest result)",
   "TYPES.Actor.caravan": "Caravan",
   "TYPES.Actor.character": "Character",
   "TYPES.Actor.npc": "NPC",
