@@ -77,8 +77,6 @@ export function safeEvaluate(expression) {
   return stack.length === 1 ? stack[0] : NaN;
 }
 
-
-
 export const getDefaultAbility = (initialValue = '') => {
   const properties = {
     required: false, blank: true,
@@ -93,5 +91,3 @@ export const getDefaultAbility = (initialValue = '') => {
     ...(initialValue && { initial: initialValue }),
   });
 };
-
-

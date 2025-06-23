@@ -7,14 +7,14 @@ const characters = game.actors.filter(e => e.type === "character");
 
 // Create character select options
 const characterOptions = [
-  '<option value="all">All Characters</option>',
+  `<option value="all">${game.i18n.localize("SDM.AllCharacters")}</option>`,
   ...characters.map(c => `<option value="${c.id}">${c.name}</option>`)
 ].join('');
 
 const content = `
   <form class="hero-dice-adjustment">
     <div class="form-group">
-      <label>Select Character</label>
+      <label>${game.i18n.localize("SDM.SelectCharacter")}</label>
       <select name="character" class="form-control">
         ${characterOptions}
       </select>
@@ -25,7 +25,7 @@ const content = `
 // Show dialog with properly configured buttons
 const data = await DialogV2.wait({
   window: {
-    title: "Adjust Hero Dice",
+    title: game.i18n.localize("SDM.ManageHeroDice"),
     resizable: false
   },
   rejectClose: false,
@@ -34,7 +34,7 @@ const data = await DialogV2.wait({
   buttons: [
     {
       action: "increment",
-      label: "1 Hero",
+      label: `1 ${game.i18n.localize('SDM.HeroDie')}`,
       icon: "fas fa-plus",
       type: "button",
       callback: (event, button, dialog) => ({
@@ -44,7 +44,7 @@ const data = await DialogV2.wait({
     },
     {
       action: "decrement",
-      label: "1 Hero",
+      label: `1 ${game.i18n.localize('SDM.HeroDie')}`,
       icon: "fas fa-minus",
       type: "button",
       callback: (event, button, dialog) => ({
@@ -64,7 +64,7 @@ const targets = data.character === "all"
   : [game.actors.get(data.character)].filter(Boolean);
 
 if (!targets.length) {
-  ui.notifications.error("No valid characters selected!");
+  ui.notifications.error(game.i18n.format('SDM.ErrorNoActorSelected', { type: 'character' }));
   return;
 }
 
@@ -72,15 +72,14 @@ if (!targets.length) {
 const updates = targets.map(actor => {
   try {
     const current = Math.max(0, actor.system.hero_dice?.value || 0);
-    const maxLevel = Math.max(1, actor.system.level || 1);
+    const maxLevel = Math.max(1, actor.system.hero_dice?.max || 1);
     const newValue = Math.clamp(current + data.adjustment, 0, maxLevel);
-    console.log(current, maxLevel, newValue);
     return newValue !== current ? {
       _id: actor.id,
-      "system.hero_dice.value": newValue
+      "system.hero_dice.value": newValue,
     } : null;
   } catch (e) {
-    console.error(`Error processing ${actor.name}:`, e);
+    console.error(game.i18n.format('SDM.ErrorUpdateDoc', { doc: actor.name }), e);
     return null;
   }
 }).filter(Boolean);
@@ -88,7 +87,7 @@ const updates = targets.map(actor => {
 // Apply changes
 if (updates.length > 0) {
   await Actor.updateDocuments(updates);
-  ui.notifications.info(`Updated hero dice for ${updates.length} character(s)!`);
+  ui.notifications.info(game.i18n.format('SDM.UpdatedHeroDice', { number: updates.length }));
 } else {
-  ui.notifications.warn("No changes were needed.");
+  ui.notifications.warn(game.i18n.localize('SDM.MessageNoChanges'));
 }

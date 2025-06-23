@@ -61,16 +61,14 @@ export class HeroDiceProcessor {
       }
     });
 
-    // 1. Parse original dice
     const explosiveDice = originalRoll.dice
-      .filter(d => d.faces === dieFaces) // Pode ser parametrizado para dx
+      .filter(d => d.faces === dieFaces)
       .flatMap((d, dieIndex) =>
         d.results.map((r, resultIndex) =>
           new ExplosiveDie({ ...r, dieIndex, resultIndex }, d.faces)));
 
     const nonExplosiveDice = originalRoll.dice.filter(d => d.faces !== dieFaces);
     const heroDiceType = actor.system.hero_dice.dice_type;
-    // 2. Roll hero dice
     const heroicRoll = await this._rollHeroDice(heroicDiceQty, true, false, Die[heroDiceType],
       // force hero dice results for testing
       // {dice: [{ results: [{result: 1, index: 0}]}]},
@@ -79,7 +77,6 @@ export class HeroDiceProcessor {
 
     const heroicResults = heroicRoll.dice[0].results.map(hr => hr.result);
 
-    // 3. Distribuir d6s otimizadamente
     const distribution = this._distributeHeroDice(
       explosiveDice,
       heroicResults,
@@ -87,11 +84,9 @@ export class HeroDiceProcessor {
     );
 
     if (shouldExplode) {
-      // 4. Processar explosões
       await this._processExplosions(distribution, dieFaces);
     }
 
-    // 5. Calcular totais
     const result = this._calculateFinalResult(
       explosiveDice,
       heroicResults,
@@ -102,7 +97,6 @@ export class HeroDiceProcessor {
       shouldExplode,
     );
 
-    // 6. Gerar mensagem de saída
     return this._createChatMessage(result, dieFaces, actor);
   }
 
@@ -153,7 +147,6 @@ export class HeroDiceProcessor {
   }
 
   static _distributeHeroDice(explosiveDice, heroicResults, keepRule) {
-    // Converte resultados para objetos simulados
     const heroicResultsObjects = heroicResults.map((result, index) => ({
       result,
       index
@@ -167,7 +160,6 @@ export class HeroDiceProcessor {
   }
 
   static _khDistributionStrategy(explosiveDice, heroicResults) {
-    // Implementação da estratégia Keep Highest
     const sortedDice = [...explosiveDice].sort((a, b) =>
       (b.faces - b.original) - (a.faces - a.original));
 
@@ -180,7 +172,6 @@ export class HeroDiceProcessor {
 
       let found = false;
 
-      // Fase 1: Busca por combinação exata
       for (let i = 0; i < sortedHero.length; i++) {
         if (sortedHero[i].result === needed) {
           HeroDiceProcessor._allocateHero(die, sortedHero, i, distribution);
@@ -189,7 +180,6 @@ export class HeroDiceProcessor {
         }
       }
 
-      // Fase 2: Busca pela menor combinação possível que atinja o necessário
       if (!found) {
         let bestFitIndex = -1;
         let minExcess = Infinity;

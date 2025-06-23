@@ -79,7 +79,6 @@ export async function createChatMessage({
     chatData = ChatMessage.applyRollMode(chatData, rollMode);
 
     return ChatMessage.create(chatData);
-    //return cls.create(msg.toObject());
   } catch (e) {
     console.error("createChatMessage: Failed to create message", e);
     return null;

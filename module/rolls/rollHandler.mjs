@@ -1,5 +1,5 @@
 import { AdvancedRollModifier } from './advancedRollModifier.mjs';
-import { isAttack, isPhysicalAction, MAX_MODIFIER } from '../helpers/actorUtils.mjs';
+import { isPhysicalAction, MAX_MODIFIER } from '../helpers/actorUtils.mjs';
 import { ActorType, Die, ItemType, RollType } from '../helpers/constants.mjs';
 import { SDM } from '../helpers/config.mjs';
 import { capitalizeFirstLetter } from '../helpers/globalUtils.mjs';
@@ -23,7 +23,7 @@ export class RollHandler {
       }
 
       if (modifier && !foundry.dice.Roll.validate(modifier)) {
-        ui.notifications.error("Invalid roll modifier");
+        ui.notifications.error(game.i18n.localize('SDM.ErrorInvalidModifier'));
         return;
       }
 
@@ -69,7 +69,7 @@ export class RollHandler {
 
     try {
       if (modifier && !foundry.dice.Roll.validate(modifier)) {
-        ui.notifications.error("Invalid roll modifier");
+        ui.notifications.error(game.i18n.localize('SDM.ErrorInvalidModifier'));
         return;
       }
 
@@ -78,7 +78,7 @@ export class RollHandler {
       const isNegativeBonus = damageBonus[0] === '-';
       const finalFormula = `(${baseFormula})${damageBonus ? `${isNegativeBonus ? '' : '+'}${damageBonus}` : ''}`
       if (!finalFormula && !foundry.dice.Roll.validate(finalFormula)) {
-        ui.notifications.error("Item doens't have configured damage roll formula");
+        ui.notifications.error(game.i18n.localize("SDM.ErrorMissingDamageFormula"));
         return;
       }
 
@@ -229,7 +229,7 @@ export class RollHandler {
   }) {
     // Validate inputs
     if (!Number.isInteger(dieFaces) || dieFaces < 2) {
-      throw new Error(`Invalid dice faces: ${dieFaces}`);
+      throw new Error(game.i18n.format('SDM.ErrorInvalidDiceFaces', { faces: dieFaces }));
     }
 
     const diceCount = Math.abs(modifier) + 1;

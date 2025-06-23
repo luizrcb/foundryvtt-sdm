@@ -73,7 +73,7 @@ export async function openItemTransferDialog(item, sourceActor) {
         const amount = parseInt(amountInput, 10);
 
         if (isNaN(amount) || amount <= 0) {
-          throw new Error(game.i18n.localize('SDM.ErrorTransferAmoutNotPositive'));
+          throw new Error(game.i18n.localize('SDM.ErrorTransferAmountNotPositive'));
         }
 
         if (amount > freshItem.system.quantity) {
@@ -111,35 +111,34 @@ export async function openItemTransferDialog(item, sourceActor) {
             _id: freshItem.id,
             system: { quantity: freshItem.system.quantity }
           }]);
-          throw new Error(`Cash transfer failed: ${err.message}`);
+          throw err;
         }
       } else {
         let newItem;
+        const newItemData = freshItem.toObject();
+        newItemData.system.readied = false;
+        newItemData.flags = {
+          sdm: {
+            transferSource: sourceActor.id,
+            transferId: transferKey
+          }
+        };
         try {
-          newItem = await targetActor.createEmbeddedDocuments(DocumentType.ITEM, [{
-            ...freshItem.toObject(),
-            flags: {
-              sdm: {
-                transferSource: sourceActor.id,
-                transferId: transferKey
-              }
-            }
-          }]);
-
+          [newItem] = await targetActor.createEmbeddedDocuments(DocumentType.ITEM, [newItemData]);
           await sourceActor.deleteEmbeddedDocuments(DocumentType.ITEM, [freshItem.id]);
           ui.notifications.info(game.i18n.format('SDM.TransferItemComplete', {
             item: newItem.name,
             target: targetActor.name
           }));
         } catch (err) {
-          if (newItem?.length) {
-            await targetActor.deleteEmbeddedDocuments(DocumentType.ITEM, [newItem[0].id]);
+          if (newItem) {
+            await targetActor.deleteEmbeddedDocuments(DocumentType.ITEM, [newItem.id]);
           }
           throw err;
         }
       }
     } catch (err) {
-      ui.notifications.error(`Transfer failed: ${err.message}`);
+      ui.notifications.error(game.i18n.format('SDM.TransferFailed', { error: err.message }));
     } finally {
       if (sourceActor.items.get(item.id)) {
         await sourceActor.updateEmbeddedDocuments(DocumentType.ITEM, [{
@@ -165,6 +164,5 @@ export async function openItemTransferDialog(item, sourceActor) {
         }
       }]);
     }
-    // ui.notifications.error("Transfer initialization failed");
   }
 }

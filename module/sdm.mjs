@@ -47,7 +47,7 @@ Hooks.on("renderChatMessageHTML", (message, html, data) => {
 // Add safety hook to prevent concurrent transfers
 Hooks.on("preUpdateItem", (item, data) => {
   if (data.flags?.sdm?.transferring && item?.getFlag("sdm", "transferring")) {
-    throw new Error("Item is already being transferred");
+    throw new Error(game.i18n.format('SDM.ErrorTransferAlreadyInProgress', { name: item.name }));
   }
 });
 

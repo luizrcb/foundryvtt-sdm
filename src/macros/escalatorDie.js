@@ -7,8 +7,7 @@ const currentValue = game.settings.get("sdm", "escalatorDie");
 const content = `
   <div class="escalator-control">
     <div style="text-align: center; margin-bottom: 10px;">
-      <h3>Escalator Die: ${currentValue}</h3>
-      <p>${game.i18n.localize("SDM.EscalatorDieHint")}</p>
+      <h3>${game.i18n.localize("SDM.EscalatorDie")}: ${currentValue}</h3>
     </div>
   </div>
 `;
@@ -36,10 +35,10 @@ new foundry.applications.api.DialogV2({
     if (result === 'increment') {
       const newValue = currentValue + 1;
       await game.settings.set("sdm", "escalatorDie", newValue);
-      ui.notifications.info(`Escalator Die increased to ${newValue}`);
+      ui.notifications.info(game.i18n.format('SDM.EscalatorDieIncreased', { value: newValue }));
     } else if (result === 'reset') {
       await game.settings.set("sdm", "escalatorDie", 0);
-      ui.notifications.info("Escalator Die reset to 0");
+      ui.notifications.info(game.i18n.localize("SDM.EscalatorDieReset"));
     }
   }
 }).render({ force: true });

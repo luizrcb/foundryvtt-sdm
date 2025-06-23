@@ -7,24 +7,26 @@ function findCashItem(actor) {
   return actor.items.find(i => i.type === 'gear' && i.system.size?.unit === 'cash');
 }
 
-const characters = game.actors.filter(a => a.type === "character");
+const characters = game.actors.filter(a => a.type === "character" || a.type === "caravan");
 const cashInput = new NumberField({
-  label: "Quantity",
-  min: 1
-}).toFormGroup({}, { value: 1, name: "amount" }).outerHTML;
+  label: game.i18n.localize('SDM.Amount'),
+  min: 0,
+}).toFormGroup({}, { value: 0, name: "amount", min: 0 }).outerHTML;
 
 const content = `
-  <div class="cash-transfer-dialog">
+  <fieldset>
+    <legend>${game.i18n.localize("SDM.CashManagement")}</legend>
     <div class="form-group">
-      <label>Select Target:</label>
+      <label>${game.i18n.localize('SDM.Target')}</label>
       <select name="target" class="form-control">
-        <option value="all">All Characters</option>
+        <option value="all">${game.i18n.localize('SDM.AllCharacters')}</option>
         ${characters.map(c => `<option value="${c.id}">${c.name}</option>`).join('')}
       </select>
     </div>
     <div class="form-group">
       ${cashInput}
     </div>
+  </fieldset>
   </div>
 `;
 
@@ -38,7 +40,7 @@ const data = await DialogV2.wait({
   buttons: [
     {
       action: "add",
-      label: "Add Money",
+      label: game.i18n.localize('SDM.CashManagementAddMoney'),
       icon: "fas fa-coins",
       callback: (event, button, dialog) => ({
         target: button.form.querySelector('[name="target"]').value,
@@ -48,7 +50,7 @@ const data = await DialogV2.wait({
     },
     {
       action: "remove",
-      label: "Remove Money",
+      label: game.i18n.localize('SDM.CashManagementRemoveMoney'),
       icon: "fas fa-minus-circle",
       callback: (event, button, dialog) => ({
         target: button.form.querySelector('[name="target"]').value,
@@ -60,14 +62,21 @@ const data = await DialogV2.wait({
   rejectClose: false,
 });
 
-if (!data?.target) return;
+if (!data?.amount) {
+  return;
+}
+
+if (data?.amount < 0) {
+  ui.notifications.error(game.i18n.localize('SDM.ErrorTransferAmountNotPositive'));
+  return;
+}
 
 const targets = data.target === "all"
   ? characters
   : [game.actors.get(data.target)].filter(Boolean);
 
 if (!targets.length) {
-  ui.notifications.error("No valid target selected!");
+  ui.notifications.error(game.i18n.format('SDM.ErrorNoActorSelected', { type: 'target' }));
   return;
 }
 
@@ -82,7 +91,7 @@ try {
           system: { quantity: cashItem.system.quantity + data.amount }
         }]);
       } else {
-        const currencyName = game.settings.get("sdm", "currencyName");
+        const currencyName = game.settings.get("sdm", "currencyName") || 'cash';
         await target.createEmbeddedDocuments("Item", [{
           name: currencyName,
           type: "gear",
@@ -95,13 +104,13 @@ try {
     }
     else if (data.operation === "remove") {
       if (!cashItem) {
-        ui.notifications.warn(`${target.name} doesn't have any money!`);
+        ui.notifications.warn(game.i18n.format('SDM.ErrorNoMoney', { target: target.name }));
         continue;
       }
 
       const newQuantity = cashItem.system.quantity - data.amount;
       if (newQuantity < 0) {
-        ui.notifications.warn(`${target.name} doesn't have enough money!`);
+        ui.notifications.warn(game.i18n.format('SDM.ErrorNotEnoughMoney', { target: target.name }));
         continue;
       }
 
@@ -112,9 +121,9 @@ try {
     }
   }
 
-  ui.notifications.info(`Cash transfer successful for ${targets.length} character(s)!`);
+  ui.notifications.info(game.i18n.format('SDM.CashManagementCompleted', { number: targets.length }));
 
 } catch (e) {
-  ui.notifications.error("An error has happened during cash transfer!");
+  ui.notifications.error(game.i18n.localize('SDM.ErrorCashManagementFailed'));
   console.error("Error:", e);
 }
