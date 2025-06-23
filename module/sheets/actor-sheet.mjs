@@ -6,6 +6,7 @@ import { ItemType, SizeUnit } from '../helpers/constants.mjs';
 import { healingHeroDice } from '../rolls/heroDice.mjs';
 import { MAX_CARRY_WEIGHT_CASH, MAX_MODIFIER, UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
 import { createChatMessage } from '../helpers/chatUtils.mjs';
+import { SAVING_THROW_BASE_FORMULA } from '../settings.mjs';
 
 const { api, sheets } = foundry.applications;
 const TextEditor = foundry.applications.ux.TextEditor.implementation;
@@ -845,14 +846,16 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     const { rollType } = dataset;
     const finalAbility = this.actor.system.abilities[rollType].final_current;
     const ward = this.actor.system.ward || 0;
+    const burdenPenalty = this.actor.system.burden_penalty || 0;
     const saveBonus = this.actor.system.abilities[rollType].save_bonus || 0;
-    const finalSavingThrowBonus = Math.min(finalAbility + ward + saveBonus, MAX_MODIFIER);
+    const finalSavingThrowBonus = Math.min(finalAbility + ward + saveBonus - burdenPenalty, MAX_MODIFIER);
 
     const label = game.i18n.format('SDM.SavingThrowRoll', {
       ability: game.i18n.localize(CONFIG.SDM.abilities[rollType]),
     });
 
-    const formula = `1d20x20 + ${finalSavingThrowBonus}`;
+    const baseRollFormula = game.settings.get('sdm', 'savingThrowBaseRollFormula') || SAVING_THROW_BASE_FORMULA;
+    const formula = `${baseRollFormula} ${finalSavingThrowBonus >= 0 ? `+`:  ``}${finalSavingThrowBonus}`;
     const targetNumber = this.actor.system.save_target;
 
     // Create and evaluate the roll

@@ -12,7 +12,8 @@ import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 // Import DataModel classes
 import * as models from './data/_module.mjs';
 import { registerHandlebarsHelpers } from './handlebars-helpers.mjs';
-import { configureUseHeroDiceButton, createEscalatorDieDisplay, registerSystemSettings, updateEscalatorDisplay } from './settings.mjs';
+import { CHARACTER_DEFAULT_INITIATIVE, configureUseHeroDiceButton, createEscalatorDieDisplay, registerSystemSettings, updateEscalatorDisplay } from './settings.mjs';
+import SdmActiveEffectConfig from './app/active-effect-config.mjs';
 
 const { Actors, Items } = foundry.documents.collections;
 
@@ -54,8 +55,6 @@ Hooks.once('init', function () {
   // Add custom constants for configuration.
   CONFIG.SDM = SDM;
 
-  CONFIG.Combatant.documentClass = SdmCombatant;
-
   // Define custom Document and DataModel classes
   CONFIG.Actor.documentClass = SdmActor;
 
@@ -94,16 +93,25 @@ Hooks.once('init', function () {
     label: 'SDM.SheetLabels.Item',
   });
 
+  DocumentSheetConfig.unregisterSheet(ActiveEffect, 'core', ActiveEffectConfig);
+  DocumentSheetConfig.registerSheet(ActiveEffect, 'sdm', SdmActiveEffectConfig, {
+    makeDefault: true,
+  });
+
   registerSystemSettings();
 
   /**
    * Set an initiative formula for the system
    * @type {String}
    */
+  const characterInitiativeFormula = game.settings.get("sdm", "initiativeFormula") ||
+    CHARACTER_DEFAULT_INITIATIVE;
   CONFIG.Combat.initiative = {
-    formula:  game.settings.get("sdm", "initiativeFormula"),
+    formula: game.settings.get("sdm", "initiativeFormula"),
     decimals: 2,
   };
+
+  CONFIG.Combatant.documentClass = SdmCombatant;
 
   //Preload Handlebars templates.
   return preloadHandlebarsTemplates();

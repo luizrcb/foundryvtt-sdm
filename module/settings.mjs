@@ -1,20 +1,13 @@
 import { handleHeroDice } from "./rolls/heroDice.mjs";
 
+export const CHARACTER_DEFAULT_INITIATIVE = "2d6 + @abilities.agi.final_current + @initiative_bonus";
+export const NPC_DEFAULT_INITIATIVE = "2d6 + @bonus";
+export const SAVING_THROW_BASE_FORMULA = "1d20x20";
+
 export function registerSystemSettings() {
   /* -------------------------------------------- */
   /*  System settings registration                */
   /* -------------------------------------------- */
-
-  game.settings.register("sdm", "initiativeFormula", {
-    name: "SDM.SettingsInitiativeFormula",
-    hint: "SDM.SettingsInitiativeFormulaHint",
-    scope: "world", // "world" = GM only, "client" = per user
-    restricted: true,
-    config: true, // Show in configuration view
-    type: String, // Data type: String, Number, Boolean, etc
-    default: "2d6 + @abilities.agi.final_current + @initiative_bonus",
-    requiresReload: true,
-  });
 
   game.settings.register("sdm", "currencyName", {
     name: "SDM.SettingsCurrencyName",
@@ -34,7 +27,7 @@ export function registerSystemSettings() {
     hint: "SDM.SettingsEscalatorDieHint",
     scope: "world", // "world" = GM only, "client" = per user
     restricted: true,
-    config: true, // Show in configuration view
+    config: false, // Show in configuration view
     type: Number, // Data type: String, Number, Boolean, etc
     default: 0,
     onChange: value => {
@@ -111,6 +104,54 @@ export function registerSystemSettings() {
     config: true, // Show in configuration view
     type: Number, // Data type: String, Number, Boolean, etc
     default: 3,
+  });
+
+  game.settings.register('sdm', 'savingThrowBaseRollFormula', {
+    name: "SDM.SettingsSavingThrowBaseRollFormula",
+    hint: "SDM.SettingsSavingThrowBaseRollFormulaHint",
+    scope: "world", // "world" = GM only, "client" = per user
+    restricted: true,
+    config: true, // Show in configuration view
+    type: String, // Data type: String, Number, Boolean, etc
+    default: SAVING_THROW_BASE_FORMULA,
+    onChange: value => {
+      if (!foundry.dice.Roll.validate(value)) {
+        ui.notifications.error(game.i18n.format('SDM.SettingsInvalidChange', { settings: 'saving throw base formula' }));
+        game.settings.set("sdm", "savingThrowBaseRollFormula", SAVING_THROW_BASE_FORMULA);
+      }
+    }
+  });
+
+  game.settings.register("sdm", "initiativeFormula", {
+    name: "SDM.SettingsInitiativeFormula",
+    hint: "SDM.SettingsInitiativeFormulaHint",
+    scope: "world", // "world" = GM only, "client" = per user
+    restricted: true,
+    config: true, // Show in configuration view
+    type: String, // Data type: String, Number, Boolean, etc
+    default: CHARACTER_DEFAULT_INITIATIVE,
+    onChange: (value) => {
+      if (!foundry.dice.Roll.validate(value)) {
+        ui.notifications.error(game.i18n.format('SDM.SettingsInvalidChange', { settings: 'initiative formula' }));
+        game.settings.set("sdm", "initiativeFormula", CHARACTER_DEFAULT_INITIATIVE);
+      }
+    }
+  });
+
+  game.settings.register("sdm", "npcInitiativeFormula", {
+    name: "SDM.SettingsNPCInitiativeFormula",
+    hint: "SDM.SettingsNPCInitiativeFormulaHint",
+    scope: "world", // "world" = GM only, "client" = per user
+    restricted: true,
+    config: true, // Show in configuration view
+    type: String, // Data type: String, Number, Boolean, etc
+    default: NPC_DEFAULT_INITIATIVE,
+    onChange: value => {
+      if (!foundry.dice.Roll.validate(value)) {
+        ui.notifications.error(game.i18n.format('SDM.SettingsInvalidChange', { settings: 'npc initiative formula' }));
+        game.settings.set("sdm", "npcInitiativeFormula", NPC_DEFAULT_INITIATIVE);
+      }
+    }
   });
 
   game.settings.register("sdm", "healingHouseRule", {
@@ -217,71 +258,71 @@ export function createEscalatorDieDisplay() {
 export function configureUseHeroDiceButton(message, html, data) {
   if (!message) return;
 
-    //const isInitiativeRoll = message?.getFlag("core", 'initiativeRoll');
-    const isHeroResult = !!message?.getFlag("sdm", 'isHeroResult');
-    const isRollTableMessage = !!message?.getFlag("core", "RollTable");
-    const isAbilityScoreRoll = !!message?.getFlag("sdm", 'isAbilityScoreRoll');
+  //const isInitiativeRoll = message?.getFlag("core", 'initiativeRoll');
+  const isHeroResult = !!message?.getFlag("sdm", 'isHeroResult');
+  const isRollTableMessage = !!message?.getFlag("core", "RollTable");
+  const isAbilityScoreRoll = !!message?.getFlag("sdm", 'isAbilityScoreRoll');
 
-    if (isRollTableMessage || isAbilityScoreRoll) return;
+  if (isRollTableMessage || isAbilityScoreRoll) return;
 
-    if (isHeroResult) {
-      $('button.hero-dice-btn').remove();
-    }
+  if (isHeroResult) {
+    $('button.hero-dice-btn').remove();
+  }
 
-    // Find the most recent roll message in chat
-    const lastRollMessage = [...game.messages.contents]
-      .reverse()
-      .find(m => m.isRoll || m?.getFlag("sdm", "isHeroResult"));
+  // Find the most recent roll message in chat
+  const lastRollMessage = [...game.messages.contents]
+    .reverse()
+    .find(m => m.isRoll || m?.getFlag("sdm", "isHeroResult"));
 
-    if (lastRollMessage?.getFlag("sdm", "isHeroResult")) {
-      $('button.hero-dice-btn').remove();
-      return;
-    };
+  if (lastRollMessage?.getFlag("sdm", "isHeroResult")) {
+    $('button.hero-dice-btn').remove();
+    return;
+  };
 
-    // if (!lastRollMessage.rolls?.[0]?.dice?.some(d => d.faces === 20)) return;
+  // if (!lastRollMessage.rolls?.[0]?.dice?.some(d => d.faces === 20)) return;
 
-    // Only proceed if this is the most recent d20 roll message
-    if (!lastRollMessage || message.id !== lastRollMessage.id) return;
-    // Only show if user has a character with hero dice
+  // Only proceed if this is the most recent d20 roll message
+  if (!lastRollMessage || message.id !== lastRollMessage.id) return;
+  // Only show if user has a character with hero dice
 
-    // Get Actor from selected token, or default character for the Actor if none is.
-    const actor = game.user?.character || canvas?.tokens?.controlled[0]?.actor;
-    const isGM = game.user.isGM;
-    if (!actor && !isGM) return;
+  // Get Actor from selected token, or default character for the Actor if none is.
+  const actor = game.user?.character || canvas?.tokens?.controlled[0]?.actor;
+  const isGM = game.user.isGM;
+  if (!actor && !isGM) return;
 
-    // Check hero_dice
-    const hero_dice = actor?.system?.hero_dice?.value;
-    if (!isGM && (!hero_dice || hero_dice < 1)) return;
+  // Check hero_dice
+  const hero_dice = actor?.system?.hero_dice?.value;
+  if (!isGM && (!hero_dice || hero_dice < 1)) return;
 
-    // Create button element
-    const btn = document.createElement('button');
-    btn.classList.add('hero-dice-btn');
-    btn.dataset.messageId = message.id;
+  // Create button element
+  const btn = document.createElement('button');
+  btn.classList.add('hero-dice-btn');
+  btn.dataset.messageId = message.id;
 
-    // Create icon element
-    const icon = document.createElement('i');
-    const actorHeroDice = actor?.system?.hero_dice?.dice_type || 'd6';
-    icon.classList.add('fas', `fa-dice-${actorHeroDice}`);
-    btn.appendChild(icon);
+  // Create icon element
+  const icon = document.createElement('i');
+  const actorHeroDice = actor?.system?.hero_dice?.dice_type || 'd6';
+  icon.classList.add('fas', `fa-dice-${actorHeroDice}`);
+  btn.appendChild(icon);
 
-    // Add localized text
-    btn.append(` ${game.i18n.localize("SDM.RollUseHeroDice")}`);
+  // Add localized text
+  btn.append(` ${game.i18n.localize("SDM.RollUseHeroDice")}`);
 
-    // Create container div
-    const container = document.createElement('div');
-    container.appendChild(document.createElement('br'));
-    container.appendChild(btn);
+  // Create container div
+  const container = document.createElement('div');
+  container.appendChild(document.createElement('br'));
+  container.appendChild(btn);
 
-    // Find message content and append
-    const messageContent = html.querySelector('.message-content');
-    if (messageContent) {
-      messageContent.appendChild(container);
-    }
+  // Find message content and append
+  const messageContent = html.querySelector('.message-content');
+  if (messageContent) {
+    messageContent.appendChild(container);
+  }
 
-    // Add event listener
-    btn.addEventListener('click', (ev) => {
-      ev.preventDefault();
-      ev.stopPropagation();
-      handleHeroDice(ev, message, actor);
-    });
+  // Add event listener
+  btn.addEventListener('click', (ev) => {
+    ev.preventDefault();
+    ev.stopPropagation();
+    handleHeroDice(ev, message, actor);
+  });
 }

@@ -1,4 +1,5 @@
 import { ActorType } from "../helpers/constants.mjs";
+import { NPC_DEFAULT_INITIATIVE } from "../settings.mjs";
 
 export class SdmCombatant extends Combatant {
   /** @override */
@@ -12,7 +13,7 @@ export class SdmCombatant extends Combatant {
     }
 
     if (actor.type === ActorType.NPC) {
-      const npcFormula = '2d6 + @bonus'
+      const npcFormula = game.settings.get("sdm", "npcInitiativeFormula") || NPC_DEFAULT_INITIATIVE;
       return npcFormula;
     }
 

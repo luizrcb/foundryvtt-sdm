@@ -31,35 +31,23 @@ const rollAttributes = async () => {
 
   // Create chat message after all rolls complete
   const content = `
-    <h3>${game.i18n.localize("SDM.AbilityScoreGeneration")}</h3>
+    <h3>${game.i18n.localize("SDM.AbilityScoreGen")}</h3>
     <ul>
         ${abilitiesOrder[currentLanguage].map(stat =>
-    `<li><b>${game.i18n.localize(`SDM.Ability.${stat}.long`)}</b>: ${results[stat].value} (Roll: ${results[stat].total})</li>`
+    `<li><b>${game.i18n.localize(`SDM.Ability${stat}`)}</b>: ${results[stat].value} (Roll: ${results[stat].total})</li>`
   ).join("")}
     </ul>
     `;
 
   const rollMode = game.settings.get('core', 'rollMode');
 
-  const chatData = {
+  let chatData = {
     content,
-    rollMode,
     rolls,
     flags: { "sdm.isAbilityScoreRoll": true },
   };
 
-
-  if (rollMode === 'selfroll') {
-    chatData.whisper = [game.user.id];
-  }
-
-  if (rollMode === 'blindroll') {
-    chatData.blind = true;
-  }
-
-  if (rollMode === 'gmroll' || rollMode === 'blindroll') {
-    chatData.whisper = ChatMessage.getWhisperRecipients('GM');
-  }
+  chatData = ChatMessage.applyRollMode(chatData, rollMode);
 
   ChatMessage.create(chatData);
 };

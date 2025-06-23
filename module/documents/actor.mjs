@@ -29,8 +29,6 @@ export class SdmActor extends Actor {
     }
 
     if (changed.system?.experience !== undefined) {
-      //TODO: add a better library to safely evaluate expressions
-
       // TODO: let's add the additional life to max and current values, but taking bonuses into account
       let resultingExperience = safeEvaluate(`${changed.system?.experience}`.trim());
       resultingExperience = parseInt(resultingExperience, 10);

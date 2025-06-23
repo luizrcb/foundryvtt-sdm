@@ -67,7 +67,7 @@ export async function createChatMessage({
   try {
     const finalSpeaker = speaker || ChatMessage.getSpeaker({ actor });
 
-    const chatData = {
+    let chatData = {
       user,
       speaker: finalSpeaker,
       flavor,
@@ -76,21 +76,10 @@ export async function createChatMessage({
       flags,
     };
 
-    // Handle roll visibility modes
-    switch (rollMode) {
-      case 'selfroll':
-        chatData.whisper = [game.user.id];
-        break;
-      case 'blindroll':
-        chatData.blind = true;
-        break;
-      case 'gmroll':
-      case 'blindroll':
-        chatData.whisper = ChatMessage.getWhisperRecipients('GM');
-        break;
-    }
+    chatData = ChatMessage.applyRollMode(chatData, rollMode);
 
     return ChatMessage.create(chatData);
+    //return cls.create(msg.toObject());
   } catch (e) {
     console.error("createChatMessage: Failed to create message", e);
     return null;

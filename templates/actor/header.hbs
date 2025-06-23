@@ -1,9 +1,9 @@
 {{! Sheet Header }}
 <div>
 {{#if (eq actor.type 'character')}}
-  {{> "systems/sdm/templates/actor/character/header.hbs"}}
+  {{> ($$ "actor/character/header")}}
 {{/if}}
 {{#if (eq actor.type 'npc')}}
-  {{> "systems/sdm/templates/actor/npc/header.hbs"}}
+  {{> ($$ "actor/npc/header")}}
 {{/if}}
 </div>

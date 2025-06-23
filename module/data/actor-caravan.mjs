@@ -90,7 +90,7 @@ export default class SdmCarvan extends SdmActorBase {
         helperId: new fields.DocumentUUIDField(),
       }), {
       required: false, initial: [
-        { helperId: "Actor.SCN24FqoDITtm4wV"}
+        { helperId: ""}
       ]}
     );
     schema.heroes = new fields.ArrayField(
@@ -99,7 +99,7 @@ export default class SdmCarvan extends SdmActorBase {
         role: new fields.StringField({ required: false, blank: true, initial: '' })
       }), {
       required: false, initial: [
-        { heroId: 'Actor.mYItQa7vlzHsfetx', role: '' }
+        { heroId: '', role: '' }
       ]}
     );
 

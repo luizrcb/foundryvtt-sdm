@@ -4,8 +4,10 @@
     <div class="flexcol flex-between flex-center">
       <img class='profile-img' src='{{actor.img}}' data-edit='img' data-action='onEditImage' title='{{actor.name}}'
         height='100' width='100' />
-      <div class="flexcol flex-group-center rollable margin-bottom-10" data-context='rollable' data-action='heroicHealing'>
-        <label class='resource-label'>{{localize 'SDM.FieldHeroDice'}} <i class="fas fa-dice-{{system.hero_dice.dice_type}}"></i></label>
+      <div class="flexcol flex-group-center rollable margin-bottom-10" data-context='rollable'
+        data-action='heroicHealing'>
+        <label class='resource-label'>{{localize 'SDM.FieldHeroDice'}} <i
+            class="fas fa-dice-{{system.hero_dice.dice_type}}"></i></label>
         <div class='resource-content flexrow height-32'>
           {{system.hero_dice.value}} / {{system.hero_dice.max}}
         </div>
@@ -27,10 +29,9 @@
             </label>
             <div class='resource-content flexrow flex-center flex-between'>
               {{#if isGM}}
-              <input type='text' name='system.player_experience' value='{{system.player_experience}}' data-dtype='Text' />
+              <input type='text' name='system.player_experience' value='{{system.player_experience}}' />
               {{else}}
-              <input type='text' name='system.player_experience' value='{{system.player_experience}}' data-dtype='Text'
-                disabled />
+              <input type='text' name='system.player_experience' value='{{system.player_experience}}' disabled />
               {{/if}}
             </div>
           </div>
@@ -41,9 +42,9 @@
             </label>
             <div class='resource-content flexrow flex-center flex-between'>
               {{#if isGM}}
-              <input type='text' name='system.experience' value='{{system.experience}}' data-dtype='Text' />
+              <input type='text' name='system.experience' value='{{system.experience}}' />
               {{else}}
-              <input type='text' name='system.experience' value='{{system.experience}}' data-dtype='Text' disabled />
+              <input type='text' name='system.experience' value='{{system.experience}}' disabled />
               {{/if}}
             </div>
           </div>
@@ -98,7 +99,7 @@
             {{localize 'SDM.Actor.Character.FIELDS.friends.label'}}
           </label>
           <div class='resource-content flexrow flex-center flex-between'>
-            <input type='text' name='system.friends' value='{{system.friends}}' data-dtype='Text' />
+            <input type='text' name='system.friends' value='{{system.friends}}' />
           </div>
         </div>
         {{/if}}
@@ -109,7 +110,7 @@
             {{localize 'SDM.Actor.Character.FIELDS.enemies.label'}}
           </label>
           <div class='resource-content flexrow flex-center flex-between'>
-            <input type='text' name='system.enemies' value='{{system.enemies}}' data-dtype='Text' />
+            <input type='text' name='system.enemies' value='{{system.enemies}}' />
           </div>
         </div>
         {{/if}}
@@ -120,7 +121,7 @@
             {{localize 'SDM.Actor.Character.FIELDS.likes.label'}}
           </label>
           <div class='resource-content flexrow flex-center flex-between'>
-            <input type='text' name='system.likes' value='{{system.likes}}' data-dtype='Text' />
+            <input type='text' name='system.likes' value='{{system.likes}}' />
           </div>
         </div>
         {{/if}}
@@ -129,8 +130,8 @@
         <div class='resource flexcol'>
           <div class="flexrow">
             <label for="system.defense" class='resource-label'>
-            {{localize 'SDM.Actor.Character.FIELDS.defense.label'}}
-          </label>
+              {{localize 'SDM.Actor.Character.FIELDS.defense.label'}}
+            </label>
           </div>
           <div class='resource-content flexrow align-center height-32'>
             <div title="Physical defense">
@@ -163,7 +164,7 @@
             {{localize 'SDM.Actor.Character.FIELDS.species.label'}}
           </label>
           <div class='resource-content flexrow flex-center flex-between'>
-            <input type='text' name='system.species' value='{{system.species}}' data-dtype='Text' />
+            <input type='text' name='system.species' value='{{system.species}}' />
           </div>
         </div>
         <div class='resource'>
@@ -171,7 +172,7 @@
             {{localize 'SDM.Actor.Character.FIELDS.looks.label'}}
           </label>
           <div class='resource-content flexrow flex-center flex-between'>
-            <input type='text' name='system.looks' value='{{system.looks}}' data-dtype='Text' />
+            <input type='text' name='system.looks' value='{{system.looks}}' />
           </div>
         </div>
         {{/if}}
@@ -186,16 +187,18 @@
             {{#each system.abilities as |ability key|}}
             <div class="main grid-span-1">
               <div class='ability flexrow flex-group-center'>
-                <span class='resource-label rollable' data-action='roll' data-context='rollable'
-                  data-key="{{key}}" data-label='{{localize (lookup @root.config.abilities key)}}' title='{{localize (lookup @root.config.abilities key)}}'>
+                <span class='resource-label rollable' data-action='roll' data-context='rollable' data-key="{{key}}"
+                  data-label='{{localize (lookup @root.config.abilities key)}}'
+                  title='{{localize (lookup @root.config.abilities key)}}'>
                   {{toUpperCase (localize (lookup @root.config.abilityAbbreviations key))}}
                 </span>
                 <input type='text' name='system.abilities.{{key}}.full' value='{{ability.full}}' class="ability-score"
                   data-dtype='Number' />
                 <input type='text' name='system.abilities.{{key}}.current' value='{{ability.current}}'
                   class="ability-score" data-dtype='Number' />
-                <div class='rollable flexrow' data-roll-type={{key}} data-action='rollSavingThrow' title="{{localize (lookup @root.config.abilities key)}} saving throw">
-                  <i class="fas {{saveIcon key}} saveIcon"></i>
+                <div class='rollable flexrow' data-roll-type={{key}} data-action='rollSavingThrow'
+                  title="{{localize (lookup @root.config.abilities key)}} saving throw">
+                  <i class="fas {{lookup @root.config.abilitySaveIcons key}} saveIcon"></i>
                 </div>
               </div>
             </div>
@@ -213,7 +216,8 @@
               </div>
             </div>
             <div class="ability grid-span-1 flexrow">
-              <div class='resource-label rollable' data-roll-type='attack' data-action='roll' data-attack="fantascience">
+              <div class='resource-label rollable' data-roll-type='attack' data-action='roll'
+                data-attack="fantascience">
                 <div>{{localize 'SDM.AttackFantascience'}}</div>
               </div>
             </div>

@@ -4,12 +4,16 @@
  * @return {Promise}
  */
 
+const $$ = (path) => `systems/sdm/templates/${path}.hbs`;
+
+const templatesToLoad = [
+  $$('actor/gears'),
+  $$('actor/traits'),
+  $$('actor/burdens'),
+  $$('actor/character/header'),
+  $$('actor/npc/header'),
+];
+
 export const preloadHandlebarsTemplates = async function () {
-  return foundry.applications.handlebars.loadTemplates([
-    'systems/sdm/templates/actor/gears.hbs',
-    'systems/sdm/templates/actor/traits.hbs',
-    'systems/sdm/templates/actor/burdens.hbs',
-    "systems/sdm/templates/actor/character/header.hbs",
-    "systems/sdm/templates/actor/npc/header.hbs"
-  ]);
+  return foundry.applications.handlebars.loadTemplates(templatesToLoad);
 };
