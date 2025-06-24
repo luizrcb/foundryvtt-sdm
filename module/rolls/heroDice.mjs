@@ -1,6 +1,7 @@
 import { createChatMessage } from '../helpers/chatUtils.mjs';
 import { SDM } from '../helpers/config.mjs';
-import { ActorType, Die } from '../helpers/constants.mjs';
+import { ActorType, Die } from '../helpers/constants.mjs'
+import { $fmt , $l10n } from '../helpers/globalUtils.mjs'
 
 const { renderTemplate } = foundry.applications.handlebars;
 
@@ -68,7 +69,9 @@ export class HeroDiceProcessor {
           new ExplosiveDie({ ...r, dieIndex, resultIndex }, d.faces)));
 
     const nonExplosiveDice = originalRoll.dice.filter(d => d.faces !== dieFaces);
-    const heroDiceType = actor.system.hero_dice.dice_type;
+    const defaultHeroDiceType = game.settings.get('sdm', 'defaultHeroDiceType');
+    const heroDiceType = actor?.system?.hero_dice?.dice_type || defaultHeroDiceType;
+
     const heroicRoll = await this._rollHeroDice(heroicDiceQty, true, false, Die[heroDiceType],
       // force hero dice results for testing
       // {dice: [{ results: [{result: 1, index: 0}]}]},
@@ -436,6 +439,9 @@ export class HeroDiceProcessor {
       }
     }
 
+    const defaultHeroDiceType = game.settings.get('sdm', 'defaultHeroDiceType');
+    const heroDiceType = actor?.system?.hero_dice?.dice_type || defaultHeroDiceType;
+
     const templateData = {
       dice: remainingDice,
       heroicTotal: distribution.heroicResults || [], // provavelmente esta errado
@@ -448,15 +454,15 @@ export class HeroDiceProcessor {
       shouldExplode,
       multiplier: multiplier ? SDM.damageMultiplier[multiplier] : '',
       diceTotal,
-      heroDiceType: actor.system.hero_dice.dice_type,
+      heroDiceType,
     };
 
     return createChatMessage({
       actor,
       content: await renderTemplate("systems/sdm/templates/chat/hero-dice-result.hbs", templateData),
-      flavor: game.i18n.format('SDM.Roll.Title', {
+      flavor: $fmt('SDM.RollTitle', {
         prefix: '',
-        title: game.i18n.localize('SDM.FieldHeroDice'),
+        title: $l10n('SDM.FieldHeroDice'),
       }),
       flags: { "sdm.isHeroResult": true },
     });
@@ -471,7 +477,7 @@ export function getHeroDiceSelect(actor, includeZero = false, isDamageRoll = fal
   ).join('');
   const heroicDiceSelect = `
       <div class="form-group">
-        <label>${game.i18n.localize("SDM.HeroDice")}</label>
+        <label>${$l10n("SDM.ItemQuantity")}</label>
         <select name="heroicQty">
           ${includeZero ? '<option value="0">0</option>' : ''}
           ${options}
@@ -479,15 +485,15 @@ export function getHeroDiceSelect(actor, includeZero = false, isDamageRoll = fal
       </div>
       ${isDamageRoll ? `
       <div class="form-group">
-        <label for="shouldExplode">${game.i18n.localize("SDM.ExplodingDice")}</label>
+        <label for="shouldExplode">${$l10n("SDM.ExplodingDice")}</label>
         <input id="shouldExplode" type="checkbox" name="shouldExplode" />
       </div>
       `: ''}
       ${healingHouseRuleEnabled ? `
       <div class="form-group">
-        <label for="healingHouseRule">${game.i18n.localize("SDM.HealingHouseRule")}</label>
-        <input id="healingHouseRule" type="checkbox" name="healingHouseRule" checked />
-        <p>${game.i18n.localize("SDM.HealingHouseRuleHint")}</p>
+        <label for="healingHouseRule">${$l10n("SDM.SettingsHealingHouseRule")}</label>
+        <input id="healingHouseRule" type="checkbox" name="healingHouseRule" />
+        <p>${$l10n("SDM.SettingsHealingHouseRuleHint")}</p>
       </div>
       `: ''}
     `;
@@ -499,29 +505,31 @@ export async function handleHeroDice(event, message, messageActor) {
   const actor = messageActor || game.user?.character || canvas?.tokens?.controlled[0]?.actor;
 
   if (!actor || actor.type !== ActorType.CHARACTER) {
-    ui.notifications.error(game.i18n.localize('SDM.ErrorNoActorSelected'));
+    ui.notifications.error($l10n('SDM.ErrorNoActorSelected'));
     return;
   }
 
   const maxDice = actor.system.hero_dice.value;
   if (maxDice < 1) {
-    ui.notifications.error(game.i18n.format('SDM.ErrorActorNoHeroDice', { actor: actor.name }));
+    ui.notifications.error($fmt('SDM.ErrorActorNoHeroDice', { actor: actor.name }));
     return;
   }
 
   const originalRoll = message.rolls[0];
   const isDamageRoll = !!message?.getFlag('sdm', 'isDamageRoll');
   const isTraitRoll = !!message?.getFlag('sdm', 'isTraitRoll');
-  const heroDiceType = actor.system.hero_dice.dice_type;
+
+  const defaultHeroDiceType = game.settings.get('sdm', 'defaultHeroDiceType');
+  const heroDiceType = actor?.system?.hero_dice?.dice_type || defaultHeroDiceType;
 
   const heroicDiceOptions = await foundry.applications.api.DialogV2.prompt({
     window: {
-      title: `${actor.name} ${game.i18n.localize("SDM.RollUseHeroDice")}`,
+      title: `${actor.name} ${$l10n("SDM.RollUseHeroDice")}`,
     },
     content: getHeroDiceSelect(actor, false, isDamageRoll || !isTraitRoll),
     ok: {
       icon: `fas fa-dice-${heroDiceType}`,
-      label: game.i18n.localize("SDM.Roll"),
+      label: $l10n("SDM.ButtonRoll"),
       callback: (event, button) => new foundry.applications.ux.FormDataExtended(button.form).object,
     }
   });
@@ -540,20 +548,20 @@ export async function handleHeroDice(event, message, messageActor) {
 }
 
 export async function healingHeroDice(event, actor) {
-  // const healingHouseRuleEnabled = !!game.settings.get('sdm', 'healingHouseRule');
+  const healingHouseRuleEnabled = !!game.settings.get('sdm', 'healingHouseRule');
   const maxDice = actor.system.hero_dice.value;
-  if (maxDice < 1) return ui.notifications.error(game.i18n.localize('SDM.ErrorNoHeroDice'));
-
-  const heroDiceType = actor.system.hero_dice.dice_type;
+  if (maxDice < 1) return ui.notifications.error($l10n('SDM.ErrorNoHeroDice'));
+  const defaultHeroDiceType = game.settings.get('sdm', 'defaultHeroDiceType');
+  const heroDiceType = actor?.system?.hero_dice?.dice_type || defaultHeroDiceType;
 
   const heroicDiceOptions = await foundry.applications.api.DialogV2.prompt({
     window: {
-      title: game.i18n.localize("SDM.RollUseHeroDice"),
+      title: $l10n("SDM.RollUseHeroDice"),
     },
-    content: getHeroDiceSelect(actor, false, false, false),
+    content: getHeroDiceSelect(actor, false, false, healingHouseRuleEnabled),
     ok: {
       icon: `fas fa-dice-${heroDiceType}`,
-      label: game.i18n.localize("SDM.Roll"),
+      label: $l10n("SDM.ButtonRoll"),
       callback: (event, button) => new foundry.applications.ux.FormDataExtended(button.form).object,
     },
   });
@@ -570,15 +578,13 @@ export async function healingHeroDice(event, actor) {
   const currentHeroDice = actor.system.hero_dice.value;
   if (heroicDiceQty > currentHeroDice) return;
 
-  const diceType = actor.system.hero_dice.dice_type;
-
-  const roll = await HeroDiceProcessor._rollHeroDice(heroicDiceQty, false, healingHouseRule, Die[diceType]);
+  const roll = await HeroDiceProcessor._rollHeroDice(heroicDiceQty, false, healingHouseRule, Die[heroDiceType]);
 
   const diceLabel = heroicDiceQty > 1 ?
-    game.i18n.localize("SDM.HeroDice") :
-    game.i18n.localize("SDM.HeroDie");
+    $l10n("SDM.HeroDice") :
+    $l10n("SDM.HeroDie");
 
-  const flavor = game.i18n.format("SDM.HeroDiceSpend", {
+  const flavor = $fmt("SDM.HeroDiceSpend", {
     actor: actor.name,
     quantity: heroicDiceQty,
     diceLabel: diceLabel,

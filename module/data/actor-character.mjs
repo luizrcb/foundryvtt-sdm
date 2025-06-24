@@ -5,6 +5,8 @@ import { getDefaultAbility } from '../helpers/globalUtils.mjs';
 import SdmActorBase from './base-actor.mjs';
 import CharacterPetModel from './character-pet.mjs';
 
+
+
 export default class SdmCharacter extends SdmActorBase {
   static LOCALIZATION_PREFIXES = [
     ...super.LOCALIZATION_PREFIXES,
@@ -116,15 +118,15 @@ export default class SdmCharacter extends SdmActorBase {
 
     schema.level = new fields.NumberField({ ...requiredInteger, min: 0, initial: 0, max: 9 });
     schema.friends = new fields.StringField({ required: false, blank: true, initial: '' });
-    schema.enemies = new fields.StringField({ required: false, blank: true, initial: '' });
+    schema.foes = new fields.StringField({ required: false, blank: true, initial: '' });
     schema.likes = new fields.StringField({ required: false, blank: true, initial: '' });
     schema.species = new fields.StringField({ required: false, blank: true, initial: '' });
     schema.looks = new fields.StringField({ required: false, blank: true, initial: '' });
 
-    schema.debt = new fields.StringField({ required: false, blank: true, initial: '' });
-    schema.wealth = new fields.StringField({ required: false, blank: true, initial: '' });
-    schema.revenue = new fields.StringField({ required: false, blank: true, initial: '' });
-    schema.expense = new fields.StringField({ required: false, blank: true, initial: '' });
+    schema.debt = new fields.StringField({ require: true, initial: '0' });
+    schema.wealth = new fields.StringField({ require: true, initial: '0' });
+    schema.revenue = new fields.StringField({ require: true, initial: '0' });
+    schema.expense = new fields.StringField({ require: true, initial: '0' });
 
 
     schema.hero_dice = new fields.SchemaField({
@@ -144,8 +146,8 @@ export default class SdmCharacter extends SdmActorBase {
         min: 0,
         max: 0,
       }),
-      dice_type: new fields.StringField({      //d6
-        required: true, blank: false, initial: DieScale[1], choices:
+      dice_type: new fields.StringField({
+        required: false, blank: true, choices:
           DieScale.reduce((acc, die) => {
             acc[die] = die;
             return acc;

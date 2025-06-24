@@ -89,8 +89,8 @@
           "friends": {
             "label": "Friends"
           },
-          "enemies": {
-            "label": "Enemies"
+          "foes": {
+            "label": "Foes"
           },
           "likes": {
             "label": "Likes"

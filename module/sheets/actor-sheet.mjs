@@ -7,6 +7,7 @@ import { healingHeroDice } from '../rolls/heroDice.mjs';
 import { MAX_CARRY_WEIGHT_CASH, MAX_MODIFIER, UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
 import { createChatMessage } from '../helpers/chatUtils.mjs';
 import { SAVING_THROW_BASE_FORMULA } from '../settings.mjs';
+import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 
 const { api, sheets } = foundry.applications;
 const TextEditor = foundry.applications.ux.TextEditor.implementation;
@@ -89,7 +90,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     result += '<option value=""}></option>';
     for (let orderedAbility of abilitiesOrder['en']) {
       result += `<option value="${orderedAbility}"${(orderedAbility === default_ability) ? 'selected' : ''}>
-      ${game.i18n.localize(CONFIG.SDM.abilities[orderedAbility])}</option>\n`
+      ${$l10n(CONFIG.SDM.abilities[orderedAbility])}</option>\n`
     }
 
     return result;
@@ -103,7 +104,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     return options;
   }
 
-
   damageMultiplierOptions() {
     let options = '';
     for (const [key, value] of Object.entries(CONFIG.SDM.damageMultiplier)) {
@@ -116,17 +116,18 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
   // Open the custom roll modal
   async _openCustomRollModal(key, attribute, attack, rolledFrom, item, versatile = false) {
     const actorAttack = attack ? this.actor.system[attack] : {};
-    const versatileLabel = game.i18n.localize(CONFIG.SDM.versatile);
+    const versatileLabel = $l10n('SDM.FeatureVersatile');
     const availableSkills = this.actor.getAvailableSkills();
-    const rollTitlePrefix = item ? 'Damage' : attack ? 'Attack' : '';
+    const rollTitlePrefix = item ? ($l10n('SDM.Damage') + ' ') : attack ? ($l10n('SDM.Attack') + ' ') : '';
     const title = attribute ?? actorAttack.name ?? `${item?.name}${versatile ? ` (${versatileLabel})` : ''}`;
+    console.log(title);
     const isTraitRoll = !!(attack || key);
     const content = `
       <div class="custom-roll-modal">
-        <h4>${rollTitlePrefix ? `${rollTitlePrefix} ` : ''}Roll: ${title}</h4>
+        <h4>${$fmt('SDM.RollTitle', { prefix: rollTitlePrefix, title })}</h4>
         <form class="custom-roll-form">
-        ${rolledFrom !== 'Ability' ? `<div class="form-group">
-            <label>${game.i18n.localize(CONFIG.SDM.abilitiesLabel)}</label>
+        ${rolledFrom !== $l10n('SDM.FieldAbility') ? `<div class="form-group">
+            <label>${$l10n('SDM.FieldAbility')}</label>
             <select name="selectedAttribute">
               ${actorAttack ? this._getStatSelectOptions(actorAttack) :
           item ? this._getStatSelectOptions({ default_ability: item?.system?.default_ability }) : this._getStatSelectOptions({})}
@@ -134,7 +135,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
           </div>
         `: ''}
          ${attack ? `<div class="form-group">
-            <label for="skillMod">Skill</label>
+            <label for="skillMod">${$l10n('SDM.Skill')}</label>
             <select name="selectedSkill" id="selectedSkill">
               <option value=""></option>
              ${this.getSkillOptions(availableSkills, attack)}
@@ -142,38 +143,38 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
             </div>
           `: ''}
           <div class="form-group">
-            <label for="modifier">${game.i18n.localize(CONFIG.SDM.modifierLabel)}</label>
+            <label for="modifier">${$l10n('SDM.RollModifier')}</label>
             <input id="modifier" type="string" name="modifier" value="" />
           </div>
          ${item ? `<div class="form-group">
-            <label for="multiplier">Multiplier</label>
+            <label for="multiplier">${$l10n('SDM.RollMultiplier')}</label>
             <select name="multiplier" id="multiplier">
               <option value=""></option>
              ${this.damageMultiplierOptions()}
             </select>
           </div>`: ''}
           <div class="form-group">
-            <label>${game.i18n.localize(CONFIG.SDM.rollTypeLabel)}</label>
+            <label>${$l10n('SDM.RollType')}</label>
             <div class="roll-type-select">
               <div>
                 <label>
-                  <input type="radio" name="rollType" value="disadvantage"> ${game.i18n.localize(CONFIG.SDM.rollType.disadvantage)}
+                  <input type="radio" name="rollType" value="disadvantage"> ${$l10n('SDM.RollDisadvantage')}
                 </label>
               </div>
               <div>
                 <label>
-                  <input type="radio" name="rollType" value="normal" checked> ${game.i18n.localize(CONFIG.SDM.rollType.normal)}
+                  <input type="radio" name="rollType" value="normal" checked> ${$l10n('SDM.RollNormal')}
                 </label>
               </div>
                <div>
                 <label>
-                  <input type="radio" name="rollType" value="advantage"> ${game.i18n.localize(CONFIG.SDM.rollType.advantage)}
+                  <input type="radio" name="rollType" value="advantage"> ${$l10n('SDM.RollAdvantage')}
                 </label>
               </div>
             </div>
           </div>
           ${rolledFrom !== 'Weapon' ? `<div class="form-group">
-            <label for="shouldExplode">${game.i18n.localize("SDM.ExplodingDice")}</label>
+            <label for="shouldExplode">${$l10n("SDM.ExplodingDice")}</label>
             <input id="shouldExplode" type="checkbox" name="shouldExplode" ${isTraitRoll ? "checked" : ""} />
           </div>` : ''}
         </form>
@@ -184,12 +185,12 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     // Create and render the modal
     const rollOptions = await foundry.applications.api.DialogV2.prompt({
       window: {
-        title: `Roll: ${title}`,
+        title: $fmt('SDM.RollTitle', { prefix: '', title }),
       },
       content,
       ok: {
         icon: 'fas fa-dice-d20',
-        label: "Roll",
+        label: $l10n('SDM.ButtonRoll'),
         callback: (event, button) => new foundry.applications.ux.FormDataExtended(button.form).object,
       }
     });
@@ -220,7 +221,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
 
     const ability = key ? key : selectedAttribute;
     const attackData = attack ? this.actor.system[attack] : {};
-    let label = attack ? attackData.name : (attribute ? attribute : (ability ? game.i18n.localize(CONFIG.SDM.abilities[ability]) : ''));
+    let label = attack ? attackData.name : (attribute ? attribute : (ability ? $l10n(CONFIG.SDM.abilities[ability]) : ''));
 
     if (item) {
       label = item.name;
@@ -308,8 +309,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
           reorderedAbilities[key] = context.system.abilities[key];
         }
       });
-
+      const heroDiceType = this.actor.system.hero_dice?.dice_type || game.settings.get('sdm', 'defaultHeroDiceType');
       // Replace the abilities in the system object with the reordered abilities
+      context.heroDiceType = heroDiceType;
       context.system.abilities = reorderedAbilities;
     }
 
@@ -375,7 +377,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
         // FontAwesome Icon, if you so choose
         icon: '',
         // Run through localization
-        label: 'SDM.Actor.Tabs.',
+        label: 'SDM.Tab',
       };
       switch (partId) {
         case 'header':
@@ -383,7 +385,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
           return tabs;
         case 'features':
           tab.id = 'features';
-          tab.label += 'Features';
+          tab.label += 'Inventory';
           break;
         case 'effects':
           tab.id = 'effects';
@@ -703,7 +705,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
   static async _deleteDoc(event, target) {
     const doc = this._getEmbeddedDocument(target);
     const proceed = await DialogV2.confirm({
-      content: `<b>${game.i18n.format('SDM.DeleteDocConfirmation', { doc: doc.name })}</b>`,
+      content: `<b>${$fmt('SDM.DeleteDocConfirmation', { doc: doc.name })}</b>`,
       modal: true,
       rejectClose: false,
     });
@@ -813,12 +815,12 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       case 'item':
         const item = this._getEmbeddedDocument(target);
         if (!item || !item?.system?.is_weapon) return;
-        const weaponLabel = game.i18n.localize(`TYPES.Item.${item.type}`);
+        const weaponLabel = $l10n(`TYPES.Item.${item.type}`);
         return this._openCustomRollModal(key, label, attack, weaponLabel, item, versatile);
       //if (item) return item.roll(event, versatile);
     }
 
-    const abilitiesLabel = game.i18n.localize(CONFIG.SDM.abilitiesLabel);
+    const abilitiesLabel = $l10n(CONFIG.SDM.abilitiesLabel);
 
     const ChatLabel = dataset.label ? `[${abilitiesLabel}] ${dataset.label}` : '';
 
@@ -830,7 +832,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     }
 
     const rolledFrom = dataset.rollType ?? 'ability';
-    const rolledFromlabel = game.i18n.localize(CONFIG.SDM.rollSource[rolledFrom]);
+    const rolledFromlabel = $l10n(CONFIG.SDM.rollSource[rolledFrom]);
 
     this._openCustomRollModal(key, label, attack, rolledFromlabel);
   }
@@ -850,36 +852,40 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     const saveBonus = this.actor.system.abilities[rollType].save_bonus || 0;
     const finalSavingThrowBonus = Math.min(finalAbility + ward + saveBonus - burdenPenalty, MAX_MODIFIER);
 
-    const label = game.i18n.format('SDM.SavingThrowRoll', {
-      ability: game.i18n.localize(CONFIG.SDM.abilities[rollType]),
+    const label = $fmt('SDM.SavingThrowRoll', {
+      ability: $l10n(CONFIG.SDM.abilities[rollType]),
     });
 
     const baseRollFormula = game.settings.get('sdm', 'savingThrowBaseRollFormula') || SAVING_THROW_BASE_FORMULA;
-    const formula = `${baseRollFormula} ${finalSavingThrowBonus >= 0 ? `+`:  ``}${finalSavingThrowBonus}`;
+    const formula = `${baseRollFormula} ${finalSavingThrowBonus >= 0 ? `+` : ``}${finalSavingThrowBonus}`;
     const targetNumber = this.actor.system.save_target;
 
     // Create and evaluate the roll
     let roll = new Roll(formula);
     roll = await roll.evaluate();
 
+    const sacrificeOutcome = $l10n("SDM.SavingThrowSacrifice");
+    const saveOutcome = $l10n("SDM.SavingThrowSave");
+    const doomOutcome = $l10n("SDM.SavingThrowDoom");
+
     // Determine outcome and message
     let outcome, message;
     if (roll.total === targetNumber) {
-      outcome = game.i18n.localize("SDM.SavingThrowSacrifice");
-      message = game.i18n.localize("SDM.SavingThrowSacrificeMessage");
+      outcome = sacrificeOutcome;
+      message = $l10n("SDM.SavingThrowSacrificeMessage");
     } else if (roll.total > targetNumber) {
-      outcome = game.i18n.localize("SDM.SavingThrowSave");
-      message = game.i18n.localize("SDM.SavingThrowSaveMessage");
+      outcome = saveOutcome;
+      message = $l10n("SDM.SavingThrowSaveMessage");
     } else {
-      outcome = game.i18n.localize("SDM.SavingThrowDoom");
-      message = game.i18n.localize("SDM.SavingThrowDoomMessage");
+      outcome = doomOutcome;
+      message = $l10n("SDM.SavingThrowDoomMessage");
     }
 
     let borderColor = '#aa0200';
 
-    if (outcome === 'SAVE') {
+    if (outcome === saveOutcome) {
       borderColor = '#028f02';
-    } else if (outcome === 'SACRIFICE') {
+    } else if (outcome === sacrificeOutcome) {
       borderColor = '#d4af37';
     }
 
@@ -889,7 +895,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       formula,
       total: roll.total,
       borderColor,
-      targetLabel: 'Target',
+      targetLabel: $l10n('SDM.Target'),
       targetNumber,
       rollTooltip: await roll.getTooltip(),
     };

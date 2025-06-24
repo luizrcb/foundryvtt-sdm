@@ -357,6 +357,12 @@
 .sdm .height-32 {
   height: 32px;
 }
+.sdm .grid-span-1.flexrow.flex-between {
+  gap: 15px;
+}
+.sdm .resources.grid.grid-5col {
+  margin-top: 0px;
+}
 .sdm .resource-label {
   font-weight: bold;
 }
@@ -366,6 +372,10 @@
 .sdm .ability-score,
 .sdm .ability-mod {
   flex: 0 0 44px;
+}
+.sdm .ability-full {
+  margin-left: 5px;
+  margin-right: 5px;
 }
 .sdm :root {
   --sdm-c-dark: #191813;
@@ -708,3 +718,5 @@
   --sdm-c-black: #ffffff;
   --sdm-c-groove: #11121f;
 }
+
+/*# sourceMappingURL=sdm.css.map */

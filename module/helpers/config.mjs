@@ -65,11 +65,11 @@ SDM.speedType = Object.values(SpeedType).reduce((acc, speedType) => {
   return acc;
 }, {});
 
-const abilitiesLabel = 'SDM.FieldAbilities';
+const abilitiesLabel = 'SDM.FieldAbility';
 
 SDM.abilitiesLabel = abilitiesLabel;
-SDM.modifierLabel = 'SDM.Rolls.modifier.label';
-SDM.rollTypeLabel = 'SDM.Rolls.rollType.label';
+SDM.modifierLabel = 'SDM.RollModifier';
+SDM.rollTypeLabel = 'SDM.RollType';
 
 
 SDM.rollType = {

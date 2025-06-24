@@ -1,3 +1,4 @@
+import { DiceType } from "./helpers/constants.mjs";
 import { handleHeroDice } from "./rolls/heroDice.mjs";
 
 export const CHARACTER_DEFAULT_INITIATIVE = "2d6 + @abilities.agi.final_current + @initiative_bonus";
@@ -104,6 +105,17 @@ export function registerSystemSettings() {
     config: true, // Show in configuration view
     type: Number, // Data type: String, Number, Boolean, etc
     default: 3,
+  });
+
+  game.settings.register("sdm", "defaultHeroDiceType", {
+    name: "SDM.SettingsDefaultHeroDiceType",
+    hint: "SDM.SettingsDefaultHeroDiceTypeHint",
+    scope: "world", // "world" = GM only, "client" = per user
+    restricted: true,
+    config: true, // Show in configuration view
+    type: String, // Data type: String, Number, Boolean, etc
+    default: "d6",
+    choices: DiceType,
   });
 
   game.settings.register('sdm', 'savingThrowBaseRollFormula', {
@@ -301,7 +313,9 @@ export function configureUseHeroDiceButton(message, html, data) {
 
   // Create icon element
   const icon = document.createElement('i');
-  const actorHeroDice = actor?.system?.hero_dice?.dice_type || 'd6';
+  const defaultHeroDiceType = game.settings.get('sdm', 'defaultHeroDiceType');
+  const actorHeroDice = actor?.system?.hero_dice?.dice_type || defaultHeroDiceType;
+
   icon.classList.add('fas', `fa-dice-${actorHeroDice}`);
   btn.appendChild(icon);
 

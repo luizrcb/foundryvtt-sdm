@@ -1,3 +1,7 @@
+export function $l10n(key) { return game.i18n.localize(key) };
+
+export function $fmt(key, values) { return game.i18n.format(key, values) };
+
 export function validateActorId(id) {
   if (!id || id.trim() === "") return true;
 

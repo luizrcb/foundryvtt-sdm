@@ -7,7 +7,7 @@
       <div class="flexcol flex-group-center rollable margin-bottom-10" data-context='rollable'
         data-action='heroicHealing'>
         <label class='resource-label'>{{localize 'SDM.FieldHeroDice'}} <i
-            class="fas fa-dice-{{system.hero_dice.dice_type}}"></i></label>
+            class="fas fa-dice-{{@root.heroDiceType}}"></i></label>
         <div class='resource-content flexrow height-32'>
           {{system.hero_dice.value}} / {{system.hero_dice.max}}
         </div>
@@ -18,42 +18,35 @@
         <div class="grid grid-4col">
           <div class="grid-span-1">
             <label for="name" class='resource-label'>
-              {{localize 'SDM.Actor.Character.FIELDS.name.label'}}
+              {{localize 'SDM.FieldName'}}
             </label>
             <input name='name' type='text' value='{{actor.name}}' placeholder='Name' />
           </div>
-          {{#if (eq actor.type 'character')}}
-          <div class="grid-span-1 resources">
-            <label for="system.player_experience" class='resource-label'>
-              {{localize 'SDM.Actor.Character.FIELDS.player_experience.label'}}
+
+          <div class='resource'>
+            <label class='resource-label'>
+              {{localize 'SDM.FieldSpecies'}}
             </label>
             <div class='resource-content flexrow flex-center flex-between'>
-              {{#if isGM}}
-              <input type='text' name='system.player_experience' value='{{system.player_experience}}' />
-              {{else}}
-              <input type='text' name='system.player_experience' value='{{system.player_experience}}' disabled />
-              {{/if}}
+              <input type='text' name='system.species' value='{{system.species}}' />
             </div>
           </div>
-          {{/if}}
-          <div class="grid-span-1 resources">
-            <label for="system.experience" class='resource-label'>
-              {{localize 'SDM.Actor.Character.FIELDS.experience.label'}}
+
+          <div class='resource'>
+            <label class='resource-label'>
+              {{localize 'SDM.FieldLooks'}}
             </label>
             <div class='resource-content flexrow flex-center flex-between'>
-              {{#if isGM}}
-              <input type='text' name='system.experience' value='{{system.experience}}' />
-              {{else}}
-              <input type='text' name='system.experience' value='{{system.experience}}' disabled />
-              {{/if}}
+              <input type='text' name='system.looks' value='{{system.looks}}' />
             </div>
           </div>
-          <div class="grid-span-1 resources">
-            <label for="system.level" class='resource-label'>
-              {{localize 'SDM.Actor.Character.FIELDS.level.label'}}
+
+          <div class='resource'>
+            <label for="system.likes" class='resource-label'>
+              {{localize 'SDM.FieldLikes'}}
             </label>
             <div class='resource-content flexrow flex-center flex-between'>
-              <input type='text' name='system.level' value='{{system.level}}' data-dtype='Number' disabled />
+              <input type='text' name='system.likes' value='{{system.likes}}' />
             </div>
           </div>
         </div>
@@ -70,7 +63,7 @@
         <div class='resource'>
           {{#if (isCharacter actor.type)}}
           <label for='system.life.max' class='resource-label flex-start'>
-            {{localize 'SDM.Actor.base.FIELDS.life.max.label'}}
+            {{localize 'SDM.FieldLifeMax'}}
           </label>
           <div class='resource-content flexrow flex-center flex-between flex-group-center'>
             <input type='text' name='system.life.value' value='{{system.life.value}}' data-dtype='Number' />
@@ -80,57 +73,57 @@
           {{/if}}
         </div>
 
-        {{#if (eq actor.type 'npc')}}
-        <div class='resource flex-group-center'>
-          <label class='resource-label'>
-            {{localize 'SDM.Actor.NPC.FIELDS.cr.label'}} / {{localize 'SDM.Actor.NPC.xp.label'}}
-          </label>
-          <div class='resource-content flexrow flex-center flex-between'>
-            <input type='text' name='system.cr' value='{{system.cr}}' data-dtype='Number' />
-            <span></span>
-            <input type='text' disabled='true' name='system.xp' value='{{system.xp}}' data-dtype='Number' />
+        <div class="grid-span-1 flexrow flex-between">
+          <div class="grid-span-1 resource">
+            <label for="system.player_experience" class='resource-label'>
+              {{localize 'SDM.FieldPlayerXP'}}
+            </label>
+            <div class='resource-content flexrow flex-center flex-between'>
+              {{#if isGM}}
+              <input type='text' name='system.player_experience' value='{{system.player_experience}}'
+                data-dtype='Number' />
+              {{else}}
+              <input type='text' name='system.player_experience' value='{{system.player_experience}}'
+                data-dtype='Number' disabled />
+              {{/if}}
+            </div>
+          </div>
+          <div class="grid-span-1 resource">
+            <label for="system.experience" class='resource-label'>
+              {{localize 'SDM.FieldCharXP'}}
+            </label>
+            <div class='resource-content flexrow flex-center flex-between'>
+              {{#if isGM}}
+              <input type='text' name='system.experience' value='{{system.experience}}' data-dtype='Number' />
+              {{else}}
+              <input type='text' name='system.experience' value='{{system.experience}}' data-dtype='Number' disabled />
+              {{/if}}
+            </div>
           </div>
         </div>
-        {{/if}}
 
-        {{#if (eq actor.type 'character')}}
         <div class='resource'>
           <label for="system.friends" class='resource-label'>
-            {{localize 'SDM.Actor.Character.FIELDS.friends.label'}}
+            {{localize 'SDM.FieldFriends'}}
           </label>
           <div class='resource-content flexrow flex-center flex-between'>
             <input type='text' name='system.friends' value='{{system.friends}}' />
           </div>
         </div>
-        {{/if}}
 
-        {{#if (eq actor.type 'character')}}
         <div class='resource'>
-          <label for="system.enemies" class='resource-label'>
-            {{localize 'SDM.Actor.Character.FIELDS.enemies.label'}}
+          <label for="system.foes" class='resource-label'>
+            {{localize 'SDM.FieldFoes'}}
           </label>
           <div class='resource-content flexrow flex-center flex-between'>
-            <input type='text' name='system.enemies' value='{{system.enemies}}' />
+            <input type='text' name='system.foes' value='{{system.foes}}' />
           </div>
         </div>
-        {{/if}}
 
-        {{#if (eq actor.type 'character')}}
-        <div class='resource'>
-          <label for="system.likes" class='resource-label'>
-            {{localize 'SDM.Actor.Character.FIELDS.likes.label'}}
-          </label>
-          <div class='resource-content flexrow flex-center flex-between'>
-            <input type='text' name='system.likes' value='{{system.likes}}' />
-          </div>
-        </div>
-        {{/if}}
-
-        {{#if (eq actor.type 'character')}}
         <div class='resource flexcol'>
           <div class="flexrow">
             <label for="system.defense" class='resource-label'>
-              {{localize 'SDM.Actor.Character.FIELDS.defense.label'}}
+              {{localize 'SDM.FieldDefense'}}
             </label>
           </div>
           <div class='resource-content flexrow align-center height-32'>
@@ -148,34 +141,65 @@
             </div>
           </div>
         </div>
-        {{/if}}
 
-        {{#if (eq actor.type 'character')}}
-        <div class='resource'>
-          <label for="system.save_target" class='resource-label'>
-            {{localize 'SDM.Actor.Character.FIELDS.save_target.label'}}
-          </label>
-          <div class='resource-content flexrow flex-center flex-between'>
-            <input type='text' name='system.save_target' value='{{system.save_target}}' data-dtype='Number' disabled />
+        <div class="grid-span-1 flexrow flex-between">
+          <div class='grid-span-1 resource'>
+            <label for="system.save_target" class='resource-label'>
+              {{localize 'SDM.FieldSaveTarget'}}
+            </label>
+            <div class='resource-content flexrow flex-center flex-between'>
+              <input type='text' name='system.save_target' value='{{system.save_target}}' data-dtype='Number'
+                disabled />
+            </div>
+          </div>
+          <div class="grid-span-1 resource">
+            <label for="system.level" class='resource-label'>
+              {{localize 'SDM.FieldLevel'}}
+            </label>
+            <div class='resource-content flexrow flex-center flex-between'>
+              <input type='text' name='system.level' value='{{system.level}}' data-dtype='Number' disabled />
+            </div>
           </div>
         </div>
-        <div class='resource'>
-          <label class='resource-label'>
-            {{localize 'SDM.Actor.Character.FIELDS.species.label'}}
-          </label>
-          <div class='resource-content flexrow flex-center flex-between'>
-            <input type='text' name='system.species' value='{{system.species}}' />
+
+        <div class="grid-span-1 flexrow flex-between">
+          <div class="grid-span-1 resource">
+            <label for="system.revenue" class='resource-label'>
+              {{localize 'SDM.FieldRevenue'}}
+            </label>
+            <div class='resource-content flexrow flex-center flex-between'>
+              <input type='text' name='system.revenue' value='{{system.revenue}}' data-dtype='Number' />
+            </div>
+          </div>
+          <div class="grid-span-1 resource">
+            <label for="system.expense" class='resource-label'>
+              {{localize 'SDM.FieldExpense'}}
+            </label>
+            <div class='resource-content flexrow flex-center flex-between'>
+              <input type='text' name='system.expense' value='{{system.expense}}' data-dtype='Number' />
+            </div>
           </div>
         </div>
-        <div class='resource'>
-          <label class='resource-label'>
-            {{localize 'SDM.Actor.Character.FIELDS.looks.label'}}
-          </label>
-          <div class='resource-content flexrow flex-center flex-between'>
-            <input type='text' name='system.looks' value='{{system.looks}}' />
+
+        <div class="grid-span-1 flexrow flex-between">
+          <div class="grid-span-1 resource">
+            <label for="system.wealth" class='resource-label'>
+              {{localize 'SDM.FieldWealth'}}
+            </label>
+            <div class='resource-content flexrow flex-center flex-between'>
+              <input type='text' name='system.wealth' value='{{system.wealth}}'
+                data-dtype='Number' />
+            </div>
+          </div>
+          <div class="grid-span-1 resource">
+            <label for="system.debt" class='resource-label'>
+              {{localize 'SDM.FieldDebt'}}
+            </label>
+            <div class='resource-content flexrow flex-center flex-between'>
+              <input type='text' name='system.debt' value='{{system.debt}}' data-dtype='Number' />
+            </div>
           </div>
         </div>
-        {{/if}}
       </div>
     </div>
   </header>
@@ -192,10 +216,10 @@
                   title='{{localize (lookup @root.config.abilities key)}}'>
                   {{toUpperCase (localize (lookup @root.config.abilityAbbreviations key))}}
                 </span>
-                <input type='text' name='system.abilities.{{key}}.full' value='{{ability.full}}' class="ability-score"
-                  data-dtype='Number' />
+                <input type='text' name='system.abilities.{{key}}.full' value='{{ability.full}}' class="ability-score ability-full"
+                  data-dtype='Number' title="Max {{localize (lookup @root.config.abilities key)}}"/>
                 <input type='text' name='system.abilities.{{key}}.current' value='{{ability.current}}'
-                  class="ability-score" data-dtype='Number' />
+                  class="ability-score" data-dtype='Number' title="Current {{localize (lookup @root.config.abilities key)}}"/>
                 <div class='rollable flexrow' data-roll-type={{key}} data-action='rollSavingThrow'
                   title="{{localize (lookup @root.config.abilities key)}} saving throw">
                   <i class="fas {{lookup @root.config.abilitySaveIcons key}} saveIcon"></i>

@@ -20,12 +20,19 @@ export class SdmActor extends Actor {
   async _onUpdate(changed, options, userId) {
     await super._onUpdate(changed, options, userId);
 
-    if (changed.system?.player_experience !== undefined) {
-      let resultingExperience = safeEvaluate(`${changed.system?.player_experience}`.trim());
-      resultingExperience = parseInt(resultingExperience, 10);
-      await this.update({
-        "system.player_experience": `${resultingExperience.toString()}`,
-      });
+    const properties = ['player_experience', 'debt', 'wealth' , 'revenue', 'expense'];
+    const updates = {};
+
+    for (const prop of properties) {
+      if (changed.system?.[prop] !== undefined) {
+        let value = safeEvaluate(`${changed.system[prop]}`.trim());
+        value = parseInt(value, 10) || 0;
+        updates[`system.${prop}`] = `${value.toString()}`;
+      }
+    }
+
+    if (Object.keys(updates).length > 0) {
+      await this.update(updates);
     }
 
     if (changed.system?.experience !== undefined) {
