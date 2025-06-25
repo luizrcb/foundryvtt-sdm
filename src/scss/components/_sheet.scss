@@ -1,3 +1,7 @@
 @use '../utils/typography' as typo;
 @use '../utils/colors' as colors;
 @use '../utils/variables' as vars;
+
+.sheet-hero-dice {
+  margin-left: 5px;
+}

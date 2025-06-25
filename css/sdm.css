@@ -499,7 +499,7 @@
   text-align: left;
 }
 .sdm .item-formula {
-  flex: 0 0 100px;
+  flex: 0 0 120px;
   padding: 0 8px;
 }
 .sdm .switch {
@@ -717,6 +717,9 @@
   --sdm-c-white: #000000;
   --sdm-c-black: #ffffff;
   --sdm-c-groove: #11121f;
+}
+.sdm .sheet-hero-dice {
+  margin-left: 5px;
 }
 
 /*# sourceMappingURL=sdm.css.map */

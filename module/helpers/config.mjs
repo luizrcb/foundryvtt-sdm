@@ -52,7 +52,7 @@ SDM.versatile = 'SDM.Item.Features.versatile.label';
 
 SDM.abilitiesOrder = {
   "en": ["str", "end", "agi", "cha", "aur", "tho"],
-  "pt-br": ["cha", "tho", "str", "agi", "aur", "end"],
+  "pt-BR": ["cha", "tho", "str", "agi", "aur", "end"],
 };
 
 SDM.pullModes = Object.values(PullMode).reduce((acc, pullMode) => {
@@ -73,9 +73,9 @@ SDM.rollTypeLabel = 'SDM.RollType';
 
 
 SDM.rollType = {
-  'normal': 'SDM.Rolls.normal.label',
-  'advantage': 'SDM.Rolls.advantage.label',
-  'disadvantage': 'SDM.Rolls.disadvantage.label',
+  'normal': 'SDM.RollNormal',
+  'advantage': 'SDM.RollAdvantage',
+  'disadvantage': 'SDM.RollDisadvantage',
 };
 
 SDM.rollSource = {

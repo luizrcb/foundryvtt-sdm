@@ -76,7 +76,7 @@ export class RollHandler {
       let baseFormula = versatile ? item.system.weapon_damage.versatile : item.system.weapon_damage.base;
       const damageBonus = item.system.weapon_damage.bonus;
       const isNegativeBonus = damageBonus[0] === '-';
-      const finalFormula = `(${baseFormula})${damageBonus ? `${isNegativeBonus ? '' : '+'}${damageBonus}` : ''}`
+      const finalFormula = `${baseFormula}${damageBonus ? `${isNegativeBonus ? '' : '+'}${damageBonus}` : ''}`
       if (!finalFormula && !foundry.dice.Roll.validate(finalFormula)) {
         ui.notifications.error(game.i18n.localize("SDM.ErrorMissingDamageFormula"));
         return;
@@ -266,12 +266,12 @@ export class RollHandler {
     const isDamageRoll = rolledFrom === ItemType.GEAR;
     const resultingRollType = rollModifier > 0 ? RollType.ADVANTAGE : (rollModifier < 0) ? RollType.DISADVANTAGE : RollType.NORMAL;
     const versatileLabel = game.i18n.localize(CONFIG.SDM.versatile);
-    const rollModifierLabel = game.i18n.localize(`SDM.Rolls.${resultingRollType}.abbr`);
+    const rollModifierLabel = game.i18n.localize(`SDM.Roll${capitalizeFirstLetter(resultingRollType)}Abbr`);
     const parts = [`[${capitalizeFirstLetter(rolledFrom)}] ${hasExpertise ? '<b>*' : ''}${label}${hasExpertise ? '</b>' : ''}`];
     if ((attack || isDamageRoll) && key) parts.push(`(${game.i18n.localize(SDM.abilities[key])})`);
     if (isDamageRoll && versatile) parts.push(`(${versatileLabel})`);
     if (rollModifier !== 0) parts.push(`(${rollModifierLabel})`);
-    if (heroicDice > 0) parts.push(`(hero ${heroicDice}d6)`)
+    // if (heroicDice > 0) parts.push(`(hero ${heroicDice}d6)`)
     if (isDamageRoll && multiplier) parts.push(`(${SDM.damageMultiplier[multiplier]})`);
     if (modifier) parts.push(`(${modifier >= 0 ? '+' : ''}${modifier})`);
     if (isDamageRoll && explode) parts.push(`(d*)`);

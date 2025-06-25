@@ -6,10 +6,10 @@
       <div class='item-formula'>{{localize 'SDM.InventoryItems'}} [{{@root.gearSlotsTaken}}/{{@root.system.item_slots}}]</div>
       <div class='item-controls'>
         {{#if @root.editable}}
-        <a class='item-control item-create' title='{{localize "DOCUMENT.Create" type=' item'}}' data-action='createDoc'
+        <a class='item-control item-create' title="{{localize 'DOCUMENT.Create' type=(localize 'TYPE.Item' )}}"  data-action='createDoc'
           data-document-class='Item' data-type='gear'>
           <i class='fas fa-plus'></i>
-          {{localize 'DOCUMENT.New' type='item'}}
+          {{localize 'DOCUMENT.New' type=(localize 'TYPE.Item' )}}
         </a>
         {{/if}}
       </div>

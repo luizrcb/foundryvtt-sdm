@@ -6,10 +6,10 @@
         height='100' width='100' />
       <div class="flexcol flex-group-center rollable margin-bottom-10" data-context='rollable'
         data-action='heroicHealing'>
-        <label class='resource-label'>{{localize 'SDM.FieldHeroDice'}} <i
-            class="fas fa-dice-{{@root.heroDiceType}}"></i></label>
+        <label class='resource-label'>{{localize 'SDM.FieldHeroDice'}}</label>
         <div class='resource-content flexrow height-32'>
           {{system.hero_dice.value}} / {{system.hero_dice.max}}
+          <i class="fas fa-dice-{{@root.heroDiceType}} sheet-hero-dice" title="{{@root.heroDiceType}}"></i>
         </div>
       </div>
     </div>
@@ -127,15 +127,15 @@
             </label>
           </div>
           <div class='resource-content flexrow align-center height-32'>
-            <div title="Physical defense">
+            <div title="{{localize 'SDM.FieldPhysicalDefense'}}">
               <i class="fas fa-shield-alt"></i>
               <span id="system.defense">{{system.defense}}</span>
             </div>
-            <div title="Mental defense">
+            <div title="{{localize 'SDM.FieldMentalDefense'}}">
               <i class="fas fa-brain-circuit"></i>
               <span id="system.mental_defense">{{system.mental_defense}}</span>
             </div>
-            <div title="Social defense">
+            <div title="{{localize 'SDM.FieldSocialDefense'}}">
               <i class="fas fa-crown"></i>
               <span id="system.social_defense">{{system.social_defense}}</span>
             </div>
@@ -217,11 +217,11 @@
                   {{toUpperCase (localize (lookup @root.config.abilityAbbreviations key))}}
                 </span>
                 <input type='text' name='system.abilities.{{key}}.full' value='{{ability.full}}' class="ability-score ability-full"
-                  data-dtype='Number' title="Max {{localize (lookup @root.config.abilities key)}}"/>
+                  data-dtype='Number' title="{{localize 'SDM.AbilityFull' ability=(localize (lookup @root.config.abilities key))}}"/>
                 <input type='text' name='system.abilities.{{key}}.current' value='{{ability.current}}'
-                  class="ability-score" data-dtype='Number' title="Current {{localize (lookup @root.config.abilities key)}}"/>
+                  class="ability-score" data-dtype='Number' title="{{localize 'SDM.AbilityCurrent' ability=(localize (lookup @root.config.abilities key))}}"/>
                 <div class='rollable flexrow' data-roll-type={{key}} data-action='rollSavingThrow'
-                  title="{{localize (lookup @root.config.abilities key)}} saving throw">
+                  title="{{localize 'SDM.SavingThrowRoll' ability=(localize (lookup @root.config.abilities key))}}">
                   <i class="fas {{lookup @root.config.abilitySaveIcons key}} saveIcon"></i>
                 </div>
               </div>

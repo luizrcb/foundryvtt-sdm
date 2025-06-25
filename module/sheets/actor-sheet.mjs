@@ -88,7 +88,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
 
 
     result += '<option value=""}></option>';
-    for (let orderedAbility of abilitiesOrder['en']) {
+    for (let orderedAbility of abilitiesOrder[currentLanguage]) {
       result += `<option value="${orderedAbility}"${(orderedAbility === default_ability) ? 'selected' : ''}>
       ${$l10n(CONFIG.SDM.abilities[orderedAbility])}</option>\n`
     }
@@ -300,7 +300,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       const currentLanguage = game.i18n.lang;
 
       // Get the order for the current language, defaulting to English if not found
-      const order = abilitiesOrder["en"];
+      const order = abilitiesOrder[currentLanguage];
 
       // Reorder the abilities in the system object
       const reorderedAbilities = {};
