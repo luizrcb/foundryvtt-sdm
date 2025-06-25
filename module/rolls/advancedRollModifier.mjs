@@ -63,7 +63,6 @@ export class AdvancedRollModifier {
     for (const term of roll.terms) {
       if (term instanceof foundry.dice.terms.Die && !term.modifiers.includes('x')) {
         term.modifiers.push('x');
-        term.modifiers.push(`${term.faces}`); // xN syntax for max face explosion
       }
     }
   }

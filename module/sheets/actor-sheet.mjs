@@ -72,8 +72,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     biography: {
       template: 'systems/sdm/templates/actor/biography.hbs',
     },
-    spells: {
-      template: 'systems/sdm/templates/actor/spells.hbs',
+    notes: {
+      template: 'systems/sdm/templates/actor/notes.hbs',
     },
     effects: {
       template: 'systems/sdm/templates/actor/effects.hbs',
@@ -264,7 +264,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
         options.parts.push('effects');
         break;
     }
-    options.parts.push('biography')
+    options.parts.push('notes');
+    options.parts.push('biography');
   }
 
   /* -------------------------------------------- */
@@ -326,6 +327,22 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     switch (partId) {
       case 'features':
         context.tab = context.tabs[partId];
+        break;
+      case 'notes':
+         context.tab = context.tabs[partId];
+        // Enrich notes info for display
+        // Enrichment turns text like `[[/r 1d20]]` into buttons
+        context.enrichedNotes = await TextEditor.enrichHTML(
+          this.actor.system.notes,
+          {
+            // Whether to show secret blocks in the finished html
+            secrets: this.document.isOwner,
+            // Data to fill in for inline rolls
+            rollData: this.actor.getRollData(),
+            // Relative UUID resolution
+            relativeTo: this.actor,
+          }
+        );
         break;
       case 'biography':
         context.tab = context.tabs[partId];
@@ -390,6 +407,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
         case 'effects':
           tab.id = 'effects';
           tab.label += 'Effects';
+          break;
+        case 'notes':
+          tab.id = 'notes';
+          tab.label += 'Notes';
           break;
         case 'biography':
           tab.id = 'biography';

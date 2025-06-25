@@ -18,12 +18,14 @@
       },
       "caravan": {
         "htmlFields": [
-          "biography"
+          "biography",
+          "notes"
         ]
       },
       "npc": {
         "htmlFields": [
-          "biography"
+          "biography",
+          "notes"
         ]
       }
     },

@@ -7,7 +7,7 @@ export default class SdmActorBase extends foundry.abstract
     const schema = {};
 
     schema.biography = new fields.HTMLField();
-    schema.features = new fields.HTMLField();
+    schema.notes = new fields.HTMLField();
 
     return schema;
   }

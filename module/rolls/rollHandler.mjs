@@ -221,6 +221,10 @@ export class RollHandler {
     }
   }
 
+  static makeAllDiceExplode(rollFormula) {
+    return rollFormula.replace(/\b(\d*d\d+)\b/g, '$1x');
+  }
+
   static buildDiceFormula({
     formula = '',
     modifier = 0,
@@ -232,16 +236,18 @@ export class RollHandler {
       throw new Error(game.i18n.format('SDM.ErrorInvalidDiceFaces', { faces: dieFaces }));
     }
 
-    const diceCount = Math.abs(modifier) + 1;
+    // const diceCount = Math.abs(modifier) + 1;
     const keepModifier = modifier > 0 ? 'kh' : (modifier < 0 ? 'kl' : '');
-    const explodeMod = explode ? `x${dieFaces}` : '';
-    let final_formula = `${diceCount}d${dieFaces}${keepModifier}${explodeMod}`;
+    let diceExpression = formula || `1d${dieFaces}`;
 
-    if (formula) {
-      final_formula = `${formula}`;
-      if (keepModifier) {
-        final_formula = `{${formula}, ${formula}}${keepModifier}`;
-      }
+    let final_formula = diceExpression;
+
+    if (keepModifier) {
+      final_formula = `{${diceExpression}, ${diceExpression}}${keepModifier}`
+    }
+
+    if (explode) {
+      final_formula = this.makeAllDiceExplode(final_formula)
     }
 
     foundry.dice.Roll.validate(final_formula);
