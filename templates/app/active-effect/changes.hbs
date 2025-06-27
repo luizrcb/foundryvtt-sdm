@@ -1,6 +1,6 @@
 <section class="tab changes{{#if tab.active}} active{{/if}}" data-group="{{tab.group}}" data-tab="{{tab.id}}">
   <header>
-    <div class="key">{{localize "SDM.EFFECT.ChangeProperty"}}</div>
+    <div class="key">{{localize "SDM.Effect.ChangeProperty"}}</div>
     <div class="mode">{{localize "EFFECT.ChangeMode"}}</div>
     <div class="value">{{localize "EFFECT.ChangeValue"}}</div>
     <div class="priority">{{localize "EFFECT.ChangePriority"}}</div>
@@ -12,7 +12,7 @@
     <li data-index="{{i}}">
       <div class="key">
         <input type="text" name="changes.{{i}}.key" value="{{change.key}}" list="key-datalist-{{i}}"
-          placeholder="{{localize 'SDM.EFFECT.ChangeProperty'}}">
+          placeholder="{{localize 'SDM.Effect.ChangeProperty'}}">
         <datalist id="key-datalist-{{i}}">
           {{#each @root.selectableKeys}}
           <option value="{{this.value}}">{{this.label}}</option>

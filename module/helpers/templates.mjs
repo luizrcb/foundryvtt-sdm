@@ -7,7 +7,7 @@
 const $$ = (path) => `systems/sdm/templates/${path}.hbs`;
 
 const templatesToLoad = [
-  $$('actor/gears'),
+  $$('actor/items'),
   $$('actor/traits'),
   $$('actor/burdens'),
   $$('actor/character/header'),

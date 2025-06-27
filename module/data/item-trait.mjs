@@ -29,13 +29,13 @@ export default class SdmTrait extends SdmItemBase {
       ...requiredInteger, initial: 0,
     });
 
-    schema.default_ability = getDefaultAbility();
+    // schema.default_ability = getDefaultAbility();
 
-    schema.default_attack = new fields.StringField({
-      required: false,
-      nullable: true,
-      initial: AttackType.MELEE,
-    });
+    // schema.default_attack = new fields.StringField({
+    //   required: false,
+    //   nullable: true,
+    //   initial: AttackType.MELEE,
+    // });
 
     schema.is_spell = new fields.BooleanField({
       required: true, initial: false,

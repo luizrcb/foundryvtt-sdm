@@ -36,78 +36,49 @@ export class SdmActor extends Actor {
     }
 
     if (changed.system?.experience !== undefined) {
-      // TODO: let's add the additional life to max and current values, but taking bonuses into account
-      let resultingExperience = safeEvaluate(`${changed.system?.experience}`.trim());
+      let resultingExperience = safeEvaluate(changed.system?.experience);
       resultingExperience = parseInt(resultingExperience, 10);
       const newLevel = getLevel(resultingExperience);
-      const maxLife = getMaxLife(newLevel);
-      const currentLostLife = this.system.life.max - this.system.life.value; // Preserve lost health
+      const baseLife = getMaxLife(newLevel);
+
+      const effectiveMaxLife = baseLife + this.system.life.bonus - this.system.life.imbued;
+      const lifeAmountToIncrease = effectiveMaxLife - this.system.life.max; // Preserve lost health
 
       const maxHeroDice = Math.max(newLevel + this.system.hero_dice.bonus, 1);
       const currentHeroDiceSpent = this.system.hero_dice.max - this.system.hero_dice.value;
       const remainingHeroDice = maxHeroDice - currentHeroDiceSpent;
 
-      const remainingLife = maxLife - currentLostLife;
       await this.update({
         "system.experience": `${resultingExperience.toString()}`,
         "system.level": newLevel,
         "system.hero_dice.max": Math.max(maxHeroDice, 1),
         "system.hero_dice.value": Math.min(remainingHeroDice, maxHeroDice),
-        "system.life.max": maxLife,
-        "system.life.value": remainingLife < 1 ? 1 : remainingLife, // Cap current health
+        "system.life.base": baseLife,
+        "system.life.value": this.system.life.value + lifeAmountToIncrease, // Cap current health
       });
     }
 
-    // if (changed.system?.abilities) {
-    //   const abilities = changed.system.abilities;
+    if (changed.system?.abilities) {
+      const abilities = changed.system.abilities;
 
-    //   // Iterate over updated abilities
-    //   for (const [abilityKey, abilityData] of Object.entries(abilities)) {
-    //     const currentEnhanced = abilityData.enhanced ?? this.system.abilities[abilityKey]?.enhanced ?? false;
-    //     const max = currentEnhanced ? 7 : 5;
+      // Iterate over updated abilities
+      // for (const [abilityKey, abilityData] of Object.entries(abilities)) {
+      //   const systemAbility = this.system.abilities[abilityKey];
+      //   if (abilityData.current !== undefined) {
 
-    //     // Clamp "full" to the current max
-    //     if (abilityData.full !== undefined) {
-    //       abilityData.full = Math.min(abilityData.full, max);
-    //       if (this.system.abilities[abilityKey].current === 0) {
-    //         abilityData.current = abilityData.full;
-    //       }
-    //     }
+      //     if (abilityData.current > (systemAbility.base + systemAbility.bonus)) {
+      //       abilityData.current = (systemAbility.base + systemAbility.bonus);
+      //     }
+      //   }
 
-    //     if (abilityData.current !== undefined && abilityData.current !== null) {
-    //       const currentMax = Math.min(this.system.abilities[abilityKey].full, max);
-    //       const currentMin = Math.max(abilityData.current, 0);
-    //       abilityData.current = Math.min(currentMin, currentMax);
-    //     }
-
-    //     await this.update({
-    //       [`system.abilities.${abilityKey}`]: {
-    //         ...this.system.abilities[abilityKey],
-    //         ...abilityData
-    //       },
-    //     });
-    //   }
-    // }
-
-    // if (changed.system?.fatigue?.halfSpeed) {
-    //   const halfSpeed = changed?.system.fatigue.halfSpeed;
-    //   if (halfSpeed === true) {
-    //     await this.addFatigueSlow();
-    //   } else {
-    //     const fatigueSlowEffec = actor.effects.getName('slow (fatigue)');
-    //     await fatigueSlowEffec.delete();
-    //   }
-    // }
-
-    // if (changed.system?.fatigue?.halfLife) {
-    //   const halfLife = changed?.system.fatigue.halfLife;
-    //   if (halfLife === true) {
-    //     await this.addFatigueHalfLife();
-    //   } else {
-    //     const fatigueHalfLifeEffect = actor.effects.getName('half life (fatigue)');
-    //     await fatigueHalfLifeEffect.delete();
-    //   }
-    // }
+      //   await this.update({
+      //     [`system.abilities.${abilityKey}`]: {
+      //       ...this.system.abilities[abilityKey],
+      //       ...abilityData
+      //     },
+      //   });
+     // }
+    }
   }
 
   // Helper: Create encumbered effect
@@ -224,8 +195,6 @@ export class SdmActor extends Actor {
   prepareBaseData() {
     // Data modifications in this step occur before processing embedded
     // documents or derived data.
-    // if (this.type === ActorType.NPC) this._prepareNpcData();
-    // if (this.type === ActorType.CARAVAN) this._prepareCharavanData();
   }
 
   _prepareCharacterData() {
@@ -241,6 +210,18 @@ export class SdmActor extends Actor {
     const mentalDefenseBonus = data.mental_defense_bonus || 0;
     const socialDefenseBonus = data.social_defense_bonus || 0;
 
+      // 1. Calcular valores derivados
+    const life = data.life;
+    life.max = life.base + life.bonus - life.imbued
+
+    // 3. Processar atributos
+    for (const [key, ability] of Object.entries(data.abilities)) {
+      ability.full = ability.base + ability.bonus;
+      if (ability.current > ability.full) {
+        ability.current = ability.full;
+      }
+    }
+
     const agility = data.abilities['agi'];
     const thought = data.abilities['tho'];
     const charisma = data.abilities['cha'];
@@ -253,13 +234,12 @@ export class SdmActor extends Actor {
     data.mental_defense = Math.min(calculatedMentalDefense, MAX_ATTRIBUTE_VALUE);
     data.social_defense = Math.min(calculatedSocialDefense, MAX_ATTRIBUTE_VALUE);
 
-    const burdenPenalty = this.getBurdenPenalty();
+    const { burdenPenalty } = this.checkInventorySlots();
 
     this.update({
       "system.burden_penalty": burdenPenalty,
       "prototypeToken.actorLink": true,
       "prototypeToken.disposition": 1, // friendly
-
     });
   }
 
@@ -291,26 +271,25 @@ export class SdmActor extends Actor {
         id: trait.uuid,
         name: trait.name,
         mod: trait.system.skill_mod + trait.system.skill_mod_bonus,
-        attack: trait.system.default_attack,
       };
     });
     return result;
   }
 
-  getBurdenPenalty() {
-    const gears = {
+  checkInventorySlots() {
+    const items = {
       slotsTaken: 0,
-      gears: [],
+      slots: [],
     };
 
     const traits = {
       slotsTaken: 0,
-      traits: [],
+      slots: [],
     };
 
     const burdens = {
       slotsTaken: 0,
-      burdens: []
+      slots: []
     };
 
     const itemsArray = this.items.contents;
@@ -318,34 +297,43 @@ export class SdmActor extends Actor {
     const itemSlotsLimit = this.system.item_slots;
     const traitSlotsLimit = this.system.trait_slots;
 
+    const burdenPenalTyBonus = this.system.burden_penalty_bonus || 0;
+
     // Iterate through items, allocating to containers
     for (let i of itemsArray) {
       const itemSlots = i.system.slots_taken || 1;
 
       // Append to inventory.
       if (i.type === ItemType.GEAR) {
-        if (gears.slotsTaken + itemSlots <= itemSlotsLimit) {
-          gears.gears.push(i);
-          gears.slotsTaken += itemSlots;
+        if (items.slotsTaken + itemSlots <= itemSlotsLimit) {
+          items.slots.push(i);
+          items.slotsTaken += itemSlots;
         } else {
-          burdens.burdens.push(i);
+          burdens.slots.push(i);
           burdens.slotsTaken += itemSlots;
         }
       } else if (i.type === ItemType.TRAIT) {
         if (traits.slotsTaken + itemSlots <= traitSlotsLimit) {
-          traits.traits.push(i);
+          traits.slots.push(i);
           traits.slotsTaken += itemSlots;
         } else {
-          burdens.burdens.push(i);
+          burdens.slots.push(i);
           burdens.slotsTaken += itemSlots;
         }
       } else if (BURDEN_ITEM_TYPES.includes(i.type)) {
-        burdens.burdens.push(i);
+        burdens.slots.push(i);
         burdens.slotsTaken += itemSlots;
       }
     }
 
-    return burdens.slotsTaken;
+    const response = {
+      items,
+      burdens,
+      traits,
+      burdenPenalty: burdens.slotsTaken + burdenPenalTyBonus,
+    };
+
+    return response;
   }
 
   getCarriedGear() {

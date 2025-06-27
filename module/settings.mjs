@@ -1,7 +1,7 @@
 import { DiceType } from "./helpers/constants.mjs";
 import { handleHeroDice } from "./rolls/heroDice.mjs";
 
-export const CHARACTER_DEFAULT_INITIATIVE = "2d6 + @abilities.agi.final_current + @initiative_bonus";
+export const CHARACTER_DEFAULT_INITIATIVE = "2d6 + @abilities.agi.current + @initiative_bonus";
 export const NPC_DEFAULT_INITIATIVE = "2d6 + @bonus";
 export const SAVING_THROW_BASE_FORMULA = "1d20x";
 

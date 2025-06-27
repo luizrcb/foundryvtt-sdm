@@ -85,6 +85,11 @@ export default class SdmCharacter extends SdmActorBase {
       ...requiredInteger, initial: 0,
     });
 
+    // bonus to all saving throw rolls
+    schema.all_save_bonus = new fields.NumberField({
+      ...requiredInteger, initial: 0,
+    });
+
     schema.save_target = new fields.NumberField({
       ...requiredInteger, initial: 13,
     });
@@ -100,6 +105,10 @@ export default class SdmCharacter extends SdmActorBase {
       ...requiredInteger, initial: 0, min: 0,
     });
 
+    schema.burden_penalty_bonus = new fields.NumberField({
+      ...requiredInteger, initial: 0, min: 0,
+    });
+
     // character experience
     schema.experience = new fields.StringField({ required: true, initial: '0' });
     schema.player_experience = new fields.StringField({ required: true, initial: '0' });
@@ -110,7 +119,8 @@ export default class SdmCharacter extends SdmActorBase {
         initial: 4,
         min: 0,
       }),
-      max: new fields.NumberField({ ...requiredInteger, initial: 4, min: 4 }),
+      base: new fields.NumberField({ ...requiredInteger, initial: 4, min: 0 }),
+      max: new fields.NumberField({ ...requiredInteger, initial: 4, min: 0 }),
       min: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0, max: 0 }),
       bonus: new fields.NumberField({ ...requiredInteger, initial: 0 }),
       imbued: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 }),
@@ -154,43 +164,35 @@ export default class SdmCharacter extends SdmActorBase {
           }, {}),
       }),
       bonus: new fields.NumberField({
-      ...requiredInteger, initial: 0,
+        ...requiredInteger, initial: 0,
       }),
     });
 
+    schema.attack_bonus = new fields.NumberField({
+      ...requiredInteger, initial: 0,
+    });
+
     schema.melee = new fields.SchemaField({
-      name: new foundry.data.fields.StringField({
-        required: true,
-        blank: false,
-        initial: game.i18n.localize('SDM.AttackMelee'),
-      }),
       bonus: new fields.NumberField({
         ...requiredInteger, initial: 0,
       }),
+      favorite_skill: new fields.DocumentUUIDField({ required: false, blank: true, initial: '' }),
       default_ability: getDefaultAbility('str'),
     });
 
     schema.ranged = new fields.SchemaField({
-      name: new foundry.data.fields.StringField({
-        required: true,
-        blank: false,
-        initial: game.i18n.localize('SDM.AttackRanged'),
-      }),
       bonus: new fields.NumberField({
         ...requiredInteger, initial: 0,
       }),
+      favorite_skill: new fields.DocumentUUIDField({ required: false, blank: true, initial: '' }),
       default_ability: getDefaultAbility('agi'),
     });
 
     schema.oldtech = new fields.SchemaField({
-      name: new foundry.data.fields.StringField({
-        required: true,
-        blank: false,
-        initial: game.i18n.localize('SDM.AttackOldtech'),
-      }),
       bonus: new fields.NumberField({
         ...requiredInteger, initial: 0,
       }),
+      favorite_skill: new fields.DocumentUUIDField({ required: false, blank: true, initial: '' }),
       default_ability: getDefaultAbility('tho'),
       magic_cost: new fields.NumberField({
         ...requiredInteger, min: 1, max: 3, initial: 2,
@@ -198,14 +200,10 @@ export default class SdmCharacter extends SdmActorBase {
     });
 
     schema.fantascience = new fields.SchemaField({
-      name: new foundry.data.fields.StringField({
-        required: true,
-        blank: false,
-        initial: game.i18n.localize('SDM.AttackFantascience'),
-      }),
       bonus: new fields.NumberField({
         ...requiredInteger, initial: 0,
       }),
+      favorite_skill: new fields.DocumentUUIDField({ required: false, blank: true, initial: '' }),
       default_ability: getDefaultAbility('cha'),
       magic_cost: new fields.NumberField({
         ...requiredInteger, min: 1, max: 3, initial: 2,
@@ -216,9 +214,10 @@ export default class SdmCharacter extends SdmActorBase {
     schema.abilities = new fields.SchemaField(
       Object.keys(CONFIG.SDM.abilities).reduce((obj, ability) => {
         obj[ability] = new fields.SchemaField({
-          enhanced: new fields.BooleanField({
-            required: true,
-            initial: false,
+          base: new fields.NumberField({
+            ...requiredInteger,
+            initial: 0,
+            min: 0,
           }),
           full: new fields.NumberField({
             ...requiredInteger,
@@ -238,17 +237,8 @@ export default class SdmCharacter extends SdmActorBase {
           }),
         });
         return obj;
-      }, {})
+      }, {}),
     );
-
-    // schema.fatigue = new fields.SchemaField({
-    //   grumpy: new fields.BooleanField({ required: true, initial: false }),
-    //   disadvantage: new fields.BooleanField({ required: true, initial: false }),
-    //   halfSpeed: new fields.BooleanField({ required: true, initial: false }),
-    //   halfLife: new fields.BooleanField({ required: true, initial: false }),
-    //   coma: new fields.BooleanField({ required: true, initial: false }),
-    //   death: new fields.BooleanField({ required: true, initial: false }),
-    // });
 
     schema.pet = new fields.EmbeddedDataField(CharacterPetModel, {
       required: false, nullable: true, initial: null,
@@ -259,22 +249,16 @@ export default class SdmCharacter extends SdmActorBase {
 
   prepareDerivedData() {
     for (const key in this.abilities) {
-      this.abilities[key].final_current = this.abilities[key].current + this.abilities[key].bonus;
-      this.abilities[key].final_full = this.abilities[key].full + this.abilities[key].bonus;
-
       // Handle abilities label localization.
-      this.abilities[key].label =
-        game.i18n.localize(CONFIG.SDM.abilities[key]) ?? key;
+      this.abilities[key].label = game.i18n.localize(CONFIG.SDM.abilities[key]) ?? key;
     }
 
-    // this.life.max = Math.max(1, this.life.base_max - this.life.imbued + this.life.bonus);
-    // this.life.value = Math.max(0, this.life.base_value - this.life.imbued + this.life.bonus);
     const baseItemSlots = game.settings.get("sdm", "baseItemSlots") || 7;
     const baseTraitSlots = game.settings.get("sdm", "baseTraitSlots") || 7;
     const baseBurdenSlots = game.settings.get("sdm", "baseBurdenSlots") || 20;
 
-    this.item_slots = baseItemSlots + this.abilities['str'].final_current + this.item_slots_bonus;
-    this.trait_slots = baseTraitSlots + this.abilities['tho'].final_current + this.trait_slots_bonus;
+    this.item_slots = baseItemSlots + this.abilities['str'].current + this.item_slots_bonus;
+    this.trait_slots = baseTraitSlots + this.abilities['tho'].current + this.trait_slots_bonus;
     this.burden_slots = baseBurdenSlots + this.burden_slots_bonus;
   }
 
@@ -292,6 +276,7 @@ export default class SdmCharacter extends SdmActorBase {
     data.hero_dice = this.hero_dice;
     data.initiative_bonus = this.initiative_bonus;
     data.burden_penalty = this.burden_penalty;
+    data.burden_penalty_bonus = this.burden_penalty_bonus;
     return data;
   }
 }

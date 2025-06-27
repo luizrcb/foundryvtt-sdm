@@ -79,4 +79,8 @@ export function registerHandlebarsHelpers() {
       Handlebars.compile(context)(this)
     );
   });
+
+  $$("ternary", function (statement, statementIsTrue, statementIsFalse) {
+    return statement ? statementIsTrue : statementIsFalse;
+  });
 }

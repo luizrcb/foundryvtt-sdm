@@ -1,14 +1,16 @@
 {{! Gear Tab }}
-<section class='tab features {{tab.cssClass}}' data-group='primary' data-tab='features'>
+<section class='tab inventory {{tab.cssClass}}' data-group='primary' data-tab='inventory'>
   <ol class='items-list'>
     <li class='item flexrow items-header'>
       <div class='item-name'></div>
       {{!-- <div class='item-formula'>{{localize 'SDM.Item.Gear.FIELDS.rollFormula.label'}}</div> --}}
-      <div class='item-formula'>{{localize 'SDM.InventoryBurdens'}}
-        [{{@root.burdenSlotsTaken}}/{{@root.system.burden_slots}}]</div>
+      <div class='item-formula' title="{{localize 'SDM.BurdensPenalty'}}">
+        {{localize 'SDM.InventoryBurdens'}}
+        [{{@root.burdenSlotsTaken}}/{{@root.system.burden_slots}}]
+      </div>
       <div class='item-controls'>
         {{#if @root.editable}}
-        <a class='item-control item-create' title="{{localize 'DOCUMENT.Create' type=(localize 'TYPE.Burden' )}}"
+        <a class='item-control item-create' title="{{localize 'DOCUMENT.Create' type=(localize 'TYPE.Burden')}}"
           data-action='createDoc' data-document-class='Item' data-type='burden'>
           <i class='fas fa-plus'></i>
           {{localize 'DOCUMENT.New' type=(localize 'TYPE.Burden' )}}
@@ -30,11 +32,12 @@
         {{/if}}
       </div>
       <div class='item-controls'>
-        <a class='item-control item-edit' title='{{localize "DOCUMENT.Update" type=' Burden'}}' data-action='viewDoc'>
+        <a class='item-control item-edit' title='{{localize "DOCUMENT.Update" type=(localize ' TYPE.Burden')}}'
+          data-action='viewDoc'>
           <i class='fas fa-edit'></i>
         </a>
         {{#if @root.editable}}
-        <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type=' Burden'}}'
+        <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type=(localize ' TYPE.Burden')}}'
           data-action='deleteDoc'>
           <i class='fas fa-trash'></i>
         </a>

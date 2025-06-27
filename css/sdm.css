@@ -7,11 +7,6 @@
   --sdm-c-white: #ffffff;
   --sdm-c-black: #000000;
   --sdm-c-groove: #eeede0;
-  --color-shadow-primary: rgb(193, 4, 250);
-  --color-shadow-highlight: rgb(193, 4, 250);
-  --color-border-highlight: rgb(193, 4, 250);
-  --color-border-highlight-alt: rgb(193, 4, 250);
-  --color-scrollbar:rgb(193, 4, 250);
 }
 
 .theme-dark {
@@ -32,11 +27,6 @@
   --sdm-c-white: #ffffff;
   --sdm-c-black: #000000;
   --sdm-c-groove: #eeede0;
-  --color-shadow-primary: rgb(193, 4, 250);
-  --color-shadow-highlight: rgb(193, 4, 250);
-  --color-border-highlight: rgb(193, 4, 250);
-  --color-border-highlight-alt: rgb(193, 4, 250);
-  --color-scrollbar:rgb(193, 4, 250);
 }
 
 .theme-dark {
@@ -286,6 +276,7 @@
   /* Move slider on checked */
   /* Rounded Slider */
   /* Disabled State */
+  /* Toggle de modo */
 }
 .sdm :root {
   --sdm-c-dark: #191813;
@@ -295,11 +286,6 @@
   --sdm-c-white: #ffffff;
   --sdm-c-black: #000000;
   --sdm-c-groove: #eeede0;
-  --color-shadow-primary: rgb(193, 4, 250);
-  --color-shadow-highlight: rgb(193, 4, 250);
-  --color-border-highlight: rgb(193, 4, 250);
-  --color-border-highlight-alt: rgb(193, 4, 250);
-  --color-scrollbar:rgb(193, 4, 250);
 }
 .sdm .theme-dark {
   --sdm-c-dark: #c9c7b8;
@@ -385,11 +371,6 @@
   --sdm-c-white: #ffffff;
   --sdm-c-black: #000000;
   --sdm-c-groove: #eeede0;
-  --color-shadow-primary: rgb(193, 4, 250);
-  --color-shadow-highlight: rgb(193, 4, 250);
-  --color-border-highlight: rgb(193, 4, 250);
-  --color-border-highlight-alt: rgb(193, 4, 250);
-  --color-scrollbar:rgb(193, 4, 250);
 }
 .sdm .theme-dark {
   --sdm-c-dark: #c9c7b8;
@@ -538,7 +519,7 @@
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 .sdm input:checked + .slider {
-  background-color: rgb(134, 3, 173);
+  background-color: #191813;
 }
 .sdm input:checked + .slider:before {
   transform: translateX(20px);
@@ -568,11 +549,6 @@
   --sdm-c-white: #ffffff;
   --sdm-c-black: #000000;
   --sdm-c-groove: #eeede0;
-  --color-shadow-primary: rgb(193, 4, 250);
-  --color-shadow-highlight: rgb(193, 4, 250);
-  --color-border-highlight: rgb(193, 4, 250);
-  --color-border-highlight-alt: rgb(193, 4, 250);
-  --color-scrollbar:rgb(193, 4, 250);
 }
 .sdm .theme-dark {
   --sdm-c-dark: #c9c7b8;
@@ -703,11 +679,6 @@
   --sdm-c-white: #ffffff;
   --sdm-c-black: #000000;
   --sdm-c-groove: #eeede0;
-  --color-shadow-primary: rgb(193, 4, 250);
-  --color-shadow-highlight: rgb(193, 4, 250);
-  --color-border-highlight: rgb(193, 4, 250);
-  --color-border-highlight-alt: rgb(193, 4, 250);
-  --color-scrollbar:rgb(193, 4, 250);
 }
 .sdm .theme-dark {
   --sdm-c-dark: #c9c7b8;
@@ -721,5 +692,33 @@
 .sdm .sheet-hero-dice {
   margin-left: 5px;
 }
-
-/*# sourceMappingURL=sdm.css.map */
+.sdm .mode-toggle {
+  display: flex;
+  gap: 0.25rem;
+  position: absolute;
+  margin-left: auto;
+}
+.sdm .toggle-mode {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border-light-tertiary);
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--color-text-dark-inactive);
+}
+.sdm .toggle-mode.active {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary-dark);
+}
+.sdm .toggle-mode:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+.sdm .edit-mode {
+  position: absolute;
+  top: 39px;
+  left: 9px;
+}

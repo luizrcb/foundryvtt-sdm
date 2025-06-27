@@ -31,10 +31,10 @@
             {{else if (eq section.type "temporary")}}
               data-duration.rounds="1"
             {{/if}}
-            title='{{localize "DOCUMENT.Create" type='Effect'}}'
+            title='{{localize "DOCUMENT.Create" type=(localize 'TYPE.Effect')}}'
           >
             <i class='fas fa-plus'></i>
-            {{localize 'DOCUMENT.New' type='Effect'}}
+            {{localize 'DOCUMENT.New' type=(localize 'TYPE.Effect')}}
           </a>
           {{/if}}
         </div>
@@ -69,7 +69,7 @@
                 <a
                   class='effect-control'
                   data-action='viewDoc'
-                  title='{{localize "DOCUMENT.Update" type='Effect'}}'
+                  title='{{localize "DOCUMENT.Update" type=(localize 'TYPE.Effect')}}'
                 >
                   <i class='fas fa-edit'></i>
                 </a>
@@ -77,7 +77,7 @@
                 <a
                   class='effect-control'
                   data-action='deleteDoc'
-                  title='{{localize "DOCUMENT.Delete" type='Effect'}}'
+                  title='{{localize "DOCUMENT.Delete" type=(localize 'TYPE.Effect')}}'
                 >
                   <i class='fas fa-trash'></i>
                 </a>

@@ -1,13 +1,13 @@
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { RollHandler } from '../rolls/rollHandler.mjs';
-import { onItemUpdate, convertToCash, GEAR_ITEM_TYPES, ITEMS_NOT_ALLOWED_IN_CHARACTERS, TRAIT_ITEM_TYPES, BURDEN_ITEM_TYPES, onItemCreateActiveEffects } from '../helpers/itemUtils.mjs';
+import { onItemUpdate, convertToCash, ITEMS_NOT_ALLOWED_IN_CHARACTERS, onItemCreateActiveEffects } from '../helpers/itemUtils.mjs';
 import { openItemTransferDialog } from '../items/transferItem.mjs';
 import { ItemType, SizeUnit } from '../helpers/constants.mjs';
 import { healingHeroDice } from '../rolls/heroDice.mjs';
 import { MAX_CARRY_WEIGHT_CASH, MAX_MODIFIER, UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
 import { createChatMessage } from '../helpers/chatUtils.mjs';
 import { SAVING_THROW_BASE_FORMULA } from '../settings.mjs';
-import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
+import { $fmt, $l10n, capitalizeFirstLetter } from '../helpers/globalUtils.mjs';
 
 const { api, sheets } = foundry.applications;
 const TextEditor = foundry.applications.ux.TextEditor.implementation;
@@ -49,6 +49,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       heroicHealing: this._onHeroHealing,
       transferItem: this._onTransferItem,
       toggleReadied: this._toggleReadied,
+      toggleMode: this._onToggleMode,
+      updateAttack: this._onUpdateAttack,
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
@@ -66,8 +68,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       // Foundry-provided generic template
       template: 'templates/generic/tab-navigation.hbs',
     },
-    features: {
-      template: 'systems/sdm/templates/actor/features.hbs',
+    inventory: {
+      template: 'systems/sdm/templates/actor/inventory.hbs',
     },
     biography: {
       template: 'systems/sdm/templates/actor/biography.hbs',
@@ -98,8 +100,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
 
   getSkillOptions(availableSkills, attack) {
     let options = '';
+    const attackData = this.actor.system[attack];
     for (const skill of Object.values(availableSkills)) {
-      options += `<option value="${skill.id}"${(skill.attack === attack) ? 'selected' : ''}>${skill.name} (+${skill.mod})</option>\n`
+      options += `<option value="${skill.id}"${(skill.id === attackData.favorite_skill) ? 'selected' : ''}>${skill.name} (+${skill.mode || 3})</option>\n`
     }
     return options;
   }
@@ -248,6 +251,51 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     });
   }
 
+
+  async _openUpdateAttackModal(attack) {
+    const availableSkills = this.actor.getAvailableSkills();
+    const capitalizedAttack = capitalizeFirstLetter(attack);
+    const skills = Object.values(availableSkills);
+
+    const attackSystemData = this.actor.system[attack];
+    const { default_ability: selectedAbility, favorite_skill: selectedSkill} = attackSystemData;
+
+    const template = await renderTemplate("systems/sdm/templates/actor/character/update-attack.hbs", {
+      skills,
+      abilities: CONFIG.SDM.abilities,
+      attack: game.i18n.localize(`SDM.Attack${capitalizedAttack}`),
+      selectedAbility,
+      selectedSkill
+    });
+
+    const updateAttackOptions = await foundry.applications.api.DialogV2.prompt({
+      window: {
+        title: game.i18n.format('DOCUMENT.Update', {
+          type: game.i18n.localize(`SDM.Attack${capitalizedAttack}`),
+        })
+      },
+      content: template,
+      ok: {
+        icon: 'fas fa-floppy-disk',
+        label: game.i18n.format('SDM.ButtonSave'),
+        callback: (event, button) => new foundry.applications.ux.FormDataExtended(button.form).object,
+      },
+    });
+
+    if (!updateAttackOptions) return;
+
+    const { default_ability = '', favorite_skill = '' } = updateAttackOptions;
+
+    await this.actor.update({
+      [`system.${attack}`]: {
+        ...this.actor.system[attack],
+        default_ability,
+        favorite_skill,
+      }
+    })
+
+  }
+
   /** @override */
   _configureRenderOptions(options) {
     super._configureRenderOptions(options);
@@ -258,7 +306,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     // Control which parts show based on document subtype
     switch (this.document.type) {
       case 'character':
-        options.parts.push('features', 'effects');
+        options.parts.push('inventory', 'effects');
         break;
       case 'npc':
         options.parts.push('effects');
@@ -314,6 +362,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       // Replace the abilities in the system object with the reordered abilities
       context.heroDiceType = heroDiceType;
       context.system.abilities = reorderedAbilities;
+
+
+      // Adiciona o estado do modo ao contexto
+      context.isEditMode = this.actor.getFlag('sdm', 'editMode') ?? true;
     }
 
     // Offloading context prep to a helper function
@@ -325,11 +377,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
   /** @override */
   async _preparePartContext(partId, context) {
     switch (partId) {
-      case 'features':
+      case 'inventory':
         context.tab = context.tabs[partId];
         break;
       case 'notes':
-         context.tab = context.tabs[partId];
+        context.tab = context.tabs[partId];
         // Enrich notes info for display
         // Enrichment turns text like `[[/r 1d20]]` into buttons
         context.enrichedNotes = await TextEditor.enrichHTML(
@@ -384,7 +436,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     // If you have sub-tabs this is necessary to change
     const tabGroup = 'primary';
     // Default tab for first time it's rendered this session
-    if (!this.tabGroups[tabGroup]) this.tabGroups[tabGroup] = 'features';
+    if (!this.tabGroups[tabGroup]) this.tabGroups[tabGroup] = 'inventory';
     return parts.reduce((tabs, partId) => {
       const tab = {
         cssClass: '',
@@ -400,8 +452,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
         case 'header':
         case 'tabs':
           return tabs;
-        case 'features':
-          tab.id = 'features';
+        case 'inventory':
+          tab.id = 'inventory';
           tab.label += 'Inventory';
           break;
         case 'effects':
@@ -433,65 +485,29 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     // You can just use `this.document.itemTypes` instead
     // if you don't need to subdivide a given type like
     // this sheet does with spells
-    const gears = {
-      slotsTaken: 0,
-      gears: [],
-    };
-
-    const traits = {
-      slotsTaken: 0,
-      traits: [],
-    };
-
-    const burdens = {
-      slotsTaken: 0,
-      burdens: []
-    };
 
     const transport = [];
     const isCaravan = this.actor.type === 'caravan';
 
-    const itemSlotsLimit = this.actor.system.item_slots;
-    const traitSlotsLimit = this.actor.system.trait_slots;
-
     // Iterate through items, allocating to containers
     for (let i of this.document.items) {
-      const itemSlots = i.system.slots_taken || 1;
-
-      // Append to inventory.
-      if (GEAR_ITEM_TYPES.includes(i.type)) {
-        if (gears.slotsTaken + itemSlots <= itemSlotsLimit) {
-          gears.gears.push(i);
-          gears.slotsTaken += itemSlots;
-        } else {
-          burdens.burdens.push(i);
-          burdens.slotsTaken += itemSlots;
-        }
-      } else if (TRAIT_ITEM_TYPES.includes(i.type)) {
-        if (traits.slotsTaken + itemSlots <= traitSlotsLimit) {
-          traits.traits.push(i);
-          traits.slotsTaken += itemSlots;
-        } else {
-          burdens.burdens.push(i);
-          burdens.slotsTaken += itemSlots;
-        }
-      } else if (BURDEN_ITEM_TYPES.includes(i.type)) {
-        burdens.burdens.push(i);
-        burdens.slotsTaken += itemSlots;
-      } else if (ITEMS_NOT_ALLOWED_IN_CHARACTERS.includes(i.type) && isCaravan) {
+      if (ITEMS_NOT_ALLOWED_IN_CHARACTERS.includes(i.type) && isCaravan) {
         transport.push(i);
       }
     }
 
-    // Sort then assign
-    context.gears = gears.gears.sort((a, b) => (a.sort || 0) - (b.sort || 0));
-    context.gearSlotsTaken = gears.slotsTaken;
+    const inventory = this.actor.checkInventorySlots();
+    const { items, traits, burdens, burdenPenalty } = inventory;
 
-    context.traits = traits.traits.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+    // Sort then assign
+    context.items = items.slots.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+    context.itemSlotsTaken = items.slotsTaken;
+
+    context.traits = traits.slots.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     context.traitSlotsTaken = traits.slotsTaken;
 
-    context.burdens = burdens.burdens.sort((a, b) => (a.sort || 0) - (b.sort || 0));
-    context.burdenSlotsTaken = burdens.slotsTaken;
+    context.burdens = burdens.slots.sort((a, b) => (a.sort || 0) - (b.sort || 0));
+    context.burdenSlotsTaken = burdenPenalty;
 
     if (isCaravan) {
       context.transport = transport;
@@ -811,6 +827,17 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     return openItemTransferDialog(item, this.actor);
   }
 
+
+  static async _onToggleMode(event, target) {
+    const currentMode = this.actor.getFlag('sdm', 'editMode') ?? true;
+    const newMode = !currentMode;
+
+    await this.actor.setFlag('sdm', 'editMode', newMode);
+
+    // Atualiza apenas a parte necessária da ficha
+    this.render({ part: 'header' });
+  }
+
   /**
    * Handle clickable rolls.
    *
@@ -867,11 +894,14 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     // Get common data attributes
     const dataset = target.dataset;
     const { rollType } = dataset;
-    const finalAbility = this.actor.system.abilities[rollType].final_current;
+    const abilityData = this.actor.system.abilities[rollType];
+    const finalAbility = abilityData.current;
     const ward = this.actor.system.ward || 0;
     const burdenPenalty = this.actor.system.burden_penalty || 0;
-    const saveBonus = this.actor.system.abilities[rollType].save_bonus || 0;
-    const finalSavingThrowBonus = Math.min(finalAbility + ward + saveBonus - burdenPenalty, MAX_MODIFIER);
+    const saveBonus = abilityData.save_bonus || 0;
+    const allSaveBonus = this.actor.system.all_save_bonus || 0;
+    const savingThrowSum = finalAbility + ward + saveBonus + allSaveBonus - burdenPenalty;
+    const finalSavingThrowBonus = Math.min(savingThrowSum, MAX_MODIFIER);
 
     const label = $fmt('SDM.SavingThrowRoll', {
       ability: $l10n(CONFIG.SDM.abilities[rollType]),
@@ -926,6 +956,19 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       flavor: label,
       rolls: [roll],
     });
+  }
+
+  static async _onUpdateAttack(event, target) {
+    event.preventDefault(); // Don't open context menu
+    event.stopPropagation(); // Don't trigger other events
+    if (event.detail > 1) return; // Ignore repeated clicks
+
+    // Get common data attributes
+    const dataset = target.dataset;
+    const { attack } = dataset;
+
+
+    this._openUpdateAttackModal(attack);
   }
 
 

@@ -1,9 +1,9 @@
 {{! Sheet Header }}
 <div>
-{{#if (eq actor.type 'character')}}
+  {{#if (eq actor.type 'character')}}
   {{> ($$ "actor/character/header")}}
-{{/if}}
-{{#if (eq actor.type 'npc')}}
+  {{/if}}
+  {{#if (eq actor.type 'npc')}}
   {{> ($$ "actor/npc/header")}}
-{{/if}}
+  {{/if}}
 </div>

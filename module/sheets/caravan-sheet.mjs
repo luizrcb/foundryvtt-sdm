@@ -5,11 +5,14 @@ import { openItemTransferDialog } from '../items/transferItem.mjs';
 import { ItemType, SizeUnit } from '../helpers/constants.mjs';
 import { getHeroDiceSelect } from '../rolls/heroDice.mjs';
 import { UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
+import { $l10n } from '../helpers/globalUtils.mjs';
 
 const { api, sheets } = foundry.applications;
 const TextEditor = foundry.applications.ux.TextEditor.implementation;
 const DragDrop = foundry.applications.ux.DragDrop.implementation;
 const FilePicker = foundry.applications.apps.FilePicker.implementation;
+
+//TODO: *** REPLACE THIS SHEET ***
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -85,9 +88,9 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
 
 
     result += '<option value=""}></option>';
-    for (let orderedAbility of abilitiesOrder['en']) {
+    for (let orderedAbility of abilitiesOrder[currentLanguage]) {
       result += `<option value="${orderedAbility}"${(orderedAbility === default_ability) ? 'selected' : ''}>
-      ${game.i18n.localize(CONFIG.SDM.abilities[orderedAbility])}</option>\n`
+      ${$l10n(CONFIG.SDM.abilities[orderedAbility])}</option>\n`
     }
 
     return result;
@@ -105,17 +108,17 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
   // Open the custom roll modal
   async _openCustomRollModal(key, attribute, skill, rolledFrom, item, versatile = false) {
     const actorSkill = skill ? this.actor.system[skill] : {};
-    const versatileLabel = game.i18n.localize(CONFIG.SDM.versatile)
+    const versatileLabel = $l10n(CONFIG.SDM.versatile)
     const title = attribute ?? actorSkill.name ?? `${item?.name}${versatile ? ` (${versatileLabel})` : ''}`;
     const isTraitRoll = !!(skill || key);
     const minHeroDiceZero = true;
     const content = `
       <div class="custom-roll-modal">
         <h2>Roll for ${title}</h2>
-        <h2>{{localize 'SDM.Roll.Title' prefix='' title='${title}'}}</h2>
+        <h2>{{localize 'SDM.RollTitle' prefix='' title='${title}'}}</h2>
         <form class="custom-roll-form">
         ${rolledFrom !== 'Abilities' ? `<div class="form-group">
-            <label>${game.i18n.localize(CONFIG.SDM.abilitiesLabel)}</label>
+            <label>${$l10n(CONFIG.SDM.abilitiesLabel)}</label>
             <select name="selectedAttribute">
               ${skill ? this._getStatSelectOptions(actorSkill) :
           item ? this._getStatSelectOptions({ default_ability: item?.system?.default_ability }, false) : this._getStatSelectOptions({}, false)}
@@ -123,7 +126,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
           </div>
         `: ''}
           <div class="form-group">
-            <label for="modifier">${game.i18n.localize(CONFIG.SDM.modifierLabel)}</label>
+            <label for="modifier">${$l10n(CONFIG.SDM.modifierLabel)}</label>
             <input id="modifier" type="string" name="modifier" value="" />
           </div>
          ${item ? `<div class="form-group">
@@ -134,28 +137,28 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
             </select>
           </div>`: ''}
           <div class="form-group">
-            <label>${game.i18n.localize(CONFIG.SDM.rollTypeLabel)}</label>
+            <label>${$l10n('SDM.RollType')}</label>
             <div class="roll-type-select">
               <div>
                 <label>
-                  <input type="radio" name="rollType" value="normal" checked> ${game.i18n.localize(CONFIG.SDM.rollType.normal)}
+                  <input type="radio" name="rollType" value="normal" checked> ${$l10n(CONFIG.SDM.rollType.normal)}
                 </label>
               </div>
               <div>
                 <label>
-                  <input type="radio" name="rollType" value="advantage"> ${game.i18n.localize(CONFIG.SDM.rollType.advantage)}
+                  <input type="radio" name="rollType" value="advantage"> ${$l10n(CONFIG.SDM.rollType.advantage)}
                 </label>
               </div>
               <div>
                 <label>
-                  <input type="radio" name="rollType" value="disadvantage"> ${game.i18n.localize(CONFIG.SDM.rollType.disadvantage)}
+                  <input type="radio" name="rollType" value="disadvantage"> ${$l10n(CONFIG.SDM.rollType.disadvantage)}
                 </label>
               </div>
             </div>
           </div>
           ${getHeroDiceSelect(this.actor, minHeroDiceZero)}
           <div class="form-group">
-            <label for="shouldExplode">${game.i18n.localize("SDM.ExplodingDice")}</label>
+            <label for="shouldExplode">${$l10n("SDM.ExplodingDice")}</label>
             <input id="shouldExplode" type="checkbox" name="shouldExplode" ${isTraitRoll ? "checked" : ""} />
           </div>
         </form>
@@ -197,7 +200,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
 
     const ability = key ? key : selectedAttribute;
     const skillData = skill ? this.actor.system[skill] : {};
-    let label = skill ? skillData.name : (attribute ? attribute : (ability ? game.i18n.localize(CONFIG.SDM.abilities[ability]) : ''));
+    let label = skill ? skillData.name : (attribute ? attribute : (ability ? $l10n(CONFIG.SDM.abilities[ability]) : ''));
 
     if (item) {
       label = item.name;
@@ -276,7 +279,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
       const currentLanguage = game.i18n.lang;
 
       // Get the order for the current language, defaulting to English if not found
-      const order = abilitiesOrder["en"];
+      const order = abilitiesOrder[currentLanguage];
 
       // Reorder the abilities in the system object
       const reorderedAbilities = {};
@@ -354,7 +357,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
         // FontAwesome Icon, if you so choose
         icon: '',
         // Run through localization
-        label: 'SDM.Actor.Tabs.',
+        label: 'SDM.Tab',
       };
       switch (partId) {
         case 'header':
@@ -726,12 +729,12 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
       case 'item':
         const item = this._getEmbeddedDocument(target);
         if (!item || item?.type !== ItemType.WEAPON) return;
-        const weaponLabel = game.i18n.localize(`TYPES.Item.${item.type}`);
+        const weaponLabel = $l10n(`TYPES.Item.${item.type}`);
         return this._openCustomRollModal(key, label, skill, weaponLabel, item, versatile);
       //if (item) return item.roll(event, versatile);
     }
 
-    const abilitiesLabel = game.i18n.localize(CONFIG.SDM.abilitiesLabel);
+    const abilitiesLabel = $l10n(CONFIG.SDM.abilitiesLabel);
 
     const ChatLabel = dataset.label ? `[${abilitiesLabel}] ${dataset.label}` : '';
 
@@ -743,7 +746,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     }
 
     const rolledFrom = dataset.rollType ?? 'ability';
-    const rolledFromlabel = game.i18n.localize(CONFIG.SDM.rollSource[rolledFrom]);
+    const rolledFromlabel = $l10n(CONFIG.SDM.rollSource[rolledFrom]);
 
     this._openCustomRollModal(key, label, skill, rolledFromlabel);
   }

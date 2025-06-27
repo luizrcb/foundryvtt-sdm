@@ -5,3 +5,40 @@
 .sheet-hero-dice {
   margin-left: 5px;
 }
+
+/* Toggle de modo */
+.mode-toggle {
+  display: flex;
+  gap: 0.25rem;
+  position: absolute;
+  margin-left: auto;
+}
+
+.toggle-mode {
+  width: 28px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--color-border-light-tertiary);
+  border-radius: 3px;
+  background: rgba(0, 0, 0, 0.05);
+  color: var(--color-text-dark-inactive);
+}
+
+.toggle-mode.active {
+  background: var(--color-primary);
+  color: white;
+  border-color: var(--color-primary-dark);
+}
+
+.toggle-mode:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.edit-mode {
+  position: absolute;
+  top: 39px;
+  left: 9px;
+}
+

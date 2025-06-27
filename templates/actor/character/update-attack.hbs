@@ -1,0 +1,19 @@
+<form>
+  <h5>{{localize 'SDM.UpdateAttack' attack=attack}}</h5>
+  <div class="grid grid-1col">
+    <div class="grid-span-1">
+      <label class="resource-label">{{localize 'SDM.DefaultAbility'}}</label>
+      <select name="default_ability" class="resource-content">
+        <option value=""></option>
+        {{selectOptions abilities localize=true selected=selectedAbility}}
+      </select>
+    </div>
+    <div class="grid-span-1">
+      <label class="resource-label">{{localize 'SDM.FavoriteSkill'}}</label>
+      <select name="favorite_skill" class="resource-content">
+        <option value=""></option>
+        {{selectOptions skills valueAttr="id" labelAttr="name" selected=selectedSkill}}
+      </select>
+    </div>
+  </div>
+</form>

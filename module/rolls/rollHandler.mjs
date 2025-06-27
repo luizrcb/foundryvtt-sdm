@@ -120,7 +120,7 @@ export class RollHandler {
   static combineStatWithModifier(actor, addAbility, modifier) {
     if (!addAbility) return modifier.trim();
 
-    const statPath = `abilities.${addAbility}.final_current`;
+    const statPath = `abilities.${addAbility}.current`;
     const statProperty = AdvancedRollModifier._getActorProperty(actor, statPath);
 
     const combined = statProperty === 0
@@ -312,7 +312,7 @@ export class RollHandler {
     const fixedValuesTotal = fixedValues.reduce((acc, fixVal) => acc + fixVal, 0);
     let baseAbility;
     if (actor.type === ActorType.CHARACTER) {
-      baseAbility = actor.system.abilities[key]?.final_current || 0;
+      baseAbility = actor.system.abilities[key]?.current || 0;
     } else if (actor.type === ActorType.NPC) {
       baseAbility = actor.system.bonus.major;
     }
