@@ -127,7 +127,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
         `: ''}
           <div class="form-group">
             <label for="modifier">${$l10n(CONFIG.SDM.modifierLabel)}</label>
-            <input id="modifier" type="string" name="modifier" value="" />
+            <input id="modifier" type="text" name="modifier" value="" />
           </div>
          ${item ? `<div class="form-group">
             <label for="multiplier">Multiplier</label>
@@ -137,21 +137,21 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
             </select>
           </div>`: ''}
           <div class="form-group">
-            <label>${$l10n('SDM.RollType')}</label>
+            <label>${$l10n('SDM.RollMode')}</label>
             <div class="roll-type-select">
               <div>
                 <label>
-                  <input type="radio" name="rollType" value="normal" checked> ${$l10n(CONFIG.SDM.rollType.normal)}
+                  <input type="radio" name="rollType" value="normal" checked> ${$l10n(CONFIG.SDM.rollMode.normal)}
                 </label>
               </div>
               <div>
                 <label>
-                  <input type="radio" name="rollType" value="advantage"> ${$l10n(CONFIG.SDM.rollType.advantage)}
+                  <input type="radio" name="rollType" value="advantage"> ${$l10n(CONFIG.SDM.rollMode.advantage)}
                 </label>
               </div>
               <div>
                 <label>
-                  <input type="radio" name="rollType" value="disadvantage"> ${$l10n(CONFIG.SDM.rollType.disadvantage)}
+                  <input type="radio" name="rollType" value="disadvantage"> ${$l10n(CONFIG.SDM.rollMode.disadvantage)}
                 </label>
               </div>
             </div>
@@ -174,7 +174,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
       content,
       ok: {
         icon: 'fas fa-dice-d20',
-        label: "Roll",
+        label: $l10n('SDM.ButtonRoll'),
         callback: (event, button) => new foundry.applications.ux.FormDataExtended(button.form).object,
       }
     });
@@ -202,29 +202,29 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     const skillData = skill ? this.actor.system[skill] : {};
     let label = skill ? skillData.name : (attribute ? attribute : (ability ? $l10n(CONFIG.SDM.abilities[ability]) : ''));
 
-    if (item) {
-      label = item.name;
-      // get item damage base or versatile
-      return RollHandler.handleItemRoll(this.actor, item, label, {
-        modifier,
-        multiplier,
-        rollType,
-        heroicDice,
-        skill: '',
-        addAbility: ability,
-        explode: shouldExplode,
-        versatile,
-      });
-    }
+    // if (item) {
+    //   label = item.name;
+    //   // get item damage base or versatile
+    //   return RollHandler.handleItemRoll(this.actor, item, label, {
+    //     modifier,
+    //     multiplier,
+    //     rollType,
+    //     heroicDice,
+    //     skill: '',
+    //     addAbility: ability,
+    //     explode: shouldExplode,
+    //     versatile,
+    //   });
+    // }
 
-    return RollHandler.performRoll(this.actor, ability, label, {
-      modifier,
-      rollType,
-      skill,
-      heroicDice,
-      rolledFrom,
-      explode: shouldExplode,
-    });
+    // return RollHandler.performRoll(this.actor, ability, label, {
+    //   modifier,
+    //   rollType,
+    //   skill,
+    //   heroicDice,
+    //   rolledFrom,
+    //   explode: shouldExplode,
+    // });
   }
 
   /** @override */

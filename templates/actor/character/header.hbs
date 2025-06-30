@@ -248,7 +248,7 @@
               </div>
               {{else}}
               <div class='ability flexrow flex-group-center'>
-                <span class='resource-label rollable' data-action='roll' data-context='rollable' data-key="{{key}}"
+                <span class='resource-label rollable' data-action='roll' data-context='rollable' data-ability="{{key}}" data-type="ability"
                   data-label='{{localize (lookup @root.config.abilities key)}}'
                   title='{{localize (lookup @root.config.abilities key)}}'>
                   {{toUpperCase (localize (lookup @root.config.abilityAbbreviations key))}}
@@ -300,23 +300,26 @@
           {{else}}
           <div class='resources grid grid-2col'>
             <div class="ability grid-span-1 flexrow">
-              <div class='resource-label rollable' data-roll-type='attack' data-action='roll' data-attack="melee">
+              <div class='resource-label rollable' data-type='attack' data-action='roll' data-attack="melee"
+               data-label="{{localize 'SDM.AttackMelee'}}">
                 <div>{{localize 'SDM.AttackMelee'}}</div>
               </div>
             </div>
             <div class="ability grid-span-1 flexrow">
-              <div class='resource-label rollable' data-roll-type='attack' data-action='roll' data-attack="ranged">
+              <div class='resource-label rollable' data-type='attack' data-action='roll' data-attack="ranged"
+                data-label="{{localize 'SDM.AttackRanged'}}">
                 <div>{{localize 'SDM.AttackRanged'}}</div>
               </div>
             </div>
             <div class="ability grid-span-1 flexrow">
-              <div class='resource-label rollable' data-roll-type='attack' data-action='roll'
-                data-attack="fantascience">
+              <div class='resource-label rollable' data-type='attack' data-action='roll'
+                data-attack="fantascience"  data-label="{{localize 'SDM.AttackFantascience'}}">
                 <div>{{localize 'SDM.AttackFantascience'}}</div>
               </div>
             </div>
             <div class="ability grid-span-1 flexrow">
-              <div class='resource-label rollable' data-roll-type='attack' data-action='roll' data-attack="oldtech">
+              <div class='resource-label rollable' data-type='attack' data-action='roll' data-attack="oldtech"
+                data-label="{{localize 'SDM.AttackOldtech'}}">
                 <div>{{localize 'SDM.AttackOldtech'}}</div>
               </div>
             </div>

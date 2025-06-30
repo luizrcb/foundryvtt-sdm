@@ -267,10 +267,13 @@ export class SdmActor extends Actor {
     const skillTraits = itemsArray.filter((item) => item.type === ItemType.TRAIT);
 
     skillTraits.forEach((trait) => {
+      const mod = trait.system.skill_mod + trait.system.skill_mod_bonus;
+
       result[trait.uuid] = {
         id: trait.uuid,
         name: trait.name,
-        mod: trait.system.skill_mod + trait.system.skill_mod_bonus,
+        mod: mod || 3,
+        label: `${trait.name}${mod > 0 ? ` (+${mod})`: ''}`
       };
     });
     return result;

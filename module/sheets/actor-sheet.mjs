@@ -1,13 +1,13 @@
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
-import { RollHandler } from '../rolls/rollHandler.mjs';
 import { onItemUpdate, convertToCash, ITEMS_NOT_ALLOWED_IN_CHARACTERS, onItemCreateActiveEffects } from '../helpers/itemUtils.mjs';
 import { openItemTransferDialog } from '../items/transferItem.mjs';
-import { ItemType, SizeUnit } from '../helpers/constants.mjs';
+import { ItemType, RollMode, RollType, SizeUnit } from '../helpers/constants.mjs';
 import { healingHeroDice } from '../rolls/heroDice.mjs';
 import { MAX_CARRY_WEIGHT_CASH, MAX_MODIFIER, UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
 import { createChatMessage } from '../helpers/chatUtils.mjs';
 import { SAVING_THROW_BASE_FORMULA } from '../settings.mjs';
 import { $fmt, $l10n, capitalizeFirstLetter } from '../helpers/globalUtils.mjs';
+import SDMRoll from '../rolls/sdmRoll.mjs';
 
 const { api, sheets } = foundry.applications;
 const TextEditor = foundry.applications.ux.TextEditor.implementation;
@@ -102,7 +102,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     let options = '';
     const attackData = this.actor.system[attack];
     for (const skill of Object.values(availableSkills)) {
-      options += `<option value="${skill.id}"${(skill.id === attackData.favorite_skill) ? 'selected' : ''}>${skill.name} (+${skill.mode || 3})</option>\n`
+      options += `<option value="${skill.id}"${(skill.id === attackData?.favorite_skill) ? 'selected' : ''}>${skill.name} (+${skill.mode || 3})</option>\n`
     }
     return options;
   }
@@ -116,81 +116,48 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     return options;
   }
 
-  // Open the custom roll modal
-  async _openCustomRollModal(key, attribute, attack, rolledFrom, item, versatile = false) {
-    const actorAttack = attack ? this.actor.system[attack] : {};
+  async _openCustomRollModal({
+    type,
+    from,
+    ability = '',
+    formula = '',
+    attack = '',
+    versatile = false,
+    versatileFormula = '',
+    bonusDamage = '',
+   }) {
+    let rollTitlePrefix = '';
+    const isDamage = type === RollType.DAMAGE;
+    const isAttack = type === RollType.ATTACK;
+    const isAbility = type === RollType.ABILITY;
+
+    if (isDamage) rollTitlePrefix =  $l10n('SDM.Damage');
+    if (isAttack) rollTitlePrefix = $l10n('SDM.Attack');
+    if (rollTitlePrefix !== '')  rollTitlePrefix += ' ';
+
+    const title = from;
+
+    const actorAttack = isAttack ? this.actor.system[attack] : null;
     const versatileLabel = $l10n('SDM.FeatureVersatile');
     const availableSkills = this.actor.getAvailableSkills();
-    const rollTitlePrefix = item ? ($l10n('SDM.Damage') + ' ') : attack ? ($l10n('SDM.Attack') + ' ') : '';
-    const title = attribute ?? actorAttack.name ?? `${item?.name}${versatile ? ` (${versatileLabel})` : ''}`;
-    console.log(title);
-    const isTraitRoll = !!(attack || key);
-    const content = `
-      <div class="custom-roll-modal">
-        <h4>${$fmt('SDM.RollTitle', { prefix: rollTitlePrefix, title })}</h4>
-        <form class="custom-roll-form">
-        ${rolledFrom !== $l10n('SDM.FieldAbility') ? `<div class="form-group">
-            <label>${$l10n('SDM.FieldAbility')}</label>
-            <select name="selectedAttribute">
-              ${actorAttack ? this._getStatSelectOptions(actorAttack) :
-          item ? this._getStatSelectOptions({ default_ability: item?.system?.default_ability }) : this._getStatSelectOptions({})}
-            </select>
-          </div>
-        `: ''}
-         ${attack ? `<div class="form-group">
-            <label for="skillMod">${$l10n('SDM.Skill')}</label>
-            <select name="selectedSkill" id="selectedSkill">
-              <option value=""></option>
-             ${this.getSkillOptions(availableSkills, attack)}
-            </select>
-            </div>
-          `: ''}
-          <div class="form-group">
-            <label for="modifier">${$l10n('SDM.RollModifier')}</label>
-            <input id="modifier" type="string" name="modifier" value="" />
-          </div>
-         ${item ? `<div class="form-group">
-            <label for="multiplier">${$l10n('SDM.RollMultiplier')}</label>
-            <select name="multiplier" id="multiplier">
-              <option value=""></option>
-             ${this.damageMultiplierOptions()}
-            </select>
-          </div>`: ''}
-          <div class="form-group">
-            <label>${$l10n('SDM.RollType')}</label>
-            <div class="roll-type-select">
-              <div>
-                <label>
-                  <input type="radio" name="rollType" value="disadvantage"> ${$l10n('SDM.RollDisadvantage')}
-                </label>
-              </div>
-              <div>
-                <label>
-                  <input type="radio" name="rollType" value="normal" checked> ${$l10n('SDM.RollNormal')}
-                </label>
-              </div>
-               <div>
-                <label>
-                  <input type="radio" name="rollType" value="advantage"> ${$l10n('SDM.RollAdvantage')}
-                </label>
-              </div>
-            </div>
-          </div>
-          ${rolledFrom !== 'Weapon' ? `<div class="form-group">
-            <label for="shouldExplode">${$l10n("SDM.ExplodingDice")}</label>
-            <input id="shouldExplode" type="checkbox" name="shouldExplode" ${isTraitRoll ? "checked" : ""} />
-          </div>` : ''}
-        </form>
-        <br/><br/>
-      </div>
-    `;
 
+    const template = await renderTemplate("systems/sdm/templates/custom-roll-dialog.hbs", {
+      rollTitlePrefix,
+      title,
+      abilities: CONFIG.SDM.abilities,
+      ability: isAbility ? ability : isAttack ? actorAttack?.default_ability : '',
+      attack,
+      availableSkills,
+      selectedSkill:  isAttack ? actorAttack?.favorite_skill : '',
+      multiplierOptions: CONFIG.SDM.damageMultiplier,
+      type,
+    });
     // Create and render the modal
     const rollOptions = await foundry.applications.api.DialogV2.prompt({
       window: {
         title: $fmt('SDM.RollTitle', { prefix: '', title }),
       },
-      content,
+      content: template,
       ok: {
         icon: 'fas fa-dice-d20',
         label: $l10n('SDM.ButtonRoll'),
@@ -203,12 +170,13 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     }
 
     const {
-      selectedAttribute = '',
+      selectedAbility = '',
       modifier = '',
       heroicQty = '0',
-      rollType = 'normal',
+      rollMode = RollMode.NORMAL,
       shouldExplode = false,
       multiplier = '',
+      selectedSkill,
     } = rollOptions;
     if (modifier && !foundry.dice.Roll.validate(modifier)) {
       ui.notifications.error("Invalid roll modifier");
@@ -222,35 +190,25 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       return
     }
 
-    const ability = key ? key : selectedAttribute;
-    const attackData = attack ? this.actor.system[attack] : {};
-    let label = attack ? attackData.name : (attribute ? attribute : (ability ? $l10n(CONFIG.SDM.abilities[ability]) : ''));
+    const rollData = {
+      type,
+      actor: this.actor,
+      from,
+      ability: ability || selectedAbility,
+      mode: rollMode,
+      modifier: bonusDamage ? `${modifier} + ${bonusDamage}`: modifier,
+      multiplier,
+      explodingDice: shouldExplode,
+      skill: availableSkills[selectedSkill],
+    };
 
-    if (item) {
-      label = item.name;
-      // get item damage base or versatile
-      return RollHandler.handleItemRoll(this.actor, item, label, {
-        modifier,
-        multiplier,
-        rollType,
-        heroicDice,
-        attack: '',
-        addAbility: ability,
-        explode: shouldExplode,
-        versatile,
-      });
+    if (formula) {
+      rollData.formula = formula;
     }
 
-    return RollHandler.performRoll(this.actor, ability, label, {
-      modifier,
-      rollType,
-      attack,
-      heroicDice,
-      rolledFrom,
-      explode: shouldExplode,
-    });
+    const sdmRoll = new SDMRoll(rollData);
+    await sdmRoll.evaluate();
   }
-
 
   async _openUpdateAttackModal(attack) {
     const availableSkills = this.actor.getAvailableSkills();
@@ -258,7 +216,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     const skills = Object.values(availableSkills);
 
     const attackSystemData = this.actor.system[attack];
-    const { default_ability: selectedAbility, favorite_skill: selectedSkill} = attackSystemData;
+    const { default_ability: selectedAbility, favorite_skill: selectedSkill } = attackSystemData;
 
     const template = await renderTemplate("systems/sdm/templates/actor/character/update-attack.hbs", {
       skills,
@@ -745,6 +703,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       content: `<b>${$fmt('SDM.DeleteDocConfirmation', { doc: doc.name })}</b>`,
       modal: true,
       rejectClose: false,
+      yes: { label: $l10n('SDM.ButtonYes') },
+      no: { label: $l10n('SDM.ButtonNo') }
     });
     if (proceed) await doc.delete();
   }
@@ -853,36 +813,42 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
 
     // Get common data attributes
     const dataset = target.dataset;
-    const key = dataset.key;
-    const label = dataset.label || key;
+    const ability = dataset.ability;
+    const label = dataset.label;
     const attack = dataset.attack;
-    const versatile = !!dataset.versatile;
+    const type = dataset.type;
+    let formula = dataset.roll || '';
+    let versatile = false;
+    let versatileFormula = '';
+    let bonusDamage = '';
 
-    // Handle item rolls.
-    switch (dataset.rollType) {
-      case 'item':
+    //Handle item rolls.
+    switch (type) {
+      case 'damage':
         const item = this._getEmbeddedDocument(target);
-        if (!item || !item?.system?.is_weapon) return;
-        const weaponLabel = $l10n(`TYPES.Item.${item.type}`);
-        return this._openCustomRollModal(key, label, attack, weaponLabel, item, versatile);
-      //if (item) return item.roll(event, versatile);
+        const weaponDamage = item.system.weapon_damage;
+
+        formula = weaponDamage.base;
+        bonusDamage = weaponDamage.bonus;
+        versatile = item.system?.versatile_weapon || false;
+
+        if (versatile) {
+          versatileFormula = weaponDamage.versatile;
+        }
     }
 
-    const abilitiesLabel = $l10n(CONFIG.SDM.abilitiesLabel);
-
-    const ChatLabel = dataset.label ? `[${abilitiesLabel}] ${dataset.label}` : '';
-
-    // Handle rolls that supply the formula directly.
-    if (dataset.roll) {
-      return RollHandler.performRoll(this.actor, null, ChatLabel, {
-        roll: dataset.roll,
-      })
+    const rollAttributes = {
+      type,
+      from: label,
+      formula,
+      ability,
+      attack,
+      versatile,
+      versatileFormula,
+      bonusDamage,
     }
 
-    const rolledFrom = dataset.rollType ?? 'ability';
-    const rolledFromlabel = $l10n(CONFIG.SDM.rollSource[rolledFrom]);
-
-    this._openCustomRollModal(key, label, attack, rolledFromlabel);
+    this._openCustomRollModal(rollAttributes);
   }
 
 

@@ -1,12 +1,12 @@
 <div class="dice-roll" data-action="expandRoll">
   <div class="dice-result">
-    <div class="dice-formula">{{heroicTotal.length}}{{heroDiceType}} ({{toLowerCase (localize 'SDM.FieldHeroDice')}})</div>
+    <div class="dice-formula">{{heroicTotal.length}}{{heroDiceType}}</div>
     <div class="dice-tooltip">
       <div class="wrapper">
         <section class="tooltip-part">
           <div class="dice">
             <header class="part-header">
-              <span class="part-formula">Original roll</span>
+              <span class="part-formula">{{localize 'SDM.OriginalRoll'}}</span>
             </header>
             <ol class="dice-rolls">
               {{#each dice}}

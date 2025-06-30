@@ -1,0 +1,59 @@
+<div class="custom-roll-modal">
+  <h4>{{localize 'SDM.RollTitle' prefix=rollTitlePrefix title=title }}</h4>
+  <form class="custom-roll-form">
+    {{#if (notEq type 'ability')}}
+      <div class="form-group">
+        <label>{{localize 'SDM.Ability'}}</label>
+        <select name="selectedAbility">
+          {{selectOptions abilities localize=true selected=ability}}
+        </select>
+      </div>
+    {{/if}}
+    <div class="form-group mt-10">
+      <label for="skillMod">{{localize 'SDM.Skill'}}</label>
+      <select name="selectedSkill" id="selectedSkill">
+        <option value=""></option>
+        {{selectOptions availableSkills valueAttr="id" labelAttr="label" selected=selectedSkill}}
+      </select>
+    </div>
+    <div class="form-group mt-10">
+      <label for="modifier">{{localize 'SDM.RollModifier' }}</label>
+      <input id="modifier" type="text" name="modifier" value="" />
+    </div>
+    {{#if (eq type 'damage')}}
+    <div class="form-group mt-10">
+      <label for="multiplier">{{localize 'SDM.RollMultiplier'}}</label>
+      <select name="multiplier" id="multiplier">
+        <option value=""></option>
+        {{selectOptions multiplierOptions}}
+      </select>
+    </div>
+    {{/if}}
+    <div class="form-group mt-10">
+      <label>{{localize 'SDM.RollMode'}}</label>
+      <div class="roll-type-select">
+        <div>
+          <label>
+            <input type="radio" name="rollMode" value="disadvantage"> {{localize 'SDM.RollDisadvantage'}}
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" name="rollMode" value="normal" checked> {{localize 'SDM.RollNormal'}}
+          </label>
+        </div>
+        <div>
+          <label>
+            <input type="radio" name="rollMode" value="advantage"> {{localize 'SDM.RollAdvantage'}}
+          </label>
+        </div>
+      </div>
+    </div>
+   <div class="form-group mt-10">
+      <label for="shouldExplode">{{localize "SDM.ExplodingDice"}}</label>
+      <input id="shouldExplode" type="checkbox" name="shouldExplode"
+      {{#if (notEq type 'damage')}}checked{{/if}} />
+    </div>
+  </form>
+  <br /><br />
+</div>

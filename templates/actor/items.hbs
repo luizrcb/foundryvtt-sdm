@@ -24,8 +24,9 @@
         <div class="flexrow">
           {{#if item.system.is_weapon}}
           {{#if item.system.readied}}
-          <div class='rollable flexrow' data-roll-type='item' data-action='roll'>
-            <i class="fa-solid fa-dice-d20 roll-icon" title="{{item.name}}"></i>
+          <div class='rollable flexrow' data-action='roll' data-type='damage'
+              data-label='{{item.name}}'>
+            <i class='fa-solid fa-dice-d20 roll-icon' title='{{item.name}}'></i>
           </div>
           {{/if}}
           {{/if}}

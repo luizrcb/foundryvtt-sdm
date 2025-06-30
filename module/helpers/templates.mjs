@@ -7,6 +7,7 @@
 const $$ = (path) => `systems/sdm/templates/${path}.hbs`;
 
 const templatesToLoad = [
+  $$('custom-roll-dialog'),
   $$('actor/items'),
   $$('actor/traits'),
   $$('actor/burdens'),

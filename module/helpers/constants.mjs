@@ -17,10 +17,17 @@ export const SizeUnit = Object.freeze({
   CASH: 'cash'
 });
 
-export const RollType = Object.freeze({
+export const RollMode = Object.freeze({
   NORMAL: 'normal',
   ADVANTAGE: 'advantage',
   DISADVANTAGE: 'disadvantage'
+});
+
+export const RollType = Object.freeze({
+  ABILITY: 'ability',
+  ATTACK: 'attack',
+  DAMAGE: 'damage',
+  SAVE: 'save',
 });
 
 export const ActorType = Object.freeze({

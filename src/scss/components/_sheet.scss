@@ -2,6 +2,13 @@
 @use '../utils/colors' as colors;
 @use '../utils/variables' as vars;
 
+.sheet.sdm.item {
+  min-width: 500px;
+  min-height: 500px;
+  max-width: 800px;
+  max-height: 800px;
+}
+
 .sheet-hero-dice {
   margin-left: 5px;
 }

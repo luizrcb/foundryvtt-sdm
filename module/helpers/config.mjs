@@ -48,7 +48,7 @@ SDM.sizeUnits = {
 };
 
 SDM.fatigue = 'SDM.Actor.Character.FIELDS.fatigue.label';
-SDM.versatile = 'SDM.Item.Features.versatile.label';
+SDM.versatile = 'SDM.FeatureVersatile';
 
 SDM.abilitiesOrder = {
   "en": ["str", "end", "agi", "cha", "aur", "tho"],
@@ -65,14 +65,14 @@ SDM.speedType = Object.values(SpeedType).reduce((acc, speedType) => {
   return acc;
 }, {});
 
-const abilitiesLabel = 'SDM.FieldAbility';
+const abilitiesLabel = 'SDM.Ability';
 
 SDM.abilitiesLabel = abilitiesLabel;
 SDM.modifierLabel = 'SDM.RollModifier';
-SDM.rollTypeLabel = 'SDM.RollType';
+SDM.rollTypeLabel = 'SDM.RollMode';
 
 
-SDM.rollType = {
+SDM.rollMode = {
   'normal': 'SDM.RollNormal',
   'advantage': 'SDM.RollAdvantage',
   'disadvantage': 'SDM.RollDisadvantage',
