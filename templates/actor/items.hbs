@@ -22,7 +22,7 @@
           <img src='{{item.img}}' title='{{item.name}}' width='24' height='24' />
         </div>
         <div class="flexrow">
-          {{#if item.system.is_weapon}}
+          {{#if (eq item.system.type 'weapon')}}
           {{#if item.system.readied}}
           <div class='rollable flexrow' data-action='roll' data-type='damage'
               data-label='{{item.name}}'>
@@ -33,7 +33,7 @@
           {{#if (gt item.system.slots_taken 1)}}[{{item.system.slots_taken}}] {{/if}}
           {{#if (eq item.system.size.unit 'cash')}} €{{item.system.quantity}} {{/if}}
           {{item.name}}
-          {{#if (notEq item.system.size.unit 'cash')}}
+          {{#if (ne item.system.size.unit 'cash')}}
           {{#if (gt item.system.quantity 1)}}
           x{{item.system.quantity}}
           {{/if}}

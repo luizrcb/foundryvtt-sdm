@@ -1,6 +1,7 @@
-import { AttackType, SkillMod } from '../helpers/constants.mjs';
+import { SkillMod } from '../helpers/constants.mjs';
 import { getDefaultAbility } from '../helpers/globalUtils.mjs';
 import SdmItemBase from './base-item.mjs';
+import PowerDataModel from './power-data.mjs';
 
 export default class SdmTrait extends SdmItemBase {
   static LOCALIZATION_PREFIXES = [
@@ -13,8 +14,14 @@ export default class SdmTrait extends SdmItemBase {
     const requiredInteger = { required: true, nullable: false, integer: true };
     const schema = super.defineSchema();
 
-    schema.is_skill = new fields.BooleanField({
-      required: true, initial: false,
+    schema.default_ability = getDefaultAbility();
+
+    schema.type = new fields.StringField({
+      required: false, blank: true, initial: '',
+      choices: Object.entries(CONFIG.SDM.traitType).reduce((acc, [key, value]) => {
+        acc[key] = game.i18n.localize(value);
+        return acc;
+      }, {}),
     });
 
     schema.skill_mod = new fields.NumberField({
@@ -29,28 +36,7 @@ export default class SdmTrait extends SdmItemBase {
       ...requiredInteger, initial: 0,
     });
 
-    // schema.default_ability = getDefaultAbility();
-
-    // schema.default_attack = new fields.StringField({
-    //   required: false,
-    //   nullable: true,
-    //   initial: AttackType.MELEE,
-    // });
-
-    schema.is_spell = new fields.BooleanField({
-      required: true, initial: false,
-    });
-
-    schema.spell_power = new fields.NumberField({
-      required: false,
-      nullable: true,
-    });
-
-    schema.roll_formula = new fields.StringField({
-      required: false, blank: true, initial: '',
-      validate: v => !v || v && foundry.dice.Roll.validate(v),
-      validationError: game.i18n.localize("SDM.ErrorValidationRollFormula"),
-    });
+    schema.power = new fields.EmbeddedDataField(PowerDataModel, { required: false, nullable: true, initial: null });
 
     return schema;
   }

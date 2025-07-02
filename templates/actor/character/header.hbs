@@ -3,7 +3,7 @@
   <header class='sheet-header'>
     <div class="edit-mode">
       <label class="switch edit-mode-toggle"
-        title="{{localize (ternary isEditMode 'SDM.SheetPlayMode' 'SDM.SheetEditMode')}}">
+        title="{{localize (ifThen isEditMode 'SDM.SheetPlayMode' 'SDM.SheetEditMode')}}">
         <input type="checkbox" {{checked isEditMode}} data-action="toggleMode">
         <span class="slider round"></span>
       </label>
@@ -166,11 +166,8 @@
                 {{localize 'SDM.FieldSaveTarget'}}
               </label>
               <div class='resource-content flexrow flex-center flex-between'>
-                <input type='text' name='system.save_target' value='{{system.save_target}}' data-dtype='Number'
-                  {{#if (not @root.isEditMode)}}
-                    disabled
-                  {{/if}}
-                />
+                <input type='text' name='system.save_target' value='{{system.save_target}}' data-dtype='Number' {{#if
+                  (not @root.isEditMode)}} disabled {{/if}} />
               </div>
             </div>
             <div class="grid-span-1 resource">
@@ -248,16 +245,15 @@
               </div>
               {{else}}
               <div class='ability flexrow flex-group-center'>
-                <span class='resource-label rollable' data-action='roll' data-context='rollable' data-ability="{{key}}" data-type="ability"
-                  data-label='{{localize (lookup @root.config.abilities key)}}'
+                <span class='resource-label rollable' data-action='roll' data-context='rollable' data-ability="{{key}}"
+                  data-type="ability" data-label='{{localize (lookup @root.config.abilities key)}}'
                   title='{{localize (lookup @root.config.abilities key)}}'>
                   {{toUpperCase (localize (lookup @root.config.abilityAbbreviations key))}}
                 </span>
                 <input type='text' name='system.abilities.{{key}}.full' value='{{ability.full}}'
                   class="ability-score ability-full" data-dtype='Number'
                   title="{{localize 'SDM.AbilityFull' ability=(localize (lookup @root.config.abilities key))}}&#10;{{
-                  localize 'SDM.AbilityBase'}} = {{ability.base}}&#10;{{localize 'SDM.AbilityBonus'}} = {{ability.bonus}}"
-                  disabled />
+                  localize 'SDM.AbilityBase'}} = {{ability.base}}&#10;{{localize 'SDM.AbilityBonus'}} = {{ability.bonus}}" disabled />
                 <input type='text' name='system.abilities.{{key}}.current' value='{{ability.current}}'
                   class="ability-score" data-dtype='Number'
                   title="{{localize 'SDM.AbilityCurrent' ability=(localize (lookup @root.config.abilities key))}}" />
@@ -269,6 +265,11 @@
               {{/if}}
             </div>
             {{/each}}
+            {{#if @root.isEditMode}}
+            <div class="main grid-span-1"></div>
+            <div class="main grid-span-1"></div>
+            <div class="main grid-span-1"></div>
+            {{/if}}
           </div>
           {{#if @root.isEditMode}}
           <div class='resources grid grid-2col'>
@@ -282,7 +283,7 @@
               <div class='resource-label'>
                 <div>{{localize 'SDM.AttackRanged'}}</div>
               </div>
-              <i class="fas fa-gear rollable"  data-action='updateAttack' data-attack="ranged"></i>
+              <i class="fas fa-gear rollable" data-action='updateAttack' data-attack="ranged"></i>
             </div>
             <div class="ability grid-span-1 flexcol align-center">
               <div class='resource-label'>
@@ -296,12 +297,20 @@
               </div>
               <i class="fas fa-gear rollable" data-action='updateAttack' data-attack="oldtech"></i>
             </div>
+            <div class="ability grid-span-1" title="{{localize 'SDM.PowerCostHint'}}">
+              <label for="system.power_cost" class='resource-label'>
+                {{localize 'SDM.PowerCost'}}
+              </label>
+              <div class='resource-content flexrow flex-center flex-between'>
+                <input type='text' name='system.power_cost' value='{{system.power_cost}}' data-dtype='Number' style="text-align:center;"/>
+              </div>
+            </div>
           </div>
           {{else}}
           <div class='resources grid grid-2col'>
             <div class="ability grid-span-1 flexrow">
               <div class='resource-label rollable' data-type='attack' data-action='roll' data-attack="melee"
-               data-label="{{localize 'SDM.AttackMelee'}}">
+                data-label="{{localize 'SDM.AttackMelee'}}">
                 <div>{{localize 'SDM.AttackMelee'}}</div>
               </div>
             </div>
@@ -312,8 +321,8 @@
               </div>
             </div>
             <div class="ability grid-span-1 flexrow">
-              <div class='resource-label rollable' data-type='attack' data-action='roll'
-                data-attack="fantascience"  data-label="{{localize 'SDM.AttackFantascience'}}">
+              <div class='resource-label rollable' data-type='attack' data-action='roll' data-attack="fantascience"
+                data-label="{{localize 'SDM.AttackFantascience'}}">
                 <div>{{localize 'SDM.AttackFantascience'}}</div>
               </div>
             </div>

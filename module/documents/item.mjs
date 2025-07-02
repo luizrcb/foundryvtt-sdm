@@ -1,5 +1,5 @@
 import { PullMode, SizeUnit } from "../helpers/constants.mjs";
-import { convertToCash } from "../helpers/itemUtils.mjs";
+import { convertToCash, getSlotsTaken } from "../helpers/itemUtils.mjs";
 
 /**
  * Extend the basic Item with some very simple modifications.
@@ -7,11 +7,16 @@ import { convertToCash } from "../helpers/itemUtils.mjs";
  */
 export class SdmItem extends Item {
 
-  /** @override */
-  async _onCreate(data, options, userId) {
-    // item creation method
-    await super._onCreate(data, options, userId);
-  }
+  // /** @override */
+  // async _onCreate(data, options, userId) {
+  //   // item creation method
+  //   await super._onCreate(data, options, userId);
+  // }
+
+  // /** @override */
+  // async _onUpdate(changed, options, userId) {
+  //   await super._onUpdate(changed, options, userId);
+  // }
 
   /**
    * Augment the basic Item data model with additional dynamic data.
@@ -72,6 +77,10 @@ export class SdmItem extends Item {
     }
 
     return convertToCash(carryWeight, SizeUnit.SACKS);
+  }
+
+  getItemSlots() {
+    return getSlotsTaken(this.system);
   }
 
   /**

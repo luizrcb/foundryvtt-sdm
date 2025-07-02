@@ -1,7 +1,7 @@
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
-import { onItemUpdate, convertToCash, ITEMS_NOT_ALLOWED_IN_CHARACTERS, onItemCreateActiveEffects } from '../helpers/itemUtils.mjs';
+import { onItemUpdate, convertToCash, ITEMS_NOT_ALLOWED_IN_CHARACTERS, onItemCreateActiveEffects, getSlotsTaken } from '../helpers/itemUtils.mjs';
 import { openItemTransferDialog } from '../items/transferItem.mjs';
-import { ItemType, RollMode, RollType, SizeUnit } from '../helpers/constants.mjs';
+import { GearType, ItemType, RollMode, RollType, SizeUnit } from '../helpers/constants.mjs';
 import { healingHeroDice } from '../rolls/heroDice.mjs';
 import { MAX_CARRY_WEIGHT_CASH, MAX_MODIFIER, UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
 import { createChatMessage } from '../helpers/chatUtils.mjs';
@@ -133,6 +133,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
 
     if (isDamage) rollTitlePrefix =  $l10n('SDM.Damage');
     if (isAttack) rollTitlePrefix = $l10n('SDM.Attack');
+    if (isAbility) rollTitlePrefix = $l10n('SDM.Ability');
     if (rollTitlePrefix !== '')  rollTitlePrefix += ' ';
 
     const title = from;
@@ -150,10 +151,12 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       availableSkills,
       selectedSkill:  isAttack ? actorAttack?.favorite_skill : '',
       multiplierOptions: CONFIG.SDM.damageMultiplier,
+      rollModes: CONFIG.SDM.rollMode,
       type,
     });
     // Create and render the modal
     const rollOptions = await foundry.applications.api.DialogV2.prompt({
+      width: 550,
       window: {
         title: $fmt('SDM.RollTitle', { prefix: '', title }),
       },
@@ -507,55 +510,62 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       }),
       create: Hooks.on('createItem', (item, options, userId) => {
         if (item.parent?.id === actorId) {
+          const shouldAllow = this._checkCarriedWeight(item);
+          if (!shouldAllow) return false;
           return onItemCreateActiveEffects(item);
         }
       }),
-      preUpdate: Hooks.on('preUpdateItem', (item, updateData, options, userId) => {
+      preUpdate: Hooks.on('preUpdateItem', (item, changedData) => {
         if (item.parent?.id === actorId) {
-          const shouldAllow = this._checkCarriedWeight(item, updateData);
+          const shouldAllow = this._checkCarriedWeight(item, changedData);
           if (!shouldAllow) return false;
         }
       }),
       update: Hooks.on('updateItem', (item, changes, options, userId) => {
         if (item.parent?.id === actorId) {
-          // this._checkEncumbrance();
+          // const shouldAllow = this._checkCarriedWeight(item, updateData);
+          // if (!shouldAllow) return false;
           return onItemUpdate(item, changes);
         }
       }),
       delete: Hooks.on('deleteItem', (item, options, userId) => {
-        if (item.parent?.id === actorId) return;// this._checkEncumbrance();
+        if (item.parent?.id === actorId) return;
       })
     };
   }
 
+  _checkActorWeightLimit(additionalSlots = 0, itemType) {
+    const itemSlotsTaken = this.actor.system.item_slots_taken;
+    const actorItemSlots = this.actor.system.item_slots;
+    const traitSlotsTaken = this.actor.system.trait_slots_taken;
+    const actorTraitSlots = this.actor.system.trait_slots;
+
+    if (itemType === ItemType.GEAR) {
+      if (itemSlotsTaken + additionalSlots <= actorItemSlots) return true;
+    } else if (itemType === ItemType.TRAIT) {
+      if (traitSlotsTaken + additionalSlots <= actorTraitSlots) return true;
+    }
+
+    const actorBurdenPenalty = this.actor.system.burden_penalty || 0;
+    const newBurdenPenalTy = additionalSlots + actorBurdenPenalty;
+    const maxBurdenSlots = this.actor.system.burden_slots;
+
+    return newBurdenPenalTy <= maxBurdenSlots;
+  }
+
   _checkCarriedWeight(item, updateData) {
-    // Calculate potential new weight
-    const originalWeight = convertToCash(
-      item.system.size.value * item.system.quantity,
-      item.system.size.unit
-    );
+    let itemSlots = getSlotsTaken(item.system);
+    let updateDataSlots = updateData ? getSlotsTaken(updateData.system) : null;
 
-    let newSizeValue = item.system.size.value;
-    let newSizeUnit = item.system.size.unit;
-    let newQuantity = item.system.quantity;
 
-    // Update values from pending changes
-    if (updateData.system?.size?.value !== undefined) {
-      newSizeValue = updateData.system.size.value;
-    }
-    if (updateData.system?.size?.unit !== undefined) {
-      newSizeUnit = updateData.system.size.unit;
-    }
-    if (updateData.system?.quantity !== undefined) {
-      newQuantity = updateData.system.quantity;
+    if (updateData && updateDataSlots <= itemSlots) {
+      return true;
     }
 
-    const newWeight = convertToCash(newSizeValue * newQuantity, newSizeUnit);
-    const currentCarriedWeight = this.actor.getCarriedGear() - originalWeight + newWeight;
-    const maxCarryWeight = this.actor.system.carry_weight?.max ?? MAX_CARRY_WEIGHT_CASH;
+    const slotsTaken = updateData ? (updateDataSlots - itemSlots) : itemSlots;
+    const validWeight = this._checkActorWeightLimit(slotsTaken, item.type);
 
-    // Only error if EXCEEDING max (not when equal)
-    if (currentCarriedWeight > maxCarryWeight) {
+    if (!validWeight) {
       ui.notifications.error("Updating this item would exceed your carry weight limit.");
       return false;
     }
@@ -564,17 +574,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
 
   // Helper validation method
   _validateItemWeight(item) {
-    const size = item.system.size || {};
-    const sizeValue = size.value ?? 1;
-    const sizeUnit = size.unit ?? SizeUnit.STONES;
-    const quantity = size.quantity ?? 1;
-    const newWeight = convertToCash(sizeValue * quantity, sizeUnit);
+    const itemSlots = item.system.slots_taken || 1;
+    const validWeight = this._checkActorWeightLimit(itemSlots, item.type);
 
-    const currentCarriedWeight = this.actor.getCarriedGear();
-    const maxCarryWeight = this.actor.system.carry_weight.max;
-    const newCarryWeight = currentCarriedWeight + newWeight;
-    if (newCarryWeight > maxCarryWeight) {
-      ui.notifications.error("Adding this item would exceed your carry weight limit.");
+    if (!validWeight) {
+      ui.notifications.error("Adding this item would exceed your burden limit.");
       return false;
     }
 
@@ -733,20 +737,20 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     }
 
     // Use data model defaults for new items
-    const sizeValue = foundry.utils.getProperty(docData, 'system.size.value') ?? 1;
-    const sizeUnit = foundry.utils.getProperty(docData, 'system.size.unit') ?? SizeUnit.STONES;
-    const quantity = foundry.utils.getProperty(docData, 'system.quantity') ?? 1;
-    const newWeight = convertToCash(sizeValue * quantity, sizeUnit);
+    // const sizeValue = foundry.utils.getProperty(docData, 'system.size.value') ?? 1;
+    // const sizeUnit = foundry.utils.getProperty(docData, 'system.size.unit') ?? SizeUnit.STONES;
+    // const quantity = foundry.utils.getProperty(docData, 'system.quantity') ?? 1;
+    // const newWeight = convertToCash(sizeValue * quantity, sizeUnit);
 
-    const currentCarriedWeight = this.actor.getCarriedGear();
-    const maxCarryWeight = this.actor.system.carry_weight.max;
+    // const currentCarriedWeight = this.actor.getCarriedGear();
+    // const maxCarryWeight = this.actor.system.carry_weight.max;
 
-    const newCarryWeight = currentCarriedWeight + newWeight;
+    // const newCarryWeight = currentCarriedWeight + newWeight;
 
-    if (newCarryWeight > maxCarryWeight) {
-      ui.notifications.error("Adding this item would exceed your carry weight limit.");
-      return;
-    }
+    // if (newCarryWeight > maxCarryWeight) {
+    //   ui.notifications.error("Adding this item would exceed your carry weight limit.");
+    //   return;
+    // }
 
     await docCls.create(docData, { parent: this.actor });
   }
@@ -826,7 +830,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     switch (type) {
       case 'damage':
         const item = this._getEmbeddedDocument(target);
-        const weaponDamage = item.system.weapon_damage;
+        const weaponDamage = item.system.weapon.damage;
 
         formula = weaponDamage.base;
         bonusDamage = weaponDamage.bonus;
@@ -1197,19 +1201,16 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     itemData = itemData instanceof Array ? itemData : [itemData];
 
     // Calculate total weight of new items using data model defaults
-    let totalNewWeight = itemData.reduce((sum, item) => {
+    let totalSlots = itemData.reduce((sum, item) => {
       const system = item.system || {};
-      const size = system.size || {};
-      const sizeValue = size.value !== undefined ? size.value : 1;
-      const sizeUnit = size.unit || SizeUnit.STONES; // Default to STONES
-      const quantity = system.quantity !== undefined ? system.quantity : 1;
-      return sum + convertToCash(sizeValue * quantity, sizeUnit);
+      const slots = getSlotsTaken(system);
+      return sum + slots;
     }, 0);
+    const itemType = itemData[0].type;
 
-    const currentCarriedWeight = this.actor.getCarriedGear();
-    const maxCarryWeight = this.actor.system.carry_weight.max;
+    const validWeight = this._checkActorWeightLimit(totalSlots, itemType);
 
-    if (currentCarriedWeight + totalNewWeight > maxCarryWeight) {
+    if (!validWeight) {
       ui.notifications.error("Adding this item would exceed your carry weight limit.");
       return [];
     }

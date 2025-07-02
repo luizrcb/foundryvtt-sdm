@@ -22,7 +22,10 @@
         <div class='item-image'>
           <img src='{{trait.img}}' title='{{trait.name}}' width='24' height='24' />
         </div>
-        <div>{{trait.name}} {{#if trait.system.is_skill}} (+{{trait.system.skill_mod_final}}){{/if}}
+        <div>{{trait.name}}
+          {{#if (eq trait.system.type 'skill')}}
+          {{#if (gt trait.system.skill_mod_final 0)}}(+{{trait.system.skill_mod_final}}){{/if}}
+          {{/if}}
         </div>
       </div>
       <div class='item-controls'>

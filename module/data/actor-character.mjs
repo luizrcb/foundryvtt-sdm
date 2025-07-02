@@ -81,6 +81,10 @@ export default class SdmCharacter extends SdmActorBase {
       ...requiredInteger, initial: 0,
     });
 
+    schema.power_slots_bonus = new fields.NumberField({
+      ...requiredInteger, initial: 0,
+    });
+
     schema.reaction_bonus = new fields.NumberField({
       ...requiredInteger, initial: 0,
     });
@@ -100,6 +104,16 @@ export default class SdmCharacter extends SdmActorBase {
       unencumbered: new fields.NumberField({ ...requiredInteger, initial: UNENCUMBERED_THRESHOLD_CASH }),
       max: new fields.NumberField({ ...requiredInteger, initial: MAX_CARRY_WEIGHT_CASH }),
     });
+
+    schema.item_slots_taken = new fields.NumberField({
+      ...requiredInteger, initial: 0, min: 0,
+    });
+
+    schema.trait_slots_taken = new fields.NumberField({
+      ...requiredInteger, initial: 0, min: 0,
+    });
+
+
 
     schema.burden_penalty = new fields.NumberField({
       ...requiredInteger, initial: 0, min: 0,
@@ -188,15 +202,16 @@ export default class SdmCharacter extends SdmActorBase {
       default_ability: getDefaultAbility('agi'),
     });
 
+    schema.power_cost = new fields.NumberField({
+      ...requiredInteger, min: 1, max: 3, initial: 2,
+    });
+
     schema.oldtech = new fields.SchemaField({
       bonus: new fields.NumberField({
         ...requiredInteger, initial: 0,
       }),
       favorite_skill: new fields.DocumentUUIDField({ required: false, blank: true, initial: '' }),
       default_ability: getDefaultAbility('tho'),
-      magic_cost: new fields.NumberField({
-        ...requiredInteger, min: 1, max: 3, initial: 2,
-      }),
     });
 
     schema.fantascience = new fields.SchemaField({
@@ -205,9 +220,6 @@ export default class SdmCharacter extends SdmActorBase {
       }),
       favorite_skill: new fields.DocumentUUIDField({ required: false, blank: true, initial: '' }),
       default_ability: getDefaultAbility('cha'),
-      magic_cost: new fields.NumberField({
-        ...requiredInteger, min: 1, max: 3, initial: 2,
-      }),
     });
 
     // Iterate over abilities names and create a new SchemaField for each.
@@ -277,6 +289,11 @@ export default class SdmCharacter extends SdmActorBase {
     data.initiative_bonus = this.initiative_bonus;
     data.burden_penalty = this.burden_penalty;
     data.burden_penalty_bonus = this.burden_penalty_bonus;
+    data.item_slots = this.item_slots;
+    data.item_slots_taken = this.item_slots_taken;
+    data.trait_slots = this.trait_slots;
+    data.trait_slots_taken = this.trait_slots_taken;
+    data.burden_slots = this.burden_slots;
     return data;
   }
 }

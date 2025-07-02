@@ -1,13 +1,13 @@
 <div class="custom-roll-modal">
   <h4>{{localize 'SDM.RollTitle' prefix=rollTitlePrefix title=title }}</h4>
   <form class="custom-roll-form">
-    {{#if (notEq type 'ability')}}
-      <div class="form-group">
-        <label>{{localize 'SDM.Ability'}}</label>
-        <select name="selectedAbility">
-          {{selectOptions abilities localize=true selected=ability}}
-        </select>
-      </div>
+    {{#if (ne type 'ability')}}
+    <div class="form-group">
+      <label>{{localize 'SDM.Ability'}}</label>
+      <select name="selectedAbility">
+        {{selectOptions abilities localize=true selected=ability}}
+      </select>
+    </div>
     {{/if}}
     <div class="form-group mt-10">
       <label for="skillMod">{{localize 'SDM.Skill'}}</label>
@@ -31,28 +31,13 @@
     {{/if}}
     <div class="form-group mt-10">
       <label>{{localize 'SDM.RollMode'}}</label>
-      <div class="roll-type-select">
-        <div>
-          <label>
-            <input type="radio" name="rollMode" value="disadvantage"> {{localize 'SDM.RollDisadvantage'}}
-          </label>
-        </div>
-        <div>
-          <label>
-            <input type="radio" name="rollMode" value="normal" checked> {{localize 'SDM.RollNormal'}}
-          </label>
-        </div>
-        <div>
-          <label>
-            <input type="radio" name="rollMode" value="advantage"> {{localize 'SDM.RollAdvantage'}}
-          </label>
-        </div>
-      </div>
+      <select name="rollMode" id="rollMode">
+        {{selectOptions rollModes localize=true selected='normal'}}
+      </select>
     </div>
-   <div class="form-group mt-10">
+    <div class="form-group mt-10">
       <label for="shouldExplode">{{localize "SDM.ExplodingDice"}}</label>
-      <input id="shouldExplode" type="checkbox" name="shouldExplode"
-      {{#if (notEq type 'damage')}}checked{{/if}} />
+      <input id="shouldExplode" type="checkbox" name="shouldExplode" {{#if (ne type 'damage' )}}checked{{/if}} />
     </div>
   </form>
   <br /><br />

@@ -458,7 +458,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
         if (item.parent?.id === actorId && !this._validateItemWeight(item)) return false;
       }),
       create: Hooks.on('createItem', (item, options, userId) => {
-        if (item.parent?.id === actorId) this._checkEncumbrance();
+        // if (item.parent?.id === actorId) this._checkEncumbrance();
       }),
       preUpdate: Hooks.on('preUpdateItem', (item, updateData, options, userId) => {
         if (item.parent?.id === actorId) {
@@ -467,10 +467,10 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
         }
       }),
       update: Hooks.on('updateItem', (item, changes, options, userId) => {
-        if (item.parent?.id === actorId) this._checkEncumbrance();
+        // if (item.parent?.id === actorId) this._checkEncumbrance();
       }),
       delete: Hooks.on('deleteItem', (item, options, userId) => {
-        if (item.parent?.id === actorId) this._checkEncumbrance();
+        // if (item.parent?.id === actorId) this._checkEncumbrance();
       })
     };
   }
@@ -488,13 +488,13 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     let newQuantity = item.system.quantity;
 
     // Update values from pending changes
-    if (updateData.system?.size?.value !== undefined) {
+    if (updateData?.system?.size?.value !== undefined) {
       newSizeValue = updateData.system.size.value;
     }
-    if (updateData.system?.size?.unit !== undefined) {
+    if (updateData?.system?.size?.unit !== undefined) {
       newSizeUnit = updateData.system.size.unit;
     }
-    if (updateData.system?.quantity !== undefined) {
+    if (updateData?.system?.quantity !== undefined) {
       newQuantity = updateData.system.quantity;
     }
 

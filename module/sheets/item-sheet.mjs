@@ -5,7 +5,6 @@ const { api, sheets } = foundry.applications;
 const TextEditor = foundry.applications.ux.TextEditor.implementation;
 const DragDrop = foundry.applications.ux.DragDrop.implementation;
 const FilePicker = foundry.applications.apps.FilePicker.implementation;
-
 /**
  * Extend the basic ItemSheet with some very simple modifications
  * @extends {ItemSheetV2}
@@ -95,6 +94,13 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(
 
   /** @override */
   async _prepareContext(options) {
+    const skillModOptons = Object.entries(CONFIG.SDM.skillMod).map(([modValue, modLabel]) => {
+      return {
+        value: modValue,
+        label: modValue > 0 ? `${game.i18n.localize(modLabel)} (+${modValue})` : game.i18n.localize(modLabel),
+      }
+    });
+
     const context = {
       // Validates both permissions and compendium status
       editable: this.isEditable,
@@ -115,6 +121,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(
       pullModes: CONFIG.SDM.pullModes,
       possibleRiders: getActorOptions('character'),
       sizeUnits: CONFIG.SDM.sizeUnits,
+      skillMod: skillModOptons,
     };
 
     return context;
@@ -176,7 +183,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(
         // FontAwesome Icon, if you so choose
         icon: '',
         // Run through localization
-        label: 'SDM.Item.Tabs.',
+        label: 'SDM.ItemTab',
       };
       switch (partId) {
         case 'header':

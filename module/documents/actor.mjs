@@ -5,7 +5,7 @@ import {
   getLevel,
   CHARACTER_DEFAULT_WEIGHT_IN_CASH,
 } from '../helpers/actorUtils.mjs';
-import { ActorType, ItemType, SizeUnit } from '../helpers/constants.mjs';
+import { ActorType, GearType, ItemType, SizeUnit, TraitType } from '../helpers/constants.mjs';
 import { safeEvaluate } from '../helpers/globalUtils.mjs';
 import { BURDEN_ITEM_TYPES, convertToCash, GEAR_ITEM_TYPES } from '../helpers/itemUtils.mjs';
 
@@ -15,12 +15,29 @@ import { BURDEN_ITEM_TYPES, convertToCash, GEAR_ITEM_TYPES } from '../helpers/it
  */
 export class SdmActor extends Actor {
 
+
+  async _preUpdate(changed, options, userId) {
+    if (changed.system?.abilities) {
+      const abilities = changed.system.abilities;
+
+      for (const [abilityKey, abilityData] of Object.entries(abilities)) {
+        const systemAbility = this.system.abilities[abilityKey];
+        if (abilityData.current !== undefined) {
+
+          if (abilityData.current > systemAbility.full) {
+            return false;
+          }
+        }
+      }
+    }
+  }
+
   // Override the _onUpdate method to handle level changes
   /** @override */
   async _onUpdate(changed, options, userId) {
     await super._onUpdate(changed, options, userId);
 
-    const properties = ['player_experience', 'debt', 'wealth' , 'revenue', 'expense'];
+    const properties = ['player_experience', 'debt', 'wealth', 'revenue', 'expense'];
     const updates = {};
 
     for (const prop of properties) {
@@ -77,7 +94,7 @@ export class SdmActor extends Actor {
       //       ...abilityData
       //     },
       //   });
-     // }
+      // }
     }
   }
 
@@ -210,7 +227,7 @@ export class SdmActor extends Actor {
     const mentalDefenseBonus = data.mental_defense_bonus || 0;
     const socialDefenseBonus = data.social_defense_bonus || 0;
 
-      // 1. Calcular valores derivados
+    // 1. Calcular valores derivados
     const life = data.life;
     life.max = life.base + life.bonus - life.imbued
 
@@ -228,16 +245,18 @@ export class SdmActor extends Actor {
 
     const calculatedDefense = baseDefense + agility.current + agility.bonus + data.armor + bonusDefense;
     const calculatedMentalDefense = baseMentalDefense + thought.current + thought.bonus + data.ward + mentalDefenseBonus;
-    const calculatedSocialDefense =  baseSocialDefense + charisma.current + charisma.bonus + data.prestige + socialDefenseBonus;
+    const calculatedSocialDefense = baseSocialDefense + charisma.current + charisma.bonus + data.prestige + socialDefenseBonus;
 
     data.defense = Math.min(calculatedDefense, MAX_ATTRIBUTE_VALUE);
     data.mental_defense = Math.min(calculatedMentalDefense, MAX_ATTRIBUTE_VALUE);
     data.social_defense = Math.min(calculatedSocialDefense, MAX_ATTRIBUTE_VALUE);
 
-    const { burdenPenalty } = this.checkInventorySlots();
+    const { burdenPenalty, items, traits } = this.checkInventorySlots();
 
     this.update({
       "system.burden_penalty": burdenPenalty,
+      "system.item_slots_taken": items.slotsTaken,
+      "system.trait_slots_taken": traits.slotsTaken,
       "prototypeToken.actorLink": true,
       "prototypeToken.disposition": 1, // friendly
     });
@@ -267,13 +286,13 @@ export class SdmActor extends Actor {
     const skillTraits = itemsArray.filter((item) => item.type === ItemType.TRAIT);
 
     skillTraits.forEach((trait) => {
-      const mod = trait.system.skill_mod + trait.system.skill_mod_bonus;
+      const mod = (trait.system.type === TraitType.SKILL && trait.system.skill_mod + trait.system.skill_mod_bonus || 0);
 
       result[trait.uuid] = {
         id: trait.uuid,
         name: trait.name,
         mod: mod || 3,
-        label: `${trait.name}${mod > 0 ? ` (+${mod})`: ''}`
+        label: `${trait.name}${mod > 0 ? ` (+${mod})` : ''}`
       };
     });
     return result;
@@ -295,19 +314,47 @@ export class SdmActor extends Actor {
       slots: []
     };
 
-    const itemsArray = this.items.contents;
+    const itemsArray = this.items.contents.sort((a, b) => {
+      // First, sort by 'readied' (true first)
+      if (a.system.readied !== b.system.readied) {
+        return a.system.readied ? -1 : 1;
+      }
+
+      // Then, sort by 'sort' value
+      return (a.sort || 0) - (b.sort || 0);
+    });
 
     const itemSlotsLimit = this.system.item_slots;
     const traitSlotsLimit = this.system.trait_slots;
 
     const burdenPenalTyBonus = this.system.burden_penalty_bonus || 0;
+    let powerSlotsBonus = this.system.power_slots_bonus || 0;
+    let smallItemBonus = this.system.small_item_slots_bonus || 0;
+    let packedItemBonus = this.system.packed_item_slots_bonus || 0;
 
     // Iterate through items, allocating to containers
     for (let i of itemsArray) {
-      const itemSlots = i.system.slots_taken || 1;
+      const isGear = i.type === ItemType.GEAR;
+      const isPower = i.system.type === GearType.POWER;
+      const isSmallITem = i.system.size.unit === SizeUnit.SOAPS;
+      const isReadied = !!i.system.readied;
+
+      let itemSlots = i.system.slots_taken || 1;
+
+      if (isPower && powerSlotsBonus > 0) {
+        powerSlotsBonus -= 1;
+        if (itemSlots >= 1) itemSlots -= 1;
+      } else if (isGear && isSmallITem && isReadied && smallItemBonus > 0) {
+        smallItemBonus -= 1;
+        if (itemSlots >= 1) itemSlots -= 1;
+      } else if (isGear && !isReadied && packedItemBonus > 0) {
+        packedItemBonus -= 1;
+        if (itemSlots >= 1) itemSlots -= 1;
+      }
+
 
       // Append to inventory.
-      if (i.type === ItemType.GEAR) {
+      if (isGear) {
         if (items.slotsTaken + itemSlots <= itemSlotsLimit) {
           items.slots.push(i);
           items.slotsTaken += itemSlots;
@@ -392,10 +439,10 @@ export class SdmActor extends Actor {
   getArmor() {
     // Filter for equipped armor items
     const itemsArray = this.items.contents;
-    const equippedArmor = itemsArray.filter(item => item.type === ItemType.GEAR && item.system.is_armor && item.system.readied);
+    const equippedArmor = itemsArray.filter(item => item.type === ItemType.GEAR && item.system.type === GearType.ARMOR && item.system.readied);
 
     // Sum the armor values
-    return equippedArmor.reduce((sum, item) => sum + (item.system.armor_value || 0), 0);
+    return equippedArmor.reduce((sum, item) => sum + (item.system.armor.value || 0), 0);
   }
 
   getCaracanCapacity() {

@@ -52,16 +52,15 @@ export const ItemType = Object.freeze({
 });
 
 export const GearType = Object.freeze({
-  GEAR: 'gear',
   WEAPON: 'weapon',
   ARMOR: 'armor',
-  SPELL: 'spell',
+  POWER: 'power',
+  POWER_CONTAINER: 'power_container'
 });
 
 export const TraitType = Object.freeze({
-  TRAIT: 'trait',
   SKILL: 'skill',
-  SPELL: 'spell',
+  POWER: 'power',
 });
 
 export const ArmorType = Object.freeze({

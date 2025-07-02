@@ -73,8 +73,8 @@ export class RollHandler {
         return;
       }
 
-      let baseFormula = versatile ? item.system.weapon_damage.versatile : item.system.weapon_damage.base;
-      const damageBonus = item.system.weapon_damage.bonus;
+      let baseFormula = versatile ? item.system.weapon.damage.versatile : item.system.weapon.damage.base;
+      const damageBonus = item.system.weapon.damage.bonus;
       const isNegativeBonus = damageBonus[0] === '-';
       const finalFormula = `${baseFormula}${damageBonus ? `${isNegativeBonus ? '' : '+'}${damageBonus}` : ''}`
       if (!finalFormula && !foundry.dice.Roll.validate(finalFormula)) {

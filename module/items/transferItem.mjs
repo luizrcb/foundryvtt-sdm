@@ -1,4 +1,5 @@
 import { ActorType, DocumentType, SizeUnit } from "../helpers/constants.mjs";
+import { getSlotsTaken } from "../helpers/itemUtils.mjs";
 
 const { renderTemplate } = foundry.applications.handlebars;
 
@@ -48,12 +49,15 @@ export async function openItemTransferDialog(item, sourceActor) {
 
       const targetActorId = transferOptions.targetActor;
       const targetActor = game.actors.get(targetActorId);
+      const freshItem = sourceActor.items.get(item.id);
 
-      if (!targetActor?.testUserPermission(game.user, "OWNER")) {
-        throw new Error(game.i18n.localize('SDM.ErrorInvalidTarget'));
+      const slotsTaken = getSlotsTaken(item.system);
+      const validWeight = targetActor.sheet._checkActorWeightLimit(slotsTaken, item.type);
+
+      if (!validWeight) {
+        throw new Error(game.i18n.localize('SDM.ErrorTransferWeightLimit'));
       }
 
-      const freshItem = sourceActor.items.get(item.id);
       if (!freshItem || freshItem?.getFlag("sdm", "transferring") !== transferKey) {
         throw new Error(game.i18n.localize('SDM.ErrorTransferInvalidItemState'));
       }

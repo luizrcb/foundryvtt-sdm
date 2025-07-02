@@ -1,4 +1,5 @@
-import { PullMode, SizeUnit, SpeedType } from "./constants.mjs";
+import { ArmorType, PullMode, SizeUnit, SkillMod, SpeedType } from "./constants.mjs";
+import { capitalizeFirstLetter } from "./globalUtils.mjs";
 
 export const SDM = {};
 
@@ -56,12 +57,12 @@ SDM.abilitiesOrder = {
 };
 
 SDM.pullModes = Object.values(PullMode).reduce((acc, pullMode) => {
-  acc[pullMode] = `SDM.Item.Mount.PullMode.${pullMode}`;
+  acc[pullMode] = `SDM.PullMode${capitalizeFirstLetter(pullMode)}`;
   return acc;
 }, {});
 
 SDM.speedType = Object.values(SpeedType).reduce((acc, speedType) => {
-  acc[speedType] = `SDM.SpeedType.${speedType}`;
+  acc[speedType] = `SDM.Speed${capitalizeFirstLetter(speedType)}`;
   return acc;
 }, {});
 
@@ -73,9 +74,9 @@ SDM.rollTypeLabel = 'SDM.RollMode';
 
 
 SDM.rollMode = {
+  'disadvantage': 'SDM.RollDisadvantage',
   'normal': 'SDM.RollNormal',
   'advantage': 'SDM.RollAdvantage',
-  'disadvantage': 'SDM.RollDisadvantage',
 };
 
 SDM.rollSource = {
@@ -123,9 +124,8 @@ SDM.characterPropertiesToActiveEffects = [
   "system.melee.bonus",
   "system.ranged.bonus",
   "system.oldtech.bonus",
-  "system.oldtech.magic_cost",
+  "system.power_cost",
   "system.fantascience.bonus",
-  "system.fantascience.magic_cost",
   "system.abilities.str.bonus",
   "system.abilities.str.save_bonus",
   "system.abilities.end.bonus",
@@ -139,3 +139,38 @@ SDM.characterPropertiesToActiveEffects = [
   "system.abilities.tho.bonus",
   "system.abilities.tho.save_bonus",
 ];
+
+SDM.itemType = {
+  'gear': 'TYPES.Item.gear',
+  'trait': 'TYPES.Item.trait',
+  'burden': 'TYPES.Item.burden',
+};
+
+SDM.gearType = {
+  'armor': 'TYPES.Item.armor',
+  'weapon': 'TYPES.Item.weapon',
+  'power': 'TYPES.Item.power',
+  'power_container': 'TYPES.Item.power_container',
+};
+
+SDM.traitType = {
+  'power': 'TYPES.Item.power',
+  'skill': 'TYPES.Item.skill',
+};
+
+SDM.burdenType = {
+  ...SDM.gearType,
+  ...SDM.traitType,
+};
+
+
+SDM.skillMod = {
+  3: 'SDM.SkillSkilled',
+  6: 'SDM.SkillExpert',
+  9: 'SDM.SkillMaster',
+}
+
+SDM.armorType = Object.values(ArmorType).reduce((acc, armorType) => {
+  acc[armorType] = `SDM.ArmorType${capitalizeFirstLetter(armorType)}`;
+  return acc;
+}, {});

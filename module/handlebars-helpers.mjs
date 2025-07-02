@@ -49,8 +49,24 @@ export function registerHandlebarsHelpers() {
     return valueA === valueB;
   });
 
-  $$('notEq', function (valueA, valueB, options) {
+  $$('ne', function (valueA, valueB, options) {
     return valueA !== valueB;
+  });
+
+  $$('gt', function (valueA, valueB, options) {
+    return (valueA > valueB);
+  });
+
+  $$('gte', function (valueA, valueB, options) {
+    return (valueA >= valueB);
+  });
+
+  $$('lt', function (valueA, valueB, options) {
+    return (valueA < valueB);
+  });
+
+  $$('lte', function (valueA, valueB, options) {
+    return (valueA <= valueB);
   });
 
   $$('checkOriginalDie', function (index, options) {
@@ -78,9 +94,5 @@ export function registerHandlebarsHelpers() {
     return new Handlebars.SafeString(
       Handlebars.compile(context)(this)
     );
-  });
-
-  $$("ternary", function (statement, statementIsTrue, statementIsFalse) {
-    return statement ? statementIsTrue : statementIsFalse;
   });
 }

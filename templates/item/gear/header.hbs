@@ -1,0 +1,137 @@
+<header class='sheet-header'>
+  <img class='profile-img' src='{{item.img}}' data-edit='img' data-action='onEditImage' title='{{item.name}}' />
+  <div class='header-fields'>
+    <div class='document-name'>
+      <input name='name' type='text' value='{{item.name}}' placeholder='Name' />
+    </div>
+    <div class='grid grid-2col'>
+
+      <div class='resource'>
+        <label class='resource-label'>{{localize 'SDM.ItemQuantity'}}
+          <input type='text' name='system.quantity' value='{{system.quantity}}' data-dtype='Number' />
+        </label>
+      </div>
+      <div class='resource'>
+        <label class='resource-label'>{{localize 'SDM.ItemCost'}}</label>
+        <input type='text' name='system.cost' value='{{system.cost}}' data-dtype='Text' />
+      </div>
+      <div class='resource'>
+        <label class='resource-label'>{{localize 'SDM.ItemSizeValue'}}</label>
+        <input type='text' name='system.size.value' value='{{system.size.value}}' data-dtype='Number' />
+      </div>
+      <div class='resource'>
+        <label class='resource-label'>{{localize 'SDM.ItemSizeUnit'}}</label>
+        <select name='system.size.unit'>
+          <option value=''></option>
+          {{selectOptions sizeUnits localize=true selected=system.size.unit}}
+        </select>
+      </div>
+
+      <div class="resource">
+        <label class='resource-label'>{{localize 'SDM.ItemGearType'}}</label>
+        <select name='system.type' class="resource-content">
+          <option value=''></option>
+          {{selectOptions config.gearType localize=true selected=system.type}}
+        </select>
+      </div>
+
+      <div class='resource flex-group-center flexrow'>
+        <div>
+          <label class='resource-label'>
+            {{#if system.readied}}
+            {{localize 'SDM.ItemReadied' }}
+            {{else}}
+            {{localize 'SDM.ItemNotReadied'}}
+            {{/if}}
+          </label>
+          <i class="fa-regular fa-shield resource-content" style="{{getReadiedStyle system.readied}}"
+            data-action="toggleReadied" {{#if system.readied}} data-tooltip="{{localize 'SDM.ItemReadied' }}" {{else}}
+            data-tooltip="{{localize 'SDM.ItemNotReadied'}}" {{/if}}></i>
+        </div>
+      </div>
+
+      {{#if (eq item.system.type 'weapon')}}
+      <div class='resource'>
+        <label class='resource-label'>
+          {{localize 'SDM.WeaponDamage'}}
+        </label>
+        <div class='resource-content'>
+          <input type='text' name='system.weapon.damage.base' value='{{system.weapon.damage.base}}' />
+        </div>
+      </div>
+      {{/if}}
+
+
+      {{#if (eq item.system.type 'armor')}}
+      <div class='resource'>
+        <label class='resource-label'>
+          {{localize 'SDM.ArmorValue'}}
+        </label>
+        <div class='resource-content'>
+          <input type='text' name='system.armor.value' value='{{system.armor.value}}' data-dtype='Number' />
+        </div>
+      </div>
+
+      <div class="resource">
+        <label class='resource-label'>{{localize 'SDM.ArmorType'}}</label>
+        <select name='system.armor.type' class="resource-content">
+          <option value=''></option>
+          {{selectOptions config.armorType localize=true selected=system.armor.type}}
+        </select>
+      </div>
+      {{/if}}
+
+      {{#if (eq item.system.type 'power')}}
+      <div class='resource'>
+        <label class='resource-label'>
+          {{localize 'SDM.PowerLevel'}}
+        </label>
+        <div class='resource-content'>
+          <input type='text' name='system.power.level' value='{{system.power.level}}' data-dtype="Number" />
+        </div>
+      </div>
+      <div class='resource'>
+        <label class='resource-label'>
+          {{localize 'SDM.PowerRange'}}
+        </label>
+        <div class='resource-content'>
+          <input type='text' name='system.power.range' value='{{system.power.range}}' />
+        </div>
+      </div>
+      <div class='resource'>
+        <label class='resource-label'>
+          {{localize 'SDM.PowerTarget'}}
+        </label>
+        <div class='resource-content'>
+          <input type='text' name='system.power.target' value='{{system.power.target}}' />
+        </div>
+      </div>
+      <div class='resource'>
+        <label class='resource-label'>
+          {{localize 'SDM.PowerDuration'}}
+        </label>
+        <div class='resource-content'>
+          <input type='text' name='system.power.duration' value='{{system.power.duration}}' />
+        </div>
+      </div>
+      <div class='resource'>
+        <label class='resource-label'>
+          {{localize 'SDM.PowerOvercharge'}}
+        </label>
+        <div class='resource-content'>
+          <input type='text' name='system.power.overcharge' value='{{system.power.overcharge}}' />
+        </div>
+      </div>
+      <div class='resource'>
+        <label class='resource-label'>
+          {{localize 'SDM.PowerRollFormula'}}
+        </label>
+        <div class='resource-content'>
+          <input type='text' name='system.power.roll_formula' value='{{system.power.roll_formula}}' />
+        </div>
+      </div>
+      {{/if}}
+    </div>
+  </div>
+  </div>
+</header>

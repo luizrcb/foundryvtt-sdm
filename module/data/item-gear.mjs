@@ -1,6 +1,9 @@
 import SdmItemBase from './base-item.mjs';
 import { getDefaultAbility } from '../helpers/globalUtils.mjs'
 import { ArmorType, RangeOption } from '../helpers/constants.mjs'
+import PowerDataModel from './power-data.mjs';
+import ArmorDataModel from './armor-data.mjs';
+import WeaponDataModel from './weapon-data.mjs';
 
 
 export default class SdmGear extends SdmItemBase {
@@ -15,80 +18,23 @@ export default class SdmGear extends SdmItemBase {
 
     schema.default_ability = getDefaultAbility();
 
-    schema.is_spell = new fields.BooleanField({
-      required: true, initial: false,
-    });
-
-    schema.spell_power = new fields.NumberField({
-      required: false,
-      nullable: true,
-    });
-
-    schema.roll_formula = new fields.StringField({
+    schema.type = new fields.StringField({
       required: false, blank: true, initial: '',
-      validate: v => !v || v && foundry.dice.Roll.validate(v),
-      validationError: game.i18n.localize("SDM.ErrorValidationRollFormula"),
+      choices: Object.entries(CONFIG.SDM.gearType).reduce((acc, [key, value]) => {
+        acc[key] = game.i18n.localize(value);
+        return acc;
+      }, {}),
     });
 
-    schema.is_armor = new fields.BooleanField({
-      required: true, initial: false,
-    });
+    schema.power = new fields.EmbeddedDataField(PowerDataModel);
 
-    schema.armor_value = new fields.NumberField({
-      required: false,
-      nullable: true,
-    });
+    schema.powers = new fields.ArrayField(
+      new fields.EmbeddedDataField(PowerDataModel),
+    );
 
-    schema.armor_type = new fields.StringField({
-      require: false, blank: true, initial: '', choices:
-        Object.values(ArmorType).reduce((acc, key) => {
-          acc[key] = game.i18n.localize(`SDM.Item.Armor.Type.${key}`);
-          return acc;
-        }, {}),
-    });
+    schema.armor = new fields.EmbeddedDataField(ArmorDataModel);
 
-    schema.cumbersome_armor = new fields.BooleanField({ initial: false });
-
-    schema.powered_armor = new fields.SchemaField({
-      max_charges: new fields.NumberField({
-        required: false, integer: true, min: 0,
-      }),
-      remaining_charges: new fields.NumberField({
-        required: false, integer: true, min: 0,
-      }),
-    }, { required: false, nullable: true, initial: null });
-
-    schema.is_weapon = new fields.BooleanField({
-      required: true, initial: false,
-    });
-
-    schema.weapon_damage = new fields.SchemaField({
-      base: new fields.StringField({
-        required: false, blank: true, initial: '',
-        validate: v => !v || v && foundry.dice.Roll.validate(v),
-        validationError: game.i18n.localize("SDM.ErrorValidationRollFormula"),
-      }),
-      versatile: new fields.StringField({
-        required: false, blank: true, initial: '',
-        validate: v => !v || v && foundry.dice.Roll.validate(v),
-        validationError: game.i18n.localize("SDM.ErrorValidationRollFormula"),
-      }),
-      bonus: new fields.StringField({
-        required: false, blank: true, initial: '',
-        validate: v => !v || v && foundry.dice.Roll.validate(v),
-        validationError: game.i18n.localize("SDM.ErrorValidationRollFormula"),
-      }),
-    });
-
-    schema.weapon_range = new fields.StringField({
-      required: false, blank: true, initial: '', choices:
-        Object.values(RangeOption).reduce((acc, key) => {
-          acc[key] = game.i18n.localize(`SDM.Item.Range.${key}`);
-          return acc;
-        }, {}),
-    });
-
-    schema.versatile_weapon = new fields.BooleanField({ required: true, initial: false });
+    schema.weapon = new fields.EmbeddedDataField(WeaponDataModel);
 
     return schema;
   }

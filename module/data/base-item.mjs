@@ -1,5 +1,4 @@
-import { SizeUnit } from '../helpers/constants.mjs';
-import { convertToCash } from '../helpers/itemUtils.mjs';
+import {  getSlotsTaken } from '../helpers/itemUtils.mjs';
 import ItemSizeDataModel from './item-size.mjs';
 
 export default class SdmItemBase extends foundry.abstract.TypeDataModel {
@@ -28,11 +27,6 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
   }
 
   prepareDerivedData() {
-    if (this.size.unit !== SizeUnit.CASH && this.quantity > 1 && this.readied) {
-      this.slots_taken =  this.quantity;
-    } else {
-      const slotsTaken = Math.ceil(convertToCash(this.quantity * this.size.value,  this.size.unit) / 250);
-      this.slots_taken = Math.max(slotsTaken, 1);
-    }
+    this.slots_taken = getSlotsTaken(this);
   }
 }
