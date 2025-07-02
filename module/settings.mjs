@@ -1,4 +1,5 @@
 import { DiceType } from "./helpers/constants.mjs";
+import { $fmt, $l10n } from "./helpers/globalUtils.mjs";
 import { handleHeroDice } from "./rolls/heroDice.mjs";
 
 export const CHARACTER_DEFAULT_INITIATIVE = "2d6 + @abilities.agi.current + @initiative_bonus";
@@ -128,7 +129,7 @@ export function registerSystemSettings() {
     default: SAVING_THROW_BASE_FORMULA,
     onChange: value => {
       if (!foundry.dice.Roll.validate(value)) {
-        ui.notifications.error(game.i18n.format('SDM.SettingsInvalidChange', { settings: 'saving throw base formula' }));
+        ui.notifications.error($fmt('SDM.SettingsInvalidChange', { settings: 'saving throw base formula' }));
         game.settings.set("sdm", "savingThrowBaseRollFormula", SAVING_THROW_BASE_FORMULA);
       }
     }
@@ -144,7 +145,7 @@ export function registerSystemSettings() {
     default: CHARACTER_DEFAULT_INITIATIVE,
     onChange: (value) => {
       if (!foundry.dice.Roll.validate(value)) {
-        ui.notifications.error(game.i18n.format('SDM.SettingsInvalidChange', { settings: 'initiative formula' }));
+        ui.notifications.error($fmt('SDM.SettingsInvalidChange', { settings: 'initiative formula' }));
         game.settings.set("sdm", "initiativeFormula", CHARACTER_DEFAULT_INITIATIVE);
       }
     }
@@ -160,7 +161,7 @@ export function registerSystemSettings() {
     default: NPC_DEFAULT_INITIATIVE,
     onChange: value => {
       if (!foundry.dice.Roll.validate(value)) {
-        ui.notifications.error(game.i18n.format('SDM.SettingsInvalidChange', { settings: 'npc initiative formula' }));
+        ui.notifications.error($fmt('SDM.SettingsInvalidChange', { settings: 'npc initiative formula' }));
         game.settings.set("sdm", "npcInitiativeFormula", NPC_DEFAULT_INITIATIVE);
       }
     }
@@ -211,7 +212,7 @@ export function createEscalatorDieDisplay() {
 
   // Create header element
   const headerText = document.createElement("div");
-  headerText.textContent = game.i18n.localize("SDM.EscalatorDie");
+  headerText.textContent = $l10n("SDM.EscalatorDie");
   headerText.style.cssText = `
     color: white;
     font-weight: bold;
@@ -320,7 +321,7 @@ export function configureUseHeroDiceButton(message, html, data) {
   btn.appendChild(icon);
 
   // Add localized text
-  btn.append(` ${game.i18n.localize("SDM.RollUseHeroDice")}`);
+  btn.append(` ${$l10n("SDM.RollUseHeroDice")}`);
 
   // Create container div
   const container = document.createElement('div');

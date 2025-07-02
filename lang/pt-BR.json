@@ -203,6 +203,7 @@
   "SDM.ErrorTransferTargetHasItem": "Alvo já possui este item",
   "SDM.ErrorTransferAmountNotPositive": "Quantidade deve ser um número positivo",
   "SDM.ErrorTransferExcessCashAmount": "Não é possível transferir mais dinheiro que o disponível",
+  "SDM.ErrorWeightLimit": "Isto excederia a capacidade de carga de {target}",
   "SDM.ErrorNoMoney": "{target} não possui dinheiro!",
   "SDM.ErrorNotEnoughMoney": "{target} não tem dinheiro suficiente!",
   "SDM.ErrorCashManagementFailed": "Erro durante transferência de dinheiro!",

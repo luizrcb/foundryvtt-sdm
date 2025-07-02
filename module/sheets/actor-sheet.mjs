@@ -182,7 +182,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       selectedSkill,
     } = rollOptions;
     if (modifier && !foundry.dice.Roll.validate(modifier)) {
-      ui.notifications.error("Invalid roll modifier");
+      ui.notifications.error($l10n('SDM.ErrorInvalidModifier'));
       return
     }
     const heroicDice = parseInt(heroicQty || 0, 10);
@@ -566,7 +566,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     const validWeight = this._checkActorWeightLimit(slotsTaken, item.type);
 
     if (!validWeight) {
-      ui.notifications.error("Updating this item would exceed your carry weight limit.");
+      ui.notifications.error($fmt('SDM.ErrorWeightLimit', { target: this.actor.name }));
       return false;
     }
     return true;
@@ -578,7 +578,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     const validWeight = this._checkActorWeightLimit(itemSlots, item.type);
 
     if (!validWeight) {
-      ui.notifications.error("Adding this item would exceed your burden limit.");
+      ui.notifications.error($fmt('SDM.ErrorWeightLimit', { target: this.actor.name }));
       return false;
     }
 
@@ -1211,7 +1211,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     const validWeight = this._checkActorWeightLimit(totalSlots, itemType);
 
     if (!validWeight) {
-      ui.notifications.error("Adding this item would exceed your carry weight limit.");
+      ui.notifications.error($fmt('SDM.ErrorWeightLimit', { target: this.actor.name }));
       return [];
     }
 

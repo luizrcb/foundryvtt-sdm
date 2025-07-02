@@ -1,4 +1,5 @@
 import { ActorType, DocumentType, SizeUnit } from "../helpers/constants.mjs";
+import { $fmt, $l10n } from "../helpers/globalUtils.mjs";
 import { getSlotsTaken } from "../helpers/itemUtils.mjs";
 
 const { renderTemplate } = foundry.applications.handlebars;
@@ -19,7 +20,7 @@ export async function openItemTransferDialog(item, sourceActor) {
     }]);
 
     if (updated.length === 0) {
-      ui.notifications.warn(game.i18n.localize('SDM.ErrorTransferItemNotAvailable'));
+      ui.notifications.warn($l10n('SDM.ErrorTransferItemNotAvailable'));
       return;
     }
 
@@ -36,11 +37,11 @@ export async function openItemTransferDialog(item, sourceActor) {
     });
 
     const transferOptions = await foundry.applications.api.DialogV2.prompt({
-      window: { title: game.i18n.format('SDM.Transfer', { type: game.i18n.localize('TYPE.Item') }) },
+      window: { title: $fmt('SDM.Transfer', { type: $l10n('TYPE.Item') }) },
       content: template,
       ok: {
         icon: 'fas fa-share',
-        label: game.i18n.format('SDM.Transfer', { type: '' }),
+        label: $fmt('SDM.Transfer', { type: '' }),
         callback: (event, button) => new foundry.applications.ux.FormDataExtended(button.form).object,
       },
       rejectClose: true,
@@ -55,19 +56,19 @@ export async function openItemTransferDialog(item, sourceActor) {
       const validWeight = targetActor.sheet._checkActorWeightLimit(slotsTaken, item.type);
 
       if (!validWeight) {
-        throw new Error(game.i18n.localize('SDM.ErrorTransferWeightLimit'));
+        throw new Error($fmt('SDM.ErrorWeightLimit', { target: targetActor.name }));
       }
 
       if (!freshItem || freshItem?.getFlag("sdm", "transferring") !== transferKey) {
-        throw new Error(game.i18n.localize('SDM.ErrorTransferInvalidItemState'));
+        throw new Error($l10n('SDM.ErrorTransferInvalidItemState'));
       }
 
       if (Date.now() - freshItem?.getFlag("sdm", "transferInitiated") > 30000) {
-        throw new Error(game.i18n.localize('SDM.ErrorTransferSessionExperied'));
+        throw new Error($l10n('SDM.ErrorTransferSessionExperied'));
       }
 
       if (targetActor.items.has(item.id)) {
-        throw new Error(game.i18n.localize('SDM.ErrorTransferTargetHasItem'));
+        throw new Error($l10n('SDM.ErrorTransferTargetHasItem'));
       }
 
       const isCashTransfer = freshItem.system.size?.unit === SizeUnit.CASH;
@@ -77,11 +78,11 @@ export async function openItemTransferDialog(item, sourceActor) {
         const amount = parseInt(amountInput, 10);
 
         if (isNaN(amount) || amount <= 0) {
-          throw new Error(game.i18n.localize('SDM.ErrorTransferAmountNotPositive'));
+          throw new Error($l10n('SDM.ErrorTransferAmountNotPositive'));
         }
 
         if (amount > freshItem.system.quantity) {
-          throw new Error(game.i18n.localize('SDM.ErrorTransferExcessCashAmount'));
+          throw new Error($l10n('SDM.ErrorTransferExcessCashAmount'));
         }
 
         // Update source quantity
@@ -108,7 +109,7 @@ export async function openItemTransferDialog(item, sourceActor) {
             await targetActor.createEmbeddedDocuments(DocumentType.ITEM, [newCashData]);
           }
 
-          ui.notifications.info(game.i18n.format('SDM.TransferCashComplete', { amount, target: targetActor.name }));
+          ui.notifications.info($fmt('SDM.TransferCashComplete', { amount, target: targetActor.name }));
         } catch (err) {
           // Rollback source quantity on failure
           await sourceActor.updateEmbeddedDocuments(DocumentType.ITEM, [{
@@ -130,7 +131,7 @@ export async function openItemTransferDialog(item, sourceActor) {
         try {
           [newItem] = await targetActor.createEmbeddedDocuments(DocumentType.ITEM, [newItemData]);
           await sourceActor.deleteEmbeddedDocuments(DocumentType.ITEM, [freshItem.id]);
-          ui.notifications.info(game.i18n.format('SDM.TransferItemComplete', {
+          ui.notifications.info($fmt('SDM.TransferItemComplete', {
             item: newItem.name,
             target: targetActor.name
           }));
@@ -142,7 +143,7 @@ export async function openItemTransferDialog(item, sourceActor) {
         }
       }
     } catch (err) {
-      ui.notifications.error(game.i18n.format('SDM.TransferFailed', { error: err.message }));
+      ui.notifications.error($fmt('SDM.TransferFailed', { error: err.message }));
     } finally {
       if (sourceActor.items.get(item.id)) {
         await sourceActor.updateEmbeddedDocuments(DocumentType.ITEM, [{
