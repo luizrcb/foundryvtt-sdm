@@ -120,6 +120,20 @@
       "path": "./packs/macros.db",
       "type": "Macro",
       "system": "sdm"
+    },
+     {
+      "name": "player macros",
+      "label": "SDM Player Macros",
+      "path": "./packs/player_macros.db",
+      "type": "Macro",
+      "system": "sdm"
+    },
+     {
+      "name": "Rolltables",
+      "label": "RollTables",
+      "path": "./packs/rolltables.db",
+      "type": "RollTable",
+      "system": "sdm"
     }
   ],
   "packFolders": [],
