@@ -27,10 +27,30 @@
   }
 }
 
+.application.sheet.sdm.item {
+  min-width: 480px;
+  min-height: 525px;
+  &.minimized {
+    min-width: 0px;
+    min-height: 0px;
+    max-width: 0px;
+    max-height: 0px;
+  }
+}
+
 .mt-5 {
   margin-top: 5px;
 }
 
 .mt-10 {
   margin-top: 10px;
+}
+
+.mb-10 {
+  margin-bottom: 10px;
+}
+
+
+.mb-20 {
+  margin-bottom: 20px;
 }
