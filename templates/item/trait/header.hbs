@@ -25,67 +25,9 @@
       </div>
 
       {{#if (eq item.system.type 'power')}}
-      <div class='resource'>
-        <label class='resource-label'>
-          {{localize 'SDM.PowerLevel'}}
-        </label>
-        <div class='resource-content'>
-          <input type='text' name='system.power.level' value='{{system.power.level}}' data-dtype="Number"/>
-        </div>
-      </div>
-      <div class='resource'>
-        <label class='resource-label'>
-          {{localize 'SDM.PowerRange'}}
-        </label>
-        <div class='resource-content'>
-          <input type='text' name='system.power.range' value='{{system.power.range}}'/>
-        </div>
-      </div>
-      <div class='resource'>
-        <label class='resource-label'>
-          {{localize 'SDM.PowerTarget'}}
-        </label>
-        <div class='resource-content'>
-          <input type='text' name='system.power.target' value='{{system.power.target}}'/>
-        </div>
-      </div>
-      <div class='resource'>
-        <label class='resource-label'>
-          {{localize 'SDM.PowerDuration'}}
-        </label>
-        <div class='resource-content'>
-          <input type='text' name='system.power.duration' value='{{system.power.duration}}'/>
-        </div>
-      </div>
-      <div class='resource grid-span-2'>
-        <label class='resource-label'>
-          {{localize 'SDM.PowerOvercharge'}}
-        </label>
-        <div class='resource-content'>
-          <input type='text' name='system.power.overcharge' value='{{system.power.overcharge}}'/>
-        </div>
-      </div>
-
-      <div class='resource'>
-        <label class='resource-label'>
-          {{localize 'SDM.DefaultAbility'}}
-        </label>
-        <div class='resource-content'>
-          <select name="system.default_ability" id="system.default_ability">
-            <option value=""></option>
-            {{selectOptions config.abilities localize=true selected=system.default_ability}}
-          </select>
-        </div>
-      </div>
-
-      <div class='resource'>
-        <label class='resource-label'>
-          {{localize 'SDM.PowerRollFormula'}}
-        </label>
-        <div class='resource-content'>
-          <input type='text' name='system.power.roll_formula' value='{{system.power.roll_formula}}'/>
-        </div>
-      </div>
+        {{!-- fragment --}}
+        {{> ($$ "item/power") item=item}}
+        {{!-- fragment --}}
       {{/if}}
     </div>
   </div>

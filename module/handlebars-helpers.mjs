@@ -45,29 +45,28 @@ export function registerHandlebarsHelpers() {
     return ['npc', 'character'].includes(actorType);
   })
 
-  $$('eq', function (valueA, valueB, options) {
-    return valueA === valueB;
-  });
+  const reduceOp = function (args, reducer) {
+    args = Array.from(args);
+    args.pop(); // => options
+    var first = args.shift();
+    return args.reduce(reducer, first);
+  };
 
-  $$('ne', function (valueA, valueB, options) {
-    return valueA !== valueB;
-  });
+  $$('eq', function () { return reduceOp(arguments, (a, b) => a === b); });
 
-  $$('gt', function (valueA, valueB, options) {
-    return (valueA > valueB);
-  });
+  $$('ne', function () { return reduceOp(arguments, (a, b) => a !== b); });
 
-  $$('gte', function (valueA, valueB, options) {
-    return (valueA >= valueB);
-  });
+  $$('lt', function () { return reduceOp(arguments, (a, b) => a < b); });
 
-  $$('lt', function (valueA, valueB, options) {
-    return (valueA < valueB);
-  });
+  $$('gt', function () { return reduceOp(arguments, (a, b) => a > b); });
 
-  $$('lte', function (valueA, valueB, options) {
-    return (valueA <= valueB);
-  });
+  $$('lte', function () { return reduceOp(arguments, (a, b) => a <= b); });
+
+  $$('gte', function () { return reduceOp(arguments, (a, b) => a >= b); });
+
+  $$('and', function () { return reduceOp(arguments, (a, b) => a && b); });
+
+  $$('or', function () { return reduceOp(arguments, (a, b) => a || b); });
 
   $$('checkOriginalDie', function (index, options) {
     const context = options.data.root;
@@ -94,5 +93,14 @@ export function registerHandlebarsHelpers() {
     return new Handlebars.SafeString(
       Handlebars.compile(context)(this)
     );
+  });
+
+  $$("multiply", function (numberA, numberB) {
+    console.log(numberA, numberB);
+    return numberA * numberB;
+  });
+
+  $$('fragment', function (options) {
+    return new Handlebars.SafeString(options.fn(this));
   });
 }

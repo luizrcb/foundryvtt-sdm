@@ -1,4 +1,5 @@
 import { RangeOption } from "../helpers/constants.mjs";
+import { capitalizeFirstLetter } from "../helpers/globalUtils.mjs";
 
 export default class WeaponDataModel extends foundry.abstract.DataModel {
   static defineSchema() {
@@ -25,7 +26,7 @@ export default class WeaponDataModel extends foundry.abstract.DataModel {
       range: new fields.StringField({
         required: false, blank: true, initial: '', choices:
           Object.values(RangeOption).reduce((acc, key) => {
-            acc[key] = game.i18n.localize(`SDM.Item.Range.${key}`);
+            acc[key] = game.i18n.localize(`SDM.Range${capitalizeFirstLetter(key)}`);
             return acc;
           }, {}),
       }),

@@ -83,6 +83,10 @@
   margin-top: 10px;
 }
 
+.mr-10 {
+  margin-right: 10px;
+}
+
 .mb-10 {
   margin-bottom: 10px;
 }
@@ -749,5 +753,3 @@
   top: 39px;
   left: 9px;
 }
-
-/*# sourceMappingURL=sdm.css.map */

@@ -5,6 +5,7 @@
     <div class="form-group">
       <label>{{localize 'SDM.Ability'}}</label>
       <select name="selectedAbility">
+        <option value=""></option>
         {{selectOptions abilities localize=true selected=ability}}
       </select>
     </div>
@@ -37,7 +38,7 @@
     </div>
     <div class="form-group mt-10">
       <label for="shouldExplode">{{localize "SDM.ExplodingDice"}}</label>
-      <input id="shouldExplode" type="checkbox" name="shouldExplode" {{#if (ne type 'damage' )}}checked{{/if}} />
+      <input id="shouldExplode" type="checkbox" name="shouldExplode" {{#if (and (ne type 'damage' ) (ne type 'power'))}}checked{{/if}} />
     </div>
   </form>
   <br /><br />

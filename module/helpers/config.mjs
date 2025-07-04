@@ -163,6 +163,13 @@ SDM.burdenType = {
   ...SDM.traitType,
 };
 
+SDM.rangeType = {
+  "melee": "SDM.RangeMelee",
+  "short": "SDM.RangeShort",
+  "long": "SDM.RangeLong",
+  "extreme": "SDM.RangeExtreme",
+};
+
 
 SDM.skillMod = {
   3: 'SDM.SkillSkilled',

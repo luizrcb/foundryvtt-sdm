@@ -17,30 +17,7 @@
       </div>
     </li>
     {{#each traits as |trait id|}}
-    <li class='item flexrow' data-item-id='{{trait._id}}' data-drag='true' data-document-class='Item'>
-      <div class='item-name'>
-        <div class='item-image'>
-          <img src='{{trait.img}}' title='{{trait.name}}' width='24' height='24' />
-        </div>
-        <div>{{trait.name}}
-          {{#if (eq trait.system.type 'skill')}}
-          {{#if (gt trait.system.skill_mod_final 0)}}(+{{trait.system.skill_mod_final}}){{/if}}
-          {{/if}}
-        </div>
-      </div>
-      <div class='item-controls'>
-        <a class='item-control item-edit' title='{{localize "DOCUMENT.Update" type=(localize 'TYPE.Trait')}}'
-          data-action='viewDoc'>
-          <i class='fas fa-edit'></i>
-        </a>
-        {{#if @root.editable}}
-        <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type=(localize 'TYPE.Trait')}}'
-          data-action='deleteDoc'>
-          <i class='fas fa-trash'></i>
-        </a>
-        {{/if}}
-      </div>
-    </li>
+      {{> ($$ "actor/trait") trait=trait }}
     {{/each}}
   </ol>
 

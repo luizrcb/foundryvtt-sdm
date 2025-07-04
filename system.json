@@ -1,11 +1,12 @@
 {
   "id": "sdm",
-  "title": "SDM",
+  "title": "Synthetic Dream Machine",
   "description": "The SDM system for FoundryVTT!",
   "authors": [
     {
       "name": "Luiz Bertoni",
-      "discord": "nightlybuild_"
+      "discord": "nightlybuild_",
+      "email": "luizrcb@gmail.com"
     }
   ],
   "documentTypes": {
@@ -78,7 +79,7 @@
       ]
     }
   },
-  "url": "Replace this with a link to your public repository",
+  "url": "https://github.com/luizrcb/foundryvtt-sdm",
   "license": "LICENSE.txt",
   "readme": "README.md",
   "bugs": "Replace this with a link to file issues or tickets",
@@ -93,7 +94,7 @@
   "version": "1.0.0",
   "compatibility": {
     "minimum": "12",
-    "verified": "13.345"
+    "verified": "13.346"
   },
   "esmodules": [
     "module/sdm.mjs"

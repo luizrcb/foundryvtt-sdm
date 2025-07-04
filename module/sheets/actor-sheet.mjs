@@ -146,7 +146,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       rollTitlePrefix,
       title,
       abilities: CONFIG.SDM.abilities,
-      ability: isAbility ? ability : isAttack ? actorAttack?.default_ability : '',
+      ability: isAttack ? actorAttack?.default_ability : ability,
       attack,
       availableSkills,
       selectedSkill:  isAttack ? actorAttack?.favorite_skill : '',
@@ -298,10 +298,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       // Necessary for formInput and formFields helpers
       fields: this.document.schema.fields,
       systemFields: this.document.system.schema.fields,
-      skills: this.actor.system.skills,
       // Add isGM to the context
       isGM: game.user.isGM,
-      carriedWeight: this.actor.getCarriedGear(),
     };
 
     if (this.actor.type === 'character') {
@@ -817,7 +815,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
 
     // Get common data attributes
     const dataset = target.dataset;
-    const ability = dataset.ability;
+    let ability = dataset.ability;
     const label = dataset.label;
     const attack = dataset.attack;
     const type = dataset.type;
@@ -831,7 +829,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       case 'damage':
         const item = this._getEmbeddedDocument(target);
         const weaponDamage = item.system.weapon.damage;
-
+        ability = item.system.default_ability;
         formula = weaponDamage.base;
         bonusDamage = weaponDamage.bonus;
         versatile = item.system?.versatile_weapon || false;
@@ -839,6 +837,14 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
         if (versatile) {
           versatileFormula = weaponDamage.versatile;
         }
+
+        break;
+      case 'power':
+        const powerItem = this._getEmbeddedDocument(target);
+        const powerDamage = powerItem.system.power.roll_formula;
+        ability = powerItem.system.default_ability;
+        formula = powerDamage;
+        break;
     }
 
     const rollAttributes = {

@@ -64,10 +64,11 @@ export const TraitType = Object.freeze({
 });
 
 export const ArmorType = Object.freeze({
-  SHIELD: 'shield',
+  SMALL: 'small',
   LIGHT: 'light',
   MEDIUM: 'medium',
   HEAVY: 'heavy',
+  GOLEM: 'golem',
 });
 
 export const PullMode = Object.freeze({
