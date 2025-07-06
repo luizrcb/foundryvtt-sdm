@@ -1,12 +1,16 @@
 <header class='sheet-header'>
   <img class='profile-img' src='{{item.img}}' data-edit='img' data-action='onEditImage' title='{{item.name}}' />
-  <div class='header-fields'>
+  <div class='header-fields mt-10'>
     <div class='document-name'>
       <input name='name' type='text' value='{{item.name}}' placeholder='Name' />
     </div>
-    <div class='grid grid-2col'>
+  </div>
+</header>
+<header>
+  <div class="">
+    <div class="grid grid-3col">
 
-       <div class="resource">
+      <div class="resource">
         <label class='resource-label'>{{localize 'SDM.ItemTraitType'}}</label>
         <select name='system.type' class="resource-content">
           <option value=''></option>
@@ -14,20 +18,20 @@
         </select>
       </div>
 
+      {{#if (eq item.system.type 'skill')}}
       <div class='resource'>
-        {{#if (eq item.system.type 'skill')}}
-        <label class='resource-label'>{{localize 'SDM.TraitSkillMod'}}</label>
-        <select name='system.skill_mod'>
+        <label class='resource-label'>{{localize 'SDM.SkillMod'}}</label>
+        <select name='system.skill.modifier'>
           <option value=''></option>
-          {{selectOptions skillMod valueAttr="value" labelAttr="label" selected=item.system.skill_mod}}
+          {{selectOptions skillMod valueAttr="value" labelAttr="label" selected=item.system.skill.modifier}}
         </select>
-        {{/if}}
       </div>
+      {{/if}}
 
       {{#if (eq item.system.type 'power')}}
-        {{!-- fragment --}}
-        {{> ($$ "item/power") item=item}}
-        {{!-- fragment --}}
+      {{!-- fragment --}}
+      {{> ($$ "item/power") item=item}}
+      {{!-- fragment --}}
       {{/if}}
     </div>
   </div>

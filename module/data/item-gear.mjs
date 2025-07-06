@@ -1,6 +1,5 @@
 import SdmItemBase from './base-item.mjs';
 import { getDefaultAbility } from '../helpers/globalUtils.mjs'
-import { ArmorType, RangeOption } from '../helpers/constants.mjs'
 import PowerDataModel from './power-data.mjs';
 import ArmorDataModel from './armor-data.mjs';
 import WeaponDataModel from './weapon-data.mjs';

@@ -102,10 +102,10 @@ async function toggleEffectTransfer(effect, shouldBeActive) {
 
 
 export function getSlotsTaken(itemSystem) {
-  let slotsTaken = Math.ceil(convertToCash(itemSystem.quantity * itemSystem.size.value, itemSystem.size.unit) / 250);
-  slotsTaken = Math.max(slotsTaken, 1);
+  let slotsTaken = Math.ceil(convertToCash(itemSystem.quantity * itemSystem.size?.value, itemSystem.size?.unit) / 250);
+  slotsTaken = Math.max(slotsTaken || 1, 1);
 
-  if (itemSystem.size.unit !== SizeUnit.CASH && itemSystem.quantity > 1 && itemSystem.readied) {
+  if (itemSystem.size?.unit !== SizeUnit.CASH && itemSystem.quantity > 1 && itemSystem.readied) {
     slotsTaken *= itemSystem.quantity
   }
 

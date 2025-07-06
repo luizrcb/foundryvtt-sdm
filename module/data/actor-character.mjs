@@ -203,7 +203,7 @@ export default class SdmCharacter extends SdmActorBase {
     });
 
     schema.power_cost = new fields.NumberField({
-      ...requiredInteger, min: 1, max: 3, initial: 2,
+      required:true, nullable: false, initial: 2,
     });
 
     schema.oldtech = new fields.SchemaField({

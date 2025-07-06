@@ -1,4 +1,4 @@
-import {  getSlotsTaken } from '../helpers/itemUtils.mjs';
+import { getSlotsTaken } from '../helpers/itemUtils.mjs';
 import ItemSizeDataModel from './item-size.mjs';
 
 export default class SdmItemBase extends foundry.abstract.TypeDataModel {

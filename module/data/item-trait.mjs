@@ -1,7 +1,7 @@
-import { SkillMod } from '../helpers/constants.mjs';
 import { getDefaultAbility } from '../helpers/globalUtils.mjs';
 import SdmItemBase from './base-item.mjs';
 import PowerDataModel from './power-data.mjs';
+import SkillDataModel from './skill-data.mjs';
 
 export default class SdmTrait extends SdmItemBase {
   static LOCALIZATION_PREFIXES = [
@@ -11,7 +11,7 @@ export default class SdmTrait extends SdmItemBase {
 
   static defineSchema() {
     const fields = foundry.data.fields;
-    const requiredInteger = { required: true, nullable: false, integer: true };
+
     const schema = super.defineSchema();
 
     schema.default_ability = getDefaultAbility();
@@ -24,17 +24,7 @@ export default class SdmTrait extends SdmItemBase {
       }, {}),
     });
 
-    schema.skill_mod = new fields.NumberField({
-      required: false, initial: 0, min: 0,
-      choices: Object.entries(SkillMod).reduce((acc, [key, value]) => {
-        acc[value] = key;
-        return acc;
-      }, {}),
-    });
-
-    schema.skill_mod_bonus = new fields.NumberField({
-      ...requiredInteger, initial: 0,
-    });
+    schema.skill = new fields.EmbeddedDataField(SkillDataModel);
 
     schema.power = new fields.EmbeddedDataField(PowerDataModel, { required: false, nullable: true, initial: null });
 
@@ -43,6 +33,6 @@ export default class SdmTrait extends SdmItemBase {
 
 
   prepareDerivedData() {
-    this.skill_mod_final = this.skill_mod + this.skill_mod_bonus;
+    this.skill.modifier_final = this.skill.modifier + this.skill.modifier_bonus;
   }
 }

@@ -125,16 +125,16 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     versatile = false,
     versatileFormula = '',
     bonusDamage = '',
-   }) {
+  }) {
     let rollTitlePrefix = '';
     const isDamage = type === RollType.DAMAGE;
     const isAttack = type === RollType.ATTACK;
     const isAbility = type === RollType.ABILITY;
 
-    if (isDamage) rollTitlePrefix =  $l10n('SDM.Damage');
+    if (isDamage) rollTitlePrefix = $l10n('SDM.Damage');
     if (isAttack) rollTitlePrefix = $l10n('SDM.Attack');
     if (isAbility) rollTitlePrefix = $l10n('SDM.Ability');
-    if (rollTitlePrefix !== '')  rollTitlePrefix += ' ';
+    if (rollTitlePrefix !== '') rollTitlePrefix += ' ';
 
     const title = from;
 
@@ -149,23 +149,46 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       ability: isAttack ? actorAttack?.default_ability : ability,
       attack,
       availableSkills,
-      selectedSkill:  isAttack ? actorAttack?.favorite_skill : '',
+      selectedSkill: isAttack ? actorAttack?.favorite_skill : '',
       multiplierOptions: CONFIG.SDM.damageMultiplier,
       rollModes: CONFIG.SDM.rollMode,
       type,
     });
+
+    const buttons = [
+      {
+        action: 'one-handed',
+        icon: isDamage ? 'fas fa-sword' : 'fas fa-dice-d20',
+        label: isDamage ? 'One-Handed' : $l10n('SDM.ButtonRoll'),
+        callback: (event, button) => ({
+          versatile: false,
+          ...new foundry.applications.ux.FormDataExtended(button.form).object,
+        }),
+      },
+    ];
+
+    if (versatile) {
+      buttons.push({
+        action: 'two-handed',
+        icon: 'fas fa-axe-battle',
+        label: 'Two-Handed',
+        callback: (event, button) => ({
+          versatile,
+          ...new foundry.applications.ux.FormDataExtended(button.form).object,
+        }),
+      });
+    }
+
     // Create and render the modal
-    const rollOptions = await foundry.applications.api.DialogV2.prompt({
-      width: 550,
+    const rollOptions = await foundry.applications.api.DialogV2.wait({
       window: {
         title: $fmt('SDM.RollTitle', { prefix: '', title }),
       },
       content: template,
-      ok: {
-        icon: 'fas fa-dice-d20',
-        label: $l10n('SDM.ButtonRoll'),
-        callback: (event, button) => new foundry.applications.ux.FormDataExtended(button.form).object,
-      }
+      position: {
+        width: 400,
+      },
+      buttons,
     });
 
     if (rollOptions === null) {
@@ -197,16 +220,21 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       type,
       actor: this.actor,
       from,
-      ability: ability || selectedAbility,
+      ability: selectedAbility || ability,
       mode: rollMode,
-      modifier: bonusDamage ? `${modifier} + ${bonusDamage}`: modifier,
+      modifier: bonusDamage ? `${modifier} + ${bonusDamage}` : modifier,
       multiplier,
       explodingDice: shouldExplode,
+      versatile: !!rollOptions.versatile,
       skill: availableSkills[selectedSkill],
     };
 
     if (formula) {
       rollData.formula = formula;
+    }
+
+    if (versatileFormula && rollOptions.versatile) {
+      rollData.formula = versatileFormula;
     }
 
     const sdmRoll = new SDMRoll(rollData);
@@ -552,8 +580,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
   }
 
   _checkCarriedWeight(item, updateData) {
-    let itemSlots = getSlotsTaken(item.system);
-    let updateDataSlots = updateData ? getSlotsTaken(updateData.system) : null;
+    let itemSlots = getSlotsTaken(item?.system);
+    let updateDataSlots = updateData ? getSlotsTaken(updateData?.system) : null;
 
 
     if (updateData && updateDataSlots <= itemSlots) {
@@ -832,7 +860,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
         ability = item.system.default_ability;
         formula = weaponDamage.base;
         bonusDamage = weaponDamage.bonus;
-        versatile = item.system?.versatile_weapon || false;
+        versatile = item.system?.weapon?.versatile || false;
 
         if (versatile) {
           versatileFormula = weaponDamage.versatile;

@@ -9,7 +9,6 @@ export default class SDMRoll {
     from,
     mode = RollMode.NORMAL,
     formula = '1d20',
-    versatileFormula = '',
     ability = '',
     skill = null,
     modifier = '',

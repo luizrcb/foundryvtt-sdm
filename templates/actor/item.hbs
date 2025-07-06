@@ -3,38 +3,26 @@
     <div class='item-image'>
       <img src='{{item.img}}' title='{{item.name}}' width='24' height='24' />
     </div>
-    <div class="flexrow"
-      {{#if (eq item.system.type 'power' )}}
-      title="{{item.name}} ({{localize 'SDM.Cost'}}: {{multiply @root.system.power_cost item.system.power.level}})
-      &#10;P: {{item.system.power.level}}, R: {{item.system.power.range}}, T: {{item.system.power.target}}, D: {{item.system.power.duration}}, Roll: {{item.system.power.roll_formula}}
-      &#10;Overcharge: {{item.system.power.overcharge}}"
-      {{/if}}
-      {{#if (eq item.system.type 'armor')}}
-        title="{{item.name}} &#10;{{localize 'SDM.ArmorValue'}}: {{item.system.armor.value}} {{localize 'SDM.ArmorType'}}: {{item.system.armor.type}}"
-      {{/if}}
-      {{#if (eq item.system.type 'weapon')}}
-        title="{{item.name}} &#10;{{localize 'SDM.WeaponDamage'}}: {{item.system.weapon.damage.base}}"
-      {{/if}}
-    >
-      {{#if (and (eq item.system.type 'weapon')  item.system.readied)}}
-        <div class='rollable flexrow' data-action='roll' data-type='damage' data-label='{{item.name}}'>
-          <i class='fa-solid fa-dice-d20 roll-icon' title='{{item.name}}'></i>
-        </div>
+    <div class="flexrow" title="{{getItemTitle item}}">
+      {{#if (and (eq item.system.type 'weapon') item.system.readied)}}
+      <div class='rollable flexrow' data-action='roll' data-type='damage' data-label='{{item.name}}'>
+        <i class='fa-solid fa-dice-d20 roll-icon' title='{{item.name}}'></i>
+      </div>
       {{/if}}
 
       {{#if (and (eq item.system.type 'power') item.system.readied item.system.power.roll_formula)}}
-        <div class='rollable flexrow' data-action='roll' data-type='power' data-label='{{item.name}}'>
-          <i class='fa-solid fa-dice-d20 roll-icon' title='{{item.name}}'></i>
-        </div>
+      <div class='rollable flexrow' data-action='roll' data-type='power' data-label='{{item.name}}'>
+        <i class='fa-solid fa-dice-d20 roll-icon' title='{{item.name}}'></i>
+      </div>
       {{/if}}
 
       {{#if (gt item.system.slots_taken 1)}}[{{item.system.slots_taken}}] {{/if}}
 
-      {{#if (eq item.system.size.unit 'cash')}} €{{item.system.quantity}} {{/if}}
+      {{#if (eq item.system.size.unit 'cash')}} € {{item.system.quantity}} {{/if}}
       {{item.name}}
 
       {{#if (and (ne item.system.size.unit 'cash') (gt item.system.quantity 1))}}
-        x{{item.system.quantity}}
+      x{{item.system.quantity}}
       {{/if}}
     </div>
     <div class='flexrow align-center'>
@@ -56,12 +44,12 @@
       <i class="fa-regular fa-exchange" data-action="transferItem" title="{{localize 'DOCUMENT.Transfer'
         type=(localize 'TYPE.Item' )}}"></i>
     </a>
-    <a class='item-control item-edit' title='{{localize "DOCUMENT.Update" type=(localize 'TYPE.Item')}}'
+    <a class='item-control item-edit' title='{{localize "DOCUMENT.Update" type=(localize ' TYPE.Item')}}'
       data-action='viewDoc'>
       <i class='fas fa-edit'></i>
     </a>
     {{#if @root.editable}}
-    <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type=(localize 'TYPE.Item')}}'
+    <a class='item-control item-delete' title='{{localize "DOCUMENT.Delete" type=(localize ' TYPE.Item')}}'
       data-action='deleteDoc'>
       <i class='fas fa-trash'></i>
     </a>

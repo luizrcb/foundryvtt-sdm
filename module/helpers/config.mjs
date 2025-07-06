@@ -1,4 +1,4 @@
-import { ArmorType, PullMode, SizeUnit, SkillMod, SpeedType } from "./constants.mjs";
+import { ArmorType, PullMode, SpeedType } from "./constants.mjs";
 import { capitalizeFirstLetter } from "./globalUtils.mjs";
 
 export const SDM = {};

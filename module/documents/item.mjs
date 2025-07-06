@@ -1,22 +1,12 @@
-import { PullMode, SizeUnit } from "../helpers/constants.mjs";
+import { GearType, PullMode, SizeUnit, TraitType } from "../helpers/constants.mjs";
 import { convertToCash, getSlotsTaken } from "../helpers/itemUtils.mjs";
+import { $l10n, capitalizeFirstLetter } from '../helpers/globalUtils.mjs'
 
 /**
  * Extend the basic Item with some very simple modifications.
  * @extends {Item}
  */
 export class SdmItem extends Item {
-
-  // /** @override */
-  // async _onCreate(data, options, userId) {
-  //   // item creation method
-  //   await super._onCreate(data, options, userId);
-  // }
-
-  // /** @override */
-  // async _onUpdate(changed, options, userId) {
-  //   await super._onUpdate(changed, options, userId);
-  // }
 
   /**
    * Augment the basic Item data model with additional dynamic data.
@@ -28,7 +18,7 @@ export class SdmItem extends Item {
   }
 
   getCarryCapacity() {
-    let carryWeight= 0;
+    let carryWeight = 0;
 
     switch (this.type) {
       case 'mount':
@@ -81,6 +71,122 @@ export class SdmItem extends Item {
 
   getItemSlots() {
     return getSlotsTaken(this.system);
+  }
+
+  getArmorTitle() {
+    const armorData = this.system?.armor;
+    const armorValueLabel = `${$l10n('SDM.ArmorValue')}: ${armorData?.value}`;
+    const armorTypeLabel = `${$l10n('SDM.ArmorType')}: ${$l10n(CONFIG.SDM.armorType[armorData?.type])}`;
+    const title = `${this.name}\r${armorValueLabel} ${armorTypeLabel}`;
+    return title;
+  }
+
+  getDefaultAbilityLabel() {
+    return `(+${$l10n(CONFIG.SDM.abilityAbbreviations[this.system.default_ability])})`;
+  }
+
+  getDefaultTitle() {
+    let title = '';
+
+    switch (this.type) {
+      case 'gear':
+        if (this.system?.size?.unit === SizeUnit.CASH) {
+          title = `${capitalizeFirstLetter($l10n('SDM.UnitCash'))}: € ${this.system.quantity}`;
+        } else {
+          title = `${$l10n('TYPES.Item.gear')}: ${this.name}`;
+        }
+        break;
+      case 'trait':
+        title = `${$l10n('TYPES.Item.trait')}: ${this.name}`;
+        break;
+      case 'burden':
+        title = `${$l10n('TYPES.Item.burden')}: ${this.name}`;
+        break;
+    }
+
+    return title;
+  }
+
+  getPowerTitle() {
+    const data = this?.system;
+    const powerData = data?.power;
+    const actorPowerCost = this.actor?.system?.power_cost || 2;
+    const powerLevel = powerData?.level || 1;
+    const powerCost = Math.ceil(actorPowerCost * powerLevel);
+
+    let title = `${this.name} (${$l10n('SDM.Cost')}: ${powerCost})\r`;
+
+    const powerLabel = `${$l10n('SDM.PowerLevelAbbr')}: ${powerLevel}`;
+    const rangeLabel = `${$l10n('SDM.PowerRangeAbbr')}: ${powerData?.range}`;
+    const targetLabel = `${$l10n('SDM.PowerTargetAbbr')}: ${powerData?.target}`;
+    const durationLabel = `${$l10n('SDM.PowerDurationAbbr')}: ${powerData?.duration}`;
+    const overchargeLabel = `${$l10n('SDM.PowerOverchargeAbbr')}: ${powerData?.overcharge}`;
+    let rollLabel = `${$l10n('SDM.PowerRollFormulaAbbr')}: ${powerData?.roll_formula}`;
+
+    if (data?.default_ability) {
+      rollLabel += ` ${this.getDefaultAbilityLabel()}`
+    }
+
+    title += `${powerLabel}, ${rangeLabel}, ${targetLabel}, ${durationLabel}${powerData?.roll_formula ? `, ${rollLabel}` : ''}`;
+    title += powerData?.overcharge ? `\r\r${overchargeLabel}` : '';
+
+    return title;
+  }
+
+  getSkillTitle() {
+    const skillMod = this.system?.skill?.modifier_final;
+
+    if (skillMod === 0) return this.name;
+
+    const skillModLabel = $l10n(CONFIG.SDM.skillMod[skillMod]);
+    const title = `${$l10n('SDM.SkillMod')}: +${skillMod} ${skillModLabel}`;
+
+    return title;
+  }
+
+
+  getWeaponTitle() {
+    const data = this.system;
+    const weaponData = data?.weapon;
+
+    let title = `${this.name}\r${$l10n('SDM.Damage')}: ${weaponData?.damage.base}`;
+
+    if (weaponData?.versatile) {
+      title += `/${weaponData?.damage.versatile}`;
+    }
+
+    if (data?.default_ability) {
+      title += ` ${this.getDefaultAbilityLabel()}`;
+    }
+
+    title += ` ${$l10n('SDM.WeaponRange')}: ${$l10n(CONFIG.SDM.rangeType[weaponData?.range])}`;
+
+    return title;
+  }
+
+  getInventoryTitle() {
+    let title = '';
+    const data = this.system;
+
+    const getInventoryItemTitle = {
+      [GearType.ARMOR]: () => this.getArmorTitle(),
+      [TraitType.POWER]: () => this.getPowerTitle(),
+      // [GearType.POWER_CONTAINER]: this.getPowerContaierTitle,
+      [TraitType.SKILL]: () => this.getSkillTitle(),
+      [GearType.WEAPON]: () => this.getWeaponTitle(),
+      '': () => this.getDefaultTitle(),
+    };
+    if (!data.type) {
+      console.log(this.system);
+    }
+    const titleFunction = getInventoryItemTitle[data.type];
+    title = titleFunction();
+
+    return title;
+  }
+
+  getInventoryName() {
+
   }
 
   /**

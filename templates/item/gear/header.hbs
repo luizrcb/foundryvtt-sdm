@@ -63,7 +63,7 @@
         </div>
       </div>
       <div class="resource">
-         <label class='resource-label'>{{localize 'SDM.WeaponRange'}}</label>
+        <label class='resource-label'>{{localize 'SDM.WeaponRange'}}</label>
         <select name='system.weapon.range' class="resource-content">
           <option value=''></option>
           {{selectOptions config.rangeType localize=true selected=system.weapon.range}}
@@ -77,17 +77,32 @@
           <input type='checkbox' name='system.weapon.versatile' {{checked system.weapon.versatile}} />
         </div>
       </div>
-      {{#if system.weapon.versatile}}
+
       <div class='resource'>
+        {{#if system.weapon.versatile}}
         <label class='resource-label'>
           {{localize 'SDM.WeaponVersatileDamage'}}
         </label>
         <div class='resource-content'>
           <input type='text' name='system.weapon.damage.versatile' value='{{system.weapon.damage.versatile}}' />
         </div>
+        {{/if}}
+      </div>
+
+
+      <div class='resource'>
+        <label class='resource-label'>
+          {{localize 'SDM.AbilityModifier'}}
+        </label>
+        <div class='resource-content'>
+          <select name="system.default_ability" id="system.default_ability">
+            <option value=""></option>
+            {{selectOptions config.abilities localize=true selected=system.default_ability}}
+          </select>
+        </div>
       </div>
       {{/if}}
-      {{/if}}
+
 
 
       {{#if (eq item.system.type 'armor')}}

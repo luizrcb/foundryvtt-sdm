@@ -96,11 +96,14 @@ export function registerHandlebarsHelpers() {
   });
 
   $$("multiply", function (numberA, numberB) {
-    console.log(numberA, numberB);
-    return numberA * numberB;
+    return Math.ceil(numberA * numberB);
   });
 
   $$('fragment', function (options) {
     return new Handlebars.SafeString(options.fn(this));
+  });
+
+  $$('getItemTitle', function (item) {
+    return item.getInventoryTitle();
   });
 }
