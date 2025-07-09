@@ -3,7 +3,7 @@ import {
   MAX_ATTRIBUTE_VALUE,
   getMaxLife,
   getLevel,
-  CHARACTER_DEFAULT_WEIGHT_IN_CASH,
+  CHARACTER_DEFAULT_WEIGHT_IN_CASH
 } from '../helpers/actorUtils.mjs';
 import { ActorType, GearType, ItemType, SizeUnit, TraitType } from '../helpers/constants.mjs';
 import { safeEvaluate } from '../helpers/globalUtils.mjs';
@@ -14,8 +14,6 @@ import { BURDEN_ITEM_TYPES, convertToCash, GEAR_ITEM_TYPES } from '../helpers/it
  * @extends {Actor}
  */
 export class SdmActor extends Actor {
-
-
   async _preUpdate(changed, options, userId) {
     if (changed.system?.abilities) {
       const abilities = changed.system.abilities;
@@ -23,7 +21,6 @@ export class SdmActor extends Actor {
       for (const [abilityKey, abilityData] of Object.entries(abilities)) {
         const systemAbility = this.system.abilities[abilityKey];
         if (abilityData.current !== undefined) {
-
           if (abilityData.current > systemAbility.full) {
             return false;
           }
@@ -66,12 +63,12 @@ export class SdmActor extends Actor {
       const remainingHeroDice = maxHeroDice - currentHeroDiceSpent;
 
       await this.update({
-        "system.experience": `${resultingExperience.toString()}`,
-        "system.level": newLevel,
-        "system.hero_dice.max": Math.max(maxHeroDice, 1),
-        "system.hero_dice.value": Math.min(remainingHeroDice, maxHeroDice),
-        "system.life.base": baseLife,
-        "system.life.value": this.system.life.value + lifeAmountToIncrease, // Cap current health
+        'system.experience': `${resultingExperience.toString()}`,
+        'system.level': newLevel,
+        'system.hero_dice.max': Math.max(maxHeroDice, 1),
+        'system.hero_dice.value': Math.min(remainingHeroDice, maxHeroDice),
+        'system.life.base': baseLife,
+        'system.life.value': this.system.life.value + lifeAmountToIncrease // Cap current health
       });
     }
 
@@ -101,67 +98,67 @@ export class SdmActor extends Actor {
   // Helper: Create encumbered effect
   async addEncumberedEffect() {
     const effectData = {
-      name: "encumbered",
-      label: "encumbered",
-      icon: "icons/tools/smithing/anvil.webp",
+      name: 'encumbered',
+      label: 'encumbered',
+      icon: 'icons/tools/smithing/anvil.webp',
       changes: [],
       flags: {
         sdm: {
-          effectType: "encumbered",
-          source: "encumbrance"
+          effectType: 'encumbered',
+          source: 'encumbrance'
         }
       }
     };
-    await this.createEmbeddedDocuments("ActiveEffect", [effectData]);
+    await this.createEmbeddedDocuments('ActiveEffect', [effectData]);
   }
 
   async addCumbersomeArmor() {
     const effectData = {
-      name: "cumbersome (armor)",
-      label: "cumbersome (armor)",
-      icon: "icons/equipment/chest/breastplate-banded-steel.webp",
+      name: 'cumbersome (armor)',
+      label: 'cumbersome (armor)',
+      icon: 'icons/equipment/chest/breastplate-banded-steel.webp',
       changes: [],
       flags: {
         sdm: {
-          effectType: "encumbered",
-          source: "armor"
+          effectType: 'encumbered',
+          source: 'armor'
         }
       }
     };
-    await this.createEmbeddedDocuments("ActiveEffect", [effectData]);
+    await this.createEmbeddedDocuments('ActiveEffect', [effectData]);
   }
 
   async addEncumberedSlow() {
     const effectData = {
-      name: "slow (encumbered)", // Descriptive label
-      label: "slow (encumbered)", // Descriptive label
-      icon: "icons/creatures/invertebrates/snail-movement-green.webp",
+      name: 'slow (encumbered)', // Descriptive label
+      label: 'slow (encumbered)', // Descriptive label
+      icon: 'icons/creatures/invertebrates/snail-movement-green.webp',
       changes: [],
       flags: {
         sdm: {
-          effectType: "slow",
-          source: "encumbrance"
+          effectType: 'slow',
+          source: 'encumbrance'
         }
       }
     };
-    await this.createEmbeddedDocuments("ActiveEffect", [effectData]);
+    await this.createEmbeddedDocuments('ActiveEffect', [effectData]);
   }
 
   // Add fatigue slow
   async addFatigueSlow() {
     const effectData = {
-      name: "slow (fatigue)", // Descriptive label
-      label: "slow (fatigue)", // Descriptive label
-      icon: "icons/creatures/invertebrates/snail-movement-green.webp",
+      name: 'slow (fatigue)', // Descriptive label
+      label: 'slow (fatigue)', // Descriptive label
+      icon: 'icons/creatures/invertebrates/snail-movement-green.webp',
       changes: [],
       flags: {
         sdm: {
-          effectType: "slow",
-          source: "fatigue"
+          effectType: 'slow',
+          source: 'fatigue'
         }
       }
     };
-    await this.createEmbeddedDocuments("ActiveEffect", [effectData]);
+    await this.createEmbeddedDocuments('ActiveEffect', [effectData]);
   }
 
   async addFatigueHalfLife() {
@@ -171,32 +168,33 @@ export class SdmActor extends Actor {
     const halfMaxLife = Math.floor(actorMaxLife * 0.5);
 
     const effectData = {
-      name: "half life (fatigue)",
-      label: "half life (fatigue)",
-      icon: "icons/svg/skull.svg",
-      changes: [{
-        key: "system.life.max",
-        value: halfMaxLife.toString(), // Ensure value is a string
-        mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE
-      },
+      name: 'half life (fatigue)',
+      label: 'half life (fatigue)',
+      icon: 'icons/svg/skull.svg',
+      changes: [
+        {
+          key: 'system.life.max',
+          value: halfMaxLife.toString(), // Ensure value is a string
+          mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE
+        }
       ],
       flags: {
         sdm: {
-          effectType: "halfLife",
-          source: "fatigue"
+          effectType: 'halfLife',
+          source: 'fatigue'
         }
       }
     };
 
     if (actorCurrentLife > halfMaxLife) {
       effectData.changes.push({
-        key: "system.life.value",
+        key: 'system.life.value',
         value: halfMaxLife.toString(), // Ensure value is a string
         mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE
-      })
+      });
     }
 
-    await this.createEmbeddedDocuments("ActiveEffect", [effectData]);
+    await this.createEmbeddedDocuments('ActiveEffect', [effectData]);
   }
 
   /** @override */
@@ -218,10 +216,11 @@ export class SdmActor extends Actor {
     const data = this.system;
 
     data.armor = this.getArmor();
+    data.ward = this.getWard();
 
-    const baseDefense = game.settings.get("sdm", "baseDefense") || BASE_DEFENSE_VALUE;
-    const baseMentalDefense = game.settings.get("sdm", "baseMentalDefense") || BASE_DEFENSE_VALUE;
-    const baseSocialDefense = game.settings.get("sdm", "baseSocialDefense") || BASE_DEFENSE_VALUE;
+    const baseDefense = game.settings.get('sdm', 'baseDefense') || BASE_DEFENSE_VALUE;
+    const baseMentalDefense = game.settings.get('sdm', 'baseMentalDefense') || BASE_DEFENSE_VALUE;
+    const baseSocialDefense = game.settings.get('sdm', 'baseSocialDefense') || BASE_DEFENSE_VALUE;
 
     const bonusDefense = data.defense_bonus || 0;
     const mentalDefenseBonus = data.mental_defense_bonus || 0;
@@ -229,7 +228,7 @@ export class SdmActor extends Actor {
 
     // 1. Calcular valores derivados
     const life = data.life;
-    life.max = life.base + life.bonus - life.imbued
+    life.max = life.base + life.bonus - life.imbued;
 
     // 3. Processar atributos
     for (const [key, ability] of Object.entries(data.abilities)) {
@@ -243,9 +242,12 @@ export class SdmActor extends Actor {
     const thought = data.abilities['tho'];
     const charisma = data.abilities['cha'];
 
-    const calculatedDefense = baseDefense + agility.current + agility.bonus + data.armor + bonusDefense;
-    const calculatedMentalDefense = baseMentalDefense + thought.current + thought.bonus + data.ward + mentalDefenseBonus;
-    const calculatedSocialDefense = baseSocialDefense + charisma.current + charisma.bonus + data.prestige + socialDefenseBonus;
+    const calculatedDefense =
+      baseDefense + agility.current + agility.bonus + data.armor + bonusDefense;
+    const calculatedMentalDefense =
+      baseMentalDefense + thought.current + thought.bonus + data.ward + mentalDefenseBonus;
+    const calculatedSocialDefense =
+      baseSocialDefense + charisma.current + charisma.bonus + data.prestige + socialDefenseBonus;
 
     data.defense = Math.min(calculatedDefense, MAX_ATTRIBUTE_VALUE);
     data.mental_defense = Math.min(calculatedMentalDefense, MAX_ATTRIBUTE_VALUE);
@@ -254,24 +256,22 @@ export class SdmActor extends Actor {
     const { burdenPenalty, items, traits } = this.checkInventorySlots();
 
     this.update({
-      "system.burden_penalty": burdenPenalty,
-      "system.item_slots_taken": items.slotsTaken,
-      "system.trait_slots_taken": traits.slotsTaken,
-      "prototypeToken.actorLink": true,
-      "prototypeToken.disposition": 1, // friendly
+      'system.burden_penalty': burdenPenalty,
+      'system.item_slots_taken': items.slotsTaken,
+      'system.trait_slots_taken': traits.slotsTaken,
+      'prototypeToken.actorLink': true,
+      'prototypeToken.disposition': 1 // friendly
     });
   }
 
-  _prepareNpcData() {
-  }
-
+  _prepareNpcData() {}
 
   getTotalWeight() {
     switch (this.type) {
       case ActorType.CHARACTER:
         return this.getCarriedGear() + CHARACTER_DEFAULT_WEIGHT_IN_CASH;
       case ActorType.CARAVAN:
-        return (this.getCarriedGear() + this.getMountRidersWeight());
+        return this.getCarriedGear() + this.getMountRidersWeight();
       case ActorType.NPC:
         return CHARACTER_DEFAULT_WEIGHT_IN_CASH;
       default:
@@ -280,18 +280,19 @@ export class SdmActor extends Actor {
   }
 
   getAvailableSkills() {
-    const result = {}
+    const result = {};
     const itemsArray = this.items.contents;
 
-    const skillTraits = itemsArray.filter((item) => item.type === ItemType.TRAIT);
+    const skillTraits = itemsArray.filter(item => item.type === ItemType.TRAIT);
 
-    skillTraits.forEach((trait) => {
-      const mod = (trait.system.type === TraitType.SKILL && (trait.system.skill.modifier + trait.system.skill.modifier_bonus) || 0);
+    skillTraits.forEach(trait => {
+      const mod = trait.system.type === TraitType.SKILL && trait.system.skill.modifier_final;
+      const modifierStep = trait.system.skill?.modifier_step || 3;
 
       result[trait.uuid] = {
         id: trait.uuid,
         name: trait.name,
-        mod: mod || 3,
+        mod: mod || modifierStep,
         label: `${trait.name}${mod > 0 ? ` (+${mod})` : ''}`
       };
     });
@@ -299,14 +300,16 @@ export class SdmActor extends Actor {
   }
 
   checkInventorySlots() {
+    const isNPC = this.type === ActorType.NPC;
+
     const items = {
       slotsTaken: 0,
-      slots: [],
+      slots: []
     };
 
     const traits = {
       slotsTaken: 0,
-      slots: [],
+      slots: []
     };
 
     const burdens = {
@@ -324,8 +327,13 @@ export class SdmActor extends Actor {
       return (a.sort || 0) - (b.sort || 0);
     });
 
-    const itemSlotsLimit = this.system.item_slots;
-    const traitSlotsLimit = this.system.trait_slots;
+    let itemSlotsLimit = this.system.item_slots;
+    let traitSlotsLimit = this.system.trait_slots;
+
+    if (isNPC) {
+      itemSlotsLimit = 100;
+      traitSlotsLimit = 100;
+    }
 
     const burdenPenalTyBonus = this.system.burden_penalty_bonus || 0;
     let powerSlotsBonus = this.system.power_slots_bonus || 0;
@@ -351,7 +359,6 @@ export class SdmActor extends Actor {
         packedItemBonus -= 1;
         if (itemSlots >= 1) itemSlots -= 1;
       }
-
 
       // Append to inventory.
       if (isGear) {
@@ -380,7 +387,7 @@ export class SdmActor extends Actor {
       items,
       burdens,
       traits,
-      burdenPenalty: burdens.slotsTaken + burdenPenalTyBonus,
+      burdenPenalty: burdens.slotsTaken + burdenPenalTyBonus
     };
 
     return response;
@@ -388,22 +395,21 @@ export class SdmActor extends Actor {
 
   getCarriedGear() {
     const itemsArray = this.items.contents;
-    const filteredItems = itemsArray.filter((item) => GEAR_ITEM_TYPES.includes(item.type));
+    const filteredItems = itemsArray.filter(item => GEAR_ITEM_TYPES.includes(item.type));
 
-    const carriedWeight = filteredItems.reduce(
-      (sum, item) => {
-        const { size, quantity = 1 } = item.system;
-        const { value: sizeValue = 1, unit: sizeUnit = SizeUnit.CASH } = size;
-        const weightInCash = convertToCash(sizeValue * quantity, sizeUnit);
-        return sum + weightInCash;
-      }, 0);
+    const carriedWeight = filteredItems.reduce((sum, item) => {
+      const { size, quantity = 1 } = item.system;
+      const { value: sizeValue = 1, unit: sizeUnit = SizeUnit.CASH } = size;
+      const weightInCash = convertToCash(sizeValue * quantity, sizeUnit);
+      return sum + weightInCash;
+    }, 0);
 
     return carriedWeight;
   }
 
   getMountRidersWeight() {
     const itemsArray = this.items.contents;
-    const filteredMounts = itemsArray.filter((item) => item.type === ItemType.MOUNT);
+    const filteredMounts = itemsArray.filter(item => item.type === ItemType.MOUNT);
     let totalWeight = 0;
 
     for (let mount of filteredMounts) {
@@ -411,17 +417,16 @@ export class SdmActor extends Actor {
         const riderActor = fromUuidSync(rider);
         if (!riderActor) continue;
 
-        totalWeight += riderActor.getTotalWeight()
+        totalWeight += riderActor.getTotalWeight();
       }
     }
 
     return totalWeight;
   }
 
-
   getMotorPassengersWeight() {
     const itemsArray = this.items.contents;
-    const filteredMotor = itemsArray.filter((item) => item.type === ItemType.MOTOR);
+    const filteredMotor = itemsArray.filter(item => item.type === ItemType.MOTOR);
     let totalWeight = 0;
 
     for (let motor of filteredMotor) {
@@ -435,14 +440,47 @@ export class SdmActor extends Actor {
     return totalWeight;
   }
 
-
   getArmor() {
     // Filter for equipped armor items
     const itemsArray = this.items.contents;
-    const equippedArmor = itemsArray.filter(item => item.type === ItemType.GEAR && item.system.type === GearType.ARMOR && item.system.readied);
+    const equippedArmor = itemsArray.filter(
+      item =>
+        item.type === ItemType.GEAR && item.system.type === GearType.ARMOR && item.system.readied
+    );
+    const equippedWard = itemsArray.filter(
+      item =>
+        item.type === ItemType.GEAR && item.system.type === GearType.WARD && item.system.readied
+    );
 
+    const equippedArmorValue = equippedArmor.reduce(
+      (sum, item) => sum + (item.system.armor.value || 0),
+      0
+    );
+    const equippedWardArmorBonus = equippedWard.reduce(
+      (sum, item) => sum + (item.system.ward.armor || 0),
+      0
+    );
     // Sum the armor values
-    return equippedArmor.reduce((sum, item) => sum + (item.system.armor.value || 0), 0);
+
+    const armorBonus = this.system.armor_bonus || 0;
+
+    return equippedArmorValue + equippedWardArmorBonus + armorBonus;
+  }
+
+  getWard() {
+    const itemsArray = this.items.contents;
+    const equippedWard = itemsArray.filter(
+      item =>
+        item.type === ItemType.GEAR && item.system.type === GearType.WARD && item.system.readied
+    );
+    const equippedWardValue = equippedWard.reduce(
+      (sum, item) => sum + (item.system.ward.value || 0),
+      0
+    );
+
+    const wardBonus = this.system.ward_bonus || 0;
+
+    return equippedWardValue + wardBonus;
   }
 
   getCaracanCapacity() {
@@ -450,7 +488,9 @@ export class SdmActor extends Actor {
       return;
     }
 
-    const itemsArray = this.items.contents.filter(item => item.type === ItemType.MOTOR || item.type === ItemType.MOUNT);
+    const itemsArray = this.items.contents.filter(
+      item => item.type === ItemType.MOTOR || item.type === ItemType.MOUNT
+    );
 
     const carryCapacity = itemsArray.reduce((acc, item) => {
       return acc + item.getCarryCapacity();
@@ -490,7 +530,7 @@ export class SdmActor extends Actor {
     const current = Math.max(0, this.system.hero_dice?.value || 0);
     const newHeroDiceValue = Math.max(current - usedHeroDice, 0);
     await this.update({
-      'system.hero_dice.value': newHeroDiceValue,
+      'system.hero_dice.value': newHeroDiceValue
     });
   }
 }

@@ -1,13 +1,19 @@
-import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
-import { onItemUpdate, convertToCash, ITEMS_NOT_ALLOWED_IN_CHARACTERS, onItemCreateActiveEffects, getSlotsTaken } from '../helpers/itemUtils.mjs';
-import { openItemTransferDialog } from '../items/transferItem.mjs';
-import { GearType, ItemType, RollMode, RollType, SizeUnit } from '../helpers/constants.mjs';
-import { healingHeroDice } from '../rolls/heroDice.mjs';
-import { MAX_CARRY_WEIGHT_CASH, MAX_MODIFIER, UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
+import { MAX_MODIFIER, UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
 import { createChatMessage } from '../helpers/chatUtils.mjs';
-import { SAVING_THROW_BASE_FORMULA } from '../settings.mjs';
+import { ActorType, ItemType, RollMode, RollType } from '../helpers/constants.mjs';
+import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { $fmt, $l10n, capitalizeFirstLetter } from '../helpers/globalUtils.mjs';
-import SDMRoll from '../rolls/sdmRoll.mjs';
+import {
+  getSlotsTaken,
+  ITEMS_NOT_ALLOWED_IN_CHARACTERS,
+  onItemCreateActiveEffects,
+  onItemUpdate
+} from '../helpers/itemUtils.mjs';
+import { templatePath } from '../helpers/templates.mjs';
+import { openItemTransferDialog } from '../items/transferItem.mjs';
+import { healingHeroDice } from '../rolls/heroDice.mjs';
+import SDMRoll, { sanitizeExpression } from '../rolls/sdmRoll.mjs';
+import { SAVING_THROW_BASE_FORMULA } from '../settings.mjs';
 
 const { api, sheets } = foundry.applications;
 const TextEditor = foundry.applications.ux.TextEditor.implementation;
@@ -20,11 +26,22 @@ const { renderTemplate } = foundry.applications.handlebars;
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheetV2}
  */
-export class SdmActorSheet extends api.HandlebarsApplicationMixin(
-  sheets.ActorSheetV2
-) {
+export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSheetV2) {
   constructor(options = {}) {
     super(options);
+
+    // Create a new classes array with the npc class if needed
+    const classes = [...this.options.classes];
+    if (this.actor?.type === ActorType.NPC) {
+      classes.push(ActorType.NPC);
+    }
+
+    // Update options with the new classes array
+    this.options = {
+      ...this.options,
+      classes
+    };
+
     this.#dragDrop = this.#createDragDropHandlers();
   }
 
@@ -33,10 +50,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     classes: ['sdm', 'actor'],
     position: {
       width: 800,
-      height: 800,
+      height: 800
     },
     window: {
-      resizable: true,
+      resizable: true
     },
     actions: {
       onEditImage: this._onEditImage,
@@ -51,35 +68,37 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       toggleReadied: this._toggleReadied,
       toggleMode: this._onToggleMode,
       updateAttack: this._onUpdateAttack,
+      rollNPCDamage: this._onRollNPCDamage,
+      rollNPCMorale: this._onRollNPCMorale
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
     form: {
-      submitOnChange: true,
-    },
+      submitOnChange: true
+    }
   };
 
   /** @override */
   static PARTS = {
     header: {
-      template: 'systems/sdm/templates/actor/header.hbs',
+      template: templatePath('actor/header')
     },
     tabs: {
       // Foundry-provided generic template
-      template: 'templates/generic/tab-navigation.hbs',
+      template: 'templates/generic/tab-navigation.hbs'
     },
     inventory: {
-      template: 'systems/sdm/templates/actor/inventory.hbs',
+      template: templatePath('actor/inventory')
     },
     biography: {
-      template: 'systems/sdm/templates/actor/biography.hbs',
+      template: templatePath('actor/biography')
     },
     notes: {
-      template: 'systems/sdm/templates/actor/notes.hbs',
+      template: templatePath('actor/notes')
     },
     effects: {
-      template: 'systems/sdm/templates/actor/effects.hbs',
-    },
+      template: templatePath('actor/effects')
+    }
   };
 
   _getStatSelectOptions(source) {
@@ -88,11 +107,12 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     const { default_ability = '' } = source;
     let result = '';
 
-
     result += '<option value=""}></option>';
     for (let orderedAbility of abilitiesOrder[currentLanguage]) {
-      result += `<option value="${orderedAbility}"${(orderedAbility === default_ability) ? 'selected' : ''}>
-      ${$l10n(CONFIG.SDM.abilities[orderedAbility])}</option>\n`
+      result += `<option value="${orderedAbility}"${
+        orderedAbility === default_ability ? 'selected' : ''
+      }>
+      ${$l10n(CONFIG.SDM.abilities[orderedAbility])}</option>\n`;
     }
 
     return result;
@@ -102,7 +122,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     let options = '';
     const attackData = this.actor.system[attack];
     for (const skill of Object.values(availableSkills)) {
-      options += `<option value="${skill.id}"${(skill.id === attackData?.favorite_skill) ? 'selected' : ''}>${skill.name} (+${skill.mode || 3})</option>\n`
+      options += `<option value="${skill.id}"${
+        skill.id === attackData?.favorite_skill ? 'selected' : ''
+      }>${skill.name} (+${skill.mode || 3})</option>\n`;
     }
     return options;
   }
@@ -110,7 +132,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
   damageMultiplierOptions() {
     let options = '';
     for (const [key, value] of Object.entries(CONFIG.SDM.damageMultiplier)) {
-      options += `<option value="${key}">${value}</option>\n`
+      options += `<option value="${key}">${value}</option>\n`;
     }
 
     return options;
@@ -124,12 +146,13 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     attack = '',
     versatile = false,
     versatileFormula = '',
-    bonusDamage = '',
+    bonusDamage = ''
   }) {
     let rollTitlePrefix = '';
     const isDamage = type === RollType.DAMAGE;
     const isAttack = type === RollType.ATTACK;
     const isAbility = type === RollType.ABILITY;
+    const isPower = type === RollType.POWER;
 
     if (isDamage) rollTitlePrefix = $l10n('SDM.Damage');
     if (isAttack) rollTitlePrefix = $l10n('SDM.Attack');
@@ -139,10 +162,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     const title = from;
 
     const actorAttack = isAttack ? this.actor.system[attack] : null;
-    const versatileLabel = $l10n('SDM.FeatureVersatile');
     const availableSkills = this.actor.getAvailableSkills();
+    const isCharacterActor = this.actor.type === ActorType.CHARACTER;
 
-    const template = await renderTemplate("systems/sdm/templates/custom-roll-dialog.hbs", {
+    const template = await renderTemplate(templatePath('custom-roll-dialog'), {
       rollTitlePrefix,
       title,
       abilities: CONFIG.SDM.abilities,
@@ -153,42 +176,49 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       multiplierOptions: CONFIG.SDM.damageMultiplier,
       rollModes: CONFIG.SDM.rollMode,
       type,
+      isCharacterActor
     });
+
+    const damageIcon = isPower
+      ? 'fas fa-wand-magic-sparkles'
+      : isDamage
+        ? 'fas fa-sword'
+        : 'fas fa-dice-d20';
 
     const buttons = [
       {
         action: 'one-handed',
-        icon: isDamage ? 'fas fa-sword' : 'fas fa-dice-d20',
-        label: isDamage ? 'One-Handed' : $l10n('SDM.ButtonRoll'),
+        icon: damageIcon,
+        label: isDamage && versatile ? $l10n('SDM.OneHanded') : $l10n('SDM.ButtonRoll'),
         callback: (event, button) => ({
           versatile: false,
-          ...new foundry.applications.ux.FormDataExtended(button.form).object,
-        }),
-      },
+          ...new foundry.applications.ux.FormDataExtended(button.form).object
+        })
+      }
     ];
 
     if (versatile) {
       buttons.push({
         action: 'two-handed',
         icon: 'fas fa-axe-battle',
-        label: 'Two-Handed',
+        label: $l10n('SDM.TwoHanded'),
         callback: (event, button) => ({
           versatile,
-          ...new foundry.applications.ux.FormDataExtended(button.form).object,
-        }),
+          ...new foundry.applications.ux.FormDataExtended(button.form).object
+        })
       });
     }
 
     // Create and render the modal
     const rollOptions = await foundry.applications.api.DialogV2.wait({
       window: {
-        title: $fmt('SDM.RollTitle', { prefix: '', title }),
+        title: $fmt('SDM.RollTitle', { prefix: '', title })
       },
       content: template,
       position: {
-        width: 400,
+        width: 400
       },
-      buttons,
+      buttons
     });
 
     if (rollOptions === null) {
@@ -202,18 +232,18 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       rollMode = RollMode.NORMAL,
       shouldExplode = false,
       multiplier = '',
-      selectedSkill,
+      selectedSkill
     } = rollOptions;
     if (modifier && !foundry.dice.Roll.validate(modifier)) {
       ui.notifications.error($l10n('SDM.ErrorInvalidModifier'));
-      return
+      return;
     }
     const heroicDice = parseInt(heroicQty || 0, 10);
     const currentHeroDice = this.actor.system.hero_dice?.value ?? 0;
 
     if (heroicDice > currentHeroDice) {
-      ui.notifications.error("Not enough hero dice for this roll");
-      return
+      ui.notifications.error('Not enough hero dice for this roll');
+      return;
     }
 
     const rollData = {
@@ -226,7 +256,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       multiplier,
       explodingDice: shouldExplode,
       versatile: !!rollOptions.versatile,
-      skill: availableSkills[selectedSkill],
+      skill: availableSkills[selectedSkill]
     };
 
     if (formula) {
@@ -249,7 +279,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     const attackSystemData = this.actor.system[attack];
     const { default_ability: selectedAbility, favorite_skill: selectedSkill } = attackSystemData;
 
-    const template = await renderTemplate("systems/sdm/templates/actor/character/update-attack.hbs", {
+    const template = await renderTemplate(templatePath('actor/character/update-attack'), {
       skills,
       abilities: CONFIG.SDM.abilities,
       attack: game.i18n.localize(`SDM.Attack${capitalizedAttack}`),
@@ -260,15 +290,16 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     const updateAttackOptions = await foundry.applications.api.DialogV2.prompt({
       window: {
         title: game.i18n.format('DOCUMENT.Update', {
-          type: game.i18n.localize(`SDM.Attack${capitalizedAttack}`),
+          type: game.i18n.localize(`SDM.Attack${capitalizedAttack}`)
         })
       },
       content: template,
       ok: {
         icon: 'fas fa-floppy-disk',
         label: game.i18n.format('SDM.ButtonSave'),
-        callback: (event, button) => new foundry.applications.ux.FormDataExtended(button.form).object,
-      },
+        callback: (event, button) =>
+          new foundry.applications.ux.FormDataExtended(button.form).object
+      }
     });
 
     if (!updateAttackOptions) return;
@@ -279,10 +310,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       [`system.${attack}`]: {
         ...this.actor.system[attack],
         default_ability,
-        favorite_skill,
+        favorite_skill
       }
-    })
-
+    });
   }
 
   /** @override */
@@ -298,7 +328,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
         options.parts.push('inventory', 'effects');
         break;
       case 'npc':
-        options.parts.push('effects');
+        options.parts.push('inventory', 'effects');
         break;
     }
     options.parts.push('notes');
@@ -327,7 +357,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       fields: this.document.schema.fields,
       systemFields: this.document.system.schema.fields,
       // Add isGM to the context
-      isGM: game.user.isGM,
+      isGM: game.user.isGM
     };
 
     if (this.actor.type === 'character') {
@@ -345,11 +375,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
           reorderedAbilities[key] = context.system.abilities[key];
         }
       });
-      const heroDiceType = this.actor.system.hero_dice?.dice_type || game.settings.get('sdm', 'defaultHeroDiceType');
+      const heroDiceType =
+        this.actor.system.hero_dice?.dice_type || game.settings.get('sdm', 'defaultHeroDiceType');
       // Replace the abilities in the system object with the reordered abilities
       context.heroDiceType = heroDiceType;
       context.system.abilities = reorderedAbilities;
-
 
       // Adiciona o estado do modo ao contexto
       context.isEditMode = this.actor.getFlag('sdm', 'editMode') ?? true;
@@ -371,33 +401,27 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
         context.tab = context.tabs[partId];
         // Enrich notes info for display
         // Enrichment turns text like `[[/r 1d20]]` into buttons
-        context.enrichedNotes = await TextEditor.enrichHTML(
-          this.actor.system.notes,
-          {
-            // Whether to show secret blocks in the finished html
-            secrets: this.document.isOwner,
-            // Data to fill in for inline rolls
-            rollData: this.actor.getRollData(),
-            // Relative UUID resolution
-            relativeTo: this.actor,
-          }
-        );
+        context.enrichedNotes = await TextEditor.enrichHTML(this.actor.system.notes, {
+          // Whether to show secret blocks in the finished html
+          secrets: this.document.isOwner,
+          // Data to fill in for inline rolls
+          rollData: this.actor.getRollData(),
+          // Relative UUID resolution
+          relativeTo: this.actor
+        });
         break;
       case 'biography':
         context.tab = context.tabs[partId];
         // Enrich biography info for display
         // Enrichment turns text like `[[/r 1d20]]` into buttons
-        context.enrichedBiography = await TextEditor.enrichHTML(
-          this.actor.system.biography,
-          {
-            // Whether to show secret blocks in the finished html
-            secrets: this.document.isOwner,
-            // Data to fill in for inline rolls
-            rollData: this.actor.getRollData(),
-            // Relative UUID resolution
-            relativeTo: this.actor,
-          }
-        );
+        context.enrichedBiography = await TextEditor.enrichHTML(this.actor.system.biography, {
+          // Whether to show secret blocks in the finished html
+          secrets: this.document.isOwner,
+          // Data to fill in for inline rolls
+          rollData: this.actor.getRollData(),
+          // Relative UUID resolution
+          relativeTo: this.actor
+        });
         break;
       case 'effects':
         context.tab = context.tabs[partId];
@@ -433,7 +457,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
         // FontAwesome Icon, if you so choose
         icon: '',
         // Run through localization
-        label: 'SDM.Tab',
+        label: 'SDM.Tab'
       };
       switch (partId) {
         case 'header':
@@ -474,7 +498,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     // this sheet does with spells
 
     const transport = [];
-    const isCaravan = this.actor.type === 'caravan';
+    const isCaravan = this.actor.type === ActorType.CARAVAN;
+    const isCharacter = this.actor.type === ActorType.CHARACTER;
+    const isNPC = this.actor.type === ActorType.NPC;
 
     // Iterate through items, allocating to containers
     for (let i of this.document.items) {
@@ -510,7 +536,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
    * @override
    */
   _onRender(context, options) {
-    this.#dragDrop.forEach((d) => d.bind(this.element));
+    this.#dragDrop.forEach(d => d.bind(this.element));
     this.#disableOverrides();
     // You may want to add other special handling here
     // Foundry comes with a large number of utility classes, e.g. SearchFilter
@@ -561,6 +587,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
   }
 
   _checkActorWeightLimit(additionalSlots = 0, itemType) {
+    if (this.actor.type === ActorType.NPC) {
+      return true;
+    }
     const itemSlotsTaken = this.actor.system.item_slots_taken;
     const actorItemSlots = this.actor.system.item_slots;
     const traitSlotsTaken = this.actor.system.trait_slots_taken;
@@ -580,15 +609,18 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
   }
 
   _checkCarriedWeight(item, updateData) {
+    if (this.actor.type === ActorType.NPC) {
+      return true;
+    }
+
     let itemSlots = getSlotsTaken(item?.system);
     let updateDataSlots = updateData ? getSlotsTaken(updateData?.system) : null;
-
 
     if (updateData && updateDataSlots <= itemSlots) {
       return true;
     }
 
-    const slotsTaken = updateData ? (updateDataSlots - itemSlots) : itemSlots;
+    const slotsTaken = updateData ? updateDataSlots - itemSlots : itemSlots;
     const validWeight = this._checkActorWeightLimit(slotsTaken, item.type);
 
     if (!validWeight) {
@@ -600,6 +632,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
 
   // Helper validation method
   _validateItemWeight(item) {
+    if (this.actor.type === ActorType.NPC) {
+      return true;
+    }
+
     const itemSlots = item.system.slots_taken || 1;
     const validWeight = this._checkActorWeightLimit(itemSlots, item.type);
 
@@ -612,8 +648,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
   }
 
   /**
-  * Remove item change listeners when sheet closes
-  */
+   * Remove item change listeners when sheet closes
+   */
   _teardownItemListeners() {
     if (!this._itemListeners) return;
     Hooks.off('preCreateItem', this._itemListeners.preCreate);
@@ -645,13 +681,15 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
 
   async _checkEncumbrance() {
     const actor = this.actor;
-    const cumbersomeArmor = this.actor.items.contents.filter(
-      (item) => item.type === ItemType.ARMOR && item.system.cumbersome && item.system.readied,
-    ).length > 0;
+    const cumbersomeArmor =
+      this.actor.items.contents.filter(
+        item => item.type === ItemType.ARMOR && item.system.cumbersome && item.system.readied
+      ).length > 0;
     // Calculate current encumbrance (SDM-specific calculation)
 
-    const carriedWeight = this.actor.getCarriedGear()
-    const encumbranceThreshold = this.actor.system.carry_weight?.unencumbered ?? UNENCUMBERED_THRESHOLD_CASH;
+    const carriedWeight = this.actor.getCarriedGear();
+    const encumbranceThreshold =
+      this.actor.system.carry_weight?.unencumbered ?? UNENCUMBERED_THRESHOLD_CASH;
     const encumberedEffect = actor.effects.getName('encumbered');
     const encumberedSlow = actor.effects.getName('slow (encumbered)');
     const cumbersomeArmorEffect = actor.effects.getName('cumbersome (armor)');
@@ -690,18 +728,16 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
   static async _onEditImage(event, target) {
     const attr = target.dataset.edit;
     const current = foundry.utils.getProperty(this.document, attr);
-    const { img } =
-      this.document.constructor.getDefaultArtwork?.(this.document.toObject()) ??
-      {};
+    const { img } = this.document.constructor.getDefaultArtwork?.(this.document.toObject()) ?? {};
     const fp = new FilePicker({
       current,
       type: 'image',
       redirectToRoot: img ? [img] : [],
-      callback: (path) => {
+      callback: path => {
         this.document.update({ [attr]: path });
       },
       top: this.position.top + 40,
-      left: this.position.left + 10,
+      left: this.position.left + 10
     });
     return fp.browse();
   }
@@ -740,7 +776,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
   }
 
   /**
-   * Handle creating a new Owned Item or ActiveEffect for the actor using initial data defined in the HTML dataset
+   * Handle creating a new Owned Item or ActiveEffect for the actor using initial data defined
+   * in the HTML dataset
    *
    * @this SdmActorSheet
    * @param {PointerEvent} event   The originating click event
@@ -752,8 +789,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     const docData = {
       name: docCls.defaultName({
         type: target.dataset.type,
-        parent: this.actor,
-      }),
+        parent: this.actor
+      })
     };
 
     // Apply dataset properties
@@ -761,22 +798,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       if (['action', 'documentClass'].includes(dataKey)) continue;
       foundry.utils.setProperty(docData, dataKey, value);
     }
-
-    // Use data model defaults for new items
-    // const sizeValue = foundry.utils.getProperty(docData, 'system.size.value') ?? 1;
-    // const sizeUnit = foundry.utils.getProperty(docData, 'system.size.unit') ?? SizeUnit.STONES;
-    // const quantity = foundry.utils.getProperty(docData, 'system.quantity') ?? 1;
-    // const newWeight = convertToCash(sizeValue * quantity, sizeUnit);
-
-    // const currentCarriedWeight = this.actor.getCarriedGear();
-    // const maxCarryWeight = this.actor.system.carry_weight.max;
-
-    // const newCarryWeight = currentCarriedWeight + newWeight;
-
-    // if (newCarryWeight > maxCarryWeight) {
-    //   ui.notifications.error("Adding this item would exceed your carry weight limit.");
-    //   return;
-    // }
 
     await docCls.create(docData, { parent: this.actor });
   }
@@ -817,15 +838,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     return openItemTransferDialog(item, this.actor);
   }
 
-
   static async _onToggleMode(event, target) {
     const currentMode = this.actor.getFlag('sdm', 'editMode') ?? true;
     const newMode = !currentMode;
 
     await this.actor.setFlag('sdm', 'editMode', newMode);
-
-    // Atualiza apenas a parte necessária da ficha
-    this.render({ part: 'header' });
   }
 
   /**
@@ -883,12 +900,101 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       attack,
       versatile,
       versatileFormula,
-      bonusDamage,
-    }
+      bonusDamage
+    };
 
     this._openCustomRollModal(rollAttributes);
   }
 
+  static async _onRollNPCDamage(event, target) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.detail > 1) return;
+
+    const damage = this.actor.system.damage || '1d4';
+
+    const rollAttributes = {
+      type: RollType.DAMAGE,
+      from: this.actor.name,
+      formula: damage
+    };
+
+    this._openCustomRollModal(rollAttributes);
+  }
+
+  static async _onRollNPCMorale(event, target) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.detail > 1) return;
+
+    const data = await DialogV2.wait({
+      window: {
+        title: game.i18n.localize('SDM.MoraleRoll'),
+        resizable: true
+      },
+      content: await renderTemplate(templatePath('actor/npc/morale-roll-dialog'), {
+        rollModes: CONFIG.SDM.rollMode
+      }),
+      buttons: [
+        {
+          label: game.i18n.localize('SDM.ButtonRoll'),
+          icon: 'fas fa-person-running',
+          callback: (event, button) => ({
+            ...new foundry.applications.ux.FormDataExtended(button.form).object
+          })
+        }
+      ],
+      rejectClose: false
+    });
+
+    if (!data) {
+      return;
+    }
+
+    const { modifier = '' } = data;
+
+    const basMoraleFormula = game.settings.get('sdm', 'baseMoraleFormula') || '2d6';
+    const formula = `${basMoraleFormula} ${modifier ? `+${modifier}` : ''}`;
+    const sanitizedFormula = sanitizeExpression(formula);
+    const targetNumber = this.actor.system.morale || 2;
+
+    // Create and evaluate the roll
+    let roll = new Roll(sanitizedFormula);
+    roll = await roll.evaluate();
+
+    const equalOutcome = $l10n('SDM.MoraleEqualOutcome');
+    const overOutcome = $l10n('SDM.MoraleOverOutcome');
+    const underOutcome = $l10n('SDM.MoraleUnderOutcome');
+
+    // Determine outcome and message
+    let outcome, message;
+    if (roll.total === targetNumber) {
+      outcome = equalOutcome;
+      message = $l10n('SDM.MoraleEqualOutcomeMessage');
+    } else if (roll.total > targetNumber) {
+      outcome = overOutcome;
+      message = $l10n('SDM.MoraleOverOutcomeMessage');
+    } else {
+      outcome = underOutcome;
+      message = $l10n('SDM.MoraleUnderOutcomeMessage');
+    }
+
+    const templateData = {
+      outcome,
+      message,
+      formula: sanitizedFormula,
+      total: roll.total,
+      targetLabel: $l10n('SDM.Target'),
+      targetNumber,
+      rollTooltip: await roll.getTooltip()
+    };
+
+    createChatMessage({
+      content: await renderTemplate(templatePath('chat/morale-roll-result'), templateData),
+      flavor: $l10n('SDM.MoraleRoll'),
+      rolls: [roll]
+    });
+  }
 
   static async _onRollSavingThrow(event, target) {
     event.preventDefault(); // Don't open context menu
@@ -907,33 +1013,40 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     const savingThrowSum = finalAbility + ward + saveBonus + allSaveBonus - burdenPenalty;
     const finalSavingThrowBonus = Math.min(savingThrowSum, MAX_MODIFIER);
 
-    const label = $fmt('SDM.SavingThrowRoll', {
-      ability: $l10n(CONFIG.SDM.abilities[rollType]),
+    let label = $fmt('SDM.SavingThrowRoll', {
+      ability: $l10n(CONFIG.SDM.abilities[rollType])
     });
 
-    const baseRollFormula = game.settings.get('sdm', 'savingThrowBaseRollFormula') || SAVING_THROW_BASE_FORMULA;
-    const formula = `${baseRollFormula} ${finalSavingThrowBonus >= 0 ? `+` : ``}${finalSavingThrowBonus}`;
+    if (ward > 0) {
+      label += ` (${$l10n('TYPES.Item.ward').toLowerCase()} +${ward})`;
+    }
+
+    const baseRollFormula =
+      game.settings.get('sdm', 'savingThrowBaseRollFormula') || SAVING_THROW_BASE_FORMULA;
+    const formula = `${baseRollFormula} ${
+      finalSavingThrowBonus >= 0 ? `+` : ``
+    }${finalSavingThrowBonus}`;
     const targetNumber = this.actor.system.save_target;
 
     // Create and evaluate the roll
     let roll = new Roll(formula);
     roll = await roll.evaluate();
 
-    const sacrificeOutcome = $l10n("SDM.SavingThrowSacrifice");
-    const saveOutcome = $l10n("SDM.SavingThrowSave");
-    const doomOutcome = $l10n("SDM.SavingThrowDoom");
+    const sacrificeOutcome = $l10n('SDM.SavingThrowSacrifice');
+    const saveOutcome = $l10n('SDM.SavingThrowSave');
+    const doomOutcome = $l10n('SDM.SavingThrowDoom');
 
     // Determine outcome and message
     let outcome, message;
     if (roll.total === targetNumber) {
       outcome = sacrificeOutcome;
-      message = $l10n("SDM.SavingThrowSacrificeMessage");
+      message = $l10n('SDM.SavingThrowSacrificeMessage');
     } else if (roll.total > targetNumber) {
       outcome = saveOutcome;
-      message = $l10n("SDM.SavingThrowSaveMessage");
+      message = $l10n('SDM.SavingThrowSaveMessage');
     } else {
       outcome = doomOutcome;
-      message = $l10n("SDM.SavingThrowDoomMessage");
+      message = $l10n('SDM.SavingThrowDoomMessage');
     }
 
     let borderColor = '#aa0200';
@@ -952,13 +1065,13 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
       borderColor,
       targetLabel: $l10n('SDM.Target'),
       targetNumber,
-      rollTooltip: await roll.getTooltip(),
+      rollTooltip: await roll.getTooltip()
     };
 
     createChatMessage({
-      content: await renderTemplate("systems/sdm/templates/chat/saving-throw-result.hbs", templateData),
+      content: await renderTemplate(templatePath('chat/saving-throw-result'), templateData),
       flavor: label,
-      rolls: [roll],
+      rolls: [roll]
     });
   }
 
@@ -971,10 +1084,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     const dataset = target.dataset;
     const { attack } = dataset;
 
-
     this._openUpdateAttackModal(attack);
   }
-
 
   static async _onHeroHealing(event, target) {
     event.preventDefault(); // Don't open context menu
@@ -1057,7 +1168,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
    * @param {DragEvent} event       The originating DragEvent
    * @protected
    */
-  _onDragOver(event) { }
+  _onDragOver(event) {}
 
   /**
    * Callback actions which occur when a dragged element is dropped on a target.
@@ -1087,20 +1198,21 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
    * Handle the dropping of ActiveEffect data onto an Actor Sheet
    * @param {DragEvent} event                  The concluding DragEvent which contains drop data
    * @param {object} data                      The data transfer extracted from the event
-   * @returns {Promise<ActiveEffect|boolean>}  The created ActiveEffect object or false if it couldn't be created.
+   * @returns {Promise<ActiveEffect|boolean>}  The created ActiveEffect object or false if
+   *                                           it couldn't be created.
    * @protected
    */
   async _onDropActiveEffect(event, data) {
     const aeCls = getDocumentClass('ActiveEffect');
     const effect = await aeCls.fromDropData(data);
     if (!this.actor.isOwner || !effect) return false;
-    if (effect.target === this.actor)
-      return this._onSortActiveEffect(event, effect);
+    if (effect.target === this.actor) return this._onSortActiveEffect(event, effect);
     return aeCls.create(effect, { parent: this.actor });
   }
 
   /**
-   * Handle a drop event for an existing embedded Active Effect to sort that Active Effect relative to its siblings
+   * Handle a drop event for an existing embedded Active Effect to sort that Active Effect
+   * relative to its siblings
    *
    * @param {DragEvent} event
    * @param {ActiveEffect} effect
@@ -1119,18 +1231,14 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     for (const el of dropTarget.parentElement.children) {
       const siblingId = el.dataset.effectId;
       const parentId = el.dataset.parentId;
-      if (
-        siblingId &&
-        parentId &&
-        (siblingId !== effect.id || parentId !== effect.parent.id)
-      )
+      if (siblingId && parentId && (siblingId !== effect.id || parentId !== effect.parent.id))
         siblings.push(this._getEmbeddedDocument(el));
     }
 
     // Perform the sort
     const sortUpdates = SortingHelpers.performIntegerSort(effect, {
       target,
-      siblings,
+      siblings
     });
 
     // Split the updates up by parent document
@@ -1150,9 +1258,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
 
     // Effects-on-items updates
     for (const [itemId, updates] of Object.entries(grandchildUpdateData)) {
-      await this.actor.items
-        .get(itemId)
-        .updateEmbeddedDocuments('ActiveEffect', updates);
+      await this.actor.items.get(itemId).updateEmbeddedDocuments('ActiveEffect', updates);
     }
 
     // Update on the main actor
@@ -1163,8 +1269,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
    * Handle dropping of an Actor data onto another Actor sheet
    * @param {DragEvent} event            The concluding DragEvent which contains drop data
    * @param {object} data                The data transfer extracted from the event
-   * @returns {Promise<object|boolean>}  A data object which describes the result of the drop, or false if the drop was
-   *                                     not permitted.
+   * @returns {Promise<object|boolean>}  A data object which describes the result of the drop,
+   *                                     or false if the drop was not permitted.
    * @protected
    */
   async _onDropActor(event, data) {
@@ -1177,7 +1283,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
    * Handle dropping of an item reference or item data onto an Actor Sheet
    * @param {DragEvent} event            The concluding DragEvent which contains drop data
    * @param {object} data                The data transfer extracted from the event
-   * @returns {Promise<Item[]|boolean>}  The created or updated Item instances, or false if the drop was not permitted.
+   * @returns {Promise<Item[]|boolean>}  The created or updated Item instances,
+   *                                     or false if the drop was not permitted.
    * @protected
    */
   async _onDropItem(event, data) {
@@ -1195,8 +1302,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     }
 
     // Handle item sorting within the same Actor
-    if (this.actor.uuid === item.parent?.uuid)
-      return this._onSortItem(event, item);
+    if (this.actor.uuid === item.parent?.uuid) return this._onSortItem(event, item);
 
     // Create the owned item
     return this._onDropItemCreate(item, event);
@@ -1215,7 +1321,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     const folder = await Folder.implementation.fromDropData(data);
     if (folder.type !== 'Item') return [];
     const droppedItemData = await Promise.all(
-      folder.contents.map(async (item) => {
+      folder.contents.map(async item => {
         if (!(document instanceof Item)) item = await fromUuid(item.uuid);
         return item;
       })
@@ -1225,7 +1331,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
 
   /**
    * Handle the final creation of dropped Item data on the Actor.
-   * This method is factored out to allow downstream classes the opportunity to override item creation behavior.
+   * This method is factored out to allow downstream classes the opportunity to override
+   * item creation behavior.
    * @param {object[]|object} itemData      The item data requested for creation
    * @param {DragEvent} event               The concluding DragEvent which provided the drop data
    * @returns {Promise<Item[]>}
@@ -1272,16 +1379,15 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
     const siblings = [];
     for (let el of dropTarget.parentElement.children) {
       const siblingId = el.dataset.itemId;
-      if (siblingId && siblingId !== item.id)
-        siblings.push(items.get(el.dataset.itemId));
+      if (siblingId && siblingId !== item.id) siblings.push(items.get(el.dataset.itemId));
     }
 
     // Perform the sort
     const sortUpdates = SortingHelpers.performIntegerSort(item, {
       target,
-      siblings,
+      siblings
     });
-    const updateData = sortUpdates.map((u) => {
+    const updateData = sortUpdates.map(u => {
       const update = u.update;
       update._id = u.target._id;
       return update;
@@ -1311,15 +1417,15 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
    * @private
    */
   #createDragDropHandlers() {
-    return this.options.dragDrop.map((d) => {
+    return this.options.dragDrop.map(d => {
       d.permissions = {
         dragstart: this._canDragStart.bind(this),
-        drop: this._canDragDrop.bind(this),
+        drop: this._canDragDrop.bind(this)
       };
       d.callbacks = {
         dragstart: this._onDragStart.bind(this),
         dragover: this._onDragOver.bind(this),
-        drop: this._onDrop.bind(this),
+        drop: this._onDrop.bind(this)
       };
       return new DragDrop(d);
     });
@@ -1335,7 +1441,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(
    * Submit a document update based on the processed form data.
    * @param {SubmitEvent} event                   The originating form submission event
    * @param {HTMLFormElement} form                The form element that was submitted
-   * @param {object} submitData                   Processed and validated form data to be used for a document update
+   * @param {object} submitData                   Processed and validated form data to be used
+   *                                              for a document update
    * @returns {Promise<void>}
    * @protected
    * @override

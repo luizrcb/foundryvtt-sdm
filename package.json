@@ -4,7 +4,8 @@
   "description": "CSS compiler for the Sdm system",
   "scripts": {
     "build": "sass src/scss/sdm.scss css/sdm.css --style=expanded --no-source-map",
-    "watch": "sass src/scss/sdm.scss css/sdm.css --style=expanded --source-map --watch"
+    "watch": "sass src/scss/sdm.scss css/sdm.css --style=expanded --source-map --watch",
+    "format": "prettier --write \"**/*.{js,mjs,html,hbs,json,css}\""
   },
   "browserslist": [
     "last 3 versions"
@@ -13,6 +14,8 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
+    "prettier": "^3.6.2",
+    "prettier-plugin-handlebars": "^0.0.1",
     "sass": "^1.53.0"
   },
   "dependencies": {

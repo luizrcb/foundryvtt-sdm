@@ -1,6 +1,6 @@
 export const DocumentType = Object.freeze({
   ITEM: 'Item',
-  ACTOR: 'Actor',
+  ACTOR: 'Actor'
 });
 
 export const RangeOption = Object.freeze({
@@ -27,20 +27,21 @@ export const RollType = Object.freeze({
   ABILITY: 'ability',
   ATTACK: 'attack',
   DAMAGE: 'damage',
-  SAVE: 'save',
+  POWER: 'power',
+  SAVE: 'save'
 });
 
 export const ActorType = Object.freeze({
   CHARACTER: 'character',
   NPC: 'npc',
-  CARAVAN: 'caravan',
+  CARAVAN: 'caravan'
 });
 
 export const AttackType = Object.freeze({
   MELEE: 'melee',
   RANGED: 'ranged',
   FANTASCIENCE: 'fantascience',
-  OLDTECH: 'oldtech',
+  OLDTECH: 'oldtech'
 });
 
 export const ItemType = Object.freeze({
@@ -48,19 +49,20 @@ export const ItemType = Object.freeze({
   TRAIT: 'trait',
   BURDEN: 'burden',
   MOUNT: 'mount',
-  MOTOR: 'motor',
+  MOTOR: 'motor'
 });
 
 export const GearType = Object.freeze({
   WEAPON: 'weapon',
   ARMOR: 'armor',
   POWER: 'power',
-  POWER_CONTAINER: 'power_container'
+  POWER_CONTAINER: 'power_container',
+  WARD: 'ward'
 });
 
 export const TraitType = Object.freeze({
   SKILL: 'skill',
-  POWER: 'power',
+  POWER: 'power'
 });
 
 export const ArmorType = Object.freeze({
@@ -68,13 +70,20 @@ export const ArmorType = Object.freeze({
   LIGHT: 'light',
   MEDIUM: 'medium',
   HEAVY: 'heavy',
-  GOLEM: 'golem',
+  GOLEM: 'golem'
+});
+
+export const WardType = Object.freeze({
+  TRINKET: 'trinket',
+  WEARABLE: 'wearable',
+  PORTABLE: 'portable',
+  BULKY: 'bulky'
 });
 
 export const PullMode = Object.freeze({
   CARTING: 'carting',
   DRAGGING: 'dragging',
-  FLYING: 'flying',
+  FLYING: 'flying'
 });
 
 export const SpeedType = Object.freeze({
@@ -82,7 +91,7 @@ export const SpeedType = Object.freeze({
   SLOW: 'slow',
   STANDARD: 'standard',
   FAST: 'fast',
-  VERY_FAST: 'very_fast',
+  VERY_FAST: 'very_fast'
 });
 
 export const DiceType = Object.freeze({
@@ -91,7 +100,7 @@ export const DiceType = Object.freeze({
   d8: 'd8',
   d10: 'd10',
   d12: 'd12',
-  d20: 'd20',
+  d20: 'd20'
 });
 
 export const Die = Object.freeze({
@@ -100,14 +109,14 @@ export const Die = Object.freeze({
   d8: 8,
   d10: 10,
   d12: 12,
-  d20: 20,
+  d20: 20
 });
 
 export const DieScale = Object.values(DiceType);
 
 export const SkillMod = Object.freeze({
   '': 0,
-  SKILLED: 3,
-  EXPERT: 6,
-  MASTER: 9,
+  SKILLED: 1,
+  EXPERT: 2,
+  MASTER: 3
 });

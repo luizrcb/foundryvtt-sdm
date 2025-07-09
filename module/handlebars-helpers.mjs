@@ -43,7 +43,7 @@ export function registerHandlebarsHelpers() {
 
   $$('isCharacter', function (actorType, options) {
     return ['npc', 'character'].includes(actorType);
-  })
+  });
 
   const reduceOp = function (args, reducer) {
     args = Array.from(args);
@@ -52,21 +52,37 @@ export function registerHandlebarsHelpers() {
     return args.reduce(reducer, first);
   };
 
-  $$('eq', function () { return reduceOp(arguments, (a, b) => a === b); });
+  $$('eq', function () {
+    return reduceOp(arguments, (a, b) => a === b);
+  });
 
-  $$('ne', function () { return reduceOp(arguments, (a, b) => a !== b); });
+  $$('ne', function () {
+    return reduceOp(arguments, (a, b) => a !== b);
+  });
 
-  $$('lt', function () { return reduceOp(arguments, (a, b) => a < b); });
+  $$('lt', function () {
+    return reduceOp(arguments, (a, b) => a < b);
+  });
 
-  $$('gt', function () { return reduceOp(arguments, (a, b) => a > b); });
+  $$('gt', function () {
+    return reduceOp(arguments, (a, b) => a > b);
+  });
 
-  $$('lte', function () { return reduceOp(arguments, (a, b) => a <= b); });
+  $$('lte', function () {
+    return reduceOp(arguments, (a, b) => a <= b);
+  });
 
-  $$('gte', function () { return reduceOp(arguments, (a, b) => a >= b); });
+  $$('gte', function () {
+    return reduceOp(arguments, (a, b) => a >= b);
+  });
 
-  $$('and', function () { return reduceOp(arguments, (a, b) => a && b); });
+  $$('and', function () {
+    return reduceOp(arguments, (a, b) => a && b);
+  });
 
-  $$('or', function () { return reduceOp(arguments, (a, b) => a || b); });
+  $$('or', function () {
+    return reduceOp(arguments, (a, b) => a || b);
+  });
 
   $$('checkOriginalDie', function (index, options) {
     const context = options.data.root;
@@ -75,7 +91,9 @@ export function registerHandlebarsHelpers() {
 
   $$('getReadiedStyle', function (readied, options) {
     const booleanReadied = !!readied;
-    const style = `font-weight: ${booleanReadied == true ? 900 : ''}; color: ${booleanReadied == true ? 'black' : 'grey'};`;
+    const style = `font-weight: ${booleanReadied == true ? 900 : ''}; color: ${
+      booleanReadied == true ? 'black' : 'grey'
+    };`;
     return style;
   });
 
@@ -88,15 +106,19 @@ export function registerHandlebarsHelpers() {
     return slotsTaken;
   });
 
-  $$("dynamicHTML", function (context, options) {
+  $$('dynamicHTML', function (context, options) {
     // Create a safe string from the compiled HTML
-    return new Handlebars.SafeString(
-      Handlebars.compile(context)(this)
-    );
+    return new Handlebars.SafeString(Handlebars.compile(context)(this));
   });
 
-  $$("multiply", function (numberA, numberB) {
-    return Math.ceil(numberA * numberB);
+  $$('multiply', function (A, B) {
+    const numberA = parseInt(A, 10);
+    const numberB = parseInt(B, 10);
+    return numberA * numberB;
+  });
+
+  $$('toInt', function (A) {
+    return parseInt(A, 10);
   });
 
   $$('fragment', function (options) {

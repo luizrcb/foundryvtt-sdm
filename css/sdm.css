@@ -49,32 +49,6 @@
   cursor: pointer;
 }
 
-.application.sheet.sdm.actor {
-  min-width: 850px;
-  min-height: 820px;
-  max-width: 1500px;
-  max-height: 1500px;
-}
-
-.application.sheet.sdm.actor.minimized {
-  min-width: 0px;
-  min-height: 0px;
-  max-width: 0px;
-  max-height: 0px;
-}
-
-.application.sheet.sdm.item {
-  min-width: 480px;
-  min-height: 525px;
-}
-
-.application.sheet.sdm.item.minimized {
-  min-width: 0px;
-  min-height: 0px;
-  max-width: 0px;
-  max-height: 0px;
-}
-
 .mt-5 {
   margin-top: 5px;
 }
@@ -93,6 +67,46 @@
 
 .mb-20 {
   margin-bottom: 20px;
+}
+
+.application.sheet.sdm.actor {
+  min-width: 850px;
+  min-height: 820px;
+  max-width: 1500px;
+  max-height: 1500px;
+}
+
+.application.sheet.sdm.actor.minimized {
+  min-width: 0px;
+  min-height: 0px;
+  max-width: 0px;
+  max-height: 0px;
+}
+
+.application.sheet.sdm.actor.npc {
+  min-width: 800px;
+  min-height: 500px;
+  max-width: 800px;
+  max-height: 500px;
+}
+
+.application.sheet.sdm.actor.npc.minimized {
+  min-width: 0px;
+  min-height: 0px;
+  max-width: 0px;
+  max-height: 0px;
+}
+
+.application.sheet.sdm.item {
+  min-width: 480px;
+  min-height: 525px;
+}
+
+.application.sheet.sdm.item.minimized {
+  min-width: 0px;
+  min-height: 0px;
+  max-width: 0px;
+  max-height: 0px;
 }
 
 .grid,
@@ -713,12 +727,6 @@
   --sdm-c-white: #000000;
   --sdm-c-black: #ffffff;
   --sdm-c-groove: #11121f;
-}
-.sdm .sheet.sdm.item {
-  min-width: 500px;
-  min-height: 500px;
-  max-width: 800px;
-  max-height: 800px;
 }
 .sdm .sheet-hero-dice {
   margin-left: 5px;

@@ -1,10 +1,6 @@
-/**
- * Define a set of template paths to pre-load
- * Pre-loaded templates are compiled and cached for fast access when rendering
- * @return {Promise}
- */
+const $$ = path => `systems/sdm/templates/${path}.hbs`;
 
-const $$ = (path) => `systems/sdm/templates/${path}.hbs`;
+export const templatePath = $$;
 
 const templatesToLoad = [
   $$('custom-roll-dialog'),
@@ -18,6 +14,7 @@ const templatesToLoad = [
   $$('item/gear/header'),
   $$('item/trait/header'),
   $$('item/power'),
+  $$('actor/npc/morale-roll-dialog')
 ];
 
 export const preloadHandlebarsTemplates = async function () {

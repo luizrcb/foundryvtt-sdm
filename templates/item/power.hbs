@@ -3,7 +3,7 @@
     {{localize 'SDM.PowerLevel'}}
   </label>
   <div class='resource-content'>
-    <input type='text' name='system.power.level' value='{{system.power.level}}' data-dtype="Number" />
+    <input type='text' name='system.power.level' value='{{system.power.level}}' data-dtype='Number' />
   </div>
 </div>
 <div class='resource'>
@@ -32,15 +32,17 @@
 </div>
 
 <div class='resource'>
-  <label class='resource-label'>
-    {{localize 'SDM.AbilityModifier'}}
-  </label>
-  <div class='resource-content'>
-    <select name="system.default_ability" id="system.default_ability">
-      <option value=""></option>
-      {{selectOptions config.abilities localize=true selected=system.default_ability}}
-    </select>
-  </div>
+  {{#if (ne item.parent.type 'npc')}}
+    <label class='resource-label'>
+      {{localize 'SDM.AbilityModifier'}}
+    </label>
+    <div class='resource-content'>
+      <select name='system.default_ability' id='system.default_ability'>
+        <option value=''></option>
+        {{selectOptions config.abilities localize=true selected=system.default_ability}}
+      </select>
+    </div>
+  {{/if}}
 </div>
 
 <div class='resource grid-span-2'>
@@ -48,7 +50,9 @@
     {{localize 'SDM.PowerOvercharge'}}
   </label>
   <div class='resource-content grid-span-2 flexcol'>
-    <textarea class="grid-span-2 flexcol" name='system.power.overcharge' rows="2">{{system.power.overcharge}}</textarea>
+    <textarea class='grid-span-2 flexcol' name='system.power.overcharge' rows='2'>
+      {{system.power.overcharge}}
+    </textarea>
   </div>
 </div>
 

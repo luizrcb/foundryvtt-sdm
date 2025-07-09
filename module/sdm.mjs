@@ -1,19 +1,20 @@
-// Import document classes.
 import { SdmActor } from './documents/actor.mjs';
-import { SdmItem } from './documents/item.mjs';
 import { SdmCombatant } from './documents/combatant.mjs';
-// Import sheet classes.
+import { SdmItem } from './documents/item.mjs';
 import { SdmActorSheet } from './sheets/actor-sheet.mjs';
 import { SdmCaravanSheet } from './sheets/caravan-sheet.mjs';
 import { SdmItemSheet } from './sheets/item-sheet.mjs';
-// Import helper/utility classes and constants.
 import { SDM } from './helpers/config.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
-// Import DataModel classes
+import SdmActiveEffectConfig from './app/active-effect-config.mjs';
 import * as models from './data/_module.mjs';
 import { registerHandlebarsHelpers } from './handlebars-helpers.mjs';
-import { CHARACTER_DEFAULT_INITIATIVE, configureUseHeroDiceButton, createEscalatorDieDisplay, registerSystemSettings, updateEscalatorDisplay } from './settings.mjs';
-import SdmActiveEffectConfig from './app/active-effect-config.mjs';
+import {
+  CHARACTER_DEFAULT_INITIATIVE,
+  configureUseHeroDiceButton,
+  createEscalatorDieDisplay,
+  registerSystemSettings
+} from './settings.mjs';
 
 const { Actors, Items } = foundry.documents.collections;
 
@@ -27,26 +28,26 @@ globalThis.sdm = {
   documents: {
     SdmActor,
     SdmItem,
-    SdmCombatant,
+    SdmCombatant
   },
   applications: {
     SdmActorSheet,
     SdmCaravanSheet,
-    SdmItemSheet,
+    SdmItemSheet
   },
   utils: {
-    rollItemMacro,
+    rollItemMacro
   },
-  models,
+  models
 };
 
-Hooks.on("renderChatMessageHTML", (message, html, data) => {
+Hooks.on('renderChatMessageHTML', (message, html, data) => {
   configureUseHeroDiceButton(message, html, data);
 });
 
 // Add safety hook to prevent concurrent transfers
-Hooks.on("preUpdateItem", (item, data) => {
-  if (data.flags?.sdm?.transferring && item?.getFlag("sdm", "transferring")) {
+Hooks.on('preUpdateItem', (item, data) => {
+  if (data.flags?.sdm?.transferring && item?.getFlag('sdm', 'transferring')) {
     throw new Error(game.i18n.format('SDM.ErrorTransferAlreadyInProgress', { name: item.name }));
   }
 });
@@ -64,7 +65,7 @@ Hooks.once('init', function () {
   CONFIG.Actor.dataModels = {
     character: models.SdmCharacter,
     npc: models.SdmNPC,
-    caravan: models.SdmCaravan,
+    caravan: models.SdmCaravan
   };
   CONFIG.Item.documentClass = SdmItem;
   CONFIG.Item.dataModels = {
@@ -72,7 +73,7 @@ Hooks.once('init', function () {
     trait: models.SdmTrait,
     burden: models.SdmBurden,
     mount: models.SdmMount,
-    motor: models.SdmMotor,
+    motor: models.SdmMotor
   };
 
   // Active Effects are never copied to the Actor,
@@ -83,19 +84,19 @@ Hooks.once('init', function () {
   // Register sheet application classes
   Actors.unregisterSheet('core', foundry.appv1.sheets.ActorSheet);
   Actors.registerSheet('sdm', SdmActorSheet, {
-    types: ["character", "npc"],
+    types: ['character', 'npc'],
     makeDefault: true,
-    label: 'SDM.SheetLabels.Actor',
+    label: 'SDM.SheetLabels.Actor'
   });
   Items.unregisterSheet('core', foundry.appv1.sheets.ItemSheet);
   Items.registerSheet('sdm', SdmItemSheet, {
     makeDefault: true,
-    label: 'SDM.SheetLabels.Item',
+    label: 'SDM.SheetLabels.Item'
   });
 
   DocumentSheetConfig.unregisterSheet(ActiveEffect, 'core', ActiveEffectConfig);
   DocumentSheetConfig.registerSheet(ActiveEffect, 'sdm', SdmActiveEffectConfig, {
-    makeDefault: true,
+    makeDefault: true
   });
 
   registerSystemSettings();
@@ -104,11 +105,11 @@ Hooks.once('init', function () {
    * Set an initiative formula for the system
    * @type {String}
    */
-  const characterInitiativeFormula = game.settings.get("sdm", "initiativeFormula") ||
-    CHARACTER_DEFAULT_INITIATIVE;
+  const characterInitiativeFormula =
+    game.settings.get('sdm', 'initiativeFormula') || CHARACTER_DEFAULT_INITIATIVE;
   CONFIG.Combat.initiative = {
-    formula: game.settings.get("sdm", "initiativeFormula"),
-    decimals: 2,
+    formula: game.settings.get('sdm', 'initiativeFormula'),
+    decimals: 2
   };
 
   CONFIG.Combatant.documentClass = SdmCombatant;
@@ -134,9 +135,9 @@ Hooks.once('ready', function () {
 
   createEscalatorDieDisplay();
 
-  Hooks.once("setup", () => {
+  Hooks.once('setup', () => {
     // Define the compendium name (matches your module.json "name" field)
-    const MACRO_COMPENDIUM = "macros";
+    const MACRO_COMPENDIUM = 'macros';
 
     // Get the compendium pack
     const pack = game.packs.get(`sdm.${MACRO_COMPENDIUM}`);
@@ -166,25 +167,21 @@ async function createDocMacro(data, slot) {
   // First, determine if this is a valid owned item.
   if (data.type !== 'Item') return;
   if (!data.uuid.includes('Actor.') && !data.uuid.includes('Token.')) {
-    return ui.notifications.warn(
-      'You can only create macro buttons for owned Items'
-    );
+    return ui.notifications.warn('You can only create macro buttons for owned Items');
   }
   // If it is, retrieve it based on the uuid.
   const item = await Item.fromDropData(data);
 
   // Create the macro command using the uuid.
   const command = `game.sdm.rollItemMacro("${data.uuid}");`;
-  let macro = game.macros.find(
-    (m) => m.name === item.name && m.command === command
-  );
+  let macro = game.macros.find(m => m.name === item.name && m.command === command);
   if (!macro) {
     macro = await Macro.create({
       name: item.name,
       type: 'script',
       img: item.img,
       command: command,
-      flags: { 'sdm.itemMacro': true },
+      flags: { 'sdm.itemMacro': true }
     });
   }
   game.user.assignHotbarMacro(macro, slot);
@@ -200,10 +197,10 @@ function rollItemMacro(itemUuid) {
   // Reconstruct the drop data so that we can load the item.
   const dropData = {
     type: 'Item',
-    uuid: itemUuid,
+    uuid: itemUuid
   };
   // Load the item from the uuid.
-  Item.fromDropData(dropData).then((item) => {
+  Item.fromDropData(dropData).then(item => {
     // Determine if the item loaded and if it's an owned item.
     if (!item || !item.parent) {
       const itemName = item?.name ?? itemUuid;

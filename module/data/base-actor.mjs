@@ -1,6 +1,5 @@
-export default class SdmActorBase extends foundry.abstract
-  .TypeDataModel {
-  static LOCALIZATION_PREFIXES = ["SDM.Actor.base"];
+export default class SdmActorBase extends foundry.abstract.TypeDataModel {
+  static LOCALIZATION_PREFIXES = ['SDM.Actor.base'];
 
   static defineSchema() {
     const fields = foundry.data.fields;

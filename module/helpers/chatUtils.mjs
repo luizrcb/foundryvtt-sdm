@@ -35,7 +35,7 @@ export function getActorFromMessage(message, user) {
     return user.character;
   }
 
-  console.warn("getActorFromMessage: Could not determine actor for message", message);
+  console.warn('getActorFromMessage: Could not determine actor for message', message);
   return null;
 }
 
@@ -73,14 +73,14 @@ export async function createChatMessage({
       flavor,
       content,
       rolls: rolls?.filter(r => r instanceof Roll),
-      flags,
+      flags
     };
 
     chatData = ChatMessage.applyRollMode(chatData, rollMode);
 
     return ChatMessage.create(chatData);
   } catch (e) {
-    console.error("createChatMessage: Failed to create message", e);
+    console.error('createChatMessage: Failed to create message', e);
     return null;
   }
 }

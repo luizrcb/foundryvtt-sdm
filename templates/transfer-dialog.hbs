@@ -1,17 +1,31 @@
 <form>
-  <h5>{{localize 'SDM.Transfer' type=item.name}}</h5>
-  <div class="grid grid-2col flexcol">
-    {{#if (eq item.system.size.unit "cash")}}
-    <div class="form-group">
-      <label>{{localize 'SDM.Amount'}}:</label>
-      <input type="number" name="cashAmount" min="1" max="{{item.system.quantity}}" required data-type="Number" placeholder="100">
-    </div>
+  <h5>
+    {{localize 'SDM.Transfer' type=item.name}}
+  </h5>
+  <div class='grid grid-2col flexcol'>
+    {{#if (eq item.system.size.unit 'cash')}}
+      <div class='form-group'>
+        <label>
+          {{localize 'SDM.Amount'}}:
+        </label>
+        <input
+          type='number'
+          name='cashAmount'
+          min='1'
+          max='{{item.system.quantity}}'
+          required
+          data-type='Number'
+          placeholder='100'
+        />
+      </div>
     {{/if}}
-    <div class="form-group">
-      <label>{{localize 'SDM.TransferTo'}}:</label>
-      <select name="targetActor">
-        <option value=""></option>
-        {{selectOptions actors valueAttr="id" labelAttr="name"}}
+    <div class='form-group'>
+      <label>
+        {{localize 'SDM.TransferTo'}}:
+      </label>
+      <select name='targetActor'>
+        <option value=''></option>
+        {{selectOptions actors valueAttr='id' labelAttr='name'}}
       </select>
     </div>
   </div>

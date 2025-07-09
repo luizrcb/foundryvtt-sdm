@@ -10,13 +10,17 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
     schema.readied = new fields.BooleanField({ initial: false });
 
     schema.cost = new fields.StringField({
-      required: false, blank: true,
+      required: false,
+      blank: true
     });
 
     schema.description = new fields.HTMLField();
 
     schema.quantity = new fields.NumberField({
-      required: true, integer: true, initial: 1, min: 0,
+      required: true,
+      integer: true,
+      initial: 1,
+      min: 0
     });
 
     schema.size = new fields.EmbeddedDataField(ItemSizeDataModel);

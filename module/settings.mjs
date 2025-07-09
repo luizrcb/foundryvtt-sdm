@@ -1,33 +1,34 @@
-import { DiceType } from "./helpers/constants.mjs";
-import { $fmt, $l10n } from "./helpers/globalUtils.mjs";
-import { handleHeroDice } from "./rolls/heroDice.mjs";
+import { DiceType } from './helpers/constants.mjs';
+import { $fmt, $l10n } from './helpers/globalUtils.mjs';
+import { handleHeroDice } from './rolls/heroDice.mjs';
 
-export const CHARACTER_DEFAULT_INITIATIVE = "2d6 + @abilities.agi.current + @initiative_bonus";
-export const NPC_DEFAULT_INITIATIVE = "2d6 + @bonus";
-export const SAVING_THROW_BASE_FORMULA = "1d20x";
+export const CHARACTER_DEFAULT_INITIATIVE = '2d6 + @abilities.agi.current + @initiative_bonus';
+export const NPC_DEFAULT_INITIATIVE = '2d6 + @bonus';
+export const SAVING_THROW_BASE_FORMULA = '1d20x';
+export const NPC_DEFAULT_MORALE_FORMULA = '2d6';
 
 export function registerSystemSettings() {
   /* -------------------------------------------- */
   /*  System settings registration                */
   /* -------------------------------------------- */
 
-  game.settings.register("sdm", "currencyName", {
-    name: "SDM.SettingsCurrencyName",
-    hint: "SDM.SettingsCurrencyNameHint",
-    scope: "world", // "world" = GM only, "client" = per user
+  game.settings.register('sdm', 'currencyName', {
+    name: 'SDM.SettingsCurrencyName',
+    hint: 'SDM.SettingsCurrencyNameHint',
+    scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
     config: true, // Show in configuration view
     type: String, // Data type: String, Number, Boolean, etc
-    default: "cash",
+    default: 'cash',
     onChange: value => {
       // Optional: Code to run when setting changes
     }
   });
 
-  game.settings.register("sdm", "escalatorDie", {
-    name: "SDM.SettingsEscalatorDie",
-    hint: "SDM.SettingsEscalatorDieHint",
-    scope: "world", // "world" = GM only, "client" = per user
+  game.settings.register('sdm', 'escalatorDie', {
+    name: 'SDM.SettingsEscalatorDie',
+    hint: 'SDM.SettingsEscalatorDieHint',
+    scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
     config: false, // Show in configuration view
     type: Number, // Data type: String, Number, Boolean, etc
@@ -38,166 +39,171 @@ export function registerSystemSettings() {
     }
   });
 
-  game.settings.register("sdm", "baseDefense", {
-    name: "SDM.SettingsBaseDefense",
-    hint: "SDM.SettingsBaseDefenseHint",
-    scope: "world", // "world" = GM only, "client" = per user
+  game.settings.register('sdm', 'baseDefense', {
+    name: 'SDM.SettingsBaseDefense',
+    hint: 'SDM.SettingsBaseDefenseHint',
+    scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
     config: true, // Show in configuration view
     type: Number, // Data type: String, Number, Boolean, etc
-    default: 7,
+    default: 7
   });
 
-  game.settings.register("sdm", "baseMentalDefense", {
-    name: "SDM.SettingsBaseMentalDefense",
-    hint: "SDM.SettingsBaseMentalDefenseHint",
-    scope: "world", // "world" = GM only, "client" = per user
+  game.settings.register('sdm', 'baseMentalDefense', {
+    name: 'SDM.SettingsBaseMentalDefense',
+    hint: 'SDM.SettingsBaseMentalDefenseHint',
+    scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
     config: true, // Show in configuration view
     type: Number, // Data type: String, Number, Boolean, etc
-    default: 7,
+    default: 7
   });
 
-  game.settings.register("sdm", "baseSocialDefense", {
-    name: "SDM.SettingsBaseSocialDefense",
-    hint: "SDM.SettingsBaseSocialDefenseHint",
-    scope: "world", // "world" = GM only, "client" = per user
+  game.settings.register('sdm', 'baseSocialDefense', {
+    name: 'SDM.SettingsBaseSocialDefense',
+    hint: 'SDM.SettingsBaseSocialDefenseHint',
+    scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
     config: true, // Show in configuration view
     type: Number, // Data type: String, Number, Boolean, etc
-    default: 7,
+    default: 7
   });
 
-  game.settings.register("sdm", "baseTraitSlots", {
-    name: "SDM.SettingsBaseTraitSlots",
-    hint: "SDM.SettingsBaseTraitSlotsHint",
-    scope: "world", // "world" = GM only, "client" = per user
+  game.settings.register('sdm', 'baseTraitSlots', {
+    name: 'SDM.SettingsBaseTraitSlots',
+    hint: 'SDM.SettingsBaseTraitSlotsHint',
+    scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
     config: true, // Show in configuration view
     type: Number, // Data type: String, Number, Boolean, etc
-    default: 7,
+    default: 7
   });
 
-  game.settings.register("sdm", "baseItemSlots", {
-    name: "SDM.SettingsBaseItemSlots",
-    hint: "SDM.SettingsBaseItemSlotsHint",
-    scope: "world", // "world" = GM only, "client" = per user
+  game.settings.register('sdm', 'baseItemSlots', {
+    name: 'SDM.SettingsBaseItemSlots',
+    hint: 'SDM.SettingsBaseItemSlotsHint',
+    scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
     config: true, // Show in configuration view
     type: Number, // Data type: String, Number, Boolean, etc
-    default: 7,
+    default: 7
   });
 
-  game.settings.register("sdm", "baseBurdenSlots", {
-    name: "SDM.SettingsBaseBurdenSlots",
-    hint: "SDM.SettingsBaseBurdenSlotsHint",
-    scope: "world", // "world" = GM only, "client" = per user
+  game.settings.register('sdm', 'baseBurdenSlots', {
+    name: 'SDM.SettingsBaseBurdenSlots',
+    hint: 'SDM.SettingsBaseBurdenSlotsHint',
+    scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
     config: true, // Show in configuration view
     type: Number, // Data type: String, Number, Boolean, etc
-    default: 20,
+    default: 20
   });
 
-  game.settings.register("sdm", "npcBaseMorale", {
-    name: "SDM.SettingsBaseNPCMorabel",
-    hint: "SDM.SettingsBaseNPCMorabelHint",
-    scope: "world", // "world" = GM only, "client" = per user
-    restricted: true,
-    config: true, // Show in configuration view
-    type: Number, // Data type: String, Number, Boolean, etc
-    default: 3,
-  });
-
-  game.settings.register("sdm", "defaultHeroDiceType", {
-    name: "SDM.SettingsDefaultHeroDiceType",
-    hint: "SDM.SettingsDefaultHeroDiceTypeHint",
-    scope: "world", // "world" = GM only, "client" = per user
+  game.settings.register('sdm', 'baseMoraleFormula', {
+    name: 'SDM.SettingBaseMoraleFormula',
+    hint: 'SDM.SettingsBaseMoraleFormulaHint',
+    scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
     config: true, // Show in configuration view
     type: String, // Data type: String, Number, Boolean, etc
-    default: "d6",
-    choices: DiceType,
+    default: NPC_DEFAULT_MORALE_FORMULA
+  });
+
+  game.settings.register('sdm', 'defaultHeroDiceType', {
+    name: 'SDM.SettingsDefaultHeroDiceType',
+    hint: 'SDM.SettingsDefaultHeroDiceTypeHint',
+    scope: 'world', // "world" = GM only, "client" = per user
+    restricted: true,
+    config: true, // Show in configuration view
+    type: String, // Data type: String, Number, Boolean, etc
+    default: 'd6',
+    choices: DiceType
   });
 
   game.settings.register('sdm', 'savingThrowBaseRollFormula', {
-    name: "SDM.SettingsSavingThrowBaseRollFormula",
-    hint: "SDM.SettingsSavingThrowBaseRollFormulaHint",
-    scope: "world", // "world" = GM only, "client" = per user
+    name: 'SDM.SettingsSavingThrowBaseRollFormula',
+    hint: 'SDM.SettingsSavingThrowBaseRollFormulaHint',
+    scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
     config: true, // Show in configuration view
     type: String, // Data type: String, Number, Boolean, etc
     default: SAVING_THROW_BASE_FORMULA,
     onChange: value => {
       if (!foundry.dice.Roll.validate(value)) {
-        ui.notifications.error($fmt('SDM.SettingsInvalidChange', { settings: 'saving throw base formula' }));
-        game.settings.set("sdm", "savingThrowBaseRollFormula", SAVING_THROW_BASE_FORMULA);
+        ui.notifications.error(
+          $fmt('SDM.SettingsInvalidChange', { settings: 'saving throw base formula' })
+        );
+        game.settings.set('sdm', 'savingThrowBaseRollFormula', SAVING_THROW_BASE_FORMULA);
       }
     }
   });
 
-  game.settings.register("sdm", "initiativeFormula", {
-    name: "SDM.SettingsInitiativeFormula",
-    hint: "SDM.SettingsInitiativeFormulaHint",
-    scope: "world", // "world" = GM only, "client" = per user
+  game.settings.register('sdm', 'initiativeFormula', {
+    name: 'SDM.SettingsInitiativeFormula',
+    hint: 'SDM.SettingsInitiativeFormulaHint',
+    scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
     config: true, // Show in configuration view
     type: String, // Data type: String, Number, Boolean, etc
     default: CHARACTER_DEFAULT_INITIATIVE,
-    onChange: (value) => {
+    onChange: value => {
       if (!foundry.dice.Roll.validate(value)) {
-        ui.notifications.error($fmt('SDM.SettingsInvalidChange', { settings: 'initiative formula' }));
-        game.settings.set("sdm", "initiativeFormula", CHARACTER_DEFAULT_INITIATIVE);
+        ui.notifications.error(
+          $fmt('SDM.SettingsInvalidChange', { settings: 'initiative formula' })
+        );
+        game.settings.set('sdm', 'initiativeFormula', CHARACTER_DEFAULT_INITIATIVE);
       }
     }
   });
 
-  game.settings.register("sdm", "npcInitiativeFormula", {
-    name: "SDM.SettingsNPCInitiativeFormula",
-    hint: "SDM.SettingsNPCInitiativeFormulaHint",
-    scope: "world", // "world" = GM only, "client" = per user
+  game.settings.register('sdm', 'npcInitiativeFormula', {
+    name: 'SDM.SettingsNPCInitiativeFormula',
+    hint: 'SDM.SettingsNPCInitiativeFormulaHint',
+    scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
     config: true, // Show in configuration view
     type: String, // Data type: String, Number, Boolean, etc
     default: NPC_DEFAULT_INITIATIVE,
     onChange: value => {
       if (!foundry.dice.Roll.validate(value)) {
-        ui.notifications.error($fmt('SDM.SettingsInvalidChange', { settings: 'npc initiative formula' }));
-        game.settings.set("sdm", "npcInitiativeFormula", NPC_DEFAULT_INITIATIVE);
+        ui.notifications.error(
+          $fmt('SDM.SettingsInvalidChange', { settings: 'npc initiative formula' })
+        );
+        game.settings.set('sdm', 'npcInitiativeFormula', NPC_DEFAULT_INITIATIVE);
       }
     }
   });
 
-  game.settings.register("sdm", "healingHouseRule", {
-    name: "SDM.SettingsHealingHouseRule",
-    hint: "SDM.SettingsHealingHouseRuleHint",
-    scope: "world", // "world" = GM only, "client" = per user
+  game.settings.register('sdm', 'healingHouseRule', {
+    name: 'SDM.SettingsHealingHouseRule',
+    hint: 'SDM.SettingsHealingHouseRuleHint',
+    scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
     config: true, // Show in configuration view
     type: Boolean, // Data type: String, Number, Boolean, etc
-    default: false,
+    default: false
   });
 }
 
 export function updateEscalatorDisplay() {
-  const value = game.settings.get("sdm", "escalatorDie");
-  const container = document.getElementById("escalator-die");
-  const display = document.getElementById("escalator-value");
+  const value = game.settings.get('sdm', 'escalatorDie');
+  const container = document.getElementById('escalator-die');
+  const display = document.getElementById('escalator-value');
 
   if (!container || !display) return;
 
   display.textContent = value;
-  container.style.display = value > 0 ? "block" : "none";
+  container.style.display = value > 0 ? 'block' : 'none';
 
   // Optional: Change icon color when active
-  const img = container.querySelector("img");
-  img.style.filter = value > 0
-    ? "drop-shadow(0 0 4px #FF0000)"
-    : "drop-shadow(0 0 4px rgba(0,0,0,0.5))";
+  const img = container.querySelector('img');
+  img.style.filter =
+    value > 0 ? 'drop-shadow(0 0 4px #FF0000)' : 'drop-shadow(0 0 4px rgba(0,0,0,0.5))';
 }
 
 export function createEscalatorDieDisplay() {
-  const escalatorContainer = document.createElement("div");
-  escalatorContainer.id = "escalator-die";
+  const escalatorContainer = document.createElement('div');
+  escalatorContainer.id = 'escalator-die';
   escalatorContainer.style.cssText = `
     position: fixed;
     top: 20px;
@@ -211,8 +217,8 @@ export function createEscalatorDieDisplay() {
   `;
 
   // Create header element
-  const headerText = document.createElement("div");
-  headerText.textContent = $l10n("SDM.EscalatorDie");
+  const headerText = document.createElement('div');
+  headerText.textContent = $l10n('SDM.EscalatorDie');
   headerText.style.cssText = `
     color: white;
     font-weight: bold;
@@ -226,7 +232,7 @@ export function createEscalatorDieDisplay() {
   `;
 
   // Create image container
-  const imageContainer = document.createElement("div");
+  const imageContainer = document.createElement('div');
   imageContainer.style.cssText = `
     position: relative;
     width: 50px;
@@ -235,8 +241,8 @@ export function createEscalatorDieDisplay() {
   `;
 
   // Create d20 image element
-  const diceImage = document.createElement("img");
-  diceImage.src = "icons/svg/d20-grey.svg";
+  const diceImage = document.createElement('img');
+  diceImage.src = 'icons/svg/d20-grey.svg';
   diceImage.style.cssText = `
     width: 100%;
     height: 100%;
@@ -247,8 +253,8 @@ export function createEscalatorDieDisplay() {
   `;
 
   // Create value display element
-  const valueDisplay = document.createElement("div");
-  valueDisplay.id = "escalator-value";
+  const valueDisplay = document.createElement('div');
+  valueDisplay.id = 'escalator-value';
   valueDisplay.style.cssText = `
     position: absolute;
     top: 50%;
@@ -272,9 +278,9 @@ export function configureUseHeroDiceButton(message, html, data) {
   if (!message) return;
 
   //const isInitiativeRoll = message?.getFlag("core", 'initiativeRoll');
-  const isHeroResult = !!message?.getFlag("sdm", 'isHeroResult');
-  const isRollTableMessage = !!message?.getFlag("core", "RollTable");
-  const isAbilityScoreRoll = !!message?.getFlag("sdm", 'isAbilityScoreRoll');
+  const isHeroResult = !!message?.getFlag('sdm', 'isHeroResult');
+  const isRollTableMessage = !!message?.getFlag('core', 'RollTable');
+  const isAbilityScoreRoll = !!message?.getFlag('sdm', 'isAbilityScoreRoll');
 
   if (isRollTableMessage || isAbilityScoreRoll) return;
 
@@ -285,12 +291,12 @@ export function configureUseHeroDiceButton(message, html, data) {
   // Find the most recent roll message in chat
   const lastRollMessage = [...game.messages.contents]
     .reverse()
-    .find(m => m.isRoll || m?.getFlag("sdm", "isHeroResult"));
+    .find(m => m.isRoll || m?.getFlag('sdm', 'isHeroResult'));
 
-  if (lastRollMessage?.getFlag("sdm", "isHeroResult")) {
+  if (lastRollMessage?.getFlag('sdm', 'isHeroResult')) {
     $('button.hero-dice-btn').remove();
     return;
-  };
+  }
 
   // if (!lastRollMessage.rolls?.[0]?.dice?.some(d => d.faces === 20)) return;
 
@@ -321,7 +327,7 @@ export function configureUseHeroDiceButton(message, html, data) {
   btn.appendChild(icon);
 
   // Add localized text
-  btn.append(` ${$l10n("SDM.RollUseHeroDice")}`);
+  btn.append(` ${$l10n('SDM.RollUseHeroDice')}`);
 
   // Create container div
   const container = document.createElement('div');
@@ -335,7 +341,7 @@ export function configureUseHeroDiceButton(message, html, data) {
   }
 
   // Add event listener
-  btn.addEventListener('click', (ev) => {
+  btn.addEventListener('click', ev => {
     ev.preventDefault();
     ev.stopPropagation();
     handleHeroDice(ev, message, actor);

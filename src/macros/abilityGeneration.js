@@ -1,17 +1,17 @@
 const abilitiesOrder = {
-  "en": ["Str", "End", "Agi", "Cha", "Aur", "Tho"],
-  "pt-br": ["Cha", "Tho", "Str", "Agi", "Aur", "End"],
+  en: ['Str', 'End', 'Agi', 'Cha', 'Aur', 'Tho'],
+  'pt-br': ['Cha', 'Tho', 'Str', 'Agi', 'Aur', 'End']
 };
 
 const currentLanguage = game.i18n.lang;
 
 const results = {};
-const rolls = []
+const rolls = [];
 
 // Wrap the logic in an async function
 const rollAttributes = async () => {
   for (const stat of abilitiesOrder[currentLanguage]) {
-    let roll = new Roll("1d100");
+    let roll = new Roll('1d100');
     roll = await roll.evaluate();
     rolls.push(roll);
 
@@ -21,7 +21,7 @@ const rollAttributes = async () => {
     else if (roll.total <= 75) value = 2;
     else if (roll.total <= 90) value = 3;
     else if (roll.total <= 99) value = 4;
-    else value = 5;  // Natural 100
+    else value = 5; // Natural 100
 
     results[stat] = {
       value: value,
@@ -31,11 +31,14 @@ const rollAttributes = async () => {
 
   // Create chat message after all rolls complete
   const content = `
-    <h3>${game.i18n.localize("SDM.AbilityScoreGen")}</h3>
+    <h3>${game.i18n.localize('SDM.AbilityScoreGen')}</h3>
     <ul>
-        ${abilitiesOrder[currentLanguage].map(stat =>
-    `<li><b>${game.i18n.localize(`SDM.Ability${stat}`)}</b>: ${results[stat].value} (Roll: ${results[stat].total})</li>`
-  ).join("")}
+        ${abilitiesOrder[currentLanguage]
+          .map(
+            stat =>
+              `<li><b>${game.i18n.localize(`SDM.Ability${stat}`)}</b>: ${results[stat].value} (Roll: ${results[stat].total})</li>`
+          )
+          .join('')}
     </ul>
     `;
 
@@ -44,7 +47,7 @@ const rollAttributes = async () => {
   let chatData = {
     content,
     rolls,
-    flags: { "sdm.isAbilityScoreRoll": true },
+    flags: { 'sdm.isAbilityScoreRoll': true }
   };
 
   chatData = ChatMessage.applyRollMode(chatData, rollMode);

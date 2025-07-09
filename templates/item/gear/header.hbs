@@ -45,6 +45,7 @@
   </header>
   <header>
     <div class='grid grid-3col'>
+      {{#if (ne item.system.size.unit 'cash')}}
       <div class="resource">
         <label class='resource-label'>{{localize 'SDM.ItemGearType'}}</label>
         <select name='system.type' class="resource-content">
@@ -52,6 +53,7 @@
           {{selectOptions config.gearType localize=true selected=system.type}}
         </select>
       </div>
+      {{/if}}
 
       {{#if (eq item.system.type 'weapon')}}
       <div class='resource'>
@@ -69,6 +71,7 @@
           {{selectOptions config.rangeType localize=true selected=system.weapon.range}}
         </select>
       </div>
+
       <div class='resource align-center'>
         <label class='resource-label'>
           {{localize 'SDM.WeaponVersatile'}}
@@ -89,7 +92,7 @@
         {{/if}}
       </div>
 
-
+      {{#if (ne item.parent.type 'npc')}}
       <div class='resource'>
         <label class='resource-label'>
           {{localize 'SDM.AbilityModifier'}}
@@ -101,6 +104,7 @@
           </select>
         </div>
       </div>
+      {{/if}}
       {{/if}}
 
 
@@ -120,6 +124,25 @@
         <select name='system.armor.type' class="resource-content">
           <option value=''></option>
           {{selectOptions config.armorType localize=true selected=system.armor.type}}
+        </select>
+      </div>
+      {{/if}}
+
+      {{#if (eq item.system.type 'ward')}}
+      <div class='resource'>
+        <label class='resource-label'>
+          {{localize 'SDM.WardValue'}}
+        </label>
+        <div class='resource-content'>
+          <input type='text' name='system.ward.value' value='{{system.ward.value}}' data-dtype='Number' />
+        </div>
+      </div>
+
+      <div class="resource">
+        <label class='resource-label'>{{localize 'SDM.WardType'}}</label>
+        <select name='system.ward.type' class="resource-content">
+          <option value=''></option>
+          {{selectOptions config.wardType localize=true selected=system.ward.type}}
         </select>
       </div>
       {{/if}}

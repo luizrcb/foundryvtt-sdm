@@ -245,11 +245,17 @@
               </div>
               {{else}}
               <div class='ability flexrow flex-group-center'>
-                <span class='resource-label rollable' data-action='roll' data-context='rollable' data-ability="{{key}}"
-                  data-type="ability" data-label='{{localize (lookup @root.config.abilities key)}}'
-                  title='{{localize (lookup @root.config.abilities key)}}'>
-                  {{toUpperCase (localize (lookup @root.config.abilityAbbreviations key))}}
-                </span>
+                <div class="flexcol">
+                  <span class='resource-label rollable' data-action='roll' data-context='rollable'
+                    data-ability="{{key}}" data-type="ability"
+                    data-label='{{localize (lookup @root.config.abilities key)}}'
+                    title='{{localize (lookup @root.config.abilities key)}}'>
+                    {{toUpperCase (localize (lookup @root.config.abilityAbbreviations key))}}
+                  </span>
+                  {{#if (eq key 'cha')}}<i class="fas fa-users rollable" title="Reaction Roll"></i>{{/if}}
+                </div>
+
+
                 <input type='text' name='system.abilities.{{key}}.full' value='{{ability.full}}'
                   class="ability-score ability-full" data-dtype='Number'
                   title="{{localize 'SDM.AbilityFull' ability=(localize (lookup @root.config.abilities key))}}&#10;{{

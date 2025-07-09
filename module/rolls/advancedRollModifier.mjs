@@ -13,7 +13,7 @@ export class AdvancedRollModifier {
       await instance._parseFormula();
       return instance;
     } catch (error) {
-      console.error("Formula validation failed:", error);
+      console.error('Formula validation failed:', error);
       throw new Error(`Invalid roll formula: ${baseFormula} - ${error.message}`);
     }
   }
@@ -30,7 +30,7 @@ export class AdvancedRollModifier {
       await modifiedRoll.evaluate();
       return modifiedRoll;
     } catch (error) {
-      console.error("Roll modification failed:", error);
+      console.error('Roll modification failed:', error);
       throw error;
     }
   }
@@ -41,7 +41,7 @@ export class AdvancedRollModifier {
       await roll.evaluate();
       this._parsedTerms = roll.terms;
     } catch (error) {
-      console.error("Formula parsing failed:", error);
+      console.error('Formula parsing failed:', error);
       throw error;
     }
   }
@@ -52,7 +52,7 @@ export class AdvancedRollModifier {
       foundry.dice.Roll.validate(formula);
       return formula;
     } catch (error) {
-      console.error("Formula construction failed:", error);
+      console.error('Formula construction failed:', error);
       throw error;
     }
   }
@@ -89,7 +89,7 @@ export class AdvancedRollModifier {
       foundry.dice.Roll.validate(finalFormula);
       return finalFormula;
     } catch (error) {
-      console.error("Ability resolution failed:", error);
+      console.error('Ability resolution failed:', error);
       throw error;
     }
   }
@@ -98,8 +98,7 @@ export class AdvancedRollModifier {
     if (!actor) return 0;
 
     try {
-      const value = path.split('.')
-        .reduce((obj, key) => obj?.[key] ?? 0, actor.system);
+      const value = path.split('.').reduce((obj, key) => obj?.[key] ?? 0, actor.system);
 
       return Number.isFinite(value) ? parseInt(value) : 0;
     } catch (error) {

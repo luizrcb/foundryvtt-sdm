@@ -6,21 +6,18 @@ const excluded = []; // Helpers/Porters
 // Separate tokens into groups
 for (const token of tokens) {
   const actor = token.actor;
-  if (actor.type === "character") {
+  if (actor.type === 'character') {
     group1.push(token);
-  }
-  else if (actor.type === "npc") {
+  } else if (actor.type === 'npc') {
     const isWarrior = actor.system?.isWarrior || false;
     const isHelper = actor.system?.isHelper || false;
     const isPorter = actor.system?.isPorter || false;
 
     if (isWarrior) {
       group1.push(token);
-    }
-    else if (!isHelper && !isPorter) {
+    } else if (!isHelper && !isPorter) {
       group2.push(token);
-    }
-    else {
+    } else {
       excluded.push(token);
     }
   }
@@ -28,7 +25,7 @@ for (const token of tokens) {
 
 // Notify about excluded tokens
 if (excluded.length > 0) {
-  const names = excluded.map(t => t.name).join(", ");
+  const names = excluded.map(t => t.name).join(', ');
   ui.notifications.info(game.i18n.format('SDM.CombatantsExcluded', { names }));
 }
 
@@ -46,7 +43,6 @@ async function processGroup(group) {
 
   // Roll initiative for roller
   await game.combat.rollAll({ messageOptions: { rollMode: CONST.DICE_ROLL_MODES.PUBLIC } });
-
 
   const initVal = roller.combatant.initiative;
 

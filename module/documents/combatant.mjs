@@ -1,5 +1,5 @@
-import { ActorType } from "../helpers/constants.mjs";
-import { NPC_DEFAULT_INITIATIVE } from "../settings.mjs";
+import { ActorType } from '../helpers/constants.mjs';
+import { NPC_DEFAULT_INITIATIVE } from '../settings.mjs';
 
 export class SdmCombatant extends Combatant {
   /** @override */
@@ -13,12 +13,11 @@ export class SdmCombatant extends Combatant {
     }
 
     if (actor.type === ActorType.NPC) {
-      const npcFormula = game.settings.get("sdm", "npcInitiativeFormula") || NPC_DEFAULT_INITIATIVE;
+      const npcFormula = game.settings.get('sdm', 'npcInitiativeFormula') || NPC_DEFAULT_INITIATIVE;
       return npcFormula;
     }
 
     // Fallback to global config
     return super._getInitiativeFormula();
   }
-
 }

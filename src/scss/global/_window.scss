@@ -14,30 +14,6 @@
   }
 }
 
-.application.sheet.sdm.actor {
-  min-width: 850px;
-  min-height: 820px;
-  max-width: 1500px;
-  max-height: 1500px;
-  &.minimized {
-    min-width: 0px;
-    min-height: 0px;
-    max-width: 0px;
-    max-height: 0px;
-  }
-}
-
-.application.sheet.sdm.item {
-  min-width: 480px;
-  min-height: 525px;
-  &.minimized {
-    min-width: 0px;
-    min-height: 0px;
-    max-width: 0px;
-    max-height: 0px;
-  }
-}
-
 .mt-5 {
   margin-top: 5px;
 }
@@ -57,4 +33,42 @@
 
 .mb-20 {
   margin-bottom: 20px;
+}
+
+
+.application.sheet.sdm.actor {
+  min-width: 850px;
+  min-height: 820px;
+  max-width: 1500px;
+  max-height: 1500px;
+  &.minimized {
+    min-width: 0px;
+    min-height: 0px;
+    max-width: 0px;
+    max-height: 0px;
+  }
+}
+
+.application.sheet.sdm.actor.npc {
+  min-width: 800px;
+  min-height: 500px;
+  max-width: 800px;
+  max-height: 500px;
+  &.minimized {
+    min-width: 0px;
+    min-height: 0px;
+    max-width: 0px;
+    max-height: 0px;
+  }
+}
+
+.application.sheet.sdm.item {
+  min-width: 480px;
+  min-height: 525px;
+  &.minimized {
+    min-width: 0px;
+    min-height: 0px;
+    max-width: 0px;
+    max-height: 0px;
+  }
 }

@@ -9,18 +9,18 @@ export function prepareActiveEffectCategories(effects) {
     temporary: {
       type: 'temporary',
       label: game.i18n.localize('SDM.Effect.Temporary'),
-      effects: [],
+      effects: []
     },
     passive: {
       type: 'passive',
       label: game.i18n.localize('SDM.Effect.Passive'),
-      effects: [],
+      effects: []
     },
     inactive: {
       type: 'inactive',
       label: game.i18n.localize('SDM.Effect.Inactive'),
-      effects: [],
-    },
+      effects: []
+    }
   };
 
   // Iterate over active effects, classifying them into categories

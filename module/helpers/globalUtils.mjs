@@ -1,21 +1,25 @@
-export function $l10n(key) { return game.i18n.localize(key) };
+export function $l10n(key) {
+  return game.i18n.localize(key);
+}
 
-export function $fmt(key, values) { return game.i18n.format(key, values) };
+export function $fmt(key, values) {
+  return game.i18n.format(key, values);
+}
 
 export function validateActorId(id) {
-  if (!id || id.trim() === "") return true;
+  if (!id || id.trim() === '') return true;
 
   return !!game.actors.get(id);
 }
 
 export function validateItemId(id) {
-  if (!id || id.trim() === "") return true;
+  if (!id || id.trim() === '') return true;
 
   return !!game.items.get(id);
 }
 
 export function validateDocumentId(id) {
-  if (!id || id.trim() === "") return true;
+  if (!id || id.trim() === '') return true;
 
   return validateActorId(id) || validateItemId(id);
 }
@@ -47,8 +51,7 @@ export function safeEvaluate(expression) {
       }
       operators.pop(); // Remove '('
     } else {
-      while (operators.length &&
-        precedence[operators[operators.length - 1]] >= precedence[token]) {
+      while (operators.length && precedence[operators[operators.length - 1]] >= precedence[token]) {
         output.push(operators.pop());
       }
       operators.push(token);
@@ -69,11 +72,21 @@ export function safeEvaluate(expression) {
       const b = stack.pop();
       const a = stack.pop();
       switch (token) {
-        case '+': stack.push(a + b); break;
-        case '-': stack.push(a - b); break;
-        case '*': stack.push(a * b); break;
-        case '/': stack.push(a / b); break;
-        case '%': stack.push(a % b); break;
+        case '+':
+          stack.push(a + b);
+          break;
+        case '-':
+          stack.push(a - b);
+          break;
+        case '*':
+          stack.push(a * b);
+          break;
+        case '/':
+          stack.push(a / b);
+          break;
+        case '%':
+          stack.push(a % b);
+          break;
       }
     }
   });
@@ -83,15 +96,16 @@ export function safeEvaluate(expression) {
 
 export const getDefaultAbility = (initialValue = '') => {
   const properties = {
-    required: false, blank: true,
+    required: false,
+    blank: true,
     choices: Object.keys(CONFIG.SDM.abilityAbbreviations).reduce((acc, key) => {
       acc[key] = game.i18n.localize(CONFIG.SDM.abilityAbbreviations[key]);
       return acc;
-    }, {}),
+    }, {})
   };
 
   return new foundry.data.fields.StringField({
     ...properties,
-    ...(initialValue && { initial: initialValue }),
+    ...(initialValue && { initial: initialValue })
   });
 };

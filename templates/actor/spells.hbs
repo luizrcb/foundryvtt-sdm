@@ -1,9 +1,5 @@
 {{! Spells Tab }}
-<section
-  class='tab spells {{tab.cssClass}}'
-  data-group='primary'
-  data-tab='spells'
->
+<section class='tab spells {{tab.cssClass}}' data-group='primary' data-tab='spells'>
   <ol class='items-list'>
     {{#each spells as |spells spellLevel|}}
       <li class='item flexrow items-header'>
@@ -27,31 +23,19 @@
         </div>
       </li>
       {{#each spells as |item id|}}
-        <li
-          class='item flexrow'
-          data-item-id='{{item._id}}'
-          data-drag='true'
-          data-document-class='Item'
-        >
+        <li class='item flexrow' data-item-id='{{item._id}}' data-drag='true' data-document-class='Item'>
           <div class='item-name flexrow'>
             <div class='item-image'>
               <a class='rollable' data-roll-type='item' data-action='roll'>
-                <img
-                  src='{{item.img}}'
-                  title='{{item.name}}'
-                  width='24'
-                  height='24'
-                />
+                <img src='{{item.img}}' title='{{item.name}}' width='24' height='24' />
               </a>
             </div>
-            <div>{{item.name}}</div>
+            <div>
+              {{item.name}}
+            </div>
           </div>
           <div class='item-controls'>
-            <a
-              class='item-control item-edit'
-              title='{{localize "DOCUMENT.Update" type='spell'}}'
-              data-action='viewDoc'
-            >
+            <a class='item-control item-edit' title='{{localize "DOCUMENT.Update" type='spell'}}' data-action='viewDoc'>
               <i class='fas fa-edit'></i>
             </a>
             {{#if @root.editable}}
@@ -68,5 +52,4 @@
       {{/each}}
     {{/each}}
   </ol>
-
 </section>

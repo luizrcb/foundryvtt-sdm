@@ -1,6 +1,10 @@
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { RollHandler } from '../rolls/rollHandler.mjs';
-import { convertToCash, GEAR_ITEM_TYPES, ITEMS_NOT_ALLOWED_IN_CHARACTERS } from '../helpers/itemUtils.mjs';
+import {
+  convertToCash,
+  GEAR_ITEM_TYPES,
+  ITEMS_NOT_ALLOWED_IN_CHARACTERS
+} from '../helpers/itemUtils.mjs';
 import { openItemTransferDialog } from '../items/transferItem.mjs';
 import { ItemType, SizeUnit } from '../helpers/constants.mjs';
 import { getHeroDiceSelect } from '../rolls/heroDice.mjs';
@@ -18,9 +22,7 @@ const FilePicker = foundry.applications.apps.FilePicker.implementation;
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheetV2}
  */
-export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
-  sheets.ActorSheetV2
-) {
+export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.ActorSheetV2) {
   constructor(options = {}) {
     super(options);
     this.#dragDrop = this.#createDragDropHandlers();
@@ -31,10 +33,10 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     classes: ['sdm', 'caravan'],
     position: {
       width: 800,
-      height: 800,
+      height: 800
     },
     window: {
-      resizable: true,
+      resizable: true
     },
     actions: {
       onEditImage: this._onEditImage,
@@ -50,34 +52,34 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
     form: {
-      submitOnChange: true,
-    },
+      submitOnChange: true
+    }
   };
 
   /** @override */
   static PARTS = {
     header: {
-      template: 'systems/sdm/templates/actor/header.hbs',
+      template: templatePath('actor/header')
     },
     tabs: {
       // Foundry-provided generic template
-      template: 'templates/generic/tab-navigation.hbs',
+      template: 'templates/generic/tab-navigation.hbs'
     },
     features: {
-      template: 'systems/sdm/templates/actor/features.hbs',
+      template: templatePath('actor/features')
     },
     biography: {
-      template: 'systems/sdm/templates/actor/biography.hbs',
+      template: templatePath('actor/biography')
     },
     gear: {
-      template: 'systems/sdm/templates/actor/gears.hbs',
+      template: templatePath('actor/gears')
     },
     spells: {
-      template: 'systems/sdm/templates/actor/spells.hbs',
+      template: templatePath('actor/spells')
     },
     effects: {
-      template: 'systems/sdm/templates/actor/effects.hbs',
-    },
+      template: templatePath('actor/effects')
+    }
   };
 
   _getStatSelectOptions(source) {
@@ -86,11 +88,10 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     const { default_ability = '' } = source;
     let result = '';
 
-
     result += '<option value=""}></option>';
     for (let orderedAbility of abilitiesOrder[currentLanguage]) {
-      result += `<option value="${orderedAbility}"${(orderedAbility === default_ability) ? 'selected' : ''}>
-      ${$l10n(CONFIG.SDM.abilities[orderedAbility])}</option>\n`
+      result += `<option value="${orderedAbility}"${orderedAbility === default_ability ? 'selected' : ''}>
+      ${$l10n(CONFIG.SDM.abilities[orderedAbility])}</option>\n`;
     }
 
     return result;
@@ -99,7 +100,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
   damageMultiplierOptions() {
     let options = '';
     for (const [key, value] of Object.entries(CONFIG.SDM.damageMultiplier)) {
-      options += `<option value="${key}">${value}</option>\n`
+      options += `<option value="${key}">${value}</option>\n`;
     }
 
     return options;
@@ -108,8 +109,9 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
   // Open the custom roll modal
   async _openCustomRollModal(key, attribute, skill, rolledFrom, item, versatile = false) {
     const actorSkill = skill ? this.actor.system[skill] : {};
-    const versatileLabel = $l10n(CONFIG.SDM.versatile)
-    const title = attribute ?? actorSkill.name ?? `${item?.name}${versatile ? ` (${versatileLabel})` : ''}`;
+    const versatileLabel = $l10n(CONFIG.SDM.versatile);
+    const title =
+      attribute ?? actorSkill.name ?? `${item?.name}${versatile ? ` (${versatileLabel})` : ''}`;
     const isTraitRoll = !!(skill || key);
     const minHeroDiceZero = true;
     const content = `
@@ -117,25 +119,41 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
         <h2>Roll for ${title}</h2>
         <h2>{{localize 'SDM.RollTitle' prefix='' title='${title}'}}</h2>
         <form class="custom-roll-form">
-        ${rolledFrom !== 'Abilities' ? `<div class="form-group">
+        ${
+          rolledFrom !== 'Abilities'
+            ? `<div class="form-group">
             <label>${$l10n(CONFIG.SDM.abilitiesLabel)}</label>
             <select name="selectedAttribute">
-              ${skill ? this._getStatSelectOptions(actorSkill) :
-          item ? this._getStatSelectOptions({ default_ability: item?.system?.default_ability }, false) : this._getStatSelectOptions({}, false)}
+              ${
+                skill
+                  ? this._getStatSelectOptions(actorSkill)
+                  : item
+                    ? this._getStatSelectOptions(
+                        { default_ability: item?.system?.default_ability },
+                        false
+                      )
+                    : this._getStatSelectOptions({}, false)
+              }
             </select>
           </div>
-        `: ''}
+        `
+            : ''
+        }
           <div class="form-group">
             <label for="modifier">${$l10n(CONFIG.SDM.modifierLabel)}</label>
             <input id="modifier" type="text" name="modifier" value="" />
           </div>
-         ${item ? `<div class="form-group">
+         ${
+           item
+             ? `<div class="form-group">
             <label for="multiplier">Multiplier</label>
             <select name="multiplier" id="multiplier">
               <option value=""></option>
              ${this.damageMultiplierOptions()}
             </select>
-          </div>`: ''}
+          </div>`
+             : ''
+         }
           <div class="form-group">
             <label>${$l10n('SDM.RollMode')}</label>
             <div class="roll-type-select">
@@ -158,8 +176,8 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
           </div>
           ${getHeroDiceSelect(this.actor, minHeroDiceZero)}
           <div class="form-group">
-            <label for="shouldExplode">${$l10n("SDM.ExplodingDice")}</label>
-            <input id="shouldExplode" type="checkbox" name="shouldExplode" ${isTraitRoll ? "checked" : ""} />
+            <label for="shouldExplode">${$l10n('SDM.ExplodingDice')}</label>
+            <input id="shouldExplode" type="checkbox" name="shouldExplode" ${isTraitRoll ? 'checked' : ''} />
           </div>
         </form>
         <br/><br/>
@@ -169,13 +187,14 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     // Create and render the modal
     const rollOptions = await foundry.applications.api.DialogV2.prompt({
       window: {
-        title: `Roll: ${title}`,
+        title: `Roll: ${title}`
       },
       content,
       ok: {
         icon: 'fas fa-dice-d20',
         label: $l10n('SDM.ButtonRoll'),
-        callback: (event, button) => new foundry.applications.ux.FormDataExtended(button.form).object,
+        callback: (event, button) =>
+          new foundry.applications.ux.FormDataExtended(button.form).object
       }
     });
     const {
@@ -184,23 +203,29 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
       heroicQty = '0',
       rollType = 'normal',
       shouldExplode = false,
-      multiplier = '',
+      multiplier = ''
     } = rollOptions;
     if (modifier && !foundry.dice.Roll.validate(modifier)) {
-      ui.notifications.error("Invalid roll modifier");
-      return
+      ui.notifications.error('Invalid roll modifier');
+      return;
     }
     const heroicDice = parseInt(heroicQty || 0, 10);
     const currentHeroDice = this.actor.system.hero_dice?.value ?? 0;
 
     if (heroicDice > currentHeroDice) {
-      ui.notifications.error("Not enough hero dice for this roll");
-      return
+      ui.notifications.error('Not enough hero dice for this roll');
+      return;
     }
 
     const ability = key ? key : selectedAttribute;
     const skillData = skill ? this.actor.system[skill] : {};
-    let label = skill ? skillData.name : (attribute ? attribute : (ability ? $l10n(CONFIG.SDM.abilities[ability]) : ''));
+    let label = skill
+      ? skillData.name
+      : attribute
+        ? attribute
+        : ability
+          ? $l10n(CONFIG.SDM.abilities[ability])
+          : '';
 
     // if (item) {
     //   label = item.name;
@@ -243,7 +268,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
         options.parts.push('gear', 'effects');
         break;
     }
-    options.parts.push('biography')
+    options.parts.push('biography');
   }
 
   /* -------------------------------------------- */
@@ -270,7 +295,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
       skills: this.actor.system.skills,
       // Add isGM to the context
       isGM: game.user.isGM,
-      carriedWeight: this.actor.getCarriedGear(),
+      carriedWeight: this.actor.getCarriedGear()
     };
 
     if (this.actor.type === 'character') {
@@ -311,17 +336,14 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
         context.tab = context.tabs[partId];
         // Enrich biography info for display
         // Enrichment turns text like `[[/r 1d20]]` into buttons
-        context.enrichedBiography = await TextEditor.enrichHTML(
-          this.actor.system.biography,
-          {
-            // Whether to show secret blocks in the finished html
-            secrets: this.document.isOwner,
-            // Data to fill in for inline rolls
-            rollData: this.actor.getRollData(),
-            // Relative UUID resolution
-            relativeTo: this.actor,
-          }
-        );
+        context.enrichedBiography = await TextEditor.enrichHTML(this.actor.system.biography, {
+          // Whether to show secret blocks in the finished html
+          secrets: this.document.isOwner,
+          // Data to fill in for inline rolls
+          rollData: this.actor.getRollData(),
+          // Relative UUID resolution
+          relativeTo: this.actor
+        });
         break;
       case 'effects':
         context.tab = context.tabs[partId];
@@ -357,7 +379,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
         // FontAwesome Icon, if you so choose
         icon: '',
         // Run through localization
-        label: 'SDM.Tab',
+        label: 'SDM.Tab'
       };
       switch (partId) {
         case 'header':
@@ -421,7 +443,6 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     if (isCaravan) {
       context.transport = transport;
     }
-
   }
 
   /**
@@ -433,7 +454,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
    * @override
    */
   _onRender(context, options) {
-    this.#dragDrop.forEach((d) => d.bind(this.element));
+    this.#dragDrop.forEach(d => d.bind(this.element));
     this.#disableOverrides();
     // You may want to add other special handling here
     // Foundry comes with a large number of utility classes, e.g. SearchFilter
@@ -504,7 +525,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
 
     // Only error if EXCEEDING max (not when equal)
     if (currentCarriedWeight > maxCarryWeight) {
-      ui.notifications.error("Updating this item would exceed your carry weight limit.");
+      ui.notifications.error('Updating this item would exceed your carry weight limit.');
       return false;
     }
     return true;
@@ -522,7 +543,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     const maxCarryWeight = this.actor.system.carry_weight.max;
     const newCarryWeight = currentCarriedWeight + newWeight;
     if (newCarryWeight > maxCarryWeight) {
-      ui.notifications.error("Adding this item would exceed your carry weight limit.");
+      ui.notifications.error('Adding this item would exceed your carry weight limit.');
       return false;
     }
 
@@ -530,8 +551,8 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
   }
 
   /**
-  * Remove item change listeners when sheet closes
-  */
+   * Remove item change listeners when sheet closes
+   */
   _teardownItemListeners() {
     if (!this._itemListeners) return;
     Hooks.off('preCreateItem', this._itemListeners.preCreate);
@@ -567,9 +588,10 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     // Calculate current encumbrance (SDM-specific calculation)
 
     const carriedWeight = this.actor.getCarriedGear();
-    const encumbranceThreshold = this.actor.system.carry_weight.unencumbered ?? UNENCUMBERED_THRESHOLD_CASH;
+    const encumbranceThreshold =
+      this.actor.system.carry_weight.unencumbered ?? UNENCUMBERED_THRESHOLD_CASH;
     const encumberedEffect = actor.effects.getName('encumbered');
-    const encumberedSlow = actor.effects.getName('slow (encumbered)')
+    const encumberedSlow = actor.effects.getName('slow (encumbered)');
 
     // Update encumbrance effect
     if (carriedWeight > encumbranceThreshold && !encumberedEffect) {
@@ -599,18 +621,16 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
   static async _onEditImage(event, target) {
     const attr = target.dataset.edit;
     const current = foundry.utils.getProperty(this.document, attr);
-    const { img } =
-      this.document.constructor.getDefaultArtwork?.(this.document.toObject()) ??
-      {};
+    const { img } = this.document.constructor.getDefaultArtwork?.(this.document.toObject()) ?? {};
     const fp = new FilePicker({
       current,
       type: 'image',
       redirectToRoot: img ? [img] : [],
-      callback: (path) => {
+      callback: path => {
         this.document.update({ [attr]: path });
       },
       top: this.position.top + 40,
-      left: this.position.left + 10,
+      left: this.position.left + 10
     });
     return fp.browse();
   }
@@ -654,8 +674,8 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     const docData = {
       name: docCls.defaultName({
         type: target.dataset.type,
-        parent: this.actor,
-      }),
+        parent: this.actor
+      })
     };
 
     // Apply dataset properties
@@ -676,7 +696,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     const newCarryWeight = currentCarriedWeight + newWeight;
 
     if (newCarryWeight > maxCarryWeight) {
-      ui.notifications.error("Adding this item would exceed your carry weight limit.");
+      ui.notifications.error('Adding this item would exceed your carry weight limit.');
       return;
     }
 
@@ -741,8 +761,8 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     // Handle rolls that supply the formula directly.
     if (dataset.roll) {
       return RollHandler.performRoll(this.actor, null, ChatLabel, {
-        roll: dataset.roll,
-      })
+        roll: dataset.roll
+      });
     }
 
     const rolledFrom = dataset.rollType ?? 'ability';
@@ -823,7 +843,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
    * @param {DragEvent} event       The originating DragEvent
    * @protected
    */
-  _onDragOver(event) { }
+  _onDragOver(event) {}
 
   /**
    * Callback actions which occur when a dragged element is dropped on a target.
@@ -860,8 +880,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     const aeCls = getDocumentClass('ActiveEffect');
     const effect = await aeCls.fromDropData(data);
     if (!this.actor.isOwner || !effect) return false;
-    if (effect.target === this.actor)
-      return this._onSortActiveEffect(event, effect);
+    if (effect.target === this.actor) return this._onSortActiveEffect(event, effect);
     return aeCls.create(effect, { parent: this.actor });
   }
 
@@ -885,18 +904,14 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     for (const el of dropTarget.parentElement.children) {
       const siblingId = el.dataset.effectId;
       const parentId = el.dataset.parentId;
-      if (
-        siblingId &&
-        parentId &&
-        (siblingId !== effect.id || parentId !== effect.parent.id)
-      )
+      if (siblingId && parentId && (siblingId !== effect.id || parentId !== effect.parent.id))
         siblings.push(this._getEmbeddedDocument(el));
     }
 
     // Perform the sort
     const sortUpdates = SortingHelpers.performIntegerSort(effect, {
       target,
-      siblings,
+      siblings
     });
 
     // Split the updates up by parent document
@@ -916,9 +931,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
 
     // Effects-on-items updates
     for (const [itemId, updates] of Object.entries(grandchildUpdateData)) {
-      await this.actor.items
-        .get(itemId)
-        .updateEmbeddedDocuments('ActiveEffect', updates);
+      await this.actor.items.get(itemId).updateEmbeddedDocuments('ActiveEffect', updates);
     }
 
     // Update on the main actor
@@ -961,8 +974,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     }
 
     // Handle item sorting within the same Actor
-    if (this.actor.uuid === item.parent?.uuid)
-      return this._onSortItem(event, item);
+    if (this.actor.uuid === item.parent?.uuid) return this._onSortItem(event, item);
 
     // Create the owned item
     return this._onDropItemCreate(item, event);
@@ -981,7 +993,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     const folder = await Folder.implementation.fromDropData(data);
     if (folder.type !== 'Item') return [];
     const droppedItemData = await Promise.all(
-      folder.contents.map(async (item) => {
+      folder.contents.map(async item => {
         if (!(document instanceof Item)) item = await fromUuid(item.uuid);
         return item;
       })
@@ -1014,7 +1026,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     const maxCarryWeight = this.actor.system.carry_weight.max;
 
     if (currentCarriedWeight + totalNewWeight > maxCarryWeight) {
-      ui.notifications.error("Adding this item would exceed your carry weight limit.");
+      ui.notifications.error('Adding this item would exceed your carry weight limit.');
       return [];
     }
 
@@ -1041,16 +1053,15 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
     const siblings = [];
     for (let el of dropTarget.parentElement.children) {
       const siblingId = el.dataset.itemId;
-      if (siblingId && siblingId !== item.id)
-        siblings.push(items.get(el.dataset.itemId));
+      if (siblingId && siblingId !== item.id) siblings.push(items.get(el.dataset.itemId));
     }
 
     // Perform the sort
     const sortUpdates = SortingHelpers.performIntegerSort(item, {
       target,
-      siblings,
+      siblings
     });
-    const updateData = sortUpdates.map((u) => {
+    const updateData = sortUpdates.map(u => {
       const update = u.update;
       update._id = u.target._id;
       return update;
@@ -1080,15 +1091,15 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(
    * @private
    */
   #createDragDropHandlers() {
-    return this.options.dragDrop.map((d) => {
+    return this.options.dragDrop.map(d => {
       d.permissions = {
         dragstart: this._canDragStart.bind(this),
-        drop: this._canDragDrop.bind(this),
+        drop: this._canDragDrop.bind(this)
       };
       d.callbacks = {
         dragstart: this._onDragStart.bind(this),
         dragover: this._onDragOver.bind(this),
-        drop: this._onDrop.bind(this),
+        drop: this._onDrop.bind(this)
       };
       return new DragDrop(d);
     });

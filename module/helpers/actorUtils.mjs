@@ -1,4 +1,4 @@
-import { ActorType } from "./constants.mjs";
+import { ActorType } from './constants.mjs';
 
 export const BASE_DEFENSE_VALUE = 7;
 export const MAX_ATTRIBUTE_VALUE = 19;
@@ -54,16 +54,16 @@ export function getCreatureStatsByLevel(level = MIN_LEVEL) {
     { target: 18, life: 300, majorBonus: 16, minorBonus: 8, damage: '2d20+16' },
     { target: 18, life: 375, majorBonus: 17, minorBonus: 8, damage: '2d20+1d8+17' },
     { target: 19, life: 500, majorBonus: 18, minorBonus: 9, damage: '2d20+1d12+18' },
-    { target: 20, life: 666, majorBonus: 19, minorBonus: 9, damage: '3d20+20' }, // level 17
+    { target: 20, life: 666, majorBonus: 19, minorBonus: 9, damage: '3d20+20' } // level 17
   ];
 
   // Validate input level
   if (level < MIN_LEVEL) {
-    return levelData[MIN_LEVEL]
+    return levelData[MIN_LEVEL];
   }
 
   if (level > MAX_CREATURE_LEVEL) {
-    return levelData[MAX_CREATURE_LEVEL]
+    return levelData[MAX_CREATURE_LEVEL];
   }
 
   // Return data for requested level
@@ -71,9 +71,9 @@ export function getCreatureStatsByLevel(level = MIN_LEVEL) {
 }
 
 export function getActorOptions(actorType = ActorType.CHARACTER) {
-  const actors = game.actors.filter((actor) => actor.type === actorType);
-  return actors.map((actor) => ({
+  const actors = game.actors.filter(actor => actor.type === actorType);
+  return actors.map(actor => ({
     id: actor.id,
-    name: actor.name,
+    name: actor.name
   }));
 }

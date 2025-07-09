@@ -1,4 +1,4 @@
-import { ItemType, SizeUnit } from "./constants.mjs";
+import { ItemType, SizeUnit } from './constants.mjs';
 /**
  * Convert any size unit to sacks.
  * @param {number} size - The size value.
@@ -17,7 +17,7 @@ export function convertToSacks(size = 0, unit) {
       break;
     case SizeUnit.SACKS:
       convertionFactor = 1; // Already in sacks
-      break
+      break;
     case SizeUnit.CASH:
       convertionFactor = 2500; // 2500 cash = 1 sack
       break;
@@ -27,7 +27,6 @@ export function convertToSacks(size = 0, unit) {
 
   return preciseRound(size / convertionFactor, 6);
 }
-
 
 export function convertToCash(size = 0, unit) {
   let convertionFactor = 1;
@@ -41,7 +40,7 @@ export function convertToCash(size = 0, unit) {
       break;
     case SizeUnit.SACKS:
       convertionFactor = 2500; // Already in sacks
-      break
+      break;
     case SizeUnit.CASH:
       convertionFactor = 1; // 2500 cash = 1 sack
       break;
@@ -62,7 +61,6 @@ export const GEAR_ITEM_TYPES = ['gear'];
 export const TRAIT_ITEM_TYPES = ['trait'];
 export const BURDEN_ITEM_TYPES = ['burden'];
 export const ITEMS_NOT_ALLOWED_IN_CHARACTERS = ['mount', 'motor'];
-
 
 // Add this method to handle item updates
 export async function onItemUpdate(item, updateData) {
@@ -89,7 +87,7 @@ async function toggleEffectTransfer(effect, shouldBeActive) {
   if (shouldBeActive) {
     // Enable transfer and activate effect
     effectUpdates.disabled = false;
-    effectUpdates["flags.core.statusId"] = null; // Clear disabled status
+    effectUpdates['flags.core.statusId'] = null; // Clear disabled status
     effectUpdates.transfer = true;
   } else {
     // Disable transfer and deactivate effect
@@ -100,13 +98,14 @@ async function toggleEffectTransfer(effect, shouldBeActive) {
   await effect.update(effectUpdates);
 }
 
-
 export function getSlotsTaken(itemSystem) {
-  let slotsTaken = Math.ceil(convertToCash(itemSystem.quantity * itemSystem.size?.value, itemSystem.size?.unit) / 250);
+  let slotsTaken = Math.ceil(
+    convertToCash(itemSystem.quantity * itemSystem.size?.value, itemSystem.size?.unit) / 250
+  );
   slotsTaken = Math.max(slotsTaken || 1, 1);
 
   if (itemSystem.size?.unit !== SizeUnit.CASH && itemSystem.quantity > 1 && itemSystem.readied) {
-    slotsTaken *= itemSystem.quantity
+    slotsTaken *= itemSystem.quantity;
   }
 
   return slotsTaken;

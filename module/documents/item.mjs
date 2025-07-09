@@ -1,13 +1,12 @@
-import { GearType, PullMode, SizeUnit, TraitType } from "../helpers/constants.mjs";
-import { convertToCash, getSlotsTaken } from "../helpers/itemUtils.mjs";
-import { $l10n, capitalizeFirstLetter } from '../helpers/globalUtils.mjs'
+import { GearType, PullMode, SizeUnit, TraitType } from '../helpers/constants.mjs';
+import { convertToCash, getSlotsTaken } from '../helpers/itemUtils.mjs';
+import { $l10n, capitalizeFirstLetter } from '../helpers/globalUtils.mjs';
 
 /**
  * Extend the basic Item with some very simple modifications.
  * @extends {Item}
  */
 export class SdmItem extends Item {
-
   /**
    * Augment the basic Item data model with additional dynamic data.
    */
@@ -27,7 +26,7 @@ export class SdmItem extends Item {
         const motor = fromUuidSync(motorId);
 
         if (!motorId || !motor) {
-          carryWeight = Math.max(mountCapacity - this.system.riders.length, 0)
+          carryWeight = Math.max(mountCapacity - this.system.riders.length, 0);
           break;
         }
 
@@ -54,7 +53,7 @@ export class SdmItem extends Item {
           } else if (mode === PullMode.CARTING) {
             pullModeMultiplier = 3;
           }
-          mountsCapacity += (mountActor.system.capacity * pullModeMultiplier);
+          mountsCapacity += mountActor.system.capacity * pullModeMultiplier;
         }
 
         if (mountsCapacity >= motorCapacity) {
@@ -78,6 +77,15 @@ export class SdmItem extends Item {
     const armorValueLabel = `${$l10n('SDM.ArmorValue')}: ${armorData?.value}`;
     const armorTypeLabel = `${$l10n('SDM.ArmorType')}: ${$l10n(CONFIG.SDM.armorType[armorData?.type])}`;
     const title = `${this.name}\r${armorValueLabel} ${armorTypeLabel}`;
+    return title;
+  }
+
+  getWardTitle() {
+    const wardData = this.system?.ward;
+    const wardValueLabel = `${$l10n('SDM.WardValue')}: ${wardData?.value}`;
+    const armorValueLabel = `${$l10n('SDM.ArmorValue')}: ${wardData?.armor}`;
+    const wardTypeLabel = `${$l10n('SDM.WardType')}: ${$l10n(CONFIG.SDM.wardType[wardData?.type])}`;
+    const title = `${this.name}\r${wardValueLabel}${wardData?.armor ? ` ${armorValueLabel}` : ''} ${wardTypeLabel}`;
     return title;
   }
 
@@ -124,7 +132,7 @@ export class SdmItem extends Item {
     let rollLabel = `${$l10n('SDM.PowerRollFormulaAbbr')}: ${powerData?.roll_formula}`;
 
     if (data?.default_ability) {
-      rollLabel += ` ${this.getDefaultAbilityLabel()}`
+      rollLabel += ` ${this.getDefaultAbilityLabel()}`;
     }
 
     title += `${powerLabel}, ${rangeLabel}, ${targetLabel}, ${durationLabel}${powerData?.roll_formula ? `, ${rollLabel}` : ''}`;
@@ -135,15 +143,15 @@ export class SdmItem extends Item {
 
   getSkillTitle() {
     const skillMod = this.system?.skill?.modifier_final;
+    const skillRank = this.system?.skill?.rank;
 
     if (skillMod === 0) return this.name;
 
-    const skillModLabel = $l10n(CONFIG.SDM.skillMod[skillMod]);
+    const skillModLabel = $l10n(CONFIG.SDM.skillMod[skillRank]);
     const title = `${$l10n('SDM.SkillMod')}: +${skillMod} ${skillModLabel}`;
 
     return title;
   }
-
 
   getWeaponTitle() {
     const data = this.system;
@@ -171,23 +179,20 @@ export class SdmItem extends Item {
     const getInventoryItemTitle = {
       [GearType.ARMOR]: () => this.getArmorTitle(),
       [TraitType.POWER]: () => this.getPowerTitle(),
-      // [GearType.POWER_CONTAINER]: this.getPowerContaierTitle,
+      [GearType.POWER_CONTAINER]: () => this.getDefaultTitle(),
       [TraitType.SKILL]: () => this.getSkillTitle(),
       [GearType.WEAPON]: () => this.getWeaponTitle(),
-      '': () => this.getDefaultTitle(),
+      [GearType.WARD]: () => this.getWardTitle(),
+      '': () => this.getDefaultTitle()
     };
-    if (!data.type) {
-      console.log(this.system);
-    }
+
     const titleFunction = getInventoryItemTitle[data.type];
     title = titleFunction();
 
     return title;
   }
 
-  getInventoryName() {
-
-  }
+  getInventoryName() {}
 
   /**
    * Prepare a data object which defines the data schema used by dice roll commands against this Item
@@ -226,12 +231,12 @@ export class SdmItem extends Item {
     let finalRoll;
 
     if (formula) {
-      finalRoll = formula
+      finalRoll = formula;
     } else {
       finalRoll = damage?.base || '';
       if (versatile && damageMode === 'versatile' && damage.versatile) {
         finalRoll = damage.versatile;
-        label += ` (${game.i18n.localize('SDM.FeatureVersatile')})`
+        label += ` (${game.i18n.localize('SDM.FeatureVersatile')})`;
       }
     }
 
@@ -243,7 +248,7 @@ export class SdmItem extends Item {
     await roll.toMessage({
       speaker: speaker,
       rollMode: rollMode,
-      flavor: label,
+      flavor: label
     });
   }
 }

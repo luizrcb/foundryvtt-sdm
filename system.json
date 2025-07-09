@@ -12,71 +12,37 @@
   "documentTypes": {
     "Actor": {
       "character": {
-        "htmlFields": [
-          "biography",
-          "notes"
-        ]
+        "htmlFields": ["biography", "notes"]
       },
       "caravan": {
-        "htmlFields": [
-          "biography",
-          "notes"
-        ]
+        "htmlFields": ["biography", "notes"]
       },
       "npc": {
-        "htmlFields": [
-          "biography",
-          "notes"
-        ]
+        "htmlFields": ["biography", "notes"]
       }
     },
     "Item": {
       "gear": {
-        "htmlFields": [
-          "description",
-          "features"
-
-        ]
+        "htmlFields": ["description", "features"]
       },
       "mount": {
-        "htmlFields": [
-          "description",
-          "features"
-        ]
+        "htmlFields": ["description", "features"]
       },
       "motor": {
-        "htmlFields": [
-          "description",
-          "features"
-        ]
+        "htmlFields": ["description", "features"]
       },
       "trait": {
-        "htmlFields": [
-          "description",
-          "features"
-        ]
+        "htmlFields": ["description", "features"]
       },
       "burden": {
-        "htmlFields": [
-          "description",
-          "features"
-        ]
+        "htmlFields": ["description", "features"]
       }
     }
   },
   "flags": {
     "hotReload": {
-      "extensions": [
-        "css",
-        "html",
-        "hbs",
-        "json"
-      ],
-      "paths": [
-        "css",
-        "lang",
-        "templates"
-      ]
+      "extensions": ["css", "html", "hbs", "json"],
+      "paths": ["css", "lang", "templates"]
     }
   },
   "url": "https://github.com/luizrcb/foundryvtt-sdm",
@@ -96,12 +62,8 @@
     "minimum": "12",
     "verified": "13.346"
   },
-  "esmodules": [
-    "module/sdm.mjs"
-  ],
-  "styles": [
-    "css/sdm.css"
-  ],
+  "esmodules": ["module/sdm.mjs"],
+  "styles": ["css/sdm.css"],
   "languages": [
     {
       "lang": "en",
@@ -122,14 +84,14 @@
       "type": "Macro",
       "system": "sdm"
     },
-     {
+    {
       "name": "player macros",
       "label": "SDM Player Macros",
       "path": "./packs/player_macros.db",
       "type": "Macro",
       "system": "sdm"
     },
-     {
+    {
       "name": "Rolltables",
       "label": "RollTables",
       "path": "./packs/rolltables.db",

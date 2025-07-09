@@ -1,7 +1,8 @@
 import { createChatMessage } from '../helpers/chatUtils.mjs';
 import { SDM } from '../helpers/config.mjs';
-import { ActorType, Die } from '../helpers/constants.mjs'
-import { $fmt , $l10n } from '../helpers/globalUtils.mjs'
+import { ActorType, Die } from '../helpers/constants.mjs';
+import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
+import { templatePath } from '../helpers/templates.mjs';
 
 const { renderTemplate } = foundry.applications.handlebars;
 
@@ -24,7 +25,7 @@ export class HeroDiceProcessor {
     const modifier = {
       formula: '',
       result: 0,
-      multiplier: '',
+      multiplier: ''
     };
 
     let nextOp = '';
@@ -33,7 +34,6 @@ export class HeroDiceProcessor {
       switch (term.constructor) {
         case foundry.dice.terms.Die:
         case foundry.dice.terms.NumericTerm:
-
           if (nextOp === '*') {
             modifier.multiplier += term.total;
             break;
@@ -53,7 +53,7 @@ export class HeroDiceProcessor {
           if (nextOp !== '*') {
             modifier.formula += term.operator;
           } else {
-            modifier.multiplier += nextOp
+            modifier.multiplier += nextOp;
           }
 
           break;
@@ -65,14 +65,20 @@ export class HeroDiceProcessor {
     const explosiveDice = originalRoll.dice
       .filter(d => d.faces === dieFaces)
       .flatMap((d, dieIndex) =>
-        d.results.map((r, resultIndex) =>
-          new ExplosiveDie({ ...r, dieIndex, resultIndex }, d.faces)));
+        d.results.map(
+          (r, resultIndex) => new ExplosiveDie({ ...r, dieIndex, resultIndex }, d.faces)
+        )
+      );
 
     const nonExplosiveDice = originalRoll.dice.filter(d => d.faces !== dieFaces);
     const defaultHeroDiceType = game.settings.get('sdm', 'defaultHeroDiceType');
     const heroDiceType = actor?.system?.hero_dice?.dice_type || defaultHeroDiceType;
 
-    const heroicRoll = await this._rollHeroDice(heroicDiceQty, true, false, Die[heroDiceType],
+    const heroicRoll = await this._rollHeroDice(
+      heroicDiceQty,
+      true,
+      false,
+      Die[heroDiceType]
       // force hero dice results for testing
       // {dice: [{ results: [{result: 1, index: 0}]}]},
     );
@@ -80,11 +86,7 @@ export class HeroDiceProcessor {
 
     const heroicResults = heroicRoll.dice[0].results.map(hr => hr.result);
 
-    const distribution = this._distributeHeroDice(
-      explosiveDice,
-      heroicResults,
-      keepRule,
-    );
+    const distribution = this._distributeHeroDice(explosiveDice, heroicResults, keepRule);
 
     if (shouldExplode) {
       await this._processExplosions(distribution, dieFaces);
@@ -97,7 +99,7 @@ export class HeroDiceProcessor {
       originalRoll,
       modifier,
       keepRule,
-      shouldExplode,
+      shouldExplode
     );
 
     return this._createChatMessage(result, dieFaces, actor);
@@ -107,14 +109,14 @@ export class HeroDiceProcessor {
     const current = Math.max(0, actor.system.hero_dice?.value || 0);
     const newHeroDiceValue = Math.max(current - heroicDiceQty, 0);
     await actor.update({
-      'system.hero_dice.value': newHeroDiceValue,
+      'system.hero_dice.value': newHeroDiceValue
     });
   }
 
   static getKeepRule(originalRoll) {
     const defaultRule = {
       type: 'kh',
-      count: 1,
+      count: 1
     };
 
     const dieTerm = originalRoll.terms.find(t => t instanceof foundry.dice.terms.Die);
@@ -133,9 +135,15 @@ export class HeroDiceProcessor {
       type: match[1], // 'kh' or 'kl'
       count: match[2] ? parseInt(match[2]) : 1 // Default to 1 if no number
     };
-  };
+  }
 
-  static async _rollHeroDice(qty, displayDice = true, healingHouseRule = false, heroicDieFaces = Die.d6, fixedResult) {
+  static async _rollHeroDice(
+    qty,
+    displayDice = true,
+    healingHouseRule = false,
+    heroicDieFaces = Die.d6,
+    fixedResult
+  ) {
     let roll = new Roll(`${qty}d${heroicDieFaces}`);
 
     if (healingHouseRule) {
@@ -155,16 +163,18 @@ export class HeroDiceProcessor {
       index
     }));
 
-    const strategy = keepRule.type === 'kh' ?
-      HeroDiceProcessor._khDistributionStrategy :
-      HeroDiceProcessor._klDistributionStrategy;
+    const strategy =
+      keepRule.type === 'kh'
+        ? HeroDiceProcessor._khDistributionStrategy
+        : HeroDiceProcessor._klDistributionStrategy;
 
     return strategy(explosiveDice, heroicResultsObjects);
   }
 
   static _khDistributionStrategy(explosiveDice, heroicResults) {
-    const sortedDice = [...explosiveDice].sort((a, b) =>
-      (b.faces - b.original) - (a.faces - a.original));
+    const sortedDice = [...explosiveDice].sort(
+      (a, b) => b.faces - b.original - (a.faces - a.original)
+    );
 
     const sortedHero = [...heroicResults].sort((a, b) => b.result - a.result);
     const distribution = new Map();
@@ -207,8 +217,11 @@ export class HeroDiceProcessor {
       if (!found && sortedHero.length > 0) {
         const combination = HeroDiceProcessor._findOptimizedCombination(sortedHero, needed);
         if (combination) {
-          combination.reverse().forEach(index =>
-            HeroDiceProcessor._allocateHero(die, sortedHero, index, distribution));
+          combination
+            .reverse()
+            .forEach(index =>
+              HeroDiceProcessor._allocateHero(die, sortedHero, index, distribution)
+            );
           found = true;
         }
       }
@@ -246,7 +259,7 @@ export class HeroDiceProcessor {
     // 3. Alocar para maximizar o mínimo
     let currentMin = Math.min(...sortedDice.map(d => d.original));
 
-    while (sortedHero.length > 0 && !sortedDice.every((d => d.modified >= dieFaces))) {
+    while (sortedHero.length > 0 && !sortedDice.every(d => d.modified >= dieFaces)) {
       // Encontrar dado mais baixo que pode ser melhorado
       const targetDie = sortedDice.find(d => d.modified === currentMin);
       if (!targetDie) break;
@@ -292,8 +305,7 @@ export class HeroDiceProcessor {
     for (const combo of this._getCombinationsOptimized(heroicPool, needed)) {
       const waste = combo.reduce((s, h) => s + h.result, 0) - needed;
 
-      if (waste < minWaste ||
-        (waste === minWaste && combo.length < best.length)) {
+      if (waste < minWaste || (waste === minWaste && combo.length < best.length)) {
         best = combo;
         minWaste = waste;
       }
@@ -339,7 +351,15 @@ export class HeroDiceProcessor {
     }
   }
 
-  static _calculateFinalResult(explosiveDice, heroicResults, distribution, originalRoll, modifier, keepRule, shouldExplode) {
+  static _calculateFinalResult(
+    explosiveDice,
+    heroicResults,
+    distribution,
+    originalRoll,
+    modifier,
+    keepRule,
+    shouldExplode
+  ) {
     // 1. Calcular soma total para cada dado (modificado + explosões)
     const diceWithTotals = [];
     const heroicDistribution = distribution.distribution;
@@ -349,9 +369,10 @@ export class HeroDiceProcessor {
       for (let [die, _heroicDistribution] of heroicDistribution.entries()) {
         diceWithTotals.push({
           die,
-          total: Math.min(die.modified, die.faces) + (
-            shouldExplode ? die.explosionChain.reduce((a, b) => a + b, 0) : 0),
-        })
+          total:
+            Math.min(die.modified, die.faces) +
+            (shouldExplode ? die.explosionChain.reduce((a, b) => a + b, 0) : 0)
+        });
       }
     } else {
       const highestDie = explosiveDice.sort((a, b) => b.original - a.original)[0];
@@ -359,7 +380,7 @@ export class HeroDiceProcessor {
       highestDie.isKept = true;
       diceWithTotals.push({
         die: highestDie,
-        total: highestDie.original,
+        total: highestDie.original
       });
     }
 
@@ -367,7 +388,7 @@ export class HeroDiceProcessor {
 
     // 2. Ordenar e selecionar os dados mantidos
     const keptDice = diceWithTotals
-      .sort((a, b) => keepRule.type === 'kh' ? b.total - a.total : a.total - b.total)
+      .sort((a, b) => (keepRule.type === 'kh' ? b.total - a.total : a.total - b.total))
       .slice(0, keepRule.count);
 
     // 3. Calcular total final
@@ -382,7 +403,6 @@ export class HeroDiceProcessor {
 
     if (modifier.result) {
       total += modifier.result;
-
     }
 
     if (!heroicDistribution.size) {
@@ -397,7 +417,7 @@ export class HeroDiceProcessor {
       fixedModifiers: modifier,
       multiplier: modifier.multiplier,
       diceTotal,
-      distribution,
+      distribution
     };
   }
 
@@ -410,7 +430,7 @@ export class HeroDiceProcessor {
       total,
       shouldExplode = true,
       multiplier,
-      diceTotal,
+      diceTotal
     } = result;
 
     // const keptDice = result.explosiveDice
@@ -425,7 +445,7 @@ export class HeroDiceProcessor {
       isKept: keptDice.includes(die) // Adiciona flag de dado mantido
     }));
 
-    const finalDice = remainingDice.find((dice) => dice.isKept);
+    const finalDice = remainingDice.find(dice => dice.isKept);
     const heroicUsed = finalDice?.heroicAllocated;
 
     const explosions = [];
@@ -434,8 +454,8 @@ export class HeroDiceProcessor {
       if (explodedDie.explosions.length) {
         explosions.push({
           isKept: explodedDie.isKept,
-          chain: explodedDie.explosions,
-        })
+          chain: explodedDie.explosions
+        });
       }
     }
 
@@ -454,48 +474,64 @@ export class HeroDiceProcessor {
       shouldExplode,
       multiplier: multiplier ? SDM.damageMultiplier[multiplier] : '',
       diceTotal,
-      heroDiceType,
+      heroDiceType
     };
 
     return createChatMessage({
       actor,
-      content: await renderTemplate("systems/sdm/templates/chat/hero-dice-result.hbs", templateData),
+      content: await renderTemplate(templatePath('/chat/hero-dice-result'), templateData),
       flavor: $fmt('SDM.RollTitle', {
         prefix: '',
-        title: $l10n('SDM.FieldHeroDice'),
+        title: $l10n('SDM.FieldHeroDice')
       }),
-      flags: { "sdm.isHeroResult": true },
+      flags: { 'sdm.isHeroResult': true }
     });
   }
 }
 
-export function getHeroDiceSelect(actor, includeZero = false, isDamageRoll = false, healingHouseRuleEnabled = false) {
+export function getHeroDiceSelect(
+  actor,
+  includeZero = false,
+  isDamageRoll = false,
+  healingHouseRuleEnabled = false
+) {
   const maxHeroDice = actor.system.hero_dice?.value ?? 0;
 
-  const options = Array.from({ length: maxHeroDice }, (_, i) =>
-    `<option value="${i + 1}">${i + 1}</option>`
+  const options = Array.from(
+    { length: maxHeroDice },
+    (_, i) => `<option value="${i + 1}">${i + 1}</option>`
   ).join('');
+
+  //TODO replace this with a template
   const heroicDiceSelect = `
       <div class="form-group">
-        <label>${$l10n("SDM.ItemQuantity")}</label>
+        <label>${$l10n('SDM.ItemQuantity')}</label>
         <select name="heroicQty">
           ${includeZero ? '<option value="0">0</option>' : ''}
           ${options}
         </select>
       </div>
-      ${isDamageRoll ? `
+      ${
+        isDamageRoll
+          ? `
       <div class="form-group">
-        <label for="shouldExplode">${$l10n("SDM.ExplodingDice")}</label>
+        <label for="shouldExplode">${$l10n('SDM.ExplodingDice')}</label>
         <input id="shouldExplode" type="checkbox" name="shouldExplode" />
       </div>
-      `: ''}
-      ${healingHouseRuleEnabled ? `
+      `
+          : ''
+      }
+      ${
+        healingHouseRuleEnabled
+          ? `
       <div class="form-group">
-        <label for="healingHouseRule">${$l10n("SDM.SettingsHealingHouseRule")}</label>
+        <label for="healingHouseRule">${$l10n('SDM.SettingsHealingHouseRule')}</label>
         <input id="healingHouseRule" type="checkbox" name="healingHouseRule" />
-        <p>${$l10n("SDM.SettingsHealingHouseRuleHint")}</p>
+        <p>${$l10n('SDM.SettingsHealingHouseRuleHint')}</p>
       </div>
-      `: ''}
+      `
+          : ''
+      }
     `;
   return heroicDiceSelect;
 }
@@ -505,7 +541,9 @@ export async function handleHeroDice(event, message, messageActor) {
   const actor = messageActor || game.user?.character || canvas?.tokens?.controlled[0]?.actor;
 
   if (!actor || actor.type !== ActorType.CHARACTER) {
-    ui.notifications.error($l10n('SDM.ErrorNoActorSelected'));
+    ui.notifications.error(
+      $fmt('SDM.ErrorNoActorSelected', { type: $l10n('TYPES.Actor.character') })
+    );
     return;
   }
 
@@ -524,22 +562,19 @@ export async function handleHeroDice(event, message, messageActor) {
 
   const heroicDiceOptions = await foundry.applications.api.DialogV2.prompt({
     window: {
-      title: `${actor.name} ${$l10n("SDM.RollUseHeroDice")}`,
+      title: `${actor.name} ${$l10n('SDM.RollUseHeroDice')}`
     },
     content: getHeroDiceSelect(actor, false, isDamageRoll || !isTraitRoll),
     ok: {
       icon: `fas fa-dice-${heroDiceType}`,
-      label: $l10n("SDM.ButtonRoll"),
-      callback: (event, button) => new foundry.applications.ux.FormDataExtended(button.form).object,
+      label: $l10n('SDM.ButtonRoll'),
+      callback: (event, button) => new foundry.applications.ux.FormDataExtended(button.form).object
     }
   });
 
   if (heroicDiceOptions === null) return;
 
-  const {
-    heroicQty = 0,
-    shouldExplode = true,
-  } = heroicDiceOptions;
+  const { heroicQty = 0, shouldExplode = true } = heroicDiceOptions;
   const heroicDiceQty = parseInt(heroicQty || 0, 10);
   const currentHeroDice = actor?.system?.hero_dice?.value || 0;
   if (heroicDiceQty > currentHeroDice) return;
@@ -556,46 +591,46 @@ export async function healingHeroDice(event, actor) {
 
   const heroicDiceOptions = await foundry.applications.api.DialogV2.prompt({
     window: {
-      title: $l10n("SDM.RollUseHeroDice"),
+      title: $l10n('SDM.RollUseHeroDice')
     },
     content: getHeroDiceSelect(actor, false, false, healingHouseRuleEnabled),
     ok: {
       icon: `fas fa-dice-${heroDiceType}`,
-      label: $l10n("SDM.ButtonRoll"),
-      callback: (event, button) => new foundry.applications.ux.FormDataExtended(button.form).object,
-    },
+      label: $l10n('SDM.ButtonRoll'),
+      callback: (event, button) => new foundry.applications.ux.FormDataExtended(button.form).object
+    }
   });
 
   if (heroicDiceOptions === null) {
     return;
   }
 
-  const {
-    heroicQty = '0',
-    healingHouseRule = false,
-  } = heroicDiceOptions;
+  const { heroicQty = '0', healingHouseRule = false } = heroicDiceOptions;
   const heroicDiceQty = parseInt(heroicQty || 0, 10);
   const currentHeroDice = actor.system.hero_dice.value;
   if (heroicDiceQty > currentHeroDice) return;
 
-  const roll = await HeroDiceProcessor._rollHeroDice(heroicDiceQty, false, healingHouseRule, Die[heroDiceType]);
+  const roll = await HeroDiceProcessor._rollHeroDice(
+    heroicDiceQty,
+    false,
+    healingHouseRule,
+    Die[heroDiceType]
+  );
 
-  const diceLabel = heroicDiceQty > 1 ?
-    $l10n("SDM.HeroDice") :
-    $l10n("SDM.HeroDie");
+  const diceLabel = heroicDiceQty > 1 ? $l10n('SDM.HeroDice') : $l10n('SDM.HeroDie');
 
-  const flavor = $fmt("SDM.HeroDiceSpend", {
+  const flavor = $fmt('SDM.HeroDiceSpend', {
     actor: actor.name,
     quantity: heroicDiceQty,
-    diceLabel: diceLabel,
+    diceLabel: diceLabel
   });
 
   await createChatMessage({
     actor,
     flavor,
     rolls: [roll],
-    flags: { "sdm.isHeroResult": true }
+    flags: { 'sdm.isHeroResult': true }
   });
 
   await HeroDiceProcessor.updateHeroDice(actor, heroicDiceQty);
-};
+}

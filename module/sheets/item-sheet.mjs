@@ -1,5 +1,6 @@
 import { getActorOptions } from '../helpers/actorUtils.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
+import { templatePath } from '../helpers/templates.mjs';
 
 const { api, sheets } = foundry.applications;
 const TextEditor = foundry.applications.ux.TextEditor.implementation;
@@ -9,9 +10,7 @@ const FilePicker = foundry.applications.apps.FilePicker.implementation;
  * Extend the basic ItemSheet with some very simple modifications
  * @extends {ItemSheetV2}
  */
-export class SdmItemSheet extends api.HandlebarsApplicationMixin(
-  sheets.ItemSheetV2
-) {
+export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemSheetV2) {
   constructor(options = {}) {
     super(options);
     this.#dragDrop = this.#createDragDropHandlers();
@@ -21,7 +20,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(
   static DEFAULT_OPTIONS = {
     classes: ['sdm', 'item'],
     window: {
-      resizable: true,
+      resizable: true
     },
     actions: {
       onEditImage: this._onEditImage,
@@ -29,13 +28,13 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(
       createDoc: this._createEffect,
       deleteDoc: this._deleteEffect,
       toggleEffect: this._toggleEffect,
-      toggleReadied: this._toggleReadied,
+      toggleReadied: this._toggleReadied
     },
     form: {
-      submitOnChange: true,
+      submitOnChange: true
     },
     // Custom property that's merged into `this.options`
-    dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
+    dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }]
   };
 
   /* -------------------------------------------- */
@@ -43,28 +42,27 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(
   /** @override */
   static PARTS = {
     header: {
-      template: 'systems/sdm/templates/item/header.hbs',
+      template: templatePath('item/header')
     },
     tabs: {
       // Foundry-provided generic template
-      template: 'templates/generic/tab-navigation.hbs',
+      template: 'templates/generic/tab-navigation.hbs'
     },
     description: {
-      template: 'systems/sdm/templates/item/description.hbs',
+      template: templatePath('item/description')
     },
     attributesFeature: {
-      template:
-        'systems/sdm/templates/item/attribute-parts/feature.hbs',
+      template: templatePath('item/attribute-parts/feature')
     },
     attributesMount: {
-      template: 'systems/sdm/templates/item/attribute-parts/mount.hbs',
+      template: templatePath('item/attribute-parts/mount')
     },
     attributesSpell: {
-      template: 'systems/sdm/templates/item/attribute-parts/spell.hbs',
+      template: templatePath('item/attribute-parts/spell')
     },
     effects: {
-      template: 'systems/sdm/templates/item/effects.hbs',
-    },
+      template: templatePath('item/effects')
+    }
   };
 
   /** @override */
@@ -97,8 +95,11 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(
     const skillModOptons = Object.entries(CONFIG.SDM.skillMod).map(([modValue, modLabel]) => {
       return {
         value: modValue,
-        label: modValue > 0 ? `${game.i18n.localize(modLabel)} (+${modValue})` : game.i18n.localize(modLabel),
-      }
+        label:
+          modValue > 0
+            ? `${game.i18n.localize(modLabel)} (+${modValue})`
+            : game.i18n.localize(modLabel)
+      };
     });
 
     const context = {
@@ -121,7 +122,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(
       pullModes: CONFIG.SDM.pullModes,
       possibleRiders: getActorOptions('character'),
       sizeUnits: CONFIG.SDM.sizeUnits,
-      skillMod: skillModOptons,
+      skillMod: skillModOptons
     };
 
     return context;
@@ -140,17 +141,14 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(
         context.tab = context.tabs[partId];
         // Enrich description info for display
         // Enrichment turns text like `[[/r 1d20]]` into buttons
-        context.enrichedDescription = await TextEditor.enrichHTML(
-          this.item.system.description,
-          {
-            // Whether to show secret blocks in the finished html
-            secrets: this.document.isOwner,
-            // Data to fill in for inline rolls
-            rollData: this.item.getRollData(),
-            // Relative UUID resolution
-            relativeTo: this.item,
-          }
-        );
+        context.enrichedDescription = await TextEditor.enrichHTML(this.item.system.description, {
+          // Whether to show secret blocks in the finished html
+          secrets: this.document.isOwner,
+          // Data to fill in for inline rolls
+          rollData: this.item.getRollData(),
+          // Relative UUID resolution
+          relativeTo: this.item
+        });
         break;
       case 'effects':
         context.tab = context.tabs[partId];
@@ -183,7 +181,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(
         // FontAwesome Icon, if you so choose
         icon: '',
         // Run through localization
-        label: 'SDM.ItemTab',
+        label: 'SDM.ItemTab'
       };
       switch (partId) {
         case 'header':
@@ -218,7 +216,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(
    * @protected
    */
   _onRender(context, options) {
-    this.#dragDrop.forEach((d) => d.bind(this.element));
+    this.#dragDrop.forEach(d => d.bind(this.element));
     // You may want to add other special handling here
     // Foundry comes with a large number of utility classes, e.g. SearchFilter
     // That you may want to implement yourself.
@@ -242,18 +240,16 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(
   static async _onEditImage(event, target) {
     const attr = target.dataset.edit;
     const current = foundry.utils.getProperty(this.document, attr);
-    const { img } =
-      this.document.constructor.getDefaultArtwork?.(this.document.toObject()) ??
-      {};
+    const { img } = this.document.constructor.getDefaultArtwork?.(this.document.toObject()) ?? {};
     const fp = new FilePicker({
       current,
       type: 'image',
       redirectToRoot: img ? [img] : [],
-      callback: (path) => {
+      callback: path => {
         this.document.update({ [attr]: path });
       },
       top: this.position.top + 40,
-      left: this.position.left + 10,
+      left: this.position.left + 10
     });
     return fp.browse();
   }
@@ -285,7 +281,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(
   }
 
   /**
-   * Handle creating a new Owned Item or ActiveEffect for the actor using initial data defined in the HTML dataset
+   * Handle creating a new Owned Item or ActiveEffect for the actor using initial data
+   * defined in the HTML dataset
    *
    * @this SdmItemSheet
    * @param {PointerEvent} event   The originating click event
@@ -301,8 +298,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(
       name: aeCls.defaultName({
         // defaultName handles an undefined type gracefully
         type: target.dataset.type,
-        parent: this.item,
-      }),
+        parent: this.item
+      })
     };
     // Loop through the dataset and add it to our effectData
     for (const [dataKey, value] of Object.entries(target.dataset)) {
@@ -334,7 +331,6 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(
   static async _toggleReadied(event, target) {
     await this.item.update({ 'system.readied': !this.item.system.readied });
   }
-
 
   /** Helper Functions */
 
@@ -437,7 +433,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(
    * Handle the dropping of ActiveEffect data onto an Actor Sheet
    * @param {DragEvent} event                  The concluding DragEvent which contains drop data
    * @param {object} data                      The data transfer extracted from the event
-   * @returns {Promise<ActiveEffect|boolean>}  The created ActiveEffect object or false if it couldn't be created.
+   * @returns {Promise<ActiveEffect|boolean>}  The created ActiveEffect object
+   *                                           or false if it couldn't be created.
    * @protected
    */
   async _onDropActiveEffect(event, data) {
@@ -445,8 +442,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(
     const effect = await aeCls.fromDropData(data);
     if (!this.item.isOwner || !effect) return false;
 
-    if (this.item.uuid === effect.parent?.uuid)
-      return this._onEffectSort(event, effect);
+    if (this.item.uuid === effect.parent?.uuid) return this._onEffectSort(event, effect);
     return aeCls.create(effect, { parent: this.item });
   }
 
@@ -469,16 +465,15 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(
     const siblings = [];
     for (let el of dropTarget.parentElement.children) {
       const siblingId = el.dataset.effectId;
-      if (siblingId && siblingId !== effect.id)
-        siblings.push(effects.get(el.dataset.effectId));
+      if (siblingId && siblingId !== effect.id) siblings.push(effects.get(el.dataset.effectId));
     }
 
     // Perform the sort
     const sortUpdates = SortingHelpers.performIntegerSort(effect, {
       target,
-      siblings,
+      siblings
     });
-    const updateData = sortUpdates.map((u) => {
+    const updateData = sortUpdates.map(u => {
       const update = u.update;
       update._id = u.target._id;
       return update;
@@ -494,8 +489,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(
    * Handle dropping of an Actor data onto another Actor sheet
    * @param {DragEvent} event            The concluding DragEvent which contains drop data
    * @param {object} data                The data transfer extracted from the event
-   * @returns {Promise<object|boolean>}  A data object which describes the result of the drop, or false if the drop was
-   *                                     not permitted.
+   * @returns {Promise<object|boolean>}  A data object which describes the result of the drop,
+   *                                     or false if the drop was not permitted.
    * @protected
    */
   async _onDropActor(event, data) {
@@ -508,7 +503,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(
    * Handle dropping of an item reference or item data onto an Actor Sheet
    * @param {DragEvent} event            The concluding DragEvent which contains drop data
    * @param {object} data                The data transfer extracted from the event
-   * @returns {Promise<Item[]|boolean>}  The created or updated Item instances, or false if the drop was not permitted.
+   * @returns {Promise<Item[]|boolean>}  The created or updated Item instances,
+   *                                     or false if the drop was not permitted.
    * @protected
    */
   async _onDropItem(event, data) {
@@ -549,15 +545,15 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(
    * @private
    */
   #createDragDropHandlers() {
-    return this.options.dragDrop.map((d) => {
+    return this.options.dragDrop.map(d => {
       d.permissions = {
         dragstart: this._canDragStart.bind(this),
-        drop: this._canDragDrop.bind(this),
+        drop: this._canDragDrop.bind(this)
       };
       d.callbacks = {
         dragstart: this._onDragStart.bind(this),
         dragover: this._onDragOver.bind(this),
-        drop: this._onDrop.bind(this),
+        drop: this._onDrop.bind(this)
       };
       return new DragDrop(d);
     });

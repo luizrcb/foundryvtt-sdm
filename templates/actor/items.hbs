@@ -3,12 +3,19 @@
   <ol class='items-list'>
     <li class='item flexrow items-header'>
       <div class='item-name'></div>
-      <div class='item-formula'>{{localize 'SDM.InventoryItems'}} [{{@root.itemSlotsTaken}}/{{@root.system.item_slots}}]
+      <div class='item-formula'
+      >{{localize 'SDM.InventoryItems'}} [{{@root.itemSlotsTaken}}{{#if (
+        ne @root.actor.type 'npc')}}/{{@root.system.item_slots}}{{/if}}]
       </div>
       <div class='item-controls'>
         {{#if @root.editable}}
-        <a class='item-control item-create' title="{{localize 'DOCUMENT.Create' type=(localize 'TYPE.Item' )}}"
-          data-action='createDoc' data-document-class='Item' data-type='gear'>
+        <a
+          class='item-control item-create'
+          title="{{localize 'DOCUMENT.Create' type=(localize 'TYPE.Item' )}}"
+          data-action='createDoc'
+          data-document-class='Item'
+          data-type='gear'
+        >
           <i class='fas fa-plus'></i>
           {{localize 'DOCUMENT.New' type=(localize 'TYPE.Item' )}}
         </a>

@@ -8,13 +8,13 @@ import { createChatMessage } from '../helpers/chatUtils.mjs';
 export class RollHandler {
   static async performRoll(actor, key, label, options = {}) {
     const {
-      modifier = "",
+      modifier = '',
       rollType = RollType.NORMAL,
-      attack = "",
+      attack = '',
       heroicDice = 0,
-      roll = "",
+      roll = '',
       rolledFrom,
-      explode = true,
+      explode = true
     } = options;
 
     try {
@@ -45,26 +45,26 @@ export class RollHandler {
         actor,
         flavor,
         rolls: [rollInstance],
-        flags: { "sdm.isTraitRoll": true },
+        flags: { 'sdm.isTraitRoll': true }
       });
 
       return rollInstance;
     } catch (error) {
-      console.error("Roll execution failed:", error);
+      console.error('Roll execution failed:', error);
       throw error;
     }
   }
 
   static async handleItemRoll(actor, item, label, options = {}) {
     const {
-      modifier = "",
-      multiplier = "",
+      modifier = '',
+      multiplier = '',
       rollType = RollType.NORMAL,
       heroicDice = 0,
       versatile = false,
       rolledFrom = ItemType.GEAR,
       explode = false,
-      addAbility = '',
+      addAbility = ''
     } = options;
 
     try {
@@ -73,12 +73,14 @@ export class RollHandler {
         return;
       }
 
-      let baseFormula = versatile ? item.system.weapon.damage.versatile : item.system.weapon.damage.base;
+      let baseFormula = versatile
+        ? item.system.weapon.damage.versatile
+        : item.system.weapon.damage.base;
       const damageBonus = item.system.weapon.damage.bonus;
       const isNegativeBonus = damageBonus[0] === '-';
-      const finalFormula = `${baseFormula}${damageBonus ? `${isNegativeBonus ? '' : '+'}${damageBonus}` : ''}`
+      const finalFormula = `${baseFormula}${damageBonus ? `${isNegativeBonus ? '' : '+'}${damageBonus}` : ''}`;
       if (!finalFormula && !foundry.dice.Roll.validate(finalFormula)) {
-        ui.notifications.error(game.i18n.localize("SDM.ErrorMissingDamageFormula"));
+        ui.notifications.error(game.i18n.localize('SDM.ErrorMissingDamageFormula'));
         return;
       }
 
@@ -97,7 +99,7 @@ export class RollHandler {
         ignoreEncumbered,
         dieFaces,
         versatile,
-        itemFormula: finalFormula,
+        itemFormula: finalFormula
       });
 
       const rollInstance = new Roll(rollFormula, actor.system);
@@ -107,12 +109,12 @@ export class RollHandler {
         actor,
         rolls: [rollInstance],
         flavor,
-        flags: { "sdm.isDamageRoll": true },
+        flags: { 'sdm.isDamageRoll': true }
       });
 
       return rollInstance;
     } catch (error) {
-      console.error("Item roll failed:", error);
+      console.error('Item roll failed:', error);
       throw error;
     }
   }
@@ -123,9 +125,10 @@ export class RollHandler {
     const statPath = `abilities.${addAbility}.current`;
     const statProperty = AdvancedRollModifier._getActorProperty(actor, statPath);
 
-    const combined = statProperty === 0
-      ? modifier.trim()
-      : [modifier.trim(), statProperty].filter(s => s).join("+");
+    const combined =
+      statProperty === 0
+        ? modifier.trim()
+        : [modifier.trim(), statProperty].filter(s => s).join('+');
 
     return this.sanitizeFormula(combined);
   }
@@ -133,35 +136,35 @@ export class RollHandler {
   static sanitizeFormula(formula) {
     const cleaned = formula
       // First handle operator sequences
-      .replace(/\+-+/g, "-")    // Convert "+-" to "-"
-      .replace(/(?<!^)-+/g, "-") // Ensure single "-"
-      .replace(/\++/g, "+")      // Convert multiple "+" to single "+"
+      .replace(/\+-+/g, '-') // Convert "+-" to "-"
+      .replace(/(?<!^)-+/g, '-') // Ensure single "-"
+      .replace(/\++/g, '+') // Convert multiple "+" to single "+"
 
       // Then clean edges and whitespace
-      .replace(/(^[+ ]+)|([+ ]+$)/g, "")
-      .replace(/\s+/g, "");
+      .replace(/(^[+ ]+)|([+ ]+$)/g, '')
+      .replace(/\s+/g, '');
 
     foundry.dice.Roll.validate(cleaned);
     return cleaned;
   }
 
   static async handleCustomRoll(actor, label, baseFormula, options = {}) {
-    const { explode = true, modifier = "" } = options;
+    const { explode = true, modifier = '' } = options;
 
     try {
       foundry.dice.Roll.validate(baseFormula);
-      const sanitizedFormula = this.sanitizeFormula([`(${baseFormula})`, modifier].join("+"));
-      const instance = await AdvancedRollModifier.create(sanitizedFormula, actor)
-      const roll = await (instance.setExplosion(explode)).apply();
+      const sanitizedFormula = this.sanitizeFormula([`(${baseFormula})`, modifier].join('+'));
+      const instance = await AdvancedRollModifier.create(sanitizedFormula, actor);
+      const roll = await instance.setExplosion(explode).apply();
       await createChatMessage({
         actor,
         flavor: label,
         rolls: [roll],
-        flags: { "sdm.isTraitRoll": true },
+        flags: { 'sdm.isTraitRoll': true }
       });
       return roll;
     } catch (error) {
-      console.error("Custom roll failed:", error);
+      console.error('Custom roll failed:', error);
       throw error;
     }
   }
@@ -178,14 +181,25 @@ export class RollHandler {
       dieFaces = Die.d20,
       ignoreEncumbered = false,
       versatile = false,
-      itemFormula = '',
+      itemFormula = ''
     } = options;
 
     try {
       const burdenPenalTy = actor.system.burden_penalty || 0;
       const rollModifier = this.calculateRollModifier(rollType, heroicDice);
-      const diceFormula = this.buildDiceFormula({ modifier: rollModifier, explode, dieFaces, formula: itemFormula });
-      const { cappedStat, hasExpertise, diceTerms, fixedValues } = this.calculateStatModifier(actor, key, attack, modifier, burdenPenalTy);
+      const diceFormula = this.buildDiceFormula({
+        modifier: rollModifier,
+        explode,
+        dieFaces,
+        formula: itemFormula
+      });
+      const { cappedStat, hasExpertise, diceTerms, fixedValues } = this.calculateStatModifier(
+        actor,
+        key,
+        attack,
+        modifier,
+        burdenPenalTy
+      );
       const multipliedDiceFormula = multiplier ? `(${diceFormula})${multiplier}` : diceFormula;
 
       const formulaComponents = [multipliedDiceFormula, diceTerms, cappedStat];
@@ -196,7 +210,7 @@ export class RollHandler {
       }
 
       const formula = formulaComponents.join('+');
-      const sanitizedFormula = this.sanitizeFormula(formula)
+      const sanitizedFormula = this.sanitizeFormula(formula);
 
       return {
         rollFormula: sanitizedFormula,
@@ -212,11 +226,11 @@ export class RollHandler {
           explode,
           rollModifier,
           heroicDice,
-          versatile,
+          versatile
         })
       };
     } catch (error) {
-      console.error("Component preparation failed:", error);
+      console.error('Component preparation failed:', error);
       throw error;
     }
   }
@@ -225,29 +239,24 @@ export class RollHandler {
     return rollFormula.replace(/\b(\d*d\d+)\b/g, '$1x');
   }
 
-  static buildDiceFormula({
-    formula = '',
-    modifier = 0,
-    dieFaces = Die.d20,
-    explode = true,
-  }) {
+  static buildDiceFormula({ formula = '', modifier = 0, dieFaces = Die.d20, explode = true }) {
     // Validate inputs
     if (!Number.isInteger(dieFaces) || dieFaces < 2) {
       throw new Error(game.i18n.format('SDM.ErrorInvalidDiceFaces', { faces: dieFaces }));
     }
 
     // const diceCount = Math.abs(modifier) + 1;
-    const keepModifier = modifier > 0 ? 'kh' : (modifier < 0 ? 'kl' : '');
+    const keepModifier = modifier > 0 ? 'kh' : modifier < 0 ? 'kl' : '';
     let diceExpression = formula || `1d${dieFaces}`;
 
     let final_formula = diceExpression;
 
     if (keepModifier) {
-      final_formula = `{${diceExpression}, ${diceExpression}}${keepModifier}`
+      final_formula = `{${diceExpression}, ${diceExpression}}${keepModifier}`;
     }
 
     if (explode) {
-      final_formula = this.makeAllDiceExplode(final_formula)
+      final_formula = this.makeAllDiceExplode(final_formula);
     }
 
     foundry.dice.Roll.validate(final_formula);
@@ -266,14 +275,23 @@ export class RollHandler {
       explode,
       rollModifier,
       heroicDice,
-      versatile = false,
+      versatile = false
     } = params;
 
     const isDamageRoll = rolledFrom === ItemType.GEAR;
-    const resultingRollType = rollModifier > 0 ? RollType.ADVANTAGE : (rollModifier < 0) ? RollType.DISADVANTAGE : RollType.NORMAL;
+    const resultingRollType =
+      rollModifier > 0
+        ? RollType.ADVANTAGE
+        : rollModifier < 0
+          ? RollType.DISADVANTAGE
+          : RollType.NORMAL;
     const versatileLabel = game.i18n.localize(CONFIG.SDM.versatile);
-    const rollModifierLabel = game.i18n.localize(`SDM.Roll${capitalizeFirstLetter(resultingRollType)}Abbr`);
-    const parts = [`[${capitalizeFirstLetter(rolledFrom)}] ${hasExpertise ? '<b>*' : ''}${label}${hasExpertise ? '</b>' : ''}`];
+    const rollModifierLabel = game.i18n.localize(
+      `SDM.Roll${capitalizeFirstLetter(resultingRollType)}Abbr`
+    );
+    const parts = [
+      `[${capitalizeFirstLetter(rolledFrom)}] ${hasExpertise ? '<b>*' : ''}${label}${hasExpertise ? '</b>' : ''}`
+    ];
     if ((attack || isDamageRoll) && key) parts.push(`(${game.i18n.localize(SDM.abilities[key])})`);
     if (isDamageRoll && versatile) parts.push(`(${versatileLabel})`);
     if (rollModifier !== 0) parts.push(`(${rollModifierLabel})`);
@@ -303,7 +321,10 @@ export class RollHandler {
     let hasExpertise = false;
 
     const components = this.parseModifierString(modifier);
-    const { fixedValues, diceTerms } = this.separateFixedAndDice([...components, `${-burdenPenalTy}`]);
+    const { fixedValues, diceTerms } = this.separateFixedAndDice([
+      ...components,
+      `${-burdenPenalTy}`
+    ]);
 
     if (attack) {
       const attackData = actor.system[attack];
@@ -321,23 +342,26 @@ export class RollHandler {
       cappedStat: Math.min(baseAbility + expertise + fixedValuesTotal, MAX_MODIFIER),
       hasExpertise,
       diceTerms: diceTerms.join(''),
-      fixedValues: fixedValuesTotal,
+      fixedValues: fixedValuesTotal
     };
   }
 
   static parseModifierString(modifier = '') {
-    return modifier.split(/(?=[+-])/g).filter(c => c !== "");
+    return modifier.split(/(?=[+-])/g).filter(c => c !== '');
   }
 
   static separateFixedAndDice(components) {
-    return components.reduce((acc, component) => {
-      if (component.includes('d')) {
-        acc.diceTerms.push(component);
-      } else {
-        const value = parseInt(component, 10) || 0;
-        acc.fixedValues.push(value);
-      }
-      return acc;
-    }, { fixedValues: [], diceTerms: [] });
+    return components.reduce(
+      (acc, component) => {
+        if (component.includes('d')) {
+          acc.diceTerms.push(component);
+        } else {
+          const value = parseInt(component, 10) || 0;
+          acc.fixedValues.push(value);
+        }
+        return acc;
+      },
+      { fixedValues: [], diceTerms: [] }
+    );
   }
 }
