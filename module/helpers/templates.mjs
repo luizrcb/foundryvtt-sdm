@@ -3,7 +3,6 @@ const $$ = path => `systems/sdm/templates/${path}.hbs`;
 export const templatePath = $$;
 
 const templatesToLoad = [
-  $$('custom-roll-dialog'),
   $$('actor/items'),
   $$('actor/item'),
   $$('actor/traits'),
@@ -13,8 +12,7 @@ const templatesToLoad = [
   $$('actor/npc/header'),
   $$('item/gear/header'),
   $$('item/trait/header'),
-  $$('item/power'),
-  $$('actor/npc/morale-roll-dialog')
+  $$('item/power')
 ];
 
 export const preloadHandlebarsTemplates = async function () {

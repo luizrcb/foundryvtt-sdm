@@ -98,8 +98,8 @@
 }
 
 .application.sheet.sdm.item {
-  min-width: 480px;
-  min-height: 525px;
+  min-width: 550px;
+  min-height: 600px;
 }
 
 .application.sheet.sdm.item.minimized {
@@ -310,7 +310,6 @@
 .sdm {
   /* Hide default checkbox */
   /* Slider Background */
-  /* Slider Circle */
   /* Checked State - Foundry Orange */
   /* Move slider on checked */
   /* Rounded Slider */
@@ -443,7 +442,7 @@
   list-style: none;
   margin: 0;
   padding: 0;
-  max-height: 380px;
+  max-height: 420px;
   overflow-y: auto;
   scrollbar-width: thin;
   color: #444444;
@@ -462,7 +461,8 @@
   align-items: center;
   display: flex;
 }
-.sdm .items-list .item-name h3, .sdm .items-list .item-name h4 {
+.sdm .items-list .item-name h3,
+.sdm .items-list .item-name h4 {
   margin: 0;
   white-space: nowrap;
   overflow-x: hidden;
@@ -546,22 +546,29 @@
   transition: 0.4s;
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
 }
-.sdm .slider:before {
+.sdm .slider .fa-cog {
   position: absolute;
-  content: "";
-  height: 16px;
-  width: 16px;
   left: 2px;
   bottom: 2px;
+  width: 16px;
+  height: 16px;
   background-color: white;
-  transition: 0.4s;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: left 0.4s ease;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+  font-size: 10px;
+  color: #555;
+  z-index: 2;
 }
 .sdm input:checked + .slider {
   background-color: #191813;
 }
-.sdm input:checked + .slider:before {
+.sdm input:checked + .slider .fa-cog {
   transform: translateX(20px);
+  color: #191813;
 }
 .sdm .slider.round {
   border-radius: 34px;
@@ -759,5 +766,5 @@
 .sdm .edit-mode {
   position: absolute;
   top: 39px;
-  left: 9px;
+  left: 10px;
 }

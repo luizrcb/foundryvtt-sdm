@@ -2,10 +2,10 @@
 <div>
   <header class='sheet-header'>
     <div class="edit-mode">
-      <label class="switch edit-mode-toggle"
-        title="{{localize (ifThen isEditMode 'SDM.SheetPlayMode' 'SDM.SheetEditMode')}}">
-        <input type="checkbox" {{checked isEditMode}} data-action="toggleMode">
-        <span class="slider round"></span>
+      <label class="switch edit-mode-toggle sdm" for="toggleMode"
+        title="{{localize (ifThen isEditMode 'SDM.SheetEditMode' 'SDM.SheetPlayMode')}}">
+        <input id="toggleMode" type="checkbox" data-action="toggleMode" {{checked @root.editMode}}/>
+        <span class="slider round"><i class="fas fa-cog"></i></span>
       </label>
     </div>
     <div class="flexcol flex-between flex-center">
@@ -252,7 +252,13 @@
                     title='{{localize (lookup @root.config.abilities key)}}'>
                     {{toUpperCase (localize (lookup @root.config.abilityAbbreviations key))}}
                   </span>
-                  {{#if (eq key 'cha')}}<i class="fas fa-users rollable" title="Reaction Roll"></i>{{/if}}
+                  {{#if (eq key 'cha')}}
+                  <i
+                    class="fas fa-theater-masks rollable"
+                    title="{{localize 'SDM.ReactionRoll'}}"
+                    data-action="reactionRoll"  data-context='rollable'
+                  ></i>
+                  {{/if}}
                 </div>
 
 
@@ -279,25 +285,25 @@
           </div>
           {{#if @root.isEditMode}}
           <div class='resources grid grid-2col'>
-            <div class="ability grid-span-1 flexcol align-center">
+            <div class="ability grid-span-1 flexcol align-center" title="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackMelee')}}">
               <div class='resource-label'>
                 <div>{{localize 'SDM.AttackMelee'}}</div>
               </div>
               <i class="fas fa-gear rollable" data-action='updateAttack' data-attack="melee"></i>
             </div>
-            <div class="ability grid-span-1 flexcol align-center">
+            <div class="ability grid-span-1 flexcol align-center"  title="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackRanged')}}">
               <div class='resource-label'>
                 <div>{{localize 'SDM.AttackRanged'}}</div>
               </div>
               <i class="fas fa-gear rollable" data-action='updateAttack' data-attack="ranged"></i>
             </div>
-            <div class="ability grid-span-1 flexcol align-center">
+            <div class="ability grid-span-1 flexcol align-center" title="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackFantascience')}}">
               <div class='resource-label'>
                 <div>{{localize 'SDM.AttackFantascience'}}</div>
               </div>
               <i class="fas fa-gear rollable" data-action='updateAttack' data-attack="fantascience"></i>
             </div>
-            <div class="ability grid-span-1 flexcol align-center">
+            <div class="ability grid-span-1 flexcol align-center" title="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackOldtech')}}">
               <div class='resource-label'>
                 <div>{{localize 'SDM.AttackOldtech'}}</div>
               </div>

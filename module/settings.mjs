@@ -1,11 +1,12 @@
 import { DiceType } from './helpers/constants.mjs';
 import { $fmt, $l10n } from './helpers/globalUtils.mjs';
-import { handleHeroDice } from './rolls/heroDice.mjs';
+import { handleHeroDice } from './rolls/hero_dice/index.mjs';
 
 export const CHARACTER_DEFAULT_INITIATIVE = '2d6 + @abilities.agi.current + @initiative_bonus';
 export const NPC_DEFAULT_INITIATIVE = '2d6 + @bonus';
 export const SAVING_THROW_BASE_FORMULA = '1d20x';
 export const NPC_DEFAULT_MORALE_FORMULA = '2d6';
+export const BASE_REACTION_FORMULA = '2d6';
 
 export function registerSystemSettings() {
   /* -------------------------------------------- */
@@ -107,6 +108,16 @@ export function registerSystemSettings() {
     config: true, // Show in configuration view
     type: String, // Data type: String, Number, Boolean, etc
     default: NPC_DEFAULT_MORALE_FORMULA
+  });
+
+  game.settings.register('sdm', 'baseReactionFormula', {
+    name: 'SDM.SettingBaseReactionFormula',
+    hint: 'SDM.SettingsBaseReactionFormulaHint',
+    scope: 'world', // "world" = GM only, "client" = per user
+    restricted: true,
+    config: true, // Show in configuration view
+    type: String, // Data type: String, Number, Boolean, etc
+    default: BASE_REACTION_FORMULA
   });
 
   game.settings.register('sdm', 'defaultHeroDiceType', {

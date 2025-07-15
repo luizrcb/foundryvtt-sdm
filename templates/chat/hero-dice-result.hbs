@@ -10,8 +10,8 @@
             </header>
             <ol class="dice-rolls">
               {{#each dice}}
-              <li class="roll die d{{../dieFaces}}
-              {{#if (eq original ../dieFaces)}}exploded max{{/if}}
+              <li class="roll die d{{dieFaces}}
+              {{#if (eq original dieFaces)}}exploded max{{/if}}
               {{#unless isKept}}discarded{{/unless}}">
                 {{original}}
               </li>
@@ -39,7 +39,7 @@
           </div>
         </section>
         {{/if}}
-        {{#if shouldExplode }}
+
         <!-- Explosions -->
         {{#each explosions as |explosion|}}
         <div class="dice">
@@ -49,17 +49,15 @@
           <ol class="dice-rolls">
             {{#each explosion.chain as |chain|}}
             <li
-              class="roll die d{{@root.dieFaces}} {{#if (eq chain @root.dieFaces)}}exploded max{{/if}}{{#unless explosion.isKept}} discarded{{/unless}}">
+              class="roll die d{{../dieFaces}} {{#if (eq chain @../dieFaces)}}exploded max{{/if}}{{#unless explosion.isKept}} discarded{{/unless}}">
               {{chain}}
             </li>
             {{/each}}
           </ol>
         </div>
         {{/each}}
-        {{/if}}
 
-        {{#if diceTotal}}
-        {{#unless (eq diceTotal total)}}
+        {{#if (and diceTotal (ne diceTotal total))}}
         <section class="tooltip-part">
           <div class="dice">
             <header class="part-header">
@@ -70,22 +68,19 @@
             </ol>
           </div>
         </section>
-        {{/unless}}
         {{/if}}
 
-        {{#if modifiers.formula}}
-        {{#unless (eq modifiers.result 0)}}
+        {{#if (and modifiers (ne modifiers 0))}}
         <section class="tooltip-part">
           <div class="dice">
             <header class="part-header">
-              <span class="part-formula">{{localize 'SDM.RollModifiers'}} ({{modifiers.formula}})</span>
+              <span class="part-formula">{{localize 'SDM.RollModifiers'}}</span>
             </header>
             <ol class="dice-rolls">
-              <li><b>{{numberFormat modifiers.result sign=true}}</b></li>
+              <li><b>{{numberFormat modifiers sign=true}}</b></li>
             </ol>
           </div>
         </section>
-        {{/unless}}
         {{/if}}
       </div>
     </div>

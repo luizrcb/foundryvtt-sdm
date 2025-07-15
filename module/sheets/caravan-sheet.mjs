@@ -1,15 +1,15 @@
+import { UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
+import { ItemType, SizeUnit } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
-import { RollHandler } from '../rolls/rollHandler.mjs';
+import { $l10n } from '../helpers/globalUtils.mjs';
 import {
   convertToCash,
   GEAR_ITEM_TYPES,
   ITEMS_NOT_ALLOWED_IN_CHARACTERS
 } from '../helpers/itemUtils.mjs';
+import { templatePath } from '../helpers/templates.mjs';
 import { openItemTransferDialog } from '../items/transferItem.mjs';
-import { ItemType, SizeUnit } from '../helpers/constants.mjs';
-import { getHeroDiceSelect } from '../rolls/heroDice.mjs';
-import { UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
-import { $l10n } from '../helpers/globalUtils.mjs';
+//import { RollHandler } from '../rolls/rollHandler.mjs';
 
 const { api, sheets } = foundry.applications;
 const TextEditor = foundry.applications.ux.TextEditor.implementation;
@@ -174,7 +174,6 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
               </div>
             </div>
           </div>
-          ${getHeroDiceSelect(this.actor, minHeroDiceZero)}
           <div class="form-group">
             <label for="shouldExplode">${$l10n('SDM.ExplodingDice')}</label>
             <input id="shouldExplode" type="checkbox" name="shouldExplode" ${isTraitRoll ? 'checked' : ''} />
@@ -760,9 +759,9 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
 
     // Handle rolls that supply the formula directly.
     if (dataset.roll) {
-      return RollHandler.performRoll(this.actor, null, ChatLabel, {
-        roll: dataset.roll
-      });
+      // return RollHandler.performRoll(this.actor, null, ChatLabel, {
+      //   roll: dataset.roll
+      // });
     }
 
     const rolledFrom = dataset.rollType ?? 'ability';

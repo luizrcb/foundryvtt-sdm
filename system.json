@@ -14,21 +14,12 @@
       "character": {
         "htmlFields": ["biography", "notes"]
       },
-      "caravan": {
-        "htmlFields": ["biography", "notes"]
-      },
       "npc": {
         "htmlFields": ["biography", "notes"]
       }
     },
     "Item": {
       "gear": {
-        "htmlFields": ["description", "features"]
-      },
-      "mount": {
-        "htmlFields": ["description", "features"]
-      },
-      "motor": {
         "htmlFields": ["description", "features"]
       },
       "trait": {

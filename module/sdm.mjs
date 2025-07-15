@@ -2,22 +2,23 @@ import { SdmActor } from './documents/actor.mjs';
 import { SdmCombatant } from './documents/combatant.mjs';
 import { SdmItem } from './documents/item.mjs';
 import { SdmActorSheet } from './sheets/actor-sheet.mjs';
-import { SdmCaravanSheet } from './sheets/caravan-sheet.mjs';
-import { SdmItemSheet } from './sheets/item-sheet.mjs';
-import { SDM } from './helpers/config.mjs';
-import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
+// import { SdmCaravanSheet } from './sheets/caravan-sheet.mjs';
 import SdmActiveEffectConfig from './app/active-effect-config.mjs';
 import * as models from './data/_module.mjs';
 import { registerHandlebarsHelpers } from './handlebars-helpers.mjs';
+import { SDM } from './helpers/config.mjs';
+import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import {
   CHARACTER_DEFAULT_INITIATIVE,
   configureUseHeroDiceButton,
   createEscalatorDieDisplay,
   registerSystemSettings
 } from './settings.mjs';
+import { SdmItemSheet } from './sheets/item-sheet.mjs';
 
 const { Actors, Items } = foundry.documents.collections;
-
+const { ActiveEffectConfig } = foundry.applications.sheets;
+const { DocumentSheetConfig } = foundry.applications.apps;
 /* -------------------------------------------- */
 /*  Init Hook                                   */
 /* -------------------------------------------- */
@@ -32,7 +33,7 @@ globalThis.sdm = {
   },
   applications: {
     SdmActorSheet,
-    SdmCaravanSheet,
+    //SdmCaravanSheet,
     SdmItemSheet
   },
   utils: {
@@ -64,16 +65,16 @@ Hooks.once('init', function () {
   // with the Character/NPC as part of super.defineSchema()
   CONFIG.Actor.dataModels = {
     character: models.SdmCharacter,
-    npc: models.SdmNPC,
-    caravan: models.SdmCaravan
+    npc: models.SdmNPC
+    // caravan: models.SdmCaravan
   };
   CONFIG.Item.documentClass = SdmItem;
   CONFIG.Item.dataModels = {
     gear: models.SdmGear,
     trait: models.SdmTrait,
-    burden: models.SdmBurden,
-    mount: models.SdmMount,
-    motor: models.SdmMotor
+    burden: models.SdmBurden
+    // mount: models.SdmMount,
+    // motor: models.SdmMotor
   };
 
   // Active Effects are never copied to the Actor,

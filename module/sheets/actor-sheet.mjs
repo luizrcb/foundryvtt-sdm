@@ -11,7 +11,7 @@ import {
 } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { openItemTransferDialog } from '../items/transferItem.mjs';
-import { healingHeroDice } from '../rolls/heroDice.mjs';
+import { healingHeroDice } from '../rolls/hero_dice/index.mjs';
 import SDMRoll, { sanitizeExpression } from '../rolls/sdmRoll.mjs';
 import { SAVING_THROW_BASE_FORMULA } from '../settings.mjs';
 
@@ -69,7 +69,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       toggleMode: this._onToggleMode,
       updateAttack: this._onUpdateAttack,
       rollNPCDamage: this._onRollNPCDamage,
-      rollNPCMorale: this._onRollNPCMorale
+      rollNPCMorale: this._onRollNPCMorale,
+      reactionRoll: this._onReactionRoll
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
@@ -282,7 +283,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const template = await renderTemplate(templatePath('actor/character/update-attack'), {
       skills,
       abilities: CONFIG.SDM.abilities,
-      attack: game.i18n.localize(`SDM.Attack${capitalizedAttack}`),
+      attack: $l10n(`SDM.Attack${capitalizedAttack}`),
       selectedAbility,
       selectedSkill
     });
@@ -290,7 +291,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const updateAttackOptions = await foundry.applications.api.DialogV2.prompt({
       window: {
         title: game.i18n.format('DOCUMENT.Update', {
-          type: game.i18n.localize(`SDM.Attack${capitalizedAttack}`)
+          type: $l10n(`SDM.Attack${capitalizedAttack}`)
         })
       },
       content: template,
@@ -357,7 +358,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       fields: this.document.schema.fields,
       systemFields: this.document.system.schema.fields,
       // Add isGM to the context
-      isGM: game.user.isGM
+      isGM: game.user.isGM,
+      editMode: this.actor.getFlag('sdm', 'editMode')
     };
 
     if (this.actor.type === 'character') {
@@ -839,10 +841,15 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
   }
 
   static async _onToggleMode(event, target) {
+    // event.preventDefault(); // Don't open context menu
+    // event.stopPropagation(); // Don't trigger other events
+    // if (event.detail > 1) return; // Ignore repeated clicks
+
     const currentMode = this.actor.getFlag('sdm', 'editMode') ?? true;
     const newMode = !currentMode;
 
     await this.actor.setFlag('sdm', 'editMode', newMode);
+    return this.render();
   }
 
   /**
@@ -929,15 +936,13 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     const data = await DialogV2.wait({
       window: {
-        title: game.i18n.localize('SDM.MoraleRoll'),
+        title: $l10n('SDM.MoraleRoll'),
         resizable: true
       },
-      content: await renderTemplate(templatePath('actor/npc/morale-roll-dialog'), {
-        rollModes: CONFIG.SDM.rollMode
-      }),
+      content: await renderTemplate(templatePath('actor/npc/morale-roll-dialog')),
       buttons: [
         {
-          label: game.i18n.localize('SDM.ButtonRoll'),
+          label: $l10n('SDM.ButtonRoll'),
           icon: 'fas fa-person-running',
           callback: (event, button) => ({
             ...new foundry.applications.ux.FormDataExtended(button.form).object
@@ -992,6 +997,129 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     createChatMessage({
       content: await renderTemplate(templatePath('chat/morale-roll-result'), templateData),
       flavor: $l10n('SDM.MoraleRoll'),
+      rolls: [roll]
+    });
+  }
+
+  static async _onReactionRoll(event, target) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.detail > 1) return;
+
+    const data = await DialogV2.wait({
+      window: {
+        title: $l10n('SDM.ReactionRoll')
+      },
+      position: {
+        width: 500,
+        height: 250
+      },
+      content: await renderTemplate(templatePath('reaction-roll-dialog')),
+      buttons: [
+        {
+          action: 'diplomacy',
+          label: $l10n('SDM.ReactionCheck'),
+          icon: 'fas fa-face-smile',
+          callback: (event, button) => ({
+            charismaOperator: 1,
+            ...new foundry.applications.ux.FormDataExtended(button.form).object
+          })
+        },
+        {
+          action: 'conflict',
+          label: $l10n('SDM.ReactionProvokeConflict'),
+          icon: 'fas fa-face-angry',
+          callback: (event, button) => ({
+            charismaOperator: -1,
+            ...new foundry.applications.ux.FormDataExtended(button.form).object
+          })
+        }
+      ],
+      rejectClose: false
+    });
+
+    if (!data) {
+      return;
+    }
+
+    const { modifier = '', charismaOperator = 1 } = data;
+
+    const basReactionFormula = game.settings.get('sdm', 'baseReactionFormula') || '2d6';
+    const chaMod = this.actor.system.abilities['cha'].current;
+    const reactionChaMod = charismaOperator * chaMod;
+    const formula = `${basReactionFormula} +${reactionChaMod}${modifier ? ` +${modifier}` : ''}`;
+    const sanitizedFormula = sanitizeExpression(formula);
+
+    let roll = new Roll(sanitizedFormula);
+    roll = await roll.evaluate();
+
+    const rollTotal = roll.total;
+
+    // Configuration object for reaction outcomes
+    const reactionConfig = [
+      {
+        min: -Infinity,
+        max: 1,
+        outcomeKey: 'SDM.ReactionOutcome1',
+        messageKey: 'SDM.ReactionMessage1'
+      },
+      { min: 2, max: 2, outcomeKey: 'SDM.ReactionOutcome2', messageKey: 'SDM.ReactionMessage2' },
+      {
+        min: 3,
+        max: 5,
+        outcomeKey: 'SDM.ReactionOutcome3to5',
+        messageKey: 'SDM.ReactionMessage3to5'
+      },
+      {
+        min: 6,
+        max: 8,
+        outcomeKey: 'SDM.ReactionOutcome6to8',
+        messageKey: 'SDM.ReactionMessage6to8'
+      },
+      {
+        min: 9,
+        max: 11,
+        outcomeKey: 'SDM.ReactionOutcome9to11',
+        messageKey: 'SDM.ReactionMessage9to11'
+      },
+      {
+        min: 12,
+        max: 12,
+        outcomeKey: 'SDM.ReactionOutcome12',
+        messageKey: 'SDM.ReactionMessage12'
+      },
+      {
+        min: 13,
+        max: Infinity,
+        outcomeKey: 'SDM.ReactionOutcome13plus',
+        messageKey: 'SDM.ReactionMessage13plus'
+      }
+    ];
+
+    // Find matching configuration
+    const matchedConfig =
+      reactionConfig.find(config => rollTotal >= config.min && rollTotal <= config.max) ||
+      reactionConfig[reactionConfig.length - 1]; // Fallback to last config
+
+    // Get localized strings
+    const outcome = $l10n(matchedConfig.outcomeKey);
+    const message = $l10n(matchedConfig.messageKey);
+
+    const templateData = {
+      outcome,
+      message,
+      formula: sanitizedFormula,
+      total: roll.total,
+      rollTooltip: await roll.getTooltip()
+    };
+
+    const flavor = `[${$l10n('SDM.Reaction')}] ${
+      charismaOperator > 0 ? $l10n('SDM.ReactionCheck') : $fmt('SDM.ReactionProvokeConflict')
+    }`;
+
+    createChatMessage({
+      content: await renderTemplate(templatePath('chat/reaction-roll-result'), templateData),
+      flavor,
       rolls: [roll]
     });
   }
