@@ -32,19 +32,32 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     // Create a new classes array with the npc class if needed
     const classes = [...this.options.classes];
+    const window = { ...this.options.window };
+    const controls = [...this.options.window.controls];
+
     if (this.actor?.type === ActorType.NPC) {
       classes.push(ActorType.NPC);
+    }
+
+    if (this.actor?.type === ActorType.CHARACTER) {
+      controls.push({
+        action: 'toggleMode',
+        icon: 'fa-solid fa-cog',
+        label: 'Edit Mode / Play Mode',
+        ownership: 'OWNER'
+      });
+      window.controls = controls;
     }
 
     // Update options with the new classes array
     this.options = {
       ...this.options,
-      classes
+      classes,
+      window
     };
 
     this.#dragDrop = this.#createDragDropHandlers();
   }
-
   /** @override */
   static DEFAULT_OPTIONS = {
     classes: ['sdm', 'actor'],
@@ -95,6 +108,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       template: templatePath('actor/biography')
     },
     notes: {
+      template: templatePath('actor/notes')
+    },
+    pet: {
       template: templatePath('actor/notes')
     },
     effects: {
@@ -326,7 +342,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     // Control which parts show based on document subtype
     switch (this.document.type) {
       case 'character':
-        options.parts.push('inventory', 'effects');
+        options.parts.push('inventory', 'pet', 'effects');
         break;
       case 'npc':
         options.parts.push('inventory', 'effects');
@@ -358,8 +374,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       fields: this.document.schema.fields,
       systemFields: this.document.system.schema.fields,
       // Add isGM to the context
-      isGM: game.user.isGM,
-      editMode: this.actor.getFlag('sdm', 'editMode')
+      isGM: game.user.isGM
     };
 
     if (this.actor.type === 'character') {
@@ -384,7 +399,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       context.system.abilities = reorderedAbilities;
 
       // Adiciona o estado do modo ao contexto
-      context.isEditMode = this.actor.getFlag('sdm', 'editMode') ?? true;
+      context.isEditMode = this.actor.getFlag('sdm', 'editMode') ?? false;
     }
 
     // Offloading context prep to a helper function
@@ -468,18 +483,27 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         case 'inventory':
           tab.id = 'inventory';
           tab.label += 'Inventory';
+          tab.icon = 'fa fa-toolbox';
+          break;
+        case 'pet':
+          tab.id = 'pet';
+          tab.label += 'Pet';
+          tab.icon = 'fa fa-otter';
           break;
         case 'effects':
           tab.id = 'effects';
           tab.label += 'Effects';
+          tab.icon = 'fa fa-bolt';
           break;
         case 'notes':
           tab.id = 'notes';
           tab.label += 'Notes';
+          tab.icon = 'fa fa-book';
           break;
         case 'biography':
           tab.id = 'biography';
           tab.label += 'Biography';
+          tab.icon = 'fa fa-user';
           break;
       }
       if (this.tabGroups[tabGroup] === tab.id) tab.cssClass = 'active';
@@ -841,11 +865,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
   }
 
   static async _onToggleMode(event, target) {
-    // event.preventDefault(); // Don't open context menu
-    // event.stopPropagation(); // Don't trigger other events
-    // if (event.detail > 1) return; // Ignore repeated clicks
-
-    const currentMode = this.actor.getFlag('sdm', 'editMode') ?? true;
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.detail > 1) return; // Ignore repeated clicks
+    const currentMode = this.actor.getFlag('sdm', 'editMode') ?? false;
     const newMode = !currentMode;
 
     await this.actor.setFlag('sdm', 'editMode', newMode);

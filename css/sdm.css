@@ -40,10 +40,11 @@
 }
 
 .window-app {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Baron Neue';
 }
 
-.rollable:hover, .rollable:focus {
+.rollable:hover,
+.rollable:focus {
   color: #000000;
   text-shadow: 0 0 10px red;
   cursor: pointer;
@@ -65,12 +66,20 @@
   margin-bottom: 10px;
 }
 
+.mb-11 {
+  margin-bottom: 11px;
+}
+
+.mb-12 {
+  margin-bottom: 12px;
+}
+
 .mb-20 {
   margin-bottom: 20px;
 }
 
 .application.sheet.sdm.actor {
-  min-width: 850px;
+  min-width: 900px;
   min-height: 820px;
   max-width: 1500px;
   max-height: 1500px;
@@ -112,7 +121,7 @@
 .grid,
 .grid-2col {
   display: grid;
-  grid-column: span 2/span 2;
+  grid-column: span 2 / span 2;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   margin: 10px 0;
@@ -120,52 +129,52 @@
 }
 
 .grid-3col {
-  grid-column: span 3/span 3;
+  grid-column: span 3 / span 3;
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .grid-4col {
-  grid-column: span 4/span 4;
+  grid-column: span 4 / span 4;
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .grid-5col {
-  grid-column: span 5/span 5;
+  grid-column: span 5 / span 5;
   grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 .grid-6col {
-  grid-column: span 6/span 6;
+  grid-column: span 6 / span 6;
   grid-template-columns: repeat(6, minmax(0, 1fr));
 }
 
 .grid-7col {
-  grid-column: span 7/span 7;
+  grid-column: span 7 / span 7;
   grid-template-columns: repeat(7, minmax(0, 1fr));
 }
 
 .grid-8col {
-  grid-column: span 8/span 8;
+  grid-column: span 8 / span 8;
   grid-template-columns: repeat(8, minmax(0, 1fr));
 }
 
 .grid-9col {
-  grid-column: span 9/span 9;
+  grid-column: span 9 / span 9;
   grid-template-columns: repeat(9, minmax(0, 1fr));
 }
 
 .grid-10col {
-  grid-column: span 10/span 10;
+  grid-column: span 10 / span 10;
   grid-template-columns: repeat(10, minmax(0, 1fr));
 }
 
 .grid-11col {
-  grid-column: span 11/span 11;
+  grid-column: span 11 / span 11;
   grid-template-columns: repeat(11, minmax(0, 1fr));
 }
 
 .grid-12col {
-  grid-column: span 12/span 12;
+  grid-column: span 12 / span 12;
   grid-template-columns: repeat(12, minmax(0, 1fr));
 }
 
@@ -335,7 +344,7 @@
   --sdm-c-groove: #11121f;
 }
 .sdm .item-form {
-  font-family: "Roboto", sans-serif;
+  font-family: 'Baron Neue';
 }
 .sdm .sheet-header {
   flex: 0 auto;
@@ -357,6 +366,8 @@
 .sdm .sheet-tabs {
   flex: 0;
   height: 30px;
+  font-family: 'Bebas Neue', sans-serif;
+  font-weight: bold;
 }
 .sdm .sheet-body,
 .sdm .sheet-body .tab,
@@ -375,9 +386,6 @@
 .sdm .tox .tox-edit-area {
   padding: 0 8px;
 }
-.sdm .margin-bottom-10 {
-  margin-bottom: 10px;
-}
 .sdm .height-32 {
   height: 32px;
 }
@@ -389,6 +397,8 @@
 }
 .sdm .resource-label {
   font-weight: bold;
+  font-family: 'Baron Neue';
+  font-size: 13px;
 }
 .sdm .ability {
   margin-bottom: 2px;
@@ -431,6 +441,8 @@
 .sdm .items-header > * {
   font-size: 14px;
   text-align: center;
+  font-weight: bold;
+  font-family: 'Bebas Neue', sans-serif;
 }
 .sdm .items-header .item-name {
   font-weight: bold;
@@ -457,6 +469,7 @@
   margin: 0;
   overflow: hidden;
   font-size: 13px;
+  font-family: 'Alegreya', sans-serif;
   text-align: left;
   align-items: center;
   display: flex;
@@ -646,7 +659,8 @@
   align-items: center;
   display: flex;
 }
-.sdm .effects-list .effect-name h3, .sdm .effects-list .effect-name h4 {
+.sdm .effects-list .effect-name h3,
+.sdm .effects-list .effect-name h4 {
   margin: 0;
   white-space: nowrap;
   overflow-x: hidden;

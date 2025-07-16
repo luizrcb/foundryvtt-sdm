@@ -14,6 +14,8 @@
   > * {
     font-size: 14px;
     text-align: center;
+    font-weight: bold;
+    font-family: typo.$font-tab;
   }
   .item-name {
     font-weight: bold;
@@ -50,6 +52,7 @@
     margin: 0;
     overflow: hidden;
     font-size: 13px;
+    font-family: typo.$font-secondary;
     text-align: left;
     align-items: center;
     display: flex;

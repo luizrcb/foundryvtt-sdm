@@ -1,10 +1,10 @@
 {{! Sheet Character Header }}
 <div>
   <header class='sheet-header'>
-    <div class="edit-mode">
-      <label class="switch edit-mode-toggle sdm" for="toggleMode"
+    <div class="edit-mode flex-row">
+      <label class="switch edit-mode-toggle sdm" for="toggleMode-{{actor._id}}"
         title="{{localize (ifThen isEditMode 'SDM.SheetEditMode' 'SDM.SheetPlayMode')}}">
-        <input id="toggleMode" type="checkbox" data-action="toggleMode" {{checked @root.editMode}}/>
+        <input id="toggleMode-{{actor._id}}" type="checkbox" data-action="toggleMode" {{checked @root.isEditMode}}/>
         <span class="slider round"><i class="fas fa-cog"></i></span>
       </label>
     </div>
@@ -12,9 +12,9 @@
       <img class='profile-img' src='{{actor.img}}' data-edit='img' data-action='onEditImage' title='{{actor.name}}'
         height='100' width='100' />
       {{#if isEditMode}}
-      <div class="flexcol flex-group-center margin-bottom-10">
+      <div class="flexcol flex-group-center mb-12">
         {{else}}
-        <div class="flexcol flex-group-center margin-bottom-10 rollable" data-context='rollable'
+        <div class="flexcol flex-group-center mb-12 rollable" data-context='rollable'
           data-action='heroicHealing'>
           {{/if}}
           <label class='resource-label'>{{localize 'SDM.FieldHeroDice'}}</label>
@@ -325,24 +325,28 @@
               <div class='resource-label rollable' data-type='attack' data-action='roll' data-attack="melee"
                 data-label="{{localize 'SDM.AttackMelee'}}">
                 <div>{{localize 'SDM.AttackMelee'}}</div>
+                <i class="fa fa-sword"></i>
               </div>
             </div>
             <div class="ability grid-span-1 flexrow">
               <div class='resource-label rollable' data-type='attack' data-action='roll' data-attack="ranged"
                 data-label="{{localize 'SDM.AttackRanged'}}">
                 <div>{{localize 'SDM.AttackRanged'}}</div>
+                 <i class="fa fa-raygun"></i>
               </div>
             </div>
             <div class="ability grid-span-1 flexrow">
               <div class='resource-label rollable' data-type='attack' data-action='roll' data-attack="fantascience"
                 data-label="{{localize 'SDM.AttackFantascience'}}">
                 <div>{{localize 'SDM.AttackFantascience'}}</div>
+                 <i class="fa fa-hat-wizard"></i>
               </div>
             </div>
             <div class="ability grid-span-1 flexrow">
               <div class='resource-label rollable' data-type='attack' data-action='roll' data-attack="oldtech"
                 data-label="{{localize 'SDM.AttackOldtech'}}">
                 <div>{{localize 'SDM.AttackOldtech'}}</div>
+                 <i class="fa fa-game-console-handheld"></i>
               </div>
             </div>
           </div>

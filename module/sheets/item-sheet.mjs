@@ -190,6 +190,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
         case 'description':
           tab.id = 'description';
           tab.label += 'Description';
+          tab.icon = 'fa fa-scroll';
           break;
         case 'attributesFeature':
         case 'attributesMount':
@@ -200,6 +201,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
         case 'effects':
           tab.id = 'effects';
           tab.label += 'Effects';
+          tab.icon = 'fa fa-bolt';
           break;
       }
       if (this.tabGroups[tabGroup] === tab.id) tab.cssClass = 'active';

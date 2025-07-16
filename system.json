@@ -44,8 +44,8 @@
   "media": [
     {
       "type": "setup",
-      "url": "systems/sdm/assets/anvil-impact.png",
-      "thumbnail": "systems/sdm/assets/anvil-impact.png"
+      "url": "systems/sdm/assets/sdm-compatible.png",
+      "thumbnail": "systems/sdm/assets/sdm-compatible.png"
     }
   ],
   "version": "1.0.0",

@@ -10,7 +10,7 @@ export default class SdmNPC extends SdmActorBase {
 
     schema.initiative = new fields.StringField({
       required: true,
-      initial: '2d6kl',
+      initial: '',
       validate: v => foundry.dice.Roll.validate(v),
       validationError: game.i18n.localize('SDM.ErrorValidationRollFormula')
     });

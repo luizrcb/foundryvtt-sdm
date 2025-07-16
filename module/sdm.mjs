@@ -82,6 +82,8 @@ Hooks.once('init', function () {
   // if the transfer property on the Active Effect is true.
   CONFIG.ActiveEffect.legacyTransferral = false;
 
+  _configureFonts();
+
   // Register sheet application classes
   Actors.unregisterSheet('core', foundry.appv1.sheets.ActorSheet);
   Actors.registerSheet('sdm', SdmActorSheet, {
@@ -212,5 +214,22 @@ function rollItemMacro(itemUuid) {
 
     // Trigger the item roll
     item.roll();
+  });
+}
+function _configureFonts() {
+  Object.assign(CONFIG.fontDefinitions, {
+    'Baron Neue': {
+      editor: true,
+      fonts: [
+        { urls: ['systems/sdm/fonts/baron_neue/Baron Neue.otf'] },
+        { urls: ['systems/sdm/fonts/baron_neue/Baron Neue Bold.otf'], weight: 'bold' },
+        { urls: ['systems/sdm/fonts/baron_neue/Baron Neue Italic.otf'], style: 'italic' },
+        {
+          urls: ['systems/sdm/fonts/baron_neue/Baron Neue Bolt Italic.otf'],
+          weight: 'bold',
+          style: 'italic'
+        }
+      ]
+    }
   });
 }

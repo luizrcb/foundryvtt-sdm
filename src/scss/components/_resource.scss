@@ -1,5 +1,9 @@
+@use '../utils/typography' as typo;
+
 .resource-label {
   font-weight: bold;
+  font-family: typo.$font-primary;
+  font-size: 13px;
 }
 
 .ability {

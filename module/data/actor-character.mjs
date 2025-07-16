@@ -291,11 +291,7 @@ export default class SdmCharacter extends SdmActorBase {
       }, {})
     );
 
-    schema.pet = new fields.EmbeddedDataField(CharacterPetModel, {
-      required: false,
-      nullable: true,
-      initial: null
-    });
+    schema.pets = new fields.ArrayField(new fields.DocumentUUIDField());
 
     return schema;
   }

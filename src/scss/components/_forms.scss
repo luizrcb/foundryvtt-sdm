@@ -29,6 +29,8 @@
 .sheet-tabs {
   flex: 0;
   height: 30px;
+  font-family: typo.$font-tab;
+  font-weight: bold;
 }
 
 .sheet-body,
@@ -53,10 +55,6 @@
   .tox-edit-area {
     padding: 0 8px;
   }
-}
-
-.margin-bottom-10 {
-  margin-bottom: 10px;
 }
 
 .height-32 {
