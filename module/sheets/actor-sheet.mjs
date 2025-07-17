@@ -111,7 +111,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       template: templatePath('actor/notes')
     },
     pet: {
-      template: templatePath('actor/notes')
+      template: templatePath('actor/pet')
     },
     effects: {
       template: templatePath('actor/effects')

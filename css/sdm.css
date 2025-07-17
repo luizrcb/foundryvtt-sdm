@@ -424,6 +424,12 @@
 .sdm .tab.biography .editor {
   height: 100%;
 }
+.sdm .tab.notes {
+  flex: 1;
+}
+.sdm .tab.notes .editor {
+  height: 100%;
+}
 .sdm .tox .tox-editor-container {
   background: #ffffff;
 }
@@ -642,7 +648,6 @@
 }
 .sdm .saveIcon {
   font-size: 16px;
-  text-shadow: black;
 }
 .sdm :root {
   --sdm-c-dark: #191813;
@@ -825,5 +830,3 @@
   top: 39px;
   left: 10px;
 }
-
-/*# sourceMappingURL=sdm.css.map */

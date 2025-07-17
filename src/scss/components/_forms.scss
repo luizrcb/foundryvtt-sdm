@@ -47,6 +47,14 @@
   }
 }
 
+.tab.notes {
+  flex: 1;
+
+  .editor {
+    height: 100%;
+  }
+}
+
 .tox {
   .tox-editor-container {
     background: colors.$c-white;
