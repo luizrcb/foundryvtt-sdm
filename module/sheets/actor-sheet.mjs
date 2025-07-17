@@ -415,6 +415,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       case 'inventory':
         context.tab = context.tabs[partId];
         break;
+      case 'pet':
+        context.tab = context.tabs[partId];
+        break;
       case 'notes':
         context.tab = context.tabs[partId];
         // Enrich notes info for display
