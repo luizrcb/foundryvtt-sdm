@@ -78,3 +78,56 @@
     max-height: 0px;
   }
 }
+
+.rust {
+  color: colors.$c-rust;
+}
+
+.pumpkin {
+  color: colors.$c-pumpkin;
+}
+
+.amber {
+  color: colors.$c-amber;
+}
+
+.lime {
+  color: colors.$c-lime;
+}
+
+.pine {
+  color: colors.$c-pine;
+}
+
+.sky {
+  color: colors.$c-sky;
+}
+
+.azure {
+  color: colors.$c-azure;
+}
+
+.royal {
+  color: colors.$c-royal;
+}
+
+.heart {
+  color: colors.$c-heart;
+}
+
+.plum {
+  color: colors.$c-plum;
+}
+
+.icon-border {
+  letter-spacing: 1px;
+  text-shadow:
+    -0.7px -0.7px 0 colors.$c-border,
+    0 -0.7px 0 colors.$c-border,
+    0.7px -0.7px 0 colors.$c-border,
+    0.7px 0 0 colors.$c-border,
+    0.7px 0.7px 0 colors.$c-border,
+    0 0.7px 0 colors.$c-border,
+    -0.7px 0.7px 0 colors.$c-border,
+    -0.7px 0 0 colors.$c-border;
+}

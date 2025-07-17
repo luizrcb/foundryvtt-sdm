@@ -13,7 +13,6 @@
       <div class="resource">
         <label class='resource-label'>{{localize 'SDM.ItemTraitType'}}</label>
         <select name='system.type' class="resource-content">
-          <option value=''></option>
           {{selectOptions config.traitType localize=true selected=system.type}}
         </select>
       </div>
@@ -27,7 +26,6 @@
           <option value='{{key}}' {{#if (eq (toInt key) ../item.system.skill.rank)}}selected{{/if}}>{{localize skill}}
             (+{{multiply key ../item.system.skill.modifier_step}})</option>
           {{/each}}
-          {{!-- {{selectOptions skillMod valueAttr="value" labelAttr="label" selected=item.system.skill.rank}} --}}
         </select>
       </div>
 

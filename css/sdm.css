@@ -40,11 +40,10 @@
 }
 
 .window-app {
-  font-family: 'Baron Neue';
+  font-family: "Baron Neue";
 }
 
-.rollable:hover,
-.rollable:focus {
+.rollable:hover, .rollable:focus {
   color: #000000;
   text-shadow: 0 0 10px red;
   cursor: pointer;
@@ -118,10 +117,55 @@
   max-height: 0px;
 }
 
+.rust {
+  color: #cc2f00;
+}
+
+.pumpkin {
+  color: #db6600;
+}
+
+.amber {
+  color: #e39e00;
+}
+
+.lime {
+  color: #76b80d;
+}
+
+.pine {
+  color: #007668;
+}
+
+.sky {
+  color: #006486;
+}
+
+.azure {
+  color: #007cb5;
+}
+
+.royal {
+  color: #465ab2;
+}
+
+.heart {
+  color: #6d47b1;
+}
+
+.plum {
+  color: #873b9c;
+}
+
+.icon-border {
+  letter-spacing: 1px;
+  text-shadow: -0.7px -0.7px 0 rgb(51, 51, 51), 0 -0.7px 0 rgb(51, 51, 51), 0.7px -0.7px 0 rgb(51, 51, 51), 0.7px 0 0 rgb(51, 51, 51), 0.7px 0.7px 0 rgb(51, 51, 51), 0 0.7px 0 rgb(51, 51, 51), -0.7px 0.7px 0 rgb(51, 51, 51), -0.7px 0 0 rgb(51, 51, 51);
+}
+
 .grid,
 .grid-2col {
   display: grid;
-  grid-column: span 2 / span 2;
+  grid-column: span 2/span 2;
   grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 10px;
   margin: 10px 0;
@@ -129,52 +173,52 @@
 }
 
 .grid-3col {
-  grid-column: span 3 / span 3;
+  grid-column: span 3/span 3;
   grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .grid-4col {
-  grid-column: span 4 / span 4;
+  grid-column: span 4/span 4;
   grid-template-columns: repeat(4, minmax(0, 1fr));
 }
 
 .grid-5col {
-  grid-column: span 5 / span 5;
+  grid-column: span 5/span 5;
   grid-template-columns: repeat(5, minmax(0, 1fr));
 }
 
 .grid-6col {
-  grid-column: span 6 / span 6;
+  grid-column: span 6/span 6;
   grid-template-columns: repeat(6, minmax(0, 1fr));
 }
 
 .grid-7col {
-  grid-column: span 7 / span 7;
+  grid-column: span 7/span 7;
   grid-template-columns: repeat(7, minmax(0, 1fr));
 }
 
 .grid-8col {
-  grid-column: span 8 / span 8;
+  grid-column: span 8/span 8;
   grid-template-columns: repeat(8, minmax(0, 1fr));
 }
 
 .grid-9col {
-  grid-column: span 9 / span 9;
+  grid-column: span 9/span 9;
   grid-template-columns: repeat(9, minmax(0, 1fr));
 }
 
 .grid-10col {
-  grid-column: span 10 / span 10;
+  grid-column: span 10/span 10;
   grid-template-columns: repeat(10, minmax(0, 1fr));
 }
 
 .grid-11col {
-  grid-column: span 11 / span 11;
+  grid-column: span 11/span 11;
   grid-template-columns: repeat(11, minmax(0, 1fr));
 }
 
 .grid-12col {
-  grid-column: span 12 / span 12;
+  grid-column: span 12/span 12;
   grid-template-columns: repeat(12, minmax(0, 1fr));
 }
 
@@ -344,7 +388,7 @@
   --sdm-c-groove: #11121f;
 }
 .sdm .item-form {
-  font-family: 'Baron Neue';
+  font-family: "Baron Neue";
 }
 .sdm .sheet-header {
   flex: 0 auto;
@@ -366,7 +410,7 @@
 .sdm .sheet-tabs {
   flex: 0;
   height: 30px;
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: "Bebas Neue", sans-serif;
   font-weight: bold;
 }
 .sdm .sheet-body,
@@ -396,9 +440,8 @@
   margin-top: 0px;
 }
 .sdm .resource-label {
-  font-weight: bold;
-  font-family: 'Baron Neue';
-  font-size: 13px;
+  font-family: "Baron Neue";
+  font-size: 14px;
 }
 .sdm .ability {
   margin-bottom: 2px;
@@ -442,7 +485,7 @@
   font-size: 14px;
   text-align: center;
   font-weight: bold;
-  font-family: 'Bebas Neue', sans-serif;
+  font-family: "Bebas Neue", sans-serif;
 }
 .sdm .items-header .item-name {
   font-weight: bold;
@@ -469,7 +512,7 @@
   margin: 0;
   overflow: hidden;
   font-size: 13px;
-  font-family: 'Alegreya', sans-serif;
+  font-family: "Alegreya", sans-serif;
   text-align: left;
   align-items: center;
   display: flex;
@@ -599,6 +642,7 @@
 }
 .sdm .saveIcon {
   font-size: 16px;
+  text-shadow: black;
 }
 .sdm :root {
   --sdm-c-dark: #191813;
@@ -659,8 +703,7 @@
   align-items: center;
   display: flex;
 }
-.sdm .effects-list .effect-name h3,
-.sdm .effects-list .effect-name h4 {
+.sdm .effects-list .effect-name h3, .sdm .effects-list .effect-name h4 {
   margin: 0;
   white-space: nowrap;
   overflow-x: hidden;
@@ -782,3 +825,5 @@
   top: 39px;
   left: 10px;
 }
+
+/*# sourceMappingURL=sdm.css.map */

@@ -356,6 +356,7 @@
   "TYPES.Item.skill": "Perícia",
   "TYPES.Item.power_container": "Container de Poderes",
   "TYPE.Effect": "Efeito",
+  "TYPE.Gear": "Equipamento",
   "TYPE.Item": "Item",
   "TYPE.Trait": "Traço",
   "TYPE.Burden": "Fardo"

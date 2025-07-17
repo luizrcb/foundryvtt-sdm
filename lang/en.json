@@ -356,6 +356,7 @@
   "TYPES.Item.skill": "Skill",
   "TYPES.Item.power_container": "Power Container",
   "TYPE.Effect": "Effect",
+  "TYPE.Gear": "Gear",
   "TYPE.Item": "Item",
   "TYPE.Trait": "Trait",
   "TYPE.Burden": "Burden"

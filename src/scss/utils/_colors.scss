@@ -7,8 +7,21 @@ $c-dark: #191813;
 $c-faint: #c9c7b8;
 $c-beige: #b5b3a4;
 $c-tan: #444444;
+$c-border: rgb(51, 51, 51);
 $c-groove: #eeede0;
 $c-violet: rgb(134, 3, 173);
+
+// 10 color rainbow
+$c-rust: #cc2f00;
+$c-pumpkin: #db6600;
+$c-amber: #e39e00;
+$c-lime: #76b80d;
+$c-pine: #007668;
+$c-sky: #006486;
+$c-azure: #007cb5;
+$c-royal: #465ab2;
+$c-heart: #6d47b1;
+$c-plum: #873b9c;
 
 // Depois mapeie para variáveis CSS
 :root {

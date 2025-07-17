@@ -194,6 +194,15 @@ export function registerSystemSettings() {
     type: Boolean, // Data type: String, Number, Boolean, etc
     default: false
   });
+
+  game.settings.register('sdm', 'coloredLabels', {
+    name: 'SDM.SettingsColoredLabels',
+    hint: 'SDM.SettingsColoredLabelsHint',
+    scope: 'client', // "world" = GM only, "client" = per user
+    config: true, // Show in configuration view
+    type: Boolean, // Data type: String, Number, Boolean, etc
+    default: false
+  });
 }
 
 export function updateEscalatorDisplay() {

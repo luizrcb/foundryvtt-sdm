@@ -225,7 +225,7 @@ function _configureFonts() {
         { urls: ['systems/sdm/fonts/baron_neue/Baron Neue Bold.otf'], weight: 'bold' },
         { urls: ['systems/sdm/fonts/baron_neue/Baron Neue Italic.otf'], style: 'italic' },
         {
-          urls: ['systems/sdm/fonts/baron_neue/Baron Neue Bolt Italic.otf'],
+          urls: ['systems/sdm/fonts/baron_neue/Baron Neue Bold Italic.otf'],
           weight: 'bold',
           style: 'italic'
         }

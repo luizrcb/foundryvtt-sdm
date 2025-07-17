@@ -2,6 +2,14 @@
   "id": "sdm",
   "title": "Synthetic Dream Machine",
   "description": "The SDM system for FoundryVTT!",
+  "version": "0.1.0",
+  "url": "https://github.com/luizrcb/foundryvtt-sdm",
+  "manifest": "https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/main/system.json",
+  "download": "https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.1.0/sdm-0.1.0.zip",
+  "compatibility": {
+    "minimum": "12",
+    "verified": "13.346"
+  },
   "authors": [
     {
       "name": "Luiz Bertoni",
@@ -36,11 +44,9 @@
       "paths": ["css", "lang", "templates"]
     }
   },
-  "url": "https://github.com/luizrcb/foundryvtt-sdm",
   "license": "LICENSE.txt",
   "readme": "README.md",
-  "bugs": "Replace this with a link to file issues or tickets",
-  "changelog": "CHANGELOG.md",
+  "bugs": "https://github.com/luizrcb/foundryvtt-sdm/issues",
   "media": [
     {
       "type": "setup",
@@ -48,11 +54,6 @@
       "thumbnail": "systems/sdm/assets/sdm-compatible.png"
     }
   ],
-  "version": "1.0.0",
-  "compatibility": {
-    "minimum": "12",
-    "verified": "13.346"
-  },
   "esmodules": ["module/sdm.mjs"],
   "styles": ["css/sdm.css"],
   "languages": [
@@ -92,9 +93,7 @@
   ],
   "packFolders": [],
   "socket": false,
-  "manifest": "Replace this with a link to the /latest release system.json so people can receive updates after they've installed the system",
-  "download": "This must link to a .zip file of the current version",
-  "background": "systems/sdm/assets/anvil-impact.png",
+  "background": "systems/sdm/assets/sdm-compatible.png",
   "grid": {
     "type": 1,
     "distance": 5,

@@ -400,6 +400,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
       // Adiciona o estado do modo ao contexto
       context.isEditMode = this.actor.getFlag('sdm', 'editMode') ?? false;
+      context.coloredLabels = game.settings.get('sdm', 'coloredLabels') ?? false;
     }
 
     // Offloading context prep to a helper function

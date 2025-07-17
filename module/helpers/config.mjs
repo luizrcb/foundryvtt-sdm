@@ -17,18 +17,34 @@ SDM.abilities = {
   tho: 'SDM.AbilityTho'
 };
 
+SDM.abilityColors = {
+  str: 'rust',
+  end: 'pumpkin',
+  agi: 'amber',
+  cha: 'sky',
+  aur: 'azure',
+  tho: 'royal'
+};
+
+SDM.attackColors = {
+  melee: 'lime',
+  ranged: 'pine',
+  fantascience: 'heart',
+  oldtech: 'plum'
+};
+
 SDM.abilitySaveIcons = {
   str: 'fas fa-fist-raised',
-  end: 'fas fa-heartbeat', //'fas fa-shield-alt',
+  end: 'fas fa-heartbeat',
   agi: 'fas fa-running',
-  cha: 'fas fa-clover', //'fas fa-crown',
+  cha: 'fas fa-clover',
   aur: 'fas fa-sparkles',
-  tho: 'fas fa-brain' //'fas fa-brain',
+  tho: 'fas fa-brain'
 };
 
 SDM.defenseIcons = {
   physical: 'fas fa-shield-alt',
-  mental: 'fa-brain-circuit',
+  mental: 'fas fa-brain-circuit',
   social: 'fas fa-crown'
 };
 
@@ -53,7 +69,8 @@ SDM.versatile = 'SDM.FeatureVersatile';
 
 SDM.abilitiesOrder = {
   en: ['str', 'end', 'agi', 'cha', 'aur', 'tho'],
-  'pt-BR': ['cha', 'tho', 'str', 'agi', 'aur', 'end']
+  'pt-BR': ['str', 'end', 'agi', 'cha', 'aur', 'tho']
+  //'pt-BR': ['cha', 'tho', 'str', 'agi', 'aur', 'end']
 };
 
 SDM.pullModes = Object.values(PullMode).reduce((acc, pullMode) => {
@@ -147,18 +164,21 @@ SDM.itemType = {
 
 SDM.gearType = {
   armor: 'TYPES.Item.armor',
-  weapon: 'TYPES.Item.weapon',
+  '': 'TYPE.Gear',
   power: 'TYPES.Item.power',
   power_container: 'TYPES.Item.power_container',
-  ward: 'TYPES.Item.ward'
+  ward: 'TYPES.Item.ward',
+  weapon: 'TYPES.Item.weapon'
 };
 
 SDM.traitType = {
+  '': 'TYPE.Trait',
   power: 'TYPES.Item.power',
   skill: 'TYPES.Item.skill'
 };
 
 SDM.burdenType = {
+  '': 'TYPE.Burden',
   ...SDM.gearType,
   ...SDM.traitType
 };

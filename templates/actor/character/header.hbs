@@ -240,13 +240,16 @@
                   class="ability-score" data-dtype='Number'
                   title="{{localize 'SDM.AbilityCurrent' ability=(localize (lookup @root.config.abilities key))}}" />
                 <div class='flexrow'>
-                  <i class="fas {{lookup @root.config.abilitySaveIcons key}} saveIcon"></i>
+                  <i class="fas {{lookup @root.config.abilitySaveIcons key}} saveIcon sdm-icon"></i>
                 </div>
               </div>
               {{else}}
               <div class='ability flexrow flex-group-center'>
                 <div class="flexcol">
-                  <span class='resource-label rollable' data-action='roll' data-context='rollable'
+                  <span class='resource-label rollable
+                  {{ifThen @root.coloredLabels (lookup @root.config.abilityColors key) ""}}
+                  {{ifThen @root.coloredLabels "icon-border" ""}}
+                  ' data-action='roll' data-context='rollable'
                     data-ability="{{key}}" data-type="ability"
                     data-label='{{localize (lookup @root.config.abilities key)}}'
                     title='{{localize (lookup @root.config.abilities key)}}'>
@@ -254,7 +257,7 @@
                   </span>
                   {{#if (eq key 'cha')}}
                   <i
-                    class="fas fa-theater-masks rollable"
+                    class="fa-duotone fa-theater-masks rollable {{lookup @root.config.abilityColors key}}"
                     title="{{localize 'SDM.ReactionRoll'}}"
                     data-action="reactionRoll"  data-context='rollable'
                   ></i>
@@ -271,7 +274,7 @@
                   title="{{localize 'SDM.AbilityCurrent' ability=(localize (lookup @root.config.abilities key))}}" />
                 <div class='rollable flexrow' data-roll-type={{key}} data-action='rollSavingThrow'
                   title="{{localize 'SDM.SavingThrowRoll' ability=(localize (lookup @root.config.abilities key))}}">
-                  <i class="fas {{lookup @root.config.abilitySaveIcons key}} saveIcon"></i>
+                  <i class="fas {{lookup @root.config.abilitySaveIcons key}} saveIcon {{lookup @root.config.abilityColors key}}"></i>
                 </div>
               </div>
               {{/if}}
@@ -324,29 +327,34 @@
             <div class="ability grid-span-1 flexrow">
               <div class='resource-label rollable' data-type='attack' data-action='roll' data-attack="melee"
                 data-label="{{localize 'SDM.AttackMelee'}}">
-                <div>{{localize 'SDM.AttackMelee'}}</div>
-                <i class="fa fa-sword"></i>
+                <div class='{{ifThen @root.coloredLabels @root.config.attackColors.melee ""}}
+                {{ifThen @root.coloredLabels "icon-border" ""}}'>
+                {{localize 'SDM.AttackMelee'}}</div>
+                <i class="fas fa-sword {{@root.config.attackColors.melee}}"></i>
               </div>
             </div>
             <div class="ability grid-span-1 flexrow">
               <div class='resource-label rollable' data-type='attack' data-action='roll' data-attack="ranged"
                 data-label="{{localize 'SDM.AttackRanged'}}">
-                <div>{{localize 'SDM.AttackRanged'}}</div>
-                 <i class="fa fa-raygun"></i>
+                <div class='{{ifThen @root.coloredLabels @root.config.attackColors.ranged ""}}
+                {{ifThen @root.coloredLabels "icon-border" ""}}'>{{localize 'SDM.AttackRanged'}}</div>
+                 <i class="fas fa-raygun {{@root.config.attackColors.ranged}}"></i>
               </div>
             </div>
             <div class="ability grid-span-1 flexrow">
               <div class='resource-label rollable' data-type='attack' data-action='roll' data-attack="fantascience"
                 data-label="{{localize 'SDM.AttackFantascience'}}">
-                <div>{{localize 'SDM.AttackFantascience'}}</div>
-                 <i class="fa fa-hat-wizard"></i>
+                 <div class='{{ifThen @root.coloredLabels @root.config.attackColors.fantascience ""}}
+                {{ifThen @root.coloredLabels "icon-border" ""}}'>{{localize 'SDM.AttackFantascience'}}</div>
+                 <i class="fas fa-hat-wizard {{@root.config.attackColors.fantascience}}"></i>
               </div>
             </div>
             <div class="ability grid-span-1 flexrow">
               <div class='resource-label rollable' data-type='attack' data-action='roll' data-attack="oldtech"
                 data-label="{{localize 'SDM.AttackOldtech'}}">
-                <div>{{localize 'SDM.AttackOldtech'}}</div>
-                 <i class="fa fa-game-console-handheld"></i>
+                <div class='{{ifThen @root.coloredLabels @root.config.attackColors.oldtech ""}}
+                {{ifThen @root.coloredLabels "icon-border" ""}}'>{{localize 'SDM.AttackOldtech'}}</div>
+                 <i class="fas fa-game-console-handheld {{@root.config.attackColors.oldtech}}"></i>
               </div>
             </div>
           </div>
