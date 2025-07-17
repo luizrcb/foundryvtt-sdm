@@ -1,0 +1,28 @@
+{
+  "name": "give cash",
+  "type": "script",
+  "author": "ubbQuuuaFUXKToRg",
+  "img": "icons/commodities/currency/coins-stitched-pouch-brown.webp",
+  "scope": "global",
+  "command": "const { DialogV2 } = foundry.applications.api;\nconst { NumberField } = foundry.data.fields;\n\nif (!game.user.isGM) return;\n\nfunction findCashItem(actor) {\n  return actor.items.find(i => i.type === 'gear' && i.system.size?.unit === 'cash');\n}\n\nconst characters = game.actors.filter(a => a.type === \"character\" || a.type === \"caravan\");\nconst cashInput = new NumberField({\n  label: game.i18n.localize('SDM.Amount'),\n  min: 0,\n}).toFormGroup({}, { value: 0, name: \"amount\", min: 0 }).outerHTML;\n\nconst content = `\n  <fieldset>\n    <legend>${game.i18n.localize(\"SDM.CashManagement\")}</legend>\n    <div class=\"form-group\">\n      <label>${game.i18n.localize('SDM.Target')}</label>\n      <select name=\"target\" class=\"form-control\">\n        <option value=\"all\">${game.i18n.localize('SDM.AllCharacters')}</option>\n        ${characters.map(c => `<option value=\"${c.id}\">${c.name}</option>`).join('')}\n      </select>\n    </div>\n    <div class=\"form-group\">\n      ${cashInput}\n    </div>\n  </fieldset>\n  </div>\n`;\n\nconst data = await DialogV2.wait({\n  window: {\n    title: game.i18n.localize(\"SDM.CashManagement\"),\n    resizable: false\n  },\n  modal: true,\n  content,\n  buttons: [\n    {\n      action: \"add\",\n      label: game.i18n.localize('SDM.CashManagementAddMoney'),\n      icon: \"fas fa-coins\",\n      callback: (event, button, dialog) => ({\n        target: button.form.querySelector('[name=\"target\"]').value,\n        amount: parseInt(button.form.querySelector('[name=\"amount\"]').value),\n        operation: \"add\"\n      })\n    },\n    {\n      action: \"remove\",\n      label: game.i18n.localize('SDM.CashManagementRemoveMoney'),\n      icon: \"fas fa-minus-circle\",\n      callback: (event, button, dialog) => ({\n        target: button.form.querySelector('[name=\"target\"]').value,\n        amount: parseInt(button.form.querySelector('[name=\"amount\"]').value),\n        operation: \"remove\"\n      })\n    }\n  ],\n  rejectClose: false,\n});\n\nif (!data?.amount) {\n  return;\n}\n\nif (data?.amount < 0) {\n  ui.notifications.error(game.i18n.localize('SDM.ErrorTransferAmountNotPositive'));\n  return;\n}\n\nconst targets = data.target === \"all\"\n  ? characters\n  : [game.actors.get(data.target)].filter(Boolean);\n\nif (!targets.length) {\n  ui.notifications.error(game.i18n.format('SDM.ErrorNoActorSelected', { type: 'target' }));\n  return;\n}\n\ntry {\n  for (const target of targets) {\n    const cashItem = findCashItem(target);\n\n    if (data.operation === \"add\") {\n      if (cashItem) {\n        await target.updateEmbeddedDocuments(\"Item\", [{\n          _id: cashItem.id,\n          system: { quantity: cashItem.system.quantity + data.amount }\n        }]);\n      } else {\n        const currencyName = game.settings.get(\"sdm\", \"currencyName\") || 'cash';\n        await target.createEmbeddedDocuments(\"Item\", [{\n          name: currencyName,\n          type: \"gear\",\n          system: {\n            size: { unit: \"cash\" },\n            quantity: data.amount\n          }\n        }]);\n      }\n    }\n    else if (data.operation === \"remove\") {\n      if (!cashItem) {\n        ui.notifications.warn(game.i18n.format('SDM.ErrorNoMoney', { target: target.name }));\n        continue;\n      }\n\n      const newQuantity = cashItem.system.quantity - data.amount;\n      if (newQuantity < 0) {\n        ui.notifications.warn(game.i18n.format('SDM.ErrorNotEnoughMoney', { target: target.name }));\n        continue;\n      }\n\n      await target.updateEmbeddedDocuments(\"Item\", [{\n        _id: cashItem.id,\n        system: { quantity: newQuantity }\n      }]);\n    }\n  }\n\n  ui.notifications.info(game.i18n.format('SDM.CashManagementCompleted', { number: targets.length }));\n\n} catch (e) {\n  ui.notifications.error(game.i18n.localize('SDM.ErrorCashManagementFailed'));\n  console.error(\"Error:\", e);\n}",
+  "folder": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.345",
+    "systemId": "sdm",
+    "systemVersion": "0.1.3",
+    "createdTime": 1750710498596,
+    "modifiedTime": 1750710970855,
+    "lastModifiedBy": "ubbQuuuaFUXKToRg"
+  },
+  "ownership": {
+    "default": 0,
+    "ubbQuuuaFUXKToRg": 3
+  },
+  "_id": "sqxpRBa4eD38y4rH",
+  "sort": 400000,
+  "_key": "!macros!sqxpRBa4eD38y4rH"
+}

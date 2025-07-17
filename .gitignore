@@ -7,6 +7,8 @@
 *.iml
 *.swp
 
+sdm.lock
+
 # Node Modules
 node_modules/
 
