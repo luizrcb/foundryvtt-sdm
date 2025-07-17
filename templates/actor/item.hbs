@@ -10,7 +10,11 @@
       <img src='{{item.img}}' width='24' height='24' />
     </div>
     <div class="flexrow">
-      {{#if (and (eq item.system.type 'weapon') item.system.readied)}}
+      {{#if (and
+        (eq item.system.type 'weapon')
+        item.system.readied
+        item.system.weapon.damage.base
+      )}}
       <div
         class='rollable flexrow'
         data-action='roll'

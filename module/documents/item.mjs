@@ -75,7 +75,7 @@ export class SdmItem extends Item {
   getArmorTitle() {
     const armorData = this.system?.armor;
     const armorValueLabel = `${$l10n('SDM.ArmorValue')}: ${armorData?.value}`;
-    const armorTypeLabel = `${$l10n('SDM.ArmorType')}: ${$l10n(CONFIG.SDM.armorType[armorData?.type])}`;
+    const armorTypeLabel = `${$l10n('SDM.ArmorType')}: ${$l10n(CONFIG.SDM.armorType[armorData?.type]) ?? ''}`;
     const title = `${this.name}\r${armorValueLabel} ${armorTypeLabel}`;
     return title;
   }
@@ -84,7 +84,7 @@ export class SdmItem extends Item {
     const wardData = this.system?.ward;
     const wardValueLabel = `${$l10n('SDM.WardValue')}: ${wardData?.value}`;
     const armorValueLabel = `${$l10n('SDM.ArmorValue')}: ${wardData?.armor}`;
-    const wardTypeLabel = `${$l10n('SDM.WardType')}: ${$l10n(CONFIG.SDM.wardType[wardData?.type])}`;
+    const wardTypeLabel = `${$l10n('SDM.WardType')}: ${$l10n(CONFIG.SDM.wardType[wardData?.type]) ?? ''}`;
     const title = `${this.name}\r${wardValueLabel}${wardData?.armor ? ` ${armorValueLabel}` : ''} ${wardTypeLabel}`;
     return title;
   }
@@ -167,7 +167,9 @@ export class SdmItem extends Item {
       title += ` ${this.getDefaultAbilityLabel()}`;
     }
 
-    title += ` ${$l10n('SDM.WeaponRange')}: ${$l10n(CONFIG.SDM.rangeType[weaponData?.range])}`;
+    const rangeLabel = $l10n(CONFIG.SDM.rangeType[weaponData?.range]) ?? '';
+
+    title += ` ${$l10n('SDM.WeaponRange')}: ${rangeLabel}`;
 
     return title;
   }
