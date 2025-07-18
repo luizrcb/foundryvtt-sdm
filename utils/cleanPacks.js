@@ -8,8 +8,10 @@ const foldersToDelete = [
   'packs/rolltables'
 ];
 
+const rootDir = path.join(__dirname, '..');
+
 foldersToDelete.forEach(folder => {
-  const fullPath = path.join(__dirname, folder);
+  const fullPath = path.join(rootDir, folder);
   if (fs.existsSync(fullPath)) {
     console.log(`Deleting ${folder}...`);
     fs.rmSync(fullPath, { recursive: true, force: true });

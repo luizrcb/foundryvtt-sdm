@@ -2,9 +2,13 @@ const fs = require('fs');
 const path = require('path');
 const archiver = require('archiver');
 
+
+// Go one level up from __dirname (i.e., project root)
+const rootDir = path.join(__dirname, '..');
+
 // Read version
-const version = fs.readFileSync('version.txt', 'utf-8').trim();
-const outputDir = path.join(__dirname, '../dist');
+const version = fs.readFileSync(path.join(rootDir, 'version.txt'), 'utf-8').trim();
+const outputDir = path.join(rootDir, '../dist');
 const outputPath = path.join(outputDir, `sdm-${version}.zip`);
 
 // Ensure directory exists
@@ -34,19 +38,15 @@ archive.glob('**/*', {
     '.gitignore',
     '.prettierignore',
     '.prettierrc',
-    'buildMacros.js',
-    'cleanPacks.js',
     'dist/**',
     'node_modules/**',
-    'pack.js',
     'package-lock.json',
     'package.json',
     'packs/_source/**',
     'sdm.lock',
     'src/**',
-    'unpack.js',
+    'utils/**',
     'version.txt',
-    'zipBuild.js',
   ]
 });
 
