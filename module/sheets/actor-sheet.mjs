@@ -345,7 +345,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     // Control which parts show based on document subtype
     switch (this.document.type) {
       case 'character':
-        options.parts.push('inventory', 'pet', 'effects');
+        options.parts.push('inventory', 'effects');
         break;
       case 'npc':
         options.parts.push('inventory', 'effects');

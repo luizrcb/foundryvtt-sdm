@@ -169,7 +169,7 @@ SDM.gearType = {
   armor: 'TYPES.Item.armor',
   '': 'TYPE.Gear',
   power: 'TYPES.Item.power',
-  power_container: 'TYPES.Item.power_container',
+  // power_container: 'TYPES.Item.power_container',
   ward: 'TYPES.Item.ward',
   weapon: 'TYPES.Item.weapon'
 };
