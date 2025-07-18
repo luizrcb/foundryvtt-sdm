@@ -6,7 +6,11 @@
     "build": "sass src/scss/sdm.scss css/sdm.css --style=expanded --no-source-map",
     "watch": "sass src/scss/sdm.scss css/sdm.css --style=expanded --source-map --watch",
     "format": "prettier --write \"**/*.{js,mjs,html,hbs,json,css}\"",
-    "package": "node zipBuild.js"
+    "zip": "node zipBuild.js",
+    "clean:packs": "node cleanPacks.js",
+    "pack": "node pack.js",
+    "unpack": "node unpack.js",
+    "repack": "npm run clean:packs && npm run pack"
   },
   "browserslist": [
     "last 3 versions"

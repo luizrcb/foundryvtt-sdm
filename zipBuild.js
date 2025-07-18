@@ -35,14 +35,18 @@ archive.glob('**/*', {
     '.prettierignore',
     '.prettierrc',
     'buildMacros.js',
+    'cleanPacks.js',
+    'dist/**',
     'node_modules/**',
+    'pack.js',
     'package-lock.json',
     'package.json',
+    'packs/_source/**',
+    'sdm.lock',
     'src/**',
+    'unpack.js',
     'version.txt',
-    'dist/**',
     'zipBuild.js',
-    'sdm.lock'
   ]
 });
 
