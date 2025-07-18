@@ -1,6 +1,6 @@
 {
   "name": "sdm",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "description": "CSS compiler for the Sdm system",
   "scripts": {
     "build": "sass src/scss/sdm.scss css/sdm.css --style=expanded --no-source-map",
@@ -15,7 +15,6 @@
   "browserslist": [
     "last 3 versions"
   ],
-  "author": "Asacolips",
   "license": "MIT",
   "private": true,
   "devDependencies": {
