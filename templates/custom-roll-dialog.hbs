@@ -15,7 +15,7 @@
       <label for="skillMod">{{localize 'SDM.Skill'}}</label>
       <select name="selectedSkill" id="selectedSkill">
         <option value=""></option>
-        {{selectOptions availableSkills valueAttr="id" labelAttr="label" selected=selectedSkill}}
+        {{selectOptions availableSkills valueAttr="id" labelAttr="label" selected=selectedSkill sort=true}}
       </select>
     </div>
     {{/if}}

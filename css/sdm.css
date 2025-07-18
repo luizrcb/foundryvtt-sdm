@@ -78,7 +78,7 @@
 }
 
 .application.sheet.sdm.actor {
-  min-width: 900px;
+  min-width: 930px;
   min-height: 820px;
   max-width: 1500px;
   max-height: 1500px;
@@ -106,7 +106,7 @@
 }
 
 .application.sheet.sdm.item {
-  min-width: 550px;
+  min-width: 580px;
   min-height: 600px;
 }
 
@@ -854,3 +854,5 @@
   top: 39px;
   left: 10px;
 }
+
+/*# sourceMappingURL=sdm.css.map */

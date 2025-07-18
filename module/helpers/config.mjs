@@ -175,9 +175,9 @@ SDM.gearType = {
 };
 
 SDM.traitType = {
-  '': 'TYPE.Trait',
   power: 'TYPES.Item.power',
-  skill: 'TYPES.Item.skill'
+  skill: 'TYPES.Item.skill',
+  '': 'TYPE.Trait',
 };
 
 SDM.burdenType = {
