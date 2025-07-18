@@ -41,7 +41,8 @@ archive.glob('**/*', {
     'src/**',
     'version.txt',
     'dist/**',
-    'zipBuild.js'
+    'zipBuild.js',
+    'sdm.lock'
   ]
 });
 

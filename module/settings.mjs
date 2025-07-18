@@ -101,7 +101,7 @@ export function registerSystemSettings() {
   });
 
   game.settings.register('sdm', 'baseMoraleFormula', {
-    name: 'SDM.SettingBaseMoraleFormula',
+    name: 'SDM.SettingsBaseMoraleFormula',
     hint: 'SDM.SettingsBaseMoraleFormulaHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
@@ -111,7 +111,7 @@ export function registerSystemSettings() {
   });
 
   game.settings.register('sdm', 'baseReactionFormula', {
-    name: 'SDM.SettingBaseReactionFormula',
+    name: 'SDM.SettingsBaseReactionFormula',
     hint: 'SDM.SettingsBaseReactionFormulaHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
@@ -195,11 +195,12 @@ export function registerSystemSettings() {
     default: false
   });
 
+  // TODO consider removing this
   game.settings.register('sdm', 'coloredLabels', {
     name: 'SDM.SettingsColoredLabels',
     hint: 'SDM.SettingsColoredLabelsHint',
     scope: 'client', // "world" = GM only, "client" = per user
-    config: true, // Show in configuration view
+    // config: true, // Show in configuration view
     type: Boolean, // Data type: String, Number, Boolean, etc
     default: false
   });

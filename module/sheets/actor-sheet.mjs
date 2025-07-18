@@ -179,6 +179,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const title = from;
 
     const actorAttack = isAttack ? this.actor.system[attack] : null;
+    const actorAttackBonus = isAttack ? actorAttack.bonus || 0 : 0;
+    const allAttackBonus = this.actor.system.attack_bonus || 0
+    const dmgOrAttackBonus = bonusDamage || (actorAttackBonus + allAttackBonus);
     const availableSkills = this.actor.getAvailableSkills();
     const isCharacterActor = this.actor.type === ActorType.CHARACTER;
 
@@ -269,7 +272,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       from,
       ability: selectedAbility || ability,
       mode: rollMode,
-      modifier: bonusDamage ? `${modifier} + ${bonusDamage}` : modifier,
+      modifier: dmgOrAttackBonus ? `${modifier}+${dmgOrAttackBonus}` : modifier,
       multiplier,
       explodingDice: shouldExplode,
       versatile: !!rollOptions.versatile,
@@ -1071,10 +1074,15 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     const { modifier = '', charismaOperator = 1 } = data;
 
-    const basReactionFormula = game.settings.get('sdm', 'baseReactionFormula') || '2d6';
+    const baseFormula = game.settings.get('sdm', 'baseReactionFormula') || '2d6';
+    const reactionBonus = this.actor.system.reaction_bonus || 0;
     const chaMod = this.actor.system.abilities['cha'].current;
-    const reactionChaMod = charismaOperator * chaMod;
-    const formula = `${basReactionFormula} +${reactionChaMod}${modifier ? ` +${modifier}` : ''}`;
+
+    const chaPart = `${charismaOperator > 0 ? '+' : '-'}${chaMod}`;
+    const bonusPart = `${reactionBonus ? ` +${reactionBonus}` : ''}`
+    const modPart = `${modifier ? ` +${modifier}` : ''}`;
+
+    const formula = `${baseFormula}${chaPart}${bonusPart}${modPart}`;
     const sanitizedFormula = sanitizeExpression(formula);
 
     let roll = new Roll(sanitizedFormula);
