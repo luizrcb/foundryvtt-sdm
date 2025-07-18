@@ -180,7 +180,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     const actorAttack = isAttack ? this.actor.system[attack] : null;
     const actorAttackBonus = isAttack ? actorAttack.bonus || 0 : 0;
-    const allAttackBonus = this.actor.system.attack_bonus || 0
+    const allAttackBonus = isAttack ? this.actor.system.attack_bonus || 0 : 0;
     const dmgOrAttackBonus = bonusDamage || (actorAttackBonus + allAttackBonus);
     const availableSkills = this.actor.getAvailableSkills();
     const isCharacterActor = this.actor.type === ActorType.CHARACTER;

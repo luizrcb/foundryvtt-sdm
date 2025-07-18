@@ -53,6 +53,11 @@ export async function openItemTransferDialog(item, sourceActor) {
     });
     try {
       const targetActorId = transferOptions.targetActor;
+
+      if (!targetActorId) {
+        return;
+      }
+
       const targetActor = game.actors.get(targetActorId);
       const freshItem = sourceActor.items.get(item.id);
 

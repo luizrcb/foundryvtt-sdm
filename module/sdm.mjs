@@ -55,6 +55,17 @@ Hooks.on('preUpdateItem', (item, data) => {
 
 Hooks.on("renderSettings", (app, html) => renderSettings(html));
 
+Hooks.on("renderGamePause", (app, html) => {
+  html.classList.add("sdme2");
+  const container = document.createElement("div");
+  container.classList.add("flexcol");
+  container.append(...html.children);
+  html.append(container);
+  const img = html.querySelector("img");
+  img.src = "systems/sdm/assets/sdm-pause.png";
+  img.className = "";
+});
+
 Hooks.once('init', function () {
   // Add custom constants for configuration.
   globalThis.sdm = game.sdm = Object.assign(game.system, globalThis.sdm);
