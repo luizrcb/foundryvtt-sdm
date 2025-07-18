@@ -53,8 +53,11 @@ Hooks.on('preUpdateItem', (item, data) => {
   }
 });
 
+Hooks.on("renderSettings", (app, html) => renderSettings(html));
+
 Hooks.once('init', function () {
   // Add custom constants for configuration.
+  globalThis.sdm = game.sdm = Object.assign(game.system, globalThis.sdm);
   CONFIG.SDM = SDM;
 
   // Define custom Document and DataModel classes
@@ -232,4 +235,25 @@ function _configureFonts() {
       ]
     }
   });
+}
+
+/**
+ * Render a custom entry for game details in the settings sidebar.
+ * @param {HTMLElement} html  The settings sidebar HTML.
+ */
+function renderSettings(html) {
+  const pip = html.querySelector(".info .system .notification-pip");
+  html.querySelector(".info .system").remove();
+
+  const section = document.createElement("section");
+  section.classList.add("sdme2", "sidebar-info");
+  section.innerHTML = `
+    <h4 class="divider">${game.i18n.localize("WORLD.FIELDS.system.label")}</h4>
+    <div class="system-badge">
+      <img src="systems/sdm/assets/sdm-compatible.png" data-tooltip="${sdm.title}" alt="${sdm.title}">
+      <span class="system-info">${sdm.version}</span>
+    </div>
+  `;
+  if ( pip ) section.querySelector(".system-info").insertAdjacentElement("beforeend", pip);
+  html.querySelector(".info").insertAdjacentElement("afterend", section);
 }
