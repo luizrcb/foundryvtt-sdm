@@ -14,20 +14,6 @@ import { BURDEN_ITEM_TYPES, convertToCash, GEAR_ITEM_TYPES } from '../helpers/it
  * @extends {Actor}
  */
 export class SdmActor extends Actor {
-  async _preUpdate(changed, options, userId) {
-    if (changed.system?.abilities) {
-      const abilities = changed.system.abilities;
-
-      for (const [abilityKey, abilityData] of Object.entries(abilities)) {
-        const systemAbility = this.system.abilities[abilityKey];
-        if (abilityData.current !== undefined) {
-          if (abilityData.current > systemAbility.full) {
-            return false;
-          }
-        }
-      }
-    }
-  }
 
   // Override the _onUpdate method to handle level changes
   /** @override */
@@ -76,22 +62,23 @@ export class SdmActor extends Actor {
       const abilities = changed.system.abilities;
 
       // Iterate over updated abilities
-      // for (const [abilityKey, abilityData] of Object.entries(abilities)) {
-      //   const systemAbility = this.system.abilities[abilityKey];
-      //   if (abilityData.current !== undefined) {
+      for (const [abilityKey, abilityData] of Object.entries(abilities)) {
+        const systemAbility = this.system.abilities[abilityKey];
+        if (abilityData.current !== undefined) {
 
-      //     if (abilityData.current > (systemAbility.base + systemAbility.bonus)) {
-      //       abilityData.current = (systemAbility.base + systemAbility.bonus);
-      //     }
-      //   }
+          if (abilityData.current > (systemAbility.base + systemAbility.bonus)) {
+            abilityData.current = (systemAbility.base + systemAbility.bonus);
+          }
 
-      //   await this.update({
-      //     [`system.abilities.${abilityKey}`]: {
-      //       ...this.system.abilities[abilityKey],
-      //       ...abilityData
-      //     },
-      //   });
-      // }
+          if (abilityData.current < 0) {
+            abilityData.current = 0;
+          }
+
+          await this.update({
+            [`system.abilities.${abilityKey}.current`]: abilityData.current,
+          });
+        }
+      }
     }
   }
 
@@ -233,9 +220,6 @@ export class SdmActor extends Actor {
     // 3. Processar atributos
     for (const [key, ability] of Object.entries(data.abilities)) {
       ability.full = ability.base + ability.bonus;
-      if (ability.current > ability.full) {
-        ability.current = ability.full;
-      }
     }
 
     const agility = data.abilities['agi'];
