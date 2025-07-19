@@ -56,7 +56,7 @@ export const GearType = Object.freeze({
   WEAPON: 'weapon',
   ARMOR: 'armor',
   POWER: 'power',
-  POWER_CONTAINER: 'power_container',
+  // POWER_CONTAINER: 'power_container',
   WARD: 'ward'
 });
 

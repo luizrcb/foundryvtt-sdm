@@ -15,7 +15,9 @@ export default class SDMRoll {
     //TODO:  add extra situaltional modifiers like bonus for attack with specific weapon type like a mace
     multiplier = '',
     explodingDice = true,
-    versatile = false
+    versatile = false,
+    targetActor,
+    attackTarget = 'ha',
   }) {
     this.actor = actor;
     this.type = type;
@@ -28,6 +30,8 @@ export default class SDMRoll {
     this.multiplier = multiplier;
     this.explodingDice = explodingDice;
     this.versatile = versatile;
+    this.targetActor = targetActor;
+    this.attackTarget = attackTarget;
   }
 
   async evaluate() {
@@ -53,13 +57,61 @@ export default class SDMRoll {
       flags['sdm.isTraitRoll'] = true;
     }
 
+    let content;
+
+    const physicalIcon =  '<i class="fas fa-shield-alt"></i>'
+    const mentalIcon = '<i class="fas fa-brain-circuit"></i>';
+    const socialIcon = '<i class="fas fa-crown"></i>';
+
+
     const rollInstance = new Roll(sanitizedFormula, this.actor.system);
     await rollInstance.evaluate();
+
+     if (this.type === RollType.ATTACK && this.targetActor && (this.targetActor !== this.actor)) {
+      const isNPCTarget = this.targetActor.type === ActorType.NPC;
+      let defenseProperty;
+      let defenseIcon;
+
+      switch (this.attackTarget) {
+        case 'ha':
+          defenseProperty = 'defense';
+          defenseIcon = physicalIcon;
+          break;
+        case 'ka':
+          defenseProperty = 'mental_defense';
+          defenseIcon = mentalIcon;
+          break;
+        case 'ba':
+          defenseProperty = 'social_defense';
+          defenseIcon = socialIcon;
+      }
+
+      if (isNPCTarget) {
+        defenseProperty = 'defense';
+        defenseIcon = physicalIcon;
+      }
+
+      const targetDefense = this.targetActor?.system[defenseProperty] || 0;
+
+      const attackResult =  rollInstance.total;
+      const isSuccess = attackResult >= targetDefense;
+      const htmlString = await rollInstance.render();
+      const resultMessage = (isSuccess  ? $l10n('SDM.Success') : $l10n('SDM.Failure')).toUpperCase();
+
+
+      content = htmlString + `
+      <br>
+      <div>
+        <span><b>${$l10n('SDM.Target')}:</b> ${this.targetActor.name}</span> <b>${$l10n('SDM.FieldDefense')}:</b> ${defenseIcon} ${targetDefense}</span><br>
+        <b>${$l10n('SDM.Result')}:</b><span style="color:${isSuccess? 'darkgreen;' : 'red;'}"> ${resultMessage}</span>
+      <div>`
+    }
 
     await createChatMessage({
       actor: this.actor,
       rolls: [rollInstance],
       flavor,
+      content,
       flags
     });
   }
@@ -114,7 +166,9 @@ export default class SDMRoll {
     const versatileLabel = $l10n('SDM.FeatureVersatile');
 
     const parts = [`[${$l10n(`SDM.${capitalizeFirstLetter(this.type)}`)}]`, this.from];
-
+    if (this.type === RollType.ATTACK) {
+      parts.push(`(${$l10n('SDM.Attack'+capitalizeFirstLetter(this.attackTarget))})`)
+    }
     if (this.type !== RollType.ABILITY && this.ability)
       parts.push(`(${$l10n(CONFIG.SDM.abilityAbbreviations[this.ability])})`);
     if (this.skill) parts.push(`(${this.skill.name})`);

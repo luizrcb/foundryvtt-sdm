@@ -176,6 +176,13 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const isPower = type === RollType.POWER;
     const isCharacter = this.actor.type === ActorType.CHARACTER;
 
+    let targetActor;
+
+    const firstTarget = Array.from(game.user.targets)[0];
+    if (firstTarget) {
+      targetActor = firstTarget.actor;
+    }
+
     if (isDamage) rollTitlePrefix = $l10n('SDM.Damage');
     if (isAttack) rollTitlePrefix = $l10n('SDM.Attack');
     if (isAbility) rollTitlePrefix = $l10n('SDM.Ability');
@@ -191,6 +198,12 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const isCharacterActor = this.actor.type === ActorType.CHARACTER;
     const language = game.i18n.lang;
 
+    const attackTargetChoices = {
+      ha: 'SDM.AttackHa',
+      ka: 'SDM.AttackKa',
+      ba: 'SDM.AttackBa'
+    };
+
     const template = await renderTemplate(templatePath('custom-roll-dialog'), {
       rollTitlePrefix,
       title,
@@ -202,7 +215,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       multiplierOptions: CONFIG.SDM.damageMultiplier,
       rollModes: CONFIG.SDM.rollMode,
       type,
-      isCharacterActor
+      isCharacterActor,
+      attackTargetChoices,
     });
 
     const damageIcon = isPower
@@ -258,7 +272,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       rollMode = RollMode.NORMAL,
       shouldExplode = false,
       multiplier = '',
-      selectedSkill
+      selectedSkill,
+      attackTarget = 'ha',
     } = rollOptions;
     if (modifier && !foundry.dice.Roll.validate(modifier)) {
       ui.notifications.error($l10n('SDM.ErrorInvalidModifier'));
@@ -282,7 +297,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       multiplier,
       explodingDice: shouldExplode,
       versatile: !!rollOptions.versatile,
-      skill: availableSkills[selectedSkill]
+      skill: availableSkills[selectedSkill],
+      targetActor,
+      attackTarget,
     };
 
     if (formula) {

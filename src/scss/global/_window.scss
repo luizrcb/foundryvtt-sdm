@@ -159,3 +159,11 @@ hr {
   //background-color: colors.$c-beige;
   background-image: linear-gradient(90deg, transparent 0%, colors.$c-font 60%, transparent 100%);
 }
+
+input[type="checkbox"]::before, input[type="radio"]::before, input[type="checkbox"]::after, input[type="radio"]::after {
+  width: var(--checkbox-size);
+  height: var(--checkbox-size);
+  font-size: var(--checkbox-size);
+  border-radius: 3px;
+  line-height: unset;
+}

@@ -181,7 +181,7 @@ export class SdmItem extends Item {
     const getInventoryItemTitle = {
       [GearType.ARMOR]: () => this.getArmorTitle(),
       [TraitType.POWER]: () => this.getPowerTitle(),
-      [GearType.POWER_CONTAINER]: () => this.getDefaultTitle(),
+      // [GearType.POWER_CONTAINER]: () => this.getDefaultTitle(),
       [TraitType.SKILL]: () => this.getSkillTitle(),
       [GearType.WEAPON]: () => this.getWeaponTitle(),
       [GearType.WARD]: () => this.getWardTitle(),

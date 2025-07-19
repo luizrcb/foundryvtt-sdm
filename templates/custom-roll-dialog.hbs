@@ -1,6 +1,14 @@
 <div class="custom-roll-modal">
   <h4>{{localize 'SDM.RollTitle' prefix=rollTitlePrefix title=title }}</h4>
   <form class="custom-roll-form">
+    {{#if (eq type 'attack')}}
+     <div class="form-group">
+      <label for="attackTarget">{{localize 'SDM.AttackTarget'}}</label>
+      <div class="flexrow">
+        {{radioBoxes 'attackTarget' attackTargetChoices checked='ha' localize=true}}
+      </div>
+    </div>
+    {{/if}}
     {{#if (and (ne type 'ability') isCharacterActor)}}
     <div class="form-group">
       <label>{{localize 'SDM.Ability'}}</label>
@@ -12,7 +20,7 @@
     {{/if}}
     {{#if isCharacterActor}}
     <div class="form-group mt-10">
-      <label for="skillMod">{{localize 'SDM.Skill'}}</label>
+      <label for="selectedSkill">{{localize 'SDM.Skill'}}</label>
       <select name="selectedSkill" id="selectedSkill">
         <option value=""></option>
         {{selectOptions availableSkills valueAttr="id" labelAttr="label" selected=selectedSkill sort=true}}
@@ -33,7 +41,7 @@
     </div>
     {{/if}}
     <div class="form-group mt-10">
-      <label>{{localize 'SDM.RollMode'}}</label>
+      <label for="rollMode">{{localize 'SDM.RollMode'}}</label>
       <select name="rollMode" id="rollMode">
         {{selectOptions rollModes localize=true selected='normal'}}
       </select>
