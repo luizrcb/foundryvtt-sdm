@@ -78,7 +78,7 @@ function getOrderedAbilities (language='en') {
   let lang = Object.keys(SDM.abilitiesOrder).includes(language) ? language : 'en';
   const reorderedAbilities = {};
   SDM.abilitiesOrder[lang].forEach(abilityKey => {
-    reorderedAbilities[abilityKey] = abilities[abilityKey];
+    reorderedAbilities[abilityKey] = SDM.abilities[abilityKey];
   });
   return reorderedAbilities;
 }
