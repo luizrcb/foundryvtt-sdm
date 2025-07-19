@@ -186,6 +186,10 @@
   font-size: var(--font-size-12);
 }
 
+hr {
+  background-image: linear-gradient(90deg, transparent 0%, rgb(102, 102, 102) 60%, transparent 100%);
+}
+
 .grid,
 .grid-2col {
   display: grid;
@@ -854,5 +858,3 @@
   top: 39px;
   left: 10px;
 }
-
-/*# sourceMappingURL=sdm.css.map */

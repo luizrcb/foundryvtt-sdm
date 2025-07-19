@@ -11,6 +11,7 @@
   "SDM.AbilityAurAbbr": "aur",
   "SDM.AbilityTho": "Thought",
   "SDM.AbilityThoAbbr": "tho",
+  "SDM.AbilityBaseValue": "Base {ability}",
   "SDM.AbilityFull": "Full {ability}",
   "SDM.AbilityCurrent": "Current {ability}",
   "SDM.AbilityBase": "Base",

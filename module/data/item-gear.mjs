@@ -18,7 +18,10 @@ export default class SdmGear extends SdmItemBase {
       required: false,
       blank: true,
       initial: '',
-      choices: Object.entries(CONFIG.SDM.gearType).reduce((acc, [key, value]) => {
+      choices: Object.entries({
+        ...CONFIG.SDM.gearType,
+        '': 'TYPE.Gear',
+      }).reduce((acc, [key, value]) => {
         acc[key] = game.i18n.localize(value);
         return acc;
       }, {})

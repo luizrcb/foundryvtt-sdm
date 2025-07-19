@@ -17,14 +17,7 @@ SDM.abilities = {
   tho: 'SDM.AbilityTho'
 };
 
-SDM.abilityColors = [
-  'rust',
-  'pumpkin',
-  'amber',
-  'sky',
-  'azure',
-  'royal'
-];
+SDM.abilityColors = ['rust', 'pumpkin', 'amber', 'sky', 'azure', 'royal'];
 
 SDM.attackColors = {
   melee: 'lime',
@@ -73,8 +66,7 @@ SDM.abilitiesOrder = {
   'pt-BR': ['cha', 'tho', 'str', 'agi', 'aur', 'end']
 };
 
-
-function getOrderedAbilities (language='en') {
+function getOrderedAbilities(language = 'en') {
   let lang = Object.keys(SDM.abilitiesOrder).includes(language) ? language : 'en';
   const reorderedAbilities = {};
   SDM.abilitiesOrder[lang].forEach(abilityKey => {
@@ -123,8 +115,17 @@ SDM.damageMultiplier = {
   '*32': 'x32'
 };
 
-SDM.speedValues = { very_slow: -2, slow: -1, standard: 0, fast: 1, very_fast: 2 };
+SDM.speedValues = {
+  very_very_slow: -3,
+  very_slow: -2,
+  slow: -1,
+  standard: 0,
+  fast: 1,
+  very_fast: 2
+};
+
 SDM.reverseSpeedValues = {
+  '-3': 'very_very_slow',
   '-2': 'very_slow',
   '-1': 'slow',
   0: 'standard',
@@ -179,7 +180,6 @@ SDM.itemType = {
 
 SDM.gearType = {
   armor: 'TYPES.Item.armor',
-  '': 'TYPE.Gear',
   power: 'TYPES.Item.power',
   // power_container: 'TYPES.Item.power_container',
   ward: 'TYPES.Item.ward',
@@ -188,8 +188,7 @@ SDM.gearType = {
 
 SDM.traitType = {
   power: 'TYPES.Item.power',
-  skill: 'TYPES.Item.skill',
-  '': 'TYPE.Trait',
+  skill: 'TYPES.Item.skill'
 };
 
 SDM.burdenType = {

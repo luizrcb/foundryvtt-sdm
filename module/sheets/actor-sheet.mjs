@@ -86,7 +86,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       reactionRoll: this._onReactionRoll
     },
     // Custom property that's merged into `this.options`
-    dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
+    dragDrop: [{ dragSelector: '.draggable', dropSelector: null }],
     form: {
       submitOnChange: true
     }
@@ -105,16 +105,20 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       template: templatePath('actor/inventory')
     },
     biography: {
-      template: templatePath('actor/biography')
+      template: templatePath('actor/biography'),
+      scrollable: ['']
     },
     notes: {
-      template: templatePath('actor/notes')
+      template: templatePath('actor/notes'),
+      scrollable: ['']
     },
     pet: {
-      template: templatePath('actor/pet')
+      template: templatePath('actor/pet'),
+      scrollable: ['']
     },
     effects: {
-      template: templatePath('actor/effects')
+      template: templatePath('actor/effects'),
+      scrollable: ['']
     }
   };
 
@@ -170,6 +174,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const isAttack = type === RollType.ATTACK;
     const isAbility = type === RollType.ABILITY;
     const isPower = type === RollType.POWER;
+    const isCharacter = this.actor.type === ActorType.CHARACTER;
 
     if (isDamage) rollTitlePrefix = $l10n('SDM.Damage');
     if (isAttack) rollTitlePrefix = $l10n('SDM.Attack');
@@ -178,10 +183,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     const title = from;
 
-    const actorAttack = isAttack ? this.actor.system[attack] : null;
-    const actorAttackBonus = isAttack ? actorAttack.bonus || 0 : 0;
-    const allAttackBonus = isAttack ? this.actor.system.attack_bonus || 0 : 0;
-    const dmgOrAttackBonus = bonusDamage || (actorAttackBonus + allAttackBonus);
+    const actorAttack = isAttack && isCharacter ? this.actor.system[attack] : null;
+    const actorAttackBonus = isAttack && isCharacter ? actorAttack.bonus || 0 : 0;
+    const allAttackBonus = isAttack && isCharacter ? this.actor.system?.attack_bonus || 0 : 0;
+    const dmgOrAttackBonus = bonusDamage || actorAttackBonus + allAttackBonus;
     const availableSkills = this.actor.getAvailableSkills();
     const isCharacterActor = this.actor.type === ActorType.CHARACTER;
     const language = game.i18n.lang;
@@ -1080,7 +1085,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const chaMod = this.actor.system.abilities['cha'].current;
 
     const chaPart = `${charismaOperator > 0 ? '+' : '-'}${chaMod}`;
-    const bonusPart = `${reactionBonus ? ` +${reactionBonus}` : ''}`
+    const bonusPart = `${reactionBonus ? ` +${reactionBonus}` : ''}`;
     const modPart = `${modifier ? ` +${modifier}` : ''}`;
 
     const formula = `${baseFormula}${chaPart}${bonusPart}${modPart}`;

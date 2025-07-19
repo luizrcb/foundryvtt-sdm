@@ -17,8 +17,9 @@ import {
 import { SdmItemSheet } from './sheets/item-sheet.mjs';
 
 const { Actors, Items } = foundry.documents.collections;
-const { ActiveEffectConfig } = foundry.applications.sheets;
 const { DocumentSheetConfig } = foundry.applications.apps;
+const { ActiveEffectConfig } = foundry.applications.sheets;
+const sheets = foundry.appv1.sheets;
 /* -------------------------------------------- */
 /*  Init Hook                                   */
 /* -------------------------------------------- */
@@ -53,17 +54,17 @@ Hooks.on('preUpdateItem', (item, data) => {
   }
 });
 
-Hooks.on("renderSettings", (app, html) => renderSettings(html));
+Hooks.on('renderSettings', (app, html) => renderSettings(html));
 
-Hooks.on("renderGamePause", (app, html) => {
-  html.classList.add("sdme2");
-  const container = document.createElement("div");
-  container.classList.add("flexcol");
+Hooks.on('renderGamePause', (app, html) => {
+  html.classList.add('sdme2');
+  const container = document.createElement('div');
+  container.classList.add('flexcol');
   container.append(...html.children);
   html.append(container);
-  const img = html.querySelector("img");
-  img.src = "systems/sdm/assets/sdm-pause.png";
-  img.className = "";
+  const img = html.querySelector('img');
+  img.src = 'systems/sdm/assets/sdm-pause.png';
+  img.className = '';
 });
 
 Hooks.once('init', function () {
@@ -99,13 +100,13 @@ Hooks.once('init', function () {
   _configureFonts();
 
   // Register sheet application classes
-  Actors.unregisterSheet('core', foundry.appv1.sheets.ActorSheet);
+  Actors.unregisterSheet('core', sheets.ActorSheet);
   Actors.registerSheet('sdm', SdmActorSheet, {
     types: ['character', 'npc'],
     makeDefault: true,
     label: 'SDM.SheetLabels.Actor'
   });
-  Items.unregisterSheet('core', foundry.appv1.sheets.ItemSheet);
+  Items.unregisterSheet('core', sheets.ItemSheet);
   Items.registerSheet('sdm', SdmItemSheet, {
     makeDefault: true,
     label: 'SDM.SheetLabels.Item'
@@ -253,18 +254,18 @@ function _configureFonts() {
  * @param {HTMLElement} html  The settings sidebar HTML.
  */
 function renderSettings(html) {
-  const pip = html.querySelector(".info .system .notification-pip");
-  html.querySelector(".info .system").remove();
+  const pip = html.querySelector('.info .system .notification-pip');
+  html.querySelector('.info .system').remove();
 
-  const section = document.createElement("section");
-  section.classList.add("sdme2", "sidebar-info");
+  const section = document.createElement('section');
+  section.classList.add('sdme2', 'sidebar-info');
   section.innerHTML = `
-    <h4 class="divider">${game.i18n.localize("WORLD.FIELDS.system.label")}</h4>
+    <h4 class="divider">${game.i18n.localize('WORLD.FIELDS.system.label')}</h4>
     <div class="system-badge">
       <img src="systems/sdm/assets/sdm-compatible.png" data-tooltip="${sdm.title}" alt="${sdm.title}">
       <span class="system-info">${sdm.version}</span>
     </div>
   `;
-  if ( pip ) section.querySelector(".system-info").insertAdjacentElement("beforeend", pip);
-  html.querySelector(".info").insertAdjacentElement("afterend", section);
+  if (pip) section.querySelector('.system-info').insertAdjacentElement('beforeend', pip);
+  html.querySelector('.info').insertAdjacentElement('afterend', section);
 }

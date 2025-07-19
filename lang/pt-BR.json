@@ -12,6 +12,7 @@
   "SDM.AbilityTho": "Inteligência",
   "SDM.AbilityThoAbbr": "int",
   "SDM.AbilityFull": "{ability} Total",
+  "SDM.AbilityBaseValue": "{ability} Base",
   "SDM.AbilityCurrent": "{ability} Atual",
   "SDM.AbilityBase": "Base",
   "SDM.AbilityBonus": "Bonus",

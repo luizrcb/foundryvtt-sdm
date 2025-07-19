@@ -235,7 +235,7 @@
                 </span>
                 <input type='text' name='system.abilities.{{key}}.base' value='{{ability.base}}'
                   class="ability-score ability-full" data-dtype='Number'
-                  title="{{localize 'SDM.AbilityFull' ability=(localize (lookup @root.config.abilities key))}}" />
+                  title="{{localize 'SDM.AbilityBaseValue' ability=(localize (lookup @root.config.abilities key))}}" />
                 <input type='text' name='system.abilities.{{key}}.current' value='{{ability.current}}'
                   class="ability-score" data-dtype='Number'
                   title="{{localize 'SDM.AbilityCurrent' ability=(localize (lookup @root.config.abilities key))}}" />
@@ -246,10 +246,8 @@
               {{else}}
               <div class='ability flexrow flex-group-center'>
                 <div class="flexcol">
-                  <span class='resource-label rollable
-                  {{ifThen @root.coloredLabels (lookup @root.config.abilityColors @index) ""}}
-                  {{ifThen @root.coloredLabels "icon-border" ""}}
-                  ' data-action='roll' data-context='rollable'
+                  <span class='resource-label rollable'
+                    data-action='roll' data-context='rollable'
                     data-ability="{{key}}" data-type="ability"
                     data-label='{{localize (lookup @root.config.abilities key)}}'
                     title='{{localize (lookup @root.config.abilities key)}}'>
@@ -264,9 +262,12 @@
                   {{/if}}
                 </div>
 
-
-                <input type='text' name='system.abilities.{{key}}.full' value='{{ability.full}}'
-                  class="ability-score ability-full" data-dtype='Number'
+                <input
+                  type='text'
+                  name='system.abilities.{{key}}.full'
+                  value='{{ability.full}}'
+                  class="ability-score ability-full"
+                  data-dtype='Number'
                   title="{{localize 'SDM.AbilityFull' ability=(localize (lookup @root.config.abilities key))}}&#10;{{
                   localize 'SDM.AbilityBase'}} = {{ability.base}}&#10;{{localize 'SDM.AbilityBonus'}} = {{ability.bonus}}" disabled />
                 <input type='text' name='system.abilities.{{key}}.current' value='{{ability.current}}'
@@ -288,25 +289,37 @@
           </div>
           {{#if @root.isEditMode}}
           <div class='resources grid grid-2col'>
-            <div class="ability grid-span-1 flexcol align-center" title="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackMelee')}}">
+            <div
+              class="ability grid-span-1 flexcol align-center"
+              title="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackMelee')}}">
               <div class='resource-label'>
                 <div>{{localize 'SDM.AttackMelee'}}</div>
               </div>
               <i class="fas fa-gear rollable" data-action='updateAttack' data-attack="melee"></i>
             </div>
-            <div class="ability grid-span-1 flexcol align-center"  title="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackRanged')}}">
+            <div
+              class="ability grid-span-1 flexcol align-center"
+              title="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackRanged')}}">
               <div class='resource-label'>
                 <div>{{localize 'SDM.AttackRanged'}}</div>
               </div>
               <i class="fas fa-gear rollable" data-action='updateAttack' data-attack="ranged"></i>
             </div>
-            <div class="ability grid-span-1 flexcol align-center" title="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackFantascience')}}">
+            <div
+              class="ability grid-span-1 flexcol align-center"
+              title="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackFantascience')}}">
               <div class='resource-label'>
                 <div>{{localize 'SDM.AttackFantascience'}}</div>
               </div>
-              <i class="fas fa-gear rollable" data-action='updateAttack' data-attack="fantascience"></i>
+              <i
+                class="fas fa-gear rollable"
+                data-action='updateAttack'
+                data-attack="fantascience">
+              </i>
             </div>
-            <div class="ability grid-span-1 flexcol align-center" title="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackOldtech')}}">
+            <div
+              class="ability grid-span-1 flexcol align-center"
+              title="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackOldtech')}}">
               <div class='resource-label'>
                 <div>{{localize 'SDM.AttackOldtech'}}</div>
               </div>
@@ -317,44 +330,60 @@
                 {{localize 'SDM.PowerCost'}}
               </label>
               <div class='resource-content flexrow flex-center flex-between'>
-                <input type='text' name='system.power_cost' value='{{system.power_cost}}' data-dtype='Number'
-                  style="text-align:center;" />
+                <input
+                  type='text'
+                  name='system.power_cost'
+                  value='{{system.power_cost}}'
+                  data-dtype='Number'
+                  style="text-align:center;"
+                />
               </div>
             </div>
           </div>
           {{else}}
           <div class='resources grid grid-2col'>
             <div class="ability grid-span-1 flexrow">
-              <div class='resource-label rollable' data-type='attack' data-action='roll' data-attack="melee"
+              <div
+                class='resource-label rollable'
+                data-type='attack'
+                data-action='roll'
+                data-attack="melee"
                 data-label="{{localize 'SDM.AttackMelee'}}">
-                <div class='{{ifThen @root.coloredLabels @root.config.attackColors.melee ""}}
-                {{ifThen @root.coloredLabels "icon-border" ""}}'>
-                {{localize 'SDM.AttackMelee'}}</div>
+                <div>{{localize 'SDM.AttackMelee'}}</div>
                 <i class="fas fa-sword {{@root.config.attackColors.melee}}"></i>
               </div>
             </div>
             <div class="ability grid-span-1 flexrow">
-              <div class='resource-label rollable' data-type='attack' data-action='roll' data-attack="ranged"
+              <div
+                class='resource-label rollable'
+                data-type='attack'
+                data-action='roll'
+                data-attack="ranged"
                 data-label="{{localize 'SDM.AttackRanged'}}">
-                <div class='{{ifThen @root.coloredLabels @root.config.attackColors.ranged ""}}
-                {{ifThen @root.coloredLabels "icon-border" ""}}'>{{localize 'SDM.AttackRanged'}}</div>
+                <div>{{localize 'SDM.AttackRanged'}}</div>
                  <i class="fas fa-raygun {{@root.config.attackColors.ranged}}"></i>
               </div>
             </div>
             <div class="ability grid-span-1 flexrow">
-              <div class='resource-label rollable' data-type='attack' data-action='roll' data-attack="fantascience"
+              <div
+                class='resource-label rollable'
+                data-type='attack'
+                data-action='roll'
+                data-attack="fantascience"
                 data-label="{{localize 'SDM.AttackFantascience'}}">
-                 <div class='{{ifThen @root.coloredLabels @root.config.attackColors.fantascience ""}}
-                {{ifThen @root.coloredLabels "icon-border" ""}}'>{{localize 'SDM.AttackFantascience'}}</div>
-                 <i class="fas fa-hat-wizard {{@root.config.attackColors.fantascience}}"></i>
+                <div>{{localize 'SDM.AttackFantascience'}}</div>
+                <i class="fas fa-hat-wizard {{@root.config.attackColors.fantascience}}"></i>
               </div>
             </div>
             <div class="ability grid-span-1 flexrow">
-              <div class='resource-label rollable' data-type='attack' data-action='roll' data-attack="oldtech"
+              <div
+                class='resource-label rollable'
+                data-type='attack'
+                data-action='roll'
+                data-attack="oldtech"
                 data-label="{{localize 'SDM.AttackOldtech'}}">
-                <div class='{{ifThen @root.coloredLabels @root.config.attackColors.oldtech ""}}
-                {{ifThen @root.coloredLabels "icon-border" ""}}'>{{localize 'SDM.AttackOldtech'}}</div>
-                 <i class="fas fa-game-console-handheld {{@root.config.attackColors.oldtech}}"></i>
+                <div>{{localize 'SDM.AttackOldtech'}}</div>
+                <i class="fas fa-game-console-handheld {{@root.config.attackColors.oldtech}}"></i>
               </div>
             </div>
           </div>
