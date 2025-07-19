@@ -184,11 +184,12 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const dmgOrAttackBonus = bonusDamage || (actorAttackBonus + allAttackBonus);
     const availableSkills = this.actor.getAvailableSkills();
     const isCharacterActor = this.actor.type === ActorType.CHARACTER;
+    const language = game.i18n.lang;
 
     const template = await renderTemplate(templatePath('custom-roll-dialog'), {
       rollTitlePrefix,
       title,
-      abilities: CONFIG.SDM.abilities,
+      abilities: CONFIG.SDM.getOrderedAbilities(language),
       ability: isAttack ? actorAttack?.default_ability : ability,
       attack,
       availableSkills,
@@ -295,13 +296,13 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const availableSkills = this.actor.getAvailableSkills();
     const capitalizedAttack = capitalizeFirstLetter(attack);
     const skills = Object.values(availableSkills);
-
+    const lang = game.i18n.lang;
     const attackSystemData = this.actor.system[attack];
     const { default_ability: selectedAbility, favorite_skill: selectedSkill } = attackSystemData;
 
     const template = await renderTemplate(templatePath('actor/character/update-attack'), {
       skills,
-      abilities: CONFIG.SDM.abilities,
+      abilities: CONFIG.SDM.getOrderedAbilities(lang),
       attack: $l10n(`SDM.Attack${capitalizedAttack}`),
       selectedAbility,
       selectedSkill

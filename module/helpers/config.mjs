@@ -17,14 +17,14 @@ SDM.abilities = {
   tho: 'SDM.AbilityTho'
 };
 
-SDM.abilityColors = {
-  str: 'rust',
-  end: 'pumpkin',
-  agi: 'amber',
-  cha: 'sky',
-  aur: 'azure',
-  tho: 'royal'
-};
+SDM.abilityColors = [
+  'rust',
+  'pumpkin',
+  'amber',
+  'sky',
+  'azure',
+  'royal'
+];
 
 SDM.attackColors = {
   melee: 'lime',
@@ -69,9 +69,21 @@ SDM.versatile = 'SDM.FeatureVersatile';
 
 SDM.abilitiesOrder = {
   en: ['str', 'end', 'agi', 'cha', 'aur', 'tho'],
-  'pt-BR': ['str', 'end', 'agi', 'cha', 'aur', 'tho']
-  //'pt-BR': ['cha', 'tho', 'str', 'agi', 'aur', 'end']
+  //'pt-BR': ['str', 'end', 'agi', 'cha', 'aur', 'tho']
+  'pt-BR': ['cha', 'tho', 'str', 'agi', 'aur', 'end']
 };
+
+
+function getOrderedAbilities (language='en') {
+  let lang = Object.keys(SDM.abilitiesOrder).includes(language) ? language : 'en';
+  const reorderedAbilities = {};
+  SDM.abilitiesOrder[lang].forEach(abilityKey => {
+    reorderedAbilities[abilityKey] = abilities[abilityKey];
+  });
+  return reorderedAbilities;
+}
+
+SDM.getOrderedAbilities = getOrderedAbilities;
 
 SDM.pullModes = Object.values(PullMode).reduce((acc, pullMode) => {
   acc[pullMode] = `SDM.PullMode${capitalizeFirstLetter(pullMode)}`;
