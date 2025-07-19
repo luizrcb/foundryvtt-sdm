@@ -17,7 +17,10 @@ export default class SdmTrait extends SdmItemBase {
       required: false,
       blank: true,
       initial: '',
-      choices: Object.entries(CONFIG.SDM.traitType).reduce((acc, [key, value]) => {
+      choices: Object.entries({
+        ...CONFIG.SDM.traitType,
+        '': 'TYPE.Trait'
+      }).reduce((acc, [key, value]) => {
         acc[key] = game.i18n.localize(value);
         return acc;
       }, {})
