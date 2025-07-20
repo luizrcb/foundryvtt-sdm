@@ -989,7 +989,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     const data = await DialogV2.wait({
       window: {
-        title: $l10n('SDM.MoraleRoll'),
+        title: $fmt('SDM.RollType', { type: $l10n('SDM.Morale') }),
         resizable: true
       },
       content: await renderTemplate(templatePath('actor/npc/morale-roll-dialog')),
@@ -1049,7 +1049,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     createChatMessage({
       content: await renderTemplate(templatePath('chat/morale-roll-result'), templateData),
-      flavor: $l10n('SDM.MoraleRoll'),
+      flavor: $fmt('SDM.RollType', { type: $l10n('SDM.Morale') }),
       rolls: [roll]
     });
   }

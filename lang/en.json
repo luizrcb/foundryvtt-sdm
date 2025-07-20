@@ -185,7 +185,6 @@
   "SDM.MessageCritical": "Critical hit!",
   "SDM.MessageNoChanges": "No changes were needed",
   "SDM.Morale": "Morale",
-  "SDM.MoraleRoll": "Morale Roll",
   "SDM.Transfer": "Transfer {type}",
   "SDM.TransferTo": "To",
   "SDM.Target": "Target",
