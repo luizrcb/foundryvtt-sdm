@@ -1,3 +1,6 @@
+import { detectNat1OrNat20 } from '../rolls/sdmRoll.mjs';
+import { $l10n } from './globalUtils.mjs';
+
 /**
  * Resolves an Actor associated with a chat message using multiple fallback strategies.
  *
@@ -62,17 +65,37 @@ export async function createChatMessage({
   flavor,
   content,
   rolls,
-  flags
+  flags,
+  checkCritical = false
 }) {
   try {
     const finalSpeaker = speaker || ChatMessage.getSpeaker({ actor });
+
+    const rollArray = rolls?.filter(r => r instanceof Roll) ?? [];
+
+    // Detect nat1 or nat20 across all provided rolls
+    if (checkCritical) {
+      for (const roll of rollArray) {
+        const { isNat1, isNat20 } = detectNat1OrNat20(roll);
+
+        if (!content) content = await roll.render();
+
+        if (isNat20) {
+          content = content.replace('dice-total', 'dice-total critical');
+          content += `<div class='flex-group-center'><span class='critical'>${$l10n('SDM.CriticalSuccess').toUpperCase()}</span></div>`;
+        } else if (isNat1) {
+          content = content.replace('dice-total', 'dice-total fumble');
+          content += `<div class='flex-group-center'><span class='fumble'>${$l10n('SDM.CriticalFailure').toUpperCase()}</span></div>`;
+        }
+      }
+    }
 
     let chatData = {
       user,
       speaker: finalSpeaker,
       flavor,
       content,
-      rolls: rolls?.filter(r => r instanceof Roll),
+      rolls: rollArray,
       flags
     };
 

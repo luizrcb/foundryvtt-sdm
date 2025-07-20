@@ -1,5 +1,5 @@
 import { createChatMessage } from '../helpers/chatUtils.mjs';
-import { ActorType, RollMode, RollType } from '../helpers/constants.mjs';
+import { ActorType, AttackTarget, RollMode, RollType } from '../helpers/constants.mjs';
 import { $l10n, capitalizeFirstLetter } from '../helpers/globalUtils.mjs';
 
 export default class SDMRoll {
@@ -17,7 +17,7 @@ export default class SDMRoll {
     explodingDice = true,
     versatile = false,
     targetActor,
-    attackTarget = 'ha',
+    attackTarget = AttackTarget.PHYSICAL
   }) {
     this.actor = actor;
     this.type = type;
@@ -48,63 +48,71 @@ export default class SDMRoll {
     const formula = formulaComponents.join('+');
     const sanitizedFormula = sanitizeExpression(formula); // ready to roll
     const flavor = this.#buildFlavorText(fixedModifiers, diceModifiers, escalatorDie);
-
+    const isAttack = this.type === RollType.ATTACK;
+    const isAbility = this.type === RollType.ABILITY;
+    const isDamage = this.type === RollType.DAMAGE;
+    let checkCritical = isAttack || isAbility;
     const flags = {};
 
-    if (this.type === RollType.DAMAGE) {
+    if (isDamage) {
       flags['sdm.isDamageRoll'] = true;
     } else {
       flags['sdm.isTraitRoll'] = true;
     }
-
-    let content;
-
-    const physicalIcon =  '<i class="fas fa-shield-alt"></i>'
-    const mentalIcon = '<i class="fas fa-brain-circuit"></i>';
-    const socialIcon = '<i class="fas fa-crown"></i>';
-
+    const attackMapping = {
+      [AttackTarget.PHYSICAL]: {
+        icon: '<i class="fas fa-shield-alt"></i>',
+        property: 'defense'
+      },
+      [AttackTarget.MENTAL]: {
+        icon: '<i class="fas fa-brain-circuit"></i>',
+        property: 'mental_defense'
+      },
+      [AttackTarget.SOCIAL]: {
+        icon: '<i class="fas fa-crown"></i>',
+        property: 'social_defense'
+      }
+    };
 
     const rollInstance = new Roll(sanitizedFormula, this.actor.system);
     await rollInstance.evaluate();
 
-     if (this.type === RollType.ATTACK && this.targetActor && (this.targetActor !== this.actor)) {
+    let content = await rollInstance.render();
+
+    if (this.type === RollType.ATTACK && this.targetActor && this.targetActor !== this.actor) {
+      checkCritical = false;
       const isNPCTarget = this.targetActor.type === ActorType.NPC;
-      let defenseProperty;
-      let defenseIcon;
+      const target = isNPCTarget ? AttackTarget.PHYSICAL : this.attackTarget;
 
-      switch (this.attackTarget) {
-        case 'ha':
-          defenseProperty = 'defense';
-          defenseIcon = physicalIcon;
-          break;
-        case 'ka':
-          defenseProperty = 'mental_defense';
-          defenseIcon = mentalIcon;
-          break;
-        case 'ba':
-          defenseProperty = 'social_defense';
-          defenseIcon = socialIcon;
+      let { icon, property } = attackMapping[target];
+
+      const targetDefense = this.targetActor?.system[property] || 0;
+
+      const attackResult = rollInstance.total;
+      const { isNat1, isNat20 } = detectNat1OrNat20(rollInstance);
+      const isSuccess = !isNat1 && (isNat20 || attackResult >= targetDefense);
+
+      let resultMessage = (isSuccess ? $l10n('SDM.Success') : $l10n('SDM.Failure')).toUpperCase();
+      const textClass = isSuccess ? 'critical' : 'fumble';
+
+      if (isNat1) {
+        resultMessage = $l10n('SDM.CriticalFailure').toUpperCase();
+        content = content.replace('dice-total', 'dice-total fumble');
       }
 
-      if (isNPCTarget) {
-        defenseProperty = 'defense';
-        defenseIcon = physicalIcon;
+      if (isNat20) {
+        resultMessage = $l10n('SDM.CriticalSuccess').toUpperCase();
+        content = content.replace('dice-total', 'dice-total critical');
       }
 
-      const targetDefense = this.targetActor?.system[defenseProperty] || 0;
-
-      const attackResult =  rollInstance.total;
-      const isSuccess = attackResult >= targetDefense;
-      const htmlString = await rollInstance.render();
-      const resultMessage = (isSuccess  ? $l10n('SDM.Success') : $l10n('SDM.Failure')).toUpperCase();
-
-
-      content = htmlString + `
+      content =
+        content +
+        `
       <br>
       <div>
-        <span><b>${$l10n('SDM.Target')}:</b> ${this.targetActor.name}</span> <b>${$l10n('SDM.FieldDefense')}:</b> ${defenseIcon} ${targetDefense}</span><br>
-        <b>${$l10n('SDM.Result')}:</b><span style="color:${isSuccess? 'darkgreen;' : 'red;'}"> ${resultMessage}</span>
-      <div>`
+        <span><b>${$l10n('SDM.Target')}:</b> ${this.targetActor.name}</span> <b>${$l10n('SDM.FieldDefense')}:</b> ${icon} ${targetDefense}</span><br>
+        <b>${$l10n('SDM.Result')}:</b><span class="${textClass}"}> ${resultMessage}</span>
+      <div>`;
     }
 
     await createChatMessage({
@@ -112,7 +120,8 @@ export default class SDMRoll {
       rolls: [rollInstance],
       flavor,
       content,
-      flags
+      flags,
+      checkCritical,
     });
   }
 
@@ -167,7 +176,7 @@ export default class SDMRoll {
 
     const parts = [`[${$l10n(`SDM.${capitalizeFirstLetter(this.type)}`)}]`, this.from];
     if (this.type === RollType.ATTACK) {
-      parts.push(`(${$l10n('SDM.Attack'+capitalizeFirstLetter(this.attackTarget))})`)
+      parts.push(`(${$l10n('SDM.Attack' + capitalizeFirstLetter(this.attackTarget))})`);
     }
     if (this.type !== RollType.ABILITY && this.ability)
       parts.push(`(${$l10n(CONFIG.SDM.abilityAbbreviations[this.ability])})`);
@@ -216,4 +225,71 @@ export function sanitizeExpression(rollExpression) {
 
   foundry.dice.Roll.validate(cleaned);
   return cleaned;
+}
+
+/**
+ * Recursively collect all DieTerm instances from any RollTerm tree.
+ * Supports PoolTerm, ParentheticalTerm, OperatorTerm, etc.
+ * @param {RollTerm} term
+ * @returns {Die[]}
+ */
+export function collectAllDice(term) {
+  if (term instanceof foundry.dice.terms.Die) return [term];
+  if (term instanceof foundry.dice.terms.PoolTerm) {
+    return term.rolls.flatMap(collectAllDice);
+  }
+  if (term instanceof foundry.dice.terms.ParentheticalTerm) {
+    return collectAllDice(term.term);
+  }
+  if (Array.isArray(term.terms)) {
+    return term.terms.flatMap(collectAllDice);
+  }
+  return [];
+}
+
+/**
+ * Detects whether a d20 in the Roll resulted in a natural 1 or 20.
+ * Only checks the first result on each d20 die.
+ * @param {Roll} roll - An evaluated Roll object.
+ * @returns {{ isNat1: boolean, isNat20: boolean }}
+ */
+export function detectNat1OrNat20(roll) {
+  const results = [];
+
+  for (const term of roll.terms) {
+    if (term instanceof foundry.dice.terms.PoolTerm) {
+      // PoolTerm: checar sub-rolls ativos
+      term.results.forEach((res, index) => {
+        if (!res.active) return;
+
+        const subRoll = term.rolls[index];
+        if (!subRoll) return;
+
+        const dice = collectAllDice(subRoll);
+        for (const die of dice) {
+          if (!(die instanceof foundry.dice.terms.Die)) continue;
+
+          const first = die.results.find(r => r.active);
+          if (first) results.push(first.result);
+        }
+      });
+    } else {
+      // Termo normal: coleta recursiva
+      const dice = collectAllDice(term);
+      for (const die of dice) {
+        if (!(die instanceof foundry.dice.terms.Die)) continue;
+
+        const first = die.results.find(r => r.active);
+        if (first) results.push(first.result);
+      }
+    }
+  }
+
+  // Determina se houve nat1 ou nat20
+  for (const r of results) {
+    if (r === 1) return { isNat1: true, isNat20: false };
+    if (r === 20) return { isNat1: false, isNat20: true };
+  }
+
+  return { isNat1: false, isNat20: false };
 }

@@ -1,6 +1,6 @@
 import { MAX_MODIFIER, UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
 import { createChatMessage } from '../helpers/chatUtils.mjs';
-import { ActorType, ItemType, RollMode, RollType } from '../helpers/constants.mjs';
+import { ActorType, AttackTarget, ItemType, RollMode, RollType } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { $fmt, $l10n, capitalizeFirstLetter } from '../helpers/globalUtils.mjs';
 import {
@@ -201,12 +201,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     let shouldExplode = !isDamage && !isPower;
     let selectedAbility = isAttack ? actorAttack?.default_ability : ability;
 
-    const attackTargetChoices = {
-      ha: 'SDM.AttackHa',
-      ka: 'SDM.AttackKa',
-      ba: 'SDM.AttackBa'
-    };
-
     const template = await renderTemplate(templatePath('custom-roll-dialog'), {
       rollTitlePrefix,
       title,
@@ -219,7 +213,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       rollModes: CONFIG.SDM.rollMode,
       type,
       isCharacterActor,
-      attackTargetChoices,
+      attackTargetChoices: CONFIG.SDM.attackTarget,
     });
 
     const damageIcon = isPower
@@ -280,7 +274,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       shouldExplode: shouldExplodeModal,
       multiplier = '',
       selectedSkill: modalSelectedSkill,
-      attackTarget = 'ha',
+      attackTarget = AttackTarget.PHYSICAL,
     } = rollOptions;
 
     if (modalSelectedSkill !== undefined) {
@@ -1279,7 +1273,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     createChatMessage({
       content: await renderTemplate(templatePath('chat/saving-throw-result'), templateData),
       flavor: label,
-      rolls: [roll]
+      rolls: [roll],
+      checkCritical: true,
     });
   }
 

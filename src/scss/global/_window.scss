@@ -167,3 +167,13 @@ input[type="checkbox"]::before, input[type="radio"]::before, input[type="checkbo
   border-radius: 3px;
   line-height: unset;
 }
+
+.critical {
+  color: #18520B;
+  font-weight: bold;
+}
+
+.fumble {
+  color: #aa0200;
+  font-weight: bold;
+}

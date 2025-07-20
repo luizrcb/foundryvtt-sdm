@@ -99,6 +99,12 @@ SDM.rollMode = {
   advantage: 'SDM.RollAdvantage'
 };
 
+SDM.attackTarget = {
+  physical: 'SDM.AttackPhysical',
+  mental: 'SDM.AttackMental',
+  social: 'SDM.AttackSocial'
+};
+
 SDM.rollSource = {
   ability: abilitiesLabel,
   skill: 'SDM.Actor.Character.FIELDS.skills.label',

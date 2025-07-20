@@ -44,6 +44,12 @@ export const AttackType = Object.freeze({
   OLDTECH: 'oldtech'
 });
 
+export const AttackTarget = Object.freeze({
+  PHYSICAL: 'physical',
+  MENTAL: 'mental',
+  SOCIAL: 'social'
+});
+
 export const ItemType = Object.freeze({
   GEAR: 'gear',
   TRAIT: 'trait',
