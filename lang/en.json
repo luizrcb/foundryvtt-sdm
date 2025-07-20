@@ -24,6 +24,8 @@
   "SDM.AttackKa": "mental",
   "SDM.AttackBa": "social",
   "SDM.AttackTarget": "Attack Type",
+  "SDM.ChatContextDamage": "Apply as Damage",
+  "SDM.ChatContextHealing": "Apply as Healing",
   "SDM.Magitech": "Magitech",
   "SDM.Psychemagic": "Psychemagic",
   "SDM.BiomagicalCorruption": "Biomagical Corruption",

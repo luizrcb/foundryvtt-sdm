@@ -67,6 +67,47 @@ Hooks.on('renderGamePause', (app, html) => {
   img.className = '';
 });
 
+Hooks.on('getChatMessageContextOptions', (html, options) => {
+  options.push(
+    {
+      name: '',
+      icon: '',
+      group: 'separator'
+    },
+    {
+      name: game.i18n.localize('SDM.ChatContextDamage'),
+      icon: '<i class="fas fa-user-minus"></i>',
+      callback: async li => {
+        const message = game.messages.get(li.dataset.messageId);
+        if (!message.rolls || !message.rolls.length) return;
+
+        const damageAmount = message.rolls[0].total;
+
+        await Promise.all(canvas.tokens.controlled.map(t => {
+          return t.actor?.applyDamage(damageAmount,  1);
+        }));
+      },
+      group: 'damage'
+    },
+    {
+      name: game.i18n.localize('SDM.ChatContextHealing'),
+      icon: '<i class="fas fa-user-plus"></i>',
+      callback: async li => {
+        const message = game.messages.get(li.dataset.messageId);
+        if (!message.rolls || !message.rolls.length) return;
+        const damageAmount = message.rolls[0].total;
+
+        await Promise.all(canvas.tokens.controlled.map(t => {
+          return t.actor?.applyDamage(damageAmount,  -1);
+        }));
+      },
+      group: 'damage'
+    }
+  )
+
+  return options;
+});
+
 Hooks.once('init', function () {
   // Add custom constants for configuration.
   globalThis.sdm = game.sdm = Object.assign(game.system, globalThis.sdm);

@@ -58,6 +58,15 @@ export class SdmActor extends Actor {
       });
     }
 
+
+    if (changed.system?.life?.value !== undefined) {
+      if (changed.system?.life?.value > this.system.life.max) {
+        await this.update({
+          'system.life.value': this.system.life.max,
+        });
+      }
+    }
+
     if (changed.system?.abilities) {
       const abilities = changed.system.abilities;
 
@@ -515,6 +524,18 @@ export class SdmActor extends Actor {
     const newHeroDiceValue = Math.max(current - usedHeroDice, 0);
     await this.update({
       'system.hero_dice.value': newHeroDiceValue
+    });
+  }
+
+  async applyDamage(damageValue = 0, multiplier = 1) {
+    const { value, max } = this.system.life;
+
+    if (!damageValue || !Number.isNumeric(damageValue)) return;
+
+    const amountToApply = damageValue * multiplier;
+    const newValue = Math.clamp(value - amountToApply, 0, max);
+     await this.update({
+      'system.life.value': newValue,
     });
   }
 }

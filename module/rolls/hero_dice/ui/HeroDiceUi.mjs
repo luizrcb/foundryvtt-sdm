@@ -92,6 +92,13 @@ export class HeroDiceUI {
       heroDiceType
     };
 
+    const heroResultRoll = Roll.fromTerms([
+      new NumericTerm({number: total})
+    ]);
+
+    heroResultRoll._evaluated = true;
+    heroResultRoll._total = total;
+
     return createChatMessage({
       actor,
       content: await renderTemplate(templatePath('/chat/hero-dice-result'), templateData),
@@ -99,6 +106,7 @@ export class HeroDiceUI {
         prefix: '',
         title: $l10n('SDM.FieldHeroDice')
       }),
+      rolls: [heroResultRoll],
       flags: { 'sdm.isHeroResult': true }
     });
   }
