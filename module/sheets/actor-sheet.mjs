@@ -168,7 +168,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     versatile = false,
     versatileFormula = '',
     bonusDamage = ''
-  }) {
+  }, isShift = false) {
     let rollTitlePrefix = '';
     const isDamage = type === RollType.DAMAGE;
     const isAttack = type === RollType.ATTACK;
@@ -197,6 +197,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const availableSkills = this.actor.getAvailableSkills();
     const isCharacterActor = this.actor.type === ActorType.CHARACTER;
     const language = game.i18n.lang;
+    let selectedSkill = isAttack ? actorAttack?.favorite_skill : '';
+    let shouldExplode = !isDamage && !isPower;
+    let selectedAbility = isAttack ? actorAttack?.default_ability : ability;
 
     const attackTargetChoices = {
       ha: 'SDM.AttackHa',
@@ -211,7 +214,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       ability: isAttack ? actorAttack?.default_ability : ability,
       attack,
       availableSkills,
-      selectedSkill: isAttack ? actorAttack?.favorite_skill : '',
+      selectedSkill,
       multiplierOptions: CONFIG.SDM.damageMultiplier,
       rollModes: CONFIG.SDM.rollMode,
       type,
@@ -249,32 +252,49 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       });
     }
 
-    // Create and render the modal
-    const rollOptions = await foundry.applications.api.DialogV2.wait({
-      window: {
-        title: $fmt('SDM.RollTitle', { prefix: '', title })
-      },
-      content: template,
-      position: {
-        width: 400
-      },
-      buttons
-    });
+    let rollOptions = {};
+
+    if (!isShift) {
+      // Create and render the modal
+      rollOptions = await foundry.applications.api.DialogV2.wait({
+        window: {
+          title: $fmt('SDM.RollTitle', { prefix: '', title })
+        },
+        content: template,
+        position: {
+          width: 400
+        },
+        buttons
+      });
+    }
 
     if (rollOptions === null) {
       return;
     }
 
     const {
-      selectedAbility = '',
+      selectedAbility: selectedAbilityModal,
       modifier = '',
       heroicQty = '0',
       rollMode = RollMode.NORMAL,
-      shouldExplode = false,
+      shouldExplode: shouldExplodeModal,
       multiplier = '',
-      selectedSkill,
+      selectedSkill: modalSelectedSkill,
       attackTarget = 'ha',
     } = rollOptions;
+
+    if (modalSelectedSkill !== undefined) {
+      selectedSkill = modalSelectedSkill;
+    }
+
+    if (shouldExplodeModal !== undefined) {
+      shouldExplode = shouldExplodeModal;
+    }
+
+    if (selectedAbilityModal !== undefined) {
+      selectedAbility = selectedAbilityModal;
+    }
+
     if (modifier && !foundry.dice.Roll.validate(modifier)) {
       ui.notifications.error($l10n('SDM.ErrorInvalidModifier'));
       return;
@@ -918,6 +938,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     event.stopPropagation(); // Don't trigger other events
     if (event.detail > 1) return; // Ignore repeated clicks
 
+    const isShift = !!event.shiftKey;
+
     // Get common data attributes
     const dataset = target.dataset;
     let ability = dataset.ability;
@@ -963,7 +985,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       bonusDamage
     };
 
-    this._openCustomRollModal(rollAttributes);
+    this._openCustomRollModal(rollAttributes , isShift);
   }
 
   static async _onRollNPCDamage(event, target) {
