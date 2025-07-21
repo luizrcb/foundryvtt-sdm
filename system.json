@@ -2,11 +2,11 @@
   "id": "sdm",
   "title": "Synthetic Dream Machine",
   "description": "The SDM system for FoundryVTT!",
-  "version": "0.1.15",
+  "version": "0.1.16",
   "url": "https://github.com/luizrcb/foundryvtt-sdm",
   "bugs": "https://github.com/luizrcb/foundryvtt-sdm/issues",
   "manifest": "https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/main/system.json",
-  "download": "https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.1.15/sdm-0.1.15.zip",
+  "download": "https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.1.16/sdm-0.1.16.zip",
   "compatibility": {
     "minimum": "13",
     "verified": "13.346"
@@ -92,7 +92,7 @@
     }
   ],
   "packFolders": [],
-  "socket": false,
+  "socket": true,
   "background": "systems/sdm/assets/sdm-compatible.png",
   "grid": {
     "type": 1,

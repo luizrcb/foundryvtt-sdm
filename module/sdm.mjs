@@ -15,6 +15,7 @@ import {
   registerSystemSettings
 } from './settings.mjs';
 import { SdmItemSheet } from './sheets/item-sheet.mjs';
+import { setupItemTransferSocket } from './items/transfer.mjs';
 
 const { Actors, Items } = foundry.documents.collections;
 const { DocumentSheetConfig } = foundry.applications.apps;
@@ -47,11 +48,8 @@ Hooks.on('renderChatMessageHTML', (message, html, data) => {
   configureUseHeroDiceButton(message, html, data);
 });
 
-// Add safety hook to prevent concurrent transfers
-Hooks.on('preUpdateItem', (item, data) => {
-  if (data.flags?.sdm?.transferring && item?.getFlag('sdm', 'transferring')) {
-    throw new Error(game.i18n.format('SDM.ErrorTransferAlreadyInProgress', { name: item.name }));
-  }
+Hooks.on("preUpdateActor", (actor, update) => {
+  if (!actor.testUserPermission(game.user, "OWNER")) return false;
 });
 
 Hooks.on('renderSettings', (app, html) => renderSettings(html));
@@ -172,6 +170,8 @@ Hooks.once('init', function () {
   };
 
   CONFIG.Combatant.documentClass = SdmCombatant;
+
+  setupItemTransferSocket();
 
   //Preload Handlebars templates.
   return preloadHandlebarsTemplates();

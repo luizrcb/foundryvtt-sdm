@@ -93,7 +93,7 @@
         center all of its child elements content and text. }}
         <div class="ability grid-span-1">
         </div>
-
+        {{#if @root.editable}}
         <div class="ability grid-span-1 flexrow">
           <div class='resource-label rollable' data-action='rollNPCMorale'
             data-label="{{localize 'SDM.Morale'}}">
@@ -114,6 +114,7 @@
             <div>{{localize 'SDM.RollType' type=(localize 'SDM.Damage')}} <i class="fas fa-explosion azure"></i></div>
           </div>
         </div>
+        {{/if}}
       </div>
     </div>
 </div>

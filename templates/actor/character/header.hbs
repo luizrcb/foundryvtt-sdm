@@ -11,7 +11,7 @@
     <div class="flexcol flex-between flex-center">
       <img class='profile-img' src='{{actor.img}}' data-edit='img' data-action='onEditImage' title='{{actor.name}}'
         height='100' width='100' />
-      {{#if isEditMode}}
+      {{#if (or isEditMode (not @root.editable))}}
       <div class="flexcol flex-group-center mb-12">
         {{else}}
         <div class="flexcol flex-group-center mb-12 rollable" data-context='rollable'
@@ -72,7 +72,7 @@
           and it will add a small amount of padding, a border, and will
           center all of its child elements content and text. }}
           <div class='resource'>
-            {{#if @root.isEditMode}}
+            {{#if (or isEditMode (not @root.editable))}}
             <label for='system.life.max' class='resource-label flex-start'>
               {{localize 'SDM.FieldLifeMax'}}
             </label>
@@ -227,7 +227,7 @@
           <div class='resources grid grid-3col'>
             {{#each system.abilities as |ability key|}}
             <div class="main grid-span-1">
-              {{#if @root.isEditMode}}
+              {{#if (or isEditMode (not @root.editable))}}
               <div class='ability flexrow flex-group-center'>
                 <span class='resource-label' data-label='{{localize (lookup @root.config.abilities key)}}'
                   title='{{localize (lookup @root.config.abilities key)}}'>
@@ -281,13 +281,13 @@
               {{/if}}
             </div>
             {{/each}}
-            {{#if @root.isEditMode}}
+            {{#if (or isEditMode (not @root.editable))}}
             <div class="main grid-span-1"></div>
             <div class="main grid-span-1"></div>
             <div class="main grid-span-1"></div>
             {{/if}}
           </div>
-          {{#if @root.isEditMode}}
+          {{#if (or isEditMode (not @root.editable))}}
           <div class='resources grid grid-2col'>
             <div
               class="ability grid-span-1 flexcol align-center"
@@ -295,7 +295,9 @@
               <div class='resource-label'>
                 <div>{{localize 'SDM.AttackMelee'}}</div>
               </div>
+              {{#if @root.editable}}
               <i class="fas fa-gear rollable" data-action='updateAttack' data-attack="melee"></i>
+              {{/if}}
             </div>
             <div
               class="ability grid-span-1 flexcol align-center"
@@ -303,7 +305,9 @@
               <div class='resource-label'>
                 <div>{{localize 'SDM.AttackRanged'}}</div>
               </div>
+               {{#if @root.editable}}
               <i class="fas fa-gear rollable" data-action='updateAttack' data-attack="ranged"></i>
+              {{/if}}
             </div>
             <div
               class="ability grid-span-1 flexcol align-center"
@@ -311,11 +315,13 @@
               <div class='resource-label'>
                 <div>{{localize 'SDM.AttackFantascience'}}</div>
               </div>
+               {{#if @root.editable}}
               <i
                 class="fas fa-gear rollable"
                 data-action='updateAttack'
                 data-attack="fantascience">
               </i>
+              {{/if}}
             </div>
             <div
               class="ability grid-span-1 flexcol align-center"
@@ -323,7 +329,9 @@
               <div class='resource-label'>
                 <div>{{localize 'SDM.AttackOldtech'}}</div>
               </div>
+               {{#if @root.editable}}
               <i class="fas fa-gear rollable" data-action='updateAttack' data-attack="oldtech"></i>
+              {{/if}}
             </div>
             <div class="ability grid-span-1" title="{{localize 'SDM.PowerCostHint'}}">
               <label for="system.power_cost" class='resource-label'>

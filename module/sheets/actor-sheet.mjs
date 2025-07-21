@@ -10,7 +10,7 @@ import {
   onItemUpdate
 } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
-import { openItemTransferDialog } from '../items/transferItem.mjs';
+import { openItemTransferDialog } from '../items/transfer.mjs';
 import { healingHeroDice } from '../rolls/hero_dice/index.mjs';
 import SDMRoll, { sanitizeExpression } from '../rolls/sdmRoll.mjs';
 import { SAVING_THROW_BASE_FORMULA } from '../settings.mjs';
@@ -86,7 +86,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       reactionRoll: this._onReactionRoll
     },
     // Custom property that's merged into `this.options`
-    dragDrop: [{ dragSelector: '.draggable', dropSelector: null }],
+    dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
     form: {
       submitOnChange: true
     }
@@ -684,6 +684,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     }
 
     let itemSlots = getSlotsTaken(item?.system);
+
+    if (updateData && !updateData.system) return true;
+
     let updateDataSlots = updateData ? getSlotsTaken(updateData?.system) : null;
 
     if (updateData && updateDataSlots <= itemSlots) {

@@ -29,6 +29,7 @@
     </div>
   </div>
   <div class='item-controls'>
+    {{#if @root.editable}}
     <a
       class='item-control item-edit'
       title='{{localize "DOCUMENT.Update" type=(localize 'TYPE.Trait')}}'
@@ -36,7 +37,6 @@
     >
       <i class='fas fa-edit'></i>
     </a>
-    {{#if @root.editable}}
       <a
         class='item-control item-delete'
         title='{{localize "DOCUMENT.Delete" type=(localize 'TYPE.Trait')}}'
