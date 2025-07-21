@@ -76,7 +76,7 @@ export async function createChatMessage({
     // Detect nat1 or nat20 across all provided rolls
     if (checkCritical) {
       for (const roll of rollArray) {
-        const { isNat1, isNat20 } = detectNat1OrNat20(roll);
+        const { isNat1, isNat20, is13 } = detectNat1OrNat20(roll);
 
         if (!content) content = await roll.render();
 
@@ -86,6 +86,10 @@ export async function createChatMessage({
         } else if (isNat1) {
           content = content.replace('dice-total', 'dice-total fumble');
           content += `<div class='flex-group-center mt-10'><span class='fumble'>${$l10n('SDM.CriticalFailure').toUpperCase()}</span></div>`;
+        } else if (is13) {
+          content = content.replace('<li class="roll die d20">13</li>', '<li class="roll die d20 is13">13</li>')
+          content = content.replace('dice-total', 'dice-total force');
+          content += `<div class='flex-group-center mt-10'><span>${$l10n('SDM.DepletedResources').toUpperCase()}</span></div>`;
         }
       }
     }

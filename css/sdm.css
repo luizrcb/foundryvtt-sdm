@@ -208,6 +208,21 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   font-weight: bold;
 }
 
+.failure {
+  color: #aa0200;
+  font-weight: bold;
+}
+
+.force {
+  color: #B8860B;
+  font-weight: bold;
+}
+
+.is13 {
+  color: #B8860B;
+  filter: sepia(0.5) hue-rotate(0deg);
+}
+
 .hero-dice-btn {
   margin-top: 10px;
 }

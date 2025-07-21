@@ -89,11 +89,15 @@ export default class SDMRoll {
       const targetDefense = this.targetActor?.system[property] || 0;
 
       const attackResult = rollInstance.total;
-      const { isNat1, isNat20 } = detectNat1OrNat20(rollInstance);
+      const { isNat1, isNat20, is13 } = detectNat1OrNat20(rollInstance);
       const isSuccess = !isNat1 && (isNat20 || attackResult > targetDefense);
+      const forceOrFail = attackResult === targetDefense;
 
       let resultMessage = (isSuccess ? $l10n('SDM.Success') : $l10n('SDM.Failure')).toUpperCase();
-      const textClass = isSuccess ? 'critical' : 'fumble';
+      const textClass = isSuccess ? 'critical' : forceOrFail ? 'force' : isNat1 ? 'fumble' : 'failure';
+
+      content = content.replace('<li class="roll die d20">13</li>',
+        '<li class="roll die d20 is13">13</li>');
 
       if (isNat1) {
         resultMessage = $l10n('SDM.CriticalFailure').toUpperCase();
@@ -105,6 +109,11 @@ export default class SDMRoll {
         content = content.replace('dice-total', 'dice-total critical');
       }
 
+      if (forceOrFail) {
+        resultMessage = $l10n('SDM.ForceOrFail').toUpperCase();
+        content = content.replace('dice-total', 'dice-total force');
+      }
+
       content +=
         `
       <br>
@@ -112,8 +121,10 @@ export default class SDMRoll {
         <span><b>${
         $l10n('SDM.Target')}:</b> ${this.targetActor.name}</span> <b>${
         $l10n('SDM.FieldDefense')}:</b> ${icon} ${targetDefense}</span><br>
-        <b>${
-        $l10n('SDM.Result')}:</b><span class="${textClass}"}> ${resultMessage}</span>
+        <span class="${textClass}"}> ${resultMessage}</span>
+        ${is13 ? `
+        <div><span><b>${$l10n('SDM.DepletedResources')}</b></span></div>
+        `: ''}
       <div>`;
     }
 
@@ -256,7 +267,7 @@ export function collectAllDice(term) {
  * @returns {{ isNat1: boolean, isNat20: boolean }}
  */
 export function detectNat1OrNat20(roll) {
-  const results = [];
+  let results = [];
 
   for (const term of roll.terms) {
     if (term instanceof foundry.dice.terms.PoolTerm) {
@@ -287,11 +298,17 @@ export function detectNat1OrNat20(roll) {
     }
   }
 
-  // Determina se houve nat1 ou nat20
-  for (const r of results) {
-    if (r === 1) return { isNat1: true, isNat20: false };
-    if (r === 20) return { isNat1: false, isNat20: true };
+  results = results.sort((a, b) => b - a );
+
+  if (results[0] === 13) {
+    return { isNat1: false, is13: true, isNat20: false };
   }
 
-  return { isNat1: false, isNat20: false };
+  // Determina se houve nat1 ou nat20
+  for (const r of results.sort((a, b) => b - a )) {
+    if (r === 1) return { isNat1: true, is13: false, isNat20: false };
+    if (r === 20) return { isNat1: false, is13: false, isNat20: true };
+  }
+
+  return { isNat1: false, is13: false, isNat20: false };
 }

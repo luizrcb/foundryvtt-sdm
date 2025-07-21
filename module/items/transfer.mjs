@@ -121,7 +121,7 @@ async function performItemTransfer(
 
   if (!sourceActor) throw new Error($l10n('SDM.ErrorSourceActorNotFound'));
 
-  const targetActor = game.actors.get(targetActorId);
+  const targetActor = await fromUuid(targetActorId);
   if (!targetActor) throw new Error($l10n('SDM.ErrorTargetActorNotFound'));
 
   const freshItem = sourceActor.items.get(itemId);
@@ -271,10 +271,25 @@ export async function openItemTransferDialog(item, sourceActor) {
     }
 
     let validActors = [];
+    let playerActors;
+
+    const npcCandidates = getEligibleNPCsForTransfer(item.id).map(entry => {
+      const name =
+        entry.fromScene && entry.token?.name
+          ? '(token) '+ entry.token.name // use custom token name if from scene
+          : entry.actor.name;
+
+      return {
+        id: entry.token?.actor?.uuid ?? entry.actor.uuid,
+        name,
+        isNPC: true,
+        fromScene: entry.fromScene
+      };
+    });
 
     if (game.user.isGM) {
       // GM obtém a lista localmente, sem socket
-      validActors = game.actors
+      playerActors = game.actors
         .filter(a => a.type !== ActorType.NPC && a.id !== sourceActor.id && !a.items.has(item.id))
         .map(a => a);
     } else {
@@ -283,7 +298,7 @@ export async function openItemTransferDialog(item, sourceActor) {
         return;
       }
       // Jogador pede a lista via socket para o GM
-      validActors = await new Promise(resolve => {
+      playerActors = await new Promise(resolve => {
         const requestId = foundry.utils.randomID();
         const handler = ({ action, requestId: resId, targets, userId }) => {
           if (
@@ -303,6 +318,9 @@ export async function openItemTransferDialog(item, sourceActor) {
         });
       });
     }
+
+    validActors = [...playerActors, ...npcCandidates];
+
     const template = await renderTemplate(templatePath('transfer-dialog'), {
       actors: validActors,
       item: item
@@ -338,7 +356,7 @@ export async function openItemTransferDialog(item, sourceActor) {
     const targetActorId = transferOptions.targetActor;
     if (!targetActorId) return;
 
-    const targetActor = game.actors.get(targetActorId);
+    const targetActor = await fromUuid(targetActorId);
     const slotsTaken = getSlotsTaken(item.system);
     const validWeight = targetActor.sheet._checkActorWeightLimit(slotsTaken, item.type);
 
@@ -397,4 +415,59 @@ export async function openItemTransferDialog(item, sourceActor) {
       ]);
     }
   }
+}
+
+function getEligibleNPCsForTransfer(itemId) {
+  const isGM = game.user.isGM;
+  const results = [];
+
+  // Step 1: Process all placed NPC tokens
+  for (const token of canvas.tokens.placeables) {
+    const actor = token.actor;
+    if (!actor || actor.type !== ActorType.NPC) continue;
+    if (actor.items.has(itemId)) continue;
+
+    const disposition = token.document.disposition;
+    const hasPermission = actor.testUserPermission(game.user, 'OWNER');
+
+    if (isGM || hasPermission || disposition >= CONST.TOKEN_DISPOSITIONS.FRIENDLY) {
+      results.push({
+        actor,
+        fromScene: true,
+        disposition,
+        token,
+        isDirectoryActor: false
+      });
+    }
+  }
+
+  // Step 2: Check all directory NPC actors
+  for (const actor of game.actors.filter(a => a.type === ActorType.NPC)) {
+    if (actor.items.has(itemId)) continue;
+
+    const isAlreadyInScene = canvas.tokens.placeables.some(
+      t => t.actor?.id === actor.id && t.document.actorLink
+    );
+
+    const prototypeDisposition =
+      actor.prototypeToken?.disposition ?? CONST.TOKEN_DISPOSITIONS.NEUTRAL;
+    const hasPermission = actor.testUserPermission(game.user, 'OWNER');
+
+    const includeDirectoryActor =
+      isGM ||
+      (!isAlreadyInScene && hasPermission) ||
+      prototypeDisposition >= CONST.TOKEN_DISPOSITIONS.FRIENDLY;
+
+    if (includeDirectoryActor) {
+      results.push({
+        actor,
+        fromScene: false,
+        disposition: prototypeDisposition,
+        token: null,
+        isDirectoryActor: true
+      });
+    }
+  }
+
+  return results;
 }

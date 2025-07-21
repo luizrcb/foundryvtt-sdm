@@ -11,12 +11,12 @@
     <div class="flexcol flex-between flex-center">
       <img class='profile-img' src='{{actor.img}}' data-edit='img' data-action='onEditImage' title='{{actor.name}}'
         height='100' width='100' />
-      {{#if (or isEditMode (not @root.editable))}}
-      <div class="flexcol flex-group-center mb-12">
+        {{#if (or isEditMode (not @root.editable))}}
+        <div class="flexcol flex-group-center mb-12">
         {{else}}
         <div class="flexcol flex-group-center mb-12 rollable" data-context='rollable'
           data-action='heroicHealing'>
-          {{/if}}
+        {{/if}}
           <label class='resource-label'>{{localize 'SDM.FieldHeroDice'}}</label>
           <div class='resource-content flexrow height-32'>
             {{system.hero_dice.value}} / {{system.hero_dice.max}}
@@ -227,7 +227,7 @@
           <div class='resources grid grid-3col'>
             {{#each system.abilities as |ability key|}}
             <div class="main grid-span-1">
-              {{#if (or isEditMode (not @root.editable))}}
+              {{#if (or @root.isEditMode (not @root.editable))}}
               <div class='ability flexrow flex-group-center'>
                 <span class='resource-label' data-label='{{localize (lookup @root.config.abilities key)}}'
                   title='{{localize (lookup @root.config.abilities key)}}'>
@@ -281,13 +281,13 @@
               {{/if}}
             </div>
             {{/each}}
-            {{#if (or isEditMode (not @root.editable))}}
+            {{#if (or @root.isEditMode (not @root.editable))}}
             <div class="main grid-span-1"></div>
             <div class="main grid-span-1"></div>
             <div class="main grid-span-1"></div>
             {{/if}}
           </div>
-          {{#if (or isEditMode (not @root.editable))}}
+          {{#if (or @root.isEditMode (not @root.editable))}}
           <div class='resources grid grid-2col'>
             <div
               class="ability grid-span-1 flexcol align-center"
