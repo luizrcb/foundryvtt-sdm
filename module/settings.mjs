@@ -298,6 +298,8 @@ export function createEscalatorDieDisplay() {
 export function configureUseHeroDiceButton(message, html, data) {
   if (!message) return;
 
+
+
   //const isInitiativeRoll = message?.getFlag("core", 'initiativeRoll');
   const isHeroResult = !!message?.getFlag('sdm', 'isHeroResult');
   const isRollTableMessage = !!message?.getFlag('core', 'RollTable');
@@ -334,6 +336,10 @@ export function configureUseHeroDiceButton(message, html, data) {
   const hero_dice = actor?.system?.hero_dice?.value;
   if (!isGM && (!hero_dice || hero_dice < 1)) return;
 
+   if (message.content.includes('fumble')) {
+    return;
+   }
+
   // Create button element
   const btn = document.createElement('button');
   btn.classList.add('hero-dice-btn');
@@ -352,7 +358,7 @@ export function configureUseHeroDiceButton(message, html, data) {
 
   // Create container div
   const container = document.createElement('div');
-  container.appendChild(document.createElement('br'));
+  container.classList.add('flex', 'flex-group-center');
   container.appendChild(btn);
 
   // Find message content and append

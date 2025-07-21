@@ -208,6 +208,10 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   font-weight: bold;
 }
 
+.hero-dice-btn {
+  margin-top: 10px;
+}
+
 .grid,
 .grid-2col {
   display: grid;
@@ -403,6 +407,10 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
 
 .flex-around {
   justify-content: space-around;
+}
+
+.flex {
+  display: flex;
 }
 
 /* Estilos específicos para sheets .sdm */

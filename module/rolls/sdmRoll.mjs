@@ -90,7 +90,7 @@ export default class SDMRoll {
 
       const attackResult = rollInstance.total;
       const { isNat1, isNat20 } = detectNat1OrNat20(rollInstance);
-      const isSuccess = !isNat1 && (isNat20 || attackResult >= targetDefense);
+      const isSuccess = !isNat1 && (isNat20 || attackResult > targetDefense);
 
       let resultMessage = (isSuccess ? $l10n('SDM.Success') : $l10n('SDM.Failure')).toUpperCase();
       const textClass = isSuccess ? 'critical' : 'fumble';
@@ -105,13 +105,15 @@ export default class SDMRoll {
         content = content.replace('dice-total', 'dice-total critical');
       }
 
-      content =
-        content +
+      content +=
         `
       <br>
       <div>
-        <span><b>${$l10n('SDM.Target')}:</b> ${this.targetActor.name}</span> <b>${$l10n('SDM.FieldDefense')}:</b> ${icon} ${targetDefense}</span><br>
-        <b>${$l10n('SDM.Result')}:</b><span class="${textClass}"}> ${resultMessage}</span>
+        <span><b>${
+        $l10n('SDM.Target')}:</b> ${this.targetActor.name}</span> <b>${
+        $l10n('SDM.FieldDefense')}:</b> ${icon} ${targetDefense}</span><br>
+        <b>${
+        $l10n('SDM.Result')}:</b><span class="${textClass}"}> ${resultMessage}</span>
       <div>`;
     }
 
@@ -175,7 +177,7 @@ export default class SDMRoll {
     const versatileLabel = $l10n('SDM.FeatureVersatile');
 
     const parts = [`[${$l10n(`SDM.${capitalizeFirstLetter(this.type)}`)}]`, this.from];
-    if (this.type === RollType.ATTACK) {
+    if (this.type === RollType.ATTACK && this.attackTarget !== AttackTarget.PHYSICAL) {
       parts.push(`(${$l10n('SDM.Attack' + capitalizeFirstLetter(this.attackTarget))})`);
     }
     if (this.type !== RollType.ABILITY && this.ability)

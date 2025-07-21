@@ -82,10 +82,10 @@ export async function createChatMessage({
 
         if (isNat20) {
           content = content.replace('dice-total', 'dice-total critical');
-          content += `<div class='flex-group-center'><span class='critical'>${$l10n('SDM.CriticalSuccess').toUpperCase()}</span></div>`;
+          content += `<div class='flex-group-center mt-10'><span class='critical'>${$l10n('SDM.CriticalSuccess').toUpperCase()}</span></div>`;
         } else if (isNat1) {
           content = content.replace('dice-total', 'dice-total fumble');
-          content += `<div class='flex-group-center'><span class='fumble'>${$l10n('SDM.CriticalFailure').toUpperCase()}</span></div>`;
+          content += `<div class='flex-group-center mt-10'><span class='fumble'>${$l10n('SDM.CriticalFailure').toUpperCase()}</span></div>`;
         }
       }
     }

@@ -1254,7 +1254,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     let borderColor = '#aa0200';
 
     if (outcome === saveOutcome) {
-      borderColor = '#028f02';
+      borderColor = '#18520B';
     } else if (outcome === sacrificeOutcome) {
       borderColor = '#d4af37';
     }
