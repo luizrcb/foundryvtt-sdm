@@ -12,7 +12,7 @@
           {{localize 'SDM.ItemNotReadied'}}
           {{/if}}
         </div>
-        <i class="fa-regular fa-shield resource-content" style="{{getReadiedStyle system.readied}}"></i>
+        <i class="fa-regular fa-shield resource-content {{ifThen system.readied 'readied' 'not-readied'}}"></i>
       </div>
     </div>
 

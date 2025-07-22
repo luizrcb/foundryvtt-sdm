@@ -1,7 +1,7 @@
 {{! Sheet Character Header }}
 <div>
   <header class='sheet-header'>
-    <div class="edit-mode flex-row">
+    <div class="edit-mode">
       <label class="switch edit-mode-toggle sdm" for="toggleMode-{{actor._id}}"
         title="{{localize (ifThen isEditMode 'SDM.SheetEditMode' 'SDM.SheetPlayMode')}}">
         <input id="toggleMode-{{actor._id}}" type="checkbox" data-action="toggleMode" {{checked @root.isEditMode}}/>

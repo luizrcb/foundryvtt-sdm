@@ -89,14 +89,6 @@ export function registerHandlebarsHelpers() {
     return index === 0 && context.firstDiceExploded;
   });
 
-  $$('getReadiedStyle', function (readied, options) {
-    const booleanReadied = !!readied;
-    const style = `font-weight: ${booleanReadied == true ? 900 : ''}; color: ${
-      booleanReadied == true ? 'black' : 'grey'
-    };`;
-    return style;
-  });
-
   $$('slotsTaken', function (container, options) {
     if (!container.length) return container.length;
 

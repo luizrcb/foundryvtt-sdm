@@ -7,16 +7,58 @@
   --sdm-c-white: #ffffff;
   --sdm-c-black: #000000;
   --sdm-c-groove: #eeede0;
+  --sdm-c-border: rgb(51, 51, 51);
+  --sdm-c-font: rgb(102, 102, 102);
+  --sdm-c-violet: rgb(134, 3, 173);
+  --sdm-c-ultraviolet: rgb(193, 4, 250);
+  --sdm-c-rust: #cc2f00;
+  --sdm-c-pumpkin: #db6600;
+  --sdm-c-amber: #e39e00;
+  --sdm-c-lime: #76b80d;
+  --sdm-c-pine: #007668;
+  --sdm-c-sky: #006486;
+  --sdm-c-azure: #007cb5;
+  --sdm-c-royal: #465ab2;
+  --sdm-c-heart: #6d47b1;
+  --sdm-c-plum: #873b9c;
+  --sdm-c-readied: #000000;
+  --sdm-c-not-readied: grey;
 }
 
 .theme-dark {
   --sdm-c-dark: #c9c7b8;
-  --sdm-c-faint: #191813;
+  --sdm-c-faint: rgb(159, 132, 117);
   --sdm-c-beige: #444444;
   --sdm-c-tan: #b5b3a4;
   --sdm-c-white: #000000;
   --sdm-c-black: #ffffff;
-  --sdm-c-groove: #11121f;
+  --sdm-c-groove: rgb(159, 132, 117);
+  --sdm-c-border: rgb(204, 204, 204);
+  --sdm-c-font: rgb(230, 230, 230);
+  --sdm-c-violet: rgb(200, 100, 255);
+  --sdm-c-ultraviolet: rgb(255, 150, 255);
+  --sdm-c-rust: #ff5a2f;
+  --sdm-c-pumpkin: #ff944d;
+  --sdm-c-amber: #ffcc66;
+  --sdm-c-lime: #a5e042;
+  --sdm-c-pine: #26bba6;
+  --sdm-c-sky: #26a2c6;
+  --sdm-c-azure: #33bfff;
+  --sdm-c-royal: #7489ff;
+  --sdm-c-heart: #a081ff;
+  --sdm-c-plum: #c771d2;
+  --sdm-c-readied: #ffffff;
+  --sdm-c-not-readied: #b5b3a4;
+}
+
+:root {
+  --sdm-top-edit: 39px;
+  --sdm-left-edit: 10px;
+}
+
+.theme-dark {
+  --sdm-top-edit: 3px;
+  --sdm-left-edit: 10px;
 }
 
 :root {
@@ -27,16 +69,58 @@
   --sdm-c-white: #ffffff;
   --sdm-c-black: #000000;
   --sdm-c-groove: #eeede0;
+  --sdm-c-border: rgb(51, 51, 51);
+  --sdm-c-font: rgb(102, 102, 102);
+  --sdm-c-violet: rgb(134, 3, 173);
+  --sdm-c-ultraviolet: rgb(193, 4, 250);
+  --sdm-c-rust: #cc2f00;
+  --sdm-c-pumpkin: #db6600;
+  --sdm-c-amber: #e39e00;
+  --sdm-c-lime: #76b80d;
+  --sdm-c-pine: #007668;
+  --sdm-c-sky: #006486;
+  --sdm-c-azure: #007cb5;
+  --sdm-c-royal: #465ab2;
+  --sdm-c-heart: #6d47b1;
+  --sdm-c-plum: #873b9c;
+  --sdm-c-readied: #000000;
+  --sdm-c-not-readied: grey;
 }
 
 .theme-dark {
   --sdm-c-dark: #c9c7b8;
-  --sdm-c-faint: #191813;
+  --sdm-c-faint: rgb(159, 132, 117);
   --sdm-c-beige: #444444;
   --sdm-c-tan: #b5b3a4;
   --sdm-c-white: #000000;
   --sdm-c-black: #ffffff;
-  --sdm-c-groove: #11121f;
+  --sdm-c-groove: rgb(159, 132, 117);
+  --sdm-c-border: rgb(204, 204, 204);
+  --sdm-c-font: rgb(230, 230, 230);
+  --sdm-c-violet: rgb(200, 100, 255);
+  --sdm-c-ultraviolet: rgb(255, 150, 255);
+  --sdm-c-rust: #ff5a2f;
+  --sdm-c-pumpkin: #ff944d;
+  --sdm-c-amber: #ffcc66;
+  --sdm-c-lime: #a5e042;
+  --sdm-c-pine: #26bba6;
+  --sdm-c-sky: #26a2c6;
+  --sdm-c-azure: #33bfff;
+  --sdm-c-royal: #7489ff;
+  --sdm-c-heart: #a081ff;
+  --sdm-c-plum: #c771d2;
+  --sdm-c-readied: #ffffff;
+  --sdm-c-not-readied: #b5b3a4;
+}
+
+:root {
+  --sdm-top-edit: 39px;
+  --sdm-left-edit: 10px;
+}
+
+.theme-dark {
+  --sdm-top-edit: 3px;
+  --sdm-left-edit: 10px;
 }
 
 .window-app {
@@ -44,7 +128,7 @@
 }
 
 .rollable:hover, .rollable:focus {
-  color: #000000;
+  color: var(--sdm-c-black);
   text-shadow: 0 0 10px red;
   cursor: pointer;
 }
@@ -118,48 +202,48 @@
 }
 
 .rust {
-  color: #cc2f00;
+  color: var(--sdm-c-rust);
 }
 
 .pumpkin {
-  color: #db6600;
+  color: var(--sdm-c-pumpkin);
 }
 
 .amber {
-  color: #e39e00;
+  color: var(--sdm-c-amber);
 }
 
 .lime {
-  color: #76b80d;
+  color: var(--sdm-c-lime);
 }
 
 .pine {
-  color: #007668;
+  color: var(--sdm-c-pine);
 }
 
 .sky {
-  color: #006486;
+  color: var(--sdm-c-sky);
 }
 
 .azure {
-  color: #007cb5;
+  color: var(--sdm-c-azure);
 }
 
 .royal {
-  color: #465ab2;
+  color: var(--sdm-c-royal);
 }
 
 .heart {
-  color: #6d47b1;
+  color: var(--sdm-c-heart);
 }
 
 .plum {
-  color: #873b9c;
+  color: var(--sdm-c-plum);
 }
 
 .icon-border {
   letter-spacing: 1px;
-  text-shadow: -0.7px -0.7px 0 rgb(51, 51, 51), 0 -0.7px 0 rgb(51, 51, 51), 0.7px -0.7px 0 rgb(51, 51, 51), 0.7px 0 0 rgb(51, 51, 51), 0.7px 0.7px 0 rgb(51, 51, 51), 0 0.7px 0 rgb(51, 51, 51), -0.7px 0.7px 0 rgb(51, 51, 51), -0.7px 0 0 rgb(51, 51, 51);
+  text-shadow: -0.7px -0.7px 0 var(--sdm-c-border), 0 -0.7px 0 var(--sdm-c-border), 0.7px -0.7px 0 var(--sdm-c-border), 0.7px 0 0 var(--sdm-c-border), 0.7px 0.7px 0 var(--sdm-c-border), 0 0.7px 0 var(--sdm-c-border), -0.7px 0.7px 0 var(--sdm-c-border), -0.7px 0 0 var(--sdm-c-border);
 }
 
 .system-badge {
@@ -187,7 +271,7 @@
 }
 
 hr {
-  background-image: linear-gradient(90deg, transparent 0%, rgb(102, 102, 102) 60%, transparent 100%);
+  background-image: linear-gradient(90deg, transparent 0%, var(--sdm-c-font) 60%, transparent 100%);
 }
 
 input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::after, input[type=radio]::after {
@@ -225,6 +309,15 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
 
 .hero-dice-btn {
   margin-top: 10px;
+}
+
+.readied {
+  font-weight: 900;
+  color: var(--sdm-c-readied);
+}
+
+.not-readied {
+  color: var(--sdm-c-not-readied);
 }
 
 .grid,
@@ -446,15 +539,47 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   --sdm-c-white: #ffffff;
   --sdm-c-black: #000000;
   --sdm-c-groove: #eeede0;
+  --sdm-c-border: rgb(51, 51, 51);
+  --sdm-c-font: rgb(102, 102, 102);
+  --sdm-c-violet: rgb(134, 3, 173);
+  --sdm-c-ultraviolet: rgb(193, 4, 250);
+  --sdm-c-rust: #cc2f00;
+  --sdm-c-pumpkin: #db6600;
+  --sdm-c-amber: #e39e00;
+  --sdm-c-lime: #76b80d;
+  --sdm-c-pine: #007668;
+  --sdm-c-sky: #006486;
+  --sdm-c-azure: #007cb5;
+  --sdm-c-royal: #465ab2;
+  --sdm-c-heart: #6d47b1;
+  --sdm-c-plum: #873b9c;
+  --sdm-c-readied: #000000;
+  --sdm-c-not-readied: grey;
 }
 .sdm .theme-dark {
   --sdm-c-dark: #c9c7b8;
-  --sdm-c-faint: #191813;
+  --sdm-c-faint: rgb(159, 132, 117);
   --sdm-c-beige: #444444;
   --sdm-c-tan: #b5b3a4;
   --sdm-c-white: #000000;
   --sdm-c-black: #ffffff;
-  --sdm-c-groove: #11121f;
+  --sdm-c-groove: rgb(159, 132, 117);
+  --sdm-c-border: rgb(204, 204, 204);
+  --sdm-c-font: rgb(230, 230, 230);
+  --sdm-c-violet: rgb(200, 100, 255);
+  --sdm-c-ultraviolet: rgb(255, 150, 255);
+  --sdm-c-rust: #ff5a2f;
+  --sdm-c-pumpkin: #ff944d;
+  --sdm-c-amber: #ffcc66;
+  --sdm-c-lime: #a5e042;
+  --sdm-c-pine: #26bba6;
+  --sdm-c-sky: #26a2c6;
+  --sdm-c-azure: #33bfff;
+  --sdm-c-royal: #7489ff;
+  --sdm-c-heart: #a081ff;
+  --sdm-c-plum: #c771d2;
+  --sdm-c-readied: #ffffff;
+  --sdm-c-not-readied: #b5b3a4;
 }
 .sdm .item-form {
   font-family: "Baron Neue";
@@ -500,7 +625,7 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   height: 100%;
 }
 .sdm .tox .tox-editor-container {
-  background: #ffffff;
+  background: var(--sdm-c-white);
 }
 .sdm .tox .tox-edit-area {
   padding: 0 8px;
@@ -537,15 +662,55 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   --sdm-c-white: #ffffff;
   --sdm-c-black: #000000;
   --sdm-c-groove: #eeede0;
+  --sdm-c-border: rgb(51, 51, 51);
+  --sdm-c-font: rgb(102, 102, 102);
+  --sdm-c-violet: rgb(134, 3, 173);
+  --sdm-c-ultraviolet: rgb(193, 4, 250);
+  --sdm-c-rust: #cc2f00;
+  --sdm-c-pumpkin: #db6600;
+  --sdm-c-amber: #e39e00;
+  --sdm-c-lime: #76b80d;
+  --sdm-c-pine: #007668;
+  --sdm-c-sky: #006486;
+  --sdm-c-azure: #007cb5;
+  --sdm-c-royal: #465ab2;
+  --sdm-c-heart: #6d47b1;
+  --sdm-c-plum: #873b9c;
+  --sdm-c-readied: #000000;
+  --sdm-c-not-readied: grey;
 }
 .sdm .theme-dark {
   --sdm-c-dark: #c9c7b8;
-  --sdm-c-faint: #191813;
+  --sdm-c-faint: rgb(159, 132, 117);
   --sdm-c-beige: #444444;
   --sdm-c-tan: #b5b3a4;
   --sdm-c-white: #000000;
   --sdm-c-black: #ffffff;
-  --sdm-c-groove: #11121f;
+  --sdm-c-groove: rgb(159, 132, 117);
+  --sdm-c-border: rgb(204, 204, 204);
+  --sdm-c-font: rgb(230, 230, 230);
+  --sdm-c-violet: rgb(200, 100, 255);
+  --sdm-c-ultraviolet: rgb(255, 150, 255);
+  --sdm-c-rust: #ff5a2f;
+  --sdm-c-pumpkin: #ff944d;
+  --sdm-c-amber: #ffcc66;
+  --sdm-c-lime: #a5e042;
+  --sdm-c-pine: #26bba6;
+  --sdm-c-sky: #26a2c6;
+  --sdm-c-azure: #33bfff;
+  --sdm-c-royal: #7489ff;
+  --sdm-c-heart: #a081ff;
+  --sdm-c-plum: #c771d2;
+  --sdm-c-readied: #ffffff;
+  --sdm-c-not-readied: #b5b3a4;
+}
+.sdm :root {
+  --sdm-top-edit: 39px;
+  --sdm-left-edit: 10px;
+}
+.sdm .theme-dark {
+  --sdm-top-edit: 3px;
+  --sdm-left-edit: 10px;
 }
 .sdm .items-header {
   height: 28px;
@@ -553,7 +718,7 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   padding: 0;
   align-items: center;
   background: rgba(0, 0, 0, 0.05);
-  border: 2px groove #eeede0;
+  border: 2px groove var(--sdm-c-groove);
   font-weight: bold;
 }
 .sdm .items-header > * {
@@ -575,7 +740,7 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   max-height: 420px;
   overflow-y: auto;
   scrollbar-width: thin;
-  color: #444444;
+  color: var(--sdm-c-tan);
 }
 .sdm .items-list .item-list {
   list-style: none;
@@ -611,13 +776,13 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
 .sdm .items-list .item {
   align-items: center;
   padding: 0 2px;
-  border-bottom: 1px solid #c9c7b8;
+  border-bottom: 1px solid var(--sdm-c-faint);
 }
 .sdm .items-list .item:last-child {
   border-bottom: none;
 }
 .sdm .items-list .item .item-name {
-  color: #191813;
+  color: var(--sdm-c-dark);
 }
 .sdm .items-list .item .item-name .item-image {
   flex: 0 0 30px;
@@ -638,7 +803,7 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   padding: 0;
   align-items: center;
   background: rgba(0, 0, 0, 0.05);
-  border: 2px groove #eeede0;
+  border: 2px groove var(--sdm-c-groove);
   font-weight: bold;
 }
 .sdm .items-list .items-header > * {
@@ -695,11 +860,11 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   z-index: 2;
 }
 .sdm input:checked + .slider {
-  background-color: #191813;
+  background-color: var(--sdm-c-dark);
 }
 .sdm input:checked + .slider .fa-cog {
   transform: translateX(20px);
-  color: #191813;
+  color: var(--sdm-c-dark);
 }
 .sdm .slider.round {
   border-radius: 34px;
@@ -726,15 +891,55 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   --sdm-c-white: #ffffff;
   --sdm-c-black: #000000;
   --sdm-c-groove: #eeede0;
+  --sdm-c-border: rgb(51, 51, 51);
+  --sdm-c-font: rgb(102, 102, 102);
+  --sdm-c-violet: rgb(134, 3, 173);
+  --sdm-c-ultraviolet: rgb(193, 4, 250);
+  --sdm-c-rust: #cc2f00;
+  --sdm-c-pumpkin: #db6600;
+  --sdm-c-amber: #e39e00;
+  --sdm-c-lime: #76b80d;
+  --sdm-c-pine: #007668;
+  --sdm-c-sky: #006486;
+  --sdm-c-azure: #007cb5;
+  --sdm-c-royal: #465ab2;
+  --sdm-c-heart: #6d47b1;
+  --sdm-c-plum: #873b9c;
+  --sdm-c-readied: #000000;
+  --sdm-c-not-readied: grey;
 }
 .sdm .theme-dark {
   --sdm-c-dark: #c9c7b8;
-  --sdm-c-faint: #191813;
+  --sdm-c-faint: rgb(159, 132, 117);
   --sdm-c-beige: #444444;
   --sdm-c-tan: #b5b3a4;
   --sdm-c-white: #000000;
   --sdm-c-black: #ffffff;
-  --sdm-c-groove: #11121f;
+  --sdm-c-groove: rgb(159, 132, 117);
+  --sdm-c-border: rgb(204, 204, 204);
+  --sdm-c-font: rgb(230, 230, 230);
+  --sdm-c-violet: rgb(200, 100, 255);
+  --sdm-c-ultraviolet: rgb(255, 150, 255);
+  --sdm-c-rust: #ff5a2f;
+  --sdm-c-pumpkin: #ff944d;
+  --sdm-c-amber: #ffcc66;
+  --sdm-c-lime: #a5e042;
+  --sdm-c-pine: #26bba6;
+  --sdm-c-sky: #26a2c6;
+  --sdm-c-azure: #33bfff;
+  --sdm-c-royal: #7489ff;
+  --sdm-c-heart: #a081ff;
+  --sdm-c-plum: #c771d2;
+  --sdm-c-readied: #ffffff;
+  --sdm-c-not-readied: #b5b3a4;
+}
+.sdm :root {
+  --sdm-top-edit: 39px;
+  --sdm-left-edit: 10px;
+}
+.sdm .theme-dark {
+  --sdm-top-edit: 3px;
+  --sdm-left-edit: 10px;
 }
 .sdm .effects-header {
   height: 28px;
@@ -742,7 +947,7 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   padding: 0;
   align-items: center;
   background: rgba(0, 0, 0, 0.05);
-  border: 2px groove #eeede0;
+  border: 2px groove var(--sdm-c-groove);
   font-weight: bold;
 }
 .sdm .effects-header > * {
@@ -761,7 +966,7 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   padding: 0;
   overflow-y: auto;
   scrollbar-width: thin;
-  color: #444444;
+  color: var(--sdm-c-tan);
 }
 .sdm .effects-list .effect-list {
   list-style: none;
@@ -795,13 +1000,13 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
 .sdm .effects-list .effect {
   align-items: center;
   padding: 0 2px;
-  border-bottom: 1px solid #c9c7b8;
+  border-bottom: 1px solid var(--sdm-c-faint);
 }
 .sdm .effects-list .effect:last-child {
   border-bottom: none;
 }
 .sdm .effects-list .effect .effect-name {
-  color: #191813;
+  color: var(--sdm-c-dark);
 }
 .sdm .effects-list .effect .effect-name .effect-image {
   flex: 0 0 30px;
@@ -822,7 +1027,7 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   padding: 0;
   align-items: center;
   background: rgba(0, 0, 0, 0.05);
-  border: 2px groove #eeede0;
+  border: 2px groove var(--sdm-c-groove);
   font-weight: bold;
 }
 .sdm .effects-list .effects-header > * {
@@ -856,15 +1061,55 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   --sdm-c-white: #ffffff;
   --sdm-c-black: #000000;
   --sdm-c-groove: #eeede0;
+  --sdm-c-border: rgb(51, 51, 51);
+  --sdm-c-font: rgb(102, 102, 102);
+  --sdm-c-violet: rgb(134, 3, 173);
+  --sdm-c-ultraviolet: rgb(193, 4, 250);
+  --sdm-c-rust: #cc2f00;
+  --sdm-c-pumpkin: #db6600;
+  --sdm-c-amber: #e39e00;
+  --sdm-c-lime: #76b80d;
+  --sdm-c-pine: #007668;
+  --sdm-c-sky: #006486;
+  --sdm-c-azure: #007cb5;
+  --sdm-c-royal: #465ab2;
+  --sdm-c-heart: #6d47b1;
+  --sdm-c-plum: #873b9c;
+  --sdm-c-readied: #000000;
+  --sdm-c-not-readied: grey;
 }
 .sdm .theme-dark {
   --sdm-c-dark: #c9c7b8;
-  --sdm-c-faint: #191813;
+  --sdm-c-faint: rgb(159, 132, 117);
   --sdm-c-beige: #444444;
   --sdm-c-tan: #b5b3a4;
   --sdm-c-white: #000000;
   --sdm-c-black: #ffffff;
-  --sdm-c-groove: #11121f;
+  --sdm-c-groove: rgb(159, 132, 117);
+  --sdm-c-border: rgb(204, 204, 204);
+  --sdm-c-font: rgb(230, 230, 230);
+  --sdm-c-violet: rgb(200, 100, 255);
+  --sdm-c-ultraviolet: rgb(255, 150, 255);
+  --sdm-c-rust: #ff5a2f;
+  --sdm-c-pumpkin: #ff944d;
+  --sdm-c-amber: #ffcc66;
+  --sdm-c-lime: #a5e042;
+  --sdm-c-pine: #26bba6;
+  --sdm-c-sky: #26a2c6;
+  --sdm-c-azure: #33bfff;
+  --sdm-c-royal: #7489ff;
+  --sdm-c-heart: #a081ff;
+  --sdm-c-plum: #c771d2;
+  --sdm-c-readied: #ffffff;
+  --sdm-c-not-readied: #b5b3a4;
+}
+.sdm :root {
+  --sdm-top-edit: 39px;
+  --sdm-left-edit: 10px;
+}
+.sdm .theme-dark {
+  --sdm-top-edit: 3px;
+  --sdm-left-edit: 10px;
 }
 .sdm .sheet-hero-dice {
   margin-left: 5px;
@@ -896,6 +1141,6 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
 }
 .sdm .edit-mode {
   position: absolute;
-  top: 39px;
-  left: 10px;
+  top: var(--sdm-top-edit);
+  left: var(--sdm-left-edit);
 }

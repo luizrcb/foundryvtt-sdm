@@ -38,6 +38,6 @@
 
 .edit-mode {
   position: absolute;
-  top: 39px;
-  left: 10px;
+  top: vars.$top-edit;
+  left: vars.$left-edit;
 }

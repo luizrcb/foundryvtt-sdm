@@ -1,6 +1,6 @@
 @use '../utils/typography' as typo;
 @use '../utils/colors' as colors;
-
+@use '../utils/variables' as vars;
 .window-app {
   font-family: typo.$font-primary;
 }
@@ -195,4 +195,13 @@ input[type="checkbox"]::before, input[type="radio"]::before, input[type="checkbo
 
 .hero-dice-btn {
   margin-top: 10px;
+}
+
+.readied {
+  font-weight: 900;
+  color: colors.$c-readied;
+}
+
+.not-readied {
+  color: colors.$c-not-readied;
 }

@@ -1,51 +1,85 @@
 // _colors.scss
 
-// Defina primeiro as variáveis Sass
-$c-white: #ffffff;
-$c-black: #000000;
-$c-dark: #191813;
-$c-faint: #c9c7b8;
-$c-beige: #b5b3a4;
-$c-tan: #444444;
-$c-border: rgb(51, 51, 51);
-$c-groove: #eeede0;
-$c-violet: rgb(134, 3, 173);
-$c-font: rgb(102, 102, 102);
-
-// 10 color rainbow
-$c-rust: #cc2f00;
-$c-pumpkin: #db6600;
-$c-amber: #e39e00;
-$c-lime: #76b80d;
-$c-pine: #007668;
-$c-sky: #006486;
-$c-azure: #007cb5;
-$c-royal: #465ab2;
-$c-heart: #6d47b1;
-$c-plum: #873b9c;
-
-// Depois mapeie para variáveis CSS
 :root {
-  --sdm-c-dark: #{$c-dark};
-  --sdm-c-faint: #{$c-faint};
-  --sdm-c-beige: #{$c-beige};
-  --sdm-c-tan: #{$c-tan};
-  --sdm-c-white: #{$c-white};
-  --sdm-c-black: #{$c-black};
-  --sdm-c-groove: #{$c-groove};
-  // --color-shadow-primary: rgb(193, 4, 250);
-  // --color-shadow-highlight: rgb(193, 4, 250);
-  // --color-border-highlight: rgb(193, 4, 250);
-  // --color-border-highlight-alt: rgb(193, 4, 250);
-  // --color-scrollbar:rgb(193, 4, 250);
+  --sdm-c-dark: #191813;
+  --sdm-c-faint: #c9c7b8;
+  --sdm-c-beige: #b5b3a4;
+  --sdm-c-tan: #444444;
+  --sdm-c-white: #ffffff;
+  --sdm-c-black: #000000;
+  --sdm-c-groove: #eeede0;
+  --sdm-c-border: rgb(51, 51, 51);
+  --sdm-c-font: rgb(102, 102, 102);
+  --sdm-c-violet: rgb(134, 3, 173);
+  --sdm-c-ultraviolet: rgb(193, 4, 250);
+
+  // 10 color rainbow
+  --sdm-c-rust: #cc2f00;
+  --sdm-c-pumpkin: #db6600;
+  --sdm-c-amber: #e39e00;
+  --sdm-c-lime: #76b80d;
+  --sdm-c-pine: #007668;
+  --sdm-c-sky: #006486;
+  --sdm-c-azure: #007cb5;
+  --sdm-c-royal: #465ab2;
+  --sdm-c-heart: #6d47b1;
+  --sdm-c-plum: #873b9c;
+
+  --sdm-c-readied: #000000;
+  --sdm-c-not-readied: grey;
 }
 
 .theme-dark {
-  --sdm-c-dark: #{$c-faint};
-  --sdm-c-faint: #{$c-dark};
-  --sdm-c-beige: #{$c-tan};
-  --sdm-c-tan: #{$c-beige};
-  --sdm-c-white: #{$c-black};
-  --sdm-c-black: #{$c-white};
-  --sdm-c-groove: #11121f;
+  --sdm-c-dark: #c9c7b8;
+  --sdm-c-faint: rgb(159, 132, 117);
+  --sdm-c-beige: #444444;
+  --sdm-c-tan: #b5b3a4;
+  --sdm-c-white: #000000;
+  --sdm-c-black: #ffffff;
+  --sdm-c-groove: rgb(159, 132, 117);
+  --sdm-c-border: rgb(204, 204, 204);
+  --sdm-c-font: rgb(230, 230, 230);
+  --sdm-c-violet: rgb(200, 100, 255);
+  --sdm-c-ultraviolet: rgb(255, 150, 255);
+
+  --sdm-c-rust: #ff5a2f;
+  --sdm-c-pumpkin: #ff944d;
+  --sdm-c-amber: #ffcc66;
+  --sdm-c-lime: #a5e042;
+  --sdm-c-pine: #26bba6;
+  --sdm-c-sky: #26a2c6;
+  --sdm-c-azure: #33bfff;
+  --sdm-c-royal: #7489ff;
+  --sdm-c-heart: #a081ff;
+  --sdm-c-plum: #c771d2;
+
+  --sdm-c-readied: #ffffff;
+  --sdm-c-not-readied: #b5b3a4;
 }
+
+$c-dark: var(--sdm-c-dark);
+$c-faint: var(--sdm-c-faint);
+$c-beige: var(--sdm-c-beige);
+$c-tan: var(--sdm-c-tan);
+$c-white: var(--sdm-c-white);
+$c-black: var(--sdm-c-black);
+$c-groove: var(--sdm-c-groove);
+$c-border: var(--sdm-c-border);
+$c-font: var(--sdm-c-font);
+$c-violet: var(--sdm-c-violet);
+$c-ultraviolet: var(--sdm-c-ultraviolet);
+
+// 10 color rainbow
+$c-rust: var(--sdm-c-rust);
+$c-pumpkin: var(--sdm-c-pumpkin);
+$c-amber: var(--sdm-c-amber);
+$c-lime: var(--sdm-c-lime);
+$c-pine: var(--sdm-c-pine);
+$c-sky: var(--sdm-c-sky);
+$c-azure: var(--sdm-c-azure);
+$c-royal: var(--sdm-c-royal);
+$c-heart: var(--sdm-c-heart);
+$c-plum: var(--sdm-c-plum);
+
+$c-readied: var(--sdm-c-readied);
+$c-not-readied: var(--sdm-c-not-readied);

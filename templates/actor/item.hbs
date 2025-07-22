@@ -66,8 +66,7 @@
     {{#if @root.editable}}
     <a class="item-control">
       <i
-        class="fa-regular fa-shield"
-        style="{{getReadiedStyle item.system.readied}}"
+        class="fa-regular fa-shield {{ifThen item.system.readied 'readied' 'not-readied'}}"
         data-action="toggleReadied"
         {{#if item.system.readied}}
           title="{{localize 'SDM.ItemReadied' }}"

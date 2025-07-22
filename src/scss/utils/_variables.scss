@@ -1,7 +1,22 @@
 @use './colors' as colors;
 
+// _colors.scss
+
+:root {
+  --sdm-top-edit: 39px;
+  --sdm-left-edit: 10px;
+}
+
+.theme-dark {
+  --sdm-top-edit: 3px;
+  --sdm-left-edit: 10px;
+}
+
 $padding-sm: 5px;
 $padding-md: 10px;
 $padding-lg: 20px;
 
 $border-groove: 2px groove colors.$c-groove;
+
+$top-edit: var(--sdm-top-edit);
+$left-edit: var(--sdm-left-edit);
