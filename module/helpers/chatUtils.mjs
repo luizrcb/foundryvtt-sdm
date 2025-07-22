@@ -89,7 +89,7 @@ export async function createChatMessage({
         } else if (is13) {
           content = content.replace('<li class="roll die d20">13</li>', '<li class="roll die d20 is13">13</li>')
           content = content.replace('dice-total', 'dice-total force');
-          content += `<div class='flex-group-center mt-10'><span>${$l10n('SDM.DepletedResources').toUpperCase()}</span></div>`;
+          content += `<div class='flex-group-center mt-10'><span  class='force'>${$l10n('SDM.DepletedResources').toUpperCase()}</span></div>`;
         }
       }
     }

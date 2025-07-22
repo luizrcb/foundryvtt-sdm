@@ -118,12 +118,12 @@ export default class SDMRoll {
         `
       <br>
       <div>
-        <span><b>${
-        $l10n('SDM.Target')}:</b> ${this.targetActor.name}</span> <b>${
-        $l10n('SDM.FieldDefense')}:</b> ${icon} ${targetDefense}</span><br>
-        <span class="${textClass}"}> ${resultMessage}</span>
+        <div class="flexrow"><div class="flex-group-center"><span><b>${
+        $l10n('SDM.Target')}:</b> ${this.targetActor.name}</span></div><div class="flex-group-center"><b>${
+        $l10n('SDM.FieldDefense')}:</b> ${icon} ${targetDefense}</span></div></div><br>
+        <div class="flex-group-center"><span class="${textClass}"}> ${resultMessage}</span><div>
         ${is13 ? `
-        <div><span><b>${$l10n('SDM.DepletedResources')}</b></span></div>
+        <div class="flex-group-center"><span class="is13"><b>${$l10n('SDM.DepletedResources')}</b></span></div>
         `: ''}
       <div>`;
     }
