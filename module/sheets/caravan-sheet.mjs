@@ -1,22 +1,22 @@
 import { UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
-import { ItemType, SizeUnit } from '../helpers/constants.mjs';
+import { ActorType, ItemType, SizeUnit } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
-import { $l10n } from '../helpers/globalUtils.mjs';
+import { $l10n, $fmt } from '../helpers/globalUtils.mjs';
 import {
   convertToCash,
-  GEAR_ITEM_TYPES,
-  ITEMS_NOT_ALLOWED_IN_CHARACTERS
+  ITEMS_NOT_ALLOWED_IN_CHARACTERS,
+  onItemCreateActiveEffects,
+  onItemUpdate
 } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { openItemTransferDialog } from '../items/transferItem.mjs';
-//import { RollHandler } from '../rolls/rollHandler.mjs';
 
 const { api, sheets } = foundry.applications;
-const TextEditor = foundry.applications.ux.TextEditor.implementation;
+const { DialogV2 } = foundry.applications.api;
+const { renderTemplate } = foundry.applications.handlebars;
 const DragDrop = foundry.applications.ux.DragDrop.implementation;
 const FilePicker = foundry.applications.apps.FilePicker.implementation;
-
-//TODO: *** REPLACE THIS SHEET ***
+const TextEditor = foundry.applications.ux.TextEditor.implementation;
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -30,7 +30,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
 
   /** @override */
   static DEFAULT_OPTIONS = {
-    classes: ['sdm', 'caravan'],
+    classes: ['sdm', 'actor', 'caravan'],
     position: {
       width: 800,
       height: 800
@@ -39,15 +39,13 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       resizable: true
     },
     actions: {
-      onEditImage: this._onEditImage,
-      viewDoc: this._viewDoc,
       createDoc: this._createDoc,
       deleteDoc: this._deleteDoc,
+      onEditImage: this._onEditImage,
+      roll: this._onRoll,
       toggleEffect: this._toggleEffect,
-      roll: {
-        handler: this._onRoll,
-        buttons: [0, 2]
-      }
+      transferItem: this._onTransferItem,
+      viewDoc: this._viewDoc
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
@@ -59,26 +57,27 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
   /** @override */
   static PARTS = {
     header: {
-      template: templatePath('actor/header')
+      template: templatePath('actor/caravan/header')
     },
     tabs: {
       // Foundry-provided generic template
       template: 'templates/generic/tab-navigation.hbs'
     },
-    features: {
-      template: templatePath('actor/features')
+    inventory: {
+      template: templatePath('actor/caravan/inventory'),
+      scrollable: ['']
     },
     biography: {
-      template: templatePath('actor/biography')
+      template: templatePath('actor/biography'),
+      scrollable: ['']
     },
-    gear: {
-      template: templatePath('actor/gears')
-    },
-    spells: {
-      template: templatePath('actor/spells')
+    notes: {
+      template: templatePath('actor/notes'),
+      scrollable: ['']
     },
     effects: {
-      template: templatePath('actor/effects')
+      template: templatePath('actor/effects'),
+      scrollable: ['']
     }
   };
 
@@ -257,15 +256,9 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     // Not all parts always render
     options.parts = ['header', 'tabs'];
     // Don't show the other tabs if only limited view
-    if (this.document.limited) return;
-    // Control which parts show based on document subtype
-    switch (this.document.type) {
-      case 'character':
-        options.parts.push('features', 'gear', 'effects');
-        break;
-      case 'npc':
-        options.parts.push('gear', 'effects');
-        break;
+    if (!this.document.limited) {
+      options.parts.push('inventory', 'effects');
+      options.parts.push('notes');
     }
     options.parts.push('biography');
   }
@@ -291,31 +284,9 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       // Necessary for formInput and formFields helpers
       fields: this.document.schema.fields,
       systemFields: this.document.system.schema.fields,
-      skills: this.actor.system.skills,
       // Add isGM to the context
-      isGM: game.user.isGM,
-      carriedWeight: this.actor.getCarriedGear()
+      isGM: game.user.isGM
     };
-
-    if (this.actor.type === 'character') {
-      // Reorder abilities based on the current language
-      const abilitiesOrder = CONFIG.SDM.abilitiesOrder;
-      const currentLanguage = game.i18n.lang;
-
-      // Get the order for the current language, defaulting to English if not found
-      const order = abilitiesOrder[currentLanguage];
-
-      // Reorder the abilities in the system object
-      const reorderedAbilities = {};
-      order.forEach(key => {
-        if (context.system?.abilities[key]) {
-          reorderedAbilities[key] = context.system.abilities[key];
-        }
-      });
-
-      // Replace the abilities in the system object with the reordered abilities
-      context.system.abilities = reorderedAbilities;
-    }
 
     // Offloading context prep to a helper function
     this._prepareItems(context);
@@ -326,10 +297,21 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
   /** @override */
   async _preparePartContext(partId, context) {
     switch (partId) {
-      case 'features':
-      case 'spells':
-      case 'gear':
+      case 'inventory':
         context.tab = context.tabs[partId];
+        break;
+      case 'notes':
+        context.tab = context.tabs[partId];
+        // Enrich notes info for display
+        // Enrichment turns text like `[[/r 1d20]]` into buttons
+        context.enrichedNotes = await TextEditor.enrichHTML(this.actor.system.notes, {
+          // Whether to show secret blocks in the finished html
+          secrets: this.document.isOwner,
+          // Data to fill in for inline rolls
+          rollData: this.actor.getRollData(),
+          // Relative UUID resolution
+          relativeTo: this.actor
+        });
         break;
       case 'biography':
         context.tab = context.tabs[partId];
@@ -368,7 +350,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     // If you have sub-tabs this is necessary to change
     const tabGroup = 'primary';
     // Default tab for first time it's rendered this session
-    if (!this.tabGroups[tabGroup]) this.tabGroups[tabGroup] = 'features';
+    if (!this.tabGroups[tabGroup]) this.tabGroups[tabGroup] = 'inventory';
     return parts.reduce((tabs, partId) => {
       const tab = {
         cssClass: '',
@@ -384,25 +366,25 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
         case 'header':
         case 'tabs':
           return tabs;
-        case 'features':
-          tab.id = 'features';
-          tab.label += 'Features';
+        case 'inventory':
+          tab.id = 'inventory';
+          tab.label += 'Inventory';
+          tab.icon = 'fa fa-toolbox';
           break;
-        case 'gear':
-          tab.id = 'gear';
-          tab.label += 'Gear';
-          break;
-        // case 'spells':
-        //   tab.id = 'spells';
-        //   tab.label += 'Spells';
-        //   break;
         case 'effects':
           tab.id = 'effects';
           tab.label += 'Effects';
+          tab.icon = 'fa fa-bolt';
+          break;
+        case 'notes':
+          tab.id = 'notes';
+          tab.label += 'Notes';
+          tab.icon = 'fa fa-book';
           break;
         case 'biography':
           tab.id = 'biography';
           tab.label += 'Biography';
+          tab.icon = 'fa fa-user';
           break;
       }
       if (this.tabGroups[tabGroup] === tab.id) tab.cssClass = 'active';
@@ -421,27 +403,50 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     // You can just use `this.document.itemTypes` instead
     // if you don't need to subdivide a given type like
     // this sheet does with spells
-    const gear = [];
-    const transport = [];
 
-    const isCaravan = this.actor.type === 'caravan';
+    // we need to get the caravan capacity in sacks
+    // for each sack create a inventory container
+    const filteredItems = this.document.items.filter(
+      item => !ITEMS_NOT_ALLOWED_IN_CHARACTERS.includes(item.type)
+    );
+    const transportItems = this.document.items.filter(item =>
+      ITEMS_NOT_ALLOWED_IN_CHARACTERS.includes(item.type)
+    );
 
     // Iterate through items, allocating to containers
-    for (let i of this.document.items) {
-      // Append to gear.
-      if (GEAR_ITEM_TYPES.includes(i.type)) {
-        gear.push(i);
-      } else if (ITEMS_NOT_ALLOWED_IN_CHARACTERS.includes(i.type) && isCaravan) {
-        transport.push(i);
+    function chunkBySlots(items, maxSlots = 10) {
+      // First sort the items (using your comparator)
+      const sortedItems = [...items].sort((a, b) => (a.sort || 0) - (b.sort || 0));
+      console.log(items.map(i => i.sort || 0))
+      const chunks = [];
+      let currentChunk = [];
+      let currentSlots = 0;
+
+      for (const item of sortedItems) {
+        const slots = item.system.slots_taken || 1;
+
+        if (currentSlots + slots > maxSlots) {
+          chunks.push(currentChunk);
+          currentChunk = [item];
+          currentSlots = slots;
+        } else {
+          currentChunk.push(item);
+          currentSlots += slots;
+        }
       }
+
+      // Push the final chunk (even if empty)
+      chunks.push(currentChunk);
+
+      return chunks;
     }
 
+    // Usage
+    const chunkedLists = chunkBySlots(filteredItems);
     // Sort then assign
-    context.gears = gear.sort((a, b) => (a.sort || 0) - (b.sort || 0));
-
-    if (isCaravan) {
-      context.transport = transport;
-    }
+    context.cargo = chunkedLists;
+    console.log(chunkedLists);
+    context.transport = transportItems;
   }
 
   /**
@@ -478,19 +483,27 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
         if (item.parent?.id === actorId && !this._validateItemWeight(item)) return false;
       }),
       create: Hooks.on('createItem', (item, options, userId) => {
-        // if (item.parent?.id === actorId) this._checkEncumbrance();
-      }),
-      preUpdate: Hooks.on('preUpdateItem', (item, updateData, options, userId) => {
         if (item.parent?.id === actorId) {
-          const shouldAllow = this._onItemUpdate(item, updateData);
+          const shouldAllow = this._checkCarriedWeight(item);
+          if (!shouldAllow) return false;
+          return onItemCreateActiveEffects(item);
+        }
+      }),
+      preUpdate: Hooks.on('preUpdateItem', (item, changedData) => {
+        if (item.parent?.id === actorId) {
+          const shouldAllow = this._checkCarriedWeight(item, changedData);
           if (!shouldAllow) return false;
         }
       }),
       update: Hooks.on('updateItem', (item, changes, options, userId) => {
-        // if (item.parent?.id === actorId) this._checkEncumbrance();
+        if (item.parent?.id === actorId) {
+          // const shouldAllow = this._checkCarriedWeight(item, updateData);
+          // if (!shouldAllow) return false;
+          return onItemUpdate(item, changes);
+        }
       }),
       delete: Hooks.on('deleteItem', (item, options, userId) => {
-        // if (item.parent?.id === actorId) this._checkEncumbrance();
+        if (item.parent?.id === actorId) return;
       })
     };
   }
@@ -530,19 +543,50 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     return true;
   }
 
+  _checkCarriedWeight(item, updateData) {
+    if (this.actor.type === ActorType.NPC) {
+      return true;
+    }
+
+    if (this.actor.type === ActorType.CARAVAN) {
+      return true;
+    }
+
+    let itemSlots = getSlotsTaken(item?.system);
+
+    if (updateData && !updateData.system) return true;
+
+    let updateDataSlots = updateData ? getSlotsTaken(updateData?.system) : null;
+
+    if (updateData && updateDataSlots <= itemSlots) {
+      return true;
+    }
+
+    const slotsTaken = updateData ? updateDataSlots - itemSlots : itemSlots;
+    const validWeight = this._checkActorWeightLimit(slotsTaken, item.type);
+
+    if (!validWeight) {
+      ui.notifications.error($fmt('SDM.ErrorWeightLimit', { target: this.actor.name }));
+      return false;
+    }
+    return true;
+  }
+
   // Helper validation method
   _validateItemWeight(item) {
-    const size = item.system.size || {};
-    const sizeValue = size.value ?? 1;
-    const sizeUnit = size.unit ?? SizeUnit.STONES;
-    const quantity = size.quantity ?? 1;
-    const newWeight = convertToCash(sizeValue * quantity, sizeUnit);
+    if (this.actor.type === ActorType.NPC) {
+      return true;
+    }
 
-    const currentCarriedWeight = this.actor.getCarriedGear();
-    const maxCarryWeight = this.actor.system.carry_weight.max;
-    const newCarryWeight = currentCarriedWeight + newWeight;
-    if (newCarryWeight > maxCarryWeight) {
-      ui.notifications.error('Adding this item would exceed your carry weight limit.');
+    if (this.actor.type === ActorType.CARAVAN) {
+      return true;
+    }
+
+    const itemSlots = item.system.slots_taken || 1;
+    const validWeight = this._checkActorWeightLimit(itemSlots, item.type);
+
+    if (!validWeight) {
+      ui.notifications.error($fmt('SDM.ErrorWeightLimit', { target: this.actor.name }));
       return false;
     }
 
@@ -657,7 +701,14 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
    */
   static async _deleteDoc(event, target) {
     const doc = this._getEmbeddedDocument(target);
-    await doc.delete();
+    const proceed = await DialogV2.confirm({
+      content: `<b>${$fmt('SDM.DeleteDocConfirmation', { doc: doc.name })}</b>`,
+      modal: true,
+      rejectClose: false,
+      yes: { label: $l10n('SDM.ButtonYes') },
+      no: { label: $l10n('SDM.ButtonNo') }
+    });
+    if (proceed) await doc.delete();
   }
 
   /**
@@ -681,22 +732,6 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     for (const [dataKey, value] of Object.entries(target.dataset)) {
       if (['action', 'documentClass'].includes(dataKey)) continue;
       foundry.utils.setProperty(docData, dataKey, value);
-    }
-
-    // Use data model defaults for new items
-    const sizeValue = foundry.utils.getProperty(docData, 'system.size.value') ?? 1;
-    const sizeUnit = foundry.utils.getProperty(docData, 'system.size.unit') ?? SizeUnit.STONES;
-    const quantity = foundry.utils.getProperty(docData, 'system.quantity') ?? 1;
-    const newWeight = convertToCash(sizeValue * quantity, sizeUnit);
-
-    const currentCarriedWeight = this.actor.getCarriedGear();
-    const maxCarryWeight = this.actor.system.carry_weight.max;
-
-    const newCarryWeight = currentCarriedWeight + newWeight;
-
-    if (newCarryWeight > maxCarryWeight) {
-      ui.notifications.error('Adding this item would exceed your carry weight limit.');
-      return;
     }
 
     await docCls.create(docData, { parent: this.actor });
@@ -768,6 +803,15 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     const rolledFromlabel = $l10n(CONFIG.SDM.rollSource[rolledFrom]);
 
     this._openCustomRollModal(key, label, skill, rolledFromlabel);
+  }
+
+
+  static async _onTransferItem(event, target) {
+    event.preventDefault(); // Don't open context menu
+    event.stopPropagation(); // Don't trigger other events
+    if (event.detail > 1) return; // Ignore repeated clicks
+    const item = this._getEmbeddedDocument(target);
+    return openItemTransferDialog(item, this.actor);
   }
 
   /** Helper Functions */
@@ -962,13 +1006,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     if (!this.actor.isOwner) return false;
     const item = await Item.implementation.fromDropData(data);
 
-    const isCharacterOrNPC = this.actor.type === 'character' || this.actor.type === 'npc';
-
-    if (isCharacterOrNPC && ITEMS_NOT_ALLOWED_IN_CHARACTERS.includes(item.type)) {
-      return false;
-    }
-
-    if (item.type === 'mount' || item.type === 'motor') {
+    if ([ItemType.BURDEN, ItemType.TRAIT].includes(item.type)) {
       return false;
     }
 

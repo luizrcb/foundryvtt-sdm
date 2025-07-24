@@ -9,12 +9,7 @@ export default class SdmCarvan extends SdmActorBase {
     const requiredInteger = { required: true, nullable: false, integer: true };
     const schema = super.defineSchema();
 
-    schema.company_name = new fields.StringField({
-      required: false,
-      blank: true,
-      initial: ''
-    });
-    schema.financer = new fields.StringField({
+    schema.financier = new fields.StringField({
       required: false,
       blank: true,
       initial: ''
@@ -25,11 +20,6 @@ export default class SdmCarvan extends SdmActorBase {
       initial: ''
     });
     schema.due = new fields.StringField({
-      required: false,
-      blank: true,
-      initial: ''
-    });
-    schema.patron = new fields.StringField({
       required: false,
       blank: true,
       initial: ''
@@ -63,7 +53,7 @@ export default class SdmCarvan extends SdmActorBase {
         initial: 0,
         min: 0
       }),
-      motors: new fields.NumberField({
+      vehicles: new fields.NumberField({
         ...requiredInteger,
         initial: 0,
         min: 0
@@ -78,7 +68,15 @@ export default class SdmCarvan extends SdmActorBase {
       yearsElapsed: new fields.StringField()
     });
 
-    schema.speed = new fields.SchemaField({
+    schema.speed = new fields.NumberField({
+      required: true,
+      nullable: false,
+      integer: true,
+      initial: 0,
+      choices: CONFIG.SDM.reverseSpeedValues,
+    });
+
+    schema.speed_travel = new fields.SchemaField({
       talliesPerWeek: new fields.StringField(),
       slowTags: new fields.ArrayField(new fields.StringField()),
       fastTags: new fields.ArrayField(new fields.StringField())
@@ -105,7 +103,7 @@ export default class SdmCarvan extends SdmActorBase {
       }),
       {
         required: false,
-        initial: [{ helperId: '' }]
+        initial: []
       }
     );
     schema.heroes = new fields.ArrayField(
@@ -115,7 +113,7 @@ export default class SdmCarvan extends SdmActorBase {
       }),
       {
         required: false,
-        initial: [{ heroId: '', role: '' }]
+        initial: []
       }
     );
 
@@ -132,7 +130,7 @@ export default class SdmCarvan extends SdmActorBase {
   }
 
   prepareDerivedData() {
-    this.size.total = this.size.mouths + this.size.mounts + this.size.motors + this.size.magicals;
+    this.size.total = this.size.mouths + this.size.mounts + this.size.vehicles + this.size.magicals;
 
     let maxPower = 0;
     let mouths = 0;
@@ -178,19 +176,19 @@ export default class SdmCarvan extends SdmActorBase {
     this.size.mouths = mouths;
 
     let mounts = 0;
-    let motors = 0;
+    let vehicles = 0;
 
     for (let caravanItem of this.parent.items.contents) {
       if (caravanItem.type === ItemType.MOUNT) {
         mounts += 1;
       }
-      if (caravanItem.type === ItemType.MOTOR) {
-        motors += 1;
+      if (caravanItem.type === ItemType.VEHICLE) {
+        vehicles += 1;
       }
     }
 
     this.size.mounts = mounts;
-    this.size.motors = motors;
-    this.size.total = this.size.mouths + this.size.mounts + this.size.motors;
+    this.size.vehicles = vehicles;
+    this.size.total = this.size.mouths + this.size.mounts + this.size.vehicles;
   }
 }

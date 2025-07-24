@@ -28,6 +28,18 @@ export function capitalizeFirstLetter(string) {
   return string[0].toUpperCase() + string.slice(1);
 }
 
+export function toPascalCase(str) {
+  const words = str.match(/[a-zA-Z\u00C0-\u024F\u1E00-\u1EFF]+/gi);
+  if (!words) {
+    return '';
+  }
+  return words
+    .map(function (word) {
+      return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
+    })
+    .join(' ');
+}
+
 export function safeEvaluate(expression) {
   // Sanitize input - only allow numbers, operators, and spaces
   const sanitized = expression.replace(/[^\d+\-*/\s().%]/g, '');

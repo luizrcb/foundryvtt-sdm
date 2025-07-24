@@ -9,8 +9,8 @@
   --sdm-c-groove: #eeede0;
   --sdm-c-border: rgb(51, 51, 51);
   --sdm-c-font: rgb(102, 102, 102);
-  --sdm-c-violet: rgb(134, 3, 173);
-  --sdm-c-ultraviolet: rgb(193, 4, 250);
+  --sdm-c-violet: #7F00FF;
+  --sdm-c-ultraviolet: #b84eff;
   --sdm-c-rust: #cc2f00;
   --sdm-c-pumpkin: #db6600;
   --sdm-c-amber: #e39e00;
@@ -23,6 +23,12 @@
   --sdm-c-plum: #873b9c;
   --sdm-c-readied: #000000;
   --sdm-c-not-readied: grey;
+  --color-shadow-primary: #b84eff;
+  --color-shadow-highlight: #b84eff;
+  --color-border-highlight: #b84eff;
+  --color-border-highlight-alt: #b84eff;
+  --color-scrollbar:#b84eff;
+  --scrollbar-color:#b84eff;
 }
 
 .theme-dark {
@@ -49,6 +55,12 @@
   --sdm-c-plum: #c771d2;
   --sdm-c-readied: #ffffff;
   --sdm-c-not-readied: #b5b3a4;
+  --color-shadow-primary: rgb(200, 100, 255);
+  --color-shadow-highlight: rgb(200, 100, 255);
+  --color-border-highlight: rgb(200, 100, 255);
+  --color-border-highlight-alt: rgb(200, 100, 255);
+  --color-scrollbar:rgb(200, 100, 255);
+  --scrollbar-color:rgb(200, 100, 255);
 }
 
 :root {
@@ -71,8 +83,8 @@
   --sdm-c-groove: #eeede0;
   --sdm-c-border: rgb(51, 51, 51);
   --sdm-c-font: rgb(102, 102, 102);
-  --sdm-c-violet: rgb(134, 3, 173);
-  --sdm-c-ultraviolet: rgb(193, 4, 250);
+  --sdm-c-violet: #7F00FF;
+  --sdm-c-ultraviolet: #b84eff;
   --sdm-c-rust: #cc2f00;
   --sdm-c-pumpkin: #db6600;
   --sdm-c-amber: #e39e00;
@@ -85,6 +97,12 @@
   --sdm-c-plum: #873b9c;
   --sdm-c-readied: #000000;
   --sdm-c-not-readied: grey;
+  --color-shadow-primary: #b84eff;
+  --color-shadow-highlight: #b84eff;
+  --color-border-highlight: #b84eff;
+  --color-border-highlight-alt: #b84eff;
+  --color-scrollbar:#b84eff;
+  --scrollbar-color:#b84eff;
 }
 
 .theme-dark {
@@ -111,6 +129,12 @@
   --sdm-c-plum: #c771d2;
   --sdm-c-readied: #ffffff;
   --sdm-c-not-readied: #b5b3a4;
+  --color-shadow-primary: rgb(200, 100, 255);
+  --color-shadow-highlight: rgb(200, 100, 255);
+  --color-border-highlight: rgb(200, 100, 255);
+  --color-border-highlight-alt: rgb(200, 100, 255);
+  --color-scrollbar:rgb(200, 100, 255);
+  --scrollbar-color:rgb(200, 100, 255);
 }
 
 :root {
@@ -129,7 +153,7 @@
 
 .rollable:hover, .rollable:focus {
   color: var(--sdm-c-black);
-  text-shadow: 0 0 10px red;
+  text-shadow: 0 0 10px var(--sdm-c-ultraviolet);
   cursor: pointer;
 }
 
@@ -183,6 +207,20 @@
 }
 
 .application.sheet.sdm.actor.npc.minimized {
+  min-width: 0px;
+  min-height: 0px;
+  max-width: 0px;
+  max-height: 0px;
+}
+
+.application.sheet.sdm.actor.caravan {
+  min-width: 1500px;
+  min-height: 820px;
+  max-width: 1600px;
+  max-height: 1520px;
+}
+
+.application.sheet.sdm.actor.caravan.minimized {
   min-width: 0px;
   min-height: 0px;
   max-width: 0px;
@@ -318,6 +356,26 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
 
 .not-readied {
   color: var(--sdm-c-not-readied);
+}
+
+section.tab.features {
+  scrollbar-color: var(--sdm-c-ultraviolet) !important;
+}
+
+.sheet-tabs a:not(.active):hover {
+  text-shadow: 0 0 8px var(--sdm-c-ultraviolet);
+}
+
+.sheet-tabs a.active {
+  text-shadow: 0 0 10px var(--sdm-c-ultraviolet);
+}
+
+.item-controls a:not(.active):hover {
+  text-shadow: 0 0 8px var(--sdm-c-ultraviolet);
+}
+
+.item-controls a.active {
+  text-shadow: 0 0 10px var(--sdm-c-ultraviolet);
 }
 
 .grid,
@@ -541,8 +599,8 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   --sdm-c-groove: #eeede0;
   --sdm-c-border: rgb(51, 51, 51);
   --sdm-c-font: rgb(102, 102, 102);
-  --sdm-c-violet: rgb(134, 3, 173);
-  --sdm-c-ultraviolet: rgb(193, 4, 250);
+  --sdm-c-violet: #7F00FF;
+  --sdm-c-ultraviolet: #b84eff;
   --sdm-c-rust: #cc2f00;
   --sdm-c-pumpkin: #db6600;
   --sdm-c-amber: #e39e00;
@@ -555,6 +613,12 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   --sdm-c-plum: #873b9c;
   --sdm-c-readied: #000000;
   --sdm-c-not-readied: grey;
+  --color-shadow-primary: #b84eff;
+  --color-shadow-highlight: #b84eff;
+  --color-border-highlight: #b84eff;
+  --color-border-highlight-alt: #b84eff;
+  --color-scrollbar:#b84eff;
+  --scrollbar-color:#b84eff;
 }
 .sdm .theme-dark {
   --sdm-c-dark: #c9c7b8;
@@ -580,6 +644,12 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   --sdm-c-plum: #c771d2;
   --sdm-c-readied: #ffffff;
   --sdm-c-not-readied: #b5b3a4;
+  --color-shadow-primary: rgb(200, 100, 255);
+  --color-shadow-highlight: rgb(200, 100, 255);
+  --color-border-highlight: rgb(200, 100, 255);
+  --color-border-highlight-alt: rgb(200, 100, 255);
+  --color-scrollbar:rgb(200, 100, 255);
+  --scrollbar-color:rgb(200, 100, 255);
 }
 .sdm .item-form {
   font-family: "Baron Neue";
@@ -664,8 +734,8 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   --sdm-c-groove: #eeede0;
   --sdm-c-border: rgb(51, 51, 51);
   --sdm-c-font: rgb(102, 102, 102);
-  --sdm-c-violet: rgb(134, 3, 173);
-  --sdm-c-ultraviolet: rgb(193, 4, 250);
+  --sdm-c-violet: #7F00FF;
+  --sdm-c-ultraviolet: #b84eff;
   --sdm-c-rust: #cc2f00;
   --sdm-c-pumpkin: #db6600;
   --sdm-c-amber: #e39e00;
@@ -678,6 +748,12 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   --sdm-c-plum: #873b9c;
   --sdm-c-readied: #000000;
   --sdm-c-not-readied: grey;
+  --color-shadow-primary: #b84eff;
+  --color-shadow-highlight: #b84eff;
+  --color-border-highlight: #b84eff;
+  --color-border-highlight-alt: #b84eff;
+  --color-scrollbar:#b84eff;
+  --scrollbar-color:#b84eff;
 }
 .sdm .theme-dark {
   --sdm-c-dark: #c9c7b8;
@@ -703,6 +779,12 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   --sdm-c-plum: #c771d2;
   --sdm-c-readied: #ffffff;
   --sdm-c-not-readied: #b5b3a4;
+  --color-shadow-primary: rgb(200, 100, 255);
+  --color-shadow-highlight: rgb(200, 100, 255);
+  --color-border-highlight: rgb(200, 100, 255);
+  --color-border-highlight-alt: rgb(200, 100, 255);
+  --color-scrollbar:rgb(200, 100, 255);
+  --scrollbar-color:rgb(200, 100, 255);
 }
 .sdm :root {
   --sdm-top-edit: 39px;
@@ -893,8 +975,8 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   --sdm-c-groove: #eeede0;
   --sdm-c-border: rgb(51, 51, 51);
   --sdm-c-font: rgb(102, 102, 102);
-  --sdm-c-violet: rgb(134, 3, 173);
-  --sdm-c-ultraviolet: rgb(193, 4, 250);
+  --sdm-c-violet: #7F00FF;
+  --sdm-c-ultraviolet: #b84eff;
   --sdm-c-rust: #cc2f00;
   --sdm-c-pumpkin: #db6600;
   --sdm-c-amber: #e39e00;
@@ -907,6 +989,12 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   --sdm-c-plum: #873b9c;
   --sdm-c-readied: #000000;
   --sdm-c-not-readied: grey;
+  --color-shadow-primary: #b84eff;
+  --color-shadow-highlight: #b84eff;
+  --color-border-highlight: #b84eff;
+  --color-border-highlight-alt: #b84eff;
+  --color-scrollbar:#b84eff;
+  --scrollbar-color:#b84eff;
 }
 .sdm .theme-dark {
   --sdm-c-dark: #c9c7b8;
@@ -932,6 +1020,12 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   --sdm-c-plum: #c771d2;
   --sdm-c-readied: #ffffff;
   --sdm-c-not-readied: #b5b3a4;
+  --color-shadow-primary: rgb(200, 100, 255);
+  --color-shadow-highlight: rgb(200, 100, 255);
+  --color-border-highlight: rgb(200, 100, 255);
+  --color-border-highlight-alt: rgb(200, 100, 255);
+  --color-scrollbar:rgb(200, 100, 255);
+  --scrollbar-color:rgb(200, 100, 255);
 }
 .sdm :root {
   --sdm-top-edit: 39px;
@@ -1063,8 +1157,8 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   --sdm-c-groove: #eeede0;
   --sdm-c-border: rgb(51, 51, 51);
   --sdm-c-font: rgb(102, 102, 102);
-  --sdm-c-violet: rgb(134, 3, 173);
-  --sdm-c-ultraviolet: rgb(193, 4, 250);
+  --sdm-c-violet: #7F00FF;
+  --sdm-c-ultraviolet: #b84eff;
   --sdm-c-rust: #cc2f00;
   --sdm-c-pumpkin: #db6600;
   --sdm-c-amber: #e39e00;
@@ -1077,6 +1171,12 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   --sdm-c-plum: #873b9c;
   --sdm-c-readied: #000000;
   --sdm-c-not-readied: grey;
+  --color-shadow-primary: #b84eff;
+  --color-shadow-highlight: #b84eff;
+  --color-border-highlight: #b84eff;
+  --color-border-highlight-alt: #b84eff;
+  --color-scrollbar:#b84eff;
+  --scrollbar-color:#b84eff;
 }
 .sdm .theme-dark {
   --sdm-c-dark: #c9c7b8;
@@ -1102,6 +1202,12 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   --sdm-c-plum: #c771d2;
   --sdm-c-readied: #ffffff;
   --sdm-c-not-readied: #b5b3a4;
+  --color-shadow-primary: rgb(200, 100, 255);
+  --color-shadow-highlight: rgb(200, 100, 255);
+  --color-border-highlight: rgb(200, 100, 255);
+  --color-border-highlight-alt: rgb(200, 100, 255);
+  --color-scrollbar:rgb(200, 100, 255);
+  --scrollbar-color:rgb(200, 100, 255);
 }
 .sdm :root {
   --sdm-top-edit: 39px;
@@ -1144,3 +1250,5 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   top: var(--sdm-top-edit);
   left: var(--sdm-left-edit);
 }
+
+/*# sourceMappingURL=sdm.css.map */

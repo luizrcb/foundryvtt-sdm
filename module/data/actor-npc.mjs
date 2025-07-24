@@ -43,7 +43,15 @@ export default class SdmNPC extends SdmActorBase {
       validationError: game.i18n.localize('SDM.ErrorValidationRollFormula')
     });
 
-    schema.cost = new fields.StringField({ required: false, nullable: true });
+    // npc wage
+    schema.cost = new fields.NumberField({
+      required: false,
+      nullable: true,
+      integer: true,
+      initial: 0
+    });
+
+    // schema.supply =
 
     schema.isWarrior = new fields.BooleanField({
       required: true,
@@ -58,6 +66,14 @@ export default class SdmNPC extends SdmActorBase {
     schema.isPorter = new fields.BooleanField({
       required: true,
       initial: false
+    });
+
+    schema.speed = new fields.NumberField({
+      required: true,
+      nullable: false,
+      integer: true,
+      initial: 0,
+      choices: CONFIG.SDM.reverseSpeedValues
     });
 
     return schema;

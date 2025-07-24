@@ -200,12 +200,15 @@
           </div>
 
           <div class="grid-span-1 flexrow flex-between">
-            <div class="grid-span-1 resource">
+            <div class="grid-span-1 resource" data-tooltip="
+              <span><b>Inventory:</b> {{localize 'SDM.CashSymbol'}}{{system.inventory_value}}</span><br/>
+              <span><b>Cash:</b> {{localize 'SDM.CashSymbol'}}{{system.total_cash}}</span>
+            ">
               <label for="system.wealth" class='resource-label'>
                 {{localize 'SDM.FieldWealth'}}
               </label>
               <div class='resource-content flexrow flex-center flex-between'>
-                <input type='text' name='system.wealth' value='{{system.wealth}}' data-dtype='Number' />
+                <input type='text' name='system.wealth' value='{{localize 'SDM.CashSymbol'}}{{system.wealth}}' data-dtype='Number'  disabled/>
               </div>
             </div>
             <div class="grid-span-1 resource">
@@ -273,7 +276,10 @@
                 <input type='text' name='system.abilities.{{key}}.current' value='{{ability.current}}'
                   class="ability-score" data-dtype='Number'
                   title="{{localize 'SDM.AbilityCurrent' ability=(localize (lookup @root.config.abilities key))}}" />
-                <div class='rollable flexrow' data-roll-type={{key}} data-action='rollSavingThrow'
+                <div
+                  class='rollable flexrow'
+                  data-ability='{{key}}'
+                  data-action='rollSavingThrow'
                   title="{{localize 'SDM.SavingThrowRoll' ability=(localize (lookup @root.config.abilities key))}}">
                   <i class="fas {{lookup @root.config.abilitySaveIcons key}} saveIcon {{lookup @root.config.abilityColors @index}}"></i>
                 </div>

@@ -60,7 +60,7 @@ export function preciseRound(value, decimals = 4) {
 export const GEAR_ITEM_TYPES = ['gear'];
 export const TRAIT_ITEM_TYPES = ['trait'];
 export const BURDEN_ITEM_TYPES = ['burden'];
-export const ITEMS_NOT_ALLOWED_IN_CHARACTERS = ['mount', 'motor'];
+export const ITEMS_NOT_ALLOWED_IN_CHARACTERS = ['mount', 'vehicle'];
 
 // Add this method to handle item updates
 export async function onItemUpdate(item, updateData) {

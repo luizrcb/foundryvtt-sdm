@@ -27,9 +27,12 @@
           </label>
         </div>
         <div class='resource'>
-          <label class='resource-label'>{{localize 'SDM.ItemCost'}}</label>
-          <input type='text' name='system.cost' value='{{system.cost}}' data-dtype='Text' />
+          {{#unless (eq system.size.unit 'cash')}}
+            <label class='resource-label'>{{localize 'SDM.ItemCost'}}</label>
+            <input type='text' name='system.cost' value='{{system.cost}}' data-dtype='Number' />
+          {{/unless}}
         </div>
+
         <div class='resource'>
           <label class='resource-label'>{{localize 'SDM.ItemSizeValue'}}</label>
           <input type='text' name='system.size.value' value='{{system.size.value}}' data-dtype='Number' />
@@ -45,14 +48,13 @@
   </header>
   <header>
     <div class='grid grid-3col'>
-      {{#if (ne item.system.size.unit 'cash')}}
+    {{#if (ne item.system.size.unit 'cash')}}
       <div class="resource">
         <label class='resource-label'>{{localize 'SDM.ItemGearType'}}</label>
         <select name='system.type' class="resource-content">
           {{selectOptions config.gearType localize=true selected=system.type sort=true blank='TYPE.Gear'}}
         </select>
       </div>
-      {{/if}}
 
       {{#if (eq item.system.type 'weapon')}}
       <div class='resource'>
@@ -151,6 +153,7 @@
       {{> ($$ "item/power") item=item}}
       {{!-- End fragment --}}
       {{/if}}
+    {{/if}}
     </div>
 </div>
 </div>

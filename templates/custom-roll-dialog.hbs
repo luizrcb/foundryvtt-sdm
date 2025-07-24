@@ -9,7 +9,7 @@
       </div>
     </div>
     {{/if}}
-    {{#if (and (ne type 'ability') isCharacterActor)}}
+    {{#if (and (ne type 'ability') (ne type 'save') isCharacterActor)}}
     <div class="form-group">
       <label>{{localize 'SDM.Ability'}}</label>
       <select name="selectedAbility">
@@ -18,7 +18,7 @@
       </select>
     </div>
     {{/if}}
-    {{#if isCharacterActor}}
+    {{#if (and (ne type 'save') isCharacterActor)}}
     <div class="form-group mt-10">
       <label for="selectedSkill">{{localize 'SDM.Skill'}}</label>
       <select name="selectedSkill" id="selectedSkill">
@@ -40,18 +40,22 @@
       </select>
     </div>
     {{/if}}
+    {{#if (ne type 'save')}}
     <div class="form-group mt-10">
       <label for="rollMode">{{localize 'SDM.RollMode'}}</label>
       <select name="rollMode" id="rollMode">
         {{selectOptions rollModes localize=true selected='normal'}}
       </select>
     </div>
+    {{/if}}
+    {{#if (ne type 'save')}}
     <div class="form-group mt-10">
       <label for="shouldExplode">{{localize "SDM.ExplodingDice"}}</label>
       <input id="shouldExplode" type="checkbox" name="shouldExplode"
         {{#if (and (ne type 'damage') (ne type 'power'))}}checked{{/if}}
       />
     </div>
+    {{/if}}
   </form>
   <br /><br />
 </div>

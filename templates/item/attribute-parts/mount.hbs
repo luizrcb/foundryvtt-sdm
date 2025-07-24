@@ -38,12 +38,12 @@
     {{! Veículo Puxado }}
     <div class='flexrow'>
       <label>
-        {{localize 'SDM.Item.Mount.PulledMotor'}}
+        {{localize 'SDM.Item.Mount.PulledVehicle'}}
       </label>
-      <select name='system.pulledLoad.motorId'>
+      <select name='system.pulledLoad.vehicleId'>
         <option value=''></option>
-        {{#each motors}}
-          {{!-- <option value="{{this.id}}" {{selected this.id ../system.pulledLoad.motorId}}>
+        {{#each vehicles}}
+          {{!-- <option value="{{this.id}}" {{selected this.id ../system.pulledLoad.vehicleId}}>
           {{this.name}}
         </option> --}}
         {{/each}}

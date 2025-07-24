@@ -10,8 +10,8 @@
   --sdm-c-groove: #eeede0;
   --sdm-c-border: rgb(51, 51, 51);
   --sdm-c-font: rgb(102, 102, 102);
-  --sdm-c-violet: rgb(134, 3, 173);
-  --sdm-c-ultraviolet: rgb(193, 4, 250);
+  --sdm-c-violet: #7F00FF;
+  --sdm-c-ultraviolet: #b84eff;
 
   // 10 color rainbow
   --sdm-c-rust: #cc2f00;
@@ -27,6 +27,13 @@
 
   --sdm-c-readied: #000000;
   --sdm-c-not-readied: grey;
+
+  --color-shadow-primary: #b84eff;
+  --color-shadow-highlight: #b84eff;
+  --color-border-highlight: #b84eff;
+  --color-border-highlight-alt: #b84eff;
+  --color-scrollbar:#b84eff;
+  --scrollbar-color:#b84eff;
 }
 
 .theme-dark {
@@ -55,6 +62,13 @@
 
   --sdm-c-readied: #ffffff;
   --sdm-c-not-readied: #b5b3a4;
+
+  --color-shadow-primary: rgb(200, 100, 255);
+  --color-shadow-highlight: rgb(200, 100, 255);
+  --color-border-highlight: rgb(200, 100, 255);
+  --color-border-highlight-alt: rgb(200, 100, 255);
+  --color-scrollbar:rgb(200, 100, 255);
+  --scrollbar-color:rgb(200, 100, 255);
 }
 
 $c-dark: var(--sdm-c-dark);

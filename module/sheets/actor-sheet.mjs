@@ -16,11 +16,11 @@ import SDMRoll, { sanitizeExpression } from '../rolls/sdmRoll.mjs';
 import { SAVING_THROW_BASE_FORMULA } from '../settings.mjs';
 
 const { api, sheets } = foundry.applications;
-const TextEditor = foundry.applications.ux.TextEditor.implementation;
-const DragDrop = foundry.applications.ux.DragDrop.implementation;
-const FilePicker = foundry.applications.apps.FilePicker.implementation;
 const { DialogV2 } = foundry.applications.api;
 const { renderTemplate } = foundry.applications.handlebars;
+const DragDrop = foundry.applications.ux.DragDrop.implementation;
+const FilePicker = foundry.applications.apps.FilePicker.implementation;
+const TextEditor = foundry.applications.ux.TextEditor.implementation;
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -69,21 +69,21 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       resizable: true
     },
     actions: {
-      onEditImage: this._onEditImage,
-      viewDoc: this._viewDoc,
       createDoc: this._createDoc,
       deleteDoc: this._deleteDoc,
-      toggleEffect: this._toggleEffect,
-      roll: this._onRoll,
-      rollSavingThrow: this._onRollSavingThrow,
       heroicHealing: this._onHeroHealing,
-      transferItem: this._onTransferItem,
-      toggleReadied: this._toggleReadied,
-      toggleMode: this._onToggleMode,
-      updateAttack: this._onUpdateAttack,
+      onEditImage: this._onEditImage,
+      reactionRoll: this._onReactionRoll,
+      roll: this._onRoll,
       rollNPCDamage: this._onRollNPCDamage,
       rollNPCMorale: this._onRollNPCMorale,
-      reactionRoll: this._onReactionRoll
+      rollSavingThrow: this._onRollSavingThrow,
+      toggleEffect: this._toggleEffect,
+      toggleMode: this._onToggleMode,
+      toggleReadied: this._toggleReadied,
+      transferItem: this._onTransferItem,
+      updateAttack: this._onUpdateAttack,
+      viewDoc: this._viewDoc
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
@@ -159,16 +159,19 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     return options;
   }
 
-  async _openCustomRollModal({
-    type,
-    from,
-    ability = '',
-    formula = '',
-    attack = '',
-    versatile = false,
-    versatileFormula = '',
-    bonusDamage = ''
-  }, isShift = false) {
+  async _openCustomRollModal(
+    {
+      type,
+      from,
+      ability = '',
+      formula = '',
+      attack = '',
+      versatile = false,
+      versatileFormula = '',
+      bonusDamage = ''
+    },
+    isShift = false
+  ) {
     let rollTitlePrefix = '';
     const isDamage = type === RollType.DAMAGE;
     const isAttack = type === RollType.ATTACK;
@@ -213,7 +216,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       rollModes: CONFIG.SDM.rollMode,
       type,
       isCharacterActor,
-      attackTargetChoices: CONFIG.SDM.attackTarget,
+      attackTargetChoices: CONFIG.SDM.attackTarget
     });
 
     const damageIcon = isPower
@@ -274,7 +277,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       shouldExplode: shouldExplodeModal,
       multiplier = '',
       selectedSkill: modalSelectedSkill,
-      attackTarget = AttackTarget.PHYSICAL,
+      attackTarget = AttackTarget.PHYSICAL
     } = rollOptions;
 
     if (modalSelectedSkill !== undefined) {
@@ -313,7 +316,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       versatile: !!rollOptions.versatile,
       skill: availableSkills[selectedSkill],
       targetActor,
-      attackTarget,
+      attackTarget
     };
 
     if (formula) {
@@ -378,17 +381,19 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     // Not all parts always render
     options.parts = ['header', 'tabs'];
     // Don't show the other tabs if only limited view
-    if (this.document.limited) return;
-    // Control which parts show based on document subtype
-    switch (this.document.type) {
-      case 'character':
-        options.parts.push('inventory', 'effects');
-        break;
-      case 'npc':
-        options.parts.push('inventory', 'effects');
-        break;
+    if (!this.document.limited) {
+      // Control which parts show based on document subtype
+      switch (this.document.type) {
+        case 'character':
+          options.parts.push('inventory', 'effects');
+          break;
+        case 'npc':
+          options.parts.push('inventory', 'effects');
+          break;
+      }
+      options.parts.push('notes');
     }
-    options.parts.push('notes');
+
     options.parts.push('biography');
   }
 
@@ -982,13 +987,14 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       bonusDamage
     };
 
-    this._openCustomRollModal(rollAttributes , isShift);
+    this._openCustomRollModal(rollAttributes, isShift);
   }
 
   static async _onRollNPCDamage(event, target) {
     event.preventDefault();
     event.stopPropagation();
     if (event.detail > 1) return;
+    const isShift = !!event.shiftKey;
 
     const damage = this.actor.system.damage || '1d4';
 
@@ -998,31 +1004,36 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       formula: damage
     };
 
-    this._openCustomRollModal(rollAttributes);
+    this._openCustomRollModal(rollAttributes, isShift);
   }
 
   static async _onRollNPCMorale(event, target) {
     event.preventDefault();
     event.stopPropagation();
     if (event.detail > 1) return;
+    const isShift = !!event.shiftKey;
 
-    const data = await DialogV2.wait({
-      window: {
-        title: $fmt('SDM.RollType', { type: $l10n('SDM.Morale') }),
-        resizable: true
-      },
-      content: await renderTemplate(templatePath('actor/npc/morale-roll-dialog')),
-      buttons: [
-        {
-          label: $l10n('SDM.ButtonRoll'),
-          icon: 'fas fa-person-running',
-          callback: (event, button) => ({
-            ...new foundry.applications.ux.FormDataExtended(button.form).object
-          })
-        }
-      ],
-      rejectClose: false
-    });
+    let data = { modifier: '' };
+
+    if (!isShift) {
+      data = await DialogV2.wait({
+        window: {
+          title: $fmt('SDM.RollType', { type: $l10n('SDM.Morale') }),
+          resizable: true
+        },
+        content: await renderTemplate(templatePath('actor/npc/morale-roll-dialog')),
+        buttons: [
+          {
+            label: $l10n('SDM.ButtonRoll'),
+            icon: 'fas fa-person-running',
+            callback: (event, button) => ({
+              ...new foundry.applications.ux.FormDataExtended(button.form).object
+            })
+          }
+        ],
+        rejectClose: false
+      });
+    }
 
     if (!data) {
       return;
@@ -1077,38 +1088,42 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     event.preventDefault();
     event.stopPropagation();
     if (event.detail > 1) return;
+    const isShift = !!event.shiftKey;
+    let data = { modifier: '', charismaOperator: 1 };
 
-    const data = await DialogV2.wait({
-      window: {
-        title: $l10n('SDM.ReactionRoll')
-      },
-      position: {
-        width: 500,
-        height: 250
-      },
-      content: await renderTemplate(templatePath('reaction-roll-dialog')),
-      buttons: [
-        {
-          action: 'diplomacy',
-          label: $l10n('SDM.ReactionCheck'),
-          icon: 'fas fa-face-smile',
-          callback: (event, button) => ({
-            charismaOperator: 1,
-            ...new foundry.applications.ux.FormDataExtended(button.form).object
-          })
+    if (!isShift) {
+      data = await DialogV2.wait({
+        window: {
+          title: $l10n('SDM.ReactionRoll')
         },
-        {
-          action: 'conflict',
-          label: $l10n('SDM.ReactionProvokeConflict'),
-          icon: 'fas fa-face-angry',
-          callback: (event, button) => ({
-            charismaOperator: -1,
-            ...new foundry.applications.ux.FormDataExtended(button.form).object
-          })
-        }
-      ],
-      rejectClose: false
-    });
+        position: {
+          width: 500,
+          height: 250
+        },
+        content: await renderTemplate(templatePath('reaction-roll-dialog')),
+        buttons: [
+          {
+            action: 'diplomacy',
+            label: $l10n('SDM.ReactionCheck'),
+            icon: 'fas fa-face-smile',
+            callback: (event, button) => ({
+              charismaOperator: 1,
+              ...new foundry.applications.ux.FormDataExtended(button.form).object
+            })
+          },
+          {
+            action: 'conflict',
+            label: $l10n('SDM.ReactionProvokeConflict'),
+            icon: 'fas fa-face-angry',
+            callback: (event, button) => ({
+              charismaOperator: -1,
+              ...new foundry.applications.ux.FormDataExtended(button.form).object
+            })
+          }
+        ],
+        rejectClose: false
+      });
+    }
 
     if (!data) {
       return;
@@ -1208,8 +1223,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     // Get common data attributes
     const dataset = target.dataset;
-    const { rollType } = dataset;
-    const abilityData = this.actor.system.abilities[rollType];
+    const { ability } = dataset;
+    const abilityData = this.actor.system.abilities[ability];
     const finalAbility = abilityData.current;
     const ward = this.actor.system.ward || 0;
     const burdenPenalty = this.actor.system.burden_penalty || 0;
@@ -1217,22 +1232,68 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const allSaveBonus = this.actor.system.all_save_bonus || 0;
     const savingThrowSum = finalAbility + ward + saveBonus + allSaveBonus - burdenPenalty;
     const finalSavingThrowBonus = Math.min(savingThrowSum, MAX_MODIFIER);
+    const isShift = !!event.shiftKey;
 
     let label = $fmt('SDM.SavingThrowRoll', {
-      ability: $l10n(CONFIG.SDM.abilities[rollType])
+      ability: $l10n(CONFIG.SDM.abilities[ability])
     });
 
     if (ward > 0) {
       label += ` (${$l10n('TYPES.Item.ward').toLowerCase()} +${ward})`;
     }
 
+    const template = await renderTemplate(templatePath('custom-roll-dialog'), {
+      rollTitlePrefix: '',
+      title: label,
+      abilities: [],
+      ability,
+      attack: '',
+      availableSkills: [],
+      selectedSkill: '',
+      multiplierOptions: CONFIG.SDM.damageMultiplier,
+      rollModes: CONFIG.SDM.rollMode,
+      type: RollType.SAVE,
+      isCharacterActor: true,
+      attackTargetChoices: CONFIG.SDM.attackTarget
+    });
+
+    const buttons = [
+      {
+        action: 'save',
+        icon: 'fas fa-dice-d20',
+        label: $l10n('SDM.ButtonRoll'),
+        callback: (event, button) => ({
+          versatile: false,
+          ...new foundry.applications.ux.FormDataExtended(button.form).object
+        })
+      }
+    ];
+
+    let rollOptions = {};
+
+    if (!isShift) {
+      // Create and render the modal
+      rollOptions = await foundry.applications.api.DialogV2.wait({
+        window: {
+          title: $fmt('SDM.RollTitle', { prefix: '', title: label })
+        },
+        content: template,
+        position: {
+          width: 400
+        },
+        buttons
+      });
+    }
+
+    const modifier = rollOptions?.modifier;
+
     const baseRollFormula =
       game.settings.get('sdm', 'savingThrowBaseRollFormula') || SAVING_THROW_BASE_FORMULA;
-    const formula = `${baseRollFormula} ${
+    let formula = `${baseRollFormula} ${
       finalSavingThrowBonus >= 0 ? `+` : ``
-    }${finalSavingThrowBonus}`;
+    }${finalSavingThrowBonus} ${modifier ? `+${modifier}` : ''}`;
     const targetNumber = this.actor.system.save_target;
-
+    formula = sanitizeExpression(formula);
     // Create and evaluate the roll
     let roll = new Roll(formula);
     roll = await roll.evaluate();
@@ -1277,7 +1338,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       content: await renderTemplate(templatePath('chat/saving-throw-result'), templateData),
       flavor: label,
       rolls: [roll],
-      checkCritical: true,
+      checkCritical: true
     });
   }
 
@@ -1480,6 +1541,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
    * @protected
    */
   async _onDropActor(event, data) {
+    // TODO: add support to drop pets for Characters and NPCs
     if (!this.actor.isOwner) return false;
   }
 
@@ -1497,13 +1559,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     if (!this.actor.isOwner) return false;
     const item = await Item.implementation.fromDropData(data);
 
-    const isCharacterOrNPC = this.actor.type === 'character' || this.actor.type === 'npc';
+    const isCharacterOrNPC = [ActorType.CHARACTER, ActorType.NPC].includes(this.actor.type);
 
     if (isCharacterOrNPC && ITEMS_NOT_ALLOWED_IN_CHARACTERS.includes(item.type)) {
-      return false;
-    }
-
-    if (item.type === 'mount' || item.type === 'motor') {
       return false;
     }
 

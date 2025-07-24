@@ -10,6 +10,7 @@ const templatesToLoad = [
   $$('actor/burdens'),
   $$('actor/character/header'),
   $$('actor/npc/header'),
+  $$('actor/caravan/header'),
   $$('item/gear/header'),
   $$('item/trait/header'),
   $$('item/burden/header'),

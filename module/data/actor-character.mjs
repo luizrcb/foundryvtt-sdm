@@ -177,7 +177,11 @@ export default class SdmCharacter extends SdmActorBase {
     schema.looks = new fields.StringField({ required: false, blank: true, initial: '' });
 
     schema.debt = new fields.StringField({ require: true, initial: '0' });
+
     schema.wealth = new fields.StringField({ require: true, initial: '0' });
+
+    schema.inventory_value = new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 });
+    schema.total_cash = new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 });
     schema.revenue = new fields.StringField({ require: true, initial: '0' });
     schema.expense = new fields.StringField({ require: true, initial: '0' });
 
@@ -292,6 +296,14 @@ export default class SdmCharacter extends SdmActorBase {
     );
 
     schema.pets = new fields.ArrayField(new fields.DocumentUUIDField());
+
+    schema.speed = new fields.NumberField({
+      required: true,
+      nullable: false,
+      integer: true,
+      initial: 0,
+      choices: CONFIG.SDM.reverseSpeedValues,
+    });
 
     return schema;
   }

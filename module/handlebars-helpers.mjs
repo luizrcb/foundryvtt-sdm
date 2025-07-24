@@ -1,3 +1,5 @@
+import { toPascalCase } from "./helpers/globalUtils.mjs";
+
 export function registerHandlebarsHelpers() {
   const $$ = (name, fn) => Handlebars.registerHelper(name, fn);
 
@@ -14,15 +16,7 @@ export function registerHandlebarsHelpers() {
   });
 
   $$('toPascalCase', function (str) {
-    const words = str.match(/[a-zA-Z\u00C0-\u024F\u1E00-\u1EFF]+/gi);
-    if (!words) {
-      return '';
-    }
-    return words
-      .map(function (word) {
-        return word.charAt(0).toUpperCase() + word.substr(1).toLowerCase();
-      })
-      .join(' ');
+    return toPascalCase(str);
   });
 
   // some one to an index

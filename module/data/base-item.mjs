@@ -9,9 +9,19 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
     // also known as equipped
     schema.readied = new fields.BooleanField({ initial: false });
 
-    schema.cost = new fields.StringField({
+    schema.cost = new fields.NumberField({
       required: false,
-      blank: true
+      nullable: true,
+      integer: true,
+      initial: 0,
+    });
+
+    schema.cost_frequency = new fields.StringField({
+      required: false,
+      nullable: true,
+      blank: true,
+      initial: '',
+      choices: CONFIG.SDM.frequency,
     });
 
     schema.description = new fields.HTMLField();

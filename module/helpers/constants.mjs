@@ -55,7 +55,7 @@ export const ItemType = Object.freeze({
   TRAIT: 'trait',
   BURDEN: 'burden',
   MOUNT: 'mount',
-  MOTOR: 'motor'
+  VEHICLE: 'vehicle'
 });
 
 export const GearType = Object.freeze({
@@ -64,6 +64,11 @@ export const GearType = Object.freeze({
   POWER: 'power',
   // POWER_CONTAINER: 'power_container',
   WARD: 'ward'
+});
+
+export const FrequencyType = Object.freeze({
+  DAY: 'day',
+  WEEK: 'week',
 });
 
 export const TraitType = Object.freeze({
@@ -93,12 +98,22 @@ export const PullMode = Object.freeze({
 });
 
 export const SpeedType = Object.freeze({
+  VERY_VERY_SLOW: 'very_very_slow',
   VERY_SLOW: 'very_slow',
   SLOW: 'slow',
   STANDARD: 'standard',
   FAST: 'fast',
   VERY_FAST: 'very_fast'
 });
+
+
+export const SpeedValues = new Map();
+SpeedValues.set('VeryVerySlow', -3);
+SpeedValues.set('VerySlow', -2);
+SpeedValues.set('Slow', -1);
+SpeedValues.set('Standard', 0);
+SpeedValues.set('Fast', 1);
+SpeedValues.set('VeryFast', 2);
 
 export const DiceType = Object.freeze({
   d4: 'd4',

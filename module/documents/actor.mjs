@@ -246,12 +246,19 @@ export class SdmActor extends Actor {
     data.mental_defense = Math.min(calculatedMentalDefense, MAX_ATTRIBUTE_VALUE);
     data.social_defense = Math.min(calculatedSocialDefense, MAX_ATTRIBUTE_VALUE);
 
+    const estimatedWealth = this.getEstimatedWealth();
+
+    const totalCash = this.getTotalCash();
+
     const { burdenPenalty, items, traits } = this.checkInventorySlots();
 
     this.update({
       'system.burden_penalty': burdenPenalty,
       'system.item_slots_taken': items.slotsTaken,
       'system.trait_slots_taken': traits.slotsTaken,
+      'system.inventory_value': estimatedWealth,
+      'system.total_cash': totalCash,
+      'system.wealth': totalCash + estimatedWealth,
       'prototypeToken.actorLink': true,
       'prototypeToken.disposition': 1 // friendly
     });
@@ -417,13 +424,13 @@ export class SdmActor extends Actor {
     return totalWeight;
   }
 
-  getMotorPassengersWeight() {
+  getVehiclePassengersWeight() {
     const itemsArray = this.items.contents;
-    const filteredMotor = itemsArray.filter(item => item.type === ItemType.MOTOR);
+    const filteredVehicle = itemsArray.filter(item => item.type === ItemType.VEHICLE);
     let totalWeight = 0;
 
-    for (let motor of filteredMotor) {
-      for (let passenger of motor.passengers) {
+    for (let vehicle of filteredVehicle) {
+      for (let passenger of vehicle.passengers) {
         const passengerActor = fromUuidSync(passenger);
         if (!passengerActor) continue;
 
@@ -482,7 +489,7 @@ export class SdmActor extends Actor {
     }
 
     const itemsArray = this.items.contents.filter(
-      item => item.type === ItemType.MOTOR || item.type === ItemType.MOUNT
+      item => item.type === ItemType.VEHICLE || item.type === ItemType.MOUNT
     );
 
     const carryCapacity = itemsArray.reduce((acc, item) => {
@@ -490,6 +497,32 @@ export class SdmActor extends Actor {
     }, 0);
 
     return carryCapacity;
+  }
+
+  getEstimatedWealth() {
+    const itemsArray = this.items.contents.filter(
+      item => [ItemType.GEAR, ItemType.MOUNT, ItemType.VEHICLE].includes(item.type) &&
+      item.system.size.unit !== SizeUnit.CASH,
+
+    );
+
+    const estimatedWealth =  itemsArray.reduce((acc, item) => {
+      return acc + (item?.system?.cost || 0);
+    }, 0);
+
+    return estimatedWealth;
+  }
+
+  getTotalCash() {
+    const itemsArray = this.items.contents.filter(
+      item => item.system.size.unit === SizeUnit.CASH,
+    );
+
+    const totalCash = itemsArray.reduce((acc, item) => {
+      return acc + (item.system.size.value || 1) * item.system.quantity;
+    }, 0);
+
+    return totalCash;
   }
 
   /**

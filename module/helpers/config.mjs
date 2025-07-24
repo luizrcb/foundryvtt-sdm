@@ -1,5 +1,5 @@
-import { ArmorType, PullMode, SpeedType, WardType } from './constants.mjs';
-import { capitalizeFirstLetter } from './globalUtils.mjs';
+import { ArmorType, PullMode, SpeedValues, WardType } from './constants.mjs';
+import { capitalizeFirstLetter, toPascalCase } from './globalUtils.mjs';
 
 export const SDM = {};
 
@@ -66,6 +66,11 @@ SDM.abilitiesOrder = {
   'pt-BR': ['cha', 'tho', 'str', 'agi', 'aur', 'end']
 };
 
+SDM.frequency = {
+  day: 'SDM.FrequencyDay',
+  week: 'SDM.FrequencyWeek'
+};
+
 function getOrderedAbilities(language = 'en') {
   let lang = Object.keys(SDM.abilitiesOrder).includes(language) ? language : 'en';
   const reorderedAbilities = {};
@@ -82,10 +87,7 @@ SDM.pullModes = Object.values(PullMode).reduce((acc, pullMode) => {
   return acc;
 }, {});
 
-SDM.speedType = Object.values(SpeedType).reduce((acc, speedType) => {
-  acc[speedType] = `SDM.Speed${capitalizeFirstLetter(speedType)}`;
-  return acc;
-}, {});
+
 
 const abilitiesLabel = 'SDM.Ability';
 
@@ -121,23 +123,28 @@ SDM.damageMultiplier = {
   '*32': 'x32'
 };
 
-SDM.speedValues = {
-  very_very_slow: -3,
-  very_slow: -2,
-  slow: -1,
-  standard: 0,
-  fast: 1,
-  very_fast: 2
+SDM.speedOptions = {
+  'SDM.SpeedVeryVerySlow': -3,
+  'SDM.SpeedVerySlow': -2,
+  'SDM.SpeedSlow': -1,
+  'SDM.SpeedStandard': 0,
+  'SDM.SpeedFast': 1,
+  'SDM.SpeedVeryFast': 2
 };
 
 SDM.reverseSpeedValues = {
-  '-3': 'very_very_slow',
-  '-2': 'very_slow',
-  '-1': 'slow',
-  0: 'standard',
-  1: 'fast',
-  2: 'very_fast'
+  '-3': 'SDM.SpeedVeryVerySlow',
+  '-2': 'SDM.SpeedVerySlow',
+  '-1': 'SDM.SpeedSlow',
+  '0': 'SDM.SpeedStandard',
+  '1': 'SDM.SpeedFast',
+  '2': 'SDM.SpeedVeryFast'
 };
+
+function getSpeedFromValue(speedValue = 0) {
+  const constrained = Math.clamp(speedValue, -3, 2);
+  return SDM.reverseSpeedValues[`${constrained}`];
+}
 
 SDM.characterPropertiesToActiveEffects = [
   'system.initiative_bonus',

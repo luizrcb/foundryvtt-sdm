@@ -9,7 +9,7 @@
   &:hover,
   &:focus {
     color: colors.$c-black;
-    text-shadow: 0 0 10px red;
+    text-shadow: 0 0 10px colors.$c-ultraviolet;
     cursor: pointer;
   }
 }
@@ -60,6 +60,19 @@
   min-height: 500px;
   max-width: 850px;
   max-height: 500px;
+  &.minimized {
+    min-width: 0px;
+    min-height: 0px;
+    max-width: 0px;
+    max-height: 0px;
+  }
+}
+
+.application.sheet.sdm.actor.caravan {
+  min-width: 1500px;
+  min-height: 820px;
+  max-width: 1600px;
+  max-height: 1520px;
   &.minimized {
     min-width: 0px;
     min-height: 0px;
@@ -204,4 +217,38 @@ input[type="checkbox"]::before, input[type="radio"]::before, input[type="checkbo
 
 .not-readied {
   color: colors.$c-not-readied;
+}
+
+section.tab.features {
+  scrollbar-color: colors.$c-ultraviolet !important;
+}
+
+.sheet-tabs {
+  a {
+    &:not(.active) {
+      &:hover {
+        text-shadow: 0 0 8px colors.$c-ultraviolet;
+      }
+    }
+
+    &.active {
+      text-shadow: 0 0 10px colors.$c-ultraviolet;
+    }
+
+  }
+}
+
+.item-controls {
+  a {
+    &:not(.active) {
+      &:hover {
+        text-shadow: 0 0 8px colors.$c-ultraviolet;
+      }
+    }
+
+    &.active {
+      text-shadow: 0 0 10px colors.$c-ultraviolet;
+    }
+
+  }
 }

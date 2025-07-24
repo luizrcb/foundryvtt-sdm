@@ -5,7 +5,7 @@
       <div class='item-name'></div>
       <div class='item-formula'
       >{{localize 'SDM.InventoryItems'}} [{{@root.itemSlotsTaken}}{{#if (
-        ne @root.actor.type 'npc')}}/{{@root.system.item_slots}}{{/if}}]
+        eq @root.actor.type 'character')}}/{{@root.system.item_slots}}{{/if}}]
       </div>
       <div class='item-controls'>
         {{#if @root.editable}}
@@ -23,7 +23,7 @@
       </div>
     </li>
     {{#each items as |item id|}}
-     {{> ($$ "actor/item") item=item }}
+     {{> ($$ "actor/item") item=item actorType=@root.actor.type}}
     {{/each}}
   </ol>
 

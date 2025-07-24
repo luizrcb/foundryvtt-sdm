@@ -2,7 +2,7 @@ import { SdmActor } from './documents/actor.mjs';
 import { SdmCombatant } from './documents/combatant.mjs';
 import { SdmItem } from './documents/item.mjs';
 import { SdmActorSheet } from './sheets/actor-sheet.mjs';
-// import { SdmCaravanSheet } from './sheets/caravan-sheet.mjs';
+import { SdmCaravanSheet } from './sheets/caravan-sheet.mjs';
 import SdmActiveEffectConfig from './app/active-effect-config.mjs';
 import * as models from './data/_module.mjs';
 import { registerHandlebarsHelpers } from './handlebars-helpers.mjs';
@@ -35,7 +35,7 @@ globalThis.sdm = {
   },
   applications: {
     SdmActorSheet,
-    //SdmCaravanSheet,
+    SdmCaravanSheet,
     SdmItemSheet
   },
   utils: {
@@ -48,8 +48,8 @@ Hooks.on('renderChatMessageHTML', (message, html, data) => {
   configureUseHeroDiceButton(message, html, data);
 });
 
-Hooks.on("preUpdateActor", (actor, update) => {
-  if (!actor.testUserPermission(game.user, "OWNER")) return false;
+Hooks.on('preUpdateActor', (actor, update) => {
+  if (!actor.testUserPermission(game.user, 'OWNER')) return false;
 });
 
 Hooks.on('renderSettings', (app, html) => renderSettings(html));
@@ -81,9 +81,11 @@ Hooks.on('getChatMessageContextOptions', (html, options) => {
 
         const damageAmount = message.rolls[0].total;
 
-        await Promise.all(canvas.tokens.controlled.map(t => {
-          return t.actor?.applyDamage(damageAmount,  1);
-        }));
+        await Promise.all(
+          canvas.tokens.controlled.map(t => {
+            return t.actor?.applyDamage(damageAmount, 1);
+          })
+        );
       },
       group: 'damage'
     },
@@ -95,13 +97,15 @@ Hooks.on('getChatMessageContextOptions', (html, options) => {
         if (!message.rolls || !message.rolls.length) return;
         const damageAmount = message.rolls[0].total;
 
-        await Promise.all(canvas.tokens.controlled.map(t => {
-          return t.actor?.applyDamage(damageAmount,  -1);
-        }));
+        await Promise.all(
+          canvas.tokens.controlled.map(t => {
+            return t.actor?.applyDamage(damageAmount, -1);
+          })
+        );
       },
       group: 'damage'
     }
-  )
+  );
 
   return options;
 });
@@ -119,16 +123,16 @@ Hooks.once('init', function () {
   // with the Character/NPC as part of super.defineSchema()
   CONFIG.Actor.dataModels = {
     character: models.SdmCharacter,
-    npc: models.SdmNPC
-    // caravan: models.SdmCaravan
+    npc: models.SdmNPC,
+    caravan: models.SdmCaravan
   };
   CONFIG.Item.documentClass = SdmItem;
   CONFIG.Item.dataModels = {
     gear: models.SdmGear,
     trait: models.SdmTrait,
-    burden: models.SdmBurden
-    // mount: models.SdmMount,
-    // motor: models.SdmMotor
+    burden: models.SdmBurden,
+    mount: models.SdmMount,
+    vehicle: models.SdmVehicle
   };
 
   // Active Effects are never copied to the Actor,
@@ -142,6 +146,11 @@ Hooks.once('init', function () {
   Actors.unregisterSheet('core', sheets.ActorSheet);
   Actors.registerSheet('sdm', SdmActorSheet, {
     types: ['character', 'npc'],
+    makeDefault: true,
+    label: 'SDM.SheetLabels.Actor'
+  });
+  Actors.registerSheet('sdm', SdmCaravanSheet, {
+    types: ['caravan'],
     makeDefault: true,
     label: 'SDM.SheetLabels.Actor'
   });

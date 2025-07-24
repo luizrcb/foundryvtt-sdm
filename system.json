@@ -25,6 +25,9 @@
       },
       "npc": {
         "htmlFields": ["biography", "notes"]
+      },
+      "caravan": {
+        "htmlFields": ["biography", "notes"]
       }
     },
     "Item": {
@@ -35,6 +38,12 @@
         "htmlFields": ["description", "features"]
       },
       "burden": {
+        "htmlFields": ["description", "features"]
+      },
+      "mount": {
+        "htmlFields": ["description", "features"]
+      },
+      "vehicle": {
         "htmlFields": ["description", "features"]
       }
     }

@@ -1,4 +1,4 @@
-import { GearType, PullMode, SizeUnit, TraitType } from '../helpers/constants.mjs';
+import { GearType, ItemType, PullMode, SizeUnit, TraitType } from '../helpers/constants.mjs';
 import { convertToCash, getSlotsTaken } from '../helpers/itemUtils.mjs';
 import { $l10n, capitalizeFirstLetter } from '../helpers/globalUtils.mjs';
 
@@ -22,20 +22,20 @@ export class SdmItem extends Item {
     switch (this.type) {
       case 'mount':
         let mountCapacity = this.system.capacity; //in sacks
-        const { motorId = '', mode = '' } = this.system.pulledLoad;
-        const motor = fromUuidSync(motorId);
+        const { vehicleId = '', mode = '' } = this.system.pulledLoad;
+        const vehicle = fromUuidSync(vehicleId);
 
-        if (!motorId || !motor) {
+        if (!vehicleId || !vehicle) {
           carryWeight = Math.max(mountCapacity - this.system.riders.length, 0);
           break;
         }
 
         break;
-      case 'motor':
-        const motorCapacity = this.system.capacity; //in sacks
+      case 'vehicle':
+        const vehicleCapacity = this.system.capacity; //in sacks
 
         if (this.system.selfPulled) {
-          carryWeight = motorCapacity;
+          carryWeight = vehicleCapacity;
           break;
         }
 
@@ -56,8 +56,8 @@ export class SdmItem extends Item {
           mountsCapacity += mountActor.system.capacity * pullModeMultiplier;
         }
 
-        if (mountsCapacity >= motorCapacity) {
-          carryWeight = motorCapacity;
+        if (mountsCapacity >= vehicleCapacity) {
+          carryWeight = vehicleCapacity;
         }
 
         break;
@@ -68,6 +68,17 @@ export class SdmItem extends Item {
     return convertToCash(carryWeight, SizeUnit.SACKS);
   }
 
+  getCostTitle() {
+    if (this.system.cost) {
+      const costFrequency =  this.system.cost_frequency;
+      const frequencyLabel = costFrequency ?
+        `/${$l10n(`SDM.Frequency${capitalizeFirstLetter(costFrequency)}`)}`: '';
+
+      return ` (${$l10n('SDM.CashSymbol')}${this.system.cost}${frequencyLabel})`;
+    }
+    return '';
+  }
+
   getItemSlots() {
     return getSlotsTaken(this.system);
   }
@@ -75,8 +86,9 @@ export class SdmItem extends Item {
   getArmorTitle() {
     const armorData = this.system?.armor;
     const armorValueLabel = `${$l10n('SDM.ArmorValue')}: ${armorData?.value}`;
-    const armorTypeLabel = `${$l10n('SDM.ArmorType')}: ${$l10n(CONFIG.SDM.armorType[armorData?.type]) ?? ''}`;
-    const title = `${this.name}\r${armorValueLabel} ${armorTypeLabel}`;
+    const armorTypeLabel = `${$l10n('SDM.ArmorType')}: ${
+      $l10n(CONFIG.SDM.armorType[armorData?.type]) ?? ''}`;
+    const title = `${this.name}${this.getCostTitle()}\r${armorValueLabel} ${armorTypeLabel}`;
     return title;
   }
 
@@ -84,8 +96,10 @@ export class SdmItem extends Item {
     const wardData = this.system?.ward;
     const wardValueLabel = `${$l10n('SDM.WardValue')}: ${wardData?.value}`;
     const armorValueLabel = `${$l10n('SDM.ArmorValue')}: ${wardData?.armor}`;
-    const wardTypeLabel = `${$l10n('SDM.WardType')}: ${$l10n(CONFIG.SDM.wardType[wardData?.type]) ?? ''}`;
-    const title = `${this.name}\r${wardValueLabel}${wardData?.armor ? ` ${armorValueLabel}` : ''} ${wardTypeLabel}`;
+    const wardTypeLabel = `${$l10n('SDM.WardType')}: ${$l10n(CONFIG.SDM.wardType[wardData?.type])
+      ?? ''}`;
+    const title = `${this.name}${this.getCostTitle()}\r${wardValueLabel}${wardData?.armor ?
+      ` ${armorValueLabel}` : ''} ${wardTypeLabel}`;
     return title;
   }
 
@@ -99,16 +113,17 @@ export class SdmItem extends Item {
     switch (this.type) {
       case 'gear':
         if (this.system?.size?.unit === SizeUnit.CASH) {
-          title = `${capitalizeFirstLetter($l10n('SDM.UnitCash'))}: € ${this.system.quantity}`;
+          title = `${capitalizeFirstLetter($l10n('SDM.UnitCash'))}: ${
+          $l10n('SDM.CashSymbol')}${this.system.quantity * (this.system.size.value || 1)}`;
         } else {
-          title = `${$l10n('TYPES.Item.gear')}: ${this.name}`;
+          title = `${$l10n('TYPES.Item.gear')}: ${this.name}${this.getCostTitle()}`;
         }
         break;
       case 'trait':
-        title = `${$l10n('TYPES.Item.trait')}: ${this.name}`;
+        title = `${$l10n('TYPES.Item.trait')}: ${this.name}${this.getCostTitle()}`;
         break;
       case 'burden':
-        title = `${$l10n('TYPES.Item.burden')}: ${this.name}`;
+        title = `${$l10n('TYPES.Item.burden')}: ${this.name}${this.getCostTitle()}`;
         break;
     }
 
@@ -122,7 +137,7 @@ export class SdmItem extends Item {
     const powerLevel = powerData?.level || 1;
     const powerCost = Math.ceil(actorPowerCost * powerLevel);
 
-    let title = `${this.name} (${$l10n('SDM.Cost')}: ${powerCost})\r`;
+    let title = `${this.name}${this.getCostTitle()} (${$l10n('SDM.Cost')}: ${powerCost})\r`;
 
     const powerLabel = `${$l10n('SDM.PowerLevelAbbr')}: ${powerLevel}`;
     const rangeLabel = `${$l10n('SDM.PowerRangeAbbr')}: ${powerData?.range}`;
@@ -157,7 +172,7 @@ export class SdmItem extends Item {
     const data = this.system;
     const weaponData = data?.weapon;
 
-    let title = `${this.name}\r${$l10n('SDM.Damage')}: ${weaponData?.damage.base}`;
+    let title = `${this.name}${this.getCostTitle()}\r${$l10n('SDM.Damage')}: ${weaponData?.damage.base}`;
 
     if (weaponData?.versatile) {
       title += `/${weaponData?.damage.versatile}`;
@@ -185,6 +200,8 @@ export class SdmItem extends Item {
       [TraitType.SKILL]: () => this.getSkillTitle(),
       [GearType.WEAPON]: () => this.getWeaponTitle(),
       [GearType.WARD]: () => this.getWardTitle(),
+      [ItemType.MOUNT]: () => this.getDefaultTitle(),
+      [ItemType.VEHICLE]: () => this.getDefaultTitle(),
       '': () => this.getDefaultTitle()
     };
 
