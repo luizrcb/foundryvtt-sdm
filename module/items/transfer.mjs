@@ -53,7 +53,7 @@ export function setupItemTransferSocket() {
         // Process immediately if the sender is the current GM
         const targets = game.actors
           .filter(a => a.type !== ActorType.NPC && a.id !== actorId && !a.items.has(payload.itemId))
-          .map(a => ({ id: a.id, name: a.name }));
+          .map(a => ({ uuid: a.id, name: a.name }));
 
         game.socket.emit('system.sdm', {
           action: 'transferTargetsResponse',
@@ -72,7 +72,7 @@ export function setupItemTransferSocket() {
         .filter(
           a => a.type !== ActorType.NPC && a.id !== sourceActor.id && !a.items.has(payload.itemId)
         )
-        .map(a => ({ id: a.id, name: a.name }));
+        .map(a => ({ uuid: a.uuid, name: a.name }));
 
       game.socket.emit('system.sdm', {
         action: 'transferTargetsResponse',
@@ -276,11 +276,11 @@ export async function openItemTransferDialog(item, sourceActor) {
     const npcCandidates = getEligibleNPCsForTransfer(item.id).map(entry => {
       const name =
         entry.fromScene && entry.token?.name
-          ? '(token) '+ entry.token.name // use custom token name if from scene
+          ? '(token) ' + entry.token.name // use custom token name if from scene
           : entry.actor.name;
 
       return {
-        id: entry.token?.actor?.uuid ?? entry.actor.uuid,
+        uuid: entry.token?.actor?.uuid ?? entry.actor.uuid,
         name,
         isNPC: true,
         fromScene: entry.fromScene
@@ -291,7 +291,7 @@ export async function openItemTransferDialog(item, sourceActor) {
       // GM obtém a lista localmente, sem socket
       playerActors = game.actors
         .filter(a => a.type !== ActorType.NPC && a.id !== sourceActor.id && !a.items.has(item.id))
-        .map(a => a);
+        .map(a => ({ uuid: a.uuid, name: a.name }));
     } else {
       if (!game.users.activeGM) {
         ui.notifications.warn($l10n('SDM.ErrorTransferNoActiveGM'));
@@ -307,7 +307,7 @@ export async function openItemTransferDialog(item, sourceActor) {
             userId === game.user.id
           ) {
             game.socket.off('system.sdm', handler);
-            resolve(targets.map(t => game.actors.get(t.id)).filter(Boolean));
+            resolve(targets);
           }
         };
         game.socket.on('system.sdm', handler);
