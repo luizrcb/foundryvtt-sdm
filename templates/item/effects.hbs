@@ -1,5 +1,5 @@
 {{! Effects Tab }}
-<section class='tab effects {{tab.cssClass}}' data-group='primary' data-tab='effects'>
+<section class='tab effects scrollable {{tab.cssClass}}' data-group='primary' data-tab='effects'>
   <ol class='effects-list'>
     {{#each effects as |section sid|}}
     <li class='effects-header flexrow' data-effect-type='{{section.type}}'>
@@ -14,7 +14,7 @@
         <a class='effect-control' data-action='createDoc' data-document-class='ActiveEffect'
           data-origin="{{@root.item.uuid}}" data-img="icons/svg/aura.svg" {{#if (eq section.type "inactive" )}}
           data-disabled="true" {{else if (eq section.type "temporary" )}} data-duration.rounds="1" {{/if}}
-          title='{{localize "DOCUMENT.Create" type=(localize ' TYPE.Effect')}}'>
+          data-tooltip='{{localize "DOCUMENT.Create" type=(localize ' TYPE.Effect')}}'>
           <i class='fas fa-plus'></i>
           {{localize 'DOCUMENT.New' type=(localize 'TYPE.Effect')}}
         </a>
@@ -32,17 +32,17 @@
         <div class='effect-duration'>{{effect.duration.label}}</div>
         <div class='effect-controls effect-controls flexrow'>
           {{#if @root.editable}}
-          <a class='effect-control' data-action='toggleEffect' title='{{localize "SDM.Effect.Toggle"}}'>
+          <a class='effect-control' data-action='toggleEffect' data-tooltip='{{localize "SDM.Effect.Toggle"}}'>
             <i class='fas {{#if effect.disabled}}fa-check{{else}}fa-times{{/if}}'></i>
           </a>
           {{/if}}
           <a class='effect-control' data-action='viewDoc' data-document-class='ActiveEffect'
-            title='{{localize "DOCUMENT.Update" type=(localize ' TYPE.Effect')}}'>
+            data-tooltip='{{localize "DOCUMENT.Update" type=(localize ' TYPE.Effect')}}'>
             <i class='fas fa-edit'></i>
           </a>
           {{#if @root.editable}}
           <a class='effect-control' data-action='deleteDoc' data-document-class='ActiveEffect'
-            title='{{localize "DOCUMENT.Delete" type=(localize ' TYPE.Effect')}}'>
+            data-tooltip='{{localize "DOCUMENT.Delete" type=(localize ' TYPE.Effect')}}'>
             <i class='fas fa-trash'></i>
           </a>
           {{/if}}

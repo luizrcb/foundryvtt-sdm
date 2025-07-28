@@ -1,0 +1,134 @@
+<div class="power-container">
+  <!-- Power Navigation Controls -->
+  <!-- Current Power Display -->
+  {{#if (gt powerCount 0)}}
+    {{#each item.system.powers as | power |}}
+    <div {{#if (ne @index @root.system.powers_current_index)}}style="display: none;" {{/if}}
+    >
+      <div class="grid grid-3col">
+        <div class="resource">
+          <img
+            class='profile-img'
+            style="aspect-ratio: auto;"
+            width="150"
+            height="120"
+            src='{{power.img}}'
+            data-edit="{{concat 'system.powers.' @index '.img'}}"
+            data-index='{{@index}}'
+            data-action='onEditPowerImage'
+            data-tooltip='{{power.name}}'
+            name="{{concat 'system.powers.' @index '.img'}}"
+          />
+          {{!-- <input type="hidden" name="{{concat 'system.powers.' @index '.img'}}" value="{{power.img}}" /> --}}
+        </div>
+        <div class="grid grid-2col">
+          <div class='resource'>
+          </div>
+
+          <div class='resource rollable flex-group-center' data-action="deletePower" data-index="{{@index}}">
+            <label class='resource-label'>
+              {{localize 'SDM.DeletePower'}}
+            </label>
+            <div class='resource-content'>
+              <i class="fas fa-trash"></i>
+            </div>
+          </div>
+
+           <div class='resource'>
+            <label class='resource-label'>
+              {{localize 'SDM.PowerName'}}
+            </label>
+            <div class='resource-content'>
+              <input type='text' name="{{concat 'system.powers.' @index '.name'}}" value='{{power.name}}' />
+            </div>
+          </div>
+
+          <div class='resource'>
+            <label class='resource-label'>
+              {{localize 'SDM.PowerLevel'}}
+            </label>
+            <div class='resource-content'>
+              <input type='text' name="{{concat 'system.powers.' @index '.level'}}" value='{{power.level}}' data-dtype='Number' />
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-3col">
+
+         <div class='resource grid-span-3'>
+          <label class='resource-label'>
+            {{localize 'SDM.PowerDescription'}}
+          </label>
+          <div class='resource-content'>
+            <input type='text' name="{{concat 'system.powers.' @index '.description'}}" value='{{power.description}}' />
+          </div>
+        </div>
+
+
+        <div class='resource'>
+          <label class='resource-label'>
+            {{localize 'SDM.PowerRange'}}
+          </label>
+          <div class='resource-content'>
+            <input type='text' name="{{concat 'system.powers.' @index '.range'}}" value='{{power.range}}' />
+          </div>
+        </div>
+
+        <div class='resource'>
+          <label class='resource-label'>
+            {{localize 'SDM.PowerTarget'}}
+          </label>
+          <div class='resource-content'>
+            <input type='text' name="{{concat 'system.powers.' @index '.target'}}" value='{{power.target}}' />
+          </div>
+        </div>
+
+        <div class='resource'>
+          <label class='resource-label'>
+            {{localize 'SDM.PowerDuration'}}
+          </label>
+          <div class='resource-content'>
+            <input type='text' name="{{concat 'system.powers.' @index '.duration'}}" value='{{power.duration}}' />
+          </div>
+        </div>
+
+        <div class='resource'>
+            <label class='resource-label' for="{{concat 'system.powers.' @index '.default_ability'}}">
+              {{localize 'SDM.AbilityModifier'}}
+            </label>
+            <div class='resource-content'>
+              <select name="{{concat 'system.powers.' @index '.default_ability'}}" id="{{concat 'system.powers.' @index '.default_ability'}}">
+                {{selectOptions @root.config.abilities localize=true selected=power.default_ability blank=''}}
+              </select>
+            </div>
+        </div>
+
+        <div class='resource'>
+          <label class='resource-label'>
+            {{localize 'SDM.PowerRollFormula'}}
+          </label>
+          <div class='resource-content'>
+            <input type='text' name="{{concat 'system.powers.' @index '.roll_formula'}}" value='{{power.roll_formula}}' />
+          </div>
+        </div>
+
+        <div class='resource'>
+          <label class='resource-label'>
+            {{localize 'SDM.PowerOvercharge'}}
+          </label>
+          <div class='resource-content grid-span-2 flexcol'>
+            <textarea class='flexcol' name="{{concat 'system.powers.' @index '.overcharge'}}" rows='2'>{{power.overcharge}}
+            </textarea>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    {{/each}}
+  {{else}}
+    <div class="no-powers">
+      <p>{{localize "SDM.NoPowers"}} <i class="fas fa-spider-web"></i></p>
+    </div>
+  {{/if}}
+</div>

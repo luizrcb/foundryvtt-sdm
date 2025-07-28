@@ -10,6 +10,7 @@
   --sdm-c-groove: #eeede0;
   --sdm-c-border: rgb(51, 51, 51);
   --sdm-c-font: rgb(102, 102, 102);
+  --sdm-c-ligh-border: #b5b3a4;
   --sdm-c-violet: #7F00FF;
   --sdm-c-ultraviolet: #b84eff;
 
@@ -45,6 +46,7 @@
   --sdm-c-black: #ffffff;
   --sdm-c-groove: rgb(159, 132, 117);
   --sdm-c-border: rgb(204, 204, 204);
+  --sdm-c-ligh-border: rgb(159, 132, 117);
   --sdm-c-font: rgb(230, 230, 230);
   --sdm-c-violet: rgb(200, 100, 255);
   --sdm-c-ultraviolet: rgb(255, 150, 255);
@@ -79,6 +81,7 @@ $c-white: var(--sdm-c-white);
 $c-black: var(--sdm-c-black);
 $c-groove: var(--sdm-c-groove);
 $c-border: var(--sdm-c-border);
+$c-light-border: var(--sdm-c-ligh-border);
 $c-font: var(--sdm-c-font);
 $c-violet: var(--sdm-c-violet);
 $c-ultraviolet: var(--sdm-c-ultraviolet);

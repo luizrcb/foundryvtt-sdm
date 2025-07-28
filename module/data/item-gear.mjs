@@ -28,6 +28,9 @@ export default class SdmGear extends SdmItemBase {
     });
 
     schema.power = new fields.EmbeddedDataField(PowerDataModel);
+    schema.powers_current_index = new fields.NumberField({ required: true, nullable: false, integer: true, initial: 0, min: 0});
+
+    schema.max_powers = new fields.NumberField({ required: true, nullable: false, integer: true, initial: 5, min: 0 });
 
     schema.powers = new fields.ArrayField(new fields.EmbeddedDataField(PowerDataModel));
 

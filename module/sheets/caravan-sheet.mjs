@@ -9,7 +9,7 @@ import {
   onItemUpdate
 } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
-import { openItemTransferDialog } from '../items/transferItem.mjs';
+import { openItemTransferDialog } from '../items/transfer.mjs';
 
 const { api, sheets } = foundry.applications;
 const { DialogV2 } = foundry.applications.api;
@@ -39,7 +39,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       resizable: true
     },
     actions: {
-      createDoc: this._createDoc,
+      createDoc: this._createAndViewDoc,
       deleteDoc: this._deleteDoc,
       onEditImage: this._onEditImage,
       roll: this._onRoll,
@@ -116,7 +116,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     const content = `
       <div class="custom-roll-modal">
         <h2>Roll for ${title}</h2>
-        <h2>{{localize 'SDM.RollTitle' prefix='' title='${title}'}}</h2>
+        <h2>{{localize 'SDM.RollTitle' prefix='' data-tooltip='${title}'}}</h2>
         <form class="custom-roll-form">
         ${
           rolledFrom !== 'Abilities'
@@ -417,14 +417,12 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     function chunkBySlots(items, maxSlots = 10) {
       // First sort the items (using your comparator)
       const sortedItems = [...items].sort((a, b) => (a.sort || 0) - (b.sort || 0));
-      console.log(items.map(i => i.sort || 0))
       const chunks = [];
       let currentChunk = [];
       let currentSlots = 0;
 
       for (const item of sortedItems) {
         const slots = item.system.slots_taken || 1;
-
         if (currentSlots + slots > maxSlots) {
           chunks.push(currentChunk);
           currentChunk = [item];
@@ -437,7 +435,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
 
       // Push the final chunk (even if empty)
       chunks.push(currentChunk);
-
+      if (!chunks[0].length) delete chunks[0];
       return chunks;
     }
 
@@ -445,7 +443,6 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     const chunkedLists = chunkBySlots(filteredItems);
     // Sort then assign
     context.cargo = chunkedLists;
-    console.log(chunkedLists);
     context.transport = transportItems;
   }
 
@@ -541,6 +538,33 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       return false;
     }
     return true;
+  }
+
+  _checkActorWeightLimit(additionalSlots = 0, itemType) {
+    if (this.actor.type === ActorType.NPC) {
+      return true;
+    }
+
+    if (this.actor.type === ActorType.CARAVAN) {
+      return true;
+    }
+
+    const itemSlotsTaken = this.actor.system.item_slots_taken;
+    const actorItemSlots = this.actor.system.item_slots;
+    const traitSlotsTaken = this.actor.system.trait_slots_taken;
+    const actorTraitSlots = this.actor.system.trait_slots;
+
+    if (itemType === ItemType.GEAR) {
+      if (itemSlotsTaken + additionalSlots <= actorItemSlots) return true;
+    } else if (itemType === ItemType.TRAIT) {
+      if (traitSlotsTaken + additionalSlots <= actorTraitSlots) return true;
+    }
+
+    const actorBurdenPenalty = this.actor.system.burden_penalty || 0;
+    const newBurdenPenalTy = additionalSlots + actorBurdenPenalty;
+    const maxBurdenSlots = this.actor.system.burden_slots;
+
+    return newBurdenPenalTy <= maxBurdenSlots;
   }
 
   _checkCarriedWeight(item, updateData) {
@@ -655,7 +679,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
   /**
    * Handle changing a Document's image.
    *
-   * @this SdmActorSheet
+   * @this SdmCaravanSheet
    * @param {PointerEvent} event   The originating click event
    * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
    * @returns {Promise}
@@ -681,7 +705,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
   /**
    * Renders an embedded document's sheet
    *
-   * @this SdmActorSheet
+   * @this SdmCaravanSheet
    * @param {PointerEvent} event   The originating click event
    * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
    * @protected
@@ -694,7 +718,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
   /**
    * Handles item deletion
    *
-   * @this SdmActorSheet
+   * @this SdmCaravanSheet
    * @param {PointerEvent} event   The originating click event
    * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
    * @protected
@@ -711,10 +735,11 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     if (proceed) await doc.delete();
   }
 
+
   /**
    * Handle creating a new Owned Item or ActiveEffect for the actor using initial data defined in the HTML dataset
    *
-   * @this SdmActorSheet
+   * @this SdmCaravanSheet
    * @param {PointerEvent} event   The originating click event
    * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
    * @private
@@ -734,13 +759,26 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       foundry.utils.setProperty(docData, dataKey, value);
     }
 
-    await docCls.create(docData, { parent: this.actor });
+    return await docCls.create(docData, { parent: this.actor });
+  }
+
+  /**
+   * Handles creating a new Owned Item and already open it for Editing
+   *
+   * @this SdmCaravanSheet
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @protected
+   */
+  static async _createAndViewDoc(event, target) {
+    const newDoc = await SdmCaravanSheet._createDoc.call(this, event, target);
+    newDoc.sheet.render(true);
   }
 
   /**
    * Determines effect parent to pass to helper
    *
-   * @this SdmActorSheet
+   * @this SdmCaravanSheet
    * @param {PointerEvent} event   The originating click event
    * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
    * @private
@@ -753,7 +791,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
   /**
    * Handle clickable rolls.
    *
-   * @this SdmActorSheet
+   * @this SdmCaravanSheet
    * @param {PointerEvent} event   The originating click event
    * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
    * @protected

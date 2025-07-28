@@ -134,6 +134,12 @@ export default class SdmCharacter extends SdmActorBase {
       min: 0
     });
 
+    schema.packed_item_slots_taken = new fields.NumberField({
+      ...requiredInteger,
+      initial: 0,
+      min: 0
+    });
+
     schema.trait_slots_taken = new fields.NumberField({
       ...requiredInteger,
       initial: 0,
@@ -340,6 +346,7 @@ export default class SdmCharacter extends SdmActorBase {
     data.burden_penalty_bonus = this.burden_penalty_bonus;
     data.item_slots = this.item_slots;
     data.item_slots_taken = this.item_slots_taken;
+    data.packed_item_slots_bonus = this.packed_item_slots_bonus;
     data.trait_slots = this.trait_slots;
     data.trait_slots_taken = this.trait_slots_taken;
     data.burden_slots = this.burden_slots;

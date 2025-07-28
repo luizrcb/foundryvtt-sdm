@@ -1,6 +1,6 @@
 import { createChatMessage } from '../helpers/chatUtils.mjs';
 import { ActorType, AttackTarget, RollMode, RollType } from '../helpers/constants.mjs';
-import { $l10n, capitalizeFirstLetter } from '../helpers/globalUtils.mjs';
+import { $l10n, capitalizeFirstLetter, toPascalCase } from '../helpers/globalUtils.mjs';
 
 export default class SDMRoll {
   constructor({
@@ -186,8 +186,8 @@ export default class SDMRoll {
     const rollMode =
       this.mode === RollMode.NORMAL ? '' : $l10n(`SDM.Roll${capitalizeFirstLetter(this.mode)}Abbr`);
     const versatileLabel = $l10n('SDM.FeatureVersatile');
-
-    const parts = [`[${$l10n(`SDM.${capitalizeFirstLetter(this.type)}`)}]`, this.from];
+    const type = this.type === 'power_container' ? 'power' : this.type;
+    const parts = [`[${$l10n(`SDM.${toPascalCase(type)}`)}]`, this.from];
     if (this.type === RollType.ATTACK && this.attackTarget !== AttackTarget.PHYSICAL) {
       parts.push(`(${$l10n('SDM.Attack' + capitalizeFirstLetter(this.attackTarget))})`);
     }

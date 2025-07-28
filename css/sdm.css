@@ -9,6 +9,7 @@
   --sdm-c-groove: #eeede0;
   --sdm-c-border: rgb(51, 51, 51);
   --sdm-c-font: rgb(102, 102, 102);
+  --sdm-c-ligh-border: #b5b3a4;
   --sdm-c-violet: #7F00FF;
   --sdm-c-ultraviolet: #b84eff;
   --sdm-c-rust: #cc2f00;
@@ -40,6 +41,7 @@
   --sdm-c-black: #ffffff;
   --sdm-c-groove: rgb(159, 132, 117);
   --sdm-c-border: rgb(204, 204, 204);
+  --sdm-c-ligh-border: rgb(159, 132, 117);
   --sdm-c-font: rgb(230, 230, 230);
   --sdm-c-violet: rgb(200, 100, 255);
   --sdm-c-ultraviolet: rgb(255, 150, 255);
@@ -83,6 +85,7 @@
   --sdm-c-groove: #eeede0;
   --sdm-c-border: rgb(51, 51, 51);
   --sdm-c-font: rgb(102, 102, 102);
+  --sdm-c-ligh-border: #b5b3a4;
   --sdm-c-violet: #7F00FF;
   --sdm-c-ultraviolet: #b84eff;
   --sdm-c-rust: #cc2f00;
@@ -114,6 +117,7 @@
   --sdm-c-black: #ffffff;
   --sdm-c-groove: rgb(159, 132, 117);
   --sdm-c-border: rgb(204, 204, 204);
+  --sdm-c-ligh-border: rgb(159, 132, 117);
   --sdm-c-font: rgb(230, 230, 230);
   --sdm-c-violet: rgb(200, 100, 255);
   --sdm-c-ultraviolet: rgb(255, 150, 255);
@@ -378,6 +382,22 @@ section.tab.features {
   text-shadow: 0 0 10px var(--sdm-c-ultraviolet);
 }
 
+.items-list .item:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.02); /* Light gray for even items */
+}
+
+.items-list .item:nth-child(odd) {
+  background-color: rgba(0, 0, 0, 0.05); /* Slightly darker for odd items */
+}
+
+.theme-dark .items-list .item:nth-child(even) {
+  background-color: rgba(255, 255, 255, 0.02) !important;
+}
+
+.theme-dark .items-list .item:nth-child(odd) {
+  background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
 .grid,
 .grid-2col {
   display: grid;
@@ -599,6 +619,7 @@ section.tab.features {
   --sdm-c-groove: #eeede0;
   --sdm-c-border: rgb(51, 51, 51);
   --sdm-c-font: rgb(102, 102, 102);
+  --sdm-c-ligh-border: #b5b3a4;
   --sdm-c-violet: #7F00FF;
   --sdm-c-ultraviolet: #b84eff;
   --sdm-c-rust: #cc2f00;
@@ -629,6 +650,7 @@ section.tab.features {
   --sdm-c-black: #ffffff;
   --sdm-c-groove: rgb(159, 132, 117);
   --sdm-c-border: rgb(204, 204, 204);
+  --sdm-c-ligh-border: rgb(159, 132, 117);
   --sdm-c-font: rgb(230, 230, 230);
   --sdm-c-violet: rgb(200, 100, 255);
   --sdm-c-ultraviolet: rgb(255, 150, 255);
@@ -734,6 +756,7 @@ section.tab.features {
   --sdm-c-groove: #eeede0;
   --sdm-c-border: rgb(51, 51, 51);
   --sdm-c-font: rgb(102, 102, 102);
+  --sdm-c-ligh-border: #b5b3a4;
   --sdm-c-violet: #7F00FF;
   --sdm-c-ultraviolet: #b84eff;
   --sdm-c-rust: #cc2f00;
@@ -764,6 +787,7 @@ section.tab.features {
   --sdm-c-black: #ffffff;
   --sdm-c-groove: rgb(159, 132, 117);
   --sdm-c-border: rgb(204, 204, 204);
+  --sdm-c-ligh-border: rgb(159, 132, 117);
   --sdm-c-font: rgb(230, 230, 230);
   --sdm-c-violet: rgb(200, 100, 255);
   --sdm-c-ultraviolet: rgb(255, 150, 255);
@@ -897,7 +921,7 @@ section.tab.features {
   text-align: left;
 }
 .sdm .item-formula {
-  flex: 0 0 120px;
+  flex: 0 0 125px;
   padding: 0 8px;
 }
 .sdm .switch {
@@ -965,6 +989,18 @@ section.tab.features {
 .sdm .saveIcon {
   font-size: 16px;
 }
+.sdm .list-border {
+  border: 1px solid var(--sdm-c-ligh-border);
+}
+.sdm .items-list .item.items-header.caravan-item-header:last-child {
+  border-bottom: 2px groove var(--sdm-c-groove);
+}
+.sdm li.item {
+  margin-bottom: 0;
+}
+.sdm .items-list .item:hover {
+  background-color: rgba(184, 78, 255, 0.1) !important; /* Your ultraviolet color with transparency */
+}
 .sdm :root {
   --sdm-c-dark: #191813;
   --sdm-c-faint: #c9c7b8;
@@ -975,6 +1011,7 @@ section.tab.features {
   --sdm-c-groove: #eeede0;
   --sdm-c-border: rgb(51, 51, 51);
   --sdm-c-font: rgb(102, 102, 102);
+  --sdm-c-ligh-border: #b5b3a4;
   --sdm-c-violet: #7F00FF;
   --sdm-c-ultraviolet: #b84eff;
   --sdm-c-rust: #cc2f00;
@@ -1005,6 +1042,7 @@ section.tab.features {
   --sdm-c-black: #ffffff;
   --sdm-c-groove: rgb(159, 132, 117);
   --sdm-c-border: rgb(204, 204, 204);
+  --sdm-c-ligh-border: rgb(159, 132, 117);
   --sdm-c-font: rgb(230, 230, 230);
   --sdm-c-violet: rgb(200, 100, 255);
   --sdm-c-ultraviolet: rgb(255, 150, 255);
@@ -1157,6 +1195,7 @@ section.tab.features {
   --sdm-c-groove: #eeede0;
   --sdm-c-border: rgb(51, 51, 51);
   --sdm-c-font: rgb(102, 102, 102);
+  --sdm-c-ligh-border: #b5b3a4;
   --sdm-c-violet: #7F00FF;
   --sdm-c-ultraviolet: #b84eff;
   --sdm-c-rust: #cc2f00;
@@ -1187,6 +1226,7 @@ section.tab.features {
   --sdm-c-black: #ffffff;
   --sdm-c-groove: rgb(159, 132, 117);
   --sdm-c-border: rgb(204, 204, 204);
+  --sdm-c-ligh-border: rgb(159, 132, 117);
   --sdm-c-font: rgb(230, 230, 230);
   --sdm-c-violet: rgb(200, 100, 255);
   --sdm-c-ultraviolet: rgb(255, 150, 255);
@@ -1250,5 +1290,3 @@ section.tab.features {
   top: var(--sdm-top-edit);
   left: var(--sdm-left-edit);
 }
-
-/*# sourceMappingURL=sdm.css.map */

@@ -1,18 +1,17 @@
 {{! Features Tab }}
 <section class='tab inventory scrollable {{tab.cssClass}}' data-group='primary' data-tab='inventory'>
-  <div class="grid grid-6col">
-    {{#each cargo as |items|}}
-    <div class="main grid-span-1">
+  <div class="grid grid-5col">
+    <div class="main grid-span-5">
       <section>
         <ol class='items-list'>
-          <li class='item flexrow items-header'>
+          <li class='item flexrow items-header caravan-item-header'>
             <div class='item-name'></div>
-            <div class='item-formula'>Sack {{addOne @index}}</div>
+            <div class='item-formula'></div>
             <div class='item-controls'>
               {{#if @root.editable}}
               <a
                 class='item-control item-create'
-                title="{{localize 'DOCUMENT.Create' type=(localize 'TYPE.Item')}}"
+                data-tooltip="{{localize 'DOCUMENT.Create' type=(localize 'TYPE.Item')}}"
                 data-action='createDoc'
                 data-document-class='Item'
                 data-type='gear'
@@ -23,11 +22,19 @@
               {{/if}}
             </div>
           </li>
-          {{#each items as |item id|}}
-            {{> ($$ "actor/item") item=item actorType=@root.actor.type}}
-          {{/each}}
+         </ol>
+       </section>
+    </div>
+    {{#each cargo as |items|}}
+    <div class="main grid-span-1 list-border">
+      <div class="flex-group-center"><span>Sack {{addOne @index}}</span></div>
+      <section>
+        <ol class='items-list list-border'>
+        {{#each items as |item id|}}
+          {{> ($$ "actor/item") item=item actorType=@root.actor.type}}
+        {{/each}}
         </ol>
-      </section>
+       </section>
     </div>
     {{/each}}
   </div>

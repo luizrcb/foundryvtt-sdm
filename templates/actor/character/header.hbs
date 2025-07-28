@@ -3,13 +3,13 @@
   <header class='sheet-header'>
     <div class="edit-mode">
       <label class="switch edit-mode-toggle sdm" for="toggleMode-{{actor._id}}"
-        title="{{localize (ifThen isEditMode 'SDM.SheetEditMode' 'SDM.SheetPlayMode')}}">
+        data-tooltip="{{localize (ifThen isEditMode 'SDM.SheetEditMode' 'SDM.SheetPlayMode')}}">
         <input id="toggleMode-{{actor._id}}" type="checkbox" data-action="toggleMode" {{checked @root.isEditMode}}/>
         <span class="slider round"><i class="fas fa-cog"></i></span>
       </label>
     </div>
     <div class="flexcol flex-between flex-center">
-      <img class='profile-img' src='{{actor.img}}' data-edit='img' data-action='onEditImage' title='{{actor.name}}'
+      <img class='profile-img' src='{{actor.img}}' data-edit='img' data-action='onEditImage' data-tooltip='{{actor.name}}'
         height='100' width='100' />
         {{#if (or isEditMode (not @root.editable))}}
         <div class="flexcol flex-group-center mb-12">
@@ -20,7 +20,7 @@
           <label class='resource-label'>{{localize 'SDM.FieldHeroDice'}}</label>
           <div class='resource-content flexrow height-32'>
             {{system.hero_dice.value}} / {{system.hero_dice.max}}
-            <i class="fas fa-dice-{{@root.heroDiceType}} sheet-hero-dice" title="{{@root.heroDiceType}}"></i>
+            <i class="fas fa-dice-{{@root.heroDiceType}} sheet-hero-dice" data-tooltip="{{@root.heroDiceType}}"></i>
           </div>
         </div>
       </div>
@@ -145,15 +145,15 @@
               </label>
             </div>
             <div class='resource-content flexrow align-center height-32'>
-              <div title="{{localize 'SDM.FieldPhysicalDefense'}}">
+              <div data-tooltip="{{localize 'SDM.FieldPhysicalDefense'}}">
                 <i class="fas fa-shield-alt"></i>
                 <span id="system.defense">{{system.defense}}</span>
               </div>
-              <div title="{{localize 'SDM.FieldMentalDefense'}}">
+              <div data-tooltip="{{localize 'SDM.FieldMentalDefense'}}">
                 <i class="fas fa-brain-circuit"></i>
                 <span id="system.mental_defense">{{system.mental_defense}}</span>
               </div>
-              <div title="{{localize 'SDM.FieldSocialDefense'}}">
+              <div data-tooltip="{{localize 'SDM.FieldSocialDefense'}}">
                 <i class="fas fa-crown"></i>
                 <span id="system.social_defense">{{system.social_defense}}</span>
               </div>
@@ -233,15 +233,15 @@
               {{#if (or @root.isEditMode (not @root.editable))}}
               <div class='ability flexrow flex-group-center'>
                 <span class='resource-label' data-label='{{localize (lookup @root.config.abilities key)}}'
-                  title='{{localize (lookup @root.config.abilities key)}}'>
+                  data-tooltip='{{localize (lookup @root.config.abilities key)}}'>
                   {{toUpperCase (localize (lookup @root.config.abilityAbbreviations key))}}
                 </span>
                 <input type='text' name='system.abilities.{{key}}.base' value='{{ability.base}}'
                   class="ability-score ability-full" data-dtype='Number'
-                  title="{{localize 'SDM.AbilityBaseValue' ability=(localize (lookup @root.config.abilities key))}}" />
+                  data-tooltip="{{localize 'SDM.AbilityBaseValue' ability=(localize (lookup @root.config.abilities key))}}" />
                 <input type='text' name='system.abilities.{{key}}.current' value='{{ability.current}}'
                   class="ability-score" data-dtype='Number'
-                  title="{{localize 'SDM.AbilityCurrent' ability=(localize (lookup @root.config.abilities key))}}" />
+                  data-tooltip="{{localize 'SDM.AbilityCurrent' ability=(localize (lookup @root.config.abilities key))}}" />
                 <div class='flexrow'>
                   <i class="fas {{lookup @root.config.abilitySaveIcons key}} saveIcon sdm-icon"></i>
                 </div>
@@ -253,13 +253,13 @@
                     data-action='roll' data-context='rollable'
                     data-ability="{{key}}" data-type="ability"
                     data-label='{{localize (lookup @root.config.abilities key)}}'
-                    title='{{localize (lookup @root.config.abilities key)}}'>
+                    data-tooltip='{{localize (lookup @root.config.abilities key)}}'>
                     {{toUpperCase (localize (lookup @root.config.abilityAbbreviations key))}}
                   </span>
                   {{#if (eq key 'cha')}}
                   <i
                     class="fa-duotone fa-theater-masks rollable {{lookup @root.config.abilityColors @index}}"
-                    title="{{localize 'SDM.ReactionRoll'}}"
+                    data-tooltip="{{localize 'SDM.ReactionRoll'}}"
                     data-action="reactionRoll"  data-context='rollable'
                   ></i>
                   {{/if}}
@@ -271,16 +271,16 @@
                   value='{{ability.full}}'
                   class="ability-score ability-full"
                   data-dtype='Number'
-                  title="{{localize 'SDM.AbilityFull' ability=(localize (lookup @root.config.abilities key))}}&#10;{{
-                  localize 'SDM.AbilityBase'}} = {{ability.base}}&#10;{{localize 'SDM.AbilityBonus'}} = {{ability.bonus}}" disabled />
+                  data-tooltip="{{localize 'SDM.AbilityFull' ability=(localize (lookup @root.config.abilities key))}}<br/>{{
+                  localize 'SDM.AbilityBase'}}: {{ability.base}}<br/>{{localize 'SDM.AbilityBonus'}}: {{ability.bonus}}" disabled />
                 <input type='text' name='system.abilities.{{key}}.current' value='{{ability.current}}'
                   class="ability-score" data-dtype='Number'
-                  title="{{localize 'SDM.AbilityCurrent' ability=(localize (lookup @root.config.abilities key))}}" />
+                  data-tooltip="{{localize 'SDM.AbilityCurrent' ability=(localize (lookup @root.config.abilities key))}}" />
                 <div
                   class='rollable flexrow'
                   data-ability='{{key}}'
                   data-action='rollSavingThrow'
-                  title="{{localize 'SDM.SavingThrowRoll' ability=(localize (lookup @root.config.abilities key))}}">
+                  data-tooltip="{{localize 'SDM.SavingThrowRoll' ability=(localize (lookup @root.config.abilities key))}}">
                   <i class="fas {{lookup @root.config.abilitySaveIcons key}} saveIcon {{lookup @root.config.abilityColors @index}}"></i>
                 </div>
               </div>
@@ -297,7 +297,7 @@
           <div class='resources grid grid-2col'>
             <div
               class="ability grid-span-1 flexcol align-center"
-              title="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackMelee')}}">
+              data-tooltip="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackMelee')}}">
               <div class='resource-label'>
                 <div>{{localize 'SDM.AttackMelee'}}</div>
               </div>
@@ -307,7 +307,7 @@
             </div>
             <div
               class="ability grid-span-1 flexcol align-center"
-              title="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackRanged')}}">
+              data-tooltip="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackRanged')}}">
               <div class='resource-label'>
                 <div>{{localize 'SDM.AttackRanged'}}</div>
               </div>
@@ -317,7 +317,7 @@
             </div>
             <div
               class="ability grid-span-1 flexcol align-center"
-              title="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackFantascience')}}">
+              data-tooltip="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackFantascience')}}">
               <div class='resource-label'>
                 <div>{{localize 'SDM.AttackFantascience'}}</div>
               </div>
@@ -331,7 +331,7 @@
             </div>
             <div
               class="ability grid-span-1 flexcol align-center"
-              title="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackOldtech')}}">
+              data-tooltip="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackOldtech')}}">
               <div class='resource-label'>
                 <div>{{localize 'SDM.AttackOldtech'}}</div>
               </div>
@@ -339,7 +339,7 @@
               <i class="fas fa-gear rollable" data-action='updateAttack' data-attack="oldtech"></i>
               {{/if}}
             </div>
-            <div class="ability grid-span-1" title="{{localize 'SDM.PowerCostHint'}}">
+            <div class="ability grid-span-1" data-tooltip="{{localize 'SDM.PowerCostHint'}}">
               <label for="system.power_cost" class='resource-label'>
                 {{localize 'SDM.PowerCost'}}
               </label>

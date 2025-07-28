@@ -9,12 +9,19 @@
       </div>
     </div>
     {{/if}}
-    {{#if (and (ne type 'ability') (ne type 'save') isCharacterActor)}}
+    {{#if (eq type 'power_container')}}
+     <div class="form-group">
+      <label for="powerIndex">{{localize 'SDM.Power'}}</label>
+      <select name="powerIndex" id="powerIndex">
+        {{selectOptions powerOptions valueAttr="index" labelAttr="name" selected=powerIndex}}
+      </select>
+    </div>
+    {{/if}}
+    {{#if (and (ne type 'ability') (ne type 'save') (ne type 'power_container') isCharacterActor)}}
     <div class="form-group">
       <label>{{localize 'SDM.Ability'}}</label>
       <select name="selectedAbility">
-        <option value=""></option>
-        {{selectOptions abilities localize=true selected=ability}}
+        {{selectOptions abilities localize=true selected=ability blank=""}}
       </select>
     </div>
     {{/if}}
@@ -22,8 +29,7 @@
     <div class="form-group mt-10">
       <label for="selectedSkill">{{localize 'SDM.Skill'}}</label>
       <select name="selectedSkill" id="selectedSkill">
-        <option value=""></option>
-        {{selectOptions availableSkills valueAttr="id" labelAttr="label" selected=selectedSkill sort=true}}
+        {{selectOptions availableSkills valueAttr="id" labelAttr="label" selected=selectedSkill sort=true blank=""}}
       </select>
     </div>
     {{/if}}
@@ -35,8 +41,7 @@
     <div class="form-group mt-10">
       <label for="multiplier">{{localize 'SDM.RollMultiplier'}}</label>
       <select name="multiplier" id="multiplier">
-        <option value=""></option>
-        {{selectOptions multiplierOptions}}
+        {{selectOptions multiplierOptions blank=""}}
       </select>
     </div>
     {{/if}}
@@ -52,7 +57,7 @@
     <div class="form-group mt-10">
       <label for="shouldExplode">{{localize "SDM.ExplodingDice"}}</label>
       <input id="shouldExplode" type="checkbox" name="shouldExplode"
-        {{#if (and (ne type 'damage') (ne type 'power'))}}checked{{/if}}
+        {{#if (and (ne type 'damage') (ne type 'power') (ne type 'power_container'))}}checked{{/if}}
       />
     </div>
     {{/if}}

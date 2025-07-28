@@ -14,7 +14,8 @@ const templatesToLoad = [
   $$('item/gear/header'),
   $$('item/trait/header'),
   $$('item/burden/header'),
-  $$('item/power')
+  $$('item/power'),
+  $$('item/power_container'),
 ];
 
 export const preloadHandlebarsTemplates = async function () {

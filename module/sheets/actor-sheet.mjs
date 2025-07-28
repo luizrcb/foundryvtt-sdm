@@ -69,7 +69,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       resizable: true
     },
     actions: {
-      createDoc: this._createDoc,
+      createDoc: this._createAndViewDoc,
       deleteDoc: this._deleteDoc,
       heroicHealing: this._onHeroHealing,
       onEditImage: this._onEditImage,
@@ -168,7 +168,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       attack = '',
       versatile = false,
       versatileFormula = '',
-      bonusDamage = ''
+      bonusDamage = '',
+      powerOptions = [],
+      powerIndex = 0,
     },
     isShift = false
   ) {
@@ -178,6 +180,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const isAbility = type === RollType.ABILITY;
     const isPower = type === RollType.POWER;
     const isCharacter = this.actor.type === ActorType.CHARACTER;
+    const isPowerContainer = type === RollType.POWER_CONTAINER;
 
     let targetActor;
 
@@ -189,6 +192,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     if (isDamage) rollTitlePrefix = $l10n('SDM.Damage');
     if (isAttack) rollTitlePrefix = $l10n('SDM.Attack');
     if (isAbility) rollTitlePrefix = $l10n('SDM.Ability');
+    if (isPowerContainer) rollTitlePrefix = $l10n('SDM.PowerContainer');
     if (rollTitlePrefix !== '') rollTitlePrefix += ' ';
 
     const title = from;
@@ -201,7 +205,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const isCharacterActor = this.actor.type === ActorType.CHARACTER;
     const language = game.i18n.lang;
     let selectedSkill = isAttack ? actorAttack?.favorite_skill : '';
-    let shouldExplode = !isDamage && !isPower;
+    let shouldExplode = !isDamage && !isPower && !isPowerContainer;
     let selectedAbility = isAttack ? actorAttack?.default_ability : ability;
 
     const template = await renderTemplate(templatePath('custom-roll-dialog'), {
@@ -216,10 +220,12 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       rollModes: CONFIG.SDM.rollMode,
       type,
       isCharacterActor,
-      attackTargetChoices: CONFIG.SDM.attackTarget
+      attackTargetChoices: CONFIG.SDM.attackTarget,
+      powerOptions,
+      powerIndex,
     });
 
-    const damageIcon = isPower
+    const damageIcon = (isPower || isPowerContainer)
       ? 'fas fa-wand-magic-sparkles'
       : isDamage
         ? 'fas fa-sword'
@@ -277,8 +283,14 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       shouldExplode: shouldExplodeModal,
       multiplier = '',
       selectedSkill: modalSelectedSkill,
-      attackTarget = AttackTarget.PHYSICAL
+      attackTarget = AttackTarget.PHYSICAL,
+      powerIndex: powerIndexModal,
     } = rollOptions;
+
+    if (powerIndexModal !== undefined) {
+      powerIndex = parseInt(powerIndexModal, 10);
+      selectedAbility = powerOptions[powerIndex].default_ability;
+    }
 
     if (modalSelectedSkill !== undefined) {
       selectedSkill = modalSelectedSkill;
@@ -304,6 +316,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       return;
     }
 
+    if (isPowerContainer) {
+      from = powerOptions[powerIndex].name;
+      ability = powerOptions[powerIndex].default_ability;
+    }
+
     const rollData = {
       type,
       actor: this.actor,
@@ -316,7 +333,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       versatile: !!rollOptions.versatile,
       skill: availableSkills[selectedSkill],
       targetActor,
-      attackTarget
+      attackTarget,
     };
 
     if (formula) {
@@ -590,6 +607,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     // Sort then assign
     context.items = items.slots.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     context.itemSlotsTaken = items.slotsTaken;
+    context.packedSlotsTaken = items.packedTaken;
 
     context.traits = traits.slots.sort((a, b) => (a.sort || 0) - (b.sort || 0));
     context.traitSlotsTaken = traits.slotsTaken;
@@ -854,6 +872,20 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
   }
 
   /**
+   * Handles creating a new Owned Item and already open it for Editing
+   *
+   * @this SdmActorSheet
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @protected
+   */
+  static async _createAndViewDoc(event, target) {
+    const newDoc = await SdmActorSheet._createDoc.call(this, event, target);
+    newDoc.sheet.render(true);
+  }
+
+
+  /**
    * Handle creating a new Owned Item or ActiveEffect for the actor using initial data defined
    * in the HTML dataset
    *
@@ -877,7 +909,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       foundry.utils.setProperty(docData, dataKey, value);
     }
 
-    await docCls.create(docData, { parent: this.actor });
+    return await docCls.create(docData, { parent: this.actor });
   }
 
   /**
@@ -952,6 +984,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     let versatile = false;
     let versatileFormula = '';
     let bonusDamage = '';
+    let powerOptions;
+    let powerIndex;
 
     //Handle item rolls.
     switch (type) {
@@ -970,9 +1004,29 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         break;
       case 'power':
         const powerItem = this._getEmbeddedDocument(target);
-        const powerDamage = powerItem.system.power.roll_formula;
-        ability = powerItem.system.default_ability;
-        formula = powerDamage;
+        const powerData = powerItem.system.power;
+        ability = powerData.default_ability;
+        formula = powerData.roll_formula;;
+        break;
+
+      case 'power_container':
+        const powerContainer = this._getEmbeddedDocument(target);
+        const { powers, powers_current_index } = powerContainer.system;
+
+        powerIndex = powers_current_index;
+        const selectedPower = powers[powerIndex];
+
+        powerOptions = powers.map((power, index) => {
+          return {
+            index,
+            name: powerContainer.getPowerShortTitle(power, this.actor.system.power_cost),
+            default_ability: power.default_ability,
+          };
+        });
+
+        ability = selectedPower.default_ability;
+        formula = selectedPower.roll_formula;;
+
         break;
     }
 
@@ -984,7 +1038,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       attack,
       versatile,
       versatileFormula,
-      bonusDamage
+      bonusDamage,
+      powerOptions,
+      powerIndex,
     };
 
     this._openCustomRollModal(rollAttributes, isShift);
@@ -1281,8 +1337,13 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         position: {
           width: 400
         },
+        rejectClose: false,
         buttons
       });
+
+      if (rollOptions === null) {
+        return;
+      }
     }
 
     const modifier = rollOptions?.modifier;

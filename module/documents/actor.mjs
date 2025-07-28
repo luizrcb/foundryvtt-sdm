@@ -256,6 +256,7 @@ export class SdmActor extends Actor {
       'system.burden_penalty': burdenPenalty,
       'system.item_slots_taken': items.slotsTaken,
       'system.trait_slots_taken': traits.slotsTaken,
+      'system.packed_item_slots_taken': items.packedTaken,
       'system.inventory_value': estimatedWealth,
       'system.total_cash': totalCash,
       'system.wealth': totalCash + estimatedWealth,
@@ -304,6 +305,7 @@ export class SdmActor extends Actor {
 
     const items = {
       slotsTaken: 0,
+      packedTaken: 0,
       slots: []
     };
 
@@ -357,6 +359,7 @@ export class SdmActor extends Actor {
         if (itemSlots >= 1) itemSlots -= 1;
       } else if (isGear && !isReadied && packedItemBonus > 0) {
         packedItemBonus -= 1;
+        items.packedTaken += 1;
         if (itemSlots >= 1) itemSlots -= 1;
       }
 

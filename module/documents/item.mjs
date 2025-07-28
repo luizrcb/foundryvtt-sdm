@@ -71,10 +71,11 @@ export class SdmItem extends Item {
   getCostTitle() {
     if (this.system.cost) {
       const costFrequency =  this.system.cost_frequency;
+      const costValue = (this.system.cost || 0) * (this.system.quantity || 1);
       const frequencyLabel = costFrequency ?
         `/${$l10n(`SDM.Frequency${capitalizeFirstLetter(costFrequency)}`)}`: '';
 
-      return ` (${$l10n('SDM.CashSymbol')}${this.system.cost}${frequencyLabel})`;
+      return ` (${$l10n('SDM.CashSymbol')}${costValue}${frequencyLabel})`;
     }
     return '';
   }
@@ -88,7 +89,7 @@ export class SdmItem extends Item {
     const armorValueLabel = `${$l10n('SDM.ArmorValue')}: ${armorData?.value}`;
     const armorTypeLabel = `${$l10n('SDM.ArmorType')}: ${
       $l10n(CONFIG.SDM.armorType[armorData?.type]) ?? ''}`;
-    const title = `${this.name}${this.getCostTitle()}\r${armorValueLabel} ${armorTypeLabel}`;
+    const title = `${this.name}${this.getCostTitle()}<br/>${armorValueLabel} ${armorTypeLabel}`;
     return title;
   }
 
@@ -98,13 +99,14 @@ export class SdmItem extends Item {
     const armorValueLabel = `${$l10n('SDM.ArmorValue')}: ${wardData?.armor}`;
     const wardTypeLabel = `${$l10n('SDM.WardType')}: ${$l10n(CONFIG.SDM.wardType[wardData?.type])
       ?? ''}`;
-    const title = `${this.name}${this.getCostTitle()}\r${wardValueLabel}${wardData?.armor ?
+    const title = `${this.name}${this.getCostTitle()}<br/>${wardValueLabel}${wardData?.armor ?
       ` ${armorValueLabel}` : ''} ${wardTypeLabel}`;
     return title;
   }
 
-  getDefaultAbilityLabel() {
-    return `(+${$l10n(CONFIG.SDM.abilityAbbreviations[this.system.default_ability])})`;
+  getDefaultAbilityLabel(power) {
+    const defaultAbility = power ? power.default_ability : this.system.default_ability;
+    return `(+${$l10n(CONFIG.SDM.abilityAbbreviations[defaultAbility])})`;
   }
 
   getDefaultTitle() {
@@ -130,14 +132,22 @@ export class SdmItem extends Item {
     return title;
   }
 
-  getPowerTitle() {
-    const data = this?.system;
-    const powerData = data?.power;
-    const actorPowerCost = this.actor?.system?.power_cost || 2;
+  getPowerShortTitle(powerData , actorPowerCost = 2) {
     const powerLevel = powerData?.level || 1;
     const powerCost = Math.ceil(actorPowerCost * powerLevel);
+    let title = `${powerData.name} (${$l10n('SDM.PowerLevelAbbr')}: ${powerLevel}, ${$l10n('SDM.Cost')}: ${powerCost})`;
+    return title;
+  }
 
-    let title = `${this.name}${this.getCostTitle()} (${$l10n('SDM.Cost')}: ${powerCost})\r`;
+
+  getPowerTitle(powerData, actorPowerCost = 2) {
+    const powerLevel = powerData?.level || 1;
+    const powerCost = Math.ceil(actorPowerCost * powerLevel);
+    const powerName = powerData.name || this.name;
+
+    let title = `<b>${powerName}</b>${!(powerData?.name) ? this.getCostTitle() : ''} (${$l10n('SDM.Cost')}: ${powerCost})<br/>`;
+
+    console.log(title);
 
     const powerLabel = `${$l10n('SDM.PowerLevelAbbr')}: ${powerLevel}`;
     const rangeLabel = `${$l10n('SDM.PowerRangeAbbr')}: ${powerData?.range}`;
@@ -146,12 +156,28 @@ export class SdmItem extends Item {
     const overchargeLabel = `${$l10n('SDM.PowerOverchargeAbbr')}: ${powerData?.overcharge}`;
     let rollLabel = `${$l10n('SDM.PowerRollFormulaAbbr')}: ${powerData?.roll_formula}`;
 
-    if (data?.default_ability) {
-      rollLabel += ` ${this.getDefaultAbilityLabel()}`;
+    if (powerData?.default_ability) {
+      rollLabel += ` ${this.getDefaultAbilityLabel(powerData)}`;
     }
 
     title += `${powerLabel}, ${rangeLabel}, ${targetLabel}, ${durationLabel}${powerData?.roll_formula ? `, ${rollLabel}` : ''}`;
-    title += powerData?.overcharge ? `\r\r${overchargeLabel}` : '';
+    console.log(title);
+    title += powerData?.overcharge ? `<br/>${overchargeLabel}` : '';
+
+    return title;
+  }
+
+  getPowerContainerTitle(actorPowerCost = 2) {
+    let title = `${$l10n('SDM.PowerContainer')}: <b>${this.name}</b>${this.getCostTitle()}<br/><br/>`;
+
+    if (!this.system.powers.length) {
+      title += `<i class="fas fa-spider-web"></i> ${$l10n('SDM.NoPowers')} <i class="fas fa-spider-web"></i>`;
+      return title;
+    }
+
+    this.system.powers.forEach((power , index) => {
+      title += `${index+1}) ${this.getPowerTitle(power, actorPowerCost)}<br/><br>`
+    });
 
     return title;
   }
@@ -172,7 +198,7 @@ export class SdmItem extends Item {
     const data = this.system;
     const weaponData = data?.weapon;
 
-    let title = `${this.name}${this.getCostTitle()}\r${$l10n('SDM.Damage')}: ${weaponData?.damage.base}`;
+    let title = `${this.name}${this.getCostTitle()}<br/>${$l10n('SDM.Damage')}: ${weaponData?.damage.base}`;
 
     if (weaponData?.versatile) {
       title += `/${weaponData?.damage.versatile}`;
@@ -195,8 +221,8 @@ export class SdmItem extends Item {
 
     const getInventoryItemTitle = {
       [GearType.ARMOR]: () => this.getArmorTitle(),
-      [TraitType.POWER]: () => this.getPowerTitle(),
-      // [GearType.POWER_CONTAINER]: () => this.getDefaultTitle(),
+      [TraitType.POWER]: (system, actorSystem) => this.getPowerTitle(system.power, actorSystem.power_cost),
+      [GearType.POWER_CONTAINER]: (system, actorSystem) => this.getPowerContainerTitle(actorSystem.power_cost),
       [TraitType.SKILL]: () => this.getSkillTitle(),
       [GearType.WEAPON]: () => this.getWeaponTitle(),
       [GearType.WARD]: () => this.getWardTitle(),
@@ -206,7 +232,7 @@ export class SdmItem extends Item {
     };
 
     const titleFunction = getInventoryItemTitle[data.type];
-    title = titleFunction();
+    title = titleFunction(this.system, this.actor.system);
 
     return title;
   }

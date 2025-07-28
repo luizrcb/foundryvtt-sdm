@@ -1,4 +1,6 @@
+import { SizeUnit } from "./helpers/constants.mjs";
 import { toPascalCase } from "./helpers/globalUtils.mjs";
+import { convertToSacks } from "./helpers/itemUtils.mjs";
 
 export function registerHandlebarsHelpers() {
   const $$ = (name, fn) => Handlebars.registerHelper(name, fn);
@@ -113,5 +115,10 @@ export function registerHandlebarsHelpers() {
 
   $$('getItemTitle', function (item) {
     return item.getInventoryTitle();
+  });
+
+  $$('toSacks', function (slotsInStones) {
+    const inSacks = convertToSacks(slotsInStones, SizeUnit.STONES);
+    return inSacks + ' sk';
   });
 }

@@ -1,7 +1,7 @@
 <div>
   <header class='sheet-header'>
     <div class="flexcol flex-between flex-center">
-      <img class='profile-img' src='{{item.img}}' data-edit='img' data-action='onEditImage' title='{{item.name}}' />
+      <img class='profile-img' src='{{item.img}}' data-edit='img' data-action='onEditImage' data-tooltip='{{item.name}}' />
       <div class="align-center mb-10 mr-10 rollable" {{#if system.readied}}
         data-tooltip="{{localize 'SDM.ItemReadied' }}" {{else}} data-tooltip="{{localize 'SDM.ItemNotReadied'}}" {{/if}}
         data-action="toggleReadied">
@@ -150,10 +150,55 @@
 
       {{#if (eq item.system.type 'power')}}
       {{!-- Start fragment --}}
-      {{> ($$ "item/power") item=item}}
+      {{> ($$ "item/power") item=item abilities=config.abilities}}
       {{!-- End fragment --}}
       {{/if}}
-    {{/if}}
+
+
+      {{#if (eq item.system.type 'power_container')}}
+      <div class="resource">
+        <label class='resource-label'>
+          {{localize 'SDM.GearMaxPowers'}}
+        </label>
+        <input type='text' name='system.max_powers' value='{{system.max_powers}}' data-dtype='Number' />
+      </div>
+      <div class="resource"></div>
+      <div class="resource grid-span-3">
+        <ol class='items-list'>
+          <li class='item flexrow items-header'>
+            <div class='item-name flex-between'>
+              <div class="rollable power-prev" data-action="prevPower" {{#unless hasPrevious}}disabled{{/unless}}>
+                <i class="fas fa-chevron-left"></i>
+              </div>
+              <div class="rollable power-counter">
+               {{ifThen (gt powerCount 0) (addOne currentPowerIndex) powerCount}} / {{powerCount}}
+              </div>
+              <div class="rollable power-next"  data-action="nextPower" {{#unless hasNext}}disabled{{/unless}}>
+                <i class="fas fa-chevron-right"></i>
+              </div>
+            </div>
+            <div class='item-formula flexrow'>
+            </div>
+            <div class='item-controls'>
+
+              {{#if @root.editable}}
+              <a
+                class='item-control item-create'
+                data-tooltip="{{localize 'DOCUMENT.Create' type=(localize 'TYPES.Item.power')}}"
+                data-action='addPower'
+                data-container='{{item.uuid}}'
+              >
+                <i class='fas fa-plus'></i>
+                {{localize 'DOCUMENT.New' type=(localize 'TYPES.Item.power')}}
+              </a>
+              {{/if}}
+            </div>
+          </li>
+          {{> ($$ "item/power_container") abilities=config.abilities index=system.powers_current_index}}
+        </ol>
+        </div>
+        {{/if}}
+      {{/if}}
     </div>
 </div>
 </div>

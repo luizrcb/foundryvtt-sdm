@@ -1,11 +1,15 @@
+import PowerDataModel from '../data/power-data.mjs';
 import { getActorOptions } from '../helpers/actorUtils.mjs';
+import { GearType } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
+import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 
 const { api, sheets } = foundry.applications;
-const TextEditor = foundry.applications.ux.TextEditor.implementation;
+const { DialogV2 } = foundry.applications.api;
 const DragDrop = foundry.applications.ux.DragDrop.implementation;
 const FilePicker = foundry.applications.apps.FilePicker.implementation;
+const TextEditor = foundry.applications.ux.TextEditor.implementation;
 /**
  * Extend the basic ItemSheet with some very simple modifications
  * @extends {ItemSheetV2}
@@ -24,7 +28,12 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     },
     actions: {
       onEditImage: this._onEditImage,
+      onEditPowerImage: this._onEditPowerImage,
       viewDoc: this._viewEffect,
+      addPower: this._onCreatePower,
+      deletePower: this._onDeletePower,
+      nextPower: this._onNextPower,
+      prevPower: this._onPrevPower,
       createDoc: this._createEffect,
       deleteDoc: this._deleteEffect,
       toggleEffect: this._toggleEffect,
@@ -49,7 +58,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       template: 'templates/generic/tab-navigation.hbs'
     },
     description: {
-      template: templatePath('item/description')
+      template: templatePath('item/description'),
+      scrollable: ['']
     },
     attributesFeature: {
       template: templatePath('item/attribute-parts/feature')
@@ -57,11 +67,9 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     attributesMount: {
       template: templatePath('item/attribute-parts/mount')
     },
-    attributesSpell: {
-      template: templatePath('item/attribute-parts/spell')
-    },
     effects: {
-      template: templatePath('item/effects')
+      template: templatePath('item/effects'),
+      scrollable: ['']
     }
   };
 
@@ -79,9 +87,6 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
         break;
       case 'mount':
         options.parts.push('attributesMount');
-        break;
-      case 'spell':
-        options.parts.push('attributesSpell');
         break;
     }
 
@@ -125,6 +130,15 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       skillMod: skillModOptons
     };
 
+    const currentPowerIndex = this.item.system.powers_current_index || 0;
+    const powers = this.item.system.powers;
+
+    // Calculate navigation states
+    context.currentPowerIndex = currentPowerIndex;
+    context.powerCount = powers.length;
+    context.hasPrevious = currentPowerIndex > 0;
+    context.hasNext = currentPowerIndex < powers.length - 1;
+
     return context;
   }
 
@@ -133,7 +147,6 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     switch (partId) {
       case 'attributesFeature':
       case 'attributesMount':
-      case 'attributesSpell':
         // Necessary for preserving active tab on re-render
         context.tab = context.tabs[partId];
         break;
@@ -194,7 +207,6 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
           break;
         case 'attributesFeature':
         case 'attributesMount':
-        case 'attributesSpell':
           tab.id = 'attributes';
           tab.label += 'Attributes';
           break;
@@ -224,6 +236,16 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     // That you may want to implement yourself.
   }
 
+  // async _onSubmitForm(formConfig, event) {
+  //   // eslint-disable-next-line no-undef
+  //   let formData = new foundry.applications.ux.FormDataExtended(this.element);
+  //   const expandedFormData = foundry.utils.expandObject(formData.object);
+  //   const { mergeObject, setProperty } = foundry.utils;
+  //   expandedFormData.system = mergeObject(expandedFormData.system, this.item.system);
+  //   await this.item.update(expandedFormData);
+  //   //await super._onSubmitForm(formConfig, event);
+  // }
+
   /**************
    *
    *   ACTIONS
@@ -249,6 +271,48 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       redirectToRoot: img ? [img] : [],
       callback: path => {
         this.document.update({ [attr]: path });
+      },
+      top: this.position.top + 40,
+      left: this.position.left + 10
+    });
+    return fp.browse();
+  }
+
+  /**
+   * Handle changing a Document's image.
+   *
+   * @this SdmItemSheet
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @returns {Promise}
+   * @protected
+   */
+  static async _onEditPowerImage(event, target) {
+    const powerIndex = parseInt(target.dataset.index, 10);
+    const current = foundry.utils.getProperty(this.item, target.dataset.edit);
+
+    let changedPowers = foundry.utils.duplicate(this.item.system.powers);
+
+    const { img } =
+      this.item.constructor.getDefaultArtwork?.(new PowerDataModel().toObject()) ?? {};
+
+    const fp = new FilePicker({
+      current,
+      type: 'image',
+      redirectToRoot: img ? [img] : [],
+      callback: async path => {
+        changedPowers = changedPowers.map((power, index) => {
+          if (index === powerIndex) {
+            return { ...power, img: path };
+          }
+
+          return power;
+        });
+
+        await this.item.update({
+          'system.powers': changedPowers
+        });
+        return this.render();
       },
       top: this.position.top + 40,
       left: this.position.left + 10
@@ -315,6 +379,103 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
 
     // Finally, create the embedded document!
     await aeCls.create(effectData, { parent: this.item });
+  }
+
+  static async _onPrevPower(event, target) {
+    const currentIndex = this.item.system.powers_current_index || 0;
+    if (currentIndex > 0) {
+      await this.item.update({
+        'system.powers_current_index': currentIndex - 1
+      });
+      this.render();
+    }
+  }
+
+  static async _onNextPower(event, target) {
+    const currentIndex = this.item.system.powers_current_index || 0;
+    const powers = this.item.system.powers || [];
+    if (currentIndex < powers.length - 1) {
+      await this.item.update({
+        'system.powers_current_index': currentIndex + 1
+      });
+      this.render();
+    }
+  }
+
+  static newPower(data) {
+    const basePower = new PowerDataModel().toObject();
+    if (!data) return basePower;
+
+    const { img, name, level, range, target, duration, overcharge, roll_formula, default_ability } =
+      data;
+
+    return {
+      ...basePower,
+      img,
+      name,
+      level,
+      range,
+      target,
+      duration,
+      overcharge,
+      roll_formula,
+      default_ability
+    };
+  }
+
+  static async _onCreatePower(event, target, data) {
+    const powerContainer = this.item.system.powers;
+
+    if (powerContainer.length === this.item.system.max_powers) {
+      return;
+    }
+
+    let newPower = SdmItemSheet.newPower(data);
+    const updatedContainer = foundry.utils.duplicate(this.item.system.powers);
+    updatedContainer.push(newPower);
+
+    await this.item.update({
+      'system.powers': updatedContainer,
+      'system.powers_current_index': updatedContainer.length - 1
+    });
+    this.render();
+  }
+
+  static async _onDeletePower(event, target) {
+    const powerContainer = this.item.system.powers;
+
+    const powerIndex = parseInt(target.dataset.index, 10);
+    if (powerIndex < 0 || !powerContainer.length || powerIndex >= powerContainer.length) {
+      return;
+    }
+
+    let powerName = powerContainer[powerIndex].name;
+
+    const proceed = await DialogV2.confirm({
+      content: `<b>${$fmt('SDM.DeleteDocConfirmation', { doc: powerName })}</b>`,
+      modal: true,
+      rejectClose: false,
+      yes: { label: $l10n('SDM.ButtonYes') },
+      no: { label: $l10n('SDM.ButtonNo') }
+    });
+    if (!proceed) return;
+
+    let newCurrentIndex;
+
+    if (powerIndex === 0) {
+      newCurrentIndex = 0;
+    } else if (powerIndex <= powerContainer.length - 1) {
+      newCurrentIndex = powerIndex - 1;
+    }
+
+    let updatedContainer = foundry.utils.duplicate(this.item.system.powers);
+    updatedContainer.splice(powerIndex, 1);
+
+    await this.item.update({
+      'system.powers': updatedContainer,
+      'system.powers_current_index': newCurrentIndex
+    });
+    this.render();
   }
 
   /**
@@ -511,6 +672,30 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
    */
   async _onDropItem(event, data) {
     if (!this.item.isOwner) return false;
+    const droppedItem = await Item.implementation.fromDropData(data);
+
+    if (
+      this.item.system.type !== GearType.POWER_CONTAINER &&
+      droppedItem.system.type !== GearType.POWER
+    ) {
+      return false;
+    }
+
+    const { level, range, target, duration, overcharge, roll_formula, default_ability } =
+      droppedItem.system.power;
+    const { img, name } = droppedItem;
+
+    await SdmItemSheet._onCreatePower.call(this, null, null, {
+      level,
+      range,
+      target,
+      duration,
+      overcharge,
+      roll_formula,
+      default_ability,
+      img,
+      name
+    });
   }
 
   /* -------------------------------------------- */

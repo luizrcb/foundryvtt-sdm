@@ -37,9 +37,9 @@
       {{localize 'SDM.AbilityModifier'}}
     </label>
     <div class='resource-content'>
-      <select name='system.default_ability' id='system.default_ability'>
+      <select name='system.power.default_ability' id='system.power.default_ability'>
         <option value=''></option>
-        {{selectOptions config.abilities localize=true selected=system.default_ability}}
+        {{selectOptions abilities localize=true selected=system.power.default_ability}}
       </select>
     </div>
   {{/if}}
@@ -49,10 +49,8 @@
   <label class='resource-label'>
     {{localize 'SDM.PowerOvercharge'}}
   </label>
-  <div class='resource-content grid-span-2 flexcol'>
-    <textarea class='grid-span-2 flexcol' name='system.power.overcharge' rows='2'>
-      {{system.power.overcharge}}
-    </textarea>
+  <div class='resource-content  grid-span-2'>
+    <textarea class='flexcol' name='system.power.overcharge' rows='2'>{{system.power.overcharge}}</textarea>
   </div>
 </div>
 

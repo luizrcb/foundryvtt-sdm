@@ -28,6 +28,7 @@ export const RollType = Object.freeze({
   ATTACK: 'attack',
   DAMAGE: 'damage',
   POWER: 'power',
+  POWER_CONTAINER: 'power_container',
   SAVE: 'save'
 });
 
@@ -62,7 +63,7 @@ export const GearType = Object.freeze({
   WEAPON: 'weapon',
   ARMOR: 'armor',
   POWER: 'power',
-  // POWER_CONTAINER: 'power_container',
+  POWER_CONTAINER: 'power_container',
   WARD: 'ward'
 });
 
