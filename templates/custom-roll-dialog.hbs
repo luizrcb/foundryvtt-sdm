@@ -1,7 +1,7 @@
 <div class="custom-roll-modal">
   <h4>{{localize 'SDM.RollTitle' prefix=rollTitlePrefix title=title }}</h4>
   <form class="custom-roll-form">
-    {{#if (eq type 'attack')}}
+    {{#if (or (eq type 'attack') (eq type 'power') (eq type 'power_container'))}}
      <div class="form-group">
       <label for="attackTarget">{{localize 'SDM.AttackTarget'}}</label>
       <div class="flexrow">
@@ -10,18 +10,19 @@
     </div>
     {{/if}}
     {{#if (eq type 'power_container')}}
-     <div class="form-group">
+     <div class="form-group mt-10">
       <label for="powerIndex">{{localize 'SDM.Power'}}</label>
       <select name="powerIndex" id="powerIndex">
         {{selectOptions powerOptions valueAttr="index" labelAttr="name" selected=powerIndex}}
       </select>
     </div>
     {{/if}}
-    {{#if (and (ne type 'ability') (ne type 'save') (ne type 'power_container') isCharacterActor)}}
-    <div class="form-group">
-      <label>{{localize 'SDM.Ability'}}</label>
-      <select name="selectedAbility">
-        {{selectOptions abilities localize=true selected=ability blank=""}}
+    {{#if (and (ne type 'ability') (ne type 'save') isCharacterActor)}}
+    <div class="form-group mt-10">
+      <label for="selectedAbility">{{localize 'SDM.Ability'}}</label>
+      <select name="selectedAbility" id="selectedAbility">
+        {{selectOptions abilities localize=true
+          selected=(ifThen (eq type 'power_container') (lookup (lookup powerOptions @root.powerIndex) 'default_ability') ability) blank=""}}
       </select>
     </div>
     {{/if}}

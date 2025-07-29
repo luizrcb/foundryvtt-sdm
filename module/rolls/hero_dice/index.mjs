@@ -1,8 +1,8 @@
-import { HeroDiceEngine } from './core/HeroDiceEngine.mjs';
-import { HeroDiceUI } from './ui/HeroDiceUi.mjs';
+import { createChatMessage } from '../../helpers/chatUtils.mjs';
 import { ActorType, Die } from '../../helpers/constants.mjs';
 import { $fmt, $l10n } from '../../helpers/globalUtils.mjs';
-import { createChatMessage } from '../../helpers/chatUtils.mjs';
+import { HeroDiceEngine } from './core/HeroDiceEngine.mjs';
+import { HeroDiceUI } from './ui/HeroDiceUi.mjs';
 
 async function _promptHeroOptions(actor) {
   const defaultHeroDiceType = game.settings.get('sdm', 'defaultHeroDiceType');
@@ -21,7 +21,7 @@ async function _promptHeroOptions(actor) {
   });
 }
 
-export async function handleHeroDice(event, message, messageActor) {
+export async function handleHeroDice(event, message, messageActor, flags) {
   const actor = messageActor || game.user?.character || canvas?.tokens?.controlled[0]?.actor;
 
   if (!actor || actor.type !== ActorType.CHARACTER) {
@@ -49,7 +49,7 @@ export async function handleHeroDice(event, message, messageActor) {
 
   const result = await HeroDiceEngine.process(originalRoll, heroicDiceQty, actor);
 
-  await HeroDiceUI.renderResultToChat(result, actor);
+  await HeroDiceUI.renderResultToChat(result, actor, flags);
 }
 
 /**

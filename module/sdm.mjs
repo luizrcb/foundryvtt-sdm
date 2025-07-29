@@ -1,25 +1,25 @@
+import SdmActiveEffectConfig from './app/active-effect-config.mjs';
+import * as models from './data/_module.mjs';
 import { SdmActor } from './documents/actor.mjs';
 import { SdmCombatant } from './documents/combatant.mjs';
 import { SdmItem } from './documents/item.mjs';
-import { SdmActorSheet } from './sheets/actor-sheet.mjs';
-import { SdmCaravanSheet } from './sheets/caravan-sheet.mjs';
-import SdmActiveEffectConfig from './app/active-effect-config.mjs';
-import * as models from './data/_module.mjs';
 import { registerHandlebarsHelpers } from './handlebars-helpers.mjs';
 import { SDM } from './helpers/config.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
+import { setupItemTransferSocket } from './items/transfer.mjs';
 import {
   CHARACTER_DEFAULT_INITIATIVE,
   configureUseHeroDiceButton,
   createEscalatorDieDisplay,
   registerSystemSettings
 } from './settings.mjs';
+import { SdmActorSheet } from './sheets/actor-sheet.mjs';
+import { SdmCaravanSheet } from './sheets/caravan-sheet.mjs';
 import { SdmItemSheet } from './sheets/item-sheet.mjs';
-import { setupItemTransferSocket } from './items/transfer.mjs';
 
+const { ActiveEffectConfig } = foundry.applications.sheets;
 const { Actors, Items } = foundry.documents.collections;
 const { DocumentSheetConfig } = foundry.applications.apps;
-const { ActiveEffectConfig } = foundry.applications.sheets;
 const sheets = foundry.appv1.sheets;
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -46,6 +46,22 @@ globalThis.sdm = {
 
 Hooks.on('renderChatMessageHTML', (message, html, data) => {
   configureUseHeroDiceButton(message, html, data);
+});
+
+Hooks.on('renderDialogV2', (dialog, html) => {
+  const powerSelect = html.querySelector('#powerIndex');
+  const abilitySelect = html.querySelector('#selectedAbility');
+  const powerOptions = dialog.options?.powerOptions;
+
+  powerSelect?.addEventListener('change', event => {
+    const selectedIndex = parseInt(event.target.value, 10);
+    const selectedPower = powerOptions.find(p => p.index === selectedIndex);
+    const defaultAbility = selectedPower?.default_ability || '';
+
+    if (abilitySelect) {
+      abilitySelect.value = defaultAbility;
+    }
+  });
 });
 
 Hooks.on('preUpdateActor', (actor, update) => {

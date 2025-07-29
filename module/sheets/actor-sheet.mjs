@@ -1,5 +1,4 @@
 import { MAX_MODIFIER, UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
-import { createChatMessage } from '../helpers/chatUtils.mjs';
 import { ActorType, AttackTarget, ItemType, RollMode, RollType } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { $fmt, $l10n, capitalizeFirstLetter } from '../helpers/globalUtils.mjs';
@@ -13,6 +12,11 @@ import { templatePath } from '../helpers/templates.mjs';
 import { openItemTransferDialog } from '../items/transfer.mjs';
 import { healingHeroDice } from '../rolls/hero_dice/index.mjs';
 import SDMRoll, { sanitizeExpression } from '../rolls/sdmRoll.mjs';
+import {
+  renderNPCMoraleResult,
+  renderReactionResult,
+  renderSaveResult
+} from '../rolls/ui/renderResults.mjs';
 import { SAVING_THROW_BASE_FORMULA } from '../settings.mjs';
 
 const { api, sheets } = foundry.applications;
@@ -102,7 +106,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       template: 'templates/generic/tab-navigation.hbs'
     },
     inventory: {
-      template: templatePath('actor/inventory')
+      template: templatePath('actor/inventory'),
+      scrollable: ['']
     },
     biography: {
       template: templatePath('actor/biography'),
@@ -170,7 +175,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       versatileFormula = '',
       bonusDamage = '',
       powerOptions = [],
-      powerIndex = 0,
+      powerIndex = 0
     },
     isShift = false
   ) {
@@ -222,14 +227,15 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       isCharacterActor,
       attackTargetChoices: CONFIG.SDM.attackTarget,
       powerOptions,
-      powerIndex,
+      powerIndex
     });
 
-    const damageIcon = (isPower || isPowerContainer)
-      ? 'fas fa-wand-magic-sparkles'
-      : isDamage
-        ? 'fas fa-sword'
-        : 'fas fa-dice-d20';
+    const damageIcon =
+      isPower || isPowerContainer
+        ? 'fas fa-wand-magic-sparkles'
+        : isDamage
+          ? 'fas fa-sword'
+          : 'fas fa-dice-d20';
 
     const buttons = [
       {
@@ -263,6 +269,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         window: {
           title: $fmt('SDM.RollTitle', { prefix: '', title })
         },
+        powerOptions,
         content: template,
         position: {
           width: 400
@@ -284,7 +291,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       multiplier = '',
       selectedSkill: modalSelectedSkill,
       attackTarget = AttackTarget.PHYSICAL,
-      powerIndex: powerIndexModal,
+      powerIndex: powerIndexModal
     } = rollOptions;
 
     if (powerIndexModal !== undefined) {
@@ -333,7 +340,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       versatile: !!rollOptions.versatile,
       skill: availableSkills[selectedSkill],
       targetActor,
-      attackTarget,
+      attackTarget
     };
 
     if (formula) {
@@ -884,7 +891,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     newDoc.sheet.render(true);
   }
 
-
   /**
    * Handle creating a new Owned Item or ActiveEffect for the actor using initial data defined
    * in the HTML dataset
@@ -977,7 +983,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     // Get common data attributes
     const dataset = target.dataset;
     let ability = dataset.ability;
-    const label = dataset.label;
+    let label = dataset.label;
     const attack = dataset.attack;
     const type = dataset.type;
     let formula = dataset.roll || '';
@@ -1005,8 +1011,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       case 'power':
         const powerItem = this._getEmbeddedDocument(target);
         const powerData = powerItem.system.power;
+        label = powerItem.getPowerShortTitle(powerData, this.actor.system.power_cost);
         ability = powerData.default_ability;
-        formula = powerData.roll_formula;;
+        formula = powerData.roll_formula;
         break;
 
       case 'power_container':
@@ -1020,12 +1027,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
           return {
             index,
             name: powerContainer.getPowerShortTitle(power, this.actor.system.power_cost),
-            default_ability: power.default_ability,
+            default_ability: power.default_ability
           };
         });
-
         ability = selectedPower.default_ability;
-        formula = selectedPower.roll_formula;;
+        formula = selectedPower.roll_formula;
 
         break;
     }
@@ -1040,7 +1046,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       versatileFormula,
       bonusDamage,
       powerOptions,
-      powerIndex,
+      powerIndex
     };
 
     this._openCustomRollModal(rollAttributes, isShift);
@@ -1106,38 +1112,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     let roll = new Roll(sanitizedFormula);
     roll = await roll.evaluate();
 
-    const equalOutcome = $l10n('SDM.MoraleEqualOutcome');
-    const overOutcome = $l10n('SDM.MoraleOverOutcome');
-    const underOutcome = $l10n('SDM.MoraleUnderOutcome');
+    const speaker = ChatMessage.getSpeaker({ actor: this.actor });
 
-    // Determine outcome and message
-    let outcome, message;
-    if (roll.total === targetNumber) {
-      outcome = equalOutcome;
-      message = $l10n('SDM.MoraleEqualOutcomeMessage');
-    } else if (roll.total > targetNumber) {
-      outcome = overOutcome;
-      message = $l10n('SDM.MoraleOverOutcomeMessage');
-    } else {
-      outcome = underOutcome;
-      message = $l10n('SDM.MoraleUnderOutcomeMessage');
-    }
-
-    const templateData = {
-      outcome,
-      message,
-      formula: sanitizedFormula,
-      total: roll.total,
-      targetLabel: $l10n('SDM.Target'),
-      targetNumber,
-      rollTooltip: await roll.getTooltip()
-    };
-
-    createChatMessage({
-      content: await renderTemplate(templatePath('chat/morale-roll-result'), templateData),
-      flavor: $fmt('SDM.RollType', { type: $l10n('SDM.Morale') }),
-      rolls: [roll]
-    });
+    await renderNPCMoraleResult({ roll, targetNumber }, { fromHeroDice: false, speaker });
   }
 
   static async _onReactionRoll(event, target) {
@@ -1201,75 +1178,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     let roll = new Roll(sanitizedFormula);
     roll = await roll.evaluate();
 
-    const rollTotal = roll.total;
+    const speaker = ChatMessage.getSpeaker({ actor: this.actor });
 
-    // Configuration object for reaction outcomes
-    const reactionConfig = [
-      {
-        min: -Infinity,
-        max: 1,
-        outcomeKey: 'SDM.ReactionOutcome1',
-        messageKey: 'SDM.ReactionMessage1'
-      },
-      { min: 2, max: 2, outcomeKey: 'SDM.ReactionOutcome2', messageKey: 'SDM.ReactionMessage2' },
-      {
-        min: 3,
-        max: 5,
-        outcomeKey: 'SDM.ReactionOutcome3to5',
-        messageKey: 'SDM.ReactionMessage3to5'
-      },
-      {
-        min: 6,
-        max: 8,
-        outcomeKey: 'SDM.ReactionOutcome6to8',
-        messageKey: 'SDM.ReactionMessage6to8'
-      },
-      {
-        min: 9,
-        max: 11,
-        outcomeKey: 'SDM.ReactionOutcome9to11',
-        messageKey: 'SDM.ReactionMessage9to11'
-      },
-      {
-        min: 12,
-        max: 12,
-        outcomeKey: 'SDM.ReactionOutcome12',
-        messageKey: 'SDM.ReactionMessage12'
-      },
-      {
-        min: 13,
-        max: Infinity,
-        outcomeKey: 'SDM.ReactionOutcome13plus',
-        messageKey: 'SDM.ReactionMessage13plus'
-      }
-    ];
-
-    // Find matching configuration
-    const matchedConfig =
-      reactionConfig.find(config => rollTotal >= config.min && rollTotal <= config.max) ||
-      reactionConfig[reactionConfig.length - 1]; // Fallback to last config
-
-    // Get localized strings
-    const outcome = $l10n(matchedConfig.outcomeKey);
-    const message = $l10n(matchedConfig.messageKey);
-
-    const templateData = {
-      outcome,
-      message,
-      formula: sanitizedFormula,
-      total: roll.total,
-      rollTooltip: await roll.getTooltip()
-    };
-
-    const flavor = `[${$l10n('SDM.Reaction')}] ${
-      charismaOperator > 0 ? $l10n('SDM.ReactionCheck') : $fmt('SDM.ReactionProvokeConflict')
-    }`;
-
-    createChatMessage({
-      content: await renderTemplate(templatePath('chat/reaction-roll-result'), templateData),
-      flavor,
-      rolls: [roll]
-    });
+    await renderReactionResult({ roll, charismaOperator }, { fromHeroDice: false, speaker });
   }
 
   static async _onRollSavingThrow(event, target) {
@@ -1359,48 +1270,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     let roll = new Roll(formula);
     roll = await roll.evaluate();
 
-    const sacrificeOutcome = $l10n('SDM.SavingThrowSacrifice');
-    const saveOutcome = $l10n('SDM.SavingThrowSave');
-    const doomOutcome = $l10n('SDM.SavingThrowDoom');
+    const speaker = ChatMessage.getSpeaker({ actor: this.actor });
 
-    // Determine outcome and message
-    let outcome, message;
-    if (roll.total === targetNumber) {
-      outcome = sacrificeOutcome;
-      message = $l10n('SDM.SavingThrowSacrificeMessage');
-    } else if (roll.total > targetNumber) {
-      outcome = saveOutcome;
-      message = $l10n('SDM.SavingThrowSaveMessage');
-    } else {
-      outcome = doomOutcome;
-      message = $l10n('SDM.SavingThrowDoomMessage');
-    }
-
-    let borderColor = '#aa0200';
-
-    if (outcome === saveOutcome) {
-      borderColor = '#18520B';
-    } else if (outcome === sacrificeOutcome) {
-      borderColor = '#d4af37';
-    }
-
-    const templateData = {
-      outcome,
-      message,
-      formula,
-      total: roll.total,
-      borderColor,
-      targetLabel: $l10n('SDM.Target'),
-      targetNumber,
-      rollTooltip: await roll.getTooltip()
-    };
-
-    createChatMessage({
-      content: await renderTemplate(templatePath('chat/saving-throw-result'), templateData),
-      flavor: label,
-      rolls: [roll],
-      checkCritical: true
-    });
+    await renderSaveResult({ roll, label, targetNumber }, { fromHeroDice: false, speaker });
   }
 
   static async _onUpdateAttack(event, target) {

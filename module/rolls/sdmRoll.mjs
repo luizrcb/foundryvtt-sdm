@@ -94,10 +94,18 @@ export default class SDMRoll {
       const forceOrFail = attackResult === targetDefense;
 
       let resultMessage = (isSuccess ? $l10n('SDM.Success') : $l10n('SDM.Failure')).toUpperCase();
-      const textClass = isSuccess ? 'critical' : forceOrFail ? 'force' : isNat1 ? 'fumble' : 'failure';
+      const textClass = isSuccess
+        ? 'critical'
+        : forceOrFail
+          ? 'force'
+          : isNat1
+            ? 'fumble'
+            : 'failure';
 
-      content = content.replace('<li class="roll die d20">13</li>',
-        '<li class="roll die d20 is13">13</li>');
+      content = content.replace(
+        '<li class="roll die d20">13</li>',
+        '<li class="roll die d20 is13">13</li>'
+      );
 
       if (isNat1) {
         resultMessage = $l10n('SDM.CriticalFailure').toUpperCase();
@@ -114,17 +122,22 @@ export default class SDMRoll {
         content = content.replace('dice-total', 'dice-total force');
       }
 
-      content +=
-        `
+      content += `
       <br>
       <div>
-        <div class="flexrow"><div class="flex-group-center"><span><b>${
-        $l10n('SDM.Target')}:</b> ${this.targetActor.name}</span></div><div class="flex-group-center"><b>${
-        $l10n('SDM.FieldDefense')}:</b> ${icon} ${targetDefense}</span></div></div><br>
+        <div class="flexrow"><div class="flex-group-center"><span><b>${$l10n(
+          'SDM.Target'
+        )}:</b> ${this.targetActor.name}</span></div><div class="flex-group-center"><b>${$l10n(
+          'SDM.FieldDefense'
+        )}:</b> ${icon} ${targetDefense}</span></div></div><br>
         <div class="flex-group-center"><span class="${textClass}"}> ${resultMessage}</span><div>
-        ${is13 ? `
+        ${
+          is13
+            ? `
         <div class="flex-group-center"><span class="is13"><b>${$l10n('SDM.DepletedResources')}</b></span></div>
-        `: ''}
+        `
+            : ''
+        }
       <div>`;
     }
 
@@ -134,7 +147,7 @@ export default class SDMRoll {
       flavor,
       content,
       flags,
-      checkCritical,
+      checkCritical
     });
   }
 
@@ -188,7 +201,10 @@ export default class SDMRoll {
     const versatileLabel = $l10n('SDM.FeatureVersatile');
     const type = this.type === 'power_container' ? 'power' : this.type;
     const parts = [`[${$l10n(`SDM.${toPascalCase(type)}`)}]`, this.from];
-    if (this.type === RollType.ATTACK && this.attackTarget !== AttackTarget.PHYSICAL) {
+    if (
+      [RollType.ATTACK, RollType.POWER, RollType.POWER_CONTAINER].includes(this.type) &&
+      this.attackTarget !== AttackTarget.PHYSICAL
+    ) {
       parts.push(`(${$l10n('SDM.Attack' + capitalizeFirstLetter(this.attackTarget))})`);
     }
     if (this.type !== RollType.ABILITY && this.ability)
@@ -298,14 +314,14 @@ export function detectNat1OrNat20(roll) {
     }
   }
 
-  results = results.sort((a, b) => b - a );
+  results = results.sort((a, b) => b - a);
 
   if (results[0] === 13) {
     return { isNat1: false, is13: true, isNat20: false };
   }
 
   // Determina se houve nat1 ou nat20
-  for (const r of results.sort((a, b) => b - a )) {
+  for (const r of results.sort((a, b) => b - a)) {
     if (r === 1) return { isNat1: true, is13: false, isNat20: false };
     if (r === 20) return { isNat1: false, is13: false, isNat20: true };
   }

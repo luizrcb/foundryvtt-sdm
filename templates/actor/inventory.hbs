@@ -1,35 +1,13 @@
 {{! Features Tab }}
-<section class='tab features {{tab.cssClass}}' data-group='primary' data-tab='inventory'>
-  {{!-- <section class='grid grid-3col'>
-    <aside class='sidebar'>
-      {{! The grid classes are defined in scss/global/_grid.scss. To use,
-      use both the "grid" and "grid-Ncol" class where "N" can be any number
-      from 1 to 12 and will create that number of columns. }}
-
-      </div>
-    </aside>
-
-    {{! For the main features list, span the right two columns }}
-    <section class='main grid-span-1'>
-      <ol class='items-list'>
-        <li class='item flexrow items-header'>
-          <div class='item-name'>{{localize 'Skills'}}</div>
-        </li>
-        {{#each skills as |skill|}}
-        <li class='item flexrow' data-item-id='{{skill.name}}'>
-          <div class='item-name rollable' data-roll-type='attack' data-action='roll' data-attack="{{skill.name}}">
-            <div>{{skill.name}}</div>
-          </div>
-        </li>
-        {{/each}}
-      </ol>
-    </section>
-  </section> --}}
+<section
+  class='tab features
+    {{#if (eq actor.type "npc")}}scrollable{{/if}} {{tab.cssClass}}'
+  data-group='primary'
+  data-tab='inventory'
+>
   <div class="grid grid-3col">
     <div class="main grid-span-1">{{> ($$ "actor/items")}}</div>
     <div class="main grid-span-1">{{> ($$ "actor/traits")}}</div>
     <div class="main grid-span-1">{{> ($$ "actor/burdens")}}</div>
   </div>
-  </div>
-</section>
 </section>

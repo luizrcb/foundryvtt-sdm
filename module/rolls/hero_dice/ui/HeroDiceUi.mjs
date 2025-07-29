@@ -1,6 +1,7 @@
 import { createChatMessage } from '../../../helpers/chatUtils.mjs';
-import { templatePath } from '../../../helpers/templates.mjs';
 import { $fmt, $l10n } from '../../../helpers/globalUtils.mjs';
+import { templatePath } from '../../../helpers/templates.mjs';
+import { renderSaveResult, renderNPCMoraleResult, renderReactionResult } from '../../ui/renderResults.mjs';
 
 const { renderTemplate } = foundry.applications.handlebars;
 
@@ -31,7 +32,7 @@ export class HeroDiceUI {
       }`;
   }
 
-  static async renderResultToChat(result, actor) {
+  static async renderResultToChat(result, actor, flags) {
     const {
       keptDice,
       explosiveDice,
@@ -92,14 +93,13 @@ export class HeroDiceUI {
       heroDiceType
     };
 
-    const heroResultRoll = Roll.fromTerms([
-      new NumericTerm({number: total})
-    ]);
+    const heroResultRoll = Roll.fromTerms([new foundry.dice.terms.NumericTerm({ number: total })]);
 
     heroResultRoll._evaluated = true;
     heroResultRoll._total = total;
+    //heroResultRoll.total = total;
 
-    return createChatMessage({
+    await createChatMessage({
       actor,
       content: await renderTemplate(templatePath('/chat/hero-dice-result'), templateData),
       flavor: $fmt('SDM.RollTitle', {
@@ -109,5 +109,38 @@ export class HeroDiceUI {
       rolls: [heroResultRoll],
       flags: { 'sdm.isHeroResult': true }
     });
+
+    if (flags && flags?.sdm?.save) {
+      const { label, targetNumber, speaker } = flags.sdm.save;
+      await renderSaveResult(
+        { roll: heroResultRoll, label, targetNumber },
+        {
+          fromHeroDice: true,
+          speaker
+        }
+      );
+    }
+
+    if (flags && flags?.sdm?.reaction) {
+      const { charismaOperator, speaker } = flags.sdm.reaction;
+      await renderReactionResult(
+        { roll: heroResultRoll, charismaOperator },
+        {
+          fromHeroDice: true,
+          speaker
+        }
+      );
+    }
+
+    if (flags && flags?.sdm?.morale) {
+      const { targetNumber, speaker } = flags.sdm.morale;
+      await renderNPCMoraleResult(
+        { roll: heroResultRoll, targetNumber },
+        {
+          fromHeroDice: true,
+          speaker
+        }
+      );
+    }
   }
 }

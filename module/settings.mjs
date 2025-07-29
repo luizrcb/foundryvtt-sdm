@@ -2,11 +2,11 @@ import { DiceType } from './helpers/constants.mjs';
 import { $fmt, $l10n } from './helpers/globalUtils.mjs';
 import { handleHeroDice } from './rolls/hero_dice/index.mjs';
 
+export const BASE_REACTION_FORMULA = '2d6';
 export const CHARACTER_DEFAULT_INITIATIVE = '2d6 + @abilities.agi.current + @initiative_bonus';
 export const NPC_DEFAULT_INITIATIVE = '2d6 + @bonus';
-export const SAVING_THROW_BASE_FORMULA = '1d20x';
 export const NPC_DEFAULT_MORALE_FORMULA = '2d6';
-export const BASE_REACTION_FORMULA = '2d6';
+export const SAVING_THROW_BASE_FORMULA = '1d20x';
 
 export function registerSystemSettings() {
   /* -------------------------------------------- */
@@ -302,7 +302,7 @@ export function configureUseHeroDiceButton(message, html, data) {
   const isHeroResult = !!message?.getFlag('sdm', 'isHeroResult');
   const isRollTableMessage = !!message?.getFlag('core', 'RollTable');
   const isAbilityScoreRoll = !!message?.getFlag('sdm', 'isAbilityScoreRoll');
-
+  const flags = message.flags;
   if (isRollTableMessage || isAbilityScoreRoll) return;
 
   if (isHeroResult) {
@@ -369,6 +369,6 @@ export function configureUseHeroDiceButton(message, html, data) {
   btn.addEventListener('click', ev => {
     ev.preventDefault();
     ev.stopPropagation();
-    handleHeroDice(ev, message, actor);
+    handleHeroDice(ev, message, actor, flags);
   });
 }
