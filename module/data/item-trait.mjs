@@ -28,11 +28,7 @@ export default class SdmTrait extends SdmItemBase {
 
     schema.skill = new fields.EmbeddedDataField(SkillDataModel);
 
-    schema.power = new fields.EmbeddedDataField(PowerDataModel, {
-      required: false,
-      nullable: true,
-      initial: null
-    });
+    schema.power = new fields.EmbeddedDataField(PowerDataModel);
 
     return schema;
   }

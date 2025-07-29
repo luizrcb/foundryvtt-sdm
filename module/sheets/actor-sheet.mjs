@@ -170,6 +170,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       from,
       ability = '',
       formula = '',
+      overchargeFormula = '',
       attack = '',
       versatile = false,
       versatileFormula = '',
@@ -200,7 +201,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     if (isPowerContainer) rollTitlePrefix = $l10n('SDM.PowerContainer');
     if (rollTitlePrefix !== '') rollTitlePrefix += ' ';
 
-    const title = from;
+    let title = from;
 
     const actorAttack = isAttack && isCharacter ? this.actor.system[attack] : null;
     const actorAttackBonus = isAttack && isCharacter ? actorAttack.bonus || 0 : 0;
@@ -236,14 +237,17 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         : isDamage
           ? 'fas fa-sword'
           : 'fas fa-dice-d20';
+    const buttonLabel = isDamage && versatile ? $l10n('SDM.OneHanded') :
+        (isPower || isPowerContainer) ? $l10n('SDM.Cast') : $l10n('SDM.ButtonRoll');
 
     const buttons = [
       {
         action: 'one-handed',
         icon: damageIcon,
-        label: isDamage && versatile ? $l10n('SDM.OneHanded') : $l10n('SDM.ButtonRoll'),
+        label: buttonLabel,
         callback: (event, button) => ({
           versatile: false,
+          overcharge: false,
           ...new foundry.applications.ux.FormDataExtended(button.form).object
         })
       }
@@ -256,6 +260,21 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         label: $l10n('SDM.TwoHanded'),
         callback: (event, button) => ({
           versatile,
+          overcharge: false,
+          ...new foundry.applications.ux.FormDataExtended(button.form).object
+        })
+      });
+    }
+
+    if (overchargeFormula) {
+      buttons.push({
+        action: 'overcharge',
+        class:'overcharge',
+        icon: 'fas fa-hand-sparkles',
+        label: $l10n('SDM.PowerOvercharge'),
+        callback: (event, button) => ({
+          versatile: false,
+          overcharge: true,
           ...new foundry.applications.ux.FormDataExtended(button.form).object
         })
       });
@@ -324,15 +343,16 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     }
 
     if (isPowerContainer) {
-      from = powerOptions[powerIndex].name;
-      ability = powerOptions[powerIndex].default_ability;
+      title = powerOptions[powerIndex].name;
+      selectedAbility = powerOptions[powerIndex].default_ability;
+      formula = powerOptions[powerIndex].formula;
     }
 
     const rollData = {
       type,
       actor: this.actor,
-      from,
-      ability: selectedAbility || ability,
+      from: title,
+      ability: selectedAbility,
       mode: rollMode,
       modifier: dmgOrAttackBonus ? `${modifier}+${dmgOrAttackBonus}` : modifier,
       multiplier,
@@ -349,6 +369,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     if (versatileFormula && rollOptions.versatile) {
       rollData.formula = versatileFormula;
+    }
+
+    if (rollOptions.overcharge) {
+      rollData.from = powerOptions[powerIndex].overcharge + ` (${$l10n('SDM.PowerOvercharge').toLowerCase()})`;
+      rollData.formula = powerOptions[powerIndex].overchargeFormula;
     }
 
     const sdmRoll = new SDMRoll(rollData);
@@ -989,6 +1014,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     let formula = dataset.roll || '';
     let versatile = false;
     let versatileFormula = '';
+    let overchargeFormula = '';
     let bonusDamage = '';
     let powerOptions;
     let powerIndex;
@@ -1014,6 +1040,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         label = powerItem.getPowerShortTitle(powerData, this.actor.system.power_cost);
         ability = powerData.default_ability;
         formula = powerData.roll_formula;
+        overchargeFormula = powerData.overcharge_roll_formula;
         break;
 
       case 'power_container':
@@ -1027,11 +1054,15 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
           return {
             index,
             name: powerContainer.getPowerShortTitle(power, this.actor.system.power_cost),
+            overcharge: powerContainer.getPowerShortTitle(power, this.actor.system.power_cost, true),
+            formula: power.roll_formula,
+            overchargeFormula: power.overcharge_roll_formula,
             default_ability: power.default_ability
           };
         });
         ability = selectedPower.default_ability;
         formula = selectedPower.roll_formula;
+        overchargeFormula = selectedPower.overcharge_roll_formula;
 
         break;
     }
@@ -1044,6 +1075,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       attack,
       versatile,
       versatileFormula,
+      overchargeFormula,
       bonusDamage,
       powerOptions,
       powerIndex

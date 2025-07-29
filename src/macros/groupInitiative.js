@@ -1,22 +1,35 @@
 const tokens = canvas.tokens.controlled;
-const group1 = []; // Players + Warrior NPCs
-const group2 = []; // Non-combat NPCs
-const excluded = []; // Helpers/Porters
+
+const excluded = [];
+const groups = {
+  group1: [], // Players + Warrior + Helpers + Friendly NPC Tokens
+  group2: [],  // Neutral NPCs
+  group3: [],  // Hostile NPCs
+  group4: [], // secret NPCs
+};
 
 // Separate tokens into groups
 for (const token of tokens) {
   const actor = token.actor;
   if (actor.type === 'character') {
-    group1.push(token);
+    groups.group1.push(token);
   } else if (actor.type === 'npc') {
-    const isWarrior = actor.system?.isWarrior || false;
-    const isHelper = actor.system?.isHelper || false;
-    const isPorter = actor.system?.isPorter || false;
+    const isFriendlyToken = token.document.disposition === CONST.TOKEN_DISPOSITIONS.FRIENDLY;
+    const isNeutralToken = token.document.disposition === CONST.TOKEN_DISPOSITIONS.NEUTRAL;
+    const isHostileToken = token.document.disposition === CONST.TOKEN_DISPOSITIONS.HOSTILE;
+    const isSecretToken = token.document.disposition === CONST.TOKEN_DISPOSITIONS.SECRET;
+    const isWarrior = actor.system?.type === 'warrior' || false;
+    const isHelper = actor.system?.type === 'helper' || false;
+    const isPorter = actor.system?.type === 'porter' || false;
 
-    if (isWarrior) {
-      group1.push(token);
-    } else if (!isHelper && !isPorter) {
-      group2.push(token);
+    if (isWarrior || isHelper || isFriendlyToken) {
+      groups.group1.push(token);
+    } else if (isSecretToken) {
+      groups.group4.push(token);
+    } else if (isHostileToken) {
+      groups.group3.push(token);
+    } else if (isNeutralToken && !isPorter) {
+      groups.group2.push(token);
     } else {
       excluded.push(token);
     }
@@ -58,6 +71,8 @@ async function processGroup(group) {
   }
 }
 
-// Process both groups
-await processGroup(group1);
-await processGroup(group2);
+for (let group of Object.values(groups)) {
+  if (group.length) {
+    await processGroup(group);
+  }
+}

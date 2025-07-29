@@ -137,11 +137,12 @@ export class SdmItem extends Item {
     return title;
   }
 
-  getPowerShortTitle(powerData, actorPowerCost = 2) {
+  getPowerShortTitle(powerData, actorPowerCost = 2, overcharge = false) {
     const powerName = powerData.name || this.name;
     const powerLevel = powerData?.level || 1;
 
-    const powerCost = Math.ceil(actorPowerCost * powerLevel);
+    let powerCost = Math.ceil(actorPowerCost * powerLevel);
+    if (overcharge) powerCost *= 2;
     let title = `${powerName} (${$l10n('SDM.Cost')}: ${powerCost})`;
     return title;
   }

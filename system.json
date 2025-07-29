@@ -32,7 +32,7 @@
     },
     "Item": {
       "gear": {
-        "htmlFields": ["description", "features"],
+        "htmlFields": ["description", "features", "powers.element.description"],
         "filePathFields": {
           "powers.value.img": ["IMAGE"]
         }

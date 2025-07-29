@@ -848,6 +848,9 @@ section.tab.features {
   scrollbar-width: thin;
   color: var(--sdm-c-tan);
 }
+.sdm .items-list.power-contaier {
+  max-height: 600px;
+}
 .sdm .items-list .item-list {
   list-style: none;
   margin: 0;

@@ -2,8 +2,8 @@
   <!-- Power Navigation Controls -->
   <!-- Current Power Display -->
   {{#if (gt powerCount 0)}}
-    {{#each item.system.powers as | power |}}
-    <div {{#if (ne @index @root.system.powers_current_index)}}style="display: none;" {{/if}}
+    {{#each powers as | power |}}
+    <div {{#if (ne @index ../currentPowerIndex)}}style="display: none;" {{/if}}
     >
       <div class="grid grid-3col">
         <div class="resource">
@@ -19,7 +19,6 @@
             data-tooltip='{{power.name}}'
             name="{{concat 'system.powers.' @index '.img'}}"
           />
-          {{!-- <input type="hidden" name="{{concat 'system.powers.' @index '.img'}}" value="{{power.img}}" /> --}}
         </div>
         <div class="grid grid-2col">
           <div class='resource'>
@@ -56,16 +55,6 @@
 
       <div class="grid grid-3col">
 
-         <div class='resource grid-span-3'>
-          <label class='resource-label'>
-            {{localize 'SDM.PowerDescription'}}
-          </label>
-          <div class='resource-content'>
-            <input type='text' name="{{concat 'system.powers.' @index '.description'}}" value='{{power.description}}' />
-          </div>
-        </div>
-
-
         <div class='resource'>
           <label class='resource-label'>
             {{localize 'SDM.PowerRange'}}
@@ -94,6 +83,15 @@
         </div>
 
         <div class='resource'>
+          <label class='resource-label'>
+            {{localize 'SDM.PowerRollFormula'}}
+          </label>
+          <div class='resource-content'>
+            <input type='text' name="{{concat 'system.powers.' @index '.roll_formula'}}" value='{{power.roll_formula}}' />
+          </div>
+        </div>
+
+        <div class='resource'>
             <label class='resource-label' for="{{concat 'system.powers.' @index '.default_ability'}}">
               {{localize 'SDM.AbilityModifier'}}
             </label>
@@ -104,22 +102,41 @@
             </div>
         </div>
 
-        <div class='resource'>
-          <label class='resource-label'>
-            {{localize 'SDM.PowerRollFormula'}}
-          </label>
-          <div class='resource-content'>
-            <input type='text' name="{{concat 'system.powers.' @index '.roll_formula'}}" value='{{power.roll_formula}}' />
-          </div>
+         <div class='resource'>
         </div>
 
         <div class='resource'>
           <label class='resource-label'>
+            {{localize 'SDM.PowerOverchargeRollFormula'}}
+          </label>
+          <div class='resource-content'>
+            <input type='text' name="{{concat 'system.powers.' @index '.overcharge_roll_formula'}}" value='{{power.overcharge_roll_formula}}' />
+          </div>
+        </div>
+
+        <div class='resource grid-span-2'>
+          <label class='resource-label'>
             {{localize 'SDM.PowerOvercharge'}}
           </label>
-          <div class='resource-content grid-span-2 flexcol'>
-            <textarea class='flexcol' name="{{concat 'system.powers.' @index '.overcharge'}}" rows='2'>{{power.overcharge}}
-            </textarea>
+          <div class='resource-content grid-span-1 flexcol'>
+            <textarea class='flexcol' name="{{concat 'system.powers.' @index '.overcharge'}}" rows='1'>{{power.overcharge}}</textarea>
+          </div>
+        </div>
+
+         <div class='resource grid-span-3'>
+          <label class='resource-label'>
+            {{localize 'SDM.PowerDescription'}}
+          </label>
+          <div class='resource-content'>
+            {{#if @root.editable}}
+            {{!-- <input type='text' name="{{concat 'system.powers.' @index '.description'}}" value='{{power.description}}' /> --}}
+            <prose-mirror name="{{concat 'system.powers.' @index '.description'}}" data-document-uuid="{{ @root.item.uuid }}"
+              value="{{ power.description }}" compact toggled>
+              {{{lookup @root.enrichedPowers @index}}}
+            </prose-mirror>
+            {{else}}
+             {{{lookup @root.enrichedPowers @index}}}
+            {{/if}}
           </div>
         </div>
 

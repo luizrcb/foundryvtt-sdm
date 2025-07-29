@@ -13,7 +13,7 @@
       <div class="resource">
         <label class='resource-label'>{{localize 'SDM.ItemTraitType'}}</label>
         <select name='system.type' class="resource-content">
-          {{selectOptions config.traitType blank='TYPE.Trait' localize=true selected=system.type sort=true}}
+          {{selectOptions @root.config.traitType blank='TYPE.Trait' localize=true selected=system.type sort=true}}
         </select>
       </div>
 
@@ -54,7 +54,7 @@
 
       {{#if (eq item.system.type 'power')}}
       {{!-- fragment --}}
-      {{> ($$ "item/power") item=item}}
+      {{> ($$ "item/power") item=item abilities=@root.config.abilities}}
       {{!-- fragment --}}
       {{/if}}
     </div>

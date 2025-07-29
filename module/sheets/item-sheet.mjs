@@ -1,6 +1,6 @@
 import PowerDataModel from '../data/power-data.mjs';
 import { getActorOptions } from '../helpers/actorUtils.mjs';
-import { GearType } from '../helpers/constants.mjs';
+import { GearType, ItemType } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
@@ -130,14 +130,15 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       skillMod: skillModOptons
     };
 
-    const currentPowerIndex = this.item.system.powers_current_index || 0;
-    const powers = this.item.system.powers;
-
-    // Calculate navigation states
-    context.currentPowerIndex = currentPowerIndex;
-    context.powerCount = powers.length;
-    context.hasPrevious = currentPowerIndex > 0;
-    context.hasNext = currentPowerIndex < powers.length - 1;
+    if (this.item.type === ItemType.GEAR && this.item.system.type === GearType.POWER_CONTAINER) {
+      // Calculate navigation states
+      context.powers = context.system?.powers;
+      context.enrichedPowers = await this._getPowersDescriptions(context.powers);
+      context.currentPowerIndex = context.system.powers_current_index || 0;
+      context.powerCount = context.powers.length;
+      context.hasPrevious = context.currentPowerIndex > 0;
+      context.hasNext = context.currentPowerIndex < context.powers.length - 1;
+    }
 
     return context;
   }
@@ -245,6 +246,21 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
   //   await this.item.update(expandedFormData);
   //   //await super._onSubmitForm(formConfig, event);
   // }
+
+  async _getPowersDescriptions(powers) {
+    if (!powers) return {};
+
+    const descriptions = await Promise.all(
+      powers?.map(async ({ description }, index) => {
+        const enriched = await TextEditor.enrichHTML(description, {
+          relativeTo: this.document
+          // secrets: this.document.isOwner
+        });
+        return [index, enriched];
+      })
+    );
+    return Object.fromEntries(descriptions);
+  }
 
   /**************
    *
@@ -406,11 +422,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     const basePower = new PowerDataModel().toObject();
     if (!data) return basePower;
 
-    const { img, name, level, range, target, duration, overcharge, roll_formula, default_ability } =
-      data;
-
-    return {
-      ...basePower,
+    const {
       img,
       name,
       level,
@@ -418,6 +430,23 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       target,
       duration,
       overcharge,
+      overcharge_roll_formula,
+      roll_formula,
+      default_ability,
+      description
+    } = data;
+
+    return {
+      ...basePower,
+      img,
+      name,
+      description,
+      level,
+      range,
+      target,
+      duration,
+      overcharge,
+      overcharge_roll_formula,
       roll_formula,
       default_ability
     };
@@ -681,8 +710,17 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       return false;
     }
 
-    const { level, range, target, duration, overcharge, roll_formula, default_ability } =
-      droppedItem.system.power;
+    const {
+      level,
+      range,
+      target,
+      duration,
+      overcharge,
+      overcharge_roll_formula,
+      roll_formula,
+      default_ability
+    } = droppedItem.system.power;
+    const { description } = droppedItem.system;
     const { img, name } = droppedItem;
 
     await SdmItemSheet._onCreatePower.call(this, null, null, {
@@ -691,10 +729,12 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       target,
       duration,
       overcharge,
+      overcharge_roll_formula,
       roll_formula,
       default_ability,
       img,
-      name
+      name,
+      description
     });
   }
 

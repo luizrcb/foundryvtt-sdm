@@ -5,6 +5,7 @@ import { SdmCombatant } from './documents/combatant.mjs';
 import { SdmItem } from './documents/item.mjs';
 import { registerHandlebarsHelpers } from './handlebars-helpers.mjs';
 import { SDM } from './helpers/config.mjs';
+import { ActorType } from './helpers/constants.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
 import {
@@ -51,21 +52,60 @@ Hooks.on('renderChatMessageHTML', (message, html, data) => {
 Hooks.on('renderDialogV2', (dialog, html) => {
   const powerSelect = html.querySelector('#powerIndex');
   const abilitySelect = html.querySelector('#selectedAbility');
+  const overChargeButton = html.querySelector('button.overcharge');
   const powerOptions = dialog.options?.powerOptions;
 
   powerSelect?.addEventListener('change', event => {
     const selectedIndex = parseInt(event.target.value, 10);
     const selectedPower = powerOptions.find(p => p.index === selectedIndex);
     const defaultAbility = selectedPower?.default_ability || '';
+    const overchargeFormula = selectedPower?.overchargeFormula;
 
     if (abilitySelect) {
       abilitySelect.value = defaultAbility;
+    }
+
+    if (overChargeButton) {
+      overChargeButton.hidden = !overchargeFormula;
     }
   });
 });
 
 Hooks.on('preUpdateActor', (actor, update) => {
   if (!actor.testUserPermission(game.user, 'OWNER')) return false;
+});
+
+Hooks.on('createActor', async (actor, _options, _id) => {
+  if (!actor.isOwner) return
+  let disposition = CONST.TOKEN_DISPOSITIONS.NEUTRAL;
+
+  const tokenData = {
+    name: actor.name,
+    displayName: CONST.TOKEN_DISPLAY_MODES.OWNER,
+    displayBars: CONST.TOKEN_DISPLAY_MODES.OWNER,
+    disposition: disposition,
+    lockRotation: true,
+  }
+
+  if (actor.type === ActorType.NPC) {
+    tokenData.appendNumber = true;
+  }
+
+  if ([ActorType.CHARACTER, ActorType.CARAVAN].includes(actor.type)) {
+    tokenData.disposition = CONST.TOKEN_DISPOSITIONS.FRIENDLY;
+    tokenData.sight = {};
+    tokenData.sight.enabled = true;
+    tokenData.actorLink = true;
+  }
+
+  await actor.update({'prototypeToken': tokenData })
+});
+
+Hooks.on('updateActor', async actor => {
+  if (!actor.isOwner) return;
+
+  const name = actor.name;
+  await actor.update({'prototypeToken.name': name });
 });
 
 Hooks.on('renderSettings', (app, html) => renderSettings(html));
@@ -216,6 +256,14 @@ Hooks.once('ready', function () {
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
   Hooks.on('hotbarDrop', (bar, data, slot) => createDocMacro(data, slot));
   // Create container element
+
+  const combatConfig = game.settings.get('core', 'combatTrackerConfig');
+  combatConfig.resource = 'life.value';
+  combatConfig.skipDefeated = true;
+  combatConfig.turnMarker.enabled = true;
+  combatConfig.turnMarker.disposition = true;
+  combatConfig.turnMarker.animation = 'spin';
+  game.settings.set('core', 'combatTrackerConfig', combatConfig);
 
   createEscalatorDieDisplay();
 

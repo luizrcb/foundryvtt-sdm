@@ -260,8 +260,6 @@ export class SdmActor extends Actor {
       'system.inventory_value': estimatedWealth,
       'system.total_cash': totalCash,
       'system.wealth': totalCash + estimatedWealth,
-      'prototypeToken.actorLink': true,
-      'prototypeToken.disposition': 1 // friendly
     });
   }
 

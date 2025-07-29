@@ -164,7 +164,7 @@
       </div>
       <div class="resource"></div>
       <div class="resource grid-span-3">
-        <ol class='items-list'>
+        <ol class='items-list power-container'>
           <li class='item flexrow items-header'>
             <div class='item-name flex-between'>
               <div class="rollable power-prev" data-action="prevPower" {{#unless hasPrevious}}disabled{{/unless}}>
@@ -194,7 +194,11 @@
               {{/if}}
             </div>
           </li>
-          {{> ($$ "item/power_container") abilities=config.abilities index=system.powers_current_index}}
+          {{> ($$ "item/power_container")
+            abilities=config.abilities
+            index=currentPowerIndex
+            enrichedPowers=@root.enrichedPowers
+            powers=@root.powers}}
         </ol>
         </div>
         {{/if}}

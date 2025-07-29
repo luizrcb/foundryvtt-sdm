@@ -1,7 +1,7 @@
 <div class="custom-roll-modal">
   <h4>{{localize 'SDM.RollTitle' prefix=rollTitlePrefix title=title }}</h4>
   <form class="custom-roll-form">
-    {{#if (or (eq type 'attack') (eq type 'power') (eq type 'power_container'))}}
+    {{#if (eq type 'attack')}}
      <div class="form-group">
       <label for="attackTarget">{{localize 'SDM.AttackTarget'}}</label>
       <div class="flexrow">

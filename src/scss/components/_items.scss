@@ -38,6 +38,9 @@
   overflow-y: auto;
   scrollbar-width: thin;
   color: colors.$c-tan;
+  &.power-contaier {
+    max-height: 600px;
+  }
 
   // Child lists
   .item-list {
