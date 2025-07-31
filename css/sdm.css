@@ -398,6 +398,12 @@ section.tab.features {
   background-color: rgba(255, 255, 255, 0.05) !important;
 }
 
+span.system-info a.notification-pip {
+  right: -15px !important;
+  top: 2px !important;
+  background: unset !important;
+}
+
 .grid,
 .grid-2col {
   display: grid;
@@ -1295,3 +1301,5 @@ section.tab.features {
   top: var(--sdm-top-edit);
   left: var(--sdm-left-edit);
 }
+
+/*# sourceMappingURL=sdm.css.map */
