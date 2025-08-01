@@ -22,9 +22,10 @@
         <label class='resource-label'>{{localize 'SDM.SkillMod'}}</label>
         <select name='system.skill.rank'>
           <option value=''></option>
-          {{#each config.skillMod as |skill key|}}
+          {{#each @root.skillMod as |skill key|}}
           <option value='{{key}}' {{#if (eq (toInt key) ../item.system.skill.rank)}}selected{{/if}}>{{localize skill}}
-            (+{{multiply key ../item.system.skill.modifier_step}})</option>
+            (+{{multiply key
+            (ifThen ../item.system.skill.custom_modifiers ../item.system.skill.modifier_step @root.skillModifierStep)}})</option>
           {{/each}}
         </select>
       </div>

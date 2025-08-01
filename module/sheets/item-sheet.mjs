@@ -1,6 +1,6 @@
 import PowerDataModel from '../data/power-data.mjs';
 import { getActorOptions } from '../helpers/actorUtils.mjs';
-import { GearType, ItemType } from '../helpers/constants.mjs';
+import { GearType, ItemType, SkillMod } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
@@ -97,15 +97,13 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
 
   /** @override */
   async _prepareContext(options) {
-    const skillModOptons = Object.entries(CONFIG.SDM.skillMod).map(([modValue, modLabel]) => {
-      return {
-        value: modValue,
-        label:
-          modValue > 0
-            ? `${game.i18n.localize(modLabel)} (+${modValue})`
-            : game.i18n.localize(modLabel)
-      };
-    });
+
+    const extendedSkillRanks = game.settings.get('sdm', 'extendedSkillRanks') || false;
+    const defaultModifierStep = game.settings.get('sdm', 'skillModifierStep') || 3;
+    const allSKillMods = {
+      ...CONFIG.SDM.skillMod,
+      ...(extendedSkillRanks ? CONFIG.SDM.extraSkillMod : {})
+    };
 
     const context = {
       // Validates both permissions and compendium status
@@ -127,7 +125,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       pullModes: CONFIG.SDM.pullModes,
       possibleRiders: getActorOptions('character'),
       sizeUnits: CONFIG.SDM.sizeUnits,
-      skillMod: skillModOptons
+      skillMod: allSKillMods,
+      skillModifierStep: defaultModifierStep,
     };
 
     if (this.item.type === ItemType.GEAR && this.item.system.type === GearType.POWER_CONTAINER) {

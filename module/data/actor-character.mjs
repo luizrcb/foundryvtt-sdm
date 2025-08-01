@@ -342,7 +342,7 @@ export default class SdmCharacter extends SdmActorBase {
     data.lvl = this.level;
     data.hero_dice = this.hero_dice;
     data.initiative_bonus = this.initiative_bonus;
-    data.burden_penalty = this.burden_penalty;
+    data.burden_penalty = this.burden_penalty || 0;
     data.burden_penalty_bonus = this.burden_penalty_bonus;
     data.item_slots = this.item_slots;
     data.item_slots_taken = this.item_slots_taken;

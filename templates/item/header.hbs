@@ -1,7 +1,7 @@
 {{! Sheet Header }}
 <div>
   {{#if (eq item.type 'trait')}}
-  {{> ($$ "item/trait/header")}}
+  {{> ($$ "item/trait/header") skillMod=@root.skillMod}}
   {{/if}}
 
   {{#if (eq item.type 'gear')}}

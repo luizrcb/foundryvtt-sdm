@@ -34,7 +34,13 @@ export default class SdmTrait extends SdmItemBase {
   }
 
   prepareDerivedData() {
+
+   const defaultModifierStep = game.settings.get('sdm', 'skillModifierStep');
+   const shouldUseCustomModifiers = this.skill.custom_modifiers;
+
+   const skillStep = shouldUseCustomModifiers ? this.skill.modifier_step : defaultModifierStep;
+
     this.skill.modifier_final =
-      this.skill.rank * this.skill.modifier_step + this.skill.modifier_bonus;
+      (this.skill.rank * skillStep) + this.skill.modifier_bonus;
   }
 }

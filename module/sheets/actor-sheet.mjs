@@ -494,7 +494,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
       // Adiciona o estado do modo ao contexto
       context.isEditMode = this.actor.getFlag('sdm', 'editMode') ?? false;
-      context.coloredLabels = game.settings.get('sdm', 'coloredLabels') ?? false;
     }
 
     // Offloading context prep to a helper function
@@ -764,7 +763,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       return true;
     }
 
-    const itemSlots = item.system.slots_taken || 1;
+    const itemSlots =  getSlotsTaken(item.system);
     const validWeight = this._checkActorWeightLimit(itemSlots, item.type);
 
     if (!validWeight) {

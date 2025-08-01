@@ -223,6 +223,11 @@ SDM.skillMod = {
   3: 'SDM.SkillMaster'
 };
 
+SDM.extraSkillMod = {
+  4: 'SDM.SkillPhylake',
+  5: 'SDM.SkillBuilder',
+};
+
 SDM.armorType = Object.values(ArmorType).reduce((acc, armorType) => {
   acc[armorType] = `SDM.ArmorType${capitalizeFirstLetter(armorType)}`;
   return acc;

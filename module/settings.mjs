@@ -7,6 +7,9 @@ export const CHARACTER_DEFAULT_INITIATIVE = '2d6 + @abilities.agi.current + @ini
 export const NPC_DEFAULT_INITIATIVE = '2d6 + @bonus';
 export const NPC_DEFAULT_MORALE_FORMULA = '2d6';
 export const SAVING_THROW_BASE_FORMULA = '1d20x';
+export const DEFAULT_LEVEL_UP_SOUND =
+  'systems/sdm/assets/audio/sounds_effects/single_church_bell.mp3';
+export const DEFAULT_CURRENCY_IMG = 'icons/commodities/currency/coins-stitched-pouch-brown.webp';
 
 export function registerSystemSettings() {
   /* -------------------------------------------- */
@@ -21,9 +24,75 @@ export function registerSystemSettings() {
     config: true, // Show in configuration view
     type: String, // Data type: String, Number, Boolean, etc
     default: 'cash',
+  });
+
+  game.settings.register('sdm', 'currencyImage', {
+    name: 'SDM.SettingsCurrencyImg',
+    hint: 'SDM.SettingsCurrencyImgHint',
+    scope: 'world',
+    restricted: true,
+    config: true,
+    type: new foundry.data.fields.FilePathField({
+      categories: ['IMAGE'],
+      default: DEFAULT_CURRENCY_IMG
+    }),
+    default: DEFAULT_CURRENCY_IMG
+  });
+
+  game.settings.register('sdm', 'shouldPlayLevelUpSoundFx', {
+    name: 'SDM.SettingsShouldPlayLevelUpSoundFx',
+    hint: 'SDM.SettingsShouldPlayLevelUpSoundFxHint',
+    scope: 'world',
+    restricted: true,
+    config: true,
+    type: Boolean,
+    default: true,
+    requiresReload: false
+  });
+
+  game.settings.register('sdm', 'levelUpSoundFx', {
+    name: 'SDM.SettingsLevelUpSoundFx',
+    hint: 'SDM.SettingsLevelUpSoundFxHint',
+    scope: 'world',
+    restricted: true,
+    config: true,
+    type: new foundry.data.fields.FilePathField({
+      categories: ['AUDIO'],
+      default: DEFAULT_LEVEL_UP_SOUND
+    }),
+    default: DEFAULT_LEVEL_UP_SOUND,
     onChange: value => {
-      // Optional: Code to run when setting changes
+      if (!value) {
+        game.settings.set('sdm', 'levelUpSoundFx', DEFAULT_LEVEL_UP_SOUND);
+      }
     }
+  });
+
+  game.settings.register('sdm', 'skillModifierStep', {
+    name: 'SDM.SettingsSkillModifierStep',
+    hint: 'SDM.SettingsSkillModifierStepHint',
+    scope: 'world',
+    restricted: true,
+    config: true,
+    type: Number,
+    default: 3,
+    onChange: value => {
+      if (!value || value < 0 || value > 4) {
+        game.settings.set('sdm', 'skillModifierStep', 3);
+      }
+    },
+    requiresReload: true
+  });
+
+  game.settings.register('sdm', 'extendedSkillRanks', {
+    name: 'SDM.SettingsExtendedSkillRanks',
+    hint: 'SDM.SettingsExtendedSkillRanksHint',
+    scope: 'world',
+    restricted: true,
+    config: true,
+    type: Boolean,
+    default: false,
+    requiresReload: true
   });
 
   game.settings.register('sdm', 'escalatorDie', {
@@ -128,7 +197,8 @@ export function registerSystemSettings() {
     config: true, // Show in configuration view
     type: String, // Data type: String, Number, Boolean, etc
     default: 'd6',
-    choices: DiceType
+    choices: DiceType,
+    requiresReload: true
   });
 
   game.settings.register('sdm', 'savingThrowBaseRollFormula', {
@@ -191,16 +261,6 @@ export function registerSystemSettings() {
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
     config: true, // Show in configuration view
-    type: Boolean, // Data type: String, Number, Boolean, etc
-    default: false
-  });
-
-  // TODO consider removing this
-  game.settings.register('sdm', 'coloredLabels', {
-    name: 'SDM.SettingsColoredLabels',
-    hint: 'SDM.SettingsColoredLabelsHint',
-    scope: 'client', // "world" = GM only, "client" = per user
-    // config: true, // Show in configuration view
     type: Boolean, // Data type: String, Number, Boolean, etc
     default: false
   });

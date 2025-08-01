@@ -140,5 +140,7 @@ export const SkillMod = Object.freeze({
   '': 0,
   SKILLED: 1,
   EXPERT: 2,
-  MASTER: 3
+  MASTER: 3,
+  PHYLAKE: 4,
+  BUILDER: 5,
 });

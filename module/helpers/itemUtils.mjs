@@ -102,6 +102,9 @@ export function getSlotsTaken(itemSystem) {
   let slotsTaken = Math.ceil(
     convertToCash(itemSystem.quantity * itemSystem.size?.value, itemSystem.size?.unit) / 250
   );
+
+  if (slotsTaken === 0 && itemSystem.size?.unit === SizeUnit.CASH) return slotsTaken;
+
   slotsTaken = Math.max(slotsTaken || 1, 1);
 
   if (itemSystem.size?.unit !== SizeUnit.CASH && itemSystem.quantity > 1 && itemSystem.readied) {

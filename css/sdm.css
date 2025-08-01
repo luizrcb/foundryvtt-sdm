@@ -402,6 +402,7 @@ span.system-info a.notification-pip {
   right: -15px !important;
   top: 2px !important;
   background: unset !important;
+  text-shadow: unset !important;
 }
 
 .grid,
@@ -1301,5 +1302,3 @@ span.system-info a.notification-pip {
   top: var(--sdm-top-edit);
   left: var(--sdm-left-edit);
 }
-
-/*# sourceMappingURL=sdm.css.map */

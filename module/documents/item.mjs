@@ -81,7 +81,7 @@ export class SdmItem extends Item {
     return '';
   }
 
-  getItemSlots() {
+  getSlotsTaken() {
     return getSlotsTaken(this.system);
   }
 
@@ -191,8 +191,8 @@ export class SdmItem extends Item {
     const skillRank = this.system?.skill?.rank;
 
     if (skillMod === 0) return this.name;
-
-    const skillModLabel = $l10n(CONFIG.SDM.skillMod[skillRank]);
+    const allMods =  {...CONFIG.SDM.skillMod, ...CONFIG.SDM.extraSkillMod };
+    const skillModLabel = $l10n(allMods[skillRank]);
     const title = `${$l10n('SDM.SkillMod')}: +${skillMod} ${skillModLabel}`;
 
     return title;

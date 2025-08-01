@@ -7,19 +7,25 @@ import {
 } from '../helpers/actorUtils.mjs';
 import { ActorType, GearType, ItemType, SizeUnit, TraitType } from '../helpers/constants.mjs';
 import { safeEvaluate } from '../helpers/globalUtils.mjs';
-import { BURDEN_ITEM_TYPES, convertToCash, GEAR_ITEM_TYPES } from '../helpers/itemUtils.mjs';
+import {
+  BURDEN_ITEM_TYPES,
+  convertToCash,
+  GEAR_ITEM_TYPES,
+  getSlotsTaken
+} from '../helpers/itemUtils.mjs';
+
 
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
  */
 export class SdmActor extends Actor {
-
   // Override the _onUpdate method to handle level changes
   /** @override */
   async _onUpdate(changed, options, userId) {
     await super._onUpdate(changed, options, userId);
-
+    const shouldPlayLevelUpSound = game.settings.get('sdm', 'shouldPlayLevelUpSoundFx');
+    const levelUpSoundFx = game.settings.get('sdm', 'levelUpSoundFx');
     const properties = ['player_experience', 'debt', 'wealth', 'revenue', 'expense'];
     const updates = {};
 
@@ -39,6 +45,16 @@ export class SdmActor extends Actor {
       let resultingExperience = safeEvaluate(changed.system?.experience);
       resultingExperience = parseInt(resultingExperience, 10);
       const newLevel = getLevel(resultingExperience);
+
+      if (shouldPlayLevelUpSound && newLevel > this.system.level) {
+        foundry.audio.AudioHelper.play({
+          src: levelUpSoundFx,
+          volume: 1,
+          autoplay: true,
+          loop: false,
+        }, true);
+      }
+
       const baseLife = getMaxLife(newLevel);
 
       const effectiveMaxLife = baseLife + this.system.life.bonus - this.system.life.imbued;
@@ -58,11 +74,10 @@ export class SdmActor extends Actor {
       });
     }
 
-
     if (changed.system?.life?.value !== undefined) {
       if (changed.system?.life?.value > this.system.life.max) {
         await this.update({
-          'system.life.value': this.system.life.max,
+          'system.life.value': this.system.life.max
         });
       }
     }
@@ -74,9 +89,8 @@ export class SdmActor extends Actor {
       for (const [abilityKey, abilityData] of Object.entries(abilities)) {
         const systemAbility = this.system.abilities[abilityKey];
         if (abilityData.current !== undefined) {
-
-          if (abilityData.current > (systemAbility.base + systemAbility.bonus)) {
-            abilityData.current = (systemAbility.base + systemAbility.bonus);
+          if (abilityData.current > systemAbility.base + systemAbility.bonus) {
+            abilityData.current = systemAbility.base + systemAbility.bonus;
           }
 
           if (abilityData.current < 0) {
@@ -84,7 +98,7 @@ export class SdmActor extends Actor {
           }
 
           await this.update({
-            [`system.abilities.${abilityKey}.current`]: abilityData.current,
+            [`system.abilities.${abilityKey}.current`]: abilityData.current
           });
         }
       }
@@ -253,13 +267,13 @@ export class SdmActor extends Actor {
     const { burdenPenalty, items, traits } = this.checkInventorySlots();
 
     this.update({
-      'system.burden_penalty': burdenPenalty,
+      'system.burden_penalty': burdenPenalty || 0,
       'system.item_slots_taken': items.slotsTaken,
       'system.trait_slots_taken': traits.slotsTaken,
       'system.packed_item_slots_taken': items.packedTaken,
       'system.inventory_value': estimatedWealth,
       'system.total_cash': totalCash,
-      'system.wealth': totalCash + estimatedWealth,
+      'system.wealth': totalCash + estimatedWealth
     });
   }
 
@@ -283,10 +297,10 @@ export class SdmActor extends Actor {
     const itemsArray = this.items.contents;
 
     const skillTraits = itemsArray.filter(item => item.type === ItemType.TRAIT);
-
+    const defaultModifierStep = game.settings.get('sdm', 'skillModifierStep');
     skillTraits.forEach(trait => {
       const mod = trait.system.type === TraitType.SKILL && trait.system.skill.modifier_final;
-      const modifierStep = trait.system.skill?.modifier_step || 3;
+      const modifierStep = defaultModifierStep || trait.system.skill?.modifier_step || 3;
 
       result[trait.uuid] = {
         id: trait.uuid,
@@ -347,7 +361,7 @@ export class SdmActor extends Actor {
       const isSmallITem = i.system.size.unit === SizeUnit.SOAPS;
       const isReadied = !!i.system.readied;
 
-      let itemSlots = i.system.slots_taken || 1;
+      let itemSlots = getSlotsTaken(i.system);
 
       if (isPower && powerSlotsBonus > 0) {
         powerSlotsBonus -= 1;
@@ -502,12 +516,12 @@ export class SdmActor extends Actor {
 
   getEstimatedWealth() {
     const itemsArray = this.items.contents.filter(
-      item => [ItemType.GEAR, ItemType.MOUNT, ItemType.VEHICLE].includes(item.type) &&
-      item.system.size.unit !== SizeUnit.CASH,
-
+      item =>
+        [ItemType.GEAR, ItemType.MOUNT, ItemType.VEHICLE].includes(item.type) &&
+        item.system.size.unit !== SizeUnit.CASH
     );
 
-    const estimatedWealth =  itemsArray.reduce((acc, item) => {
+    const estimatedWealth = itemsArray.reduce((acc, item) => {
       return acc + (item?.system?.cost || 0);
     }, 0);
 
@@ -515,9 +529,7 @@ export class SdmActor extends Actor {
   }
 
   getTotalCash() {
-    const itemsArray = this.items.contents.filter(
-      item => item.system.size.unit === SizeUnit.CASH,
-    );
+    const itemsArray = this.items.contents.filter(item => item.system.size.unit === SizeUnit.CASH);
 
     const totalCash = itemsArray.reduce((acc, item) => {
       return acc + (item.system.size.value || 1) * item.system.quantity;
@@ -568,8 +580,8 @@ export class SdmActor extends Actor {
 
     const amountToApply = damageValue * multiplier;
     const newValue = Math.clamp(value - amountToApply, 0, max);
-     await this.update({
-      'system.life.value': newValue,
+    await this.update({
+      'system.life.value': newValue
     });
   }
 }

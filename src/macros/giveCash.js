@@ -3,11 +3,30 @@ const { NumberField } = foundry.data.fields;
 
 if (!game.user.isGM) return;
 
+const defaultCurrencyName = game.settings.get('sdm', 'currencyName') || 'cash';
+const defaultCurrencyImage =
+  game.settings.get('sdm', 'currencyImage') ||
+  'icons/commodities/currency/coins-stitched-pouch-brown.webp';
+
 function findCashItem(actor) {
-  return actor.items.find(i => i.type === 'gear' && i.system.size?.unit === 'cash');
+  const cashItems = actor.items.filter(i => i.type === 'gear' && i.system.size?.unit === 'cash');
+  if (!cashItems.length) return null;
+
+  if (cashItems.length === 1) return cashItems[0];
+
+  const defaultCashItem = cashItems.find(
+    i => i.name === defaultCurrencyName && i.img === defaultCurrencyImage
+  );
+  if (defaultCashItem) return defaultCashItem;
+
+  // fallback to size = 1 cash item
+  return cashItems.find(i => i.system.size?.value === 1);
 }
 
-const characters = game.actors.filter(a => a.type === 'character' || a.type === 'caravan');
+const characters = game.actors.filter(a => a.type === 'character');
+const caravans = game.actors.filter(a => a.type === 'caravan');
+const allTransferTarget = [...characters, ...caravans];
+
 const cashInput = new NumberField({
   label: game.i18n.localize('SDM.Amount'),
   min: 0
@@ -20,7 +39,7 @@ const content = `
       <label>${game.i18n.localize('SDM.Target')}</label>
       <select name="target" class="form-control">
         <option value="all">${game.i18n.localize('SDM.AllCharacters')}</option>
-        ${characters.map(c => `<option value="${c.id}">${c.name}</option>`).join('')}
+        ${allTransferTarget.map(c => `<option value="${c.id}">${c.name}</option>`).join('')}
       </select>
     </div>
     <div class="form-group">
@@ -91,11 +110,11 @@ try {
           }
         ]);
       } else {
-        const currencyName = game.settings.get('sdm', 'currencyName') || 'cash';
         await target.createEmbeddedDocuments('Item', [
           {
-            name: currencyName,
+            name: defaultCurrencyName,
             type: 'gear',
+            img: defaultCurrencyImage,
             system: {
               size: { unit: 'cash' },
               quantity: data.amount
