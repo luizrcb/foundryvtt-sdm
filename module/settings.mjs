@@ -10,6 +10,7 @@ export const SAVING_THROW_BASE_FORMULA = '1d20x';
 export const DEFAULT_LEVEL_UP_SOUND =
   'systems/sdm/assets/audio/sounds_effects/single_church_bell.mp3';
 export const DEFAULT_CURRENCY_IMG = 'icons/commodities/currency/coins-stitched-pouch-brown.webp';
+export const DEFAULT_MAX_POWERS = 3;
 
 export function registerSystemSettings() {
   /* -------------------------------------------- */
@@ -42,8 +43,7 @@ export function registerSystemSettings() {
   game.settings.register('sdm', 'shouldPlayLevelUpSoundFx', {
     name: 'SDM.SettingsShouldPlayLevelUpSoundFx',
     hint: 'SDM.SettingsShouldPlayLevelUpSoundFxHint',
-    scope: 'world',
-    restricted: true,
+    scope: 'client',
     config: true,
     type: Boolean,
     default: true,
@@ -66,6 +66,22 @@ export function registerSystemSettings() {
         game.settings.set('sdm', 'levelUpSoundFx', DEFAULT_LEVEL_UP_SOUND);
       }
     }
+  });
+
+  game.settings.register('sdm', 'defaultMaxPowers', {
+    name: 'SDM.SettingsDefaultMaxPowers',
+    hint: 'SDM.SettingsDefaultMaxPowersHint',
+    scope: 'world',
+    restricted: true,
+    config: true,
+    type: Number,
+    default: DEFAULT_MAX_POWERS,
+    onChange: value => {
+      if (!value || value <= 0) {
+        game.settings.set('sdm', 'defaultMaxPowers', DEFAULT_MAX_POWERS);
+      }
+    },
+    requiresReload: true
   });
 
   game.settings.register('sdm', 'skillModifierStep', {
@@ -107,6 +123,16 @@ export function registerSystemSettings() {
       // This will now be called automatically
       updateEscalatorDisplay();
     }
+  });
+
+  game.settings.register('sdm', 'defaultSaveValue', {
+    name: 'SDM.SettingsDefaultSaveValue',
+    hint: 'SDM.SettingsDefaultSaveValueHint',
+    scope: 'world', // "world" = GM only, "client" = per user
+    restricted: true,
+    config: true, // Show in configuration view
+    type: Number, // Data type: String, Number, Boolean, etc
+    default: 13
   });
 
   game.settings.register('sdm', 'baseDefense', {
@@ -408,7 +434,7 @@ export function configureUseHeroDiceButton(message, html, data) {
   const defaultHeroDiceType = game.settings.get('sdm', 'defaultHeroDiceType');
   const actorHeroDice = actor?.system?.hero_dice?.dice_type || defaultHeroDiceType;
 
-  icon.classList.add('fas', `fa-dice-${actorHeroDice}`);
+  icon.classList.add('fa-solid', `fa-dice-${actorHeroDice}`);
   btn.appendChild(icon);
 
   // Add localized text

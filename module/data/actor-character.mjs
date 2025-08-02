@@ -115,7 +115,7 @@ export default class SdmCharacter extends SdmActorBase {
 
     schema.save_target = new fields.NumberField({
       ...requiredInteger,
-      initial: 13
+      initial: 0
     });
 
     //TODO: remove total carry weight and encumbered active effects, to use slots system and burden penalties
@@ -327,6 +327,7 @@ export default class SdmCharacter extends SdmActorBase {
     this.item_slots = baseItemSlots + this.abilities['str'].current + this.item_slots_bonus;
     this.trait_slots = baseTraitSlots + this.abilities['tho'].current + this.trait_slots_bonus;
     this.burden_slots = baseBurdenSlots + this.burden_slots_bonus;
+    this.save_target = this.save_target || game.settings.get('sdm', 'defaultSaveValue') || 13;
   }
 
   getRollData() {

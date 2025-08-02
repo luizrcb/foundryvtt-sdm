@@ -455,6 +455,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     const powerContainer = this.item.system.powers;
 
     if (powerContainer.length === this.item.system.max_powers) {
+      ui.notifications.warn($fmt('SDM.ErrorMaxPowers', { item: this.item.name }))
       return;
     }
 

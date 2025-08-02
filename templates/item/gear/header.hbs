@@ -168,13 +168,13 @@
           <li class='item flexrow items-header'>
             <div class='item-name flex-between'>
               <div class="rollable power-prev" data-action="prevPower" {{#unless hasPrevious}}disabled{{/unless}}>
-                <i class="fas fa-chevron-left"></i>
+                <i class="fa-solid fa-chevron-left"></i>
               </div>
               <div class="rollable power-counter">
                {{ifThen (gt powerCount 0) (addOne currentPowerIndex) powerCount}} / {{powerCount}}
               </div>
               <div class="rollable power-next"  data-action="nextPower" {{#unless hasNext}}disabled{{/unless}}>
-                <i class="fas fa-chevron-right"></i>
+                <i class="fa-solid fa-chevron-right"></i>
               </div>
             </div>
             <div class='item-formula flexrow'>
@@ -184,12 +184,12 @@
               {{#if @root.editable}}
               <a
                 class='item-control item-create'
-                data-tooltip="{{localize 'DOCUMENT.Create' type=(localize 'TYPES.Item.power')}}"
+                data-tooltip="{{localize 'SDM.DOCUMENT.Create' type=(localize 'TYPES.Item.power')}}"
                 data-action='addPower'
                 data-container='{{item.uuid}}'
               >
-                <i class='fas fa-plus'></i>
-                {{localize 'DOCUMENT.New' type=(localize 'TYPES.Item.power')}}
+                <i class='fa-solid fa-plus'></i>
+                {{localize 'SDM.DOCUMENT.New' type=(localize 'TYPES.Item.power')}}
               </a>
               {{/if}}
             </div>

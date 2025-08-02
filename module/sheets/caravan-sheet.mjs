@@ -189,7 +189,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       },
       content,
       ok: {
-        icon: 'fas fa-dice-d20',
+        icon: 'fa-solid fa-dice-d20',
         label: $l10n('SDM.ButtonRoll'),
         callback: (event, button) =>
           new foundry.applications.ux.FormDataExtended(button.form).object

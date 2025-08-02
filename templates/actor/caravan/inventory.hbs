@@ -11,13 +11,13 @@
               {{#if @root.editable}}
               <a
                 class='item-control item-create'
-                data-tooltip="{{localize 'DOCUMENT.Create' type=(localize 'TYPE.Item')}}"
+                data-tooltip="{{localize 'SDM.DOCUMENT.Create' type=(localize 'TYPE.Item')}}"
                 data-action='createDoc'
                 data-document-class='Item'
                 data-type='gear'
               >
-                <i class='fas fa-plus'></i>
-                {{localize 'DOCUMENT.New' type=(localize 'TYPE.Item')}}
+                <i class='fa-solid fa-plus'></i>
+                {{localize 'SDM.DOCUMENT.New' type=(localize 'TYPE.Item')}}
               </a>
               {{/if}}
             </div>
@@ -27,7 +27,7 @@
     </div>
     {{#each cargo as |items|}}
     <div class="main grid-span-1 list-border">
-      <div class="flex-group-center"><span>Sack {{addOne @index}}</span></div>
+      <div class="flex-group-center"><span>{{toPascalCase (localize 'SDM.UnitSack')}} {{addOne @index}}</span></div>
       <section>
         <ol class='items-list list-border'>
         {{#each items as |item id|}}

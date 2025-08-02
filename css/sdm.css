@@ -362,49 +362,47 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   color: var(--sdm-c-not-readied);
 }
 
-section.tab.features {
-  scrollbar-color: var(--sdm-c-ultraviolet) !important;
+@layer window-layer {
+  * {
+    scrollbar-color: var(--sdm-c-plum) transparent;
+  }
+  .sheet-tabs a:not(.active):hover {
+    text-shadow: 0 0 8px var(--sdm-c-ultraviolet);
+  }
+  .sheet-tabs a.active {
+    text-shadow: 0 0 10px var(--sdm-c-ultraviolet);
+  }
+  .item-controls a:not(.active):hover {
+    text-shadow: 0 0 8px var(--sdm-c-ultraviolet);
+  }
+  .item-controls a.active {
+    text-shadow: 0 0 10px var(--sdm-c-ultraviolet);
+  }
+  .items-list .item:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.02); /* Light gray for even items */
+  }
+  .items-list .item:nth-child(odd) {
+    background-color: rgba(0, 0, 0, 0.05); /* Slightly darker for odd items */
+  }
+  .items-list .items-header {
+    border-bottom: 2px groove var(--sdm-c-groove);
+  }
+  .items-list .item:last-child {
+    border-bottom: 2px groove var(--sdm-c-groove);
+  }
+  .theme-dark .items-list .item:nth-child(even) {
+    background-color: rgba(255, 255, 255, 0.02);
+  }
+  .theme-dark .items-list .item:nth-child(odd) {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  span.system-info a.notification-pip {
+    right: -15px;
+    top: 2px;
+    background: unset;
+    text-shadow: unset;
+  }
 }
-
-.sheet-tabs a:not(.active):hover {
-  text-shadow: 0 0 8px var(--sdm-c-ultraviolet);
-}
-
-.sheet-tabs a.active {
-  text-shadow: 0 0 10px var(--sdm-c-ultraviolet);
-}
-
-.item-controls a:not(.active):hover {
-  text-shadow: 0 0 8px var(--sdm-c-ultraviolet);
-}
-
-.item-controls a.active {
-  text-shadow: 0 0 10px var(--sdm-c-ultraviolet);
-}
-
-.items-list .item:nth-child(even) {
-  background-color: rgba(0, 0, 0, 0.02); /* Light gray for even items */
-}
-
-.items-list .item:nth-child(odd) {
-  background-color: rgba(0, 0, 0, 0.05); /* Slightly darker for odd items */
-}
-
-.theme-dark .items-list .item:nth-child(even) {
-  background-color: rgba(255, 255, 255, 0.02) !important;
-}
-
-.theme-dark .items-list .item:nth-child(odd) {
-  background-color: rgba(255, 255, 255, 0.05) !important;
-}
-
-span.system-info a.notification-pip {
-  right: -15px !important;
-  top: 2px !important;
-  background: unset !important;
-  text-shadow: unset !important;
-}
-
 .grid,
 .grid-2col {
   display: grid;
@@ -1010,8 +1008,10 @@ span.system-info a.notification-pip {
 .sdm li.item {
   margin-bottom: 0;
 }
-.sdm .items-list .item:hover {
-  background-color: rgba(184, 78, 255, 0.1) !important; /* Your ultraviolet color with transparency */
+@layer item-list {
+  .sdm .items-list .item:hover {
+    background-color: rgba(184, 78, 255, 0.1); /* Your ultraviolet color with transparency */
+  }
 }
 .sdm :root {
   --sdm-c-dark: #191813;
@@ -1302,3 +1302,5 @@ span.system-info a.notification-pip {
   top: var(--sdm-top-edit);
   left: var(--sdm-left-edit);
 }
+
+/*# sourceMappingURL=sdm.css.map */

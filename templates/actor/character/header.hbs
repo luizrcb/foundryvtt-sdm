@@ -5,7 +5,7 @@
       <label class="switch edit-mode-toggle sdm" for="toggleMode-{{actor._id}}"
         data-tooltip="{{localize (ifThen isEditMode 'SDM.SheetEditMode' 'SDM.SheetPlayMode')}}">
         <input id="toggleMode-{{actor._id}}" type="checkbox" data-action="toggleMode" {{checked @root.isEditMode}}/>
-        <span class="slider round"><i class="fas fa-cog"></i></span>
+        <span class="slider round"><i class="fa-solid fa-cog"></i></span>
       </label>
     </div>
     <div class="flexcol flex-between flex-center">
@@ -17,10 +17,10 @@
         <div class="flexcol flex-group-center mb-12 rollable" data-context='rollable'
           data-action='heroicHealing'>
         {{/if}}
-          <label class='resource-label'>{{localize 'SDM.FieldHeroDice'}}</label>
-          <div class='resource-content flexrow height-32'>
+          <label class='resource-label rollable'>{{localize 'SDM.FieldHeroDice'}}</label>
+          <div class='resource-content flexrow height-32 rollable'>
             {{system.hero_dice.value}} / {{system.hero_dice.max}}
-            <i class="fas fa-dice-{{@root.heroDiceType}} sheet-hero-dice" data-tooltip="{{@root.heroDiceType}}"></i>
+            <i class="fa-solid fa-dice-{{@root.heroDiceType}} sheet-hero-dice" data-tooltip="{{@root.heroDiceType}}"></i>
           </div>
         </div>
       </div>
@@ -146,15 +146,15 @@
             </div>
             <div class='resource-content flexrow align-center height-32'>
               <div data-tooltip="{{localize 'SDM.FieldPhysicalDefense'}}">
-                <i class="fas fa-shield-alt"></i>
+                <i class="fa-solid fa-shield-alt"></i>
                 <span id="system.defense">{{system.defense}}</span>
               </div>
               <div data-tooltip="{{localize 'SDM.FieldMentalDefense'}}">
-                <i class="fas fa-brain-circuit"></i>
+                <i class="fa-solid fa-brain-circuit"></i>
                 <span id="system.mental_defense">{{system.mental_defense}}</span>
               </div>
               <div data-tooltip="{{localize 'SDM.FieldSocialDefense'}}">
-                <i class="fas fa-crown"></i>
+                <i class="fa-solid fa-crown"></i>
                 <span id="system.social_defense">{{system.social_defense}}</span>
               </div>
             </div>
@@ -201,8 +201,8 @@
 
           <div class="grid-span-1 flexrow flex-between">
             <div class="grid-span-1 resource" data-tooltip="
-              <span><b>Inventory:</b> {{localize 'SDM.CashSymbol'}}{{system.inventory_value}}</span><br/>
-              <span><b>Cash:</b> {{localize 'SDM.CashSymbol'}}{{system.total_cash}}</span>
+              <span><b>{{localize 'SDM.TabInventory'}}:</b> {{localize 'SDM.CashSymbol'}}{{system.inventory_value}}</span><br/>
+              <span><b>{{toPascalCase (localize 'SDM.UnitCash')}}:</b> {{localize 'SDM.CashSymbol'}}{{system.total_cash}}</span>
             ">
               <label for="system.wealth" class='resource-label'>
                 {{localize 'SDM.FieldWealth'}}
@@ -243,7 +243,7 @@
                   class="ability-score" data-dtype='Number'
                   data-tooltip="{{localize 'SDM.AbilityCurrent' ability=(localize (lookup @root.config.abilities key))}}" />
                 <div class='flexrow'>
-                  <i class="fas {{lookup @root.config.abilitySaveIcons key}} saveIcon sdm-icon"></i>
+                  <i class="fa-solid {{lookup @root.config.abilitySaveIcons key}} saveIcon sdm-icon"></i>
                 </div>
               </div>
               {{else}}
@@ -281,7 +281,7 @@
                   data-ability='{{key}}'
                   data-action='rollSavingThrow'
                   data-tooltip="{{localize 'SDM.SavingThrowRoll' ability=(localize (lookup @root.config.abilities key))}}">
-                  <i class="fas {{lookup @root.config.abilitySaveIcons key}} saveIcon {{lookup @root.config.abilityColors @index}}"></i>
+                  <i class="fa-solid {{lookup @root.config.abilitySaveIcons key}} saveIcon {{lookup @root.config.abilityColors @index}}"></i>
                 </div>
               </div>
               {{/if}}
@@ -302,7 +302,7 @@
                 <div>{{localize 'SDM.AttackMelee'}}</div>
               </div>
               {{#if @root.editable}}
-              <i class="fas fa-gear rollable" data-action='updateAttack' data-attack="melee"></i>
+              <i class="fa-solid fa-gear rollable" data-action='updateAttack' data-attack="melee"></i>
               {{/if}}
             </div>
             <div
@@ -312,7 +312,7 @@
                 <div>{{localize 'SDM.AttackRanged'}}</div>
               </div>
                {{#if @root.editable}}
-              <i class="fas fa-gear rollable" data-action='updateAttack' data-attack="ranged"></i>
+              <i class="fa-solid fa-gear rollable" data-action='updateAttack' data-attack="ranged"></i>
               {{/if}}
             </div>
             <div
@@ -323,7 +323,7 @@
               </div>
                {{#if @root.editable}}
               <i
-                class="fas fa-gear rollable"
+                class="fa-solid fa-gear rollable"
                 data-action='updateAttack'
                 data-attack="fantascience">
               </i>
@@ -336,7 +336,7 @@
                 <div>{{localize 'SDM.AttackOldtech'}}</div>
               </div>
                {{#if @root.editable}}
-              <i class="fas fa-gear rollable" data-action='updateAttack' data-attack="oldtech"></i>
+              <i class="fa-solid fa-gear rollable" data-action='updateAttack' data-attack="oldtech"></i>
               {{/if}}
             </div>
             <div class="ability grid-span-1" data-tooltip="{{localize 'SDM.PowerCostHint'}}">
@@ -364,7 +364,7 @@
                 data-attack="melee"
                 data-label="{{localize 'SDM.AttackMelee'}}">
                 <div>{{localize 'SDM.AttackMelee'}}</div>
-                <i class="fas fa-sword {{@root.config.attackColors.melee}}"></i>
+                <i class="fa-solid fa-sword {{@root.config.attackColors.melee}}"></i>
               </div>
             </div>
             <div class="ability grid-span-1 flexrow">
@@ -375,7 +375,7 @@
                 data-attack="ranged"
                 data-label="{{localize 'SDM.AttackRanged'}}">
                 <div>{{localize 'SDM.AttackRanged'}}</div>
-                 <i class="fas fa-raygun {{@root.config.attackColors.ranged}}"></i>
+                 <i class="fa-solid fa-raygun {{@root.config.attackColors.ranged}}"></i>
               </div>
             </div>
             <div class="ability grid-span-1 flexrow">
@@ -386,7 +386,7 @@
                 data-attack="fantascience"
                 data-label="{{localize 'SDM.AttackFantascience'}}">
                 <div>{{localize 'SDM.AttackFantascience'}}</div>
-                <i class="fas fa-hat-wizard {{@root.config.attackColors.fantascience}}"></i>
+                <i class="fa-solid fa-hat-wizard {{@root.config.attackColors.fantascience}}"></i>
               </div>
             </div>
             <div class="ability grid-span-1 flexrow">
@@ -397,7 +397,7 @@
                 data-attack="oldtech"
                 data-label="{{localize 'SDM.AttackOldtech'}}">
                 <div>{{localize 'SDM.AttackOldtech'}}</div>
-                <i class="fas fa-game-console-handheld {{@root.config.attackColors.oldtech}}"></i>
+                <i class="fa-solid fa-game-console-handheld {{@root.config.attackColors.oldtech}}"></i>
               </div>
             </div>
           </div>

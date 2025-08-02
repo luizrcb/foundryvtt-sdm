@@ -35,7 +35,7 @@ const data = await DialogV2.wait({
     {
       action: 'increment',
       label: `1 ${game.i18n.localize('SDM.HeroDie')}`,
-      icon: 'fas fa-plus',
+      icon: 'fa-solid fa-plus',
       type: 'button',
       callback: (event, button, dialog) => ({
         character: button.form.querySelector('[name="character"]').value,
@@ -45,7 +45,7 @@ const data = await DialogV2.wait({
     {
       action: 'decrement',
       label: `1 ${game.i18n.localize('SDM.HeroDie')}`,
-      icon: 'fas fa-minus',
+      icon: 'fa-solid fa-minus',
       type: 'button',
       callback: (event, button, dialog) => ({
         character: button.form.querySelector('[name="character"]').value,

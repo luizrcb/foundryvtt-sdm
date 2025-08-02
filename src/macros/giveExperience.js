@@ -39,7 +39,7 @@ const data = await DialogV2.prompt({
   content,
   ok: {
     label: game.i18n.localize('SDM.DistributeXP'),
-    icon: 'fas fa-hand-holding-medical',
+    icon: 'fa-solid fa-hand-holding-medical',
     callback: (event, button) => new foundry.applications.ux.FormDataExtended(button.form).object
   },
   rejectClose: false

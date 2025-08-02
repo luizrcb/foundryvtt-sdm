@@ -1,4 +1,8 @@
 <div class='resource'>
+
+</div>
+
+<div class='resource'>
   <label class='resource-label'>
     {{localize 'SDM.PowerLevel'}}
   </label>
@@ -32,6 +36,15 @@
 </div>
 
 <div class='resource'>
+  <label class='resource-label'>
+    {{localize 'SDM.PowerRollFormula'}}
+  </label>
+  <div class='resource-content'>
+    <input type='text' name='system.power.roll_formula' value='{{system.power.roll_formula}}' />
+  </div>
+</div>
+
+<div class='resource'>
   {{#if (ne item.parent.type 'npc')}}
     <label class='resource-label'>
       {{localize 'SDM.AbilityModifier'}}
@@ -45,20 +58,23 @@
   {{/if}}
 </div>
 
+<div class="resource"></div>
+
+<div class='resource'>
+  <label class='resource-label'>
+    {{localize 'SDM.PowerOverchargeRollFormula'}}
+  </label>
+  <div class='resource-content'>
+    <input type='text' name='system.power.overcharge_roll_formula' value='{{system.power.overcharge_roll_formula}}' />
+  </div>
+</div>
+
 <div class='resource grid-span-2'>
   <label class='resource-label'>
     {{localize 'SDM.PowerOvercharge'}}
   </label>
-  <div class='resource-content  grid-span-2'>
+  <div class='resource-content grid-span-1 flexcol'>
     <textarea class='flexcol' name='system.power.overcharge' rows='2'>{{system.power.overcharge}}</textarea>
   </div>
 </div>
 
-<div class='resource'>
-  <label class='resource-label'>
-    {{localize 'SDM.PowerRollFormula'}}
-  </label>
-  <div class='resource-content'>
-    <input type='text' name='system.power.roll_formula' value='{{system.power.roll_formula}}' />
-  </div>
-</div>

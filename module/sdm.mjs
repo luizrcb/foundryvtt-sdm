@@ -5,13 +5,14 @@ import { SdmCombatant } from './documents/combatant.mjs';
 import { SdmItem } from './documents/item.mjs';
 import { registerHandlebarsHelpers } from './handlebars-helpers.mjs';
 import { SDM } from './helpers/config.mjs';
-import { ActorType } from './helpers/constants.mjs';
+import { ActorType, ItemType } from './helpers/constants.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
 import {
   CHARACTER_DEFAULT_INITIATIVE,
   configureUseHeroDiceButton,
   createEscalatorDieDisplay,
+  DEFAULT_MAX_POWERS,
   registerSystemSettings
 } from './settings.mjs';
 import { SdmActorSheet } from './sheets/actor-sheet.mjs';
@@ -22,6 +23,7 @@ const { ActiveEffectConfig } = foundry.applications.sheets;
 const { Actors, Items } = foundry.documents.collections;
 const { DocumentSheetConfig } = foundry.applications.apps;
 const sheets = foundry.appv1.sheets;
+
 /* -------------------------------------------- */
 /*  Init Hook                                   */
 /* -------------------------------------------- */
@@ -66,7 +68,7 @@ Hooks.on('renderDialogV2', (dialog, html) => {
     }
 
     if (overChargeButton) {
-      overChargeButton.hidden = !overchargeFormula;
+      overChargeButton.style.display = !overchargeFormula ? 'none' : '';
     }
   });
 });
@@ -108,6 +110,16 @@ Hooks.on('updateActor', async actor => {
   await actor.update({'prototypeToken.name': name });
 });
 
+Hooks.on('createItem', async (item, _options, _id) => {
+  if (!item.isOwner) return
+
+  if (item.type !== ItemType.GEAR) return;
+
+  const defaultMaxPowers = game.settings.get('sdm', 'defaultMaxPowers') || DEFAULT_MAX_POWERS;
+
+  await item.update({'system.max_powers': defaultMaxPowers });
+});
+
 Hooks.on('renderSettings', (app, html) => renderSettings(html));
 
 Hooks.on('renderGamePause', (app, html) => {
@@ -130,7 +142,7 @@ Hooks.on('getChatMessageContextOptions', (html, options) => {
     },
     {
       name: game.i18n.localize('SDM.ChatContextDamage'),
-      icon: '<i class="fas fa-user-minus"></i>',
+      icon: '<i class="fa-solid fa-user-minus"></i>',
       callback: async li => {
         const message = game.messages.get(li.dataset.messageId);
         if (!message.rolls || !message.rolls.length) return;
@@ -147,7 +159,7 @@ Hooks.on('getChatMessageContextOptions', (html, options) => {
     },
     {
       name: game.i18n.localize('SDM.ChatContextHealing'),
-      icon: '<i class="fas fa-user-plus"></i>',
+      icon: '<i class="fa-solid fa-user-plus"></i>',
       callback: async li => {
         const message = game.messages.get(li.dataset.messageId);
         if (!message.rolls || !message.rolls.length) return;

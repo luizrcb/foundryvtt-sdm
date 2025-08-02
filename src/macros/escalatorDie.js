@@ -16,12 +16,12 @@ const content = `
 const buttons = [
   {
     action: 'increment',
-    icon: '<i class="fas fa-plus"></i>',
+    icon: '<i class="fa-solid fa-plus"></i>',
     label: game.i18n.localize('SDM.Increment')
   },
   {
     action: 'reset',
-    icon: '<i class="fas fa-undo"></i>',
+    icon: '<i class="fa-solid fa-undo"></i>',
     label: game.i18n.localize('SDM.Reset')
   }
 ];

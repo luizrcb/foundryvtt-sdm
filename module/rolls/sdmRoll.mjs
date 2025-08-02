@@ -61,15 +61,15 @@ export default class SDMRoll {
     }
     const attackMapping = {
       [AttackTarget.PHYSICAL]: {
-        icon: '<i class="fas fa-shield-alt"></i>',
+        icon: '<i class="fa-solid fa-shield-alt"></i>',
         property: 'defense'
       },
       [AttackTarget.MENTAL]: {
-        icon: '<i class="fas fa-brain-circuit"></i>',
+        icon: '<i class="fa-solid fa-brain-circuit"></i>',
         property: 'mental_defense'
       },
       [AttackTarget.SOCIAL]: {
-        icon: '<i class="fas fa-crown"></i>',
+        icon: '<i class="fa-solid fa-crown"></i>',
         property: 'social_defense'
       }
     };

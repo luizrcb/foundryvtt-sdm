@@ -143,7 +143,7 @@ export class SdmItem extends Item {
 
     let powerCost = Math.ceil(actorPowerCost * powerLevel);
     if (overcharge) powerCost *= 2;
-    let title = `${powerName} (${$l10n('SDM.Cost')}: ${powerCost})`;
+    let title = `${powerName} (${$l10n('SDM.Cost').toLowerCase()}: ${powerCost})`;
     return title;
   }
 
@@ -152,7 +152,7 @@ export class SdmItem extends Item {
     const powerCost = Math.ceil(actorPowerCost * powerLevel);
     const powerName = powerData.name || this.name;
 
-    let title = `<b>${powerName}</b>${!powerData?.name ? this.getCostTitle() : ''} (${$l10n('SDM.Cost')}: ${powerCost})<br/>`;
+    let title = `<b>${powerName}</b>${!powerData?.name ? this.getCostTitle() : ''} (${$l10n('SDM.Cost').toLowerCase()}: ${powerCost})<br/>`;
 
     const powerLabel = `${$l10n('SDM.PowerLevelAbbr')}: ${powerLevel}`;
     const rangeLabel = `${$l10n('SDM.PowerRangeAbbr')}: ${powerData?.range}`;
@@ -175,7 +175,7 @@ export class SdmItem extends Item {
     let title = `${$l10n('SDM.PowerContainer')}: <b>${this.name}</b>${this.getCostTitle()}<br/><br/>`;
 
     if (!this.system.powers.length) {
-      title += `<i class="fas fa-spider-web"></i> ${$l10n('SDM.NoPowers')} <i class="fas fa-spider-web"></i>`;
+      title += `<i class="fa-solid fa-spider-web"></i> ${$l10n('SDM.NoPowers')} <i class="fa-solid fa-spider-web"></i>`;
       return title;
     }
 

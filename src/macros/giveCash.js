@@ -60,7 +60,7 @@ const data = await DialogV2.wait({
     {
       action: 'add',
       label: game.i18n.localize('SDM.CashManagementAddMoney'),
-      icon: 'fas fa-coins',
+      icon: 'fa-solid fa-coins',
       callback: (event, button, dialog) => ({
         target: button.form.querySelector('[name="target"]').value,
         amount: parseInt(button.form.querySelector('[name="amount"]').value),
@@ -70,7 +70,7 @@ const data = await DialogV2.wait({
     {
       action: 'remove',
       label: game.i18n.localize('SDM.CashManagementRemoveMoney'),
-      icon: 'fas fa-minus-circle',
+      icon: 'fa-solid fa-minus-circle',
       callback: (event, button, dialog) => ({
         target: button.form.querySelector('[name="target"]').value,
         amount: parseInt(button.form.querySelector('[name="amount"]').value),

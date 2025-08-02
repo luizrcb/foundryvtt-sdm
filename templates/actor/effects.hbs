@@ -31,10 +31,10 @@
             {{else if (eq section.type "temporary")}}
               data-duration.rounds="1"
             {{/if}}
-            data-tooltip='{{localize "DOCUMENT.Create" type=(localize 'TYPE.Effect')}}'
+            data-tooltip='{{localize "SDM.DOCUMENT.Create" type=(localize 'TYPE.Effect')}}'
           >
-            <i class='fas fa-plus'></i>
-            {{localize 'DOCUMENT.New' type=(localize 'TYPE.Effect')}}
+            <i class='fa-solid fa-plus'></i>
+            {{localize 'SDM.DOCUMENT.New' type=(localize 'TYPE.Effect')}}
           </a>
           {{/if}}
         </div>
@@ -63,7 +63,7 @@
                   data-action='toggleEffect'
                   data-tooltip='{{localize "SDM.Effect.Toggle"}}'
                 >
-                  <i class='fas {{#if effect.disabled}}fa-check{{else}}fa-times{{/if}}'></i>
+                  <i class='fa-solid {{#if effect.disabled}}fa-check{{else}}fa-times{{/if}}'></i>
                 </a>
                 {{/if}}
                 <a
@@ -71,7 +71,7 @@
                   data-action='viewDoc'
                   data-tooltip='{{localize "DOCUMENT.Update" type=(localize 'TYPE.Effect')}}'
                 >
-                  <i class='fas fa-edit'></i>
+                  <i class='fa-solid fa-edit'></i>
                 </a>
                 {{#if @root.editable}}
                 <a
@@ -79,7 +79,7 @@
                   data-action='deleteDoc'
                   data-tooltip='{{localize "DOCUMENT.Delete" type=(localize 'TYPE.Effect')}}'
                 >
-                  <i class='fas fa-trash'></i>
+                  <i class='fa-solid fa-trash'></i>
                 </a>
                 {{/if}}
               {{/if}}

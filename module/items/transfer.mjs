@@ -330,7 +330,7 @@ export async function openItemTransferDialog(item, sourceActor) {
       window: { title: $fmt('SDM.Transfer', { type: $l10n('TYPE.Item') }) },
       content: template,
       ok: {
-        icon: 'fas fa-share',
+        icon: 'fa-solid fa-share',
         label: $fmt('SDM.Transfer', { type: '' }),
         callback: (event, button) =>
           new foundry.applications.ux.FormDataExtended(button.form).object

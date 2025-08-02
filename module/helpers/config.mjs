@@ -27,18 +27,18 @@ SDM.attackColors = {
 };
 
 SDM.abilitySaveIcons = {
-  str: 'fas fa-fist-raised',
-  end: 'fas fa-heartbeat',
-  agi: 'fas fa-running',
-  cha: 'fas fa-clover',
-  aur: 'fas fa-sparkles',
-  tho: 'fas fa-brain'
+  str: 'fa-solid fa-fist-raised',
+  end: 'fa-solid fa-heartbeat',
+  agi: 'fa-solid fa-running',
+  cha: 'fa-solid fa-clover',
+  aur: 'fa-solid fa-sparkles',
+  tho: 'fa-solid fa-brain'
 };
 
 SDM.defenseIcons = {
-  physical: 'fas fa-shield-alt',
-  mental: 'fas fa-brain-circuit',
-  social: 'fas fa-crown'
+  physical: 'fa-solid fa-shield-alt',
+  mental: 'fa-solid fa-brain-circuit',
+  social: 'fa-solid fa-crown'
 };
 
 SDM.abilityAbbreviations = {

@@ -232,6 +232,9 @@ li.item {
   margin-bottom: 0;
 }
 
-.items-list .item:hover {
-  background-color: rgba(184, 78, 255, 0.1) !important; /* Your ultraviolet color with transparency */
+@layer item-list {
+  .items-list .item:hover {
+    background-color: rgba(184, 78, 255, 0.1); /* Your ultraviolet color with transparency */
+  }
 }
+

@@ -233,10 +233,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     const damageIcon =
       isPower || isPowerContainer
-        ? 'fas fa-wand-magic-sparkles'
+        ? 'fa-solid fa-wand-magic-sparkles'
         : isDamage
-          ? 'fas fa-sword'
-          : 'fas fa-dice-d20';
+          ? 'fa-solid fa-sword'
+          : 'fa-solid fa-dice-d20';
     const buttonLabel = isDamage && versatile ? $l10n('SDM.OneHanded') :
         (isPower || isPowerContainer) ? $l10n('SDM.Cast') : $l10n('SDM.ButtonRoll');
 
@@ -256,7 +256,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     if (versatile) {
       buttons.push({
         action: 'two-handed',
-        icon: 'fas fa-axe-battle',
+        icon: 'fa-solid fa-axe-battle',
         label: $l10n('SDM.TwoHanded'),
         callback: (event, button) => ({
           versatile,
@@ -266,19 +266,20 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       });
     }
 
-    if (overchargeFormula) {
-      buttons.push({
-        action: 'overcharge',
-        class:'overcharge',
-        icon: 'fas fa-hand-sparkles',
-        label: $l10n('SDM.PowerOvercharge'),
-        callback: (event, button) => ({
-          versatile: false,
-          overcharge: true,
-          ...new foundry.applications.ux.FormDataExtended(button.form).object
-        })
-      });
-    }
+    buttons.push({
+      action: 'overcharge',
+      class:'overcharge',
+      // hidden: !overchargeFormula,
+      style: { display: !overchargeFormula ? 'none' : '' },
+      icon: 'fa-solid fa-hand-sparkles',
+      label: $l10n('SDM.PowerOvercharge'),
+      callback: (event, button) => ({
+        versatile: false,
+        overcharge: true,
+        ...new foundry.applications.ux.FormDataExtended(button.form).object
+      })
+    });
+
 
     let rollOptions = {};
 
@@ -404,7 +405,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       },
       content: template,
       ok: {
-        icon: 'fas fa-floppy-disk',
+        icon: 'fa-solid fa-floppy-disk',
         label: game.i18n.format('SDM.ButtonSave'),
         callback: (event, button) =>
           new foundry.applications.ux.FormDataExtended(button.form).object
@@ -1040,6 +1041,16 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         ability = powerData.default_ability;
         formula = powerData.roll_formula;
         overchargeFormula = powerData.overcharge_roll_formula;
+
+        powerOptions = [{
+          index: 0,
+          name: powerItem.getPowerShortTitle(powerData, this.actor.system.power_cost),
+          overcharge: powerItem.getPowerShortTitle(powerData, this.actor.system.power_cost, true),
+          formula: powerData.roll_formula,
+          overchargeFormula: powerData.overcharge_roll_formula,
+          default_ability: powerData.default_ability
+        }]
+        powerIndex = 0;
         break;
 
       case 'power_container':
@@ -1118,7 +1129,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         buttons: [
           {
             label: $l10n('SDM.ButtonRoll'),
-            icon: 'fas fa-person-running',
+            icon: 'fa-solid fa-person-running',
             callback: (event, button) => ({
               ...new foundry.applications.ux.FormDataExtended(button.form).object
             })
@@ -1169,7 +1180,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
           {
             action: 'diplomacy',
             label: $l10n('SDM.ReactionCheck'),
-            icon: 'fas fa-face-smile',
+            icon: 'fa-solid fa-face-smile',
             callback: (event, button) => ({
               charismaOperator: 1,
               ...new foundry.applications.ux.FormDataExtended(button.form).object
@@ -1178,7 +1189,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
           {
             action: 'conflict',
             label: $l10n('SDM.ReactionProvokeConflict'),
-            icon: 'fas fa-face-angry',
+            icon: 'fa-solid fa-face-angry',
             callback: (event, button) => ({
               charismaOperator: -1,
               ...new foundry.applications.ux.FormDataExtended(button.form).object
@@ -1258,7 +1269,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const buttons = [
       {
         action: 'save',
-        icon: 'fas fa-dice-d20',
+        icon: 'fa-solid fa-dice-d20',
         label: $l10n('SDM.ButtonRoll'),
         callback: (event, button) => ({
           versatile: false,
