@@ -51,7 +51,7 @@
       {{#if (and
         (ne actorType 'caravan')
         (ne item.system.size.unit 'cash')
-        (eq item.system.type 'power_container')
+        (eq item.system.type 'power_album')
         item.system.readied
         (gt item.system.powers.length 0)
         @root.editable
@@ -59,9 +59,9 @@
       <div
         class='rollable flexrow'
         data-action='roll'
-        data-type='power_container'
+        data-type='power_album'
         data-label='{{item.name}}'
-        data-tooltip="{{localize 'SDM.RollType' type=(localize 'SDM.PowerContainer')}}"
+        data-tooltip="{{localize 'SDM.RollType' type=(localize 'SDM.PowerAlbum')}}"
       >
         <i class='fa-solid fa-book-sparkles roll-icon'></i>
       </div>

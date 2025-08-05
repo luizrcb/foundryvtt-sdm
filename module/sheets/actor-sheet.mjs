@@ -186,7 +186,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const isAbility = type === RollType.ABILITY;
     const isPower = type === RollType.POWER;
     const isCharacter = this.actor.type === ActorType.CHARACTER;
-    const isPowerContainer = type === RollType.POWER_CONTAINER;
+    const isPowerAlbum = type === RollType.POWER_ALBUM;
 
     let targetActor;
 
@@ -198,7 +198,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     if (isDamage) rollTitlePrefix = $l10n('SDM.Damage');
     if (isAttack) rollTitlePrefix = $l10n('SDM.Attack');
     if (isAbility) rollTitlePrefix = $l10n('SDM.Ability');
-    if (isPowerContainer) rollTitlePrefix = $l10n('SDM.PowerContainer');
+    if (isPowerAlbum) rollTitlePrefix = $l10n('SDM.PowerAlbum');
     if (rollTitlePrefix !== '') rollTitlePrefix += ' ';
 
     let title = from;
@@ -211,7 +211,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const isCharacterActor = this.actor.type === ActorType.CHARACTER;
     const language = game.i18n.lang;
     let selectedSkill = isAttack ? actorAttack?.favorite_skill : '';
-    let shouldExplode = !isDamage && !isPower && !isPowerContainer;
+    let shouldExplode = !isDamage && !isPower && !isPowerAlbum;
     let selectedAbility = isAttack ? actorAttack?.default_ability : ability;
 
     const template = await renderTemplate(templatePath('custom-roll-dialog'), {
@@ -232,13 +232,13 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     });
 
     const damageIcon =
-      isPower || isPowerContainer
+      isPower || isPowerAlbum
         ? 'fa-solid fa-wand-magic-sparkles'
         : isDamage
           ? 'fa-solid fa-sword'
           : 'fa-solid fa-dice-d20';
     const buttonLabel = isDamage && versatile ? $l10n('SDM.OneHanded') :
-        (isPower || isPowerContainer) ? $l10n('SDM.Cast') : $l10n('SDM.ButtonRoll');
+        (isPower || isPowerAlbum) ? $l10n('SDM.Cast') : $l10n('SDM.ButtonRoll');
 
     const buttons = [
       {
@@ -343,7 +343,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       return;
     }
 
-    if (isPowerContainer) {
+    if (isPowerAlbum) {
       title = powerOptions[powerIndex].name;
       selectedAbility = powerOptions[powerIndex].default_ability;
       formula = powerOptions[powerIndex].formula;
@@ -1053,9 +1053,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         powerIndex = 0;
         break;
 
-      case 'power_container':
-        const powerContainer = this._getEmbeddedDocument(target);
-        const { powers, powers_current_index } = powerContainer.system;
+      case 'power_album':
+        const powerAlbum = this._getEmbeddedDocument(target);
+        const { powers, powers_current_index } = powerAlbum.system;
 
         powerIndex = powers_current_index;
         const selectedPower = powers[powerIndex];
@@ -1063,8 +1063,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         powerOptions = powers.map((power, index) => {
           return {
             index,
-            name: powerContainer.getPowerShortTitle(power, this.actor.system.power_cost),
-            overcharge: powerContainer.getPowerShortTitle(power, this.actor.system.power_cost, true),
+            name: powerAlbum.getPowerShortTitle(power, this.actor.system.power_cost),
+            overcharge: powerAlbum.getPowerShortTitle(power, this.actor.system.power_cost, true),
             formula: power.roll_formula,
             overchargeFormula: power.overcharge_roll_formula,
             default_ability: power.default_ability

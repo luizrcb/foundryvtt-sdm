@@ -1,82 +1,51 @@
+import { attributeFields } from './attributes-data.mjs';
 import SdmActorBase from './base-actor.mjs';
+
+const fields = foundry.data.fields;
 
 export default class SdmNPC extends SdmActorBase {
   static LOCALIZATION_PREFIXES = [...super.LOCALIZATION_PREFIXES, 'SDM.Actor.NPC'];
 
   static defineSchema() {
-    const fields = foundry.data.fields;
-    const requiredInteger = { required: true, nullable: false, integer: true };
-    const schema = super.defineSchema();
+    const baseActorSchema = super.defineSchema();
 
-    schema.initiative = new fields.StringField({
-      required: true,
-      initial: '',
-      validate: v => foundry.dice.Roll.validate(v),
-      validationError: game.i18n.localize('SDM.ErrorValidationRollFormula')
-    });
+    return {
+      ...baseActorSchema,
+      ...attributeFields(),
 
-    schema.level = new fields.NumberField({
-      ...requiredInteger,
-      initial: 0,
-      min: 0
-    });
-
-    schema.life = new fields.SchemaField({
-      value: new fields.NumberField({
-        ...requiredInteger,
-        initial: 1,
-        min: 0
+      // npc wage
+      cost: new fields.NumberField({
+        required: false,
+        nullable: true,
+        integer: true,
+        initial: 0
       }),
-      max: new fields.NumberField({ ...requiredInteger, initial: 1, min: 1 })
-    });
 
-    schema.morale = new fields.NumberField({ ...requiredInteger, initial: 2, min: 2 });
+      //  supply =
 
-    schema.defense = new fields.NumberField({ ...requiredInteger, initial: 7, min: 1 });
+      isWarrior: new fields.BooleanField({
+        required: true,
+        initial: false
+      }),
 
-    schema.bonus = new fields.NumberField({ ...requiredInteger, initial: 1, min: 0 });
+      isHelper: new fields.BooleanField({
+        required: true,
+        initial: false
+      }),
 
-    schema.damage = new fields.StringField({
-      required: true,
-      initial: '1d4',
-      validate: v => foundry.dice.Roll.validate(v),
-      validationError: game.i18n.localize('SDM.ErrorValidationRollFormula')
-    });
+      isPorter: new fields.BooleanField({
+        required: true,
+        initial: false
+      }),
 
-    // npc wage
-    schema.cost = new fields.NumberField({
-      required: false,
-      nullable: true,
-      integer: true,
-      initial: 0
-    });
-
-    // schema.supply =
-
-    schema.isWarrior = new fields.BooleanField({
-      required: true,
-      initial: false
-    });
-
-    schema.isHelper = new fields.BooleanField({
-      required: true,
-      initial: false
-    });
-
-    schema.isPorter = new fields.BooleanField({
-      required: true,
-      initial: false
-    });
-
-    schema.speed = new fields.NumberField({
-      required: true,
-      nullable: false,
-      integer: true,
-      initial: 0,
-      choices: CONFIG.SDM.reverseSpeedValues
-    });
-
-    return schema;
+      speed: new fields.NumberField({
+        required: true,
+        nullable: false,
+        integer: true,
+        initial: 0,
+        choices: CONFIG.SDM.reverseSpeedValues
+      })
+    };
   }
 
   getRollData() {

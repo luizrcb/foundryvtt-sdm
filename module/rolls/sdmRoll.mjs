@@ -199,10 +199,10 @@ export default class SDMRoll {
     const rollMode =
       this.mode === RollMode.NORMAL ? '' : $l10n(`SDM.Roll${capitalizeFirstLetter(this.mode)}Abbr`);
     const versatileLabel = $l10n('SDM.FeatureVersatile');
-    const type = this.type === 'power_container' ? 'power' : this.type;
+    const type = this.type === 'power_album' ? 'power' : this.type;
     const parts = [`[${$l10n(`SDM.${toPascalCase(type)}`)}]`, this.from];
     if (
-      [RollType.ATTACK, RollType.POWER, RollType.POWER_CONTAINER].includes(this.type) &&
+      [RollType.ATTACK, RollType.POWER, RollType.POWER_ALBUM].includes(this.type) &&
       this.attackTarget !== AttackTarget.PHYSICAL
     ) {
       parts.push(`(${$l10n('SDM.Attack' + capitalizeFirstLetter(this.attackTarget))})`);

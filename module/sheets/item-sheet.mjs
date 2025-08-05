@@ -129,7 +129,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       skillModifierStep: defaultModifierStep,
     };
 
-    if (this.item.type === ItemType.GEAR && this.item.system.type === GearType.POWER_CONTAINER) {
+    if (this.item.type === ItemType.GEAR && this.item.system.type === GearType.POWER_ALBUM) {
       // Calculate navigation states
       context.powers = context.system?.powers;
       context.enrichedPowers = await this._getPowersDescriptions(context.powers);
@@ -452,9 +452,9 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
   }
 
   static async _onCreatePower(event, target, data) {
-    const powerContainer = this.item.system.powers;
+    const powerAlbum = this.item.system.powers;
 
-    if (powerContainer.length === this.item.system.max_powers) {
+    if (powerAlbum.length === this.item.system.max_powers) {
       ui.notifications.warn($fmt('SDM.ErrorMaxPowers', { item: this.item.name }))
       return;
     }
@@ -471,14 +471,14 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
   }
 
   static async _onDeletePower(event, target) {
-    const powerContainer = this.item.system.powers;
+    const powerAlbum = this.item.system.powers;
 
     const powerIndex = parseInt(target.dataset.index, 10);
-    if (powerIndex < 0 || !powerContainer.length || powerIndex >= powerContainer.length) {
+    if (powerIndex < 0 || !powerAlbum.length || powerIndex >= powerAlbum.length) {
       return;
     }
 
-    let powerName = powerContainer[powerIndex].name;
+    let powerName = powerAlbum[powerIndex].name;
 
     const proceed = await DialogV2.confirm({
       content: `<b>${$fmt('SDM.DeleteDocConfirmation', { doc: powerName })}</b>`,
@@ -493,7 +493,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
 
     if (powerIndex === 0) {
       newCurrentIndex = 0;
-    } else if (powerIndex <= powerContainer.length - 1) {
+    } else if (powerIndex <= powerAlbum.length - 1) {
       newCurrentIndex = powerIndex - 1;
     }
 
@@ -704,7 +704,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     const droppedItem = await Item.implementation.fromDropData(data);
 
     if (
-      this.item.system.type !== GearType.POWER_CONTAINER &&
+      this.item.system.type !== GearType.POWER_ALBUM &&
       droppedItem.system.type !== GearType.POWER
     ) {
       return false;

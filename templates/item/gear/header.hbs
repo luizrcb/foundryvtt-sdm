@@ -155,7 +155,7 @@
       {{/if}}
 
 
-      {{#if (eq item.system.type 'power_container')}}
+      {{#if (eq item.system.type 'power_album')}}
       <div class="resource">
         <label class='resource-label'>
           {{localize 'SDM.GearMaxPowers'}}
@@ -164,7 +164,7 @@
       </div>
       <div class="resource"></div>
       <div class="resource grid-span-3">
-        <ol class='items-list power-container'>
+        <ol class='items-list power-album'>
           <li class='item flexrow items-header'>
             <div class='item-name flex-between'>
               <div class="rollable power-prev" data-action="prevPower" {{#unless hasPrevious}}disabled{{/unless}}>
@@ -194,7 +194,7 @@
               {{/if}}
             </div>
           </li>
-          {{> ($$ "item/power_container")
+          {{> ($$ "item/power_album")
             abilities=config.abilities
             index=currentPowerIndex
             enrichedPowers=@root.enrichedPowers

@@ -853,7 +853,7 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   scrollbar-width: thin;
   color: var(--sdm-c-tan);
 }
-.sdm .items-list.power-contaier {
+.sdm .items-list.power-album {
   max-height: 600px;
 }
 .sdm .items-list .item-list {

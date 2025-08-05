@@ -9,7 +9,7 @@
       </div>
     </div>
     {{/if}}
-    {{#if (eq type 'power_container')}}
+    {{#if (eq type 'power_album')}}
      <div class="form-group mt-10">
       <label for="powerIndex">{{localize 'SDM.Power'}}</label>
       <select name="powerIndex" id="powerIndex">
@@ -22,7 +22,7 @@
       <label for="selectedAbility">{{localize 'SDM.Ability'}}</label>
       <select name="selectedAbility" id="selectedAbility">
         {{selectOptions abilities localize=true
-          selected=(ifThen (eq type 'power_container') (lookup (lookup powerOptions @root.powerIndex) 'default_ability') ability) blank=""}}
+          selected=(ifThen (eq type 'power_album') (lookup (lookup powerOptions @root.powerIndex) 'default_ability') ability) blank=""}}
       </select>
     </div>
     {{/if}}
@@ -58,7 +58,7 @@
     <div class="form-group mt-10">
       <label for="shouldExplode">{{localize "SDM.ExplodingDice"}}</label>
       <input id="shouldExplode" type="checkbox" name="shouldExplode"
-        {{#if (and (ne type 'damage') (ne type 'power') (ne type 'power_container'))}}checked{{/if}}
+        {{#if (and (ne type 'damage') (ne type 'power') (ne type 'power_album'))}}checked{{/if}}
       />
     </div>
     {{/if}}

@@ -171,8 +171,8 @@ export class SdmItem extends Item {
     return title;
   }
 
-  getPowerContainerTitle(actorPowerCost = 2) {
-    let title = `${$l10n('SDM.PowerContainer')}: <b>${this.name}</b>${this.getCostTitle()}<br/><br/>`;
+  getPowerAlbumTitle(actorPowerCost = 2) {
+    let title = `${$l10n('SDM.PowerAlbum')}: <b>${this.name}</b>${this.getCostTitle()}<br/><br/>`;
 
     if (!this.system.powers.length) {
       title += `<i class="fa-solid fa-spider-web"></i> ${$l10n('SDM.NoPowers')} <i class="fa-solid fa-spider-web"></i>`;
@@ -227,8 +227,8 @@ export class SdmItem extends Item {
       [GearType.ARMOR]: () => this.getArmorTitle(),
       [TraitType.POWER]: (system, actorSystem) =>
         this.getPowerTitle(system.power, actorSystem.power_cost),
-      [GearType.POWER_CONTAINER]: (system, actorSystem) =>
-        this.getPowerContainerTitle(actorSystem.power_cost),
+      [GearType.POWER_ALBUM]: (system, actorSystem) =>
+        this.getPowerAlbumTitle(actorSystem.power_cost),
       [TraitType.SKILL]: () => this.getSkillTitle(),
       [GearType.WEAPON]: () => this.getWeaponTitle(),
       [GearType.WARD]: () => this.getWardTitle(),
