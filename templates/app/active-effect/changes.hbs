@@ -11,7 +11,7 @@
     {{#with ../fields.changes.element.fields as |changeFields|}}
     <li data-index="{{i}}">
       <div class="key">
-        <input type="text" name="changes.{{i}}.key" value="{{change.key}}" list="key-datalist-{{i}}"
+        <input class="changes-key" type="text" id="changes.{{i}}.key" name="changes.{{i}}.key" value="{{change.key}}" list="key-datalist-{{i}}"
           placeholder="{{localize 'SDM.Effect.ChangeProperty'}}">
         <datalist id="key-datalist-{{i}}">
           {{#each @root.selectableKeys}}

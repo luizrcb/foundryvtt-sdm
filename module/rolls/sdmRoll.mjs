@@ -65,7 +65,7 @@ export default class SDMRoll {
         property: 'defense'
       },
       [AttackTarget.MENTAL]: {
-        icon: '<i class="fa-solid fa-brain-circuit"></i>',
+        icon: '<i class="fa-solid fa-helmet-safety"></i>',
         property: 'mental_defense'
       },
       [AttackTarget.SOCIAL]: {

@@ -175,7 +175,7 @@ export class SdmItem extends Item {
     let title = `${$l10n('SDM.PowerAlbum')}: <b>${this.name}</b>${this.getCostTitle()}<br/><br/>`;
 
     if (!this.system.powers.length) {
-      title += `<i class="fa-solid fa-spider-web"></i> ${$l10n('SDM.NoPowers')} <i class="fa-solid fa-spider-web"></i>`;
+      title += `<i class="fa-solid fa-spider"></i> ${$l10n('SDM.NoPowers')} <i class="fa-solid fa-spider"></i>`;
       return title;
     }
 

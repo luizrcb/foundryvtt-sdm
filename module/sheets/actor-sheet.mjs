@@ -235,7 +235,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       isPower || isPowerAlbum
         ? 'fa-solid fa-wand-magic-sparkles'
         : isDamage
-          ? 'fa-solid fa-sword'
+          ? 'fa-solid fa-hand-fist'
           : 'fa-solid fa-dice-d20';
     const buttonLabel = isDamage && versatile ? $l10n('SDM.OneHanded') :
         (isPower || isPowerAlbum) ? $l10n('SDM.Cast') : $l10n('SDM.ButtonRoll');
@@ -256,7 +256,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     if (versatile) {
       buttons.push({
         action: 'two-handed',
-        icon: 'fa-solid fa-axe-battle',
+        icon: 'fa-solid fa-gavel',
         label: $l10n('SDM.TwoHanded'),
         callback: (event, button) => ({
           versatile,

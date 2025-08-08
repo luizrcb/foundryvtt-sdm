@@ -366,6 +366,9 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   * {
     scrollbar-color: var(--sdm-c-plum) transparent;
   }
+  .changes-key {
+    line-height: inherit;
+  }
   .sheet-tabs a:not(.active):hover {
     text-shadow: 0 0 8px var(--sdm-c-ultraviolet);
   }
@@ -383,12 +386,6 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   }
   .items-list .item:nth-child(odd) {
     background-color: rgba(0, 0, 0, 0.05); /* Slightly darker for odd items */
-  }
-  .items-list .items-header {
-    border-bottom: 2px groove var(--sdm-c-groove);
-  }
-  .items-list .item:last-child {
-    border-bottom: 2px groove var(--sdm-c-groove);
   }
   .theme-dark .items-list .item:nth-child(even) {
     background-color: rgba(255, 255, 255, 0.02);
@@ -1302,5 +1299,3 @@ input[type=checkbox]::before, input[type=radio]::before, input[type=checkbox]::a
   top: var(--sdm-top-edit);
   left: var(--sdm-left-edit);
 }
-
-/*# sourceMappingURL=sdm.css.map */

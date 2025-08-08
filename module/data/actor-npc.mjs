@@ -1,4 +1,4 @@
-import { attributeFields } from './attributes-data.mjs';
+import { npcBaseFields } from './npc-base-data.mjs';
 import SdmActorBase from './base-actor.mjs';
 
 const fields = foundry.data.fields;
@@ -11,7 +11,7 @@ export default class SdmNPC extends SdmActorBase {
 
     return {
       ...baseActorSchema,
-      ...attributeFields(),
+      ...npcBaseFields(),
 
       // npc wage
       cost: new fields.NumberField({
@@ -38,7 +38,7 @@ export default class SdmNPC extends SdmActorBase {
         initial: false
       }),
 
-      speed: new fields.NumberField({
+      base_speed: new fields.NumberField({
         required: true,
         nullable: false,
         integer: true,

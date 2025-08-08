@@ -303,7 +303,7 @@ export default class SdmCharacter extends SdmActorBase {
 
     schema.pets = new fields.ArrayField(new fields.DocumentUUIDField());
 
-    schema.speed = new fields.NumberField({
+    schema.base_speed = new fields.NumberField({
       required: true,
       nullable: false,
       integer: true,

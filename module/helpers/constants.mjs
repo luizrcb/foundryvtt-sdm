@@ -116,6 +116,7 @@ SpeedValues.set('Standard', 0);
 SpeedValues.set('Fast', 1);
 SpeedValues.set('VeryFast', 2);
 
+
 export const DiceType = Object.freeze({
   d4: 'd4',
   d6: 'd6',

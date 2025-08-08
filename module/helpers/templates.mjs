@@ -3,19 +3,21 @@ const $$ = path => `systems/sdm/templates/${path}.hbs`;
 export const templatePath = $$;
 
 const templatesToLoad = [
-  $$('actor/items'),
-  $$('actor/item'),
-  $$('actor/traits'),
-  $$('actor/trait'),
   $$('actor/burdens'),
-  $$('actor/character/header'),
-  $$('actor/npc/header'),
   $$('actor/caravan/header'),
-  $$('item/gear/header'),
-  $$('item/trait/header'),
+  $$('actor/character/header'),
+  $$('actor/item'),
+  $$('actor/items'),
+  $$('actor/npc/header'),
+  $$('actor/trait'),
+  $$('actor/traits'),
   $$('item/burden/header'),
-  $$('item/power'),
+  $$('item/gear/header'),
+  $$('item/mount/header'),
   $$('item/power_album'),
+  $$('item/power'),
+  $$('item/trait/header'),
+  $$('item/vehicle/header'),
 ];
 
 export const preloadHandlebarsTemplates = async function () {

@@ -150,7 +150,7 @@
                 <span id="system.defense">{{system.defense}}</span>
               </div>
               <div data-tooltip="{{localize 'SDM.FieldMentalDefense'}}">
-                <i class="fa-solid fa-brain-circuit"></i>
+                <i class="fa-solid fa-helmet-safety"></i>
                 <span id="system.mental_defense">{{system.mental_defense}}</span>
               </div>
               <div data-tooltip="{{localize 'SDM.FieldSocialDefense'}}">
@@ -258,7 +258,7 @@
                   </span>
                   {{#if (eq key 'cha')}}
                   <i
-                    class="fa-duotone fa-theater-masks rollable {{lookup @root.config.abilityColors @index}}"
+                    class="fa-solid fa-masks-theater rollable {{lookup @root.config.abilityColors @index}}"
                     data-tooltip="{{localize 'SDM.ReactionRoll'}}"
                     data-action="reactionRoll"  data-context='rollable'
                   ></i>
@@ -364,7 +364,7 @@
                 data-attack="melee"
                 data-label="{{localize 'SDM.AttackMelee'}}">
                 <div>{{localize 'SDM.AttackMelee'}}</div>
-                <i class="fa-solid fa-sword {{@root.config.attackColors.melee}}"></i>
+                <i class="fa-solid fa-hand-fist {{@root.config.attackColors.melee}}"></i>
               </div>
             </div>
             <div class="ability grid-span-1 flexrow">
@@ -375,7 +375,7 @@
                 data-attack="ranged"
                 data-label="{{localize 'SDM.AttackRanged'}}">
                 <div>{{localize 'SDM.AttackRanged'}}</div>
-                 <i class="fa-solid fa-raygun {{@root.config.attackColors.ranged}}"></i>
+                 <i class="fa-solid fa-gun {{@root.config.attackColors.ranged}}"></i>
               </div>
             </div>
             <div class="ability grid-span-1 flexrow">
@@ -397,7 +397,7 @@
                 data-attack="oldtech"
                 data-label="{{localize 'SDM.AttackOldtech'}}">
                 <div>{{localize 'SDM.AttackOldtech'}}</div>
-                <i class="fa-solid fa-game-console-handheld {{@root.config.attackColors.oldtech}}"></i>
+                <i class="fa-solid fa-gamepad {{@root.config.attackColors.oldtech}}"></i>
               </div>
             </div>
           </div>

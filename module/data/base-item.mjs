@@ -1,5 +1,5 @@
 import { getSlotsTaken } from '../helpers/itemUtils.mjs';
-import AttributesDataModel from './attributes-data.mjs';
+import NPCBaseDataModel from './npc-base-data.mjs';
 import ItemSizeDataModel from './item-size.mjs';
 
 export default class SdmItemBase extends foundry.abstract.TypeDataModel {
@@ -38,7 +38,7 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
 
     schema.features = new fields.HTMLField();
 
-    schema.attributes = new fields.EmbeddedDataField(AttributesDataModel)
+    schema.attributes = new fields.EmbeddedDataField(NPCBaseDataModel)
 
     return schema;
   }
