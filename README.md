@@ -1,5 +1,11 @@
 ![](https://github.com/luizrcb/foundryvtt-sdm/blob/main/assets/sdm-compatible.png?raw=true)
 
+![SDM System](https://img.shields.io/badge/dynamic/json.svg?url=https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/main/system.json&label=SDM%20System&query=$.version&colorB=blue&logo=gnometerminal&logoColor=white) ![FoundryVTT Verified](https://img.shields.io/badge/dynamic/json.svg?url=https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/main/system.json&label=FoundryVTT%20Verified&query=$.compatibility.verified&colorB=green&logo=roll20) ![FoundryVTT Supported](https://img.shields.io/endpoint?url=https://foundryshields.com/version?url=https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/main/system.json&label=FoundryVTT%20Supported&colorB=green)
+
+![GitHub Release Date](https://img.shields.io/github/release-date/luizrcb/foundryvtt-sdm?color=blue) [![GitHub commits](https://img.shields.io/github/commits-since/luizrcb/foundryvtt-sdm/latest)](https://github.com/luizrcb/foundryvtt-sdm/commits) ![GitHub contributors](https://img.shields.io/github/contributors/luizrcb/foundryvtt-sdm)
+
+![GitHub downloads](https://img.shields.io/github/downloads/luizrcb/foundryvtt-sdm/total?label=Downloads) ![GitHub downloads Latest](https://img.shields.io/github/downloads/luizrcb/foundryvtt-sdm/latest/total?label=Downloads%20Latest%20Release)
+
 # Synthetic Dream Machine for Foundry VTT
 
 An unoffical, community-supported system for playing [Synthetic Dream Machine](https://www.wizardthieffighter.com/synthetic-dream-machine/) on [Foundry VTT](http://foundryvtt.com/).
