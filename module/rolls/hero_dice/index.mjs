@@ -14,7 +14,7 @@ async function _promptHeroOptions(actor) {
     },
     content: HeroDiceUI.getHeroDiceSelect(actor, false),
     ok: {
-      icon: `fa-solid fa-dice-${heroDiceType}`,
+      icon: `die-label dice-${heroDiceType}`,
       label: $l10n('SDM.ButtonRoll'),
       callback: (event, button) => new foundry.applications.ux.FormDataExtended(button.form).object
     }
@@ -73,7 +73,7 @@ export async function healingHeroDice(event, actor) {
     },
     content: HeroDiceUI.getHeroDiceSelect(actor, false, healingHouseRuleEnabled),
     ok: {
-      icon: `fa-solid fa-dice-${heroDiceType}`,
+      icon: `die-label dice-${heroDiceType}`,
       label: $l10n('SDM.ButtonRoll'),
       callback: (event, button) => new foundry.applications.ux.FormDataExtended(button.form).object
     }

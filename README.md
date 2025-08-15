@@ -15,6 +15,7 @@ An unoffical, community-supported system for playing [Synthetic Dream Machine](h
 ## Credits
 
 - Synthetic Dream Machine (SDM), Ultraviolet Grasslands (UVG), Our Golden Age (OGA), and the Vastlands Guidebook (VLG) are copyright Luka Rejec.
+- Icons by https://game-icons.net/ under [Creative Commons 3.0](https://creativecommons.org/licenses/by/3.0/).
 
 ## Installation Instructions
 

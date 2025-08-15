@@ -27,17 +27,17 @@ SDM.attackColors = {
 };
 
 SDM.abilitySaveIcons = {
-  str: 'fa-solid fa-weight-hanging',
+  str: 'fa-solid fa-hand-fist',
   end: 'fa-solid fa-heartbeat',
   agi: 'fa-solid fa-person-running',
   cha: 'fa-solid fa-clover',
   aur: 'fa-solid fa-splotch',
-  tho: 'fa-solid fa-brain'
+  tho: 'fa-solid fa-cloud'
 };
 
 SDM.defenseIcons = {
   physical: 'fa-solid fa-shield-halved',
-  mental: 'fa-solid fa-helmet-safety',
+  mental: 'fa-solid fa-brain',
   social: 'fa-solid fa-crown'
 };
 

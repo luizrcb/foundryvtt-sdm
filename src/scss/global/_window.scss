@@ -8,7 +8,7 @@
 .rollable {
   &:hover,
   &:focus {
-    color: colors.$c-black;
+    //color: colors.$c-black;
     text-shadow: 0 0 10px colors.$c-ultraviolet;
     cursor: pointer;
   }
@@ -149,8 +149,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: .5rem;
-  padding: .25rem;
+  gap: 0.5rem;
+  padding: 0.25rem;
 
   > img {
     height: 100px;
@@ -173,7 +173,10 @@ hr {
   background-image: linear-gradient(90deg, transparent 0%, colors.$c-font 60%, transparent 100%);
 }
 
-input[type="checkbox"]::before, input[type="radio"]::before, input[type="checkbox"]::after, input[type="radio"]::after {
+input[type='checkbox']::before,
+input[type='radio']::before,
+input[type='checkbox']::after,
+input[type='radio']::after {
   width: var(--checkbox-size);
   height: var(--checkbox-size);
   font-size: var(--checkbox-size);
@@ -182,7 +185,7 @@ input[type="checkbox"]::before, input[type="radio"]::before, input[type="checkbo
 }
 
 .critical {
-  color: #18520B;
+  color: #18520b;
   font-weight: bold;
 }
 
@@ -197,12 +200,12 @@ input[type="checkbox"]::before, input[type="radio"]::before, input[type="checkbo
 }
 
 .force {
-  color: #B8860B;
+  color: #b8860b;
   font-weight: bold;
 }
 
 .is13 {
-  color: #B8860B;
+  color: #b8860b;
   filter: sepia(0.5) hue-rotate(0deg);
 }
 
@@ -220,10 +223,170 @@ input[type="checkbox"]::before, input[type="radio"]::before, input[type="checkbo
 }
 
 @layer window-layer {
-
   * {
     scrollbar-color: colors.$c-plum transparent;
   }
+
+  .die-label {
+    display: inline-flex;
+    width: 19px;
+    height: 19px;
+  }
+
+  .dice-d4 {
+    --dice-image: url('../assets/icons/dice/d4.svg');
+    background-image: var(--dice-image);
+  }
+
+  .dice-d6 {
+    --dice-image: url('../assets/icons/dice/d6.svg');
+    background-image: var(--dice-image);
+  }
+
+  .dice-d8 {
+    --dice-image: url('../assets/icons/dice/d8.svg');
+    background-image: var(--dice-image);
+  }
+
+  .dice-d10 {
+    --dice-image: url('../assets/icons/dice/d10.svg');
+    background-image: var(--dice-image);
+  }
+
+  .dice-d12 {
+    --dice-image: url('../assets/icons/dice/d12.svg');
+    background-image: var(--dice-image);
+  }
+
+  .dice-d20 {
+    --dice-image: url('../assets/icons/dice/d20.svg');
+    background-image: var(--dice-image);
+  }
+
+  button i.die-label {
+    background-image: unset;
+    background-color: var(--button-text-color);
+    -webkit-mask: var(--dice-image) no-repeat center;
+    mask: var(--dice-image) no-repeat center;
+    transition: all 0.5s ease 0s;
+  }
+
+  button:hover i.die-label {
+    background-color: var(--button-hover-text-color);
+    transition: all 0.5s ease 0s;
+  }
+
+  .rollable:hover .die-label,
+  .die-label:hover {
+    filter: vars.$hover-filter;
+  }
+
+  button .melee-attack {
+    transition: all 0.5s ease 0s;
+  }
+
+  button .die-label {
+    color: var(--button-text-color);
+    transition: all 0.5s ease 0s;
+    color: blue;
+    &:hover {
+      color: var(--button-hover-text-color);
+      transition: all 0.5s ease 0s;
+    }
+  }
+
+  button:hover i.melee-attack.rollable,
+  .melee-attack:hover {
+    background-color: var(--button-hover-text-color);
+    transition: all 0.5s ease 0s;
+  }
+
+  .melee-attack {
+    width: 15px;
+    height: 15px;
+    display: inline-block;
+    background-color: var(--button-text-color);
+    -webkit-mask: url('../assets/icons/equipment/melee-weapons/broadsword.svg') no-repeat center;
+    mask: url('../assets/icons/equipment/melee-weapons/broadsword.svg') no-repeat center;
+    &.lime {
+      width: 16px;
+      height: 16px;
+      display: inline-block;
+      -webkit-mask: unset;
+      mask: unset;
+      background: url('../assets/icons/equipment/melee-weapons/broadsword-lime.svg');
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      cursor: pointer;
+    }
+  }
+
+  button:hover i.one-handed,
+  .one-handed:hover {
+    background-color: var(--button-hover-text-color);
+    transition: all 0.5s ease 0s;
+  }
+
+  .one-handed {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    background-color: var(--button-text-color);
+    transition: all 0.5s ease 0s;
+    -webkit-mask: url('../assets/icons/attack/one-handed.svg') no-repeat bottom;
+    mask: url('../assets/icons/attack/one-handed.svg') no-repeat bottom;
+  }
+
+  button:hover i.two-handed,
+  .two-handed:hover {
+    background-color: var(--button-hover-text-color);
+    transition: all 0.5s ease 0s;
+  }
+
+  .two-handed {
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    background-color: var(--button-text-color);
+    transition: all 0.5s ease 0s;
+    -webkit-mask: url('../assets/icons/attack/two-handed.svg') no-repeat bottom;
+    mask: url('../assets/icons/attack/two-handed.svg') no-repeat bottom;
+  }
+
+  .npc-attack {
+    display: flex;
+    gap: 3px;
+    align-items: center;
+  }
+
+  .theme-dark .melee-attack.lime {
+    background: url('../assets/icons/equipment/melee-weapons/broadsword-lime-theme-dark.svg');
+  }
+
+  .rollable:hover i.melee-attack.lime,
+  .melee-attack.lime:hover {
+    filter: vars.$hover-filter;
+  }
+
+  // .thou-save {
+  //   width: 16px;
+  //   height: 16px;
+  //   display: inline-block;
+  //   background: url('../assets/icons/ui/thought-bubble.svg');
+  //   background-repeat: no-repeat;
+  //   background-position: center;
+  //   background-size: contain;
+  //   cursor: pointer;
+  // }
+
+  // .theme-dark .thou-save {
+  //   background: url('../assets/icons/ui/thought-bubble-dark.svg');
+  // }
+
+  // .rollable:hover i.thou-save, .thou-save:hover {
+  //   filter: vars.$hover-filter
+  // }
 
   .changes-key {
     line-height: inherit;
@@ -240,7 +403,6 @@ input[type="checkbox"]::before, input[type="radio"]::before, input[type="checkbo
       &.active {
         text-shadow: 0 0 10px colors.$c-ultraviolet;
       }
-
     }
   }
 
@@ -255,7 +417,6 @@ input[type="checkbox"]::before, input[type="radio"]::before, input[type="checkbo
       &.active {
         text-shadow: 0 0 10px colors.$c-ultraviolet;
       }
-
     }
   }
 
@@ -283,5 +444,4 @@ input[type="checkbox"]::before, input[type="radio"]::before, input[type="checkbo
       text-shadow: unset;
     }
   }
-
 }

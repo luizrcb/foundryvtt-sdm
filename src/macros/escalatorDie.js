@@ -21,7 +21,7 @@ const buttons = [
   },
   {
     action: 'reset',
-    icon: '<i class="fa-solid fa-undo"></i>',
+    icon: '<i class="fa-solid fa-rotate-left"></i>',
     label: game.i18n.localize('SDM.Reset')
   }
 ];

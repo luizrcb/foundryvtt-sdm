@@ -164,7 +164,7 @@
   box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-.slider .fa-cog {
+.slider .fa-gear {
   position: absolute;
   left: 2px;
   bottom: 2px;
@@ -188,7 +188,7 @@ input:checked + .slider {
 }
 
 /* Move slider on checked */
-input:checked + .slider .fa-cog {
+input:checked + .slider .fa-gear {
   transform: translateX(20px);
   color: colors.$c-dark;
 }

@@ -46,7 +46,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     if (this.actor?.type === ActorType.CHARACTER) {
       controls.push({
         action: 'toggleMode',
-        icon: 'fa-solid fa-cog',
+        icon: 'fa-solid fa-gear',
         label: 'Edit Mode / Play Mode',
         ownership: 'OWNER'
       });
@@ -235,7 +235,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       isPower || isPowerAlbum
         ? 'fa-solid fa-wand-magic-sparkles'
         : isDamage
-          ? 'fa-solid fa-hand-fist'
+          ? 'one-handed'
           : 'fa-solid fa-dice-d20';
     const buttonLabel = isDamage && versatile ? $l10n('SDM.OneHanded') :
         (isPower || isPowerAlbum) ? $l10n('SDM.Cast') : $l10n('SDM.ButtonRoll');
@@ -256,7 +256,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     if (versatile) {
       buttons.push({
         action: 'two-handed',
-        icon: 'fa-solid fa-gavel',
+        icon: 'two-handed',
         label: $l10n('SDM.TwoHanded'),
         callback: (event, button) => ({
           versatile,
@@ -488,7 +488,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         }
       });
       const heroDiceType =
-        this.actor.system.hero_dice?.dice_type || game.settings.get('sdm', 'defaultHeroDiceType');
+   this.actor.system.hero_dice?.dice_type || game.settings.get('sdm', 'defaultHeroDiceType');
       // Replace the abilities in the system object with the reordered abilities
       context.heroDiceType = heroDiceType;
       context.system.abilities = reorderedAbilities;

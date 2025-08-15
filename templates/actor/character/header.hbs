@@ -5,7 +5,7 @@
       <label class="switch edit-mode-toggle sdm" for="toggleMode-{{actor._id}}"
         data-tooltip="{{localize (ifThen isEditMode 'SDM.SheetEditMode' 'SDM.SheetPlayMode')}}">
         <input id="toggleMode-{{actor._id}}" type="checkbox" data-action="toggleMode" {{checked @root.isEditMode}}/>
-        <span class="slider round"><i class="fa-solid fa-cog"></i></span>
+        <span class="slider round"><i class="fa-solid fa-gear"></i></span>
       </label>
     </div>
     <div class="flexcol flex-between flex-center">
@@ -20,7 +20,7 @@
           <label class='resource-label rollable'>{{localize 'SDM.FieldHeroDice'}}</label>
           <div class='resource-content flexrow height-32 rollable'>
             {{system.hero_dice.value}} / {{system.hero_dice.max}}
-            <i class="fa-solid fa-dice-{{@root.heroDiceType}} sheet-hero-dice" data-tooltip="{{@root.heroDiceType}}"></i>
+            <i class="die-label dice-{{@root.heroDiceType}} sheet-hero-dice" data-tooltip="{{@root.heroDiceType}}"></i>
           </div>
         </div>
       </div>
@@ -146,11 +146,11 @@
             </div>
             <div class='resource-content flexrow align-center height-32'>
               <div data-tooltip="{{localize 'SDM.FieldPhysicalDefense'}}">
-                <i class="fa-solid fa-shield-alt"></i>
+                <i class="fa-solid fa-shield-halved"></i>
                 <span id="system.defense">{{system.defense}}</span>
               </div>
               <div data-tooltip="{{localize 'SDM.FieldMentalDefense'}}">
-                <i class="fa-solid fa-helmet-safety"></i>
+                <i class="fa-solid fa-brain"></i>
                 <span id="system.mental_defense">{{system.mental_defense}}</span>
               </div>
               <div data-tooltip="{{localize 'SDM.FieldSocialDefense'}}">
@@ -364,7 +364,7 @@
                 data-attack="melee"
                 data-label="{{localize 'SDM.AttackMelee'}}">
                 <div>{{localize 'SDM.AttackMelee'}}</div>
-                <i class="fa-solid fa-hand-fist {{@root.config.attackColors.melee}}"></i>
+                <i class="melee-attack {{@root.config.attackColors.melee}}"></i>
               </div>
             </div>
             <div class="ability grid-span-1 flexrow">

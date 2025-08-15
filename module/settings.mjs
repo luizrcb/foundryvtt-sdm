@@ -434,7 +434,7 @@ export function configureUseHeroDiceButton(message, html, data) {
   const defaultHeroDiceType = game.settings.get('sdm', 'defaultHeroDiceType');
   const actorHeroDice = actor?.system?.hero_dice?.dice_type || defaultHeroDiceType;
 
-  icon.classList.add('fa-solid', `fa-dice-${actorHeroDice}`);
+  icon.classList.add('die-label', `dice-${actorHeroDice}`);
   btn.appendChild(icon);
 
   // Add localized text

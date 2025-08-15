@@ -20,7 +20,7 @@ export function transportBaseFields() {
 
     base_speed: new fields.NumberField({
       ...requiredInteger,
-      initial: SpeedValues.get(SpeedType.STANDARD),
+      initial: 0,
       choices: CONFIG.SDM.reverseSpeedValues,
     }),
 
