@@ -73,7 +73,7 @@ export function getCreatureStatsByLevel(level = MIN_LEVEL) {
 export function getActorOptions(actorType = ActorType.CHARACTER) {
   const actors = game.actors.filter(actor => actor.type === actorType);
   return actors.map(actor => ({
-    id: actor.id,
+    id: actor.uuid,
     name: actor.name
   }));
 }
