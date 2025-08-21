@@ -21,8 +21,8 @@ async function _promptHeroOptions(actor) {
   });
 }
 
-export async function handleHeroDice(event, message, messageActor, flags) {
-  const actor = messageActor || game.user?.character || canvas?.tokens?.controlled[0]?.actor;
+export async function handleHeroDice(event, message, flags) {
+  const actor = game.user?.character || canvas?.tokens?.controlled[0]?.actor;
 
   if (!actor || actor.type !== ActorType.CHARACTER) {
     ui.notifications.error(

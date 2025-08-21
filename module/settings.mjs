@@ -24,7 +24,7 @@ export function registerSystemSettings() {
     restricted: true,
     config: true, // Show in configuration view
     type: String, // Data type: String, Number, Boolean, etc
-    default: 'cash',
+    default: 'cash'
   });
 
   game.settings.register('sdm', 'currencyImage', {
@@ -455,6 +455,6 @@ export function configureUseHeroDiceButton(message, html, data) {
   btn.addEventListener('click', ev => {
     ev.preventDefault();
     ev.stopPropagation();
-    handleHeroDice(ev, message, actor, flags);
+    handleHeroDice(ev, message, flags);
   });
 }
