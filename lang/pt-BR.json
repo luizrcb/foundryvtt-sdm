@@ -330,6 +330,8 @@
   "SDM.SettingsDefaultHeroDiceTypeHint": "Muda o tipo padrão de dado heróico para todos personagens jogadores",
   "SDM.SettingsDefaultMaxPowers": "Máximo padrão de podres",
   "SDM.SettingsDefaultMaxPowersHint": "Número máximo padrão de poderes armazenados em um álbum de poderes",
+  "SDM.SettingsDefaultSaveValue": "Valor inicial de Salvaguarda",
+  "SDM.SettingsDefaultSaveValueHint": "Valor inicial de Salvaguarda, número alvo para rolagens de Salvaguarda",
   "SDM.SettingsEscalatorDie": "Dado de Intensidade",
   "SDM.SettingsEscalatorDieHint": "Bônus aplicado a todas as rolagens",
   "SDM.SettingsExtendedSkillRanks": "Usar ranques extras de perícias",

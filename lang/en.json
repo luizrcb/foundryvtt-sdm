@@ -330,6 +330,8 @@
   "SDM.SettingsDefaultHeroDiceTypeHint": "Changes the default hero dice type for all characters",
   "SDM.SettingsDefaultMaxPowers": "Default Max Powers",
   "SDM.SettingsDefaultMaxPowersHint": "Default number of max stored powers in a power album",
+  "SDM.SettingsDefaultSaveValue": "Initial Save Value",
+  "SDM.SettingsDefaultSaveValueHint": "The initial value of save, the target value for saving throw rolls",
   "SDM.SettingsEscalatorDie": "Escalator Die",
   "SDM.SettingsEscalatorDieHint": "Every roll will be increased by this amount",
   "SDM.SettingsExtendedSkillRanks": "Use extra skill ranks",

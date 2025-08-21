@@ -1,6 +1,6 @@
 const abilitiesOrder = {
   en: ['Str', 'End', 'Agi', 'Cha', 'Aur', 'Tho'],
-  'pt-br': ['Cha', 'Tho', 'Str', 'Agi', 'Aur', 'End']
+  'pt-BR': ['Cha', 'Tho', 'Str', 'Agi', 'Aur', 'End']
 };
 
 const currentLanguage = game.i18n.lang;

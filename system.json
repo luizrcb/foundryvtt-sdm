@@ -2,11 +2,11 @@
   "id": "sdm",
   "title": "Synthetic Dream Machine",
   "description": "The SDM system for FoundryVTT!",
-  "version": "0.1.20",
+  "version": "0.1.21",
   "url": "https://github.com/luizrcb/foundryvtt-sdm",
   "bugs": "https://github.com/luizrcb/foundryvtt-sdm/issues",
   "manifest": "https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/main/system.json",
-  "download": "https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.1.20/sdm-0.1.20.zip",
+  "download": "https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.1.21/sdm-0.1.21.zip",
   "compatibility": {
     "minimum": "13",
     "verified": "13.347"
@@ -25,9 +25,6 @@
       },
       "npc": {
         "htmlFields": ["biography", "notes"]
-      },
-      "caravan": {
-        "htmlFields": ["biography", "notes"]
       }
     },
     "Item": {
@@ -41,12 +38,6 @@
         "htmlFields": ["description", "features"]
       },
       "burden": {
-        "htmlFields": ["description", "features"]
-      },
-      "mount": {
-        "htmlFields": ["description", "features"]
-      },
-      "vehicle": {
         "htmlFields": ["description", "features"]
       }
     }
