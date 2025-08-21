@@ -16,7 +16,7 @@ import {
   registerSystemSettings
 } from './settings.mjs';
 import { SdmActorSheet } from './sheets/actor-sheet.mjs';
-//import { SdmCaravanSheet } from './sheets/caravan-sheet.mjs';
+import { SdmCaravanSheet } from './sheets/caravan-sheet.mjs';
 import { SdmItemSheet } from './sheets/item-sheet.mjs';
 
 const { ActiveEffectConfig } = foundry.applications.sheets;
@@ -38,7 +38,7 @@ globalThis.sdm = {
   },
   applications: {
     SdmActorSheet,
-    //SdmCaravanSheet,
+    SdmCaravanSheet,
     SdmItemSheet
   },
   utils: {
@@ -192,15 +192,15 @@ Hooks.once('init', function () {
   CONFIG.Actor.dataModels = {
     character: models.SdmCharacter,
     npc: models.SdmNPC,
-    //caravan: models.SdmCaravan
+    caravan: models.SdmCaravan
   };
   CONFIG.Item.documentClass = SdmItem;
   CONFIG.Item.dataModels = {
     gear: models.SdmGear,
     trait: models.SdmTrait,
     burden: models.SdmBurden,
-    //mount: models.SdmMount,
-    //vehicle: models.SdmVehicle
+    mount: models.SdmMount,
+    vehicle: models.SdmVehicle
   };
 
   // Active Effects are never copied to the Actor,
@@ -217,11 +217,11 @@ Hooks.once('init', function () {
     makeDefault: true,
     label: 'SDM.SheetLabels.Actor'
   });
-  // Actors.registerSheet('sdm', SdmCaravanSheet, {
-  //   types: ['caravan'],
-  //   makeDefault: true,
-  //   label: 'SDM.SheetLabels.Actor'
-  // });
+  Actors.registerSheet('sdm', SdmCaravanSheet, {
+    types: ['caravan'],
+    makeDefault: true,
+    label: 'SDM.SheetLabels.Actor'
+  });
   Items.unregisterSheet('core', sheets.ItemSheet);
   Items.registerSheet('sdm', SdmItemSheet, {
     makeDefault: true,

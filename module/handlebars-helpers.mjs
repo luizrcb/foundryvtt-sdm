@@ -1,5 +1,5 @@
 import { SizeUnit } from "./helpers/constants.mjs";
-import { toPascalCase } from "./helpers/globalUtils.mjs";
+import { $l10n, toPascalCase } from "./helpers/globalUtils.mjs";
 import { convertToSacks } from "./helpers/itemUtils.mjs";
 
 export function registerHandlebarsHelpers() {
@@ -119,6 +119,6 @@ export function registerHandlebarsHelpers() {
 
   $$('toSacks', function (slotsInStones) {
     const inSacks = convertToSacks(slotsInStones, SizeUnit.STONES);
-    return inSacks + ' sk';
+    return `${inSacks} ${$l10n('SDM.UnitSacksAbbr')}`;
   });
 }

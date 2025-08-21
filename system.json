@@ -15,6 +15,7 @@
     {
       "name": "Luiz Bertoni",
       "discord": "nightlybuild_",
+      "url": "https://github.com/luizrcb",
       "email": "luizrcb@gmail.com"
     }
   ],
@@ -24,6 +25,9 @@
         "htmlFields": ["biography", "notes"]
       },
       "npc": {
+        "htmlFields": ["biography", "notes"]
+      },
+      "caravan": {
         "htmlFields": ["biography", "notes"]
       }
     },
@@ -38,6 +42,12 @@
         "htmlFields": ["description", "features"]
       },
       "burden": {
+        "htmlFields": ["description", "features"]
+      },
+      "mount": {
+        "htmlFields": ["description", "features"]
+      },
+      "vehicle": {
         "htmlFields": ["description", "features"]
       }
     }

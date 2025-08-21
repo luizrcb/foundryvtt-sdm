@@ -105,6 +105,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       ...(extendedSkillRanks ? CONFIG.SDM.extraSkillMod : {})
     };
 
+    const language = game.i18n.lang;
+
     const context = {
       // Validates both permissions and compendium status
       editable: this.isEditable,
@@ -127,6 +129,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       sizeUnits: CONFIG.SDM.sizeUnits,
       skillMod: allSKillMods,
       skillModifierStep: defaultModifierStep,
+      abilities: CONFIG.SDM.getOrderedAbilities(language),
     };
 
     if (this.item.type === ItemType.GEAR && this.item.system.type === GearType.POWER_ALBUM) {

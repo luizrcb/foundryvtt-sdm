@@ -101,7 +101,7 @@
         <div class='resource-content'>
           <select name="system.default_ability" id="system.default_ability">
             <option value=""></option>
-            {{selectOptions config.abilities localize=true selected=system.default_ability}}
+            {{selectOptions @root.abilities localize=true selected=system.default_ability}}
           </select>
         </div>
       </div>
@@ -150,7 +150,7 @@
 
       {{#if (eq item.system.type 'power')}}
       {{!-- Start fragment --}}
-      {{> ($$ "item/power") item=item abilities=config.abilities}}
+      {{> ($$ "item/power") item=item abilities=@root.abilities}}
       {{!-- End fragment --}}
       {{/if}}
 
@@ -195,7 +195,7 @@
             </div>
           </li>
           {{> ($$ "item/power_album")
-            abilities=config.abilities
+            abilities=@root.abilities
             index=currentPowerIndex
             enrichedPowers=@root.enrichedPowers
             powers=@root.powers}}
