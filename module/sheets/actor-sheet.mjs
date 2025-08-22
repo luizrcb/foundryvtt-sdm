@@ -1162,7 +1162,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
   static async _onReactionRoll(event, target) {
     event.preventDefault();
     event.stopPropagation();
+
     if (event.detail > 1) return;
+
     const isShift = !!event.shiftKey;
     let data = { modifier: '', charismaOperator: 1 };
 
@@ -1208,13 +1210,15 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     const baseFormula = game.settings.get('sdm', 'baseReactionFormula') || '2d6';
     const reactionBonus = this.actor.system.reaction_bonus || 0;
+    const burdenPenalty = this.actor.system.burden_penalty || 0;
     const chaMod = this.actor.system.abilities['cha'].current;
 
+    const burdenPart = burdenPenalty > 0 ? -burdenPenalty : '';
     const chaPart = `${charismaOperator > 0 ? '+' : '-'}${chaMod}`;
-    const bonusPart = `${reactionBonus ? ` +${reactionBonus}` : ''}`;
-    const modPart = `${modifier ? ` +${modifier}` : ''}`;
+    const bonusPart = reactionBonus ? ` +${reactionBonus}` : '';
+    const modPart = modifier ? ` +${modifier}` : '';
 
-    const formula = `${baseFormula}${chaPart}${bonusPart}${modPart}`;
+    const formula = `${baseFormula}${chaPart}${bonusPart}${modPart}${burdenPart}`;
     const sanitizedFormula = sanitizeExpression(formula);
 
     let roll = new Roll(sanitizedFormula);
