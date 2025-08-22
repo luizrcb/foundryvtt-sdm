@@ -1,0 +1,42 @@
+<section class='tab attributes {{tab.cssClass}}' data-group='primary' data-tab='album'>
+{{#if (eq item.system.type 'power_album')}}
+<div class="resource grid-span-3">
+  <ol class='items-list power-album'>
+    <li class='item flexrow items-header'>
+      <div class='item-name flex-between'>
+        <div class="rollable power-prev" data-action="prevPower" {{#unless hasPrevious}}disabled{{/unless}}>
+          <i class="fa-solid fa-chevron-left"></i>
+        </div>
+        <div class="rollable power-counter">
+          {{ifThen (gt powerCount 0) (addOne currentPowerIndex) powerCount}} / {{powerCount}}
+        </div>
+        <div class="rollable power-next"  data-action="nextPower" {{#unless hasNext}}disabled{{/unless}}>
+          <i class="fa-solid fa-chevron-right"></i>
+        </div>
+      </div>
+      <div class='item-formula flexrow'>
+      </div>
+      <div class='item-controls'>
+
+        {{#if @root.editable}}
+        <a
+          class='item-control item-create'
+          data-tooltip="{{localize 'SDM.DOCUMENT.Create' type=(localize 'TYPES.Item.power')}}"
+          data-action='addPower'
+          data-container='{{item.uuid}}'
+        >
+          <i class='fa-solid fa-plus'></i>
+          {{localize 'SDM.DOCUMENT.New' type=(localize 'TYPES.Item.power')}}
+        </a>
+        {{/if}}
+      </div>
+    </li>
+    {{> ($$ "item/power_album")
+      abilities=config.abilities
+      index=currentPowerIndex
+      enrichedPowers=@root.enrichedPowers
+      powers=@root.powers}}
+  </ol>
+  </div>
+{{/if}}
+</section>

@@ -64,6 +64,10 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     attributesFeature: {
       template: templatePath('item/attribute-parts/feature')
     },
+    powerAlbum: {
+      template: templatePath('item/attribute-parts/power_album'),
+      scrollable: ['']
+    },
     attributesMount: {
       template: templatePath('item/attribute-parts/mount')
     },
@@ -82,8 +86,10 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     if (this.document.limited) return;
     // Control which parts show based on document subtype
     switch (this.document.type) {
-      case 'feature':
-        options.parts.push('attributesFeature', 'effects');
+      case 'gear':
+        if (this.document.system.type === GearType.POWER_ALBUM) {
+          options.parts.push('powerAlbum');
+        }
         break;
       case 'mount':
         options.parts.push('attributesMount');
@@ -97,7 +103,6 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
 
   /** @override */
   async _prepareContext(options) {
-
     const extendedSkillRanks = game.settings.get('sdm', 'extendedSkillRanks') || false;
     const defaultModifierStep = game.settings.get('sdm', 'skillModifierStep') || 3;
     const allSKillMods = {
@@ -126,7 +131,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       possibleRiders: getActorOptions('character'),
       sizeUnits: CONFIG.SDM.sizeUnits,
       skillMod: allSKillMods,
-      skillModifierStep: defaultModifierStep,
+      skillModifierStep: defaultModifierStep
     };
 
     if (this.item.type === ItemType.GEAR && this.item.system.type === GearType.POWER_ALBUM) {
@@ -147,6 +152,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     switch (partId) {
       case 'attributesFeature':
       case 'attributesMount':
+      case 'powerAlbum':
         // Necessary for preserving active tab on re-render
         context.tab = context.tabs[partId];
         break;
@@ -182,7 +188,11 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     // If you have sub-tabs this is necessary to change
     const tabGroup = 'primary';
 
-    const defaultTab = parts.includes('attributes') ? 'attributes' : 'description';
+    const defaultTab = parts.includes('powerAlbum')
+      ? 'album'
+      : parts.includes('attributes')
+        ? 'attributes'
+        : 'description';
     // Default tab for first time it's rendered this session
     if (!this.tabGroups[tabGroup]) this.tabGroups[tabGroup] = defaultTab;
     return parts.reduce((tabs, partId) => {
@@ -210,6 +220,11 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
           tab.id = 'attributes';
           tab.label += 'Attributes';
           break;
+        case 'powerAlbum':
+          tab.id = 'album';
+          tab.label += 'Album';
+          tab.icon = 'fa fa-book';
+          break;
         case 'effects':
           tab.id = 'effects';
           tab.label += 'Effects';
@@ -233,7 +248,24 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     this.#dragDrop.forEach(d => d.bind(this.element));
     // You may want to add other special handling here
     // Foundry comes with a large number of utility classes, e.g. SearchFilter
-    // That you may want to implement yourself.
+    // That you may want to  implement yourself.
+    const selectElement = this.element.querySelector('#gearType');
+    selectElement?.addEventListener('change', event => {
+      const tabs = this.element.querySelectorAll('[data-tab]');
+      if (event.target.value !== 'power_album') {
+        this.tabGroups['primary'] = 'description';
+        for (let t of tabs) {
+          if (t.dataset.group && t.dataset.group !== 'primary') continue;
+          t.classList.toggle('active', t.dataset.tab === 'description');
+        }
+      } else {
+        this.tabGroups['primary'] = 'album';
+        for (let t of tabs) {
+          if (t.dataset.group && t.dataset.group !== 'primary') continue;
+          t.classList.toggle('active', t.dataset.tab === 'album');
+        }
+      }
+    });
   }
 
   // async _onSubmitForm(formConfig, event) {
@@ -455,7 +487,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     const powerAlbum = this.item.system.powers;
 
     if (powerAlbum.length === this.item.system.max_powers) {
-      ui.notifications.warn($fmt('SDM.ErrorMaxPowers', { item: this.item.name }))
+      ui.notifications.warn($fmt('SDM.ErrorMaxPowers', { item: this.item.name }));
       return;
     }
 
