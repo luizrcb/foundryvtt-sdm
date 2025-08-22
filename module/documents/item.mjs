@@ -7,6 +7,18 @@ import { convertToCash, getSlotsTaken } from '../helpers/itemUtils.mjs';
  * @extends {Item}
  */
 export class SdmItem extends Item {
+  async _onUpdate(changed, options, userId) {
+    await super._onUpdate(changed, options, userId);
+
+    if (changed.system?.max_powers !== undefined) {
+      if (changed.system?.max_powers < this.system.powers.length) {
+        await this.update({
+          'system.max_powers': this.system.powers.length
+        });
+      }
+    }
+  }
+
   /**
    * Augment the basic Item data model with additional dynamic data.
    */
@@ -191,7 +203,7 @@ export class SdmItem extends Item {
     const skillRank = this.system?.skill?.rank;
 
     if (skillMod === 0) return this.name;
-    const allMods =  {...CONFIG.SDM.skillMod, ...CONFIG.SDM.extraSkillMod };
+    const allMods = { ...CONFIG.SDM.skillMod, ...CONFIG.SDM.extraSkillMod };
     const skillModLabel = $l10n(allMods[skillRank]);
     const title = `${$l10n('SDM.SkillMod')}: +${skillMod} ${skillModLabel}`;
 
