@@ -2,11 +2,11 @@
   "id": "sdm",
   "title": "Synthetic Dream Machine",
   "description": "The SDM system for FoundryVTT!",
-  "version": "0.1.22",
+  "version": "0.1.25",
   "url": "https://github.com/luizrcb/foundryvtt-sdm",
   "bugs": "https://github.com/luizrcb/foundryvtt-sdm/issues",
   "manifest": "https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/main/system.json",
-  "download": "https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.1.22/sdm-0.1.22.zip",
+  "download": "https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.1.25/sdm-0.1.25.zip",
   "compatibility": {
     "minimum": "13",
     "verified": "13.347"
@@ -15,8 +15,8 @@
     {
       "name": "Luiz Bertoni",
       "discord": "nightlybuild_",
-      "url": "https://github.com/luizrcb",
-      "email": "luizrcb@gmail.com"
+      "email": "luizrcb@gmail.com",
+      "url": "https://github.com/luizrcb"
     }
   ],
   "documentTypes": {

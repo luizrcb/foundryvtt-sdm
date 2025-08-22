@@ -51,7 +51,7 @@
     {{#if (ne item.system.size.unit 'cash')}}
       <div class="resource">
         <label class='resource-label'>{{localize 'SDM.ItemGearType'}}</label>
-        <select name='system.type' class="resource-content">
+        <select id='gearType' name='system.type' class="resource-content">
           {{selectOptions config.gearType localize=true selected=system.type sort=true blank='TYPE.Gear'}}
         </select>
       </div>
@@ -163,45 +163,7 @@
         <input type='text' name='system.max_powers' value='{{system.max_powers}}' data-dtype='Number' />
       </div>
       <div class="resource"></div>
-      <div class="resource grid-span-3">
-        <ol class='items-list power-album'>
-          <li class='item flexrow items-header'>
-            <div class='item-name flex-between'>
-              <div class="rollable power-prev" data-action="prevPower" {{#unless hasPrevious}}disabled{{/unless}}>
-                <i class="fa-solid fa-chevron-left"></i>
-              </div>
-              <div class="rollable power-counter">
-               {{ifThen (gt powerCount 0) (addOne currentPowerIndex) powerCount}} / {{powerCount}}
-              </div>
-              <div class="rollable power-next"  data-action="nextPower" {{#unless hasNext}}disabled{{/unless}}>
-                <i class="fa-solid fa-chevron-right"></i>
-              </div>
-            </div>
-            <div class='item-formula flexrow'>
-            </div>
-            <div class='item-controls'>
-
-              {{#if @root.editable}}
-              <a
-                class='item-control item-create'
-                data-tooltip="{{localize 'SDM.DOCUMENT.Create' type=(localize 'TYPES.Item.power')}}"
-                data-action='addPower'
-                data-container='{{item.uuid}}'
-              >
-                <i class='fa-solid fa-plus'></i>
-                {{localize 'SDM.DOCUMENT.New' type=(localize 'TYPES.Item.power')}}
-              </a>
-              {{/if}}
-            </div>
-          </li>
-          {{> ($$ "item/power_album")
-            abilities=@root.abilities
-            index=currentPowerIndex
-            enrichedPowers=@root.enrichedPowers
-            powers=@root.powers}}
-        </ol>
-        </div>
-        {{/if}}
+      {{/if}}
       {{/if}}
     </div>
 </div>
