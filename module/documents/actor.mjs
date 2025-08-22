@@ -235,7 +235,6 @@ export class SdmActor extends Actor {
     const bonusDefense = data.defense_bonus || 0;
     const mentalDefenseBonus = data.mental_defense_bonus || 0;
     const socialDefenseBonus = data.social_defense_bonus || 0;
-
     // 1. Calcular valores derivados
     const life = data.life;
     life.max = life.base + life.bonus - life.imbued;

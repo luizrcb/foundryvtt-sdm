@@ -3,6 +3,7 @@
 .nova/
 .vs/
 .vscode/
+!.vscode/i18n-ally-custom-framework.yml
 *.code-workspace
 *.iml
 *.swp

@@ -47,6 +47,10 @@ archive.glob('**/*', {
     'src/**',
     'utils/**',
     'version.txt',
+    'tools/**',
+    '.vscode/**',
+    'foundry-config-example.yaml',
+    'jsconfig.json',
   ]
 });
 
