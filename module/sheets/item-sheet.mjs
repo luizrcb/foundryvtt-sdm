@@ -736,7 +736,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     const droppedItem = await Item.implementation.fromDropData(data);
 
     if (
-      this.item.system.type !== GearType.POWER_ALBUM &&
+      this.item.system.type !== GearType.POWER_ALBUM ||
       droppedItem.system.type !== GearType.POWER
     ) {
       return false;
