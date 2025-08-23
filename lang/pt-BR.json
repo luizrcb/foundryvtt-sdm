@@ -346,6 +346,8 @@
   "SDM.SettingsLevelUpSoundFxHint": "Muda o efeito sonoro reproduzido ao subir de nível",
   "SDM.SettingsNPCInitiativeFormula": "Rolagem de Iniciativa para NPCs",
   "SDM.SettingsNPCInitiativeFormulaHint": "Rolagem padrão de Initiativa para NPCs",
+  "SDM.SettingsReverseShiftKey": "Tecla Shift reversa",
+  "SDM.SettingsReverseShiftKeyHint": "Reverte o funcionamento da tecla Shift em botões de rolagem.\n Marcar esta opção exigirá Shift+click para abrir diálogos de rolagem personalizados",
   "SDM.SettingsSavingThrowBaseRollFormula": "Fórmula base para Salvaguardas",
   "SDM.SettingsSavingThrowBaseRollFormulaHint": "Fórmula padrão para rolagens de Salvaguarda",
   "SDM.SettingsShouldPlayLevelUpSoundFx": "Tocar efeito sonoro ao subir de nível",
