@@ -8,7 +8,7 @@ export const NPC_DEFAULT_INITIATIVE = '2d6 + @bonus';
 export const NPC_DEFAULT_MORALE_FORMULA = '2d6';
 export const SAVING_THROW_BASE_FORMULA = '1d20x';
 export const DEFAULT_LEVEL_UP_SOUND =
-  'systems/sdm/assets/audio/sounds_effects/single_church_bell.mp3';
+  'systems/sdm/assets/audio/sound_effects/single_church_bell.mp3';
 export const DEFAULT_CURRENCY_IMG = 'icons/commodities/currency/coins-stitched-pouch-brown.webp';
 export const DEFAULT_MAX_POWERS = 3;
 
