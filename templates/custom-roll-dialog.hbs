@@ -38,7 +38,7 @@
       <label for="modifier">{{localize 'SDM.RollModifier' }}</label>
       <input id="modifier" type="text" name="modifier" value="" />
     </div>
-    {{#if (eq type 'damage')}}
+    {{#if (or (eq type 'damage') (eq type 'power') (eq type 'power_album'))}}
     <div class="form-group mt-10">
       <label for="multiplier">{{localize 'SDM.RollMultiplier'}}</label>
       <select name="multiplier" id="multiplier">

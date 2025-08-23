@@ -1,12 +1,12 @@
 {
   "id": "sdm",
   "title": "Synthetic Dream Machine",
-  "description": "The SDM system for FoundryVTT!",
-  "version": "0.1.26",
+  "description": "An unofficial system for playing Ultraviolet Grasslands (UVG) and Our Golden Age (OGA) using the Synthetic Dream Machine (SDM) RPG system.",
+  "version": "0.1.27",
   "url": "https://github.com/luizrcb/foundryvtt-sdm",
   "bugs": "https://github.com/luizrcb/foundryvtt-sdm/issues",
   "manifest": "https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/main/system.json",
-  "download": "https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.1.26/sdm-0.1.26.zip",
+  "download": "https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.1.27/sdm-0.1.27.zip",
   "compatibility": {
     "minimum": "13",
     "verified": "13.347"
@@ -60,6 +60,7 @@
   },
   "license": "LICENSE.txt",
   "readme": "README.md",
+  "changelog": "CHANGELOG.md",
   "media": [
     {
       "type": "setup",
