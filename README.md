@@ -4,11 +4,11 @@
 
 ![GitHub Release Date](https://img.shields.io/github/release-date/luizrcb/foundryvtt-sdm?color=blue) [![GitHub commits](https://img.shields.io/github/commits-since/luizrcb/foundryvtt-sdm/latest)](https://github.com/luizrcb/foundryvtt-sdm/commits) ![GitHub contributors](https://img.shields.io/github/contributors/luizrcb/foundryvtt-sdm) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/luizrcb/foundryvtt-sdm/issues)
 
-![GitHub downloads](https://img.shields.io/github/downloads/luizrcb/foundryvtt-sdm/total?label=Downloads) ![GitHub downloads Latest](https://img.shields.io/github/downloads/luizrcb/foundryvtt-sdm/latest/total?label=Downloads%20Latest%20Release)
+![GitHub downloads](https://img.shields.io/github/downloads/luizrcb/foundryvtt-sdm/total?label=Downloads) ![GitHub downloads Latest](https://img.shields.io/github/downloads/luizrcb/foundryvtt-sdm/latest/total?label=Downloads%20Latest%20Release) [![Report Bugs](https://img.shields.io/badge/Report%20Bugs%20on%20GitHub-2dba4e?logo=GitHub&amp;logoColor=white)](https://github.com/luizrcb/foundryvtt-sdm/issues)
 
 # Synthetic Dream Machine for Foundry VTT
 
-An unoffical, community-supported system for playing [Synthetic Dream Machine](https://www.wizardthieffighter.com/synthetic-dream-machine/) on [Foundry VTT](http://foundryvtt.com/).
+An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG) and Our Golden Age (OGA) using the [Synthetic Dream Machine](https://www.wizardthieffighter.com/synthetic-dream-machine/) RPG rules on [Foundry VTT](http://foundryvtt.com/).
 
 *foundryvtt-sdm* is an independent production by community contributors, and is not affiliated with Luka Rejec or WTF Studio. It is published under the [Synthetic Dream Machine Third Party License](https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/main/SDM%203RD%20PARTY%20LICENSE%202.0.txt).
 
@@ -16,6 +16,62 @@ An unoffical, community-supported system for playing [Synthetic Dream Machine](h
 
 - Synthetic Dream Machine (SDM), Ultraviolet Grasslands (UVG), Our Golden Age (OGA), and the Vastlands Guidebook (VLG) are copyright Luka Rejec.
 - Icons by https://game-icons.net/ under [Creative Commons 3.0](https://creativecommons.org/licenses/by/3.0/).
+
+## System Features
+
+### Actor Types
+
+- Character
+- NPC
+
+### Item Types
+
+- Item
+  - Armor
+  - Gear
+  - Power
+  - Power Album
+  - Ward
+  - Weapon
+- Trait
+  - Power
+  - Skill
+  - Trait
+- Burden
+
+### Features
+
+- Fully automated character inventory slots (each burden imposes a -1 to all rolls except hero dice rolls).
+- Hovering over items in the inventory displays their key information (damage, range, power cost, etc.).
+- Easy item transfer between actors.
+- Character Sheet (Edit Mode / Play Mode) for configuring attacks, power costs, and full ability values.
+- Each attack type (melee, ranged, fantascience, and oldtech) can be configured with a preferred ability and skill.
+- Characters can spend hero dice to modify rolls or regain life (players must configure their main character in the User Configuration menu). This can cause dice to explode.
+- Support for group initiative rolls (GM Macro).
+- Shift+click shortcut to skip opening custom roll dialogs.
+- Highly configurable core game values (base defenses, item and trait slots, etc.).
+- Customizable initiative rolls in NPC sheets.
+- Descriptive results for saving throws, reactions, morale (NPC), and targeted attack rolls.
+- Extensive bonus options to simulate backpacks, blessings, curses, injuries, trait effects (see the Active Effects Changes tab for the full list).
+- GM utility macros.
+- Drag and drop a power into a power album to easily copy it to the album.
+- Support for mental and social attacks (and defenses) as described in the Vastlands Guidebook (VLG).
+- Full localization for Brazilian Portuguese (pt-BR).
+- Special roll results for magic numbers (1 = critical failure, 13 = only one ammo or other resource left, 20 = critical success).
+- Right-click roll results in the chat to open `Apply as Damage` and `Apply as Healing` menu options. This will be applied to all selected tokens.
+
+- The following compendiums contain macros and roll tables:
+  - SDM Macros (GM Macros):
+    - Give (or take) cash.
+    - Give (or take) hero dice.
+    - Give XP.
+    - Group Initiative (select all tokens and use the macro, no need to create the encounter). Initiative will be grouped by token disposition (friendly, neutral, hostile, secret).
+    - Escalator Die (UVG 1ed legacy feature). The escalator die value will be added to ability, attack, weapon, power, and power album roll results.
+  - SDM Player Macros:
+    - Generate Ability Scores (method described in the Vastlands Guidebook (VLG): rolls 1d100 for every ability score and displays the results in chat).
+  - Rolltables:
+    - Ability Scores (preferred method for ability score generation). Roll d100 table to generate ability scores, then assign unlabeled scores.
+    - Referee Title (a fun d10 table to choose referee title and referee session power).
 
 ## Installation Instructions
 
