@@ -17,6 +17,15 @@ export function registerSystemSettings() {
   /*  System settings registration                */
   /* -------------------------------------------- */
 
+    game.settings.register('sdm', 'reverseShiftKey', {
+    name: 'SDM.SettingsReverseShiftKey',
+    hint: 'SDM.SettingsReverseShiftKeyHint',
+    scope: 'client',
+    config: true,
+    type: Boolean,
+    default: false
+  });
+
   game.settings.register('sdm', 'currencyName', {
     name: 'SDM.SettingsCurrencyName',
     hint: 'SDM.SettingsCurrencyNameHint',

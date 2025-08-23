@@ -344,6 +344,8 @@
   "SDM.SettingsLevelUpSoundFxHint": "Changes the sound effect played on character level up",
   "SDM.SettingsNPCInitiativeFormula": "NPC Initiative Formula",
   "SDM.SettingsNPCInitiativeFormulaHint": "Default initiative formula for NPCs",
+  "SDM.SettingsReverseShiftKey": "Reverse Shift Key",
+  "SDM.SettingsReverseShiftKeyHint": "Reverse Shift+click behaviour in roll buttons.\n Checking this will require shift+click to open custom roll dialogs",
   "SDM.SettingsSavingThrowBaseRollFormula": "Base saving throw roll formula",
   "SDM.SettingsSavingThrowBaseRollFormulaHint": "Base roll formula for all saving throw rolls",
   "SDM.SettingsShouldPlayLevelUpSoundFx": "Play Level Up Sound Effect",

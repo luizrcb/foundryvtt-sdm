@@ -1003,7 +1003,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     event.stopPropagation(); // Don't trigger other events
     if (event.detail > 1) return; // Ignore repeated clicks
 
-    const isShift = !!event.shiftKey;
+    const reverseShift = game.settings.get('sdm', 'reverseShiftKey');
+    const isShift = reverseShift !== !!event.shiftKey;
 
     // Get common data attributes
     const dataset = target.dataset;
@@ -1098,7 +1099,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     event.preventDefault();
     event.stopPropagation();
     if (event.detail > 1) return;
-    const isShift = !!event.shiftKey;
+    const reverseShift = game.settings.get('sdm', 'reverseShiftKey');
+    const isShift = reverseShift !== !!event.shiftKey;
 
     const damage = this.actor.system.damage || '1d4';
 
@@ -1115,7 +1117,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     event.preventDefault();
     event.stopPropagation();
     if (event.detail > 1) return;
-    const isShift = !!event.shiftKey;
+    const reverseShift = game.settings.get('sdm', 'reverseShiftKey');
+    const isShift = reverseShift !== !!event.shiftKey;
 
     let data = { modifier: '' };
 
@@ -1165,7 +1168,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     if (event.detail > 1) return;
 
-    const isShift = !!event.shiftKey;
+    const reverseShift = game.settings.get('sdm', 'reverseShiftKey');
+    const isShift = reverseShift !== !!event.shiftKey;
     let data = { modifier: '', charismaOperator: 1 };
 
     if (!isShift) {
@@ -1245,7 +1249,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const allSaveBonus = this.actor.system.all_save_bonus || 0;
     const savingThrowSum = finalAbility + ward + saveBonus + allSaveBonus - burdenPenalty;
     const finalSavingThrowBonus = Math.min(savingThrowSum, MAX_MODIFIER);
-    const isShift = !!event.shiftKey;
+    const reverseShift = game.settings.get('sdm', 'reverseShiftKey');
+    const isShift = reverseShift !== !!event.shiftKey;
 
     let label = $fmt('SDM.SavingThrowRoll', {
       ability: $l10n(CONFIG.SDM.abilities[ability])
