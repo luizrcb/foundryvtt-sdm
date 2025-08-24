@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.1.28
+
+- Ignore all roll modifiers that are not a valid roll expression
+
 ## v0.1.27
 
 - Updated README
