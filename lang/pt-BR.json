@@ -189,7 +189,6 @@
   "SDM.FrequencyWeek": "Semana",
   "SDM.GearMaxPowers": "Máximo de Poderes",
   "SDM.HealingHouseRule": "Regra de Cura",
-  "SDM.HealingHouseRuleHint": "",
   "SDM.HeroDice": "dados heróicos",
   "SDM.HeroDiceSpend": "{actor} gastou {quantity} {diceLabel}",
   "SDM.HeroDie": "dado heróico",

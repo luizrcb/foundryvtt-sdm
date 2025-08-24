@@ -189,7 +189,6 @@
   "SDM.FrequencyWeek": "Week",
   "SDM.GearMaxPowers": "Max Stored Powers",
   "SDM.HealingHouseRule": "Healing House Rule",
-  "SDM.HealingHouseRuleHint": "",
   "SDM.HeroDice": "hero dice",
   "SDM.HeroDiceSpend": "{actor} spent {quantity} {diceLabel}",
   "SDM.HeroDie": "hero die",

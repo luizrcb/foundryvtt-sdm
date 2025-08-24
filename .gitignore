@@ -3,6 +3,7 @@
 .nova/
 .vs/
 .vscode/
+!.vscode/i18n-ally-custom-framework.yml
 *.code-workspace
 *.iml
 *.swp
@@ -18,3 +19,6 @@ node_modules/
 # Foundry DB Files
 packs/*
 !packs/_source/
+
+foundry-config.yaml
+foundry

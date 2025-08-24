@@ -10,7 +10,9 @@
     "clean:packs": "node utils/cleanPacks.js",
     "pack": "node utils/pack.js",
     "unpack": "node utils/unpack.js",
-    "repack": "npm run clean:packs && npm run pack"
+    "repack": "npm run clean:packs && npm run pack",
+    "createSymlinks": "node ./tools/create-symlinks.mjs",
+    "postinstall": "npm run createSymlinks"
   },
   "browserslist": [
     "last 3 versions"
@@ -19,6 +21,7 @@
   "private": true,
   "devDependencies": {
     "archiver": "^7.0.1",
+    "js-yaml": "^4.1.0",
     "prettier": "^3.6.2",
     "prettier-plugin-handlebars": "^0.0.1",
     "sass": "^1.53.0"
