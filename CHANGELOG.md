@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.1.29
+
+- Fix players not been able to change player xp and pc xp in their character sheets
+- Allow GMs to drag and reposition the escalator die display
+
 ## v0.1.28
 
 - Ignore all roll modifiers that are not a valid roll expression
