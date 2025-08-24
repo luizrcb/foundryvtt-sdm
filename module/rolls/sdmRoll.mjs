@@ -26,7 +26,7 @@ export default class SDMRoll {
     this.formula = formula;
     this.ability = ability;
     this.skill = skill;
-    this.modifier = modifier;
+    this.modifier = foundry.dice.Roll.validate(modifier) ? modifier : '';
     this.multiplier = multiplier;
     this.explodingDice = explodingDice;
     this.versatile = versatile;

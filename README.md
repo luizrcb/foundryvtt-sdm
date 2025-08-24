@@ -19,10 +19,11 @@ An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG
 ## Licenses
 
 - **Content:** [Synthetic Dream Machine Third Party License](https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/main/SDM%203RD%20PARTY%20LICENSE%202.0.txt)
-- **Source Code:** All source code _(javascript, hbs, scss, as well as system templates and the like) are licensed under the [MIT License](https://en.wikipedia.org/wiki/MIT_License).
+- **Source Code:** All source code files (javascript, hbs, scss, css) are licensed under the [MIT License](https://en.wikipedia.org/wiki/MIT_License).
 - **Foundry VTT:** The project is created following the Foundry VTT [Limited License Agreement for module development](https://foundryvtt.com/article/license/).
 - **Icons:** Icons in the `/assets/icons/` folder are courtesy of [Game-icons.net](https://game-icons.net/) and licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).
-- **Audio:** Audio file in `/assets/audio/sound_effects` folder are courtesy of [Pixabay](https://pixabay.com) and licensed under [Content License - Pixabay](https://pixabay.com/service/license-summary/)
+- **Audio:** Audio files in the `/assets/audio/sound_effects` folder are courtesy of [Pixabay](https://pixabay.com) and licensed under [Content License - Pixabay](https://pixabay.com/service/license-summary/)
+- **Fonts:** The fonts used in this project carry their own licenses.
 
 ## System Features
 

@@ -331,10 +331,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       selectedAbility = selectedAbilityModal;
     }
 
-    if (modifier && !foundry.dice.Roll.validate(modifier)) {
-      ui.notifications.error($l10n('SDM.ErrorInvalidModifier'));
-      return;
-    }
     const heroicDice = parseInt(heroicQty || 0, 10);
     const currentHeroDice = this.actor.system.hero_dice?.value ?? 0;
 
@@ -349,13 +345,15 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       formula = powerOptions[powerIndex].formula;
     }
 
+    const modPart = foundry.dice.Roll.validate(modifier) ? `+${modifier}` : '';
+
     const rollData = {
       type,
       actor: this.actor,
       from: title,
       ability: selectedAbility,
       mode: rollMode,
-      modifier: dmgOrAttackBonus ? `${modifier}+${dmgOrAttackBonus}` : modifier,
+      modifier: dmgOrAttackBonus ? `${modPart}+${dmgOrAttackBonus}` : modPart,
       multiplier,
       explodingDice: shouldExplode,
       versatile: !!rollOptions.versatile,
@@ -1147,9 +1145,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     }
 
     const { modifier = '' } = data;
-
+    const modPart = foundry.dice.Roll.validate(modifier) ? `+${modifier}` : '';
     const basMoraleFormula = game.settings.get('sdm', 'baseMoraleFormula') || '2d6';
-    const formula = `${basMoraleFormula} ${modifier ? `+${modifier}` : ''}`;
+    const formula = `${basMoraleFormula} ${modPart}`;
     const sanitizedFormula = sanitizeExpression(formula);
     const targetNumber = this.actor.system.morale || 2;
 
@@ -1220,7 +1218,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const burdenPart = burdenPenalty > 0 ? -burdenPenalty : '';
     const chaPart = `${charismaOperator > 0 ? '+' : '-'}${chaMod}`;
     const bonusPart = reactionBonus ? ` +${reactionBonus}` : '';
-    const modPart = modifier ? ` +${modifier}` : '';
+    const modPart = foundry.dice.Roll.validate(modifier) ? ` +${modifier}` : '';
 
     const formula = `${baseFormula}${chaPart}${bonusPart}${modPart}${burdenPart}`;
     const sanitizedFormula = sanitizeExpression(formula);
@@ -1309,12 +1307,12 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     }
 
     const modifier = rollOptions?.modifier;
-
+    const modPart = foundry.dice.Roll.validate(modifier) ? `+${modifier}` : '';
     const baseRollFormula =
       game.settings.get('sdm', 'savingThrowBaseRollFormula') || SAVING_THROW_BASE_FORMULA;
     let formula = `${baseRollFormula} ${
       finalSavingThrowBonus >= 0 ? `+` : ``
-    }${finalSavingThrowBonus} ${modifier ? `+${modifier}` : ''}`;
+    }${finalSavingThrowBonus} ${modPart}`;
     const targetNumber = this.actor.system.save_target;
     formula = sanitizeExpression(formula);
     // Create and evaluate the roll

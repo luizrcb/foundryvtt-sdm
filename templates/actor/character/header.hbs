@@ -99,7 +99,7 @@
                 {{localize 'SDM.FieldPlayerXP'}}
               </label>
               <div class='resource-content flexrow flex-center flex-between'>
-                {{#if isGM}}
+                {{#if (or isEditMode (not @root.editable))}}
                 <input type='text' name='system.player_experience' value='{{system.player_experience}}' />
                 {{else}}
                 <input type='text' name='system.player_experience' value='{{system.player_experience}}' disabled />
@@ -111,7 +111,7 @@
                 {{localize 'SDM.FieldCharXP'}}
               </label>
               <div class='resource-content flexrow flex-center flex-between'>
-                {{#if isGM}}
+                {{#if (or isEditMode (not @root.editable))}}
                 <input type='text' name='system.experience' value='{{system.experience}}' />
                 {{else}}
                 <input type='text' name='system.experience' value='{{system.experience}}' disabled />

@@ -13,7 +13,8 @@ import {
   configureUseHeroDiceButton,
   createEscalatorDieDisplay,
   DEFAULT_MAX_POWERS,
-  registerSystemSettings
+  registerSystemSettings,
+  setupEscalatorDiePositionBroadcast
 } from './settings.mjs';
 import { SdmActorSheet } from './sheets/actor-sheet.mjs';
 import { SdmCaravanSheet } from './sheets/caravan-sheet.mjs';
@@ -249,6 +250,8 @@ Hooks.once('init', function () {
   CONFIG.Combatant.documentClass = SdmCombatant;
 
   setupItemTransferSocket();
+
+  setupEscalatorDiePositionBroadcast();
 
   //Preload Handlebars templates.
   return preloadHandlebarsTemplates();

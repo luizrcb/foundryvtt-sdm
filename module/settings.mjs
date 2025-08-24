@@ -17,7 +17,7 @@ export function registerSystemSettings() {
   /*  System settings registration                */
   /* -------------------------------------------- */
 
-    game.settings.register('sdm', 'reverseShiftKey', {
+  game.settings.register('sdm', 'reverseShiftKey', {
     name: 'SDM.SettingsReverseShiftKey',
     hint: 'SDM.SettingsReverseShiftKeyHint',
     scope: 'client',
@@ -121,13 +121,22 @@ export function registerSystemSettings() {
   });
 
   game.settings.register('sdm', 'escalatorDie', {
-    name: 'SDM.SettingsEscalatorDie',
-    hint: 'SDM.SettingsEscalatorDieHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
     config: false, // Show in configuration view
     type: Number, // Data type: String, Number, Boolean, etc
     default: 0,
+    onChange: value => {
+      // This will now be called automatically
+      updateEscalatorDisplay();
+    }
+  });
+
+  game.settings.register('sdm', 'escalatorPosition', {
+    scope: 'world',
+    config: false,
+    type: Object,
+    default: { top: '20px', left: '50%' },
     onChange: value => {
       // This will now be called automatically
       updateEscalatorDisplay();
@@ -318,18 +327,24 @@ export function updateEscalatorDisplay() {
 }
 
 export function createEscalatorDieDisplay() {
+  const savedPosition = game.settings.get('sdm', 'escalatorPosition') || {
+    top: '20px',
+    left: '50%'
+  };
+
   const escalatorContainer = document.createElement('div');
   escalatorContainer.id = 'escalator-die';
   escalatorContainer.style.cssText = `
     position: fixed;
-    top: 20px;
-    left: 50%;
+    top: ${savedPosition.top};
+    left: ${savedPosition.left};
     transform: translateX(-50%);
     z-index: 100;
     display: none;
     flex-direction: column;
     align-items: center;
     gap: 5px;
+    cursor: grab;
   `;
 
   // Create header element
@@ -344,6 +359,7 @@ export function createEscalatorDieDisplay() {
     background: rgba(0,0,0,0.7);
     padding: 2px 8px;
     border-radius: 3px;
+    margin-bottom: 5px;
     text-align: center;
   `;
 
@@ -387,7 +403,71 @@ export function createEscalatorDieDisplay() {
   imageContainer.append(diceImage, valueDisplay);
   escalatorContainer.append(headerText, imageContainer);
   document.body.appendChild(escalatorContainer);
+
+  if (game.user.isGM) {
+    makeDraggable(escalatorContainer, headerText);
+  }
+
   updateEscalatorDisplay();
+}
+
+function makeDraggable(element, handle) {
+  let isDragging = false;
+  let offsetX = 0;
+  let offsetY = 0;
+
+  element.addEventListener('mousedown', event => {
+    isDragging = true;
+    offsetX = event.clientX - element.offsetLeft;
+    offsetY = event.clientY - element.offsetTop;
+    element.style.cursor = 'grabbing';
+    document.body.style.userSelect = 'none'; // prevent text selection
+  });
+
+  document.addEventListener('mousemove', event => {
+    if (!isDragging) return;
+    element.style.left = event.clientX - offsetX + 'px';
+    element.style.top = event.clientY - offsetY + 'px';
+    element.style.right = 'auto';
+    element.style.bottom = 'auto';
+    element.style.transform = 'none'; // disable centering once user moves it
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (isDragging) {
+      isDragging = false;
+      element.style.cursor = 'grab';
+      document.body.style.userSelect = '';
+
+      // Save new position in settings
+      game.settings.set('sdm', 'escalatorPosition', {
+        left: element.style.left,
+        top: element.style.top
+      });
+
+      // Broadcast to other clients so they update immediately
+      game.socket.emit("system.sdm", {
+        type: "updateEscalatorPosition",
+        position: {
+          left: element.style.left,
+          top: element.style.top,
+        },
+      });
+    }
+  });
+}
+
+export function setupEscalatorDiePositionBroadcast() {
+  game.socket.on("system.sdm", (data) => {
+    if (data.type === "updateEscalatorPosition" && !game.user.isGM) {
+      const container = document.getElementById("escalator-die");
+      if (container) {
+        container.style.top = data.position.top;
+        container.style.left = data.position.left;
+        container.style.transform = "none";
+      }
+    }
+  });
 }
 
 export function configureUseHeroDiceButton(message, html, data) {
