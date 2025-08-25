@@ -127,12 +127,13 @@ jobs:
               "lang/",
               "module/",
               "packs/",
+              "!packs/_source/",
               "templates/",
               "CHANGELOG.md",
               "LICENSE",
               "README.md",
               "system.json",
-              "SDM 3RD PARTY LICENSE 2.0.txt"
+              "SDM-3RD-PARTY-LICENSE-2.0.txt"
             ]
           };
 

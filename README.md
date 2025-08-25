@@ -10,7 +10,7 @@
 
 An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG) and Our Golden Age (OGA) using the [Synthetic Dream Machine](https://www.wizardthieffighter.com/synthetic-dream-machine/) RPG rules on [Foundry VTT](http://foundryvtt.com/).
 
-*foundryvtt-sdm* is an independent production by community contributors, and is not affiliated with Luka Rejec or WTF Studio. It is published under the [Synthetic Dream Machine Third Party License](https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/main/SDM%203RD%20PARTY%20LICENSE%202.0.txt).
+*foundryvtt-sdm* is an independent production by community contributors, and is not affiliated with Luka Rejec or WTF Studio. It is published under the [Synthetic Dream Machine Third Party License](https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/main/SDM-3RD-PARTY-LICENSE-2.0.txt).
 
 ## Credits
 
@@ -18,7 +18,7 @@ An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG
 
 ## Licenses
 
-- **Content:** [Synthetic Dream Machine Third Party License](https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/main/SDM%203RD%20PARTY%20LICENSE%202.0.txt)
+- **Content:** [Synthetic Dream Machine Third Party License](https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/main/SDM-3RD-PARTY-LICENSE-2.0.txt)
 - **Source Code:** All source code files (javascript, hbs, scss, css) are licensed under the [MIT License](https://en.wikipedia.org/wiki/MIT_License).
 - **Foundry VTT:** The project is created following the Foundry VTT [Limited License Agreement for module development](https://foundryvtt.com/article/license/).
 - **Icons:** Icons in the `/assets/icons/` folder are courtesy of [Game-icons.net](https://game-icons.net/) and licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).
