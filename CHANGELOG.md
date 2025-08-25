@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.1.31
+
+- Fix issue when updating base abilities to a value lower than current + bonus
+
+- Fix bug that incorrectly added ability bonuses to defenses
+
 ## v0.1.30
 
 - Remove hardcoded roll bonus and use a config value for traits when used as skills
