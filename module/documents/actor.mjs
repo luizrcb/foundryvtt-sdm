@@ -101,6 +101,19 @@ export class SdmActor extends Actor {
             [`system.abilities.${abilityKey}.current`]: abilityData.current
           });
         }
+
+        if (abilityData.base !== undefined) {
+          const updateData = {
+            [`system.abilities.${abilityKey}.base`]: abilityData.base,
+          };
+
+          if ((abilityData.base + systemAbility.bonus) < systemAbility.current) {
+            abilityData.current = abilityData.base + systemAbility.bonus;
+            updateData[`system.abilities.${abilityKey}.current`] = abilityData.current;
+          }
+
+          await this.update(updateData);
+        }
       }
     }
   }
@@ -249,11 +262,11 @@ export class SdmActor extends Actor {
     const charisma = data.abilities['cha'];
 
     const calculatedDefense =
-      baseDefense + agility.current + agility.bonus + data.armor + bonusDefense;
+      baseDefense + agility.current + data.armor + bonusDefense;
     const calculatedMentalDefense =
-      baseMentalDefense + thought.current + thought.bonus + data.ward + mentalDefenseBonus;
+      baseMentalDefense + thought.current + data.ward + mentalDefenseBonus;
     const calculatedSocialDefense =
-      baseSocialDefense + charisma.current + charisma.bonus + data.prestige + socialDefenseBonus;
+      baseSocialDefense + charisma.current + data.prestige + socialDefenseBonus;
 
     data.defense = Math.min(calculatedDefense, MAX_ATTRIBUTE_VALUE);
     data.mental_defense = Math.min(calculatedMentalDefense, MAX_ATTRIBUTE_VALUE);

@@ -1,6 +1,6 @@
 {
   "name": "sdm",
-  "version": "0.1.30",
+  "version": "0.1.31",
   "description": "CSS compiler for the Sdm system",
   "scripts": {
     "build": "sass src/scss/sdm.scss css/sdm.css --style=expanded --no-source-map",
@@ -12,7 +12,7 @@
     "local:unpack": "node utils/unpack.js",
     "local:repack": "npm run local:clean && npm run local:pack",
     "createSymlinks": "node ./tools/create-symlinks.mjs",
-    "postinstall": "npm run createSymlinks",
+    "postinstall": "npm run build && npm run createSymlinks",
     "pullJSONtoLDB": "node ./tools/pullJSONtoLDB.mjs",
     "pushLDBtoJSON": "node ./tools/pushLDBtoJSON.mjs",
     "unpack": "npm run pushLDBtoJSON",
