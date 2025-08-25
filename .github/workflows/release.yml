@@ -150,7 +150,11 @@ jobs:
             ...(manifest.includes ?? [])
           ];
 
-          includes = includes.filter(i => !i.startsWith("packs/_source/") && i !== "packs/_source/");
+          includes = includes.filter(i =>
+            typeof i === "string" &&
+            !i.startsWith("packs/_source/") &&
+            i !== "packs/_source/"
+          );
 
           return includes.join(" ");
 
