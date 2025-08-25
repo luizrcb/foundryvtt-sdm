@@ -127,7 +127,6 @@ jobs:
               "lang/",
               "module/",
               "packs/",
-              "!packs/_source/",
               "templates/",
               "CHANGELOG.md",
               "LICENSE",
@@ -142,7 +141,7 @@ jobs:
           if (process.env.PACKS) manifest.packs = JSON.parse(process.env.PACKS);
           if (process.env.STYLES) manifest.styles = JSON.parse(process.env.STYLES);
 
-          const includes = [
+          let includes = [
             "${{ env.PACKAGE_TYPE }}.json",
             ...(manifest.esmodules ?? []),
             ...(manifest.esmodules?.map(s => `${s}.map`) ?? []),
@@ -150,6 +149,8 @@ jobs:
             ...(manifest.languages?.map(l => l.path) ?? []),
             ...(manifest.includes ?? [])
           ];
+
+          includes = includes.filter(i => !i.startsWith("packs/_source/") && i !== "packs/_source/");
 
           return includes.join(" ");
 
@@ -189,7 +190,8 @@ jobs:
     # Publish update to Foundry Admin interface via API
     - name: Publish Module to FoundryVTT Website
       id: publish-to-foundry-website
-      uses: cs96and/FoundryVTT-release-package@v1.0.1
+      uses: cs96and/FoundryVTT-release-package@v1
       with:
         package-token: ${{ secrets.PACKAGE_TOKEN }}
         manifest-url: ${{ env.RELEASE_INSTALL_URL }}
+        notes-url: https://github.com/${{github.repository}}/releases/tag/${{env.TAG_NAME}}
