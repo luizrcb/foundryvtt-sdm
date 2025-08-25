@@ -66,7 +66,7 @@ jobs:
         PACKAGE_DOWNLOAD: ${{ steps.manifest.outputs.download }}
       run: |
         # Validate that the tag being released matches the package version.
-        if [[ ! $TAG_NAME == v-$PACKAGE_VERSION ]]; then
+        if [[ ! $TAG_NAME == v$PACKAGE_VERSION ]]; then
           echo "The $PACKAGE_TYPE.json version does not match tag name."
           echo "$PACKAGE_TYPE.json: $PACKAGE_VERSION"
           echo "tag name: $TAG_NAME"
