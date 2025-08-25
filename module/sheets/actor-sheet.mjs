@@ -146,11 +146,13 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
   getSkillOptions(availableSkills, attack) {
     let options = '';
+    const defaultTraitModifier = game.settings.get('sdm', 'skillModifierStep') || 3;
     const attackData = this.actor.system[attack];
+
     for (const skill of Object.values(availableSkills)) {
       options += `<option value="${skill.id}"${
         skill.id === attackData?.favorite_skill ? 'selected' : ''
-      }>${skill.name} (+${skill.mode || 3})</option>\n`;
+      }>${skill.name} (+${skill.mode || defaultTraitModifier})</option>\n`;
     }
     return options;
   }
