@@ -1,18 +1,23 @@
 {
   "name": "sdm",
-  "version": "0.1.29",
+  "version": "0.1.30",
   "description": "CSS compiler for the Sdm system",
   "scripts": {
     "build": "sass src/scss/sdm.scss css/sdm.css --style=expanded --no-source-map",
     "watch": "sass src/scss/sdm.scss css/sdm.css --style=expanded --source-map --watch",
     "format": "prettier --write \"**/*.{js,mjs,html,hbs,json,css}\"",
     "zip": "node utils/zipBuild.js",
-    "clean:packs": "node utils/cleanPacks.js",
-    "pack": "node utils/pack.js",
-    "unpack": "node utils/unpack.js",
-    "repack": "npm run clean:packs && npm run pack",
+    "local:clean": "node utils/cleanPacks.js",
+    "local:pack": "node utils/pack.js",
+    "local:unpack": "node utils/unpack.js",
+    "local:repack": "npm run local:clean && npm run local:pack",
     "createSymlinks": "node ./tools/create-symlinks.mjs",
-    "postinstall": "npm run createSymlinks"
+    "postinstall": "npm run createSymlinks",
+    "pullJSONtoLDB": "node ./tools/pullJSONtoLDB.mjs",
+    "pushLDBtoJSON": "node ./tools/pushLDBtoJSON.mjs",
+    "unpack": "npm run pushLDBtoJSON",
+    "build:packs": "npm run pullJSONtoLDB",
+    "prepareRelease": "npm run build:packs"
   },
   "browserslist": [
     "last 3 versions"
@@ -20,6 +25,7 @@
   "license": "MIT",
   "private": true,
   "devDependencies": {
+    "@foundryvtt/foundryvtt-cli": "^2.0.0",
     "archiver": "^7.0.1",
     "js-yaml": "^4.1.0",
     "prettier": "^3.6.2",

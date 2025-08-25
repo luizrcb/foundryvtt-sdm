@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.1.30
+
+- Remove hardcoded roll bonus and use a config value for traits when used as skills
+- Add github actions release workflow
+
 ## v0.1.29
 
 - Fix players not been able to change player xp and pc xp in their character sheets
