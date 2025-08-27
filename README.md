@@ -75,6 +75,7 @@ An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG
     - Give XP.
     - Group Initiative (select all tokens and use the macro, no need to create the encounter). Initiative will be grouped by token disposition (friendly, neutral, hostile, secret).
     - Escalator Die (UVG 1ed legacy feature). The escalator die value will be added to ability, attack, weapon, power, and power album roll results.
+    - Generate Random NPCs using tables from the Vastlands Guidebook (VLG)
   - SDM Player Macros:
     - Generate Ability Scores (method described in the Vastlands Guidebook (VLG): rolls 1d100 for every ability score and displays the results in chat).
   - Rolltables:

@@ -4,6 +4,7 @@ import { SdmActor } from './documents/actor.mjs';
 import { SdmCombatant } from './documents/combatant.mjs';
 import { SdmItem } from './documents/item.mjs';
 import { registerHandlebarsHelpers } from './handlebars-helpers.mjs';
+import { createNPC, createNPCByLevel } from './helpers/actorUtils.mjs';
 import { SDM } from './helpers/config.mjs';
 import { ActorType, ItemType } from './helpers/constants.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
@@ -45,7 +46,11 @@ globalThis.sdm = {
   utils: {
     rollItemMacro
   },
-  models
+  models,
+  api: {
+    createNPC,
+    createNPCByLevel,
+  }
 };
 
 Hooks.on('renderChatMessageHTML', (message, html, data) => {

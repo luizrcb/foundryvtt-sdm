@@ -1,9 +1,13 @@
 # CHANGELOG
 
+## v0.1.32
+
+- Add GM macro to generate random NPCs
+- Expose API functions to create random NPCs (game.sdm.api.createNPC and game.sdm.api.createNPCByLevel)
+
 ## v0.1.31
 
 - Fix issue when updating base abilities to a value lower than current + bonus
-
 - Fix bug that incorrectly added ability bonuses to defenses
 
 ## v0.1.30
