@@ -9,7 +9,7 @@ const packs = await fs.readdir("./packs");
 for (const pack of packs) {
   if ((pack === ".gitattributes") || (pack === ".DS_Store")) continue;
   console.log("Unpacking " + pack);
-  const directory = `./src/packs/${pack}`;
+  const directory = `./packs/${pack}`;
   try {
     for (const file of await fs.readdir(directory)) {
       const filePath = path.join(directory, file);
@@ -22,7 +22,7 @@ for (const pack of packs) {
   }
   await extractPack(
     `${SYSTEM_ID}/packs/${pack}`,
-    `${SYSTEM_ID}/packs/_source/${pack}`,
+    `${SYSTEM_ID}/packs-source/${pack}`,
     {
       yaml
     },

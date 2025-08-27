@@ -53,6 +53,7 @@ archive.glob('**/*', {
     'foundry-config.yaml',
     'foundry/**',
     'jsconfig.json',
+    'packs-source',
   ]
 });
 
