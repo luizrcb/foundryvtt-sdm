@@ -145,6 +145,33 @@
     -0.7px 0 0 colors.$c-border;
 }
 
+.sidebar-info {
+  ul.links {
+    gap: 0;
+    margin-top: 6px;
+
+    li:not(:last-child)::after {
+      content: ' • ';
+      margin-inline: 3px;
+      font-weight: bold;
+    }
+  }
+}
+
+.sidebar-info {
+  ul.links {
+    flex: 1;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 0.5rem;
+    text-transform: uppercase;
+    font-size: var(--font-size-11);
+    justify-content: center;
+  }
+}
+
 .system-badge {
   display: flex;
   flex-direction: column;
@@ -225,6 +252,16 @@ input[type='radio']::after {
 @layer window-layer {
   * {
     scrollbar-color: colors.$c-plum transparent;
+  }
+
+  .unlist {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+
+    li {
+      margin: 0;
+    }
   }
 
   .die-label {

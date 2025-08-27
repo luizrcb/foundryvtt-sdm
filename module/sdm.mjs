@@ -384,6 +384,30 @@ function _configureFonts() {
 }
 
 /**
+ * Generate sidebar links.
+ * @returns {HTMLUListElement}
+ * @private
+ */
+function _generateLinks() {
+  const links = document.createElement("ul");
+  links.classList.add("unlist", "links");
+  links.innerHTML = `
+    <li>
+      <a href="https://github.com/luizrcb/foundryvtt-sdm/releases/latest" target="_blank">
+        ${game.i18n.localize("SDM.Notes")}
+      </a>
+    </li>
+    <li>
+      <a href="https://github.com/luizrcb/foundryvtt-sdm/issues" target="_blank">${game.i18n.localize("SDM.Issues")}</a>
+    </li>
+    <li>
+      <a href="https://github.com/luizrcb/foundryvtt-sdm/wiki" target="_blank">${game.i18n.localize("SDM.Wiki")}</a>
+    </li>
+  `;
+  return links;
+}
+
+/**
  * Render a custom entry for game details in the settings sidebar.
  * @param {HTMLElement} html  The settings sidebar HTML.
  */
@@ -400,6 +424,7 @@ function renderSettings(html) {
       <span class="system-info">${sdm.version}</span>
     </div>
   `;
+  section.append(_generateLinks());
   if (pip) section.querySelector('.system-info').insertAdjacentElement('beforeend', pip);
   html.querySelector('.info').insertAdjacentElement('afterend', section);
 }
