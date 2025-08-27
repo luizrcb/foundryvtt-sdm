@@ -17,8 +17,7 @@ node_modules/
 .DS_Store
 
 # Foundry DB Files
-packs/*
-!packs/_source/
+packs/
 
 foundry-config.yaml
 foundry
