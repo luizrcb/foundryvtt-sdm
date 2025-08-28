@@ -5,7 +5,7 @@ const SYSTEM_ID = process.cwd();
 const yaml = false;
 const folders = true;
 
-const packs = await fs.readdir(".packs-source");
+const packs = await fs.readdir("./packs-source");
 for (const pack of packs) {
   if (pack === ".gitattributes") continue;
   console.log("Packing " + pack);
