@@ -2413,18 +2413,18 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.346",
+    "coreVersion": "13.347",
     "systemId": "sdm",
     "systemVersion": "0.1.20",
     "createdTime": 1751505624163,
-    "modifiedTime": 1751542911392,
-    "lastModifiedBy": "ubbQuuuaFUXKToRg"
+    "modifiedTime": 1756406352613,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
   },
   "ownership": {
     "default": 0,
     "ubbQuuuaFUXKToRg": 3
   },
   "_id": "RuTRMlMY9MxfACSQ",
-  "sort": 300000,
+  "sort": 100000,
   "_key": "!tables!RuTRMlMY9MxfACSQ"
 }

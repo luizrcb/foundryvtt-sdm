@@ -1,0 +1,22 @@
+{
+  "type": "Item",
+  "folder": "Wa3pkfQylUdowmdq",
+  "name": "Light Armors",
+  "color": null,
+  "sorting": "m",
+  "_id": "PdJH0bPd8wPV6vye",
+  "description": "",
+  "sort": -300000,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.347",
+    "systemId": "sdm",
+    "systemVersion": "0.1.32",
+    "lastModifiedBy": "0fqTkfNvjooZ2og7",
+    "modifiedTime": 1756407798765
+  },
+  "_key": "!folders!PdJH0bPd8wPV6vye"
+}

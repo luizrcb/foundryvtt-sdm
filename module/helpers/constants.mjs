@@ -4,10 +4,10 @@ export const DocumentType = Object.freeze({
 });
 
 export const RangeOption = Object.freeze({
-  MELEE: 'melee',
+  CLOSE: 'close',
   SHORT: 'short',
-  LONG: 'long',
-  EXTREME: 'extreme'
+  MEDIUM: 'medium',
+  LONG: 'long'
 });
 
 export const SizeUnit = Object.freeze({

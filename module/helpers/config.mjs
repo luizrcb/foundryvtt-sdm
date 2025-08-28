@@ -211,10 +211,10 @@ SDM.burdenType = {
 };
 
 SDM.rangeType = {
-  melee: 'SDM.RangeMelee',
+  close: 'SDM.RangeClose',
   short: 'SDM.RangeShort',
-  long: 'SDM.RangeLong',
-  extreme: 'SDM.RangeExtreme'
+  medium: 'SDM.RangeMedium',
+  long: 'SDM.RangeLong'
 };
 
 SDM.skillMod = {

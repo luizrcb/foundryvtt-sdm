@@ -254,18 +254,18 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.346",
+    "coreVersion": "13.347",
     "systemId": "sdm",
     "systemVersion": "0.1.20",
     "createdTime": 1751542920119,
-    "modifiedTime": 1751542920119,
-    "lastModifiedBy": "ubbQuuuaFUXKToRg"
+    "modifiedTime": 1756406352613,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
   },
   "ownership": {
     "default": 0,
     "ubbQuuuaFUXKToRg": 3
   },
   "_id": "WkD8i2h6iLosOPv0",
-  "sort": 0,
+  "sort": 200000,
   "_key": "!tables!WkD8i2h6iLosOPv0"
 }

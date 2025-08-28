@@ -1,0 +1,23 @@
+{
+  "type": "Item",
+  "folder": null,
+  "name": "Wards",
+  "color": null,
+  "sorting": "m",
+  "_id": "fw4Y6iVN3p5XdRyA",
+  "description": "",
+  "sort": 500000,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.347",
+    "systemId": "sdm",
+    "systemVersion": "0.1.32",
+    "createdTime": 1756338619697,
+    "modifiedTime": 1756414748734,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_key": "!folders!fw4Y6iVN3p5XdRyA"
+}

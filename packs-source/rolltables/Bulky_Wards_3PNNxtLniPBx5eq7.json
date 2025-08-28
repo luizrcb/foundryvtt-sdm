@@ -1,0 +1,180 @@
+{
+  "name": "Bulky Wards",
+  "description": "A random table created from the contents of the Bulky Wards Folder.",
+  "results": [
+    {
+      "name": "Prayer Engine",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.QQYQrTbfjnBDZgpn",
+      "img": "icons/commodities/tech/cog-large-steel-white.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "eLKNV4jMHwv8eMtz",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!3PNNxtLniPBx5eq7.eLKNV4jMHwv8eMtz"
+    },
+    {
+      "name": "Living Coffin",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.7w5Do1GfggOR40AJ",
+      "img": "icons/containers/boxes/crate-wooden-brown.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "l9kBSTFutc2QFGqz",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!3PNNxtLniPBx5eq7.l9kBSTFutc2QFGqz"
+    },
+    {
+      "name": "Necrolexicon NEC",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.bOTzCPrQA0NfYtcL",
+      "img": "icons/sundries/books/book-face-black.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "sLbGi0ImRQ9bLBSo",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!3PNNxtLniPBx5eq7.sLbGi0ImRQ9bLBSo"
+    },
+    {
+      "name": "Basic Homunculo",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.WJpA72EA1O68oH4d",
+      "img": "icons/creatures/magical/fae-fairy-winged-glowing-green.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "LWcavKUkKgnbTNma",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!3PNNxtLniPBx5eq7.LWcavKUkKgnbTNma"
+    },
+    {
+      "name": "Monochrome  Mirror",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.vxMN6WVgHmzQtiTx",
+      "img": "icons/commodities/treasure/gem-framed-spiral-purple.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "lBZB7VJn8ZoGXMIz",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!3PNNxtLniPBx5eq7.lBZB7VJn8ZoGXMIz"
+    },
+    {
+      "name": "Second Soul",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.SczLZ4Z1ioFxhEHN",
+      "img": "icons/magic/unholy/silhouette-robe-evil-power.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "gHt8tJQswp1PGhFv",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!3PNNxtLniPBx5eq7.gHt8tJQswp1PGhFv"
+    }
+  ],
+  "formula": "1d6",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.347",
+    "systemId": "sdm",
+    "systemVersion": "0.1.32",
+    "createdTime": 1756416596734,
+    "modifiedTime": 1756416612944,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_id": "3PNNxtLniPBx5eq7",
+  "sort": 1900000,
+  "_key": "!tables!3PNNxtLniPBx5eq7"
+}

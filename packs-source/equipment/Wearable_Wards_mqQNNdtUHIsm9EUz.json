@@ -1,0 +1,22 @@
+{
+  "type": "Item",
+  "folder": "fw4Y6iVN3p5XdRyA",
+  "name": "Wearable Wards",
+  "color": null,
+  "sorting": "m",
+  "_id": "mqQNNdtUHIsm9EUz",
+  "description": "",
+  "sort": 150000,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.347",
+    "systemId": "sdm",
+    "systemVersion": "0.1.32",
+    "lastModifiedBy": "0fqTkfNvjooZ2og7",
+    "modifiedTime": 1756414756162
+  },
+  "_key": "!folders!mqQNNdtUHIsm9EUz"
+}

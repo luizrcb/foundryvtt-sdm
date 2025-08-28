@@ -1,0 +1,23 @@
+{
+  "type": "Item",
+  "folder": null,
+  "name": "Powers",
+  "color": null,
+  "sorting": "a",
+  "_id": "nvE6J5q2pVx6leTv",
+  "description": "",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.347",
+    "systemId": "sdm",
+    "systemVersion": "0.1.32",
+    "createdTime": 1756338626449,
+    "modifiedTime": 1756338626449,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_key": "!folders!nvE6J5q2pVx6leTv"
+}

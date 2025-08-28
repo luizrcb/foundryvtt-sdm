@@ -3,7 +3,8 @@ const { execSync } = require('child_process');
 const packs = [
   { name: 'rolltables', source: 'packs-source/rolltables' },
   { name: 'macros', source: 'packs-source/macros' },
-  { name: 'player_macros', source: 'packs-source/player_macros' }
+  { name: 'player_macros', source: 'packs-source/player_macros' },
+  { name: 'equipment', source: 'packs-source/equipment' }
 ];
 
 try {

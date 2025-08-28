@@ -1,0 +1,22 @@
+{
+  "type": "Item",
+  "folder": "dMp05nhGHKzbIjuk",
+  "name": "Throwing Weapons",
+  "color": null,
+  "sorting": "m",
+  "_id": "tJhwg88QFzoQsn96",
+  "description": "",
+  "sort": 331250,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.347",
+    "systemId": "sdm",
+    "systemVersion": "0.1.32",
+    "lastModifiedBy": "0fqTkfNvjooZ2og7",
+    "modifiedTime": 1756390139638
+  },
+  "_key": "!folders!tJhwg88QFzoQsn96"
+}

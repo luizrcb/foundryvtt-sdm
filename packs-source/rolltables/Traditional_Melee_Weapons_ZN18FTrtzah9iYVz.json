@@ -1,0 +1,230 @@
+{
+  "name": "Traditional Melee Weapons",
+  "description": "A random table created from the contents of the Traditional Melee Weapons Folder.",
+  "results": [
+    {
+      "name": "Stun Baton Wand",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.5CV0LEfvJl3WrT9M",
+      "img": "icons/weapons/staves/staff-orb-red.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "rnB9kycotI1NT4AA",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ZN18FTrtzah9iYVz.rnB9kycotI1NT4AA"
+    },
+    {
+      "name": "Machete",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.72hJKgB42MvVuFgz",
+      "img": "icons/weapons/swords/sword-machete-white.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "MQztMRLJcUogCcKs",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ZN18FTrtzah9iYVz.MQztMRLJcUogCcKs"
+    },
+    {
+      "name": "Wrench Hammer",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.9JXku0CpoFjICjl7",
+      "img": "icons/weapons/hammers/hammer-double-engraved.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "JElUFUkhPXhq2l2R",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ZN18FTrtzah9iYVz.JElUFUkhPXhq2l2R"
+    },
+    {
+      "name": "Gentleman’s Cane",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.EA5uv6xvuX1318tD",
+      "img": "icons/weapons/staves/staff-ornate.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "DZJ1Dn682LLiN02e",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ZN18FTrtzah9iYVz.DZJ1Dn682LLiN02e"
+    },
+    {
+      "name": "Shiv",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.EWDh7VPfiwyCdcLC",
+      "img": "icons/weapons/daggers/dagger-simple-green.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "3bSeO77Nb0rVHmBZ",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ZN18FTrtzah9iYVz.3bSeO77Nb0rVHmBZ"
+    },
+    {
+      "name": "Burdenbeast Whip",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.kCKLugHtUzZOyDVq",
+      "img": "icons/weapons/misc/whip-red-yellow.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "bAAdBjKpCvh5fgGK",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ZN18FTrtzah9iYVz.bAAdBjKpCvh5fgGK"
+    },
+    {
+      "name": "Spear",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.usP7z6fJMW7bbC7p",
+      "img": "icons/weapons/polearms/glaive-simple.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "pLuNwAVk0FAcpSqH",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ZN18FTrtzah9iYVz.pLuNwAVk0FAcpSqH"
+    },
+    {
+      "name": "Battle Stick",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.ym0vgYdyeE35FOsi",
+      "img": "icons/weapons/staves/staff-simple-brown.webp",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "2qgrmE7ReoQEncDv",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ZN18FTrtzah9iYVz.2qgrmE7ReoQEncDv"
+    }
+  ],
+  "formula": "1d8",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.347",
+    "systemId": "sdm",
+    "systemVersion": "0.1.32",
+    "createdTime": 1756392499291,
+    "modifiedTime": 1756406352613,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_id": "ZN18FTrtzah9iYVz",
+  "sort": 600000,
+  "_key": "!tables!ZN18FTrtzah9iYVz"
+}

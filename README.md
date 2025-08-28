@@ -68,7 +68,25 @@ An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG
 - Special roll results for magic numbers (1 = critical failure, 13 = only one ammo or other resource left, 20 = critical success).
 - Right-click roll results in the chat to open `Apply as Damage` and `Apply as Healing` menu options. This will be applied to all selected tokens.
 
-- The following compendiums contain macros and roll tables:
+- The following compendiums contain, items, macros and roll tables:
+  - Equipment:
+    - Armors
+      - Modern and Ancient Shields
+      - Light Armor
+      - Medium Armor
+      - Heavy Armor
+      - Classic Golem Armor
+    - Wards:
+      - Trinkets
+      - Wearable Wards
+      - Portable Wards
+      - Bulky Wards
+    - Weapons:
+      - Traditional Melee Weapons
+      - Long Ago Melee Weapons
+      - Ranged Weapons
+      - Throwing Weapons
+      - Terrible Ranged Weapons of the Long Ago
   - SDM Macros (GM Macros):
     - Give (or take) cash.
     - Give (or take) hero dice.
@@ -81,6 +99,7 @@ An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG
   - Rolltables:
     - Ability Scores (preferred method for ability score generation). Roll d100 table to generate ability scores, then assign unlabeled scores.
     - Referee Title (a fun d10 table to choose referee title and referee session power).
+    - RollTables for every equipment category (Light Armor, Medium Armor, etc)
 
 ## Installation Instructions
 

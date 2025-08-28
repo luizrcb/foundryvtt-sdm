@@ -1,0 +1,180 @@
+{
+  "name": "Wearable Wards",
+  "description": "A random table created from the contents of the Wearable Wards Folder.",
+  "results": [
+    {
+      "name": "Skull Garland",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.ka1DT5FEr4JkmoeV",
+      "img": "icons/commodities/bones/skull-hollow-grey.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "bLMEvnPphIKVQtcr",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!P2r2FyaTlGji5ZKk.bLMEvnPphIKVQtcr"
+    },
+    {
+      "name": "Pointy Slippers",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.EB4yl09rxu2KxpFS",
+      "img": "icons/equipment/feet/shoes-pointed-blue.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "3mTO7rhmgBgHqd6v",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!P2r2FyaTlGji5ZKk.3mTO7rhmgBgHqd6v"
+    },
+    {
+      "name": "Jade Mask",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.mTBx3cjza9KQ1BVl",
+      "img": "icons/commodities/treasure/mask-wood-tan.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "tlnoZWvjeztuT6mM",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!P2r2FyaTlGji5ZKk.tlnoZWvjeztuT6mM"
+    },
+    {
+      "name": "Pectoral of Red",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.k7EDvq7G8GmGu46U",
+      "img": "icons/equipment/chest/shirt-collared-pink.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "zmqgJp300lgcnSdf",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!P2r2FyaTlGji5ZKk.zmqgJp300lgcnSdf"
+    },
+    {
+      "name": "Robe of Eyes",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.kjcsL8bUYXEOBPfL",
+      "img": "icons/equipment/back/cloak-layered-pink.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "cz7jZmXuUvIbVonI",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!P2r2FyaTlGji5ZKk.cz7jZmXuUvIbVonI"
+    },
+    {
+      "name": "Full-Spectrum Suit",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.3sO6S0zu62SEKxBb",
+      "img": "icons/magic/unholy/strike-body-explode-disintegrate.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "SD8bDC2p5o3nKZS2",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!P2r2FyaTlGji5ZKk.SD8bDC2p5o3nKZS2"
+    }
+  ],
+  "formula": "1d6",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.347",
+    "systemId": "sdm",
+    "systemVersion": "0.1.32",
+    "createdTime": 1756416594134,
+    "modifiedTime": 1756416602930,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_id": "P2r2FyaTlGji5ZKk",
+  "sort": 1700000,
+  "_key": "!tables!P2r2FyaTlGji5ZKk"
+}

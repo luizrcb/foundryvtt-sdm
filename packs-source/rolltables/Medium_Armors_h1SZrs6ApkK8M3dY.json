@@ -1,0 +1,155 @@
+{
+  "name": "Medium Armors",
+  "description": "A random table created from the contents of the Medium Armors Folder.",
+  "results": [
+    {
+      "name": "Scale Suit",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.AEvs0QB7VnnISg7p",
+      "img": "icons/equipment/chest/breastplate-rivited-red.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "2yBCNMArVsFxlO1O",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!h1SZrs6ApkK8M3dY.2yBCNMArVsFxlO1O"
+    },
+    {
+      "name": "Dryland Weave",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.vIPC0dVJh7FF1sSH",
+      "img": "icons/equipment/chest/breastplate-layered-leather-blue-gold.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "vh8jKYlLTJbgCBv6",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!h1SZrs6ApkK8M3dY.vh8jKYlLTJbgCBv6"
+    },
+    {
+      "name": "GRD Combat Harness",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.kUE8m3tRBsWCVVDr",
+      "img": "icons/equipment/chest/breastplate-helmet-metal.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "4XBRZ20jjFkXOleg",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!h1SZrs6ApkK8M3dY.4XBRZ20jjFkXOleg"
+    },
+    {
+      "name": "Watersuit",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.oIqZCAh8Ap8iUp5k",
+      "img": "icons/equipment/chest/coat-leather-blue.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "b5xUc12K0GkDZJYY",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!h1SZrs6ApkK8M3dY.b5xUc12K0GkDZJYY"
+    },
+    {
+      "name": "Amber Cuirass",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.n0bkvfZ0sLwXSROc",
+      "img": "icons/equipment/chest/breastplate-layered-gilded-orange.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "HdcG8iYnM6DRUUKD",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!h1SZrs6ApkK8M3dY.HdcG8iYnM6DRUUKD"
+    }
+  ],
+  "formula": "1d5",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.347",
+    "systemId": "sdm",
+    "systemVersion": "0.1.32",
+    "createdTime": 1756412833799,
+    "modifiedTime": 1756412835365,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_id": "h1SZrs6ApkK8M3dY",
+  "sort": 1300000,
+  "_key": "!tables!h1SZrs6ApkK8M3dY"
+}

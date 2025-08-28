@@ -42,4 +42,27 @@ export default class SdmGear extends SdmItemBase {
 
     return schema;
   }
+
+  static migrateData(source) {
+    this._migrateData(source);
+    return super.migrateData(source);
+  }
+
+  /** @inheritDoc */
+  static _migrateData(source) {
+    SdmGear.#migrateRange(source);
+  }
+
+
+  /**
+   * Migrate weapon range
+   * @param {object} source  The candidate source data from which the model will be constructed.
+   */
+  static #migrateRange(source) {
+    if (!source.weapon) return;
+
+    if (source.weapon.range === 'melee') source.weapon.range = 'close';
+    if (source.weapon.range === 'long') source.weapon.range = 'medium';
+    if (source.weapon.range === 'extreme') source.weapon.range = 'long';
+  }
 }

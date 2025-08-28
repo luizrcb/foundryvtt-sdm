@@ -1,0 +1,230 @@
+{
+  "name": "Light Armors",
+  "description": "A random table created from the contents of the Light Armors Folder.",
+  "results": [
+    {
+      "name": "Nomad Robes",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.n9HAt1hBBEg5rdyK",
+      "img": "icons/equipment/chest/vest-leather-tattered-white.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "yxKqWkFbgQDalDju",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Yaip9Q0GqiWB3ZnU.yxKqWkFbgQDalDju"
+    },
+    {
+      "name": "Artyhide",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.l0ysHjIBhhHaaDNa",
+      "img": "icons/equipment/chest/breastplate-sculpted-grey.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "udFwfaBNFoB1GFdK",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Yaip9Q0GqiWB3ZnU.udFwfaBNFoB1GFdK"
+    },
+    {
+      "name": "Riot Pleather Suit",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.cVCfL5dmN5G7wCC0",
+      "img": "icons/equipment/chest/breastplate-layered-steel-grey.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "TWmpVpjUeaVapT9w",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Yaip9Q0GqiWB3ZnU.TWmpVpjUeaVapT9w"
+    },
+    {
+      "name": "Ballistic Linen Suit",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.M8P5P4zhHPr0FBSb",
+      "img": "icons/equipment/chest/vest-leather-pink.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "V5ICGg2HGhsUSoEM",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Yaip9Q0GqiWB3ZnU.V5ICGg2HGhsUSoEM"
+    },
+    {
+      "name": "Silk Vest",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.eeG58lmOG0xsizZP",
+      "img": "icons/equipment/chest/robe-layered-white.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "w8l1Vb4WYoXcLtTl",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Yaip9Q0GqiWB3ZnU.w8l1Vb4WYoXcLtTl"
+    },
+    {
+      "name": "Hazviral Suit",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.uSNqYfZuTHy6iJfp",
+      "img": "icons/equipment/chest/breastplate-layered-leather-studded-black.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "woRcNpFzUS72im07",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Yaip9Q0GqiWB3ZnU.woRcNpFzUS72im07"
+    },
+    {
+      "name": "Syncsuit",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.RJNtdAwRl6RvEETo",
+      "img": "icons/equipment/chest/breastplate-sculpted-green.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "sciFxZh1weZ3bq7F",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Yaip9Q0GqiWB3ZnU.sciFxZh1weZ3bq7F"
+    },
+    {
+      "name": "Shipmetal Shirt",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.6V3ujWkl3EtBnZz6",
+      "img": "icons/equipment/chest/breastplate-layered-leather-green.webp",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "d7KLQ58XhQym04xe",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Yaip9Q0GqiWB3ZnU.d7KLQ58XhQym04xe"
+    }
+  ],
+  "formula": "1d8",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.347",
+    "systemId": "sdm",
+    "systemVersion": "0.1.32",
+    "createdTime": 1756412829854,
+    "modifiedTime": 1756412831714,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_id": "Yaip9Q0GqiWB3ZnU",
+  "sort": 1200000,
+  "_key": "!tables!Yaip9Q0GqiWB3ZnU"
+}

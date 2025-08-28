@@ -1,0 +1,230 @@
+{
+  "name": "Heavy Armors",
+  "description": "A random table created from the contents of the Heavy Armors Folder.",
+  "results": [
+    {
+      "name": "Splinter Suit",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.vb7eETYg6RoiyXIi",
+      "img": "icons/equipment/chest/breastplate-banded-steel.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "0txiZLCD9wzcUsOL",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!LSg27qn689qR6UaO.0txiZLCD9wzcUsOL"
+    },
+    {
+      "name": "Bone Mesh",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.aQStDj4d9d7Pxh8g",
+      "img": "icons/equipment/chest/robe-collared-pink.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "UUwuojM9d5KhoL65",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!LSg27qn689qR6UaO.UUwuojM9d5KhoL65"
+    },
+    {
+      "name": "Assault Suit",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.OijNIHxXQHb7Dzr8",
+      "img": "icons/equipment/chest/breastplate-cuirass-steel-blue.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "BU9t8ObjKdaj7Ryi",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!LSg27qn689qR6UaO.BU9t8ObjKdaj7Ryi"
+    },
+    {
+      "name": "Bullet Plate Weave",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.H8gWuBS3Is2EvEnT",
+      "img": "icons/equipment/chest/breastplate-gorget-steel.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "I40fp6AgVJjDrcds",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!LSg27qn689qR6UaO.I40fp6AgVJjDrcds"
+    },
+    {
+      "name": "Jade Mail",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.ZDxWuYZb3j2lNGK1",
+      "img": "icons/equipment/chest/breastplate-layered-steel-green.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "9rseP6lhaFgE3q7D",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!LSg27qn689qR6UaO.9rseP6lhaFgE3q7D"
+    },
+    {
+      "name": "Voidsuit",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.daVOtlRFqSg6piVH",
+      "img": "icons/equipment/head/helm-barbute-steel.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "VoON0bQK7H4TYAm7",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!LSg27qn689qR6UaO.VoON0bQK7H4TYAm7"
+    },
+    {
+      "name": "Bunker Crawler",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.dvQRSg4bW5nUjTke",
+      "img": "icons/equipment/head/helm-norman-brutal.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "msREbyMH8QerbwuJ",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!LSg27qn689qR6UaO.msREbyMH8QerbwuJ"
+    },
+    {
+      "name": "Umbral Panoply",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.TL7hMkzZDEhR6Abf",
+      "img": "icons/equipment/chest/breastplate-banded-steel-grey.webp",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "w4qlKHEx4NqHPL77",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!LSg27qn689qR6UaO.w4qlKHEx4NqHPL77"
+    }
+  ],
+  "formula": "1d8",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.347",
+    "systemId": "sdm",
+    "systemVersion": "0.1.32",
+    "createdTime": 1756412839543,
+    "modifiedTime": 1756412843819,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_id": "LSg27qn689qR6UaO",
+  "sort": 1400000,
+  "_key": "!tables!LSg27qn689qR6UaO"
+}

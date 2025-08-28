@@ -1,0 +1,87 @@
+{
+  "folder": "gxRuxIkifrDlURJ3",
+  "name": "Eye Solar",
+  "type": "gear",
+  "_id": "Yw5380CPB0dgMcoo",
+  "img": "icons/magic/light/explosion-star-large-orange.webp",
+  "system": {
+    "readied": false,
+    "cost": 4400,
+    "cost_frequency": "",
+    "description": "<p>The Hard Sun’s divine eye smites your foes with its cruel, luminous hands.</p><p><strong>Features:</strong> med, 2H, vital, petrifying</p>",
+    "quantity": 1,
+    "size": {
+      "value": 2,
+      "unit": "stones"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "type": "weapon",
+    "power": {
+      "img": "icons/svg/book.svg",
+      "name": "",
+      "description": "",
+      "level": 1,
+      "range": "",
+      "target": "",
+      "duration": "",
+      "overcharge": "",
+      "roll_formula": "",
+      "overcharge_roll_formula": ""
+    },
+    "powers_current_index": 0,
+    "max_powers": 3,
+    "powers": [],
+    "armor": {
+      "value": 0,
+      "type": "",
+      "cumbersome": false,
+      "powered": null
+    },
+    "ward": {
+      "value": 0,
+      "type": "",
+      "armor": 0
+    },
+    "weapon": {
+      "damage": {
+        "base": "1d6x",
+        "versatile": "1d4",
+        "bonus": ""
+      },
+      "range": "medium",
+      "versatile": false
+    },
+    "default_ability": ""
+  },
+  "effects": [],
+  "sort": 2300000,
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.347",
+    "systemId": "sdm",
+    "systemVersion": "0.1.32",
+    "createdTime": 1756398708952,
+    "modifiedTime": 1756398851678,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_key": "!items!Yw5380CPB0dgMcoo"
+}

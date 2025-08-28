@@ -1,0 +1,23 @@
+{
+  "type": "Item",
+  "folder": null,
+  "name": "Gears",
+  "color": null,
+  "sorting": "a",
+  "_id": "rA2LSCD4L5xy1ufu",
+  "description": "",
+  "sort": 400000,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.347",
+    "systemId": "sdm",
+    "systemVersion": "0.1.32",
+    "createdTime": 1756338629946,
+    "modifiedTime": 1756385769358,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_key": "!folders!rA2LSCD4L5xy1ufu"
+}

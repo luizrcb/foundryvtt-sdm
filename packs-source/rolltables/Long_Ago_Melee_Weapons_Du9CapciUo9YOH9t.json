@@ -1,0 +1,330 @@
+{
+  "name": "Long Ago Melee Weapons",
+  "description": "<p>A random table created from the contents of the Long Ago Melee Weapons Folder.</p>",
+  "results": [
+    {
+      "name": "Chain Sword",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.32GErRz1iWywC6AN",
+      "img": "icons/weapons/swords/sword-guard-serrated.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "V9AhncZ1sncFabbn",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Du9CapciUo9YOH9t.V9AhncZ1sncFabbn"
+    },
+    {
+      "name": "Arzax Lance",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.AOcSCO2oWMAF2x5m",
+      "img": "icons/weapons/polearms/spear-ice-crystal-blue.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "GGmOvyja5EeFvgOH",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Du9CapciUo9YOH9t.GGmOvyja5EeFvgOH"
+    },
+    {
+      "name": "Pleasure Thorn",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.ISVyKwieIZcmFXoM",
+      "img": "icons/weapons/daggers/dagger-straight-thin-black.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "BZtYSTatbOmI3yuJ",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Du9CapciUo9YOH9t.BZtYSTatbOmI3yuJ"
+    },
+    {
+      "name": "Wire-Ghoul  Hammer-Axe",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.S0zXIOaxG7DxgjGo",
+      "img": "icons/weapons/axes/axe-battle-eyes-red.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "H8dOrXpQ2GIEWPhV",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Du9CapciUo9YOH9t.H8dOrXpQ2GIEWPhV"
+    },
+    {
+      "name": "Black City Blade",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.XOGYXrO6F7kUbufi",
+      "img": "icons/weapons/swords/sword-guard-flanged.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "jWDfMpZAEoycpuI1",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Du9CapciUo9YOH9t.jWDfMpZAEoycpuI1"
+    },
+    {
+      "name": "Skip Knife",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.YvwJsB5t8XVt43xo",
+      "img": "icons/tools/cooking/knife-chef-steel-black.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "Y6M53qPeAr2xaiZm",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Du9CapciUo9YOH9t.Y6M53qPeAr2xaiZm"
+    },
+    {
+      "name": "Soul Siphon Spear",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.ZteNSXBaRUbC5CuU",
+      "img": "icons/weapons/polearms/spear-flared-silver-pink.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "iM3vxYkVuREo8baI",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Du9CapciUo9YOH9t.iM3vxYkVuREo8baI"
+    },
+    {
+      "name": "Forty-Pound  Uranium Rod",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.c0H7EAxKMb1Ni1Oq",
+      "img": "icons/weapons/staves/staff-ornate-green.webp",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "hzgSrd6xouaLVfJM",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Du9CapciUo9YOH9t.hzgSrd6xouaLVfJM"
+    },
+    {
+      "name": "Ghost Bone Axe",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.mFMUBdpTDO3yVLAF",
+      "img": "icons/weapons/axes/axe-battle-skull-black.webp",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "ue5o782cOjzjUtWM",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Du9CapciUo9YOH9t.ue5o782cOjzjUtWM"
+    },
+    {
+      "name": "Noetic Blade",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.vf9R7QAvpP5cVaHK",
+      "img": "icons/weapons/swords/sword-guard-flanged-purple.webp",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "oYsAnhq3dd9C5Tph",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Du9CapciUo9YOH9t.oYsAnhq3dd9C5Tph"
+    },
+    {
+      "name": "Agon Whip",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.w2WOCk1WLqyRPM6Q",
+      "img": "icons/magic/control/debuff-chains-purple.webp",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_id": "qXUorbI203lJFrZb",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Du9CapciUo9YOH9t.qXUorbI203lJFrZb"
+    },
+    {
+      "name": "Access Flenser",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.ziSFtT3nY0ADW13h",
+      "img": "icons/weapons/swords/sword-broad-serrated-blue.webp",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_id": "XM8RCqKcbWykOQH8",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Du9CapciUo9YOH9t.XM8RCqKcbWykOQH8"
+    }
+  ],
+  "formula": "1d12",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.347",
+    "systemId": "sdm",
+    "systemVersion": "0.1.32",
+    "createdTime": 1756392526949,
+    "modifiedTime": 1756406352613,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_id": "Du9CapciUo9YOH9t",
+  "sort": 700000,
+  "_key": "!tables!Du9CapciUo9YOH9t"
+}
