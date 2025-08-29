@@ -2,11 +2,11 @@
   "id": "sdm",
   "title": "Synthetic Dream Machine",
   "description": "An unofficial system for playing Ultraviolet Grasslands (UVG) and Our Golden Age (OGA) using the Synthetic Dream Machine (SDM) RPG system.",
-  "version": "0.1.34",
+  "version": "0.1.35",
   "url": "https://github.com/luizrcb/foundryvtt-sdm",
   "bugs": "https://github.com/luizrcb/foundryvtt-sdm/issues",
   "manifest": "https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/main/system.json",
-  "download": "https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.1.34/sdm-0.1.34.zip",
+  "download": "https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.1.35/sdm-0.1.35.zip",
   "compatibility": {
     "minimum": "13",
     "verified": "13.348"
@@ -99,6 +99,13 @@
       "name": "equipment",
       "label": "Equipment",
       "path": "./packs/equipment",
+      "type": "Item",
+      "system": "sdm"
+    },
+    {
+      "name": "traits",
+      "label": "Traits",
+      "path": "./packs/traits",
       "type": "Item",
       "system": "sdm"
     }

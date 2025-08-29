@@ -1,0 +1,115 @@
+{
+  "folder": "SoSFz2ZUtNtRPhQx",
+  "name": "3. Grit",
+  "type": "trait",
+  "_id": "NQLG4EEMff3aNYA5",
+  "img": "icons/magic/life/heart-cross-purple-orange.webp",
+  "system": {
+    "readied": false,
+    "cost": 0,
+    "cost_frequency": "",
+    "description": "<p>Gain 1 life per level (<em>update value in the effects tab every level</em>) and <span style=\"text-decoration:underline\"><span style=\"text-decoration:underline\">advantage when you roll endurance</span></span> (<em>not automated</em>).</p><p><em>(life bonuses will only apply to the max life value, you need to adjust the current value accordinly)</em></p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "type": "",
+    "skill": {
+      "rank": 0,
+      "modifier_step": 3,
+      "modifier_bonus": 0,
+      "modifier_final": 0,
+      "custom_modifiers": false
+    },
+    "power": {
+      "img": "icons/svg/book.svg",
+      "name": "",
+      "description": "",
+      "level": 1,
+      "range": "",
+      "target": "",
+      "duration": "",
+      "overcharge": "",
+      "roll_formula": "",
+      "overcharge_roll_formula": ""
+    }
+  },
+  "effects": [
+    {
+      "name": "bonus life",
+      "origin": "Compendium.sdm.traits.Item.NQLG4EEMff3aNYA5",
+      "img": "icons/magic/life/heart-cross-purple-orange.webp",
+      "_id": "7ZCZ5Hyhe99FuVxK",
+      "type": "base",
+      "system": {},
+      "changes": [
+        {
+          "key": "system.life.bonus",
+          "mode": 2,
+          "value": "1",
+          "priority": null
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.34",
+        "createdTime": 1756497896357,
+        "modifiedTime": 1756497917721,
+        "lastModifiedBy": "0fqTkfNvjooZ2og7"
+      },
+      "_key": "!items.effects!NQLG4EEMff3aNYA5.7ZCZ5Hyhe99FuVxK"
+    }
+  ],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.34",
+    "createdTime": 1756497823226,
+    "modifiedTime": 1756497992736,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_key": "!items!NQLG4EEMff3aNYA5"
+}

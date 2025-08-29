@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.1.35
+
+- Many fixes in pt-BR localization
+- Added Traits compendium with Path of the Wizard, Path of the Traveler and Path of the Fighter
+
 ## v0.1.34
 
 - Add Character Background Trait Generator in SDM Player Macros

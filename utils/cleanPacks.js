@@ -6,7 +6,8 @@ const foldersToDelete = [
   'packs/macros',
   'packs/player_macros',
   'packs/rolltables',
-  'packs/equipment'
+  'packs/equipment',
+  'packs/traits',
 ];
 
 const rootDir = path.join(__dirname, '..');

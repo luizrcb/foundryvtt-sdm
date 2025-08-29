@@ -4,7 +4,8 @@ const packs = [
   { name: 'rolltables', output: 'packs-source/rolltables' },
   { name: 'macros', output: 'packs-source/macros' },
   { name: 'player_macros', output: 'packs-source/player_macros' },
-  { name: 'equipment', output: 'packs-source/equipment' }
+  { name: 'equipment', output: 'packs-source/equipment' },
+  { name: 'traits', output: 'packs-source/traits' }
 ];
 
 try {
