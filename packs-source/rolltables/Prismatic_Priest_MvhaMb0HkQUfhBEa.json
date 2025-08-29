@@ -1,5 +1,5 @@
 {
-  "folder": null,
+  "folder": "AxdxtrvaotrjjTpa",
   "name": "Prismatic Priest",
   "img": "icons/svg/d20-grey.svg",
   "description": "<p><strong>Title</strong>: Prismatic Priest<br /><strong>Session Powers</strong>: Randomly recolor locations.</p>",
@@ -166,15 +166,15 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.347",
+    "coreVersion": "13.348",
     "systemId": "sdm",
     "systemVersion": "0.1.20",
     "createdTime": 1751542921819,
-    "modifiedTime": 1756406352613,
-    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+    "modifiedTime": 1756510310407,
+    "lastModifiedBy": "3vgxDetPOGhfUfqu"
   },
   "formula": "1d6",
   "_id": "MvhaMb0HkQUfhBEa",
-  "sort": 300000,
+  "sort": 200000,
   "_key": "!tables!MvhaMb0HkQUfhBEa"
 }

@@ -1,0 +1,21 @@
+{
+  "type": "RollTable",
+  "folder": "DnouzxEjZMIdrIqA",
+  "name": "Armors",
+  "color": null,
+  "sorting": "a",
+  "_id": "19Xqobp7oJQI6uJl",
+  "description": "",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.35",
+    "lastModifiedBy": null
+  },
+  "_key": "!folders!19Xqobp7oJQI6uJl"
+}

@@ -361,7 +361,7 @@
   "SDM.ErrorTransferExcessCashAmount": "Não é possível transferir mais dinheiro que o disponível",
   "SDM.ErrorTransferInvalidItemState": "Estado do item alterado durante transferência",
   "SDM.ErrorTransferItemNotAvailable": "Item indisponível para transferência",
-  "SDM.ErrorTransferNoActiveGM": "A transferência de itens só funciona com o Mestre online",
+  "SDM.ErrorTransferNoActiveGM": "A transferência de itens só funciona com o Mediador online",
   "SDM.ErrorTransferSessionExperied": "Sessão de transferência expirada",
   "SDM.ErrorTransferTargetHasItem": "Alvo já possui este item",
   "SDM.ErrorUpdateDoc": "Erro ao atualizar {doc}",

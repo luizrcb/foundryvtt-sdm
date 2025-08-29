@@ -207,7 +207,7 @@
   "img": "icons/svg/d20-grey.svg",
   "replacement": true,
   "displayRoll": true,
-  "folder": null,
+  "folder": "bgYIDMfG5Smh4RFQ",
   "ownership": {
     "default": 0,
     "0fqTkfNvjooZ2og7": 3
@@ -217,14 +217,14 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.347",
+    "coreVersion": "13.348",
     "systemId": "sdm",
     "systemVersion": "0.1.32",
     "createdTime": 1756392499291,
-    "modifiedTime": 1756406352613,
-    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+    "modifiedTime": 1756510268868,
+    "lastModifiedBy": "3vgxDetPOGhfUfqu"
   },
   "_id": "ZN18FTrtzah9iYVz",
-  "sort": 600000,
+  "sort": 100000,
   "_key": "!tables!ZN18FTrtzah9iYVz"
 }

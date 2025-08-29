@@ -1,0 +1,23 @@
+{
+  "type": "RollTable",
+  "folder": null,
+  "name": "Referee",
+  "color": null,
+  "sorting": "a",
+  "_id": "AxdxtrvaotrjjTpa",
+  "description": "",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.35",
+    "createdTime": 1756510304788,
+    "modifiedTime": 1756510304788,
+    "lastModifiedBy": "3vgxDetPOGhfUfqu"
+  },
+  "_key": "!folders!AxdxtrvaotrjjTpa"
+}

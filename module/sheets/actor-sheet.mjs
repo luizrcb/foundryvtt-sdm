@@ -244,8 +244,12 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         : isDamage
           ? 'one-handed'
           : 'fa-solid fa-dice-d20';
-    const buttonLabel = isDamage && versatile ? $l10n('SDM.OneHanded') :
-        (isPower || isPowerAlbum) ? $l10n('SDM.Cast') : $l10n('SDM.ButtonRoll');
+    const buttonLabel =
+      isDamage && versatile
+        ? $l10n('SDM.OneHanded')
+        : isPower || isPowerAlbum
+          ? $l10n('SDM.Cast')
+          : $l10n('SDM.ButtonRoll');
 
     const buttons = [
       {
@@ -275,7 +279,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     buttons.push({
       action: 'overcharge',
-      class:'overcharge',
+      class: 'overcharge',
       // hidden: !overchargeFormula,
       style: { display: !overchargeFormula ? 'none' : '' },
       icon: 'fa-solid fa-hand-sparkles',
@@ -286,7 +290,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         ...new foundry.applications.ux.FormDataExtended(button.form).object
       })
     });
-
 
     let rollOptions = {};
 
@@ -378,7 +381,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     }
 
     if (rollOptions.overcharge) {
-      rollData.from = powerOptions[powerIndex].overcharge + ` (${$l10n('SDM.PowerOvercharge').toLowerCase()})`;
+      rollData.from =
+        powerOptions[powerIndex].overcharge + ` (${$l10n('SDM.PowerOvercharge').toLowerCase()})`;
       rollData.formula = powerOptions[powerIndex].overchargeFormula;
     }
 
@@ -493,7 +497,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         }
       });
       const heroDiceType =
-   this.actor.system.hero_dice?.dice_type || game.settings.get('sdm', 'defaultHeroDiceType');
+        this.actor.system.hero_dice?.dice_type || game.settings.get('sdm', 'defaultHeroDiceType');
       // Replace the abilities in the system object with the reordered abilities
       context.heroDiceType = heroDiceType;
       context.system.abilities = reorderedAbilities;
@@ -769,7 +773,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       return true;
     }
 
-    const itemSlots =  getSlotsTaken(item.system);
+    const itemSlots = getSlotsTaken(item.system);
     const validWeight = this._checkActorWeightLimit(itemSlots, item.type);
 
     if (!validWeight) {
@@ -1048,14 +1052,16 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         formula = powerData.roll_formula;
         overchargeFormula = powerData.overcharge_roll_formula;
 
-        powerOptions = [{
-          index: 0,
-          name: powerItem.getPowerShortTitle(powerData, this.actor.system.power_cost),
-          overcharge: powerItem.getPowerShortTitle(powerData, this.actor.system.power_cost, true),
-          formula: powerData.roll_formula,
-          overchargeFormula: powerData.overcharge_roll_formula,
-          default_ability: powerData.default_ability
-        }]
+        powerOptions = [
+          {
+            index: 0,
+            name: powerItem.getPowerShortTitle(powerData, this.actor.system.power_cost),
+            overcharge: powerItem.getPowerShortTitle(powerData, this.actor.system.power_cost, true),
+            formula: powerData.roll_formula,
+            overchargeFormula: powerData.overcharge_roll_formula,
+            default_ability: powerData.default_ability
+          }
+        ];
         powerIndex = 0;
         break;
 
@@ -1133,7 +1139,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
           title: $fmt('SDM.RollType', { type: $l10n('SDM.Morale') }),
           resizable: true
         },
-        content: await renderTemplate(templatePath('actor/npc/morale-roll-dialog')),
+        content: await renderTemplate(templatePath('actor/npc/morale-roll-dialog'), {
+          rollModes: CONFIG.SDM.rollMode
+        }),
         buttons: [
           {
             label: $l10n('SDM.ButtonRoll'),
@@ -1151,10 +1159,18 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       return;
     }
 
-    const { modifier = '' } = data;
+    const { modifier = '', rollMode = 'normal' } = data;
     const modPart = foundry.dice.Roll.validate(modifier) ? `+${modifier}` : '';
     const basMoraleFormula = game.settings.get('sdm', 'baseMoraleFormula') || '2d6';
-    const formula = `${basMoraleFormula} ${modPart}`;
+
+    const keepModifier =
+      rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
+
+    const diceExpression = keepModifier
+      ? `{${basMoraleFormula}, ${basMoraleFormula}}${keepModifier}`
+      : basMoraleFormula;
+
+    const formula = `${diceExpression} ${modPart}`;
     const sanitizedFormula = sanitizeExpression(formula);
     const targetNumber = this.actor.system.morale || 2;
 
@@ -1186,7 +1202,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
           width: 500,
           height: 250
         },
-        content: await renderTemplate(templatePath('reaction-roll-dialog')),
+        content: await renderTemplate(templatePath('reaction-roll-dialog'), {
+          rollModes: CONFIG.SDM.rollMode
+        }),
         buttons: [
           {
             action: 'diplomacy',
@@ -1215,7 +1233,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       return;
     }
 
-    const { modifier = '', charismaOperator = 1 } = data;
+    const { modifier = '', charismaOperator = 1, rollMode = 'normal' } = data;
 
     const baseFormula = game.settings.get('sdm', 'baseReactionFormula') || '2d6';
     const reactionBonus = this.actor.system.reaction_bonus || 0;
@@ -1227,7 +1245,14 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const bonusPart = reactionBonus ? ` +${reactionBonus}` : '';
     const modPart = foundry.dice.Roll.validate(modifier) ? ` +${modifier}` : '';
 
-    const formula = `${baseFormula}${chaPart}${bonusPart}${modPart}${burdenPart}`;
+    const keepModifier =
+      rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
+
+    const diceExpression = keepModifier
+      ? `{${baseFormula}, ${baseFormula}}${keepModifier}`
+      : baseFormula;
+
+    const formula = `${diceExpression}${chaPart}${bonusPart}${modPart}${burdenPart}`;
     const sanitizedFormula = sanitizeExpression(formula);
 
     let roll = new Roll(sanitizedFormula);
@@ -1317,10 +1342,20 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     }
 
     const modifier = rollOptions?.modifier;
+    const rollMode = rollOptions?.rollMode;
+
     const modPart = foundry.dice.Roll.validate(modifier) ? `+${modifier}` : '';
     const baseRollFormula =
       game.settings.get('sdm', 'savingThrowBaseRollFormula') || SAVING_THROW_BASE_FORMULA;
-    let formula = `${baseRollFormula} ${
+
+    const keepModifier =
+      rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
+
+    const diceExpression = keepModifier
+      ? `{${baseRollFormula}, ${baseRollFormula}}${keepModifier}`
+      : baseRollFormula;
+
+    let formula = `${diceExpression} ${
       finalSavingThrowBonus >= 0 ? `+` : ``
     }${finalSavingThrowBonus} ${modPart}`;
     const targetNumber = this.actor.system.save_target;

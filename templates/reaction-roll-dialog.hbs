@@ -9,7 +9,12 @@
       </label>
       <input id='modifier' type='text' name='modifier' value='' />
     </div>
+    <div class="form-group mt-10">
+      <label for="rollMode">{{localize 'SDM.RollMode'}}</label>
+      <select name="rollMode" id="rollMode">
+        {{selectOptions rollModes localize=true selected='normal'}}
+      </select>
+    </div>
   </form>
-  <br />
   <br />
 </div>

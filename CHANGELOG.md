@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.1.36
+
+- Replace the word GM for Referee
+- Organize rollable tables into folders
+- Add option to roll with advantage or disadvantage saving throw, reaction and morale rolls
+
 ## v0.1.35
 
 - Many fixes in pt-BR localization
@@ -14,11 +20,11 @@
 ## v0.1.33
 
 - Add compendium with all weapons, armors and wards from the Vastlands Guidebook
-- Add rolltables for every equipment category (light armor, medium armor, etc)
+- Add rollable tables for every equipment category (light armor, medium armor, etc)
 
 ## v0.1.32
 
-- Add GM macro to generate random NPCs
+- Add Referee macro to generate random NPCs
 - Expose API functions to create random NPCs (game.sdm.api.createNPC and game.sdm.api.createNPCByLevel)
 
 ## v0.1.31
@@ -34,7 +40,7 @@
 ## v0.1.29
 
 - Fix players not been able to change player xp and pc xp in their character sheets
-- Allow GMs to drag and reposition the escalator die display
+- Allow Referees to drag and reposition the escalator die display
 
 ## v0.1.28
 

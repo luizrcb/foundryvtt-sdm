@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 0,
     "cost_frequency": "",
-    "description": "",
+    "description": "<p>You’re skilled at being lucky. That’s a +3 bonus to all saves.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -106,10 +106,10 @@
     "exportSource": null,
     "coreVersion": "13.348",
     "systemId": "sdm",
-    "systemVersion": "0.1.34",
+    "systemVersion": "0.1.35",
     "createdTime": 1756496144769,
-    "modifiedTime": 1756496238569,
-    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+    "modifiedTime": 1756510078905,
+    "lastModifiedBy": "3vgxDetPOGhfUfqu"
   },
   "_key": "!items!JXppeJy7EMRNMk6o"
 }

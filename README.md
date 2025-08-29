@@ -55,13 +55,13 @@ An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG
 - Character Sheet (Edit Mode / Play Mode) for configuring attacks, power costs, and full ability values.
 - Each attack type (melee, ranged, fantascience, and oldtech) can be configured with a preferred ability and skill.
 - Characters can spend hero dice to modify rolls or regain life (players must configure their main character in the User Configuration menu). This can cause dice to explode.
-- Support for group initiative rolls (GM Macro).
+- Support for group initiative rolls (Referee Macro).
 - Shift+click shortcut to skip opening custom roll dialogs.
 - Highly configurable core game values (base defenses, item and trait slots, etc.).
 - Customizable initiative rolls in NPC sheets.
 - Descriptive results for saving throws, reactions, morale (NPC), and targeted attack rolls.
 - Extensive bonus options to simulate backpacks, blessings, curses, injuries, trait effects (see the Active Effects Changes tab for the full list).
-- GM utility macros.
+- Referee utility macros.
 - Drag and drop a power into a power album to easily copy it to the album.
 - Support for mental and social attacks (and defenses) as described in the Vastlands Guidebook (VLG).
 - Full localization for Brazilian Portuguese (pt-BR).
@@ -91,7 +91,7 @@ An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG
     - Path of the Wizard
     - Path of the Traveler
     - Path of the Fighter
-  - SDM Macros (GM Macros):
+  - SDM Macros (Referee Macros):
     - Give (or take) cash.
     - Give (or take) hero dice.
     - Give XP.
@@ -101,10 +101,10 @@ An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG
   - SDM Player Macros:
     - Generate Ability Scores (method described in the Vastlands Guidebook (VLG): rolls 1d100 for every ability score and displays the results in chat).
     - Character Background Trait Generator (based in the Vastlands Guidebook Background table)
-  - Rolltables:
+  - Rollable Tables:
     - Ability Scores (preferred method for ability score generation). Roll d100 table to generate ability scores, then assign unlabeled scores.
     - Referee Title (a fun d10 table to choose referee title and referee session power).
-    - RollTables for every equipment category (Light Armor, Medium Armor, etc)
+    - Rollable tables for every equipment category (Light Armor, Medium Armor, etc)
 
 ## Installation Instructions
 

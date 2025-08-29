@@ -46,14 +46,12 @@
       </select>
     </div>
     {{/if}}
-    {{#if (ne type 'save')}}
     <div class="form-group mt-10">
       <label for="rollMode">{{localize 'SDM.RollMode'}}</label>
       <select name="rollMode" id="rollMode">
         {{selectOptions rollModes localize=true selected='normal'}}
       </select>
     </div>
-    {{/if}}
     {{#if (ne type 'save')}}
     <div class="form-group mt-10">
       <label for="shouldExplode">{{localize "SDM.ExplodingDice"}}</label>
