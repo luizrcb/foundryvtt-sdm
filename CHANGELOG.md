@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.1.34
+
+- Add Character Background Trait Generator in SDM Player Macros
+- Add support to custom base damage multiplier (hunter trait)
+- Add bonus weapon slots (armiger trait)
+
 ## v0.1.33
 
 - Add compendium with all weapons, armors and wards from the Vastlands Guidebook

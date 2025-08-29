@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 950,
     "cost_frequency": "",
-    "description": "<p>A push-button shield of force.</p><p>In melee, it deals [[/r 1d4]] damage and severs limbs on a natural 17.</p><p><strong>Features:</strong> weapon, vorpal</p>",
+    "description": "<p>A push-button shield of force.</p><p>In melee, it deals [[/r 1d4]] damage and severs limbs on a natural 17.</p><p><strong>Features:</strong> weapon, vorpal</p><p><em>armors with the weapon feature are weapons with armor bonus active effect</em></p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -27,7 +27,7 @@
       "bonus": 1,
       "damage": "1d4"
     },
-    "type": "armor",
+    "type": "weapon",
     "power": {
       "img": "icons/svg/book.svg",
       "name": "",
@@ -60,11 +60,57 @@
         "versatile": "1d4",
         "bonus": ""
       },
-      "range": "",
+      "range": "close",
       "versatile": false
-    }
+    },
+    "default_ability": ""
   },
-  "effects": [],
+  "effects": [
+    {
+      "name": "armor +3",
+      "origin": "Compendium.sdm.equipment.Item.27YcJ2YjxiMAhYCR",
+      "img": "icons/equipment/shield/shield-round-boss-wood-brown.webp",
+      "_id": "pD1CwyKQz9f0358t",
+      "type": "base",
+      "system": {},
+      "changes": [
+        {
+          "key": "system.armor_bonus",
+          "mode": 2,
+          "value": "3",
+          "priority": null
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.33",
+        "createdTime": 1756467879679,
+        "modifiedTime": 1756467936961,
+        "lastModifiedBy": "0fqTkfNvjooZ2og7"
+      },
+      "_key": "!items.effects!27YcJ2YjxiMAhYCR.pD1CwyKQz9f0358t"
+    }
+  ],
   "sort": 0,
   "ownership": {
     "default": 0,
@@ -75,11 +121,11 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.347",
+    "coreVersion": "13.348",
     "systemId": "sdm",
-    "systemVersion": "0.1.32",
+    "systemVersion": "0.1.33",
     "createdTime": 1756407641057,
-    "modifiedTime": 1756407755310,
+    "modifiedTime": 1756467991378,
     "lastModifiedBy": "0fqTkfNvjooZ2og7"
   },
   "_key": "!items!27YcJ2YjxiMAhYCR"

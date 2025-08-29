@@ -62,6 +62,8 @@ export class HeroDiceUI {
 
     const defaultHeroDiceType = game.settings.get('sdm', 'defaultHeroDiceType');
     const heroDiceType = actor?.system?.hero_dice?.dice_type || defaultHeroDiceType;
+    const actorData = actor?.system;
+    const damageMultiplier = CONFIG.SDM.getDamageMultiplier(actorData.base_damage_multiplier || 2);
     const heroicIndexes = remainingDice
       .filter(remaining => remaining.isKept)
       .flatMap(remaining => (remaining.heroicAllocated || []).map(heroic => heroic.index));
@@ -86,7 +88,7 @@ export class HeroDiceUI {
       heroicUsed: heroicIndexes,
       total,
       modifiers: nonTargetValue,
-      multiplier: targetMultiplier !== 1 ? CONFIG.SDM.damageMultiplier[`*${targetMultiplier}`] : '',
+      multiplier: targetMultiplier !== 1 ? damageMultiplier[`*${targetMultiplier}`] : '',
       diceTotal: targetGroupTotal,
       keepCount: keepRule.count,
       explosions,

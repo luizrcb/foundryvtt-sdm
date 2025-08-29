@@ -196,6 +196,8 @@ export default class SDMRoll {
   }
 
   #buildFlavorText(fixedModifiers, diceModifiers) {
+    const actorData = this.actor?.system;
+    const damageMultiplier = CONFIG.SDM.getDamageMultiplier(actorData.base_damage_multiplier || 2);
     const rollMode =
       this.mode === RollMode.NORMAL ? '' : $l10n(`SDM.Roll${capitalizeFirstLetter(this.mode)}Abbr`);
     const versatileLabel = $l10n('SDM.FeatureVersatile');
@@ -214,7 +216,7 @@ export default class SDMRoll {
     if (diceModifiers) parts.push(`(${diceModifiers})`);
     if (fixedModifiers) parts.push(`(${fixedModifiers >= 0 ? '+' : ''}${fixedModifiers})`);
     if (rollMode) parts.push(`(${rollMode})`);
-    if (this.multiplier) parts.push(`(${CONFIG.SDM.damageMultiplier[this.multiplier]})`);
+    if (this.multiplier) parts.push(`(${damageMultiplier[this.multiplier]})`);
     if (this.type === RollType.DAMAGE && this.explodingDice) parts.push(`(d*)`);
 
     const flavor = parts.join(' ');

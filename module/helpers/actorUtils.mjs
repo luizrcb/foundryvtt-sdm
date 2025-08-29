@@ -288,3 +288,26 @@ export async function createNPCByLevel(name, lvl, tableName, initiative) {
   await createRandomTrait(targetActor, traitsTable);
   return npcData;
 }
+
+
+export async function createBackgroundTrait(targetActor, {
+  flavor = '',
+  role= '',
+  task = '',
+  spin = ''
+}) {
+  const traitName = `${flavor} ${role}`;
+  const description = `
+<p><strong>${game.i18n.localize('SDM.BackgroundTask')}:</strong> ${task}</p>
+<p><strong>${game.i18n.localize('SDM.BackgroundSpin')}:</strong> ${spin}</p>`;
+
+  await targetActor.createEmbeddedDocuments('Item', [
+    new Item({
+      name: traitName,
+      type: 'trait',
+      system: {
+        description,
+      }
+    }).toObject()
+  ]);
+}

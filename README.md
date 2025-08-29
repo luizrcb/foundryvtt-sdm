@@ -96,6 +96,7 @@ An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG
     - Generate Random NPCs using tables from the Vastlands Guidebook (VLG)
   - SDM Player Macros:
     - Generate Ability Scores (method described in the Vastlands Guidebook (VLG): rolls 1d100 for every ability score and displays the results in chat).
+    - Character Background Trait Generator (based in the Vastlands Guidebook Background table)
   - Rolltables:
     - Ability Scores (preferred method for ability score generation). Roll d100 table to generate ability scores, then assign unlabeled scores.
     - Referee Title (a fun d10 table to choose referee title and referee session power).

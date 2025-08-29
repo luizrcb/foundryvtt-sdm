@@ -123,6 +123,21 @@ SDM.damageMultiplier = {
   '*32': 'x32'
 };
 
+
+SDM.getDamageMultiplier = function generateDamageMultiplier(base = 2, ranks = 5) {
+  const sequence = [];
+  const multiplierObject = {};
+
+  // Gerar sequência de multiplicadores
+  for (let i = 0; i < ranks; i++) {
+    const value = base * Math.pow(2, i); // base * 2^i
+    sequence.push(value);
+    multiplierObject[`*${value}`] = `x${value}`;
+  }
+
+  return multiplierObject
+}
+
 SDM.speedOptions = {
   'SDM.SpeedVeryVerySlow': -3,
   'SDM.SpeedVerySlow': -2,
@@ -157,6 +172,8 @@ SDM.characterPropertiesToActiveEffects = [
   'system.trait_slots_bonus',
   'system.item_slots_bonus',
   'system.small_item_slots_bonus',
+  'system.weapon_item_slots_bonus',
+  'system.base_damage_multiplier',
   'system.packed_item_slots_bonus',
   'system.burden_slots_bonus',
   'system.power_slots_bonus',

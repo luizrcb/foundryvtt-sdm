@@ -365,12 +365,14 @@ export class SdmActor extends Actor {
     const burdenPenalTyBonus = this.system.burden_penalty_bonus || 0;
     let powerSlotsBonus = this.system.power_slots_bonus || 0;
     let smallItemBonus = this.system.small_item_slots_bonus || 0;
+    let weaponItemBonus = this.system.weapon_item_slots_bonus || 0;
     let packedItemBonus = this.system.packed_item_slots_bonus || 0;
 
     // Iterate through items, allocating to containers
     for (let i of itemsArray) {
       const isGear = i.type === ItemType.GEAR;
       const isPower = i.system.type === GearType.POWER;
+      const isWeapon = i.system.type === GearType.WEAPON;
       const isSmallITem = i.system.size.unit === SizeUnit.SOAPS;
       const isReadied = !!i.system.readied;
 
@@ -378,10 +380,15 @@ export class SdmActor extends Actor {
 
       if (isPower && powerSlotsBonus > 0) {
         powerSlotsBonus -= 1;
-        if (itemSlots >= 1) itemSlots -= 1;
+        // if (itemSlots >= 1) itemSlots -= 1;
+        itemSlots = 0;
+      } else if (isGear && isWeapon && weaponItemBonus > 0) {
+        weaponItemBonus -= 1;
+        itemSlots = 0;
       } else if (isGear && isSmallITem && isReadied && smallItemBonus > 0) {
         smallItemBonus -= 1;
-        if (itemSlots >= 1) itemSlots -= 1;
+        // if (itemSlots >= 1) itemSlots -= 1;
+        itemSlots = 0;
       } else if (isGear && !isReadied && packedItemBonus > 0) {
         packedItemBonus -= 1;
         items.packedTaken += 1;

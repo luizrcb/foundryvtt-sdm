@@ -158,8 +158,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
   }
 
   damageMultiplierOptions() {
+    const baseMultiplier = this.actor.system.base_damage_multiplier || 2;
+    const damageMultiplier = CONFIG.SDM.getDamageMultiplier(baseMultiplier);
     let options = '';
-    for (const [key, value] of Object.entries(CONFIG.SDM.damageMultiplier)) {
+    for (const [key, value] of Object.entries(damageMultiplier)) {
       options += `<option value="${key}">${value}</option>\n`;
     }
 
@@ -216,6 +218,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     let shouldExplode = !isDamage && !isPower && !isPowerAlbum;
     let selectedAbility = isAttack ? actorAttack?.default_ability : ability;
 
+    const actorData = this.actor?.system;
+    const damageMultiplier = CONFIG.SDM.getDamageMultiplier(actorData.base_damage_multiplier || 2);
+
     const template = await renderTemplate(templatePath('custom-roll-dialog'), {
       rollTitlePrefix,
       title,
@@ -224,7 +229,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       attack,
       availableSkills,
       selectedSkill,
-      multiplierOptions: CONFIG.SDM.damageMultiplier,
+      multiplierOptions: damageMultiplier,
       rollModes: CONFIG.SDM.rollMode,
       type,
       isCharacterActor,
@@ -1260,6 +1265,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       label += ` (${$l10n('TYPES.Item.ward').toLowerCase()} +${ward})`;
     }
 
+    const actorData = this.actor?.system;
+    const damageMultiplier = CONFIG.SDM.getDamageMultiplier(actorData.base_damage_multiplier || 2);
+
     const template = await renderTemplate(templatePath('custom-roll-dialog'), {
       rollTitlePrefix: '',
       title: label,
@@ -1268,7 +1276,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       attack: '',
       availableSkills: [],
       selectedSkill: '',
-      multiplierOptions: CONFIG.SDM.damageMultiplier,
+      multiplierOptions: damageMultiplier,
       rollModes: CONFIG.SDM.rollMode,
       type: RollType.SAVE,
       isCharacterActor: true,
