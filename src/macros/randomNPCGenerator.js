@@ -72,9 +72,8 @@ const data = await DialogV2.wait({
     },
   ],
   rejectClose: false,
-  render: (dialog) => {
-    // dialog is the DialogV2 instance
-    const html = dialog.target.element; // element is a jQuery-like object, [0] is the HTMLElement
+  render: (event, dialog) => {
+    const html = dialog.element;
     const select = html.querySelector("#npc-table-select");
     const description = html.querySelector("#npc-table-description");
 
@@ -114,3 +113,8 @@ if (data.level && !isNaN(data.level)) {
 } else {
   npc = await game.sdm.api.createNPC(npcData?.name, npcData.table, npcData.initiative);
 }
+
+ui.notifications.info(game.i18n.format("SDM.NPCCreated", {
+  name: npc?.name,
+  level: npc?.system?.level || "-",
+}));

@@ -266,6 +266,7 @@ export async function createNPC(name = 'NPC', tableName, initiative = '') {
   const traitsTable = NPCTables[tableName].traits;
 
   await createRandomTrait(targetActor, traitsTable);
+  return npcData;
 }
 
 // retorna NPC pelo nível (ou nível mais próximo abaixo)
@@ -285,4 +286,5 @@ export async function createNPCByLevel(name, lvl, tableName, initiative) {
   const traitsTable = NPCTables[tableName].traits;
 
   await createRandomTrait(targetActor, traitsTable);
+  return npcData;
 }
