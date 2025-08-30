@@ -176,6 +176,7 @@ SDM.characterPropertiesToActiveEffects = [
   'system.base_damage_multiplier',
   'system.packed_item_slots_bonus',
   'system.burden_slots_bonus',
+  'system.burden_penalty_bonus',
   'system.power_slots_bonus',
   'system.hero_dice.bonus',
   'system.hero_dice.dice_type',

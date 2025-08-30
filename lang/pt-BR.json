@@ -342,6 +342,7 @@
   "SDM.EffectsLabel.system.trait_slots_bonus": "Afeta o número de espaços para traços",
   "SDM.EffectsLabel.system.ward_bonus": "Bônus de proteção (afeta defesa mental e todas as rolagens de salvaguarda)",
   "SDM.EffectsLabel.system.weapon_item_slots_bonus": "Número de armas que não ocupam espaços",
+  "SDM.EffectsLabel.system.burden_penalty_bonus": "Penalidade por Fardos (números negativos para ignorar fardos)",
   "SDM.EffectSource": "Fonte",
   "SDM.EffectTemporary": "Efeitos Temporários",
   "SDM.EffectToggle": "Alternar Efeito",
