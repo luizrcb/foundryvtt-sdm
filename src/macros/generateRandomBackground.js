@@ -1,4 +1,11 @@
-// ----- 1. Sorteio das 5 linhas -----
+let actor = game.user?.character || canvas?.tokens?.controlled[0]?.actor;
+
+if (!actor) {
+  ui.notifications.error(game.i18n.localize('SDM.BackgroundInvalidCharacter'));
+  return;
+}
+
+// ----- 1. Sorteio das 10 linhas -----
 const BACKGROUND_TABLE = Array.from({ length: 40 }, (_, i) => ({
   flavor: game.i18n.localize(`SDM.BackgroundRow${String(i + 1).padStart(2, '0')}.Flavor`),
   role1: game.i18n.localize(`SDM.BackgroundRow${String(i + 1).padStart(2, '0')}.Role1`),
@@ -7,16 +14,19 @@ const BACKGROUND_TABLE = Array.from({ length: 40 }, (_, i) => ({
   spin: game.i18n.localize(`SDM.BackgroundRow${String(i + 1).padStart(2, '0')}.Spin`)
 }));
 
-function roll5d40(table) {
+function roll10d40(table) {
   const results = [];
-  while (results.length < 5) {
+  while (results.length < 10) {
     const r = Math.floor(Math.random() * table.length);
     if (!results.includes(r)) results.push(r);
   }
   return results.map(i => ({ index: i + 1, ...table[i] }));
 }
 
-// ----- 2. Criar HTML do Dialog com inputs editáveis e CSS -----
+// Ordem dos dois primeiros campos do preview.
+let previewOrder = ['flavor', 'role'];
+
+// ----- 2. HTML do Dialog -----
 function buildDialogContent(rows) {
   let html = `
     <style>
@@ -28,16 +38,14 @@ function buildDialogContent(rows) {
       .preview-inputs input { width: 100%; margin-bottom: 4px; padding: 4px; background-color: #333; border: 1px solid #555; color: #fff; }
       .preview-inputs label { font-weight: bold; margin-bottom: 2px; display: block; }
       #reroll-dice { color: red; cursor:pointer; margin-bottom:5px; display:inline-block; }
+      #swap-order { cursor: pointer; margin-left: 8px; }
+      .preview-toolbar { display:flex; align-items:center; gap:8px; margin-bottom:6px; }
+      .muted { opacity: 0.85; font-size: 0.9em; }
     </style>
     <div style="display:flex; justify-content:flex-end;">
       <div style="color: red; margin-bottom:5px;">
         <span style="color: black"><b>${game.i18n.localize('SDM.BackgroundReroll')}</b></span>
-        <i
-          class="fas fa-dice fa-lg"
-          id="reroll-dice"
-          title="${game.i18n.localize('SDM.BackgroundReroll')}"
-          style="cursor: pointer"
-        ></i>
+        <i class="fas fa-dice fa-lg" id="reroll-dice" title="${game.i18n.localize('SDM.BackgroundReroll')}" style="cursor: pointer"></i>
       </div>
     </div>
     <table class="background-table">
@@ -67,19 +75,61 @@ function buildDialogContent(rows) {
 
   html += `</tbody></table>
     <div class="preview-inputs">
-      <label><strong>${game.i18n.localize('SDM.BackgroundEditablePreview')}<strong></label>
-      <input type="text" id="preview-flavor" placeholder="${game.i18n.localize('SDM.BackgroundFlavor')}">
-      <input type="text" id="preview-role" placeholder="${game.i18n.localize('SDM.BackgroundRole')}">
-      <input type="text" id="preview-task" placeholder="${game.i18n.localize('SDM.BackgroundTask')}">
-      <input type="text" id="preview-spin" placeholder="${game.i18n.localize('SDM.BackgroundSpin')}">
+      <div class="preview-toolbar">
+        <label style="margin:0;"><strong>${game.i18n.localize('SDM.BackgroundEditablePreview')}</strong></label>
+        <i style="cursor:pointer; margin-left: 5px;" id="swap-order" class="fas fa-exchange-alt" title="${game.i18n.localize('SDM.BackgroundSwapOrder')}"> ${game.i18n.localize('SDM.BackgroundSwapOrder')}</i>
+        <span class="muted" id="order-hint"></span>
+      </div>
+      <div id="preview-fields"></div>
     </div>`;
   return html;
 }
 
-// ----- 3. Inicializa linhas sorteadas -----
-let selectedRows = roll5d40(BACKGROUND_TABLE);
+// Renderiza os inputs do preview conforme a ordem atual.
+function renderPreviewInputs(html) {
+  const container = html.querySelector('#preview-fields');
+  if (!container) return;
 
-// ----- 4. Criar DialogV2 -----
+  const current = {
+    flavor: html.querySelector('#preview-flavor')?.value ?? '',
+    role:   html.querySelector('#preview-role')?.value ?? '',
+    task:   html.querySelector('#preview-task')?.value ?? '',
+    spin:   html.querySelector('#preview-spin')?.value ?? ''
+  };
+
+  const flavorPh = game.i18n.localize('SDM.BackgroundFlavor');
+  const rolePh   = game.i18n.localize('SDM.BackgroundRole');
+  const taskPh   = game.i18n.localize('SDM.BackgroundTask');
+  const spinPh   = game.i18n.localize('SDM.BackgroundSpin');
+
+  const firstField  = previewOrder[0];
+  const secondField = previewOrder[1];
+
+  container.innerHTML = `
+    <input type="text" id="preview-${firstField}"  placeholder="${firstField  === 'flavor' ? flavorPh : rolePh}">
+    <input type="text" id="preview-${secondField}" placeholder="${secondField === 'flavor' ? flavorPh : rolePh}">
+    <input type="text" id="preview-task" placeholder="${taskPh}">
+    <input type="text" id="preview-spin"  placeholder="${spinPh}">
+  `;
+
+  container.querySelector('#preview-flavor')?.setAttribute('value', current.flavor);
+  const pFlavor = container.querySelector('#preview-flavor'); if (pFlavor) pFlavor.value = current.flavor;
+  container.querySelector('#preview-role')?.setAttribute('value', current.role);
+  const pRole   = container.querySelector('#preview-role');   if (pRole)   pRole.value   = current.role;
+  const pTask   = container.querySelector('#preview-task');   if (pTask)   pTask.value   = current.task;
+  const pSpin   = container.querySelector('#preview-spin');   if (pSpin)   pSpin.value   = current.spin;
+
+  const orderHint = html.querySelector('#order-hint');
+  if (orderHint) {
+    const names = { flavor: flavorPh, role: rolePh };
+    orderHint.textContent = `${names[previewOrder[0]]} → ${names[previewOrder[1]]}`;
+  }
+}
+
+// ----- 3. Inicialização -----
+let selectedRows = roll10d40(BACKGROUND_TABLE);
+
+// ----- 4. DialogV2 -----
 await foundry.applications.api.DialogV2.wait({
   window: { title: game.i18n.localize('SDM.BackgroundGenerator') },
   content: buildDialogContent(selectedRows),
@@ -91,21 +141,21 @@ await foundry.applications.api.DialogV2.wait({
         const html = dialog.element;
         const selected = { flavor: null, role1: null, role2: null, task: null, spin: null };
 
-        // Seleção das linhas
-        html.querySelectorAll('tr').forEach(tr => {
+        // Linhas selecionadas
+        html.querySelectorAll('tbody tr').forEach(tr => {
           const rowIndex = parseInt(tr.dataset.row);
           const rowCheckbox = tr.querySelector('.row-select');
           if (rowCheckbox?.checked && !isNaN(rowIndex)) {
             const rowData = selectedRows[rowIndex];
             selected.flavor ??= rowData.flavor;
-            selected.role1 ??= rowData.role1;
-            selected.role2 ??= rowData.role2;
-            selected.task ??= rowData.task;
-            selected.spin ??= rowData.spin;
+            selected.role1  ??= rowData.role1;
+            selected.role2  ??= rowData.role2;
+            selected.task   ??= rowData.task;
+            selected.spin   ??= rowData.spin;
           }
         });
 
-        // Seleção das células
+        // Células selecionadas
         html.querySelectorAll('.cell-select:checked').forEach(cb => {
           const tr = cb.closest('tr');
           if (!tr) return;
@@ -114,29 +164,42 @@ await foundry.applications.api.DialogV2.wait({
           selected[cb.dataset.col] = selectedRows[rowIndex][cb.dataset.col];
         });
 
-        // Pega valores do preview ou usa os selecionados
-        const flavor = html.querySelector('#preview-flavor').value || selected.flavor;
-        const role =
-          html.querySelector('#preview-role').value || `${selected.role1} ${selected.role2}`;
-        const task = html.querySelector('#preview-task').value || selected.task;
-        const spin = html.querySelector('#preview-spin').value || selected.spin;
+        // Pega os DOIS primeiros campos em ordem visual e combina
+        const firstId  = `#preview-${previewOrder[0]}`;
+        const secondId = `#preview-${previewOrder[1]}`;
+        const roleAuto = (selected.role1 && selected.role2)
+          ? `${selected.role1} ${selected.role2}`
+          : (selected.role1 ?? selected.role2 ?? '');
 
-        const actor = game.user?.character || canvas?.tokens?.controlled[0]?.actor;
+        const firstVal =
+          html.querySelector(firstId)?.value ||
+          (previewOrder[0] === 'flavor' ? selected.flavor : roleAuto);
 
+        const secondVal =
+          html.querySelector(secondId)?.value ||
+          (previewOrder[1] === 'flavor' ? selected.flavor : roleAuto);
+
+        const combined = [firstVal, secondVal].filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
+
+        const task = html.querySelector('#preview-task')?.value || selected.task;
+        const spin = html.querySelector('#preview-spin')?.value || selected.spin;
+
+        actor = game.user?.character || canvas?.tokens?.controlled[0]?.actor;
         if (!actor) {
           ui.notifications.error(game.i18n.localize('SDM.BackgroundInvalidCharacter'));
-        }
-
-        if (!flavor || !role || !task || !spin) {
           return;
         }
+        if (!combined) return;
 
-
-        await game.sdm.api.createBackgroundTrait(actor, { flavor, role, task, spin });
+        await game.sdm.api.createBackgroundTrait(actor, {
+          title: combined,
+          task,
+          spin
+        });
 
         ui.notifications.info(game.i18n.format("SDM.BackgroundTraitCreated", {
-          flavor,
-          role,
+          flavor: combined,
+          role: '',
           name: actor.name,
         }));
       }
@@ -148,18 +211,21 @@ await foundry.applications.api.DialogV2.wait({
 
     function updatePreview() {
       const selected = { flavor: null, role1: null, role2: null, task: null, spin: null };
-      html.querySelectorAll('tr').forEach(tr => {
+
+      // Use apenas tbody tr
+      html.querySelectorAll('tbody tr').forEach(tr => {
         const rowIndex = parseInt(tr.dataset.row);
         const rowCheckbox = tr.querySelector('.row-select');
         if (rowCheckbox?.checked && !isNaN(rowIndex)) {
           const rowData = selectedRows[rowIndex];
           selected.flavor ??= rowData.flavor;
-          selected.role1 ??= rowData.role1;
-          selected.role2 ??= rowData.role2;
-          selected.task ??= rowData.task;
-          selected.spin ??= rowData.spin;
+          selected.role1  ??= rowData.role1;
+          selected.role2  ??= rowData.role2;
+          selected.task   ??= rowData.task;
+          selected.spin   ??= rowData.spin;
         }
       });
+
       html.querySelectorAll('.cell-select:checked').forEach(cb => {
         const tr = cb.closest('tr');
         if (!tr) return;
@@ -168,11 +234,17 @@ await foundry.applications.api.DialogV2.wait({
         selected[cb.dataset.col] = selectedRows[rowIndex][cb.dataset.col];
       });
 
-      html.querySelector('#preview-flavor').value = selected.flavor ?? '';
-      html.querySelector('#preview-role').value =
-        selected.role1 && selected.role2 ? `${selected.role1} ${selected.role2}` : '';
-      html.querySelector('#preview-task').value = selected.task ?? '';
-      html.querySelector('#preview-spin').value = selected.spin ?? '';
+      const pFlavor = html.querySelector('#preview-flavor');
+      const pRole   = html.querySelector('#preview-role');
+      if (pFlavor) pFlavor.value = selected.flavor ?? '';
+      if (pRole)   pRole.value   = (selected.role1 && selected.role2)
+        ? `${selected.role1} ${selected.role2}`
+        : (selected.role1 ?? selected.role2 ?? '');
+
+      const pTask = html.querySelector('#preview-task');
+      const pSpin = html.querySelector('#preview-spin');
+      if (pTask) pTask.value = selected.task ?? '';
+      if (pSpin) pSpin.value = selected.spin ?? '';
     }
 
     function attachListeners() {
@@ -211,19 +283,38 @@ await foundry.applications.api.DialogV2.wait({
       });
     }
 
+    // Liga o botão de troca **uma única vez**
+    const swap = html.querySelector('#swap-order');
+    if (swap && !swap.dataset.bound) {
+      swap.addEventListener('click', () => {
+        previewOrder.reverse();
+        renderPreviewInputs(html);
+        updatePreview();
+      });
+      swap.dataset.bound = '1';
+    }
+
     // Reroll
     const reroll = html.querySelector('#reroll-dice');
     reroll?.addEventListener('click', async () => {
       if (!window.confirm(game.i18n.localize('SDM.BackgroundRerollConfirmation'))) return;
-      selectedRows = roll5d40(BACKGROUND_TABLE);
+      selectedRows = roll10d40(BACKGROUND_TABLE);
+
       const tbody = html.querySelector('tbody');
       if (tbody) {
         tbody.innerHTML = buildDialogContent(selectedRows).match(/<tbody>([\s\S]*)<\/tbody>/)[1];
       }
+
+      // Reanexa apenas os listeners da TABELA (swap-order continua 1x)
       attachListeners();
+
+      // Mantém a ordem atual do preview
+      renderPreviewInputs(html);
       updatePreview();
     });
 
+    // Primeira renderização
+    renderPreviewInputs(html);
     attachListeners();
     updatePreview();
   }

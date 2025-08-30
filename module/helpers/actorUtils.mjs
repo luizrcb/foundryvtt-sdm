@@ -294,16 +294,15 @@ export async function createNPCByLevel(name, lvl, tableName, initiative) {
 
 export async function createBackgroundTrait(
   targetActor,
-  { flavor = '', role = '', task = '', spin = '' }
+  { title= '', task = '', spin = '' }
 ) {
-  const traitName = `${flavor} ${role}`;
   const description = `
 <p><strong>${game.i18n.localize('SDM.BackgroundTask')}:</strong> ${task}</p>
 <p><strong>${game.i18n.localize('SDM.BackgroundSpin')}:</strong> ${spin}</p>`;
 
   await targetActor.createEmbeddedDocuments('Item', [
     new Item({
-      name: traitName,
+      name: title,
       type: 'trait',
       system: {
         description
