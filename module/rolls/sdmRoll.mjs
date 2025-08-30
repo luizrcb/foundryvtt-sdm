@@ -181,18 +181,30 @@ export default class SDMRoll {
       abilityMod = actorData?.abilities[this.ability]?.current ?? 0;
     } else if (
       this.actor.type === ActorType.NPC &&
-      ![RollType.DAMAGE, RollType.POWER].includes(type)
+      ![RollType.DAMAGE, RollType.POWER, RollType.POWER_ALBUM].includes(type)
     ) {
       abilityMod = actorData?.bonus ?? 0;
     }
 
     const burdenPenalty = actorData?.burden_penalty || 0;
-    const burdenPenaltyBonus = actorData?.burden_penalty_bonus || 0;
+    const burdenPenaltyBonus = actorData?.burden_penalty_bonus || 0; // ignored burdens
     const skillMod = this.skill?.mod || 0;
     const allBonuses = burdenPenaltyBonus - burdenPenalty + abilityMod + skillMod;
     const modifierComponents = this.#parseModifierString(this.modifier);
+    const fixedAndDice = this.#separateFixedAndDice([...modifierComponents, `${allBonuses}`]);
 
-    return this.#separateFixedAndDice([...modifierComponents, `${allBonuses}`]);
+    const fixed = fixedAndDice.fixedModifiers;
+
+    const useHardLimitRule = game.settings.get('sdm', 'useHardLimitRule');
+    const defaultHardLimitValue = game.settings.get('sdm', 'defaultHardLimitValue') || 13;
+
+    const finalFixed =
+      useHardLimitRule && ![RollType.DAMAGE, RollType.POWER, RollType.POWER_ALBUM].includes(type)
+        ? Math.min(fixed, defaultHardLimitValue)
+        : fixed;
+    fixedAndDice.fixedModifiers = finalFixed;
+
+    return fixedAndDice;
   }
 
   #buildFlavorText(fixedModifiers, diceModifiers) {

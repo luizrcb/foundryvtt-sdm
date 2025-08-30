@@ -500,7 +500,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         this.actor.system.hero_dice?.dice_type || game.settings.get('sdm', 'defaultHeroDiceType');
       // Replace the abilities in the system object with the reordered abilities
       context.heroDiceType = heroDiceType;
-      context.system.abilities = reorderedAbilities;
+      // context.system.abilities = reorderedAbilities;
 
       // Adiciona o estado do modo ao contexto
       context.isEditMode = this.actor.getFlag('sdm', 'editMode') ?? false;
@@ -1236,13 +1236,14 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const { modifier = '', charismaOperator = 1, rollMode = 'normal' } = data;
 
     const baseFormula = game.settings.get('sdm', 'baseReactionFormula') || '2d6';
+
     const reactionBonus = this.actor.system.reaction_bonus || 0;
     const burdenPenalty = this.actor.system.burden_penalty || 0;
     const chaMod = this.actor.system.abilities['cha'].current;
-
-    const burdenPart = burdenPenalty > 0 ? -burdenPenalty : '';
-    const chaPart = `${charismaOperator > 0 ? '+' : '-'}${chaMod}`;
-    const bonusPart = reactionBonus ? ` +${reactionBonus}` : '';
+    const burdenPart = burdenPenalty > 0 ? (-1 * burdenPenalty) : 0;
+    const chaPart = charismaOperator > 0 ? chaMod : (-1 * chaMod);
+    const totalBonuses = chaPart + reactionBonus + burdenPart;
+    const bonusPart = totalBonuses === 0 ? '' : totalBonuses > 0 ? `+${totalBonuses}` : totalBonuses;
     const modPart = foundry.dice.Roll.validate(modifier) ? ` +${modifier}` : '';
 
     const keepModifier =
@@ -1252,7 +1253,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       ? `{${baseFormula}, ${baseFormula}}${keepModifier}`
       : baseFormula;
 
-    const formula = `${diceExpression}${chaPart}${bonusPart}${modPart}${burdenPart}`;
+    const formula = `${diceExpression}${bonusPart}${modPart}`;
     const sanitizedFormula = sanitizeExpression(formula);
 
     let roll = new Roll(sanitizedFormula);
@@ -1278,7 +1279,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const saveBonus = abilityData.save_bonus || 0;
     const allSaveBonus = this.actor.system.all_save_bonus || 0;
     const savingThrowSum = finalAbility + ward + saveBonus + allSaveBonus - burdenPenalty;
-    const finalSavingThrowBonus = Math.min(savingThrowSum, MAX_MODIFIER);
+
+    const useHardLimitRule = game.settings.get('sdm', 'useHardLimitRule');
+    const defaultHardLimitValue = game.settings.get('sdm', 'defaultHardLimitValue') || MAX_MODIFIER;
+    const finalSavingThrowBonus = useHardLimitRule ? Math.min(savingThrowSum, defaultHardLimitValue) : savingThrowSum;
+
     const reverseShift = game.settings.get('sdm', 'reverseShiftKey');
     const isShift = reverseShift !== !!event.shiftKey;
 
@@ -1355,9 +1360,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       ? `{${baseRollFormula}, ${baseRollFormula}}${keepModifier}`
       : baseRollFormula;
 
-    let formula = `${diceExpression} ${
-      finalSavingThrowBonus >= 0 ? `+` : ``
-    }${finalSavingThrowBonus} ${modPart}`;
+    const bonusPart = finalSavingThrowBonus === 0 ? '' : finalSavingThrowBonus > 0 ? `+${finalSavingThrowBonus}` : finalSavingThrowBonus;
+
+    let formula = `${diceExpression}${bonusPart}${modPart}`;
+
     const targetNumber = this.actor.system.save_target;
     formula = sanitizeExpression(formula);
     // Create and evaluate the roll

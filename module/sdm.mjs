@@ -4,7 +4,12 @@ import { SdmActor } from './documents/actor.mjs';
 import { SdmCombatant } from './documents/combatant.mjs';
 import { SdmItem } from './documents/item.mjs';
 import { registerHandlebarsHelpers } from './handlebars-helpers.mjs';
-import { createNPC, createNPCByLevel, createBackgroundTrait } from './helpers/actorUtils.mjs';
+import {
+  createNPC,
+  createNPCByLevel,
+  createBackgroundTrait,
+  createFullAutoDestructionMode
+} from './helpers/actorUtils.mjs';
 import { SDM } from './helpers/config.mjs';
 import { ActorType, ItemType } from './helpers/constants.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
@@ -51,6 +56,7 @@ globalThis.sdm = {
     createNPC,
     createNPCByLevel,
     createBackgroundTrait,
+    createFullAutoDestructionMode
   }
 };
 
@@ -85,7 +91,7 @@ Hooks.on('preUpdateActor', (actor, update) => {
 });
 
 Hooks.on('createActor', async (actor, _options, _id) => {
-  if (!actor.isOwner) return
+  if (!actor.isOwner) return;
   let disposition = CONST.TOKEN_DISPOSITIONS.NEUTRAL;
 
   const tokenData = {
@@ -93,8 +99,8 @@ Hooks.on('createActor', async (actor, _options, _id) => {
     displayName: CONST.TOKEN_DISPLAY_MODES.OWNER,
     displayBars: CONST.TOKEN_DISPLAY_MODES.OWNER,
     disposition: disposition,
-    lockRotation: true,
-  }
+    lockRotation: true
+  };
 
   if (actor.type === ActorType.NPC) {
     tokenData.appendNumber = true;
@@ -107,24 +113,24 @@ Hooks.on('createActor', async (actor, _options, _id) => {
     tokenData.actorLink = true;
   }
 
-  await actor.update({'prototypeToken': tokenData })
+  await actor.update({ prototypeToken: tokenData });
 });
 
 Hooks.on('updateActor', async actor => {
   if (!actor.isOwner) return;
 
   const name = actor.name;
-  await actor.update({'prototypeToken.name': name });
+  await actor.update({ 'prototypeToken.name': name });
 });
 
 Hooks.on('createItem', async (item, _options, _id) => {
-  if (!item.isOwner) return
+  if (!item.isOwner) return;
 
   if (item.type !== ItemType.GEAR) return;
 
   const defaultMaxPowers = game.settings.get('sdm', 'defaultMaxPowers') || DEFAULT_MAX_POWERS;
 
-  await item.update({'system.max_powers': defaultMaxPowers });
+  await item.update({ 'system.max_powers': defaultMaxPowers });
 });
 
 Hooks.on('renderSettings', (app, html) => renderSettings(html));
@@ -198,14 +204,14 @@ Hooks.once('init', function () {
   // with the Character/NPC as part of super.defineSchema()
   CONFIG.Actor.dataModels = {
     character: models.SdmCharacter,
-    npc: models.SdmNPC,
+    npc: models.SdmNPC
     //caravan: models.SdmCaravan
   };
   CONFIG.Item.documentClass = SdmItem;
   CONFIG.Item.dataModels = {
     gear: models.SdmGear,
     trait: models.SdmTrait,
-    burden: models.SdmBurden,
+    burden: models.SdmBurden
     //mount: models.SdmMount,
     //vehicle: models.SdmVehicle
   };
@@ -390,19 +396,19 @@ function _configureFonts() {
  * @private
  */
 function _generateLinks() {
-  const links = document.createElement("ul");
-  links.classList.add("unlist", "links");
+  const links = document.createElement('ul');
+  links.classList.add('unlist', 'links');
   links.innerHTML = `
     <li>
       <a href="https://github.com/luizrcb/foundryvtt-sdm/releases/latest" target="_blank">
-        ${game.i18n.localize("SDM.Notes")}
+        ${game.i18n.localize('SDM.Notes')}
       </a>
     </li>
     <li>
-      <a href="https://github.com/luizrcb/foundryvtt-sdm/issues" target="_blank">${game.i18n.localize("SDM.Issues")}</a>
+      <a href="https://github.com/luizrcb/foundryvtt-sdm/issues" target="_blank">${game.i18n.localize('SDM.Issues')}</a>
     </li>
     <li>
-      <a href="https://github.com/luizrcb/foundryvtt-sdm/wiki" target="_blank">${game.i18n.localize("SDM.Wiki")}</a>
+      <a href="https://github.com/luizrcb/foundryvtt-sdm/wiki" target="_blank">${game.i18n.localize('SDM.Wiki')}</a>
     </li>
   `;
   return links;

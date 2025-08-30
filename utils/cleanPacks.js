@@ -8,6 +8,7 @@ const foldersToDelete = [
   'packs/rolltables',
   'packs/equipment',
   'packs/traits',
+  'packs/creatures'
 ];
 
 const rootDir = path.join(__dirname, '..');

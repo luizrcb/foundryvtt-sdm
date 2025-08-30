@@ -5,7 +5,8 @@ const packs = [
   { name: 'macros', source: 'packs-source/macros' },
   { name: 'player_macros', source: 'packs-source/player_macros' },
   { name: 'equipment', source: 'packs-source/equipment' },
-  { name: 'traits', source: 'packs-source/traits' }
+  { name: 'traits', source: 'packs-source/traits' },
+  { name: 'creatures', source: 'packs-source/creatures' }
 ];
 
 try {

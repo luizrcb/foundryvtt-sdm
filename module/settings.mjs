@@ -11,11 +11,14 @@ export const DEFAULT_LEVEL_UP_SOUND =
   'systems/sdm/assets/audio/sound_effects/single_church_bell.mp3';
 export const DEFAULT_CURRENCY_IMG = 'icons/commodities/currency/coins-stitched-pouch-brown.webp';
 export const DEFAULT_MAX_POWERS = 3;
+export const DEFAULT_HARD_LIMIT = 13;
 
 export function registerSystemSettings() {
   /* -------------------------------------------- */
   /*  System settings registration                */
   /* -------------------------------------------- */
+
+  /** qol settings */
 
   game.settings.register('sdm', 'reverseShiftKey', {
     name: 'SDM.SettingsReverseShiftKey',
@@ -25,6 +28,8 @@ export function registerSystemSettings() {
     type: Boolean,
     default: false
   });
+
+  /** game world settings */
 
   game.settings.register('sdm', 'currencyName', {
     name: 'SDM.SettingsCurrencyName',
@@ -77,6 +82,35 @@ export function registerSystemSettings() {
     }
   });
 
+  /** sdm rules settings */
+
+  game.settings.register('sdm', 'useHardLimitRule', {
+    name: 'SDM.SettingsUseHardLimitRule',
+    hint: 'SDM.SettingsUseHardLimitRuleHint',
+    scope: 'world',
+    restricted: true,
+    config: true,
+    type: Boolean,
+    default: true,
+    requiresReload: true
+  });
+
+  game.settings.register('sdm', 'defaultHardLimitValue', {
+    name: 'SDM.SettingsDefaultHardLimitValue',
+    hint: 'SDM.SettingsDefaultHardLimitValueHint',
+    scope: 'world',
+    restricted: true,
+    config: true,
+    type: Number,
+    default: DEFAULT_HARD_LIMIT,
+    onChange: value => {
+      if (!value || value <= 0) {
+        game.settings.set('sdm', 'defaultHardLimitValue', DEFAULT_HARD_LIMIT);
+      }
+    },
+    requiresReload: true
+  });
+
   game.settings.register('sdm', 'defaultMaxPowers', {
     name: 'SDM.SettingsDefaultMaxPowers',
     hint: 'SDM.SettingsDefaultMaxPowersHint',
@@ -92,6 +126,8 @@ export function registerSystemSettings() {
     },
     requiresReload: true
   });
+
+  /** rules customization settings */
 
   game.settings.register('sdm', 'skillModifierStep', {
     name: 'SDM.SettingsSkillModifierStep',
@@ -446,25 +482,25 @@ function makeDraggable(element, handle) {
       });
 
       // Broadcast to other clients so they update immediately
-      game.socket.emit("system.sdm", {
-        type: "updateEscalatorPosition",
+      game.socket.emit('system.sdm', {
+        type: 'updateEscalatorPosition',
         position: {
           left: element.style.left,
-          top: element.style.top,
-        },
+          top: element.style.top
+        }
       });
     }
   });
 }
 
 export function setupEscalatorDiePositionBroadcast() {
-  game.socket.on("system.sdm", (data) => {
-    if (data.type === "updateEscalatorPosition" && !game.user.isGM) {
-      const container = document.getElementById("escalator-die");
+  game.socket.on('system.sdm', data => {
+    if (data.type === 'updateEscalatorPosition' && !game.user.isGM) {
+      const container = document.getElementById('escalator-die');
       if (container) {
         container.style.top = data.position.top;
         container.style.left = data.position.left;
-        container.style.transform = "none";
+        container.style.transform = 'none';
       }
     }
   });

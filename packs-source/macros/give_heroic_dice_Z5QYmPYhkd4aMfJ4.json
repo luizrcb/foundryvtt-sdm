@@ -11,18 +11,18 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.345",
+    "coreVersion": "13.348",
     "systemId": "sdm",
     "systemVersion": "0.1.20",
     "createdTime": 1750710497200,
-    "modifiedTime": 1750710970855,
-    "lastModifiedBy": "ubbQuuuaFUXKToRg"
+    "modifiedTime": 1756551178840,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
   },
   "ownership": {
     "default": 0,
     "ubbQuuuaFUXKToRg": 0
   },
   "_id": "Z5QYmPYhkd4aMfJ4",
-  "sort": 300000,
+  "sort": 500000,
   "_key": "!macros!Z5QYmPYhkd4aMfJ4"
 }

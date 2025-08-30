@@ -1,6 +1,6 @@
 {
   "folder": "VVAAtWb7IMLM0ST8",
-  "name": "Soul Siphon Spear",
+  "name": "(0) Soul Siphon Spear",
   "type": "gear",
   "_id": "ZteNSXBaRUbC5CuU",
   "img": "icons/weapons/polearms/spear-flared-silver-pink.webp",
@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 3000,
     "cost_frequency": "",
-    "description": "<p>Whips like a cobra, drinking souls and leaving empty husks. Holds three souls.</p><p>Spend one to animate it as a spear snake (L3/12 life) or to regain [[/r 1d6x]] life</p><p><strong>Features:</strong> 2H, attune, fantascience</p>",
+    "description": "<p>Whips like a cobra, drinking souls and leaving empty husks. Holds three souls.</p><p>Spend one to animate it as a @UUID[Compendium.sdm.creatures.Actor.RrHPo1p4xq14BKO3]{Spear Snake} (L3/12 life) or to regain [[/r 1d6x]] life</p><p><strong>Features:</strong> 2H, attune, fantascience</p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -76,11 +76,11 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.347",
+    "coreVersion": "13.348",
     "systemId": "sdm",
-    "systemVersion": "0.1.32",
+    "systemVersion": "0.1.36",
     "createdTime": 1756383245892,
-    "modifiedTime": 1756387700735,
+    "modifiedTime": 1756515734570,
     "lastModifiedBy": "0fqTkfNvjooZ2og7"
   },
   "_key": "!items!ZteNSXBaRUbC5CuU"

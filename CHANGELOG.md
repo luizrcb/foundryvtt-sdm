@@ -5,6 +5,7 @@
 - Replace the word “GM” with “Referee” everywhere
 - Organize rollable tables into folders
 - Add an option to roll saving throws, reaction, and morale with advantage or disadvantage
+- Add optional hard limit rule for d20 rolls (configurable and enabled by default)
 
 ## v0.1.35
 

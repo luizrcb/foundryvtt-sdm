@@ -216,9 +216,11 @@ const NPCTables = {
 };
 
 // cria o objeto final padronizado
-function makeNPC(name, data, initiative = '') {
+function makeNPC(name, img = '', biography = '', data, initiative = '') {
   return {
     name,
+    img,
+    biography,
     type: 'npc',
     system: {
       initiative,
@@ -230,7 +232,7 @@ function makeNPC(name, data, initiative = '') {
         value: data.Life,
         max: data.Life
       },
-      morale: data.Mor
+      morale: data.Mor,
     }
   };
 }
@@ -259,8 +261,9 @@ export async function createNPC(name = 'NPC', tableName, initiative = '') {
   let roll = Math.floor(Math.random() * 100) + 1; // 1 a 100
   const entry = table.find(e => roll >= e.range[0] && roll <= e.range[1]);
   if (!entry) throw new Error(`Nenhuma entrada encontrada para rolagem ${roll} em ${tableName}`);
-
-  const npcData = makeNPC(name, entry, initiative);
+  const biography = '';
+  const img = '';
+  const npcData = makeNPC(name, img, biography, entry, initiative);
 
   const targetActor = await Actor.create(npcData);
   const traitsTable = NPCTables[tableName].traits;
@@ -276,11 +279,11 @@ export async function createNPCByLevel(name, lvl, tableName, initiative) {
 
   // pega a maior entrada <= lvl
   const entry = [...table].reverse().find(e => e.Lvl <= lvl);
-  console.log(entry);
 
   if (!entry) throw new Error(`Nenhuma entrada encontrada para lvl ${lvl} em ${tableName}`);
-
-  const npcData = makeNPC(name, entry, initiative);
+  const biography = '';
+  const img = '';
+  const npcData = makeNPC(name, img, biography, entry, initiative);
 
   const targetActor = await Actor.create(npcData);
   const traitsTable = NPCTables[tableName].traits;
@@ -289,13 +292,10 @@ export async function createNPCByLevel(name, lvl, tableName, initiative) {
   return npcData;
 }
 
-
-export async function createBackgroundTrait(targetActor, {
-  flavor = '',
-  role= '',
-  task = '',
-  spin = ''
-}) {
+export async function createBackgroundTrait(
+  targetActor,
+  { flavor = '', role = '', task = '', spin = '' }
+) {
   const traitName = `${flavor} ${role}`;
   const description = `
 <p><strong>${game.i18n.localize('SDM.BackgroundTask')}:</strong> ${task}</p>
@@ -306,8 +306,118 @@ export async function createBackgroundTrait(targetActor, {
       name: traitName,
       type: 'trait',
       system: {
-        description,
+        description
       }
     }).toObject()
   ]);
+}
+
+export async function createFullAutoDestructionMode(
+  name = 'Unnamed Auto Destruction',
+  armorBonus = 5,
+  img = ''
+) {
+
+  let entry;
+
+  const stats = [
+    {
+      armor: 5,
+      level: '1d4+1',
+      lifeMultiplier: 5,
+      morale: 9,
+      defenseFormula: '1d4+13',
+      plusBonus: 2,
+      damage: '1d6',
+      mood: 'Filled with dread and foreboding'
+    },
+    {
+      armor: 6,
+      level: '1d4+2',
+      lifeMultiplier: 6,
+      morale: 9,
+      defenseFormula: '1d6+13',
+      plusBonus: 2,
+      damage: '1d8',
+      mood: 'Vengeful. Convinced it is dead.'
+    },
+    {
+      armor: 7,
+      level: '1d6+2',
+      lifeMultiplier: 7,
+      morale: 10,
+      defenseFormula: '1d6+14',
+      plusBonus: 2,
+      damage: '1d10',
+      mood: 'Chasing those it once saved.'
+    },
+    {
+      armor: 8,
+      level: '1d6+3',
+      lifeMultiplier: 9,
+      morale: 10,
+      defenseFormula: '1d6+15',
+      plusBonus: 3,
+      damage: '2d6',
+      mood: "Doesn't even care. YOLO."
+    },
+    {
+      armor: 9,
+      level: '1d6+4',
+      lifeMultiplier: 12,
+      morale: 11,
+      defenseFormula: '1d8+15',
+      plusBonus: 4,
+      damage: '2d8',
+      mood: "Traveled time. Seen ma's future."
+    },
+    {
+      armor: 10,
+      level: '1d8+4',
+      lifeMultiplier: 15,
+      morale: 11,
+      defenseFormula: '1d10+15',
+      plusBonus: 5,
+      damage: '2d10',
+      mood: 'Eyes full of stars and hope.'
+    }
+  ];
+
+  if (!armorBonus || armorBonus <= 5) {
+    entry = stats[0];
+  } else {
+    entry = [...stats].reverse().find(e => e.armor <= armorBonus);
+  }
+
+  if (!entry) return;
+
+  let levelRoll = new Roll(entry.level);
+  levelRoll = await levelRoll.evaluate();
+  const level = levelRoll.total;
+  const life = level * entry.lifeMultiplier;
+  const morale = entry.morale;
+  let defenseRoll = new Roll(entry.defenseFormula);
+  defenseRoll = await defenseRoll.evaluate();
+  const defense = defenseRoll.total;
+  const bonus = level + entry.plusBonus;
+  const damage = entry.damage;
+  const biography = `<p><strong>Mood:</strong> ${entry.mood}</p>`;
+  const initiative = '';
+
+  const npcData = makeNPC(
+    name,
+    img,
+    biography,
+    {
+      Bon: bonus,
+      Dmg: damage,
+      Def: defense,
+      Lvl: levelRoll.total,
+      Life: life,
+      Mor: morale
+    },
+    initiative,
+  );
+
+  await Actor.create(npcData);
 }

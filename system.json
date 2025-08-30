@@ -108,6 +108,13 @@
       "path": "./packs/traits",
       "type": "Item",
       "system": "sdm"
+    },
+     {
+      "name": "creatures",
+      "label": "Creatures",
+      "path": "./packs/creatures",
+      "type": "Actor",
+      "system": "sdm"
     }
   ],
   "packFolders": [],
