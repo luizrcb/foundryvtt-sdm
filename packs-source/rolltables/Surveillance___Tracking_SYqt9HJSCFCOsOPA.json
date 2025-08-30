@@ -1,0 +1,180 @@
+{
+  "name": "Surveillance & Tracking",
+  "description": "A random table created from the contents of the Surveillance &amp; Tracking Folder.",
+  "results": [
+    {
+      "name": "Chronometer",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.zyS1zptSMJK7Ltvr",
+      "img": "icons/tools/navigation/watch-simple-blue.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "jVoKaryZmjFBvpfX",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!SYqt9HJSCFCOsOPA.jVoKaryZmjFBvpfX"
+    },
+    {
+      "name": "Electronic Ear",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.YapxuFqE7bYvmn81",
+      "img": "icons/commodities/biological/ear-grey-brown.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "G7GHzQpNIzJjuADS",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!SYqt9HJSCFCOsOPA.G7GHzQpNIzJjuADS"
+    },
+    {
+      "name": "Clicker Casket",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.EL2LAAPsRCHsgCPG",
+      "img": "icons/commodities/treasure/box-jade-tassel.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "BAvTEw0KcGuh1cNb",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!SYqt9HJSCFCOsOPA.BAvTEw0KcGuh1cNb"
+    },
+    {
+      "name": "Microgolem",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.llpprtA1lMcn46hM",
+      "img": "icons/creatures/unholy/demon-hairy-winged-pink.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "scYQ7Hxkb0zA8RpR",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!SYqt9HJSCFCOsOPA.scYQ7Hxkb0zA8RpR"
+    },
+    {
+      "name": "Holomap",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.eQe3ubjxQDzOJ2Yu",
+      "img": "icons/commodities/tech/blueprint.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "66SIx4y29VC3TQt5",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!SYqt9HJSCFCOsOPA.66SIx4y29VC3TQt5"
+    },
+    {
+      "name": "Bioscanner",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.NIMlh2pMBflQN9Y5",
+      "img": "icons/commodities/treasure/token-brass-round.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "MU3ci0sUAwjSF7SV",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!SYqt9HJSCFCOsOPA.MU3ci0sUAwjSF7SV"
+    }
+  ],
+  "formula": "1d6",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "HRL8AeuDUw26tJDf",
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.36",
+    "createdTime": 1756574623627,
+    "modifiedTime": 1756574635106,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_id": "SYqt9HJSCFCOsOPA",
+  "sort": 900000,
+  "_key": "!tables!SYqt9HJSCFCOsOPA"
+}

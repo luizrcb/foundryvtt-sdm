@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.1.37
+
+- Add gadget gears compendium  
+- Fix pt-BR localization in the background trait generator
+
 ## v0.1.36
 
 - Replace the word “GM” with “Referee” everywhere

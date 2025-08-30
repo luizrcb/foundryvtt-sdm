@@ -1,17 +1,17 @@
 {
-  "folder": "6AcYDPeN6IZ1t5Nb",
-  "name": "Living Coffin",
+  "folder": "DEYfjbaWuMiSncgT",
+  "name": "Bioscanner",
   "type": "gear",
-  "_id": "7w5Do1GfggOR40AJ",
-  "img": "icons/containers/misc/coffin-wood-brown.webp",
+  "_id": "NIMlh2pMBflQN9Y5",
+  "img": "icons/commodities/treasure/token-brass-round.webp",
   "system": {
     "readied": false,
-    "cost": 2500,
+    "cost": 200,
     "cost_frequency": "",
-    "description": "<p>Field ward of the revolutionary ghouls of the 3rd Juniper Era. Works best when fed a fresh human.</p><p><strong>Features:</strong> auto, corpsefed, emplaced</p>",
+    "description": "<p>Detects traces of individuals and species. Database may be out of date.</p>",
     "quantity": 1,
     "size": {
-      "value": 5,
+      "value": 1,
       "unit": "stones"
     },
     "features": "",
@@ -27,7 +27,7 @@
       "bonus": 1,
       "damage": "1d4"
     },
-    "type": "ward",
+    "type": "",
     "power": {
       "img": "icons/svg/book.svg",
       "name": "",
@@ -50,8 +50,8 @@
       "powered": null
     },
     "ward": {
-      "value": 4,
-      "type": "bulky",
+      "value": 0,
+      "type": "",
       "armor": 0
     },
     "weapon": {
@@ -77,10 +77,10 @@
     "exportSource": null,
     "coreVersion": "13.348",
     "systemId": "sdm",
-    "systemVersion": "0.1.32",
-    "createdTime": 1756415861464,
-    "modifiedTime": 1756568676209,
+    "systemVersion": "0.1.36",
+    "createdTime": 1756569650696,
+    "modifiedTime": 1756569751274,
     "lastModifiedBy": "0fqTkfNvjooZ2og7"
   },
-  "_key": "!items!7w5Do1GfggOR40AJ"
+  "_key": "!items!NIMlh2pMBflQN9Y5"
 }

@@ -6,7 +6,7 @@
   "sorting": "a",
   "_id": "yC3l6zbbHDf1YQD3",
   "description": "",
-  "sort": 100000,
+  "sort": 400000,
   "flags": {},
   "_stats": {
     "compendiumSource": null,
@@ -16,8 +16,8 @@
     "systemId": "sdm",
     "systemVersion": "0.1.35",
     "createdTime": 1756510189540,
-    "modifiedTime": 1756510244059,
-    "lastModifiedBy": "3vgxDetPOGhfUfqu"
+    "modifiedTime": 1756574576137,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
   },
   "_key": "!folders!yC3l6zbbHDf1YQD3"
 }

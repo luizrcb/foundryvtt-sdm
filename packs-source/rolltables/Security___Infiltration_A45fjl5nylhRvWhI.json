@@ -1,0 +1,180 @@
+{
+  "name": "Security & Infiltration",
+  "description": "A random table created from the contents of the Security &amp; Infiltration Folder.",
+  "results": [
+    {
+      "name": "Disintegrity Spray",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.W1WaMiYMQ5Me3ebj",
+      "img": "icons/consumables/potions/bottle-conical-corked-labeled-skull-poison-green.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "wlSH7AM8fJEctB2o",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!A45fjl5nylhRvWhI.wlSH7AM8fJEctB2o"
+    },
+    {
+      "name": "Mechatronic Picks",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.1Pp3Z5o01ro53V0j",
+      "img": "icons/tools/hand/lockpicks-steel-grey.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "eR2dbYEhG5dcU25N",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!A45fjl5nylhRvWhI.eR2dbYEhG5dcU25N"
+    },
+    {
+      "name": "Multi-Auto Tool",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.FJX7Ea1VRKS6AubF",
+      "img": "icons/commodities/tech/sensor-brown.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "uZ8vDQDec7akq3XI",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!A45fjl5nylhRvWhI.uZ8vDQDec7akq3XI"
+    },
+    {
+      "name": "Interface Gauntlet",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.hGFxue7mxbEs0eu7",
+      "img": "icons/equipment/hand/gauntlet-armored-leather-teal-orange.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "DcOdX6tFmlHRHOo2",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!A45fjl5nylhRvWhI.DcOdX6tFmlHRHOo2"
+    },
+    {
+      "name": "Augmented Reality",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.eOPUMmQ1GbrBFZDN",
+      "img": "icons/equipment/head/goggles-leather-blue.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "lKgHuBw5gaGUN1rS",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!A45fjl5nylhRvWhI.lKgHuBw5gaGUN1rS"
+    },
+    {
+      "name": "Omni-Utilitool",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.pcAmfnNx13j8RqSn",
+      "img": "icons/commodities/tech/smoke-bomb-red-yellow.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "KJTEZQJrCsgdtkbX",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!A45fjl5nylhRvWhI.KJTEZQJrCsgdtkbX"
+    }
+  ],
+  "formula": "1d6",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "HRL8AeuDUw26tJDf",
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.36",
+    "createdTime": 1756574626970,
+    "modifiedTime": 1756574635106,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_id": "A45fjl5nylhRvWhI",
+  "sort": 400000,
+  "_key": "!tables!A45fjl5nylhRvWhI"
+}

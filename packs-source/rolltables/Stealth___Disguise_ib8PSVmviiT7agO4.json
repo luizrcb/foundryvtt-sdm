@@ -1,0 +1,180 @@
+{
+  "name": "Stealth & Disguise",
+  "description": "A random table created from the contents of the Stealth &amp; Disguise Folder.",
+  "results": [
+    {
+      "name": "Dampsound Shoes",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.YID6ILzuXkiRrFSQ",
+      "img": "icons/equipment/feet/shoes-rounded-pink.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "hbU4MOplKonkPaai",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ib8PSVmviiT7agO4.hbU4MOplKonkPaai"
+    },
+    {
+      "name": "Unnoticeability Mask",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.otJTTrFSMh9QZBAx",
+      "img": "icons/magic/control/fear-fright-white.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "ZA2yW29QTG4mMmWo",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ib8PSVmviiT7agO4.ZA2yW29QTG4mMmWo"
+    },
+    {
+      "name": "Voice Modulator",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.FwrABfOjXDA4FP1o",
+      "img": "icons/equipment/neck/necklace-animal-scarab.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "3OCpvjobOyuFz7Sj",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ib8PSVmviiT7agO4.3OCpvjobOyuFz7Sj"
+    },
+    {
+      "name": "Wall-Blender",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.xM0Vg1HIZRXDcZVW",
+      "img": "icons/magic/control/silhouette-hold-change-green.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "6o1Bfs4zNpSE9IeO",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ib8PSVmviiT7agO4.6o1Bfs4zNpSE9IeO"
+    },
+    {
+      "name": "Dark-Vision Goggles",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.8xc6TKx2c3rF9Lwa",
+      "img": "icons/equipment/head/goggles-leather-tan.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "fCOXB8Ajse92PN8l",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ib8PSVmviiT7agO4.fCOXB8Ajse92PN8l"
+    },
+    {
+      "name": "Soft-Hands Gloves",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.PPYa8oK9eh8go30M",
+      "img": "icons/equipment/hand/glove-cuffed-studded-red.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "OV4sW4pjKcELZScU",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ib8PSVmviiT7agO4.OV4sW4pjKcELZScU"
+    }
+  ],
+  "formula": "1d6",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "HRL8AeuDUw26tJDf",
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.36",
+    "createdTime": 1756574625445,
+    "modifiedTime": 1756574635106,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_id": "ib8PSVmviiT7agO4",
+  "sort": 800000,
+  "_key": "!tables!ib8PSVmviiT7agO4"
+}

@@ -1,10 +1,10 @@
 {
   "type": "RollTable",
-  "folder": null,
-  "name": "Equipment",
+  "folder": "MQfAWYx9K2WEu1eo",
+  "name": "Gadgets",
   "color": null,
   "sorting": "m",
-  "_id": "DnouzxEjZMIdrIqA",
+  "_id": "HRL8AeuDUw26tJDf",
   "description": "",
   "sort": 0,
   "flags": {},
@@ -14,10 +14,8 @@
     "exportSource": null,
     "coreVersion": "13.348",
     "systemId": "sdm",
-    "systemVersion": "0.1.35",
-    "createdTime": 1756510131255,
-    "modifiedTime": 1756574566605,
-    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+    "systemVersion": "0.1.36",
+    "lastModifiedBy": null
   },
-  "_key": "!folders!DnouzxEjZMIdrIqA"
+  "_key": "!folders!HRL8AeuDUw26tJDf"
 }

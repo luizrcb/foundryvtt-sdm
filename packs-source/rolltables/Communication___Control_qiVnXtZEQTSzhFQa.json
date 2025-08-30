@@ -1,0 +1,180 @@
+{
+  "name": "Communication & Control",
+  "description": "A random table created from the contents of the Communication &amp; Control Folder.",
+  "results": [
+    {
+      "name": "Alarwurm Box",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.C1f3XpKxZQ9miKDA",
+      "img": "icons/containers/boxes/crate-reinforced-green.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "lfAy9cforcTZkGL6",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!qiVnXtZEQTSzhFQa.lfAy9cforcTZkGL6"
+    },
+    {
+      "name": "Distraction Projector",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.6HjpFxDWSfTnd3pq",
+      "img": "icons/commodities/treasure/glass-cube-teal.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "GSakgfKdbssZfaXQ",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!qiVnXtZEQTSzhFQa.GSakgfKdbssZfaXQ"
+    },
+    {
+      "name": "Ear Jewels",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.ksGMLhtu4sa8MZrM",
+      "img": "icons/commodities/treasure/pearl-shell.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "fOnaVXE4MRD53P0P",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!qiVnXtZEQTSzhFQa.fOnaVXE4MRD53P0P"
+    },
+    {
+      "name": "Ear Slug",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.OVnNwxnFrhjIZplp",
+      "img": "icons/creatures/invertebrates/snail-movement-tan.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "pJcfZuIzupK7cX1f",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!qiVnXtZEQTSzhFQa.pJcfZuIzupK7cX1f"
+    },
+    {
+      "name": "Control Choke",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.KRLx08EMp6YP9ScC",
+      "img": "icons/commodities/tech/metal-panel.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "Lea3uQOC6p9Ymwwr",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!qiVnXtZEQTSzhFQa.Lea3uQOC6p9Ymwwr"
+    },
+    {
+      "name": "Credenticard",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.iKGaFrQreLHkYXix",
+      "img": "icons/sundries/documents/document-symbol-triangle-pink.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "g5fau4yEMlsXM2AT",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!qiVnXtZEQTSzhFQa.g5fau4yEMlsXM2AT"
+    }
+  ],
+  "formula": "1d6",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "HRL8AeuDUw26tJDf",
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.36",
+    "createdTime": 1756574631878,
+    "modifiedTime": 1756574635106,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_id": "qiVnXtZEQTSzhFQa",
+  "sort": 100000,
+  "_key": "!tables!qiVnXtZEQTSzhFQa"
+}

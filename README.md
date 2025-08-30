@@ -87,6 +87,8 @@ An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG
       - Ranged Weapons
       - Throwing Weapons
       - Terrible Ranged Weapons of the Long Ago
+    - Gears:
+      - Gadgets
   - Traits:
     - Path of the Wizard
     - Path of the Traveler
