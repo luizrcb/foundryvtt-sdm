@@ -2,9 +2,9 @@
 
 ## v0.1.36
 
-- Replace the word GM for Referee
+- Replace the word “GM” with “Referee” everywhere
 - Organize rollable tables into folders
-- Add option to roll with advantage or disadvantage saving throw, reaction and morale rolls
+- Add an option to roll saving throws, reaction, and morale with advantage or disadvantage
 
 ## v0.1.35
 
