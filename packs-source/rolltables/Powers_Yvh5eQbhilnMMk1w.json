@@ -1,0 +1,21 @@
+{
+  "type": "RollTable",
+  "folder": "DnouzxEjZMIdrIqA",
+  "name": "Powers",
+  "color": null,
+  "sorting": "a",
+  "_id": "Yvh5eQbhilnMMk1w",
+  "description": "",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.38",
+    "lastModifiedBy": null
+  },
+  "_key": "!folders!Yvh5eQbhilnMMk1w"
+}

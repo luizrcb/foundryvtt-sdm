@@ -3,7 +3,7 @@
   "name": "Thornstone Obelisk",
   "type": "gear",
   "_id": "QzVNCdU1oJWEKwud",
-  "img": "icons/svg/item-bag.svg",
+  "img": "icons/svg/fire.svg",
   "system": {
     "readied": false,
     "cost": 0,
@@ -80,7 +80,7 @@
     "systemId": "sdm",
     "systemVersion": "0.1.37",
     "createdTime": 1756661064643,
-    "modifiedTime": 1756661222293,
+    "modifiedTime": 1756674892654,
     "lastModifiedBy": "0fqTkfNvjooZ2og7"
   },
   "_key": "!items!QzVNCdU1oJWEKwud"
