@@ -10,7 +10,7 @@
       <img src='{{trait.img}}' width='24' height='24' />
     </div>
     <div class='flexrow'>
-      {{#if (and (eq trait.system.type 'power') trait.system.power.roll_formula)}}
+      {{#if (eq trait.system.type 'power')}}
         <div
           class='rollable flexrow'
           data-action='roll'

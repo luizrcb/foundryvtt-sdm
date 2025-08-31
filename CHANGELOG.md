@@ -1,8 +1,17 @@
 # CHANGELOG
 
+## v0.1.38
+
+- Add consumables to the gears compendium
+- Add 104 powers to the equipment compendium
+- Add support for custom reaction base formulas
+- Add support for casting/overcharging powers that don't have a roll expression (sends power card to chat)
+- Add support for zero-cost powers
+- Add power and overcharge descriptions to the roll result in chat
+
 ## v0.1.37
 
-- Add gadget gears compendium  
+- Add gadget gears compendium
 - Fix pt-BR localization in the background trait generator
 
 ## v0.1.36

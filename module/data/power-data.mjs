@@ -7,7 +7,7 @@ export default class PowerDataModel extends foundry.abstract.DataModel {
       img: new fields.FilePathField({ required: false, nullable: true, blank: true, categories: ["IMAGE"], initial: 'icons/svg/book.svg' }),
       name: new fields.StringField({ required: false, blank: true, initial: '' }),
       description: new fields.HTMLField(),
-      level: new fields.NumberField({ required: true, initial: 1, min: 1 }),
+      level: new fields.NumberField({ required: true, initial: 1, min: 0 }),
       range: new fields.StringField({ required: true, blank: true, initial: '' }),
       target: new fields.StringField({ required: true, blank: true, initial: '' }),
       duration: new fields.StringField({ required: true, blank: true, initial: '' }),

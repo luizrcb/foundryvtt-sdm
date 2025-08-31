@@ -76,6 +76,10 @@ An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG
       - Medium Armor
       - Heavy Armor
       - Classic Golem Armor
+    - Gears:
+      - Gadgets
+      - Consumables
+    - Powers
     - Wards:
       - Trinkets
       - Wearable Wards
@@ -87,8 +91,6 @@ An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG
       - Ranged Weapons
       - Throwing Weapons
       - Terrible Ranged Weapons of the Long Ago
-    - Gears:
-      - Gadgets
   - Traits:
     - Path of the Wizard
     - Path of the Traveler

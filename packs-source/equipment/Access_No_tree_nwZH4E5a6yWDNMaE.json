@@ -1,0 +1,87 @@
+{
+  "name": "Access Noötree",
+  "img": "icons/svg/fire.svg",
+  "type": "gear",
+  "system": {
+    "description": "<p><em>Localized Spirit Surf<br /></em><br />You unplug from your body and send your spirit-mind (<em>ka-ba</em>) into the synthetic dreamspace of a local server tree. You can access the tree’s short-term memories, divine announcements, algorithmically generated human-interest novelties, and locally hosted offshoot dream realities.</p>",
+    "type": "power",
+    "power": {
+      "level": 1,
+      "range": "touch",
+      "target": "one thinking tree",
+      "duration": "10 minutes",
+      "overcharge": "<p>gain root-level access to the tree’s source codes and find the mycelial doors that link it to the wider noösphere—Long Ago electronic world fragments, celestial memory palaces, and other micro-realms.</p>\n<p>Useful when the referee has a one shot or other odd dungeon ready. Be careful. Noise and commotion may alert functioning guardians (L[[/r 2d6]], electrangelic) to your interventions.</p>",
+      "roll_formula": "",
+      "overcharge_roll_formula": "",
+      "img": "icons/svg/book.svg",
+      "name": "",
+      "description": "",
+      "default_ability": ""
+    },
+    "readied": false,
+    "cost": 0,
+    "cost_frequency": "",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "powers_current_index": 0,
+    "max_powers": 3,
+    "powers": [],
+    "armor": {
+      "value": 0,
+      "type": "",
+      "cumbersome": false,
+      "powered": null
+    },
+    "ward": {
+      "value": 0,
+      "type": "",
+      "armor": 0
+    },
+    "weapon": {
+      "damage": {
+        "base": "1d4",
+        "versatile": "1d4",
+        "bonus": ""
+      },
+      "range": "",
+      "versatile": false
+    }
+  },
+  "effects": [],
+  "folder": "nvE6J5q2pVx6leTv",
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.37",
+    "createdTime": 1756650202442,
+    "modifiedTime": 1756667120206,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_id": "nwZH4E5a6yWDNMaE",
+  "sort": 0,
+  "_key": "!items!nwZH4E5a6yWDNMaE"
+}

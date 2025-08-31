@@ -12,6 +12,7 @@ import {
 } from './helpers/actorUtils.mjs';
 import { SDM } from './helpers/config.mjs';
 import { ActorType, ItemType } from './helpers/constants.mjs';
+import { makePowerItem } from './helpers/itemUtils.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
 import {
@@ -56,7 +57,8 @@ globalThis.sdm = {
     createNPC,
     createNPCByLevel,
     createBackgroundTrait,
-    createFullAutoDestructionMode
+    createFullAutoDestructionMode,
+    makePowerItem,
   }
 };
 
@@ -74,14 +76,14 @@ Hooks.on('renderDialogV2', (dialog, html) => {
     const selectedIndex = parseInt(event.target.value, 10);
     const selectedPower = powerOptions.find(p => p.index === selectedIndex);
     const defaultAbility = selectedPower?.default_ability || '';
-    const overchargeFormula = selectedPower?.overchargeFormula;
+    const canOvercharge = selectedPower?.canOvercharge;
 
     if (abilitySelect) {
       abilitySelect.value = defaultAbility;
     }
 
     if (overChargeButton) {
-      overChargeButton.style.display = !overchargeFormula ? 'none' : '';
+      overChargeButton.style.display = !canOvercharge ? 'none' : '';
     }
   });
 });

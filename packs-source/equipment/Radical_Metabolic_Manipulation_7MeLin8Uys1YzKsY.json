@@ -1,0 +1,86 @@
+{
+  "name": "Radical Metabolic Manipulation",
+  "img": "icons/svg/fire.svg",
+  "type": "gear",
+  "system": {
+    "description": "<p>You coerce the target into a fight or flight overdrive, boosting its physical abilities past their safe limits. The target gains +2 strength, endurance, and agility. It can lift more, leap farther, punch harder. When the overdrive fades, it gains 6 exhaustion burdens. These fade at a rate of one per hour.</p>",
+    "type": "power",
+    "power": {
+      "level": 1,
+      "range": "touch",
+      "target": "one creature",
+      "duration": "10 minutes",
+      "overcharge": "<p>The target gains an additional 6 points to assign to strength, endurance, agility, attack, and defense as it sees fit. When the overdrive fades, besides the exhaustion the target also suffers [[/r 1d8]] damage. Again (x4): The target gains 6 more points to assign. When the overdrive fades, besides the exhaustion and damage, the target must save or die.</p>",
+      "roll_formula": "",
+      "overcharge_roll_formula": "1d8",
+      "img": "icons/svg/book.svg",
+      "name": "",
+      "description": ""
+    },
+    "readied": false,
+    "cost": 0,
+    "cost_frequency": "",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "powers_current_index": 0,
+    "max_powers": 3,
+    "powers": [],
+    "armor": {
+      "value": 0,
+      "type": "",
+      "cumbersome": false,
+      "powered": null
+    },
+    "ward": {
+      "value": 0,
+      "type": "",
+      "armor": 0
+    },
+    "weapon": {
+      "damage": {
+        "base": "1d4",
+        "versatile": "1d4",
+        "bonus": ""
+      },
+      "range": "",
+      "versatile": false
+    }
+  },
+  "effects": [],
+  "folder": "nvE6J5q2pVx6leTv",
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.37",
+    "createdTime": 1756647980469,
+    "modifiedTime": 1756648043068,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_id": "7MeLin8Uys1YzKsY",
+  "sort": 2400000,
+  "_key": "!items!7MeLin8Uys1YzKsY"
+}

@@ -151,7 +151,7 @@ export class SdmItem extends Item {
 
   getPowerShortTitle(powerData, actorPowerCost = 2, overcharge = false) {
     const powerName = powerData.name || this.name;
-    const powerLevel = powerData?.level || 1;
+    const powerLevel = powerData?.level;
 
     let powerCost = Math.ceil(actorPowerCost * powerLevel);
     if (overcharge) powerCost *= 2;
@@ -160,7 +160,7 @@ export class SdmItem extends Item {
   }
 
   getPowerTitle(powerData, actorPowerCost = 2) {
-    const powerLevel = powerData?.level || 1;
+    const powerLevel = powerData?.level;
     const powerCost = Math.ceil(actorPowerCost * powerLevel);
     const powerName = powerData.name || this.name;
 

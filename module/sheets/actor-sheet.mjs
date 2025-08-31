@@ -174,7 +174,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       from,
       ability = '',
       formula = '',
-      overchargeFormula = '',
+      canOvercharge = false,
       attack = '',
       versatile = false,
       versatileFormula = '',
@@ -281,7 +281,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       action: 'overcharge',
       class: 'overcharge',
       // hidden: !overchargeFormula,
-      style: { display: !overchargeFormula ? 'none' : '' },
+      style: { display: !canOvercharge ? 'none' : ''  },
       icon: 'fa-solid fa-hand-sparkles',
       label: $l10n('SDM.PowerOvercharge'),
       callback: (event, button) => ({
@@ -380,11 +380,21 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       rollData.formula = versatileFormula;
     }
 
+    if (isPower || isPowerAlbum) {
+      rollData.powerDescription = powerOptions[powerIndex].description;
+    }
+
     if (rollOptions.overcharge) {
       rollData.from =
         powerOptions[powerIndex].overcharge + ` (${$l10n('SDM.PowerOvercharge').toLowerCase()})`;
       rollData.formula = powerOptions[powerIndex].overchargeFormula;
+      rollData.powerDescription =  `${powerOptions[powerIndex].description}<strong>${$l10n('SDM.PowerOvercharge')}</strong><br>${powerOptions[powerIndex].overchargeDescription}`;
+      ;
     }
+
+    if ((isPower || isPowerAlbum) && !rollData.formula) {
+      rollData.sendPowerToChat = true;
+    };
 
     const sdmRoll = new SDMRoll(rollData);
     await sdmRoll.evaluate();
@@ -1028,6 +1038,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     let bonusDamage = '';
     let powerOptions;
     let powerIndex;
+    let canOvercharge = false;
 
     //Handle item rolls.
     switch (type) {
@@ -1059,10 +1070,14 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
             overcharge: powerItem.getPowerShortTitle(powerData, this.actor.system.power_cost, true),
             formula: powerData.roll_formula,
             overchargeFormula: powerData.overcharge_roll_formula,
-            default_ability: powerData.default_ability
+            canOvercharge: !!powerData.overcharge,
+            default_ability: powerData.default_ability,
+            description: powerItem.system.description,
+            overchargeDescription: powerData.overcharge,
           }
         ];
         powerIndex = 0;
+        canOvercharge = !!powerData.overcharge;
         break;
 
       case 'power_album':
@@ -1079,12 +1094,16 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
             overcharge: powerAlbum.getPowerShortTitle(power, this.actor.system.power_cost, true),
             formula: power.roll_formula,
             overchargeFormula: power.overcharge_roll_formula,
-            default_ability: power.default_ability
+            canOvercharge: !!power.overcharge,
+            default_ability: power.default_ability,
+            description: power.description,
+            overchargeDescription: power.overcharge,
           };
         });
         ability = selectedPower.default_ability;
         formula = selectedPower.roll_formula;
         overchargeFormula = selectedPower.overcharge_roll_formula;
+        canOvercharge = !!selectedPower.overcharge;
 
         break;
     }
@@ -1098,6 +1117,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       versatile,
       versatileFormula,
       overchargeFormula,
+      canOvercharge,
       bonusDamage,
       powerOptions,
       powerIndex
@@ -1191,7 +1211,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     const reverseShift = game.settings.get('sdm', 'reverseShiftKey');
     const isShift = reverseShift !== !!event.shiftKey;
-    let data = { modifier: '', charismaOperator: 1 };
+    let data = { modifier: '', charismaOperator: 1, customBaseFormula: '' };
 
     if (!isShift) {
       data = await DialogV2.wait({
@@ -1200,7 +1220,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         },
         position: {
           width: 500,
-          height: 250
+          height: 300
         },
         content: await renderTemplate(templatePath('reaction-roll-dialog'), {
           rollModes: CONFIG.SDM.rollMode
@@ -1233,9 +1253,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       return;
     }
 
-    const { modifier = '', charismaOperator = 1, rollMode = 'normal' } = data;
+    const { modifier = '', charismaOperator = 1, rollMode = 'normal', customBaseFormula = '' } = data;
 
     const baseFormula = game.settings.get('sdm', 'baseReactionFormula') || '2d6';
+
+    const finalBaseFormula = foundry.dice.Roll.validate(customBaseFormula) ? customBaseFormula : baseFormula;
 
     const reactionBonus = this.actor.system.reaction_bonus || 0;
     const burdenPenalty = this.actor.system.burden_penalty || 0;
@@ -1250,8 +1272,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
 
     const diceExpression = keepModifier
-      ? `{${baseFormula}, ${baseFormula}}${keepModifier}`
-      : baseFormula;
+      ? `{${finalBaseFormula}, ${finalBaseFormula}}${keepModifier}`
+      : finalBaseFormula;
 
     const formula = `${diceExpression}${bonusPart}${modPart}`;
     const sanitizedFormula = sanitizeExpression(formula);

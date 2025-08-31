@@ -1,0 +1,86 @@
+{
+  "name": "Medeorite's Healing Dream Ritual",
+  "img": "icons/svg/fire.svg",
+  "type": "gear",
+  "system": {
+    "description": "<p>Your dream-form leads the patient into a deep, healing sleep. While asleep, they appear lifeless. After the spell concludes they awake rejuvenated, with one attribute restored or one burden lifted.</p>",
+    "type": "power",
+    "power": {
+      "level": 2,
+      "range": "touch",
+      "target": "1 creature",
+      "duration": "3 days and nights",
+      "overcharge": "<p>Restore an additional attribute or lift a second burden. Alternatively, reduce the duration of the slumber three-fold.</p>",
+      "roll_formula": "",
+      "overcharge_roll_formula": "",
+      "img": "icons/svg/book.svg",
+      "name": "",
+      "description": ""
+    },
+    "readied": false,
+    "cost": 0,
+    "cost_frequency": "",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "powers_current_index": 0,
+    "max_powers": 3,
+    "powers": [],
+    "armor": {
+      "value": 0,
+      "type": "",
+      "cumbersome": false,
+      "powered": null
+    },
+    "ward": {
+      "value": 0,
+      "type": "",
+      "armor": 0
+    },
+    "weapon": {
+      "damage": {
+        "base": "1d4",
+        "versatile": "1d4",
+        "bonus": ""
+      },
+      "range": "",
+      "versatile": false
+    }
+  },
+  "effects": [],
+  "folder": "nvE6J5q2pVx6leTv",
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.37",
+    "createdTime": 1756647927328,
+    "modifiedTime": 1756648043068,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_id": "9eUes2V7dvoiPlkj",
+  "sort": 3900000,
+  "_key": "!items!9eUes2V7dvoiPlkj"
+}

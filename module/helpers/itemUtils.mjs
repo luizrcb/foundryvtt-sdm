@@ -113,3 +113,37 @@ export function getSlotsTaken(itemSystem) {
 
   return slotsTaken;
 }
+
+export async function makePowerItem({
+  name,
+  img = 'icons/svg/fire.svg',
+  description,
+  level,
+  range,
+  target,
+  duration,
+  overcharge,
+  roll_formula,
+  overcharge_roll_formula,
+}) {
+  const itemData = {
+    name,
+    img,
+    type: 'gear',
+    system: {
+      description,
+      type: 'power',
+      power : {
+        level,
+        range,
+        target,
+        duration,
+        overcharge,
+        roll_formula,
+        overcharge_roll_formula
+      }
+    }
+  }
+
+  await Item.create(itemData);
+}
