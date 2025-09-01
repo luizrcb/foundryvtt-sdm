@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.1.39
+
+- When you drag and drop a power onto a character sheet, you can choose to create it as an item or as a trait
+- Changed “Power Album” labels to “Album of Power”
+
 ## v0.1.38
 
 - Add consumables to the gears compendium
@@ -69,7 +74,7 @@
 ## v0.1.26
 
 - Added setting to reverse Shift key shortcut behaviour
-- Fixed drop of powers in power items
+- Fixed drop of powers in power albums
 
 ## v0.1.25
 
