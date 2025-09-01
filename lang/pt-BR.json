@@ -696,7 +696,7 @@
   "TYPES.Actor.npc": "NPC",
   "TYPES.Item.armor": "Armadura",
   "TYPES.Item.burden": "Fardo",
-  "TYPES.Item.gear": "Item",
+  "TYPES.Item.gear": "Equipamento",
   "TYPES.Item.mount": "Montaria",
   "TYPES.Item.power": "Poder",
   "TYPES.Item.power_album": "Álbum de Poderes",

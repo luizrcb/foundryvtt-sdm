@@ -1,4 +1,5 @@
 import { MAX_MODIFIER, UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
+import { createChatMessage } from '../helpers/chatUtils.mjs';
 import {
   ActorType,
   AttackTarget,
@@ -94,7 +95,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       toggleReadied: this._toggleReadied,
       transferItem: this._onTransferItem,
       updateAttack: this._onUpdateAttack,
-      viewDoc: this._viewDoc
+      viewDoc: this._viewDoc,
+      sendToChat: { handler: this._sendToChat, buttons: [0, 2] },
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
@@ -1368,6 +1370,36 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     await healingHeroDice(event, this.actor);
   }
 
+
+  static async _sendToChat(event, target) {
+    event.preventDefault(); // Don't open context menu
+    event.stopPropagation(); // Don't trigger other events
+    const { detail, button } = event;
+
+    if (button === 0) {
+      if (detail <= 1 || detail > 2) return;
+      return SdmActorSheet._viewDoc.call(this, event, target);
+    }
+
+    if (detail > 1) return;
+
+    const item = this._getEmbeddedDocument(target);
+
+    const context = {
+      actor: this.actor,
+      config: CONFIG.SDM,
+      tokenId: this.actor.token?.uuid || null,
+      item,
+      type: item.system.type ? item.system.type : item.type,
+    };
+
+    await createChatMessage({
+      actor: this.actor,
+      content: await renderTemplate(templatePath('chat/item-card'), context),
+      flavor: game.user.name,
+    });
+  }
+
   /** Helper Functions */
 
   /**
@@ -1573,7 +1605,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     // Handle item sorting within the same Actor
     if (this.actor.uuid === item.parent?.uuid) return this._onSortItem(event, item);
 
-    if (item.type === ItemType.GEAR && item.system.type === GearType.POWER) {
+    if (item.system?.type === GearType.POWER) {
       const itemPower = await DialogV2.confirm({
         window: { title: $l10n('SDM.CreatePowerItem') },
         content: `<h3>${$l10n('SDM.CreatePowerItem')}</h3>`,
@@ -1585,13 +1617,15 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
       if (itemPower === null) return;
 
+      let clonedItem = foundry.utils.duplicate(item);
+
       if (!itemPower) {
-        const traitPower = foundry.utils.duplicate(item);
-        traitPower.type = ItemType.TRAIT;
-        return this._onDropItemCreate(traitPower, event);
+        clonedItem.type = ItemType.TRAIT;
+        return this._onDropItemCreate(clonedItem, event);
       }
 
-      return this._onDropItemCreate(item, event);
+      clonedItem.type = ItemType.GEAR;
+      return this._onDropItemCreate(clonedItem, event);
     }
 
     // Create the owned item

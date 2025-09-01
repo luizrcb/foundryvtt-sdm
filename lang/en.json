@@ -696,7 +696,7 @@
   "TYPES.Actor.npc": "NPC",
   "TYPES.Item.armor": "Armor",
   "TYPES.Item.burden": "Burden",
-  "TYPES.Item.gear": "Item",
+  "TYPES.Item.gear": "Gear",
   "TYPES.Item.mount": "Mount",
   "TYPES.Item.power": "Power",
   "TYPES.Item.power_album": "Album of Power",

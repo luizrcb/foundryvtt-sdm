@@ -1,0 +1,40 @@
+<div class="chat-card item-card" data-actor-id="{{ actor.id }}" data-item-id="{{ item.id }}">
+  {{!-- {{#if tokenId}}data-token-id="{{tokenId}}"{{/if}} {{#if isPower}}data-power-level="{{ item.system.power.level }}"{{/if}}> --}}
+
+  {{!-- Collapsible Item Details --}}
+  <section class="card-header description collapsible">
+
+    {{!-- Summary --}}
+    <header class="summary" style="cursor:pointer;">
+      <img class="gold-icon" src="{{ item.img }}" alt="{{ item.name }}">
+      <div class="name-stacked border">
+          <span class="title">{{ item.name }}</span>
+          {{#if (eq item.system.type 'power')}}
+          <span class="subtitle">
+            {{localize 'SDM.PowerLevel'}}: {{item.system.power.level}}
+          </span>
+          {{else}}
+            <span class="subtitle">
+            {{localize (concat 'TYPES.Item.' type)}}
+            </span>
+          {{/if}}
+      </div>
+      <i class="fas fa-chevron-down fa-fw"></i>
+    </header>
+
+    {{!-- Details --}}
+    <section class="details collapsible-content card-content">
+      <div class="wrapper">
+        {{{ item.system.description }}}
+        {{#if (and (eq item.system.type 'power') (ne item.system.power.overcharge ''))}}
+        <div>
+          <span class="overcharge"><strong>{{localize 'SDM.PowerOvercharge'}}</strong></span>
+          <div>
+            {{{ item.system.power.overcharge }}}
+          </div>
+        </div>
+        {{/if}}
+      </div>
+    </section>
+  </section>
+</div>

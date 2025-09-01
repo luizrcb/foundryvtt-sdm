@@ -10,6 +10,7 @@ import {
   createBackgroundTrait,
   createFullAutoDestructionMode
 } from './helpers/actorUtils.mjs';
+import { configureChatListeners } from './helpers/chatUtils.mjs';
 import { SDM } from './helpers/config.mjs';
 import { ActorType, ItemType } from './helpers/constants.mjs';
 import { makePowerItem } from './helpers/itemUtils.mjs';
@@ -58,12 +59,16 @@ globalThis.sdm = {
     createNPCByLevel,
     createBackgroundTrait,
     createFullAutoDestructionMode,
-    makePowerItem,
+    makePowerItem
   }
 };
 
 Hooks.on('renderChatMessageHTML', (message, html, data) => {
   configureUseHeroDiceButton(message, html, data);
+});
+
+Hooks.on('renderChatLog', (app, html, data) => {
+  configureChatListeners(html);
 });
 
 Hooks.on('renderDialogV2', (dialog, html) => {
@@ -149,15 +154,22 @@ Hooks.on('renderGamePause', (app, html) => {
 });
 
 Hooks.on('getChatMessageContextOptions', (html, options) => {
+  const canApply = li => {
+    const message = game.messages.get(li.dataset.messageId);
+    return message.rolls && message.rolls.length;
+  };
+
   options.push(
     {
       name: '',
       icon: '',
+      condition: canApply,
       group: 'separator'
     },
     {
       name: game.i18n.localize('SDM.ChatContextDamage'),
       icon: '<i class="fa-solid fa-user-minus"></i>',
+      condition: canApply,
       callback: async li => {
         const message = game.messages.get(li.dataset.messageId);
         if (!message.rolls || !message.rolls.length) return;
@@ -175,6 +187,7 @@ Hooks.on('getChatMessageContextOptions', (html, options) => {
     {
       name: game.i18n.localize('SDM.ChatContextHealing'),
       icon: '<i class="fa-solid fa-user-plus"></i>',
+      condition: canApply,
       callback: async li => {
         const message = game.messages.get(li.dataset.messageId);
         if (!message.rolls || !message.rolls.length) return;
