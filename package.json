@@ -1,6 +1,6 @@
 {
   "name": "sdm",
-  "version": "0.1.39",
+  "version": "0.1.40",
   "description": "CSS compiler for the Sdm system",
   "scripts": {
     "build": "sass src/scss/sdm.scss css/sdm.css --style=expanded --no-source-map",

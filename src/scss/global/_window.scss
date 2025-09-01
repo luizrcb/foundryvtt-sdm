@@ -326,9 +326,15 @@ input[type='radio']::after {
   }
 
   .title {
+    align-items: center;
     font-size: var(--font-size-16);
     font-weight: bold;
     color: var(--color-text-primary);
+
+    .item-cost {
+      font-size: var(--font-size-14);
+      font-weight: normal;
+    }
   }
 
   .subtitle {

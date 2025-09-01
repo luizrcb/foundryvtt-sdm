@@ -20,6 +20,7 @@ export default class SDMRoll {
     attackTarget = AttackTarget.PHYSICAL,
     sendPowerToChat = false,
     powerDescription = '',
+    item = null
   }) {
     this.actor = actor;
     this.type = type;
@@ -36,17 +37,17 @@ export default class SDMRoll {
     this.attackTarget = attackTarget;
     this.sendPowerToChat = sendPowerToChat;
     this.powerDescription = powerDescription;
+    this.item = item;
   }
 
   async evaluate() {
-    if (this.sendPowerToChat) {
-      await createChatMessage({
+    if (this.sendPowerToChat && this.item) {
+      return await this.item.sendToChat({
         actor: this.actor,
-        rolls: [],
         flavor: this.#buildFlavorText(),
-        content: this.powerDescription,
+        collapsed: true,
+        displayWeight: false,
       });
-      return;
     }
 
     const expression = this.#buildDiceComponent();
@@ -156,10 +157,8 @@ export default class SDMRoll {
     }
 
     if (this.powerDescription) {
-      content += `
-      <br>
-      ${this.powerDescription}
-      `;
+      const powerCard = await this.item.getItemChatCard({ collapsed: true, displayWeight: false });
+      content += powerCard;
     }
 
     await createChatMessage({

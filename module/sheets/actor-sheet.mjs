@@ -1,3 +1,4 @@
+import { SdmItem } from '../documents/item.mjs';
 import { MAX_MODIFIER, UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
 import { createChatMessage } from '../helpers/chatUtils.mjs';
 import {
@@ -148,7 +149,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       versatileFormula = '',
       bonusDamage = '',
       powerOptions = [],
-      powerIndex = 0
+      powerIndex = 0,
+      item = null,
     },
     isShift = false
   ) {
@@ -361,6 +363,27 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     if ((isPower || isPowerAlbum) && !rollData.formula) {
       rollData.sendPowerToChat = true;
+    }
+
+    if (item) {
+      rollData.item = item;
+
+      if (isPowerAlbum) {
+        const powerItem = item.system.powers[powerIndex];
+        const newPowerItem = new SdmItem({
+          name: powerItem.name,
+          type: 'gear',
+          img: powerItem.img,
+          system: {
+            type: 'power',
+            ...powerItem,
+            power: {
+              ...powerItem,
+            }
+          }
+        });
+        rollData.item = newPowerItem;
+      }
     }
 
     const sdmRoll = new SDMRoll(rollData);
@@ -976,11 +999,13 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     let powerOptions;
     let powerIndex;
     let canOvercharge = false;
+    let rollItem = null;
 
     //Handle item rolls.
     switch (type) {
       case 'damage':
         const item = this._getEmbeddedDocument(target);
+        rollItem = item;
         const weaponDamage = item.system.weapon.damage;
         ability = item.system.default_ability;
         formula = weaponDamage.base;
@@ -994,6 +1019,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         break;
       case 'power':
         const powerItem = this._getEmbeddedDocument(target);
+        rollItem = powerItem;
         const powerData = powerItem.system.power;
         label = powerItem.getPowerShortTitle(powerData, this.actor.system.power_cost);
         ability = powerData.default_ability;
@@ -1020,7 +1046,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       case 'power_album':
         const powerAlbum = this._getEmbeddedDocument(target);
         const { powers, powers_current_index } = powerAlbum.system;
-
+        rollItem = powerAlbum;
         powerIndex = powers_current_index;
         const selectedPower = powers[powerIndex];
 
@@ -1057,7 +1083,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       canOvercharge,
       bonusDamage,
       powerOptions,
-      powerIndex
+      powerIndex,
+      item: rollItem,
     };
 
     this._openCustomRollModal(rollAttributes, isShift);
@@ -1384,20 +1411,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     if (detail > 1) return;
 
     const item = this._getEmbeddedDocument(target);
-
-    const context = {
-      actor: this.actor,
-      config: CONFIG.SDM,
-      tokenId: this.actor.token?.uuid || null,
-      item,
-      type: item.system.type ? item.system.type : item.type,
-    };
-
-    await createChatMessage({
-      actor: this.actor,
-      content: await renderTemplate(templatePath('chat/item-card'), context),
-      flavor: game.user.name,
-    });
+    return await item.sendToChat({ actor: this.actor, collapsed: false });
   }
 
   /** Helper Functions */

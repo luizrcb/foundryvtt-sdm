@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.1.40
+
+- Send inventory items to chat when you right-click them
+- Send power cards to chat when you cast a power
+- Double-clicking an inventory item will open its sheet
+
 ## v0.1.39
 
 - When you drag and drop a power onto a character sheet, you can choose to create it as an item or as a trait

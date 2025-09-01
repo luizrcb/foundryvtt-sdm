@@ -453,9 +453,14 @@ input[type=radio]::after {
     line-height: normal;
   }
   .title {
+    align-items: center;
     font-size: var(--font-size-16);
     font-weight: bold;
     color: var(--color-text-primary);
+  }
+  .title .item-cost {
+    font-size: var(--font-size-14);
+    font-weight: normal;
   }
   .subtitle {
     font-size: var(--font-size-11);
