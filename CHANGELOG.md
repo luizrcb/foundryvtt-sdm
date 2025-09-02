@@ -1,9 +1,61 @@
 # CHANGELOG
 
+## v0.1.40
+
+- Send inventory items to chat when you right-click them
+- Send power cards to chat when you cast a power
+- Double-clicking an inventory item will open its sheet
+
+## v0.1.39
+
+- When you drag and drop a power onto a character sheet, you can choose to create it as an item or as a trait
+- Changed “Power Album” labels to “Album of Power”
+
+## v0.1.38
+
+- Add consumables to the gears compendium
+- Add 65 powers to the equipment compendium
+- Add support for custom reaction base formulas
+- Add support for casting/overcharging powers that don't have a roll expression (sends power card to chat)
+- Add support for zero-cost powers
+- Add power and overcharge descriptions to the roll result in chat
+
+## v0.1.37
+
+- Add gadget gears compendium
+- Fix pt-BR localization in the background trait generator
+
+## v0.1.36
+
+- Replace the word “GM” with “Referee” everywhere
+- Organize rollable tables into folders
+- Add an option to roll saving throws, reaction, and morale with advantage or disadvantage
+- Add optional hard limit rule for d20 rolls (configurable and enabled by default)
+
+## v0.1.35
+
+- Many fixes in pt-BR localization
+- Added Traits compendium with Path of the Wizard, Path of the Traveler and Path of the Fighter
+
+## v0.1.34
+
+- Add Character Background Trait Generator in SDM Player Macros
+- Add support to custom base damage multiplier (hunter trait)
+- Add bonus weapon slots (armiger trait)
+
+## v0.1.33
+
+- Add compendium with all weapons, armors and wards from the Vastlands Guidebook
+- Add rollable tables for every equipment category (light armor, medium armor, etc)
+
+## v0.1.32
+
+- Add Referee macro to generate random NPCs
+- Expose API functions to create random NPCs (game.sdm.api.createNPC and game.sdm.api.createNPCByLevel)
+
 ## v0.1.31
 
 - Fix issue when updating base abilities to a value lower than current + bonus
-
 - Fix bug that incorrectly added ability bonuses to defenses
 
 ## v0.1.30
@@ -14,7 +66,7 @@
 ## v0.1.29
 
 - Fix players not been able to change player xp and pc xp in their character sheets
-- Allow GMs to drag and reposition the escalator die display
+- Allow Referees to drag and reposition the escalator die display
 
 ## v0.1.28
 
@@ -28,7 +80,7 @@
 ## v0.1.26
 
 - Added setting to reverse Shift key shortcut behaviour
-- Fixed drop of powers in power items
+- Fixed drop of powers in power albums
 
 ## v0.1.25
 

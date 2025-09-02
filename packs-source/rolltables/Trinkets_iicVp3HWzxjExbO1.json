@@ -1,0 +1,180 @@
+{
+  "name": "Trinkets",
+  "description": "A random table created from the contents of the Trinkets Folder.",
+  "results": [
+    {
+      "name": "Heretech Scribbles",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.gVSphXhwQPlSY8si",
+      "img": "icons/sundries/scrolls/scroll-symbol-triangle-brown.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "VxVB38RbjLTjMxoK",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!iicVp3HWzxjExbO1.VxVB38RbjLTjMxoK"
+    },
+    {
+      "name": "Safety Scarab",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.gFCTeanDPkvarztc",
+      "img": "icons/creatures/invertebrates/beetle-stag-yellow-green.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "XWiikajOvYjyEQ3c",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!iicVp3HWzxjExbO1.XWiikajOvYjyEQ3c"
+    },
+    {
+      "name": "Bone Necklace",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.MQM5xvNDVy4aevg6",
+      "img": "icons/equipment/neck/necklace-simple-bone-skull.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "JNqvtBYFxsRbe1QR",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!iicVp3HWzxjExbO1.JNqvtBYFxsRbe1QR"
+    },
+    {
+      "name": "Violet Cat Egg",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.p94qIJ2yzgk9TEwo",
+      "img": "icons/consumables/eggs/egg-cracked-purple.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "BUb283oZNcbBYVJQ",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!iicVp3HWzxjExbO1.BUb283oZNcbBYVJQ"
+    },
+    {
+      "name": "Shadow Shawl",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.3tVz2bRPWWhryqmG",
+      "img": "icons/equipment/back/cloak-heavy-black-red.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "iGIPJcEiQ1ehHrFb",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!iicVp3HWzxjExbO1.iGIPJcEiQ1ehHrFb"
+    },
+    {
+      "name": "Empty Glasses",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.4pzlm2KzybTERN1z",
+      "img": "icons/equipment/head/goggles-leather-grey.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "VBzwCdXozcPwi6dR",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!iicVp3HWzxjExbO1.VBzwCdXozcPwi6dR"
+    }
+  ],
+  "formula": "1d6",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "yC3l6zbbHDf1YQD3",
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.32",
+    "createdTime": 1756416587825,
+    "modifiedTime": 1756510217900,
+    "lastModifiedBy": "3vgxDetPOGhfUfqu"
+  },
+  "_id": "iicVp3HWzxjExbO1",
+  "sort": 400000,
+  "_key": "!tables!iicVp3HWzxjExbO1"
+}

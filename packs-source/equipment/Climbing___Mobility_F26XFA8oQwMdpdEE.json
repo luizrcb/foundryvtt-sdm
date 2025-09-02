@@ -1,0 +1,22 @@
+{
+  "type": "Item",
+  "folder": "DBqKNVh8vkpL41oV",
+  "name": "Climbing & Mobility",
+  "color": null,
+  "sorting": "m",
+  "_id": "F26XFA8oQwMdpdEE",
+  "description": "",
+  "sort": 100000,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.36",
+    "lastModifiedBy": "0fqTkfNvjooZ2og7",
+    "modifiedTime": 1756570500658
+  },
+  "_key": "!folders!F26XFA8oQwMdpdEE"
+}

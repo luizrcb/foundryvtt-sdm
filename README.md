@@ -55,31 +55,60 @@ An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG
 - Character Sheet (Edit Mode / Play Mode) for configuring attacks, power costs, and full ability values.
 - Each attack type (melee, ranged, fantascience, and oldtech) can be configured with a preferred ability and skill.
 - Characters can spend hero dice to modify rolls or regain life (players must configure their main character in the User Configuration menu). This can cause dice to explode.
-- Support for group initiative rolls (GM Macro).
+- Support for group initiative rolls (Referee Macro).
 - Shift+click shortcut to skip opening custom roll dialogs.
 - Highly configurable core game values (base defenses, item and trait slots, etc.).
 - Customizable initiative rolls in NPC sheets.
 - Descriptive results for saving throws, reactions, morale (NPC), and targeted attack rolls.
 - Extensive bonus options to simulate backpacks, blessings, curses, injuries, trait effects (see the Active Effects Changes tab for the full list).
-- GM utility macros.
+- Referee utility macros.
 - Drag and drop a power into a power album to easily copy it to the album.
 - Support for mental and social attacks (and defenses) as described in the Vastlands Guidebook (VLG).
 - Full localization for Brazilian Portuguese (pt-BR).
 - Special roll results for magic numbers (1 = critical failure, 13 = only one ammo or other resource left, 20 = critical success).
 - Right-click roll results in the chat to open `Apply as Damage` and `Apply as Healing` menu options. This will be applied to all selected tokens.
 
-- The following compendiums contain macros and roll tables:
-  - SDM Macros (GM Macros):
+- The following compendiums contain equipment, traits, macros and roll tables:
+  - Equipment:
+    - Armors
+      - Modern and Ancient Shields
+      - Light Armor
+      - Medium Armor
+      - Heavy Armor
+      - Classic Golem Armor
+    - Gears:
+      - Gadgets
+      - Consumables
+    - Powers
+    - Wards:
+      - Trinkets
+      - Wearable Wards
+      - Portable Wards
+      - Bulky Wards
+    - Weapons:
+      - Traditional Melee Weapons
+      - Long Ago Melee Weapons
+      - Ranged Weapons
+      - Throwing Weapons
+      - Terrible Ranged Weapons of the Long Ago
+  - Traits:
+    - Path of the Wizard
+    - Path of the Traveler
+    - Path of the Fighter
+  - SDM Macros (Referee Macros):
     - Give (or take) cash.
     - Give (or take) hero dice.
     - Give XP.
     - Group Initiative (select all tokens and use the macro, no need to create the encounter). Initiative will be grouped by token disposition (friendly, neutral, hostile, secret).
     - Escalator Die (UVG 1ed legacy feature). The escalator die value will be added to ability, attack, weapon, power, and power album roll results.
+    - Generate Random NPCs using tables from the Vastlands Guidebook (VLG)
   - SDM Player Macros:
     - Generate Ability Scores (method described in the Vastlands Guidebook (VLG): rolls 1d100 for every ability score and displays the results in chat).
-  - Rolltables:
+    - Character Background Trait Generator (based in the Vastlands Guidebook Background table)
+  - Rollable Tables:
     - Ability Scores (preferred method for ability score generation). Roll d100 table to generate ability scores, then assign unlabeled scores.
     - Referee Title (a fun d10 table to choose referee title and referee session power).
+    - Rollable tables for every equipment category (Light Armor, Medium Armor, etc)
 
 ## Installation Instructions
 

@@ -87,7 +87,10 @@ export async function createChatMessage({
           content = content.replace('dice-total', 'dice-total fumble');
           content += `<div class='flex-group-center mt-10'><span class='fumble'>${$l10n('SDM.CriticalFailure').toUpperCase()}</span></div>`;
         } else if (is13) {
-          content = content.replace('<li class="roll die d20">13</li>', '<li class="roll die d20 is13">13</li>')
+          content = content.replace(
+            '<li class="roll die d20">13</li>',
+            '<li class="roll die d20 is13">13</li>'
+          );
           content = content.replace('dice-total', 'dice-total force');
           content += `<div class='flex-group-center mt-10'><span  class='force'>${$l10n('SDM.DepletedResources').toUpperCase()}</span></div>`;
         }
@@ -109,5 +112,24 @@ export async function createChatMessage({
   } catch (e) {
     console.error('createChatMessage: Failed to create message', e);
     return null;
+  }
+}
+
+export function configureChatListeners(html) {
+  html.addEventListener('click', event => {
+    if (event.target.closest('.collapsible')) _onChatCardToggleContent(event);
+  });
+}
+
+/**
+ * Handle toggling the visibility of chat card content when the name is clicked
+ * @param {Event} event   The originating click event
+ * @private
+ */
+function _onChatCardToggleContent(event) {
+  const header = event.target.closest('.collapsible');
+  if (!event.target.closest('.collapsible-content.card-content')) {
+    event.preventDefault();
+    header.classList.toggle('collapsed');
   }
 }

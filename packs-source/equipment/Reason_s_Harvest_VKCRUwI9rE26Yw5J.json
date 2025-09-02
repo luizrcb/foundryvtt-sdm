@@ -1,0 +1,87 @@
+{
+  "name": "Reason’s Harvest",
+  "img": "icons/svg/fire.svg",
+  "type": "gear",
+  "system": {
+    "description": "<p><em>All-Library Interface</em></p><p>The harvest protocol skims the ambient infotronium cloud of an object—essentially, it copies a book’s worth of information directly into the user’s mind.</p>",
+    "type": "power",
+    "power": {
+      "level": 1,
+      "range": "touch",
+      "target": "1 item or book",
+      "duration": "1 minute",
+      "overcharge": "<p>Ten books’ worth, but this is painful.</p>",
+      "roll_formula": "",
+      "overcharge_roll_formula": "",
+      "img": "icons/svg/book.svg",
+      "name": "",
+      "description": "",
+      "default_ability": ""
+    },
+    "readied": false,
+    "cost": 0,
+    "cost_frequency": "",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "powers_current_index": 0,
+    "max_powers": 3,
+    "powers": [],
+    "armor": {
+      "value": 0,
+      "type": "",
+      "cumbersome": false,
+      "powered": null
+    },
+    "ward": {
+      "value": 0,
+      "type": "",
+      "armor": 0
+    },
+    "weapon": {
+      "damage": {
+        "base": "1d4",
+        "versatile": "1d4",
+        "bonus": ""
+      },
+      "range": "",
+      "versatile": false
+    }
+  },
+  "effects": [],
+  "folder": "nvE6J5q2pVx6leTv",
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.37",
+    "createdTime": 1756647987665,
+    "modifiedTime": 1756668195238,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_id": "VKCRUwI9rE26Yw5J",
+  "sort": 2200000,
+  "_key": "!items!VKCRUwI9rE26Yw5J"
+}

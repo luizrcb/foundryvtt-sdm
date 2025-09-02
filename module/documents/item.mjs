@@ -1,6 +1,10 @@
+import { createChatMessage } from '../helpers/chatUtils.mjs';
 import { GearType, ItemType, PullMode, SizeUnit, TraitType } from '../helpers/constants.mjs';
 import { $l10n, capitalizeFirstLetter } from '../helpers/globalUtils.mjs';
 import { convertToCash, getSlotsTaken } from '../helpers/itemUtils.mjs';
+import { templatePath } from '../helpers/templates.mjs';
+
+const { renderTemplate } = foundry.applications.handlebars;
 
 /**
  * Extend the basic Item with some very simple modifications.
@@ -80,17 +84,22 @@ export class SdmItem extends Item {
     return convertToCash(carryWeight, SizeUnit.SACKS);
   }
 
-  getCostTitle() {
+  getCostTitle(addParentheses = true) {
     if (this.system.cost) {
       const costFrequency = this.system.cost_frequency;
       const costValue = (this.system.cost || 0) * (this.system.quantity || 1);
       const frequencyLabel = costFrequency
         ? `/${$l10n(`SDM.Frequency${capitalizeFirstLetter(costFrequency)}`)}`
         : '';
-
-      return ` (${$l10n('SDM.CashSymbol')}${costValue}${frequencyLabel})`;
+      const costTitle = `${$l10n('SDM.CashSymbol')}${costValue}${frequencyLabel}`;
+      if (!addParentheses) return ` ${costTitle}`;
+      return ` (${costTitle})`;
     }
     return '';
+  }
+
+  getSizeTitle() {
+    //this.system?.size?.unit === SizeUnit.CASH
   }
 
   getSlotsTaken() {
@@ -151,7 +160,7 @@ export class SdmItem extends Item {
 
   getPowerShortTitle(powerData, actorPowerCost = 2, overcharge = false) {
     const powerName = powerData.name || this.name;
-    const powerLevel = powerData?.level || 1;
+    const powerLevel = powerData?.level;
 
     let powerCost = Math.ceil(actorPowerCost * powerLevel);
     if (overcharge) powerCost *= 2;
@@ -160,7 +169,7 @@ export class SdmItem extends Item {
   }
 
   getPowerTitle(powerData, actorPowerCost = 2) {
-    const powerLevel = powerData?.level || 1;
+    const powerLevel = powerData?.level;
     const powerCost = Math.ceil(actorPowerCost * powerLevel);
     const powerName = powerData.name || this.name;
 
@@ -256,6 +265,44 @@ export class SdmItem extends Item {
   }
 
   getInventoryName() {}
+
+  async getItemChatCard({ collapsed = false, displayWeight = true }) {
+    let type = this.system.type ? this.system.type : this.type;
+
+    let costSubtitle = this.getCostTitle(false);
+    let weightSubtitle = `${this.system.size.value} ${$l10n(`SDM.Unit.${this.system.size.unit}.abbr`)}`;
+
+    if (this.system.size.unit === SizeUnit.CASH) {
+      type = SizeUnit.CASH;
+      costSubtitle = `${$l10n('SDM.CashSymbol')}${this.system.quantity * (this.system.size.value || 1)}`;
+      weightSubtitle = '';
+    }
+
+    if ([ItemType.TRAIT, ItemType.BURDEN].includes(this.type)) {
+      weightSubtitle = '';
+    }
+
+    const context = {
+      config: CONFIG.SDM,
+      item: this,
+      type,
+      costSubtitle,
+      weightSubtitle: displayWeight ? weightSubtitle : '',
+      collapsed
+    };
+
+    return await renderTemplate(templatePath('chat/item-card'), context);
+  }
+
+  async sendToChat({ actor, flavor = '', collapsed = false, displayWeight = true }) {
+    const content = await this.getItemChatCard({ collapsed, displayWeight });
+
+    return createChatMessage({
+      actor,
+      content,
+      flavor: flavor || game.user.name
+    });
+  }
 
   /**
    * Prepare a data object which defines the data schema used by dice roll commands against this Item

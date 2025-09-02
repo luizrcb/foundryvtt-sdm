@@ -17,7 +17,10 @@ export default class SDMRoll {
     explodingDice = true,
     versatile = false,
     targetActor,
-    attackTarget = AttackTarget.PHYSICAL
+    attackTarget = AttackTarget.PHYSICAL,
+    sendPowerToChat = false,
+    powerDescription = '',
+    item = null
   }) {
     this.actor = actor;
     this.type = type;
@@ -32,9 +35,21 @@ export default class SDMRoll {
     this.versatile = versatile;
     this.targetActor = targetActor;
     this.attackTarget = attackTarget;
+    this.sendPowerToChat = sendPowerToChat;
+    this.powerDescription = powerDescription;
+    this.item = item;
   }
 
   async evaluate() {
+    if (this.sendPowerToChat && this.item) {
+      return await this.item.sendToChat({
+        actor: this.actor,
+        flavor: this.#buildFlavorText(),
+        collapsed: true,
+        displayWeight: false,
+      });
+    }
+
     const expression = this.#buildDiceComponent();
     const explodingExpression = this.#applyExplodingDice(expression);
     const multipliedExpression = this.#applyMultiplier(explodingExpression);
@@ -141,6 +156,11 @@ export default class SDMRoll {
       <div>`;
     }
 
+    if (this.powerDescription) {
+      const powerCard = await this.item.getItemChatCard({ collapsed: true, displayWeight: false });
+      content += powerCard;
+    }
+
     await createChatMessage({
       actor: this.actor,
       rolls: [rollInstance],
@@ -181,21 +201,35 @@ export default class SDMRoll {
       abilityMod = actorData?.abilities[this.ability]?.current ?? 0;
     } else if (
       this.actor.type === ActorType.NPC &&
-      ![RollType.DAMAGE, RollType.POWER].includes(type)
+      ![RollType.DAMAGE, RollType.POWER, RollType.POWER_ALBUM].includes(type)
     ) {
       abilityMod = actorData?.bonus ?? 0;
     }
 
     const burdenPenalty = actorData?.burden_penalty || 0;
-    const burdenPenaltyBonus = actorData?.burden_penalty_bonus || 0;
+    const burdenPenaltyBonus = actorData?.burden_penalty_bonus || 0; // ignored burdens
     const skillMod = this.skill?.mod || 0;
     const allBonuses = burdenPenaltyBonus - burdenPenalty + abilityMod + skillMod;
     const modifierComponents = this.#parseModifierString(this.modifier);
+    const fixedAndDice = this.#separateFixedAndDice([...modifierComponents, `${allBonuses}`]);
 
-    return this.#separateFixedAndDice([...modifierComponents, `${allBonuses}`]);
+    const fixed = fixedAndDice.fixedModifiers;
+
+    const useHardLimitRule = game.settings.get('sdm', 'useHardLimitRule');
+    const defaultHardLimitValue = game.settings.get('sdm', 'defaultHardLimitValue') || 13;
+
+    const finalFixed =
+      useHardLimitRule && ![RollType.DAMAGE, RollType.POWER, RollType.POWER_ALBUM].includes(type)
+        ? Math.min(fixed, defaultHardLimitValue)
+        : fixed;
+    fixedAndDice.fixedModifiers = finalFixed;
+
+    return fixedAndDice;
   }
 
   #buildFlavorText(fixedModifiers, diceModifiers) {
+    const actorData = this.actor?.system;
+    const damageMultiplier = CONFIG.SDM.getDamageMultiplier(actorData.base_damage_multiplier || 2);
     const rollMode =
       this.mode === RollMode.NORMAL ? '' : $l10n(`SDM.Roll${capitalizeFirstLetter(this.mode)}Abbr`);
     const versatileLabel = $l10n('SDM.FeatureVersatile');
@@ -214,7 +248,7 @@ export default class SDMRoll {
     if (diceModifiers) parts.push(`(${diceModifiers})`);
     if (fixedModifiers) parts.push(`(${fixedModifiers >= 0 ? '+' : ''}${fixedModifiers})`);
     if (rollMode) parts.push(`(${rollMode})`);
-    if (this.multiplier) parts.push(`(${CONFIG.SDM.damageMultiplier[this.multiplier]})`);
+    if (this.multiplier) parts.push(`(${damageMultiplier[this.multiplier]})`);
     if (this.type === RollType.DAMAGE && this.explodingDice) parts.push(`(d*)`);
 
     const flavor = parts.join(' ');

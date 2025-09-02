@@ -4,8 +4,16 @@ import { SdmActor } from './documents/actor.mjs';
 import { SdmCombatant } from './documents/combatant.mjs';
 import { SdmItem } from './documents/item.mjs';
 import { registerHandlebarsHelpers } from './handlebars-helpers.mjs';
+import {
+  createNPC,
+  createNPCByLevel,
+  createBackgroundTrait,
+  createFullAutoDestructionMode
+} from './helpers/actorUtils.mjs';
+import { configureChatListeners } from './helpers/chatUtils.mjs';
 import { SDM } from './helpers/config.mjs';
 import { ActorType, ItemType } from './helpers/constants.mjs';
+import { makePowerItem } from './helpers/itemUtils.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
 import {
@@ -45,11 +53,22 @@ globalThis.sdm = {
   utils: {
     rollItemMacro
   },
-  models
+  models,
+  api: {
+    createNPC,
+    createNPCByLevel,
+    createBackgroundTrait,
+    createFullAutoDestructionMode,
+    makePowerItem
+  }
 };
 
 Hooks.on('renderChatMessageHTML', (message, html, data) => {
   configureUseHeroDiceButton(message, html, data);
+});
+
+Hooks.on('renderChatLog', (app, html, data) => {
+  configureChatListeners(html);
 });
 
 Hooks.on('renderDialogV2', (dialog, html) => {
@@ -62,14 +81,14 @@ Hooks.on('renderDialogV2', (dialog, html) => {
     const selectedIndex = parseInt(event.target.value, 10);
     const selectedPower = powerOptions.find(p => p.index === selectedIndex);
     const defaultAbility = selectedPower?.default_ability || '';
-    const overchargeFormula = selectedPower?.overchargeFormula;
+    const canOvercharge = selectedPower?.canOvercharge;
 
     if (abilitySelect) {
       abilitySelect.value = defaultAbility;
     }
 
     if (overChargeButton) {
-      overChargeButton.style.display = !overchargeFormula ? 'none' : '';
+      overChargeButton.style.display = !canOvercharge ? 'none' : '';
     }
   });
 });
@@ -79,7 +98,7 @@ Hooks.on('preUpdateActor', (actor, update) => {
 });
 
 Hooks.on('createActor', async (actor, _options, _id) => {
-  if (!actor.isOwner) return
+  if (!actor.isOwner) return;
   let disposition = CONST.TOKEN_DISPOSITIONS.NEUTRAL;
 
   const tokenData = {
@@ -87,8 +106,8 @@ Hooks.on('createActor', async (actor, _options, _id) => {
     displayName: CONST.TOKEN_DISPLAY_MODES.OWNER,
     displayBars: CONST.TOKEN_DISPLAY_MODES.OWNER,
     disposition: disposition,
-    lockRotation: true,
-  }
+    lockRotation: true
+  };
 
   if (actor.type === ActorType.NPC) {
     tokenData.appendNumber = true;
@@ -101,24 +120,24 @@ Hooks.on('createActor', async (actor, _options, _id) => {
     tokenData.actorLink = true;
   }
 
-  await actor.update({'prototypeToken': tokenData })
+  await actor.update({ prototypeToken: tokenData });
 });
 
 Hooks.on('updateActor', async actor => {
   if (!actor.isOwner) return;
 
   const name = actor.name;
-  await actor.update({'prototypeToken.name': name });
+  await actor.update({ 'prototypeToken.name': name });
 });
 
 Hooks.on('createItem', async (item, _options, _id) => {
-  if (!item.isOwner) return
+  if (!item.isOwner) return;
 
   if (item.type !== ItemType.GEAR) return;
 
   const defaultMaxPowers = game.settings.get('sdm', 'defaultMaxPowers') || DEFAULT_MAX_POWERS;
 
-  await item.update({'system.max_powers': defaultMaxPowers });
+  await item.update({ 'system.max_powers': defaultMaxPowers });
 });
 
 Hooks.on('renderSettings', (app, html) => renderSettings(html));
@@ -135,15 +154,22 @@ Hooks.on('renderGamePause', (app, html) => {
 });
 
 Hooks.on('getChatMessageContextOptions', (html, options) => {
+  const canApply = li => {
+    const message = game.messages.get(li.dataset.messageId);
+    return message.rolls && message.rolls.length;
+  };
+
   options.push(
     {
       name: '',
       icon: '',
+      condition: canApply,
       group: 'separator'
     },
     {
       name: game.i18n.localize('SDM.ChatContextDamage'),
       icon: '<i class="fa-solid fa-user-minus"></i>',
+      condition: canApply,
       callback: async li => {
         const message = game.messages.get(li.dataset.messageId);
         if (!message.rolls || !message.rolls.length) return;
@@ -161,6 +187,7 @@ Hooks.on('getChatMessageContextOptions', (html, options) => {
     {
       name: game.i18n.localize('SDM.ChatContextHealing'),
       icon: '<i class="fa-solid fa-user-plus"></i>',
+      condition: canApply,
       callback: async li => {
         const message = game.messages.get(li.dataset.messageId);
         if (!message.rolls || !message.rolls.length) return;
@@ -379,6 +406,30 @@ function _configureFonts() {
 }
 
 /**
+ * Generate sidebar links.
+ * @returns {HTMLUListElement}
+ * @private
+ */
+function _generateLinks() {
+  const links = document.createElement('ul');
+  links.classList.add('unlist', 'links');
+  links.innerHTML = `
+    <li>
+      <a href="https://github.com/luizrcb/foundryvtt-sdm/releases/latest" target="_blank">
+        ${game.i18n.localize('SDM.Notes')}
+      </a>
+    </li>
+    <li>
+      <a href="https://github.com/luizrcb/foundryvtt-sdm/issues" target="_blank">${game.i18n.localize('SDM.Issues')}</a>
+    </li>
+    <li>
+      <a href="https://github.com/luizrcb/foundryvtt-sdm/wiki" target="_blank">${game.i18n.localize('SDM.Wiki')}</a>
+    </li>
+  `;
+  return links;
+}
+
+/**
  * Render a custom entry for game details in the settings sidebar.
  * @param {HTMLElement} html  The settings sidebar HTML.
  */
@@ -395,6 +446,7 @@ function renderSettings(html) {
       <span class="system-info">${sdm.version}</span>
     </div>
   `;
+  section.append(_generateLinks());
   if (pip) section.querySelector('.system-info').insertAdjacentElement('beforeend', pip);
   html.querySelector('.info').insertAdjacentElement('afterend', section);
 }

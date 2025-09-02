@@ -1,0 +1,22 @@
+{
+  "type": "Item",
+  "folder": "Xga9VnirSPUaxuJm",
+  "name": "Drugs",
+  "color": null,
+  "sorting": "m",
+  "_id": "bb0Gth6VMABPrrk7",
+  "description": "",
+  "sort": 300000,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.37",
+    "lastModifiedBy": "0fqTkfNvjooZ2og7",
+    "modifiedTime": 1756597893815
+  },
+  "_key": "!folders!bb0Gth6VMABPrrk7"
+}

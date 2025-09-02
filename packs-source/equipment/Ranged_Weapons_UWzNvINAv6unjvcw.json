@@ -1,0 +1,22 @@
+{
+  "type": "Item",
+  "folder": "dMp05nhGHKzbIjuk",
+  "name": "Ranged Weapons",
+  "color": null,
+  "sorting": "m",
+  "_id": "UWzNvINAv6unjvcw",
+  "description": "",
+  "sort": 325000,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.347",
+    "systemId": "sdm",
+    "systemVersion": "0.1.32",
+    "lastModifiedBy": "0fqTkfNvjooZ2og7",
+    "modifiedTime": 1756388855946
+  },
+  "_key": "!folders!UWzNvINAv6unjvcw"
+}

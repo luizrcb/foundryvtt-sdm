@@ -1,0 +1,22 @@
+{
+  "type": "Item",
+  "folder": "DBqKNVh8vkpL41oV",
+  "name": "Magielectronics & Power",
+  "color": null,
+  "sorting": "m",
+  "_id": "2ELfA1oY2DkBKtHc",
+  "description": "",
+  "sort": 431250,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.36",
+    "lastModifiedBy": "0fqTkfNvjooZ2og7",
+    "modifiedTime": 1756572718945
+  },
+  "_key": "!folders!2ELfA1oY2DkBKtHc"
+}

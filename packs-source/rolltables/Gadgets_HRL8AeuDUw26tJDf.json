@@ -1,0 +1,21 @@
+{
+  "type": "RollTable",
+  "folder": "MQfAWYx9K2WEu1eo",
+  "name": "Gadgets",
+  "color": null,
+  "sorting": "m",
+  "_id": "HRL8AeuDUw26tJDf",
+  "description": "",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.36",
+    "lastModifiedBy": null
+  },
+  "_key": "!folders!HRL8AeuDUw26tJDf"
+}

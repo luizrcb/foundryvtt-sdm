@@ -1,0 +1,86 @@
+{
+  "folder": "ZEku7XZ9kg8Lrque",
+  "name": "Omni-Utilitool",
+  "type": "gear",
+  "_id": "pcAmfnNx13j8RqSn",
+  "img": "icons/commodities/tech/smoke-bomb-red-yellow.webp",
+  "system": {
+    "readied": false,
+    "cost": 200,
+    "cost_frequency": "",
+    "description": "<p>Laser cutter, microwelder, plasma beam, and seven other small energy tools.</p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "type": "",
+    "power": {
+      "img": "icons/svg/book.svg",
+      "name": "",
+      "description": "",
+      "level": 1,
+      "range": "",
+      "target": "",
+      "duration": "",
+      "overcharge": "",
+      "roll_formula": "",
+      "overcharge_roll_formula": ""
+    },
+    "powers_current_index": 0,
+    "max_powers": 3,
+    "powers": [],
+    "armor": {
+      "value": 0,
+      "type": "",
+      "cumbersome": false,
+      "powered": null
+    },
+    "ward": {
+      "value": 0,
+      "type": "",
+      "armor": 0
+    },
+    "weapon": {
+      "damage": {
+        "base": "1d4",
+        "versatile": "1d4",
+        "bonus": ""
+      },
+      "range": "",
+      "versatile": false
+    }
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.36",
+    "createdTime": 1756571110095,
+    "modifiedTime": 1756571144553,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_key": "!items!pcAmfnNx13j8RqSn"
+}

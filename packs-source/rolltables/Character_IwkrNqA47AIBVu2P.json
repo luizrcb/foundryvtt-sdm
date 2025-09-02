@@ -1,0 +1,23 @@
+{
+  "type": "RollTable",
+  "folder": null,
+  "name": "Character",
+  "color": null,
+  "sorting": "a",
+  "_id": "IwkrNqA47AIBVu2P",
+  "description": "",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.35",
+    "createdTime": 1756510484741,
+    "modifiedTime": 1756510484741,
+    "lastModifiedBy": "3vgxDetPOGhfUfqu"
+  },
+  "_key": "!folders!IwkrNqA47AIBVu2P"
+}

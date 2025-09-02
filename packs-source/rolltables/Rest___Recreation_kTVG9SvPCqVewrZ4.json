@@ -1,0 +1,180 @@
+{
+  "name": "Rest & Recreation",
+  "description": "A random table created from the contents of the Rest &amp; Recreation Folder.",
+  "results": [
+    {
+      "name": "Folding Chair",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.MOaDyT6ReINbbpZI",
+      "img": "icons/commodities/wood/furniture-stool-brown.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "sRvbLssFwZtFf6de",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!kTVG9SvPCqVewrZ4.sRvbLssFwZtFf6de"
+    },
+    {
+      "name": "Musical Instrument",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.Cgd7EP023IsnbTQE",
+      "img": "icons/tools/instruments/lute-gold-brown.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "s7YzlVK8J7ouDVVk",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!kTVG9SvPCqVewrZ4.s7YzlVK8J7ouDVVk"
+    },
+    {
+      "name": "Campaign Bed",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.3ZxNyrt6HKpSjUDp",
+      "img": "icons/sundries/survival/bedroll-grey.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "OE3X3npmLx0YWiVL",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!kTVG9SvPCqVewrZ4.OE3X3npmLx0YWiVL"
+    },
+    {
+      "name": "Enviro Tent",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.JKlkDJCI0Os1yQid",
+      "img": "icons/environment/settlement/tent.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "yXpIPaDJcQlC34pf",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!kTVG9SvPCqVewrZ4.yXpIPaDJcQlC34pf"
+    },
+    {
+      "name": "Portable Illusion",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.yhirx7u1p6Zral0U",
+      "img": "icons/tools/laboratory/alembic-glass-ball-blue.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "nwO0YBOqzzjZJA5z",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!kTVG9SvPCqVewrZ4.nwO0YBOqzzjZJA5z"
+    },
+    {
+      "name": "Radiothermal Stove",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.vlNhe5YNi739oAMJ",
+      "img": "icons/tools/smithing/furnace-fire-metal-orange.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "rJ42VC8UVD1y6PCL",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!kTVG9SvPCqVewrZ4.rJ42VC8UVD1y6PCL"
+    }
+  ],
+  "formula": "1d6",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "HRL8AeuDUw26tJDf",
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.36",
+    "createdTime": 1756574635093,
+    "modifiedTime": 1756574635106,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_id": "kTVG9SvPCqVewrZ4",
+  "sort": 200000,
+  "_key": "!tables!kTVG9SvPCqVewrZ4"
+}

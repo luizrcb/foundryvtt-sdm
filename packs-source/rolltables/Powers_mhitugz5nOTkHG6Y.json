@@ -1,0 +1,1655 @@
+{
+  "name": "Powers",
+  "description": "A random table created from the contents of the Powers Folder.",
+  "results": [
+    {
+      "name": "Wing And Prayer",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.0UpweATkobFSr7oG",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "MHqiDAaGV8RY3LeA",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.MHqiDAaGV8RY3LeA"
+    },
+    {
+      "name": "Floating Disc",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.0W3XgwXtSPYtEaq0",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "IdGKRx2FCx9b92sa",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.IdGKRx2FCx9b92sa"
+    },
+    {
+      "name": "Gem Bomb",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.0g37ZeE8yxwZ0T5m",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "H722J3L7I91xFMS4",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.H722J3L7I91xFMS4"
+    },
+    {
+      "name": "Yellow Foresight",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.0wTjrRzvs81m5294",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "MeKIL238pDCXavBw",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.MeKIL238pDCXavBw"
+    },
+    {
+      "name": "Orange Dream",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.1AFmtHEZe1OqJodX",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "0TEoULNgNJUsHTTw",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.0TEoULNgNJUsHTTw"
+    },
+    {
+      "name": "Counterfire",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.24rPNndkgQFXN4rD",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "eDvTq8BLdMzzfy8B",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.eDvTq8BLdMzzfy8B"
+    },
+    {
+      "name": "Depleted Heavy Metal Rain",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.2yL6lTBGTRVNXexN",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "dZr4vVV6cLKBUZbR",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.dZr4vVV6cLKBUZbR"
+    },
+    {
+      "name": "Raise Dead",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.3Kfirgv7rYO9tWko",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "pokmFwhjDSBx71oL",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.pokmFwhjDSBx71oL"
+    },
+    {
+      "name": "Motor Fixative",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.4OY7e1L0eOVOz6Dy",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "Lu4jQP5tamHxfnkD",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.Lu4jQP5tamHxfnkD"
+    },
+    {
+      "name": "Suspended Insight",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.5Dhg8C7RPbr07jwB",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "PLd0mFpSSKlEtRbj",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.PLd0mFpSSKlEtRbj"
+    },
+    {
+      "name": "Toxin Render",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.6HRDOy73RHB0KXSI",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_id": "kKkXVbrVpmhckBRf",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.kKkXVbrVpmhckBRf"
+    },
+    {
+      "name": "Dampen Mass",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.7g7FCHk4COB7CGx1",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_id": "rtja879FHbVP6LrW",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.rtja879FHbVP6LrW"
+    },
+    {
+      "name": "Eyes of the Arrow",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.9Zqi6pWhTob2LkN7",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        13,
+        13
+      ],
+      "drawn": false,
+      "_id": "sS3PaXZzlq1W8jrx",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.sS3PaXZzlq1W8jrx"
+    },
+    {
+      "name": "Speak With Husk",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.9dnTnoj3JQtDQCOH",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        14,
+        14
+      ],
+      "drawn": false,
+      "_id": "nlwWNLsY8N2kQvl2",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.nlwWNLsY8N2kQvl2"
+    },
+    {
+      "name": "Three-Point Immobility",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.AgT3GR63o3raQEgv",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        15,
+        15
+      ],
+      "drawn": false,
+      "_id": "Zb77d9mSBt1svfAB",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.Zb77d9mSBt1svfAB"
+    },
+    {
+      "name": "Supplicate the Rotting God",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.BPC72mUt9cuKalUl",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        16,
+        16
+      ],
+      "drawn": false,
+      "_id": "rkqnM6lQr8S9txpj",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.rkqnM6lQr8S9txpj"
+    },
+    {
+      "name": "Primary Desenescence",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.ClEi0dTQCpQDe16e",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        17,
+        17
+      ],
+      "drawn": false,
+      "_id": "exI2jGPtEApGNcuF",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.exI2jGPtEApGNcuF"
+    },
+    {
+      "name": "Roadfinder",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.DPdg0Tm3HLKkRFHY",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        18,
+        18
+      ],
+      "drawn": false,
+      "_id": "j3U2xOvWMa3Vc7oi",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.j3U2xOvWMa3Vc7oi"
+    },
+    {
+      "name": "Better Pastures",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.DbJnTKP2PxQnJHSa",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        19,
+        19
+      ],
+      "drawn": false,
+      "_id": "nNcEemcrgvpSXCCM",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.nNcEemcrgvpSXCCM"
+    },
+    {
+      "name": "Essence Sift",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.DbP7DVD8jzBTP5OB",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        20,
+        20
+      ],
+      "drawn": false,
+      "_id": "iG6hXRNKSi2SMXKL",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.iG6hXRNKSi2SMXKL"
+    },
+    {
+      "name": "Pyreball",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.EQneCAZWYdltSFXS",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        21,
+        21
+      ],
+      "drawn": false,
+      "_id": "bml8NjIHldHXEMuv",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.bml8NjIHldHXEMuv"
+    },
+    {
+      "name": "Dryland Sculpture",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.EW904QJqp5L8OcJe",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        22,
+        22
+      ],
+      "drawn": false,
+      "_id": "nsSboLLdVJp7hhal",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.nsSboLLdVJp7hhal"
+    },
+    {
+      "name": "Purple Memories",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.GJVO6xbLDmFdCGWQ",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        23,
+        23
+      ],
+      "drawn": false,
+      "_id": "G85HNQYtPDIdC3vc",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.G85HNQYtPDIdC3vc"
+    },
+    {
+      "name": "Highway Cruiser",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.GhxxJrR0x38IbSbJ",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        24,
+        24
+      ],
+      "drawn": false,
+      "_id": "1nLA011t2amZDaCE",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.1nLA011t2amZDaCE"
+    },
+    {
+      "name": "Process Food",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.IzdVLwOgpy73j4Ow",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        25,
+        25
+      ],
+      "drawn": false,
+      "_id": "PrQ4eeCBN4zjlcwR",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.PrQ4eeCBN4zjlcwR"
+    },
+    {
+      "name": "Dissolution and Resolution of the Spirit",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.JTUZMeEhOUFHYO26",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        26,
+        26
+      ],
+      "drawn": false,
+      "_id": "hb6YXu6dh6O4Jfje",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.hb6YXu6dh6O4Jfje"
+    },
+    {
+      "name": "Tragic Missile",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.KjO6irgJ70h3Ri48",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        27,
+        27
+      ],
+      "drawn": false,
+      "_id": "QQh4OtLcZrY33pBQ",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.QQh4OtLcZrY33pBQ"
+    },
+    {
+      "name": "Invoke Ub Dragon",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.LmfGUcUlFI3ruLpw",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        28,
+        28
+      ],
+      "drawn": false,
+      "_id": "yi5YjXtKJMl2eFon",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.yi5YjXtKJMl2eFon"
+    },
+    {
+      "name": "Imbue Edge",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.PnMwDe4ep5WtjPNg",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        29,
+        29
+      ],
+      "drawn": false,
+      "_id": "OODv4UIaHgLqWogc",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.OODv4UIaHgLqWogc"
+    },
+    {
+      "name": "Open Person",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.QKhneN81qMD8wFkA",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        30,
+        30
+      ],
+      "drawn": false,
+      "_id": "ClK2w2KmgNt2HFqn",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.ClK2w2KmgNt2HFqn"
+    },
+    {
+      "name": "Anti-Babylon",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.QttLgsPwwn8H5Ty8",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        31,
+        31
+      ],
+      "drawn": false,
+      "_id": "mNnAPXMO4NSCyatr",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.mNnAPXMO4NSCyatr"
+    },
+    {
+      "name": "Thornstone Obelisk",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.QzVNCdU1oJWEKwud",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        32,
+        32
+      ],
+      "drawn": false,
+      "_id": "9EGpHIA7f2JntI1g",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.9EGpHIA7f2JntI1g"
+    },
+    {
+      "name": "Akaula's Sacrificial Hero",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.R29KoaPbHrCJ10QT",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        33,
+        33
+      ],
+      "drawn": false,
+      "_id": "GaLHpqsj2UagqMbF",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.GaLHpqsj2UagqMbF"
+    },
+    {
+      "name": "Burdenbeast Modification",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.SJVVY9VM1HAvKt8c",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        34,
+        34
+      ],
+      "drawn": false,
+      "_id": "7PORXlOYM0G7RM82",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.7PORXlOYM0G7RM82"
+    },
+    {
+      "name": "Magic Jar",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.SSV9dL0NcCljWp25",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        35,
+        35
+      ],
+      "drawn": false,
+      "_id": "E1dAhGyYPwI66KnP",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.E1dAhGyYPwI66KnP"
+    },
+    {
+      "name": "Recall Soul",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.TMlq4lYHHCZ20DbR",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        36,
+        36
+      ],
+      "drawn": false,
+      "_id": "dP7mN7jY2B1VIbir",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.dP7mN7jY2B1VIbir"
+    },
+    {
+      "name": "Yellow Cloud",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.V1EAZIPbEViHvYjZ",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        37,
+        37
+      ],
+      "drawn": false,
+      "_id": "nCEg51whPDkBqJOJ",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.nCEg51whPDkBqJOJ"
+    },
+    {
+      "name": "Can Trip",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.V601Cc4psvs9WhZz",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        38,
+        38
+      ],
+      "drawn": false,
+      "_id": "WDWRFxqIdTGKQitf",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.WDWRFxqIdTGKQitf"
+    },
+    {
+      "name": "Reason’s Harvest",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.VKCRUwI9rE26Yw5J",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        39,
+        39
+      ],
+      "drawn": false,
+      "_id": "YeHfX7w6OwwY4OXx",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.YeHfX7w6OwwY4OXx"
+    },
+    {
+      "name": "Egregious Topology",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.X4WWBPEB9fl6qwKm",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        40,
+        40
+      ],
+      "drawn": false,
+      "_id": "EXJi8Axb0v1rWlZ1",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.EXJi8Axb0v1rWlZ1"
+    },
+    {
+      "name": "Real-time Rebuild",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.XVwqxKEEzRIK2ZkH",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        41,
+        41
+      ],
+      "drawn": false,
+      "_id": "Dv0I2TNCy0ZgOygx",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.Dv0I2TNCy0ZgOygx"
+    },
+    {
+      "name": "Knock / Lock",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.Xpd3xl4YDD2bzOZn",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        42,
+        42
+      ],
+      "drawn": false,
+      "_id": "KWmppHA2Vjj6E1AY",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.KWmppHA2Vjj6E1AY"
+    },
+    {
+      "name": "Blue Lotus",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.Yra8Qz5WFY8wVWud",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        43,
+        43
+      ],
+      "drawn": false,
+      "_id": "IzR16tM4jCKyjai7",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.IzR16tM4jCKyjai7"
+    },
+    {
+      "name": "Mother of Bullets",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.ZO05stEklZz8lb67",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        44,
+        44
+      ],
+      "drawn": false,
+      "_id": "RqU4gZs1dYehmlc6",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.RqU4gZs1dYehmlc6"
+    },
+    {
+      "name": "Parasoma Transference",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.bwQeiUJJ1VuqeZbq",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        45,
+        45
+      ],
+      "drawn": false,
+      "_id": "QwS9cb9bUTzx5Pbr",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.QwS9cb9bUTzx5Pbr"
+    },
+    {
+      "name": "Ring of Lead",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.fsVkHnunMrz6XIoQ",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        46,
+        46
+      ],
+      "drawn": false,
+      "_id": "CvdICJ7cFqVbh2fe",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.CvdICJ7cFqVbh2fe"
+    },
+    {
+      "name": "Roadmaker",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.gDiuvAyAdiIRKv2a",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        47,
+        47
+      ],
+      "drawn": false,
+      "_id": "XWafU6cJxSrdP7Wb",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.XWafU6cJxSrdP7Wb"
+    },
+    {
+      "name": "Stoyevod’s Irreducible Crystallization of the Ego Complex",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.gNi0oSZHtAPdreCt",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        48,
+        48
+      ],
+      "drawn": false,
+      "_id": "bJ6gH8lGkg5vgcst",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.bJ6gH8lGkg5vgcst"
+    },
+    {
+      "name": "Burden Share",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.iodUpfHdxkIR6x31",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        49,
+        49
+      ],
+      "drawn": false,
+      "_id": "Xh8mYfIRAjI83Feb",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.Xh8mYfIRAjI83Feb"
+    },
+    {
+      "name": "Red Mist",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.jBq6pmWb0wAq2KR1",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        50,
+        50
+      ],
+      "drawn": false,
+      "_id": "Z1HrrUIotNhJr3tD",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.Z1HrrUIotNhJr3tD"
+    },
+    {
+      "name": "Alter Self",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.jJDkCPAUq9BSYTv5",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        51,
+        51
+      ],
+      "drawn": false,
+      "_id": "vGhFDCiPBVlAWHXb",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.vGhFDCiPBVlAWHXb"
+    },
+    {
+      "name": "Dancing In The Hail",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.kxK7CBdxAeAXM8jJ",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        52,
+        52
+      ],
+      "drawn": false,
+      "_id": "8vKCUdSw2ToqssFe",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.8vKCUdSw2ToqssFe"
+    },
+    {
+      "name": "Anne Astec",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.lfMNdFE6y6gW6PKb",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        53,
+        53
+      ],
+      "drawn": false,
+      "_id": "cLib9kZnVgAHyckN",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.cLib9kZnVgAHyckN"
+    },
+    {
+      "name": "Restorative Slumber",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.mo9Ixs345yoUhYlo",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        54,
+        54
+      ],
+      "drawn": false,
+      "_id": "UiraaAndWsjLbdL8",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.UiraaAndWsjLbdL8"
+    },
+    {
+      "name": "Access Noötree",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.nwZH4E5a6yWDNMaE",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        55,
+        55
+      ],
+      "drawn": false,
+      "_id": "4TgcJreiRRLb0k3n",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.4TgcJreiRRLb0k3n"
+    },
+    {
+      "name": "Cerebral Purge",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.oNNGKX0DJY2N4Lah",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        56,
+        56
+      ],
+      "drawn": false,
+      "_id": "jPU7QhwLGU13d0oL",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.jPU7QhwLGU13d0oL"
+    },
+    {
+      "name": "Green Haven",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.ouzJeCx2u3VeulNP",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        57,
+        57
+      ],
+      "drawn": false,
+      "_id": "JBWJO19WeWBANwC9",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.JBWJO19WeWBANwC9"
+    },
+    {
+      "name": "Entropic Reversal",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.p90OPNjPUWxnNJvO",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        58,
+        58
+      ],
+      "drawn": false,
+      "_id": "LIim5T1yU10p0rY7",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.LIim5T1yU10p0rY7"
+    },
+    {
+      "name": "Metempsychosis",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.ppsHg8bwEKvhGCxK",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        59,
+        59
+      ],
+      "drawn": false,
+      "_id": "fz9UNPODynRmnTRS",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.fz9UNPODynRmnTRS"
+    },
+    {
+      "name": "Nihil Est!",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.rN3Yqwt6oPs2Wyoi",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        60,
+        60
+      ],
+      "drawn": false,
+      "_id": "fYEAQV5OcNYflwHC",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.fYEAQV5OcNYflwHC"
+    },
+    {
+      "name": "Eyes of Akaula",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.uKxsMjYhb8SMkld2",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        61,
+        61
+      ],
+      "drawn": false,
+      "_id": "gRDn093lPAt0AX2D",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.gRDn093lPAt0AX2D"
+    },
+    {
+      "name": "Animate Corpse",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.uuzpRJniKhBhLkxF",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        62,
+        62
+      ],
+      "drawn": false,
+      "_id": "MF05AzLe1dvF4UAK",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.MF05AzLe1dvF4UAK"
+    },
+    {
+      "name": "Hlod Person",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.xOXJly1gLYLRBljs",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        63,
+        63
+      ],
+      "drawn": false,
+      "_id": "ybnyAIfDVWu3YbM0",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.ybnyAIfDVWu3YbM0"
+    },
+    {
+      "name": "Linked Portals",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.yUMiVaBgI7MiFPf2",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        64,
+        64
+      ],
+      "drawn": false,
+      "_id": "t81cWCFDlTgOxsTX",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.t81cWCFDlTgOxsTX"
+    },
+    {
+      "name": "Big Wish",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.zne8ZzbDf4m1Nqyf",
+      "img": "icons/svg/fire.svg",
+      "weight": 1,
+      "range": [
+        65,
+        65
+      ],
+      "drawn": false,
+      "_id": "uRBfeul4eVxAcYOD",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.38",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!mhitugz5nOTkHG6Y.uRBfeul4eVxAcYOD"
+    }
+  ],
+  "formula": "1d65",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "Yvh5eQbhilnMMk1w",
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.38",
+    "createdTime": 1756675394552,
+    "modifiedTime": 1756675394552,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_id": "mhitugz5nOTkHG6Y",
+  "sort": 0,
+  "_key": "!tables!mhitugz5nOTkHG6Y"
+}

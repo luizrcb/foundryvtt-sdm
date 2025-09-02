@@ -1,0 +1,28 @@
+{
+  "name": "Random NPC Generator",
+  "type": "script",
+  "command": "const { DialogV2 } = foundry.applications.api;\n\nif (!game.user.isGM) return;\n\n// Table options\nconst tableOptions = [\n  \"generic-synthesized-creature\",\n  \"humans-of-the-pananthropy\",\n  \"brick-bastions\",\n  \"darting-dodgers\",\n  \"crystal-cannons\",\n  \"erratic-expendables\",\n];\n\n// Table descriptions\nconst tableDescriptions = {\n  \"generic-synthesized-creature\": game.i18n.localize(\"SDM.TableDesc.GenericSynthesizedCreature\"),\n  \"humans-of-the-pananthropy\": game.i18n.localize(\"SDM.TableDesc.HumansOfThePananthropy\"),\n  \"brick-bastions\": game.i18n.localize(\"SDM.TableDesc.BrickBastions\"),\n  \"darting-dodgers\": game.i18n.localize(\"SDM.TableDesc.DartingDodgers\"),\n  \"crystal-cannons\": game.i18n.localize(\"SDM.TableDesc.CrystalCannons\"),\n  \"erratic-expendables\": game.i18n.localize(\"SDM.TableDesc.ErraticExpendables\"),\n};\n\n// Build dialog content\nconst content = `\n<fieldset>\n  <legend>${game.i18n.localize(\"SDM.CreateRandomNPC\")}</legend>\n  <div id=\"npc-table-description\" style=\"margin-top:5px;font-style:italic;\">\n    ${tableDescriptions[\"generic-synthesized-creature\"]}\n  </div>\n  <div class=\"form-group\">\n    <label>${game.i18n.localize(\"SDM.CreatureTable\")}</label>\n    <select name=\"table\" class=\"form-control\" id=\"npc-table-select\">\n      ${tableOptions\n        .map(\n          (t) =>\n            `<option value=\"${t}\" ${\n              t === \"generic-synthesized-creature\" ? \"selected\" : \"\"\n            }>${game.i18n.localize(`SDM.${t}`)}</option>`\n        )\n        .join(\"\")}\n    </select>\n  </div>\n  <div class=\"form-group\">\n    <label>${game.i18n.format(\"SDM.OptionalField\", {field: game.i18n.localize('SDM.FieldName')})}</label>\n    <input type=\"text\" name=\"name\" class=\"form-control\">\n  </div>\n  <div class=\"form-group\">\n    <label>${game.i18n.format(\"SDM.OptionalField\", {field: game.i18n.localize('SDM.FieldLevel')})}</label>\n    <input type=\"number\" name=\"level\" class=\"form-control\" min=\"0\">\n  </div>\n\n  <div class=\"form-group\">\n    <label>${game.i18n.format(\"SDM.OptionalField\", {field: game.i18n.localize('SDM.CustomInitiative')})}</label>\n    <input type=\"text\" name=\"initiative\" class=\"form-control\" placeholder=\"e.g. 2d6+@bonus\">\n  </div>\n</fieldset>\n`;\n\n// Create dialog instance\nconst data = await DialogV2.wait({\n  window: { title: game.i18n.localize(\"SDM.CreateRandomNPC\") },\n  content,\n  buttons: [\n    {\n      action: \"ok\",\n      label: game.i18n.localize(\"SDM.CreateNPC\"),\n      icon: \"fa-solid fa-spaghetti-monster-flying\",\n      callback: (event, button) =>\n        new foundry.applications.ux.FormDataExtended(button.form).object,\n    },\n  ],\n  rejectClose: false,\n  render: (event, dialog) => {\n    const html = dialog.element;\n    const select = html.querySelector(\"#npc-table-select\");\n    const description = html.querySelector(\"#npc-table-description\");\n\n    if (select && description) {\n      select.addEventListener(\"change\", (ev) => {\n        const val = ev.target.value;\n        description.innerHTML = tableDescriptions[val] ?? \"\";\n      });\n    }\n  },\n});\n\n// Render the dialog\nif (!data) return;\n\n// Prepare NPC data\nconst npcData = {\n  name: data?.name || game.i18n.localize(\"SDM.UnnamedNPC\"),\n  table: data.table,\n  initiative: '',\n};\n\n// Validate initiative as a Roll formula\nif (data.initiative) {\n  npcData.initiative = data.initiative;\n}\n\n// Call system API\nlet npc;\nif (data.level && !isNaN(data.level)) {\n  npc = await game.sdm.api.createNPCByLevel(\n    npcData?.name,\n    parseInt(data.level),\n    npcData.table,\n    npcData.initiative\n  );\n} else {\n  npc = await game.sdm.api.createNPC(npcData?.name, npcData.table, npcData.initiative);\n}\n\nui.notifications.info(game.i18n.format(\"SDM.NPCCreated\", {\n  name: npc?.name,\n  level: npc?.system?.level || \"-\",\n}));",
+  "img": "icons/creatures/magical/humanoid-silhouette-glowing-pink.webp",
+  "author": "0fqTkfNvjooZ2og7",
+  "scope": "global",
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.31",
+    "createdTime": 1756325625423,
+    "modifiedTime": 1756551178840,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_id": "4NjWUlltoC4GoHgg",
+  "sort": 100000,
+  "_key": "!macros!4NjWUlltoC4GoHgg"
+}

@@ -154,7 +154,7 @@ jobs:
 
 
     - name: Zip package
-      run: zip -r "${{ env.ZIP_NAME }}" "${{ steps.archive.outputs.result }}" -x "packs/_source/*" "packs/_source/"
+      run: zip ${{ env.ZIP_NAME }} -r  ${{ steps.archive.outputs.result }}
 
     - name: Fetch Release Body
       id: release

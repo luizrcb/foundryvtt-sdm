@@ -2,14 +2,14 @@
   "id": "sdm",
   "title": "Synthetic Dream Machine",
   "description": "An unofficial system for playing Ultraviolet Grasslands (UVG) and Our Golden Age (OGA) using the Synthetic Dream Machine (SDM) RPG system.",
-  "version": "0.1.31",
+  "version": "0.1.40",
   "url": "https://github.com/luizrcb/foundryvtt-sdm",
   "bugs": "https://github.com/luizrcb/foundryvtt-sdm/issues",
   "manifest": "https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/main/system.json",
-  "download": "https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.1.31/sdm-0.1.31.zip",
+  "download": "https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.1.40/sdm-0.1.40.zip",
   "compatibility": {
     "minimum": "13",
-    "verified": "13.347"
+    "verified": "13.348"
   },
   "authors": [
     {
@@ -99,9 +99,30 @@
     },
     {
       "name": "rolltables",
-      "label": "RollTables",
+      "label": "Rollable Tables",
       "path": "./packs/rolltables",
       "type": "RollTable",
+      "system": "sdm"
+    },
+    {
+      "name": "equipment",
+      "label": "Equipment",
+      "path": "./packs/equipment",
+      "type": "Item",
+      "system": "sdm"
+    },
+    {
+      "name": "traits",
+      "label": "Traits",
+      "path": "./packs/traits",
+      "type": "Item",
+      "system": "sdm"
+    },
+     {
+      "name": "creatures",
+      "label": "Creatures",
+      "path": "./packs/creatures",
+      "type": "Actor",
       "system": "sdm"
     }
   ],

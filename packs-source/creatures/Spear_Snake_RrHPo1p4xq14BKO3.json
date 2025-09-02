@@ -1,0 +1,140 @@
+{
+  "name": "Spear Snake",
+  "type": "npc",
+  "img": "icons/creatures/reptiles/serpent-horned-green.webp",
+  "system": {
+    "biography": "",
+    "notes": "",
+    "initiative": "",
+    "level": 3,
+    "life": {
+      "value": 12,
+      "max": 12
+    },
+    "morale": 6,
+    "defense": 12,
+    "bonus": 5,
+    "damage": "2d6",
+    "cost": 0,
+    "isWarrior": false,
+    "isHelper": false,
+    "isPorter": false,
+    "base_speed": 0
+  },
+  "prototypeToken": {
+    "name": "Spear Snake",
+    "displayName": 40,
+    "actorLink": false,
+    "width": 1,
+    "height": 1,
+    "texture": {
+      "src": "icons/creatures/reptiles/serpent-horned-green.webp",
+      "anchorX": 0.5,
+      "anchorY": 0.5,
+      "offsetX": 0,
+      "offsetY": 0,
+      "fit": "contain",
+      "scaleX": 1,
+      "scaleY": 1,
+      "rotation": 0,
+      "tint": "#ffffff",
+      "alphaThreshold": 0.75
+    },
+    "lockRotation": true,
+    "rotation": 0,
+    "alpha": 1,
+    "disposition": 0,
+    "displayBars": 40,
+    "bar1": {
+      "attribute": "life"
+    },
+    "bar2": {
+      "attribute": "defense"
+    },
+    "light": {
+      "negative": false,
+      "priority": 0,
+      "alpha": 0.5,
+      "angle": 360,
+      "bright": 0,
+      "color": null,
+      "coloration": 1,
+      "dim": 0,
+      "attenuation": 0.5,
+      "luminosity": 0.5,
+      "saturation": 0,
+      "contrast": 0,
+      "shadows": 0,
+      "animation": {
+        "type": null,
+        "speed": 5,
+        "intensity": 5,
+        "reverse": false
+      },
+      "darkness": {
+        "min": 0,
+        "max": 1
+      }
+    },
+    "sight": {
+      "enabled": false,
+      "range": 0,
+      "angle": 360,
+      "visionMode": "basic",
+      "color": null,
+      "attenuation": 0.1,
+      "brightness": 0,
+      "saturation": 0,
+      "contrast": 0
+    },
+    "detectionModes": [],
+    "occludable": {
+      "radius": 0
+    },
+    "ring": {
+      "enabled": false,
+      "colors": {
+        "ring": null,
+        "background": null
+      },
+      "effects": 1,
+      "subject": {
+        "scale": 1,
+        "texture": null
+      }
+    },
+    "turnMarker": {
+      "mode": 1,
+      "animation": null,
+      "src": null,
+      "disposition": false
+    },
+    "movementAction": null,
+    "flags": {},
+    "randomImg": false,
+    "appendNumber": true,
+    "prependAdjective": false
+  },
+  "items": [],
+  "effects": [],
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.36",
+    "createdTime": 1756515647945,
+    "modifiedTime": 1756515647945,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_id": "RrHPo1p4xq14BKO3",
+  "sort": 0,
+  "_key": "!actors!RrHPo1p4xq14BKO3"
+}

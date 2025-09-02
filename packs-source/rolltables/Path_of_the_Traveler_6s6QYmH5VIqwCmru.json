@@ -1,0 +1,205 @@
+{
+  "name": "Path of the Traveler",
+  "description": "<p>A random table created from the contents of the Path of the Traveler Folder.</p>",
+  "results": [
+    {
+      "name": "0. Traveler",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.XyM2RxZmnkj4cs8k",
+      "img": "icons/tools/navigation/compass-brass-blue-red.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "z6NIwiFxTyZ0Mvf8",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.35",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!6s6QYmH5VIqwCmru.z6NIwiFxTyZ0Mvf8"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "name": "1. Escapist",
+      "img": "icons/magic/control/buff-luck-fortune-green-gold.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.JXppeJy7EMRNMk6o",
+      "_id": "plhAkfzwJVTclLNO",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.35",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!6s6QYmH5VIqwCmru.plhAkfzwJVTclLNO"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "name": "2. Friends",
+      "img": "icons/creatures/mammals/dog-husky-white-blue.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.TStHHiUv6FdBqS60",
+      "_id": "Q7ZBuruSOf3gRxuC",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.35",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!6s6QYmH5VIqwCmru.Q7ZBuruSOf3gRxuC"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "name": "3. Hunter",
+      "img": "icons/weapons/bows/shortbow-arrows-black.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.WuHik39ZXGrMriKV",
+      "_id": "kdP474oIQEVoRe6H",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.35",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!6s6QYmH5VIqwCmru.kdP474oIQEVoRe6H"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "name": "4. Pleasant",
+      "img": "icons/skills/social/diplomacy-handshake.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.9N80kHxShlzyXeW3",
+      "_id": "8PdB4tt64jcBF2k3",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.35",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!6s6QYmH5VIqwCmru.8PdB4tt64jcBF2k3"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "name": "5. Pocketmaster",
+      "img": "icons/containers/bags/coinpouch-simple-leather-tan.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.9Go2pgqvJIoKjSMx",
+      "_id": "8PIXj2AmNObI8aF6",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.35",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!6s6QYmH5VIqwCmru.8PIXj2AmNObI8aF6"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "name": "6. Swift",
+      "img": "icons/magic/movement/trail-streak-zigzag-teal.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.277EsdejSdhWUsAV",
+      "_id": "K33NS0v1TCMBQiUN",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.35",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!6s6QYmH5VIqwCmru.K33NS0v1TCMBQiUN"
+    }
+  ],
+  "formula": "1d7",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8gXEqCY7Gctq4hdt",
+  "ownership": {
+    "default": 0,
+    "3vgxDetPOGhfUfqu": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.35",
+    "createdTime": 1756510853341,
+    "modifiedTime": 1756510858102,
+    "lastModifiedBy": "3vgxDetPOGhfUfqu"
+  },
+  "_id": "6s6QYmH5VIqwCmru",
+  "sort": 150000,
+  "_key": "!tables!6s6QYmH5VIqwCmru"
+}

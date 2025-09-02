@@ -1,0 +1,180 @@
+{
+  "name": "Ranged Weapons",
+  "description": "<p>A random table created from the contents of the Ranged Weapons Folder.</p>",
+  "results": [
+    {
+      "name": "Redland District Submachine Gun",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.XbeBMLtditR95b0R",
+      "img": "icons/weapons/guns/gun-red.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "NmK837G4t6T3tBAs",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!LAkkmuiSwXTiQSiA.NmK837G4t6T3tBAs"
+    },
+    {
+      "name": "Crossbow",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.cZMO2QZCSA0n1RnN",
+      "img": "icons/weapons/crossbows/crossbow-loaded-black.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "B3TQJs2M1MtsNNSO",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!LAkkmuiSwXTiQSiA.B3TQJs2M1MtsNNSO"
+    },
+    {
+      "name": "Golem Lance",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.eacggpo0Xugwd4gx",
+      "img": "icons/commodities/tech/conduit-transmission-red.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "1qytSe7kIb68PBL7",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!LAkkmuiSwXTiQSiA.1qytSe7kIb68PBL7"
+    },
+    {
+      "name": "Scavenger Bolter",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.ltpia6YOIecgAjKT",
+      "img": "icons/weapons/guns/rifle-brown.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "xYWcsCQz7GkHNi5O",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!LAkkmuiSwXTiQSiA.xYWcsCQz7GkHNi5O"
+    },
+    {
+      "name": "Inquisition  Squirtgun",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.mp7cuVdA4E1udA8m",
+      "img": "icons/weapons/guns/gun-pistol-flintlock-metal.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "Fog0s9KC6YdrtkmU",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!LAkkmuiSwXTiQSiA.Fog0s9KC6YdrtkmU"
+    },
+    {
+      "name": "Bow",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.qDvcnyymY1YS9sqx",
+      "img": "icons/weapons/bows/bow-ornamental-silver-black.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "usmaRjHUCp6e5F6E",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!LAkkmuiSwXTiQSiA.usmaRjHUCp6e5F6E"
+    }
+  ],
+  "formula": "1d6",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "bgYIDMfG5Smh4RFQ",
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.32",
+    "createdTime": 1756392553740,
+    "modifiedTime": 1756510275616,
+    "lastModifiedBy": "3vgxDetPOGhfUfqu"
+  },
+  "_id": "LAkkmuiSwXTiQSiA",
+  "sort": 300000,
+  "_key": "!tables!LAkkmuiSwXTiQSiA"
+}

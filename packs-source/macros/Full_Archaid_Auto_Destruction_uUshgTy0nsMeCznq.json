@@ -1,0 +1,28 @@
+{
+  "name": "Full Archaid Auto Destruction",
+  "type": "script",
+  "command": "game.sdm.api.createFullAutoDestructionMode('Auto Destr Full Archaic', 8, 'icons/creatures/magical/humanoid-horned-rider.webp');\nui.notifications.info('Auto Destruction Full Archaic created');",
+  "img": "icons/creatures/magical/humanoid-horned-rider.webp",
+  "author": "0fqTkfNvjooZ2og7",
+  "scope": "global",
+  "folder": "9glTESQKCF39jNso",
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.36",
+    "createdTime": 1756551178829,
+    "modifiedTime": 1756551216246,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_id": "uUshgTy0nsMeCznq",
+  "sort": 100000,
+  "_key": "!macros!uUshgTy0nsMeCznq"
+}

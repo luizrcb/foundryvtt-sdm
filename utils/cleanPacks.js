@@ -5,7 +5,10 @@ const path = require('path');
 const foldersToDelete = [
   'packs/macros',
   'packs/player_macros',
-  'packs/rolltables'
+  'packs/rolltables',
+  'packs/equipment',
+  'packs/traits',
+  'packs/creatures'
 ];
 
 const rootDir = path.join(__dirname, '..');

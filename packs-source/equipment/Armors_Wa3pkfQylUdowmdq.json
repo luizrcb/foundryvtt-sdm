@@ -1,0 +1,23 @@
+{
+  "type": "Item",
+  "folder": null,
+  "name": "Armors",
+  "color": null,
+  "sorting": "m",
+  "_id": "Wa3pkfQylUdowmdq",
+  "description": "",
+  "sort": 100000,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.347",
+    "systemId": "sdm",
+    "systemVersion": "0.1.32",
+    "createdTime": 1756338623481,
+    "modifiedTime": 1756407797075,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_key": "!folders!Wa3pkfQylUdowmdq"
+}

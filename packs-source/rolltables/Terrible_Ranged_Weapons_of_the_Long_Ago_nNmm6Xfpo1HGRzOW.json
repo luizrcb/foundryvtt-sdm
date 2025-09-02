@@ -1,0 +1,780 @@
+{
+  "name": "Terrible Ranged Weapons of the Long Ago",
+  "description": "A random table created from the contents of the Terrible Ranged Weapons of the Long Ago Folder.",
+  "results": [
+    {
+      "name": "Replacer Rod",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.1Y5F0wj4SM6aMbHB",
+      "img": "icons/commodities/tech/coil-tesla-large.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "x5UZGmt5Mrq8dJ1p",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.x5UZGmt5Mrq8dJ1p"
+    },
+    {
+      "name": "White City Matter Creator",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.2ovbTfig8Z3aBEvb",
+      "img": "icons/commodities/tech/coil-steel-grey.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "RBNvL3eJfsaOPyyA",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.RBNvL3eJfsaOPyyA"
+    },
+    {
+      "name": "Porcelain Death Mask",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.ACeAU1cGsI9FFzeV",
+      "img": "icons/equipment/head/mask-carved-bird-grey-pink.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "bxNt7g1AChJKHcjq",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.bxNt7g1AChJKHcjq"
+    },
+    {
+      "name": "Ego Echo Wandpistol",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.ASIFYD6udTR3mHQx",
+      "img": "icons/weapons/wands/wand-gem-red.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "XyeAINEH1qk66uw6",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.XyeAINEH1qk66uw6"
+    },
+    {
+      "name": "Aerolith Impactor",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.GE51UUuq0RPkUGVv",
+      "img": "icons/weapons/wands/wand-carved-fire.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "S7hZVmf4YacyFya8",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.S7hZVmf4YacyFya8"
+    },
+    {
+      "name": "Magnificent Fireball Wandpistol",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.H9nuHDKYI2ztxxEW",
+      "img": "icons/magic/fire/projectiles-salvo-trio-orange.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "JSaTf6yONJYDYT1L",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.JSaTf6yONJYDYT1L"
+    },
+    {
+      "name": "Autoportal Conflux",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.Hi0NPKcRnhslzRlZ",
+      "img": "icons/commodities/tech/bulb-vacuum.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "kqZVAU9WzwmlOAJk",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.kqZVAU9WzwmlOAJk"
+    },
+    {
+      "name": "Telempathy Blaster",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.It0Sugv5CBbFk7sm",
+      "img": "icons/weapons/wands/wand-totem.webp",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "NTX7IrMCTOHu4hDv",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.NTX7IrMCTOHu4hDv"
+    },
+    {
+      "name": "Blue God Blaster",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.LTMIvUkwZOAJSKOE",
+      "img": "icons/commodities/tech/tube-chamber-lightning.webp",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "E2nNPXdazMU2dBog",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.E2nNPXdazMU2dBog"
+    },
+    {
+      "name": "Angelroarer",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.Ljpx9q1nSFCXiEo4",
+      "img": "icons/tools/scribal/lens-blue.webp",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "n3LmA7P6wUZzWbYi",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.n3LmA7P6wUZzWbYi"
+    },
+    {
+      "name": "Satrap  Radiant Gun",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.NSwwFk4kLam16ioG",
+      "img": "icons/weapons/wands/wand-carved-pink.webp",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_id": "LMtE3n6Lq4TXrBzJ",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.LMtE3n6Lq4TXrBzJ"
+    },
+    {
+      "name": "Jetolene Igniter",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.OGlMt8XXVID1OuKP",
+      "img": "icons/commodities/tech/smoke-spout-blue.webp",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_id": "nm515HFMs8RNGMZf",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.nm515HFMs8RNGMZf"
+    },
+    {
+      "name": "Lamarckian Needler",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.PTTwxaqTDagRnVfV",
+      "img": "icons/weapons/wands/wand-gem-green.webp",
+      "weight": 1,
+      "range": [
+        13,
+        13
+      ],
+      "drawn": false,
+      "_id": "pcuh2VyOvvHBNfYw",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.pcuh2VyOvvHBNfYw"
+    },
+    {
+      "name": "Ultra Blaster",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.RhaYonS3y4c1Ydpb",
+      "img": "icons/commodities/tech/smoke-bomb-yellow.webp",
+      "weight": 1,
+      "range": [
+        14,
+        14
+      ],
+      "drawn": false,
+      "_id": "4cjn733XCxn6VKeD",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.4cjn733XCxn6VKeD"
+    },
+    {
+      "name": "Fold-Field Array",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.WjU6ISgcE9WBPpaf",
+      "img": "icons/commodities/tech/antenna-powered-purple.webp",
+      "weight": 1,
+      "range": [
+        15,
+        15
+      ],
+      "drawn": false,
+      "_id": "SHaHhFIeUHaJe0HJ",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.SHaHhFIeUHaJe0HJ"
+    },
+    {
+      "name": "Solipsism Shotgun",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.XRZT2baDTfmeZekc",
+      "img": "icons/weapons/guns/gun-double-barrel.webp",
+      "weight": 1,
+      "range": [
+        16,
+        16
+      ],
+      "drawn": false,
+      "_id": "8AsEtZ1ur2rHxln9",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.8AsEtZ1ur2rHxln9"
+    },
+    {
+      "name": "Eye Solar",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.Yw5380CPB0dgMcoo",
+      "img": "icons/magic/light/explosion-star-large-orange.webp",
+      "weight": 1,
+      "range": [
+        17,
+        17
+      ],
+      "drawn": false,
+      "_id": "PG4QPHE03Zz115r3",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.PG4QPHE03Zz115r3"
+    },
+    {
+      "name": "Phase Handgun",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.bJ7RfNbDMZl8wcov",
+      "img": "icons/commodities/tech/diode-copper.webp",
+      "weight": 1,
+      "range": [
+        18,
+        18
+      ],
+      "drawn": false,
+      "_id": "HGetHyDG9agxbGI5",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.HGetHyDG9agxbGI5"
+    },
+    {
+      "name": "Golem Killer",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.cWchSW05vtyIVJuD",
+      "img": "icons/skills/ranged/cannon-barrel-firing-orange.webp",
+      "weight": 1,
+      "range": [
+        19,
+        19
+      ],
+      "drawn": false,
+      "_id": "18pLiCp0vAe9MoyF",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.18pLiCp0vAe9MoyF"
+    },
+    {
+      "name": "Transfer Gun",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.eXPPiplEN17nnx5N",
+      "img": "icons/tools/instruments/horn-red-brown.webp",
+      "weight": 1,
+      "range": [
+        20,
+        20
+      ],
+      "drawn": false,
+      "_id": "ZjjpfPT9ccDJR9SC",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.ZjjpfPT9ccDJR9SC"
+    },
+    {
+      "name": "Mouth of the Void",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.fxILIoyiCAFuKSHu",
+      "img": "icons/creatures/abilities/mouth-teeth-rows-needles-purple.webp",
+      "weight": 1,
+      "range": [
+        21,
+        21
+      ],
+      "drawn": false,
+      "_id": "BzmBaFIbYwNF2DUO",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.BzmBaFIbYwNF2DUO"
+    },
+    {
+      "name": "Hellfire Hand Cannon",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.pUvAIKBkSRzrLGhB",
+      "img": "icons/commodities/tech/metal-insert.webp",
+      "weight": 1,
+      "range": [
+        22,
+        22
+      ],
+      "drawn": false,
+      "_id": "frJwzkNUquujS8yG",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.frJwzkNUquujS8yG"
+    },
+    {
+      "name": "Dusk Emitter",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.q7a8DmUlCiPdbQme",
+      "img": "icons/weapons/wands/wand-gem-purple.webp",
+      "weight": 1,
+      "range": [
+        23,
+        23
+      ],
+      "drawn": false,
+      "_id": "YvKx0oCk5gLfoY2I",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.YvKx0oCk5gLfoY2I"
+    },
+    {
+      "name": "Gate Daemon Actuator",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.qwbsP4FJYM6TCLm3",
+      "img": "icons/commodities/tech/fan-ventilator-copper.webp",
+      "weight": 1,
+      "range": [
+        24,
+        24
+      ],
+      "drawn": false,
+      "_id": "aktElUNPfigK5ghe",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.aktElUNPfigK5ghe"
+    },
+    {
+      "name": "Diagnostic Wand",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.tQNowywlTmLxavAB",
+      "img": "icons/weapons/wands/wand-simple-eye.webp",
+      "weight": 1,
+      "range": [
+        25,
+        25
+      ],
+      "drawn": false,
+      "_id": "QPgszmvENbebc2tg",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.QPgszmvENbebc2tg"
+    },
+    {
+      "name": "Crystal Siege Rod",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.wtf9zvdsjznSuejK",
+      "img": "icons/weapons/staves/staff-ornate-banded-purple.webp",
+      "weight": 1,
+      "range": [
+        26,
+        26
+      ],
+      "drawn": false,
+      "_id": "ffjdW9adYTsJIvPK",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.ffjdW9adYTsJIvPK"
+    },
+    {
+      "name": "Reality Flense",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.xKrfbwAvjq3oQGeJ",
+      "img": "icons/skills/toxins/bottle-open-vapors-pink.webp",
+      "weight": 1,
+      "range": [
+        27,
+        27
+      ],
+      "drawn": false,
+      "_id": "5REV4REmNleAHeFl",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.5REV4REmNleAHeFl"
+    },
+    {
+      "name": "Radiothermal Horn",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.y4N1XoaqhULuaT4h",
+      "img": "icons/tools/instruments/horn-red-grey.webp",
+      "weight": 1,
+      "range": [
+        28,
+        28
+      ],
+      "drawn": false,
+      "_id": "RY3nXv5MPPaeD3py",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.RY3nXv5MPPaeD3py"
+    },
+    {
+      "name": "Ultra Ba \"Leapfrog\"",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.f9MWWXjmIVcauiPJ",
+      "img": "icons/magic/death/skull-weapon-staff-glow-pink.webp",
+      "weight": 1,
+      "range": [
+        29,
+        29
+      ],
+      "drawn": false,
+      "_id": "RuCShmrOLt3DAqVt",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.RuCShmrOLt3DAqVt"
+    },
+    {
+      "name": "Mazing Crown",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.equipment.Item.64nsgbJFK7ZdUbz1",
+      "img": "icons/equipment/head/crown-gold-blue.webp",
+      "weight": 1,
+      "range": [
+        30,
+        30
+      ],
+      "drawn": false,
+      "_id": "aK4tJw1gOrAbVFVu",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nNmm6Xfpo1HGRzOW.aK4tJw1gOrAbVFVu"
+    }
+  ],
+  "formula": "1d30",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "bgYIDMfG5Smh4RFQ",
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.32",
+    "createdTime": 1756406350576,
+    "modifiedTime": 1756510282566,
+    "lastModifiedBy": "3vgxDetPOGhfUfqu"
+  },
+  "_id": "nNmm6Xfpo1HGRzOW",
+  "sort": 500000,
+  "_key": "!tables!nNmm6Xfpo1HGRzOW"
+}
