@@ -218,15 +218,13 @@ input:checked + .slider .fa-gear {
 }
 
 .list-border {
- // border: 1px solid colors.$c-light-border;
+  // border: 1px solid colors.$c-light-border;
   border: 1px solid colors.$c-light-border;
 }
 
 .items-list .item.items-header.caravan-item-header:last-child {
   border-bottom: 2px groove colors.$c-groove;
 }
-
-
 
 li.item {
   margin-bottom: 0;
@@ -237,4 +235,3 @@ li.item {
     background-color: rgba(184, 78, 255, 0.1); /* Your ultraviolet color with transparency */
   }
 }
-

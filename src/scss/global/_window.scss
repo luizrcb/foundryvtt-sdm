@@ -14,6 +14,50 @@
   }
 }
 
+.sheet input[type='text'],
+.sheet input[type='number'],
+.sheet input[type='password'],
+.sheet input[type='email'],
+.sheet input[type='url'],
+.sheet input[type='search'],
+.sheet input[type='date'],
+.sheet input[type='time'],
+.sheet input[type='datetime-local'],
+.sheet input[type='tel'],
+.sheet textarea,
+.sheet select {
+  background: none;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid #888; /* the underline */
+  padding: 2px 0 2px 2px;
+  outline: none;
+  box-shadow: none;
+  font-family: typo.$font-secondary;
+}
+
+/* Disabled or readonly inputs */
+.sheet input:disabled,
+.sheet input[readonly],
+.sheet textarea:disabled,
+.sheet textarea[readonly],
+.sheet select:disabled {
+  background: rgba(0,0,0,0.05); /* subtle grey background */
+  border-bottom: 1px solid #aaa; /* differentiate from normal */
+  color: #666;
+  padding: 2px 0 2px 4px;
+  font-family: typo.$font-secondary;
+}
+
+/* On focus, accent color */
+.sheet input:focus,
+.sheet textarea:focus,
+.sheet select:focus {
+  border-bottom: 2px solid colors.$c-theme;
+  box-shadow: none;
+  font-family: typo.$font-secondary;
+}
+
 .mt-5 {
   margin-top: 5px;
 }
@@ -69,7 +113,7 @@
 }
 
 .application.sheet.sdm.actor.caravan {
-  min-width: 1500px;
+  min-width: 1200px;
   min-height: 820px;
   max-width: 1600px;
   max-height: 1520px;

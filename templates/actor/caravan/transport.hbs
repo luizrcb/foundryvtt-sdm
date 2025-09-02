@@ -1,0 +1,87 @@
+{{! Transport Tab }}
+<section class='tab transport scrollable {{tab.cssClass}}' data-group='primary' data-tab='transport'>
+    <div class="grid grid-7col">
+    <div class="main grid-span-7">
+      <section>
+        <ol class='items-list'>
+          <li class='item flexrow items-header caravan-item-header' style="position: stick;">
+            <div class=''></div>
+            <div class=''></div>
+            <div class=''>
+              {{#if @root.editable}}
+              <a
+                class='item-control item-create'
+                data-tooltip="Add Transport"
+                data-action='addTransport'
+              >
+                <i class='fa-solid fa-plus'></i>
+                Add Transport
+              </a>
+              {{/if}}
+            </div>
+          </li>
+          {{#each system.transport as |transport key|}}
+          <li class='item flexrow'>
+            <div class='resource grid-span-1'>
+              <label class='resource-label'>
+                {{localize 'SDM.FieldName'}}
+              </label>
+              <div class='resource-content'>
+                <input type='text' name='system.transport.{{key}}.name' value='{{transport.name}}' />
+              </div>
+            </div>
+
+            <div class='resource grid-span-1'>
+              <label class='resource-label'>
+                {{localize 'SDM.FieldCapacity'}}
+              </label>
+              <div class='resource-content'>
+                <input type='text' name='system.transport.{{key}}.capacity' value='{{transport.capacity}}' data-dtype="Number" />
+              </div>
+            </div>
+
+            <div class='resource grid-span-2'>
+              <label class='resource-label'>
+                {{localize 'SDM.FieldCargo'}}
+              </label>
+              <div class='resource-content'>
+                <input type='text' name='system.transport.{{key}}.cargo' value='{{transport.cargo}}' />
+              </div>
+            </div>
+
+            <div class='resource grid-span-1'>
+              <label class='resource-label'>
+                {{localize 'SDM.FieldSpeed'}}
+              </label>
+              <div class='resource-content'>
+                <select name="system.transport.{{key}}.speed" class="resource-content" data-dtype="Number">
+                  {{selectOptions @root.config.speedOptions localize=true selected=transport.speed inverted=true}}
+                </select>
+              </div>
+            </div>
+
+            <div class='resource grid-span-1'>
+              <label class='resource-label'>
+                {{localize 'SDM.FieldCost'}}
+              </label>
+              <div class='resource-content'>
+                <input type='text' name='system.transport.{{key}}.cost' value='{{transport.cost}}' />
+              </div>
+            </div>
+
+            <div class='resource grid-span-1'>
+              <label class='resource-label'>
+                {{localize 'SDM.FieldSupply'}}
+              </label>
+              <div class='resource-content flex flexrow flex-group-center'>
+                <input type='text' name='system.transport.{{key}}.supply' value='{{transport.supply}}' />
+                <a data-action="deleteTransport" data-key="{{key}}"><i class="fa-solid fa-trash"></i></a>
+              </div>
+            </div>
+          </li>
+          {{/each}}
+        </ol>
+      </section>
+    </div>
+  </div>
+</section>

@@ -227,8 +227,8 @@ Hooks.once('init', function () {
     gear: models.SdmGear,
     trait: models.SdmTrait,
     burden: models.SdmBurden,
-    mount: models.SdmMount,
-    vehicle: models.SdmVehicle
+    // mount: models.SdmMount,
+    // vehicle: models.SdmVehicle
   };
 
   // Active Effects are never copied to the Actor,

@@ -45,7 +45,10 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       roll: this._onRoll,
       toggleEffect: this._toggleEffect,
       transferItem: this._onTransferItem,
-      viewDoc: this._viewDoc
+      viewDoc: this._viewDoc,
+      sendToChat: { handler: this._sendToChat, buttons: [0, 2] },
+      addTransport: this._addTransport,
+      deleteTransport: this._deleteTransport,
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
@@ -78,177 +81,20 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     effects: {
       template: templatePath('actor/effects'),
       scrollable: ['']
+    },
+    transport: {
+      template: templatePath('actor/caravan/transport'),
+      scrollable: ['']
+    },
+    crew: {
+      template: templatePath('actor/caravan/crew'),
+      scrollable: ['']
+    },
+    routes: {
+      template: templatePath('actor/caravan/routes'),
+      scrollable: ['']
     }
   };
-
-  _getStatSelectOptions(source) {
-    const abilitiesOrder = CONFIG.SDM.abilitiesOrder;
-    const currentLanguage = game.i18n.lang;
-    const { default_ability = '' } = source;
-    let result = '';
-
-    result += '<option value=""}></option>';
-    for (let orderedAbility of abilitiesOrder[currentLanguage]) {
-      result += `<option value="${orderedAbility}"${orderedAbility === default_ability ? 'selected' : ''}>
-      ${$l10n(CONFIG.SDM.abilities[orderedAbility])}</option>\n`;
-    }
-
-    return result;
-  }
-
-  damageMultiplierOptions() {
-    let options = '';
-    for (const [key, value] of Object.entries(CONFIG.SDM.damageMultiplier)) {
-      options += `<option value="${key}">${value}</option>\n`;
-    }
-
-    return options;
-  }
-
-  // Open the custom roll modal
-  async _openCustomRollModal(key, attribute, skill, rolledFrom, item, versatile = false) {
-    const actorSkill = skill ? this.actor.system[skill] : {};
-    const versatileLabel = $l10n(CONFIG.SDM.versatile);
-    const title =
-      attribute ?? actorSkill.name ?? `${item?.name}${versatile ? ` (${versatileLabel})` : ''}`;
-    const isTraitRoll = !!(skill || key);
-    const minHeroDiceZero = true;
-    const content = `
-      <div class="custom-roll-modal">
-        <h2>Roll for ${title}</h2>
-        <h2>{{localize 'SDM.RollTitle' prefix='' data-tooltip='${title}'}}</h2>
-        <form class="custom-roll-form">
-        ${
-          rolledFrom !== 'Abilities'
-            ? `<div class="form-group">
-            <label>${$l10n(CONFIG.SDM.abilitiesLabel)}</label>
-            <select name="selectedAttribute">
-              ${
-                skill
-                  ? this._getStatSelectOptions(actorSkill)
-                  : item
-                    ? this._getStatSelectOptions(
-                        { default_ability: item?.system?.default_ability },
-                        false
-                      )
-                    : this._getStatSelectOptions({}, false)
-              }
-            </select>
-          </div>
-        `
-            : ''
-        }
-          <div class="form-group">
-            <label for="modifier">${$l10n(CONFIG.SDM.modifierLabel)}</label>
-            <input id="modifier" type="text" name="modifier" value="" />
-          </div>
-         ${
-           item
-             ? `<div class="form-group">
-            <label for="multiplier">Multiplier</label>
-            <select name="multiplier" id="multiplier">
-              <option value=""></option>
-             ${this.damageMultiplierOptions()}
-            </select>
-          </div>`
-             : ''
-         }
-          <div class="form-group">
-            <label>${$l10n('SDM.RollMode')}</label>
-            <div class="roll-type-select">
-              <div>
-                <label>
-                  <input type="radio" name="rollType" value="normal" checked> ${$l10n(CONFIG.SDM.rollMode.normal)}
-                </label>
-              </div>
-              <div>
-                <label>
-                  <input type="radio" name="rollType" value="advantage"> ${$l10n(CONFIG.SDM.rollMode.advantage)}
-                </label>
-              </div>
-              <div>
-                <label>
-                  <input type="radio" name="rollType" value="disadvantage"> ${$l10n(CONFIG.SDM.rollMode.disadvantage)}
-                </label>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="shouldExplode">${$l10n('SDM.ExplodingDice')}</label>
-            <input id="shouldExplode" type="checkbox" name="shouldExplode" ${isTraitRoll ? 'checked' : ''} />
-          </div>
-        </form>
-        <br/><br/>
-      </div>
-    `;
-
-    // Create and render the modal
-    const rollOptions = await foundry.applications.api.DialogV2.prompt({
-      window: {
-        title: `Roll: ${title}`
-      },
-      content,
-      ok: {
-        icon: 'fa-solid fa-dice-d20',
-        label: $l10n('SDM.ButtonRoll'),
-        callback: (event, button) =>
-          new foundry.applications.ux.FormDataExtended(button.form).object
-      }
-    });
-    const {
-      selectedAttribute = '',
-      modifier = '',
-      heroicQty = '0',
-      rollType = 'normal',
-      shouldExplode = false,
-      multiplier = ''
-    } = rollOptions;
-    if (modifier && !foundry.dice.Roll.validate(modifier)) {
-      ui.notifications.error('Invalid roll modifier');
-      return;
-    }
-    const heroicDice = parseInt(heroicQty || 0, 10);
-    const currentHeroDice = this.actor.system.hero_dice?.value ?? 0;
-
-    if (heroicDice > currentHeroDice) {
-      ui.notifications.error('Not enough hero dice for this roll');
-      return;
-    }
-
-    const ability = key ? key : selectedAttribute;
-    const skillData = skill ? this.actor.system[skill] : {};
-    let label = skill
-      ? skillData.name
-      : attribute
-        ? attribute
-        : ability
-          ? $l10n(CONFIG.SDM.abilities[ability])
-          : '';
-
-    // if (item) {
-    //   label = item.name;
-    //   // get item damage base or versatile
-    //   return RollHandler.handleItemRoll(this.actor, item, label, {
-    //     modifier,
-    //     multiplier,
-    //     rollType,
-    //     heroicDice,
-    //     skill: '',
-    //     addAbility: ability,
-    //     explode: shouldExplode,
-    //     versatile,
-    //   });
-    // }
-
-    // return RollHandler.performRoll(this.actor, ability, label, {
-    //   modifier,
-    //   rollType,
-    //   skill,
-    //   heroicDice,
-    //   rolledFrom,
-    //   explode: shouldExplode,
-    // });
-  }
 
   /** @override */
   _configureRenderOptions(options) {
@@ -257,8 +103,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     options.parts = ['header', 'tabs'];
     // Don't show the other tabs if only limited view
     if (!this.document.limited) {
-      options.parts.push('inventory', 'effects');
-      options.parts.push('notes');
+      options.parts.push('inventory', 'transport', 'crew', 'routes', 'notes', 'effects');
     }
     options.parts.push('biography');
   }
@@ -298,13 +143,16 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
   async _preparePartContext(partId, context) {
     switch (partId) {
       case 'inventory':
+      case 'crew':
+      case 'transport':
+      case 'routes':
         context.tab = context.tabs[partId];
         break;
-      case 'notes':
+      case 'biography':
         context.tab = context.tabs[partId];
-        // Enrich notes info for display
+        // Enrich biography info for display
         // Enrichment turns text like `[[/r 1d20]]` into buttons
-        context.enrichedNotes = await TextEditor.enrichHTML(this.actor.system.notes, {
+        context.enrichedBiography = await TextEditor.enrichHTML(this.actor.system.biography, {
           // Whether to show secret blocks in the finished html
           secrets: this.document.isOwner,
           // Data to fill in for inline rolls
@@ -313,11 +161,11 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
           relativeTo: this.actor
         });
         break;
-      case 'biography':
+      case 'notes':
         context.tab = context.tabs[partId];
-        // Enrich biography info for display
+        // Enrich notes info for display
         // Enrichment turns text like `[[/r 1d20]]` into buttons
-        context.enrichedBiography = await TextEditor.enrichHTML(this.actor.system.biography, {
+        context.enrichedNotes = await TextEditor.enrichHTML(this.actor.system.notes, {
           // Whether to show secret blocks in the finished html
           secrets: this.document.isOwner,
           // Data to fill in for inline rolls
@@ -368,8 +216,23 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
           return tabs;
         case 'inventory':
           tab.id = 'inventory';
-          tab.label += 'Inventory';
+          tab.label += 'CaravanInventory';
           tab.icon = 'fa fa-toolbox';
+          break;
+        case 'crew':
+          tab.id = 'crew';
+          tab.label += 'Crew';
+          tab.icon = 'fa fa-people-group';
+          break;
+        case 'transport':
+          tab.id = 'transport';
+          tab.label += 'Transport';
+          tab.icon = 'fa fa-truck-monster';
+          break;
+        case 'routes':
+          tab.id = 'routes';
+          tab.label += 'Routes';
+          tab.icon = 'fa fa-route';
           break;
         case 'effects':
           tab.id = 'effects';
@@ -378,13 +241,13 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
           break;
         case 'notes':
           tab.id = 'notes';
-          tab.label += 'Notes';
-          tab.icon = 'fa fa-book';
+          tab.label += 'CaravanNotes';
+          tab.icon = 'fa fa-map-location';
           break;
         case 'biography':
           tab.id = 'biography';
           tab.label += 'Biography';
-          tab.icon = 'fa fa-user';
+          tab.icon = 'fa fa-book';
           break;
       }
       if (this.tabGroups[tabGroup] === tab.id) tab.cssClass = 'active';
@@ -735,7 +598,6 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     if (proceed) await doc.delete();
   }
 
-
   /**
    * Handle creating a new Owned Item or ActiveEffect for the actor using initial data defined in the HTML dataset
    *
@@ -843,13 +705,70 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     this._openCustomRollModal(key, label, skill, rolledFromlabel);
   }
 
-
   static async _onTransferItem(event, target) {
     event.preventDefault(); // Don't open context menu
     event.stopPropagation(); // Don't trigger other events
     if (event.detail > 1) return; // Ignore repeated clicks
     const item = this._getEmbeddedDocument(target);
     return openItemTransferDialog(item, this.actor);
+  }
+
+  static async _sendToChat(event, target) {
+    event.preventDefault(); // Don't open context menu
+    event.stopPropagation(); // Don't trigger other events
+    const { detail, button } = event;
+
+    if (button === 0) {
+      if (detail <= 1 || detail > 2) return;
+      return SdmCaravanSheet._viewDoc.call(this, event, target);
+    }
+
+    if (detail > 1) return;
+
+    const item = this._getEmbeddedDocument(target);
+    return await item.sendToChat({ actor: this.actor, collapsed: false });
+  }
+
+  static async _addTransport(event, target) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const newKey = foundry.utils.randomID();
+    const transportLength = Object.keys(this.actor.system.transport).length;
+
+    await this.actor.update({
+      'system.transport': {
+        [`${newKey}`]: {
+          name: `New transport (${transportLength})`,
+          level: 0,
+          capacity: 1,
+          cargo: '',
+          speed: 0,
+          cost: '',
+          supply: ''
+        }
+      }
+    });
+  }
+
+  static async _deleteTransport(event, target) {
+    const dataset = target.dataset;
+    const key = dataset.key;
+
+    const transport = this.actor.system.transport[key];
+
+     const proceed = await DialogV2.confirm({
+      content: `<b>${$fmt('SDM.DeleteDocConfirmation', { doc: transport.name })}</b>`,
+      modal: true,
+      rejectClose: false,
+      yes: { label: $l10n('SDM.ButtonYes') },
+      no: { label: $l10n('SDM.ButtonNo') }
+    });
+    if (!proceed) return;
+
+    await this.actor.update({
+      [`system.transport.-=${key}`]: null
+    });
   }
 
   /** Helper Functions */
@@ -1045,6 +964,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     const item = await Item.implementation.fromDropData(data);
 
     if ([ItemType.BURDEN, ItemType.TRAIT].includes(item.type)) {
+      alert('burden or trait dropped');
       return false;
     }
 

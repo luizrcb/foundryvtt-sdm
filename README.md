@@ -35,10 +35,10 @@ An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG
 ### Item Types
 
 - Item
+  - Album of Power
   - Armor
   - Gear
   - Power
-  - Power Album
   - Ward
   - Weapon
 - Trait
@@ -62,7 +62,7 @@ An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG
 - Descriptive results for saving throws, reactions, morale (NPC), and targeted attack rolls.
 - Extensive bonus options to simulate backpacks, blessings, curses, injuries, trait effects (see the Active Effects Changes tab for the full list).
 - Referee utility macros.
-- Drag and drop a power into a power album to easily copy it to the album.
+- Drag and drop a power into a album of power to easily copy it to the album.
 - Support for mental and social attacks (and defenses) as described in the Vastlands Guidebook (VLG).
 - Full localization for Brazilian Portuguese (pt-BR).
 - Special roll results for magic numbers (1 = critical failure, 13 = only one ammo or other resource left, 20 = critical success).
@@ -100,7 +100,7 @@ An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG
     - Give (or take) hero dice.
     - Give XP.
     - Group Initiative (select all tokens and use the macro, no need to create the encounter). Initiative will be grouped by token disposition (friendly, neutral, hostile, secret).
-    - Escalator Die (UVG 1ed legacy feature). The escalator die value will be added to ability, attack, weapon, power, and power album roll results.
+    - Escalator Die (UVG 1ed legacy feature). The escalator die value will be added to ability, attack, weapon, power, and album of power roll results.
     - Generate Random NPCs using tables from the Vastlands Guidebook (VLG)
   - SDM Player Macros:
     - Generate Ability Scores (method described in the Vastlands Guidebook (VLG): rolls 1d100 for every ability score and displays the results in chat).

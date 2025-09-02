@@ -1,0 +1,59 @@
+<div class="grid grid-4col">
+  <div class='resource'>
+    <label class='resource-label'>
+      {{localize 'SDM.FieldLevel'}}
+    </label>
+    <div class='resource-content'>
+      <input type='text' name='system.level' value='{{system.level}}' data-dtype="Number" />
+    </div>
+  </div>
+
+  <div class='resource'>
+    <label class='resource-label'>
+      {{localize 'SDM.FieldCapacity'}}
+    </label>
+    <div class='resource-content'>
+      <input type='text' name='system.capacity' value='{{system.capacity}}' data-dtype="Number" />
+    </div>
+  </div>
+
+  <div class='resource grid-span-2'>
+    <label class='resource-label'>
+      {{localize 'SDM.FieldSupply'}}
+    </label>
+    <div class='resource-content'>
+      <input type='text' name='system.supply' value='{{system.supply}}' />
+    </div>
+  </div>
+
+  <div class='resource grid-span-2'>
+    <label class='resource-label'>
+      {{localize 'SDM.FieldSpeed'}}
+    </label>
+    <div class='resource-content'>
+      <select name="system.base_speed" class="resource-content" data-dtype="Number">
+        {{selectOptions @root.config.speedOptions localize=true selected=system.base_speed inverted=true}}
+      </select>
+    </div>
+  </div>
+
+  <div class='resource'>
+    <label class='resource-label'>
+      {{localize 'SDM.FieldCost'}}
+    </label>
+    <div class='resource-content'>
+      <input type='text' name='system.cost' value='{{system.cost}}' data-dtype="Number" />
+    </div>
+  </div>
+
+  <div class='resource'>
+    <label class='resource-label'>
+      {{localize 'SDM.FieldCostFrequency'}}
+    </label>
+    <div class='resource-content'>
+      <select name="system.cost_frequency" class="resource-content">
+        {{selectOptions @root.config.frequency localize=true blank='' selected=system.cost_frequency sort=true}}
+      </select>
+    </div>
+  </div>
+</div>

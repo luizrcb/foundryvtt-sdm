@@ -75,12 +75,12 @@
 ## v0.1.27
 
 - Updated README
-- Add missing multiplier options for power and power album roll dialogs
+- Add missing multiplier options for power and album of power roll dialogs
 
 ## v0.1.26
 
 - Added setting to reverse Shift key shortcut behaviour
-- Fixed drop of powers in power albums
+- Fixed drop of powers in album of powers
 
 ## v0.1.25
 
@@ -88,7 +88,7 @@
 
 ## v0.1.24
 
-- Changed power album content to a tab
+- Changed album of power content to a tab
 
 ## v0.1.23
 
@@ -105,12 +105,12 @@
 - Fixed missing i18n strings
 - Removed pro font awesome icons and replaced with free options using SVG assets
 - Added default config in combat tracker actors prototype tokens and new group initiative logic
-- Renamed power container to power album
+- Renamed power container to album of power
 - Added sound effect on leveling up and additional configuration options
 - Merged quality-of-life features from caravan branch
 - Fixed system update notification pip position
 - Added system version and GitHub metadata to README file
-- Changed power album roll icon
+- Changed album of power roll icon
 
 ## v0.1.20
 

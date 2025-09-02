@@ -50,4 +50,16 @@ export default class SdmVehicle extends SdmItemBase {
     };
 
   }
+
+  getRollData() {
+    const data = {};
+
+    data.level = this.level;
+    data.capacity = this.capacity;
+    data.base_speed = this.base_speed;
+    data.weapon = this.weapon;
+    data.damage = this.weapon.damage.base;
+
+    return data;
+  }
 }

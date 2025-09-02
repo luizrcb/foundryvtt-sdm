@@ -53,4 +53,16 @@ export default class SdmMount extends SdmItemBase {
       tags: new fields.ArrayField(new fields.StringField(), { initial: [] })
     };
   }
+
+  getRollData() {
+    const data = {};
+
+    data.level = this.level;
+    data.capacity = this.capacity;
+    data.base_speed = this.base_speed;
+    data.weapon = this.weapon;
+    data.damage = this.weapon.damage.base;
+
+    return data;
+  }
 }

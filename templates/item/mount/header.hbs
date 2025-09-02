@@ -6,3 +6,57 @@
     </div>
   </div>
 </header>
+<header>
+  <div>
+     {{> ($$ "item/transport/base")}}
+  </div>
+</header>
+
+{{!-- <header>
+    <div class='form-group stacked'>
+    <legend>
+      {{localize 'SDM.Item.Mount.PulledLoad'}}
+    </legend>
+
+    {{! Veículo Puxado }}
+    <div class='flexrow'>
+      <label>
+        {{localize 'SDM.Item.Mount.PulledVehicle'}}
+      </label>
+      <select name='system.pulledLoad.vehicleId'>
+        <option value=''></option>
+        {{#each vehicles}}
+          {{!-- <option value="{{this.id}}" {{selected this.id ../system.pulledLoad.vehicleId}}>
+          {{this.name}}
+        </option>
+        {{/each}}
+      </select>
+    </div>
+
+    {{! Modo de Tração }}
+    <div class='flexrow'>
+      <label>
+        {{localize 'SDM.Item.Mount.PullMode'}}
+      </label>
+      <select name='system.pulledLoad.mode' data-type='Text'>
+        <option value=''></option>
+        {{selectOptions pullModes localize=true selected=system.pulledLoad.mode}}
+        {{!-- {{#each pullModes}}
+        {{!-- {{selected this ../system.pulledLoad.mode}} --}}
+        {{!-- <option value="{{this}}" {{#if (eq this ../system.pulledLoad.mode)}}selected{{/if}}>
+          {{localize  (concat "SDM.Item.Mount.PullMode." this)}}
+        </option>
+      </select>
+    </div>
+  </div>
+
+  {{! Cavaleiros }}
+  <div class='form-group'>
+    <label>
+      {{localize 'SDM.Item.Mount.Riders'}}
+    </label>
+    <multi-select name='system.riders' data-type='Text'>
+      {{selectOptions possibleRiders valueAttr='id' labelAttr='name' selected=system.riders}}
+    </multi-select>
+  </div>
+</header> --}}

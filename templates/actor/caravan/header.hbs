@@ -2,76 +2,99 @@
 <div>
   <header class='sheet-header'>
     <div class="flexcol flex-between flex-center">
-      <img class='profile-img' src='{{actor.img}}' data-edit='img' data-action='onEditImage' data-tooltip='{{actor.name}}'
+      <img class='caravan-profile-img' src='{{actor.img}}' data-edit='img' data-action='onEditImage' data-tooltip='{{actor.name}}'
         height='150' width='150' />
     </div>
     <div class='header-fields'>
       <div class="grid grid-6col">
-        <div class="grid-span-1">
+        <div class="grid-span-2">
           <label for="name" class='resource-label'>
-            {{localize 'SDM.CompanyField'}}
+            {{localize 'SDM.FieldCompany'}}
           </label>
           <input name='name' type='text' value='{{actor.name}}' />
         </div>
 
+        <div class="grid-span-2">
+          <label for="system.motto" class='resource-label'>
+            {{localize 'SDM.FieldMotto'}}
+          </label>
+          <input name='system.motto' type='text' value='{{system.motto}}' />
+        </div>
+
+        <div class="grid-span-2">
+          <label for="system.financier" class='resource-label'>
+            {{localize 'SDM.FieldFinancier'}}
+          </label>
+          <input name='system.financier' type='text' value='{{system.financier}}' />
+        </div>
+
+         <div class="grid-span-1">
+          <label for="system.wealth" class='resource-label'>
+            {{localize 'SDM.FieldWealth'}}
+          </label>
+          <input name='system.wealth' type='text' value='{{system.wealth}}' />
+        </div>
+
         <div class="grid-span-1">
-          <label for="name" class='resource-label'>
-            {{localize 'SDM.FinancierField'}}
+          <label for="system.debt" class='resource-label'>
+            {{localize 'SDM.FieldDebt'}}
           </label>
-          <input name='system.financier' type='text' value='{{system.financier}}' />
+          <input name='system.debt' type='text' value='{{system.debt}}' />
         </div>
 
-         <div class="grid-span-1">
-          <label for="name" class='resource-label'>
-            {{localize 'SDM.FinancierField'}}
+        <div class="grid-span-1">
+          <label for="system.cost" class='resource-label'>
+            {{localize 'SDM.FieldWeeklyCost'}}
           </label>
-          <input name='system.financier' type='text' value='{{system.financier}}' />
+          <input name='system.cost' type='text' value='{{system.cost}}' />
         </div>
 
-         <div class="grid-span-1">
-          <label for="name" class='resource-label'>
-            {{localize 'SDM.FinancierField'}}
+        <div class="grid-span-1">
+          <label for="system.supply" class='resource-label'>
+            {{localize 'SDM.FieldWeeklySupply'}}
           </label>
-          <input name='system.financier' type='text' value='{{system.financier}}' />
+          <input name='system.supply' type='text' value='{{system.supply}}' />
+        </div>
+        <div class="grid-span-1">
+          <label for="system.date" class='resource-label'>
+            {{localize 'SDM.FieldDate'}}
+          </label>
+          <input name='system.date' type='text' value='{{system.date}}' />
+        </div>
+        <div class="grid-span-1">
+          <label for="system.speed" class='resource-label'>
+            {{localize 'SDM.FieldSpeed'}}
+          </label>
+          <select name="system.speed" class="resource-content" data-dtype="Number">
+            {{selectOptions @root.config.speedOptions localize=true selected=system.speed inverted=true}}
+          </select>
+        </div>
+        <div class="grid-span-1">
+          <label for="system.capacity" class='resource-label'>
+            {{localize 'SDM.FieldCapacity'}}
+          </label>
+          <input name='system.capacity' type='text' value='{{system.capacity}}' data-dtype="Number"/>
         </div>
 
-         <div class="grid-span-1">
-          <label for="name" class='resource-label'>
-            {{localize 'SDM.FinancierField'}}
+        <div class="grid-span-2">
+          <label for="system.current_location" class='resource-label'>
+            {{localize 'SDM.FieldCurrentLocation'}}
           </label>
-          <input name='system.financier' type='text' value='{{system.financier}}' />
+          <input name='system.current_location' type='text' value='{{system.current_location}}' />
         </div>
 
-         <div class="grid-span-1">
-          <label for="name" class='resource-label'>
-            {{localize 'SDM.FinancierField'}}
+        <div class="grid-span-1">
+          <label for="system.eta" class='resource-label'>
+            {{localize 'SDM.FieldETA'}}
           </label>
-          <input name='system.financier' type='text' value='{{system.financier}}' />
+          <input name='system.eta' type='text' value='{{system.eta}}' />
         </div>
 
-         <div class="grid-span-1">
-          <label for="name" class='resource-label'>
-            {{localize 'SDM.FinancierField'}}
+        <div class="grid-span-2">
+          <label for="system.current_destination" class='resource-label'>
+            {{localize 'SDM.FieldCurrentDestination'}}
           </label>
-          <input name='system.financier' type='text' value='{{system.financier}}' />
-        </div>
-         <div class="grid-span-1">
-          <label for="name" class='resource-label'>
-            {{localize 'SDM.FinancierField'}}
-          </label>
-          <input name='system.financier' type='text' value='{{system.financier}}' />
-        </div>
-         <div class="grid-span-1">
-          <label for="name" class='resource-label'>
-            {{localize 'SDM.FinancierField'}}
-          </label>
-          <input name='system.financier' type='text' value='{{system.financier}}' />
-        </div>
-         <div class="grid-span-1">
-          <label for="name" class='resource-label'>
-            {{localize 'SDM.FinancierField'}}
-          </label>
-          <input name='system.financier' type='text' value='{{system.financier}}' />
+          <input name='system.current_destination' type='text' value='{{system.current_destination}}' />
         </div>
       </div>
       {{!-- <div class='resource'>

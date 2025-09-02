@@ -13,6 +13,7 @@ import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { $fmt, $l10n, capitalizeFirstLetter } from '../helpers/globalUtils.mjs';
 import {
   getSlotsTaken,
+  ITEMS_NOT_ALLOWED_IN_CARAVANS,
   ITEMS_NOT_ALLOWED_IN_CHARACTERS,
   onItemCreateActiveEffects,
   onItemUpdate
@@ -1608,11 +1609,16 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
    */
   async _onDropItem(event, data) {
     if (!this.actor.isOwner) return false;
+
     const item = await Item.implementation.fromDropData(data);
-    console.log(item);
     const isCharacterOrNPC = [ActorType.CHARACTER, ActorType.NPC].includes(this.actor.type);
+    const isCaravan = this.actor.type === ActorType.CARAVAN;
 
     if (isCharacterOrNPC && ITEMS_NOT_ALLOWED_IN_CHARACTERS.includes(item.type)) {
+      return false;
+    }
+
+    if (isCaravan && ITEMS_NOT_ALLOWED_IN_CARAVANS.includes(item.type)) {
       return false;
     }
 

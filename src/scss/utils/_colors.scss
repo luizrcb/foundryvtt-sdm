@@ -13,6 +13,8 @@
   --sdm-c-ligh-border: #b5b3a4;
   --sdm-c-violet: #7F00FF;
   --sdm-c-ultraviolet: #b84eff;
+  --sdm-c-theme: #00A2AB;
+  --sdm-c-table: #CDECEE;
 
   // 10 color rainbow
   --sdm-c-rust: #cc2f00;
@@ -71,6 +73,10 @@
   --color-border-highlight-alt: rgb(200, 100, 255);
   --color-scrollbar:rgb(200, 100, 255);
   --scrollbar-color:rgb(200, 100, 255);
+
+  --sdm-c-theme: #00A2AB;
+  --sdm-c-table: #CDECEE;
+
 }
 
 $c-dark: var(--sdm-c-dark);
@@ -85,6 +91,8 @@ $c-light-border: var(--sdm-c-ligh-border);
 $c-font: var(--sdm-c-font);
 $c-violet: var(--sdm-c-violet);
 $c-ultraviolet: var(--sdm-c-ultraviolet);
+$c-theme: var(--sdm-c-theme);
+$c-table: var(--sdm-c-table);
 
 // 10 color rainbow
 $c-rust: var(--sdm-c-rust);

@@ -68,9 +68,6 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       template: templatePath('item/attribute-parts/power_album'),
       scrollable: ['']
     },
-    attributesMount: {
-      template: templatePath('item/attribute-parts/mount')
-    },
     effects: {
       template: templatePath('item/effects'),
       scrollable: ['']
@@ -90,9 +87,6 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
         if (this.document.system.type === GearType.POWER_ALBUM) {
           options.parts.push('powerAlbum');
         }
-        break;
-      case 'mount':
-        options.parts.push('attributesMount');
         break;
     }
 
@@ -219,7 +213,6 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
           tab.icon = 'fa fa-scroll';
           break;
         case 'attributesFeature':
-        case 'attributesMount':
           tab.id = 'attributes';
           tab.label += 'Attributes';
           break;
