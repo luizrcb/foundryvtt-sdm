@@ -25,7 +25,7 @@ export class SdmActor extends Actor {
     await super._onUpdate(changed, options, userId);
     const shouldPlayLevelUpSound = game.settings.get('sdm', 'shouldPlayLevelUpSoundFx');
     const levelUpSoundFx = game.settings.get('sdm', 'levelUpSoundFx');
-    const properties = ['player_experience', 'debt', 'wealth', 'revenue', 'expense'];
+    const properties = ['player_experience', 'debt', 'wealth', 'revenue', 'expense', 'experience'];
     const updates = {};
 
     for (const prop of properties) {

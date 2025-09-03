@@ -26,7 +26,7 @@
       </select>
     </div>
     {{/if}}
-    {{#if (and (ne type 'save') isCharacterActor)}}
+    {{#if (ne type 'save')}}
     <div class="form-group mt-10">
       <label for="selectedSkill">{{localize 'SDM.Skill'}}</label>
       <select name="selectedSkill" id="selectedSkill">
