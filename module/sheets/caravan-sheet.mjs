@@ -4,6 +4,7 @@ import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { $l10n, $fmt } from '../helpers/globalUtils.mjs';
 import {
   convertToCash,
+  ITEMS_NOT_ALLOWED_IN_CARAVANS,
   ITEMS_NOT_ALLOWED_IN_CHARACTERS,
   onItemCreateActiveEffects,
   onItemUpdate
@@ -271,10 +272,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     // we need to get the caravan capacity in sacks
     // for each sack create a inventory container
     const filteredItems = this.document.items.filter(
-      item => !ITEMS_NOT_ALLOWED_IN_CHARACTERS.includes(item.type)
-    );
-    const transportItems = this.document.items.filter(item =>
-      ITEMS_NOT_ALLOWED_IN_CHARACTERS.includes(item.type)
+      item => !ITEMS_NOT_ALLOWED_IN_CARAVANS.includes(item.type)
     );
 
     // Iterate through items, allocating to containers
@@ -307,7 +305,6 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     const chunkedLists = chunkBySlots(filteredItems);
     // Sort then assign
     context.cargo = chunkedLists;
-    context.transport = transportItems;
   }
 
   /**
@@ -399,7 +396,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
 
     // Only error if EXCEEDING max (not when equal)
     if (currentCarriedWeight > maxCarryWeight) {
-      ui.notifications.error('Updating this item would exceed your carry weight limit.');
+      ui.notifications.warning('Updating this item would exceed your carry weight limit.');
       return false;
     }
     return true;
@@ -500,19 +497,6 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     this._teardownItemListeners();
     return super.close(options);
   }
-
-  // _getCarriedGear() {
-  //   const itemsArray = this.actor.items.contents;
-  //   const carriedWeight = itemsArray.reduce(
-  //     (sum, item) => {
-  //       const { size, quantity = 1 } = item.system;
-  //       const { value: sizeValue = 1, unit: sizeUnit = SizeUnit.CASH } = size;
-  //       const weightInSacks = convertToCash(sizeValue * quantity, sizeUnit);
-  //       return sum + weightInSacks;
-  //     }, 0);
-
-  //   return carriedWeight;
-  // }
 
   async _checkEncumbrance() {
     const actor = this.actor;
@@ -1009,7 +993,6 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     const item = await Item.implementation.fromDropData(data);
 
     if ([ItemType.BURDEN, ItemType.TRAIT].includes(item.type)) {
-      alert('burden or trait dropped');
       return false;
     }
 
@@ -1072,8 +1055,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     const maxCarryWeight = convertToCash(totalCapacityInSacks, SizeUnit.SACKS);
 
     if (currentCarriedWeight + totalNewWeight > maxCarryWeight) {
-      ui.notifications.error('Adding this item would exceed your carry weight limit.');
-      return [];
+      // ui.notifications.error('Adding this item will exceed your carry weight limit.');
     }
 
     return this.actor.createEmbeddedDocuments('Item', itemData);

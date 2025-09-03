@@ -164,6 +164,8 @@ export default class SdmCarvan extends SdmActorBase {
       initial: 0
     });
 
+    schema.encumbered =  new fields.BooleanField({ initial: false });
+
     return schema;
   }
 

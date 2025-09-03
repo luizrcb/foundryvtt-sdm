@@ -73,11 +73,17 @@
             {{selectOptions @root.config.speedOptions localize=true selected=system.speed inverted=true}}
           </select>
         </div>
-        <div class="grid-span-1">
-          <label for="system.capacity" class='resource-label'>
-            {{localize 'SDM.FieldCapacity'}}
+        <div class="grid-span-1" data-tooltip="{{#if system.encumbered}}{{localize 'SDM.StatusEncumbered'}}{{/if}}">
+          <label for="system.capacity" class='resource-label {{#if system.encumbered}}fumble{{/if}}'>
+            {{localize 'SDM.FieldCapacity'}} {{#if system.encumbered}} <i class="fa fa-weight-hanging fumble"></i>{{/if}}
           </label>
-          <input name='system.capacity' type='text' value='{{system.capacity}}' data-dtype="Number"/>
+          <input
+            name='system.capacity'
+            class="{{#if system.encumbered}}fumble{{/if}}"
+            type='text'
+            value='{{system.capacity}}'
+            data-dtype="Number"
+          />
         </div>
 
         <div class="grid-span-2">
