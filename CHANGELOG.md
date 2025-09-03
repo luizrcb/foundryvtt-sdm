@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.2.0
+
+- Add caravan actor type
+- Change all sheet input styles to look clean and minimal
+- Automatically disable temporary active effects based on combat round/turn durations
+
 ## v0.1.40
 
 - Send inventory items to chat when you right-click them

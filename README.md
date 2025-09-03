@@ -29,6 +29,7 @@ An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG
 
 ### Actor Types
 
+- Caravan
 - Character
 - NPC
 
