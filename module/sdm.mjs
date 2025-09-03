@@ -123,6 +123,11 @@ Hooks.on('createActor', async (actor, _options, _id) => {
   await actor.update({ prototypeToken: tokenData });
 });
 
+Hooks.on('createItem', async (item, _options, _id) => {
+  if (!item.isOwner) return;
+  await item.update({ 'system.readied': false });
+})
+
 Hooks.on('updateActor', async actor => {
   if (!actor.isOwner) return;
 

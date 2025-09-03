@@ -24,7 +24,8 @@ export default class SdmCarvan extends SdmActorBase {
 
     // shared cash
     schema.wealth = new fields.StringField({ require: true, initial: '0' });
-
+    schema.total_cash = new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 });
+    schema.inventory_value = new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 });
     schema.debt = new fields.StringField({
       required: false,
       blank: true,

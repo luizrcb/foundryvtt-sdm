@@ -1,6 +1,6 @@
 import PowerDataModel from '../data/power-data.mjs';
 import { getActorOptions } from '../helpers/actorUtils.mjs';
-import { GearType, ItemType, SkillMod } from '../helpers/constants.mjs';
+import { ActorType, GearType, ItemType, SkillMod } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
@@ -549,7 +549,13 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
   }
 
   static async _toggleReadied(event, target) {
-    await this.item.update({ 'system.readied': !this.item.system.readied });
+    let nextValue = !this.item.system.readied;
+
+    if (!this.item.parent || (this.item.parent && this.item.parent?.type === ActorType.CARAVAN)) {
+      nextValue = false;
+    }
+
+    await this.item.update({ 'system.readied': nextValue });
   }
 
   /** Helper Functions */

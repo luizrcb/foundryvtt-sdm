@@ -201,14 +201,15 @@
 
           <div class="grid-span-1 flexrow flex-between">
             <div class="grid-span-1 resource" data-tooltip="
-              <span><b>{{localize 'SDM.TabInventory'}}:</b> {{localize 'SDM.CashSymbol'}}{{system.inventory_value}}</span><br/>
-              <span><b>{{toPascalCase (localize 'SDM.UnitCash')}}:</b> {{localize 'SDM.CashSymbol'}}{{system.total_cash}}</span>
+              <span><b>{{toPascalCase (localize 'SDM.UnitCash')}}:</b> {{localize 'SDM.CashSymbol'}}{{system.total_cash}}</span><br/>
+              <span><b>{{localize 'SDM.TabInventory'}}:</b> {{localize 'SDM.CashSymbol'}}{{system.inventory_value}}</span><hr>
+              <span><b>{{toPascalCase (localize 'SDM.Total')}}:</b> {{localize 'SDM.CashSymbol'}}{{system.wealth}}</span>
             ">
-              <label for="system.wealth" class='resource-label'>
+              <label for="system.total_cash" class='resource-label'>
                 {{localize 'SDM.FieldWealth'}}
               </label>
               <div class='resource-content flexrow flex-center flex-between'>
-                <input type='text' name='system.wealth' value='{{localize 'SDM.CashSymbol'}}{{system.wealth}}' data-dtype='Number'  disabled/>
+                <input type='text' name='system.total_cash' value='{{localize 'SDM.CashSymbol'}}{{system.total_cash}}' data-dtype='Number'  disabled/>
               </div>
             </div>
             <div class="grid-span-1 resource">

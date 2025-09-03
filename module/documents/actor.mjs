@@ -290,6 +290,17 @@ export class SdmActor extends Actor {
     });
   }
 
+  _prepareCaravanData() {
+    const estimatedWealth = this.getEstimatedWealth();
+    const totalCash = this.getTotalCash();
+
+    this.update({
+      'system.inventory_value': estimatedWealth,
+      'system.total_cash': totalCash,
+      'system.wealth': totalCash + estimatedWealth
+    });
+  }
+
   _prepareNpcData() {}
 
   getTotalWeight() {
@@ -518,18 +529,13 @@ export class SdmActor extends Actor {
     return equippedWardValue + wardBonus;
   }
 
-  getCaracanCapacity() {
-    if (this.type !== 'caravan') {
+  getCaravanCapacity() {
+    if (this.type !== ActorType.CARAVAN) {
       return;
     }
 
-    const itemsArray = this.items.contents.filter(
-      item => item.type === ItemType.VEHICLE || item.type === ItemType.MOUNT
-    );
-
-    const carryCapacity = itemsArray.reduce((acc, item) => {
-      return acc + item.getCarryCapacity();
-    }, 0);
+    const totalCapacityInSacks = this.system.capacity + this.system.capacity_bonus;
+    const maxCarryWeight = convertToCash(totalCapacityInSacks, SizeUnit.SACKS);
 
     return carryCapacity;
   }
@@ -537,12 +543,12 @@ export class SdmActor extends Actor {
   getEstimatedWealth() {
     const itemsArray = this.items.contents.filter(
       item =>
-        [ItemType.GEAR, ItemType.MOUNT, ItemType.VEHICLE].includes(item.type) &&
+        [ItemType.GEAR].includes(item.type) &&
         item.system.size.unit !== SizeUnit.CASH
     );
 
     const estimatedWealth = itemsArray.reduce((acc, item) => {
-      return acc + (item?.system?.cost || 0);
+      return acc + ( (item?.system?.cost || 0) * (item?.system.quantity || 1));
     }, 0);
 
     return estimatedWealth;
@@ -569,6 +575,7 @@ export class SdmActor extends Actor {
     super.prepareDerivedData();
     if (this.type === ActorType.CHARACTER) this._prepareCharacterData();
     if (this.type === ActorType.NPC) this._prepareNpcData();
+    if (this.type === ActorType.CARAVAN) this._prepareCaravanData();
   }
 
   /**

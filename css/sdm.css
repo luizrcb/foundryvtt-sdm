@@ -207,9 +207,14 @@
 .sheet input:focus,
 .sheet textarea:focus,
 .sheet select:focus {
-  border-bottom: 2px solid var(--sdm-c-theme);
+  border-bottom: 2px solid var(--sdm-c-plum);
   box-shadow: none;
   font-family: "Alegreya", sans-serif;
+}
+
+.sheet input.resource-label {
+  font-weight: bold;
+  font-size: 15px;
 }
 
 .mt-5 {
@@ -272,7 +277,6 @@
   min-width: 1200px;
   min-height: 820px;
   max-width: 1600px;
-  max-height: 1520px;
 }
 
 .application.sheet.sdm.actor.caravan.minimized {
@@ -443,6 +447,9 @@ input[type=radio]::after {
   * {
     scrollbar-color: var(--sdm-c-plum) transparent;
   }
+  .route-item {
+    padding: 4px;
+  }
   .description {
     padding: 0.5rem;
     border-radius: 3px;
@@ -513,6 +520,7 @@ input[type=radio]::after {
   .title .item-cost {
     font-size: var(--font-size-14);
     font-weight: normal;
+    min-width: fit-content;
   }
   .subtitle {
     font-size: var(--font-size-11);
@@ -881,6 +889,10 @@ input[type=radio]::after {
   flex: 2;
 }
 
+.flexnormal {
+  flex: 1;
+}
+
 .align-left {
   justify-content: flex-start;
   text-align: left;
@@ -1024,6 +1036,12 @@ input[type=radio]::after {
 }
 .sdm .tab.biography .editor {
   height: 100%;
+}
+.sdm .tab.routes {
+  flex: 1;
+}
+.sdm .tab.transport {
+  flex: 1;
 }
 .sdm .tab.notes {
   flex: 1;
@@ -1173,6 +1191,9 @@ input[type=radio]::after {
 .sdm .items-list.power-album {
   max-height: 600px;
 }
+.sdm .items-list.full-list {
+  max-height: unset;
+}
 .sdm .items-list .item-list {
   list-style: none;
   margin: 0;
@@ -1208,6 +1229,9 @@ input[type=radio]::after {
   align-items: center;
   padding: 0 2px;
   border-bottom: 1px solid var(--sdm-c-faint);
+}
+.sdm .items-list .item.route-item {
+  padding: 4px 6px;
 }
 .sdm .items-list .item:last-child {
   border-bottom: none;

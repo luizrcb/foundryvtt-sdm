@@ -12,13 +12,14 @@
           {{localize 'SDM.ItemNotReadied'}}
           {{/if}}
         </div>
-        <i class="fa-regular fa-shield resource-content {{ifThen system.readied 'readied' 'not-readied'}}"></i>
+        {{log system.readied}}
+        <i class="fa-regular fa-shield {{ifThen system.readied 'readied' 'not-readied'}}"></i>
       </div>
     </div>
 
     <div class='header-fields mt-10'>
       <div class='document-name'>
-        <input name='name' type='text' value='{{item.name}}' placeholder='Name' />
+        <input name='name' class="resource-label" type='text' value='{{item.name}}' placeholder='Name' />
       </div>
       <div class='grid grid-2col'>
         <div class='resource'>

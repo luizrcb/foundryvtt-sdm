@@ -49,13 +49,19 @@
   font-family: typo.$font-secondary;
 }
 
+
 /* On focus, accent color */
 .sheet input:focus,
 .sheet textarea:focus,
 .sheet select:focus {
-  border-bottom: 2px solid colors.$c-theme;
+  border-bottom: 2px solid colors.$c-plum;
   box-shadow: none;
   font-family: typo.$font-secondary;
+}
+
+.sheet input.resource-label {
+  font-weight: bold;
+  font-size: 15px;
 }
 
 .mt-5 {
@@ -116,7 +122,6 @@
   min-width: 1200px;
   min-height: 820px;
   max-width: 1600px;
-  max-height: 1520px;
   &.minimized {
     min-width: 0px;
     min-height: 0px;
@@ -298,6 +303,10 @@ input[type='radio']::after {
     scrollbar-color: colors.$c-plum transparent;
   }
 
+  .route-item {
+    padding: 4px;
+  }
+
   .description {
     padding: .5rem;
     //border: 1px solid var(--dnd5e-color-gold);
@@ -378,6 +387,7 @@ input[type='radio']::after {
     .item-cost {
       font-size: var(--font-size-14);
       font-weight: normal;
+      min-width: fit-content;
     }
   }
 
@@ -560,25 +570,6 @@ input[type='radio']::after {
   .melee-attack.lime:hover {
     filter: vars.$hover-filter;
   }
-
-  // .thou-save {
-  //   width: 16px;
-  //   height: 16px;
-  //   display: inline-block;
-  //   background: url('../assets/icons/ui/thought-bubble.svg');
-  //   background-repeat: no-repeat;
-  //   background-position: center;
-  //   background-size: contain;
-  //   cursor: pointer;
-  // }
-
-  // .theme-dark .thou-save {
-  //   background: url('../assets/icons/ui/thought-bubble-dark.svg');
-  // }
-
-  // .rollable:hover i.thou-save, .thou-save:hover {
-  //   filter: vars.$hover-filter
-  // }
 
   .changes-key {
     line-height: inherit;

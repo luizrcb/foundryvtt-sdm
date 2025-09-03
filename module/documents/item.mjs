@@ -269,7 +269,8 @@ export class SdmItem extends Item {
   async getItemChatCard({ collapsed = false, displayWeight = true }) {
     let type = this.system.type ? this.system.type : this.type;
 
-    let costSubtitle = this.getCostTitle(false);
+    let costSubtitle = `${$l10n('SDM.CashSymbol')}${this.system.cost}`;
+
     let weightSubtitle = `${this.system.size.value} ${$l10n(`SDM.Unit.${this.system.size.unit}.abbr`)}`;
 
     if (this.system.size.unit === SizeUnit.CASH) {

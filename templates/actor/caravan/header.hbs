@@ -28,11 +28,15 @@
           <input name='system.financier' type='text' value='{{system.financier}}' />
         </div>
 
-         <div class="grid-span-1">
-          <label for="system.wealth" class='resource-label'>
+         <div class="grid-span-1 resource" data-tooltip="
+              <span><b>{{toPascalCase (localize 'SDM.UnitCash')}}:</b> {{localize 'SDM.CashSymbol'}}{{system.total_cash}}</span><br/>
+              <span><b>{{localize 'SDM.TabInventory'}}:</b> {{localize 'SDM.CashSymbol'}}{{system.inventory_value}}</span><hr>
+              <span><b>{{toPascalCase (localize 'SDM.Total')}}:</b> {{localize 'SDM.CashSymbol'}}{{system.wealth}}</span>
+            ">
+          <label for="system.total_cash" class='resource-label'>
             {{localize 'SDM.FieldWealth'}}
           </label>
-          <input name='system.wealth' type='text' value='{{system.wealth}}' />
+          <input name='system.total_cash' type='text' value=' {{localize 'SDM.CashSymbol'}}{{system.total_cash}}' disabled/>
         </div>
 
         <div class="grid-span-1">

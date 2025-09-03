@@ -13,7 +13,6 @@ import { openItemTransferDialog } from '../items/transfer.mjs';
 
 const { api, sheets } = foundry.applications;
 const { DialogV2 } = foundry.applications.api;
-const { renderTemplate } = foundry.applications.handlebars;
 const DragDrop = foundry.applications.ux.DragDrop.implementation;
 const FilePicker = foundry.applications.apps.FilePicker.implementation;
 const TextEditor = foundry.applications.ux.TextEditor.implementation;
@@ -48,7 +47,9 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       viewDoc: this._viewDoc,
       sendToChat: { handler: this._sendToChat, buttons: [0, 2] },
       addTransport: this._addTransport,
-      deleteTransport: this._deleteTransport
+      deleteTransport: this._deleteTransport,
+      addRoute: this._addRoute,
+      deleteRoute: this._deleteRoute
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
@@ -103,7 +104,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     options.parts = ['header', 'tabs'];
     // Don't show the other tabs if only limited view
     if (!this.document.limited) {
-      options.parts.push('inventory', 'transport', 'crew', 'routes', 'notes', 'effects');
+      options.parts.push('inventory', 'transport', 'routes', 'notes', 'effects');
     }
     options.parts.push('biography');
   }
@@ -393,7 +394,8 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
 
     const newWeight = convertToCash(newSizeValue * newQuantity, newSizeUnit);
     const currentCarriedWeight = this.actor.getCarriedGear() - originalWeight + newWeight;
-    const maxCarryWeight = this.actor.system.carry_weight.max;
+    const totalCapacityInSacks = this.actor.system.capacity + this.actor.system.capacity_bonus;
+    const maxCarryWeight = convertToCash(totalCapacityInSacks, SizeUnit.SACKS);
 
     // Only error if EXCEEDING max (not when equal)
     if (currentCarriedWeight > maxCarryWeight) {
@@ -771,6 +773,49 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     });
   }
 
+  static async _addRoute(event, target) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const newKey = foundry.utils.randomID();
+    const routesLength = Object.keys(this.actor.system.routes).length;
+
+    await this.actor.update({
+      'system.routes': {
+        [`${newKey}`]: {
+          name: `New route (${routesLength})`,
+          agent: '',
+          quirk: '',
+          locationA: '',
+          eta: '',
+          locationB: '',
+          investment: '',
+          risk: ''
+        }
+      }
+    });
+  }
+
+  static async _deleteRoute(event, target) {
+    const dataset = target.dataset;
+    const key = dataset.key;
+
+    const route = this.actor.system.routes[key];
+
+    const proceed = await DialogV2.confirm({
+      content: `<b>${$fmt('SDM.DeleteDocConfirmation', { doc: route.name })}</b>`,
+      modal: true,
+      rejectClose: false,
+      yes: { label: $l10n('SDM.ButtonYes') },
+      no: { label: $l10n('SDM.ButtonNo') }
+    });
+    if (!proceed) return;
+
+    await this.actor.update({
+      [`system.routes.-=${key}`]: null
+    });
+  }
+
   /** Helper Functions */
 
   /**
@@ -1007,6 +1052,11 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
   async _onDropItemCreate(itemData, event) {
     itemData = itemData instanceof Array ? itemData : [itemData];
 
+    itemData = itemData.map(item => {
+      item.system.readied = false;
+      return item;
+    });
+
     // Calculate total weight of new items using data model defaults
     let totalNewWeight = itemData.reduce((sum, item) => {
       const system = item.system || {};
@@ -1018,7 +1068,8 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     }, 0);
 
     const currentCarriedWeight = this.actor.getCarriedGear();
-    const maxCarryWeight = this.actor.system.carry_weight.max;
+    const totalCapacityInSacks = this.actor.system.capacity + this.actor.system.capacity_bonus;
+    const maxCarryWeight = convertToCash(totalCapacityInSacks, SizeUnit.SACKS);
 
     if (currentCarriedWeight + totalNewWeight > maxCarryWeight) {
       ui.notifications.error('Adding this item would exceed your carry weight limit.');

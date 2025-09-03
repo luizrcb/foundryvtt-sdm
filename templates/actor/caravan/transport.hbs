@@ -3,19 +3,19 @@
     <div class="grid grid-7col">
     <div class="main grid-span-7">
       <section>
-        <ol class='items-list'>
-          <li class='item flexrow items-header caravan-item-header' style="position: stick;">
+        <ol class='items-list full-list'>
+          <li class='item flexrow items-header caravan-item-header' style="position: sticky;">
             <div class=''></div>
             <div class=''></div>
             <div class=''>
               {{#if @root.editable}}
               <a
                 class='item-control item-create'
-                data-tooltip="Add Transport"
+                data-tooltip="{{localize 'SDM.DOCUMENT.Create' type=(localize 'SDM.Transport')}}"
                 data-action='addTransport'
               >
                 <i class='fa-solid fa-plus'></i>
-                Add Transport
+                {{localize 'SDM.DOCUMENT.New' type=(localize 'SDM.Transport')}}
               </a>
               {{/if}}
             </div>
@@ -24,7 +24,7 @@
           <li class='item flexrow'>
             <div class='resource grid-span-1'>
               <label class='resource-label'>
-                {{localize 'SDM.FieldName'}}
+                {{localize 'SDM.FieldTransportType'}}
               </label>
               <div class='resource-content'>
                 <input type='text' name='system.transport.{{key}}.name' value='{{transport.name}}' />
@@ -40,7 +40,7 @@
               </div>
             </div>
 
-            <div class='resource grid-span-2'>
+            <div class='resource flexlarge'>
               <label class='resource-label'>
                 {{localize 'SDM.FieldCargo'}}
               </label>
@@ -62,7 +62,7 @@
 
             <div class='resource grid-span-1'>
               <label class='resource-label'>
-                {{localize 'SDM.FieldCost'}}
+                {{localize 'SDM.FieldCostPerWeek'}}
               </label>
               <div class='resource-content'>
                 <input type='text' name='system.transport.{{key}}.cost' value='{{transport.cost}}' />
@@ -71,11 +71,11 @@
 
             <div class='resource grid-span-1'>
               <label class='resource-label'>
-                {{localize 'SDM.FieldSupply'}}
+                {{localize 'SDM.FieldSupplyPerWeek'}}
               </label>
               <div class='resource-content flex flexrow flex-group-center'>
                 <input type='text' name='system.transport.{{key}}.supply' value='{{transport.supply}}' />
-                <a data-action="deleteTransport" data-key="{{key}}"><i class="fa-solid fa-trash"></i></a>
+                <a data-action="deleteTransport" data-key="{{key}}" data-tooltip="{{localize 'DOCUMENT.Delete' type=(localize 'SDM.Transport')}}"><i class="fa-solid fa-trash"></i></a>
               </div>
             </div>
           </li>

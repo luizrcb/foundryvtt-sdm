@@ -1,4 +1,116 @@
 {{! Routes Tab }}
 <section class='tab routes scrollable {{tab.cssClass}}' data-group='primary' data-tab='routes'>
-  <div>routes tab</div>
+    <div class="grid grid-3col">
+    <div class="main grid-span-3">
+      <section>
+        <ol class='items-list full-list'>
+          <li class='item flexrow items-header caravan-item-header' style="position: sticky;">
+            <div class=''></div>
+            <div class=''></div>
+            <div class=''>
+              {{#if @root.editable}}
+              <a
+                class='item-control item-create'
+                data-tooltip="{{localize 'SDM.DOCUMENT.Create' type=(localize 'SDM.Route')}}"
+                data-action='addRoute'
+              >
+                <i class='fa-solid fa-plus'></i>
+                {{localize 'SDM.DOCUMENT.New' type=(localize 'SDM.Route')}}
+              </a>
+              {{/if}}
+            </div>
+          </li>
+          {{#each system.routes as |route key|}}
+          <li class='item grid grid-3col flexrow list-border route-item'>
+
+            <div class='resource grid-span-1'>
+              <label class='resource-label'>
+                {{localize 'SDM.FieldRunName'}}
+              </label>
+              <div class='resource-content'>
+                <input type='text' name='system.route.{{key}}.name' value='{{route.name}}' />
+              </div>
+            </div>
+
+
+            <div class='resource grid-span-1'>
+              <label class='resource-label'>
+                {{localize 'SDM.FieldAgent'}}
+              </label>
+              <div class='resource-content'>
+                <input type='text' name='system.route.{{key}}.agent' value='{{route.agent}}' />
+              </div>
+            </div>
+
+            <div class='resource grid-span-1 flex flexcol'>
+              <label class='resource-label flex flex-between'>
+                {{localize 'SDM.FieldQuirk'}}
+                <a
+                    data-action="deleteRoute"
+                    data-key="{{key}}"
+                    data-tooltip="{{localize 'DOCUMENT.Delete' type=(localize 'SDM.Route')}}"
+                  >
+                <i class="fa-solid fa-trash"></i>
+                </a>
+              </label>
+              <div class='resource-content'>
+                <input type='text' name='system.route.{{key}}.quirk' value='{{route.quirk}}' />
+              </div>
+            </div>
+            <div class="grid-span-3">
+              <div class="grid grid-7col">
+
+                <div class='resource grid-span-2'>
+                  <label class='resource-label'>
+                    {{localize 'SDM.FieldLocationA'}}
+                  </label>
+                  <div class='resource-content'>
+                    <input type='text' name='system.route.{{key}}.locationA' value='{{route.locationA}}' />
+                  </div>
+                </div>
+
+                <div class='resource'>
+                  <label class='resource-label'>
+                    {{localize 'SDM.FieldETA'}}
+                  </label>
+                  <div class='resource-content'>
+                    <input type='text' name='system.route.{{key}}.eta' value='{{route.eta}}' />
+                  </div>
+                </div>
+
+                <div class='resource grid-span-2'>
+                  <label class='resource-label'>
+                    {{localize 'SDM.FieldLocationB'}}
+                  </label>
+                  <div class='resource-content'>
+                    <input type='text' name='system.route.{{key}}.locationB' value='{{route.locationB}}' />
+                  </div>
+                </div>
+
+                <div class='resource'>
+                  <label class='resource-label'>
+                    {{localize 'SDM.FieldInvestment'}}
+                  </label>
+                  <div class='resource-content'>
+                    <input type='text' name='system.route.{{key}}.investment' value='{{route.investment}}' />
+                  </div>
+                </div>
+
+                <div class='resource'>
+                  <label class='resource-label'>
+                    {{localize 'SDM.FieldRisk'}}
+                  </label>
+                  <div class='resource-content'>
+                    <input type='text' name='system.route.{{key}}.risk' value='{{route.risk}}' />
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </li>
+          {{/each}}
+        </ol>
+      </section>
+    </div>
+  </div>
 </section>
