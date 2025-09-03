@@ -130,6 +130,23 @@ Hooks.on('updateActor', async actor => {
   await actor.update({ 'prototypeToken.name': name });
 });
 
+Hooks.on('updateCombat', async (combat, update) => {
+  if (!('round' in update || 'turn' in update)) return;
+
+  for (const combatant of combat.combatants) {
+    const actor = combatant.actor;
+    if (!actor) continue;
+
+    const expiredEffects = actor.effects.filter(
+      effect => effect.isTemporary && !effect.duration.remaining
+    );
+
+    for (const expired of expiredEffects) {
+      await expired.update({ disabled: true });
+    }
+  }
+});
+
 Hooks.on('createItem', async (item, _options, _id) => {
   if (!item.isOwner) return;
 
