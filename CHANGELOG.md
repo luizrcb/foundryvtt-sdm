@@ -1,8 +1,14 @@
 # CHANGELOG
 
+## v0.2.2
+
+- Added an experience field for NPCs (pets, sidekicks). NPC leveling is not automated, but you can track the invested XP
+- NPCs can also use skills and traits in their rolls (same as characters)
+- Fixed pt-BR localization in the caravan sheet
+
 ## v0.2.1
 
-- Fixed a bug in the "slots taken" calculation for readied soap-sized items.
+- Fixed a bug in the "slots taken" calculation for readied soap-sized items
 
 ## v0.2.0
 
