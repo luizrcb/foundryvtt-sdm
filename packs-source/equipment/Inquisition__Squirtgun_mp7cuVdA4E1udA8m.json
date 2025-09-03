@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 300,
     "cost_frequency": "",
-    "description": "<p>Originally an effective tranquilizer delivery device. Now adapted for all kinds of fluids.</p><p><strong>Features:</strong> short, re 5, intravenous</p>",
+    "description": "<p>Originally an effective tranquilizer delivery device. Now adapted for all kinds of fluids.</p><p><strong>Features:</strong> short, re 5 [[/r 1d20]], intravenous</p>",
     "quantity": 1,
     "size": {
       "value": 5,

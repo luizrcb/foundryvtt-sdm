@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 250,
     "cost_frequency": "",
-    "description": "<p>A flame-thrower from the anti-anti-zombie wars. Sets hearts (and heads) afire.</p><p><strong>Features:</strong> short, re 15, 2H, high heat</p>",
+    "description": "<p>A flame-thrower from the anti-anti-zombie wars. Sets hearts (and heads) afire.</p><p><strong>Features:</strong> short, re 15 [[/r 1d20]], 2H, high heat</p>",
     "quantity": 1,
     "size": {
       "value": 3,

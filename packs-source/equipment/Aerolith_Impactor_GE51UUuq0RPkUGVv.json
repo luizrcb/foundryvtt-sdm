@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 800,
     "cost_frequency": "",
-    "description": "<p>Fires an aerolith seed reducing the target's weight by 1 sack per hit. </p><p>Effect lasts 10 minutes.</p><p><strong>Features:</strong> med, re 4, oldtech</p>",
+    "description": "<p>Fires an aerolith seed reducing the target's weight by 1 sack per hit. </p><p>Effect lasts 10 minutes.</p><p><strong>Features:</strong> med, re 4 [[/r 1d20]], oldtech</p>",
     "quantity": 1,
     "size": {
       "value": 1,

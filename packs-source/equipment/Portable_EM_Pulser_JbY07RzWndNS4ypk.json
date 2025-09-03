@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 50,
     "cost_frequency": "",
-    "description": "<p>Temporarily disable golems and synthetics (save). Short range, re 4.</p>",
+    "description": "<p>Temporarily disable golems and synthetics (save). Short range, re 4 [[/r 1d20]].</p>",
     "quantity": 1,
     "size": {
       "value": 1,

@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 100,
     "cost_frequency": "",
-    "description": "<p>Rugged, tough, notoriously easy to modify. Not the most accurate, though.</p><p><strong>Features:</strong> med, re 10, 2H, clumsy</p>",
+    "description": "<p>Rugged, tough, notoriously easy to modify. Not the most accurate, though.</p><p><strong>Features:</strong> med, re 10 [[/r 1d20]], 2H, clumsy</p>",
     "quantity": 1,
     "size": {
       "value": 1,

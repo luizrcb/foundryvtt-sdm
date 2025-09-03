@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 1250,
     "cost_frequency": "",
-    "description": "<p>Cuts through time, skips the target forward 1d6 rounds (hard save). </p><p>Its mass is increased by its future anchors.</p><p><strong>Features:</strong> re 1, fantascience</p>",
+    "description": "<p>Cuts through time, skips the target forward 1d6 rounds (hard save). </p><p>Its mass is increased by its future anchors.</p><p><strong>Features:</strong> re 1 [[/r 1d20]], fantascience</p>",
     "quantity": 1,
     "size": {
       "value": 7,

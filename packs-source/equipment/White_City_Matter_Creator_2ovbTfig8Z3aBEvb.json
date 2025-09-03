@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 10000,
     "cost_frequency": "",
-    "description": "<p>This coiling, whorling device duplicates [[/r 1d6]] stones matter at range.</p><p><strong>Features:</strong> short, re 5, 2H, attune</p><p></p>",
+    "description": "<p>This coiling, whorling device duplicates [[/r 1d6]] stones matter at range.</p><p><strong>Features:</strong> short, re 5 [[/r 1d20]], 2H, attune</p><p></p>",
     "quantity": 1,
     "size": {
       "value": 2,

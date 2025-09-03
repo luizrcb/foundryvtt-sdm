@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 10,
     "cost_frequency": "",
-    "description": "<p>Glows brightly and smokes for about 10 minutes. Says, “I am here!” Re 2.</p>",
+    "description": "<p>Glows brightly and smokes for about 10 minutes. Says, “I am here!” re 2 [[/r 1d20]].</p>",
     "quantity": 1,
     "size": {
       "value": 1,

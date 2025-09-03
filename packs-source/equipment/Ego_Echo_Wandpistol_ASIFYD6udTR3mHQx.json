@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 200,
     "cost_frequency": "",
-    "description": "<p>Reverberates thoughts and emotions, disorienting the target (save). A disoriented creature (1d6): @UUID[Compendium.sdm.rolltables.RollTable.eerz5aHba8TEL7YK]{Desorienting Creature (save)}</p><p><strong>Features:</strong> short, re 4, attune, fantascience, psychic</p><p></p>",
+    "description": "<p>Reverberates thoughts and emotions, disorienting the target (save). A disoriented creature (1d6): @UUID[Compendium.sdm.rolltables.RollTable.eerz5aHba8TEL7YK]{Desorienting Creature (save)}</p><p><strong>Features:</strong> short, re 4 [[/r 1d20]], attune, fantascience, psychic</p><p></p>",
     "quantity": 1,
     "size": {
       "value": 5,

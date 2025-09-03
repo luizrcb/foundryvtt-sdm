@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 8000,
     "cost_frequency": "",
-    "description": "<p>Polished stone and woven lines of force to resist high velocity and energy attacks.</p><p>Burn mode [[/r 1d20]]: gain +5 strength or 30 life forcefield (<em>toggle active effects</em>)</p><p><strong>Features: </strong>re 4, bulletproof, energy resistant</p>",
+    "description": "<p>Polished stone and woven lines of force to resist high velocity and energy attacks.</p><p>Burn mode [[/r 1d20]]: gain +5 strength or 30 life forcefield (<em>toggle active effects</em>)</p><p><strong>Features: </strong>re 4 [[/r 1d20]], bulletproof, energy resistant</p>",
     "quantity": 1,
     "size": {
       "value": 2,

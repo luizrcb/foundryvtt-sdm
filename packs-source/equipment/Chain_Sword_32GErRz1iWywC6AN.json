@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 450,
     "cost_frequency": "",
-    "description": "<p>An elegant weapon from the time of the great reincarnation error. </p><p>Decapitate on natural 20.</p><p><strong>Features:</strong> re 2, versatile, vorpal,</p>",
+    "description": "<p>An elegant weapon from the time of the great reincarnation error. </p><p>Decapitate on natural 20.</p><p><strong>Features:</strong> re 2 [[/r 1d20]], versatile, vorpal,</p>",
     "quantity": 1,
     "size": {
       "value": 2,

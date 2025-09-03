@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 200,
     "cost_frequency": "",
-    "description": "<p>Take a defunct war golem’s arm, remove the war golem, and you have an effective heat ray.</p><p><strong>Features:</strong> short, re 6, 2H, heat</p>",
+    "description": "<p>Take a defunct war golem’s arm, remove the war golem, and you have an effective heat ray.</p><p><strong>Features:</strong> short, re 6 [[/r 1d20]], 2H, heat</p>",
     "quantity": 1,
     "size": {
       "value": 2,

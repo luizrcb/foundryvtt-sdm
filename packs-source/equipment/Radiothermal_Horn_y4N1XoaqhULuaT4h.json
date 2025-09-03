@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 400,
     "cost_frequency": "",
-    "description": "<p>Emits hard radiation. Causes illness (hard save). Backfires on a natural 1. Works as a portable stove.</p><p><strong>Features:</strong> short, re 2, glowing, oldtech</p>",
+    "description": "<p>Emits hard radiation. Causes illness (hard save). Backfires on a natural 1. Works as a portable stove.</p><p><strong>Features:</strong> short, re 2 [[/r 1d20]], glowing, oldtech</p>",
     "quantity": 1,
     "size": {
       "value": 1,

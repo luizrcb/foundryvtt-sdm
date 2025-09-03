@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 1500,
     "cost_frequency": "",
-    "description": "<p>Repurposed cracked levi drive. Reduces spatial dimensions in the target area by 50%. Targets are slowed and weakened (save).</p><p>On a natural 2, one target’s skull folds in on itself instead.</p><p><strong>Features:</strong> short, area S, re 10, oldtech</p>",
+    "description": "<p>Repurposed cracked levi drive. Reduces spatial dimensions in the target area by 50%. Targets are slowed and weakened (save).</p><p>On a natural 2, one target’s skull folds in on itself instead.</p><p><strong>Features:</strong> short, area S, re 10 [[/r 1d20]], oldtech</p>",
     "quantity": 1,
     "size": {
       "value": 1,

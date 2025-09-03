@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 200,
     "cost_frequency": "",
-    "description": "<p>This less-lethal phantom blade cuts layers of ego and id. </p><p>Max dmg: give target’s soul one direct command (save vs extreme commands).</p><p><strong>Features:</strong> re 5, attune, oldtech, subdual</p>",
+    "description": "<p>This less-lethal phantom blade cuts layers of ego and id. </p><p>Max dmg: give target’s soul one direct command (save vs extreme commands).</p><p><strong>Features:</strong> re 5 [[/r 1d20]], attune, oldtech, subdual</p>",
     "quantity": 1,
     "size": {
       "value": 1,

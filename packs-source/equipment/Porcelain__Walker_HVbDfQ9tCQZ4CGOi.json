@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 600,
     "cost_frequency": "",
-    "description": "<p>The best in princely technology, with shiny polychrome ceramic plates. </p><p>Burn mode [[/r 1d20]]: walks itself for several hours.</p><p><strong>Features:</strong> re 3, bulky, cool, intravenous</p>",
+    "description": "<p>The best in princely technology, with shiny polychrome ceramic plates. </p><p>Burn mode [[/r 1d20]]: walks itself for several hours.</p><p><strong>Features:</strong> re 3 [[/r 1d20]], bulky, cool, intravenous</p>",
     "quantity": 1,
     "size": {
       "value": 3,

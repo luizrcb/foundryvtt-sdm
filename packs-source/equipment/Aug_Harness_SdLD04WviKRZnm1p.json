@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 200,
     "cost_frequency": "",
-    "description": "<p>Golem strength physical augmentation. Sets your strength to 6. Re 5</p>",
+    "description": "<p>Golem strength physical augmentation. Sets your strength to 6. re 5 [[/r 1d20]]</p>",
     "quantity": 1,
     "size": {
       "value": 1,

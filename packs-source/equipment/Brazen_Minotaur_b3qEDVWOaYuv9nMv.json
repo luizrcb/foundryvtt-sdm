@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 5000,
     "cost_frequency": "",
-    "description": "<p>Monstrosity of godmeat and astral bronze cooked up in the crypt vats of the Living Flesh God. Deals [[/r 1d10]] damage with unarmed attacks.</p><p>Bonds to its user; removal requires a day of prayer or [[/r 3d6]] life. </p><p>Burn mode [[/r 1d20]]: gain +6 strength and a 30 life forcefield (active effects)</p><p><strong>Features:</strong> large, re 3, bonded, weapon</p>",
+    "description": "<p>Monstrosity of godmeat and astral bronze cooked up in the crypt vats of the Living Flesh God. Deals [[/r 1d10]] damage with unarmed attacks.</p><p>Bonds to its user; removal requires a day of prayer or [[/r 3d6]] life. </p><p>Burn mode [[/r 1d20]]: gain +6 strength and a 30 life forcefield (active effects)</p><p><strong>Features:</strong> large, re 3 [[/r 1d20]], bonded, weapon</p>",
     "quantity": 1,
     "size": {
       "value": 4,

@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 2000,
     "cost_frequency": "",
-    "description": "<p>Gray-orange anti-mechanical emitter.</p><p>Damage roll 13: target mech shuts down for an hour.</p><p><strong>Features:</strong> med, re 4, 2H, silent</p>",
+    "description": "<p>Gray-orange anti-mechanical emitter.</p><p>Damage roll 13: target mech shuts down for an hour.</p><p><strong>Features:</strong> med, re 4 [[/r 1d20]], 2H, silent</p>",
     "quantity": 1,
     "size": {
       "value": 2,

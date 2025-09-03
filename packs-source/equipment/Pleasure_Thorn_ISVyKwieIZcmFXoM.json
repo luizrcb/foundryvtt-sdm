@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 400,
     "cost_frequency": "",
-    "description": "<p>Related to the neural whip, but more pleasant. Disables with ecstasy. </p><p>Paroxysms for 1 round on a natural 7.</p><p><strong>Features:</strong> close, re 5, oldtech</p>",
+    "description": "<p>Related to the neural whip, but more pleasant. Disables with ecstasy. </p><p>Paroxysms for 1 round on a natural 7.</p><p><strong>Features:</strong> close, re 5 [[/r 1d20]], oldtech</p>",
     "quantity": 1,
     "size": {
       "value": 1,

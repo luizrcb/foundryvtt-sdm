@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 600,
     "cost_frequency": "",
-    "description": "<p>Repurposed psychemedical device. Minimum damage: the target stops fighting for one round and tries to parley.</p><p><strong>Features:</strong> short, re 6, attune, fantascience, psychic</p>",
+    "description": "<p>Repurposed psychemedical device. Minimum damage: the target stops fighting for one round and tries to parley.</p><p><strong>Features:</strong> short, re 6 [[/r 1d20]], attune, fantascience, psychic</p>",
     "quantity": 1,
     "size": {
       "value": 1,

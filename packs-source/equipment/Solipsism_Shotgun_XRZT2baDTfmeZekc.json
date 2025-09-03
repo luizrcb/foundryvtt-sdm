@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 1000,
     "cost_frequency": "",
-    "description": "<p>Dream a lifetime in a day! This old prayer gun is useful for putting enemies to sleep (save).</p><p><strong>Features:</strong> short, re 2, 2H, attune, slumber, fantascience</p>",
+    "description": "<p>Dream a lifetime in a day! This old prayer gun is useful for putting enemies to sleep (save).</p><p><strong>Features:</strong> short, re 2 [[/r 1d20]], 2H, attune, slumber, fantascience</p>",
     "quantity": 1,
     "size": {
       "value": 2,

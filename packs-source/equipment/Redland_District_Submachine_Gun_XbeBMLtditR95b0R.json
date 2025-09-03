@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 500,
     "cost_frequency": "",
-    "description": "<p>The mass-produced firearm of the people. Rare outside the RLD, restricted inside.</p><p><strong>Features:</strong> med, re 1, 2H, burst</p>",
+    "description": "<p>The mass-produced firearm of the people. Rare outside the RLD, restricted inside.</p><p><strong>Features:</strong> med, re 1 [[/r 1d20]], 2H, burst</p>",
     "quantity": 1,
     "size": {
       "value": 1,

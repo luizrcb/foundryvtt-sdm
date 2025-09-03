@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 1800,
     "cost_frequency": "",
-    "description": "<p>The target glimpses the true, underlying nature of reality.</p><p>On a natural 20, their mind breaks. On a natural 7, they permanently gain 1 aura.</p><p><strong>Features:</strong> short, re 3, attune, mad, psychic</p><p></p>",
+    "description": "<p>The target glimpses the true, underlying nature of reality.</p><p>On a natural 20, their mind breaks. On a natural 7, they permanently gain 1 aura.</p><p><strong>Features:</strong> short, re 3 [[/r 1d20]], attune, mad, psychic</p><p></p>",
     "quantity": 1,
     "size": {
       "value": 1,

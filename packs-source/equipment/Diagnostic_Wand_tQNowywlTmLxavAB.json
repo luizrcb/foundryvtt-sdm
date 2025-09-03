@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 120,
     "cost_frequency": "",
-    "description": "<p>Demands a full summary of intent. Target’s next action takes two actions to complete.</p><p><strong>Features:</strong> short, re 15, attune, oldtech</p><p></p>",
+    "description": "<p>Demands a full summary of intent. Target’s next action takes two actions to complete.</p><p><strong>Features:</strong> short, re 15 [[/r 1d20]], attune, oldtech</p><p></p>",
     "quantity": 1,
     "size": {
       "value": 5,

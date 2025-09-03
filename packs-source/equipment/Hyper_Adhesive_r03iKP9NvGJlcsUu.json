@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 30,
     "cost_frequency": "",
-    "description": "<p>Seal doors or immobilize enemies (save). Re 4.</p>",
+    "description": "<p>Seal doors or immobilize enemies (save). re 4 [[/r 1d20]].</p>",
     "quantity": 1,
     "size": {
       "value": 1,

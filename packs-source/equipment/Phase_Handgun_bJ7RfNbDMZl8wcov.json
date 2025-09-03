@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 1650,
     "cost_frequency": "",
-    "description": "<p>Shifts the target (or a 3 cubit sphere) out of phase with normal matter for 1 round (save).</p><p><strong>Features:</strong> short, re 6, attune, oldtech</p><p></p>",
+    "description": "<p>Shifts the target (or a 3 cubit sphere) out of phase with normal matter for 1 round (save).</p><p><strong>Features:</strong> short, re 6 [[/r 1d20]], attune, oldtech</p><p></p>",
     "quantity": 1,
     "size": {
       "value": 1,

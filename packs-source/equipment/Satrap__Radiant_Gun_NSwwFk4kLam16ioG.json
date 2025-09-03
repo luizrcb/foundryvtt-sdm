@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 1100,
     "cost_frequency": "",
-    "description": "<p>Semi-sentient laser weapon that communicates through its crystal soul display.</p><p><strong>Features:</strong> long, re 7, 2H, blinding, radiant</p>",
+    "description": "<p>Semi-sentient laser weapon that communicates through its crystal soul display.</p><p><strong>Features:</strong> long, re 7 [[/r 1d20]], 2H, blinding, radiant</p>",
     "quantity": 1,
     "size": {
       "value": 2,

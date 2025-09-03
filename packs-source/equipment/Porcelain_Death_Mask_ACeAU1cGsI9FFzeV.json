@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 1000,
     "cost_frequency": "",
-    "description": "<p>Micro-rocket headset. Generates hornet-sized ammo using integrated fabricators ([[/r 1d4]] life to reload). Designed for polybody drones.<br /><strong>Features:</strong> med, re 7, hands-free</p>",
+    "description": "<p>Micro-rocket headset. Generates hornet-sized ammo using integrated fabricators ([[/r 1d4]] life to reload). Designed for polybody drones.<br /><strong>Features:</strong> med, re 7 [[/r 1d20]], hands-free</p>",
     "quantity": 1,
     "size": {
       "value": 1,

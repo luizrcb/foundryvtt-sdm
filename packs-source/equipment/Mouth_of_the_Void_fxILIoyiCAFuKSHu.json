@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 3900,
     "cost_frequency": "",
-    "description": "<p>Hear the song of the cosmos, merge with your existential dread.</p><p>Adjacent creatures suffer [[/r 1d6]] damage. Stops a heart on a natural 13.</p><p><strong>Features:</strong> short, re 4, attune, fantascience, deathly, fearsome</p><p></p>",
+    "description": "<p>Hear the song of the cosmos, merge with your existential dread.</p><p>Adjacent creatures suffer [[/r 1d6]] damage. Stops a heart on a natural 13.</p><p><strong>Features:</strong> short, re 4 [[/r 1d20]], attune, fantascience, deathly, fearsome</p><p></p>",
     "quantity": 1,
     "size": {
       "value": 6,

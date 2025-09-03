@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 50,
     "cost_frequency": "",
-    "description": "<p>This convenient, pocket-sized anti-light ray wand gun emits ‘dusk’ in a 15° cone.</p><p><strong>Features:</strong> med, re 3, blinding, oldtech</p>",
+    "description": "<p>This convenient, pocket-sized anti-light ray wand gun emits ‘dusk’ in a 15° cone.</p><p><strong>Features:</strong> med, re 3 [[/r 1d20]], blinding, oldtech</p>",
     "quantity": 1,
     "size": {
       "value": 5,

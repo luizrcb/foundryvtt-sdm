@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 2900,
     "cost_frequency": "",
-    "description": "<p>Replaces target with an almost identical copy of (save). Ever after, they feel alien to themselves.</p><p><strong>Damage:</strong> [[/r 2d4x]] &amp; <code>1 tho</code></p><p><strong>Features:</strong> short, re 7, atrophy, fantascience</p>",
+    "description": "<p>Replaces target with an almost identical copy of (save). Ever after, they feel alien to themselves.</p><p><strong>Damage:</strong> [[/r 2d4x]] &amp; <code>1 tho</code></p><p><strong>Features:</strong> short, re 7 [[/r 1d20]], atrophy, fantascience</p>",
     "quantity": 1,
     "size": {
       "value": 1,

@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 7500,
     "cost_frequency": "",
-    "description": "<p>Fires itself and its user through itself into the destination, re-materializing with a bang. Natural 13: re-materialization delay; roll d6: @UUID[Compendium.sdm.rolltables.RollTable.CvZC0eXNX8sldMPP]{Re-materialization delay}<br /><strong>Features:</strong> long, area M, re 7, 2H, attune, slow, oldtech</p>",
+    "description": "<p>Fires itself and its user through itself into the destination, re-materializing with a bang. Natural 13: re-materialization delay; roll d6: @UUID[Compendium.sdm.rolltables.RollTable.CvZC0eXNX8sldMPP]{Re-materialization delay}<br /><strong>Features:</strong> long, area M, re 7 [[/r 1d20]], 2H, attune, slow, oldtech</p>",
     "quantity": 1,
     "size": {
       "value": 2,

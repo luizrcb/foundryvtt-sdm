@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 5000,
     "cost_frequency": "",
-    "description": "<p>This smart suit can fight without you inside (see full auto destruction mode).</p><p>Warning: may develop a personality.</p><p>Burn mode [[/r 1d20]]: gain +4 strength or a 20 life forcefield (<em>active effects</em>)</p><p><strong>Features:</strong> re 2, semi sentient</p><p>@UUID[Compendium.sdm.macros.Macro.uUshgTy0nsMeCznq]{Full Archaid Auto Destruction}</p>",
+    "description": "<p>This smart suit can fight without you inside (see full auto destruction mode).</p><p>Warning: may develop a personality.</p><p>Burn mode [[/r 1d20]]: gain +4 strength or a 20 life forcefield (<em>active effects</em>)</p><p><strong>Features:</strong> re 2 [[/r 1d20]], semi sentient</p><p>@UUID[Compendium.sdm.macros.Macro.uUshgTy0nsMeCznq]{Full Archaid Auto Destruction}</p>",
     "quantity": 1,
     "size": {
       "value": 3,

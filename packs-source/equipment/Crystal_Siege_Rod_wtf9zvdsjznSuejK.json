@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 2000,
     "cost_frequency": "",
-    "description": "<p>Disintegration ray amplifier housed in a heavily- glyphed brass and brazilwood casing. A leftover from the rationalist living god wars.</p><p>Breaks open doors if any die rolls a natural 6.</p><p><strong>Features:</strong> short, re 4, 2H, clumsy, slow</p>",
+    "description": "<p>Disintegration ray amplifier housed in a heavily- glyphed brass and brazilwood casing. A leftover from the rationalist living god wars.</p><p>Breaks open doors if any die rolls a natural 6.</p><p><strong>Features:</strong> short, re 4 [[/r 1d20]], 2H, clumsy, slow</p>",
     "quantity": 1,
     "size": {
       "value": 3,

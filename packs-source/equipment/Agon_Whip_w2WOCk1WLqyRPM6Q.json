@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 1500,
     "cost_frequency": "",
-    "description": "<p>Implants the target with your personality homunculus (save).</p><p>Each round, each implanted personality tries to take control (aura rolls).</p><p><strong>Features:  </strong>reach, re 13, attune, fantasci, burdening</p>",
+    "description": "<p>Implants the target with your personality homunculus (save).</p><p>Each round, each implanted personality tries to take control (aura rolls).</p><p><strong>Features:  </strong>reach, re 13 [[/r 1d20]], attune, fantasci, burdening</p>",
     "quantity": 1,
     "size": {
       "value": 1,

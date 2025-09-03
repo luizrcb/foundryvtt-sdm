@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 10000,
     "cost_frequency": "",
-    "description": "<p>Coiling onyx snakes and shifting spirit stones whispers of lives wasted, dreams destroyed. </p><p>Burn mode [[/r 1d20]]: gain +3 aura or 50 life forcefield (<em>active effects</em>)</p><p><strong>Features: </strong>re 2, enviro</p>",
+    "description": "<p>Coiling onyx snakes and shifting spirit stones whispers of lives wasted, dreams destroyed. </p><p>Burn mode [[/r 1d20]]: gain +3 aura or 50 life forcefield (<em>active effects</em>)</p><p><strong>Features:</strong> re 2 [[/r 1d20]], enviro</p>",
     "quantity": 1,
     "size": {
       "value": 2,

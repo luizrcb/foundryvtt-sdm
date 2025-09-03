@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 45000,
     "cost_frequency": "",
-    "description": "<p>Rays from its labyrinth jewel cause confusion (save). </p><p>Minimum damage: target falls into a bubble maze dimension for a week.</p><p><strong>Features:</strong> short, re 3, hands-free, attune, fantascience</p>",
+    "description": "<p>Rays from its labyrinth jewel cause confusion (save). </p><p>Minimum damage: target falls into a bubble maze dimension for a week.</p><p><strong>Features:</strong> short, re 3 [[/r 1d20]], hands-free, attune, fantascience</p>",
     "quantity": 1,
     "size": {
       "value": 1,

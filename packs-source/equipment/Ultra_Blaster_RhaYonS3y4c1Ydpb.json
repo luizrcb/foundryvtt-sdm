@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 2000,
     "cost_frequency": "",
-    "description": "<p>For void use, with fully shielded particle coils that function even in the subspace of the dullways.<br /><strong>Features:</strong> short, re 1, blinding, radiant</p>",
+    "description": "<p>For void use, with fully shielded particle coils that function even in the subspace of the dullways.<br /><strong>Features:</strong> short, re 1 [[/r 1d20]], blinding, radiant</p>",
     "quantity": 1,
     "size": {
       "value": 5,

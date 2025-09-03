@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 1500,
     "cost_frequency": "",
-    "description": "<p>Projects part of the target’s mind into hell. They are burdened with the fire of pain, the acid of despair, the depredation of time (save).</p><p>The burden dissipates after [[/r 1d6x]] days.</p><p><strong>Features:</strong> med, re 5, 2H, attune, burdening, fantascience</p>",
+    "description": "<p>Projects part of the target’s mind into hell. They are burdened with the fire of pain, the acid of despair, the depredation of time (save).</p><p>The burden dissipates after [[/r 1d6x]] days.</p><p><strong>Features:</strong> med, re 5 [[/r 1d20]], 2H, attune, burdening, fantascience</p>",
     "quantity": 1,
     "size": {
       "value": 2,

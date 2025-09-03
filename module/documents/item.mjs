@@ -281,6 +281,7 @@ export class SdmItem extends Item {
 
     if ([ItemType.TRAIT, ItemType.BURDEN].includes(this.type)) {
       weightSubtitle = '';
+      costSubtitle = '';
     }
 
     const context = {

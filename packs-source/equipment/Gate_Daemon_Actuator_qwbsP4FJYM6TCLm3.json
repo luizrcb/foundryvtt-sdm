@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 4500,
     "cost_frequency": "",
-    "description": "<p>Once used to spin up travel gates, now it serves as a pair of gravity shears. </p><p>Bisects target on a natural 13. Also, reorients gravity in a small area.</p><p><strong>Features:</strong> med, re 13, 2H, vorpal, oldtech</p>",
+    "description": "<p>Once used to spin up travel gates, now it serves as a pair of gravity shears. </p><p>Bisects target on a natural 13. Also, reorients gravity in a small area.</p><p><strong>Features:</strong> med, re 13 [[/r 1d20]], 2H, vorpal, oldtech</p>",
     "quantity": 1,
     "size": {
       "value": 3,

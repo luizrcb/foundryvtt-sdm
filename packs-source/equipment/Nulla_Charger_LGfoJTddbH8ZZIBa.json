@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 450,
     "cost_frequency": "",
-    "description": "<p>Uses zero-energy to recharge any item in one hour. Re 5.</p>",
+    "description": "<p>Uses zero-energy to recharge any item in one hour. re 5 [[/r 1d20]].</p>",
     "quantity": 1,
     "size": {
       "value": 1,
