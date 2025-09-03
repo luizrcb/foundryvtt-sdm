@@ -108,8 +108,9 @@ export function getSlotsTaken(itemSystem) {
 
   slotsTaken = Math.max(slotsTaken || 1, 1);
 
-  if (itemSystem.size?.unit !== SizeUnit.CASH && itemSystem.quantity > 1 && itemSystem.readied) {
-    slotsTaken *= itemSystem.quantity;
+  if (itemSystem.size?.unit === SizeUnit.SOAPS
+     && itemSystem.quantity > 1 && itemSystem.readied) {
+    slotsTaken = itemSystem.quantity;
   }
 
   return slotsTaken;

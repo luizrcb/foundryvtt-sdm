@@ -59,7 +59,7 @@ export default class SdmMount extends SdmItemBase {
 
     data.level = this.level;
     data.capacity = this.capacity;
-    data.base_speed = this.base_speed;
+    data.speed = this.speed;
     data.weapon = this.weapon;
     data.damage = this.weapon.damage.base;
 

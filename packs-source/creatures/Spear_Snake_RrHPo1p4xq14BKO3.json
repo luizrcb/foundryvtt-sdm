@@ -19,7 +19,7 @@
     "isWarrior": false,
     "isHelper": false,
     "isPorter": false,
-    "base_speed": 0
+    "speed": 0
   },
   "prototypeToken": {
     "name": "Spear Snake",

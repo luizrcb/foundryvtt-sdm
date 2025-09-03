@@ -14,14 +14,19 @@ export default class SdmNPC extends SdmActorBase {
       ...npcBaseFields(),
 
       // npc wage
-      cost: new fields.NumberField({
+      cost: new fields.StringField({
         required: false,
         nullable: true,
-        integer: true,
-        initial: 0
+        blank: true,
+        initial: ''
       }),
 
-      //  supply =
+      supply: new fields.StringField({
+        required: false,
+        nullable: true,
+        blank: true,
+        initial: ''
+      }),
 
       isWarrior: new fields.BooleanField({
         required: true,
@@ -38,7 +43,14 @@ export default class SdmNPC extends SdmActorBase {
         initial: false
       }),
 
-      base_speed: new fields.NumberField({
+      isPet: new fields.BooleanField({
+        required: true,
+        initial: false
+      }),
+
+      experience: new fields.StringField({ required: true, initial: '0' }),
+
+      speed: new fields.NumberField({
         required: true,
         nullable: false,
         integer: true,

@@ -78,6 +78,19 @@ export function getActorOptions(actorType = ActorType.CHARACTER) {
   }));
 }
 
+const PET_TABLE = [
+  { level: 0, defense: 10, life: 4, bonus: 2, morale: 3, damage: '1d4' }, // level 0
+  { level: 1, defense: 11, life: 8, bonus: 3, morale: 4, damage: '1d6' },
+  { level: 2, defense: 12, life: 12, bonus: 4, morale: 5, damage: '1d8' },
+  { level: 3, defense: 12, life: 16, bonus: 5, morale: 6, damage: '1d10' },
+  { level: 4, defense: 13, life: 20, bonus: 6, morale: 6, damage: '1d12' },
+  { level: 5, defense: 13, life: 24, bonus: 7, morale: 7, damage: '1d8+5' },
+  { level: 6, defense: 14, life: 28, bonus: 8, morale: 7, damage: '1d10+6' },
+  { level: 7, defense: 14, life: 32, bonus: 9, morale: 8, damage: '1d12+7' },
+  { level: 8, defense: 15, life: 36, bonus: 10, morale: 8, damage: '2d8+8' },
+  { level: 9, defense: 15, life: 40, bonus: 11, morale: 9, damage: '1d20+11' },
+];
+
 const NPCTables = {
   'generic-synthesized-creature': {
     table: [

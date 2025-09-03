@@ -50,9 +50,11 @@ An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG
 
 ### Features
 
-- Fully automated character inventory slots (each burden imposes a -1 to all rolls except hero dice rolls).
+- Fully automated character inventory slots (each burden imposes a -1 to all rolls, except hero dice rolls).
 - Hovering over items in the inventory displays their key information (damage, range, power cost, etc.).
 - Easy item transfer between actors.
+- Double-clicking an inventory item will open its sheet.
+- Right-click any inventory item, trait or burden to send a card to the chat.
 - Character Sheet (Edit Mode / Play Mode) for configuring attacks, power costs, and full ability values.
 - Each attack type (melee, ranged, fantascience, and oldtech) can be configured with a preferred ability and skill.
 - Characters can spend hero dice to modify rolls or regain life (players must configure their main character in the User Configuration menu). This can cause dice to explode.

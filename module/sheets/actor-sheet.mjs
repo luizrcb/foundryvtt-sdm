@@ -1592,7 +1592,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
    * @protected
    */
   async _onDropActor(event, data) {
-    // TODO: add support to drop pets for Characters and NPCs
     if (!this.actor.isOwner) return false;
   }
 
