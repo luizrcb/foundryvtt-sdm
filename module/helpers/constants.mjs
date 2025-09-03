@@ -55,8 +55,6 @@ export const ItemType = Object.freeze({
   GEAR: 'gear',
   TRAIT: 'trait',
   BURDEN: 'burden'
-  // MOUNT: 'mount',
-  // VEHICLE: 'vehicle'
 });
 
 export const GearType = Object.freeze({

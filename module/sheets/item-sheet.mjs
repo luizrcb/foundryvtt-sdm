@@ -1,6 +1,6 @@
 import PowerDataModel from '../data/power-data.mjs';
 import { getActorOptions } from '../helpers/actorUtils.mjs';
-import { ActorType, GearType, ItemType, SkillMod } from '../helpers/constants.mjs';
+import { ActorType, GearType, ItemType } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';

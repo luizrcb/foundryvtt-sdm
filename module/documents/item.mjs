@@ -32,58 +32,6 @@ export class SdmItem extends Item {
     super.prepareData();
   }
 
-  getCarryCapacity() {
-    let carryWeight = 0;
-
-    switch (this.type) {
-      case 'mount':
-        let mountCapacity = this.system.capacity; //in sacks
-        const { vehicleId = '', mode = '' } = this.system.pulledLoad;
-        const vehicle = fromUuidSync(vehicleId);
-
-        if (!vehicleId || !vehicle) {
-          carryWeight = Math.max(mountCapacity - this.system.riders.length, 0);
-          break;
-        }
-
-        break;
-      case 'vehicle':
-        const vehicleCapacity = this.system.capacity; //in sacks
-
-        if (this.system.selfPulled) {
-          carryWeight = vehicleCapacity;
-          break;
-        }
-
-        let mountsCapacity = 0;
-        const pulledBy = this.system.pulledBy;
-
-        for (let pullMount of pulledBy) {
-          const mountActor = fromUuidSync(pullMount);
-          if (!mountActor) continue;
-          const { mode = '' } = mountActor.system.pulledLoad;
-          let pullModeMultiplier = 1;
-
-          if (mode === PullMode.DRAGGING) {
-            pullModeMultiplier = 2;
-          } else if (mode === PullMode.CARTING) {
-            pullModeMultiplier = 3;
-          }
-          mountsCapacity += mountActor.system.capacity * pullModeMultiplier;
-        }
-
-        if (mountsCapacity >= vehicleCapacity) {
-          carryWeight = vehicleCapacity;
-        }
-
-        break;
-      default:
-        break;
-    }
-
-    return convertToCash(carryWeight, SizeUnit.SACKS);
-  }
-
   getCostTitle(addParentheses = true) {
     if (this.system.cost) {
       const costFrequency = this.system.cost_frequency;

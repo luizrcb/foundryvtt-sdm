@@ -126,7 +126,7 @@ Hooks.on('createActor', async (actor, _options, _id) => {
 Hooks.on('createItem', async (item, _options, _id) => {
   if (!item.isOwner) return;
   await item.update({ 'system.readied': false });
-})
+});
 
 Hooks.on('updateActor', async actor => {
   if (!actor.isOwner) return;
@@ -249,8 +249,6 @@ Hooks.once('init', function () {
     gear: models.SdmGear,
     trait: models.SdmTrait,
     burden: models.SdmBurden
-    // mount: models.SdmMount,
-    // vehicle: models.SdmVehicle
   };
 
   // Active Effects are never copied to the Actor,

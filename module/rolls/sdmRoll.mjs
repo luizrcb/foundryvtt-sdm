@@ -12,7 +12,6 @@ export default class SDMRoll {
     ability = '',
     skill = null,
     modifier = '',
-    //TODO:  add extra situaltional modifiers like bonus for attack with specific weapon type like a mace
     multiplier = '',
     explodingDice = true,
     versatile = false,

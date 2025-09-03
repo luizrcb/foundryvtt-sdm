@@ -5,7 +5,6 @@ import { $l10n, $fmt } from '../helpers/globalUtils.mjs';
 import {
   convertToCash,
   ITEMS_NOT_ALLOWED_IN_CARAVANS,
-  ITEMS_NOT_ALLOWED_IN_CHARACTERS,
   onItemCreateActiveEffects,
   onItemUpdate
 } from '../helpers/itemUtils.mjs';

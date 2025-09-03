@@ -170,54 +170,5 @@ export default class SdmCarvan extends SdmActorBase {
   }
 
   prepareDerivedData() {
-    // this.size.total = this.size.mouths + this.size.mounts + this.size.vehicles + this.size.magicals;
-    // let maxPower = 0;
-    // let mouths = 0;
-    // for (let hero of this.heroes) {
-    //   const actor = fromUuidSync(hero.heroId);
-    //   if (!actor) {
-    //     continue;
-    //   }
-    //   hero.name = actor.name;
-    //   hero.level = actor.system.level;
-    //   maxPower += hero.level;
-    //   mouths += 1;
-    // }
-    // for (let helper of this.helpers) {
-    //   const npc = fromUuidSync(helper.helperId);
-    //   if (!npc) {
-    //     continue;
-    //   }
-    //   helper.name = npc.name;
-    //   helper.level = npc.system.level;
-    //   helper.bonus = npc.system.bonus.major;
-    //   helper.skills = npc.system.skills;
-    //   helper.isWarrior = npc.system.isWarrior;
-    //   if (helper.isWarrior) {
-    //     maxPower += Math.max(helper.level, 1);
-    //   }
-    //   mouths += 1;
-    // }
-    // if (this.power.value === 0 && this.power.max === 0) {
-    //   this.power.value = maxPower;
-    // } else {
-    //   const spentPoints = this.power.max - this.power.value;
-    //   this.power.value = maxPower - spentPoints;
-    // }
-    // this.power.max = maxPower;
-    // this.size.mouths = mouths;
-    // let mounts = 0;
-    // let vehicles = 0;
-    // for (let caravanItem of this.parent.items.contents) {
-    //   if (caravanItem.type === ItemType.MOUNT) {
-    //     mounts += 1;
-    //   }
-    //   if (caravanItem.type === ItemType.VEHICLE) {
-    //     vehicles += 1;
-    //   }
-    // }
-    // this.size.mounts = mounts;
-    // this.size.vehicles = vehicles;
-    // this.size.total = this.size.mouths + this.size.mounts + this.size.vehicles;
   }
 }

@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.2.1
+
+- Fixed a bug in the "slots taken" calculation for readied soap-sized items.
+
 ## v0.2.0
 
 - Add caravan actor type

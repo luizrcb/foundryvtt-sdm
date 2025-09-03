@@ -1,6 +1,5 @@
 import { SdmItem } from '../documents/item.mjs';
 import { MAX_MODIFIER, UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
-import { createChatMessage } from '../helpers/chatUtils.mjs';
 import {
   ActorType,
   AttackTarget,

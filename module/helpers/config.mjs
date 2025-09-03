@@ -1,5 +1,5 @@
-import { ArmorType, PullMode, SpeedValues, WardType } from './constants.mjs';
-import { capitalizeFirstLetter, toPascalCase } from './globalUtils.mjs';
+import { ArmorType, PullMode, WardType } from './constants.mjs';
+import { capitalizeFirstLetter } from './globalUtils.mjs';
 
 export const SDM = {};
 
