@@ -1,7 +1,11 @@
 import { createChatMessage } from '../../../helpers/chatUtils.mjs';
 import { $fmt, $l10n } from '../../../helpers/globalUtils.mjs';
 import { templatePath } from '../../../helpers/templates.mjs';
-import { renderSaveResult, renderNPCMoraleResult, renderReactionResult } from '../../ui/renderResults.mjs';
+import {
+  renderSaveResult,
+  renderNPCMoraleResult,
+  renderReactionResult
+} from '../../ui/renderResults.mjs';
 
 const { renderTemplate } = foundry.applications.handlebars;
 

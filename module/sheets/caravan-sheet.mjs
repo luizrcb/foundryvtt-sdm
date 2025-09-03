@@ -48,7 +48,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       viewDoc: this._viewDoc,
       sendToChat: { handler: this._sendToChat, buttons: [0, 2] },
       addTransport: this._addTransport,
-      deleteTransport: this._deleteTransport,
+      deleteTransport: this._deleteTransport
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
@@ -757,7 +757,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
 
     const transport = this.actor.system.transport[key];
 
-     const proceed = await DialogV2.confirm({
+    const proceed = await DialogV2.confirm({
       content: `<b>${$fmt('SDM.DeleteDocConfirmation', { doc: transport.name })}</b>`,
       modal: true,
       rejectClose: false,

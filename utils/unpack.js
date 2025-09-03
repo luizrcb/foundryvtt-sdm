@@ -12,10 +12,9 @@ const packs = [
 try {
   packs.forEach(pack => {
     console.log(`Unpacking ${pack.name}...`);
-    execSync(
-      `fvtt package unpack -n "${pack.name}" --outputDirectory "${pack.output}"`,
-      { stdio: 'inherit' }
-    );
+    execSync(`fvtt package unpack -n "${pack.name}" --outputDirectory "${pack.output}"`, {
+      stdio: 'inherit'
+    });
   });
 } catch (error) {
   console.error('Unpacking failed:', error);

@@ -98,7 +98,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       transferItem: this._onTransferItem,
       updateAttack: this._onUpdateAttack,
       viewDoc: this._viewDoc,
-      sendToChat: { handler: this._sendToChat, buttons: [0, 2] },
+      sendToChat: { handler: this._sendToChat, buttons: [0, 2] }
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
@@ -151,7 +151,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       bonusDamage = '',
       powerOptions = [],
       powerIndex = 0,
-      item = null,
+      item = null
     },
     isShift = false
   ) {
@@ -379,7 +379,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
             type: 'power',
             ...powerItem,
             power: {
-              ...powerItem,
+              ...powerItem
             }
           }
         });
@@ -1085,7 +1085,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       bonusDamage,
       powerOptions,
       powerIndex,
-      item: rollItem,
+      item: rollItem
     };
 
     this._openCustomRollModal(rollAttributes, isShift);
@@ -1397,7 +1397,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     // Get common data attributes
     await healingHeroDice(event, this.actor);
   }
-
 
   static async _sendToChat(event, target) {
     event.preventDefault(); // Don't open context menu

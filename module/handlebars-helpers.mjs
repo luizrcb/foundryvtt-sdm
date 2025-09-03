@@ -1,6 +1,6 @@
-import { SizeUnit } from "./helpers/constants.mjs";
-import { $l10n, toPascalCase } from "./helpers/globalUtils.mjs";
-import { convertToSacks } from "./helpers/itemUtils.mjs";
+import { SizeUnit } from './helpers/constants.mjs';
+import { $l10n, toPascalCase } from './helpers/globalUtils.mjs';
+import { convertToSacks } from './helpers/itemUtils.mjs';
 
 export function registerHandlebarsHelpers() {
   const $$ = (name, fn) => Handlebars.registerHelper(name, fn);

@@ -112,7 +112,7 @@
       "type": "Item",
       "system": "sdm"
     },
-     {
+    {
       "name": "creatures",
       "label": "Creatures",
       "path": "./packs/creatures",

@@ -232,7 +232,7 @@ function makeNPC(name, img = '', biography = '', data, initiative = '') {
         value: data.Life,
         max: data.Life
       },
-      morale: data.Mor,
+      morale: data.Mor
     }
   };
 }
@@ -292,10 +292,7 @@ export async function createNPCByLevel(name, lvl, tableName, initiative) {
   return npcData;
 }
 
-export async function createBackgroundTrait(
-  targetActor,
-  { title= '', task = '', spin = '' }
-) {
+export async function createBackgroundTrait(targetActor, { title = '', task = '', spin = '' }) {
   const description = `
 <p><strong>${game.i18n.localize('SDM.BackgroundTask')}:</strong> ${task}</p>
 <p><strong>${game.i18n.localize('SDM.BackgroundSpin')}:</strong> ${spin}</p>`;
@@ -316,7 +313,6 @@ export async function createFullAutoDestructionMode(
   armorBonus = 5,
   img = ''
 ) {
-
   let entry;
 
   const stats = [
@@ -415,7 +411,7 @@ export async function createFullAutoDestructionMode(
       Life: life,
       Mor: morale
     },
-    initiative,
+    initiative
   );
 
   await Actor.create(npcData);

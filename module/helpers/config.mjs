@@ -87,8 +87,6 @@ SDM.pullModes = Object.values(PullMode).reduce((acc, pullMode) => {
   return acc;
 }, {});
 
-
-
 const abilitiesLabel = 'SDM.Ability';
 
 SDM.abilitiesLabel = abilitiesLabel;
@@ -123,7 +121,6 @@ SDM.damageMultiplier = {
   '*32': 'x32'
 };
 
-
 SDM.getDamageMultiplier = function generateDamageMultiplier(base = 2, ranks = 5) {
   const sequence = [];
   const multiplierObject = {};
@@ -135,8 +132,8 @@ SDM.getDamageMultiplier = function generateDamageMultiplier(base = 2, ranks = 5)
     multiplierObject[`*${value}`] = `x${value}`;
   }
 
-  return multiplierObject
-}
+  return multiplierObject;
+};
 
 SDM.speedOptions = {
   'SDM.SpeedVeryVerySlow': -3,
@@ -151,9 +148,9 @@ SDM.reverseSpeedValues = {
   '-3': 'SDM.SpeedVeryVerySlow',
   '-2': 'SDM.SpeedVerySlow',
   '-1': 'SDM.SpeedSlow',
-  '0': 'SDM.SpeedStandard',
-  '1': 'SDM.SpeedFast',
-  '2': 'SDM.SpeedVeryFast'
+  0: 'SDM.SpeedStandard',
+  1: 'SDM.SpeedFast',
+  2: 'SDM.SpeedVeryFast'
 };
 
 function getSpeedFromValue(speedValue = 0) {
@@ -243,7 +240,7 @@ SDM.skillMod = {
 
 SDM.extraSkillMod = {
   4: 'SDM.SkillPhylake',
-  5: 'SDM.SkillBuilder',
+  5: 'SDM.SkillBuilder'
 };
 
 SDM.armorType = Object.values(ArmorType).reduce((acc, armorType) => {

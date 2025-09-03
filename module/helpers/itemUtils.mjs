@@ -125,7 +125,7 @@ export async function makePowerItem({
   duration,
   overcharge,
   roll_formula,
-  overcharge_roll_formula,
+  overcharge_roll_formula
 }) {
   const itemData = {
     name,
@@ -134,7 +134,7 @@ export async function makePowerItem({
     system: {
       description,
       type: 'power',
-      power : {
+      power: {
         level,
         range,
         target,
@@ -144,7 +144,7 @@ export async function makePowerItem({
         overcharge_roll_formula
       }
     }
-  }
+  };
 
   await Item.create(itemData);
 }

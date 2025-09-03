@@ -14,7 +14,6 @@ import {
   getSlotsTaken
 } from '../helpers/itemUtils.mjs';
 
-
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
  * @extends {Actor}
@@ -47,12 +46,15 @@ export class SdmActor extends Actor {
       const newLevel = getLevel(resultingExperience);
 
       if (shouldPlayLevelUpSound && newLevel > this.system.level) {
-        foundry.audio.AudioHelper.play({
-          src: levelUpSoundFx,
-          volume: 1,
-          autoplay: true,
-          loop: false,
-        }, true);
+        foundry.audio.AudioHelper.play(
+          {
+            src: levelUpSoundFx,
+            volume: 1,
+            autoplay: true,
+            loop: false
+          },
+          true
+        );
       }
 
       const baseLife = getMaxLife(newLevel);
@@ -104,10 +106,10 @@ export class SdmActor extends Actor {
 
         if (abilityData.base !== undefined) {
           const updateData = {
-            [`system.abilities.${abilityKey}.base`]: abilityData.base,
+            [`system.abilities.${abilityKey}.base`]: abilityData.base
           };
 
-          if ((abilityData.base + systemAbility.bonus) < systemAbility.current) {
+          if (abilityData.base + systemAbility.bonus < systemAbility.current) {
             abilityData.current = abilityData.base + systemAbility.bonus;
             updateData[`system.abilities.${abilityKey}.current`] = abilityData.current;
           }
@@ -261,8 +263,7 @@ export class SdmActor extends Actor {
     const thought = data.abilities['tho'];
     const charisma = data.abilities['cha'];
 
-    const calculatedDefense =
-      baseDefense + agility.current + data.armor + bonusDefense;
+    const calculatedDefense = baseDefense + agility.current + data.armor + bonusDefense;
     const calculatedMentalDefense =
       baseMentalDefense + thought.current + data.ward + mentalDefenseBonus;
     const calculatedSocialDefense =

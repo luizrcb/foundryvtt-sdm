@@ -7,7 +7,6 @@ export default class SdmVehicle extends SdmItemBase {
   static LOCALIZATION_PREFIXES = ['SDM.Item.base', 'SDM.Item.Vehicle'];
 
   static defineSchema() {
-
     const baseItemSchema = super.defineSchema();
 
     return {
@@ -48,7 +47,6 @@ export default class SdmVehicle extends SdmItemBase {
 
       tags: new fields.ArrayField(new fields.StringField(), { initial: [] })
     };
-
   }
 
   getRollData() {

@@ -128,7 +128,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       sizeUnits: CONFIG.SDM.sizeUnits,
       skillMod: allSKillMods,
       skillModifierStep: defaultModifierStep,
-      abilities: CONFIG.SDM.getOrderedAbilities(language),
+      abilities: CONFIG.SDM.getOrderedAbilities(language)
     };
 
     if (this.item.type === ItemType.GEAR && this.item.system.type === GearType.POWER_ALBUM) {

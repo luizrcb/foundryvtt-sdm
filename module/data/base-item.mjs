@@ -14,7 +14,7 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       required: false,
       nullable: true,
       integer: true,
-      initial: 0,
+      initial: 0
     });
 
     schema.cost_frequency = new fields.StringField({
@@ -22,7 +22,7 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       nullable: true,
       blank: true,
       initial: '',
-      choices: CONFIG.SDM.frequency,
+      choices: CONFIG.SDM.frequency
     });
 
     schema.description = new fields.HTMLField();
@@ -38,7 +38,7 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
 
     schema.features = new fields.HTMLField();
 
-    schema.attributes = new fields.EmbeddedDataField(NPCBaseDataModel)
+    schema.attributes = new fields.EmbeddedDataField(NPCBaseDataModel);
 
     return schema;
   }

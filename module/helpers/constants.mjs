@@ -54,7 +54,7 @@ export const AttackTarget = Object.freeze({
 export const ItemType = Object.freeze({
   GEAR: 'gear',
   TRAIT: 'trait',
-  BURDEN: 'burden',
+  BURDEN: 'burden'
   // MOUNT: 'mount',
   // VEHICLE: 'vehicle'
 });
@@ -69,7 +69,7 @@ export const GearType = Object.freeze({
 
 export const FrequencyType = Object.freeze({
   DAY: 'day',
-  WEEK: 'week',
+  WEEK: 'week'
 });
 
 export const TraitType = Object.freeze({
@@ -107,7 +107,6 @@ export const SpeedType = Object.freeze({
   VERY_FAST: 'very_fast'
 });
 
-
 export const SpeedValues = new Map();
 SpeedValues.set('VeryVerySlow', -3);
 SpeedValues.set('VerySlow', -2);
@@ -115,7 +114,6 @@ SpeedValues.set('Slow', -1);
 SpeedValues.set('Standard', 0);
 SpeedValues.set('Fast', 1);
 SpeedValues.set('VeryFast', 2);
-
 
 export const DiceType = Object.freeze({
   d4: 'd4',
@@ -143,5 +141,5 @@ export const SkillMod = Object.freeze({
   EXPERT: 2,
   MASTER: 3,
   PHYLAKE: 4,
-  BUILDER: 5,
+  BUILDER: 5
 });

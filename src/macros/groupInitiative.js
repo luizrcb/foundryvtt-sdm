@@ -3,9 +3,9 @@ const tokens = canvas.tokens.controlled;
 const excluded = [];
 const groups = {
   group1: [], // Players + Warrior + Helpers + Friendly NPC Tokens
-  group2: [],  // Neutral NPCs
-  group3: [],  // Hostile NPCs
-  group4: [], // secret NPCs
+  group2: [], // Neutral NPCs
+  group3: [], // Hostile NPCs
+  group4: [] // secret NPCs
 };
 
 // Separate tokens into groups

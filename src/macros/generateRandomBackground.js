@@ -92,32 +92,36 @@ function renderPreviewInputs(html) {
 
   const current = {
     flavor: html.querySelector('#preview-flavor')?.value ?? '',
-    role:   html.querySelector('#preview-role')?.value ?? '',
-    task:   html.querySelector('#preview-task')?.value ?? '',
-    spin:   html.querySelector('#preview-spin')?.value ?? ''
+    role: html.querySelector('#preview-role')?.value ?? '',
+    task: html.querySelector('#preview-task')?.value ?? '',
+    spin: html.querySelector('#preview-spin')?.value ?? ''
   };
 
   const flavorPh = game.i18n.localize('SDM.BackgroundFlavor');
-  const rolePh   = game.i18n.localize('SDM.BackgroundRole');
-  const taskPh   = game.i18n.localize('SDM.BackgroundTask');
-  const spinPh   = game.i18n.localize('SDM.BackgroundSpin');
+  const rolePh = game.i18n.localize('SDM.BackgroundRole');
+  const taskPh = game.i18n.localize('SDM.BackgroundTask');
+  const spinPh = game.i18n.localize('SDM.BackgroundSpin');
 
-  const firstField  = previewOrder[0];
+  const firstField = previewOrder[0];
   const secondField = previewOrder[1];
 
   container.innerHTML = `
-    <input type="text" id="preview-${firstField}"  placeholder="${firstField  === 'flavor' ? flavorPh : rolePh}">
+    <input type="text" id="preview-${firstField}"  placeholder="${firstField === 'flavor' ? flavorPh : rolePh}">
     <input type="text" id="preview-${secondField}" placeholder="${secondField === 'flavor' ? flavorPh : rolePh}">
     <input type="text" id="preview-task" placeholder="${taskPh}">
     <input type="text" id="preview-spin"  placeholder="${spinPh}">
   `;
 
   container.querySelector('#preview-flavor')?.setAttribute('value', current.flavor);
-  const pFlavor = container.querySelector('#preview-flavor'); if (pFlavor) pFlavor.value = current.flavor;
+  const pFlavor = container.querySelector('#preview-flavor');
+  if (pFlavor) pFlavor.value = current.flavor;
   container.querySelector('#preview-role')?.setAttribute('value', current.role);
-  const pRole   = container.querySelector('#preview-role');   if (pRole)   pRole.value   = current.role;
-  const pTask   = container.querySelector('#preview-task');   if (pTask)   pTask.value   = current.task;
-  const pSpin   = container.querySelector('#preview-spin');   if (pSpin)   pSpin.value   = current.spin;
+  const pRole = container.querySelector('#preview-role');
+  if (pRole) pRole.value = current.role;
+  const pTask = container.querySelector('#preview-task');
+  if (pTask) pTask.value = current.task;
+  const pSpin = container.querySelector('#preview-spin');
+  if (pSpin) pSpin.value = current.spin;
 
   const orderHint = html.querySelector('#order-hint');
   if (orderHint) {
@@ -148,10 +152,10 @@ await foundry.applications.api.DialogV2.wait({
           if (rowCheckbox?.checked && !isNaN(rowIndex)) {
             const rowData = selectedRows[rowIndex];
             selected.flavor ??= rowData.flavor;
-            selected.role1  ??= rowData.role1;
-            selected.role2  ??= rowData.role2;
-            selected.task   ??= rowData.task;
-            selected.spin   ??= rowData.spin;
+            selected.role1 ??= rowData.role1;
+            selected.role2 ??= rowData.role2;
+            selected.task ??= rowData.task;
+            selected.spin ??= rowData.spin;
           }
         });
 
@@ -165,11 +169,12 @@ await foundry.applications.api.DialogV2.wait({
         });
 
         // Pega os DOIS primeiros campos em ordem visual e combina
-        const firstId  = `#preview-${previewOrder[0]}`;
+        const firstId = `#preview-${previewOrder[0]}`;
         const secondId = `#preview-${previewOrder[1]}`;
-        const roleAuto = (selected.role1 && selected.role2)
-          ? `${selected.role1} ${selected.role2}`
-          : (selected.role1 ?? selected.role2 ?? '');
+        const roleAuto =
+          selected.role1 && selected.role2
+            ? `${selected.role1} ${selected.role2}`
+            : (selected.role1 ?? selected.role2 ?? '');
 
         const firstVal =
           html.querySelector(firstId)?.value ||
@@ -179,7 +184,11 @@ await foundry.applications.api.DialogV2.wait({
           html.querySelector(secondId)?.value ||
           (previewOrder[1] === 'flavor' ? selected.flavor : roleAuto);
 
-        const combined = [firstVal, secondVal].filter(Boolean).join(' ').replace(/\s+/g, ' ').trim();
+        const combined = [firstVal, secondVal]
+          .filter(Boolean)
+          .join(' ')
+          .replace(/\s+/g, ' ')
+          .trim();
 
         const task = html.querySelector('#preview-task')?.value || selected.task;
         const spin = html.querySelector('#preview-spin')?.value || selected.spin;
@@ -197,11 +206,13 @@ await foundry.applications.api.DialogV2.wait({
           spin
         });
 
-        ui.notifications.info(game.i18n.format("SDM.BackgroundTraitCreated", {
-          flavor: combined,
-          role: '',
-          name: actor.name,
-        }));
+        ui.notifications.info(
+          game.i18n.format('SDM.BackgroundTraitCreated', {
+            flavor: combined,
+            role: '',
+            name: actor.name
+          })
+        );
       }
     },
     { action: 'cancel', label: game.i18n.localize('SDM.BackgroundCancel') }
@@ -219,10 +230,10 @@ await foundry.applications.api.DialogV2.wait({
         if (rowCheckbox?.checked && !isNaN(rowIndex)) {
           const rowData = selectedRows[rowIndex];
           selected.flavor ??= rowData.flavor;
-          selected.role1  ??= rowData.role1;
-          selected.role2  ??= rowData.role2;
-          selected.task   ??= rowData.task;
-          selected.spin   ??= rowData.spin;
+          selected.role1 ??= rowData.role1;
+          selected.role2 ??= rowData.role2;
+          selected.task ??= rowData.task;
+          selected.spin ??= rowData.spin;
         }
       });
 
@@ -235,11 +246,13 @@ await foundry.applications.api.DialogV2.wait({
       });
 
       const pFlavor = html.querySelector('#preview-flavor');
-      const pRole   = html.querySelector('#preview-role');
+      const pRole = html.querySelector('#preview-role');
       if (pFlavor) pFlavor.value = selected.flavor ?? '';
-      if (pRole)   pRole.value   = (selected.role1 && selected.role2)
-        ? `${selected.role1} ${selected.role2}`
-        : (selected.role1 ?? selected.role2 ?? '');
+      if (pRole)
+        pRole.value =
+          selected.role1 && selected.role2
+            ? `${selected.role1} ${selected.role2}`
+            : (selected.role1 ?? selected.role2 ?? '');
 
       const pTask = html.querySelector('#preview-task');
       const pSpin = html.querySelector('#preview-spin');

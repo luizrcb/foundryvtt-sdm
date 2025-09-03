@@ -2,7 +2,6 @@ const fs = require('fs');
 const path = require('path');
 const archiver = require('archiver');
 
-
 // Go one level up from __dirname (i.e., project root)
 const rootDir = path.join(__dirname, '..');
 
@@ -53,7 +52,7 @@ archive.glob('**/*', {
     'foundry-config.yaml',
     'foundry/**',
     'jsconfig.json',
-    'packs-source/**',
+    'packs-source/**'
   ]
 });
 

@@ -20,7 +20,7 @@ export default class SdmGear extends SdmItemBase {
       initial: '',
       choices: Object.entries({
         ...CONFIG.SDM.gearType,
-        '': 'TYPE.Gear',
+        '': 'TYPE.Gear'
       }).reduce((acc, [key, value]) => {
         acc[key] = game.i18n.localize(value);
         return acc;
@@ -28,9 +28,21 @@ export default class SdmGear extends SdmItemBase {
     });
 
     schema.power = new fields.EmbeddedDataField(PowerDataModel);
-    schema.powers_current_index = new fields.NumberField({ required: true, nullable: false, integer: true, initial: 0, min: 0});
+    schema.powers_current_index = new fields.NumberField({
+      required: true,
+      nullable: false,
+      integer: true,
+      initial: 0,
+      min: 0
+    });
 
-    schema.max_powers = new fields.NumberField({ required: true, nullable: false, integer: true, initial: 3, min: 0 });
+    schema.max_powers = new fields.NumberField({
+      required: true,
+      nullable: false,
+      integer: true,
+      initial: 3,
+      min: 0
+    });
 
     schema.powers = new fields.ArrayField(new fields.EmbeddedDataField(PowerDataModel));
 
@@ -52,7 +64,6 @@ export default class SdmGear extends SdmItemBase {
   static _migrateData(source) {
     SdmGear.#migrateRange(source);
   }
-
 
   /**
    * Migrate weapon range

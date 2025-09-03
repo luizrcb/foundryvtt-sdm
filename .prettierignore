@@ -2,6 +2,10 @@ node_modules
 dist
 build
 
+*.css
+
+packs-source/**/*
+
 **/*.hbs
 
 foundry/**/*

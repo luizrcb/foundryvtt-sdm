@@ -120,3 +120,9 @@ URL into the **Install System** dialog on the Setup menu of the application.
 If you wish to manually install the system, you must clone or extract it into the `Data/systems/sdm` folder. You
 may do this by cloning the repository or downloading a zip archive from the
 [Releases Page](https://github.com/luizrcb/foundryvtt-sdm/releases).
+
+<!-- This system is made possible thanks to all of its contributors!
+
+<a href="https://github.com/luizrcb/foundryvtt-sdm/graphs/contributors">
+  <img src="https://contrib.rocks/image?repo=luizrcb/foundryvtt-sdm" />
+</a> -->

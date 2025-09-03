@@ -7,6 +7,7 @@
     "watch": "sass src/scss/sdm.scss css/sdm.css --style=expanded --source-map --watch",
     "format": "prettier --write \"**/*.{js,mjs,html,hbs,json,css}\"",
     "zip": "node utils/zipBuild.js",
+    "local:build": "npm i && npm run build && npm run local:repack",
     "local:clean": "node utils/cleanPacks.js",
     "local:pack": "node utils/pack.js",
     "local:unpack": "node utils/unpack.js",

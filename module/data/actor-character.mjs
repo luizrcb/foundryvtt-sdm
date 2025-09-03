@@ -28,7 +28,7 @@ export default class SdmCharacter extends SdmActorBase {
 
     schema.base_damage_multiplier = new fields.NumberField({
       ...requiredInteger,
-      initial: 2,
+      initial: 2
     });
 
     schema.armor_bonus = new fields.NumberField({
@@ -94,7 +94,7 @@ export default class SdmCharacter extends SdmActorBase {
 
     schema.weapon_item_slots_bonus = new fields.NumberField({
       ...requiredInteger,
-      initial: 0,
+      initial: 0
     });
 
     schema.packed_item_slots_bonus = new fields.NumberField({
@@ -318,7 +318,7 @@ export default class SdmCharacter extends SdmActorBase {
       nullable: false,
       integer: true,
       initial: 0,
-      choices: CONFIG.SDM.reverseSpeedValues,
+      choices: CONFIG.SDM.reverseSpeedValues
     });
 
     return schema;

@@ -1,10 +1,16 @@
-import { getDefaultAbility } from "../helpers/globalUtils.mjs";
+import { getDefaultAbility } from '../helpers/globalUtils.mjs';
 
 export default class PowerDataModel extends foundry.abstract.DataModel {
   static defineSchema() {
     const fields = foundry.data.fields;
     return {
-      img: new fields.FilePathField({ required: false, nullable: true, blank: true, categories: ["IMAGE"], initial: 'icons/svg/book.svg' }),
+      img: new fields.FilePathField({
+        required: false,
+        nullable: true,
+        blank: true,
+        categories: ['IMAGE'],
+        initial: 'icons/svg/book.svg'
+      }),
       name: new fields.StringField({ required: false, blank: true, initial: '' }),
       description: new fields.HTMLField(),
       level: new fields.NumberField({ required: true, initial: 1, min: 0 }),
@@ -26,7 +32,7 @@ export default class PowerDataModel extends foundry.abstract.DataModel {
         validate: v => !v || (v && foundry.dice.Roll.validate(v)),
         validationError: game.i18n.localize('SDM.ErrorValidationRollFormula')
       }),
-      default_ability: getDefaultAbility(),
+      default_ability: getDefaultAbility()
     };
   }
 }
