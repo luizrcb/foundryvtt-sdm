@@ -406,6 +406,11 @@ input[type='radio']::after {
     color: var(--color-text-secondary);
   }
 
+  .labelInput {
+    height: 20px;
+    text-align: center;
+  }
+
   .collapsible,
   .collapsible.smd-collapsible {
     &.collapsed {

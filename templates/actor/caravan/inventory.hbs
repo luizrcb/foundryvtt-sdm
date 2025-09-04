@@ -6,9 +6,13 @@
         <ol class='items-list'>
           <li class='item flexrow items-header caravan-item-header'>
             <div class='item-name'>
-              {{#if system.encumbered}}
+              <div class="mr-10">
+                <span class="">{{localize 'SDM.CaravanItemSlots'}}</span>
+                <span>[{{totalUsedSlots}}/{{totalMaxSlots}}]</span>
+              </div>
+              {{#if system.overloaded}}
                 <div class="fumble">
-                  {{localize 'SDM.StatusEncumbered'}}
+                  {{localize 'SDM.StatusOverloaded'}}
                   <i class="fa fa-weight-hanging fumble"></i>
                 </div>
               {{/if}}
@@ -32,26 +36,53 @@
          </ol>
        </section>
     </div>
-    {{#each cargo as |items|}}
-    <div class="main grid-span-1 list-border">
-      <div class="flex-group-center flexrow">
-        <span>
-          {{toPascalCase (localize 'SDM.UnitSack')}} {{addOne @index}}
-        </span>
+
+    {{#each cargo as |sack|}}
+    <div class="main grid-span-1 list-border sack-drop" data-sack-index="{{@index}}" data-drop="true">
+      <div class="flex-group-center flexrow mt-5">
         <div>
-          <span>
-             ({{localize 'SDM.CashSymbol'}}{{getEstimatedValue items}})
-          </span>
+           <span>{{toPascalCase (localize 'SDM.UnitSack')}} {{addOne @index}}</span>
         </div>
+        <div>
+          <span>[{{sack.usedSlots}}/{{sack.maxSlots}}]</span>
+        </div>
+        <div>
+          <span>({{localize 'SDM.CashSymbol'}}{{getEstimatedValue sack}})</span>
+        </div>
+      </div>
+      <div class="flex-group-center flexrow">
+         <input class="sack-name subtitle labelInput"
+             type="text"
+             name="system.inventory.{{@index}}.name"
+             value="{{sack.name}}"
+             maxlength="35"
+             data-no-drag="true" />
       </div>
       <section>
         <ol class='items-list list-border'>
-        {{#each items as |item id|}}
+        {{#each (@lookup sack 'items') as |item id|}}
           {{> ($$ "actor/item") item=item actorType=@root.actor.type}}
         {{/each}}
         </ol>
        </section>
     </div>
     {{/each}}
+    {{#if overflow}}
+      <div class="main grid-span-1 list-border sack-drop sack-overflow"
+          data-sack-index="{{system.capacity}}" data-drop="true">
+        <div class="flex-group-center flexrow mt-5">
+          <div><span>{{toPascalCase (localize 'SDM.UnitSack')}} {{localize 'SDM.SackOverflow'}}</span></div>
+          <div><span>[{{overflow.usedSlots}}]</span></div>
+          <div><span>({{localize 'SDM.CashSymbol'}}{{getEstimatedValue overflow}})</span></div>
+        </div>
+        <section>
+          <ol class='items-list list-border'>
+            {{#each (@lookup overflow 'items') as |item id|}}
+              {{> ($$ "actor/item") item=item actorType=@root.actor.type}}
+            {{/each}}
+          </ol>
+        </section>
+      </div>
+    {{/if}}
   </div>
 </section>

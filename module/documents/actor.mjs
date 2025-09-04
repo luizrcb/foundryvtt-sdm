@@ -298,13 +298,13 @@ export class SdmActor extends Actor {
     const totalCapacityInSacks = this.system.capacity + this.system.capacity_bonus;
 
     const maxCarryWeight = convertToCash(totalCapacityInSacks, SizeUnit.SACKS);
-    const encumbered = currentCarriedWeight > maxCarryWeight;
+    const overloaded = currentCarriedWeight > maxCarryWeight;
 
     this.update({
       'system.inventory_value': estimatedWealth,
       'system.total_cash': totalCash,
       'system.wealth': totalCash + estimatedWealth,
-      'system.encumbered': encumbered,
+      'system.overloaded': overloaded,
     });
   }
 

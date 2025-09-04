@@ -534,6 +534,10 @@ input[type=radio]::after {
     font-size: var(--font-size-11);
     color: var(--color-text-secondary);
   }
+  .labelInput {
+    height: 20px;
+    text-align: center;
+  }
   .collapsible.collapsed .fa-chevron-down,
   .collapsible.smd-collapsible.collapsed .fa-chevron-down {
     transform: rotate(-90deg);

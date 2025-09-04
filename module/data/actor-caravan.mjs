@@ -149,6 +149,15 @@ export default class SdmCarvan extends SdmActorBase {
       }
     );
 
+    schema.inventory = new fields.TypedObjectField(
+      new fields.SchemaField(
+        {
+          name: new fields.StringField({ required: false, blank: true, initial: '' })
+        },
+        { nullable: true }
+      )
+    );
+
     schema.capacity_bonus = new fields.NumberField({
       ...requiredInteger,
       initial: 0
@@ -164,11 +173,9 @@ export default class SdmCarvan extends SdmActorBase {
       initial: 0
     });
 
-    schema.encumbered =  new fields.BooleanField({ initial: false });
+    schema.overloaded = new fields.BooleanField({ initial: false });
 
     return schema;
   }
 
-  prepareDerivedData() {
-  }
 }

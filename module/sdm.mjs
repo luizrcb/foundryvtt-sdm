@@ -329,6 +329,24 @@ Hooks.once('ready', function () {
 
   createEscalatorDieDisplay();
 
+  // Hooks.on('dropCanvasData', async (canvas, data) => {
+  //   console.log(canvas, data);
+
+  //   const { uuid, x, y } = data;
+
+  //   const item = await fromUuid(uuid);
+  //   if (!item) return;
+
+  //   console.log(item);
+  //   const attributes = item.system.attributes;
+  //   console.log(attributes);
+
+  //   const virtualActor = new SdmActor({type: 'npc', name: item.name, img: item.img, system: {...attributes} }).toObject();
+  //   const actor = await SdmActor.create(virtualActor);
+  //   const tokenDoc = await actor.getTokenDocument({x, y });
+  //   await game.scenes.active.createEmbeddedDocuments("Token", [ tokenDoc.toObject() ]);
+  // });
+
   Hooks.once('setup', () => {
     // Define the compendium name (matches your module.json "name" field)
     const MACRO_COMPENDIUM = 'macros';

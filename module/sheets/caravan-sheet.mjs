@@ -17,6 +17,10 @@ const DragDrop = foundry.applications.ux.DragDrop.implementation;
 const FilePicker = foundry.applications.apps.FilePicker.implementation;
 const TextEditor = foundry.applications.ux.TextEditor.implementation;
 
+const FLAG_SCOPE = 'sdm';
+const FLAG_SACK = 'sackIndex';
+const SLOTS_PER_SACK = 10;
+
 /**
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheetV2}
@@ -52,7 +56,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       deleteRoute: this._deleteRoute
     },
     // Custom property that's merged into `this.options`
-    dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
+    dragDrop: [{ dragSelector: '[data-drag]', dropSelector: '[data-drop], [data-item-id]' }],
     form: {
       submitOnChange: true
     }
@@ -135,7 +139,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     };
 
     // Offloading context prep to a helper function
-    this._prepareItems(context);
+    await this._prepareItems(context);
 
     return context;
   }
@@ -262,48 +266,88 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
    *
    * @param {object} context The context object to mutate
    */
-  _prepareItems(context) {
+  async _prepareItems(context) {
     // Initialize containers.
     // You can just use `this.document.itemTypes` instead
     // if you don't need to subdivide a given type like
     // this sheet does with spells
 
-    // we need to get the caravan capacity in sacks
-    // for each sack create a inventory container
-    const filteredItems = this.document.items.filter(
-      item => !ITEMS_NOT_ALLOWED_IN_CARAVANS.includes(item.type)
-    );
+    const capacity = Number(this.actor.system.capacity ?? 0);
+    const inventory = this.actor.system.inventory ?? {};
 
-    // Iterate through items, allocating to containers
-    function chunkBySlots(items, maxSlots = 10) {
-      // First sort the items (using your comparator)
-      const sortedItems = [...items].sort((a, b) => (a.sort || 0) - (b.sort || 0));
-      const chunks = [];
-      let currentChunk = [];
-      let currentSlots = 0;
-
-      for (const item of sortedItems) {
-        const slots = item.system.slots_taken || 1;
-        if (currentSlots + slots > maxSlots) {
-          chunks.push(currentChunk);
-          currentChunk = [item];
-          currentSlots = slots;
-        } else {
-          currentChunk.push(item);
-          currentSlots += slots;
-        }
+    const updates = {};
+    for (let i = 0; i < capacity; i += 1) {
+      const key = String(i);
+      if (!(key in inventory)) {
+        updates[`system.inventory.${key}`] = { name: "" };
       }
-
-      // Push the final chunk (even if empty)
-      chunks.push(currentChunk);
-      if (!chunks[0].length) delete chunks[0];
-      return chunks;
     }
 
-    // Usage
-    const chunkedLists = chunkBySlots(filteredItems);
-    // Sort then assign
-    context.cargo = chunkedLists;
+    if (Object.keys(updates).length) {
+      await this.actor.update(updates);
+    }
+
+    const inventoryNames = this.actor.system.inventory || {};
+
+    const sacks = Array.from({ length: capacity }, (_, i) => ({
+      index: i,
+      name: inventoryNames[i].name || `${game.i18n.localize('SDM.UnitSack')} ${i + 1}`,
+      items: [],
+      usedSlots: 0,
+      maxSlots: SLOTS_PER_SACK
+    }));
+
+    const overflow = {
+      index: capacity,
+      name: `${game.i18n.localize('SDM.UnitSack')} ${capacity + 1}`,
+      items: [],
+      usedSlots: 0,
+      maxSlots: Infinity
+    };
+
+    const items = [...this.document.items]
+      .filter(it => !ITEMS_NOT_ALLOWED_IN_CARAVANS.includes(it.type))
+      .sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0));
+
+    const firstFitIndex = need => sacks.findIndex(s => s.usedSlots + need <= s.maxSlots);
+
+    for (const item of items) {
+      const need = Number(item.system?.slots_taken ?? 1) || 1;
+
+      const flaggedIdx = Number(item.getFlag(FLAG_SCOPE, FLAG_SACK));
+      const hasValidFlag = Number.isFinite(flaggedIdx) && flaggedIdx >= 0 && flaggedIdx < capacity;
+
+      if (hasValidFlag && sacks[flaggedIdx].usedSlots + need <= sacks[flaggedIdx].maxSlots) {
+        sacks[flaggedIdx].items.push(item);
+        sacks[flaggedIdx].usedSlots += need;
+        continue;
+      }
+
+      const fit = firstFitIndex(need);
+      if (fit !== -1) {
+        sacks[fit].items.push(item);
+        sacks[fit].usedSlots += need;
+      } else {
+        overflow.items.push(item);
+        overflow.usedSlots += need;
+      }
+    }
+
+    sacks.forEach(s => s.items.sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0)));
+
+    context.cargo = sacks;
+    if (overflow.items.length) context.overflow = overflow;
+    context.canRenameSacks = this.actor.isOwner;
+
+    context.totalUsedSlots = sacks.reduce((a, s) => a + s.usedSlots, 0) + overflow.usedSlots;
+    context.totalMaxSlots = sacks.reduce((a, s) => a + s.maxSlots, 0);
+  }
+
+  _getDropSackIndex(event) {
+    const el = event.target?.closest?.('.sack-drop');
+    if (!el) return null;
+    const idx = Number(el.dataset.sackIndex);
+    return Number.isFinite(idx) ? idx : null;
   }
 
   /**
@@ -980,6 +1024,57 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
 
   /* -------------------------------------------- */
 
+  _getDropSackIndexFromEvent(event) {
+    const el = event?.target?.closest?.('.sack-drop');
+    if (!el) return null;
+    const idx = Number(el.dataset.sackIndex);
+    return Number.isFinite(idx) ? idx : null;
+  }
+
+  _buildUsageMap(actor, capacity, excludeItemId = null) {
+    const usage = new Map();
+
+    for (let i = 0; i < Math.max(capacity, 1); i++) {
+      usage.set(i, { used: 0, max: SLOTS_PER_SACK });
+    }
+
+    let maxIdx = capacity - 1;
+    for (const it of actor.items) {
+      const idx = Number(it.getFlag(FLAG_SCOPE, FLAG_SACK));
+      if (Number.isFinite(idx)) maxIdx = Math.max(maxIdx, idx);
+    }
+    for (let i = capacity; i <= maxIdx; i++) {
+      if (!usage.has(i)) usage.set(i, { used: 0, max: SLOTS_PER_SACK });
+    }
+
+    for (const it of actor.items) {
+      if (ITEMS_NOT_ALLOWED_IN_CARAVANS.includes(it.type)) continue;
+      if (excludeItemId && it.id === excludeItemId) continue;
+
+      const s = Number(it.system?.slots_taken ?? 1) || 1;
+      const idx = Number(it.getFlag(FLAG_SCOPE, FLAG_SACK));
+      if (Number.isFinite(idx)) {
+        if (!usage.has(idx)) usage.set(idx, { used: 0, max: SLOTS_PER_SACK });
+        usage.get(idx).used += s;
+      } else {
+        const base = usage.get(0) ?? { used: 0, max: SLOTS_PER_SACK };
+        base.used += s;
+        usage.set(0, base);
+      }
+    }
+
+    return usage;
+  }
+
+  _findOrCreateOverflowIndex(usage, capacity, need) {
+    for (const [idx, info] of usage.entries()) {
+      if (idx >= capacity && info.used + need <= info.max) return idx;
+    }
+    const nextIdx = Math.max(...usage.keys(), capacity - 1) + 1;
+    usage.set(nextIdx, { used: 0, max: SLOTS_PER_SACK });
+    return nextIdx;
+  }
+
   /**
    * Handle dropping of an item reference or item data onto an Actor Sheet
    * @param {DragEvent} event            The concluding DragEvent which contains drop data
@@ -989,17 +1084,42 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
    */
   async _onDropItem(event, data) {
     if (!this.actor.isOwner) return false;
-    const item = await Item.implementation.fromDropData(data);
 
-    if ([ItemType.BURDEN, ItemType.TRAIT].includes(item.type)) {
+    const item = await Item.implementation.fromDropData(data);
+    if (ITEMS_NOT_ALLOWED_IN_CARAVANS.includes(item.type)) return false;
+
+    const capacity = Number(this.actor.system.capacity ?? 0);
+    const targetIdx = this._getDropSackIndexFromEvent(event);
+    const aimedIdx = Number.isFinite(targetIdx) ? targetIdx : 0;
+
+    const sameActor = item?.parent?.uuid === this.actor.uuid;
+    const need = Number(item?.system?.slots_taken ?? 1) || 1;
+
+    const usage = this._buildUsageMap(this.actor, capacity, sameActor ? item.id : null);
+    if (!usage.has(aimedIdx)) usage.set(aimedIdx, { used: 0, max: SLOTS_PER_SACK });
+
+    let finalIdx = aimedIdx;
+    const aimedInfo = usage.get(aimedIdx);
+    const isOfficial = aimedIdx < capacity;
+
+    const oldIdx = Number(item.getFlag(FLAG_SCOPE, FLAG_SACK)) || 0;
+    if (sameActor && oldIdx === aimedIdx) {
+      const dropOnItem = !!event.target.closest?.('[data-item-id]');
+      if (dropOnItem) return this._onSortItem(event, item);
       return false;
     }
 
-    // Handle item sorting within the same Actor
-    if (this.actor.uuid === item.parent?.uuid) return this._onSortItem(event, item);
+    if (aimedInfo.used + need > aimedInfo.max) {
+      finalIdx = this._findOrCreateOverflowIndex(usage, capacity, need);
+    }
 
-    // Create the owned item
-    return this._onDropItemCreate(item, event);
+    if (sameActor) {
+      return item.update({ [`flags.${FLAG_SCOPE}.${FLAG_SACK}`]: finalIdx });
+    }
+
+    const createData = item.toObject();
+    foundry.utils.setProperty(createData, `flags.${FLAG_SCOPE}.${FLAG_SACK}`, finalIdx);
+    return this.actor.createEmbeddedDocuments('Item', [createData]);
   }
 
   /**

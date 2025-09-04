@@ -73,13 +73,13 @@
             {{selectOptions @root.config.speedOptions localize=true selected=system.speed inverted=true}}
           </select>
         </div>
-        <div class="grid-span-1" data-tooltip="{{#if system.encumbered}}{{localize 'SDM.StatusEncumbered'}}{{/if}}">
-          <label for="system.capacity" class='resource-label {{#if system.encumbered}}fumble{{/if}}'>
-            {{localize 'SDM.FieldCapacity'}} {{#if system.encumbered}} <i class="fa fa-weight-hanging fumble"></i>{{/if}}
+        <div class="grid-span-1" data-tooltip="{{#if system.overloaded}}{{localize 'SDM.StatusOverloaded'}}{{/if}}">
+          <label for="system.capacity" class='resource-label {{#if system.overloaded}}fumble{{/if}}'>
+            {{localize 'SDM.FieldCapacity'}} {{#if system.overloaded}} <i class="fa fa-weight-hanging fumble"></i>{{/if}}
           </label>
           <input
             name='system.capacity'
-            class="{{#if system.encumbered}}fumble{{/if}}"
+            class="{{#if system.overloaded}}fumble{{/if}}"
             type='text'
             value='{{system.capacity}}'
             data-dtype="Number"
@@ -107,12 +107,6 @@
           <input name='system.current_destination' type='text' value='{{system.current_destination}}' />
         </div>
       </div>
-      {{!-- <div class='resource'>
-        <label class='resource-label'>{{localize 'SDM.Speed'}}</label>
-        <select name='system.speed' data-dtype="number">
-          {{selectOptions config.speedOptions localize=true selected=system.speed inverted=true}}
-        </select>
-      </div> --}}
     </div>
   </header>
 </div>

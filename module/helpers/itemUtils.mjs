@@ -150,7 +150,7 @@ export async function makePowerItem({
 }
 
 export function getWealthFromItems(itemsArray = []) {
-  return itemsArray.reduce((acc, item) => {
+  return itemsArray.items.reduce((acc, item) => {
     const qty = item?.system?.quantity || 1;
 
     if (item.type === ItemType.GEAR && item.system.size.unit !== SizeUnit.CASH) {
