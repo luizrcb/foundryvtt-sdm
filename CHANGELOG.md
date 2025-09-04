@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v0.2.3
+
+- Increment route location letters alphabetically in the routes tab
+- Improve caravan cargo tab: drag and drop using real containers based on caravan capacity
+- Add the total value and number of slots in each sack container
+- Overloading a caravan now adds a visual indication in the capacity field
+
 ## v0.2.2
 
 - Added an experience field for NPCs (pets, sidekicks). NPC leveling is not automated, but you can track the invested XP
