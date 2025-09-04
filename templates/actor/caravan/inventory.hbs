@@ -34,7 +34,16 @@
     </div>
     {{#each cargo as |items|}}
     <div class="main grid-span-1 list-border">
-      <div class="flex-group-center"><span>{{toPascalCase (localize 'SDM.UnitSack')}} {{addOne @index}}</span></div>
+      <div class="flex-group-center flexrow">
+        <span>
+          {{toPascalCase (localize 'SDM.UnitSack')}} {{addOne @index}}
+        </span>
+        <div>
+          <span>
+             ({{localize 'SDM.CashSymbol'}}{{getEstimatedValue items}})
+          </span>
+        </div>
+      </div>
       <section>
         <ol class='items-list list-border'>
         {{#each items as |item id|}}

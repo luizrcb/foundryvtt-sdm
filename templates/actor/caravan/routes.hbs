@@ -62,7 +62,7 @@
 
                 <div class='resource grid-span-2'>
                   <label class='resource-label'>
-                    {{localize 'SDM.FieldLocationA'}}
+                    {{localize 'SDM.FieldLocation' letter=(alphaFromIndex @index 'A')}}
                   </label>
                   <div class='resource-content'>
                     <input type='text' name='system.route.{{key}}.locationA' value='{{route.locationA}}' />
@@ -80,7 +80,7 @@
 
                 <div class='resource grid-span-2'>
                   <label class='resource-label'>
-                    {{localize 'SDM.FieldLocationB'}}
+                    {{localize 'SDM.FieldLocation' letter=(alphaFromIndex @index 'B')}}
                   </label>
                   <div class='resource-content'>
                     <input type='text' name='system.route.{{key}}.locationB' value='{{route.locationB}}' />

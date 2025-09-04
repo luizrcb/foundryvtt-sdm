@@ -108,8 +108,7 @@ export function getSlotsTaken(itemSystem) {
 
   slotsTaken = Math.max(slotsTaken || 1, 1);
 
-  if (itemSystem.size?.unit === SizeUnit.SOAPS
-     && itemSystem.quantity > 1 && itemSystem.readied) {
+  if (itemSystem.size?.unit === SizeUnit.SOAPS && itemSystem.quantity > 1 && itemSystem.readied) {
     slotsTaken = itemSystem.quantity;
   }
 
@@ -148,4 +147,18 @@ export async function makePowerItem({
   };
 
   await Item.create(itemData);
+}
+
+export function getWealthFromItems(itemsArray = []) {
+  return itemsArray.reduce((acc, item) => {
+    const qty = item?.system?.quantity || 1;
+
+    if (item.type === ItemType.GEAR && item.system.size.unit !== SizeUnit.CASH) {
+      acc += (item?.system?.cost || 0) * qty;
+    } else if (item.system.size.unit === SizeUnit.CASH) {
+      acc += (item?.system?.size?.value || 1) * qty;
+    }
+
+    return acc;
+  }, 0);
 }

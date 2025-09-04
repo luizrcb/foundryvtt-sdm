@@ -1,6 +1,6 @@
 import { SizeUnit } from './helpers/constants.mjs';
 import { $l10n, toPascalCase } from './helpers/globalUtils.mjs';
-import { convertToSacks } from './helpers/itemUtils.mjs';
+import { convertToSacks, getWealthFromItems } from './helpers/itemUtils.mjs';
 
 export function registerHandlebarsHelpers() {
   const $$ = (name, fn) => Handlebars.registerHelper(name, fn);
@@ -120,5 +120,28 @@ export function registerHandlebarsHelpers() {
   $$('toSacks', function (slotsInStones) {
     const inSacks = convertToSacks(slotsInStones, SizeUnit.STONES);
     return `${inSacks} ${$l10n('SDM.UnitSacksAbbr')}`;
+  });
+
+  function alphaLabel(i) {
+    let s = '';
+    i += 1;
+    while (i > 0) {
+      const r = (i - 1) % 26;
+      s = String.fromCharCode(65 + r) + s;
+      i = Math.floor((i - 1) / 26);
+    }
+    return s;
+  }
+
+  $$('alphaFromIndex', function (idx, location = 'A') {
+    const start = idx * 2;
+    if (location === 'A') return alphaLabel(start);
+    if (location === 'B') return alphaLabel(start + 1);
+    return ''; // fallback se location não for 'A' nem 'B'
+  });
+
+  $$('getEstimatedValue', function (items = []) {
+    if (!items && !items.length) return 0;
+    return getWealthFromItems(items);
   });
 }
