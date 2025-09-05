@@ -98,7 +98,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       updateAttack: this._onUpdateAttack,
       viewDoc: this._viewDoc,
       sendToChat: { handler: this._sendToChat, buttons: [0, 2] },
-      toggleItemStatus: { handler: this._toggleItemStatus, buttons: [0, 2]}
+      toggleItemStatus: { handler: this._toggleItemStatus, buttons: [0, 2] }
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
@@ -737,6 +737,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     let updateDataSlots = updateData ? getSlotsTaken(updateData?.system) : null;
 
+    // TODO REMOVE THIS
+    console.log(updateData);
+
+
     if (updateData && updateDataSlots <= itemSlots) {
       return true;
     }
@@ -755,6 +759,15 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
   _validateItemWeight(item) {
     if (this.actor.type === ActorType.NPC) {
       return true;
+    }
+
+    if (
+      this.actor.type === ActorType.CHARACTER &&
+      item.system.is_hallmark &&
+      !this.actor.canAddHallmarkItem()
+    ) {
+      ui.notifications.error($fmt('SDM.ErrorHallmarkLimit', { target: this.actor.name }));
+      return false;
     }
 
     const itemSlots = getSlotsTaken(item.system);
@@ -1423,7 +1436,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     await item.toggleItemStatus(event);
   }
 
-
   /** Helper Functions */
 
   /**
@@ -1700,6 +1712,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       return sum + slots;
     }, 0);
     const itemType = itemData[0].type;
+
+    if (itemData[0].system.is_hallmark && !this.actor.canAddHallmarkItem()) {
+      ui.notifications.error($fmt('SDM.ErrorHallmarkLimit', { target: this.actor.name }));
+      return [];
+    }
 
     const validWeight = this._checkActorWeightLimit(totalSlots, itemType);
 

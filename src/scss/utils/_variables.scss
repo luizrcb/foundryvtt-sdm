@@ -21,4 +21,4 @@ $border-groove: 2px groove colors.$c-groove;
 $top-edit: var(--sdm-top-edit);
 $left-edit: var(--sdm-left-edit);
 
-$hover-filter: drop-shadow(0px 0px 5px colors.$c-ultraviolet);
+$hover-filter: drop-shadow(0px 0px 5px var(--sdm-c-highlight));

@@ -282,6 +282,24 @@ export class SdmItem extends Item {
     await this.update({ 'system.readied': nextValue });
   }
 
+  async toggleIsHallmark() {
+    if (this.system.is_hallmark && this.system.hallmark) {
+      const currentExperience = parseInt(this.system.hallmark.experience);
+      if (currentExperience > 0) return;
+    }
+
+    if (!this.parent || (this.parent && this.parent?.type === ActorType.CARAVAN)) {
+      return;
+    }
+
+    if (!this.system.is_hallmark && this.parent && this.parent?.type === ActorType.CHARACTER) {
+      const characterCurrentHallmarks = this.parent.items.contents.filter(item => item.system.is_hallmark);
+      if (characterCurrentHallmarks.length >= this.parent.system.level) return;
+    }
+
+    await this.update({ 'system.is_hallmark': !this.system.is_hallmark });
+  }
+
   async toggleItemStatus(event) {
     event.preventDefault();
     event.stopPropagation();

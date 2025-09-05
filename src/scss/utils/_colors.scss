@@ -31,12 +31,16 @@
   --sdm-c-readied: #000000;
   --sdm-c-not-readied: grey;
 
-  --color-shadow-primary: #b84eff;
-  --color-shadow-highlight: #b84eff;
-  --color-border-highlight: #b84eff;
-  --color-border-highlight-alt: #b84eff;
-  --color-scrollbar:#b84eff;
-  --scrollbar-color:#b84eff;
+  --sdm-c-highlight: var(--sdm-c-ultraviolet);
+  --sdm-c-accent: var(--sdm-c-plum);
+
+  --color-shadow-primary: var(--sdm-c-highlight);
+  --color-shadow-highlight: var(--sdm-c-highlight);
+  --color-border-highlight: var(--sdm-c-highlight);
+  --color-border-highlight-alt: var(--sdm-c-highlight);
+  --color-scrollbar: var(--sdm-c-highlight);
+  --scrollbar-color: var(--sdm-c-highlight);
+  --sdm-scrollbar-thumb: var(--sdm-c-highlight, #b84eff);
 }
 
 .theme-dark {
@@ -67,12 +71,15 @@
   --sdm-c-readied: #ffffff;
   --sdm-c-not-readied: #b5b3a4;
 
-  --color-shadow-primary: rgb(200, 100, 255);
-  --color-shadow-highlight: rgb(200, 100, 255);
-  --color-border-highlight: rgb(200, 100, 255);
-  --color-border-highlight-alt: rgb(200, 100, 255);
-  --color-scrollbar:rgb(200, 100, 255);
-  --scrollbar-color:rgb(200, 100, 255);
+  --sdm-c-highlight: var(--sdm-c-ultraviolet);
+  --sdm-c-accent: var(--sdm-c-plum);
+
+  --color-shadow-primary: var(--sdm-c-highlight);
+  --color-shadow-highlight: var(--sdm-c-highlight);
+  --color-border-highlight: var(--sdm-c-highlight);
+  --color-border-highlight-alt: var(--sdm-c-highlight);
+  --color-scrollbar: var(--sdm-c-highlight);
+  --scrollbar-color: var(--sdm-c-highlight);
 
   --sdm-c-theme: #00A2AB;
   --sdm-c-table: #CDECEE;
@@ -90,10 +97,10 @@ $c-border: var(--sdm-c-border);
 $c-light-border: var(--sdm-c-ligh-border);
 $c-font: var(--sdm-c-font);
 $c-violet: var(--sdm-c-violet);
-$c-ultraviolet: var(--sdm-c-ultraviolet);
+$c-ultraviolet: var(--sdm-c-highlight);
 $c-theme: var(--sdm-c-theme);
 $c-table: var(--sdm-c-table);
-
+$c-accent: var(--sdm-c-accent);
 // 10 color rainbow
 $c-rust: var(--sdm-c-rust);
 $c-pumpkin: var(--sdm-c-pumpkin);
@@ -108,3 +115,4 @@ $c-plum: var(--sdm-c-plum);
 
 $c-readied: var(--sdm-c-readied);
 $c-not-readied: var(--sdm-c-not-readied);
+$c-highlight: var(--sdm-c-highlight);

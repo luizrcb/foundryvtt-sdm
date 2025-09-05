@@ -323,6 +323,17 @@ export class SdmActor extends Actor {
     }
   }
 
+  canAddHallmarkItem() {
+    if (this.type !== ActorType.CHARACTER) {
+      return true;
+    }
+
+    const itemsArray = this.items.contents;
+    const hallmarkItems = itemsArray.filter(item => item.system.is_hallmark);
+
+    return hallmarkItems.length < this.system.level;
+  }
+
   getAvailableSkills() {
     const result = {};
     const itemsArray = this.items.contents;

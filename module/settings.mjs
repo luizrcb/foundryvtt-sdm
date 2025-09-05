@@ -20,6 +20,25 @@ export function registerSystemSettings() {
 
   /** qol settings */
 
+  game.settings.register('sdm', 'accentColor', {
+    name: 'Chromatype',
+    hint: 'Pick your chromatype in the light of the polychrom!',
+    scope: 'client', // or "world"
+    config: true,
+    requiresReload: true,
+    choices: {
+      '#cc2f00': 'Red',
+      '#db6600': 'Orange',
+      '#ffcc66': 'Yellow',
+      '#76b80d': 'Green',
+      '#007cb5': 'Blue',
+      '#873b9c': 'Purple',
+      '#b84eff': 'Ultraviolet'
+    },
+    type: String,
+    default: '#873b9c'
+  });
+
   game.settings.register('sdm', 'reverseShiftKey', {
     name: 'SDM.SettingsReverseShiftKey',
     hint: 'SDM.SettingsReverseShiftKeyHint',

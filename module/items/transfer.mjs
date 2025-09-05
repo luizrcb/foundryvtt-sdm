@@ -364,6 +364,11 @@ export async function openItemTransferDialog(item, sourceActor) {
       throw new Error($fmt('SDM.ErrorWeightLimit', { target: targetActor.name }));
     }
 
+    if (item.system.is_hallmark && !targetActor.canAddHallmarkItem()) {
+      throw new Error($fmt('SDM.ErrorHallmarkLimit', { target: targetActor.name }));
+    }
+
+
     const freshItem = sourceActor.items.get(item.id);
     if (!freshItem || freshItem?.getFlag('sdm', 'transferring') !== transferKey) {
       throw new Error($l10n('SDM.ErrorTransferInvalidItemState'));

@@ -1,6 +1,7 @@
 import { getSlotsTaken } from '../helpers/itemUtils.mjs';
 import NPCBaseDataModel from './npc-base-data.mjs';
 import ItemSizeDataModel from './item-size.mjs';
+import HallmarkBaseDataModel from './hallmark-base-data.mjs';
 
 export default class SdmItemBase extends foundry.abstract.TypeDataModel {
   static defineSchema() {
@@ -47,6 +48,13 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
     schema.features = new fields.HTMLField();
 
     schema.attributes = new fields.EmbeddedDataField(NPCBaseDataModel);
+
+    schema.is_hallmark = new fields.BooleanField({
+      required: true,
+      initial: false,
+    });
+
+    schema.hallmark = new fields.EmbeddedDataField(HallmarkBaseDataModel)
 
     return schema;
   }

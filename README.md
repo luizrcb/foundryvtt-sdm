@@ -10,11 +10,15 @@
 
 An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG) and Our Golden Age (OGA) using the [Synthetic Dream Machine](https://www.wizardthieffighter.com/synthetic-dream-machine/) RPG rules on [Foundry VTT](http://foundryvtt.com/).
 
-*foundryvtt-sdm* is an independent production by community contributors, and is not affiliated with Luka Rejec or WTF Studio. It is published under the [Synthetic Dream Machine Third Party License](https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/main/SDM-3RD-PARTY-LICENSE-2.0.txt).
+*foundryvtt-sdm* is an independent production by community contributors, and is not affiliated with [Luka Rejec](https://patreon.com/wizardthieffighter) or [WTF Studio](https://www.wizardthieffighter.com/). It is published under the [Synthetic Dream Machine Third Party License](https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/main/SDM-3RD-PARTY-LICENSE-2.0.txt).
 
 ## Credits
 
-- Synthetic Dream Machine (SDM), Ultraviolet Grasslands (UVG), Our Golden Age (OGA), and the Vastlands Guidebook (VLG) are copyright Luka Rejec.
+Synthetic Dream Machine (SDM), Ultraviolet Grasslands (UVG), Our Golden Age (OGA), and the Vastlands Guidebook (VLG) are copyright [Luka Rejec](https://patreon.com/wizardthieffighter).
+
+## Acknowledgements
+
+This project uses names of creatures, items, traits, powers, locations, and rule sections from the [Vastlands Guidebook](https://www.exaltedfuneral.com/products/vastlands-guidebook-bootleg-beta-early-release-free-pdf) ([Luka Rejec](https://patreon.com/wizardthieffighter), VLG 2025)
 
 ## Licenses
 
@@ -71,30 +75,32 @@ An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG
 - Special roll results for magic numbers (1 = critical failure, 13 = only one ammo or other resource left, 20 = critical success).
 - Right-click roll results in the chat to open `Apply as Damage` and `Apply as Healing` menu options. This will be applied to all selected tokens.
 
+This project compendiums and macros use names of creatures, items, traits, powers, locations and rule sections from the *Vastlands Guidebook*.
+
 - The following compendiums contain equipment, traits, macros and roll tables:
   - Equipment:
-    - Armors
+    - Armors (VLG, pp. 74-77):
       - Modern and Ancient Shields
       - Light Armor
       - Medium Armor
       - Heavy Armor
       - Classic Golem Armor
-    - Gears:
+    - Gears: (VLG, pp. 82-85)
       - Gadgets
       - Consumables
-    - Powers
-    - Wards:
+    - Powers (VLG, pp. 94-113 and [Powers Enumerated I](https://www.wizardthieffighter.com/2024/powers-enumerated-i/))
+    - Wards (VLG, pp. 78-79):
       - Trinkets
       - Wearable Wards
       - Portable Wards
       - Bulky Wards
-    - Weapons:
+    - Weapons (VLG, pp. 68-73):
       - Traditional Melee Weapons
       - Long Ago Melee Weapons
       - Ranged Weapons
       - Throwing Weapons
       - Terrible Ranged Weapons of the Long Ago
-  - Traits:
+  - Traits (VLG, pp. 16-17):
     - Path of the Wizard
     - Path of the Traveler
     - Path of the Fighter
@@ -104,25 +110,26 @@ An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG
     - Give XP.
     - Group Initiative (select all tokens and use the macro, no need to create the encounter). Initiative will be grouped by token disposition (friendly, neutral, hostile, secret).
     - Escalator Die (UVG 1ed legacy feature). The escalator die value will be added to ability, attack, weapon, power, and album of power roll results.
-    - Generate Random NPCs using tables from the Vastlands Guidebook (VLG)
+    - Generate Random NPCs using tables from the Vastlands Guidebook (VLG, pp. 162-163)
   - SDM Player Macros:
-    - Generate Ability Scores (method described in the Vastlands Guidebook (VLG): rolls 1d100 for every ability score and displays the results in chat).
-    - Character Background Trait Generator (based in the Vastlands Guidebook Background table)
+    - Generate Ability Scores (method described in the Vastlands Guidebook (VLG, p. 12): rolls 1d100 for every ability score and displays the results in chat).
+    - Character Background Trait Generator based in the Vastlands Guidebook Background table (VLG, p. 15)
   - Rollable Tables:
-    - Ability Scores (preferred method for ability score generation). Roll d100 table to generate ability scores, then assign unlabeled scores.
-    - Referee Title (a fun d10 table to choose referee title and referee session power).
+    - Ability Scores: preferred method for ability score generation (VLG, pp. 12-13). Roll d100 table to generate ability scores, then assign unlabeled scores.
+    - Referee Title: a fun d10 table to choose referee title and referee session power (VLG, p. 7).
     - Rollable tables for every equipment category (Light Armor, Medium Armor, etc)
 
 ## Installation Instructions
 
-To install and use the Synthetic Dream Machine system for Foundry Virtual Tabletop, simply paste the following
-URL into the **Install System** dialog on the Setup menu of the application.
+The latest version of the system can be installed through the in-app System Browser by searching for any of the following: "SDM", "Synthetic Dream Machine", "UVG", "Ultraviolet Grasslands", "OGA", or "Our Golden Age".
 
-[https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/main/system.json](https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/main/system.json)
+You can also use one of the following alternative installation methods:
 
-If you wish to manually install the system, you must clone or extract it into the `Data/systems/sdm` folder. You
-may do this by cloning the repository or downloading a zip archive from the
-[Releases Page](https://github.com/luizrcb/foundryvtt-sdm/releases).
+1. Pasting the following url into the **Install System** dialog on the Setup menu of the application.
+##
+    https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/main/system.json
+2. Browsing the repository's [Releases](https://github.com/luizrcb/foundryvtt-sdm/releases) page, where you can copy any system.json link for use in the Install System dialog.
+3. Downloading one of the .zip archives from the Releases page and extracting it into your foundry Data folder, under `Data/systems/sdm`.
 
 <!-- This system is made possible thanks to all of its contributors!
 

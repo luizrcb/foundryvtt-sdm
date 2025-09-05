@@ -9,7 +9,7 @@
   &:hover,
   &:focus {
     //color: colors.$c-black;
-    text-shadow: 0 0 10px colors.$c-ultraviolet;
+    text-shadow: 0 0 10px var(--sdm-scrollbar-thumb);
     cursor: pointer;
   }
 }
@@ -53,7 +53,7 @@
 .sheet input:focus,
 .sheet textarea:focus,
 .sheet select:focus {
-  border-bottom: 2px solid colors.$c-plum;
+  border-bottom: 2px solid var(--sdm-c-accent);
   box-shadow: none;
   font-family: typo.$font-secondary;
 }
@@ -307,7 +307,7 @@ input[type='radio']::after {
 
 @layer window-layer {
   * {
-    scrollbar-color: colors.$c-plum transparent;
+    scrollbar-color: var(--sdm-scrollbar-thumb) transparent;
   }
 
   .route-item {
@@ -437,7 +437,7 @@ input[type='radio']::after {
 
   .sack-drop {
     &.list-border.drop-area {
-      border: 2px dashed var(--sdm-c-plum);
+      border: 2px dashed var(--sdm-c-accent);
       border-radius: 8px;
     }
   }
@@ -601,12 +601,12 @@ input[type='radio']::after {
     a {
       &:not(.active) {
         &:hover {
-          text-shadow: 0 0 8px colors.$c-ultraviolet;
+          text-shadow: 0 0 8px var(--sdm-c-highlight);
         }
       }
 
       &.active {
-        text-shadow: 0 0 10px colors.$c-ultraviolet;
+        text-shadow: 0 0 10px var(--sdm-c-highlight);
       }
     }
   }
@@ -615,12 +615,12 @@ input[type='radio']::after {
     a {
       &:not(.active) {
         &:hover {
-          text-shadow: 0 0 8px colors.$c-ultraviolet;
+          text-shadow: 0 0 8px var(--sdm-c-highlight);
         }
       }
 
       &.active {
-        text-shadow: 0 0 10px colors.$c-ultraviolet;
+        text-shadow: 0 0 10px var(--sdm-c-highlight);
       }
     }
   }

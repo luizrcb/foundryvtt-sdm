@@ -18,7 +18,7 @@ export function hallmarkBaseFields() {
 export default class HallmarkBaseDataModel extends foundry.abstract.DataModel {
   static defineSchema() {
     return {
-      ...npcBaseFields()
+      ...hallmarkBaseFields()
     };
   }
 }
