@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.2.4
+
+- Add support for marking items as notched and broken
+- Highlight caravan cargo drop areas when starting to drag an item
+
 ## v0.2.3
 
 - Increment route location letters alphabetically in the routes tab
