@@ -71,6 +71,11 @@ SDM.frequency = {
   week: 'SDM.FrequencyWeek'
 };
 
+SDM.itemStatus = {
+  notched: 'SDM.ItemStatusNotched',
+  broken: 'SDM.ItemStatusBroken',
+}
+
 function getOrderedAbilities(language = 'en') {
   let lang = Object.keys(SDM.abilitiesOrder).includes(language) ? language : 'en';
   const reorderedAbilities = {};

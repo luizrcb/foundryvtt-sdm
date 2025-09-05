@@ -1,5 +1,5 @@
 <li
-  class='item flexrow'
+  class='item flexrow {{item.system.status}}'
   data-item-id='{{item._id}}'
   data-drag='true'
   data-document-class='Item'
@@ -8,10 +8,17 @@
   <div class='item-name' style="cursor:pointer;" data-action='sendToChat'>
     <div class='item-image'>
       <img src='{{item.img}}' width='24' height='24' data-tooltip="{{item.name}}"/>
+      {{#if (eq item.system.status 'notched')}}
+       <i class="fa fa-hammer overlay-icon notched-icon"></i>
+      {{/if}}
+      {{#if (eq item.system.status 'broken')}}
+        <i class="fa fa-ban overlay-icon broken-icon"></i>
+      {{/if}}
     </div>
     <div class="flexrow">
       {{#if (and
         (ne actorType 'caravan')
+        (ne item.system.status 'broken')
         (ne item.system.size.unit 'cash')
         (eq item.system.type 'weapon')
         item.system.readied
@@ -31,6 +38,7 @@
 
       {{#if (and
         (ne actorType 'caravan')
+        (ne item.system.status 'broken')
         (ne item.system.size.unit 'cash')
         (eq item.system.type 'power')
         item.system.readied
@@ -49,6 +57,7 @@
 
       {{#if (and
         (ne actorType 'caravan')
+        (ne item.system.status 'broken')
         (ne item.system.size.unit 'cash')
         (eq item.system.type 'power_album')
         item.system.readied
@@ -85,9 +94,13 @@
       </div>
     </div>
   </div>
-  <div class='item-controls'>
+  <div class='item-controls{{#if (eq actorType 'caravan')}}-small{{/if}}'>
     {{#if @root.editable}}
-    {{#if (ne actorType 'caravan')}}
+
+    {{#if (and
+      (ne actorType 'caravan')
+      (ne item.system.status 'broken')
+    )}}
     <a class="item-control">
       <i
         class="fa-regular fa-shield {{ifThen item.system.readied 'readied' 'not-readied'}}"
@@ -99,6 +112,36 @@
         {{/if}}
       >
       </i>
+    </a>
+    {{/if}}
+    {{#if (and
+      (ne item.system.size.unit 'cash')
+      (ne actorType 'caravan')
+    )}}
+    <a class="item-control"
+      data-tooltip="
+        {{#if (eq system.status 'notched')}}
+        <b>{{localize 'SDM.ItemStatusNotched'}}</b><br>
+        {{localize 'SDM.NotchedItemAction'}}
+        {{else}}
+        {{#if (eq system.status 'broken')}}
+        <b>{{localize 'SDM.ItemStatusBroken'}}</b><br>
+        {{localize 'SDM.BrokenItemAction'}}
+        {{else}}
+        {{localize 'SDM.NormalItemAction'}}
+        {{/if}}
+        {{/if}}
+      "
+    >
+      <i class="fa-regular
+        {{#if (eq system.status 'notched')}}fa-hammer
+        {{else}}
+        {{#if (eq system.status 'broken')}}fa-ban
+        {{else}}fa-circle-dot
+        {{/if}}
+        {{/if}}"
+        data-action="toggleItemStatus"
+      ></i>
     </a>
     {{/if}}
     <a class="item-control">

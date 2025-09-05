@@ -1,7 +1,14 @@
 import { createChatMessage } from '../helpers/chatUtils.mjs';
-import { GearType, ItemType, PullMode, SizeUnit, TraitType } from '../helpers/constants.mjs';
+import {
+  ActorType,
+  GearType,
+  ItemStatusType,
+  ItemType,
+  SizeUnit,
+  TraitType
+} from '../helpers/constants.mjs';
 import { $l10n, capitalizeFirstLetter } from '../helpers/globalUtils.mjs';
-import { convertToCash, getSlotsTaken } from '../helpers/itemUtils.mjs';
+import { getSlotsTaken } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 
 const { renderTemplate } = foundry.applications.handlebars;
@@ -54,13 +61,22 @@ export class SdmItem extends Item {
     return getSlotsTaken(this.system);
   }
 
+  getNameTitle() {
+    const status = this.system.status;
+    const statusTitle = status
+      ? `(${$l10n(`SDM.ItemStatus${capitalizeFirstLetter(status)}`)})`
+      : '';
+
+    return `${statusTitle} ${this.name}`;
+  }
+
   getArmorTitle() {
     const armorData = this.system?.armor;
     const armorValueLabel = `${$l10n('SDM.ArmorValue')}: ${armorData?.value}`;
     const armorTypeLabel = `${$l10n('SDM.ArmorType')}: ${
       $l10n(CONFIG.SDM.armorType[armorData?.type]) ?? ''
     }`;
-    const title = `${this.name}${this.getCostTitle()}<br/>${armorValueLabel} ${armorTypeLabel}`;
+    const title = `${this.getNameTitle()}${this.getCostTitle()}<br/>${armorValueLabel} ${armorTypeLabel}`;
     return title;
   }
 
@@ -71,7 +87,7 @@ export class SdmItem extends Item {
     const wardTypeLabel = `${$l10n('SDM.WardType')}: ${
       $l10n(CONFIG.SDM.wardType[wardData?.type]) ?? ''
     }`;
-    const title = `${this.name}${this.getCostTitle()}<br/>${wardValueLabel}${
+    const title = `${this.getNameTitle()}${this.getCostTitle()}<br/>${wardValueLabel}${
       wardData?.armor ? ` ${armorValueLabel}` : ''
     } ${wardTypeLabel}`;
     return title;
@@ -92,14 +108,14 @@ export class SdmItem extends Item {
             'SDM.CashSymbol'
           )}${this.system.quantity * (this.system.size.value || 1)}`;
         } else {
-          title = `${$l10n('TYPES.Item.gear')}: ${this.name}${this.getCostTitle()}`;
+          title = `${$l10n('TYPES.Item.gear')}: ${this.getNameTitle()}${this.getCostTitle()}`;
         }
         break;
       case 'trait':
-        title = `${$l10n('TYPES.Item.trait')}: ${this.name}${this.getCostTitle()}`;
+        title = `${$l10n('TYPES.Item.trait')}: ${this.getNameTitle()}${this.getCostTitle()}`;
         break;
       case 'burden':
-        title = `${$l10n('TYPES.Item.burden')}: ${this.name}${this.getCostTitle()}`;
+        title = `${$l10n('TYPES.Item.burden')}: ${this.getNameTitle()}${this.getCostTitle()}`;
         break;
     }
 
@@ -119,7 +135,7 @@ export class SdmItem extends Item {
   getPowerTitle(powerData, actorPowerCost = 2) {
     const powerLevel = powerData?.level;
     const powerCost = Math.ceil(actorPowerCost * powerLevel);
-    const powerName = powerData.name || this.name;
+    const powerName = powerData.name || this.getNameTitle();
 
     let title = `<b>${powerName}</b>${!powerData?.name ? this.getCostTitle() : ''} (${$l10n('SDM.Cost').toLowerCase()}: ${powerCost})<br/>`;
 
@@ -141,7 +157,7 @@ export class SdmItem extends Item {
   }
 
   getPowerAlbumTitle(actorPowerCost = 2) {
-    let title = `${$l10n('SDM.PowerAlbum')}: <b>${this.name}</b>${this.getCostTitle()}<br/><br/>`;
+    let title = `${$l10n('SDM.PowerAlbum')}: <b>${this.getNameTitle()}</b>${this.getCostTitle()}<br/><br/>`;
 
     if (!this.system.powers.length) {
       title += `<i class="fa-solid fa-spider"></i> ${$l10n('SDM.NoPowers')} <i class="fa-solid fa-spider"></i>`;
@@ -171,7 +187,7 @@ export class SdmItem extends Item {
     const data = this.system;
     const weaponData = data?.weapon;
 
-    let title = `${this.name}${this.getCostTitle()}<br/>${$l10n('SDM.Damage')}: ${weaponData?.damage.base}`;
+    let title = `${this.getNameTitle()}${this.getCostTitle()}<br/>${$l10n('SDM.Damage')}: ${weaponData?.damage.base}`;
 
     if (weaponData?.versatile) {
       title += `/${weaponData?.damage.versatile}`;
@@ -251,6 +267,47 @@ export class SdmItem extends Item {
       actor,
       content,
       flavor: flavor || game.user.name
+    });
+  }
+
+  async toggleReadied() {
+    const BROKEN_ITEM_READIED = false;
+
+    let nextValue = this.system.broken ? BROKEN_ITEM_READIED : !this.system.readied;
+
+    if (!this.parent || (this.parent && this.parent?.type === ActorType.CARAVAN)) {
+      nextValue = false;
+    }
+
+    await this.update({ 'system.readied': nextValue });
+  }
+
+  async toggleItemStatus(event) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    const { detail, button } = event;
+    if (detail > 1) return;
+
+    const isRepair = button === 2;
+    const status = this.system.status;
+    const readied = this.system.readied;
+
+    let nextStatus;
+
+    if (status === '' && !isRepair) {
+      nextStatus = ItemStatusType.NOTCHED;
+    } else if (status === ItemStatusType.NOTCHED) {
+      nextStatus = isRepair ? '' : ItemStatusType.BROKEN;
+    } else if (status === ItemStatusType.BROKEN && isRepair) {
+      nextStatus = ItemStatusType.NOTCHED;
+    }
+
+    if (nextStatus === undefined) return; // sem mudança
+
+    await this.update({
+      'system.status': nextStatus,
+      'system.readied': nextStatus === ItemStatusType.BROKEN ? false : readied
     });
   }
 

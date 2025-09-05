@@ -97,7 +97,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       transferItem: this._onTransferItem,
       updateAttack: this._onUpdateAttack,
       viewDoc: this._viewDoc,
-      sendToChat: { handler: this._sendToChat, buttons: [0, 2] }
+      sendToChat: { handler: this._sendToChat, buttons: [0, 2] },
+      toggleItemStatus: { handler: this._toggleItemStatus, buttons: [0, 2]}
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
@@ -947,7 +948,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     event.preventDefault(); // Don't open context menu
     event.stopPropagation(); // Don't trigger other events
     const item = this._getEmbeddedDocument(target);
-    await item.update({ 'system.readied': !item.system.readied });
+
+    await item.toggleReadied();
   }
 
   static async _onTransferItem(event, target) {
@@ -1412,6 +1414,15 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const item = this._getEmbeddedDocument(target);
     return await item.sendToChat({ actor: this.actor, collapsed: false });
   }
+
+  static async _toggleItemStatus(event, target) {
+    event.preventDefault(); // Don't open context menu
+    event.stopPropagation(); // Don't trigger other events
+
+    const item = this._getEmbeddedDocument(target);
+    await item.toggleItemStatus(event);
+  }
+
 
   /** Helper Functions */
 

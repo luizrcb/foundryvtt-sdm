@@ -1,5 +1,5 @@
 <li
-  class='item flexrow'
+  class='item flexrow {{trait.system.status}}'
   data-item-id='{{trait._id}}'
   data-drag='true'
   data-document-class='Item'
@@ -8,9 +8,18 @@
   <div class='item-name' style="cursor:pointer;" data-action='sendToChat'>
     <div class='item-image'>
       <img src='{{trait.img}}' width='24' height='24' />
+      {{#if (eq trait.system.status 'notched')}}
+       <i class="fa fa-hammer overlay-icon notched-icon"></i>
+      {{/if}}
+      {{#if (eq trait.system.status 'broken')}}
+        <i class="fa fa-ban overlay-icon broken-icon"></i>
+      {{/if}}
     </div>
     <div class='flexrow'>
-      {{#if (eq trait.system.type 'power')}}
+      {{#if (and
+        (eq trait.system.type 'power')
+        (ne trait.system.status 'broken')
+      )}}
         <div
           class='rollable flexrow'
           data-action='roll'
@@ -28,8 +37,21 @@
       {{/if}}
     </div>
   </div>
-  <div class='item-controls'>
+  <div class='item-controls-small'>
     {{#if @root.editable}}
+    {{#if (eq trait.system.type 'power')}}
+    <a class="item-control">
+      <i class="fa-regular
+        {{#if (eq system.status 'notched')}}fa-hammer
+        {{else}}
+        {{#if (eq system.status 'broken')}}fa-ban
+        {{else}}fa-circle-dot
+        {{/if}}
+        {{/if}}"
+        data-action="toggleItemStatus"
+      ></i>
+    </a>
+    {{/if}}
     <a
       class='item-control item-edit'
       data-tooltip='{{localize "DOCUMENT.Update" type=(localize 'TYPE.Trait')}}'

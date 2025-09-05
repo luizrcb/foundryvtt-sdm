@@ -1,6 +1,6 @@
 import PowerDataModel from '../data/power-data.mjs';
 import { getActorOptions } from '../helpers/actorUtils.mjs';
-import { ActorType, GearType, ItemType } from '../helpers/constants.mjs';
+import { GearType, ItemType } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
@@ -37,7 +37,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       createDoc: this._createEffect,
       deleteDoc: this._deleteEffect,
       toggleEffect: this._toggleEffect,
-      toggleReadied: this._toggleReadied
+      toggleReadied: this._toggleReadied,
+      toggleItemStatus: { handler: this._toggleItemStatus, buttons: [0, 2]}
     },
     form: {
       submitOnChange: true
@@ -548,15 +549,14 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     await effect.update({ disabled: !effect.disabled });
   }
 
-  static async _toggleReadied(event, target) {
-    let nextValue = !this.item.system.readied;
-
-    if (!this.item.parent || (this.item.parent && this.item.parent?.type === ActorType.CARAVAN)) {
-      nextValue = false;
-    }
-
-    await this.item.update({ 'system.readied': nextValue });
+  static async _toggleReadied() {
+    await this.item.toggleReadied();
   }
+
+  static async _toggleItemStatus(event) {
+    await this.item.toggleItemStatus(event);
+  }
+
 
   /** Helper Functions */
 

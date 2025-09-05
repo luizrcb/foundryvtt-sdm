@@ -82,6 +82,18 @@
     }
   }
 
+  // Control Buttons
+  .item-controls-small {
+    display: flex;
+    flex: 0 0 50px;
+    justify-content: flex-end;
+    a {
+      font-size: 12px;
+      text-align: center;
+      margin: 0 6px;
+    }
+  }
+
   // Individual Item
   .item {
     align-items: center;
@@ -98,12 +110,48 @@
       .item-image {
         flex: 0 0 30px;
         height: 30px;
-        background-size: 30px;
-        border: none;
         margin-right: 5px;
-        display: flex;
-        align-items: center;
+        position: relative;
+        display: inline-block;
       }
+
+      .item-image img {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+
+      .item-image .overlay-icon {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        font-size: 16px;
+        text-shadow: 0 0 3px rgba(0,0,0,.7);
+        pointer-events: none;
+      }
+
+      .item-image .notched-icon {
+        color: var(--sdm-c-amber, #e39e00);
+        opacity: 0.9;
+      }
+
+      .item-image .broken-icon {
+        color: var(--sdm-c-rust, #cc2f00);
+        opacity: 0.95;
+      }
+
+    }
+
+    &.notched {
+      border: 1px rgb(183, 65, 14, 0.2);
+      border-style: inset dotted;
+      background: rgb(183, 65, 14, 0.2)
+    }
+
+    &.broken {
+      background: rgb(255, 0, 0, 0.2);
+      border: 1px rgb(255, 0, 0, 0.2) dashed;
     }
   }
 

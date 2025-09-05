@@ -1237,6 +1237,16 @@ input[type=radio]::after {
   text-align: center;
   margin: 0 6px;
 }
+.sdm .items-list .item-controls-small {
+  display: flex;
+  flex: 0 0 50px;
+  justify-content: flex-end;
+}
+.sdm .items-list .item-controls-small a {
+  font-size: 12px;
+  text-align: center;
+  margin: 0 6px;
+}
 .sdm .items-list .item {
   align-items: center;
   padding: 0 2px;
@@ -1250,15 +1260,46 @@ input[type=radio]::after {
 }
 .sdm .items-list .item .item-name {
   color: var(--sdm-c-dark);
+  /* Notched: hammer overlay */
+  /* Broken: ban overlay */
 }
 .sdm .items-list .item .item-name .item-image {
   flex: 0 0 30px;
   height: 30px;
-  background-size: 30px;
-  border: none;
   margin-right: 5px;
-  display: flex;
-  align-items: center;
+  position: relative; /* ✅ establish positioning context */
+  display: inline-block; /* prevent stretching */
+}
+.sdm .items-list .item .item-name .item-image img {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+.sdm .items-list .item .item-name .item-image .overlay-icon {
+  position: absolute; /* ✅ position relative to .item-image */
+  top: 50%; /* center vertically */
+  left: 50%; /* center horizontally */
+  transform: translate(-50%, -50%);
+  font-size: 16px; /* tweak size */
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.7); /* makes it readable */
+  pointer-events: none; /* clicks go to the image */
+}
+.sdm .items-list .item .item-name .item-image .notched-icon {
+  color: var(--sdm-c-amber, #e39e00);
+  opacity: 0.9;
+}
+.sdm .items-list .item .item-name .item-image .broken-icon {
+  color: var(--sdm-c-rust, #cc2f00);
+  opacity: 0.95;
+}
+.sdm .items-list .item.notched {
+  border: 1px rgba(183, 65, 14, 0.2);
+  border-style: inset dotted;
+  background: rgba(183, 65, 14, 0.2);
+}
+.sdm .items-list .item.broken {
+  background: rgba(255, 0, 0, 0.2);
+  border: 1px rgba(255, 0, 0, 0.2) dashed;
 }
 .sdm .items-list .item-prop {
   text-align: center;
@@ -1663,3 +1704,5 @@ input[type=radio]::after {
   top: var(--sdm-top-edit);
   left: var(--sdm-left-edit);
 }
+
+/*# sourceMappingURL=sdm.css.map */

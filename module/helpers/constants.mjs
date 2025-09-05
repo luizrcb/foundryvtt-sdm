@@ -70,6 +70,11 @@ export const FrequencyType = Object.freeze({
   WEEK: 'week'
 });
 
+export const ItemStatusType = Object.freeze({
+  NOTCHED: 'notched',
+  BROKEN: 'broken'
+});
+
 export const TraitType = Object.freeze({
   SKILL: 'skill',
   POWER: 'power'

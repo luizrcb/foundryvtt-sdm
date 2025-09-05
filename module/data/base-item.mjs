@@ -10,6 +10,14 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
     // also known as equipped
     schema.readied = new fields.BooleanField({ initial: false });
 
+    schema.status = new fields.StringField({
+      required: false,
+      nullable: true,
+      blank: true,
+      initial: '',
+      choices: CONFIG.SDM.itemStatus,
+    });
+
     schema.cost = new fields.NumberField({
       required: false,
       nullable: true,
