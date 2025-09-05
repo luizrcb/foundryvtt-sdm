@@ -898,6 +898,12 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
    * @protected
    */
   _onDragStart(event) {
+    const section = event.target.closest('.tab.inventory.scrollable.active');
+    if (!section) return;
+
+    const sacks = Array.from(section.querySelectorAll('.sack-drop'));
+    sacks.forEach(s => s.classList.add('drop-area'));
+
     const docRow = event.currentTarget.closest('li');
     if ('link' in event.target.dataset) return;
 
@@ -908,6 +914,14 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
 
     // Set data transfer
     event.dataTransfer.setData('text/plain', JSON.stringify(dragData));
+  }
+
+  _onDragEnd(event) {
+    const section = event.target.closest('.tab.inventory.scrollable.active');
+    if (!section) return;
+
+    const sacks = Array.from(section.querySelectorAll('.sack-drop'));
+    sacks.forEach(s => s.classList.remove('drop-area'));
   }
 
   /**
@@ -1245,6 +1259,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       };
       d.callbacks = {
         dragstart: this._onDragStart.bind(this),
+        dragend: this._onDragEnd.bind(this),
         dragover: this._onDragOver.bind(this),
         drop: this._onDrop.bind(this)
       };

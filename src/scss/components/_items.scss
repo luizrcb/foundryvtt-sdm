@@ -272,8 +272,9 @@ input:checked + .slider .fa-gear {
 }
 
 .list-border {
-  // border: 1px solid colors.$c-light-border;
-  border: 1px solid colors.$c-light-border;
+  &:not(.drop-area){
+    border: 1px solid colors.$c-light-border;
+  }
 }
 
 .items-list .item.items-header.caravan-item-header:last-child {
