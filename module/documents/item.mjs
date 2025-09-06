@@ -21,7 +21,7 @@ export class SdmItem extends Item {
   async _onUpdate(changed, options, userId) {
     await super._onUpdate(changed, options, userId);
 
-    if (changed.system?.max_powers !== undefined) {
+    if (changed?.system?.max_powers !== undefined) {
       if (changed.system?.max_powers < this.system.powers.length) {
         await this.update({
           'system.max_powers': this.system.powers.length
@@ -29,7 +29,7 @@ export class SdmItem extends Item {
       }
     }
 
-    if (changed.system?.type !== undefined) {
+    if (changed?.system?.type !== undefined) {
       if (this.type === ItemType.TRAIT && changed.system.type !== GearType.POWER) {
         await this.update({
           'system.is_hallmark': false
@@ -37,7 +37,7 @@ export class SdmItem extends Item {
       }
     }
 
-    if (changed.system.size && changed.system.size.unit === SizeUnit.CASH) {
+    if (changed?.system?.size && changed?.system?.size?.unit === SizeUnit.CASH) {
       await this.update({
         'system.is_hallmark': false
       });

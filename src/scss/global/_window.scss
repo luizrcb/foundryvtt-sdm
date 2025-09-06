@@ -319,6 +319,13 @@ input[type='radio']::after {
     --color-warm-2: var(--sdm-scrollbar-thumb);
   }
 
+  .dice-rolls {
+    font-family: typo.$font-dice;
+    .roll {
+      font-size: 13px !important;
+    }
+  }
+
   .sdm-icon {
     width: 250px;
     height: 150px;

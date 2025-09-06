@@ -444,6 +444,12 @@ function _configureFonts() {
           style: 'italic'
         }
       ]
+    },
+    'Our Golden Age': {
+      editor: true,
+      fonts: [
+        { urls: ['systems/sdm/fonts/our_golden_age/OurGoldenAge-Regular.otf'] },
+      ]
     }
   });
 }

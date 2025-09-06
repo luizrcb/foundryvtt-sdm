@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.2.7
+
+- Fix bugs on hallmark item limits check
+- Add new font to the project for 3D and 2D dice results
+
 ## v0.2.6
 
 - Fix the “SDM Compatible” icon appearing unintentionally on the character sheet

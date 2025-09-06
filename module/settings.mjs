@@ -784,7 +784,7 @@ export function configurePlayerChromatype() {
         outline: 'black',
         texture: 'none',
         material: 'plastic',
-        font: 'Baron Neue',
+        font: 'Our Golden Age',
       });
     }
   });

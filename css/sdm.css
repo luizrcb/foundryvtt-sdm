@@ -1,5 +1,12 @@
 @charset "UTF-8";
 :root {
+  --sdm-font-primary: "Baron Neue";
+  --sdm-font-secondary: "Alegreya", sans-serif;
+  --sdm-font-dice: "Our Golden Age";
+  --sdm-font-tab: "Bebas Neue", sans-serif;
+}
+
+:root {
   --sdm-c-dark: #191813;
   --sdm-c-faint: #c9c7b8;
   --sdm-c-beige: #b5b3a4;
@@ -83,6 +90,13 @@
 .theme-dark {
   --sdm-top-edit: 3px;
   --sdm-left-edit: 10px;
+}
+
+:root {
+  --sdm-font-primary: "Baron Neue";
+  --sdm-font-secondary: "Alegreya", sans-serif;
+  --sdm-font-dice: "Our Golden Age";
+  --sdm-font-tab: "Bebas Neue", sans-serif;
 }
 
 :root {
@@ -172,7 +186,7 @@
 }
 
 .window-app {
-  font-family: "Baron Neue";
+  font-family: var(--sdm-font-primary);
 }
 
 .rollable:hover, .rollable:focus {
@@ -199,7 +213,7 @@
   padding: 2px 0 2px 2px;
   outline: none;
   box-shadow: none;
-  font-family: "Alegreya", sans-serif;
+  font-family: var(--sdm-font-secondary);
 }
 
 /* Disabled or readonly inputs */
@@ -212,7 +226,7 @@
   border-bottom: 1px solid #aaa; /* differentiate from normal */
   color: #666;
   padding: 2px 0 2px 4px;
-  font-family: "Alegreya", sans-serif;
+  font-family: var(--sdm-font-secondary);
 }
 
 /* On focus, accent color */
@@ -221,7 +235,7 @@
 .sheet select:focus {
   border-bottom: 2px solid var(--sdm-c-accent);
   box-shadow: none;
-  font-family: "Alegreya", sans-serif;
+  font-family: var(--sdm-font-secondary);
 }
 
 .sheet input.resource-label {
@@ -468,6 +482,12 @@ input[type=radio]::after {
     --button-focus-outline-color: var(--sdm-scrollbar-thumb);
     --color-warm-1: var(--sdm-scrollbar-thumb);
     --color-warm-2: var(--sdm-scrollbar-thumb);
+  }
+  .dice-rolls {
+    font-family: var(--sdm-font-dice);
+  }
+  .dice-rolls .roll {
+    font-size: 13px !important;
   }
   .sdm-icon {
     width: 250px;
@@ -976,6 +996,12 @@ input[type=radio]::after {
   /* Toggle de modo */
 }
 .sdm :root {
+  --sdm-font-primary: "Baron Neue";
+  --sdm-font-secondary: "Alegreya", sans-serif;
+  --sdm-font-dice: "Our Golden Age";
+  --sdm-font-tab: "Bebas Neue", sans-serif;
+}
+.sdm :root {
   --sdm-c-dark: #191813;
   --sdm-c-faint: #c9c7b8;
   --sdm-c-beige: #b5b3a4;
@@ -1050,7 +1076,7 @@ input[type=radio]::after {
   --sdm-c-table: #cdecee;
 }
 .sdm .item-form {
-  font-family: "Baron Neue";
+  font-family: var(--sdm-font-primary);
 }
 .sdm .sheet-header {
   flex: 0 auto;
@@ -1078,7 +1104,7 @@ input[type=radio]::after {
 .sdm .sheet-tabs {
   flex: 0;
   height: 30px;
-  font-family: "Bebas Neue", sans-serif;
+  font-family: var(--sdm-font-tab);
   font-weight: bold;
 }
 .sdm .sheet-body,
@@ -1119,12 +1145,18 @@ input[type=radio]::after {
 .sdm .resources.grid.grid-5col {
   margin-top: 0px;
 }
+.sdm :root {
+  --sdm-font-primary: "Baron Neue";
+  --sdm-font-secondary: "Alegreya", sans-serif;
+  --sdm-font-dice: "Our Golden Age";
+  --sdm-font-tab: "Bebas Neue", sans-serif;
+}
 .sdm .resource-label {
-  font-family: "Baron Neue";
+  font-family: var(--sdm-font-primary);
   font-size: 14px;
 }
 .sdm .resource-content {
-  font-family: "Alegreya", sans-serif;
+  font-family: var(--sdm-font-secondary);
 }
 .sdm .ability {
   margin-bottom: 2px;
@@ -1136,6 +1168,12 @@ input[type=radio]::after {
 .sdm .ability-full {
   margin-left: 5px;
   margin-right: 5px;
+}
+.sdm :root {
+  --sdm-font-primary: "Baron Neue";
+  --sdm-font-secondary: "Alegreya", sans-serif;
+  --sdm-font-dice: "Our Golden Age";
+  --sdm-font-tab: "Bebas Neue", sans-serif;
 }
 .sdm :root {
   --sdm-c-dark: #191813;
@@ -1232,7 +1270,7 @@ input[type=radio]::after {
   font-size: 14px;
   text-align: center;
   font-weight: bold;
-  font-family: "Bebas Neue", sans-serif;
+  font-family: var(--sdm-font-tab);
 }
 .sdm .items-header .item-name {
   font-weight: bold;
@@ -1265,7 +1303,7 @@ input[type=radio]::after {
   margin: 0;
   overflow: hidden;
   font-size: 13px;
-  font-family: "Alegreya", sans-serif;
+  font-family: var(--sdm-font-secondary);
   text-align: left;
   align-items: center;
   display: flex;
@@ -1453,6 +1491,12 @@ input[type=radio]::after {
   .sdm .items-list .item:hover {
     background-color: var(--sdm-item-hover); /* Your ultraviolet color with transparency */
   }
+}
+.sdm :root {
+  --sdm-font-primary: "Baron Neue";
+  --sdm-font-secondary: "Alegreya", sans-serif;
+  --sdm-font-dice: "Our Golden Age";
+  --sdm-font-tab: "Bebas Neue", sans-serif;
 }
 .sdm :root {
   --sdm-c-dark: #191813;
@@ -1647,6 +1691,12 @@ input[type=radio]::after {
 }
 .sdm .effects .item .effect-controls {
   border: none;
+}
+.sdm :root {
+  --sdm-font-primary: "Baron Neue";
+  --sdm-font-secondary: "Alegreya", sans-serif;
+  --sdm-font-dice: "Our Golden Age";
+  --sdm-font-tab: "Bebas Neue", sans-serif;
 }
 .sdm :root {
   --sdm-c-dark: #191813;

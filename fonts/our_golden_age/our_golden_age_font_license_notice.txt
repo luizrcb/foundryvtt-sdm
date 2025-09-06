@@ -1,0 +1,13 @@
+Font License Notice
+===================
+
+This font is provided by the creator Luka Rejec on https://patreon.com/wizardthieffighter with the following terms:
+
+- Use is permitted within this project.
+- Redistribution of the font file is not permitted.
+- Others who are not patrons or license holders must obtain their own license
+  from the creator before using this font.
+- This license is personal and non-transferable.
+
+This font license is separate from the MIT license that applies to the rest
+of this codebase. The MIT license does not apply to this font file.

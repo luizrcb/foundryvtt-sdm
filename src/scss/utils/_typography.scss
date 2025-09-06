@@ -1,3 +1,11 @@
-$font-primary: 'Baron Neue';
-$font-secondary: 'Alegreya', sans-serif;
-$font-tab: 'Bebas Neue', sans-serif;
+:root {
+  --sdm-font-primary: 'Baron Neue';
+  --sdm-font-secondary: 'Alegreya', sans-serif;
+  --sdm-font-dice: 'Our Golden Age';
+  --sdm-font-tab: 'Bebas Neue', sans-serif;
+}
+
+$font-primary: var(--sdm-font-primary);
+$font-secondary: var(--sdm-font-secondary);
+$font-dice: var(--sdm-font-dice);
+$font-tab: var(--sdm-font-tab);

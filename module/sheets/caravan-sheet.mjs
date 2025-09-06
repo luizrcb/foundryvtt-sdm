@@ -483,7 +483,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
 
     let itemSlots = getSlotsTaken(item?.system);
 
-    if (updateData && !updateData.system) return true;
+    if (updateData && !updateData?.system) return true;
 
     let updateDataSlots = updateData ? getSlotsTaken(updateData?.system) : null;
 
