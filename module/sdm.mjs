@@ -18,6 +18,7 @@ import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
 import {
   CHARACTER_DEFAULT_INITIATIVE,
+  configurePlayerChromatype,
   configureUseHeroDiceButton,
   createEscalatorDieDisplay,
   DEFAULT_MAX_POWERS,
@@ -317,21 +318,8 @@ registerHandlebarsHelpers();
 Hooks.once('ready', function () {
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
 
-  const color = game.settings.get('sdm', 'accentColor');
-  document.documentElement.style.setProperty('--sdm-c-accent', color);
-  document.documentElement.style.setProperty('--sdm-c-highlight', color);
-  document.documentElement.style.setProperty('--sdm-scrollbar-thumb', color);
-
-
-  document.documentElement.style.setProperty('scrollbar-color', `${color} transparent`, 'important');
-
-
-  const darkRoot = document.querySelector(".theme-dark") || document;
-
-  // Dark theme scope (nearest ancestor wins over :root)
-  darkRoot.style.setProperty("--sdm-c-accent", color, "important");
-  darkRoot.style.setProperty("--sdm-c-highlight", color, "important");
-  darkRoot.style.setProperty('--sdm-scrollbar-thumb', color, 'important');
+  // client custom color system settings
+  configurePlayerChromatype();
 
   Hooks.on('hotbarDrop', (bar, data, slot) => createDocMacro(data, slot));
   // Create container element

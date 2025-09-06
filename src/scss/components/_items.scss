@@ -286,6 +286,6 @@ li.item {
 
 @layer item-list {
   .items-list .item:hover {
-    background-color: rgba(184, 78, 255, 0.1); /* Your ultraviolet color with transparency */
+    background-color: var(--sdm-item-hover); /* Your ultraviolet color with transparency */
   }
 }

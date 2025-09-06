@@ -73,8 +73,28 @@ SDM.frequency = {
 
 SDM.itemStatus = {
   notched: 'SDM.ItemStatusNotched',
-  broken: 'SDM.ItemStatusBroken',
-}
+  broken: 'SDM.ItemStatusBroken'
+};
+
+SDM.accendColorOptions = {
+  black: 'SDM.ColorBlack',
+  blue: 'SDM.ColorBlue',
+  brown: 'SDM.ColorBrown',
+  crimson: 'SDM.ColorCrimson',
+  emerald: 'SDM.ColorEmerald',
+  gold: 'SDM.ColorGold',
+  green: 'SDM.ColorGreen',
+  olive: 'SDM.ColorOlive',
+  orange: 'SDM.ColorOrange',
+  pink: 'SDM.ColorPink',
+  purple: 'SDM.ColorPurple',
+  red: 'SDM.ColorRed',
+  silver: 'SDM.ColorSilver',
+  teal: 'SDM.ColorTeal',
+  violet: 'SDM.ColorViolet',
+  white: 'SDM.ColorWhite',
+  yellow: 'SDM.ColorYellow'
+};
 
 function getOrderedAbilities(language = 'en') {
   let lang = Object.keys(SDM.abilitiesOrder).includes(language) ? language : 'en';

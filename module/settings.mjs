@@ -20,23 +20,15 @@ export function registerSystemSettings() {
 
   /** qol settings */
 
-  game.settings.register('sdm', 'accentColor', {
-    name: 'Chromatype',
-    hint: 'Pick your chromatype in the light of the polychrom!',
+  game.settings.register('sdm', 'chromatype', {
+    name: 'SDM.SettingsChromatype',
+    hint: 'SDM.SettingsChromatypeHint',
     scope: 'client', // or "world"
     config: true,
     requiresReload: true,
-    choices: {
-      '#cc2f00': 'Red',
-      '#db6600': 'Orange',
-      '#ffcc66': 'Yellow',
-      '#76b80d': 'Green',
-      '#007cb5': 'Blue',
-      '#873b9c': 'Purple',
-      '#b84eff': 'Ultraviolet'
-    },
+    choices: CONFIG.SDM.accendColorOptions,
     type: String,
-    default: '#873b9c'
+    default: 'teal'
   });
 
   game.settings.register('sdm', 'reverseShiftKey', {
@@ -297,7 +289,7 @@ export function registerSystemSettings() {
     type: String, // Data type: String, Number, Boolean, etc
     default: 'd6',
     choices: DiceType,
-    requiresReload: true
+    requiresReload: true,
   });
 
   game.settings.register('sdm', 'savingThrowBaseRollFormula', {
@@ -601,4 +593,193 @@ export function configureUseHeroDiceButton(message, html, data) {
     ev.stopPropagation();
     handleHeroDice(ev, message, flags);
   });
+}
+
+export function configurePlayerChromatype() {
+  const color = game.settings.get('sdm', 'chromatype');
+
+  const colorMapping = {
+    red: {
+      hex: '#cc0000ff',
+      rgb: 'rgba(255, 0, 0, 0.1)',
+      dice: {
+        foreground: '#fa7979ff',
+        background: '#900000'
+      }
+    },
+    orange: {
+      hex: '#db6600',
+      rgb: 'rgba(219, 102, 0, 0.1)',
+      dice: {
+        foreground: '#FFA74F',
+        background: '#db6600'
+      }
+    },
+    yellow: {
+      hex: '#c4c416ff',
+      rgb: 'rgba(255, 252, 102, 0.25)',
+      dice: {
+        foreground: '#fdfd7eff',
+        background: '#c4c416ff'
+      }
+    },
+    green: {
+      hex: '#00B500',
+      rgb: 'rgba(118, 184, 13, 0.1)',
+      dice: {
+        foreground: '#aff5afff',
+        background: '#00B500'
+      }
+    },
+    blue: {
+      hex: '#007cb5',
+      rgb: 'rgba(0, 124, 181, 0.1)',
+      dice: {
+        foreground: '#8cb3f7ff',
+        background: '#00008E'
+      }
+    },
+    purple: {
+      hex: '#873b9c',
+      rgb: 'rgba(135, 59, 156, 0.1)',
+      dice: {
+        foreground: '#e599faff',
+        background: '#873b9c'
+      }
+    },
+    violet: {
+      hex: '#7F00FF',
+      rgb: 'rgba(127, 0, 255, 0.1)',
+      dice: {
+        foreground: '#d7afffff',
+        background: '#7F00FF'
+      }
+    },
+    pink: {
+      hex: '#cf1371ff', // vivid but not neon
+      rgb: 'rgba(255, 77, 166, 0.1)',
+      dice: {
+        foreground: '#f395c4ff',
+        background: '#cf1371ff'
+      }
+    },
+    teal: {
+      hex: '#00666b',
+      rgb: 'rgba(0, 162, 171, 0.15)',
+      dice: {
+        foreground: '#9ef0f5ff',
+        background: '#00666b'
+      }
+    },
+    brown: {
+      hex: '#8b4513', // classic earthy brown (saddle brown)
+      rgb: 'rgba(139, 69, 19, 0.1)',
+      dice: {
+        foreground: '#ffa462ff',
+        background: '#8b4513'
+      }
+    },
+    black: {
+      hex: '#000000',
+      rgb: 'rgba(0, 0, 0, 0.25)',
+      dice: {
+        foreground: '#f0f0f0ff',
+        background: '#000000'
+      }
+    },
+    white: {
+      hex: 'rgba(255, 255, 255, 0.5)',
+      rgb: 'rgba(255, 255, 255, 0.5)',
+      dice: {
+        foreground: '#000000ff',
+        background: '#ffffff8c'
+      }
+    },
+    gold: {
+      hex: '#b8860b',
+      rgb: 'rgba(255, 215, 0, 0.15)',
+      dice: {
+        foreground: '#fff6b3ff',
+        background: '#b8860b'
+      }
+    },
+    silver: {
+      hex: '#6e6e6e',
+      rgb: 'rgba(192, 192, 192, 0.15)',
+      dice: {
+        foreground: '#f8f8f8ff',
+        background: '#6e6e6e'
+      }
+    },
+    crimson: {
+      hex: '#660000',
+      rgb: 'rgba(153, 0, 0, 0.15)',
+      dice: {
+        foreground: '#ff8080ff',
+        background: '#660000'
+      }
+    },
+    emerald: {
+      hex: '#1e7d43',
+      rgb: 'rgba(80, 200, 120, 0.15)',
+      dice: {
+        foreground: '#c0ffd6ff',
+        background: '#1e7d43'
+      }
+    },
+    olive: {
+      hex: '#4a4a00',
+      rgb: 'rgba(128, 128, 0, 0.15)',
+      dice: {
+        foreground: '#f0f0a0ff',
+        background: '#4a4a00'
+      }
+    }
+  };
+  const selectedColor = colorMapping[color];
+  const dice3DColor = selectedColor.dice;
+
+  Hooks.once('diceSoNiceInit', dice3d => {
+    if (dice3d) {
+      dice3d.addColorset({
+        name: 'sdm-chromatype',
+        description: 'SDM Chromatype Dice',
+        category: 'Colors',
+        foreground: [dice3DColor.foreground],
+        background: [dice3DColor.background],
+        outline: 'black',
+        texture: 'none',
+        material: 'plastic'
+      });
+    }
+  });
+
+  const { hex: hexColor, rgb: rgbColor } = selectedColor;
+
+  document.documentElement.style.setProperty('--sdm-c-accent', hexColor);
+  document.documentElement.style.setProperty('--sdm-c-highlight', hexColor);
+  document.documentElement.style.setProperty('--sdm-scrollbar-thumb', hexColor);
+  document.documentElement.style.setProperty('--sdm-item-hover', rgbColor);
+  document.documentElement.style.setProperty('--button-focus-outline-color', rgbColor, 'important');
+  document.documentElement.style.setProperty(
+    '--button-hover-background-color:',
+    rgbColor,
+    'important'
+  );
+  document.documentElement.style.setProperty('--color-warm-2', rgbColor, 'important');
+  document.documentElement.style.setProperty(
+    'scrollbar-color',
+    `${hexColor} transparent`,
+    'important'
+  );
+
+  const darkRoot = document.querySelector('.theme-dark') || document;
+  if (!darkRoot) return;
+  // Dark theme scope (nearest ancestor wins over :root)
+  darkRoot.style?.setProperty('--sdm-c-accent', hexColor, 'important');
+  darkRoot.style?.setProperty('--sdm-c-highlight', hexColor, 'important');
+  darkRoot.style?.setProperty('--sdm-scrollbar-thumb', hexColor, 'important');
+  darkRoot.style?.setProperty('--sdm-item-hover', rgbColor, 'important');
+  darkRoot.style?.setProperty('--button-focus-outline-color', rgbColor, 'important');
+  darkRoot.style?.setProperty('--button-hover-background-color', rgbColor, 'important');
 }

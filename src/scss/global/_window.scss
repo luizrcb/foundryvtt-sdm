@@ -308,6 +308,9 @@ input[type='radio']::after {
 @layer window-layer {
   * {
     scrollbar-color: var(--sdm-scrollbar-thumb) transparent;
+    --button-focus-outline-color: var(--sdm-scrollbar-thumb);
+    // --button-hover-background-color: var(--sdm-scrollbar-thumb);
+    --color-warm-2: var(--sdm-scrollbar-thumb);
   }
 
   .route-item {

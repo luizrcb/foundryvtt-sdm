@@ -11,10 +11,10 @@
   --sdm-c-border: rgb(51, 51, 51);
   --sdm-c-font: rgb(102, 102, 102);
   --sdm-c-ligh-border: #b5b3a4;
-  --sdm-c-violet: #7F00FF;
+  --sdm-c-violet: #7f00ff;
   --sdm-c-ultraviolet: #b84eff;
-  --sdm-c-theme: #00A2AB;
-  --sdm-c-table: #CDECEE;
+  --sdm-c-theme: #00a2ab;
+  --sdm-c-table: #cdecee;
 
   // 10 color rainbow
   --sdm-c-rust: #cc2f00;
@@ -41,6 +41,7 @@
   --color-scrollbar: var(--sdm-c-highlight);
   --scrollbar-color: var(--sdm-c-highlight);
   --sdm-scrollbar-thumb: var(--sdm-c-highlight, #b84eff);
+  --sdm-item-hover: rgba(184, 78, 255, 0.1);
 }
 
 .theme-dark {
@@ -81,9 +82,8 @@
   --color-scrollbar: var(--sdm-c-highlight);
   --scrollbar-color: var(--sdm-c-highlight);
 
-  --sdm-c-theme: #00A2AB;
-  --sdm-c-table: #CDECEE;
-
+  --sdm-c-theme: #00a2ab;
+  --sdm-c-table: #cdecee;
 }
 
 $c-dark: var(--sdm-c-dark);
