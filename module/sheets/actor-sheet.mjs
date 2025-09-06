@@ -737,9 +737,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     let updateDataSlots = updateData ? getSlotsTaken(updateData?.system) : null;
 
-    // TODO REMOVE THIS
-    console.log(updateData);
-
+    if (updateData.system?.is_hallmark && !this.actor.canAddHallmarkItem()) {
+      ui.notifications.error($fmt('SDM.ErrorHallmarkLimit', { target: this.actor.name }));
+      return false;
+    }
 
     if (updateData && updateDataSlots <= itemSlots) {
       return true;

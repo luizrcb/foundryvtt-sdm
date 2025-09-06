@@ -394,12 +394,6 @@
   padding: 0.25rem;
 }
 
-.system-badge > img {
-  height: 100px;
-  border: none;
-  object-fit: contain;
-}
-
 .system-badge .system-info {
   position: relative;
   font-size: var(--font-size-16);
@@ -474,6 +468,21 @@ input[type=radio]::after {
     --button-focus-outline-color: var(--sdm-scrollbar-thumb);
     --color-warm-1: var(--sdm-scrollbar-thumb);
     --color-warm-2: var(--sdm-scrollbar-thumb);
+  }
+  .sdm-icon {
+    width: 250px;
+    height: 150px;
+    -webkit-mask-image: url("../assets/sdm-compatible.png");
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    -webkit-mask-size: contain;
+    mask-image: url("../assets/sdm-compatible.png");
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+    object-fit: fill;
+    /* you choose the visible color now */
+    background-color: var(--sdm-scrollbar-thumb);
   }
   .route-item {
     padding: 4px;

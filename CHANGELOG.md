@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v0.2.6
+
+- Fix the “SDM Compatible” icon appearing unintentionally on the character sheet
+- Fix the hallmark limit check when editing an item
+- Add a separate configuration for Dice So Nice Chromatype color
+- Change the font of the “SDM Chromatype Dice” theme
+
 ## v0.2.5
 
 - Add support to flag items as hallmark (hallmark item leveling is not automated)

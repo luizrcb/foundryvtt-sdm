@@ -485,7 +485,7 @@ function renderSettings(html) {
   section.innerHTML = `
     <h4 class="divider">${game.i18n.localize('WORLD.FIELDS.system.label')}</h4>
     <div class="system-badge">
-      <img src="systems/sdm/assets/sdm-compatible.png" data-tooltip="${sdm.title}" alt="${sdm.title}">
+      <div class="sdm-icon" data-tooltip="${sdm.title}" alt="${sdm.title}"></div>
       <span class="system-info">${sdm.version}</span>
     </div>
   `;

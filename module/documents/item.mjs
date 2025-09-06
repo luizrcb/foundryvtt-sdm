@@ -28,6 +28,20 @@ export class SdmItem extends Item {
         });
       }
     }
+
+    if (changed.system?.type !== undefined) {
+      if (this.type === ItemType.TRAIT && changed.system.type !== GearType.POWER) {
+        await this.update({
+          'system.is_hallmark': false
+        });
+      }
+    }
+
+    if (changed.system.size && changed.system.size.unit === SizeUnit.CASH) {
+      await this.update({
+        'system.is_hallmark': false
+      });
+    }
   }
 
   /**

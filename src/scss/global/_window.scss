@@ -235,11 +235,11 @@
   gap: 0.5rem;
   padding: 0.25rem;
 
-  > img {
-    height: 100px;
-    border: none;
-    object-fit: contain;
-  }
+  // > img {
+  //   height: 100px;
+  //   border: none;
+  //   object-fit: fill;
+  // }
 
   .system-info {
     position: relative;
@@ -317,6 +317,25 @@ input[type='radio']::after {
     // --button-hover-background-color: var(--sdm-scrollbar-thumb);
     --color-warm-1: var(--sdm-scrollbar-thumb);
     --color-warm-2: var(--sdm-scrollbar-thumb);
+  }
+
+  .sdm-icon {
+    width: 250px;
+    height: 150px;
+
+    -webkit-mask-image: url('../assets/sdm-compatible.png');
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    -webkit-mask-size: contain;
+
+    mask-image: url('../assets/sdm-compatible.png');
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+    object-fit: fill;
+
+    /* you choose the visible color now */
+    background-color: var(--sdm-scrollbar-thumb);
   }
 
   .route-item {

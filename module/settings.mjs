@@ -31,6 +31,20 @@ export function registerSystemSettings() {
     default: 'teal'
   });
 
+  game.settings.register('sdm', 'diceSoNiceChromatype', {
+    name: 'SDM.SettingsDiceSoNiceChromatype',
+    hint: 'SDM.SettingsDiceSoNiceChromatypeHint',
+    scope: 'client', // or "world"
+    config: true,
+    requiresReload: true,
+    choices: {
+      'same': 'SDM.DSNChromatypeSame',
+      ...CONFIG.SDM.accendColorOptions,
+    },
+    type: String,
+    default: 'same'
+  })
+
   game.settings.register('sdm', 'reverseShiftKey', {
     name: 'SDM.SettingsReverseShiftKey',
     hint: 'SDM.SettingsReverseShiftKeyHint',
@@ -597,6 +611,9 @@ export function configureUseHeroDiceButton(message, html, data) {
 
 export function configurePlayerChromatype() {
   const color = game.settings.get('sdm', 'chromatype');
+  const dsnColor = game.settings.get('sdm', 'diceSoNiceChromatype');
+
+  const dsnFinalColor = dsnColor === 'same' ? color : dsnColor;
 
   const colorMapping = {
     aqua: {
@@ -754,7 +771,7 @@ export function configurePlayerChromatype() {
     }
   };
   const selectedColor = colorMapping[color];
-  const dice3DColor = selectedColor.dice;
+  const dice3DColor = colorMapping[dsnFinalColor].dice;
 
   Hooks.once('diceSoNiceInit', dice3d => {
     if (dice3d) {
@@ -766,7 +783,8 @@ export function configurePlayerChromatype() {
         background: [dice3DColor.background],
         outline: 'black',
         texture: 'none',
-        material: 'plastic'
+        material: 'plastic',
+        font: 'Baron Neue',
       });
     }
   });
