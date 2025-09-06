@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.2.5
+
+- Add support to flag items as hallmark (hallmark item leveling is not automated)
+- Add a Chromatype configuration option for clients to choose a main color for UI elements
+- Users of the “Dice So Nice” module will find a special “SDM Chromatype Dice” theme to color their 3D dice according to their chromatype
+
 ## v0.2.4
 
 - Add support for marking items as notched and broken
