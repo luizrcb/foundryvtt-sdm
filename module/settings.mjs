@@ -599,83 +599,100 @@ export function configurePlayerChromatype() {
   const color = game.settings.get('sdm', 'chromatype');
 
   const colorMapping = {
-    red: {
-      hex: '#cc0000ff',
-      rgb: 'rgba(255, 0, 0, 0.1)',
+    aqua: {
+      hex: '#07cfcfd0',
+      rgb: 'rgba(0, 255, 255, 0.2)',
       dice: {
-        foreground: '#fa7979ff',
-        background: '#900000'
+        foreground: '#CF0707',
+        background: '#07cfcfe0'
+      }
+    },
+    red: {
+      hex: '#E25C65',
+      rgb: 'rgba(226, 92, 101, 0.2)',
+      dice: {
+        foreground: '#177a74ff',
+        background: '#E25C65'
       }
     },
     orange: {
-      hex: '#db6600',
-      rgb: 'rgba(219, 102, 0, 0.1)',
+      hex: '#EC843D',
+      rgb: 'rgba(236, 132, 61, 0.2)',
       dice: {
-        foreground: '#FFA74F',
-        background: '#db6600'
+        foreground: '#0075DB',
+        background: '#EC843D'
       }
     },
     yellow: {
-      hex: '#c4c416ff',
-      rgb: 'rgba(255, 252, 102, 0.25)',
+      hex: '#D5CC63',
+      rgb: 'rgba(213, 204, 99, 0.3)',
       dice: {
-        foreground: '#fdfd7eff',
-        background: '#c4c416ff'
+        foreground: '#48C5C7',
+        background: '#D5CC63'
       }
     },
     green: {
-      hex: '#00B500',
-      rgb: 'rgba(118, 184, 13, 0.1)',
+      hex: '#688B75',
+      rgb: 'rgba(104, 139, 117, 0.3)',
       dice: {
-        foreground: '#aff5afff',
-        background: '#00B500'
+        foreground: '#463629',
+        background: '#688B75'
       }
     },
     blue: {
-      hex: '#007cb5',
-      rgb: 'rgba(0, 124, 181, 0.1)',
+      hex: '#497DAD',
+      rgb: 'rgba(73, 125, 173, 0.25)',
       dice: {
-        foreground: '#8cb3f7ff',
-        background: '#00008E'
+        foreground: '#D27F23',
+        background: '#497DAD'
       }
     },
     purple: {
-      hex: '#873b9c',
-      rgb: 'rgba(135, 59, 156, 0.1)',
+      hex: '#785DAA',
+      rgb: 'rgba(120, 93, 170, 0.2)',
       dice: {
-        foreground: '#e599faff',
-        background: '#873b9c'
+        foreground: '#8faa5d',
+        background: '#785DAA'
       }
     },
     violet: {
-      hex: '#7F00FF',
-      rgb: 'rgba(127, 0, 255, 0.1)',
+      hex: '#B10FD4',
+      rgb: 'rgba(177, 15, 212, 0.2)',
       dice: {
-        foreground: '#d7afffff',
-        background: '#7F00FF'
+        foreground: '#000000',
+        background: '#B10FD4'
       }
     },
     pink: {
-      hex: '#cf1371ff', // vivid but not neon
-      rgb: 'rgba(255, 77, 166, 0.1)',
+      hex: '#CF6188',
+      rgb: 'rgba(207, 97, 136, 0.2)',
       dice: {
-        foreground: '#f395c4ff',
-        background: '#cf1371ff'
+        foreground: '#362e63ff',
+        background: '#CF6188'
+      }
+    },
+    ultraviolet: {
+      hex: '#F3169A',
+      rgb: 'rgba(2, 2, 2, 0.2)',
+      dice: {
+        // foreground: '#16F36F',
+        foreground: '#19A652',
+        background: '#F3169A',
       }
     },
     teal: {
-      hex: '#00666b',
-      rgb: 'rgba(0, 162, 171, 0.15)',
+      hex: '#00817F',
+      rgb: 'rgba(0, 129, 127, 0.15)',
       dice: {
-        foreground: '#9ef0f5ff',
-        background: '#00666b'
+        foreground: '#000000',
+        background: '#00817F'
       }
     },
     brown: {
       hex: '#8b4513', // classic earthy brown (saddle brown)
       rgb: 'rgba(139, 69, 19, 0.1)',
       dice: {
-        foreground: '#ffa462ff',
+        foreground: '#3098E3',
         background: '#8b4513'
       }
     },
@@ -696,11 +713,11 @@ export function configurePlayerChromatype() {
       }
     },
     gold: {
-      hex: '#b8860b',
-      rgb: 'rgba(255, 215, 0, 0.15)',
+      hex: '#AD8C3F',
+      rgb: 'rgba(173, 140, 63, 0.2)',
       dice: {
-        foreground: '#fff6b3ff',
-        background: '#b8860b'
+        foreground: '#3b4cecff',
+        background: '#AD8C3F'
       }
     },
     silver: {
@@ -715,7 +732,7 @@ export function configurePlayerChromatype() {
       hex: '#660000',
       rgb: 'rgba(153, 0, 0, 0.15)',
       dice: {
-        foreground: '#ff8080ff',
+        foreground: '#00a3a3ff',
         background: '#660000'
       }
     },
@@ -723,7 +740,7 @@ export function configurePlayerChromatype() {
       hex: '#1e7d43',
       rgb: 'rgba(80, 200, 120, 0.15)',
       dice: {
-        foreground: '#c0ffd6ff',
+        foreground: '#7D1E58',
         background: '#1e7d43'
       }
     },
@@ -731,7 +748,7 @@ export function configurePlayerChromatype() {
       hex: '#4a4a00',
       rgb: 'rgba(128, 128, 0, 0.15)',
       dice: {
-        foreground: '#f0f0a0ff',
+        foreground: '#00004A',
         background: '#4a4a00'
       }
     }

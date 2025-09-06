@@ -459,6 +459,11 @@ input[type=radio]::after {
   color: var(--sdm-c-readied);
 }
 
+.hallmark {
+  font-weight: 900;
+  color: var(--sdm-c-amber);
+}
+
 .not-readied {
   color: var(--sdm-c-not-readied);
 }
@@ -467,6 +472,7 @@ input[type=radio]::after {
   * {
     scrollbar-color: var(--sdm-scrollbar-thumb) transparent;
     --button-focus-outline-color: var(--sdm-scrollbar-thumb);
+    --color-warm-1: var(--sdm-scrollbar-thumb);
     --color-warm-2: var(--sdm-scrollbar-thumb);
   }
   .route-item {
@@ -913,6 +919,10 @@ input[type=radio]::after {
 
 .flex-between {
   justify-content: space-between;
+}
+
+.flexultra {
+  flex: 4;
 }
 
 .flexlarge {

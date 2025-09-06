@@ -77,6 +77,7 @@ SDM.itemStatus = {
 };
 
 SDM.accendColorOptions = {
+  aqua: 'SDM.ColorAqua',
   black: 'SDM.ColorBlack',
   blue: 'SDM.ColorBlue',
   brown: 'SDM.ColorBrown',
@@ -91,6 +92,7 @@ SDM.accendColorOptions = {
   red: 'SDM.ColorRed',
   silver: 'SDM.ColorSilver',
   teal: 'SDM.ColorTeal',
+  ultraviolet: 'SDM.ColorUltraviolet',
   violet: 'SDM.ColorViolet',
   white: 'SDM.ColorWhite',
   yellow: 'SDM.ColorYellow'

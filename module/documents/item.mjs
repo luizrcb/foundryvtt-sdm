@@ -7,7 +7,7 @@ import {
   SizeUnit,
   TraitType
 } from '../helpers/constants.mjs';
-import { $l10n, capitalizeFirstLetter } from '../helpers/globalUtils.mjs';
+import { $fmt, $l10n, capitalizeFirstLetter } from '../helpers/globalUtils.mjs';
 import { getSlotsTaken } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 
@@ -285,7 +285,10 @@ export class SdmItem extends Item {
   async toggleIsHallmark() {
     if (this.system.is_hallmark && this.system.hallmark) {
       const currentExperience = parseInt(this.system.hallmark.experience);
-      if (currentExperience > 0) return;
+      if (currentExperience > 0) {
+        ui.notifications.error($l10n('SMD.ErrorHallmarkExperience'));
+        return;
+      }
     }
 
     if (!this.parent || (this.parent && this.parent?.type === ActorType.CARAVAN)) {
@@ -293,8 +296,13 @@ export class SdmItem extends Item {
     }
 
     if (!this.system.is_hallmark && this.parent && this.parent?.type === ActorType.CHARACTER) {
-      const characterCurrentHallmarks = this.parent.items.contents.filter(item => item.system.is_hallmark);
-      if (characterCurrentHallmarks.length >= this.parent.system.level) return;
+      const characterCurrentHallmarks = this.parent.items.contents.filter(
+        item => item.system.is_hallmark
+      );
+      if (characterCurrentHallmarks.length >= this.parent.system.level) {
+        ui.notifications.error($fmt('SDM.ErrorHallmarkLimit', { target: this.parent.name }));
+        return;
+      }
     }
 
     await this.update({ 'system.is_hallmark': !this.system.is_hallmark });

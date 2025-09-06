@@ -38,7 +38,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       deleteDoc: this._deleteEffect,
       toggleEffect: this._toggleEffect,
       toggleReadied: this._toggleReadied,
-      toggleItemStatus: { handler: this._toggleItemStatus, buttons: [0, 2]}
+      toggleItemStatus: { handler: this._toggleItemStatus, buttons: [0, 2]},
+      toggleIsHallmark: this._toggleIsHallmark,
     },
     form: {
       submitOnChange: true
@@ -551,6 +552,10 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
 
   static async _toggleReadied() {
     await this.item.toggleReadied();
+  }
+
+  static async _toggleIsHallmark() {
+    await this.item.toggleIsHallmark();
   }
 
   static async _toggleItemStatus(event) {

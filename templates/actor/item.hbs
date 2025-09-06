@@ -70,6 +70,7 @@
         data-type='power_album'
         data-label='{{item.name}}'
         data-tooltip="{{localize 'SDM.RollType' type=(localize 'SDM.PowerAlbum')}}"
+        style="align-items: center;"
       >
         <i class='fa-solid fa-book roll-icon'></i>
       </div>
@@ -79,6 +80,7 @@
       {{#if (and (gt item.system.slots_taken 1) (eq item.system.size.unit 'sacks'))}}[{{toSacks item.system.slots_taken}}] {{/if}}
 
       {{#if (eq item.system.size.unit 'cash')}} {{item.system.quantity}} {{/if}}
+      {{#if item.system.is_hallmark}}<i class="fa-regular fa-star hallmark" data-tooltip="{{localize 'SDM.HallmarkItem'}}"></i>{{/if}}
       {{item.name}}
 
       {{#if (and (ne item.system.size.unit 'cash') (gt item.system.quantity 1))}}

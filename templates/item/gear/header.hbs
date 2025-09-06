@@ -12,13 +12,21 @@
           {{localize 'SDM.ItemNotReadied'}}
           {{/if}}
         </div>
-        <i class="fa-regular fa-shield {{ifThen system.readied 'readied' 'not-readied'}}"></i>
+          <i class="fa-regular fa-shield {{ifThen system.readied 'readied' 'not-readied'}}"></i>
       </div>
     </div>
 
     <div class='header-fields mt-10'>
       <div class='document-name'>
-        <input name='name' class="resource-label" type='text' value='{{item.name}}' placeholder='Name' />
+        <div class="flexrow flex-between">
+          <input name='name' class="resource-label flexultra" type='text' value='{{item.name}}' placeholder='Name' />
+          {{#unless (eq system.size.unit 'cash')}}
+          <div class="flex flex-group-center flexcol rollable" data-action="toggleIsHallmark" style="cursor:pointer;">
+            <label class='resource-label'>{{localize 'SDM.HallmarkItem'}}</label>
+            <i class="fa-regular fa-star mt-5 {{#if item.system.is_hallmark}}hallmark{{/if}}"></i>
+          </div>
+           {{/unless}}
+        </div>
       </div>
       <div class='grid grid-2col'>
         <div class='resource'>
@@ -44,6 +52,18 @@
             {{selectOptions sizeUnits localize=true selected=system.size.unit}}
           </select>
         </div>
+
+        {{#if item.system.is_hallmark}}
+        <div class='resource'>
+          <label class='resource-label'>{{localize 'SDM.FieldLevel'}}
+            <input type='text' name='system.hallmark.level' value='{{system.hallmark.level}}' data-dtype='Number' />
+          </label>
+        </div>
+        <div class='resource'>
+          <label class='resource-label'>{{localize 'SDM.FieldExperience'}}</label>
+          <input type='text' name='system.hallmark.experience' value='{{system.hallmark.experience}}' />
+        </div>
+        {{/if}}
       </div>
   </header>
   <header>

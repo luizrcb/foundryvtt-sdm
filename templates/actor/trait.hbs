@@ -30,7 +30,7 @@
           <i class='fa-solid fa-dice-d20 roll-icon'></i>
         </div>
       {{/if}}
-
+      {{#if trait.system.is_hallmark}}<i class="fa-regular fa-star hallmark" data-tooltip="{{localize 'SDM.HallmarkItem'}}"></i>{{/if}}
       {{trait.name}}
       {{#if (and (eq trait.system.type 'skill') (gt trait.system.skill.modifier_final 0))}}
         (+{{trait.system.skill.modifier_final}})
@@ -40,7 +40,21 @@
   <div class='item-controls-small'>
     {{#if @root.editable}}
     {{#if (eq trait.system.type 'power')}}
-    <a class="item-control">
+    <a class="item-control"
+       data-tooltip="
+        {{#if (eq system.status 'notched')}}
+        <b>{{localize 'SDM.ItemStatusNotched'}}</b><br>
+        {{localize 'SDM.NotchedItemAction'}}
+        {{else}}
+        {{#if (eq system.status 'broken')}}
+        <b>{{localize 'SDM.ItemStatusBroken'}}</b><br>
+        {{localize 'SDM.BrokenItemAction'}}
+        {{else}}
+        {{localize 'SDM.NormalItemAction'}}
+        {{/if}}
+        {{/if}}
+      "
+    >
       <i class="fa-regular
         {{#if (eq system.status 'notched')}}fa-hammer
         {{else}}
