@@ -124,7 +124,13 @@ Hooks.on('createActor', async (actor, _options, _id) => {
     tokenData.actorLink = true;
   }
 
-  await actor.update({ prototypeToken: tokenData });
+  const updateData = { prototypeToken: tokenData };
+
+  if (actor.type === ActorType.CHARACTER) {
+    updateData['system.experience'] = '300';
+  }
+
+  await actor.update(updateData);
 });
 
 Hooks.on('createItem', async (item, _options, _id) => {
