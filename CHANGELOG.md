@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## v0.2.8
+
+- Allow referees to extract (copy) a power from an Album of Power
+- Update some color palettes in the Chromatype system setting
+- Add (neon) Lime Chromatype color option
+- Add all Referee and Player utility macros to the system API
+- Hallmark experience field now supports math expressions, like other experience fields
+- Fix an issue with packed_item_slots_bonus (a bonus for not readied items that don’t take item slots)
+
 ## v0.2.7
 
 - Fix bugs on hallmark item limits check
