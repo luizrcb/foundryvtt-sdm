@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 3,
     "cost_frequency": "",
-    "description": "",
+    "description": "<p>Fizzy drink that lets you ignore a burden for a day. Excessive consumption may cause petrification (easy save after 2nd can, medium after 3rd, etc.)!</p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -122,10 +122,10 @@
     "exportSource": null,
     "coreVersion": "13.348",
     "systemId": "sdm",
-    "systemVersion": "0.1.37",
+    "systemVersion": "0.2.8",
     "createdTime": 1756592667389,
-    "modifiedTime": 1756592725891,
-    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+    "modifiedTime": 1757273677760,
+    "lastModifiedBy": "m8JkkFk55TmjXFHQ"
   },
   "_key": "!items!glOXlansoqW6pz6t"
 }
