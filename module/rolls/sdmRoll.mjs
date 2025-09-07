@@ -19,7 +19,8 @@ export default class SDMRoll {
     attackTarget = AttackTarget.PHYSICAL,
     sendPowerToChat = false,
     powerDescription = '',
-    item = null
+    item = null,
+    isCtrl = false
   }) {
     this.actor = actor;
     this.type = type;
@@ -37,6 +38,7 @@ export default class SDMRoll {
     this.sendPowerToChat = sendPowerToChat;
     this.powerDescription = powerDescription;
     this.item = item;
+    this.isCtrl = isCtrl;
   }
 
   async evaluate() {
@@ -160,14 +162,20 @@ export default class SDMRoll {
       content += powerCard;
     }
 
-    await createChatMessage({
+    const chatDataMessage = {
       actor: this.actor,
       rolls: [rollInstance],
       flavor,
       content,
       flags,
       checkCritical
-    });
+    };
+
+    if (this.isCtrl) {
+      chatDataMessage.rollMode = CONST.DICE_ROLL_MODES.BLIND;
+    }
+
+    await createChatMessage(chatDataMessage);
   }
 
   #buildDiceComponent() {

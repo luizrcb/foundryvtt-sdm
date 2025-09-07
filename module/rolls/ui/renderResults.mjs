@@ -7,7 +7,7 @@ const { renderTemplate } = foundry.applications.handlebars;
 
 export async function renderNPCMoraleResult(
   { roll, targetNumber },
-  { fromHeroDice = false, speaker }
+  { fromHeroDice = false, speaker, isCtrl = false }
 ) {
   const equalOutcome = $l10n('SDM.MoraleEqualOutcome');
   const overOutcome = $l10n('SDM.MoraleOverOutcome');
@@ -47,18 +47,24 @@ export async function renderNPCMoraleResult(
     };
   }
 
-  createChatMessage({
+  const chatMessageData = {
     content: await renderTemplate(templatePath('chat/morale-roll-result'), templateData),
     flavor: $fmt('SDM.RollType', { type: $l10n('SDM.Morale') }),
     rolls: [roll],
     speaker,
     flags
-  });
+  };
+
+  if (isCtrl) {
+    chatMessageData.rollMode = CONST.DICE_ROLL_MODES.BLIND;
+  }
+
+  await createChatMessage(chatMessageData);
 }
 
 export async function renderReactionResult(
   { roll, charismaOperator },
-  { fromHeroDice = false, speaker }
+  { fromHeroDice = false, speaker, isCtrl = false }
 ) {
   const rollTotal = roll.total;
 
@@ -135,18 +141,24 @@ export async function renderReactionResult(
     };
   }
 
-  createChatMessage({
+  const chatMessageData = {
     content: await renderTemplate(templatePath('chat/reaction-roll-result'), templateData),
     flavor,
     rolls: [roll],
     flags,
     speaker
-  });
+  };
+
+  if (isCtrl) {
+    chatMessageData.rollMode = CONST.DICE_ROLL_MODES.BLIND;
+  }
+
+  await createChatMessage(chatMessageData);
 }
 
 export async function renderSaveResult(
   { roll, label, targetNumber },
-  { fromHeroDice = false, speaker }
+  { fromHeroDice = false, speaker, isCtrl = false }
 ) {
   const sacrificeOutcome = $l10n('SDM.SavingThrowSacrifice');
   const saveOutcome = $l10n('SDM.SavingThrowSave');
@@ -196,12 +208,18 @@ export async function renderSaveResult(
     };
   }
 
-  createChatMessage({
+  const chatMessageData = {
     content: await renderTemplate(templatePath('chat/saving-throw-result'), templateData),
     flavor: label,
     rolls: [roll],
     checkCritical: true,
     flags,
     speaker
-  });
+  };
+
+  if (isCtrl) {
+    chatMessageData.rollMode = CONST.DICE_ROLL_MODES.BLIND;
+  }
+
+  await createChatMessage(chatMessageData);
 }

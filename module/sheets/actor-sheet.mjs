@@ -153,7 +153,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       powerIndex = 0,
       item = null
     },
-    isShift = false
+    isShift = false,
+    isCtrl = false
   ) {
     let rollTitlePrefix = '';
     const isDamage = type === RollType.DAMAGE;
@@ -387,6 +388,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       }
     }
 
+    rollData.isCtrl = isCtrl;
     const sdmRoll = new SDMRoll(rollData);
     await sdmRoll.evaluate();
   }
@@ -1000,6 +1002,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     const reverseShift = game.settings.get('sdm', 'reverseShiftKey');
     const isShift = reverseShift !== !!event.shiftKey;
+    const isCtrl = !!event.ctrlKey;
 
     // Get common data attributes
     const dataset = target.dataset;
@@ -1103,7 +1106,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       item: rollItem
     };
 
-    this._openCustomRollModal(rollAttributes, isShift);
+    this._openCustomRollModal(rollAttributes, isShift, isCtrl);
   }
 
   static async _onRollNPCDamage(event, target) {
@@ -1112,6 +1115,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     if (event.detail > 1) return;
     const reverseShift = game.settings.get('sdm', 'reverseShiftKey');
     const isShift = reverseShift !== !!event.shiftKey;
+    const isCtrl = !!event.ctrlKey;
 
     const damage = this.actor.system.damage || '1d4';
 
@@ -1121,7 +1125,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       formula: damage
     };
 
-    this._openCustomRollModal(rollAttributes, isShift);
+    this._openCustomRollModal(rollAttributes, isShift, isCtrl);
   }
 
   static async _onRollNPCMorale(event, target) {
@@ -1130,6 +1134,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     if (event.detail > 1) return;
     const reverseShift = game.settings.get('sdm', 'reverseShiftKey');
     const isShift = reverseShift !== !!event.shiftKey;
+    const isCtrl = !!event.ctrlKey;
 
     let data = { modifier: '' };
 
@@ -1180,7 +1185,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
 
-    await renderNPCMoraleResult({ roll, targetNumber }, { fromHeroDice: false, speaker });
+    await renderNPCMoraleResult({ roll, targetNumber }, { fromHeroDice: false, speaker, isCtrl });
   }
 
   static async _onReactionRoll(event, target) {
@@ -1191,6 +1196,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     const reverseShift = game.settings.get('sdm', 'reverseShiftKey');
     const isShift = reverseShift !== !!event.shiftKey;
+    const isCtrl = !!event.ctrlKey;
     let data = { modifier: '', charismaOperator: 1, customBaseFormula: '' };
 
     if (!isShift) {
@@ -1271,7 +1277,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
 
-    await renderReactionResult({ roll, charismaOperator }, { fromHeroDice: false, speaker });
+    await renderReactionResult(
+      { roll, charismaOperator },
+      { fromHeroDice: false, speaker, isCtrl }
+    );
   }
 
   static async _onRollSavingThrow(event, target) {
@@ -1298,6 +1307,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     const reverseShift = game.settings.get('sdm', 'reverseShiftKey');
     const isShift = reverseShift !== !!event.shiftKey;
+    const isCtrl = !!event.ctrlKey;
 
     let label = $fmt('SDM.SavingThrowRoll', {
       ability: $l10n(CONFIG.SDM.abilities[ability])
@@ -1389,7 +1399,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
 
-    await renderSaveResult({ roll, label, targetNumber }, { fromHeroDice: false, speaker });
+    await renderSaveResult({ roll, label, targetNumber }, { fromHeroDice: false, speaker, isCtrl });
   }
 
   static async _onUpdateAttack(event, target) {
