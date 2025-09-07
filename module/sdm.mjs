@@ -153,9 +153,9 @@ Hooks.on('createActor', async (actor, _options, _id) => {
     lockRotation: true
   };
 
-  if (actor.type === ActorType.NPC) {
-    tokenData.appendNumber = true;
-  }
+  // if (actor.type === ActorType.NPC) {
+  //   tokenData.appendNumber = true;
+  // }
 
   if ([ActorType.CHARACTER, ActorType.CARAVAN].includes(actor.type)) {
     tokenData.disposition = CONST.TOKEN_DISPOSITIONS.FRIENDLY;

@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v0.2.9
+
+- Move Referee utility functions from macros to buttons in the token controls left menu
+- Add Ctrl+Click shortcut to make rolls in “blind GM mode”
+- Add missing description to the “You Go” drink gear
+- Update 3D and 2D dice fonts
+- Update Chromatype palettes for better 3D dice contrast
+
 ## v0.2.8
 
 - Allow referees to extract (copy) a power from an Album of Power
