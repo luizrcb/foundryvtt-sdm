@@ -85,6 +85,7 @@ SDM.accendColorOptions = {
   emerald: 'SDM.ColorEmerald',
   gold: 'SDM.ColorGold',
   green: 'SDM.ColorGreen',
+  lime: 'SDM.ColorLime',
   olive: 'SDM.ColorOlive',
   orange: 'SDM.ColorOrange',
   pink: 'SDM.ColorPink',

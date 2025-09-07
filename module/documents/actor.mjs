@@ -304,7 +304,7 @@ export class SdmActor extends Actor {
       'system.inventory_value': estimatedWealth,
       'system.total_cash': totalCash,
       'system.wealth': totalCash + estimatedWealth,
-      'system.overloaded': overloaded,
+      'system.overloaded': overloaded
     });
   }
 
@@ -418,10 +418,10 @@ export class SdmActor extends Actor {
         smallItemBonus -= 1;
         // if (itemSlots >= 1) itemSlots -= 1;
         itemSlots = 0;
-      } else if (isGear && !isReadied && packedItemBonus > 0) {
-        packedItemBonus -= 1;
-        items.packedTaken += 1;
-        if (itemSlots >= 1) itemSlots -= 1;
+      } else if (isGear && !isReadied && packedItemBonus > 0 && packedItemBonus >= itemSlots) {
+        packedItemBonus -= (itemSlots || 1);
+        items.packedTaken += (itemSlots || 1);
+        itemSlots = 0;
       }
 
       // Append to inventory.
@@ -560,13 +560,11 @@ export class SdmActor extends Actor {
 
   getEstimatedWealth() {
     const itemsArray = this.items.contents.filter(
-      item =>
-        [ItemType.GEAR].includes(item.type) &&
-        item.system.size.unit !== SizeUnit.CASH
+      item => [ItemType.GEAR].includes(item.type) && item.system.size.unit !== SizeUnit.CASH
     );
 
     const estimatedWealth = itemsArray.reduce((acc, item) => {
-      return acc + ( (item?.system?.cost || 0) * (item?.system.quantity || 1));
+      return acc + (item?.system?.cost || 0) * (item?.system.quantity || 1);
     }, 0);
 
     return estimatedWealth;

@@ -28,7 +28,7 @@
            {{/unless}}
         </div>
       </div>
-      <div class='grid grid-2col'>
+      <div class='grid grid-{{ifThen item.system.is_hallmark 3 2}}col'>
         <div class='resource'>
           <label class='resource-label'>{{localize 'SDM.ItemQuantity'}}
             <input type='text' name='system.quantity' value='{{system.quantity}}' data-dtype='Number' />
@@ -40,6 +40,14 @@
             <input type='text' name='system.cost' value='{{system.cost}}' data-dtype='Number' />
           {{/unless}}
         </div>
+
+        {{#if item.system.is_hallmark}}
+        <div class='resource'>
+          <label class='resource-label'>{{localize 'SDM.FieldLevel'}}
+            <input type='text' name='system.hallmark.level' value='{{system.hallmark.level}}' data-dtype='Number' />
+          </label>
+        </div>
+        {{/if}}
 
         <div class='resource'>
           <label class='resource-label'>{{localize 'SDM.ItemSizeValue'}}</label>
@@ -54,11 +62,6 @@
         </div>
 
         {{#if item.system.is_hallmark}}
-        <div class='resource'>
-          <label class='resource-label'>{{localize 'SDM.FieldLevel'}}
-            <input type='text' name='system.hallmark.level' value='{{system.hallmark.level}}' data-dtype='Number' />
-          </label>
-        </div>
         <div class='resource'>
           <label class='resource-label'>{{localize 'SDM.FieldExperience'}}</label>
           <input type='text' name='system.hallmark.experience' value='{{system.hallmark.experience}}' />

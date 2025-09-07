@@ -1,4 +1,5 @@
 import PowerDataModel from '../data/power-data.mjs';
+import { SdmItem } from '../documents/item.mjs';
 import { getActorOptions } from '../helpers/actorUtils.mjs';
 import { GearType, ItemType } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
@@ -32,14 +33,15 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       viewDoc: this._viewEffect,
       addPower: this._onCreatePower,
       deletePower: this._onDeletePower,
+      extractPower: this._onExtractPower,
       nextPower: this._onNextPower,
       prevPower: this._onPrevPower,
       createDoc: this._createEffect,
       deleteDoc: this._deleteEffect,
       toggleEffect: this._toggleEffect,
       toggleReadied: this._toggleReadied,
-      toggleItemStatus: { handler: this._toggleItemStatus, buttons: [0, 2]},
-      toggleIsHallmark: this._toggleIsHallmark,
+      toggleItemStatus: { handler: this._toggleItemStatus, buttons: [0, 2] },
+      toggleIsHallmark: this._toggleIsHallmark
     },
     form: {
       submitOnChange: true
@@ -130,7 +132,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       sizeUnits: CONFIG.SDM.sizeUnits,
       skillMod: allSKillMods,
       skillModifierStep: defaultModifierStep,
-      abilities: CONFIG.SDM.getOrderedAbilities(language)
+      abilities: CONFIG.SDM.getOrderedAbilities(language),
+      isGM: game.user.isGM
     };
 
     if (this.item.type === ItemType.GEAR && this.item.system.type === GearType.POWER_ALBUM) {
@@ -537,6 +540,35 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     this.render();
   }
 
+  static async _onExtractPower(event, target) {
+    if (!game.user.isGM) return;
+
+    const powerAlbum = this.item.system.powers;
+
+    const powerIndex = parseInt(target.dataset.index, 10);
+    if (powerIndex < 0 || !powerAlbum.length || powerIndex >= powerAlbum.length) {
+      return;
+    }
+    const powerToExtract = powerAlbum[powerIndex];
+    const { name, img, description, ...data } = powerToExtract;
+
+    const newPowerData = {
+      type: ItemType.GEAR,
+      name,
+      img,
+      system: {
+        type: GearType.POWER,
+        description,
+        power: {
+          ...data
+        }
+      }
+    };
+
+    await SdmItem.create(newPowerData);
+    ui.notifications.info($fmt('SDM.PowerExtractionComplete', { power: name, power_album: this.item.name }));
+  }
+
   /**
    * Determines effect parent to pass to helper
    *
@@ -561,7 +593,6 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
   static async _toggleItemStatus(event) {
     await this.item.toggleItemStatus(event);
   }
-
 
   /** Helper Functions */
 

@@ -5,10 +5,10 @@ import { SdmCombatant } from './documents/combatant.mjs';
 import { SdmItem } from './documents/item.mjs';
 import { registerHandlebarsHelpers } from './handlebars-helpers.mjs';
 import {
-  createNPC,
-  createNPCByLevel,
   createBackgroundTrait,
-  createFullAutoDestructionMode
+  createFullAutoDestructionMode,
+  createNPC,
+  createNPCByLevel
 } from './helpers/actorUtils.mjs';
 import { configureChatListeners } from './helpers/chatUtils.mjs';
 import { SDM } from './helpers/config.mjs';
@@ -16,6 +16,7 @@ import { ActorType, ItemType } from './helpers/constants.mjs';
 import { makePowerItem } from './helpers/itemUtils.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
+import { gm as gmMacros, player as playerMacros } from './macros/_module.mjs';
 import {
   CHARACTER_DEFAULT_INITIATIVE,
   configurePlayerChromatype,
@@ -56,11 +57,13 @@ globalThis.sdm = {
   },
   models,
   api: {
-    createNPC,
-    createNPCByLevel,
     createBackgroundTrait,
     createFullAutoDestructionMode,
-    makePowerItem
+    createNPC,
+    createNPCByLevel,
+    gm: gmMacros,
+    makePowerItem,
+    player: playerMacros
   }
 };
 
@@ -241,8 +244,8 @@ Hooks.once('init', function () {
   // for the base actor/item classes - they are included
   // with the Character/NPC as part of super.defineSchema()
   CONFIG.Actor.dataModels = {
-    character: models.SdmCharacter,
     npc: models.SdmNPC,
+    character: models.SdmCharacter,
     caravan: models.SdmCaravan
   };
   CONFIG.Item.documentClass = SdmItem;
@@ -262,7 +265,7 @@ Hooks.once('init', function () {
   // Register sheet application classes
   Actors.unregisterSheet('core', sheets.ActorSheet);
   Actors.registerSheet('sdm', SdmActorSheet, {
-    types: ['character', 'npc'],
+    types: ['npc', 'character'],
     makeDefault: true,
     label: 'SDM.SheetLabels.Actor'
   });
@@ -447,9 +450,7 @@ function _configureFonts() {
     },
     'Our Golden Age': {
       editor: true,
-      fonts: [
-        { urls: ['systems/sdm/fonts/our_golden_age/OurGoldenAge-Regular.otf'] },
-      ]
+      fonts: [{ urls: ['systems/sdm/fonts/our_golden_age/OurGoldenAge-Regular.otf'] }]
     }
   });
 }

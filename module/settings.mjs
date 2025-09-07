@@ -38,12 +38,12 @@ export function registerSystemSettings() {
     config: true,
     requiresReload: true,
     choices: {
-      'same': 'SDM.DSNChromatypeSame',
-      ...CONFIG.SDM.accendColorOptions,
+      same: 'SDM.DSNChromatypeSame',
+      ...CONFIG.SDM.accendColorOptions
     },
     type: String,
     default: 'same'
-  })
+  });
 
   game.settings.register('sdm', 'reverseShiftKey', {
     name: 'SDM.SettingsReverseShiftKey',
@@ -303,7 +303,7 @@ export function registerSystemSettings() {
     type: String, // Data type: String, Number, Boolean, etc
     default: 'd6',
     choices: DiceType,
-    requiresReload: true,
+    requiresReload: true
   });
 
   game.settings.register('sdm', 'savingThrowBaseRollFormula', {
@@ -689,24 +689,23 @@ export function configurePlayerChromatype() {
       }
     },
     ultraviolet: {
-      hex: '#F3169A',
-      rgb: 'rgba(2, 2, 2, 0.2)',
+      hex: '#7A00FF',
+      rgb: 'rgba(122, 0, 255, 0.2)',
       dice: {
-        // foreground: '#16F36F',
-        foreground: '#19A652',
-        background: '#F3169A',
+        foreground: '#E5CCFF',
+        background: '#7A00FF'
       }
     },
     teal: {
       hex: '#00817F',
       rgb: 'rgba(0, 129, 127, 0.15)',
       dice: {
-        foreground: '#000000',
+        foreground: '#FFFF99',
         background: '#00817F'
       }
     },
     brown: {
-      hex: '#8b4513', // classic earthy brown (saddle brown)
+      hex: '#8b4513',
       rgb: 'rgba(139, 69, 19, 0.1)',
       dice: {
         foreground: '#3098E3',
@@ -768,10 +767,19 @@ export function configurePlayerChromatype() {
         foreground: '#00004A',
         background: '#4a4a00'
       }
-    }
+    },
+    lime: {
+      hex: '#39FF14',
+      rgb: 'rgba(57, 255, 20, 0.2)',
+      dice: {
+        foreground: '#000000',
+        background: '#39FF14'
+      }
+    },
   };
   const selectedColor = colorMapping[color];
   const dice3DColor = colorMapping[dsnFinalColor].dice;
+  const { foreground, background } = dice3DColor;
 
   Hooks.once('diceSoNiceInit', dice3d => {
     if (dice3d) {
@@ -779,12 +787,12 @@ export function configurePlayerChromatype() {
         name: 'sdm-chromatype',
         description: 'SDM Chromatype Dice',
         category: 'Colors',
-        foreground: [dice3DColor.foreground],
-        background: [dice3DColor.background],
+        foreground: [foreground],
+        background: [background],
         outline: 'black',
         texture: 'none',
         material: 'plastic',
-        font: 'Our Golden Age',
+        font: 'Our Golden Age'
       });
     }
   });

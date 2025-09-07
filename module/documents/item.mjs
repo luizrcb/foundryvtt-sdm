@@ -7,7 +7,7 @@ import {
   SizeUnit,
   TraitType
 } from '../helpers/constants.mjs';
-import { $fmt, $l10n, capitalizeFirstLetter } from '../helpers/globalUtils.mjs';
+import { $fmt, $l10n, capitalizeFirstLetter, safeEvaluate } from '../helpers/globalUtils.mjs';
 import { getSlotsTaken } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 
@@ -20,6 +20,14 @@ const { renderTemplate } = foundry.applications.handlebars;
 export class SdmItem extends Item {
   async _onUpdate(changed, options, userId) {
     await super._onUpdate(changed, options, userId);
+
+    if (changed?.system?.hallmark?.experience !== undefined) {
+      let value = safeEvaluate(`${changed.system.hallmark.experience}`.trim());
+      value = parseInt(value, 10) || 0;
+      await this.update({
+        'system.hallmark.experience': `${value}`
+      });
+    }
 
     if (changed?.system?.max_powers !== undefined) {
       if (changed.system?.max_powers < this.system.powers.length) {
@@ -305,7 +313,10 @@ export class SdmItem extends Item {
       }
     }
 
-    if (!this.parent || (this.parent && this.parent?.type === ActorType.CARAVAN)) {
+    if (
+      (!this.parent && !game.user.isGM) ||
+      (this.parent && this.parent?.type === ActorType.CARAVAN)
+    ) {
       return;
     }
 

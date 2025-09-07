@@ -22,10 +22,20 @@
         </div>
         <div class="grid grid-2col">
           <div class='resource'>
+            {{#if @root.isGM}}
+            <div class='rollable flex-group-center' style="cursor:pointer;" data-action="extractPower" data-index="{{@index}}"  data-tooltip="{{localize 'SDM.ExtractPowerTooltip'}}">
+              <label class='resource-label' style="cursor:pointer;">
+                {{localize 'SDM.ExtractPower'}}
+              </label>
+              <div class='resource-content'>
+                <i class="fa-solid fa-file-import"></i>
+              </div>
+            </div>
+            {{/if}}
           </div>
 
           <div class='resource rollable flex-group-center' data-action="deletePower" data-index="{{@index}}">
-            <label class='resource-label'>
+            <label class='resource-label' style="cursor:pointer;">
               {{localize 'SDM.DeletePower'}}
             </label>
             <div class='resource-content'>

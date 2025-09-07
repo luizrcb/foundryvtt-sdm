@@ -21,13 +21,13 @@
   ],
   "documentTypes": {
     "Actor": {
-      "character": {
-        "htmlFields": ["biography", "notes"]
-      },
       "npc": {
         "htmlFields": ["biography", "notes"]
       },
       "caravan": {
+        "htmlFields": ["biography", "notes"]
+      },
+      "character": {
         "htmlFields": ["biography", "notes"]
       }
     },
