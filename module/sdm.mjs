@@ -67,6 +67,46 @@ globalThis.sdm = {
   }
 };
 
+Hooks.on("getSceneControlButtons", function(controls) {
+  if (game.user.isGM) {
+    controls.tokens.tools['sdm-hero-dice'] = {
+      icon: "fa fa-dice-d6",
+      name: "sdm-hero-dice",
+      title: "Give Hero Dice",
+      button: true,
+      onChange: async (event, active) => { if (active) await game.sdm.api.gm.giveHeroDice() }
+    };
+    controls.tokens.tools['sdm-give-cash'] = {
+      icon: "fa fa-euro-sign",
+      name: "sdm-give-cash",
+      title: "Give/Take Cash",
+      button: true,
+      onChange: async (event, active) => { if (active) await game.sdm.api.gm.giveCash() }
+    };
+    controls.tokens.tools['sdm-give-xp'] = {
+      icon: "fa-solid fa-angles-up",
+      name: "sdm-give-xp",
+      title: "Give Experience",
+      button: true,
+      onChange: async (event, active) => { if (active) await game.sdm.api.gm.giveExperience() }
+    };
+    controls.tokens.tools['sdm-group-initiative'] = {
+      icon: "fa-solid fa-people-group",
+      name: "sdm-group-initiative",
+      title: "Group Initiative",
+      button: true,
+      onChange: async (event, active) => { if (active) await game.sdm.api.gm.groupInitiative() }
+    };
+     controls.tokens.tools['sdm-generate-npc'] = {
+      icon: "fa-solid fa-spaghetti-monster-flying",
+      name: "sdm-generate-npc",
+      title: "Generate Random NPC",
+      button: true,
+      onChange: async (event, active) => { if (active) await game.sdm.api.gm.randomNPCGenerator() }
+    };
+  }
+});
+
 Hooks.on('renderChatMessageHTML', (message, html, data) => {
   configureUseHeroDiceButton(message, html, data);
 });
