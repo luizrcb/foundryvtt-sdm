@@ -12,6 +12,7 @@ export const DEFAULT_LEVEL_UP_SOUND =
 export const DEFAULT_CURRENCY_IMG = 'icons/commodities/currency/coins-stitched-pouch-brown.webp';
 export const DEFAULT_MAX_POWERS = 3;
 export const DEFAULT_HARD_LIMIT = 13;
+export const DEFAULT_SAVE_VALUE = 13;
 
 export function registerSystemSettings() {
   /* -------------------------------------------- */
@@ -211,7 +212,7 @@ export function registerSystemSettings() {
     restricted: true,
     config: true, // Show in configuration view
     type: Number, // Data type: String, Number, Boolean, etc
-    default: 13
+    default: DEFAULT_SAVE_VALUE
   });
 
   game.settings.register('sdm', 'baseDefense', {

@@ -47,9 +47,9 @@
               {{localize 'SDM.FieldLifeMax'}}
             </label>
             <div class='resource-content flexrow flex-center flex-between flex-group-center'>
-              <input type='text' name='system.life.value' value='{{system.life.value}}' data-dtype="Number" />
+              <input type='text' name='system.life.value' value='{{system.life.value}}' data-dtype="Number"  data-tooltip='{{localize "SDM.FieldLife"}}' />
               <span> / </span>
-              <input type='text' name='system.life.max' value='{{system.life.max}}' data-dtype="Number" />
+              <input type='text' name='system.life.max' value='{{system.life.max}}' data-dtype="Number" data-tooltip='{{localize "SDM.FieldLifeMax"}}'/>
             </div>
           </div>
 
@@ -91,6 +91,7 @@
         {{! "flex-group-center" is also defined in the _grid.scss file
         and it will add a small amount of padding, a border, and will
         center all of its child elements content and text. }}
+        {{#if @root.editable}}
         <div class='resource'>
           <label class='resource-label'>
             {{localize 'SDM.FieldExperience'}}
@@ -99,7 +100,7 @@
             <input type='text' name='system.experience' value='{{system.experience}}' />
           </div>
         </div>
-        {{#if @root.editable}}
+
         <div class="ability grid-span-1 flexrow">
           <div class='resource-label rollable' data-action='rollNPCMorale'
             data-label="{{localize 'SDM.Morale'}}">
@@ -118,6 +119,24 @@
           <div class='resource-label rollable' data-action='rollNPCDamage'
             data-label="{{localize 'SDM.Damage'}}">
             <div>{{localize 'SDM.RollType' type=(localize 'SDM.Damage')}} <i class="fa-solid fa-explosion azure"></i></div>
+          </div>
+        </div>
+
+        <div class='resource'>
+        </div>
+
+        <div class='resource'>
+        </div>
+
+         <div class="ability grid-span-1 flexrow">
+          <div
+            class='resource-label rollable'
+            data-ability='npc'
+            data-action='rollSavingThrow'
+            data-attack="melee"
+            data-tooltip="{{localize 'SDM.SavingThrowRoll' ability=(localize 'TYPES.Actor.npc')}}"
+            >
+            <div>{{localize 'SDM.RollType' type=(localize 'SDM.FieldSaveTarget')}} <i class="saveIcon fa fa-shield-cat heart"></i></div>
           </div>
         </div>
         {{/if}}

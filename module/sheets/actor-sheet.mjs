@@ -26,7 +26,7 @@ import {
   renderReactionResult,
   renderSaveResult
 } from '../rolls/ui/renderResults.mjs';
-import { SAVING_THROW_BASE_FORMULA } from '../settings.mjs';
+import { DEFAULT_SAVE_VALUE, SAVING_THROW_BASE_FORMULA } from '../settings.mjs';
 
 const { api, sheets } = foundry.applications;
 const { DialogV2 } = foundry.applications.api;
@@ -1296,12 +1296,12 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     // Get common data attributes
     const dataset = target.dataset;
     const { ability } = dataset;
-    const abilityData = this.actor.system.abilities[ability];
-    const finalAbility = abilityData.current;
-    const ward = this.actor.system.ward || 0;
-    const burdenPenalty = this.actor.system.burden_penalty || 0;
-    const saveBonus = abilityData.save_bonus || 0;
-    const allSaveBonus = this.actor.system.all_save_bonus || 0;
+    const abilityData = ability !== ActorType.NPC ? this.actor.system.abilities[ability] : { current: this.actor.system.bonus };
+    const finalAbility = abilityData?.current;
+    const ward = this.actor?.system?.ward || 0;
+    const burdenPenalty = this.actor.system?.burden_penalty || 0;
+    const saveBonus = abilityData?.save_bonus || 0;
+    const allSaveBonus = this.actor.system?.all_save_bonus || 0;
     const savingThrowSum = finalAbility + ward + saveBonus + allSaveBonus - burdenPenalty;
 
     const useHardLimitRule = game.settings.get('sdm', 'useHardLimitRule');
@@ -1315,7 +1315,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const isCtrl = !!event.ctrlKey;
 
     let label = $fmt('SDM.SavingThrowRoll', {
-      ability: $l10n(CONFIG.SDM.abilities[ability])
+      ability: $l10n(CONFIG.SDM.abilities[ability]) || $l10n('TYPES.Actor.npc')
     });
 
     if (ward > 0) {
@@ -1397,7 +1397,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     let formula = `${diceExpression}${bonusPart}${modPart}`;
 
-    const targetNumber = this.actor.system.save_target;
+    const targetNumber = this.actor.system?.save_target || DEFAULT_SAVE_VALUE;
     formula = sanitizeExpression(formula);
     // Create and evaluate the roll
     let roll = new Roll(formula);
