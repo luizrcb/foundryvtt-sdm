@@ -567,8 +567,8 @@ export function configureUseHeroDiceButton(message, html, data) {
   if (!actor && !isGM) return;
 
   // Check hero_dice
-  const hero_dice = actor?.system?.hero_dice?.value;
-  if (!isGM && (!hero_dice || hero_dice < 1)) return;
+  // const hero_dice = actor?.system?.hero_dice?.value;
+  //if (!isGM && (!hero_dice || hero_dice < 1)) return;
 
   if (message.content.includes('fumble')) {
     return;

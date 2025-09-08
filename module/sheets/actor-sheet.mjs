@@ -9,7 +9,7 @@ import {
   RollType
 } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
-import { $fmt, $l10n, capitalizeFirstLetter } from '../helpers/globalUtils.mjs';
+import { $fmt, $l10n, capitalizeFirstLetter, toPascalCase } from '../helpers/globalUtils.mjs';
 import {
   getSlotsTaken,
   ITEMS_NOT_ALLOWED_IN_CARAVANS,
@@ -207,7 +207,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       isCharacterActor,
       attackTargetChoices: CONFIG.SDM.attackTarget,
       powerOptions,
-      powerIndex
+      powerIndex,
+      blindGMRoll: isCtrl
     });
 
     const damageIcon =
@@ -263,13 +264,15 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       })
     });
 
+    const titleType = capitalizeFirstLetter(toPascalCase(type)).replace(' ', '');
+
     let rollOptions = {};
 
     if (!isShift) {
       // Create and render the modal
       rollOptions = await foundry.applications.api.DialogV2.wait({
         window: {
-          title: $fmt('SDM.RollTitle', { prefix: '', title })
+          title: $fmt('SDM.RollType', { type: $l10n(`SDM.${titleType}`)}),
         },
         powerOptions,
         content: template,
@@ -1141,11 +1144,12 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     if (!isShift) {
       data = await DialogV2.wait({
         window: {
-          title: $fmt('SDM.RollType', { type: $l10n('SDM.Morale') }),
+          title: $fmt('SDM.RollType', { type: $l10n('SDM.Morale')}),
           resizable: true
         },
         content: await renderTemplate(templatePath('actor/npc/morale-roll-dialog'), {
-          rollModes: CONFIG.SDM.rollMode
+          rollModes: CONFIG.SDM.rollMode,
+          blindGMRoll: isCtrl
         }),
         buttons: [
           {
@@ -1202,14 +1206,15 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     if (!isShift) {
       data = await DialogV2.wait({
         window: {
-          title: $l10n('SDM.ReactionRoll')
+          title: $fmt('SDM.RollType', { type: $l10n('SDM.Reaction')}),
         },
         position: {
           width: 500,
           height: 300
         },
         content: await renderTemplate(templatePath('reaction-roll-dialog'), {
-          rollModes: CONFIG.SDM.rollMode
+          rollModes: CONFIG.SDM.rollMode,
+          blindGMRoll: isCtrl
         }),
         buttons: [
           {
@@ -1332,7 +1337,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       rollModes: CONFIG.SDM.rollMode,
       type: RollType.SAVE,
       isCharacterActor: true,
-      attackTargetChoices: CONFIG.SDM.attackTarget
+      attackTargetChoices: CONFIG.SDM.attackTarget,
+      blindGMRoll: isCtrl
     });
 
     const buttons = [
@@ -1353,7 +1359,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       // Create and render the modal
       rollOptions = await foundry.applications.api.DialogV2.wait({
         window: {
-          title: $fmt('SDM.RollTitle', { prefix: '', title: label })
+          title: $fmt('SDM.RollType', { type: $l10n('SDM.FieldSaveTarget')}),
         },
         content: template,
         position: {

@@ -1,5 +1,5 @@
 <div class="custom-roll-modal">
-  <h4>{{localize 'SDM.RollTitle' prefix=rollTitlePrefix title=title }}</h4>
+  <h4>{{#if blindGMRoll}}<i class="fa-solid fa-eye-slash"></i>{{/if}}{{localize 'SDM.RollTitle' prefix=(ifThen blindGMRoll (concat (localize 'SDM.BlindRoll') ' ') '') title=title}}</h4>
   <form class="custom-roll-form">
     {{#if (eq type 'attack')}}
      <div class="form-group">

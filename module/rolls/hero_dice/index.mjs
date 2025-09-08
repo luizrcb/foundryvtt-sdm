@@ -24,6 +24,8 @@ async function _promptHeroOptions(actor) {
 export async function handleHeroDice(event, message, flags) {
   const actor = game.user?.character || canvas?.tokens?.controlled[0]?.actor;
 
+  if (message.blind) return;
+
   if (!actor || actor.type !== ActorType.CHARACTER) {
     ui.notifications.error(
       $fmt('SDM.ErrorNoActorSelected', { type: $l10n('TYPES.Actor.character') })

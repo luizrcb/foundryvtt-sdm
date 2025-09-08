@@ -228,7 +228,7 @@ Hooks.on('renderGamePause', (app, html) => {
 Hooks.on('getChatMessageContextOptions', (html, options) => {
   const canApply = li => {
     const message = game.messages.get(li.dataset.messageId);
-    return message.rolls && message.rolls.length;
+    return (!message.blind || game.user.isGM) && message.rolls && message.rolls.length;
   };
 
   options.push(

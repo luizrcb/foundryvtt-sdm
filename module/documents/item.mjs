@@ -282,14 +282,20 @@ export class SdmItem extends Item {
     return await renderTemplate(templatePath('chat/item-card'), context);
   }
 
-  async sendToChat({ actor, flavor = '', collapsed = false, displayWeight = true }) {
+  async sendToChat({ actor, flavor = '', collapsed = false, displayWeight = true, blindGMRoll = false }) {
     const content = await this.getItemChatCard({ collapsed, displayWeight });
 
-    return createChatMessage({
+    const chatMessageData = {
       actor,
       content,
       flavor: flavor || game.user.name
-    });
+    };
+
+    if (blindGMRoll) {
+      chatMessageData.rollMode = CONST.DICE_ROLL_MODES.BLIND;
+    }
+
+    return createChatMessage(chatMessageData);
   }
 
   async toggleReadied() {

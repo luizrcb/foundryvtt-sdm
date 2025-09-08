@@ -47,7 +47,8 @@ export default class SDMRoll {
         actor: this.actor,
         flavor: this.#buildFlavorText(),
         collapsed: true,
-        displayWeight: false
+        displayWeight: false,
+        blindGMRoll: this.isCtrl
       });
     }
 

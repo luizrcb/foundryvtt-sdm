@@ -1,7 +1,5 @@
 <div class='custom-roll-modal'>
-  <h4>
-    {{localize 'SDM.ReactionRoll'}}
-  </h4>
+  <h4>{{#if blindGMRoll}}<i class="fa-solid fa-eye-slash"></i>{{/if}}{{localize 'SDM.RollTitle' prefix=(ifThen blindGMRoll (concat (localize 'SDM.BlindRoll') ' ') '') title=(localize 'SDM.Reaction')}}</h4>
   <form class='custom-roll-form'>
     <div class='form-group'>
       <label for='customBaseFormula'>

@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.2.10
+
+- Fix issues related to “Blind GM Rolls” and usage of Hero Dice
+- Fix issues related to “Blind GM Rolls” and chat card context menu to apply damage or healing
+
 ## v0.2.9
 
 - Move Referee utility functions from macros to buttons in the token controls left menu

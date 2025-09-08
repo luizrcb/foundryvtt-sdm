@@ -259,6 +259,7 @@
   "SDM.BackgroundTask": "Task",
   "SDM.BackgroundTraitCreated": "{flavor} {role} background trait created for {name} character!",
   "SDM.BiomagicalCorruption": "Biomagical Corruption",
+  "SDM.BlindRoll": "Blind GM",
   "SDM.brick-bastions": "Brick Bastions",
   "SDM.BrokenItemAction": "<b>right-click</b>: repair item back to notched",
   "SDM.BurdensPenalty": "Each burden imposes a -1 to all rolls",
