@@ -1,3 +1,5 @@
+import { $l10n } from "../../helpers/globalUtils.mjs";
+
 export async function groupInitiative() {
   const tokens = canvas.tokens.controlled;
 
@@ -8,6 +10,10 @@ export async function groupInitiative() {
     group3: [], // Hostile NPCs
     group4: [] // secret NPCs
   };
+
+  if (!tokens || !tokens.length) {
+    ui.notifications.warn('SDM.GroupInitiativeErrorNoTokens', { localize: true, permanent: true });
+  }
 
   // Separate tokens into groups
   for (const token of tokens) {

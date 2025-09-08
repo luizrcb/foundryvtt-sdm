@@ -25,7 +25,7 @@ export class HeroDiceEngine {
    *   @property {number} targetGroupTotal - Total of target group after modifications
    *   @property {Object} distribution - Heroic dice allocation details
    */
-  static async process(originalRoll, heroicDiceQty, actor) {
+  static async process(originalRoll, heroicDiceQty, heroicBonusQty = 0, actor) {
     const analyzer = new RollAnalyzer(originalRoll);
     const {
       targetDice,
@@ -61,7 +61,7 @@ export class HeroDiceEngine {
 
     // Roll heroic dice
     const heroicRoll = await this._rollHeroDice({
-      quantity: heroicDiceQty,
+      quantity: heroicDiceQty + heroicBonusQty,
       faces: Die[heroDiceType]
     });
 

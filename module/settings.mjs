@@ -539,8 +539,9 @@ export function configureUseHeroDiceButton(message, html, data) {
   const isHeroResult = !!message?.getFlag('sdm', 'isHeroResult');
   const isRollTableMessage = !!message?.getFlag('core', 'RollTable');
   const isAbilityScoreRoll = !!message?.getFlag('sdm', 'isAbilityScoreRoll');
+  const noHeroDice = !!message?.getFlag('sdm', 'noHeroDice');
   const flags = message.flags;
-  if (isRollTableMessage || isAbilityScoreRoll) return;
+  if (isRollTableMessage || isAbilityScoreRoll || noHeroDice) return;
 
   if (isHeroResult) {
     $('button.hero-dice-btn').remove();

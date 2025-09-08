@@ -10,7 +10,7 @@ import {
 const { renderTemplate } = foundry.applications.handlebars;
 
 export class HeroDiceUI {
-  static getHeroDiceSelect(actor, includeZero = false, healingHouseRuleEnabled = false) {
+  static getHeroDiceSelect(actor, includeZero = false, healingHouseRuleEnabled = false, bonusHeroDiceEnabled = false) {
     const maxHeroDice = actor.system.hero_dice?.value ?? 0;
     const options = Array.from(
       { length: maxHeroDice },
@@ -19,24 +19,31 @@ export class HeroDiceUI {
 
     return `
       <div class="form-group">
-        <label>${$l10n('SDM.ItemQuantity')}</label>
+        <label for="heroicQty">${$l10n('SDM.ItemQuantity')}</label>
         <select name="heroicQty">
           ${includeZero ? '<option value="0">0</option>' : ''}
           ${options}
         </select>
       </div>
-      ${
-        healingHouseRuleEnabled
-          ? `<div class="form-group">
-               <label for="healingHouseRule">${$l10n('SDM.SettingsHealingHouseRule')}</label>
-               <input id="healingHouseRule" type="checkbox" name="healingHouseRule" />
-               <p>${$l10n('SDM.SettingsHealingHouseRuleHint')}</p>
-             </div>`
-          : ''
-      }`;
+      ${ bonusHeroDiceEnabled ? `
+        <div class="form-group mt-10">
+          <label for"bonusQty">${$l10n('SDM.BonusHeroDice')}</label>
+          <input type="text" name="bonusQty" value="0" data-dtype="Number" />
+        </div>`
+        : ''
+      }
+      ${ healingHouseRuleEnabled ?
+        `<div class="form-group">
+          <label for="healingHouseRule">${$l10n('SDM.SettingsHealingHouseRule')}</label>
+          <input id="healingHouseRule" type="checkbox" name="healingHouseRule" />
+          <p>${$l10n('SDM.SettingsHealingHouseRuleHint')}</p>
+        </div>`
+        : ''
+      }
+    `;
   }
 
-  static async renderResultToChat(result, actor, flags) {
+  static async renderResultToChat(result, actor, flags, heroicBonusQty = 0) {
     const {
       keptDice,
       explosiveDice,
@@ -110,7 +117,7 @@ export class HeroDiceUI {
       content: await renderTemplate(templatePath('/chat/hero-dice-result'), templateData),
       flavor: $fmt('SDM.RollTitle', {
         prefix: '',
-        title: $l10n('SDM.FieldHeroDice')
+        title: $l10n('SDM.FieldHeroDice')+`${heroicBonusQty > 0 ? ` (${$l10n('SDM.FieldBonus')}: ${heroicBonusQty})`: ''}`
       }),
       rolls: [heroResultRoll],
       flags: { 'sdm.isHeroResult': true }

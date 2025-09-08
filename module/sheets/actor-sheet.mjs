@@ -84,7 +84,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     actions: {
       createDoc: this._createAndViewDoc,
       deleteDoc: this._deleteDoc,
-      heroicHealing: this._onHeroHealing,
+      heroicHealing: { handler: this._onHeroHealing, buttons: [0, 2] },
       onEditImage: this._onEditImage,
       reactionRoll: this._onReactionRoll,
       roll: this._onRoll,
@@ -1423,10 +1423,13 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
   static async _onHeroHealing(event, target) {
     event.preventDefault(); // Don't open context menu
     event.stopPropagation(); // Don't trigger other events
-    if (event.detail > 1) return; // Ignore repeated clicks
+    const { detail, button } = event;
+    if (event.detail > 1) return;
+
+    let onlySpendWithoutRolling = button === 2;
 
     // Get common data attributes
-    await healingHeroDice(event, this.actor);
+    await healingHeroDice(event, this.actor, onlySpendWithoutRolling);
   }
 
   static async _sendToChat(event, target) {
