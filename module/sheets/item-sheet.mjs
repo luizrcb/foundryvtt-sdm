@@ -452,6 +452,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
 
   static newPower(data) {
     const basePower = new PowerDataModel().toObject();
+    basePower.name = $fmt('SDM.DOCUMENT.New', { type: $l10n('SDM.Power')});
     if (!data) return basePower;
 
     const {
