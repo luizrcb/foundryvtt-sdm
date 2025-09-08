@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## v0.2.11
+
+- Allow users to spend Hero Dice without rolling by right-clicking their Hero Dice label
+- Allow users to add bonus Hero Dice (granted by other players or the referee) when modifying a roll result
+- Add missing localization for referee feature buttons in the token controls menu
+- Add warning when the referee uses the Group Initiative feature without selecting any tokens
+- Fix an issue caused by an empty power name when creating new powers in Albums of Power
+- Add a label to the NPC sheet for rolling saving throws
+
 ## v0.2.10
 
 - Fix issues related to “Blind GM Rolls” and usage of Hero Dice
