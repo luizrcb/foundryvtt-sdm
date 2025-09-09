@@ -74,18 +74,12 @@
   .item-controls {
     display: flex;
     flex: 0 0 100px;
-    justify-content: flex-end;
-    a {
-      font-size: 12px;
-      text-align: center;
-      margin: 0 6px;
+    &.controls-2 {
+      flex: 0 0 50px;
     }
-  }
-
-  // Control Buttons
-  .item-controls-small {
-    display: flex;
-    flex: 0 0 50px;
+    &.controls-1 {
+      flex: 0 0 25px;
+    }
     justify-content: flex-end;
     a {
       font-size: 12px;

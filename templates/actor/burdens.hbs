@@ -3,7 +3,6 @@
   <ol class='items-list'>
     <li class='item flexrow items-header'>
       <div class='item-name'></div>
-      {{!-- <div class='item-formula'>{{localize 'SDM.Item.Gear.FIELDS.rollFormula.label'}}</div> --}}
       <div class='item-formula' data-tooltip="{{localize 'SDM.BurdensPenalty'}}">
         {{localize 'SDM.InventoryBurdens'}} [{{@root.burdenSlotsTaken}}{{#if (ne @root.actor.type 'npc')}}/{{@root.system.burden_slots}}{{/if}}]
       </div>
@@ -26,23 +25,11 @@
       {{/if}}
        {{#if (eq burden.type 'burden')}}
         <li class='item flexrow' data-item-id='{{burden._id}}' data-drag='true' data-document-class='Item' data-tooltip="{{getItemTitle burden}}">
-          <div class='item-name' style="cursor:pointer;" data-action='sendToChat'>
+          <div class='item-name' style="cursor:pointer;" data-action='openDoc'>
             <div class='item-image'>
               <img src='{{burden.img}}' width='24' height='24' />
             </div>
             <div>{{burden.name}}</div>
-          </div>
-          <div class='item-controls-small'>
-            {{#if @root.editable}}
-            <a class='item-control item-edit' data-tooltip='{{localize "DOCUMENT.Update" type=(localize (lookup @root.config.itemType burden.type))}}'
-              data-action='viewDoc'>
-              <i class='fa-solid fa-edit'></i>
-            </a>
-            <a class='item-control item-delete' data-tooltip='{{localize "DOCUMENT.Delete" type=(localize (lookup @root.config.itemType burden.type))}}'
-              data-action='deleteDoc'>
-              <i class='fa-solid fa-trash'></i>
-            </a>
-            {{/if}}
           </div>
         </li>
       {{/if}}

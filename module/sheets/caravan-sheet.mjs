@@ -49,7 +49,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       toggleEffect: this._toggleEffect,
       transferItem: this._onTransferItem,
       viewDoc: this._viewDoc,
-      sendToChat: { handler: this._sendToChat, buttons: [0, 2] },
+      openDoc: { handler: this._openDoc, buttons: [0] },
       addTransport: this._addTransport,
       deleteTransport: this._deleteTransport,
       addRoute: this._addRoute,
@@ -279,7 +279,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     for (let i = 0; i < capacity; i += 1) {
       const key = String(i);
       if (!(key in inventory)) {
-        updates[`system.inventory.${key}`] = { name: "" };
+        updates[`system.inventory.${key}`] = { name: '' };
       }
     }
 
@@ -367,6 +367,31 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
 
     // Add item change listeners
     this._setupItemListeners();
+  }
+
+  /**
+   * Actions performed after a first render of the Application.
+   * @param {ApplicationRenderContext} context      Prepared context data.
+   * @param {RenderOptions} options                 Provided render options.
+   * @protected
+   */
+  async _onFirstRender(context, options) {
+    await super._onFirstRender(context, options);
+
+    this._createContextMenu(
+      this._getItemListContextOptions,
+       //'[data-document-class][data-item-id], [data-document-class][data-effect-id]',
+      '[data-document-class][data-item-id]',
+      {
+        hookName: 'getItemListContextOptions',
+        parentClassHooks: false,
+        fixed: true
+      }
+    );
+  }
+
+  _getItemListContextOptions() {
+    return this.actor._getItemListContextOptions();
   }
 
   /**
@@ -742,20 +767,13 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     return openItemTransferDialog(item, this.actor);
   }
 
-  static async _sendToChat(event, target) {
-    event.preventDefault(); // Don't open context menu
-    event.stopPropagation(); // Don't trigger other events
+  static async _openDoc(event, target) {
     const { detail, button } = event;
 
     if (button === 0) {
       if (detail <= 1 || detail > 2) return;
       return SdmCaravanSheet._viewDoc.call(this, event, target);
     }
-
-    if (detail > 1) return;
-
-    const item = this._getEmbeddedDocument(target);
-    return await item.sendToChat({ actor: this.actor, collapsed: false });
   }
 
   static async _addTransport(event, target) {

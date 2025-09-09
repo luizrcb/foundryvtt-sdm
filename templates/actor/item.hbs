@@ -5,7 +5,7 @@
   data-document-class='Item'
   data-tooltip="{{getItemTitle item}}"
 >
-  <div class='item-name' style="cursor:pointer;" data-action='sendToChat'>
+  <div class='item-name' style="cursor:pointer;" data-action='openDoc'>
     <div class='item-image'>
       <img src='{{item.img}}' width='24' height='24' data-tooltip="{{item.name}}"/>
       {{#if (eq item.system.status 'notched')}}
@@ -96,7 +96,7 @@
       </div>
     </div>
   </div>
-  <div class='item-controls{{#if (eq actorType 'caravan')}}-small{{/if}}'>
+  <div class='item-controls {{ifThen (eq actorType 'caravan') 'controls-1' 'controls-2'}}'>
     {{#if @root.editable}}
 
     {{#if (and
@@ -120,31 +120,6 @@
       (ne item.system.size.unit 'cash')
       (ne actorType 'caravan')
     )}}
-    <a class="item-control"
-      data-tooltip="
-        {{#if (eq system.status 'notched')}}
-        <b>{{localize 'SDM.ItemStatusNotched'}}</b><br>
-        {{localize 'SDM.NotchedItemAction'}}
-        {{else}}
-        {{#if (eq system.status 'broken')}}
-        <b>{{localize 'SDM.ItemStatusBroken'}}</b><br>
-        {{localize 'SDM.BrokenItemAction'}}
-        {{else}}
-        {{localize 'SDM.NormalItemAction'}}
-        {{/if}}
-        {{/if}}
-      "
-    >
-      <i class="fa-regular
-        {{#if (eq system.status 'notched')}}fa-hammer
-        {{else}}
-        {{#if (eq system.status 'broken')}}fa-ban
-        {{else}}fa-circle-dot
-        {{/if}}
-        {{/if}}"
-        data-action="toggleItemStatus"
-      ></i>
-    </a>
     {{/if}}
     <a class="item-control">
       <i
@@ -154,22 +129,6 @@
         type=(localize 'TYPE.Item' )}}"
       >
       </i>
-    </a>
-    <a
-      class='item-control item-edit'
-      data-tooltip='{{localize "DOCUMENT.Update"
-      type=(localize "TYPE.Item")}}'
-      data-action='viewDoc'
-    >
-      <i class='fa-solid fa-edit'></i>
-    </a>
-
-    <a
-      class='item-control item-delete'
-      data-tooltip='{{localize "DOCUMENT.Delete" type=(localize "TYPE.Item")}}'
-      data-action='deleteDoc'
-    >
-      <i class='fa-solid fa-trash'></i>
     </a>
     {{/if}}
   </div>

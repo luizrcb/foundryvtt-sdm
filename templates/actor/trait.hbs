@@ -5,7 +5,7 @@
   data-document-class='Item'
   data-tooltip='{{getItemTitle trait}}'
 >
-  <div class='item-name' style="cursor:pointer;" data-action='sendToChat'>
+  <div class='item-name' style="cursor:pointer;" data-action='openDoc'>
     <div class='item-image'>
       <img src='{{trait.img}}' width='24' height='24' />
       {{#if (eq trait.system.status 'notched')}}
@@ -36,50 +36,5 @@
         (+{{trait.system.skill.modifier_final}})
       {{/if}}
     </div>
-  </div>
-  <div class='item-controls-small'>
-    {{#if @root.editable}}
-    {{#if (eq trait.system.type 'power')}}
-    <a class="item-control"
-       data-tooltip="
-        {{#if (eq system.status 'notched')}}
-        <b>{{localize 'SDM.ItemStatusNotched'}}</b><br>
-        {{localize 'SDM.NotchedItemAction'}}
-        {{else}}
-        {{#if (eq system.status 'broken')}}
-        <b>{{localize 'SDM.ItemStatusBroken'}}</b><br>
-        {{localize 'SDM.BrokenItemAction'}}
-        {{else}}
-        {{localize 'SDM.NormalItemAction'}}
-        {{/if}}
-        {{/if}}
-      "
-    >
-      <i class="fa-regular
-        {{#if (eq system.status 'notched')}}fa-hammer
-        {{else}}
-        {{#if (eq system.status 'broken')}}fa-ban
-        {{else}}fa-circle-dot
-        {{/if}}
-        {{/if}}"
-        data-action="toggleItemStatus"
-      ></i>
-    </a>
-    {{/if}}
-    <a
-      class='item-control item-edit'
-      data-tooltip='{{localize "DOCUMENT.Update" type=(localize 'TYPE.Trait')}}'
-      data-action='viewDoc'
-    >
-      <i class='fa-solid fa-edit'></i>
-    </a>
-      <a
-        class='item-control item-delete'
-        data-tooltip='{{localize "DOCUMENT.Delete" type=(localize 'TYPE.Trait')}}'
-        data-action='deleteDoc'
-      >
-        <i class='fa-solid fa-trash'></i>
-      </a>
-    {{/if}}
   </div>
 </li>

@@ -339,14 +339,8 @@ export class SdmItem extends Item {
     await this.update({ 'system.is_hallmark': !this.system.is_hallmark });
   }
 
-  async toggleItemStatus(event) {
-    event.preventDefault();
-    event.stopPropagation();
-
-    const { detail, button } = event;
-    if (detail > 1) return;
-
-    const isRepair = button === 2;
+  async toggleItemStatus(action='') {
+    const isRepair = action === 'repair';
     const status = this.system.status;
     const readied = this.system.readied;
 

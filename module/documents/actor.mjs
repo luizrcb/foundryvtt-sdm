@@ -419,8 +419,8 @@ export class SdmActor extends Actor {
         // if (itemSlots >= 1) itemSlots -= 1;
         itemSlots = 0;
       } else if (isGear && !isReadied && packedItemBonus > 0 && packedItemBonus >= itemSlots) {
-        packedItemBonus -= (itemSlots || 1);
-        items.packedTaken += (itemSlots || 1);
+        packedItemBonus -= itemSlots || 1;
+        items.packedTaken += itemSlots || 1;
         itemSlots = 0;
       }
 
@@ -578,6 +578,80 @@ export class SdmActor extends Actor {
     }, 0);
 
     return totalCash;
+  }
+
+  _getItemListContextOptions() {
+    return [
+      {
+        name: 'SDM.Item.View',
+        icon: '<i class="fa-solid fa-fw fa-eye"></i>',
+        callback: async target => {
+          const document = this.sheet._getEmbeddedDocument(target);
+          await document.sheet.render({ force: true });
+        }
+      },
+      {
+        name: 'SDM.Item.Repair',
+        icon: '<i class="fa-solid fa-hammer"></i>',
+        condition: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          if (item.system.size.unit === 'cash' || item.type === 'burden') return false;
+          if (item.type === 'trait' && item.system.type !== 'power') return false;
+          return this.isOwner && item.system.status !== '';
+        },
+        callback: async target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          await item.toggleItemStatus('repair');
+        }
+      },
+      {
+        name: 'SDM.Item.Notched',
+        icon: '<i class="fa-solid fa-circle-dot"></i>',
+        condition: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          if (item.system.size.unit === 'cash' || item.type === 'burden') return false;
+          if (item.type === 'trait' && item.system.type !== 'power') return false;
+          return this.isOwner && item.system.status === '';
+        },
+        callback: async target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          await item.toggleItemStatus();
+        }
+      },
+      {
+        name: 'SDM.Item.Broken',
+        icon: '<i class="fa-solid fa-ban"></i>',
+        condition: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          if (item.system.size.unit === 'cash' || item.type === 'burden') return false;
+          if (item.type === 'trait' && item.system.type !== 'power') return false;
+          return this.isOwner && item.system.status === 'notched';
+        },
+        callback: async target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          await item.toggleItemStatus();
+        }
+      },
+      {
+        name: 'SDM.Item.Share',
+        icon: '<i class="fa-solid fa-fw fa-share-from-square"></i>',
+        callback: async target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          await item.sendToChat({ actor: this, collapsed: false });
+        }
+      },
+      {
+        name: 'SDM.Item.Delete',
+        icon: '<i class="fa-solid fa-fw fa-trash"></i>',
+        condition: () => this.isOwner,
+        callback: async target => {
+          const document = this.sheet._getEmbeddedDocument(target);
+          //await this._deleteDoc.call(this, null, target);
+          if (document.hasGrantedItems) await document.advancementDeletionPrompt();
+          else await document.deleteDialog();
+        }
+      }
+    ];
   }
 
   /**

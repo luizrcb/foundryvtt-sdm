@@ -97,10 +97,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       transferItem: this._onTransferItem,
       updateAttack: this._onUpdateAttack,
       viewDoc: this._viewDoc,
-      sendToChat: { handler: this._sendToChat, buttons: [0, 2] },
+      openDoc: { handler: this._openDoc, buttons: [0] },
       toggleItemStatus: { handler: this._toggleItemStatus, buttons: [0, 2] }
     },
-    // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
     form: {
       submitOnChange: true
@@ -272,7 +271,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       // Create and render the modal
       rollOptions = await foundry.applications.api.DialogV2.wait({
         window: {
-          title: $fmt('SDM.RollType', { type: $l10n(`SDM.${titleType}`)}),
+          title: $fmt('SDM.RollType', { type: $l10n(`SDM.${titleType}`) })
         },
         powerOptions,
         content: template,
@@ -667,6 +666,31 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     // Add item change listeners
     this._setupItemListeners();
+  }
+
+ /**
+   * Actions performed after a first render of the Application.
+   * @param {ApplicationRenderContext} context      Prepared context data.
+   * @param {RenderOptions} options                 Provided render options.
+   * @protected
+   */
+  async _onFirstRender(context, options) {
+    await super._onFirstRender(context, options);
+
+    this._createContextMenu(
+      this._getItemListContextOptions,
+       //'[data-document-class][data-item-id], [data-document-class][data-effect-id]',
+      '[data-document-class][data-item-id]',
+      {
+        hookName: 'getItemListContextOptions',
+        parentClassHooks: false,
+        fixed: true
+      }
+    );
+  }
+
+  _getItemListContextOptions() {
+    return this.actor._getItemListContextOptions();
   }
 
   /**
@@ -1144,7 +1168,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     if (!isShift) {
       data = await DialogV2.wait({
         window: {
-          title: $fmt('SDM.RollType', { type: $l10n('SDM.Morale')}),
+          title: $fmt('SDM.RollType', { type: $l10n('SDM.Morale') }),
           resizable: true
         },
         content: await renderTemplate(templatePath('actor/npc/morale-roll-dialog'), {
@@ -1206,7 +1230,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     if (!isShift) {
       data = await DialogV2.wait({
         window: {
-          title: $fmt('SDM.RollType', { type: $l10n('SDM.Reaction')}),
+          title: $fmt('SDM.RollType', { type: $l10n('SDM.Reaction') })
         },
         position: {
           width: 500,
@@ -1296,7 +1320,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     // Get common data attributes
     const dataset = target.dataset;
     const { ability } = dataset;
-    const abilityData = ability !== ActorType.NPC ? this.actor.system.abilities[ability] : { current: this.actor.system.bonus };
+    const abilityData =
+      ability !== ActorType.NPC
+        ? this.actor.system.abilities[ability]
+        : { current: this.actor.system.bonus };
     const finalAbility = abilityData?.current;
     const ward = this.actor?.system?.ward || 0;
     const burdenPenalty = this.actor.system?.burden_penalty || 0;
@@ -1359,7 +1386,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       // Create and render the modal
       rollOptions = await foundry.applications.api.DialogV2.wait({
         window: {
-          title: $fmt('SDM.RollType', { type: $l10n('SDM.FieldSaveTarget')}),
+          title: $fmt('SDM.RollType', { type: $l10n('SDM.FieldSaveTarget') })
         },
         content: template,
         position: {
@@ -1432,20 +1459,13 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     await healingHeroDice(event, this.actor, onlySpendWithoutRolling);
   }
 
-  static async _sendToChat(event, target) {
-    event.preventDefault(); // Don't open context menu
-    event.stopPropagation(); // Don't trigger other events
+  static async _openDoc(event, target) {
     const { detail, button } = event;
 
     if (button === 0) {
       if (detail <= 1 || detail > 2) return;
       return SdmActorSheet._viewDoc.call(this, event, target);
     }
-
-    if (detail > 1) return;
-
-    const item = this._getEmbeddedDocument(target);
-    return await item.sendToChat({ actor: this.actor, collapsed: false });
   }
 
   static async _toggleItemStatus(event, target) {

@@ -12,7 +12,8 @@
               {{#each dice}}
               <li class="roll die d{{dieFaces}}
               {{#if (eq original dieFaces)}}exploded max{{/if}}
-              {{#unless isKept}}discarded{{/unless}}">
+              {{#unless isKept}}discarded{{/unless}}"
+                data-tooltip="{{#unless isKept}}{{localize 'SDM.DiceDiscarded'}}{{/unless}}">
                 {{original}}
               </li>
               {{/each}}
@@ -31,7 +32,8 @@
             <ol class="dice-rolls">
               {{#each heroicTotal as |heroicDice|}}
               <li class="roll die {{@root.heroDiceType}}
-                {{#unless (contains ../heroicUsed heroicDice.index)}}discarded{{/unless}}">
+                {{#unless (contains ../heroicUsed heroicDice.index)}}discarded{{/unless}}"
+                  data-tooltip="{{#unless (contains ../heroicUsed heroicDice.index)}}{{localize 'SDM.DiceDiscarded'}}{{/unless}}">
                 {{heroicDice.result}}
               </li>
               {{/each}}
@@ -49,7 +51,8 @@
           <ol class="dice-rolls">
             {{#each explosion.chain as |chain|}}
             <li
-              class="roll die d{{../dieFaces}} {{#if (eq chain @../dieFaces)}}exploded max{{/if}}{{#unless explosion.isKept}} discarded{{/unless}}">
+              class="roll die d{{../dieFaces}} {{#if (eq chain @../dieFaces)}}exploded max{{/if}}{{#unless explosion.isKept}} discarded{{/unless}}"
+              data-tooltip="{{#unless explosion.isKept}}{{localize 'SDM.DiceDiscarded'}}{{/unless}}">
               {{chain}}
             </li>
             {{/each}}
