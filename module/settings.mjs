@@ -27,7 +27,7 @@ export function registerSystemSettings() {
     scope: 'client', // or "world"
     config: true,
     requiresReload: true,
-    choices: CONFIG.SDM.accendColorOptions,
+    choices: CONFIG.SDM.accenTColorOptions,
     type: String,
     default: 'teal'
   });
@@ -40,7 +40,7 @@ export function registerSystemSettings() {
     requiresReload: true,
     choices: {
       same: 'SDM.DSNChromatypeSame',
-      ...CONFIG.SDM.accendColorOptions
+      ...CONFIG.SDM.accenTColorOptions
     },
     type: String,
     default: 'same'
@@ -617,13 +617,28 @@ export function configurePlayerChromatype() {
 
   const dsnFinalColor = dsnColor === 'same' ? color : dsnColor;
 
+  const DICE_SCALE = {
+    d2: 1,
+    d4: 1,
+    d6: 1.25,
+    d8: 0.75,
+    d10: 0.75,
+    d12: 1,
+    d20: 0.75,
+    d3: 1,
+    d5: 0.75,
+    df: 2,
+    d100: 0.6
+  };
+
   const colorMapping = {
     aqua: {
       hex: '#07cfcfd0',
       rgb: 'rgba(0, 255, 255, 0.2)',
       dice: {
         foreground: '#301B3F',
-        background: '#07cfcfe0'
+        background: '#07cfcfe0',
+        edge: '#301B3F'
       }
     },
     red: {
@@ -679,7 +694,8 @@ export function configurePlayerChromatype() {
       rgb: 'rgba(177, 15, 212, 0.2)',
       dice: {
         foreground: '#000000',
-        background: '#B10FD4'
+        background: '#B10FD4',
+        edge: '#000000'
       }
     },
     pink: {
@@ -687,7 +703,8 @@ export function configurePlayerChromatype() {
       rgb: 'rgba(207, 97, 136, 0.2)',
       dice: {
         foreground: '#362e63ff',
-        background: '#CF6188'
+        background: '#CF6188',
+        edge: '#362e63ff'
       }
     },
     ultraviolet: {
@@ -695,7 +712,8 @@ export function configurePlayerChromatype() {
       rgb: 'rgba(122, 0, 255, 0.2)',
       dice: {
         foreground: '#E5CCFF',
-        background: '#7A00FF'
+        background: '#7A00FF',
+        edge: '#E5CCFF'
       }
     },
     teal: {
@@ -711,7 +729,8 @@ export function configurePlayerChromatype() {
       rgb: 'rgba(139, 69, 19, 0.1)',
       dice: {
         foreground: '#3098E3',
-        background: '#8b4513'
+        background: '#8b4513',
+        edge: '#3098E3'
       }
     },
     black: {
@@ -719,15 +738,17 @@ export function configurePlayerChromatype() {
       rgb: 'rgba(0, 0, 0, 0.25)',
       dice: {
         foreground: '#f0f0f0ff',
-        background: '#000000'
+        background: '#000000',
+        edge: '#f0f0f0ff'
       }
     },
     white: {
       hex: 'rgba(255, 255, 255, 0.5)',
       rgb: 'rgba(255, 255, 255, 0.5)',
       dice: {
-        foreground: '#000000ff',
-        background: '#ffffff8c'
+        foreground: '#462A8F',
+        background: '#ffffff8c',
+        edge: '#462A8F'
       }
     },
     gold: {
@@ -735,7 +756,8 @@ export function configurePlayerChromatype() {
       rgb: 'rgba(173, 140, 63, 0.2)',
       dice: {
         foreground: '#0E245A',
-        background: '#AD8C3F'
+        background: '#AD8C3F',
+        edge: '#0E245A'
       }
     },
     silver: {
@@ -743,7 +765,8 @@ export function configurePlayerChromatype() {
       rgb: 'rgba(192, 192, 192, 0.15)',
       dice: {
         foreground: '#f8f8f8ff',
-        background: '#6e6e6e'
+        background: '#6e6e6e',
+        edge: '#f8f8f8ff'
       }
     },
     crimson: {
@@ -751,7 +774,8 @@ export function configurePlayerChromatype() {
       rgb: 'rgba(153, 0, 0, 0.15)',
       dice: {
         foreground: '#CFFCF7',
-        background: '#660000'
+        background: '#660000',
+        edge: '#CFFCF7'
       }
     },
     emerald: {
@@ -759,7 +783,8 @@ export function configurePlayerChromatype() {
       rgb: 'rgba(80, 200, 120, 0.15)',
       dice: {
         foreground: '#FADADD',
-        background: '#1e7d43'
+        background: '#1e7d43',
+        edge: '#FADADD'
       }
     },
     olive: {
@@ -767,25 +792,36 @@ export function configurePlayerChromatype() {
       rgb: 'rgba(128, 128, 0, 0.15)',
       dice: {
         foreground: '#EAF0B1',
-        background: '#4a4a00'
+        background: '#4a4a00',
+        edge: '#EAF0B1'
       }
     },
     lime: {
       hex: '#39FF14',
       rgb: 'rgba(57, 255, 20, 0.2)',
       dice: {
-        foreground: '#000000',
-        background: '#39FF14'
+        foreground: '#462A8F',
+        background: '#39FF14',
+        edge: '#462A8F'
       }
     },
+    neonPurple: {
+      hex: '#FF02FF',
+      rgb: 'rgba(255, 2, 255, 0.3)',
+      dice: {
+        foreground: '#000000',
+        background: '#FF02FF',
+        edge: '#000000'
+      }
+    }
   };
   const selectedColor = colorMapping[color];
   const dice3DColor = colorMapping[dsnFinalColor].dice;
-  const { foreground, background } = dice3DColor;
+  const { foreground, background, edge } = dice3DColor;
 
   Hooks.once('diceSoNiceInit', dice3d => {
     if (dice3d) {
-      dice3d.addColorset({
+      const colorData = {
         name: 'sdm-chromatype',
         description: 'SDM Chromatype Dice',
         category: 'Colors',
@@ -794,8 +830,14 @@ export function configurePlayerChromatype() {
         outline: 'black',
         texture: 'none',
         material: 'plastic',
-        font: 'Our Golden Age'
-      });
+        font: 'Our Golden Age',
+        fontScale: DICE_SCALE
+      };
+
+      if (edge) {
+        colorData.edge = [edge];
+      }
+      dice3d.addColorset(colorData);
     }
   });
 

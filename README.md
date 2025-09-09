@@ -54,26 +54,65 @@ This project uses names of creatures, items, traits, powers, locations, and rule
 
 ### Features
 
-- Fully automated character inventory slots (each burden imposes a -1 to all rolls, except hero dice rolls).
-- Hovering over items in the inventory displays their key information (damage, range, power cost, etc.).
-- Easy item transfer between actors.
-- Double-clicking an inventory item will open its sheet.
-- Right-click any inventory item, trait or burden to send a card to the chat.
-- Character Sheet (Edit Mode / Play Mode) for configuring attacks, power costs, and full ability values.
+#### Core Gameplay
+
+- Character Sheet (Edit Mode / Play Mode) for configuring attacks, power cost, and full ability values.
 - Each attack type (melee, ranged, fantascience, and oldtech) can be configured with a preferred ability and skill.
-- Characters can spend hero dice to modify rolls or regain life (players must configure their main character in the User Configuration menu). This can cause dice to explode.
-- Support for group initiative rolls (Referee Macro).
-- Shift+click shortcut to skip opening custom roll dialogs.
-- Highly configurable core game values (base defenses, item and trait slots, etc.).
-- Customizable initiative rolls in NPC sheets.
+- Support for mental and social attacks (and defenses) as described in the *Vastlands Guidebook* (VLG).
 - Descriptive results for saving throws, reactions, morale (NPC), and targeted attack rolls.
-- Extensive bonus options to simulate backpacks, blessings, curses, injuries, trait effects (see the Active Effects Changes tab for the full list).
-- Referee utility macros.
-- Drag and drop a power into a album of power to easily copy it to the album.
-- Support for mental and social attacks (and defenses) as described in the Vastlands Guidebook (VLG).
+- Characters can spend hero dice to modify rolls or regain life (players must configure their main character in the User Configuration menu). Exploding dice are supported.
+- **Special roll results (magic numbers):**
+  - **1** = critical failure.
+  - **13** = only one ammo or other resource left.
+  - **20** = critical success.
+- The system will automatically disable temporary active effects based on combat round/turn durations.
+
+#### Items & Inventory
+
+- Fully automated character inventory slots (each burden imposes a -1 penalty to all rolls, except hero dice rolls).
+- Hovering over items in the inventory displays their key information (damage, range, power cost, etc.).
+- Double-clicking an inventory item will open its sheet.
+- Right-click any inventory item, trait, or burden to send a card to the chat.
+- Easy item transfer between actors.
+- Caravan cargo drop areas are highlighted when dragging an item.
+- Items can be flagged as  a **hallmark** (hallmark item leveling is not automated). The hallmark experience field supports math expressions.
+- Items can be marked as **notched** or **broken**.
+- Drag and drop a power into an Album of Power to add it to the Album; Referees can also extract powers from an album (copy power from the album to a new gear item).
+
+### Caravan System
+
+- **Caravan actor type:**
+  - Real container-based drag-and-drop inventory (sacks).
+  - Shows total value and slots per sack for each container.
+  - Overload indicator when the caravan capacity is exceeded.
+
+### Dice & Rolls
+
+- Group initiative rolls (Referee button in the Token Controls menu).
+- Customizable initiative rolls in NPC sheets.
+- Shift+Click shortcut to skip opening custom roll dialogs.
+- Ctrl+Click shortcut to make rolls in blind GM mode.
+- Right-click roll results in the chat to open `Apply as Damage` and `Apply as Healing` menu options (applies to all selected tokens).
+
+### NPCs & Referee Tools
+
+- NPCs support experience tracking (pets, sidekicks) and can use skills and traits in rolls.
+- **Referee utility functions** are available directly as buttons in the token controls left menu (no need to use macros).
+- Referee and Player utility functions are exposed in the system API for automation.
+
+### Customization & UI
+
+- Highly configurable core game values (base defenses, item and trait slots, etc.).
+- **Chromatype customization:**
+  - Choose a main chromatype color for UI elements.
+  - Dice So Nice integration with the  "SDM Chromatype Dice” theme for Dice So Nice.
+  - Separate configuration for Dice So Nice Chromatype color.
+
+### Localization
+
 - Full localization for Brazilian Portuguese (pt-BR).
-- Special roll results for magic numbers (1 = critical failure, 13 = only one ammo or other resource left, 20 = critical success).
-- Right-click roll results in the chat to open `Apply as Damage` and `Apply as Healing` menu options. This will be applied to all selected tokens.
+
+## Compendiums
 
 This project compendiums and macros use names of creatures, items, traits, powers, locations and rule sections from the *Vastlands Guidebook*.
 

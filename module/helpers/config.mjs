@@ -76,7 +76,7 @@ SDM.itemStatus = {
   broken: 'SDM.ItemStatusBroken'
 };
 
-SDM.accendColorOptions = {
+SDM.accenTColorOptions = {
   aqua: 'SDM.ColorAqua',
   black: 'SDM.ColorBlack',
   blue: 'SDM.ColorBlue',
@@ -86,6 +86,7 @@ SDM.accendColorOptions = {
   gold: 'SDM.ColorGold',
   green: 'SDM.ColorGreen',
   lime: 'SDM.ColorLime',
+  neonPurple: 'SDM.ColorNeonPurple',
   olive: 'SDM.ColorOlive',
   orange: 'SDM.ColorOrange',
   pink: 'SDM.ColorPink',
