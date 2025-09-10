@@ -27,6 +27,16 @@ export default class SdmGear extends SdmItemBase {
       }, {})
     });
 
+    schema.starting_kit = new fields.BooleanField({ required: true, initial: false });
+
+    schema.packed_remaining_items = new fields.NumberField({
+      required: true,
+      nullable: false,
+      integer: true,
+      initial: 10,
+      min: 0
+    });
+
     schema.power = new fields.EmbeddedDataField(PowerDataModel);
     schema.powers_current_index = new fields.NumberField({
       required: true,

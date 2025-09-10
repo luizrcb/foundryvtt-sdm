@@ -130,7 +130,11 @@ export class SdmItem extends Item {
             'SDM.CashSymbol'
           )}${this.system.quantity * (this.system.size.value || 1)}`;
         } else {
-          title = `${$l10n('TYPES.Item.gear')}: ${this.getNameTitle()}${this.getCostTitle()}`;
+          let remainingItems = '';
+          if (!this.system.type && this.system.starting_kit) {
+            remainingItems = `<br>${$l10n('SDM.GearStartingKitRemainingItems')}: ${this.system.packed_remaining_items}`;
+          }
+          title = `${$l10n('TYPES.Item.gear')}: ${this.getNameTitle()}${this.getCostTitle()}${remainingItems}`;
         }
         break;
       case 'trait':
@@ -282,7 +286,13 @@ export class SdmItem extends Item {
     return await renderTemplate(templatePath('chat/item-card'), context);
   }
 
-  async sendToChat({ actor, flavor = '', collapsed = false, displayWeight = true, blindGMRoll = false }) {
+  async sendToChat({
+    actor,
+    flavor = '',
+    collapsed = false,
+    displayWeight = true,
+    blindGMRoll = false
+  }) {
     const content = await this.getItemChatCard({ collapsed, displayWeight });
 
     const chatMessageData = {
@@ -339,7 +349,7 @@ export class SdmItem extends Item {
     await this.update({ 'system.is_hallmark': !this.system.is_hallmark });
   }
 
-  async toggleItemStatus(action='') {
+  async toggleItemStatus(action = '') {
     const isRepair = action === 'repair';
     const status = this.system.status;
     const readied = this.system.readied;

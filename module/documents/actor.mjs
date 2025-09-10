@@ -584,10 +584,27 @@ export class SdmActor extends Actor {
     return [
       {
         name: 'SDM.Item.View',
-        icon: '<i class="fa-solid fa-fw fa-eye"></i>',
+        icon: '<i class="fa-solid fa-eye"></i>',
         callback: async target => {
           const document = this.sheet._getEmbeddedDocument(target);
           await document.sheet.render({ force: true });
+        }
+      },
+      {
+        name: 'SDM.Item.Unpack',
+        icon: '<i class="fa-solid fa-box-archive"></i>',
+        condition: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          return (
+            item.type === ItemType.GEAR &&
+            !item.system.type &&
+            item.system.starting_kit &&
+            item.system.packed_remaining_items > 0 &&
+            item.system.status !== 'broken'
+          );
+        },
+        callback: async target => {
+          await this.sheet.unpackStartingKitItem(target);
         }
       },
       {
@@ -595,8 +612,8 @@ export class SdmActor extends Actor {
         icon: '<i class="fa-solid fa-hammer"></i>',
         condition: target => {
           const item = this.sheet._getEmbeddedDocument(target);
-          if (item.system.size.unit === 'cash' || item.type === 'burden') return false;
-          if (item.type === 'trait' && item.system.type !== 'power') return false;
+          if (item.system.size.unit === SizeUnit.CASH || item.type === ItemType.BURDEN) return false;
+          if (item.type === ItemType.TRAIT && item.system.type !== GearType.POWER) return false;
           return this.isOwner && item.system.status !== '';
         },
         callback: async target => {
@@ -609,8 +626,8 @@ export class SdmActor extends Actor {
         icon: '<i class="fa-solid fa-circle-dot"></i>',
         condition: target => {
           const item = this.sheet._getEmbeddedDocument(target);
-          if (item.system.size.unit === 'cash' || item.type === 'burden') return false;
-          if (item.type === 'trait' && item.system.type !== 'power') return false;
+          if (item.system.size.unit === SizeUnit.CASH || item.type === ItemType.BURDEN) return false;
+          if (item.type === ItemType.TRAIT && item.system.type !== GearType.POWER) return false;
           return this.isOwner && item.system.status === '';
         },
         callback: async target => {

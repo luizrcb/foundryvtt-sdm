@@ -668,7 +668,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     this._setupItemListeners();
   }
 
- /**
+  /**
    * Actions performed after a first render of the Application.
    * @param {ApplicationRenderContext} context      Prepared context data.
    * @param {RenderOptions} options                 Provided render options.
@@ -679,7 +679,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     this._createContextMenu(
       this._getItemListContextOptions,
-       //'[data-document-class][data-item-id], [data-document-class][data-effect-id]',
+      //'[data-document-class][data-item-id], [data-document-class][data-effect-id]',
       '[data-document-class][data-item-id]',
       {
         hookName: 'getItemListContextOptions',
@@ -753,6 +753,25 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const maxBurdenSlots = this.actor.system.burden_slots;
 
     return newBurdenPenalTy <= maxBurdenSlots;
+  }
+
+  //
+
+  async unpackStartingKitItem(target) {
+    const item = this._getEmbeddedDocument(target);
+    await SdmActorSheet._createAndViewDoc.call(this, null, {
+      dataset: {
+        documentClass: 'Item',
+        type: 'gear'
+      }
+    });
+
+    if (item.system?.starting_kit && item.system?.packed_remaining_items === 1) {
+      await item.delete();
+      return;
+    }
+
+    await item.update({ 'system.packed_remaining_items': item.system.packed_remaining_items - 1 });
   }
 
   _checkCarriedWeight(item, updateData) {
