@@ -4,14 +4,20 @@ import { getSlotsTaken } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 
 const { renderTemplate } = foundry.applications.handlebars;
+const CHANNEL = 'system.sdm';
 
 export function setupItemTransferSocket() {
-  game.socket.on('system.sdm', async ({ action, payload, userId }) => {
-    // GM processes transfer requests
+  game.socket.on(CHANNEL, async msg => {
+    const { action, userId, payload } = msg ?? {};
+    if (!action) return;
+
+    // --- GM processes transfer requests ---
     if (action === 'transferRequest' && game.user.isGM) {
-      const { transferKey, itemId, sourceActorId, targetActorId, sourceActorType, cashAmount } =
-        payload;
       try {
+        if (!payload) throw new Error($l10n('SDM.ErrorBadPayload'));
+        const { transferKey, itemId, sourceActorId, targetActorId, sourceActorType, cashAmount } =
+          payload;
+
         const result = await performItemTransfer(
           transferKey,
           itemId,
@@ -21,78 +27,83 @@ export function setupItemTransferSocket() {
           cashAmount
         );
 
-        // Notify sender
-        game.socket.emit('system.sdm', {
+        // Notify sender (success)
+        game.socket.emit(CHANNEL, {
           action: 'transferResult',
-          userId: userId,
-          success: true
+          userId,
+          payload: { success: true }
         });
 
         // Notify recipients
-        if (result.targetUserIds.length > 0) {
-          game.socket.emit('system.sdm', {
+        if (result?.targetUserIds?.length > 0) {
+          game.socket.emit(CHANNEL, {
             action: 'transferReceived',
-            targetUserIds: result.targetUserIds,
-            itemName: result.itemName,
-            sourceName: result.sourceName
+            // no userId here; recipients filter by payload.targetUserIds
+            payload: {
+              targetUserIds: result.targetUserIds,
+              itemName: result.itemName,
+              sourceName: result.sourceName
+            },
+            userId
           });
         }
       } catch (error) {
-        game.socket.emit('system.sdm', {
+        game.socket.emit(CHANNEL, {
           action: 'transferResult',
-          userId: userId,
-          success: false,
-          message: error.message
+          userId,
+          payload: { success: false, message: error?.message }
         });
       }
     }
 
-    // GM handles transfer target list request
+    // --- GM handles transfer target list request ---
     if (action === 'requestTransferTargets' && game.user.isGM) {
-      if (userId === game.user.id) {
-        // Process immediately if the sender is the current GM
-        const targets = game.actors
-          .filter(a => a.type !== ActorType.NPC && a.id !== actorId && !a.items.has(payload.itemId))
-          .map(a => ({ uuid: a.id, name: a.name }));
-
-        game.socket.emit('system.sdm', {
+      if (!payload) return;
+      const { requestId, actorId, itemId } = payload;
+      if (!requestId || !actorId || !itemId) {
+        game.socket.emit(CHANNEL, {
           action: 'transferTargetsResponse',
-          requestId: payload.requestId,
-          targets,
-          userId
+          userId,
+          payload: { requestId, targets: [] }
         });
         return;
       }
 
-      const { requestId, actorId } = payload;
-      const sourceActor = game.actors.get(actorId);
-      if (!sourceActor) return;
+      // If the sender is this GM, we can compute immediately (same logic)
+      const sourceActorSelf = game.actors.get(actorId);
+      if (!sourceActorSelf) {
+        game.socket.emit(CHANNEL, {
+          action: 'transferTargetsResponse',
+          userId,
+          payload: { requestId, targets: [] }
+        });
+        return;
+      }
 
       const targets = game.actors
         .filter(
-          a => a.type !== ActorType.NPC && a.id !== sourceActor.id && !a.items.has(payload.itemId)
+          a => a.type !== ActorType.NPC && a.id !== sourceActorSelf.id && !a.items.has(itemId)
         )
         .map(a => ({ uuid: a.uuid, name: a.name }));
 
-      game.socket.emit('system.sdm', {
+      game.socket.emit(CHANNEL, {
         action: 'transferTargetsResponse',
-        requestId,
-        targets,
-        userId
+        userId,
+        payload: { requestId, targets }
       });
     }
 
-    // Handle sender notifications
+    // --- Sender notifications (result of transfer request) ---
     if (action === 'transferResult' && userId === game.user.id) {
-      if (payload.success) {
+      if (payload?.success) {
         ui.notifications.info($l10n('SDM.TransferComplete'));
       } else {
-        ui.notifications.error(payload.message || $l10n('SDM.TransferFailedGeneric'));
+        ui.notifications.error(payload?.message || $l10n('SDM.TransferFailedGeneric'));
       }
     }
 
-    // Handle recipient notifications
-    if (action === 'transferReceived' && payload.targetUserIds.includes(game.user.id)) {
+    // --- Recipient notifications (received item) ---
+    if (action === 'transferReceived' && payload?.targetUserIds?.includes(game.user.id) && userId !== game.user.id) {
       ui.notifications.info(
         $fmt('SDM.TransferReceived', {
           item: payload.itemName,
@@ -113,17 +124,19 @@ async function performItemTransfer(
 ) {
   let sourceActor;
 
+  // Resolve source actor
   if (sourceActorType === ActorType.NPC) {
     sourceActor = fromUuidSync(sourceActorId);
   } else {
     sourceActor = game.actors.get(sourceActorId);
   }
-
   if (!sourceActor) throw new Error($l10n('SDM.ErrorSourceActorNotFound'));
 
+  // Resolve target actor
   const targetActor = await fromUuid(targetActorId);
   if (!targetActor) throw new Error($l10n('SDM.ErrorTargetActorNotFound'));
 
+  // Fetch fresh item from source
   const freshItem = sourceActor.items.get(itemId);
   if (!freshItem) throw new Error($l10n('SDM.ErrorTransferItemNotAvailable'));
 
@@ -131,11 +144,9 @@ async function performItemTransfer(
   if (freshItem.getFlag('sdm', 'transferring') !== transferKey) {
     throw new Error($l10n('SDM.ErrorTransferInvalidItemState'));
   }
-
   if (Date.now() - freshItem.getFlag('sdm', 'transferInitiated') > 120000) {
     throw new Error($l10n('SDM.ErrorTransferSessionExperied'));
   }
-
   if (targetActor.items.has(itemId)) {
     throw new Error($l10n('SDM.ErrorTransferTargetHasItem'));
   }
@@ -146,64 +157,58 @@ async function performItemTransfer(
     targetUserIds = [];
 
   try {
-    // Get recipients to notify
+    // Collect target user IDs to notify
     targetUserIds = game.users
       .filter(u => u.active && !u.isGM && targetActor.testUserPermission(u, 'OWNER'))
       .map(u => u.id);
 
     if (isCashTransfer) {
+      // Cash transfer path
       const amount = parseInt(cashAmount, 10);
       if (isNaN(amount) || amount <= 0) {
         throw new Error($l10n('SDM.ErrorTransferAmountNotPositive'));
       }
-
       if (amount > freshItem.system.quantity) {
         throw new Error($l10n('SDM.ErrorTransferExcessCashAmount'));
       }
 
-      // Format notification details
       const currencyName = game.settings.get('sdm', 'currencyName');
       itemName = `${amount} ${currencyName}`;
       sourceName = sourceActor.name;
 
-      // Update source quantity
+      // Decrement source quantity
+      const originalQty = freshItem.system.quantity;
       await sourceActor.updateEmbeddedDocuments(DocumentType.ITEM, [
-        {
-          _id: freshItem.id,
-          system: { quantity: freshItem.system.quantity - amount }
-        }
+        { _id: freshItem.id, system: { quantity: originalQty - amount } }
       ]);
 
       try {
         const existingCash = targetActor.items.find(i => i.system.size?.unit === SizeUnit.CASH);
-
         if (existingCash) {
           await targetActor.updateEmbeddedDocuments(DocumentType.ITEM, [
-            {
-              _id: existingCash.id,
-              system: { quantity: existingCash.system.quantity + amount }
-            }
+            { _id: existingCash.id, system: { quantity: existingCash.system.quantity + amount } }
           ]);
         } else {
           const newCashData = freshItem.toObject();
           newCashData.system.quantity = amount;
-          newCashData.system.name = currencyName;
-          delete newCashData.flags?.sdm?.transferring;
-          delete newCashData.flags?.sdm?.transferInitiated;
+          // Set item display name at root level
+          newCashData.name = currencyName;
+          // Remove transient flags
+          if (newCashData.flags?.sdm) {
+            delete newCashData.flags.sdm.transferring;
+            delete newCashData.flags.sdm.transferInitiated;
+          }
           await targetActor.createEmbeddedDocuments(DocumentType.ITEM, [newCashData]);
         }
       } catch (err) {
-        // Rollback source quantity
+        // Rollback on target update failure
         await sourceActor.updateEmbeddedDocuments(DocumentType.ITEM, [
-          {
-            _id: freshItem.id,
-            system: { quantity: freshItem.system.quantity }
-          }
+          { _id: freshItem.id, system: { quantity: freshItem.system.quantity } }
         ]);
         throw err;
       }
     } else {
-      // Item transfer
+      // Physical item transfer path
       itemName = freshItem.name;
       sourceName = sourceActor.name;
 
@@ -230,7 +235,7 @@ async function performItemTransfer(
 
     return { itemName, sourceName, targetUserIds };
   } finally {
-    // Clear transfer flags
+    // Clear transfer flags on source if the item still exists
     if (sourceActor.items.get(itemId)) {
       await sourceActor.updateEmbeddedDocuments(DocumentType.ITEM, [
         {
@@ -252,6 +257,7 @@ export async function openItemTransferDialog(item, sourceActor) {
   const transferKey = `transfer-${item.id}-${Date.now()}-${foundry.utils.randomID(4)}`;
 
   try {
+    // Mark item as "transferring"
     const updated = await sourceActor.updateEmbeddedDocuments(DocumentType.ITEM, [
       {
         _id: item.id,
@@ -264,7 +270,6 @@ export async function openItemTransferDialog(item, sourceActor) {
         }
       }
     ]);
-
     if (updated.length === 0) {
       ui.notifications.warn($l10n('SDM.ErrorTransferItemNotAvailable'));
       return;
@@ -273,10 +278,11 @@ export async function openItemTransferDialog(item, sourceActor) {
     let validActors = [];
     let playerActors;
 
+    // Build NPC candidates
     const npcCandidates = getEligibleNPCsForTransfer(item.id).map(entry => {
       const name =
         entry.fromScene && entry.token?.name
-          ? '(token) ' + entry.token.name // use custom token name if from scene
+          ? '(token) ' + entry.token.name // displayed label only; i18n not needed here
           : entry.actor.name;
 
       return {
@@ -287,8 +293,8 @@ export async function openItemTransferDialog(item, sourceActor) {
       };
     });
 
+    // Collect player actors (GM locally, Player via socket)
     if (game.user.isGM) {
-      // GM obtém a lista localmente, sem socket
       playerActors = game.actors
         .filter(a => a.type !== ActorType.NPC && a.id !== sourceActor.id && !a.items.has(item.id))
         .map(a => ({ uuid: a.uuid, name: a.name }));
@@ -297,33 +303,36 @@ export async function openItemTransferDialog(item, sourceActor) {
         ui.notifications.warn($l10n('SDM.ErrorTransferNoActiveGM'));
         return;
       }
-      // Jogador pede a lista via socket para o GM
       playerActors = await new Promise(resolve => {
         const requestId = foundry.utils.randomID();
-        const handler = ({ action, requestId: resId, targets, userId }) => {
+
+        const handler = msg => {
+          const { action, userId, payload } = msg ?? {};
           if (
             action === 'transferTargetsResponse' &&
-            resId === requestId &&
-            userId === game.user.id
+            userId === game.user.id &&
+            payload?.requestId === requestId
           ) {
-            game.socket.off('system.sdm', handler);
-            resolve(targets);
+            game.socket.off(CHANNEL, handler);
+            resolve(payload.targets ?? []);
           }
         };
-        game.socket.on('system.sdm', handler);
-        game.socket.emit('system.sdm', {
+
+        game.socket.on(CHANNEL, handler);
+        game.socket.emit(CHANNEL, {
           action: 'requestTransferTargets',
-          payload: { requestId, actorId: sourceActor.id, itemId: item.id },
-          userId: game.user.id
+          userId: game.user.id,
+          payload: { requestId, actorId: sourceActor.id, itemId: item.id }
         });
       });
     }
 
     validActors = [...playerActors, ...npcCandidates];
 
+    // Render dialog
     const template = await renderTemplate(templatePath('transfer-dialog'), {
       actors: validActors,
-      item: item
+      item
     });
 
     const transferOptions = await foundry.applications.api.DialogV2.prompt({
@@ -339,6 +348,7 @@ export async function openItemTransferDialog(item, sourceActor) {
     });
 
     if (!transferOptions) {
+      // User canceled: clear flags
       await sourceActor.updateEmbeddedDocuments(DocumentType.ITEM, [
         {
           _id: item.id,
@@ -359,7 +369,6 @@ export async function openItemTransferDialog(item, sourceActor) {
     const targetActor = await fromUuid(targetActorId);
     const slotsTaken = getSlotsTaken(item.system);
     const validWeight = targetActor.sheet._checkActorWeightLimit(slotsTaken, item.type);
-
     if (!validWeight) {
       throw new Error($fmt('SDM.ErrorWeightLimit', { target: targetActor.name }));
     }
@@ -368,7 +377,7 @@ export async function openItemTransferDialog(item, sourceActor) {
       throw new Error($fmt('SDM.ErrorHallmarkLimit', { target: targetActor.name }));
     }
 
-
+    // Re-validate transfer state on source
     const freshItem = sourceActor.items.get(item.id);
     if (!freshItem || freshItem?.getFlag('sdm', 'transferring') !== transferKey) {
       throw new Error($l10n('SDM.ErrorTransferInvalidItemState'));
@@ -389,8 +398,9 @@ export async function openItemTransferDialog(item, sourceActor) {
       ui.notifications.info($l10n('SDM.TransferComplete'));
     } else {
       // Player sends socket request
-      game.socket.emit('system.sdm', {
+      game.socket.emit(CHANNEL, {
         action: 'transferRequest',
+        userId: game.user.id,
         payload: {
           transferKey,
           itemId: item.id,
@@ -398,14 +408,13 @@ export async function openItemTransferDialog(item, sourceActor) {
           sourceActorType: sourceActor.type,
           targetActorId,
           cashAmount: transferOptions.cashAmount
-        },
-        userId: game.user.id
+        }
       });
-      ui.notifications.info($l10n('SDM.TransferRequestSent'));
+      // ui.notifications.info($l10n('SDM.TransferRequestSent'));
     }
   } catch (err) {
-    ui.notifications.error($fmt('SDM.TransferFailed', { error: err.message }));
-    // Cleanup flags on error
+    ui.notifications.error($fmt('SDM.TransferFailed', { error: err?.message || '' }));
+    // Cleanup flags on error if item still exists
     if (sourceActor.items.get(item.id)) {
       await sourceActor.updateEmbeddedDocuments(DocumentType.ITEM, [
         {
@@ -426,7 +435,7 @@ function getEligibleNPCsForTransfer(itemId) {
   const isGM = game.user.isGM;
   const results = [];
 
-  // Step 1: Process all placed NPC tokens
+  // Step 1: Process placed NPC tokens
   for (const token of canvas.tokens.placeables) {
     const actor = token.actor;
     if (!actor || actor.type !== ActorType.NPC) continue;
@@ -446,7 +455,7 @@ function getEligibleNPCsForTransfer(itemId) {
     }
   }
 
-  // Step 2: Check all directory NPC actors
+  // Step 2: Directory NPC actors
   for (const actor of game.actors.filter(a => a.type === ActorType.NPC)) {
     if (actor.items.has(itemId)) continue;
 

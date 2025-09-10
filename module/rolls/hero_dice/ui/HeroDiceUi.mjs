@@ -10,7 +10,13 @@ import {
 const { renderTemplate } = foundry.applications.handlebars;
 
 export class HeroDiceUI {
-  static getHeroDiceSelect(actor, includeZero = false, healingHouseRuleEnabled = false, bonusHeroDiceEnabled = false) {
+  static getHeroDiceSelect(
+    actor,
+    includeZero = false,
+    healingHouseRuleEnabled = false,
+    bonusHeroDice = 0,
+    includeModeToggle = true
+  ) {
     const maxHeroDice = actor.system.hero_dice?.value ?? 0;
     const options = Array.from(
       { length: maxHeroDice },
@@ -25,20 +31,38 @@ export class HeroDiceUI {
           ${options}
         </select>
       </div>
-      ${ bonusHeroDiceEnabled ? `
+      ${
+        bonusHeroDice > 0
+          ? `
         <div class="form-group mt-10">
           <label for"bonusQty">${$l10n('SDM.BonusHeroDice')}</label>
-          <input type="text" name="bonusQty" value="0" data-dtype="Number" />
+          <input type="text" name="bonusQty" value="${bonusHeroDice}" data-dtype="Number" disabled/>
         </div>`
-        : ''
+          : ''
       }
-      ${ healingHouseRuleEnabled ?
-        `<div class="form-group">
+      ${
+        healingHouseRuleEnabled
+          ? `<div class="form-group">
           <label for="healingHouseRule">${$l10n('SDM.SettingsHealingHouseRule')}</label>
           <input id="healingHouseRule" type="checkbox" name="healingHouseRule" />
           <p>${$l10n('SDM.SettingsHealingHouseRuleHint')}</p>
         </div>`
-        : ''
+          : ''
+      }
+      ${
+        includeModeToggle
+          ? `
+        <div class="form-group mt-10">
+          <label for="heroMode">${$l10n('SDM.HeroDiceMode') || 'Hero Dice Mode'}</label>
+          <select name="heroMode">
+            <option value="increase">${$l10n('SDM.HeroDiceModeIncrease') || 'Increase (boost result)'}</option>
+            <option value="decrease">${$l10n('SDM.HeroDiceModeDecrease') || 'Decrease (suppress result)'}</option>
+          </select>
+          <p class="hint">
+            ${$l10n('SDM.HeroDiceModeHint') || 'Choose whether hero dice should raise or lower the previous roll. Decrease will floor dice at 1 and never explode.'}
+          </p>
+        </div>`
+          : ''
       }
     `;
   }
@@ -117,7 +141,9 @@ export class HeroDiceUI {
       content: await renderTemplate(templatePath('/chat/hero-dice-result'), templateData),
       flavor: $fmt('SDM.RollTitle', {
         prefix: '',
-        title: $l10n('SDM.FieldHeroDice')+`${heroicBonusQty > 0 ? ` (${$l10n('SDM.FieldBonus')}: ${heroicBonusQty})`: ''}`
+        title:
+          $l10n('SDM.FieldHeroDice') +
+          `${heroicBonusQty > 0 ? ` (${$l10n('SDM.FieldBonus')}: ${heroicBonusQty})` : ''}`
       }),
       rolls: [heroResultRoll],
       flags: { 'sdm.isHeroResult': true }

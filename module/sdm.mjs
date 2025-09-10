@@ -26,6 +26,7 @@ import {
   registerSystemSettings,
   setupEscalatorDiePositionBroadcast
 } from './settings.mjs';
+import { setupSettingsSocket } from './settingsSocket.mjs';
 import { SdmActorSheet } from './sheets/actor-sheet.mjs';
 import { SdmCaravanSheet } from './sheets/caravan-sheet.mjs';
 import { SdmItemSheet } from './sheets/item-sheet.mjs';
@@ -347,6 +348,7 @@ Hooks.once('init', function () {
   CONFIG.Combatant.documentClass = SdmCombatant;
 
   setupItemTransferSocket();
+  setupSettingsSocket();
 
   setupEscalatorDiePositionBroadcast();
 

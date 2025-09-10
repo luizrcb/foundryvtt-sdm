@@ -25,7 +25,7 @@ export class HeroDiceEngine {
    *   @property {number} targetGroupTotal - Total of target group after modifications
    *   @property {Object} distribution - Heroic dice allocation details
    */
-  static async process(originalRoll, heroicDiceQty, heroicBonusQty = 0, actor) {
+  static async process(originalRoll, heroicDiceQty, heroicBonusQty = 0, actor, { mode = "increase" } = {}) {
     const analyzer = new RollAnalyzer(originalRoll);
     const {
       targetDice,
@@ -45,7 +45,7 @@ export class HeroDiceEngine {
           results: [result]
         };
 
-        const canExplode = shouldExplode && !result.exploded;
+        const canExplode = (mode === "increase") && shouldExplode && !result.exploded;
 
         // Create separate ExplosiveDie for each die result
         explosiveDice.push(new ExplosiveDie(pseudoTerm, dieTerm.faces, canExplode));
@@ -75,7 +75,7 @@ export class HeroDiceEngine {
     }));
 
     // Allocate heroic dice to explosive dice
-    const distribution = HeroDiceAllocator.allocate(explosiveDice, heroicResults, keepRule);
+    const distribution = HeroDiceAllocator.allocate(explosiveDice, heroicResults, keepRule, { mode });
 
     // Apply heroic values to dice
     for (const exploDie of explosiveDice) {

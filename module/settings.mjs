@@ -194,6 +194,13 @@ export function registerSystemSettings() {
     }
   });
 
+  game.settings.register('sdm', 'bonusHeroDicePool', {
+    scope: 'world',
+    config: false,
+    type: Number,
+    default: 0,
+  });
+
   game.settings.register('sdm', 'escalatorPosition', {
     scope: 'world',
     config: false,

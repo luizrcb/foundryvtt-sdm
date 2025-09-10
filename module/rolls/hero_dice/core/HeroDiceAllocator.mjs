@@ -12,7 +12,10 @@ export class HeroDiceAllocator {
    * @param {KeepRule} keepRule - Keep rule to apply
    * @returns {Object} Allocation result with distribution details
    */
-  static allocate(explosiveDice, heroicResults, keepRule) {
+  static allocate(explosiveDice, heroicResults, keepRule, { mode = 'increase' } = {}) {
+    if (mode === 'decrease') {
+      return this._allocateDecrease(explosiveDice, heroicResults, keepRule);
+    }
     return keepRule.type === KeepRule.TYPES.KEEP_HIGHEST
       ? this._allocateKeepHigh(explosiveDice, heroicResults, keepRule)
       : this._allocateKeepLow(explosiveDice, heroicResults, keepRule);
@@ -269,6 +272,94 @@ export class HeroDiceAllocator {
       usedHeroIndexes,
       heroicResults: sortedHero,
       keepRule
+    };
+  }
+
+  /**
+   * Greedy minimal allocator for "decrease" mode:
+   * - Subtracts hero dice from targets (clamped to >= 1)
+   * - Chooses the target that yields the greatest DECREASE in the post-keep total
+   * - Works for both kh and kl by re-evaluating the kept set after each placement
+   */
+  static _allocateDecrease(explosiveDice, heroicResults, keepRule) {
+    // Work on a shadow view of current totals (do not mutate real dice until end)
+    const state = explosiveDice.map(die => ({
+      die,
+      faces: die.faces,
+      total: die.getTotal(), // current effective total for keep preview
+      _alloc: [] // store per-hero placements (by {result,index})
+    }));
+
+    // sort heroes by size desc so large decreases are applied first
+    const heroes = [...heroicResults].filter(h => h.result > 0).sort((a, b) => b.result - a.result);
+
+    const keptSum = totals => {
+      const arr = totals
+        .slice()
+        .sort((a, b) => (keepRule.type === KeepRule.TYPES.KEEP_HIGHEST ? b - a : a - b));
+      return arr.slice(0, keepRule.count).reduce((s, x) => s + x, 0);
+    };
+
+    const currentScore = () => keptSum(state.map(s => s.total));
+
+    const applyDecreasePreview = (current, hv) => {
+      const roomDown = Math.max(0, current - 1); // how much we can reduce without going under 1
+      const used = Math.min(roomDown, hv);
+      return current - used; // discard overflow automatically
+    };
+
+    // Greedy placement: pick the target die that *most decreases* the kept sum
+    for (const hero of heroes) {
+      const before = currentScore();
+      let bestIdx = 0;
+      let bestDelta = +Infinity; // we want the most negative delta
+
+      for (let i = 0; i < state.length; i++) {
+        const preview = state.map(s => s.total);
+        preview[i] = applyDecreasePreview(preview[i], hero.result);
+        const after = keptSum(preview);
+        const delta = after - before; // negative is good (reduces kept sum)
+
+        if (delta < bestDelta) {
+          bestDelta = delta;
+          bestIdx = i;
+        }
+      }
+
+      // commit placement into state
+      state[bestIdx].total = applyDecreasePreview(state[bestIdx].total, hero.result);
+      state[bestIdx]._alloc.push(hero);
+    }
+
+    // Now mutate the real dice: subtract (with clamp) the sum placed on each die.
+    const distribution = new Map();
+    for (const s of state) {
+      if (!s._alloc.length) continue;
+
+      // We faithfully track which hero dice were used on which die.
+      distribution.set(s.die, s._alloc.slice());
+
+      // Apply once to the actual die: subtract and clamp at 1.
+      const sum = s._alloc.reduce((acc, h) => acc + h.result, 0);
+      const roomDown = Math.max(0, s.die.modifiedValue - 1);
+      const used = Math.min(roomDown, sum);
+      s.die.modifiedValue = Math.max(1, s.die.modifiedValue - used);
+      s.die.heroicAllocated.push(...s._alloc);
+    }
+
+    // Bookkeeping mirrors your build result
+    const usedHeroIndexes = [];
+    for (const [, allocs] of distribution.entries()) {
+      for (const a of allocs) usedHeroIndexes.push(a.index);
+    }
+
+    return {
+      distribution,
+      // When decreasing, no new explosions will happen (engine disables explosions).
+      explosionCount: explosiveDice.filter(d => d.modifiedValue === d.faces).length,
+      usedHeroIndexes,
+      keepRule,
+      heroicResults
     };
   }
 
