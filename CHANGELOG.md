@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v0.2.12
+
+- Move many item utility buttons to a context menu. Right-click an item in any inventory to open the available options
+- Add support for using Hero Dice to decrease roll results
+- Characters can right-click the Hero Dice label on their sheet to add Hero Dice to a shared bonus dice pool
+- Every time a character clicks on **Use Hero Dice** in a chat roll result, all dice from the shared bonus pool (if any) will be added to their roll
+- Add support for marking a gear as a Starting Kit. You can unpack (right-click the item in the inventory) up to 10 items before the kit disappears
+
 ## v0.2.11
 
 - Allow users to spend Hero Dice without rolling by right-clicking their Hero Dice label
