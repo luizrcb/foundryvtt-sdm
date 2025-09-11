@@ -38,6 +38,7 @@ export async function handleHeroDice(event, message, flags) {
 
   const maxDice = actor.system.hero_dice.value;
   const bonusHDPool = game.settings.get('sdm', 'bonusHeroDicePool');
+
   if (maxDice < 1 && bonusHDPool < 1) {
     ui.notifications.error($fmt('SDM.ErrorActorNoHeroDice', { actor: actor.name }));
     return;
@@ -55,7 +56,10 @@ export async function handleHeroDice(event, message, flags) {
   if (heroicDiceQty > maxDice) return;
 
   const result = await HeroDiceEngine.process(originalRoll, heroicDiceQty, bonusHDPool, actor, { mode: heroMode });
-  await requestSettingUpdate('bonusHeroDicePool', 0);
+
+  if (bonusHDPool > 0) {
+    await requestSettingUpdate('bonusHeroDicePool', 0);
+  }
 
   await HeroDiceUI.renderResultToChat(result, actor, flags, bonusHDPool);
 }
