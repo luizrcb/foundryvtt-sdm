@@ -42,6 +42,7 @@ archive.glob('**/*', {
     'package-lock.json',
     'package.json',
     'packs/_source/**',
+    'tests/**',
     'sdm.lock',
     'src/**',
     'utils/**',

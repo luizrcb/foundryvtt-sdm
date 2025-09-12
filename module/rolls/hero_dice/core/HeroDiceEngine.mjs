@@ -14,8 +14,12 @@ export class HeroDiceEngine {
    * @async
    * @param {Roll} originalRoll - The original Foundry Roll to modify
    * @param {number} heroicDiceQty - Number of heroic dice to apply
+   * @param {number} heroicBonusQty - Bonus heroic dice (already rolled elsewhere or setting)
    * @param {Actor} actor - Actor applying the heroic dice
-   * @param {KeepRule} [keepRule] - Optional keep rule override
+   * @param {Object} [options]
+   * @param {'increase'|'decrease'} [options.mode='increase'] - How to apply hero dice
+   * @param {boolean} [options.displayDice=true]
+   * @param {boolean} [options.healingHouseRule=false]
    * @returns {Promise<Object>} Final result object with:
    *   @property {number} total - Final modified roll total
    *   @property {ExplosiveDie[]} explosiveDice - Modified dice
@@ -24,8 +28,17 @@ export class HeroDiceEngine {
    *   @property {number} nonTargetValue - Value from non-target terms
    *   @property {number} targetGroupTotal - Total of target group after modifications
    *   @property {Object} distribution - Heroic dice allocation details
+   *   @property {Object} keepRule - Keep rule used
    */
-  static async process(originalRoll, heroicDiceQty, heroicBonusQty = 0, actor, { mode = "increase" } = {}) {
+  static async process(originalRoll, heroicDiceQty, heroicBonusQty = 0, actor, options = {}) {
+    const {
+      mode = 'increase',
+      displayDice = true,
+      healingHouseRule = false,
+      fixedResult
+    } = options;
+
+    // 1) Analisar a rolagem para descobrir o alvo e metadados
     const analyzer = new RollAnalyzer(originalRoll);
     const {
       targetDice,
@@ -35,54 +48,94 @@ export class HeroDiceEngine {
       shouldExplode = false
     } = await analyzer.identifyTargetComponents();
 
+    // 2) Preparar ExplosiveDie por resultado individual (mantendo groupId quando houver)
     const explosiveDice = [];
-
+    let chainId = 0;
     targetDice.forEach(dieTerm => {
-      dieTerm.results.forEach((result, index) => {
-        // Create a pseudo term for each individual die
+      const thisChain = chainId++;
+      const faces = Number(dieTerm.faces) || 0;
+      const groupId = dieTerm.groupId ?? dieTerm._groupId ?? null;
+
+      // Cada "result" ativo vira um segmento que podemos modificar individualmente
+      (dieTerm.results || []).forEach((result, index) => {
+        const prev = dieTerm.results[index - 1];
+        const isTail =
+          shouldExplode && index > 0 && (prev?.exploded === true || prev?.result === dieTerm.faces);
+
+        // pseudoTerm: 1 resultado por ExplosiveDie
         const pseudoTerm = {
           dieIndex: explosiveDice.length,
-          results: [result]
+          results: [result],
+          groupId: dieTerm.groupId ?? dieTerm._groupId ?? null,
+          chainId,
+          segmentIndex: index,
+          isExplosionSegment: isTail
         };
-
-        const canExplode = (mode === "increase") && shouldExplode && !result.exploded;
-
-        // Create separate ExplosiveDie for each die result
-        explosiveDice.push(new ExplosiveDie(pseudoTerm, dieTerm.faces, canExplode));
+        const canExplode = shouldExplode && !result.exploded;
+        const e = new ExplosiveDie(pseudoTerm, faces, canExplode);
+        if (groupId != null) e.groupId = groupId; // <- importante para pools/parentheses (kh/kl por grupo)
+        explosiveDice.push(e);
       });
     });
 
-    // Determine keep rule if not provided
-    const keepRule = analyzer.getKeepRule(targetTerms);
-
-    // Get heroic dice type from settings or actor
+    // 3) Se não há dados alvo, devolve resultado "pass-through" e mantém heroicResults para a UI
+    //    (também evita quebrar a alocação quando state = [])
     const defaultHeroDiceType = game.settings.get('sdm', 'defaultHeroDiceType');
     const heroDiceType = actor?.system?.hero_dice?.dice_type || defaultHeroDiceType;
 
-    // Roll heroic dice
+    // Rola os dados heróicos (antes do early return para termos heroicResults para UI)
     const heroicRoll = await this._rollHeroDice({
       quantity: heroicDiceQty + heroicBonusQty,
-      faces: Die[heroDiceType]
+      faces: Die[heroDiceType],
+      fixedResult,
+      displayDice,
+      healingHouseRule
     });
 
-    // Update actor resource
+    const heroicResultsArr =
+      heroicRoll?.dice?.[0]?.results?.map((hr, index) => ({ result: hr.result, index })) || [];
+
+    // Atualiza recurso do ator
     await this.updateHeroDice(actor, heroicDiceQty);
 
-    // Prepare heroic results
-    const heroicResults = heroicRoll.dice[0].results.map((hr, index) => ({
-      result: hr.result,
-      index
-    }));
+    if (!explosiveDice.length) {
+      const passthroughTotal = Number(originalRoll?.total) || 0;
+      return {
+        total: passthroughTotal,
+        explosiveDice: [],
+        keptDice: [],
+        targetMultiplier: 1,
+        nonTargetValue: 0,
+        targetGroupTotal: passthroughTotal,
+        diceTotal: passthroughTotal,
+        distribution: {
+          distribution: new Map(),
+          usedHeroIndexes: [],
+          heroicResults: heroicResultsArr
+        },
+        keepRule: new KeepRule(KeepRule.TYPES.KEEP_HIGHEST, 0)
+      };
+    }
 
-    // Allocate heroic dice to explosive dice
-    const distribution = HeroDiceAllocator.allocate(explosiveDice, heroicResults, keepRule, { mode });
+    // 4) Keep rule (ciente de escopo 'die' ou 'group' para pools)
+    const keepRule = analyzer.getKeepRule(targetTerms);
 
-    // Apply heroic values to dice
+    // 5) Distribuição dos dados heróicos (modo increase/decrease)
+    const distribution = HeroDiceAllocator.allocate(explosiveDice, heroicResultsArr, keepRule, {
+      mode
+    });
+
+    // garantir heroicResults para a UI (independente do caminho no allocator)
+    if (!distribution.heroicResults) {
+      distribution.heroicResults = heroicResultsArr;
+    }
+
+    // 6) Aplicar heróicos (explosões reais acontecem dentro de ExplosiveDie.applyHeroic)
     for (const exploDie of explosiveDice) {
       await exploDie.applyHeroic();
     }
 
-    // Calculate and return final result
+    // 7) Calcular e retornar o resultado final (group-aware)
     return this._calculateFinalResult(
       explosiveDice,
       distribution,
@@ -96,8 +149,12 @@ export class HeroDiceEngine {
    * Rolls heroic dice
    * @private
    * @async
-   * @param {number} qty - Number of dice to roll
-   * @param {number} faces - Number of faces per die
+   * @param {object} args
+   * @param {number} args.quantity
+   * @param {number} [args.faces=Die.d6]
+   * @param {Roll} [args.fixedResult]
+   * @param {boolean} [args.displayDice=true]
+   * @param {boolean} [args.healingHouseRule=false]
    * @returns {Promise<Roll>} The resulting Roll object
    */
   static async _rollHeroDice({
@@ -130,14 +187,15 @@ export class HeroDiceEngine {
    * @param {number} qty - Quantity of dice to deduct
    */
   static async updateHeroDice(actor, qty) {
-    const current = Math.max(0, actor.system.hero_dice?.value || 0);
-    await actor.update({
-      'system.hero_dice.value': Math.max(current - qty, 0)
+    const current = Math.max(0, actor?.system?.hero_dice?.value || 0);
+    await actor?.update?.({
+      'system.hero_dice.value': Math.max(current - (qty || 0), 0)
     });
   }
 
   /**
    * Calculates final result after heroic dice application
+   * - ciente de KH/KL por dado ('die') e por grupo ('group')
    * @private
    * @param {ExplosiveDie[]} explosiveDice - Modified dice
    * @param {Object} distribution - Heroic dice allocation details
@@ -146,6 +204,20 @@ export class HeroDiceEngine {
    * @param {number} nonTargetValue - Value from non-target terms
    * @returns {Object} Final result object
    */
+  /**
+   * Calcula o resultado final após aplicar os dados heróicos.
+   * Respeita o escopo do KeepRule:
+   *  - scope: 'die'  -> mantém por dado (comportamento antigo)
+   *  - scope: 'group'-> agrega por groupId (usado em pools {…}kh/kl)
+   *
+   * @private
+   * @param {ExplosiveDie[]} explosiveDice - Dados modificados
+   * @param {Object} distribution - Detalhes de alocação dos dados heróicos
+   * @param {KeepRule} keepRule - Regra de keep (kh/kl) + scope
+   * @param {number} targetMultiplier - Multiplicador do grupo alvo
+   * @param {number} nonTargetValue - Valor dos termos não-alvo
+   * @returns {Object} Resultado final
+   */
   static _calculateFinalResult(
     explosiveDice,
     distribution,
@@ -153,25 +225,57 @@ export class HeroDiceEngine {
     targetMultiplier,
     nonTargetValue
   ) {
-    // Calculate totals for each die
+    // 1) Totais por dado (após alocação, antes de explosões adicionais já aplicadas via ExplosiveDie.applyHeroic)
     const diceWithTotals = explosiveDice.map(die => ({
       die,
-      total: die.getTotal()
+      total: typeof die.getTotal === 'function' ? die.getTotal() : Number(die.modifiedValue || 0),
+      groupId: die.groupId ?? null
     }));
 
-    const keptDice = diceWithTotals
-      .sort((a, b) => (keepRule.type === 'kh' ? b.total - a.total : a.total - b.total))
-      .slice(0, keepRule.count);
+    const isKH = keepRule?.type === KeepRule.TYPES.KEEP_HIGHEST;
+    const keepCount = Math.max(1, Number(keepRule?.count || 1));
+    const scope = keepRule?.scope || 'die';
 
-    let diceTotal = keptDice.reduce((sum, d) => sum + d.total, 0);
-    let targetGroupTotal = diceTotal * targetMultiplier;
+    let keptDiceEntries;
 
-    let total = targetGroupTotal + nonTargetValue;
+    if (scope === 'group') {
+      // 2) Agrupa por groupId
+      const byGroup = new Map(); // groupId -> { sum, entries[] }
+      for (const entry of diceWithTotals) {
+        const gid = entry.groupId;
+        if (!byGroup.has(gid)) byGroup.set(gid, { sum: 0, entries: [] });
+        const bucket = byGroup.get(gid);
+        bucket.sum += Number(entry.total || 0);
+        bucket.entries.push(entry);
+      }
 
+      // 3) Ordena grupos por soma (KH: desc, KL: asc) e pega os 'keepCount' grupos
+      const groupsArr = Array.from(byGroup.entries()); // [groupId, {sum, entries}]
+      groupsArr.sort((a, b) => (isKH ? b[1].sum - a[1].sum : a[1].sum - b[1].sum));
+      const keptGroups = groupsArr.slice(0, Math.min(keepCount, groupsArr.length));
+
+      // 4) Mantém todos os dados dos grupos escolhidos
+      keptDiceEntries = keptGroups.flatMap(([, bucket]) => bucket.entries);
+    } else {
+      // Escopo por dado (comportamento anterior)
+      const sorted = [...diceWithTotals].sort((a, b) =>
+        isKH ? b.total - a.total : a.total - b.total
+      );
+      keptDiceEntries = sorted.slice(0, Math.min(keepCount, sorted.length));
+    }
+
+    // 5) Soma dos dados mantidos
+    const diceTotal = keptDiceEntries.reduce((sum, e) => sum + (Number(e.total) || 0), 0);
+
+    // 6) Aplica multiplicador do grupo alvo e soma não-alvo
+    const targetGroupTotal = diceTotal * (Number(targetMultiplier) || 1);
+    const total = targetGroupTotal + (Number(nonTargetValue) || 0);
+
+    // 7) Retorna no formato esperado pela UI
     return {
       total,
       explosiveDice,
-      keptDice: keptDice.map(d => d.die),
+      keptDice: keptDiceEntries.map(e => e.die),
       targetMultiplier,
       nonTargetValue,
       targetGroupTotal,

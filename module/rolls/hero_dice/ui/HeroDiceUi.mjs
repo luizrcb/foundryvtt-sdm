@@ -1,5 +1,5 @@
 import { createChatMessage } from '../../../helpers/chatUtils.mjs';
-import { $fmt, $l10n } from '../../../helpers/globalUtils.mjs';
+import { $fmt, $l10n, capitalizeFirstLetter } from '../../../helpers/globalUtils.mjs';
 import { templatePath } from '../../../helpers/templates.mjs';
 import {
   renderSaveResult,
@@ -67,7 +67,7 @@ export class HeroDiceUI {
     `;
   }
 
-  static async renderResultToChat(result, actor, flags, heroicBonusQty = 0) {
+  static async renderResultToChat(result, actor, flags, heroicBonusQty = 0, heroMode = 'increase') {
     const {
       keptDice,
       explosiveDice,
@@ -127,7 +127,8 @@ export class HeroDiceUI {
       diceTotal: targetGroupTotal,
       keepCount: keepRule.count,
       explosions,
-      heroDiceType
+      heroDiceType,
+      heroMode: capitalizeFirstLetter(heroMode)
     };
 
     const heroResultRoll = Roll.fromTerms([new foundry.dice.terms.NumericTerm({ number: total })]);
@@ -143,6 +144,7 @@ export class HeroDiceUI {
         prefix: '',
         title:
           $l10n('SDM.FieldHeroDice') +
+          `${heroMode === 'decrease' ? `<br>${$l10n('SDM.HeroDiceModeDecrease')}` : ''}` +
           `${heroicBonusQty > 0 ? ` (${$l10n('SDM.FieldBonus')}: ${heroicBonusQty})` : ''}`
       }),
       rolls: [heroResultRoll],

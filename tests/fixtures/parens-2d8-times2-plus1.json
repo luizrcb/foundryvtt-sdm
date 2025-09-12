@@ -1,0 +1,34 @@
+[
+  {
+    "class": "ParentheticalTerm",
+    "options": { "flavor": null },
+    "evaluated": true,
+    "term": "2d8",
+    "roll": {
+      "class": "Roll",
+      "options": {},
+      "dice": [],
+      "formula": "2d8",
+      "terms": [
+        {
+          "class": "Die",
+          "options": { "flavor": null },
+          "evaluated": true,
+          "number": 2,
+          "faces": 8,
+          "modifiers": [],
+          "results": [
+            { "result": 6, "active": true },
+            { "result": 5, "active": true }
+          ]
+        }
+      ],
+      "total": 11,
+      "evaluated": true
+    }
+  },
+  { "class": "OperatorTerm", "options": {}, "evaluated": true, "operator": "*" },
+  { "class": "NumericTerm", "options": { "flavor": null }, "evaluated": true, "number": 2 },
+  { "class": "OperatorTerm", "options": {}, "evaluated": true, "operator": "+" },
+  { "class": "NumericTerm", "options": { "flavor": null }, "evaluated": true, "number": 1 }
+]

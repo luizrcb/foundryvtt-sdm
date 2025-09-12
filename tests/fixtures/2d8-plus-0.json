@@ -1,0 +1,16 @@
+[
+  {
+    "class": "Die",
+    "options": { "flavor": null },
+    "evaluated": true,
+    "number": 2,
+    "faces": 8,
+    "modifiers": [],
+    "results": [
+      { "result": 6, "active": true },
+      { "result": 4, "active": true }
+    ]
+  },
+  { "class": "OperatorTerm", "options": {}, "evaluated": true, "operator": "+" },
+  { "class": "NumericTerm", "options": { "flavor": null }, "evaluated": true, "number": 0 }
+]

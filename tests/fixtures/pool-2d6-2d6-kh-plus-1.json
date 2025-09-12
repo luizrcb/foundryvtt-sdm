@@ -1,0 +1,61 @@
+[
+  {
+    "class": "PoolTerm",
+    "options": { "flavor": null },
+    "evaluated": true,
+    "terms": ["2d6", "2d6"],
+    "modifiers": ["kh"],
+    "rolls": [
+      {
+        "class": "Roll",
+        "options": {},
+        "dice": [],
+        "formula": "2d6",
+        "terms": [
+          {
+            "class": "Die",
+            "options": { "flavor": null },
+            "evaluated": true,
+            "number": 2,
+            "faces": 6,
+            "modifiers": [],
+            "results": [
+              { "result": 2, "active": true },
+              { "result": 3, "active": true }
+            ]
+          }
+        ],
+        "total": 5,
+        "evaluated": true
+      },
+      {
+        "class": "Roll",
+        "options": {},
+        "dice": [],
+        "formula": "2d6",
+        "terms": [
+          {
+            "class": "Die",
+            "options": { "flavor": null },
+            "evaluated": true,
+            "number": 2,
+            "faces": 6,
+            "modifiers": [],
+            "results": [
+              { "result": 2, "active": true },
+              { "result": 5, "active": true }
+            ]
+          }
+        ],
+        "total": 7,
+        "evaluated": true
+      }
+    ],
+    "results": [
+      { "result": 5, "active": false, "discarded": true },
+      { "result": 7, "active": true }
+    ]
+  },
+  { "class": "OperatorTerm", "options": {}, "evaluated": true, "operator": "+" },
+  { "class": "NumericTerm", "options": { "flavor": null }, "evaluated": true, "number": 1 }
+]

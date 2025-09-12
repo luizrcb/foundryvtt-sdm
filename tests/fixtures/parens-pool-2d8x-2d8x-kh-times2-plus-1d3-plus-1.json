@@ -1,0 +1,157 @@
+[
+  {
+    "class": "ParentheticalTerm",
+    "options": {
+      "flavor": null
+    },
+    "evaluated": true,
+    "term": "{2d8x,2d8x}kh",
+    "roll": {
+      "class": "Roll",
+      "options": {},
+      "dice": [],
+      "formula": "{2d8x,2d8x}kh",
+      "terms": [
+        {
+          "class": "PoolTerm",
+          "options": {
+            "flavor": null
+          },
+          "evaluated": true,
+          "terms": ["2d8x", "2d8x"],
+          "modifiers": ["kh"],
+          "rolls": [
+            {
+              "class": "Roll",
+              "options": {},
+              "dice": [],
+              "formula": "2d8x",
+              "terms": [
+                {
+                  "class": "Die",
+                  "options": {
+                    "flavor": null
+                  },
+                  "evaluated": true,
+                  "number": 2,
+                  "faces": 8,
+                  "modifiers": ["x"],
+                  "results": [
+                    {
+                      "result": 5,
+                      "active": true
+                    },
+                    {
+                      "result": 8,
+                      "active": true,
+                      "exploded": true
+                    },
+                    {
+                      "result": 5,
+                      "active": true
+                    }
+                  ]
+                }
+              ],
+              "total": 18,
+              "evaluated": true
+            },
+            {
+              "class": "Roll",
+              "options": {},
+              "dice": [],
+              "formula": "2d8x",
+              "terms": [
+                {
+                  "class": "Die",
+                  "options": {
+                    "flavor": null
+                  },
+                  "evaluated": true,
+                  "number": 2,
+                  "faces": 8,
+                  "modifiers": ["x"],
+                  "results": [
+                    {
+                      "result": 4,
+                      "active": true
+                    },
+                    {
+                      "result": 5,
+                      "active": true
+                    }
+                  ]
+                }
+              ],
+              "total": 9,
+              "evaluated": true
+            }
+          ],
+          "results": [
+            {
+              "result": 18,
+              "active": true
+            },
+            {
+              "result": 9,
+              "active": false,
+              "discarded": true
+            }
+          ]
+        }
+      ],
+      "total": 18,
+      "evaluated": true
+    }
+  },
+  {
+    "class": "OperatorTerm",
+    "options": {},
+    "evaluated": true,
+    "operator": "*"
+  },
+  {
+    "class": "NumericTerm",
+    "options": {
+      "flavor": null
+    },
+    "evaluated": true,
+    "number": 2
+  },
+  {
+    "class": "OperatorTerm",
+    "options": {},
+    "evaluated": true,
+    "operator": "+"
+  },
+  {
+    "class": "Die",
+    "options": {
+      "flavor": null
+    },
+    "evaluated": true,
+    "number": 1,
+    "faces": 3,
+    "modifiers": [],
+    "results": [
+      {
+        "result": 2,
+        "active": true
+      }
+    ]
+  },
+  {
+    "class": "OperatorTerm",
+    "options": {},
+    "evaluated": true,
+    "operator": "+"
+  },
+  {
+    "class": "NumericTerm",
+    "options": {
+      "flavor": null
+    },
+    "evaluated": true,
+    "number": 1
+  }
+]

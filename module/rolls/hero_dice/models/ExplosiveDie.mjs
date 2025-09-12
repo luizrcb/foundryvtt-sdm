@@ -7,11 +7,14 @@ export class ExplosiveDie {
    * Creates an ExplosiveDie instance
    * @param {Object} dieTerm - The original die term from Foundry Roll
    * @param {number} dieTerm.dieIndex - Index of the die in the roll
-   * @param {Array} dieTerm.results - Original roll results
+   * @param {Array}  dieTerm.results - Original roll results
    * @param {number} faces - Number of faces on the die
    * @param {boolean} [canExplode=true] - Whether the die can explode when max value is reached
+   * @param {Object} [opts]
+   * @param {'increase'|'decrease'} [opts.mode='increase'] - allocation mode (explosions only in 'increase')
+   * @param {string|null} [opts.groupId=null] - pool roll group this die belongs to (for pool kh/kl)
    */
-  constructor(dieTerm, faces, canExplode = true) {
+  constructor(dieTerm, faces, canExplode = true, opts = {}) {
     /**
      * Index of the die in the original roll
      * @type {number}
@@ -25,10 +28,27 @@ export class ExplosiveDie {
     this.faces = faces;
 
     /**
+     * Allocation mode (increase/decrease). Explosions only happen in increase mode.
+     * @type {'increase'|'decrease'}
+     */
+    this.mode = opts.mode ?? 'increase';
+
+    /**
      * Whether the die can explode when reaching max value
+     * (disabled automatically if mode !== 'increase')
      * @type {boolean}
      */
-    this.canExplode = canExplode;
+    this.canExplode = (this.mode === 'increase') && !!canExplode;
+
+    this.chainId = dieTerm.chainId ?? null;
+    this.segmentIndex = dieTerm.segmentIndex ?? 0;
+    this.isExplosionSegment = !!dieTerm.isExplosionSegment;
+
+    /**
+     * Optional group id (all dice from the same pool roll share the same id)
+     * @type {string|null}
+     */
+    this.groupId = opts.groupId ?? null;
 
     /**
      * Original roll results before modifications
@@ -70,6 +90,12 @@ export class ExplosiveDie {
      * @type {number[]}
      */
     this.newExplosions = [];
+
+    /**
+     * When true (used in decrease mode for explosion segments), this die is removed (counts as 0).
+     * @type {boolean}
+     */
+    this.removed = false;
   }
 
   /**
@@ -85,40 +111,44 @@ export class ExplosiveDie {
    * - Original active results
    * - Heroic modifications
    * - New explosions
+   * (If removed, returns 0.)
    * @returns {number} Total value of the die
    */
   getTotal() {
+    if (this.removed) return 0;
     return this.modifiedValue + this.newExplosions.reduce((sum, val) => sum + val, 0);
   }
 
   /**
-   * Applies a heroic value to the die, potentially triggering explosions
-   * @param {number} heroicValue - Value to add to the die
+   * Applies heroic allocations already recorded on this die (modifiedValue/heroicAllocated),
+   * potentially triggering explosions (only in increase mode when allowed).
    * @returns {Promise<ExplosiveDie>} Returns itself after modification
    */
   async applyHeroic() {
-    // 1. Aplicar o valor heroico diretamente ao dado
+    // If we've already hit faces and have pending explosions handled, nothing to do
     if (this.modifiedValue === this.faces && this.newExplosions.length) return this;
 
+    // Clamp overflows above faces before explosion processing
     if (this.modifiedValue > this.faces) {
       this.modifiedValue = this.faces;
     }
 
-    // 2. Verificar e processar explosões
+    // Only INCREASE mode with canExplode rolls further explosions
     if (this.canExplode) {
       while (this.modifiedValue >= this.faces) {
-        // Limitar ao valor máximo
+        // Lock at faces for this segment
         this.modifiedValue = this.faces;
 
-        // Rolar a explosão
+        // Roll the explosion
         const explosionRoll = await new Roll(`1d${this.faces}`).evaluate();
         if (game.dice3d) await game.dice3d.showForRoll(explosionRoll);
 
-        // Adicionar o resultado da explosão
+        // Append explosion value to chain
         this.newExplosions.push(explosionRoll.total);
 
-        // Parar se não for outra explosão máxima
+        // Stop if this explosion is not max again
         if (explosionRoll.total !== this.faces) break;
+        // else loop to chain more explosions
       }
     }
 

@@ -1,6 +1,18 @@
-import { $l10n } from "../../helpers/globalUtils.mjs";
+function getUniqueRandomDecimals(count = 4) {
+  const nums = new Set();
+
+  while (nums.size < count) {
+    // generate random digit 1–9
+    const digit = Math.floor(Math.random() * 9) + 1;
+    nums.add(digit / 10);
+  }
+
+  return Array.from(nums);
+}
 
 export async function groupInitiative() {
+  const tieBreakers = getUniqueRandomDecimals();
+
   const tokens = canvas.tokens.controlled;
 
   const excluded = [];
@@ -50,7 +62,7 @@ export async function groupInitiative() {
   }
 
   // Process a token group
-  async function processGroup(group) {
+  async function processGroup(group, index) {
     if (group.length === 0) return;
 
     // Select random roller
@@ -63,13 +75,14 @@ export async function groupInitiative() {
 
     // Roll initiative for roller
     await game.combat.rollAll({ messageOptions: { rollMode: CONST.DICE_ROLL_MODES.PUBLIC } });
+    const initVal = roller.combatant.initiative + tieBreakers[index];
 
-    const initVal = roller.combatant.initiative;
+
+    roller.combatant.update({ initiative: initVal })
 
     // Apply initiative to group
     for (const token of group) {
       if (token === roller) continue;
-
       if (!token.combatant) {
         await token.document.toggleCombatant();
       }
@@ -78,9 +91,9 @@ export async function groupInitiative() {
     }
   }
 
-  for (let group of Object.values(groups)) {
+  for (const [index, group] of Object.values(groups).entries()) {
     if (group.length) {
-      await processGroup(group);
+      await processGroup(group, index);
     }
   }
 }
