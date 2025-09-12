@@ -1,0 +1,127 @@
+[
+  {
+    "class": "ParentheticalTerm",
+    "options": {
+      "flavor": null
+    },
+    "evaluated": true,
+    "term": "{1d6,1d6}kl",
+    "roll": {
+      "class": "Roll",
+      "options": {},
+      "dice": [],
+      "formula": "{1d6,1d6}kl",
+      "terms": [
+        {
+          "class": "PoolTerm",
+          "options": {
+            "flavor": null
+          },
+          "evaluated": true,
+          "terms": [
+            "1d6",
+            "1d6"
+          ],
+          "modifiers": [
+            "kl"
+          ],
+          "rolls": [
+            {
+              "class": "Roll",
+              "options": {},
+              "dice": [],
+              "formula": "1d6",
+              "terms": [
+                {
+                  "class": "Die",
+                  "options": {
+                    "flavor": null
+                  },
+                  "evaluated": true,
+                  "number": 1,
+                  "faces": 6,
+                  "modifiers": [],
+                  "results": [
+                    {
+                      "result": 5,
+                      "active": true
+                    }
+                  ]
+                }
+              ],
+              "total": 5,
+              "evaluated": true
+            },
+            {
+              "class": "Roll",
+              "options": {},
+              "dice": [],
+              "formula": "1d6",
+              "terms": [
+                {
+                  "class": "Die",
+                  "options": {
+                    "flavor": null
+                  },
+                  "evaluated": true,
+                  "number": 1,
+                  "faces": 6,
+                  "modifiers": [],
+                  "results": [
+                    {
+                      "result": 4,
+                      "active": true
+                    }
+                  ]
+                }
+              ],
+              "total": 4,
+              "evaluated": true
+            }
+          ],
+          "results": [
+            {
+              "result": 5,
+              "active": false,
+              "discarded": true
+            },
+            {
+              "result": 4,
+              "active": true
+            }
+          ]
+        }
+      ],
+      "total": 4,
+      "evaluated": true
+    }
+  },
+  {
+    "class": "OperatorTerm",
+    "options": {},
+    "evaluated": true,
+    "operator": "*"
+  },
+  {
+    "class": "NumericTerm",
+    "options": {
+      "flavor": null
+    },
+    "evaluated": true,
+    "number": 2
+  },
+  {
+    "class": "OperatorTerm",
+    "options": {},
+    "evaluated": true,
+    "operator": "+"
+  },
+  {
+    "class": "NumericTerm",
+    "options": {
+      "flavor": null
+    },
+    "evaluated": true,
+    "number": 1
+  }
+]

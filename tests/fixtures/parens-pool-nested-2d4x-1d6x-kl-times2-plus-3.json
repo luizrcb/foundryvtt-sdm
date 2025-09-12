@@ -1,0 +1,268 @@
+[
+  {
+    "class": "ParentheticalTerm",
+    "options": {
+      "flavor": null
+    },
+    "evaluated": true,
+    "term": "{{2d4x,1d6x},{2d4x,1d6x}}kl",
+    "roll": {
+      "class": "Roll",
+      "options": {},
+      "dice": [],
+      "formula": "{{2d4x,1d6x},{2d4x,1d6x}}kl",
+      "terms": [
+        {
+          "class": "PoolTerm",
+          "options": {
+            "flavor": null
+          },
+          "evaluated": true,
+          "terms": [
+            "{2d4x,1d6x}",
+            "{2d4x,1d6x}"
+          ],
+          "modifiers": [
+            "kl"
+          ],
+          "rolls": [
+            {
+              "class": "Roll",
+              "options": {},
+              "dice": [],
+              "formula": "{2d4x,1d6x}",
+              "terms": [
+                {
+                  "class": "PoolTerm",
+                  "options": {
+                    "flavor": null
+                  },
+                  "evaluated": true,
+                  "terms": [
+                    "2d4x",
+                    "1d6x"
+                  ],
+                  "modifiers": [],
+                  "rolls": [
+                    {
+                      "class": "Roll",
+                      "options": {},
+                      "dice": [],
+                      "formula": "2d4x",
+                      "terms": [
+                        {
+                          "class": "Die",
+                          "options": {
+                            "flavor": null
+                          },
+                          "evaluated": true,
+                          "number": 2,
+                          "faces": 4,
+                          "modifiers": [
+                            "x"
+                          ],
+                          "results": [
+                            {
+                              "result": 1,
+                              "active": true
+                            },
+                            {
+                              "result": 2,
+                              "active": true
+                            }
+                          ]
+                        }
+                      ],
+                      "total": 3,
+                      "evaluated": true
+                    },
+                    {
+                      "class": "Roll",
+                      "options": {},
+                      "dice": [],
+                      "formula": "1d6x",
+                      "terms": [
+                        {
+                          "class": "Die",
+                          "options": {
+                            "flavor": null
+                          },
+                          "evaluated": true,
+                          "number": 1,
+                          "faces": 6,
+                          "modifiers": [
+                            "x"
+                          ],
+                          "results": [
+                            {
+                              "result": 5,
+                              "active": true
+                            }
+                          ]
+                        }
+                      ],
+                      "total": 5,
+                      "evaluated": true
+                    }
+                  ],
+                  "results": [
+                    {
+                      "result": 3,
+                      "active": true
+                    },
+                    {
+                      "result": 5,
+                      "active": true
+                    }
+                  ]
+                }
+              ],
+              "total": 8,
+              "evaluated": true
+            },
+            {
+              "class": "Roll",
+              "options": {},
+              "dice": [],
+              "formula": "{2d4x,1d6x}",
+              "terms": [
+                {
+                  "class": "PoolTerm",
+                  "options": {
+                    "flavor": null
+                  },
+                  "evaluated": true,
+                  "terms": [
+                    "2d4x",
+                    "1d6x"
+                  ],
+                  "modifiers": [],
+                  "rolls": [
+                    {
+                      "class": "Roll",
+                      "options": {},
+                      "dice": [],
+                      "formula": "2d4x",
+                      "terms": [
+                        {
+                          "class": "Die",
+                          "options": {
+                            "flavor": null
+                          },
+                          "evaluated": true,
+                          "number": 2,
+                          "faces": 4,
+                          "modifiers": [
+                            "x"
+                          ],
+                          "results": [
+                            {
+                              "result": 4,
+                              "active": true,
+                              "exploded": true
+                            },
+                            {
+                              "result": 2,
+                              "active": true
+                            },
+                            {
+                              "result": 3,
+                              "active": true
+                            }
+                          ]
+                        }
+                      ],
+                      "total": 9,
+                      "evaluated": true
+                    },
+                    {
+                      "class": "Roll",
+                      "options": {},
+                      "dice": [],
+                      "formula": "1d6x",
+                      "terms": [
+                        {
+                          "class": "Die",
+                          "options": {
+                            "flavor": null
+                          },
+                          "evaluated": true,
+                          "number": 1,
+                          "faces": 6,
+                          "modifiers": [
+                            "x"
+                          ],
+                          "results": [
+                            {
+                              "result": 1,
+                              "active": true
+                            }
+                          ]
+                        }
+                      ],
+                      "total": 1,
+                      "evaluated": true
+                    }
+                  ],
+                  "results": [
+                    {
+                      "result": 9,
+                      "active": true
+                    },
+                    {
+                      "result": 1,
+                      "active": true
+                    }
+                  ]
+                }
+              ],
+              "total": 10,
+              "evaluated": true
+            }
+          ],
+          "results": [
+            {
+              "result": 8,
+              "active": true
+            },
+            {
+              "result": 10,
+              "active": false,
+              "discarded": true
+            }
+          ]
+        }
+      ],
+      "total": 8,
+      "evaluated": true
+    }
+  },
+  {
+    "class": "OperatorTerm",
+    "options": {},
+    "evaluated": true,
+    "operator": "*"
+  },
+  {
+    "class": "NumericTerm",
+    "options": {
+      "flavor": null
+    },
+    "evaluated": true,
+    "number": 2
+  },
+  {
+    "class": "OperatorTerm",
+    "options": {},
+    "evaluated": true,
+    "operator": "+"
+  },
+  {
+    "class": "NumericTerm",
+    "options": {
+      "flavor": null
+    },
+    "evaluated": true,
+    "number": 3
+  }
+]

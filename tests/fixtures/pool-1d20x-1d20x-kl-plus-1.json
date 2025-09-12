@@ -1,0 +1,99 @@
+[
+  {
+    "class": "PoolTerm",
+    "options": {
+      "flavor": null
+    },
+    "evaluated": true,
+    "terms": [
+      "1d20x",
+      "1d20x"
+    ],
+    "modifiers": [
+      "kl"
+    ],
+    "rolls": [
+      {
+        "class": "Roll",
+        "options": {},
+        "dice": [],
+        "formula": "1d20x",
+        "terms": [
+          {
+            "class": "Die",
+            "options": {
+              "flavor": null
+            },
+            "evaluated": true,
+            "number": 1,
+            "faces": 20,
+            "modifiers": [
+              "x"
+            ],
+            "results": [
+              {
+                "result": 10,
+                "active": true
+              }
+            ]
+          }
+        ],
+        "total": 10,
+        "evaluated": true
+      },
+      {
+        "class": "Roll",
+        "options": {},
+        "dice": [],
+        "formula": "1d20x",
+        "terms": [
+          {
+            "class": "Die",
+            "options": {
+              "flavor": null
+            },
+            "evaluated": true,
+            "number": 1,
+            "faces": 20,
+            "modifiers": [
+              "x"
+            ],
+            "results": [
+              {
+                "result": 18,
+                "active": true
+              }
+            ]
+          }
+        ],
+        "total": 18,
+        "evaluated": true
+      }
+    ],
+    "results": [
+      {
+        "result": 10,
+        "active": true
+      },
+      {
+        "result": 18,
+        "active": false,
+        "discarded": true
+      }
+    ]
+  },
+  {
+    "class": "OperatorTerm",
+    "options": {},
+    "evaluated": true,
+    "operator": "+"
+  },
+  {
+    "class": "NumericTerm",
+    "options": {
+      "flavor": null
+    },
+    "evaluated": true,
+    "number": 1
+  }
+]
