@@ -1,6 +1,6 @@
 {
   "name": "sdm",
-  "version": "0.2.12",
+  "version": "0.3.0",
   "description": "CSS compiler for the Sdm system",
   "scripts": {
     "build": "sass src/scss/sdm.scss css/sdm.css --style=expanded --no-source-map",
@@ -18,7 +18,8 @@
     "pushLDBtoJSON": "node ./tools/pushLDBtoJSON.mjs",
     "unpack": "npm run pushLDBtoJSON",
     "build:packs": "npm run pullJSONtoLDB",
-    "prepareRelease": "npm run build:packs"
+    "prepareRelease": "npm run build:packs",
+    "test": "node ./tests/test_runner.mjs"
   },
   "browserslist": [
     "last 3 versions"

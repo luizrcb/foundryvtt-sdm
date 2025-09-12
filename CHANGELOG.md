@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.3.0
+
+- Fix unnecessary Bonus Hero Dice Pool update notifications
+- Improve Hero Dice usage: now supports complex expressions such as advantage, disadvantage, and multipliers
+
 ## v0.2.12
 
 - Move many item utility buttons to a context menu. Right-click an item in any inventory to open the available options
