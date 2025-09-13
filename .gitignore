@@ -21,3 +21,5 @@ packs/
 
 foundry-config.yaml
 foundry
+
+tests/out/

@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v4
+    - uses: actions/checkout@v5
 
     - name: Load system manifest
       id: manifest
@@ -31,7 +31,7 @@ jobs:
     # "version" key required for a valid module manifest.
     - name: Extract Version From Tag
       id: get_version
-      uses: Simply007/get-version-action@v2
+      uses: dhkatz/get-version-action@v3
 
 
     # Set up our some variables for future use
