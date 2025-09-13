@@ -681,18 +681,18 @@ const cases = [
     expected: { total: 4 }
   },
 
-  // {
-  //   name: 'increase {2d4x,1d6x} + 0 (+1 ⇒ 13)',
-  //   fixture: './tests/fixtures/pool-2d4x-1d6x-plus-0.json',
-  //   hero: { mode: 'increase', results: [1] },
-  //   expected: { total: 13 }
-  // },
-  // {
-  //   name: 'increase {2d4x,1d6x} + 0 (+2 ⇒ 14)',
-  //   fixture: './tests/fixtures/pool-2d4x-1d6x-plus-0.json',
-  //   hero: { mode: 'increase', results: [2] },
-  //   expected: { total: 14 }
-  // },
+  {
+    name: 'increase {2d4x,1d6x} + 0 (+1 ⇒ 13)',
+    fixture: './tests/fixtures/pool-2d4x-1d6x-plus-0.json',
+    hero: { mode: 'increase', results: [1] },
+    expected: { total: 13 }
+  },
+  {
+    name: 'increase {2d4x,1d6x} + 0 (+2 ⇒ 14)',
+    fixture: './tests/fixtures/pool-2d4x-1d6x-plus-0.json',
+    hero: { mode: 'increase', results: [2] },
+    expected: { total: 14 }
+  },
 
   // =============== INCREASE — criar explosão “natural” =================
   // +1 no d6: 5→6 cria explosão (default tail=1 no helper) → +2 no total ⇒ 14
@@ -755,24 +755,24 @@ const cases = [
     hero: { mode: 'decrease', results: [1] },
     expected: { total: 11 }
   },
-  // {
-  //   name: 'decrease {2d4x,1d6x} + 0 (-2 ⇒ 10)',
-  //   fixture: './tests/fixtures/pool-2d4x-1d6x-plus-0.json',
-  //   hero: { mode: 'decrease', results: [2] },
-  //   expected: { total: 10 }
-  // },
-  // {
-  //   name: 'decrease {2d4x,1d6x} + 0 (-3 ⇒ 9)',
-  //   fixture: './tests/fixtures/pool-2d4x-1d6x-plus-0.json',
-  //   hero: { mode: 'decrease', results: [3] },
-  //   expected: { total: 9 }
-  // },
-  // {
-  //   name: 'decrease {2d4x,1d6x} + 0 (-10 leva tudo ao piso ⇒ 3)',
-  //   fixture: './tests/fixtures/pool-2d4x-1d6x-plus-0.json',
-  //   hero: { mode: 'decrease', results: [10] },
-  //   expected: { total: 3 }
-  // },
+  {
+    name: 'decrease {2d4x,1d6x} + 0 (-2 ⇒ 10)',
+    fixture: './tests/fixtures/pool-2d4x-1d6x-plus-0.json',
+    hero: { mode: 'decrease', results: [2] },
+    expected: { total: 10 }
+  },
+  {
+    name: 'decrease {2d4x,1d6x} + 0 (-3 ⇒ 9)',
+    fixture: './tests/fixtures/pool-2d4x-1d6x-plus-0.json',
+    hero: { mode: 'decrease', results: [3] },
+    expected: { total: 9 }
+  },
+  {
+    name: 'decrease {2d4x,1d6x} + 0 (-10 leva tudo ao piso ⇒ 3)',
+    fixture: './tests/fixtures/pool-2d4x-1d6x-plus-0.json',
+    hero: { mode: 'decrease', results: [10] },
+    expected: { total: 3 }
+  },
 
   {
     name: 'increase de ({2d4,1d6}) * 2 + 0 (+1 não melhora: teto em 4,4,6 ⇒ 28)',
@@ -818,18 +818,18 @@ const cases = [
     hero: { mode: 'decrease', results: [5] },
     expected: { total: 18 }
   },
-  // {
-  //   name: 'decrease de ({2d4,1d6}) * 2 + 0 (-6 ⇒ 16)',
-  //   fixture: './tests/fixtures/parens-pool-2d4-1d6-times2-plus-0.json',
-  //   hero: { mode: 'decrease', results: [6] },
-  //   expected: { total: 16 }
-  // },
-  // {
-  //   name: 'decrease de ({2d4,1d6}) * 2 + 0 (-7 ⇒ 14)',
-  //   fixture: './tests/fixtures/parens-pool-2d4-1d6-times2-plus-0.json',
-  //   hero: { mode: 'decrease', results: [7] },
-  //   expected: { total: 14 }
-  // },
+  {
+    name: 'decrease de ({2d4,1d6}) * 2 + 0 (-6 ⇒ 16)',
+    fixture: './tests/fixtures/parens-pool-2d4-1d6-times2-plus-0.json',
+    hero: { mode: 'decrease', results: [6] },
+    expected: { total: 16 }
+  },
+  {
+    name: 'decrease de ({2d4,1d6}) * 2 + 0 (-7 ⇒ 14)',
+    fixture: './tests/fixtures/parens-pool-2d4-1d6-times2-plus-0.json',
+    hero: { mode: 'decrease', results: [7] },
+    expected: { total: 14 }
+  },
 
   // ======= DECREASE com múltiplos heróicos (combinação ótima, piso=1 por dado) =======
   {
@@ -838,34 +838,34 @@ const cases = [
     hero: { mode: 'decrease', results: [2, 3] },
     expected: { total: 18 }
   },
-  // {
-  //   name: 'decrease de ({2d4,1d6}) * 2 + 0 (-11 ⇒ floora 4,4,6 para 1,1,1 ⇒ (3)*2 = 6)',
-  //   fixture: './tests/fixtures/parens-pool-2d4-1d6-times2-plus-0.json',
-  //   hero: { mode: 'decrease', results: [11] },
-  //   expected: { total: 6 }
-  // },
+  {
+    name: 'decrease de ({2d4,1d6}) * 2 + 0 (-11 ⇒ floora 4,4,6 para 1,1,1 ⇒ (3)*2 = 6)',
+    fixture: './tests/fixtures/parens-pool-2d4-1d6-times2-plus-0.json',
+    hero: { mode: 'decrease', results: [11] },
+    expected: { total: 6 }
+  },
 
   // --- Baseline / sanity ---
-  // {
-  //   name: 'increase of {1d20x,1d20x}kl + 1 (+0 => 6)',
-  //   fixture: './tests/fixtures/pool-1d20x-1d20x-kl-plus-1.json',
-  //   hero: { mode: 'increase', results: [] },
-  //   expected: { total: 6 }
-  // },
+  {
+    name: 'increase of {1d20x,1d20x}kl + 1 (+0 => 10)',
+    fixture: './tests/fixtures/pool-1d20x-1d20x-kl-plus-1.json',
+    hero: { mode: 'increase', results: [] },
+    expected: { total: 11 }
+  },
 
-  // // --- INCREASE: raise the kept (lowest) die only helps ---
-  // {
-  //   name: 'increase of {1d20x,1d20x}kl + 1 (+2 on kept 5 => 8)',
-  //   fixture: './tests/fixtures/pool-1d20x-1d20x-kl-plus-1.json',
-  //   hero: { mode: 'increase', results: [2] },
-  //   expected: { total: 8 }
-  // },
-  // {
-  //   name: 'increase of {1d20x,1d20x}kl + 1 (+8 on kept 5 => ties 13 -> 14)',
-  //   fixture: './tests/fixtures/pool-1d20x-1d20x-kl-plus-1.json',
-  //   hero: { mode: 'increase', results: [8] },
-  //   expected: { total: 14 }
-  // },
+  // --- INCREASE: raise the kept (lowest) die only helps ---
+  {
+    name: 'increase of {1d20x,1d20x}kl + 1 ()',
+    fixture: './tests/fixtures/pool-1d20x-1d20x-kl-plus-1.json',
+    hero: { mode: 'increase', results: [2] },
+    expected: { total: 13 }
+  },
+  {
+    name: 'increase of {1d20x,1d20x}kl + 1 (+8 on kept 5 => ties 13 -> 14)',
+    fixture: './tests/fixtures/pool-1d20x-1d20x-kl-plus-1.json',
+    hero: { mode: 'increase', results: [6] },
+    expected: { total: 19 }
+  },
   // {
   //   name: 'increase of {1d20x,1d20x}kl + 1 (+9 on kept 5 -> 14, lowest=13 => 14)',
   //   fixture: './tests/fixtures/pool-1d20x-1d20x-kl-plus-1.json',

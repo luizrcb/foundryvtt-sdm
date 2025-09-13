@@ -202,8 +202,15 @@ export class HeroDiceAllocator {
         return combo && combo.length ? combo : null;
       };
 
+      const restrictPhase0ToKept =
+        scope === 'group' && keepRule?.type === KeepRule.TYPES.KEEP_LOWEST;
+
       for (const item of needList) {
         if (!heroes.length) break;
+
+        // KL + group: never push non-kept groups to faces in Phase 0
+        if (restrictPhase0ToKept && !item.kept) continue;
+
         const s = state[item.idx];
         if (s.total >= s.faces) continue;
 
@@ -225,9 +232,11 @@ export class HeroDiceAllocator {
     }
 
     // =========================
-    // GREEDY per hero (remaining)
+    // GREEDY per hero (remaining) with improvement-only + kept-group tie-break
     // =========================
     heroes.sort((a, b) => b.result - a.result);
+
+    const isKL = keepRule?.type === KeepRule.TYPES.KEEP_LOWEST;
 
     for (let h = 0; h < heroes.length; h++) {
       const hero = heroes[h];
@@ -250,8 +259,6 @@ export class HeroDiceAllocator {
         const s = state[i];
 
         const candidateTotal = applyIncCap(s.total, hero.result, s.faces);
-        const improves = candidateTotal > Number(s.total || 0);
-        if (!improves && hadImprovement) continue;
 
         const hitsFaces = Number(candidateTotal) >= Number(s.faces || 0);
         const nudge = hitsFaces && s.canExplode ? (Number(s.faces || 0) + 1) / 2 : 0;
@@ -266,7 +273,13 @@ export class HeroDiceAllocator {
 
         const sc = scorePreview(preview);
 
-        if (improves && !hadImprovement) {
+        // Gate: for KL+group, prefer moves that improve the kept score; else, any die improvement
+        const improvesDie = candidateTotal > Number(s.total || 0);
+        const improvesKeptScore = sc.sum > baseScore.sum || sc.min > baseScore.min;
+        const gateImprove = isKL && scope === 'group' ? improvesKeptScore : improvesDie;
+
+        if (!gateImprove && hadImprovement) continue;
+        if (gateImprove && !hadImprovement) {
           hadImprovement = true;
           bestScore = null;
           bestIdx = -1;
@@ -276,7 +289,8 @@ export class HeroDiceAllocator {
 
         if (bestScore === null || betterThan(sc, bestScore)) {
           take = true;
-        } else if (bestScore && isKH && scope === 'group' && sc.sum === bestScore.sum) {
+        } else if (bestScore && scope === 'group' && sc.sum === bestScore.sum) {
+          // tie-break: prefer current kept group
           const candKept = keptNow.has(groupKeyOf(s));
           const bestKept = keptNow.has(groupKeyOf(state[bestIdx]));
           if (candKept && !bestKept) take = true;
