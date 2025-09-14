@@ -2,7 +2,10 @@
 
 ## v0.3.1
 
-- the “Group Initiative” feature was moved to a separate, system independent module called “Disposition Initiative”
+- Add support for marking gear resources (ammo, battery) as running low or run out
+- Add test cases to cover Hero Dice usage options and validate expected results
+- Add system setting to reroll group initiatives every round
+- Add system setting to choose whether players are grouped with friendly tokens during group initiative rolls
 
 ## v0.3.0
 
