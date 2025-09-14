@@ -5,7 +5,7 @@ export class RollAnalyzer {
     this.roll = roll;
   }
 
-  // --- duck-typing helpers ---
+  // ========== Duck-typing helpers ==========
   isDie(term) {
     if (!term) return false;
     if (term instanceof foundry.dice.terms.Die) return true;
@@ -39,35 +39,84 @@ export class RollAnalyzer {
     return typeof term?.number === 'number';
   }
 
+  // ========== Tree helpers (dedup seguro) ==========
+  // CORRIGIDO: evita duplicar nós quando existem .terms, .term.terms e .roll.terms
   listTerms(node) {
     const out = [];
     if (!node) return out;
-    if (Array.isArray(node.terms)) out.push(...node.terms);
-    if (node.term && Array.isArray(node.term.terms)) out.push(...node.term.terms);
-    if (node.roll && Array.isArray(node.roll.terms)) out.push(...node.roll.terms);
+
+    const seen = new Set();
+    const push = t => {
+      if (t && !seen.has(t)) {
+        seen.add(t);
+        out.push(t);
+      }
+    };
+
+    if (Array.isArray(node.terms)) node.terms.forEach(push);
+    if (node.term && Array.isArray(node.term.terms)) node.term.terms.forEach(push);
+    if (node.roll && Array.isArray(node.roll.terms)) node.roll.terms.forEach(push);
+
     return out;
   }
 
+  // Busca dados diretos dentro de um Roll (termos e/ou dice)
+  // CORRIGIDO: busca profunda em Pool/Paren recursivamente
   listDiceFromRoll(roll) {
     const dice = [];
     if (!roll) return dice;
-    if (Array.isArray(roll.dice) && roll.dice.length) dice.push(...roll.dice);
-    if (Array.isArray(roll.terms)) {
-      for (const t of roll.terms) {
-        if (this.isDie(t)) dice.push(t);
-        else if (t?.terms) {
-          for (const inner of t.terms) if (this.isDie(inner)) dice.push(inner);
+
+    const pushUnique = this.makePusher();
+
+    const visit = term => {
+      if (!term) return;
+
+      if (this.isDie(term)) {
+        this.markExplodingFromDie(term);
+        pushUnique(dice, term);
+        return;
+      }
+
+      if (this.isPool(term)) {
+        const rolls = Array.isArray(term.rolls) ? term.rolls : [];
+        for (const r of rolls) {
+          const innerDice = this.listDiceFromRoll(r); // recursivo profundo
+          for (const d of innerDice) pushUnique(dice, d);
         }
+        return;
+      }
+
+      if (this.isParen(term)) {
+        for (const inner of this.listTerms(term)) visit(inner);
+        return;
+      }
+
+      if (Array.isArray(term.terms)) {
+        for (const inner of term.terms) visit(inner);
+      }
+    };
+
+    if (Array.isArray(roll.dice)) {
+      for (const d of roll.dice) {
+        this.markExplodingFromDie(d);
+        pushUnique(dice, d);
       }
     }
+
+    if (Array.isArray(roll.terms)) {
+      for (const t of roll.terms) visit(t);
+    }
+
     return dice;
   }
 
+  // Marca se há explosão em algum dado
   markExplodingFromDie(die) {
     const mods = Array.isArray(die?.modifiers) ? die.modifiers : [];
     if (mods.some(m => m === 'x')) this._shouldExplode = true;
   }
 
+  // Evita duplicar referências iguais/semelhantes
   makePusher() {
     const seenWeak = new WeakSet();
     const seenKey = new Set();
@@ -88,57 +137,57 @@ export class RollAnalyzer {
     };
   }
 
-  // --- main dice extraction (dedup + group tagging) ---
+  // ========== Extração de dados-alvo (com tagging de grupo em pools) ==========
+  e; // ========== Extração de dados-alvo (duck-typed; com tagging de grupo em pools) ==========
   extractDice(term) {
     const dice = [];
     const pushUnique = this.makePusher();
 
-    // 1) Single Die
-    if (term instanceof foundry.dice.terms.Die) {
-      this.markExplodingFromDie(term);
-      pushUnique(dice, term);
-      return dice;
-    }
+    const visit = node => {
+      if (!node) return;
 
-    // 2) PoolTerm (root or nested)
-    if (term instanceof foundry.dice.terms.PoolTerm) {
-      const rolls = Array.isArray(term.rolls) ? term.rolls : [];
-      const res = Array.isArray(term.results) ? term.results : [];
-      for (let groupIdx = 0; groupIdx < rolls.length; groupIdx++) {
-        const kept = !!(res[groupIdx] && res[groupIdx].active && !res[groupIdx].discarded);
-        const ds = this.listDiceFromRoll(rolls[groupIdx]);
-        for (const die of ds) {
-          die.groupId = groupIdx;
-          die._groupId = `pool:${groupIdx}`;
-          die._groupKept = kept;
-          this.markExplodingFromDie(die);
-          pushUnique(dice, die);
+      // 1) Dado simples
+      if (this.isDie(node)) {
+        this.markExplodingFromDie(node);
+        pushUnique(dice, node);
+        return;
+      }
+
+      // 2) Pool (duck-typed): preserva tagging de grupo e kept
+      if (this.isPool(node)) {
+        const rolls = Array.isArray(node.rolls) ? node.rolls : [];
+        const res = Array.isArray(node.results) ? node.results : [];
+        for (let groupIdx = 0; groupIdx < rolls.length; groupIdx++) {
+          const kept = !!(res[groupIdx] && res[groupIdx].active && !res[groupIdx].discarded);
+          const innerDice = this.listDiceFromRoll(rolls[groupIdx]); // profundo
+          for (const d of innerDice) {
+            d.groupId = groupIdx;
+            d._groupId = `pool:${groupIdx}`;
+            d._groupKept = kept;
+            this.markExplodingFromDie(d);
+            pushUnique(dice, d);
+          }
         }
+        return;
       }
-      return dice;
-    }
 
-    // 3) ParentheticalTerm: walk inside
-    if (term instanceof foundry.dice.terms.ParentheticalTerm) {
-      const innerTerms = term.roll?.terms ?? term.term?.terms ?? [];
-      for (const inner of innerTerms) {
-        const innerDice = this.extractDice(inner);
-        for (const d of innerDice) pushUnique(dice, d);
+      // 3) Parêntese (duck-typed): caminha para dentro
+      if (this.isParen(node)) {
+        for (const inner of this.listTerms(node)) visit(inner);
+        return;
       }
-      return dice;
-    }
 
-    // 4) Any composite node
-    if (term?.terms?.length) {
-      for (const inner of term.terms) {
-        const innerDice = this.extractDice(inner);
-        for (const d of innerDice) pushUnique(dice, d);
+      // 4) Qualquer composto com .terms
+      if (Array.isArray(node.terms)) {
+        for (const inner of node.terms) visit(inner);
       }
-    }
+    };
 
+    visit(term);
     return dice;
   }
 
+  // Soma tudo que não é alvo na raiz, respeitando sinais
   _sumNonTargetAtRoot(terms, { excludeIdxs = new Set() } = {}) {
     let acc = 0;
     let sign = 1;
@@ -179,7 +228,8 @@ export class RollAnalyzer {
     return acc;
   }
 
-  // --- API ---
+  // ========== API principal ==========
+  // CORRIGIDO: targetTerms contém apenas o termo-alvo; multiplicador é excluído do keep
   async identifyTargetComponents() {
     this._shouldExplode = false;
 
@@ -206,6 +256,7 @@ export class RollAnalyzer {
 
       targetDice = this.extractDice(targetTerm);
 
+      // multiplicador à direita, se houver
       const opIdx = firstTargetIndex + 1;
       if (opIdx < this.roll.terms.length - 1) {
         const op = this.roll.terms[opIdx];
@@ -217,7 +268,9 @@ export class RollAnalyzer {
         }
       }
 
-      targetTerms = this.roll.terms.filter((_, idx) => excludeIdxs.has(idx));
+      // SOMENTE o termo-alvo segue para detecção de keep
+      targetTerms = [targetTerm];
+
       nonTargetValue = this._sumNonTargetAtRoot(this.roll.terms, { excludeIdxs });
     }
 
@@ -230,13 +283,16 @@ export class RollAnalyzer {
     };
   }
 
+  // CORRIGIDO: dedup de nós visitados; contagem de dados ativa correta; escopo certo
   getKeepRule(targetTerms) {
     let keepRule = new KeepRule(KeepRule.TYPES.KEEP_HIGHEST, 0);
     let totalActiveDice = 0;
     let foundKeepMod = false;
 
-    const processTerm = term => {
-      if (!term) return;
+    const seen = new WeakSet();
+    const processOnce = term => {
+      if (!term || (typeof term === 'object' && term !== null && seen.has(term))) return;
+      if (typeof term === 'object' && term !== null) seen.add(term);
 
       if (this.isDie(term)) {
         totalActiveDice += (term.results || []).filter(r => r.active).length;
@@ -254,6 +310,7 @@ export class RollAnalyzer {
       } else if (this.isPool(term)) {
         const rolls = Array.isArray(term.rolls) ? term.rolls : [];
         for (const r of rolls) {
+          // usa busca profunda para contar todos os dados efetivamente rolados
           const ds = this.listDiceFromRoll(r);
           for (const d of ds) totalActiveDice += (d.results || []).filter(x => x.active).length;
         }
@@ -269,14 +326,14 @@ export class RollAnalyzer {
           }
         }
       } else if (this.isParen(term)) {
-        this.listTerms(term).forEach(processTerm);
+        this.listTerms(term).forEach(processOnce);
       } else if (Array.isArray(term.terms)) {
-        term.terms.forEach(processTerm);
+        term.terms.forEach(processOnce);
       }
     };
 
-    const termsToProcess = targetTerms || this.roll.terms;
-    termsToProcess.forEach(processTerm);
+    const termsToProcess = targetTerms && targetTerms.length ? targetTerms : this.roll.terms;
+    termsToProcess.forEach(processOnce);
 
     if (totalActiveDice === 0) totalActiveDice = 1;
     if (!foundKeepMod) {

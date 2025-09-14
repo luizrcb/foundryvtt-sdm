@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.3.1
+
+- the “Group Initiative” feature was moved to a separate, system independent module called “Disposition Initiative”
+
 ## v0.3.0
 
 - Fix unnecessary Bonus Hero Dice Pool update notifications
@@ -30,7 +34,7 @@
 ## v0.2.9
 
 - Move Referee utility functions from macros to buttons in the token controls left menu
-- Add Ctrl+Click shortcut to make rolls in “blind GM mode”
+- Add Ctrl+Click shortcut to make rolls in blind GM mode”
 - Add missing description to the “You Go” drink gear
 - Update 3D and 2D dice fonts
 - Update Chromatype palettes for better 3D dice contrast

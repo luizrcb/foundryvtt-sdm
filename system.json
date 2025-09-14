@@ -130,5 +130,17 @@
     "diagonals": 0
   },
   "primaryTokenAttribute": "life",
-  "secondaryTokenAttribute": "defense"
+  "secondaryTokenAttribute": "defense",
+  "relationships": {
+    "requires": [
+      {
+        "id": "disposition-initiative",
+        "manifest": "https://github.com/luizrcb/disposition-initiative/releases/download/0.3.4/module.json",
+        "compatibility": {
+          "minimum": "0.3.4",
+          "verified": "0.3.4"
+        }
+      }
+    ]
+  }
 }

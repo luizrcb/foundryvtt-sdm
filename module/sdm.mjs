@@ -91,13 +91,13 @@ Hooks.on("getSceneControlButtons", function(controls) {
       button: true,
       onChange: async (event, active) => { if (active) await game.sdm.api.gm.giveExperience() }
     };
-    controls.tokens.tools['sdm-group-initiative'] = {
-      icon: "fa-solid fa-people-group",
-      name: "sdm-group-initiative",
-      title: "SDM.GMGroupInitiative",
-      button: true,
-      onChange: async (event, active) => { if (active) await game.sdm.api.gm.groupInitiative() }
-    };
+    // controls.tokens.tools['sdm-group-initiative'] = {
+    //   icon: "fa-solid fa-people-group",
+    //   name: "sdm-group-initiative",
+    //   title: "SDM.GMGroupInitiative",
+    //   button: true,
+    //   onChange: async (event, active) => { if (active) await game.sdm.api.gm.groupInitiative() }
+    // };
      controls.tokens.tools['sdm-generate-npc'] = {
       icon: "fa-solid fa-spaghetti-monster-flying",
       name: "sdm-generate-npc",

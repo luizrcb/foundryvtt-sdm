@@ -4,7 +4,7 @@ import { generateRandomBackground } from './player/generateRandomBackground.mjs'
 import { giveCash } from './gm/giveCash.mjs';
 import { giveExperience } from './gm/giveExperience.mjs';
 import { giveHeroDice } from './gm/giveHeroDice.mjs';
-import { groupInitiative } from './gm/groupInitiative.mjs';
+// import { groupInitiative } from './gm/groupInitiative.mjs';
 import { randomNPCGenerator } from './gm/randomNPCGenerator.mjs';
 
 const gm = {
@@ -12,7 +12,7 @@ const gm = {
   giveCash,
   giveExperience,
   giveHeroDice,
-  groupInitiative,
+  //groupInitiative,
   randomNPCGenerator
 };
 
