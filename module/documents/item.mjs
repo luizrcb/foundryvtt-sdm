@@ -245,6 +245,7 @@ export class SdmItem extends Item {
       [GearType.WARD]: () => this.getWardTitle(),
       [ItemType.MOUNT]: () => this.getDefaultTitle(),
       [ItemType.VEHICLE]: () => this.getDefaultTitle(),
+      //[TraitType.LEARNING]: () => this.getDefaultTitle(),
       '': () => this.getDefaultTitle()
     };
 
@@ -369,6 +370,12 @@ export class SdmItem extends Item {
     await this.update({
       'system.status': nextStatus,
       'system.readied': nextStatus === ItemStatusType.BROKEN ? false : readied
+    });
+  }
+
+  async toggleItemResources(resources = '') {
+    await this.update({
+      'system.resources': resources,
     });
   }
 

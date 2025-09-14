@@ -16,9 +16,20 @@
       {{/if}}
     </div>
     <div class="flexrow">
+      {{#if (eq item.system.resources 'running_low')}}
+      <div data-tooltip="{{localize 'SDM.ItemStatusRunningLow'}}">
+        <i class="fa-solid fa-battery-quarter mr-5"></i>
+      </div>
+      {{/if}}
+      {{#if (eq item.system.resources 'run_out')}}
+      <div data-tooltip="{{localize 'SDM.ItemStatusRunOut'}}">
+        <i class="fa-solid fa-battery-empty mr-5"></i>
+      </div>
+      {{/if}}
       {{#if (and
         (ne actorType 'caravan')
         (ne item.system.status 'broken')
+        (ne item.system.resources 'run_out')
         (ne item.system.size.unit 'cash')
         (eq item.system.type 'weapon')
         item.system.readied
@@ -39,6 +50,7 @@
       {{#if (and
         (ne actorType 'caravan')
         (ne item.system.status 'broken')
+        (ne item.system.resources 'run_out')
         (ne item.system.size.unit 'cash')
         (eq item.system.type 'power')
         item.system.readied
@@ -58,6 +70,7 @@
       {{#if (and
         (ne actorType 'caravan')
         (ne item.system.status 'broken')
+        (ne item.system.resources 'run_out')
         (ne item.system.size.unit 'cash')
         (eq item.system.type 'power_album')
         item.system.readied

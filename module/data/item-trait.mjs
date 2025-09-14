@@ -26,6 +26,18 @@ export default class SdmTrait extends SdmItemBase {
       }, {})
     });
 
+    // schema.required_successes = new fields.NumberField({
+    //   required: true,
+    //   initial: 3,
+    //   min: 3,
+    // });
+
+    // schema.learning_sources = new fields.NumberField({
+    //   required: true,
+    //   initial: 0,
+    //   min: 0,
+    // });
+
     schema.skill = new fields.EmbeddedDataField(SkillDataModel);
 
     schema.power = new fields.EmbeddedDataField(PowerDataModel);

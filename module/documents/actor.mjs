@@ -607,6 +607,45 @@ export class SdmActor extends Actor {
           await this.sheet.unpackStartingKitItem(target);
         }
       },
+       {
+        name: 'SDM.Item.Recharge',
+        icon: '<i class="fa-solid fa-battery-full"></i>',
+        condition: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          if (item.system.size.unit === SizeUnit.CASH || item.type !== ItemType.GEAR) return false;
+          return this.isOwner && item.system.resources !== '';
+        },
+        callback: async target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          await item.toggleItemResources('');
+        }
+      },
+      {
+        name: 'SDM.Item.RunningLow',
+        icon: '<i class="fa-solid fa-battery-quarter"></i>',
+        condition: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          if (item.system.size.unit === SizeUnit.CASH || item.type !== ItemType.GEAR) return false;
+          return this.isOwner && item.system.resources === '';
+        },
+        callback: async target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          await item.toggleItemResources('running_low');
+        }
+      },
+      {
+        name: 'SDM.Item.RunOut',
+        icon: '<i class="fa-solid fa-battery-empty"></i>',
+        condition: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          if (item.system.size.unit === SizeUnit.CASH || item.type !== ItemType.GEAR) return false;
+          return this.isOwner && item.system.resources === 'running_low';
+        },
+        callback: async target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          await item.toggleItemResources('run_out');
+        }
+      },
       {
         name: 'SDM.Item.Repair',
         icon: '<i class="fa-solid fa-hammer"></i>',

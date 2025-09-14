@@ -46,6 +46,26 @@ export function registerSystemSettings() {
     default: 'same'
   });
 
+  game.settings.register('sdm', 'groupPlayersToFriendlyTokens', {
+    name: 'SDM.SettingsGroupPlayersToFriendlyTokens',
+    hint: 'SDM.SettingsGroupPlayersToFriendlyTokensHint',
+    scope: 'world',
+    config: true,
+    restricted: true,
+    type: Boolean,
+    default: true
+  });
+
+  game.settings.register('sdm', 'rerollInitiativeEveryRound', {
+    name: 'SDM.SettingsRerollInitiativeEveryRound',
+    hint: 'SDM.SettingsRerollInitiativeEveryRoundHint',
+    scope: 'world',
+    config: true,
+    restricted: true,
+    type: Boolean,
+    default: false
+  });
+
   game.settings.register('sdm', 'reverseShiftKey', {
     name: 'SDM.SettingsReverseShiftKey',
     hint: 'SDM.SettingsReverseShiftKeyHint',
@@ -198,7 +218,7 @@ export function registerSystemSettings() {
     scope: 'world',
     config: false,
     type: Number,
-    default: 0,
+    default: 0
   });
 
   game.settings.register('sdm', 'escalatorPosition', {
@@ -626,7 +646,7 @@ export function configurePlayerChromatype() {
 
   const DICE_SCALE = {
     d2: 1,
-    d4: 0.90,
+    d4: 0.9,
     d6: 1.25,
     d8: 0.75,
     d10: 0.75,

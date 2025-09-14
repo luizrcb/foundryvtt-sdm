@@ -76,6 +76,11 @@ SDM.itemStatus = {
   broken: 'SDM.ItemStatusBroken'
 };
 
+SDM.itemResources = {
+  running_low: 'SDM.ItemResourcesRunningLow',
+  run_out: 'SDM.ItemResourcesRunOut'
+}
+
 SDM.accenTColorOptions = {
   aqua: 'SDM.ColorAqua',
   black: 'SDM.ColorBlack',
@@ -244,6 +249,7 @@ SDM.gearType = {
 };
 
 SDM.traitType = {
+  // learning: 'TYPES.Item.learning',
   power: 'TYPES.Item.power',
   skill: 'TYPES.Item.skill'
 };
