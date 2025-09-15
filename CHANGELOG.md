@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.3.2
+
+- Add support for tracking the learning of new traits, skills, and powers
+
 ## v0.3.1
 
 - Add support for marking gear resources (ammo, battery) as running low or run out
