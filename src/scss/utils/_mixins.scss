@@ -14,3 +14,42 @@
 @mixin hide {
   display: none;
 }
+
+@mixin custom_radio_square($side) {
+  display: flex;
+  $default_color: var(--sdm-c-white);
+  $accent_color: var(--sdm-c-highlight);
+  $circle_border_color: var(--sdm-c-black);
+
+  label {
+    & {
+      height: $side;
+      width: $side;
+      background-color: var(--sdm-c-accent);
+
+      vertical-align: middle;
+      border: 1px solid $circle_border_color;
+      border-radius: 3px;
+
+      &[for$='-0'] {
+        margin-right: 0px;
+      }
+    }
+  }
+
+  /* Hide the browser's default checkbox */
+  input {
+    display: none;
+
+    &:checked {
+      & ~ label {
+        background-color: $default_color;
+        border: 1px solid $circle_border_color;
+      }
+      & + label {
+        background-color: $accent_color;
+        border: 1px solid $circle_border_color;
+      }
+    }
+  }
+}

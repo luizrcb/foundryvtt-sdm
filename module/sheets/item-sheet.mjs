@@ -41,7 +41,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       toggleEffect: this._toggleEffect,
       toggleReadied: this._toggleReadied,
       toggleItemStatus: { handler: this._toggleItemStatus, buttons: [0, 2] },
-      toggleIsHallmark: this._toggleIsHallmark
+      toggleIsHallmark: this._toggleIsHallmark,
+      radioToggle: this._radioToggle
     },
     form: {
       submitOnChange: true
@@ -452,7 +453,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
 
   static newPower(data) {
     const basePower = new PowerDataModel().toObject();
-    basePower.name = $fmt('SDM.DOCUMENT.New', { type: $l10n('SDM.Power')});
+    basePower.name = $fmt('SDM.DOCUMENT.New', { type: $l10n('SDM.Power') });
     if (!data) return basePower;
 
     const {
@@ -567,7 +568,9 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     };
 
     await SdmItem.create(newPowerData);
-    ui.notifications.info($fmt('SDM.PowerExtractionComplete', { power: name, power_album: this.item.name }));
+    ui.notifications.info(
+      $fmt('SDM.PowerExtractionComplete', { power: name, power_album: this.item.name })
+    );
   }
 
   /**
@@ -581,6 +584,55 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
   static async _toggleEffect(event, target) {
     const effect = this._getEffect(target);
     await effect.update({ disabled: !effect.disabled });
+  }
+
+  /**
+   * Determines effect parent to pass to helper
+   *
+   * @this SdmItemSheet
+   * @param {PointerEvent} event   The originating click event
+   * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
+   * @private
+   */
+  static _radioToggle(event) {
+    let target = event.target;
+    if (!(target instanceof Element)) return;
+
+    // If click landed on/inside a <label>, resolve the control
+    if (target.tagName === 'LABEL' || target.closest('label')) {
+      const label = target.tagName === 'LABEL' ? target : target.closest('label');
+      const forId = label.getAttribute('for');
+      const control =
+        label.control ||
+        (forId ? document.getElementById(forId) : null) ||
+        label.querySelector('input,select,textarea,button,[tabindex]');
+      if (control) target = control;
+    }
+
+    const isInput = target instanceof HTMLInputElement;
+    const isChecked = isInput ? target.checked : false;
+
+    // Use the element you attached the listener to as the search root
+    const root = event.currentTarget instanceof HTMLElement ? event.currentTarget : document;
+
+    if (isChecked || event.type === 'contextmenu') {
+      // find the next lowest-value radio with the same name and click it
+      if (!isInput) return;
+      const name = target.name;
+      const cur = parseInt(target.value, 10);
+      if (!name || Number.isNaN(cur)) {
+        target.click();
+        return;
+      }
+
+      const prevVal = String(cur - 1);
+      const selector = `input[type="radio"][name="${name}"][value="${prevVal}"]`;
+      const next = root.querySelector(selector) || document.querySelector(selector); // fallback
+
+      if (next instanceof HTMLInputElement) next.click();
+    } else {
+      if (target instanceof HTMLElement) target.click();
+    }
   }
 
   static async _toggleReadied() {

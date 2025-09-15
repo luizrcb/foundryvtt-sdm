@@ -13,6 +13,27 @@
       </div>
     </div>
     <div class='grid grid-2col'>
+      <div class='resource mr-10'>
+        <label class='resource-label'>{{localize 'SDM.SourcesToLearn'}}
+          <input type='text' name='system.learning.required_successes' value='{{system.learning.required_successes}}' data-dtype='Number' />
+        </label>
+      </div>
+
+      <div class='resource flex-group-center'>
+        {{#if (gt system.learning.required_successes 0)}}
+        <label class='resource-label'>{{localize 'SDM.Sources'}}</label>
+        <div class="resource-content sources flex-group-center mt-5">
+          {{#multiboxes system.learning.sources}}
+            <input type="radio" id="sources-{{item.id}}-0" name="system.learning.sources" value="0" checked="checked" data-dtype='Radio' style="cursor:pointer;">
+            {{#times_from 1 system.learning.required_successes}}
+              <input type="radio" id="sources-{{../item.id}}-{{this}}" name="system.learning.sources" value="{{this}}" data-dtype='Radio' style="cursor:pointer;">
+              <label class="radio-toggle" data-action="radioToggle" for="sources-{{../item.id}}-{{this}}" style="cursor:pointer;" data-tooltip="{{this}}"></label>
+            {{/times_from}}
+          {{/multiboxes}}
+        </div>
+        {{/if}}
+      </div>
+
       {{#if item.system.is_hallmark}}
       <div class='resource'>
         <label class='resource-label'>{{localize 'SDM.FieldLevel'}}

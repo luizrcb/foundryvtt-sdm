@@ -474,6 +474,7 @@ input[type=radio]::after {
 .hallmark {
   font-weight: 900;
   color: var(--sdm-c-amber);
+  margin-right: 3px;
 }
 
 .not-readied {
@@ -1311,6 +1312,7 @@ input[type=radio]::after {
   text-align: left;
   align-items: center;
   display: flex;
+  line-height: normal;
 }
 .sdm .items-list .item-name h3,
 .sdm .items-list .item-name h4 {
@@ -1354,6 +1356,7 @@ input[type=radio]::after {
   margin-right: 5px;
   position: relative;
   display: inline-block;
+  line-height: normal;
 }
 .sdm .items-list .item .item-name .item-image img {
   width: 100%;
@@ -1491,6 +1494,41 @@ input[type=radio]::after {
   .sdm .items-list .item:hover {
     background-color: var(--sdm-item-hover); /* Your ultraviolet color with transparency */
   }
+}
+.sdm .sources {
+  display: flex;
+  flex-direction: row;
+  display: flex;
+  /* Hide the browser's default checkbox */
+}
+.sdm .sources label {
+  height: 15px;
+  width: 15px;
+  background-color: var(--sdm-c-accent);
+  vertical-align: middle;
+  border: 1px solid var(--sdm-c-black);
+  border-radius: 3px;
+}
+.sdm .sources label[for$="-0"] {
+  margin-right: 0px;
+}
+.sdm .sources input {
+  display: none;
+}
+.sdm .sources input:checked ~ label {
+  background-color: var(--sdm-c-white);
+  border: 1px solid var(--sdm-c-black);
+}
+.sdm .sources input:checked + label {
+  background-color: var(--sdm-c-highlight);
+  border: 1px solid var(--sdm-c-black);
+}
+.sdm .sources input ~ label {
+  margin-right: 3px;
+  margin-bottom: 3px;
+}
+.sdm .sources input ~ label[for$="0"] {
+  border-width: 2px;
 }
 .sdm :root {
   --sdm-font-primary: "Baron Neue";

@@ -508,6 +508,22 @@ function _configureFonts() {
     'Our Golden Age': {
       editor: true,
       fonts: [{ urls: ['systems/sdm/fonts/our_golden_age/OurGoldenAge-Regular.otf'] }]
+    },
+    'Roboto Condensed': {
+      editor: true,
+      fonts: [
+        { urls: ['systems/sdm/fonts/roboto_condensed/RobotoCondensed-VariableFont_wght.ttf'], weight: 'bold'},
+        { urls: ['systems/sdm/fonts/roboto_condensed/RobotoCondensed-VariableFont_wght.ttf'], style: 'italic'}
+      ]
+    },
+    'Source Sans Pro': {
+      editor: true,
+      fonts: [
+        { urls: ['systems/sdm/fonts/source_sans_pro/SourceSansPro-Regular.ttf'] },
+        { urls: ['systems/sdm/fonts/source_sans_pro/SourceSansPro-Bold.ttf'], weight: 'bold' },
+        { urls: ['systems/sdm/fonts/source_sans_pro/SourceSansPro-Italic.ttf'], style: 'italic' },
+        { urls: ['systems/sdm/fonts/source_sans_pro/SourceSansPro-Light.ttf'], weight: 'lighter' },
+      ]
     }
   });
 }

@@ -338,7 +338,14 @@ export class SdmActor extends Actor {
     const result = {};
     const itemsArray = this.items.contents;
 
-    const skillTraits = itemsArray.filter(item => item.type === ItemType.TRAIT);
+    const skillTraits = itemsArray.filter(
+      item =>
+        item.type === ItemType.TRAIT &&
+        (!item.system?.learning ||
+          item.system?.learning?.required_successes === 0 ||
+          item.system?.skill?.rank > 0 ||
+          item.system?.learning?.required_successes === item.system?.learning?.sources)
+    );
     const defaultModifierStep = game.settings.get('sdm', 'skillModifierStep');
     skillTraits.forEach(trait => {
       const mod = trait.system.type === TraitType.SKILL && trait.system.skill.modifier_final;
@@ -607,7 +614,7 @@ export class SdmActor extends Actor {
           await this.sheet.unpackStartingKitItem(target);
         }
       },
-       {
+      {
         name: 'SDM.Item.Recharge',
         icon: '<i class="fa-solid fa-battery-full"></i>',
         condition: target => {
@@ -651,7 +658,8 @@ export class SdmActor extends Actor {
         icon: '<i class="fa-solid fa-hammer"></i>',
         condition: target => {
           const item = this.sheet._getEmbeddedDocument(target);
-          if (item.system.size.unit === SizeUnit.CASH || item.type === ItemType.BURDEN) return false;
+          if (item.system.size.unit === SizeUnit.CASH || item.type === ItemType.BURDEN)
+            return false;
           if (item.type === ItemType.TRAIT && item.system.type !== GearType.POWER) return false;
           return this.isOwner && item.system.status !== '';
         },
@@ -665,7 +673,8 @@ export class SdmActor extends Actor {
         icon: '<i class="fa-solid fa-circle-dot"></i>',
         condition: target => {
           const item = this.sheet._getEmbeddedDocument(target);
-          if (item.system.size.unit === SizeUnit.CASH || item.type === ItemType.BURDEN) return false;
+          if (item.system.size.unit === SizeUnit.CASH || item.type === ItemType.BURDEN)
+            return false;
           if (item.type === ItemType.TRAIT && item.system.type !== GearType.POWER) return false;
           return this.isOwner && item.system.status === '';
         },

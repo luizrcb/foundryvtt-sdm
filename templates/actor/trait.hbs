@@ -19,6 +19,10 @@
       {{#if (and
         (eq trait.system.type 'power')
         (ne trait.system.status 'broken')
+        (or
+          (eq trait.system.learning.required_successes 0)
+          (lte trait.system.learning.required_successes trait.system.learning.sources)
+        )
       )}}
         <div
           class='rollable flexrow'

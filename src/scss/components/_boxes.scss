@@ -1,0 +1,21 @@
+@use '../utils/mixins' as mx;
+
+$source_size: 15px;
+$source_margin: 3px;
+
+.sources {
+  display: flex;
+  flex-direction: row;
+  @include mx.custom_radio_square($source_size);
+
+  //flex-wrap: wrap;
+
+  input ~ label {
+    margin-right: $source_margin;
+    margin-bottom: $source_margin;
+
+    &[for$='0'] {
+      border-width: 2px;
+    }
+  }
+}

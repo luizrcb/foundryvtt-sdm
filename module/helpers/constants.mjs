@@ -76,7 +76,6 @@ export const ItemStatusType = Object.freeze({
 });
 
 export const TraitType = Object.freeze({
-  // LEARNING: 'learning',
   SKILL: 'skill',
   POWER: 'power'
 });

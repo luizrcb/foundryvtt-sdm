@@ -144,4 +144,45 @@ export function registerHandlebarsHelpers() {
     if (!items && !items.length) return 0;
     return getWealthFromItems(items);
   });
+
+  // "N Times" loop for handlebars.
+  //  Block is executed N times starting from start.
+  //
+  // Usage:
+  // {{#times_from 1 10}}
+  //   <span>{{this}}</span>
+  // {{/times_from}}
+  $$('times_from', function (start, n, block) {
+    let accum = '';
+    for (let i = start; i <= n; ++i) {
+      accum += block.fn(i);
+    }
+    return accum;
+  });
+
+  $$('multiboxes', function (selected, options) {
+    let html = options.fn(this);
+
+    // Fix for single non-array values.
+    if (!Array.isArray(selected)) {
+      selected = [selected];
+    }
+
+    if (typeof selected !== 'undefined') {
+      selected.forEach(selected_value => {
+        if (selected_value !== false) {
+          let escapedValue = RegExp.escape(Handlebars.escapeExpression(selected_value));
+          let rgx = new RegExp(' value=\"' + escapedValue + '\"');
+          let oldHtml = html;
+          html = html.replace(rgx, '$& checked');
+          while (oldHtml === html && escapedValue >= 0) {
+            escapedValue--;
+            rgx = new RegExp(' value=\"' + escapedValue + '\"');
+            html = html.replace(rgx, '$& checked');
+          }
+        }
+      });
+    }
+    return html;
+  });
 }

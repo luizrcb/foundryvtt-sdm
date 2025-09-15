@@ -308,6 +308,7 @@ input[type='radio']::after {
 .hallmark {
   font-weight: 900;
   color: colors.$c-amber;
+  margin-right: 3px;
 }
 
 .not-readied {

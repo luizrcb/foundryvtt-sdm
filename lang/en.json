@@ -743,6 +743,8 @@
   "SDM.SkillModifierStep": "Modifier Step",
   "SDM.SkillPhylake": "Phylake",
   "SDM.SkillSkilled": "Skilled",
+  "SDM.Sources": "Sources",
+  "SDM.SourcesToLearn": "Sources to Learn",
   "SDM.SpeedFast": "Fast (+1)",
   "SDM.SpeedSlow": "Slow (-1)",
   "SDM.SpeedStandard": "Normal (0)",
