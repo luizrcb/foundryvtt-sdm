@@ -46,6 +46,17 @@
       "overcharge": "",
       "roll_formula": "",
       "overcharge_roll_formula": ""
+    },
+    "status": "",
+    "resources": "",
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "learning": {
+      "sources": 0,
+      "required_successes": 0
     }
   },
   "effects": [
@@ -96,8 +107,7 @@
   ],
   "sort": 0,
   "ownership": {
-    "default": 0,
-    "0fqTkfNvjooZ2og7": 3
+    "default": 0
   },
   "flags": {},
   "_stats": {
@@ -106,10 +116,10 @@
     "exportSource": null,
     "coreVersion": "13.348",
     "systemId": "sdm",
-    "systemVersion": "0.1.35",
+    "systemVersion": "0.3.2",
     "createdTime": 1756496144769,
-    "modifiedTime": 1756510078905,
-    "lastModifiedBy": "3vgxDetPOGhfUfqu"
+    "modifiedTime": 1757957401277,
+    "lastModifiedBy": "xN5KQ8c8JiOFyOLU"
   },
   "_key": "!items!JXppeJy7EMRNMk6o"
 }

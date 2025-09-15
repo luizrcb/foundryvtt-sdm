@@ -63,7 +63,16 @@
       "range": "close",
       "versatile": false
     },
-    "default_ability": ""
+    "default_ability": "",
+    "status": "",
+    "resources": "",
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "starting_kit": false,
+    "packed_remaining_items": 10
   },
   "effects": [
     {
@@ -113,8 +122,7 @@
   ],
   "sort": 0,
   "ownership": {
-    "default": 0,
-    "0fqTkfNvjooZ2og7": 3
+    "default": 0
   },
   "flags": {},
   "_stats": {
@@ -123,10 +131,10 @@
     "exportSource": null,
     "coreVersion": "13.348",
     "systemId": "sdm",
-    "systemVersion": "0.1.33",
+    "systemVersion": "0.3.2",
     "createdTime": 1756407641057,
-    "modifiedTime": 1756467991378,
-    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+    "modifiedTime": 1757957101366,
+    "lastModifiedBy": "xN5KQ8c8JiOFyOLU"
   },
   "_key": "!items!27YcJ2YjxiMAhYCR"
 }
