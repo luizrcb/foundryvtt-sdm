@@ -26,6 +26,7 @@ import {
   registerSystemSettings,
   setupEscalatorDiePositionBroadcast
 } from './settings.mjs';
+import { registerSDMGMSettingMenus } from './settings/register-gm-menus.mjs';
 import { setupSettingsSocket } from './settingsSocket.mjs';
 import { SdmActorSheet } from './sheets/actor-sheet.mjs';
 import { SdmCaravanSheet } from './sheets/caravan-sheet.mjs';
@@ -342,6 +343,7 @@ Hooks.once('init', function () {
   });
 
   registerSystemSettings();
+  registerSDMGMSettingMenus();
 
   /**
    * Set an initiative formula for the system

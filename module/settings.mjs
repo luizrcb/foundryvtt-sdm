@@ -25,7 +25,6 @@ export function registerSystemSettings() {
     name: 'SDM.SettingsChromatype',
     hint: 'SDM.SettingsChromatypeHint',
     scope: 'client', // or "world"
-    config: true,
     requiresReload: true,
     choices: CONFIG.SDM.accenTColorOptions,
     type: String,
@@ -36,7 +35,6 @@ export function registerSystemSettings() {
     name: 'SDM.SettingsDiceSoNiceChromatype',
     hint: 'SDM.SettingsDiceSoNiceChromatypeHint',
     scope: 'client', // or "world"
-    config: true,
     requiresReload: true,
     choices: {
       same: 'SDM.DSNChromatypeSame',
@@ -50,7 +48,6 @@ export function registerSystemSettings() {
     name: 'SDM.SettingsGroupPlayersToFriendlyTokens',
     hint: 'SDM.SettingsGroupPlayersToFriendlyTokensHint',
     scope: 'world',
-    config: true,
     restricted: true,
     type: Boolean,
     default: true
@@ -60,7 +57,6 @@ export function registerSystemSettings() {
     name: 'SDM.SettingsRerollInitiativeEveryRound',
     hint: 'SDM.SettingsRerollInitiativeEveryRoundHint',
     scope: 'world',
-    config: true,
     restricted: true,
     type: Boolean,
     default: false
@@ -70,7 +66,6 @@ export function registerSystemSettings() {
     name: 'SDM.SettingsReverseShiftKey',
     hint: 'SDM.SettingsReverseShiftKeyHint',
     scope: 'client',
-    config: true,
     type: Boolean,
     default: false
   });
@@ -82,7 +77,6 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsCurrencyNameHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
-    config: true, // Show in configuration view
     type: String, // Data type: String, Number, Boolean, etc
     default: 'cash'
   });
@@ -92,7 +86,6 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsCurrencyImgHint',
     scope: 'world',
     restricted: true,
-    config: true,
     type: new foundry.data.fields.FilePathField({
       categories: ['IMAGE'],
       default: DEFAULT_CURRENCY_IMG
@@ -104,7 +97,6 @@ export function registerSystemSettings() {
     name: 'SDM.SettingsShouldPlayLevelUpSoundFx',
     hint: 'SDM.SettingsShouldPlayLevelUpSoundFxHint',
     scope: 'client',
-    config: true,
     type: Boolean,
     default: false,
     requiresReload: false
@@ -115,7 +107,6 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsLevelUpSoundFxHint',
     scope: 'world',
     restricted: true,
-    config: true,
     type: new foundry.data.fields.FilePathField({
       categories: ['AUDIO'],
       default: DEFAULT_LEVEL_UP_SOUND
@@ -135,7 +126,6 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsUseHardLimitRuleHint',
     scope: 'world',
     restricted: true,
-    config: true,
     type: Boolean,
     default: true,
     requiresReload: true
@@ -146,7 +136,6 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsDefaultHardLimitValueHint',
     scope: 'world',
     restricted: true,
-    config: true,
     type: Number,
     default: DEFAULT_HARD_LIMIT,
     onChange: value => {
@@ -162,7 +151,6 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsDefaultMaxPowersHint',
     scope: 'world',
     restricted: true,
-    config: true,
     type: Number,
     default: DEFAULT_MAX_POWERS,
     onChange: value => {
@@ -180,7 +168,6 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsSkillModifierStepHint',
     scope: 'world',
     restricted: true,
-    config: true,
     type: Number,
     default: 3,
     onChange: value => {
@@ -196,7 +183,6 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsExtendedSkillRanksHint',
     scope: 'world',
     restricted: true,
-    config: true,
     type: Boolean,
     default: false,
     requiresReload: true
@@ -237,7 +223,6 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsDefaultSaveValueHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
-    config: true, // Show in configuration view
     type: Number, // Data type: String, Number, Boolean, etc
     default: DEFAULT_SAVE_VALUE
   });
@@ -247,7 +232,6 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsBaseDefenseHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
-    config: true, // Show in configuration view
     type: Number, // Data type: String, Number, Boolean, etc
     default: 7
   });
@@ -257,7 +241,6 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsBaseMentalDefenseHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
-    config: true, // Show in configuration view
     type: Number, // Data type: String, Number, Boolean, etc
     default: 7
   });
@@ -267,7 +250,6 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsBaseSocialDefenseHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
-    config: true, // Show in configuration view
     type: Number, // Data type: String, Number, Boolean, etc
     default: 7
   });
@@ -277,7 +259,6 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsBaseTraitSlotsHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
-    config: true, // Show in configuration view
     type: Number, // Data type: String, Number, Boolean, etc
     default: 7
   });
@@ -287,7 +268,6 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsBaseItemSlotsHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
-    config: true, // Show in configuration view
     type: Number, // Data type: String, Number, Boolean, etc
     default: 7
   });
@@ -297,7 +277,6 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsBaseBurdenSlotsHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
-    config: true, // Show in configuration view
     type: Number, // Data type: String, Number, Boolean, etc
     default: 20
   });
@@ -307,7 +286,6 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsBaseMoraleFormulaHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
-    config: true, // Show in configuration view
     type: String, // Data type: String, Number, Boolean, etc
     default: NPC_DEFAULT_MORALE_FORMULA
   });
@@ -317,7 +295,6 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsBaseReactionFormulaHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
-    config: true, // Show in configuration view
     type: String, // Data type: String, Number, Boolean, etc
     default: BASE_REACTION_FORMULA
   });
@@ -327,7 +304,6 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsDefaultHeroDiceTypeHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
-    config: true, // Show in configuration view
     type: String, // Data type: String, Number, Boolean, etc
     default: 'd6',
     choices: DiceType,
@@ -339,7 +315,6 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsSavingThrowBaseRollFormulaHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
-    config: true, // Show in configuration view
     type: String, // Data type: String, Number, Boolean, etc
     default: SAVING_THROW_BASE_FORMULA,
     onChange: value => {
@@ -357,7 +332,6 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsInitiativeFormulaHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
-    config: true, // Show in configuration view
     type: String, // Data type: String, Number, Boolean, etc
     default: CHARACTER_DEFAULT_INITIATIVE,
     onChange: value => {
@@ -375,7 +349,6 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsNPCInitiativeFormulaHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
-    config: true, // Show in configuration view
     type: String, // Data type: String, Number, Boolean, etc
     default: NPC_DEFAULT_INITIATIVE,
     onChange: value => {
@@ -393,7 +366,6 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsHealingHouseRuleHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
-    config: true, // Show in configuration view
     type: Boolean, // Data type: String, Number, Boolean, etc
     default: false
   });
