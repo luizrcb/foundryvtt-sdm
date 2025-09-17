@@ -692,6 +692,8 @@
   "SDM.SavingThrowSave": "SAVE",
   "SDM.SavingThrowSaveMessage": "Disaster averted, fortune appeased.",
   "SDM.SelectCharacter": "Select Character",
+  "SDM.Settings.ResetDefaults.Confirm": " Reset all fields in this section to their default values?",
+  "SDM.Settings.ResetDefaults.Title": "Reset Settings",
   "SDM.SettingsBaseBurdenSlots": "Base Burden Slots",
   "SDM.SettingsBaseBurdenSlotsHint": "Base number of burden slots for a character",
   "SDM.SettingsBaseDefense": "Base Defense",

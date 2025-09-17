@@ -618,7 +618,7 @@ export function configurePlayerChromatype() {
 
   const DICE_SCALE = {
     d2: 1,
-    d4: 0.9,
+    d4: 0.8,
     d6: 1.25,
     d8: 0.75,
     d10: 0.75,

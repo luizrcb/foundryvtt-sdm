@@ -1,3 +1,5 @@
+import { $l10n } from "../helpers/globalUtils.mjs";
+
 // base-settings.mjs
 const ApplicationV2 = foundry.applications?.api?.ApplicationV2 ?? class {};
 const HandlebarsApplicationMixin =
@@ -25,7 +27,8 @@ export default class BaseSettingsConfig extends HandlebarsApplicationMixin(Appli
 
     this.options.actions ??= {};
     this.options.actions.pickFile = this._onPickFile.bind(this);
-    this.options.actions.cancel = this._onCancel.bind(this); // << aqui
+    this.options.actions.cancel = this._onCancel.bind(this);
+    this.options.actions.resetDefaults = this._onResetDefaults.bind(this);
   }
 
   static PARTS = {
@@ -41,6 +44,12 @@ export default class BaseSettingsConfig extends HandlebarsApplicationMixin(Appli
     context ??= {};
     context.buttons ??= [
       { type: 'submit', icon: 'fa-solid fa-save', label: 'Save Changes' },
+      {
+        type: 'button',
+        action: 'resetDefaults',
+        icon: 'fa-solid fa-rotate-left',
+        label: 'SETTINGS.Reset'
+      },
       { type: 'cancel', action: 'cancel', icon: 'fa-solid fa-xmark', label: 'Cancel' }
     ];
     return context;
@@ -143,6 +152,69 @@ export default class BaseSettingsConfig extends HandlebarsApplicationMixin(Appli
     event?.preventDefault();
     event?.stopPropagation();
     this.close();
+  }
+
+  async _onResetDefaults(event, button) {
+    event?.preventDefault();
+    event?.stopPropagation();
+
+    const ok = await foundry.applications.api.DialogV2.confirm({
+      window: {
+        title: $l10n('SDM.Settings.ResetDefaults.Title')
+      },
+      content: `<p>${$l10n('SDM.Settings.ResetDefaults.Confirm')}</p>`,
+      modal: true,
+      rejectClose: false
+    }); // resolves true/false/null
+
+    if (!ok) return;
+
+    const cls = this.constructor;
+    const ns = cls.NAMESPACE ?? 'sdm';
+    const keys = Array.isArray(cls.ALL_KEYS) ? cls.ALL_KEYS : [];
+
+    const samePrim = (a, b) => a === b || (Number.isNaN(a) && Number.isNaN(b));
+
+    let needsClientReload = false;
+    let needsWorldReload = false;
+
+    for (const key of keys) {
+      const def = game.settings.settings.get(`${ns}.${key}`);
+      if (!def) continue;
+
+      // The default registered at game.settings.register(... default: X ...)
+      // For FilePathField you should also have set that `default` property.
+      let defVal = def.default;
+
+      // If you stored objects as JSON textareas, ensure defVal is structured as you expect.
+      const before = game.settings.get(ns, key);
+
+      // Compare & skip if already at default
+      let changed = false;
+      if (def.type === Object) {
+        const a = before && typeof before === 'object' ? before : {};
+        const b = defVal && typeof defVal === 'object' ? defVal : {};
+        const diff = foundry.utils.diffObject(a, b);
+        changed = Object.keys(diff).length > 0;
+      } else {
+        changed = !samePrim(before, defVal);
+      }
+      if (!changed) continue;
+
+      await game.settings.set(ns, key, defVal);
+
+      if (def.requiresReload) {
+        if (def.scope === 'world') needsWorldReload = true;
+        else needsClientReload = true;
+      }
+    }
+
+    // Re-render the form so inputs reflect defaults
+    this.render(true);
+
+    if (needsClientReload || needsWorldReload) {
+      return SettingsConfig.reloadConfirm({ world: needsWorldReload });
+    }
   }
 
   // HANDLER (instância)

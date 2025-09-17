@@ -692,6 +692,8 @@
   "SDM.SavingThrowSave": "SE SALVOU",
   "SDM.SavingThrowSaveMessage": "Desastre evitado, fortuna apaziguada.",
   "SDM.SelectCharacter": "Selecionar Personagem",
+  "SDM.Settings.ResetDefaults.Confirm": "Redefinir todos os campos deste seção para seus valores padrão?",
+  "SDM.Settings.ResetDefaults.Title": "Redefinir Configurações",
   "SDM.SettingsBaseBurdenSlots": "Espaços de Fardos Base",
   "SDM.SettingsBaseBurdenSlotsHint": "Número base de espaços de inventário para fardos",
   "SDM.SettingsBaseDefense": "Defesa Inicial",
