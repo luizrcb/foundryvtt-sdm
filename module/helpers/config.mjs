@@ -231,7 +231,9 @@ SDM.characterPropertiesToActiveEffects = [
   'system.abilities.aur.bonus',
   'system.abilities.aur.save_bonus',
   'system.abilities.tho.bonus',
-  'system.abilities.tho.save_bonus'
+  'system.abilities.tho.save_bonus',
+  'system.capacity',
+  'system.speed'
 ];
 
 SDM.itemType = {
