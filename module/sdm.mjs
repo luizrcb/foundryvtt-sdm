@@ -120,9 +120,6 @@ Hooks.on("updateCombat", async (combat, update) => {
 
 Hooks.on('renderChatMessageHTML', (message, html, data) => {
   configureUseHeroDiceButton(message, html, data);
-});
-
-Hooks.on('renderChatLog', (app, html, data) => {
   configureChatListeners(html);
 });
 
