@@ -223,6 +223,7 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsDefaultSaveValueHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
+    requiresReload: true,
     type: Number, // Data type: String, Number, Boolean, etc
     default: DEFAULT_SAVE_VALUE
   });
@@ -232,6 +233,7 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsBaseDefenseHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
+    requiresReload: true,
     type: Number, // Data type: String, Number, Boolean, etc
     default: 7
   });
@@ -241,6 +243,7 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsBaseMentalDefenseHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
+    requiresReload: true,
     type: Number, // Data type: String, Number, Boolean, etc
     default: 7
   });
@@ -250,6 +253,7 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsBaseSocialDefenseHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
+    requiresReload: true,
     type: Number, // Data type: String, Number, Boolean, etc
     default: 7
   });
@@ -259,6 +263,7 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsBaseTraitSlotsHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
+    requiresReload: true,
     type: Number, // Data type: String, Number, Boolean, etc
     default: 7
   });
@@ -268,6 +273,7 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsBaseItemSlotsHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
+    requiresReload: true,
     type: Number, // Data type: String, Number, Boolean, etc
     default: 7
   });
@@ -277,6 +283,7 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsBaseBurdenSlotsHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
+    requiresReload: true,
     type: Number, // Data type: String, Number, Boolean, etc
     default: 20
   });
@@ -286,6 +293,7 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsBaseMoraleFormulaHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
+    requiresReload: true,
     type: String, // Data type: String, Number, Boolean, etc
     default: NPC_DEFAULT_MORALE_FORMULA
   });
@@ -295,6 +303,7 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsBaseReactionFormulaHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
+    requiresReload: true,
     type: String, // Data type: String, Number, Boolean, etc
     default: BASE_REACTION_FORMULA
   });
@@ -317,6 +326,7 @@ export function registerSystemSettings() {
     restricted: true,
     type: String, // Data type: String, Number, Boolean, etc
     default: SAVING_THROW_BASE_FORMULA,
+    requiresReload: true,
     onChange: value => {
       if (!foundry.dice.Roll.validate(value)) {
         ui.notifications.error(
@@ -334,6 +344,7 @@ export function registerSystemSettings() {
     restricted: true,
     type: String, // Data type: String, Number, Boolean, etc
     default: CHARACTER_DEFAULT_INITIATIVE,
+    requiresReload: true,
     onChange: value => {
       if (!foundry.dice.Roll.validate(value)) {
         ui.notifications.error(
@@ -351,6 +362,7 @@ export function registerSystemSettings() {
     restricted: true,
     type: String, // Data type: String, Number, Boolean, etc
     default: NPC_DEFAULT_INITIATIVE,
+    requiresReload: true,
     onChange: value => {
       if (!foundry.dice.Roll.validate(value)) {
         ui.notifications.error(
