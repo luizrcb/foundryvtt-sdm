@@ -722,7 +722,7 @@
   "SDM.SettingsDefaultHardLimitValueHint": "Define o valor do bônus máximo permitido em rolagens de d20",
   "SDM.SettingsDefaultHeroDiceType": "Dado Heróico padrão",
   "SDM.SettingsDefaultHeroDiceTypeHint": "Muda o tipo padrão de dado heróico para todos personagens jogadores",
-  "SDM.SettingsDefaultMaxPowers": "Máximo padrão de podres",
+  "SDM.SettingsDefaultMaxPowers": "Máximo padrão de poderes",
   "SDM.SettingsDefaultMaxPowersHint": "Número máximo padrão de poderes armazenados em um álbum de poderes",
   "SDM.SettingsDefaultSaveValue": "Valor inicial de Salvaguarda",
   "SDM.SettingsDefaultSaveValueHint": "Valor inicial de Salvaguarda, número alvo para rolagens de Salvaguarda",
