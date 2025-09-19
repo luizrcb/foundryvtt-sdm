@@ -135,18 +135,19 @@ export class HeroDiceUI {
 
     heroResultRoll._evaluated = true;
     heroResultRoll._total = total;
-    //heroResultRoll.total = total;
+
+    const flavor = $fmt('SDM.RollTitle', {
+      prefix: '',
+      title:
+        $l10n('SDM.FieldHeroDice') +
+        `${heroMode === 'decrease' ? `<br>${$l10n('SDM.HeroDiceModeDecrease')}` : ''}` +
+        `${heroicBonusQty > 0 ? ` (${$l10n('SDM.FieldBonus')}: ${heroicBonusQty})` : ''}`
+    }).replace(' :', ':');
 
     await createChatMessage({
       actor,
       content: await renderTemplate(templatePath('/chat/hero-dice-result'), templateData),
-      flavor: $fmt('SDM.RollTitle', {
-        prefix: '',
-        title:
-          $l10n('SDM.FieldHeroDice') +
-          `${heroMode === 'decrease' ? `<br>${$l10n('SDM.HeroDiceModeDecrease')}` : ''}` +
-          `${heroicBonusQty > 0 ? ` (${$l10n('SDM.FieldBonus')}: ${heroicBonusQty})` : ''}`
-      }),
+      flavor,
       rolls: [heroResultRoll],
       flags: { 'sdm.isHeroResult': true }
     });
