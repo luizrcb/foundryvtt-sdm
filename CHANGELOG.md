@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.3.3
+
+- Move all system settings into submenus for better organization
+- Fix issues in pt-BR localization
+
 ## v0.3.2
 
 - Add support for tracking the learning of new traits, skills, and powers
