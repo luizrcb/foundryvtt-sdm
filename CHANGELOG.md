@@ -1,5 +1,17 @@
 # CHANGELOG
 
+## v0.4.0
+
+- GM transfer item can also charge money from an actor (editable amount, using unit price as default value). For supply items, quantity can also be selected
+- Adjust give/take cash API calls to accept parameters and execute without opening a dialog
+- Add supply flag and supply type to gear items
+- Add caravan button to consume supply; if the gear has an active effect, copy the effect to the actor when the supply is consumed
+- Add right-click context menu options to gear items to split and merge item stacks
+- Caravan cash transfer will enforce a maximum cash item stack size of 2,500
+- Dropping or transferring multiple supply items of sack size to a caravan sheet will split those supplies into multiple items of quantity 1
+- Drag and drop items between owned actors will no longer duplicate items
+- Add support for the Item Piles module in a separate **“Item Piles: SDM”** companion module
+
 ## v0.3.3
 
 - Move all system settings into submenus for better organization

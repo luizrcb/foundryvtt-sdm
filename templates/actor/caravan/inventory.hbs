@@ -16,8 +16,13 @@
                   <i class="fa fa-weight-hanging fumble"></i>
                 </div>
               {{/if}}
+              <div class="rollable" style="align-self: flex-end;" data-action="consumeSupplies">
+                <i class="fa-solid fa-sack-xmark" data-action="consumeSupplies"></i>
+                <span>{{localize 'SDM.ConsumeSupply'}}</span>
+              </div>
             </div>
-            <div class='item-formula'></div>
+            <div class='item-formula'>
+            </div>
             <div class='item-controls'>
               {{#if @root.editable}}
               <a

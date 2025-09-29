@@ -1,0 +1,124 @@
+<form class="sdm-consume-supplies">
+  <div class="grid grid-2col gap-sm">
+
+    {{!-- Human Supplies --}}
+    <div class="form-group">
+      <div class="grid grid-2col">
+
+      <label class="flexrow grid-span-1" style="justify-content:space-between; align-items:center;">
+        <span><strong>{{localize "SDM.HumanSupplies"}}</strong> <i class="fas fa-mug-hot"></i></span>
+      </label>
+
+      {{#if totalHumanSupplies}}
+        <input
+          class="grid-span-1"
+          type="number"
+          name="consumeHuman"
+          min="0"
+          max="{{totalHumanSupplies}}"
+          step="1"
+          value="0"
+          data-type="Number"
+          aria-label="{{localize 'SDM.HumanSupplies'}}"
+        />
+      {{else}}
+        <input
+          class="grid-span-1"
+          type="number"
+          name="consumeHuman"
+          min="0"
+          max="0"
+          step="1"
+          value="0"
+          data-type="Number"
+          disabled
+          aria-label="{{localize 'SDM.HumanSupplies'}}"
+        />
+      {{/if}}
+      <label class="grid-span-1"><span class="tag">{{localize "SDM.Available"}}: <strong>{{totalHumanSupplies}}</strong></span></label>
+      </div>
+    </div>
+
+
+    {{!-- Animal Supplies --}}
+    <div class="form-group">
+      <div class="grid grid-2col">
+
+      <label class="flexrow grid-span-1" style="justify-content:space-between; align-items:center;">
+        <span><strong>{{localize "SDM.AnimalSupplies"}}</strong> <i class="fas fa-seedling"></i></span>
+      </label>
+
+      {{#if totalAnimalSupplies}}
+        <input
+          class="grid-span-1"
+          type="number"
+          name="consumeAnimal"
+          min="0"
+          max="{{totalAnimalSupplies}}"
+          step="1"
+          value="0"
+          data-type="Number"
+          aria-label="{{localize 'SDM.AnimalSupplies'}}"
+        />
+      {{else}}
+        <input
+          class="grid-span-1"
+          type="number"
+          name="consumeAnimal"
+          min="0"
+          max="0"
+          step="1"
+          value="0"
+          data-type="Number"
+          disabled
+          aria-label="{{localize 'SDM.AnimalSupplies'}}"
+        />
+      {{/if}}
+      <label class="grid-span-1"><span class="tag">{{localize "SDM.Available"}}: <strong>{{totalAnimalSupplies}}</strong></span></label>
+      </div>
+    </div>
+
+    {{!-- Machine Supplies --}}
+    <div class="form-group">
+      <div class="grid grid-2col">
+
+      <label class="flexrow grid-span-1" style="justify-content:space-between; align-items:center;">
+        <span><strong>{{localize "SDM.MachineSupplies"}}</strong> <i class="fas fa-gas-pump"></i></span>
+      </label>
+
+      {{#if totalMachineSupplies}}
+        <input
+          class="grid-span-1"
+          type="number"
+          name="consumeMachine"
+          min="0"
+          max="{{totalMachineSupplies}}"
+          step="1"
+          value="0"
+          data-type="Number"
+          aria-label="{{localize 'SDM.MachineSupplies'}}"
+        />
+      {{else}}
+        <input
+          class="grid-span-1"
+          type="number"
+          name="consumeMachine"
+          min="0"
+          max="0"
+          step="1"
+          value="0"
+          data-type="Number"
+          disabled
+          aria-label="{{localize 'SDM.MachineSupplies'}}"
+        />
+      {{/if}}
+      <label class="grid-span-1"><span class="tag">{{localize "SDM.Available"}}: <strong>{{totalMachineSupplies}}</strong></span></label>
+      </div>
+    </div>
+
+  </div>
+
+  <p class="notes">
+    <strong>{{localize "SDM.ConsumeSupplyHint"}}</strong>: {{weeklySupply}}
+  </p>
+</form>

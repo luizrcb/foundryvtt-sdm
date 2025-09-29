@@ -11,6 +11,7 @@ const { DialogV2 } = foundry.applications.api;
 const DragDrop = foundry.applications.ux.DragDrop.implementation;
 const FilePicker = foundry.applications.apps.FilePicker.implementation;
 const TextEditor = foundry.applications.ux.TextEditor.implementation;
+const { performIntegerSort } = foundry.utils;
 /**
  * Extend the basic ItemSheet with some very simple modifications
  * @extends {ItemSheetV2}
@@ -784,7 +785,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     }
 
     // Perform the sort
-    const sortUpdates = SortingHelpers.performIntegerSort(effect, {
+    const sortUpdates = performIntegerSort(effect, {
       target,
       siblings
     });

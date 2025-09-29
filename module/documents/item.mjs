@@ -9,6 +9,7 @@ import {
 } from '../helpers/constants.mjs';
 import { $fmt, $l10n, capitalizeFirstLetter, safeEvaluate } from '../helpers/globalUtils.mjs';
 import { getSlotsTaken } from '../helpers/itemUtils.mjs';
+import { splitStackIntoSingles } from '../helpers/stackUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 
 const { renderTemplate } = foundry.applications.handlebars;
@@ -18,6 +19,67 @@ const { renderTemplate } = foundry.applications.handlebars;
  * @extends {Item}
  */
 export class SdmItem extends Item {
+  async _preCreate(data, options, userId) {
+    // if (userId !== game.user.id) return;
+
+    await super._preCreate(data, options, userId);
+
+    // Avoid loops: if we’re creating as a result of a split, skip
+    if (options?._sdmFromSplit) return;
+
+    const actor = this.parent;
+    if (!actor || actor.type !== ActorType.CARAVAN) return;
+
+    // Use the incoming source data first (data), then existing fallbacks (this.system)
+    const isSupply = !!(data?.system?.is_supply ?? this.system?.is_supply);
+    const unit = data?.system?.size?.unit ?? this.system?.size?.unit;
+    const qty = Number(data?.system?.quantity ?? this.system?.quantity ?? 1) || 1;
+
+    // Only auto-split "supplies in sacks" with qty > 1
+    if (!(isSupply && unit === SizeUnit.SACKS && qty > 1)) return;
+
+    // Keep 1 on the original being created
+    this.updateSource({ 'system.quantity': 1, 'system.readied': false });
+
+    // Build (qty - 1) additional single-quantity copies
+    const singlesToCreate = qty - 1;
+    const base = this.toObject(); // includes flags, sack assignment, etc.
+    delete base._id;
+    foundry.utils.setProperty(base, 'system.quantity', 1);
+    foundry.utils.setProperty(base, 'system.readied', false);
+
+    const clones = Array.from({ length: singlesToCreate }, () => foundry.utils.duplicate(base));
+
+    // Create the extra singles. Pass a guard flag so their preCreate skips splitting.
+    if (clones.length) {
+      await actor.createEmbeddedDocuments('Item', clones, { _sdmFromSplit: true });
+    }
+  }
+
+  // async _onCreate(data, options, userId) {
+  //   if (userId !== game.user.id) return;
+
+  //   await super._onCreate(data, options, userId);
+
+  //   try {
+  //     // Only act on embedded items that just landed on a Caravan
+  //     const actor = this.parent;
+  //     if (!actor || actor.type !== ActorType.CARAVAN) return;
+
+  //     // Only split supplies in sacks with quantity > 1
+  //     const isSupply = !!this.system?.is_supply;
+  //     const unit = this.system?.size?.unit;
+  //     const qty = Number(this.system?.quantity ?? 1) || 1;
+
+  //     if (isSupply && unit === SizeUnit.SACKS && qty > 1) {
+  //       // Keep 1 on the original; create (qty-1) 1-qty copies
+  //       await splitStackIntoSingles(this, { count: qty, keepOnOriginal: true });
+  //     }
+  //   } catch (err) {
+  //     console.error('SdmItem._onCreate auto-split failed:', err);
+  //   }
+  // }
+
   async _onUpdate(changed, options, userId) {
     await super._onUpdate(changed, options, userId);
 

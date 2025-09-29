@@ -149,7 +149,11 @@ export class HeroDiceUI {
       content: await renderTemplate(templatePath('/chat/hero-dice-result'), templateData),
       flavor,
       rolls: [heroResultRoll],
-      flags: { 'sdm.isHeroResult': true }
+      flags: {
+        sdm: {
+          isHeroResult: true
+        }
+      }
     });
 
     if (flags && flags?.sdm?.save) {

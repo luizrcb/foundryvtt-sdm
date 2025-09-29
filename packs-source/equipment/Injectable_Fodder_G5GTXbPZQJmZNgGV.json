@@ -71,7 +71,9 @@
       "experience": "0"
     },
     "starting_kit": false,
-    "packed_remaining_items": 10
+    "packed_remaining_items": 10,
+    "is_supply": true,
+    "supply_type": "animal"
   },
   "effects": [],
   "sort": 0,
@@ -85,9 +87,9 @@
     "exportSource": null,
     "coreVersion": "13.348",
     "systemId": "sdm",
-    "systemVersion": "0.3.2",
+    "systemVersion": "0.3.3",
     "createdTime": 1756596976025,
-    "modifiedTime": 1757957101366,
+    "modifiedTime": 1758898279917,
     "lastModifiedBy": "xN5KQ8c8JiOFyOLU"
   },
   "_key": "!items!G5GTXbPZQJmZNgGV"

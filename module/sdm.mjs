@@ -521,7 +521,7 @@ function _configureFonts() {
         { urls: ['systems/sdm/fonts/source_sans_pro/SourceSansPro-Regular.ttf'] },
         { urls: ['systems/sdm/fonts/source_sans_pro/SourceSansPro-Bold.ttf'], weight: 'bold' },
         { urls: ['systems/sdm/fonts/source_sans_pro/SourceSansPro-Italic.ttf'], style: 'italic' },
-        { urls: ['systems/sdm/fonts/source_sans_pro/SourceSansPro-Light.ttf'], weight: 'lighter' },
+        { urls: ['systems/sdm/fonts/source_sans_pro/SourceSansPro-Light.ttf'], weight: 300, style: 'normal' }
       ]
     }
   });

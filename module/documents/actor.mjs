@@ -1,9 +1,9 @@
 import {
   BASE_DEFENSE_VALUE,
-  MAX_ATTRIBUTE_VALUE,
-  getMaxLife,
+  CHARACTER_DEFAULT_WEIGHT_IN_CASH,
   getLevel,
-  CHARACTER_DEFAULT_WEIGHT_IN_CASH
+  getMaxLife,
+  MAX_ATTRIBUTE_VALUE
 } from '../helpers/actorUtils.mjs';
 import { ActorType, GearType, ItemType, SizeUnit, TraitType } from '../helpers/constants.mjs';
 import { safeEvaluate } from '../helpers/globalUtils.mjs';
@@ -13,6 +13,12 @@ import {
   GEAR_ITEM_TYPES,
   getSlotsTaken
 } from '../helpers/itemUtils.mjs';
+import { mergeSimilarItems, splitStackIntoTwo } from '../helpers/stackUtils.mjs';
+import { templatePath } from '../helpers/templates.mjs';
+import { promptSplitStackFirstQty } from '../items/splitDialog.mjs';
+const { renderTemplate } = foundry.applications.handlebars;
+
+const { DialogV2 } = foundry.applications.api;
 
 /**
  * Extend the base Actor document by defining a custom roll data structure which is ideal for the Simple system.
@@ -587,6 +593,214 @@ export class SdmActor extends Actor {
     return totalCash;
   }
 
+  async consumeSupplies() {
+    if (this.type !== ActorType.CARAVAN) {
+      return;
+    }
+
+    const itemsArray = this.items.contents;
+
+    const supplyItems = itemsArray.filter(
+      item => item.type === ItemType.GEAR && item.system.type === '' && item.system.is_supply
+    );
+
+    const animalSupplies = supplyItems.filter(item => item.system.supply_type === 'animal');
+    const humanSupplies = supplyItems.filter(item => item.system.supply_type === 'human');
+    const machineSupplies = supplyItems.filter(item => item.system.supply_type === 'machine');
+
+    const totalAnimalSupplies = animalSupplies.reduce((acc, item) => {
+      return acc + item.system.quantity;
+    }, 0);
+
+    const totalHumanSupplies = humanSupplies.reduce((acc, item) => {
+      return acc + item.system.quantity;
+    }, 0);
+
+    const totalMachineSupplies = machineSupplies.reduce((acc, item) => {
+      return acc + item.system.quantity;
+    }, 0);
+
+    const templateData = {
+      totalAnimalSupplies,
+      totalHumanSupplies,
+      totalMachineSupplies,
+      weeklySupply: this.system.supply
+    };
+
+    const data = await DialogV2.wait({
+      window: { title: game.i18n.localize('SDM.ConsumeSupply'), resizable: true },
+      position: {
+        width: 800,
+        height: 370
+      },
+      content: await renderTemplate(
+        templatePath('/actor/caravan/consume-supply-dialog'),
+        templateData
+      ),
+      buttons: [
+        {
+          action: 'ok',
+          label: game.i18n.localize('SDM.ConsumeSupply'),
+          icon: 'fa-solid fa-sack-xmark',
+          callback: (event, button) =>
+            new foundry.applications.ux.FormDataExtended(button.form).object
+        },
+        { action: 'cancel', label: game.i18n.localize('SDM.BackgroundCancel') }
+      ],
+      rejectClose: false
+    });
+
+    if (!data) return;
+    // Parse requested amounts (clamp to >= 0, integers)
+    const animalToConsume = Math.max(0, parseInt(data.consumeAnimal, 10) || 0);
+    const humanToConsume = Math.max(0, parseInt(data.consumeHuman, 10) || 0);
+    const machineToConsume = Math.max(0, parseInt(data.consumeMachine, 10) || 0);
+
+    // Sort by cost asc (undefined -> 0)
+    const byCostAsc = (a, b) => Number(a.system?.cost ?? 0) - Number(b.system?.cost ?? 0);
+
+    const animalSorted = animalSupplies.slice().sort(byCostAsc);
+    const humanSorted = humanSupplies.slice().sort(byCostAsc);
+    const machineSorted = machineSupplies.slice().sort(byCostAsc);
+
+    const updates = [];
+    const deletions = [];
+
+    // Aggregate tracker: key = `${name}|||${img}`
+    const consumedMap = new Map();
+
+    // Effects buffer to batch-create on actor
+    const effectsToCreate = [];
+
+    /**
+     * Clone an ActiveEffect from an item and adapt it for the actor.
+     * - clears _id
+     * - sets origin to the actor
+     * - disables transfer (we're placing it directly on actor)
+     * - ensures a readable name
+     */
+    function makeActorEffectData(effectDoc, itemName) {
+      const data = effectDoc.toObject();
+      delete data._id;
+      data.origin = this.uuid; // actor origin
+      data.transfer = false; // ensure it's actor-owned, not transferred
+      data.disabled = false; // apply enabled
+      if (!data.name) data.name = itemName;
+      return data;
+    }
+
+    /**
+     * Consume `amount` units across `items` (sorted by cost asc).
+     * Also clones item Active Effects to the actor: one copy per unit consumed.
+     */
+    function consumeFromItems(items, amount) {
+      let remaining = amount;
+      if (remaining <= 0 || !items.length) return 0;
+
+      for (const it of items) {
+        if (remaining <= 0) break;
+
+        const qty = Math.max(0, Number(it.system?.quantity ?? 0));
+        if (qty <= 0) continue;
+
+        const take = Math.min(qty, remaining);
+        if (take <= 0) continue;
+
+        const newQty = qty - take;
+
+        // Queue update/delete
+        if (newQty > 0) {
+          updates.push({ _id: it.id, system: { quantity: newQty } });
+        } else {
+          deletions.push(it.id);
+        }
+
+        // Aggregate consumed summary
+        const key = `${it.name}|||${it.img ?? ''}`;
+        const prev = consumedMap.get(key);
+        consumedMap.set(key, {
+          name: it.name,
+          img: it.img ?? '',
+          quantity: (prev?.quantity || 0) + take
+        });
+
+        // Copy the item's active effects to the actor (one per unit consumed)
+        const itemEffects = it.effects?.contents ?? [];
+        if (itemEffects.length) {
+          for (let n = 0; n < take; n++) {
+            for (const ef of itemEffects) {
+              effectsToCreate.push(makeActorEffectData.call(this, ef, it.name));
+            }
+          }
+        }
+
+        remaining -= take;
+      }
+
+      return amount - remaining; // actually consumed
+    }
+
+    // Consume per category (cost-ascending)
+    consumeFromItems.call(this, animalSorted, animalToConsume);
+    consumeFromItems.call(this, humanSorted, humanToConsume);
+    consumeFromItems.call(this, machineSorted, machineToConsume);
+
+    // Apply item updates/deletions in batches
+    if (updates.length) await this.updateEmbeddedDocuments('Item', updates);
+    if (deletions.length) await this.deleteEmbeddedDocuments('Item', deletions);
+
+    // Create all copied Active Effects on the actor in one batch
+    if (effectsToCreate.length) {
+      await this.createEmbeddedDocuments('ActiveEffect', effectsToCreate);
+    }
+
+    // Build a final array you can log/use for chat, etc.
+    const consumedSummary = Array.from(consumedMap.values());
+    //console.log('Consumed summary:', consumedSummary);
+  }
+
+  /**
+   * Consume 1 unit from an item on this actor.
+   * - Decrements system.quantity by 1 (if stackable); if it reaches 0 (or item is non-stackable), deletes the item.
+   * - Copies all Active Effects from the item to the actor (enabled, non-transfer, origin set).
+   *
+   * @param {Item} item - The item document belonging to this actor.
+   */
+  async consumeSupply(item) {
+    if (!item || item.parent !== this) return;
+
+    // 1) Prepare actor-owned effects cloned from the item
+    const effectsToCreate = [];
+    const itemEffects = item.effects?.contents ?? [];
+    for (const ef of itemEffects) {
+      const data = ef.toObject();
+      delete data._id;
+      // Prefer item as origin (so you can trace where it came from)
+      data.origin = item.uuid ?? this.uuid;
+      data.transfer = false; // place directly on actor
+      data.disabled = false; // apply enabled
+      // Optional provenance:
+      // data.flags = foundry.utils.mergeObject({ sdm: { sourceItemId: item.id } }, data.flags || {}, { inplace: false });
+      effectsToCreate.push(data);
+    }
+
+    // 2) Apply effects first (so even if the item is deleted, the effects still land)
+    if (effectsToCreate.length) {
+      await this.createEmbeddedDocuments('ActiveEffect', effectsToCreate);
+    }
+
+    // 3) Decrement quantity or delete the item
+    const hasStacks = Number.isFinite(Number(item.system?.quantity));
+    const currentQty = hasStacks ? Number(item.system.quantity) : 1;
+    const newQty = hasStacks ? Math.max(0, currentQty - 1) : 0;
+
+    if (hasStacks && newQty > 0) {
+      await this.updateEmbeddedDocuments('Item', [{ _id: item.id, system: { quantity: newQty } }]);
+    } else {
+      await this.deleteEmbeddedDocuments('Item', [item.id]);
+    }
+  }
+
   _getItemListContextOptions() {
     return [
       {
@@ -595,6 +809,50 @@ export class SdmActor extends Actor {
         callback: async target => {
           const document = this.sheet._getEmbeddedDocument(target);
           await document.sheet.render({ force: true });
+        }
+      },
+      {
+        name: 'SDM.Item.SplitItems',
+        icon: '<i class="fa-solid fa-arrows-split-up-and-left"></i>',
+        condition: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          return item.type === ItemType.GEAR && item.parent && item.system.quantity > 1;
+        },
+        callback: async target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          const firstQty = await promptSplitStackFirstQty(item);
+          if (firstQty == null) return; // user canceled
+          await splitStackIntoTwo(item, firstQty);
+        }
+      },
+      {
+        name: 'SDM.Item.MergeItems',
+        icon: '<i class="fa-solid fa-code-merge"></i>',
+        condition: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          return item.type === ItemType.GEAR && item.parent && this.canMergeItem(item);
+        },
+        callback: async target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          await mergeSimilarItems(item);
+        }
+      },
+      {
+        name: 'SDM.Item.ConsumeSupply',
+        icon: '<i class="fa-solid fa-sack-xmark"></i>',
+        condition: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          return (
+            item.type === ItemType.GEAR &&
+            !item.system.type &&
+            item.system.is_supply &&
+            item.parent &&
+            item.parent?.type === ActorType.CARAVAN
+          );
+        },
+        callback: async target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          await this.consumeSupply(item);
         }
       },
       {
@@ -717,6 +975,56 @@ export class SdmActor extends Actor {
         }
       }
     ];
+  }
+
+  isMergeBlocked(item) {
+    return (
+      this?.type === ActorType.CARAVAN &&
+      !!item?.system?.is_supply &&
+      item?.system?.size?.unit === SizeUnit.SACKS
+    );
+  }
+
+  canMergeItem(item, opts = {}) {
+    return this.getMergeableSiblings(item, opts).length > 0;
+  }
+
+  getMergeableSiblings(item, opts = {}) {
+    if (!item) throw new Error('getMergeableSiblings: missing item.');
+    if (item.parent && item.parent !== this) return [];
+
+    const caseSensitive = opts.caseSensitive ?? true;
+    const ignoreRule = opts.ignoreCaravanSacksRule ?? false;
+
+    // Block merging entirely for caravan sack supplies, unless explicitly overridden
+    if (!ignoreRule && this.isMergeBlocked(item)) return [];
+
+    const keyName = caseSensitive ? v => v : v => (v ?? '').toLowerCase();
+    const nameKey = keyName(item.name);
+    const typeKey = item.type;
+    const sysTypeKey = item.system?.type ?? '';
+
+    function isStackable(i) {
+      return Number.isFinite(Number(i?.system?.quantity));
+    }
+
+    // Only stackable items
+    const siblings = this.items.contents.filter(i => {
+      if (i.id === item.id) return false;
+
+      if (!isStackable(i) || !isStackable(item)) return false;
+
+      // Apply the same block rule to each candidate
+      if (!ignoreRule && this.isMergeBlocked(this, i)) return false;
+
+      const sameName = keyName(i.name) === nameKey;
+      const sameType = i.type === typeKey;
+      const sameSysType = (i.system?.type ?? '') === sysTypeKey;
+
+      return sameName && sameType && sameSysType;
+    });
+
+    return siblings;
   }
 
   /**

@@ -95,6 +95,28 @@
             <input type='text' name='system.packed_remaining_items' value='{{system.packed_remaining_items}}' data-dtype='Number' disabled/>
           </div>
         </div>
+        {{else}}
+        <div class="resource">
+
+        </div>
+        {{/if}}
+
+        <div class="resource"></div>
+
+        <div class="resource align-center">
+          <label class='resource-label'>{{localize 'SDM.IsSupply'}}</label>
+          <div class='resource-content align-center'>
+            <input type='checkbox' name='system.is_supply' {{checked system.is_supply}} />
+          </div>
+        </div>
+
+        {{#if item.system.is_supply}}
+        <div class= "resource">
+          <label class='resource-label '>{{localize 'SDM.SupplyType'}}</label>
+          <select id='supply_type' name='system.supply_type' class="resource-content">
+            {{selectOptions config.SupplyType localize=true selected=system.supply_type sort=true}}
+          </select>
+        </div>
         {{/if}}
 
       {{/if}}

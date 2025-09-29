@@ -1,7 +1,7 @@
 import { UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
 import { ActorType, ItemType, SizeUnit } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
-import { $l10n, $fmt } from '../helpers/globalUtils.mjs';
+import { $l10n, $fmt, foundryVersionIsAtLeast } from '../helpers/globalUtils.mjs';
 import {
   convertToCash,
   ITEMS_NOT_ALLOWED_IN_CARAVANS,
@@ -9,6 +9,7 @@ import {
   onItemUpdate
 } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
+import { splitStackIntoSingles } from '../helpers/stackUtils.mjs';
 import { openItemTransferDialog } from '../items/transfer.mjs';
 
 const { api, sheets } = foundry.applications;
@@ -16,6 +17,7 @@ const { DialogV2 } = foundry.applications.api;
 const DragDrop = foundry.applications.ux.DragDrop.implementation;
 const FilePicker = foundry.applications.apps.FilePicker.implementation;
 const TextEditor = foundry.applications.ux.TextEditor.implementation;
+const { performIntegerSort } = foundry.utils;
 
 const FLAG_SCOPE = 'sdm';
 const FLAG_SACK = 'sackIndex';
@@ -53,7 +55,8 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       addTransport: this._addTransport,
       deleteTransport: this._deleteTransport,
       addRoute: this._addRoute,
-      deleteRoute: this._deleteRoute
+      deleteRoute: this._deleteRoute,
+      consumeSupplies: this._consumeSupplies
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: '[data-drop], [data-item-id]' }],
@@ -380,7 +383,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
 
     this._createContextMenu(
       this._getItemListContextOptions,
-       //'[data-document-class][data-item-id], [data-document-class][data-effect-id]',
+      //'[data-document-class][data-item-id], [data-document-class][data-effect-id]',
       '[data-document-class][data-item-id]',
       {
         hookName: 'getItemListContextOptions',
@@ -408,11 +411,13 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       preCreate: Hooks.on('preCreateItem', (item, options, userId) => {
         if (item.parent?.id === actorId && !this._validateItemWeight(item)) return false;
       }),
-      create: Hooks.on('createItem', (item, options, userId) => {
+      create: Hooks.on('createItem', async (item, options, userId) => {
         if (item.parent?.id === actorId) {
           const shouldAllow = this._checkCarriedWeight(item);
           if (!shouldAllow) return false;
-          return onItemCreateActiveEffects(item);
+
+          // Run your existing effects hook
+          await onItemCreateActiveEffects(item);
         }
       }),
       preUpdate: Hooks.on('preUpdateItem', (item, changedData) => {
@@ -813,9 +818,19 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     });
     if (!proceed) return;
 
-    await this.actor.update({
-      [`system.transport.-=${key}`]: null
-    });
+    let deleteOperation;
+
+    if (foundryVersionIsAtLeast('14')) {
+      deleteOperation = {
+        [`system.transport.${key}`]: _del
+      };
+    } else {
+      deleteOperation = {
+        [`system.transport.-=${key}`]: null
+      };
+    }
+
+    await this.actor.update(deleteOperation);
   }
 
   static async _addRoute(event, target) {
@@ -856,9 +871,23 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     });
     if (!proceed) return;
 
-    await this.actor.update({
-      [`system.routes.-=${key}`]: null
-    });
+    let deleteOperation;
+
+    if (foundryVersionIsAtLeast('14')) {
+      deleteOperation = {
+        [`system.routes.${key}`]: _del
+      };
+    } else {
+      deleteOperation = {
+        [`system.routes.-=${key}`]: null
+      };
+    }
+
+    await this.actor.update(deleteOperation);
+  }
+
+  static async _consumeSupplies() {
+    return this.actor.consumeSupplies();
   }
 
   /** Helper Functions */
@@ -1013,7 +1042,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     }
 
     // Perform the sort
-    const sortUpdates = SortingHelpers.performIntegerSort(effect, {
+    const sortUpdates = performIntegerSort(effect, {
       target,
       siblings
     });
@@ -1151,6 +1180,12 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
 
     const createData = item.toObject();
     foundry.utils.setProperty(createData, `flags.${FLAG_SCOPE}.${FLAG_SACK}`, finalIdx);
+
+    if (item.parent?.isOwner) {
+      const itemToDelete = fromUuidSync(item.uuid);
+      await itemToDelete.delete();
+    }
+
     return this.actor.createEmbeddedDocuments('Item', [createData]);
   }
 
@@ -1236,7 +1271,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     }
 
     // Perform the sort
-    const sortUpdates = SortingHelpers.performIntegerSort(item, {
+    const sortUpdates = performIntegerSort(item, {
       target,
       siblings
     });

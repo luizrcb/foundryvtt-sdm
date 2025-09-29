@@ -1,4 +1,5 @@
 import { SdmItem } from '../documents/item.mjs';
+
 import { MAX_MODIFIER, UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
 import {
   ActorType,
@@ -34,6 +35,7 @@ const { renderTemplate } = foundry.applications.handlebars;
 const DragDrop = foundry.applications.ux.DragDrop.implementation;
 const FilePicker = foundry.applications.apps.FilePicker.implementation;
 const TextEditor = foundry.applications.ux.TextEditor.implementation;
+const { performIntegerSort } = foundry.utils;
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -754,8 +756,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     return newBurdenPenalTy <= maxBurdenSlots;
   }
-
-  //
 
   async unpackStartingKitItem(target) {
     const item = this._getEmbeddedDocument(target);
@@ -1635,7 +1635,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     }
 
     // Perform the sort
-    const sortUpdates = SortingHelpers.performIntegerSort(effect, {
+    const sortUpdates = performIntegerSort(effect, {
       target,
       siblings
     });
@@ -1727,6 +1727,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       return this._onDropItemCreate(clonedItem, event);
     }
 
+
     // Create the owned item
     return this._onDropItemCreate(item, event);
   }
@@ -1759,7 +1760,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
    * @param {object[]|object} itemData      The item data requested for creation
    * @param {DragEvent} event               The concluding DragEvent which provided the drop data
    * @returns {Promise<Item[]>}
-   * @private
+   * @privateW
    */
   async _onDropItemCreate(itemData, event) {
     itemData = itemData instanceof Array ? itemData : [itemData];
@@ -1782,6 +1783,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     if (!validWeight) {
       ui.notifications.error($fmt('SDM.ErrorWeightLimit', { target: this.actor.name }));
       return [];
+    }
+
+    if (itemData[0].parent?.isOwner) {
+      const item = fromUuidSync(itemData[0].uuid);
+      await item.delete();
     }
 
     return this.actor.createEmbeddedDocuments('Item', itemData);
@@ -1811,7 +1817,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     }
 
     // Perform the sort
-    const sortUpdates = SortingHelpers.performIntegerSort(item, {
+    const sortUpdates = performIntegerSort(item, {
       target,
       siblings
     });

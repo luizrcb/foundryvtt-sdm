@@ -29,6 +29,14 @@ export default class SdmGear extends SdmItemBase {
 
     schema.starting_kit = new fields.BooleanField({ required: true, initial: false });
 
+    schema.is_supply = new fields.BooleanField({ required: true, initial: false });
+    schema.supply_type = new fields.StringField({
+      required: true,
+      blank: true,
+      initial: 'human',
+      choices: CONFIG.SDM.SuppyType
+    });
+
     schema.packed_remaining_items = new fields.NumberField({
       required: true,
       nullable: false,

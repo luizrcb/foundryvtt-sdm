@@ -121,3 +121,10 @@ export const getDefaultAbility = (initialValue = '') => {
     ...(initialValue && { initial: initialValue })
   });
 };
+
+
+export const foundryVersionIsAtLeast = (v) => {
+  const current = game.version ?? `${game.release?.generation}.${game.release?.build ?? 0}`;
+  // true if current >= v
+  return !foundry.utils.isNewerVersion(v, current);
+};

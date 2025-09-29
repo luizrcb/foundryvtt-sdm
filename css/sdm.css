@@ -488,6 +488,19 @@ input[type=radio]::after {
     --color-warm-1: var(--sdm-scrollbar-thumb);
     --color-warm-2: var(--sdm-scrollbar-thumb);
   }
+  .item-piles-chat-card-title > p:first-of-type {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
+    margin: 0;
+  }
+  .item-piles-chat-card-title > p:first-of-type img {
+    vertical-align: middle;
+  }
+  .item-piles-chat-card-title > p:first-of-type i {
+    line-height: 1;
+  }
   .dice-rolls {
     font-family: var(--sdm-font-dice);
   }

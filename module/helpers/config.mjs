@@ -268,6 +268,12 @@ SDM.rangeType = {
   long: 'SDM.RangeLong'
 };
 
+SDM.SupplyType = {
+  animal: 'SDM.SupplyTypeAnimal',
+  human: 'SDM.SupplyTypeHuman',
+  machine: 'SDM.SupplyTypeMachine'
+}
+
 SDM.skillMod = {
   1: 'SDM.SkillSkilled',
   2: 'SDM.SkillExpert',

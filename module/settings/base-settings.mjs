@@ -1,4 +1,4 @@
-import { $l10n } from "../helpers/globalUtils.mjs";
+import { $l10n } from '../helpers/globalUtils.mjs';
 
 // base-settings.mjs
 const ApplicationV2 = foundry.applications?.api?.ApplicationV2 ?? class {};
@@ -82,17 +82,27 @@ export default class BaseSettingsConfig extends HandlebarsApplicationMixin(Appli
         : cat.includes('video')
           ? 'video'
           : 'image';
+
+      // Only show the preview for images
+      const isImagePicker = pickerType === 'image';
+      const safeVal = foundry.utils.escapeHTML(value ?? '');
+      const previewImg = isImagePicker
+        ? `<img data-preview-for="${name}" src="${safeVal}" alt="" width="32" height="32"
+            style="width:32px;height:32px;object-fit:contain;margin-right:8px;${value ? '' : 'display:none'}">`
+        : '';
+
       return {
         key: name,
         label,
         hint,
         inputHTML: `
-          <div class="flexrow">
-            <input type="text" name="${name}" value="${foundry.utils.escapeHTML(value ?? '')}">
-            <a class="button" data-action="pickFile" data-target="${name}" data-picker="${pickerType}">
-              <i class="fas fa-file-import"></i>
-            </a>
-          </div>`
+      <div class="flexrow setting-filepicker">
+        ${previewImg}
+        <input type="text" name="${name}" value="${safeVal}">
+        <a class="button" data-action="pickFile" data-target="${name}" data-picker="${pickerType}">
+          <i class="fas fa-file-import"></i>
+        </a>
+      </div>`
       };
     }
 
@@ -143,6 +153,13 @@ export default class BaseSettingsConfig extends HandlebarsApplicationMixin(Appli
       current: input?.value ?? '',
       callback: path => {
         if (input) input.value = path;
+
+        // Update preview (only present for image pickers)
+        const preview = form?.querySelector(`img[data-preview-for="${CSS.escape(target)}"]`);
+        if (preview) {
+          preview.src = path || '';
+          preview.style.display = path ? '' : 'none';
+        }
       }
     });
     fp.render(true);

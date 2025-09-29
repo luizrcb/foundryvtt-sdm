@@ -1,32 +1,67 @@
 <form>
-  <h5>
-    {{localize 'SDM.Transfer' type=item.name}}
-  </h5>
+  <h5>{{localize 'SDM.Transfer' type=item.name}}</h5>
+
   <div class='grid grid-2col flexcol'>
+
     {{#if (eq item.system.size.unit 'cash')}}
       <div class='form-group'>
-        <label>
-          {{localize 'SDM.Amount'}}:
-        </label>
-        <input
-          type='number'
-          name='cashAmount'
-          min='1'
-          max='{{item.system.quantity}}'
-          required
-          data-type='Number'
-          placeholder=''
-        />
+        <label>{{localize 'SDM.Amount'}}:</label>
+        <input type='number' name='cashAmount' min='1' max='{{item.system.quantity}}' required data-type='Number' />
       </div>
     {{/if}}
+
     <div class='form-group'>
-      <label>
-        {{localize 'SDM.TransferTo'}}:
-      </label>
+      <label>{{localize 'SDM.TransferTo'}}:</label>
       <select name='targetActor'>
         <option value=''></option>
         {{selectOptions actors valueAttr='uuid' labelAttr='name' sort=true}}
       </select>
     </div>
+
+    {{#if isGM}}
+      {{#unless (eq item.system.size.unit 'cash')}}
+        <div class='form-group'>
+          <label>{{localize 'SDM.ItemQuantity'}}:</label>
+          <input
+            type='number'
+            name='quantity'
+            min='1'
+            max='{{maxQuantity}}'
+            step='1'
+            value='1'
+            data-type='Number'
+          />
+        </div>
+
+        <div class='form-group'>
+          <label>
+            {{localize 'SDM.ChargeForThisTransfer'}}
+          </label>
+          {{!-- <label class="flexrow" style="gap:.5rem; align-items:center;"> --}}
+          <input type="checkbox" name="chargeEnabled" />
+        </div>
+        <div class="form-group">
+          <label>{{localize 'SDM.UnitPrice'}}:</label>
+          <input
+              type='number'
+              name='chargeAmount'
+              min='0'
+              step='1'
+              value='{{unitCost}}'
+              data-type='Number'
+              disabled
+            />
+        </div>
+        <div class="form-group">
+
+        </div>
+        <div class="form-group">
+          <div class="notes">
+            {{localize 'SDM.TotalToCharge'}}:
+            <strong>€<span id="sdm-total-charge">0</span></strong>
+          </div>
+        </div>
+      {{/unless}}
+    {{/if}}
   </div>
 </form>
