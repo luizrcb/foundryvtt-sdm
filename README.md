@@ -29,6 +29,12 @@ This project uses names of creatures, items, traits, powers, locations, and rule
 - **Audio:** Audio files in the `/assets/audio/sound_effects` folder are courtesy of [Pixabay](https://pixabay.com) and licensed under [Content License - Pixabay](https://pixabay.com/service/license-summary/)
 - **Fonts:** The fonts used in this project carry their own licenses.
 
+## Add-on Modules Integration
+
+The SDM system provides companion add-on modules to integrate with the following:
+
+- **Item Piles**: [Item Piles: SDM](https://github.com/luizrcb/item-piles-sdm)
+
 ## System Features
 
 ### Actor Types
