@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.4.1
+
+- Add support to Token Action HUD module
+
 ## v0.4.0
 
 - GM transfer item can also charge money from an actor (editable amount, using unit price as default value). For supply items, quantity can also be selected

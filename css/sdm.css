@@ -756,6 +756,9 @@ input[type=radio]::after {
   .theme-dark .melee-attack.lime {
     background: url("../assets/icons/equipment/melee-weapons/broadsword-lime-theme-dark.svg");
   }
+  .melee-attack.white {
+    background: url("../assets/icons/equipment/melee-weapons/broadsword-white.svg");
+  }
   .rollable:hover i.melee-attack.lime,
   .melee-attack.lime:hover {
     filter: drop-shadow(0px 0px 5px var(--sdm-c-highlight));

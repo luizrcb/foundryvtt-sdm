@@ -6,7 +6,11 @@ import {
   MAX_ATTRIBUTE_VALUE
 } from '../helpers/actorUtils.mjs';
 import { ActorType, GearType, ItemType, SizeUnit, TraitType } from '../helpers/constants.mjs';
-import { safeEvaluate } from '../helpers/globalUtils.mjs';
+import {
+  $l10n,
+  capitalizeFirstLetter,
+  safeEvaluate,
+} from '../helpers/globalUtils.mjs';
 import {
   BURDEN_ITEM_TYPES,
   convertToCash,
@@ -628,9 +632,9 @@ export class SdmActor extends Actor {
     };
 
     const data = await DialogV2.wait({
-      window: { title: game.i18n.localize('SDM.ConsumeSupply'), resizable: true },
+      window: { title: game.i18n.localize('SDM.ConsumeSupply') },
       position: {
-        width: 800,
+        width: 820,
         height: 370
       },
       content: await renderTemplate(
@@ -1073,5 +1077,127 @@ export class SdmActor extends Actor {
     await this.update({
       'system.life.value': newValue
     });
+  }
+
+  async performHudAction(action, identifier = '', args = {}, isShift = false, isCtrl = false) {
+    // Resolve composite strings like "ability|str"
+    let actionType = action || '';
+    let actionKey = identifier || '';
+    if (typeof actionType === 'string' && actionType.includes('|')) {
+      const parts = actionType.split('|').map(s => s.trim());
+      actionType = parts[0] || '';
+      actionKey = parts[1] || '';
+    }
+
+    actionType = actionType || '';
+    actionKey = actionKey || '';
+    // Prepare a fake event object compatible with sheet handlers
+    const fakeEvent = {
+      preventDefault: () => {},
+      stopPropagation: () => {},
+      shiftKey: !!isShift,
+      ctrlKey: !!isCtrl,
+      // dataset and target will be provided by the constructed fakeTarget below when needed
+      currentTarget: {},
+      target: {}
+    };
+
+    // Helper to create a fake target element with dataset and closest()
+    const makeFakeTarget = (dataset = {}, closestReturn = null) => {
+      return {
+        dataset,
+        closest: selector => {
+          // If caller provided a closestReturn object, return it; otherwise try default selector mapping
+          if (closestReturn) return closestReturn;
+          // default behavior for item elements: find li[data-document-class]
+          if (selector && selector.includes('[data-document-class')) {
+            return { dataset: dataset };
+          }
+          return null;
+        }
+      };
+    };
+
+    try {
+      // Mapping from actionType to sheet handler name and how to build dataset/closestReturn
+      const mapping = {
+        ability: {
+          handler: '_onRoll',
+          dataset: {
+            action: 'ability',
+            ability: actionKey,
+            type: 'ability',
+            label: $l10n(CONFIG.SDM.abilities[actionKey])
+          }
+        },
+        save: { handler: '_onRollSavingThrow', dataset: { action: 'save', ability: actionKey } },
+        attack: {
+          handler: '_onRoll',
+          dataset: {
+            action: 'roll',
+            type: 'attack',
+            attack: actionKey,
+            label: $l10n(
+              `SDM.Attack${actionKey !== 'attack' ? capitalizeFirstLetter(actionKey) : ''}`
+            )
+          }
+        },
+        reaction: {
+          handler: '_onReactionRoll',
+          dataset: { action: 'reaction', reaction: actionKey }
+        },
+        roll: { handler: '_onRoll', dataset: { action: 'roll', roll: actionKey } },
+        rollNPCDamage: {
+          handler: '_onRollNPCDamage',
+          dataset: { action: 'rollNPCDamage', damage: actionKey, label: $l10n('SDM.Damage') }
+        },
+        rollNPCMorale: {
+          handler: '_onRollNPCMorale',
+          dataset: { action: 'rollNPCMorale', label: $l10n('SDM.Morale') }
+        },
+        heroichealing: {
+          handler: '_onHeroHealing',
+          dataset: { action: 'heroicHealing', index: actionKey }
+        },
+        item: {
+          handler: '_onRoll',
+          dataset: { action: 'roll', type: actionType, label: args.label, tooltip: args.tooltip },
+          closestReturn: { dataset: { documentClass: 'Item', itemId: actionKey } }
+        }
+      };
+
+      // Normalize mapping key (allow synonyms)
+      const normalizedKey = actionType.replace(/\s+/g, '');
+      const finalKey = ['power', 'power_album', 'damage'].includes(normalizedKey)
+        ? 'item'
+        : normalizedKey;
+      const mapEntry = mapping[finalKey] || null;
+
+      // If no mapping found, try to handle composite defaults (like 'ability|str' already parsed)
+      if (!mapEntry) {
+        // fallback: if it looks like item id (hex) handle as item
+        if (/^[0-9a-f]{8,}$/i.test(actionKey)) {
+          return await this.performHudAction('item', actionKey, isShift, isCtrl);
+        }
+        // fallback to ability
+        return await this.performHudAction('ability', actionKey, isShift, isCtrl);
+      }
+
+      // If sheet class is found, instantiate a lightweight sheet and call the handler
+
+      const sheet = this.sheet.constructor;
+      const fakeTarget = makeFakeTarget(mapEntry.dataset, mapEntry.closestReturn);
+      fakeEvent.currentTarget = fakeTarget;
+      fakeEvent.target = fakeTarget;
+
+      // Call the handler if present
+      if (typeof sheet[mapEntry.handler] === 'function') {
+        return await sheet[mapEntry.handler].call(this.sheet, fakeEvent, fakeTarget);
+      }
+    } catch (err) {
+      console.error('performHudAction: error while mapping or executing action', err);
+      ui.notifications?.error?.('Action failed (see console)');
+      return null;
+    }
   }
 }

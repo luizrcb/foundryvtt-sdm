@@ -1159,6 +1159,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     event.preventDefault();
     event.stopPropagation();
     if (event.detail > 1) return;
+
     const reverseShift = game.settings.get('sdm', 'reverseShiftKey');
     const isShift = reverseShift !== !!event.shiftKey;
     const isCtrl = !!event.ctrlKey;
@@ -1178,6 +1179,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     event.preventDefault();
     event.stopPropagation();
     if (event.detail > 1) return;
+
     const reverseShift = game.settings.get('sdm', 'reverseShiftKey');
     const isShift = reverseShift !== !!event.shiftKey;
     const isCtrl = !!event.ctrlKey;
@@ -1343,6 +1345,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       ability !== ActorType.NPC
         ? this.actor.system.abilities[ability]
         : { current: this.actor.system.bonus };
+
     const finalAbility = abilityData?.current;
     const ward = this.actor?.system?.ward || 0;
     const burdenPenalty = this.actor.system?.burden_penalty || 0;
@@ -1726,7 +1729,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       clonedItem.type = ItemType.GEAR;
       return this._onDropItemCreate(clonedItem, event);
     }
-
 
     // Create the owned item
     return this._onDropItemCreate(item, event);

@@ -643,6 +643,11 @@ input[type='radio']::after {
     background: url('../assets/icons/equipment/melee-weapons/broadsword-lime-theme-dark.svg');
   }
 
+  .melee-attack.white {
+    background: url('../assets/icons/equipment/melee-weapons/broadsword-white.svg');
+  }
+
+
   .rollable:hover i.melee-attack.lime,
   .melee-attack.lime:hover {
     filter: vars.$hover-filter;

@@ -34,6 +34,7 @@ This project uses names of creatures, items, traits, powers, locations, and rule
 The SDM system provides companion add-on modules to integrate with the following:
 
 - **Item Piles**: [Item Piles: SDM](https://github.com/luizrcb/item-piles-sdm)
+- **Token Action HUD**: [Token Action HUD SDM](https://github.com/luizrcb/token-action-hud-sdm)
 
 ## System Features
 

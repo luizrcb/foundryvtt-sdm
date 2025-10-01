@@ -55,7 +55,7 @@ export async function promptSplitStackFirstQty(item, opts = {}) {
           </label>
         </div>
 
-        <p class="notes" style="margin-top: 0.5rem;">
+        <p style="margin-top: 0.5rem;">
           ${$l10n('SDM.SplitHint') || 'Drag the slider or type a number. Totals must add up to the original quantity.'}
         </p>
       </fieldset>
