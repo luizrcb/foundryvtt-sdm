@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.4.2
+
+- Add support to right-clicked action on the Token Action HUD (right-click Hero Dice button)
+
 ## v0.4.1
 
 - Add support to Token Action HUD module

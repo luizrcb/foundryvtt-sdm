@@ -1189,6 +1189,7 @@ export class SdmActor extends Actor {
       const fakeTarget = makeFakeTarget(mapEntry.dataset, mapEntry.closestReturn);
       fakeEvent.currentTarget = fakeTarget;
       fakeEvent.target = fakeTarget;
+      fakeEvent.button = args?.button ?? 1;
 
       // Call the handler if present
       if (typeof sheet[mapEntry.handler] === 'function') {
