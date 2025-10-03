@@ -128,7 +128,7 @@ async function postHeroDiceSummary(targets = [], data = {}, opts = {}) {
 
         // tenta obter uma imagem representativa: prefer token img se existir, senão actor.img
         // Se o actor for um token, ele pode ter token.img; se for actor directory use actor.img
-        let actorImg = actor.prototypeToken?.texture?.src || actor.img || null;
+        let actorImg = actor.img || null;
         // alternativa: se actor.token (TokenDocument) estiver disponível:
         if (!actorImg && actor.token?.texture?.src) actorImg = actor.token.texture.src;
 

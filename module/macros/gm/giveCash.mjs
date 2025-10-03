@@ -263,7 +263,7 @@ export async function giveCash(
           cashChanges.push({
             actorId: target.id,
             actorName: target.name,
-            actorImg: target.prototypeToken?.texture?.src || target.img || null,
+            actorImg: target.img || null,
             amount: 0,
             before,
             after: before,
@@ -286,7 +286,7 @@ export async function giveCash(
       cashChanges.push({
         actorId: target.id,
         actorName: target.name,
-        actorImg: target.prototypeToken?.texture?.src || target.img || null,
+        actorImg: target.img || null,
         amount: delta,
         before,
         after,

@@ -71,7 +71,7 @@ export async function giveExperience() {
       return {
         actorId: actor.id,
         actorName: actor.name,
-        actorImg: actor.prototypeToken?.texture?.src || actor.img || null,
+        actorImg: actor.img || null,
         amount: added, // positivo = ganho
         before,
         after,
