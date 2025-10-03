@@ -889,5 +889,6 @@
   "TYPES.Item.trait": "Traço",
   "TYPES.Item.vehicle": "Veículo",
   "TYPES.Item.ward": "Resguardo",
-  "TYPES.Item.weapon": "Arma"
+  "TYPES.Item.weapon": "Arma",
+  "SDM.ResetBonusHeroDice": "Zerar Parada Bônus de Dados Heróicos "
 }

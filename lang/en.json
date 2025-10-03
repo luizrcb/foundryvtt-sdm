@@ -889,5 +889,6 @@
   "TYPES.Item.trait": "Trait",
   "TYPES.Item.vehicle": "Vehicle",
   "TYPES.Item.ward": "Ward",
-  "TYPES.Item.weapon": "Weapon"
+  "TYPES.Item.weapon": "Weapon",
+  "SDM.ResetBonusHeroDice": "Reset Bonus Hero Dice Pool"
 }

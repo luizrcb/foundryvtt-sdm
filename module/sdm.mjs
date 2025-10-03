@@ -21,10 +21,13 @@ import {
   CHARACTER_DEFAULT_INITIATIVE,
   configurePlayerChromatype,
   configureUseHeroDiceButton,
+  createBonusHeroDiceDisplay,
   createEscalatorDieDisplay,
   DEFAULT_MAX_POWERS,
   registerSystemSettings,
-  setupEscalatorDiePositionBroadcast
+  setupBonusHeroDiceBroadcast,
+  setupEscalatorDiePositionBroadcast,
+  updateBonusHeroDiceDisplay
 } from './settings.mjs';
 import { registerSDMGMSettingMenus } from './settings/register-gm-menus.mjs';
 import { setupSettingsSocket } from './settingsSocket.mjs';
@@ -392,6 +395,9 @@ Hooks.once('ready', function () {
   game.settings.set('core', 'combatTrackerConfig', combatConfig);
 
   createEscalatorDieDisplay();
+  createBonusHeroDiceDisplay();
+  setupBonusHeroDiceBroadcast();
+  updateBonusHeroDiceDisplay();
 
   // Hooks.on('dropCanvasData', async (canvas, data) => {
   //   console.log(canvas, data);

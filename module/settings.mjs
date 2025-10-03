@@ -204,7 +204,10 @@ export function registerSystemSettings() {
     scope: 'world',
     config: false,
     type: Number,
-    default: 0
+    default: 0,
+    onChange: value => {
+      updateBonusHeroDiceDisplay();
+    }
   });
 
   game.settings.register('sdm', 'escalatorPosition', {
@@ -511,21 +514,22 @@ function makeDraggable(element, handle) {
       isDragging = false;
       element.style.cursor = 'grab';
       document.body.style.userSelect = '';
-
-      // Save new position in settings
-      game.settings.set('sdm', 'escalatorPosition', {
-        left: element.style.left,
-        top: element.style.top
-      });
-
-      // Broadcast to other clients so they update immediately
-      game.socket.emit('system.sdm', {
-        type: 'updateEscalatorPosition',
-        position: {
+      if (game.user.isGM) {
+        // Save new position in settings
+        game.settings.set('sdm', 'escalatorPosition', {
           left: element.style.left,
           top: element.style.top
-        }
-      });
+        });
+
+        // Broadcast to other clients so they update immediately
+        game.socket.emit('system.sdm', {
+          type: 'updateEscalatorPosition',
+          position: {
+            left: element.style.left,
+            top: element.style.top
+          }
+        });
+      }
     }
   });
 }
@@ -880,4 +884,146 @@ export function configurePlayerChromatype() {
   darkRoot.style?.setProperty('--sdm-item-hover', rgbColor, 'important');
   darkRoot.style?.setProperty('--button-focus-outline-color', rgbColor, 'important');
   darkRoot.style?.setProperty('--button-hover-background-color', rgbColor, 'important');
+}
+
+export function updateBonusHeroDiceDisplay() {
+  const value = game.settings.get('sdm', 'bonusHeroDicePool') || 0;
+  const container = document.getElementById('bonus-hero-dice');
+  const display = document.getElementById('bonus-hero-value');
+
+  if (!container || !display) return;
+
+  display.textContent = value;
+  container.style.display = value > 0 ? 'flex' : 'none';
+
+  // Optional: visual pulse when active
+  container.style.boxShadow = value > 0 ? '0 0 8px var(--sdm-c-accent)' : 'none';
+}
+
+export function createBonusHeroDiceDisplay() {
+  const savedPos = { top: '80px', left: '50%' }; // default position; adjust as you like
+
+  const container = document.createElement('div');
+  container.id = 'bonus-hero-dice';
+  container.style.cssText = `
+    position: fixed;
+    top: ${savedPos.top};
+    left: ${savedPos.left};
+    transform: translateX(-50%);
+    z-index: 100;
+    display: none;
+    gap: 6px;
+    align-items: center;
+    padding: 6px 8px;
+    border-radius: 8px;
+    background: rgba(0,0,0,0.55);
+    color: white;
+    font-weight: 600;
+    font-size: 0.9em;
+    pointer-events: auto;
+  `;
+
+  // header / label
+  const label = document.createElement('div');
+  label.textContent = $l10n('SDM.BonusHeroDice') || 'Bonus Hero Dice';
+  label.style.cssText = `
+    white-space: nowrap;
+    text-shadow: 1px 1px 2px black;
+    margin-right: 8px;
+  `;
+
+  // icon
+  const icon = document.createElement('i');
+  icon.classList.add('fa-solid', 'fa-dice-d6');
+  icon.style.cssText = `
+    font-size: 20px;
+    width: 20px;
+    height: 20px;
+    line-height: 20px;
+    margin-right: 6px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
+  `;
+
+  // value display
+  const valueEl = document.createElement('div');
+  valueEl.id = 'bonus-hero-value';
+  valueEl.style.cssText = `
+    min-width: 18px;
+    text-align: center;
+    font-size: 1.1em;
+    text-shadow: 1px 1px 2px black;
+  `;
+
+  // GM-only reset button (created only for GMs)
+  let resetBtn = null;
+  if (game?.user?.isGM) {
+    resetBtn = document.createElement('button');
+    resetBtn.classList.add('bonus-hero-reset');
+    const resetTooltip = $l10n('SDM.ResetBonusHeroDice') || 'Reset';
+    resetBtn.setAttribute('data-tooltip', resetTooltip);
+    resetBtn.style.cssText = `
+      margin-left: 8px;
+      background: transparent;
+      border: 1px solid rgba(255,255,255,0.15);
+      color: white;
+      padding: 4px 6px;
+      border-radius: 4px;
+      cursor: pointer;
+    `;
+    resetBtn.textContent = '⟲';
+
+    resetBtn.addEventListener('click', async ev => {
+      ev.preventDefault();
+      ev.stopPropagation();
+
+      // set to zero
+      await game.settings.set('sdm', 'bonusHeroDicePool', 0);
+
+      // broadcast so other clients update
+      game.socket.emit('system.sdm', {
+        type: 'updateBonusHeroDice',
+        value: 0
+      });
+
+      updateBonusHeroDiceDisplay();
+    });
+  }
+
+  // assemble
+  const inner = document.createElement('div');
+  inner.style.cssText = 'display:flex; align-items:center;';
+  inner.append(icon, label, valueEl);
+  if (resetBtn) inner.appendChild(resetBtn);
+
+  container.appendChild(inner);
+  document.body.appendChild(container);
+
+  // allow GMs to drag it like the escalator (optional), using same draggable helper if available
+  if (typeof makeDraggable === 'function') {
+    makeDraggable(container, label);
+  }
+
+  // initial update
+  updateBonusHeroDiceDisplay();
+}
+
+/* ----------------------------
+   Broadcast listener for sync
+   ---------------------------- */
+
+export function setupBonusHeroDiceBroadcast() {
+  game.socket.on('system.sdm', data => {
+    if (!data) return;
+    if (data.type === 'updateBonusHeroDice') {
+      // Some other client changed the value -> update local settings if a value is present
+      if (typeof data.value !== 'undefined') {
+        // If the change came from GM via socket but this client didn't receive setting
+        // (race conditions), force a settings read & UI update
+        updateBonusHeroDiceDisplay();
+      }
+    }
+  });
 }
