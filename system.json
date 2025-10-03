@@ -9,7 +9,7 @@
   "download": "https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.4.2/sdm-0.4.2.zip",
   "compatibility": {
     "minimum": "13",
-    "verified": "13.348"
+    "verified": "13.350"
   },
   "authors": [
     {

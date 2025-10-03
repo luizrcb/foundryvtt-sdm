@@ -193,7 +193,8 @@ async function performItemTransfer(
   sourceActorType,
   targetActorId,
   cashAmount,
-  quantity = 1
+  quantity = 1,
+  totalCharged = 0,
 ) {
   let sourceActor;
 
@@ -361,7 +362,35 @@ async function performItemTransfer(
         throw err;
       }
     }
+    let items = [];
+    if (!isCashTransfer && freshItem) {
+      items.push(freshItem);
+    }
 
+    const ctx = {
+      senderName: 'Gamemaster',
+      transferId: transferKey,
+      sourceId: sourceActor.id,
+      targetId: targetActor.id,
+      sourceName,
+      sourceImg: sourceActor.img,
+      targetImg: targetActor.img,
+      targetName: targetActor.name,
+      items,
+      itemName: itemName,
+      quantity,
+      isCash: isCashTransfer,
+      amount: isCashTransfer ? parseInt(cashAmount, 10) : undefined,
+      currencyName: game.settings.get('sdm', 'currencyName') || 'cash',
+      currencyImg: game.settings.get('sdm', 'currencyImage'),
+      totalValue: totalCharged,
+    };
+
+    const content = await renderTemplate(templatePath('chat/transfer-summary-card'), ctx);
+    await ChatMessage.create({
+      content: `${content}`,
+      speaker: { alias: 'Gamemaster' }
+    });
     return { itemName, sourceName, targetUserIds };
   } finally {
     // Clear transfer flags on source if the item still exists
@@ -598,7 +627,8 @@ export async function openItemTransferDialog(item, sourceActor) {
           sourceActor.type,
           targetActorId,
           transferOptions.cashAmount,
-          reqQty
+          reqQty,
+          totalCharge,
         );
         ui.notifications.info($l10n('SDM.TransferComplete'));
       } catch (err) {

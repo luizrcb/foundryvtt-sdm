@@ -9,7 +9,6 @@ import {
 } from '../helpers/constants.mjs';
 import { $fmt, $l10n, capitalizeFirstLetter, safeEvaluate } from '../helpers/globalUtils.mjs';
 import { getSlotsTaken } from '../helpers/itemUtils.mjs';
-import { splitStackIntoSingles } from '../helpers/stackUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 
 const { renderTemplate } = foundry.applications.handlebars;
@@ -55,30 +54,6 @@ export class SdmItem extends Item {
       await actor.createEmbeddedDocuments('Item', clones, { _sdmFromSplit: true });
     }
   }
-
-  // async _onCreate(data, options, userId) {
-  //   if (userId !== game.user.id) return;
-
-  //   await super._onCreate(data, options, userId);
-
-  //   try {
-  //     // Only act on embedded items that just landed on a Caravan
-  //     const actor = this.parent;
-  //     if (!actor || actor.type !== ActorType.CARAVAN) return;
-
-  //     // Only split supplies in sacks with quantity > 1
-  //     const isSupply = !!this.system?.is_supply;
-  //     const unit = this.system?.size?.unit;
-  //     const qty = Number(this.system?.quantity ?? 1) || 1;
-
-  //     if (isSupply && unit === SizeUnit.SACKS && qty > 1) {
-  //       // Keep 1 on the original; create (qty-1) 1-qty copies
-  //       await splitStackIntoSingles(this, { count: qty, keepOnOriginal: true });
-  //     }
-  //   } catch (err) {
-  //     console.error('SdmItem._onCreate auto-split failed:', err);
-  //   }
-  // }
 
   async _onUpdate(changed, options, userId) {
     await super._onUpdate(changed, options, userId);

@@ -6,11 +6,7 @@ import {
   MAX_ATTRIBUTE_VALUE
 } from '../helpers/actorUtils.mjs';
 import { ActorType, GearType, ItemType, SizeUnit, TraitType } from '../helpers/constants.mjs';
-import {
-  $l10n,
-  capitalizeFirstLetter,
-  safeEvaluate,
-} from '../helpers/globalUtils.mjs';
+import { $l10n, capitalizeFirstLetter, safeEvaluate } from '../helpers/globalUtils.mjs';
 import {
   BURDEN_ITEM_TYPES,
   convertToCash,
@@ -20,8 +16,8 @@ import {
 import { mergeSimilarItems, splitStackIntoTwo } from '../helpers/stackUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { promptSplitStackFirstQty } from '../items/splitDialog.mjs';
-const { renderTemplate } = foundry.applications.handlebars;
 
+const { renderTemplate } = foundry.applications.handlebars;
 const { DialogV2 } = foundry.applications.api;
 
 /**
@@ -1162,6 +1158,11 @@ export class SdmActor extends Actor {
         item: {
           handler: '_onRoll',
           dataset: { action: 'roll', type: actionType, label: args.label, tooltip: args.tooltip },
+          closestReturn: { dataset: { documentClass: 'Item', itemId: actionKey } }
+        },
+        transferCash: {
+          handler: '_onTransferItem',
+          dataset: { action: 'roll', type: actionType },
           closestReturn: { dataset: { documentClass: 'Item', itemId: actionKey } }
         }
       };

@@ -1,0 +1,67 @@
+
+<div class="flexcol" data-message-id="{{messageId}}">
+  <header class="message-header flexrow">
+    <span class="flavor-text">
+      {{localize 'SDM.Transfer' type=(localize (ifThen isCash 'TYPES.Item.cash' 'TYPE.Item'))}}
+    </span>
+  </header>
+
+  <div class="message-content">
+    <div class="item-piles-chat-card transfer-summary-card"
+         data-source-id="{{sourceId}}" data-target-id="{{targetId}}" data-transfer-id="{{transferId}}">
+
+      <div class="item-piles-chat-card-title">
+        <p class="actors-brief">
+          {{#if sourceImg}}<img src="{{sourceImg}}" alt="{{sourceName}}" height="32" data-fast-tooltip="{{sourceName}}">{{/if}}
+          <i class="fas fa-arrow-right" aria-hidden="true"></i>
+          {{#if targetImg}}<img src="{{targetImg}}" alt="{{targetName}}" height="32" data-fast-tooltip="{{targetName}}">{{/if}}
+        </p>
+        {{#if note}}
+          <p class="transfer-note">{{note}}</p>
+        {{else}}
+          <p class="transfer-note">{{localize 'SDM.Transferred'}}:</p>
+        {{/if}}
+      </div>
+
+      <ul class="transfer-items">
+        {{!-- Prefer an items array if provided (multiple items), otherwise fall back to single item fields --}}
+        {{#if items}}
+          {{#each items}}
+            <li class="transfer-item-row" data-item-id="{{this.id}}">
+              {{#if this.img}}<img src="{{this.img}}" alt="{{this.name}}" height="20" data-fast-tooltip="{{this.name}}">{{/if}}
+              <label class="transfer-item-name">{{this.name}} (x{{this.system.quantity}})</label>
+
+              {{#if this.isCash}}
+                <label class="transfer-item-amount">{{this.amount}} {{this.currency}}</label>
+              {{else}}
+                {{#if this.quantity}}
+                  <label class="transfer-item-qty">x{{this.quantity}}</label>
+                {{/if}}
+                {{#if this.unitCost}}
+                  <label class="transfer-item-cost">({{this.currency}}{{this.unitCost}} each)</label>
+                {{/if}}
+              {{/if}}
+            </li>
+          {{/each}}
+        {{else}}
+          <li class="transfer-item-row">
+            {{#if isCash}}
+              <img src="{{currencyImg}}" alt="{{currencyName}}" height="20" data-fast-tooltip="{{currencyName}}">
+              <label class="transfer-item-name">€{{amount}}</label>
+            {{else}}
+              {{#if itemImg}}<img src="{{itemImg}}" alt="{{itemName}}" height="20" data-fast-tooltip="{{itemName}}">{{/if}}
+              <label class="transfer-item-name">{{itemName}}</label>
+              {{#if quantity}}<label class="transfer-item-qty">(x{{quantity}})</label>{{/if}}
+            {{/if}}
+          </li>
+        {{/if}}
+        {{#if (gt totalValue 0)}}<label class="transfer-item-amount">{{localize 'SDM.TotalCharged'}}: €{{totalValue}}</label>{{/if}}
+      </ul>
+
+      <div class="transfer-footer">
+        {{!-- <small class="transfer-meta">From <strong>{{sourceName}}</strong> to <strong>{{targetName}}</strong></small> --}}
+        {{#if note}}<div class="transfer-note-2">{{note}}</div>{{/if}}
+      </div>
+    </div>
+  </div>
+</div>

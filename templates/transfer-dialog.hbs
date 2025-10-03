@@ -1,5 +1,5 @@
 <form>
-  <h5>{{localize 'SDM.Transfer' type=item.name}}</h5>
+  <h5>{{localize 'SDM.TransferItem' type=item.name}}</h5>
 
   <div class='grid grid-2col flexcol'>
 
@@ -28,7 +28,7 @@
             min='1'
             max='{{maxQuantity}}'
             step='1'
-            value='1'
+            value='{{item.system.quantity}}'
             data-type='Number'
           />
         </div>
