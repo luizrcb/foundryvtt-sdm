@@ -796,6 +796,54 @@ input[type=radio]::after {
     background: unset;
     text-shadow: unset;
   }
+  /* Even / odd row backgrounds */
+  .adjustment-row:nth-child(odd) {
+    background-color: rgba(0, 0, 0, 0.05); /* light gray for odd rows */
+  }
+  .adjustment-row:nth-child(even) {
+    background-color: rgba(0, 0, 0, 0.02); /* light gray for odd rows */
+  }
+  .adjustment-value {
+    align-self: flex-end;
+    font-size: 14px;
+  }
+  .adjustment-meta {
+    font-size: 14px;
+  }
+  /* Positive / negative values */
+  .adjustment-value.positive {
+    color: green;
+  }
+  .adjustment-value.negative {
+    color: red;
+  }
+  /* Row padding and flex layout */
+  .adjustment-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+  }
+  /* Optional: hover highlight */
+  .adjustment-row:hover {
+    background-color: rgba(0, 0, 0, 0.1);
+  }
+  /* Actor image styling */
+  .adjustment-row img {
+    flex: 0 0 auto;
+    border-radius: 3px;
+  }
+  /* Cash image styling */
+  .cash-img {
+    vertical-align: text-bottom;
+    height: 14px;
+  }
+  /* Note styling */
+  .adjustment-note {
+    margin-left: 8px;
+  }
 }
 .grid,
 .grid-2col {

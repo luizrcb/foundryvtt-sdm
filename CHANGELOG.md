@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.4.3
+
+- Item and Cash transfers now create a history card in the chat
+- Many Referee actions now create a history card in the chat (Give Hero Dice, Give XP, Give/Take Cash)
+
 ## v0.4.2
 
 - Add support to right-clicked action on the Token Action HUD (right-click Hero Dice button)

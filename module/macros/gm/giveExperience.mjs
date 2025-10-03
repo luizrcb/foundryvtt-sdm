@@ -1,5 +1,9 @@
+import { $l10n } from "../../helpers/globalUtils.mjs";
+import { templatePath } from "../../helpers/templates.mjs";
+
 const { DialogV2 } = foundry.applications.api;
 const { NumberField } = foundry.data.fields;
+const { renderTemplate } = foundry.applications.handlebars;
 
 export async function giveExperience() {
   if (!game.user.isGM) return;
@@ -57,8 +61,60 @@ export async function giveExperience() {
     'system.player_experience': `${Math.max(parseInt(actor.system.player_experience) + data.xp, 0)}`
   }));
 
-  // Apply updates
+  // Antes de aplicar mudanças:
+  const xpChanges = targets
+    .map(actor => {
+      const before = Number(actor.system?.player_experience ?? 0);
+      const added = Number(data.xp ?? 0) || 0;
+      const after = Math.max(0, before + added);
+      // se você quiser permitir diminuição (negativos) ajustaria aqui
+      return {
+        actorId: actor.id,
+        actorName: actor.name,
+        actorImg: actor.prototypeToken?.texture?.src || actor.img || null,
+        amount: added, // positivo = ganho
+        before,
+        after,
+        note: data.note ?? undefined
+      };
+    })
+    .filter(Boolean);
+
+  // Aplica updates (o seu código atual)
   await Actor.updateDocuments(updates);
+
+  // Depois, post:
+  if (xpChanges.length) {
+    const ctx = {
+      messageId: foundry.utils.randomID(),
+      timestamp: new Date().toLocaleTimeString(),
+      senderName: 'Gamemaster',
+      logId: `xp-${Date.now()}-${foundry.utils.randomID(4)}`,
+      eventLabel: $l10n('SDM.GMGiveExperience') ?? 'Experience Distribution',
+      xpChanges
+    };
+
+    try {
+      let html = await renderTemplate(templatePath('chat/adjustments-summary-card'), ctx);
+      if (typeof html !== 'string') {
+        if (html instanceof HTMLElement) html = html.outerHTML;
+        else if (html instanceof NodeList || html instanceof HTMLCollection) {
+          html = Array.from(html)
+            .map(n => n.outerHTML ?? String(n))
+            .join('');
+        } else html = String(html);
+      }
+
+      await ChatMessage.create({
+        content: html,
+        speaker: ChatMessage.getSpeaker({ alias: 'Gamemaster' }),
+        type: CONST.CHAT_MESSAGE_TYPES.OOC
+      });
+    } catch (err) {
+      console.error('Erro ao postar resumo de XP:', err);
+    }
+  }
+
   ui.notifications.info(
     game.i18n.format('SDM.ExperienceDistributionCompleted', { xp: data.xp, number: targets.length })
   );

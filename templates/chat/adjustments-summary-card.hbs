@@ -1,0 +1,92 @@
+<div class="flexcol" data-message-id="{{messageId}}">
+  <div class="message-content">
+    <div class="adjustments-summary-card" data-log-id="{{logId}}">
+
+      {{!-- CASH --}}
+      {{#if cashChanges}}
+      <div class="adjustment-block cash-block">
+        <div class="block-title">
+          <i class="fa-solid fa-coins" aria-hidden="true"></i>
+          <strong>{{localize 'SDM.CashManagement'}}</strong>
+        </div>
+        <ul class="adjustment-list">
+          {{#each cashChanges}}
+          <li class="adjustment-row" data-actor-id="{{this.actorId}}">
+            {{#if this.actorImg}}
+              <div class="flex flexrow" style="gap: 5px;"><img src="{{this.actorImg}}" alt="{{this.actorName}}" height="20" data-fast-tooltip="{{this.actorName}}">
+              <span>{{this.actorName}}</span></div>
+            {{/if}}
+
+            <span class="adjustment-value {{#if (gt this.amount 0)}}positive{{else if (lt this.amount 0)}}negative{{/if}}">
+              {{#if (gt this.amount 0)}}+{{/if}}{{this.amount}} {{localize 'SDM.CashSymbol'}}
+              {{#if this.currencyImg}}
+                <img src="{{this.currencyImg}}" alt="{{this.currency}}" class="cash-img">
+              {{/if}}
+            </span>
+
+            {{#if this.note}}
+              <small class="adjustment-note">— {{this.note}}</small>
+            {{/if}}
+          </li>
+        {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+
+      {{!-- EXPERIENCE --}}
+      {{#if xpChanges}}
+      <div class="adjustment-block xp-block">
+        <div class="block-title">
+          <i class="fa-solid fa-angles-up" aria-hidden="true"></i>
+          <strong>{{localize 'SDM.FieldExperience'}} ({{localize 'SDM.FieldPlayerXP'}})</strong>
+        </div>
+        <ul class="adjustment-list">
+          {{#each xpChanges}}
+            <li class="adjustment-row" data-actor-id="{{this.actorId}}">
+              <div class="flex flexrow" style="gap: 5px;">
+              {{#if this.actorImg}}<img src="{{this.actorImg}}" alt="{{this.actorName}}" height="20" data-fast-tooltip="{{this.actorName}}">{{/if}}
+              <span class="actor-name">{{this.actorName}}</span>
+              </div>
+              <span class="adjustment-value {{#if (gt this.amount 0)}}positive{{else if (lt this.amount 0)}}negative{{/if}}">
+                {{#if (gt this.amount 0)}}+{{/if}}{{this.amount}} XP</span>
+              {{#if this.note}}<small class="adjustment-note">— {{this.note}}</small>{{/if}}
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+
+      {{!-- HERO DICE --}}
+      {{#if heroDiceChanges}}
+      <div class="adjustment-block hero-dice-block">
+        <div class="block-title">
+          <i class="fa-solid fa-dice" aria-hidden="true"></i>
+          <strong>{{toPascalCase (localize 'SDM.HeroDice')}}</strong>
+        </div>
+        <ul class="adjustment-list">
+          {{#each heroDiceChanges}}
+            <li class="adjustment-row" data-actor-id="{{this.actorId}}">
+              <div class="flex flexrow" style="gap: 5px;">
+              {{#if this.actorImg}}<img src="{{this.actorImg}}" alt="{{this.actorName}}" height="20" data-fast-tooltip="{{this.actorName}}">{{/if}}
+              <span class="actor-name">{{this.actorName}}</span>
+              </div>
+              <div style="gap: 8px;">
+                <span class="adjustment-value {{#if (gt this.adjustment 0)}}positive{{else if (lt this.adjustment 0)}}negative{{/if}}">
+                  {{#if (gt this.adjustment 0)}}+{{/if}}{{this.adjustment}}
+                </span>
+                <small class="adjustment-meta">({{this.before}} → {{this.after}})</small>
+              </div>
+              {{!-- {{#if this.note}}<small class="adjustment-note">— {{this.note}}</small>{{/if}} --}}
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+
+      {{!-- Footer --}}
+      <div class="adjustment-footer">
+        <small class="muted">Event: {{eventLabel}}{{#if eventSource}} — {{eventSource}}{{/if}}</small>
+      </div>
+    </div>
+  </div>
+</div>
