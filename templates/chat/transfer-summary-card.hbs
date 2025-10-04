@@ -12,9 +12,9 @@
 
       <div class="item-piles-chat-card-title">
         <p class="actors-brief">
-          {{#if sourceImg}}<img src="{{sourceImg}}" alt="{{sourceName}}" height="32" data-fast-tooltip="{{sourceName}}">{{/if}}
+          {{#if sourceImg}}<img src="{{sourceImg}}" alt="{{sourceName}}" height="32" data-tooltip="{{sourceName}}">{{/if}}
           <i class="fas fa-arrow-right" aria-hidden="true"></i>
-          {{#if targetImg}}<img src="{{targetImg}}" alt="{{targetName}}" height="32" data-fast-tooltip="{{targetName}}">{{/if}}
+          {{#if targetImg}}<img src="{{targetImg}}" alt="{{targetName}}" height="32" data-tooltip="{{targetName}}">{{/if}}
         </p>
         {{#if note}}
           <p class="transfer-note">{{note}}</p>
@@ -28,7 +28,7 @@
         {{#if items}}
           {{#each items}}
             <li class="transfer-item-row" data-item-id="{{this.id}}">
-              {{#if this.img}}<img src="{{this.img}}" alt="{{this.name}}" height="20" data-fast-tooltip="{{this.name}}">{{/if}}
+              {{#if this.img}}<img src="{{this.img}}" alt="{{this.name}}" height="20" data-tooltip="{{this.name}}">{{/if}}
               <label class="transfer-item-name">{{this.name}} (x{{this.system.quantity}})</label>
 
               {{#if this.isCash}}
@@ -46,10 +46,10 @@
         {{else}}
           <li class="transfer-item-row">
             {{#if isCash}}
-              <img src="{{currencyImg}}" alt="{{currencyName}}" height="20" data-fast-tooltip="{{currencyName}}">
+              <img src="{{currencyImg}}" alt="{{currencyName}}" height="20" data-tooltip="{{currencyName}}">
               <label class="transfer-item-name">€{{amount}}</label>
             {{else}}
-              {{#if itemImg}}<img src="{{itemImg}}" alt="{{itemName}}" height="20" data-fast-tooltip="{{itemName}}">{{/if}}
+              {{#if itemImg}}<img src="{{itemImg}}" alt="{{itemName}}" height="20" data-tooltip="{{itemName}}">{{/if}}
               <label class="transfer-item-name">{{itemName}}</label>
               {{#if quantity}}<label class="transfer-item-qty">(x{{quantity}})</label>{{/if}}
             {{/if}}

@@ -3,7 +3,9 @@ import {
   CHARACTER_DEFAULT_WEIGHT_IN_CASH,
   getLevel,
   getMaxLife,
-  MAX_ATTRIBUTE_VALUE
+  MAX_ATTRIBUTE_VALUE,
+  postConsumeSupplies,
+  postLifeChange
 } from '../helpers/actorUtils.mjs';
 import { ActorType, GearType, ItemType, SizeUnit, TraitType } from '../helpers/constants.mjs';
 import { $l10n, capitalizeFirstLetter, safeEvaluate } from '../helpers/globalUtils.mjs';
@@ -756,7 +758,7 @@ export class SdmActor extends Actor {
 
     // Build a final array you can log/use for chat, etc.
     const consumedSummary = Array.from(consumedMap.values());
-    //console.log('Consumed summary:', consumedSummary);
+    await postConsumeSupplies(this, consumedSummary);
   }
 
   /**
@@ -1070,6 +1072,9 @@ export class SdmActor extends Actor {
 
     const amountToApply = damageValue * multiplier;
     const newValue = Math.clamp(value - amountToApply, 0, max);
+
+    await postLifeChange(this, damageValue, multiplier);
+
     await this.update({
       'system.life.value': newValue
     });

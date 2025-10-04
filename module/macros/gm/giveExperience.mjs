@@ -108,7 +108,6 @@ export async function giveExperience() {
       await ChatMessage.create({
         content: html,
         speaker: ChatMessage.getSpeaker({ alias: 'Gamemaster' }),
-        type: CONST.CHAT_MESSAGE_TYPES.OOC
       });
     } catch (err) {
       console.error('Erro ao postar resumo de XP:', err);

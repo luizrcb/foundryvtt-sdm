@@ -1,4 +1,6 @@
 import { ActorType } from './constants.mjs';
+import { templatePath } from './templates.mjs';
+const { renderTemplate } = foundry.applications.handlebars;
 
 export const BASE_DEFENSE_VALUE = 7;
 export const MAX_ATTRIBUTE_VALUE = 19;
@@ -88,7 +90,7 @@ const PET_TABLE = [
   { level: 6, defense: 14, life: 28, bonus: 8, morale: 7, damage: '1d10+6' },
   { level: 7, defense: 14, life: 32, bonus: 9, morale: 8, damage: '1d12+7' },
   { level: 8, defense: 15, life: 36, bonus: 10, morale: 8, damage: '2d8+8' },
-  { level: 9, defense: 15, life: 40, bonus: 11, morale: 9, damage: '1d20+11' },
+  { level: 9, defense: 15, life: 40, bonus: 11, morale: 9, damage: '1d20+11' }
 ];
 
 const NPCTables = {
@@ -428,4 +430,98 @@ export async function createFullAutoDestructionMode(
   );
 
   await Actor.create(npcData);
+}
+
+function percentToHpColor(percent) {
+  const p = Math.max(0, Math.min(100, Number(percent) || 0));
+  const hue = Math.round((p / 100) * 120);
+  return `hsl(${hue} 70% 45%)`;
+}
+
+export async function postLifeChange(actor, damageValue = 0, multiplier = 1, opts = {}) {
+  if (!actor) return;
+  const isHealing = Number(multiplier) < 0;
+  const amount = Math.abs(Number(damageValue) || 0) * Math.abs(Number(multiplier) || 1);
+  const before = Number(actor.system?.life?.value ?? 0);
+  const max = Number(actor.system?.life?.max ?? 0);
+  const after = Math.clamp(before - amount * (Number(multiplier) || 1), 0, max);
+  const percentAfter = max > 0 ? Math.round((after / max) * 100) : 0;
+  const hpColor = percentToHpColor(percentAfter);
+  const ctx = {
+    messageId: foundry.utils.randomID(),
+    timestamp: new Date().toLocaleTimeString(),
+    senderName: opts.senderName ?? 'Gamemaster',
+    eventLabel:
+      opts.eventLabel ??
+      (isHealing
+        ? (game.i18n.localize('SDM.Heal') ?? 'Heal')
+        : (game.i18n.localize('SDM.Damage') ?? 'Damage')),
+    actorId: actor.id,
+    actorName: actor.name,
+    actorImg: actor.prototypeToken?.texture?.src || actor.img || '',
+    amountFormatted: String(Math.round(amount)),
+    amount: Math.round(amount),
+    isHealing,
+    before,
+    after,
+    max,
+    percentAfter,
+    hpColor,
+    note: opts.note ?? ''
+  };
+  let html = await renderTemplate(templatePath('chat/life-change-card'), ctx);
+  if (typeof html !== 'string') {
+    if (html instanceof HTMLElement) html = html.outerHTML;
+    else if (html instanceof NodeList || html instanceof HTMLCollection)
+      html = Array.from(html)
+        .map(n => n.outerHTML ?? String(n))
+        .join('');
+    else html = String(html);
+  }
+  const wrapper = document.createElement('div');
+  wrapper.innerHTML = html;
+  const fill = wrapper.querySelector('.life-hp-fill');
+  if (fill) {
+    fill.style.setProperty('--hp-color', ctx.hpColor);
+    fill.style.width = `${ctx.percentAfter}%`;
+  }
+  await ChatMessage.create({
+    content: wrapper.innerHTML,
+    speaker: ChatMessage.getSpeaker({ alias: ctx.senderName })
+  });
+  return ctx;
+}
+
+export async function postConsumeSupplies(actor, supplies = [], opts = {}) {
+  if (!actor) return null;
+  const messageId = foundry.utils.randomID();
+  const senderName = opts.senderName ?? 'Gamemaster';
+  const actorId = actor.id;
+  const actorName = actor.name;
+  const actorImg = actor.img || '';
+  const actorNote = opts.actorNote ?? '';
+  const totalCount = supplies.reduce((s, it) => s + (Number(it.quantity) || 0), 0);
+  const ctx = {
+    messageId,
+    actorId,
+    actorName,
+    actorImg,
+    actorNote,
+    supplies,
+    totalCount
+  };
+  let html = await renderTemplate(templatePath('chat/consume-supplies-card'), ctx);
+  if (typeof html !== 'string') {
+    if (html instanceof HTMLElement) html = html.outerHTML;
+    else if (html instanceof NodeList || html instanceof HTMLCollection)
+      html = Array.from(html)
+        .map(n => n.outerHTML ?? String(n))
+        .join('');
+    else html = String(html);
+  }
+  await ChatMessage.create({
+    content: html,
+    speaker: ChatMessage.getSpeaker({ alias: senderName })
+  });
+  return ctx;
 }

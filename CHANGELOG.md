@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.4.4
+
+- Add new SDM color themes to Dice So Nice
+- Applying Damage or Healing now creates a history card in the chat
+- Caravan supply consumption now creates a history card in the chat
+
 ## v0.4.3
 
 - Item and Cash transfers now create a history card in the chat

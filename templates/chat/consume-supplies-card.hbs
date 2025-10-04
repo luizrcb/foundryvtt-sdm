@@ -1,0 +1,34 @@
+<div class="flexcol cs-consume-card" data-message-id="{{messageId}}">
+  <header class="message-header flexrow cs-consume-header">
+    <span class="">{{localize 'SDM.ConsumeSupply'}}</span>
+  </header>
+
+  <div class="message-content cs-consume-content">
+    <div class="cs-consumer" data-actor-id="{{actorId}}">
+      {{#if actorImg}}<img src="{{actorImg}}" alt="{{actorName}}" class="cs-consumer-img">{{/if}}
+      <div class="cs-consumer-info">
+        <strong class="cs-consumer-name">{{actorName}}</strong>
+        {{#if actorNote}}<small class="cs-consumer-note">{{actorNote}}</small>{{/if}}
+      </div>
+    </div>
+
+    <ul class="cs-supplies-list">
+      {{#each supplies}}
+        <li class="cs-supply-row" data-item-name="{{this.name}}">
+          {{#if this.img}}<img src="{{this.img}}" alt="{{this.name}}" class="cs-supply-img">{{/if}}
+          <div class="cs-supply-info">
+            <span class="cs-supply-name">{{this.name}}</span>
+            {{#if this.note}}<small class="cs-supply-note">{{this.note}}</small>{{/if}}
+          </div>
+          <div class="cs-supply-qty">x{{this.quantity}}</div>
+        </li>
+      {{/each}}
+    </ul>
+
+    {{#if totalCount}}
+      <div class="cs-supplies-footer">
+        {{localize 'SDM.TotalSuppliesConsumed'}}: <strong>{{totalCount}}</strong>
+      </div>
+    {{/if}}
+  </div>
+</div>

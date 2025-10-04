@@ -13,7 +13,7 @@
           {{#each cashChanges}}
           <li class="adjustment-row" data-actor-id="{{this.actorId}}">
             {{#if this.actorImg}}
-              <div class="flex flexrow" style="gap: 5px;"><img src="{{this.actorImg}}" alt="{{this.actorName}}" height="20" data-fast-tooltip="{{this.actorName}}">
+              <div class="flex flexrow" style="gap: 5px;"><img src="{{this.actorImg}}" alt="{{this.actorName}}" height="20" data-tooltip="{{this.actorName}}">
               <span>{{this.actorName}}</span></div>
             {{/if}}
 
@@ -44,7 +44,7 @@
           {{#each xpChanges}}
             <li class="adjustment-row" data-actor-id="{{this.actorId}}">
               <div class="flex flexrow" style="gap: 5px;">
-              {{#if this.actorImg}}<img src="{{this.actorImg}}" alt="{{this.actorName}}" height="20" data-fast-tooltip="{{this.actorName}}">{{/if}}
+              {{#if this.actorImg}}<img src="{{this.actorImg}}" alt="{{this.actorName}}" height="20" data-tooltip="{{this.actorName}}">{{/if}}
               <span class="actor-name">{{this.actorName}}</span>
               </div>
               <span class="adjustment-value {{#if (gt this.amount 0)}}positive{{else if (lt this.amount 0)}}negative{{/if}}">
@@ -67,7 +67,7 @@
           {{#each heroDiceChanges}}
             <li class="adjustment-row" data-actor-id="{{this.actorId}}">
               <div class="flex flexrow" style="gap: 5px;">
-              {{#if this.actorImg}}<img src="{{this.actorImg}}" alt="{{this.actorName}}" height="20" data-fast-tooltip="{{this.actorName}}">{{/if}}
+              {{#if this.actorImg}}<img src="{{this.actorImg}}" alt="{{this.actorName}}" height="20" data-tooltip="{{this.actorName}}">{{/if}}
               <span class="actor-name">{{this.actorName}}</span>
               </div>
               <div style="gap: 8px;">

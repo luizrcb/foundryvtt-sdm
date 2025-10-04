@@ -1,0 +1,33 @@
+<div class="flexcol life-change-card" data-message-id="{{messageId}}">
+  <header class="message-header flexrow life-header">
+    <span class="flavor-text life-flavor">{{#if isHealing}}{{localize 'SDM.Healing'}}{{else}}{{localize 'SDM.Damage'}}{{/if}}</span>
+  </header>
+
+  <div class="message-content life-content">
+    <div class="life-row" data-actor-id="{{actorId}}">
+      <div class="life-thumb">
+        {{#if actorImg}}<img src="{{actorImg}}" alt="{{actorName}}" data-tooltip="{{actorName}}" class="life-thumb-img">{{/if}}
+      </div>
+
+      <div class="life-main">
+        <div class="life-top">
+          <div class="life-name">{{actorName}}</div>
+          <div class="life-change">
+            {{#if isHealing}}<i class="fas fa-heart life-icon lime" aria-hidden="true"></i>{{else}}<i class="fas fa-explosion life-icon rust" aria-hidden="true"></i>{{/if}}
+            <span class="life-amount">{{#if isHealing}}+{{/if}}{{amountFormatted}}</span>
+          </div>
+        </div>
+
+        <div class="life-hp-line">
+          <div class="life-hp-label">Before: {{before}} / {{max}}</div>
+          <div class="life-hp-bar" role="progressbar" aria-valuemin="0" aria-valuemax="{{max}}" aria-valuenow="{{after}}">
+            <div class="life-hp-fill" style="width: {{percentAfter}}%; background: var(--hp-color, #8be24a);"></div>
+            <div class="life-hp-after">{{after}} / {{max}}</div>
+          </div>
+        </div>
+
+        {{#if note}}<div class="life-note">{{note}}</div>{{/if}}
+      </div>
+    </div>
+  </div>
+</div>

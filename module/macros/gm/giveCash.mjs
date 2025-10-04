@@ -319,7 +319,6 @@ export async function giveCash(
         await ChatMessage.create({
           content: html,
           speaker: ChatMessage.getSpeaker({ alias: 'Gamemaster' }),
-          type: CONST.CHAT_MESSAGE_TYPES.OOC
         });
       }
 

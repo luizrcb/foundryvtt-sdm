@@ -499,6 +499,7 @@
   "SDM.GMGroupInitiative": "Group Initiative",
   "SDM.GroupInitiativeErrorNoTokens": "Select all tokens that will be part of the encounter. No need to create the encounter beforehand.",
   "SDM.HallmarkItem": "Hallmark",
+  "SDM.Healing": "Healing",
   "SDM.HealingHouseRule": "Healing House Rule",
   "SDM.HeroDice": "hero dice",
   "SDM.HeroDiceHealingTip": "<b>Left-click</b>: roll Hero Dice for healing<br><b>Right-click</b>: add Hero Dice to a shared Bonus Pool",
@@ -685,6 +686,7 @@
   "SDM.ReactionProvokeConflict": "Provoke Conflict",
   "SDM.ReactionRoll": "Reaction Roll",
   "SDM.Reset": "Reset to 0",
+  "SDM.ResetBonusHeroDice": "Reset Bonus Hero Dice Pool",
   "SDM.Result": "Result",
   "SDM.RollAdvantage": "advantage",
   "SDM.RollAdvantageAbbr": "↑a",
@@ -827,6 +829,7 @@
   "SDM.Target": "Target",
   "SDM.Total": "total",
   "SDM.TotalCharged": "Total Charged",
+  "SDM.TotalSuppliesConsumed": "Total supplies consumed",
   "SDM.TotalToCharge": "Total to Charge",
   "SDM.Transfer": "{type} Transfer",
   "SDM.TransferCashComplete": "Transferred {amount} cash to {target}",
@@ -889,6 +892,5 @@
   "TYPES.Item.trait": "Trait",
   "TYPES.Item.vehicle": "Vehicle",
   "TYPES.Item.ward": "Ward",
-  "TYPES.Item.weapon": "Weapon",
-  "SDM.ResetBonusHeroDice": "Reset Bonus Hero Dice Pool"
+  "TYPES.Item.weapon": "Weapon"
 }

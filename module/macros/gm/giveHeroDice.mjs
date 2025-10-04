@@ -186,7 +186,6 @@ async function postHeroDiceSummary(targets = [], data = {}, opts = {}) {
     await ChatMessage.create({
       content: html,
       speaker: ChatMessage.getSpeaker({ alias: senderName }),
-      type: CONST.CHAT_MESSAGE_TYPES.OOC
     });
 
     return ctx; // retorno útil para testes / logs

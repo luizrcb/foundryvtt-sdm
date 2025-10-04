@@ -834,6 +834,18 @@ export function configurePlayerChromatype() {
   const dice3DColor = colorMapping[dsnFinalColor].dice;
   const { foreground, background, edge } = dice3DColor;
 
+  const rainbow = ['purple', 'red', 'orange', 'yellow', 'green', 'blue'];
+  const foregroundRainbow = rainbow.map(color => colorMapping[color].dice.foreground);
+  const backgroundRainbow = rainbow.map(color => colorMapping[color].dice.background);
+
+  const neon = ['neonPurple', 'lime', 'ultraviolet', 'aqua'];
+  const foregroundNeon = neon.map(color => colorMapping[color].dice.foreground);
+  const backgroundNeon = neon.map(color => colorMapping[color].dice.background);
+
+  const luxury = ['olive', 'emerald', 'crimson', 'silver', 'gold'];
+  const foregroundLuxury = luxury.map(color => colorMapping[color].dice.foreground);
+  const backgroundLuxury = luxury.map(color => colorMapping[color].dice.background);
+
   Hooks.once('diceSoNiceInit', dice3d => {
     if (dice3d) {
       const colorData = {
@@ -853,6 +865,49 @@ export function configurePlayerChromatype() {
         colorData.edge = [edge];
       }
       dice3d.addColorset(colorData);
+
+
+      const rainbowData = {
+        name: 'sdm-rainbowlands',
+        description: 'SDM Rainbowlands Dice',
+        category: 'Colors',
+        foreground: foregroundRainbow,
+        background: backgroundRainbow,
+        outline: 'black',
+        texture: 'none',
+        material: 'plastic',
+        font: 'Our Golden Age',
+        fontScale: DICE_SCALE
+      };
+      dice3d.addColorset(rainbowData);
+
+      const neonData = {
+        name: 'sdm-neon',
+        description: 'SDM Neon Dice',
+        category: 'Colors',
+        foreground: foregroundNeon,
+        background: backgroundNeon,
+        outline: 'black',
+        texture: 'none',
+        material: 'plastic',
+        font: 'Our Golden Age',
+        fontScale: DICE_SCALE
+      };
+      dice3d.addColorset(neonData);
+
+      const luxuryData = {
+        name: 'sdm-luxury',
+        description: 'SDM Luxury Dice',
+        category: 'Colors',
+        foreground: foregroundLuxury,
+        background: backgroundLuxury,
+        outline: 'black',
+        texture: 'none',
+        material: 'plastic',
+        font: 'Our Golden Age',
+        fontScale: DICE_SCALE
+      };
+      dice3d.addColorset(luxuryData);
     }
   });
 

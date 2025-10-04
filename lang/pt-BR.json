@@ -499,7 +499,8 @@
   "SDM.GMGroupInitiative": "Iniciativa em Grupo",
   "SDM.GroupInitiativeErrorNoTokens": "Selecione todos os tokens que farão parte do encontro. Não há necessidade de criar o encontro previamente.",
   "SDM.HallmarkItem": "Emblemático",
-  "SDM.HealingHouseRule": "Regra de Cura",
+  "SDM.Healing": "Cura",
+  "SDM.HealingHouseRule": "Regra da Casa de Cura",
   "SDM.HeroDice": "dados heróicos",
   "SDM.HeroDiceHealingTip": "<b>clique-esquerdo</b>: role dados heróicos para se curar<br><b>clique-direito</b>: adiciona dados heróicos em uma parada bônus compartilhada",
   "SDM.HeroDiceMode": "Modo dos Dados Heróicos",
@@ -685,6 +686,7 @@
   "SDM.ReactionProvokeConflict": "Provocar Conflito",
   "SDM.ReactionRoll": "Rolagem de Reação",
   "SDM.Reset": "Reiniciar para 0",
+  "SDM.ResetBonusHeroDice": "Zerar Parada Bônus de Dados Heróicos ",
   "SDM.Result": "Resultado",
   "SDM.RollAdvantage": "vantagem",
   "SDM.RollAdvantageAbbr": "↑v",
@@ -827,6 +829,7 @@
   "SDM.Target": "Alvo",
   "SDM.Total": "total",
   "SDM.TotalCharged": "Total Cobrado",
+  "SDM.TotalSuppliesConsumed": "Total de suprimentos consumidos",
   "SDM.TotalToCharge": "Total Cobrado",
   "SDM.Transfer": "Transferir {type}",
   "SDM.TransferCashComplete": "Transferidos {amount} em dinheiro para {target}",
@@ -889,6 +892,5 @@
   "TYPES.Item.trait": "Traço",
   "TYPES.Item.vehicle": "Veículo",
   "TYPES.Item.ward": "Resguardo",
-  "TYPES.Item.weapon": "Arma",
-  "SDM.ResetBonusHeroDice": "Zerar Parada Bônus de Dados Heróicos "
+  "TYPES.Item.weapon": "Arma"
 }
