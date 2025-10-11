@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.4.5
+
+- Add starting kit to Equipment compendium
+- Fix drop-down boxes style in dark theme
+
 ## v0.4.4
 
 - Add new SDM color themes to Dice So Nice
