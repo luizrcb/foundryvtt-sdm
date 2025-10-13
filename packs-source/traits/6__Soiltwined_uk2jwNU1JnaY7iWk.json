@@ -1,0 +1,144 @@
+{
+  "folder": "gbxTC0v879hgS8TX",
+  "name": "6. Soiltwined",
+  "type": "trait",
+  "_id": "uk2jwNU1JnaY7iWk",
+  "img": "icons/magic/nature/root-vine-entangled-humanoid.webp",
+  "system": {
+    "readied": false,
+    "status": "",
+    "resources": "",
+    "cost": 0,
+    "cost_frequency": "",
+    "description": "<p>Sprung from the soil itself, you are an ur-peasant, one with this Given World. Barefoot on bare ground, you are wiser and stronger, adding your <strong>endurance</strong> to <em>thought</em> and <em>strength</em> rolls.</p><p><em>Manually adjust the <strong>Soiltwined</strong> active effect values, adding your current <span style=\"text-decoration:underline\">endurance</span> value to thought and strength roll bonus and save bonus.</em></p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "type": "",
+    "learning": {
+      "sources": 0,
+      "required_successes": 0
+    },
+    "skill": {
+      "rank": 0,
+      "modifier_step": 3,
+      "modifier_bonus": 0,
+      "modifier_final": 0,
+      "custom_modifiers": false
+    },
+    "power": {
+      "img": "icons/svg/book.svg",
+      "name": "",
+      "description": "",
+      "level": 1,
+      "range": "",
+      "target": "",
+      "duration": "",
+      "overcharge": "",
+      "roll_formula": "",
+      "overcharge_roll_formula": ""
+    }
+  },
+  "effects": [
+    {
+      "name": "Soiltwined",
+      "origin": "Compendium.sdm.traits.Item.uk2jwNU1JnaY7iWk",
+      "img": "icons/magic/nature/root-vine-entangled-humanoid.webp",
+      "_id": "FyLDBTgk4znHr0lX",
+      "type": "base",
+      "system": {},
+      "changes": [
+        {
+          "key": "system.abilities.tho.roll_bonus",
+          "mode": 2,
+          "value": "0",
+          "priority": null
+        },
+        {
+          "key": "system.abilities.str.roll_bonus",
+          "mode": 2,
+          "value": "0",
+          "priority": null
+        },
+        {
+          "key": "system.abilities.tho.save_bonus",
+          "mode": 2,
+          "value": "0",
+          "priority": null
+        },
+        {
+          "key": "system.abilities.str.save_bonus",
+          "mode": 2,
+          "value": "0",
+          "priority": null
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.350",
+        "systemId": "sdm",
+        "systemVersion": "0.4.5",
+        "createdTime": 1760202061066,
+        "modifiedTime": 1760202709924,
+        "lastModifiedBy": "XnQAppzUXfkn5LcX"
+      },
+      "_key": "!items.effects!uk2jwNU1JnaY7iWk.FyLDBTgk4znHr0lX"
+    }
+  ],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "XnQAppzUXfkn5LcX": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "sdm",
+    "systemVersion": "0.4.5",
+    "createdTime": 1760201880925,
+    "modifiedTime": 1760202971238,
+    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+  },
+  "_key": "!items!uk2jwNU1JnaY7iWk"
+}

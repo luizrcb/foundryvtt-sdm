@@ -15,9 +15,10 @@ export class HeroDiceUI {
     includeZero = false,
     healingHouseRuleEnabled = false,
     bonusHeroDice = 0,
-    includeModeToggle = true
+    includeModeToggle = true,
+    resource = 'hero_dice',
   ) {
-    const maxHeroDice = actor.system.hero_dice?.value ?? 0;
+    const maxHeroDice = actor.system[resource]?.value ?? 0;
     const options = Array.from(
       { length: maxHeroDice },
       (_, i) => `<option value="${i + 1}">${i + 1}</option>`

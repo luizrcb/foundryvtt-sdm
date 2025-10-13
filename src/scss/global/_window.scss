@@ -192,6 +192,10 @@
   color: colors.$c-plum;
 }
 
+.blood {
+  color: colors.$c-blood;
+}
+
 .icon-border {
   letter-spacing: 1px;
   text-shadow:
@@ -809,38 +813,70 @@ input[type='radio']::after {
   .life-amount {
     font-variant-numeric: tabular-nums;
   }
-  .life-hp-line {
+  .life-hp-line,
+  .life-temp-line {
     display: flex;
     flex-direction: column;
-    gap: 6px;
   }
-  .life-hp-label {
+  .life-hp-label,
+  .life-temp-label {
     font-size: 0.82rem;
   }
   .life-hp-bar {
     position: relative;
-    height: 20px;
+    height: 15px;
     background: rgba(255, 255, 255, 0.04);
     border-radius: 8px;
     overflow: hidden;
     border: 1px solid rgba(0, 0, 0, 0.35);
   }
-  .life-hp-fill {
+  .life-hp-fill, .life-temp-fill {
     height: 100%;
     width: 0;
     transition: width 300ms ease;
     box-shadow: inset 0 -4px 8px rgba(0, 0, 0, 0.25);
   }
-  .life-hp-after {
+
+  .life-temp-bar {
+    background: rgba(52, 50, 182, 0.082);
+    border-radius: 6px;
+    position: relative;
+    overflow: hidden;
+    height: 15px;
+    border: 1px solid rgba(0, 0, 0, 0.35);
+  }
+
+  .life-temp-fill::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: linear-gradient(
+      45deg,
+      rgba(255, 255, 255, 0.06) 25%,
+      transparent 25%,
+      transparent 50%,
+      rgba(255, 255, 255, 0.06) 50%,
+      rgba(255, 255, 255, 0.06) 75%,
+      transparent 75%,
+      transparent
+    );
+    background-size: 12px 12px;
+    pointer-events: none;
+    mix-blend-mode: overlay;
+  }
+
+  .life-hp-after,
+  .life-temp-after {
     position: absolute;
     right: 8px;
     top: 50%;
     transform: translateY(-50%);
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 500;
     color: var(--color-text-primary);
     text-shadow: 0 1px 0 rgba(0, 0, 0, 0.5);
   }
+
   .life-note {
     margin-top: 6px;
     font-size: 0.85rem;

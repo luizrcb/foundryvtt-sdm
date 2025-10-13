@@ -187,10 +187,7 @@ export class HeroDiceEngine {
    * @param {number} qty - Quantity of dice to deduct
    */
   static async updateHeroDice(actor, qty) {
-    const current = Math.max(0, actor?.system?.hero_dice?.value || 0);
-    await actor?.update?.({
-      'system.hero_dice.value': Math.max(current - (qty || 0), 0)
-    });
+    await actor.updateHeroDice(qty);
   }
 
   /**

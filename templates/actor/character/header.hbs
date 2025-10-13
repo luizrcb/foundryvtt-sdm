@@ -12,9 +12,9 @@
       <img class='profile-img' src='{{actor.img}}' data-edit='img' data-action='onEditImage' data-tooltip='{{actor.name}}'
         height='100' width='100' />
         {{#if (or isEditMode (not @root.editable))}}
-        <div class="flexcol flex-group-center mb-12">
+        <div class="flexcol {{#unless system.blood_clad}}mb-12{{/unless}} flex-group-center">
         {{else}}
-        <div class="flexcol flex-group-center mb-12 rollable" data-context='rollable'
+        <div class="flexcol {{#unless system.blood_clad}}mb-12{{/unless}} flex-group-center rollable" data-context='rollable'
           data-action='heroicHealing' data-tooltip="{{localize 'SDM.HeroDiceHealingTip'}}">
         {{/if}}
           <label class='resource-label rollable'>{{localize 'SDM.FieldHeroDice'}}</label>
@@ -23,6 +23,15 @@
             <i class="die-label dice-{{@root.heroDiceType}} sheet-hero-dice" data-tooltip="{{@root.heroDiceType}}"></i>
           </div>
         </div>
+        {{#if system.blood_clad}}
+        <div class="flexcol flex-group-center rollable" data-context='rollable' data-action='bloodDiceRoll'>
+          <label class='resource-label rollable blood'>{{localize 'SDM.FieldBloodDice'}}</label>
+          <div class='resource-content flexrow height-32 rollable'>
+            {{system.blood_dice.value}} / {{system.blood_dice.max}}
+            <i class="die-label blood dice-{{system.blood_dice.dice_type}} sheet-hero-dice" data-tooltip="{{system.blood_dice.dice_type}}"></i>
+          </div>
+        </div>
+        {{/if}}
       </div>
       <div class='header-fields'>
         {{!-- <div class='document-name'> --}}
@@ -71,7 +80,9 @@
           {{! "flex-group-center" is also defined in the _grid.scss file
           and it will add a small amount of padding, a border, and will
           center all of its child elements content and text. }}
-          <div class='resource'>
+          <div class="grid-span-1 flexrow flex-between">
+
+          <div class='graid-span-1 resource'>
             {{#if (or isEditMode (not @root.editable))}}
             <label for='system.life.max' class='resource-label flex-start'>
               {{localize 'SDM.FieldLifeMax'}}
@@ -91,6 +102,54 @@
               <input type='text' name='system.life.max' value='{{system.life.max}}' disabled />
             </div>
             {{/if}}
+          </div>
+          {{#if system.borrowed_life.enabled }}
+          <div class='graid-span-1 resource'>
+            {{#if (or isEditMode (not @root.editable))}}
+            <label for='system.borrowed_life.max' class='resource-label flex-start'>
+              Borrowed
+            </label>
+            <div class='resource-content flexrow flex-center flex-between flex-group-center'>
+              <input type='text' name='system.borrowed_life.value' value='{{system.borrowed_life.value}}' data-dtype='Number' />
+              <span> / </span>
+              <input type='text' name='system.borrowed_life.max' value='{{system.borrowed_life.max}}' data-dtype='Number' disabled />
+            </div>
+            {{else}}
+            <label for='system.borrowed_life.max' class='resource-label flex-start' data-tooltip="Borrowed Life">
+               Borrowed
+            </label>
+            <div class='resource-content flexrow flex-center flex-between flex-group-center'>
+              <input type='text' name='system.borrowed_life.value' value='{{system.borrowed_life.value}}' />
+              <span> / </span>
+              <input type='text' name='system.borrowed_life.max' value='{{system.borrowed_life.max}}' disabled />
+            </div>
+            {{/if}}
+          </div>
+          {{/if}}
+
+          {{#if system.temporary_life.enabled }}
+          <div class='graid-span-1 resource'>
+            {{#if (or isEditMode (not @root.editable))}}
+            <label for='system.temporary_life.max' class='resource-label flex-start'>
+              Temporary
+            </label>
+            <div class='resource-content flexrow flex-center flex-between flex-group-center'>
+              <input type='text' name='system.temporary_life.value' value='{{system.temporary_life.value}}' data-dtype='Number' />
+              <span> / </span>
+              <input type='text' name='system.temporary_life.max' value='{{system.temporary_life.max}}' data-dtype='Number' disabled />
+            </div>
+            {{else}}
+            <label for='system.temporary_life.max' class='resource-label flex-start' data-tooltip="Temporary Life">
+               Temporary
+            </label>
+            <div class='resource-content flexrow flex-center flex-between flex-group-center'>
+              <input type='text' name='system.temporary_life.value' value='{{system.temporary_life.value}}' />
+              <span> / </span>
+              <input type='text' name='system.temporary_life.max' value='{{system.temporary_life.max}}' disabled />
+            </div>
+            {{/if}}
+          </div>
+          {{/if}}
           </div>
 
           <div class="grid-span-1 flexrow flex-between">

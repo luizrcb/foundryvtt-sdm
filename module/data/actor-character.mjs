@@ -36,6 +36,10 @@ export default class SdmCharacter extends SdmActorBase {
       initial: 0
     });
 
+    schema.readied_armor_take_no_slots = new fields.BooleanField({
+      initial: false,
+    });
+
     schema.defense = new fields.NumberField({
       ...requiredInteger,
       initial: 0
@@ -101,6 +105,11 @@ export default class SdmCharacter extends SdmActorBase {
       ...requiredInteger,
       initial: 0
     });
+
+    schema.readied_item_slots_bonus = new fields.NumberField({
+      ...requiredInteger,
+      initial: 0
+    })
 
     schema.burden_slots_bonus = new fields.NumberField({
       ...requiredInteger,
@@ -185,6 +194,30 @@ export default class SdmCharacter extends SdmActorBase {
       imbued: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 })
     });
 
+    schema.borrowed_life = new fields.SchemaField({
+      enabled: new fields.BooleanField({ initial: false }),
+      value: new fields.NumberField({
+        ...requiredInteger,
+        initial: 0,
+        min: 0
+      }),
+      max: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 }),
+      bonus: new fields.NumberField({ ...requiredInteger, initial: 0 }),
+      imbued: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 }),
+    });
+
+    schema.temporary_life = new fields.SchemaField({
+      enabled: new fields.BooleanField({ initial: false }),
+      value: new fields.NumberField({
+        ...requiredInteger,
+        initial: 0,
+        min: 0
+      }),
+      max: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 }),
+      bonus: new fields.NumberField({ ...requiredInteger, initial: 0 }),
+      imbued: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 }),
+    });
+
     schema.level = new fields.NumberField({ ...requiredInteger, min: 0, initial: 0, max: 9 });
     schema.friends = new fields.StringField({ required: false, blank: true, initial: '' });
     schema.foes = new fields.StringField({ required: false, blank: true, initial: '' });
@@ -232,6 +265,40 @@ export default class SdmCharacter extends SdmActorBase {
       })
     });
 
+    schema.blood_clad = new fields.BooleanField({ initial: false });
+
+    schema.blood_dice = new fields.SchemaField({
+      value: new fields.NumberField({
+        ...requiredInteger,
+        initial: 1,
+        min: 0
+      }),
+      max: new fields.NumberField({
+        ...requiredInteger,
+        initial: 1,
+        min: 1
+      }),
+      min: new fields.NumberField({
+        ...requiredInteger,
+        initial: 0,
+        min: 0,
+        max: 0
+      }),
+      dice_type: new fields.StringField({
+        required: true,
+        blank: false,
+        initial: 'd6',
+        choices: DieScale.reduce((acc, die) => {
+          acc[die] = die;
+          return acc;
+        }, {})
+      }),
+      bonus: new fields.NumberField({
+        ...requiredInteger,
+        initial: 0
+      })
+    });
+
     schema.attack_bonus = new fields.NumberField({
       ...requiredInteger,
       initial: 0
@@ -259,6 +326,12 @@ export default class SdmCharacter extends SdmActorBase {
       required: true,
       nullable: false,
       initial: 2
+    });
+
+    schema.power_cost_bonus = new fields.NumberField({
+      ...requiredInteger,
+      initial: 0,
+      min: 0
     });
 
     schema.oldtech = new fields.SchemaField({
@@ -299,6 +372,10 @@ export default class SdmCharacter extends SdmActorBase {
             min: 0
           }),
           bonus: new fields.NumberField({
+            ...requiredInteger,
+            initial: 0
+          }),
+          roll_bonus: new fields.NumberField({
             ...requiredInteger,
             initial: 0
           }),
@@ -356,6 +433,7 @@ export default class SdmCharacter extends SdmActorBase {
     data.item_slots = this.item_slots;
     data.item_slots_taken = this.item_slots_taken;
     data.packed_item_slots_bonus = this.packed_item_slots_bonus;
+    data.readied_item_slots_bonus = this.readied_item_slots_bonus;
     data.trait_slots = this.trait_slots;
     data.trait_slots_taken = this.trait_slots_taken;
     data.burden_slots = this.burden_slots;

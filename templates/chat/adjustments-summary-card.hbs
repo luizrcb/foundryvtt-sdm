@@ -2,7 +2,7 @@
   <div class="message-content">
     <div class="adjustments-summary-card" data-log-id="{{logId}}">
 
-      {{!-- CASH --}}
+      {{!-- CASH (backwards compatibility) --}}
       {{#if cashChanges}}
       <div class="adjustment-block cash-block">
         <div class="block-title">
@@ -11,29 +11,31 @@
         </div>
         <ul class="adjustment-list">
           {{#each cashChanges}}
-          <li class="adjustment-row" data-actor-id="{{this.actorId}}">
-            {{#if this.actorImg}}
-              <div class="flex flexrow" style="gap: 5px;"><img src="{{this.actorImg}}" alt="{{this.actorName}}" height="20" data-tooltip="{{this.actorName}}">
-              <span>{{this.actorName}}</span></div>
-            {{/if}}
+            <li class="adjustment-row" data-actor-id="{{this.actorId}}">
+              <div class="flex flexrow" style="gap: 5px;">
+                {{#if this.actorImg}}
+                  <img src="{{this.actorImg}}" alt="{{this.actorName}}" height="20" data-tooltip="{{this.actorName}}">
+                {{/if}}
+                <span class="actor-name">{{this.actorName}}</span>
+              </div>
 
-            <span class="adjustment-value {{#if (gt this.amount 0)}}positive{{else if (lt this.amount 0)}}negative{{/if}}">
-              {{#if (gt this.amount 0)}}+{{/if}}{{this.amount}} {{localize 'SDM.CashSymbol'}}
-              {{#if this.currencyImg}}
-                <img src="{{this.currencyImg}}" alt="{{this.currency}}" class="cash-img">
+              <span class="adjustment-value {{#if (gt this.amount 0)}}positive{{else if (lt this.amount 0)}}negative{{/if}}">
+                {{#if (gt this.amount 0)}}+{{/if}}{{this.amount}} {{localize 'SDM.CashSymbol'}}
+                {{#if this.currencyImg}}
+                  <img src="{{this.currencyImg}}" alt="{{this.currency}}" class="cash-img">
+                {{/if}}
+              </span>
+
+              {{#if this.note}}
+                <small class="adjustment-note">— {{this.note}}</small>
               {{/if}}
-            </span>
-
-            {{#if this.note}}
-              <small class="adjustment-note">— {{this.note}}</small>
-            {{/if}}
-          </li>
-        {{/each}}
+            </li>
+          {{/each}}
         </ul>
       </div>
       {{/if}}
 
-      {{!-- EXPERIENCE --}}
+      {{!-- EXPERIENCE (backwards compatibility) --}}
       {{#if xpChanges}}
       <div class="adjustment-block xp-block">
         <div class="block-title">
@@ -44,11 +46,12 @@
           {{#each xpChanges}}
             <li class="adjustment-row" data-actor-id="{{this.actorId}}">
               <div class="flex flexrow" style="gap: 5px;">
-              {{#if this.actorImg}}<img src="{{this.actorImg}}" alt="{{this.actorName}}" height="20" data-tooltip="{{this.actorName}}">{{/if}}
-              <span class="actor-name">{{this.actorName}}</span>
+                {{#if this.actorImg}}<img src="{{this.actorImg}}" alt="{{this.actorName}}" height="20" data-tooltip="{{this.actorName}}">{{/if}}
+                <span class="actor-name">{{this.actorName}}</span>
               </div>
               <span class="adjustment-value {{#if (gt this.amount 0)}}positive{{else if (lt this.amount 0)}}negative{{/if}}">
-                {{#if (gt this.amount 0)}}+{{/if}}{{this.amount}} XP</span>
+                {{#if (gt this.amount 0)}}+{{/if}}{{this.amount}} XP
+              </span>
               {{#if this.note}}<small class="adjustment-note">— {{this.note}}</small>{{/if}}
             </li>
           {{/each}}
@@ -56,7 +59,7 @@
       </div>
       {{/if}}
 
-      {{!-- HERO DICE --}}
+      {{!-- HERO DICE (backwards compatibility) --}}
       {{#if heroDiceChanges}}
       <div class="adjustment-block hero-dice-block">
         <div class="block-title">
@@ -66,9 +69,9 @@
         <ul class="adjustment-list">
           {{#each heroDiceChanges}}
             <li class="adjustment-row" data-actor-id="{{this.actorId}}">
-              <div class="flex flexrow" style="gap: 5px;">
-              {{#if this.actorImg}}<img src="{{this.actorImg}}" alt="{{this.actorName}}" height="20" data-tooltip="{{this.actorName}}">{{/if}}
-              <span class="actor-name">{{this.actorName}}</span>
+              <div class="flex flexrow" style="gap: 7px;">
+                {{#if this.actorImg}}<img src="{{this.actorImg}}" alt="{{this.actorName}}" height="20" data-tooltip="{{this.actorName}}">{{/if}}
+                <span class="actor-name">{{this.actorName}}</span>
               </div>
               <div style="gap: 8px;">
                 <span class="adjustment-value {{#if (gt this.adjustment 0)}}positive{{else if (lt this.adjustment 0)}}negative{{/if}}">
@@ -76,7 +79,39 @@
                 </span>
                 <small class="adjustment-meta">({{this.before}} → {{this.after}})</small>
               </div>
-              {{!-- {{#if this.note}}<small class="adjustment-note">— {{this.note}}</small>{{/if}} --}}
+            </li>
+          {{/each}}
+        </ul>
+      </div>
+      {{/if}}
+
+      {{!-- GENERIC CHANGES: supports new macro output (changes array) --}}
+      {{#if changes}}
+      <div class="adjustment-block generic-changes-block">
+        <div class="block-title">
+          <strong>{{toPascalCase (lookup (lookup changes 0) 'resourceLabel')}}</strong>
+        </div>
+        <ul class="adjustment-list">
+          {{#each changes}}
+            <li class="adjustment-row" data-actor-id="{{this.actorId}}">
+              <div class="flex flexrow" style="gap: 5px;">
+                {{#if this.actorImg}}
+                  <img src="{{this.actorImg}}" alt="{{this.actorName}}" height="20" data-tooltip="{{this.actorName}}">
+                {{/if}}
+                <span class="actor-name">{{this.actorName}}</span>
+                {{!-- <span class="resource-label">{{this.resourceLabel}}{{#if this.resource}} ({{this.resource}}){{/if}}</span> --}}
+              </div>
+
+              <div style="gap: 8px;">
+                <span class="adjustment-value {{#if (gt this.adjustment 0)}}positive{{else if (lt this.adjustment 0)}}negative{{/if}}">
+                  {{#if (gt this.adjustment 0)}}+{{/if}}{{this.adjustment}}
+                </span>
+                <small class="adjustment-meta">({{this.before}} → {{this.after}})</small>
+              </div>
+
+              {{!-- {{#if this.note}}
+                <div><small class="adjustment-note">— {{this.note}}</small></div>
+              {{/if}} --}}
             </li>
           {{/each}}
         </ul>
@@ -85,7 +120,7 @@
 
       {{!-- Footer --}}
       <div class="adjustment-footer">
-        <small class="muted">Event: {{eventLabel}}{{#if eventSource}} — {{eventSource}}{{/if}}</small>
+        <small class="muted">{{localize 'SDM.Event'}}: {{eventLabel}}{{#if eventSource}} — {{eventSource}}{{/if}}</small>
       </div>
     </div>
   </div>

@@ -1,0 +1,126 @@
+{
+  "folder": "U4koYvuTVVp5DKyJ",
+  "name": "0. Servant",
+  "type": "trait",
+  "_id": "0ErBuk1jeXWNYpPi",
+  "img": "icons/environment/creatures/golem-stone-purple.webp",
+  "system": {
+    "readied": false,
+    "status": "",
+    "resources": "",
+    "cost": 0,
+    "cost_frequency": "",
+    "description": "<p>You were born, or made, to serve. You are skilled in a blue collar trade, but also in relations, deceptions, and flatteries. You gain +1 life per point of endurance. Also, spend a hero die to make the higher classes overlook or underestimate you.</p><p></p><p><em>Use the active effect to update your bonus life (+1 life per point of endurance)</em></p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "type": "skill",
+    "learning": {
+      "sources": 0,
+      "required_successes": 0
+    },
+    "skill": {
+      "rank": 1,
+      "modifier_step": 3,
+      "modifier_bonus": 0,
+      "modifier_final": 0,
+      "custom_modifiers": false
+    },
+    "power": {
+      "img": "icons/svg/book.svg",
+      "name": "",
+      "description": "",
+      "level": 1,
+      "range": "",
+      "target": "",
+      "duration": "",
+      "overcharge": "",
+      "roll_formula": "",
+      "overcharge_roll_formula": ""
+    }
+  },
+  "effects": [
+    {
+      "name": "Bonus Life",
+      "origin": "Compendium.sdm.traits.Item.0ErBuk1jeXWNYpPi",
+      "img": "icons/environment/creatures/golem-stone-purple.webp",
+      "_id": "riEfih6AdmJpqygl",
+      "type": "base",
+      "system": {},
+      "changes": [
+        {
+          "key": "system.life.bonus",
+          "mode": 2,
+          "value": "0",
+          "priority": null
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.350",
+        "systemId": "sdm",
+        "systemVersion": "0.4.5",
+        "createdTime": 1760319087635,
+        "modifiedTime": 1760319114408,
+        "lastModifiedBy": "XnQAppzUXfkn5LcX"
+      },
+      "_key": "!items.effects!0ErBuk1jeXWNYpPi.riEfih6AdmJpqygl"
+    }
+  ],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "XnQAppzUXfkn5LcX": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "sdm",
+    "systemVersion": "0.4.5",
+    "createdTime": 1760318907751,
+    "modifiedTime": 1760319082468,
+    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+  },
+  "_key": "!items!0ErBuk1jeXWNYpPi"
+}

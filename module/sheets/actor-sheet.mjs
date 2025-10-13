@@ -20,7 +20,7 @@ import {
 } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { openItemTransferDialog } from '../items/transfer.mjs';
-import { healingHeroDice } from '../rolls/hero_dice/index.mjs';
+import { healingHeroDice, bloodDiceRoll } from '../rolls/hero_dice/index.mjs';
 import SDMRoll, { sanitizeExpression } from '../rolls/sdmRoll.mjs';
 import {
   renderNPCMoraleResult,
@@ -87,6 +87,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       createDoc: this._createAndViewDoc,
       deleteDoc: this._deleteDoc,
       heroicHealing: { handler: this._onHeroHealing, buttons: [0, 2] },
+      bloodDiceRoll: this._onBloodDiceRoll,
       onEditImage: this._onEditImage,
       reactionRoll: this._onReactionRoll,
       roll: this._onRoll,
@@ -1086,7 +1087,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         const powerItem = this._getEmbeddedDocument(target);
         rollItem = powerItem;
         const powerData = powerItem.system.power;
-        label = powerItem.getPowerShortTitle(powerData, this.actor.system.power_cost);
+        label = powerItem.getPowerShortTitle(powerData, this.actor.system.power_cost, this.actor.system.power_cost_bonus);
         ability = powerData.default_ability;
         formula = powerData.roll_formula;
         overchargeFormula = powerData.overcharge_roll_formula;
@@ -1094,8 +1095,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         powerOptions = [
           {
             index: 0,
-            name: powerItem.getPowerShortTitle(powerData, this.actor.system.power_cost),
-            overcharge: powerItem.getPowerShortTitle(powerData, this.actor.system.power_cost, true),
+            name: powerItem.getPowerShortTitle(powerData, this.actor.system.power_cost, this.actor.system.power_cost_bonus),
+            overcharge: powerItem.getPowerShortTitle(powerData, this.actor.system.power_cost, this.actor.system.power_cost_bonus, true),
             formula: powerData.roll_formula,
             overchargeFormula: powerData.overcharge_roll_formula,
             canOvercharge: !!powerData.overcharge,
@@ -1118,8 +1119,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         powerOptions = powers.map((power, index) => {
           return {
             index,
-            name: powerAlbum.getPowerShortTitle(power, this.actor.system.power_cost),
-            overcharge: powerAlbum.getPowerShortTitle(power, this.actor.system.power_cost, true),
+            name: powerAlbum.getPowerShortTitle(power, this.actor.system.power_cost, this.actor.system.power_cost_bonus),
+            overcharge: powerAlbum.getPowerShortTitle(power, this.actor.system.power_cost, this.actor.system.power_cost_bonus, true),
             formula: power.roll_formula,
             overchargeFormula: power.overcharge_roll_formula,
             canOvercharge: !!power.overcharge,
@@ -1479,6 +1480,14 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     // Get common data attributes
     await healingHeroDice(event, this.actor, onlySpendWithoutRolling);
+  }
+
+    static async _onBloodDiceRoll(event, target) {
+    event.preventDefault(); // Don't open context menu
+    event.stopPropagation(); // Don't trigger other events
+
+    // Get common data attributes
+    await bloodDiceRoll(event, this.actor);
   }
 
   static async _openDoc(event, target) {

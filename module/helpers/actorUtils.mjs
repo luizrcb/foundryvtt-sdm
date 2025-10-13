@@ -440,13 +440,70 @@ function percentToHpColor(percent) {
 
 export async function postLifeChange(actor, damageValue = 0, multiplier = 1, opts = {}) {
   if (!actor) return;
-  const isHealing = Number(multiplier) < 0;
-  const amount = Math.abs(Number(damageValue) || 0) * Math.abs(Number(multiplier) || 1);
-  const before = Number(actor.system?.life?.value ?? 0);
-  const max = Number(actor.system?.life?.max ?? 0);
-  const after = Math.clamp(before - amount * (Number(multiplier) || 1), 0, max);
-  const percentAfter = max > 0 ? Math.round((after / max) * 100) : 0;
+
+  // Normalize numeric inputs
+  const dv = Number(damageValue) || 0;
+  const mul = Number(multiplier) || 0;
+  // Signed net amount: positive = damage, negative = healing
+  const netSigned = dv * mul;
+  const amountAbs = Math.round(Math.abs(netSigned));
+
+  const isHealing = netSigned < 0;
+
+  // Life / temp values from the actor
+  const life = actor.system?.life ?? {};
+  const beforeLife = Number(life.value ?? 0);
+  const lifeMax = Number(life.max ?? 0);
+
+  const temp = actor.system?.temporary_life ?? {};
+  const tempEnabled = !!temp.enabled;
+  const beforeTemp = tempEnabled ? Number(temp.value ?? 0) : 0;
+  const tempMax = tempEnabled ? Number(temp.max ?? 0) : 0;
+
+  // Helper clamp
+  const clamp = (v, a, b) => Math.min(Math.max(v, a), b);
+
+  // Simulate after-values depending on damage vs healing
+  let afterLife = beforeLife;
+  let afterTemp = beforeTemp;
+
+  if (netSigned > 0) {
+    // DAMAGE: consume temporary first, overflow to life
+    let remaining = netSigned;
+
+    if (tempEnabled && afterTemp > 0) {
+      const takenFromTemp = Math.min(afterTemp, remaining);
+      afterTemp = clamp(afterTemp - takenFromTemp, 0, tempMax);
+      remaining -= takenFromTemp;
+    }
+
+    if (remaining > 0) {
+      afterLife = clamp(afterLife - remaining, 0, lifeMax);
+    }
+  } else if (netSigned < 0) {
+    // HEALING: heal life first, overflow to temporary (if enabled)
+    let remaining = Math.abs(netSigned);
+
+    if (afterLife < lifeMax) {
+      const healToLife = Math.min(remaining, lifeMax - afterLife);
+      afterLife = clamp(afterLife + healToLife, 0, lifeMax);
+      remaining -= healToLife;
+    }
+
+    if (remaining > 0 && tempEnabled) {
+      const healToTemp = Math.min(remaining, tempMax - afterTemp);
+      afterTemp = clamp(afterTemp + healToTemp, 0, tempMax);
+      remaining -= healToTemp;
+    }
+  }
+
+  // Compute display percentages
+  const percentAfter = lifeMax > 0 ? Math.round((afterLife / lifeMax) * 100) : 0;
+  const tempPercentAfter = tempEnabled && tempMax > 0 ? Math.round((afterTemp / tempMax) * 100) : 0;
+
+  // Color for life bar (keep original)
   const hpColor = percentToHpColor(percentAfter);
+
   const ctx = {
     messageId: foundry.utils.randomID(),
     timestamp: new Date().toLocaleTimeString(),
@@ -454,21 +511,29 @@ export async function postLifeChange(actor, damageValue = 0, multiplier = 1, opt
     eventLabel:
       opts.eventLabel ??
       (isHealing
-        ? (game.i18n.localize('SDM.Heal') ?? 'Heal')
+        ? (game.i18n.localize('SDM.Healing') ?? 'Heal')
         : (game.i18n.localize('SDM.Damage') ?? 'Damage')),
     actorId: actor.id,
     actorName: actor.name,
     actorImg: actor.prototypeToken?.texture?.src || actor.img || '',
-    amountFormatted: String(Math.round(amount)),
-    amount: Math.round(amount),
+    amountFormatted: String(amountAbs),
+    amount: amountAbs,
     isHealing,
-    before,
-    after,
-    max,
+    before: beforeLife,
+    after: afterLife,
+    max: lifeMax,
     percentAfter,
     hpColor,
-    note: opts.note ?? ''
+    note: opts.note ?? '',
+    // Temporary life fields (only used in template when tempEnabled is true)
+    tempEnabled,
+    beforeTemp,
+    afterTemp,
+    tempMax,
+    tempPercentAfter
   };
+
+  // Render template
   let html = await renderTemplate(templatePath('chat/life-change-card'), ctx);
   if (typeof html !== 'string') {
     if (html instanceof HTMLElement) html = html.outerHTML;
@@ -478,17 +543,28 @@ export async function postLifeChange(actor, damageValue = 0, multiplier = 1, opt
         .join('');
     else html = String(html);
   }
+
+  // Post-process fill bars to set width and color
   const wrapper = document.createElement('div');
   wrapper.innerHTML = html;
+
   const fill = wrapper.querySelector('.life-hp-fill');
   if (fill) {
     fill.style.setProperty('--hp-color', ctx.hpColor);
     fill.style.width = `${ctx.percentAfter}%`;
   }
+
+  // Temporary life fill (only present when template included it)
+  const tempFill = wrapper.querySelector('.life-temp-fill');
+  if (tempFill) {
+    tempFill.style.width = `${ctx.tempPercentAfter}%`;
+  }
+
   await ChatMessage.create({
     content: wrapper.innerHTML,
     speaker: ChatMessage.getSpeaker({ alias: ctx.senderName })
   });
+
   return ctx;
 }
 
@@ -524,4 +600,48 @@ export async function postConsumeSupplies(actor, supplies = [], opts = {}) {
     speaker: ChatMessage.getSpeaker({ alias: senderName })
   });
   return ctx;
+}
+
+export async function addCompendiumItemToActor(actor, itemRef) {
+  try {
+    if (!actor || actor.type !== ActorType.CHARACTER) return;
+
+    const doc = await fromUuid(itemRef);
+    if (!doc) return;
+
+    const itemData = typeof doc.toObject === 'function' ? doc.toObject() : doc;
+
+    itemData.system = itemData.system || {};
+    itemData.system.readied = true;
+    itemData.flags = itemData.flags || {};
+    itemData.flags.sdm = itemData.flags.sdm || {};
+    itemData.flags.sdm.fromCompendium = itemRef;
+
+    const existingByFlag = actor.items.find(i => {
+      try {
+        return i.getFlag?.('sdm', 'fromCompendium') === itemRef;
+      } catch {
+        return false;
+      }
+    });
+    if (existingByFlag) {
+      await existingByFlag.update({
+        'system.readied': true
+      });
+      return;
+    }
+
+    const existingByName = actor.items.find(i => i.name === itemData.name);
+    if (existingByName) {
+      await existingByName.update({
+        'system.readied': true,
+        'flags.sdm.fromCompendium': itemRef
+      });
+      return;
+    }
+
+    await actor.createEmbeddedDocuments('Item', [itemData]);
+  } catch (err) {
+    console.error('Erro ao adicionar item do compêndio via fromUuid:', err);
+  }
 }

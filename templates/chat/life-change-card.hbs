@@ -19,12 +19,22 @@
         </div>
 
         <div class="life-hp-line">
-          <div class="life-hp-label">Before: {{before}} / {{max}}</div>
+          <div class="life-hp-label">{{localize 'SDM.LifeBefore'}}: {{before}} / {{max}}</div>
           <div class="life-hp-bar" role="progressbar" aria-valuemin="0" aria-valuemax="{{max}}" aria-valuenow="{{after}}">
             <div class="life-hp-fill" style="width: {{percentAfter}}%; background: var(--hp-color, #8be24a);"></div>
             <div class="life-hp-after">{{after}} / {{max}}</div>
           </div>
         </div>
+
+        {{#if tempEnabled}}
+        <div class="life-temp-line mt-10">
+          <div class="life-temp-label">{{localize 'SDM.TemporaryBefore'}}: {{beforeTemp}} / {{tempMax}}</div>
+          <div class="life-temp-bar" role="progressbar" aria-valuemin="0" aria-valuemax="{{tempMax}}" aria-valuenow="{{afterTemp}}">
+            <div class="life-temp-fill" style="width: {{tempPercentAfter}}%; background: var(--hp-color, #6c84ee);"></div>
+            <div class="life-temp-after">{{afterTemp}} / {{tempMax}}</div>
+          </div>
+        </div>
+        {{/if}}
 
         {{#if note}}<div class="life-note">{{note}}</div>{{/if}}
       </div>

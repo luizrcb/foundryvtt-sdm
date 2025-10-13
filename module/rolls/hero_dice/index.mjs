@@ -76,7 +76,7 @@ export async function healingHeroDice(event, actor, onlySpendWithoutRolling = fa
   const bonusHeroDice = 0;
   const includeModeToggle = false;
 
-  if (maxDice < 1) return ui.notifications.error($l10n('SDM.ErrorNoHeroDice'));
+  if (maxDice < 1) return ui.notifications.error($fmt('SDM.ErrorNoHeroDice', { type: $l10n('SDM.FieldHeroDice')}));
 
   const defaultHeroDiceType = game.settings.get('sdm', 'defaultHeroDiceType');
   const heroDiceType = actor?.system?.hero_dice?.dice_type || defaultHeroDiceType;
@@ -145,4 +145,70 @@ export async function healingHeroDice(event, actor, onlySpendWithoutRolling = fa
   });
 
   await HeroDiceEngine.updateHeroDice(actor, heroicDiceQty);
+}
+
+
+/**
+ * Handles blood dice usage
+ * @async
+ * @param {Event} event - The triggering event
+ * @param {Actor} actor - Actor using blood dice
+ */
+export async function bloodDiceRoll(event, actor) {
+  const maxDice = actor.system.blood_dice.value;
+
+  if (maxDice < 1) return ui.notifications.error($fmt('SDM.ErrorNoHeroDice', { type: $l10n('SDM.FieldBloodDice')}));
+  const bloodDiceType = actor?.system?.blood_dice?.dice_type;
+
+  const title = $l10n('SDM.RollUseBloodDice');
+
+  const bloodDiceOptions = await foundry.applications.api.DialogV2.prompt({
+    window: {
+      title
+    },
+    content: HeroDiceUI.getHeroDiceSelect(actor, false, false, 0, false, 'blood_dice'),
+    ok: {
+      icon: `die-label dice-${bloodDiceType}`,
+      label: $l10n('SDM.ButtonRoll'),
+      callback: (event, button) => new foundry.applications.ux.FormDataExtended(button.form).object
+    }
+  });
+
+  if (bloodDiceOptions === null) {
+    return;
+  }
+
+  const { heroicQty = '0' } = bloodDiceOptions;
+  const bloodDiceQty = parseInt(heroicQty || 0, 10);
+  const currentBloodDice = actor.system.blood_dice.value;
+  let rolls = [];
+  const flags = {};
+
+  if (bloodDiceQty > currentBloodDice) return;
+
+  const roll = await HeroDiceEngine._rollHeroDice({
+    quantity: bloodDiceQty,
+    faces: Die[bloodDiceType],
+    displayDice: false,
+    healingHouseRule: false
+  });
+  rolls.push(roll);
+  flags['sdm.isHeroResult'] = true;
+
+  const diceLabel = bloodDiceQty > 1 ? $l10n('SDM.BloodDice') : $l10n('SDM.BloodDie');
+
+  let flavor = $fmt('SDM.HeroDiceSpend', {
+    actor: actor.name,
+    quantity: bloodDiceQty,
+    diceLabel: diceLabel
+  });
+
+  await createChatMessage({
+    actor,
+    flavor,
+    rolls,
+    flags
+  });
+
+  await actor.updateBloodDice(bloodDiceQty)
 }

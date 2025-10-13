@@ -1,4 +1,6 @@
-import { ItemType, SizeUnit } from './constants.mjs';
+export const UnarmedDamageItem =
+  'Compendium.sdm.equipment.Item.uKcbcZUs1jQZskQ4';
+import { GearType, ItemType, SizeUnit } from './constants.mjs';
 /**
  * Convert any size unit to sacks.
  * @param {number} size - The size value.
@@ -76,6 +78,9 @@ export async function onItemUpdate(item, updateData) {
 
 export async function onItemCreateActiveEffects(item) {
   if (item.type === ItemType.GEAR) {
+    if (item.getFlag?.('sdm', 'fromCompendium') === UnarmedDamageItem) {
+      return;
+    }
     for (const effect of item.effects) {
       await toggleEffectTransfer(effect, false);
     }
@@ -161,4 +166,22 @@ export function getWealthFromItems(itemsArray = []) {
 
     return acc;
   }, 0);
+}
+
+export function checkIfItemIsAlsoAnArmor(item) {
+  if (!item || typeof item !== 'object') return false;
+
+  const sys = item.system ?? (item.data && item.data.system) ?? {};
+  const type = String(sys.type ?? '').toLowerCase();
+  if (!(type === GearType.WEAPON || type === GearType.WARD)) return false;
+
+  const effects = Array.from(item.effects);
+  if (!effects.length) return false;
+
+  const isArmor = effects.some(effect => {
+    if (!effect || !Array.isArray(effect.changes)) return false;
+    return effect.changes.some(change => String(change?.key ?? '') === 'system.armor_bonus');
+  });
+
+  return !!isArmor;
 }

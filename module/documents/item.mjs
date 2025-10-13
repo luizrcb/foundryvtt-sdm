@@ -185,19 +185,21 @@ export class SdmItem extends Item {
     return title;
   }
 
-  getPowerShortTitle(powerData, actorPowerCost = 2, overcharge = false) {
+  getPowerShortTitle(powerData, actorPowerCost = 2, powerCostBonus = 0, overcharge = false, ) {
     const powerName = powerData.name || this.name;
     const powerLevel = powerData?.level;
 
     let powerCost = Math.ceil(actorPowerCost * powerLevel);
     if (overcharge) powerCost *= 2;
+    if (powerCostBonus > 0) powerCost = Math.max(powerCost - 2, 1);
     let title = `${powerName} (${$l10n('SDM.Cost').toLowerCase()}: ${powerCost})`;
     return title;
   }
 
-  getPowerTitle(powerData, actorPowerCost = 2) {
+  getPowerTitle(powerData, actorPowerCost = 2, powerCostBonus = 0) {
     const powerLevel = powerData?.level;
-    const powerCost = Math.ceil(actorPowerCost * powerLevel);
+    const powerCostBase = Math.ceil(actorPowerCost * powerLevel);
+    const powerCost = Math.max(powerCostBase - powerCostBonus, 1);
     const powerName = powerData.name || this.getNameTitle();
 
     let title = `<b>${powerName}</b>${!powerData?.name ? this.getCostTitle() : ''} (${$l10n('SDM.Cost').toLowerCase()}: ${powerCost})<br/>`;
@@ -219,7 +221,7 @@ export class SdmItem extends Item {
     return title;
   }
 
-  getPowerAlbumTitle(actorPowerCost = 2) {
+  getPowerAlbumTitle(actorPowerCost = 2, powerCostBonus = 0) {
     let title = `${$l10n('SDM.PowerAlbum')}: <b>${this.getNameTitle()}</b>${this.getCostTitle()}<br/><br/>`;
 
     if (!this.system.powers.length) {
@@ -228,7 +230,7 @@ export class SdmItem extends Item {
     }
 
     this.system.powers.forEach((power, index) => {
-      title += `${index + 1}) ${this.getPowerTitle(power, actorPowerCost)}<br/><br>`;
+      title += `${index + 1}) ${this.getPowerTitle(power, actorPowerCost, powerCostBonus)}<br/><br>`;
     });
 
     return title;
@@ -274,9 +276,9 @@ export class SdmItem extends Item {
     const getInventoryItemTitle = {
       [GearType.ARMOR]: () => this.getArmorTitle(),
       [TraitType.POWER]: (system, actorSystem) =>
-        this.getPowerTitle(system.power, actorSystem.power_cost),
+        this.getPowerTitle(system.power, actorSystem.power_cost, actorSystem.power_cost_bonus),
       [GearType.POWER_ALBUM]: (system, actorSystem) =>
-        this.getPowerAlbumTitle(actorSystem.power_cost),
+        this.getPowerAlbumTitle(actorSystem.power_cost, actorSystem.power_cost_bonus),
       [TraitType.SKILL]: () => this.getSkillTitle(),
       [GearType.WEAPON]: () => this.getWeaponTitle(),
       [GearType.WARD]: () => this.getWardTitle(),

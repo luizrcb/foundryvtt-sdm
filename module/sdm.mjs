@@ -5,6 +5,7 @@ import { SdmCombatant } from './documents/combatant.mjs';
 import { SdmItem } from './documents/item.mjs';
 import { registerHandlebarsHelpers } from './handlebars-helpers.mjs';
 import {
+  addCompendiumItemToActor,
   createBackgroundTrait,
   createFullAutoDestructionMode,
   createNPC,
@@ -13,7 +14,7 @@ import {
 import { configureChatListeners } from './helpers/chatUtils.mjs';
 import { SDM } from './helpers/config.mjs';
 import { ActorType, ItemType } from './helpers/constants.mjs';
-import { makePowerItem } from './helpers/itemUtils.mjs';
+import { makePowerItem, UnarmedDamageItem } from './helpers/itemUtils.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
 import { gm as gmMacros, player as playerMacros } from './macros/_module.mjs';
@@ -72,52 +73,62 @@ globalThis.sdm = {
   }
 };
 
-Hooks.on("getSceneControlButtons", function(controls) {
+Hooks.on('getSceneControlButtons', function (controls) {
   if (game.user.isGM) {
     controls.tokens.tools['sdm-hero-dice'] = {
-      icon: "fa fa-dice-d6",
-      name: "sdm-hero-dice",
-      title: "SDM.GMGiveHeroDice",
+      icon: 'fa fa-dice-d6',
+      name: 'sdm-hero-dice',
+      title: 'SDM.GMGiveHeroDice',
       button: true,
-      onChange: async (event, active) => { if (active) await game.sdm.api.gm.giveHeroDice() }
+      onChange: async (event, active) => {
+        if (active) await game.sdm.api.gm.giveHeroDice();
+      }
     };
     controls.tokens.tools['sdm-give-cash'] = {
-      icon: "fa fa-euro-sign",
-      name: "sdm-give-cash",
-      title: "SDM.GMGiveCash",
+      icon: 'fa fa-euro-sign',
+      name: 'sdm-give-cash',
+      title: 'SDM.GMGiveCash',
       button: true,
-      onChange: async (event, active) => { if (active) await game.sdm.api.gm.giveCash() }
+      onChange: async (event, active) => {
+        if (active) await game.sdm.api.gm.giveCash();
+      }
     };
     controls.tokens.tools['sdm-give-xp'] = {
-      icon: "fa-solid fa-angles-up",
-      name: "sdm-give-xp",
-      title: "SDM.GMGiveExperience",
+      icon: 'fa-solid fa-angles-up',
+      name: 'sdm-give-xp',
+      title: 'SDM.GMGiveExperience',
       button: true,
-      onChange: async (event, active) => { if (active) await game.sdm.api.gm.giveExperience() }
+      onChange: async (event, active) => {
+        if (active) await game.sdm.api.gm.giveExperience();
+      }
     };
     controls.tokens.tools['sdm-group-initiative'] = {
-      icon: "fa-solid fa-people-group",
-      name: "sdm-group-initiative",
-      title: "SDM.GMGroupInitiative",
+      icon: 'fa-solid fa-people-group',
+      name: 'sdm-group-initiative',
+      title: 'SDM.GMGroupInitiative',
       button: true,
-      onChange: async (event, active) => { if (active) await game.sdm.api.gm.groupInitiative() }
+      onChange: async (event, active) => {
+        if (active) await game.sdm.api.gm.groupInitiative();
+      }
     };
-     controls.tokens.tools['sdm-generate-npc'] = {
-      icon: "fa-solid fa-spaghetti-monster-flying",
-      name: "sdm-generate-npc",
-      title: "SDM.GMGenerateRandomNPC",
+    controls.tokens.tools['sdm-generate-npc'] = {
+      icon: 'fa-solid fa-spaghetti-monster-flying',
+      name: 'sdm-generate-npc',
+      title: 'SDM.GMGenerateRandomNPC',
       button: true,
-      onChange: async (event, active) => { if (active) await game.sdm.api.gm.randomNPCGenerator() }
+      onChange: async (event, active) => {
+        if (active) await game.sdm.api.gm.randomNPCGenerator();
+      }
     };
   }
 });
 
-Hooks.on("updateCombat", async (combat, update) => {
+Hooks.on('updateCombat', async (combat, update) => {
   if (!game.user.isGM) return;
 
   if (update && update.round && update.round > 1) {
-    const reroll = game.settings.get('sdm', "rerollInitiativeEveryRound");
-    if (reroll) await game.sdm.api.gm.groupInitiative()
+    const reroll = game.settings.get('sdm', 'rerollInitiativeEveryRound');
+    if (reroll) await game.sdm.api.gm.groupInitiative();
   }
 });
 
@@ -154,6 +165,7 @@ Hooks.on('preUpdateActor', (actor, update) => {
 
 Hooks.on('createActor', async (actor, _options, _id) => {
   if (!actor.isOwner) return;
+  await addCompendiumItemToActor(actor, UnarmedDamageItem);
   let disposition = CONST.TOKEN_DISPOSITIONS.NEUTRAL;
 
   const tokenData = {
@@ -186,12 +198,13 @@ Hooks.on('createActor', async (actor, _options, _id) => {
 
 Hooks.on('createItem', async (item, _options, _id) => {
   if (!item.isOwner) return;
+  if (item.getFlag?.('sdm', 'fromCompendium') === UnarmedDamageItem) return;
   await item.update({ 'system.readied': false });
 });
 
 Hooks.on('updateActor', async actor => {
   if (!actor.isOwner) return;
-
+  // await addCompendiumItemToActor(actor, UnarmedDamageItem);
   const name = actor.name;
   await actor.update({ 'prototypeToken.name': name });
 });
@@ -239,15 +252,40 @@ Hooks.on('renderGamePause', (app, html) => {
 Hooks.on('getChatMessageContextOptions', (html, options) => {
   const canApply = li => {
     const message = game.messages.get(li.dataset.messageId);
-    return (!message.blind || game.user.isGM) && message.rolls && message.rolls.length;
+    return (!message.blind || game.user.isGM) && message.rolls && message.rolls.length && canvas.tokens.controlled.length;
+  };
+
+  const noTokenSelected = li => {
+    const message = game.messages.get(li.dataset.messageId);
+    return (!message.blind || game.user.isGM) && message.rolls && message.rolls.length && !canvas.tokens.controlled.length;
   };
 
   options.push(
     {
       name: '',
-      icon: '',
       condition: canApply,
       group: 'separator'
+    },
+    {
+      name: game.i18n.localize('SDM.ChatContextNoTokensSelected'),
+      condition: noTokenSelected,
+      icon: '<i class="fa-solid fa-user-slash"></i>',
+      group: 'damage'
+    },
+    {
+      name: game.i18n.localize('SDM.ChatContextHalfDamage') || 'Apply Half Damage',
+      icon: '<i class="fa-solid fa-user-minus"></i>',
+      condition: canApply,
+      callback: async li => {
+        const message = game.messages.get(li.dataset.messageId);
+        if (!message?.rolls?.length) return;
+        const orig = message.rolls[0].total;
+        // Using Math.ceil so small values don't reduce to 0. Use Math.floor if you prefer.
+        const damageAmount = Math.ceil(orig / 2);
+
+        await Promise.all(canvas.tokens.controlled.map(t => t.actor?.applyDamage(damageAmount, 1)));
+      },
+      group: 'damage'
     },
     {
       name: game.i18n.localize('SDM.ChatContextDamage'),
@@ -267,6 +305,37 @@ Hooks.on('getChatMessageContextOptions', (html, options) => {
       },
       group: 'damage'
     },
+
+    {
+      name: game.i18n.localize('SDM.ChatContextDoubleDamage') || 'Apply Double Damage',
+      icon: '<i class="fa-solid fa-user-minus"></i>',
+      condition: canApply,
+      callback: async li => {
+        const message = game.messages.get(li.dataset.messageId);
+        if (!message?.rolls?.length) return;
+        const orig = message.rolls[0].total;
+        const damageAmount = orig * 2;
+
+        await Promise.all(canvas.tokens.controlled.map(t => t.actor?.applyDamage(damageAmount, 1)));
+      },
+      group: 'damage'
+    },
+
+    // {
+    //   name: game.i18n.localize('SDM.ChatContextHalfHealing') || 'Apply Half Healing',
+    //   icon: '<i class="fa-solid fa-user-plus"></i>',
+    //   condition: canApply,
+    //   callback: async li => {
+    //     const message = game.messages.get(li.dataset.messageId);
+    //     if (!message?.rolls?.length) return;
+    //     const orig = message.rolls[0].total;
+    //     const healAmount = Math.ceil(orig / 2);
+
+    //     await Promise.all(canvas.tokens.controlled.map(t => t.actor?.applyDamage(healAmount, -1)));
+    //   },
+    //   group: 'healing'
+    // },
+
     {
       name: game.i18n.localize('SDM.ChatContextHealing'),
       icon: '<i class="fa-solid fa-user-plus"></i>',
@@ -282,8 +351,24 @@ Hooks.on('getChatMessageContextOptions', (html, options) => {
           })
         );
       },
-      group: 'damage'
-    }
+      group: 'healing'
+    },
+
+    // NEW: Double Healing
+    // {
+    //   name: game.i18n.localize('SDM.ChatContextDoubleHealing') || 'Apply Double Healing',
+    //   icon: '<i class="fa-solid fa-user-plus"></i>',
+    //   condition: canApply,
+    //   callback: async li => {
+    //     const message = game.messages.get(li.dataset.messageId);
+    //     if (!message?.rolls?.length) return;
+    //     const orig = message.rolls[0].total;
+    //     const healAmount = orig * 2;
+
+    //     await Promise.all(canvas.tokens.controlled.map(t => t.actor?.applyDamage(healAmount, -1)));
+    //   },
+    //   group: 'healing'
+    // }
   );
 
   return options;
@@ -517,8 +602,14 @@ function _configureFonts() {
     'Roboto Condensed': {
       editor: true,
       fonts: [
-        { urls: ['systems/sdm/fonts/roboto_condensed/RobotoCondensed-VariableFont_wght.ttf'], weight: 'bold'},
-        { urls: ['systems/sdm/fonts/roboto_condensed/RobotoCondensed-VariableFont_wght.ttf'], style: 'italic'}
+        {
+          urls: ['systems/sdm/fonts/roboto_condensed/RobotoCondensed-VariableFont_wght.ttf'],
+          weight: 'bold'
+        },
+        {
+          urls: ['systems/sdm/fonts/roboto_condensed/RobotoCondensed-VariableFont_wght.ttf'],
+          style: 'italic'
+        }
       ]
     },
     'Source Sans Pro': {
@@ -527,7 +618,11 @@ function _configureFonts() {
         { urls: ['systems/sdm/fonts/source_sans_pro/SourceSansPro-Regular.ttf'] },
         { urls: ['systems/sdm/fonts/source_sans_pro/SourceSansPro-Bold.ttf'], weight: 'bold' },
         { urls: ['systems/sdm/fonts/source_sans_pro/SourceSansPro-Italic.ttf'], style: 'italic' },
-        { urls: ['systems/sdm/fonts/source_sans_pro/SourceSansPro-Light.ttf'], weight: 300, style: 'normal' }
+        {
+          urls: ['systems/sdm/fonts/source_sans_pro/SourceSansPro-Light.ttf'],
+          weight: 300,
+          style: 'normal'
+        }
       ]
     }
   });

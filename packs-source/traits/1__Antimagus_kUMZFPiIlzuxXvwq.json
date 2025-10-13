@@ -1,0 +1,170 @@
+{
+  "folder": "lrZkXsCu9x6MHzRA",
+  "name": "1. Antimagus",
+  "type": "trait",
+  "_id": "kUMZFPiIlzuxXvwq",
+  "img": "icons/magic/defensive/shield-barrier-flaming-pentagon-magenta.webp",
+  "system": {
+    "readied": false,
+    "status": "",
+    "resources": "",
+    "cost": 0,
+    "cost_frequency": "",
+    "description": "<p>Your very blood rebels against the false gods' trickery. Gain 2 life per level, but the price you pay for oldtech and fantascience spells is doubled.</p><p><em>Update the <strong>Bonus Life</strong> active effect every time your character levels up.</em></p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "type": "",
+    "learning": {
+      "sources": 0,
+      "required_successes": 0
+    },
+    "skill": {
+      "rank": 0,
+      "modifier_step": 3,
+      "modifier_bonus": 0,
+      "modifier_final": 0,
+      "custom_modifiers": false
+    },
+    "power": {
+      "img": "icons/svg/book.svg",
+      "name": "",
+      "description": "",
+      "level": 1,
+      "range": "",
+      "target": "",
+      "duration": "",
+      "overcharge": "",
+      "roll_formula": "",
+      "overcharge_roll_formula": ""
+    }
+  },
+  "effects": [
+    {
+      "name": "Double power cost",
+      "origin": "Compendium.sdm.traits.Item.kUMZFPiIlzuxXvwq",
+      "img": "icons/magic/unholy/strike-body-explode-disintegrate.webp",
+      "_id": "OBNxV9QnJaof5uwT",
+      "type": "base",
+      "system": {},
+      "changes": [
+        {
+          "key": "system.power_cost",
+          "mode": 1,
+          "value": "2",
+          "priority": null
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.350",
+        "systemId": "sdm",
+        "systemVersion": "0.4.5",
+        "createdTime": 1760191524388,
+        "modifiedTime": 1760191570934,
+        "lastModifiedBy": "XnQAppzUXfkn5LcX"
+      },
+      "_key": "!items.effects!kUMZFPiIlzuxXvwq.OBNxV9QnJaof5uwT"
+    },
+    {
+      "name": "Bonus Life (lvl x2)",
+      "origin": "Compendium.sdm.traits.Item.kUMZFPiIlzuxXvwq",
+      "img": "icons/magic/life/heart-shadow-red.webp",
+      "_id": "UupKyrCurB534vow",
+      "type": "base",
+      "system": {},
+      "changes": [
+        {
+          "key": "system.life.bonus",
+          "mode": 2,
+          "value": "2",
+          "priority": null
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "<p>Update this effect change value every time your character level goes up!</p>",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.350",
+        "systemId": "sdm",
+        "systemVersion": "0.4.5",
+        "createdTime": 1760191577537,
+        "modifiedTime": 1760191667247,
+        "lastModifiedBy": "XnQAppzUXfkn5LcX"
+      },
+      "_key": "!items.effects!kUMZFPiIlzuxXvwq.UupKyrCurB534vow"
+    }
+  ],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "XnQAppzUXfkn5LcX": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "sdm",
+    "systemVersion": "0.4.5",
+    "createdTime": 1760191475103,
+    "modifiedTime": 1760191737706,
+    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+  },
+  "_key": "!items!kUMZFPiIlzuxXvwq"
+}

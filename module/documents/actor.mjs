@@ -11,6 +11,7 @@ import { ActorType, GearType, ItemType, SizeUnit, TraitType } from '../helpers/c
 import { $l10n, capitalizeFirstLetter, safeEvaluate } from '../helpers/globalUtils.mjs';
 import {
   BURDEN_ITEM_TYPES,
+  checkIfItemIsAlsoAnArmor,
   convertToCash,
   GEAR_ITEM_TYPES,
   getSlotsTaken
@@ -18,6 +19,7 @@ import {
 import { mergeSimilarItems, splitStackIntoTwo } from '../helpers/stackUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { promptSplitStackFirstQty } from '../items/splitDialog.mjs';
+import { postDiceSummary } from '../macros/gm/giveHeroDice.mjs';
 
 const { renderTemplate } = foundry.applications.handlebars;
 const { DialogV2 } = foundry.applications.api;
@@ -71,6 +73,7 @@ export class SdmActor extends Actor {
       const lifeAmountToIncrease = effectiveMaxLife - this.system.life.max; // Preserve lost health
 
       const maxHeroDice = Math.max(newLevel + this.system.hero_dice.bonus, 1);
+      const maxBloodDice = Math.max(newLevel + this.system.blood_dice.bonus, 1);
       const currentHeroDiceSpent = this.system.hero_dice.max - this.system.hero_dice.value;
       const remainingHeroDice = maxHeroDice - currentHeroDiceSpent;
 
@@ -79,6 +82,7 @@ export class SdmActor extends Actor {
         'system.level': newLevel,
         'system.hero_dice.max': Math.max(maxHeroDice, 1),
         'system.hero_dice.value': Math.min(remainingHeroDice, maxHeroDice),
+        'system.blood_dice.max': Math.max(maxBloodDice, 1),
         'system.life.base': baseLife,
         'system.life.value': this.system.life.value + lifeAmountToIncrease // Cap current health
       });
@@ -88,6 +92,22 @@ export class SdmActor extends Actor {
       if (changed.system?.life?.value > this.system.life.max) {
         await this.update({
           'system.life.value': this.system.life.max
+        });
+      }
+    }
+
+    if (changed.system?.borrowed_life?.value !== undefined) {
+      if (changed.system?.borrowed_life?.value > this.system.borrowed_life.max) {
+        await this.update({
+          'system.borrowed_life.value': this.system.borrowed_life.max
+        });
+      }
+    }
+
+    if (changed.system?.temporary_life?.value !== undefined) {
+      if (changed.system?.temporary_life?.value > this.system.temporary_life.max) {
+        await this.update({
+          'system.temporary_life.value': this.system.borrowed_life.max
         });
       }
     }
@@ -262,6 +282,9 @@ export class SdmActor extends Actor {
     const life = data.life;
     life.max = life.base + life.bonus - life.imbued;
 
+    const borrowed = data.borrowed_life;
+    borrowed.max = life.base + life.bonus;
+
     // 3. Processar atributos
     for (const [key, ability] of Object.entries(data.abilities)) {
       ability.full = ability.base + ability.bonus;
@@ -287,6 +310,10 @@ export class SdmActor extends Actor {
 
     const { burdenPenalty, items, traits } = this.checkInventorySlots();
 
+    if (!this.id) {
+      return;
+    }
+
     this.update({
       'system.burden_penalty': burdenPenalty || 0,
       'system.item_slots_taken': items.slotsTaken,
@@ -294,7 +321,8 @@ export class SdmActor extends Actor {
       'system.packed_item_slots_taken': items.packedTaken,
       'system.inventory_value': estimatedWealth,
       'system.total_cash': totalCash,
-      'system.wealth': totalCash + estimatedWealth
+      'system.wealth': totalCash + estimatedWealth,
+      _id: this.id
     });
   }
 
@@ -308,11 +336,16 @@ export class SdmActor extends Actor {
     const maxCarryWeight = convertToCash(totalCapacityInSacks, SizeUnit.SACKS);
     const overloaded = currentCarriedWeight > maxCarryWeight;
 
+    if (!this.id) {
+      return;
+    }
+
     this.update({
       'system.inventory_value': estimatedWealth,
       'system.total_cash': totalCash,
       'system.wealth': totalCash + estimatedWealth,
-      'system.overloaded': overloaded
+      'system.overloaded': overloaded,
+      _id: this.id
     });
   }
 
@@ -369,6 +402,21 @@ export class SdmActor extends Actor {
     return result;
   }
 
+  getAllEffects() {
+    let effects = Array.from(this.effects);
+
+    const items = Array.from(this.items.filter(it => ['gear', 'trait'].includes(it.type)));
+    items.forEach(item => {
+      const _eff = Array.from(item.effects);
+      if (_eff.length > 0) {
+        const mergedEffects = [...new Set([...effects, ..._eff])];
+        effects = mergedEffects;
+      }
+    });
+
+    return effects;
+  }
+
   checkInventorySlots() {
     const isNPC = this.type === ActorType.NPC;
 
@@ -411,18 +459,26 @@ export class SdmActor extends Actor {
     let smallItemBonus = this.system.small_item_slots_bonus || 0;
     let weaponItemBonus = this.system.weapon_item_slots_bonus || 0;
     let packedItemBonus = this.system.packed_item_slots_bonus || 0;
+    let readiedItemBonus = this.system.readied_item_slots_bonus || 0;
+    const readiedArmorTakeNoSlots = !!this.system.readied_armor_take_no_slots;
 
     // Iterate through items, allocating to containers
     for (let i of itemsArray) {
       const isGear = i.type === ItemType.GEAR;
       const isPower = i.system.type === GearType.POWER;
       const isWeapon = i.system.type === GearType.WEAPON;
+      const isWard = i.system.type === GearType.WARD;
+      const isArmor = i.system.type === GearType.ARMOR;
       const isSmallITem = i.system.size.unit === SizeUnit.SOAPS;
       const isReadied = !!i.system.readied;
 
       let itemSlots = getSlotsTaken(i.system);
 
-      if (isPower && powerSlotsBonus > 0) {
+      if (isArmor && isReadied && readiedArmorTakeNoSlots) {
+        itemSlots = 0;
+      } else if ((isWeapon || isWard) && isReadied && readiedArmorTakeNoSlots && !!checkIfItemIsAlsoAnArmor(i)) {
+        itemSlots = 0;
+      } else if (isPower && powerSlotsBonus > 0) {
         powerSlotsBonus -= 1;
         // if (itemSlots >= 1) itemSlots -= 1;
         itemSlots = 0;
@@ -432,6 +488,9 @@ export class SdmActor extends Actor {
       } else if (isGear && isSmallITem && isReadied && smallItemBonus > 0) {
         smallItemBonus -= 1;
         // if (itemSlots >= 1) itemSlots -= 1;
+        itemSlots = 0;
+      } else if (isReadied && readiedItemBonus > 0 && itemSlots === 1) {
+        readiedItemBonus -= 1;
         itemSlots = 0;
       } else if (isGear && !isReadied && packedItemBonus > 0 && packedItemBonus >= itemSlots) {
         packedItemBonus -= itemSlots || 1;
@@ -1065,20 +1124,131 @@ export class SdmActor extends Actor {
     });
   }
 
-  async applyDamage(damageValue = 0, multiplier = 1) {
-    const { value, max } = this.system.life;
+  async updateBloodDice(usedBloodDice = 0) {
+    if (!usedBloodDice) return;
 
-    if (!damageValue || !Number.isNumeric(damageValue)) return;
-
-    const amountToApply = damageValue * multiplier;
-    const newValue = Math.clamp(value - amountToApply, 0, max);
-
-    await postLifeChange(this, damageValue, multiplier);
-
+    const current = Math.max(0, this.system.blood_dice?.value || 0);
+    const newBloodDiceValue = Math.max(current - usedBloodDice, 0);
     await this.update({
-      'system.life.value': newValue
+      'system.blood_dice.value': newBloodDiceValue
     });
   }
+
+  async addOneBloodDie() {
+    const current = Math.max(0, this.system.blood_dice?.value || 0);
+    const newBloodDiceValue = Math.min(current + 1, this.system.blood_dice.max);
+    const adjustment = newBloodDiceValue > current ? 1 : 0;
+    const resource = 'blood_dice';
+
+    const chatCardData = {
+      actor: this,
+      adjustment,
+      after: newBloodDiceValue,
+      befor: current,
+      resource
+    };
+
+    const dialogData = [
+      {
+        adjustment,
+        character: this.id,
+        operation: 'increment',
+        resource
+      }
+    ];
+
+    if (adjustment > 0) {
+      await postDiceSummary([chatCardData], dialogData, { eventLabel: $l10n('SDM.Damage') });
+    }
+
+    await this.update({
+      'system.blood_dice.value': newBloodDiceValue
+    });
+  }
+
+  async applyDamage(damageValue = 0, multiplier = 1) {
+  const life = this.system.life;
+  const tempLife = this.system.temporary_life;
+  const bloodClad = this.system.blood_clad;
+
+  if (!damageValue || !Number.isNumeric(damageValue)) return;
+
+  // Net amount: positive = damage, negative = healing
+  const netAmount = damageValue * multiplier;
+
+  // Call the hook/logging you already had
+  await postLifeChange(this, damageValue, multiplier);
+
+  // Helper clamps (in case your environment doesn't have Math.clamp)
+  const clamp = (v, a, b) => Math.min(Math.max(v, a), b);
+
+  // --- DAMAGE PATH (netAmount > 0) ---
+  if (netAmount > 0) {
+    let remainingDamage = netAmount;
+    let newTempValue = tempLife?.value ?? 0;
+    let newLifeValue = life.value;
+
+    // If temporary life is enabled and > 0, consume it first
+    if (tempLife?.enabled && (newTempValue > 0)) {
+      const takenFromTemp = Math.min(newTempValue, remainingDamage);
+      newTempValue = clamp(newTempValue - takenFromTemp, 0, tempLife.max ?? newTempValue);
+      remainingDamage -= takenFromTemp;
+    }
+
+    // Any remaining damage reduces real life
+    if (remainingDamage > 0) {
+      newLifeValue = clamp(newLifeValue - remainingDamage, 0, life.max);
+    }
+
+    // If multiplier === 1 and some damage was applied (same condition as before), keep adding blood die
+    if (multiplier === 1 && netAmount && bloodClad) {
+      await this.addOneBloodDie();
+    }
+
+    // Build update object (include temp only if the system has it)
+    const updateData = { 'system.life.value': newLifeValue };
+    if (typeof tempLife !== 'undefined' && ('enabled' in tempLife)) {
+      updateData['system.temporary_life.value'] = newTempValue;
+    }
+
+    await this.update(updateData);
+    return;
+  }
+
+  // --- HEALING PATH (netAmount < 0) ---
+  if (netAmount < 0) {
+    let remainingHeal = Math.abs(netAmount);
+    let newLifeValue = life.value;
+    let newTempValue = tempLife?.value ?? 0;
+
+    // First heal real life up to its max
+    if (newLifeValue < life.max) {
+      const healToLife = Math.min(remainingHeal, life.max - newLifeValue);
+      newLifeValue = clamp(newLifeValue + healToLife, 0, life.max);
+      remainingHeal -= healToLife;
+    }
+
+    // Any overflow can go to temporary life (if enabled)
+    if (remainingHeal > 0 && tempLife?.enabled) {
+      const tempMax = tempLife.max ?? newTempValue;
+      const healToTemp = Math.min(remainingHeal, tempMax - newTempValue);
+      newTempValue = clamp(newTempValue + healToTemp, 0, tempMax);
+      remainingHeal -= healToTemp;
+    }
+
+    // Update the document (include temp only if the system has it)
+    const updateData = { 'system.life.value': newLifeValue };
+    if (typeof tempLife !== 'undefined' && ('enabled' in tempLife)) {
+      updateData['system.temporary_life.value'] = newTempValue;
+    }
+
+    await this.update(updateData);
+    return;
+  }
+
+  // If netAmount === 0 we already returned earlier due to the initial guard,
+  // but keep this for clarity.
+}
 
   async performHudAction(action, identifier = '', args = {}, isShift = false, isCtrl = false) {
     // Resolve composite strings like "ability|str"
@@ -1159,6 +1329,10 @@ export class SdmActor extends Actor {
         heroichealing: {
           handler: '_onHeroHealing',
           dataset: { action: 'heroicHealing', index: actionKey }
+        },
+        bloodDiceRoll: {
+          handler: '_onBloodDiceRoll',
+          dataset: { action: 'bloodDiceRoll', index: actionKey }
         },
         item: {
           handler: '_onRoll',

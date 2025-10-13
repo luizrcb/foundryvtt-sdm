@@ -68,10 +68,12 @@ export default class SDMRoll {
     const isAttack = this.type === RollType.ATTACK;
     const isAbility = this.type === RollType.ABILITY;
     const isDamage = this.type === RollType.DAMAGE;
+    const isPower = this.type ===  RollType.POWER;
+    const isPowerAlbum = this.type === RollType.POWER_ALBUM;
     let checkCritical = isAttack || isAbility;
     const flags = {};
 
-    if (isDamage) {
+    if (isDamage || isPower || isPowerAlbum) {
       flags['sdm.isDamageRoll'] = true;
     } else {
       flags['sdm.isTraitRoll'] = true;
@@ -207,6 +209,8 @@ export default class SDMRoll {
 
     if (this.actor?.type === ActorType.CHARACTER) {
       abilityMod = actorData?.abilities[this.ability]?.current ?? 0;
+      const rollBonus = actorData?.abilities[this.ability]?.roll_bonus ?? 0;
+      abilityMod += rollBonus;
     } else if (
       this.actor.type === ActorType.NPC &&
       ![RollType.DAMAGE, RollType.POWER, RollType.POWER_ALBUM].includes(type)

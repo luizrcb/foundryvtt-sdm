@@ -26,7 +26,7 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsChromatypeHint',
     scope: 'client', // or "world"
     requiresReload: true,
-    choices: CONFIG.SDM.accenTColorOptions,
+    choices: CONFIG.SDM.accentColorOptions,
     type: String,
     default: 'teal'
   });
@@ -38,7 +38,7 @@ export function registerSystemSettings() {
     requiresReload: true,
     choices: {
       same: 'SDM.DSNChromatypeSame',
-      ...CONFIG.SDM.accenTColorOptions
+      ...CONFIG.SDM.accentColorOptions
     },
     type: String,
     default: 'same'
@@ -550,7 +550,7 @@ export function setupEscalatorDiePositionBroadcast() {
 export function configureUseHeroDiceButton(message, html, data) {
   if (!message) return;
 
-  //const isInitiativeRoll = message?.getFlag("core", 'initiativeRoll');
+  // Guards — keep the original exclusions
   const isHeroResult = !!message?.getFlag('sdm', 'isHeroResult');
   const isRollTableMessage = !!message?.getFlag('core', 'RollTable');
   const isAbilityScoreRoll = !!message?.getFlag('sdm', 'isAbilityScoreRoll');
@@ -558,73 +558,67 @@ export function configureUseHeroDiceButton(message, html, data) {
   const flags = message.flags;
   if (isRollTableMessage || isAbilityScoreRoll || noHeroDice) return;
 
+  // Remove existing buttons if the message is already a hero result
   if (isHeroResult) {
     $('button.hero-dice-btn').remove();
+    $('button.blood-dice-btn').remove();
   }
 
-  // Find the most recent roll message in chat
+  // Find the most recent roll message in chat (same logic as before)
   const lastRollMessage = [...game.messages.contents]
     .reverse()
     .find(m => m.isRoll || m?.getFlag('sdm', 'isHeroResult'));
 
   if (lastRollMessage?.getFlag('sdm', 'isHeroResult')) {
     $('button.hero-dice-btn').remove();
+    $('button.blood-dice-btn').remove();
     return;
   }
 
-  // if (!lastRollMessage.rolls?.[0]?.dice?.some(d => d.faces === 20)) return;
-
-  // Only proceed if this is the most recent d20 roll message
+  // Only proceed if this is the most recent roll message
   if (!lastRollMessage || message.id !== lastRollMessage.id) return;
-  // Only show if user has a character with hero dice
 
   // Get Actor from selected token, or default character for the Actor if none is.
   const actor = game.user?.character || canvas?.tokens?.controlled[0]?.actor;
   const isGM = game.user.isGM;
   if (!actor && !isGM) return;
 
-  // Check hero_dice
-  // const hero_dice = actor?.system?.hero_dice?.value;
-  //if (!isGM && (!hero_dice || hero_dice < 1)) return;
+  // Do not show for fumbles (preserve original early return)
+  if (message.content.includes('fumble')) return;
 
-  if (message.content.includes('fumble')) {
-    return;
-  }
+  // --- HERO DICE BUTTON (original behaviour) ---
+  // Create hero-dice button element
+  const heroBtn = document.createElement('button');
+  heroBtn.classList.add('hero-dice-btn');
+  heroBtn.dataset.messageId = message.id;
 
-  // Create button element
-  const btn = document.createElement('button');
-  btn.classList.add('hero-dice-btn');
-  btn.dataset.messageId = message.id;
-
-  // Create icon element
-  const icon = document.createElement('i');
+  const heroIcon = document.createElement('i');
   const defaultHeroDiceType = game.settings.get('sdm', 'defaultHeroDiceType');
   const actorHeroDice = actor?.system?.hero_dice?.dice_type || defaultHeroDiceType;
+  heroIcon.classList.add('die-label', `dice-${actorHeroDice}`);
+  heroBtn.appendChild(heroIcon);
 
-  icon.classList.add('die-label', `dice-${actorHeroDice}`);
-  btn.appendChild(icon);
+  heroBtn.append(` ${$l10n('SDM.RollUseHeroDice')}`);
 
-  // Add localized text
-  btn.append(` ${$l10n('SDM.RollUseHeroDice')}`);
+  // Append hero button (container)
+  const heroContainer = document.createElement('div');
+  heroContainer.classList.add('flex', 'flex-group-center');
+  heroContainer.appendChild(heroBtn);
 
-  // Create container div
-  const container = document.createElement('div');
-  container.classList.add('flex', 'flex-group-center');
-  container.appendChild(btn);
-
-  // Find message content and append
   const messageContent = html.querySelector('.message-content');
   if (messageContent) {
-    messageContent.appendChild(container);
+    messageContent.appendChild(heroContainer);
   }
 
-  // Add event listener
-  btn.addEventListener('click', ev => {
+  // Hero button handler (unchanged call site)
+  heroBtn.addEventListener('click', ev => {
     ev.preventDefault();
     ev.stopPropagation();
+    // existing function assumed to exist
     handleHeroDice(ev, message, flags);
   });
 }
+
 
 export function configurePlayerChromatype() {
   const color = game.settings.get('sdm', 'chromatype');
@@ -828,8 +822,81 @@ export function configurePlayerChromatype() {
         background: '#FF02FF',
         edge: '#000000'
       }
+    },
+    neonYellow: {
+      hex: '#FFFF33',
+      rgb: 'rgba(255, 255, 51, 0.3)',
+      dice: {
+        foreground: '#202040',
+        background: '#FFFF33',
+        edge: '#202040'
+      }
+    },
+    neonRose: {
+      hex: '#FF007F',
+      rgb: 'rgba(255, 0, 127, 0.25)',
+      dice: {
+        foreground: '#000000',
+        background: '#FF007F',
+        edge: '#000000'
+      }
+    },
+    mint: {
+      hex: '#3FFFBF',
+      rgb: 'rgba(63, 255, 191, 0.25)',
+      dice: {
+        foreground: '#102020',
+        background: '#3FFFBF',
+        edge: '#102020'
+      }
+    },
+    electricBlue: {
+      hex: '#00BFFF',
+      rgb: 'rgba(0, 191, 255, 0.25)',
+      dice: {
+        foreground: '#101010',
+        background: '#00BFFF',
+        edge: '#101010'
+      }
+    },
+    tangerine: {
+      hex: '#FF7E00',
+      rgb: 'rgba(255, 126, 0, 0.25)',
+      dice: {
+        foreground: '#002244',
+        background: '#FF7E00',
+        edge: '#002244'
+      }
+    },
+    ice: {
+      hex: '#AFFFFF',
+      rgb: 'rgba(175, 255, 255, 0.25)',
+      dice: {
+        foreground: '#003344',
+        background: '#AFFFFF',
+        edge: '#003344'
+      }
+    },
+    sky: {
+      hex: '#87CEFA',
+      rgb: 'rgba(135, 206, 250, 0.25)',
+      dice: {
+        foreground: '#103050',
+        background: '#87CEFA',
+        edge: '#103050'
+      }
+    },
+    roseGold: {
+      hex: '#B76E79',
+      rgb: 'rgba(183, 110, 121, 0.25)',
+      dice: {
+        foreground: '#2C0E10',
+        background: '#B76E79',
+        edge: '#2C0E10'
+      }
     }
   };
+
   const selectedColor = colorMapping[color];
   const dice3DColor = colorMapping[dsnFinalColor].dice;
   const { foreground, background, edge } = dice3DColor;
@@ -838,13 +905,73 @@ export function configurePlayerChromatype() {
   const foregroundRainbow = rainbow.map(color => colorMapping[color].dice.foreground);
   const backgroundRainbow = rainbow.map(color => colorMapping[color].dice.background);
 
-  const neon = ['neonPurple', 'lime', 'ultraviolet', 'aqua'];
+  const neon = [
+    'neonPurple',
+    'lime',
+    'ultraviolet',
+    'aqua',
+    'tangerine',
+    'neonRose',
+    'neonYellow',
+    'mint',
+    'electricBlue'
+  ];
   const foregroundNeon = neon.map(color => colorMapping[color].dice.foreground);
   const backgroundNeon = neon.map(color => colorMapping[color].dice.background);
 
-  const luxury = ['olive', 'emerald', 'crimson', 'silver', 'gold'];
+  const luxury = ['olive', 'emerald', 'crimson', 'silver', 'gold', 'roseGold'];
   const foregroundLuxury = luxury.map(color => colorMapping[color].dice.foreground);
   const backgroundLuxury = luxury.map(color => colorMapping[color].dice.background);
+
+  // 1) pastel: soft, gentle tones
+  const pastel = ['mint', 'ice', 'sky', 'pink', 'roseGold', 'aqua'];
+  const foregroundPastel = pastel.map(color => colorMapping[color].dice.foreground);
+  const backgroundPastel = pastel.map(color => colorMapping[color].dice.background);
+
+  // 2) earth: grounded, natural tones
+  const earth = ['brown', 'olive', 'green', 'emerald', 'gold'];
+  const foregroundEarth = earth.map(color => colorMapping[color].dice.foreground);
+  const backgroundEarth = earth.map(color => colorMapping[color].dice.background);
+
+  // 3) warm: fire / sun palette
+  const warm = ['red', 'crimson', 'orange', 'tangerine', 'gold', 'yellow'];
+  const foregroundWarm = warm.map(color => colorMapping[color].dice.foreground);
+  const backgroundWarm = warm.map(color => colorMapping[color].dice.background);
+
+  // 4) cool: water / sky / futuristic
+  const cool = ['aqua', 'electricBlue', 'ice', 'teal', 'ultraviolet'];
+  const foregroundCool = cool.map(color => colorMapping[color].dice.foreground);
+  const backgroundCool = cool.map(color => colorMapping[color].dice.background);
+
+  // 5) dark: moody, deep tones
+  const dark = ['black', 'brown', 'crimson', 'olive', 'purple', 'violet'];
+  const foregroundDark = dark.map(color => colorMapping[color].dice.foreground);
+  const backgroundDark = dark.map(color => colorMapping[color].dice.background);
+
+  // 6) light: bright / near-white highlights
+  const light = ['white', 'ice', 'mint', 'sky', 'aqua', 'yellow'];
+  const foregroundLight = light.map(color => colorMapping[color].dice.foreground);
+  const backgroundLight = light.map(color => colorMapping[color].dice.background);
+
+  // 7) romantic: soft warm/purple/pink mix
+  const romantic = ['pink', 'roseGold', 'neonRose', 'purple', 'violet', 'gold'];
+  const foregroundRomantic = romantic.map(color => colorMapping[color].dice.foreground);
+  const backgroundRomantic = romantic.map(color => colorMapping[color].dice.background);
+
+  // 8) metallic: shiny / reflective tones
+  const metallic = ['silver', 'gold', 'roseGold'];
+  const foregroundMetallic = metallic.map(color => colorMapping[color].dice.foreground);
+  const backgroundMetallic = metallic.map(color => colorMapping[color].dice.background);
+
+  // 9) bright: high-visibility lively colors
+  const bright = ['yellow', 'lime', 'tangerine', 'pink', 'electricBlue'];
+  const foregroundBright = bright.map(color => colorMapping[color].dice.foreground);
+  const backgroundBright = bright.map(color => colorMapping[color].dice.background);
+
+  // 10) royal: rich, regal tones
+  const royal = ['emerald', 'crimson', 'violet', 'gold', 'purple'];
+  const foregroundRoyal = royal.map(color => colorMapping[color].dice.foreground);
+  const backgroundRoyal = royal.map(color => colorMapping[color].dice.background);
 
   Hooks.once('diceSoNiceInit', dice3d => {
     if (dice3d) {
@@ -865,7 +992,6 @@ export function configurePlayerChromatype() {
         colorData.edge = [edge];
       }
       dice3d.addColorset(colorData);
-
 
       const rainbowData = {
         name: 'sdm-rainbowlands',
@@ -908,6 +1034,146 @@ export function configurePlayerChromatype() {
         fontScale: DICE_SCALE
       };
       dice3d.addColorset(luxuryData);
+
+      // const pastelData = {
+      //   name: 'sdm-pastel',
+      //   description: 'SDM Pastel Dice',
+      //   category: 'Colors',
+      //   foreground: foregroundPastel,
+      //   background: backgroundPastel,
+      //   outline: 'black',
+      //   texture: 'none',
+      //   material: 'plastic',
+      //   font: 'Our Golden Age',
+      //   fontScale: DICE_SCALE
+      // };
+      // dice3d.addColorset(pastelData);
+
+      // const earthData = {
+      //   name: 'sdm-earth',
+      //   description: 'SDM Earth Dice',
+      //   category: 'Colors',
+      //   foreground: foregroundEarth,
+      //   background: backgroundEarth,
+      //   outline: 'black',
+      //   texture: 'none',
+      //   material: 'plastic',
+      //   font: 'Our Golden Age',
+      //   fontScale: DICE_SCALE
+      // };
+      // dice3d.addColorset(earthData);
+
+      const warmData = {
+        name: 'sdm-warm',
+        description: 'SDM Warm Dice',
+        category: 'Colors',
+        foreground: foregroundWarm,
+        background: backgroundWarm,
+        outline: 'black',
+        texture: 'none',
+        material: 'plastic',
+        font: 'Our Golden Age',
+        fontScale: DICE_SCALE
+      };
+      dice3d.addColorset(warmData);
+
+      const coolData = {
+        name: 'sdm-cool',
+        description: 'SDM Cool Dice',
+        category: 'Colors',
+        foreground: foregroundCool,
+        background: backgroundCool,
+        outline: 'black',
+        texture: 'none',
+        material: 'plastic',
+        font: 'Our Golden Age',
+        fontScale: DICE_SCALE
+      };
+      dice3d.addColorset(coolData);
+
+      const darkData = {
+        name: 'sdm-dark',
+        description: 'SDM Dark Dice',
+        category: 'Colors',
+        foreground: foregroundDark,
+        background: backgroundDark,
+        outline: 'black',
+        texture: 'none',
+        material: 'plastic',
+        font: 'Our Golden Age',
+        fontScale: DICE_SCALE
+      };
+      dice3d.addColorset(darkData);
+
+      const lightData = {
+        name: 'sdm-light',
+        description: 'SDM Light Dice',
+        category: 'Colors',
+        foreground: foregroundLight,
+        background: backgroundLight,
+        outline: 'black',
+        texture: 'none',
+        material: 'plastic',
+        font: 'Our Golden Age',
+        fontScale: DICE_SCALE
+      };
+      dice3d.addColorset(lightData);
+
+      const romanticData = {
+        name: 'sdm-romantic',
+        description: 'SDM Romantic Dice',
+        category: 'Colors',
+        foreground: foregroundRomantic,
+        background: backgroundRomantic,
+        outline: 'black',
+        texture: 'none',
+        material: 'plastic',
+        font: 'Our Golden Age',
+        fontScale: DICE_SCALE
+      };
+      dice3d.addColorset(romanticData);
+
+      // const metallicData = {
+      //   name: 'sdm-metallic',
+      //   description: 'SDM Metallic Dice',
+      //   category: 'Colors',
+      //   foreground: foregroundMetallic,
+      //   background: backgroundMetallic,
+      //   outline: 'black',
+      //   texture: 'none',
+      //   material: 'plastic',
+      //   font: 'Our Golden Age',
+      //   fontScale: DICE_SCALE
+      // };
+      // dice3d.addColorset(metallicData);
+
+      // const brightData = {
+      //   name: 'sdm-bright',
+      //   description: 'SDM Bright Dice',
+      //   category: 'Colors',
+      //   foreground: foregroundBright,
+      //   background: backgroundBright,
+      //   outline: 'black',
+      //   texture: 'none',
+      //   material: 'plastic',
+      //   font: 'Our Golden Age',
+      //   fontScale: DICE_SCALE
+      // };
+      // dice3d.addColorset(brightData);
+
+      // const royalData = {
+      //   name: 'sdm-royal',
+      //   description: 'SDM Royal Dice',
+      //   category: 'Colors',
+      //   foreground: foregroundRoyal,
+      //   background: backgroundRoyal,
+      //   outline: 'black',
+      //   texture: 'none',
+      //   material: 'plastic',
+      //   font: 'Our Golden Age',
+      //   fontScale: DICE_SCALE
+      // };
+      // dice3d.addColorset(royalData);
     }
   });
 
