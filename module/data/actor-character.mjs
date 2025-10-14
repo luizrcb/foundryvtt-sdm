@@ -31,6 +31,11 @@ export default class SdmCharacter extends SdmActorBase {
       initial: 2
     });
 
+    schema.damage_bonus = new fields.NumberField({
+      ...requiredInteger,
+      initial: 0
+    });
+
     schema.armor_bonus = new fields.NumberField({
       ...requiredInteger,
       initial: 0
@@ -265,9 +270,41 @@ export default class SdmCharacter extends SdmActorBase {
       })
     });
 
-    schema.blood_clad = new fields.BooleanField({ initial: false });
+    schema.tourist_dice = new fields.SchemaField({
+      enabled: new fields.BooleanField({ initial: false }),
+      value: new fields.NumberField({
+        ...requiredInteger,
+        initial: 0,
+        min: 0
+      }),
+      max: new fields.NumberField({
+        ...requiredInteger,
+        initial: 0,
+        min: 0
+      }),
+      min: new fields.NumberField({
+        ...requiredInteger,
+        initial: 0,
+        min: 0,
+        max: 0
+      }),
+      dice_type: new fields.StringField({
+        required: true,
+        blank: false,
+        initial: 'd6',
+        choices: DieScale.reduce((acc, die) => {
+          acc[die] = die;
+          return acc;
+        }, {})
+      }),
+      bonus: new fields.NumberField({
+        ...requiredInteger,
+        initial: 0
+      })
+    });
 
     schema.blood_dice = new fields.SchemaField({
+      enabled: new fields.BooleanField({ initial: false }),
       value: new fields.NumberField({
         ...requiredInteger,
         initial: 1,

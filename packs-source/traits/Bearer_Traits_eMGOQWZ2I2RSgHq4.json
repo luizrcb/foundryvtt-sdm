@@ -1,0 +1,22 @@
+{
+  "type": "Item",
+  "folder": "6Yjiv2Z80S052LbC",
+  "name": "Bearer Traits",
+  "color": null,
+  "sorting": "a",
+  "_id": "eMGOQWZ2I2RSgHq4",
+  "description": "",
+  "sort": 100000,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "sdm",
+    "systemVersion": "0.4.5",
+    "lastModifiedBy": "XnQAppzUXfkn5LcX",
+    "modifiedTime": 1760379342005
+  },
+  "_key": "!folders!eMGOQWZ2I2RSgHq4"
+}

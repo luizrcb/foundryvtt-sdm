@@ -1,16 +1,16 @@
 {
-  "folder": "Dh7uJ9USCgZvV3EB",
-  "name": "6. Hashtag Blessed",
+  "folder": "xPx1zTN3OKrGKQZS",
+  "name": "3. Rancher",
   "type": "trait",
-  "_id": "TGvlHNtosFuDRVhz",
-  "img": "icons/magic/holy/prayer-hands-glowing-yellow.webp",
+  "_id": "Q6k9aW95K3l36TMh",
+  "img": "icons/environment/settlement/house-farmland.webp",
   "system": {
     "readied": false,
     "status": "",
     "resources": "",
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p>Every time you visit a new place, gain a tourist die. It works like a hero die. You can hold a number equal to your charisma.</p><p><em>Update the <strong>Tourist Dice</strong> active effect <span style=\"text-decoration:underline\">system.tourist_dice.max</span> property with the value of your current charisma.</em></p>",
+    "description": "<p>You know how to keep herds well-oiled and charged, manage shepherds and dogs, ride solar steeds, spot water holes, and rustle burden beasts. Gain 1 strength or charisma.</p><p><em>(use the <strong>Rancher</strong> active effect to add the strenght or charisma bonus)</em></p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -61,21 +61,21 @@
   },
   "effects": [
     {
-      "name": "Tourist Dice",
-      "origin": "Compendium.sdm.traits.Item.TGvlHNtosFuDRVhz",
-      "img": "icons/sundries/gaming/dice-pair-white-green.webp",
-      "_id": "YhH258OWCjHCQZ7e",
+      "name": "Rancher",
+      "origin": "Compendium.sdm.traits.Item.Q6k9aW95K3l36TMh",
+      "img": "icons/environment/settlement/house-farmland.webp",
+      "_id": "U3KAyGU2ZUMsfPzA",
       "type": "base",
       "system": {},
       "changes": [
         {
-          "key": "system.tourist_dice.enabled",
-          "mode": 5,
-          "value": "true",
+          "key": "system.abilities.str.bonus",
+          "mode": 2,
+          "value": "0",
           "priority": null
         },
         {
-          "key": "system.tourist_dice.max",
+          "key": "system.abilities.cha.bonus",
           "mode": 2,
           "value": "0",
           "priority": null
@@ -104,11 +104,11 @@
         "coreVersion": "13.350",
         "systemId": "sdm",
         "systemVersion": "0.4.5",
-        "createdTime": 1760381008166,
-        "modifiedTime": 1760381076058,
+        "createdTime": 1760377001848,
+        "modifiedTime": 1760377030362,
         "lastModifiedBy": "XnQAppzUXfkn5LcX"
       },
-      "_key": "!items.effects!TGvlHNtosFuDRVhz.YhH258OWCjHCQZ7e"
+      "_key": "!items.effects!Q6k9aW95K3l36TMh.U3KAyGU2ZUMsfPzA"
     }
   ],
   "sort": 0,
@@ -124,9 +124,9 @@
     "coreVersion": "13.350",
     "systemId": "sdm",
     "systemVersion": "0.4.5",
-    "createdTime": 1760370927087,
-    "modifiedTime": 1760394416268,
+    "createdTime": 1760376897758,
+    "modifiedTime": 1760376996321,
     "lastModifiedBy": "XnQAppzUXfkn5LcX"
   },
-  "_key": "!items!TGvlHNtosFuDRVhz"
+  "_key": "!items!Q6k9aW95K3l36TMh"
 }

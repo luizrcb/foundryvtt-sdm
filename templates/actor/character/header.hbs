@@ -12,23 +12,33 @@
       <img class='profile-img' src='{{actor.img}}' data-edit='img' data-action='onEditImage' data-tooltip='{{actor.name}}'
         height='100' width='100' />
         {{#if (or isEditMode (not @root.editable))}}
-        <div class="flexcol {{#unless system.blood_clad}}mb-12{{/unless}} flex-group-center">
+        <div class="flexcol {{#unless system.blood_dice.enabled}}mb-12{{/unless}} flex-group-center">
         {{else}}
-        <div class="flexcol {{#unless system.blood_clad}}mb-12{{/unless}} flex-group-center rollable" data-context='rollable'
+        <div class="flexcol {{#unless system.blood_dice.enabled}}mb-12{{/unless}} flex-group-center rollable" data-context='rollable'
           data-action='heroicHealing' data-tooltip="{{localize 'SDM.HeroDiceHealingTip'}}">
         {{/if}}
           <label class='resource-label rollable'>{{localize 'SDM.FieldHeroDice'}}</label>
           <div class='resource-content flexrow height-32 rollable'>
             {{system.hero_dice.value}} / {{system.hero_dice.max}}
-            <i class="die-label dice-{{@root.heroDiceType}} sheet-hero-dice" data-tooltip="{{@root.heroDiceType}}"></i>
+            <i class="fa-solid fa-dice-{{@root.heroDiceType}} sheet-hero-dice" data-tooltip="{{@root.heroDiceType}}"></i>
           </div>
         </div>
-        {{#if system.blood_clad}}
+        {{#if system.blood_dice.enabled}}
         <div class="flexcol flex-group-center rollable" data-context='rollable' data-action='bloodDiceRoll'>
           <label class='resource-label rollable blood'>{{localize 'SDM.FieldBloodDice'}}</label>
           <div class='resource-content flexrow height-32 rollable'>
             {{system.blood_dice.value}} / {{system.blood_dice.max}}
-            <i class="die-label blood dice-{{system.blood_dice.dice_type}} sheet-hero-dice" data-tooltip="{{system.blood_dice.dice_type}}"></i>
+            <i class="blood fa-solid fa-dice-{{system.blood_dice.dice_type}} sheet-hero-dice" data-tooltip="{{system.blood_dice.dice_type}}"></i>
+          </div>
+        </div>
+        {{/if}}
+
+        {{#if system.tourist_dice.enabled }}
+        <div class="flexcol flex-group-center rollable" data-context='rollable' data-action='touristDiceRoll'>
+          <label class='resource-label rollable pine'>{{localize 'SDM.FieldTouristDice'}}</label>
+          <div class='resource-content flexrow height-32 rollable'>
+            {{system.tourist_dice.value}} / {{system.tourist_dice.max}}
+            <i class="pine fa-solid fa-dice-{{system.tourist_dice.dice_type}} sheet-hero-dice" data-tooltip="{{system.tourist_dice.dice_type}}"></i>
           </div>
         </div>
         {{/if}}

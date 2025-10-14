@@ -209,11 +209,17 @@ async function loadFixture(file) {
 // =============== 6) Stub determinístico of hero dice ===============
 function stubHeroDice(results) {
   const orig = HeroDiceEngine._rollHeroDice;
+  const updateHeroOriginal = HeroDiceEngine.updateHeroDice;
+
   HeroDiceEngine._rollHeroDice = async ({ quantity, faces }) => {
     return { dice: [{ results: results.map((v, i) => ({ result: v, active: true, index: i })) }] };
   };
+  HeroDiceEngine.updateHeroDice = async () => {
+    return Promise.resolve(true);
+  };
   return () => {
     HeroDiceEngine._rollHeroDice = orig;
+    HeroDiceEngine.updateHeroDice = updateHeroOriginal;
   };
 }
 

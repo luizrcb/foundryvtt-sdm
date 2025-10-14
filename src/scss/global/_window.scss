@@ -981,36 +981,36 @@ input[type='radio']::after {
     background: rgba(255, 255, 255, 0.04);
   }
 
-  .theme-dark .sheet select option {
+  .theme-dark select option {
     background: var(--background);
     color: var(--sdm-c-font);
   }
 
-  .theme-dark .sheet select option:hover {
+  .theme-dark select option:hover {
     background: var(--sdm-c-highlight) !important;
   }
 
-  .theme-dark .sheet select option:hover {
+  .theme-dark select option:hover {
     background: var(--sdm-c-highlight);
     color: var(--sdm-c-font);
   }
 
-  .theme-dark .sheet select option:checked,
-  .theme-dark .sheet select option[selected] {
+  .theme-dark select option:checked,
+  .theme-dark select option[selected] {
     background: var(--sdm-c-highlight);
     color: var(--sdm-c-font);
   }
 
-  .theme-dark .sheet select option:focus {
+  .theme-dark select option:focus {
     background: var(--sdm-c-highlight);
     outline: none;
   }
 
-  .theme-dark .sheet select option:active {
+  .theme-dark select option:active {
     background: var(--sdm-c-highlight);
   }
 
-  .theme-dark .sheet select::-ms-expand {
+  .theme-dark select::-ms-expand {
     filter: invert(1);
   }
 }

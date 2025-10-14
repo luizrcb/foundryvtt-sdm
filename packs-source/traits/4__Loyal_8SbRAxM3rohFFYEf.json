@@ -1,16 +1,16 @@
 {
-  "folder": "Dh7uJ9USCgZvV3EB",
-  "name": "6. Hashtag Blessed",
+  "folder": "eMGOQWZ2I2RSgHq4",
+  "name": "4. Loyal",
   "type": "trait",
-  "_id": "TGvlHNtosFuDRVhz",
-  "img": "icons/magic/holy/prayer-hands-glowing-yellow.webp",
+  "_id": "8SbRAxM3rohFFYEf",
+  "img": "icons/magic/control/control-influence-puppet.webp",
   "system": {
     "readied": false,
     "status": "",
     "resources": "",
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p>Every time you visit a new place, gain a tourist die. It works like a hero die. You can hold a number equal to your charisma.</p><p><em>Update the <strong>Tourist Dice</strong> active effect <span style=\"text-decoration:underline\">system.tourist_dice.max</span> property with the value of your current charisma.</em></p>",
+    "description": "<p>You never betray your friends (or master), and would suffer torture and tribulation for them without fear. Once per scene, when you sacrifice your own best interests to prove your loyalty, you immediately gain a hero die. Also, gain +1 ward.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -61,23 +61,17 @@
   },
   "effects": [
     {
-      "name": "Tourist Dice",
-      "origin": "Compendium.sdm.traits.Item.TGvlHNtosFuDRVhz",
-      "img": "icons/sundries/gaming/dice-pair-white-green.webp",
-      "_id": "YhH258OWCjHCQZ7e",
+      "name": "+1 Ward",
+      "origin": "Compendium.sdm.traits.Item.8SbRAxM3rohFFYEf",
+      "img": "icons/magic/control/control-influence-puppet.webp",
+      "_id": "PNPYEYYpcP2QtXpg",
       "type": "base",
       "system": {},
       "changes": [
         {
-          "key": "system.tourist_dice.enabled",
-          "mode": 5,
-          "value": "true",
-          "priority": null
-        },
-        {
-          "key": "system.tourist_dice.max",
+          "key": "system.ward_bonus",
           "mode": 2,
-          "value": "0",
+          "value": "1",
           "priority": null
         }
       ],
@@ -104,11 +98,11 @@
         "coreVersion": "13.350",
         "systemId": "sdm",
         "systemVersion": "0.4.5",
-        "createdTime": 1760381008166,
-        "modifiedTime": 1760381076058,
+        "createdTime": 1760380062392,
+        "modifiedTime": 1760380078213,
         "lastModifiedBy": "XnQAppzUXfkn5LcX"
       },
-      "_key": "!items.effects!TGvlHNtosFuDRVhz.YhH258OWCjHCQZ7e"
+      "_key": "!items.effects!8SbRAxM3rohFFYEf.PNPYEYYpcP2QtXpg"
     }
   ],
   "sort": 0,
@@ -124,9 +118,9 @@
     "coreVersion": "13.350",
     "systemId": "sdm",
     "systemVersion": "0.4.5",
-    "createdTime": 1760370927087,
-    "modifiedTime": 1760394416268,
+    "createdTime": 1760379665832,
+    "modifiedTime": 1760380029798,
     "lastModifiedBy": "XnQAppzUXfkn5LcX"
   },
-  "_key": "!items!TGvlHNtosFuDRVhz"
+  "_key": "!items!8SbRAxM3rohFFYEf"
 }

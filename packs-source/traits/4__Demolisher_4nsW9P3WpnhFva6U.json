@@ -1,16 +1,16 @@
 {
-  "folder": "Dh7uJ9USCgZvV3EB",
-  "name": "6. Hashtag Blessed",
+  "folder": "azq3HyXsnywN2mNv",
+  "name": "4. Demolisher",
   "type": "trait",
-  "_id": "TGvlHNtosFuDRVhz",
-  "img": "icons/magic/holy/prayer-hands-glowing-yellow.webp",
+  "_id": "4nsW9P3WpnhFva6U",
+  "img": "icons/skills/melee/strike-hammer-destructive-blue.webp",
   "system": {
     "readied": false,
     "status": "",
     "resources": "",
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p>Every time you visit a new place, gain a tourist die. It works like a hero die. You can hold a number equal to your charisma.</p><p><em>Update the <strong>Tourist Dice</strong> active effect <span style=\"text-decoration:underline\">system.tourist_dice.max</span> property with the value of your current charisma.</em></p>",
+    "description": "<p>Your critical hits are stronger (e.g., x2 becomes x3). Also, when you strike an object up to the size of a compact car, you can spend 1 strength or endurance to simply demolish it. Doors burst open, brick walls explode, wooden walls shatter into kindling, straw huts go flying, small golems crumple. You can also use this ability to turn a regular hit into a critical hit, or to double a critical hit. As a weapon (without strength or endurance), simply use your bearer’s abilities as fuel for your fury.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -61,23 +61,17 @@
   },
   "effects": [
     {
-      "name": "Tourist Dice",
-      "origin": "Compendium.sdm.traits.Item.TGvlHNtosFuDRVhz",
-      "img": "icons/sundries/gaming/dice-pair-white-green.webp",
-      "_id": "YhH258OWCjHCQZ7e",
+      "name": "Demolisher Critical Bonus",
+      "origin": "Compendium.sdm.traits.Item.4nsW9P3WpnhFva6U",
+      "img": "icons/skills/melee/strike-hammer-destructive-blue.webp",
+      "_id": "faHq3imDHWdajv45",
       "type": "base",
       "system": {},
       "changes": [
         {
-          "key": "system.tourist_dice.enabled",
-          "mode": 5,
-          "value": "true",
-          "priority": null
-        },
-        {
-          "key": "system.tourist_dice.max",
+          "key": "system.base_damage_multiplier",
           "mode": 2,
-          "value": "0",
+          "value": "1",
           "priority": null
         }
       ],
@@ -104,11 +98,11 @@
         "coreVersion": "13.350",
         "systemId": "sdm",
         "systemVersion": "0.4.5",
-        "createdTime": 1760381008166,
-        "modifiedTime": 1760381076058,
+        "createdTime": 1760378529292,
+        "modifiedTime": 1760378559937,
         "lastModifiedBy": "XnQAppzUXfkn5LcX"
       },
-      "_key": "!items.effects!TGvlHNtosFuDRVhz.YhH258OWCjHCQZ7e"
+      "_key": "!items.effects!4nsW9P3WpnhFva6U.faHq3imDHWdajv45"
     }
   ],
   "sort": 0,
@@ -124,9 +118,9 @@
     "coreVersion": "13.350",
     "systemId": "sdm",
     "systemVersion": "0.4.5",
-    "createdTime": 1760370927087,
-    "modifiedTime": 1760394416268,
+    "createdTime": 1760378419326,
+    "modifiedTime": 1760378516547,
     "lastModifiedBy": "XnQAppzUXfkn5LcX"
   },
-  "_key": "!items!TGvlHNtosFuDRVhz"
+  "_key": "!items!4nsW9P3WpnhFva6U"
 }

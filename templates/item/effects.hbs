@@ -40,11 +40,13 @@
             data-tooltip='{{localize "DOCUMENT.Update" type=(localize ' TYPE.Effect')}}'>
             <i class='fa-solid fa-edit'></i>
           </a>
+          {{#if @root.isGM}}
           {{#if @root.editable}}
           <a class='effect-control' data-action='deleteDoc' data-document-class='ActiveEffect'
             data-tooltip='{{localize "DOCUMENT.Delete" type=(localize ' TYPE.Effect')}}'>
             <i class='fa-solid fa-trash'></i>
           </a>
+          {{/if}}
           {{/if}}
         </div>
       </li>

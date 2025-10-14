@@ -60,20 +60,28 @@ export default class SDMRoll {
     const formulaComponents = [multipliedExpression, diceModifiers, fixedModifiers];
 
     const escalatorDie = game.settings.get('sdm', 'escalatorDie') ?? 0;
-    if (escalatorDie > 0) formulaComponents.push(escalatorDie);
 
-    const formula = formulaComponents.join('+');
-    const sanitizedFormula = sanitizeExpression(formula); // ready to roll
-    const flavor = this.#buildFlavorText(fixedModifiers, diceModifiers, escalatorDie);
+    if (escalatorDie > 0) formulaComponents.push(escalatorDie);
     const isAttack = this.type === RollType.ATTACK;
     const isAbility = this.type === RollType.ABILITY;
     const isDamage = this.type === RollType.DAMAGE;
     const isPower = this.type ===  RollType.POWER;
     const isPowerAlbum = this.type === RollType.POWER_ALBUM;
+    const isDamageRoll = isDamage || isPower || isPowerAlbum;
+    const damageBonus = this.actor.system?.damage_bonus || 0;
     let checkCritical = isAttack || isAbility;
+
+    if (isDamageRoll && damageBonus > 0) {
+      formulaComponents.push(damageBonus);
+    }
+
+    const formula = formulaComponents.join('+');
+    const sanitizedFormula = sanitizeExpression(formula); // ready to roll
+    const flavor = this.#buildFlavorText(fixedModifiers, diceModifiers, escalatorDie);
+
     const flags = {};
 
-    if (isDamage || isPower || isPowerAlbum) {
+    if (isDamageRoll) {
       flags['sdm.isDamageRoll'] = true;
     } else {
       flags['sdm.isTraitRoll'] = true;

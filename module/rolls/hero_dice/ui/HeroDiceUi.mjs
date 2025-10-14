@@ -17,10 +17,14 @@ export class HeroDiceUI {
     bonusHeroDice = 0,
     includeModeToggle = true,
     resource = 'hero_dice',
+    includeTouristDice = false
+
   ) {
     const maxHeroDice = actor.system[resource]?.value ?? 0;
+    const touristDice = (resource === 'hero_dice' && actor.system.tourist_dice.enabled) ? actor.system.tourist_dice.value : 0;
+    const diceAmount = includeTouristDice ? maxHeroDice + touristDice : maxHeroDice;
     const options = Array.from(
-      { length: maxHeroDice },
+      { length: diceAmount },
       (_, i) => `<option value="${i + 1}">${i + 1}</option>`
     ).join('');
 

@@ -595,7 +595,7 @@ export function configureUseHeroDiceButton(message, html, data) {
   const heroIcon = document.createElement('i');
   const defaultHeroDiceType = game.settings.get('sdm', 'defaultHeroDiceType');
   const actorHeroDice = actor?.system?.hero_dice?.dice_type || defaultHeroDiceType;
-  heroIcon.classList.add('die-label', `dice-${actorHeroDice}`);
+  heroIcon.classList.add('fa-solid', `fa-dice-${actorHeroDice}`);
   heroBtn.appendChild(heroIcon);
 
   heroBtn.append(` ${$l10n('SDM.RollUseHeroDice')}`);
@@ -618,7 +618,6 @@ export function configureUseHeroDiceButton(message, html, data) {
     handleHeroDice(ev, message, flags);
   });
 }
-
 
 export function configurePlayerChromatype() {
   const color = game.settings.get('sdm', 'chromatype');
@@ -1251,6 +1250,7 @@ export function createBonusHeroDiceDisplay() {
     white-space: nowrap;
     text-shadow: 1px 1px 2px black;
     margin-right: 8px;
+    font-family: var(--sdm-font-secondary);
   `;
 
   // icon
@@ -1276,7 +1276,62 @@ export function createBonusHeroDiceDisplay() {
     text-align: center;
     font-size: 1.1em;
     text-shadow: 1px 1px 2px black;
+    border: 1px solid rgba(255,255,255,0.15);
+    padding: 4px 4px;
+    font-size: 14px;
+    font-family: var(--sdm-font-dice);
   `;
+
+  // Make it look interactive for GMs
+  if (game?.user?.isGM) {
+    valueEl.style.cursor = 'pointer';
+    valueEl.setAttribute('data-tooltip', $l10n('SDM.DoubleClickToEdit'));
+
+    // Double-click to change value (GM only) — using DialogV2.input (Foundry v13)
+    valueEl.addEventListener('dblclick', async ev => {
+      ev.preventDefault();
+      ev.stopPropagation();
+      if (!game.user.isGM) return;
+
+      const current = game.settings.get('sdm', 'bonusHeroDicePool') || 0;
+
+      try {
+        // DialogV2.input returns an object with the form values (or throws if closed when rejectClose=true)
+        const data = await foundry.applications.api.DialogV2.input({
+          window: { title: $l10n('SDM.SetBonusHeroDice') || 'Set Bonus Hero Dice' },
+          // the input name must be "value" so we can read data.value
+          content: `<input name="value" type="number" min="0" step="1" value="${Number(current)}" autofocus style="width:100%;">`,
+          ok: { label: $l10n('SDM.ButtonSave') || 'Save' },
+          // rejectClose:false by default in v13; using try/catch below handles cancel
+          rejectClose: false,
+          // modal optional: false so it doesn't block entire UI
+          modal: true
+        });
+
+        if (!data || typeof data.value === 'undefined') return; // cancelled
+
+        const parsed = parseInt(String(data.value).trim(), 10);
+        if (Number.isNaN(parsed) || parsed < 0) {
+          const warnMsg = $l10n('SDM.InvalidNumber') || 'Please enter a non-negative integer.';
+          ui.notifications?.warn(warnMsg);
+          return;
+        }
+
+        // persist and broadcast
+        await game.settings.set('sdm', 'bonusHeroDicePool', parsed);
+        game.socket.emit('system.sdm', {
+          type: 'updateBonusHeroDice',
+          value: parsed
+        });
+
+        // refresh local display
+        updateBonusHeroDiceDisplay();
+      } catch (err) {
+        // user dismissed dialog or an unexpected error occurred — ignore cancel quietly
+        console.debug('Set Bonus Hero Dice cancelled or failed', err);
+      }
+    });
+  }
 
   // GM-only reset button (created only for GMs)
   let resetBtn = null;
@@ -1315,7 +1370,7 @@ export function createBonusHeroDiceDisplay() {
 
   // assemble
   const inner = document.createElement('div');
-  inner.style.cssText = 'display:flex; align-items:center;';
+  inner.style.cssText = 'display:flex; align-items:center; gap:6px;';
   inner.append(icon, label, valueEl);
   if (resetBtn) inner.appendChild(resetBtn);
 

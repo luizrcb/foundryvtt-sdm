@@ -186,8 +186,8 @@ export class HeroDiceEngine {
    * @param {Actor} actor - Actor to update
    * @param {number} qty - Quantity of dice to deduct
    */
-  static async updateHeroDice(actor, qty) {
-    await actor.updateHeroDice(qty);
+  static async updateHeroDice(actor, qty, shouldUseTouristDice = true) {
+    await actor.updateHeroDice(qty, shouldUseTouristDice);
   }
 
   /**

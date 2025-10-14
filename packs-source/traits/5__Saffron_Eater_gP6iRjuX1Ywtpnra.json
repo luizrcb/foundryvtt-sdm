@@ -1,16 +1,16 @@
 {
-  "folder": "Dh7uJ9USCgZvV3EB",
-  "name": "6. Hashtag Blessed",
+  "folder": "xPx1zTN3OKrGKQZS",
+  "name": "5. Saffron Eater",
   "type": "trait",
-  "_id": "TGvlHNtosFuDRVhz",
-  "img": "icons/magic/holy/prayer-hands-glowing-yellow.webp",
+  "_id": "gP6iRjuX1Ywtpnra",
+  "img": "icons/creatures/abilities/paw-glowing-yellow.webp",
   "system": {
     "readied": false,
     "status": "",
     "resources": "",
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p>Every time you visit a new place, gain a tourist die. It works like a hero die. You can hold a number equal to your charisma.</p><p><em>Update the <strong>Tourist Dice</strong> active effect <span style=\"text-decoration:underline\">system.tourist_dice.max</span> property with the value of your current charisma.</em></p>",
+    "description": "<p>Long exposure to exotic poisons and potions has turned your skin bright yellow and made you resistant to most toxins. Gain 1 aura and a bonus to avoid becoming addicted.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -61,23 +61,17 @@
   },
   "effects": [
     {
-      "name": "Tourist Dice",
-      "origin": "Compendium.sdm.traits.Item.TGvlHNtosFuDRVhz",
-      "img": "icons/sundries/gaming/dice-pair-white-green.webp",
-      "_id": "YhH258OWCjHCQZ7e",
+      "name": "+1 Aura",
+      "origin": "Compendium.sdm.traits.Item.gP6iRjuX1Ywtpnra",
+      "img": "icons/creatures/abilities/paw-glowing-yellow.webp",
+      "_id": "s6JxYrcFwjPSCYHX",
       "type": "base",
       "system": {},
       "changes": [
         {
-          "key": "system.tourist_dice.enabled",
-          "mode": 5,
-          "value": "true",
-          "priority": null
-        },
-        {
-          "key": "system.tourist_dice.max",
+          "key": "system.abilities.aur.bonus",
           "mode": 2,
-          "value": "0",
+          "value": "1",
           "priority": null
         }
       ],
@@ -104,11 +98,11 @@
         "coreVersion": "13.350",
         "systemId": "sdm",
         "systemVersion": "0.4.5",
-        "createdTime": 1760381008166,
-        "modifiedTime": 1760381076058,
+        "createdTime": 1760377316764,
+        "modifiedTime": 1760377337337,
         "lastModifiedBy": "XnQAppzUXfkn5LcX"
       },
-      "_key": "!items.effects!TGvlHNtosFuDRVhz.YhH258OWCjHCQZ7e"
+      "_key": "!items.effects!gP6iRjuX1Ywtpnra.s6JxYrcFwjPSCYHX"
     }
   ],
   "sort": 0,
@@ -124,9 +118,9 @@
     "coreVersion": "13.350",
     "systemId": "sdm",
     "systemVersion": "0.4.5",
-    "createdTime": 1760370927087,
-    "modifiedTime": 1760394416268,
+    "createdTime": 1760377228285,
+    "modifiedTime": 1760377311458,
     "lastModifiedBy": "XnQAppzUXfkn5LcX"
   },
-  "_key": "!items!TGvlHNtosFuDRVhz"
+  "_key": "!items!gP6iRjuX1Ywtpnra"
 }

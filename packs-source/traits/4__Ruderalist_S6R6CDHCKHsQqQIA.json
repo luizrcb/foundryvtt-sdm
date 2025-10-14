@@ -1,16 +1,16 @@
 {
-  "folder": "Dh7uJ9USCgZvV3EB",
-  "name": "6. Hashtag Blessed",
+  "folder": "xPx1zTN3OKrGKQZS",
+  "name": "4. Ruderalist",
   "type": "trait",
-  "_id": "TGvlHNtosFuDRVhz",
-  "img": "icons/magic/holy/prayer-hands-glowing-yellow.webp",
+  "_id": "S6R6CDHCKHsQqQIA",
+  "img": "icons/environment/wilderness/wall-ruins.webp",
   "system": {
     "readied": false,
     "status": "",
     "resources": "",
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p>Every time you visit a new place, gain a tourist die. It works like a hero die. You can hold a number equal to your charisma.</p><p><em>Update the <strong>Tourist Dice</strong> active effect <span style=\"text-decoration:underline\">system.tourist_dice.max</span> property with the value of your current charisma.</em></p>",
+    "description": "<p>Garden in the oldtech ruins, distinguish holograms from hollow eaters, and navigate the dangers of oldtech by intuition and tradition. Wield electric and magnetic weapons. Gain 1 thought.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -34,13 +34,13 @@
       "level": 0,
       "experience": "0"
     },
-    "type": "",
+    "type": "skill",
     "learning": {
       "sources": 0,
       "required_successes": 0
     },
     "skill": {
-      "rank": 0,
+      "rank": 1,
       "modifier_step": 3,
       "modifier_bonus": 0,
       "modifier_final": 0,
@@ -61,23 +61,17 @@
   },
   "effects": [
     {
-      "name": "Tourist Dice",
-      "origin": "Compendium.sdm.traits.Item.TGvlHNtosFuDRVhz",
-      "img": "icons/sundries/gaming/dice-pair-white-green.webp",
-      "_id": "YhH258OWCjHCQZ7e",
+      "name": "+1 Thought",
+      "origin": "Compendium.sdm.traits.Item.S6R6CDHCKHsQqQIA",
+      "img": "icons/environment/wilderness/wall-ruins.webp",
+      "_id": "0ewAjAMaBFI0u52r",
       "type": "base",
       "system": {},
       "changes": [
         {
-          "key": "system.tourist_dice.enabled",
-          "mode": 5,
-          "value": "true",
-          "priority": null
-        },
-        {
-          "key": "system.tourist_dice.max",
+          "key": "system.abilities.tho.bonus",
           "mode": 2,
-          "value": "0",
+          "value": "1",
           "priority": null
         }
       ],
@@ -104,11 +98,11 @@
         "coreVersion": "13.350",
         "systemId": "sdm",
         "systemVersion": "0.4.5",
-        "createdTime": 1760381008166,
-        "modifiedTime": 1760381076058,
+        "createdTime": 1760377185507,
+        "modifiedTime": 1760377213657,
         "lastModifiedBy": "XnQAppzUXfkn5LcX"
       },
-      "_key": "!items.effects!TGvlHNtosFuDRVhz.YhH258OWCjHCQZ7e"
+      "_key": "!items.effects!S6R6CDHCKHsQqQIA.0ewAjAMaBFI0u52r"
     }
   ],
   "sort": 0,
@@ -124,9 +118,9 @@
     "coreVersion": "13.350",
     "systemId": "sdm",
     "systemVersion": "0.4.5",
-    "createdTime": 1760370927087,
-    "modifiedTime": 1760394416268,
+    "createdTime": 1760377047255,
+    "modifiedTime": 1760377085102,
     "lastModifiedBy": "XnQAppzUXfkn5LcX"
   },
-  "_key": "!items!TGvlHNtosFuDRVhz"
+  "_key": "!items!S6R6CDHCKHsQqQIA"
 }

@@ -146,10 +146,12 @@ This project compendiums and macros use names of creatures, items, traits, power
       - Ranged Weapons
       - Throwing Weapons
       - Terrible Ranged Weapons of the Long Ago
-  - Traits (VLG, pp. 16-17):
+  - Traits (VLG, pp. 16-17 and pp. 114-159):
     - Path of the Wizard
     - Path of the Traveler
     - Path of the Fighter
+    - Other Paths
+      - Barbarian, Bluelander, Bourgeois, Golem, Greenlander, Holy Fool, Manager, Noble, Noömagus, Orangelander, Purplelander, Redlander, Scion, Servant, Skeleton, Soldier, Tourist Trickster, Weapon (Weapon and Bearer), Yellowlander.
   - SDM Macros (Referee Macros):
     - Give (or take) cash.
     - Give (or take) hero dice.

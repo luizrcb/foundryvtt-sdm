@@ -1,13 +1,14 @@
 # CHANGELOG
 
-## v0.4.6
+## v0.5.0
 
 - Add new Traits to the system Compendium
-- Add support for Blood Dice
+- Add support for Blood Dice and Tourist Dice
 - Add support for Borrowed Life and Temporary Life
 - Add new color palettes: electricBlue, ice, mint, neonRose, neonYellow, roseGold, sky, tangerine
 - Add new Dice so Nice color themes: SDM Warm Dice, SDM Cool Dice, SDM Dark Dice, SDM Light Dice, SDM Romantic Dice
 - Updated Neon Dice and Luxury Dice color themes
+- Fixed players not been able to edit active effects
 
 ## v0.4.5
 

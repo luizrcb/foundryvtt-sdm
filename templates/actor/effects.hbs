@@ -56,7 +56,6 @@
             <div class='effect-source'>{{effect.sourceName}}</div>
             <div class='effect-duration'>{{effect.duration.label}}</div>
             <div class='effect-controls flexrow'>
-              {{#if @root.isGM}}
                 {{#if @root.editable}}
                 <a
                   class='effect-control'
@@ -73,6 +72,7 @@
                 >
                   <i class='fa-solid fa-edit'></i>
                 </a>
+              {{#if @root.isGM}}
                 {{#if @root.editable}}
                 <a
                   class='effect-control'

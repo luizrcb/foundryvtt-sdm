@@ -1,16 +1,16 @@
 {
-  "folder": "Dh7uJ9USCgZvV3EB",
-  "name": "6. Hashtag Blessed",
+  "folder": "azq3HyXsnywN2mNv",
+  "name": "6. I Am Legion",
   "type": "trait",
-  "_id": "TGvlHNtosFuDRVhz",
-  "img": "icons/magic/holy/prayer-hands-glowing-yellow.webp",
+  "_id": "djd5SqnPqysHGabl",
+  "img": "icons/skills/melee/blade-tip-chipped-blood-red.webp",
   "system": {
     "readied": false,
     "status": "",
     "resources": "",
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p>Every time you visit a new place, gain a tourist die. It works like a hero die. You can hold a number equal to your charisma.</p><p><em>Update the <strong>Tourist Dice</strong> active effect <span style=\"text-decoration:underline\">system.tourist_dice.max</span> property with the value of your current charisma.</em></p>",
+    "description": "<p>You know everything about armies. Also, track the enemies you kill in a battle. Every enemy killed gives you a cumulative bonus of +1 damage until the end of the battle. After the first kill, blood gushes from you until the killing stops. Expert: the bonus is +2 per kill. Master: +3.</p><p><em>Active and edit the <strong>I Am Legion</strong> active effect to add the damage bonus.</em></p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -34,17 +34,17 @@
       "level": 0,
       "experience": "0"
     },
-    "type": "",
+    "type": "skill",
     "learning": {
       "sources": 0,
       "required_successes": 0
     },
     "skill": {
-      "rank": 0,
-      "modifier_step": 3,
+      "rank": 1,
+      "modifier_step": 1,
       "modifier_bonus": 0,
       "modifier_final": 0,
-      "custom_modifiers": false
+      "custom_modifiers": true
     },
     "power": {
       "img": "icons/svg/book.svg",
@@ -61,27 +61,21 @@
   },
   "effects": [
     {
-      "name": "Tourist Dice",
-      "origin": "Compendium.sdm.traits.Item.TGvlHNtosFuDRVhz",
-      "img": "icons/sundries/gaming/dice-pair-white-green.webp",
-      "_id": "YhH258OWCjHCQZ7e",
+      "name": "I Am Legion",
+      "origin": "Compendium.sdm.traits.Item.djd5SqnPqysHGabl",
+      "img": "icons/skills/melee/blade-tip-chipped-blood-red.webp",
+      "_id": "Cs6IxE1obe4uOJ4Z",
       "type": "base",
       "system": {},
       "changes": [
         {
-          "key": "system.tourist_dice.enabled",
-          "mode": 5,
-          "value": "true",
-          "priority": null
-        },
-        {
-          "key": "system.tourist_dice.max",
+          "key": "system.damage_bonus",
           "mode": 2,
-          "value": "0",
+          "value": "1",
           "priority": null
         }
       ],
-      "disabled": false,
+      "disabled": true,
       "duration": {
         "startTime": null,
         "combat": null,
@@ -104,11 +98,11 @@
         "coreVersion": "13.350",
         "systemId": "sdm",
         "systemVersion": "0.4.5",
-        "createdTime": 1760381008166,
-        "modifiedTime": 1760381076058,
+        "createdTime": 1760378762130,
+        "modifiedTime": 1760379449538,
         "lastModifiedBy": "XnQAppzUXfkn5LcX"
       },
-      "_key": "!items.effects!TGvlHNtosFuDRVhz.YhH258OWCjHCQZ7e"
+      "_key": "!items.effects!djd5SqnPqysHGabl.Cs6IxE1obe4uOJ4Z"
     }
   ],
   "sort": 0,
@@ -124,9 +118,9 @@
     "coreVersion": "13.350",
     "systemId": "sdm",
     "systemVersion": "0.4.5",
-    "createdTime": 1760370927087,
-    "modifiedTime": 1760394416268,
+    "createdTime": 1760378692984,
+    "modifiedTime": 1760379443556,
     "lastModifiedBy": "XnQAppzUXfkn5LcX"
   },
-  "_key": "!items!TGvlHNtosFuDRVhz"
+  "_key": "!items!djd5SqnPqysHGabl"
 }

@@ -1,16 +1,16 @@
 {
-  "folder": "Dh7uJ9USCgZvV3EB",
-  "name": "6. Hashtag Blessed",
+  "folder": "xPx1zTN3OKrGKQZS",
+  "name": "2. Dust Rat",
   "type": "trait",
-  "_id": "TGvlHNtosFuDRVhz",
-  "img": "icons/magic/holy/prayer-hands-glowing-yellow.webp",
+  "_id": "2Hg96KuCL89ijkHc",
+  "img": "icons/magic/air/fog-gas-smoke-brown.webp",
   "system": {
     "readied": false,
     "status": "",
     "resources": "",
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p>Every time you visit a new place, gain a tourist die. It works like a hero die. You can hold a number equal to your charisma.</p><p><em>Update the <strong>Tourist Dice</strong> active effect <span style=\"text-decoration:underline\">system.tourist_dice.max</span> property with the value of your current charisma.</em></p>",
+    "description": "<p>Adapted to the dry land, you require half as much water as a normal human. Gain 1 endurance. Also, you know your way around arid biomes.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -61,23 +61,17 @@
   },
   "effects": [
     {
-      "name": "Tourist Dice",
-      "origin": "Compendium.sdm.traits.Item.TGvlHNtosFuDRVhz",
-      "img": "icons/sundries/gaming/dice-pair-white-green.webp",
-      "_id": "YhH258OWCjHCQZ7e",
+      "name": "+1 Endurance",
+      "origin": "Compendium.sdm.traits.Item.2Hg96KuCL89ijkHc",
+      "img": "icons/magic/air/fog-gas-smoke-brown.webp",
+      "_id": "3GuN8o5NC96GaEu2",
       "type": "base",
       "system": {},
       "changes": [
         {
-          "key": "system.tourist_dice.enabled",
-          "mode": 5,
-          "value": "true",
-          "priority": null
-        },
-        {
-          "key": "system.tourist_dice.max",
+          "key": "system.abilities.end.bonus",
           "mode": 2,
-          "value": "0",
+          "value": "1",
           "priority": null
         }
       ],
@@ -104,14 +98,14 @@
         "coreVersion": "13.350",
         "systemId": "sdm",
         "systemVersion": "0.4.5",
-        "createdTime": 1760381008166,
-        "modifiedTime": 1760381076058,
+        "createdTime": 1760376819225,
+        "modifiedTime": 1760376837830,
         "lastModifiedBy": "XnQAppzUXfkn5LcX"
       },
-      "_key": "!items.effects!TGvlHNtosFuDRVhz.YhH258OWCjHCQZ7e"
+      "_key": "!items.effects!2Hg96KuCL89ijkHc.3GuN8o5NC96GaEu2"
     }
   ],
-  "sort": 0,
+  "sort": 50000,
   "ownership": {
     "default": 0,
     "XnQAppzUXfkn5LcX": 3
@@ -124,9 +118,9 @@
     "coreVersion": "13.350",
     "systemId": "sdm",
     "systemVersion": "0.4.5",
-    "createdTime": 1760370927087,
-    "modifiedTime": 1760394416268,
+    "createdTime": 1760376640667,
+    "modifiedTime": 1760376873904,
     "lastModifiedBy": "XnQAppzUXfkn5LcX"
   },
-  "_key": "!items!TGvlHNtosFuDRVhz"
+  "_key": "!items!2Hg96KuCL89ijkHc"
 }

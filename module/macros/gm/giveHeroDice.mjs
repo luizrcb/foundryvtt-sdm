@@ -1,4 +1,4 @@
-import { $l10n } from "../../helpers/globalUtils.mjs";
+import { $l10n, toPascalCase } from "../../helpers/globalUtils.mjs";
 import { templatePath } from "../../helpers/templates.mjs";
 
 const { renderTemplate } = foundry.applications.handlebars;
@@ -21,8 +21,9 @@ export async function giveHeroDice() {
 
   // Resource selector (extendable)
   const resourceOptions = [
-    { key: 'hero_dice', label: game.i18n.localize('SDM.HeroDice')},
-    { key: 'blood_dice', label: game.i18n.localize('SDM.BloodDice') }
+    { key: 'hero_dice', label: game.i18n.localize('SDM.HeroDicePl')},
+    { key: 'blood_dice', label: game.i18n.localize('SDM.BloodDicePl') },
+    { key: 'tourist_dice', label: game.i18n.localize('SDM.TouristDicePl') }
   ];
 
   const resourceOptionsHtml = resourceOptions
@@ -217,13 +218,13 @@ export async function postDiceSummary(summaryTargets = [], dialogData = {}, opts
         if (!actorImg && actor.token?.texture?.src) actorImg = actor.token.texture.src;
         // fallback to prototype token if available
         if (!actorImg && actor.prototypeToken?.texture?.src) actorImg = actor.prototypeToken.texture.src;
-
+        const resourceName = toPascalCase(resource).replace(' ', '');
         return {
           actorId,
           actorName,
           actorImg,
           resource,
-          resourceLabel: game.i18n.localize(resource === 'blood_dice' ? 'SDM.BloodDice' : 'SDM.HeroDice') ?? resource,
+          resourceLabel: game.i18n.localize(`SDM.${resourceName}Pl`) ?? resource,
           adjustment,
           before: current,
           after,

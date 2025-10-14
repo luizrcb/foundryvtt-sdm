@@ -476,7 +476,12 @@ export class SdmActor extends Actor {
 
       if (isArmor && isReadied && readiedArmorTakeNoSlots) {
         itemSlots = 0;
-      } else if ((isWeapon || isWard) && isReadied && readiedArmorTakeNoSlots && !!checkIfItemIsAlsoAnArmor(i)) {
+      } else if (
+        (isWeapon || isWard) &&
+        isReadied &&
+        readiedArmorTakeNoSlots &&
+        !!checkIfItemIsAlsoAnArmor(i)
+      ) {
         itemSlots = 0;
       } else if (isPower && powerSlotsBonus > 0) {
         powerSlotsBonus -= 1;
@@ -716,6 +721,8 @@ export class SdmActor extends Actor {
     const animalToConsume = Math.max(0, parseInt(data.consumeAnimal, 10) || 0);
     const humanToConsume = Math.max(0, parseInt(data.consumeHuman, 10) || 0);
     const machineToConsume = Math.max(0, parseInt(data.consumeMachine, 10) || 0);
+
+    if (animalToConsume === 0 && humanToConsume === 0 && machineToConsume === 0) return;
 
     // Sort by cost asc (undefined -> 0)
     const byCostAsc = (a, b) => Number(a.system?.cost ?? 0) - Number(b.system?.cost ?? 0);
@@ -1114,24 +1121,49 @@ export class SdmActor extends Actor {
     return { ...super.getRollData(), ...(this.system.getRollData?.() ?? null) };
   }
 
-  async updateHeroDice(usedHeroDice = 0) {
-    if (!usedHeroDice) return;
+  async updateHeroDice(usedHeroDice = 0, shouldUseTouristDice = true) {
+    // normalize input
+    usedHeroDice = Number(usedHeroDice || 0);
+    if (usedHeroDice <= 0) return;
 
-    const current = Math.max(0, this.system.hero_dice?.value || 0);
-    const newHeroDiceValue = Math.max(current - usedHeroDice, 0);
+    // current values (safe defaults)
+    const currentHero = Math.max(0, Number(this.system?.hero_dice?.value ?? 0));
+    const touristEnabled = Boolean(this.system?.tourist_dice?.enabled);
+    const currentTourist = (touristEnabled && shouldUseTouristDice)
+      ? Math.max(0, Number(this.system?.tourist_dice?.value ?? 0))
+      : 0;
+
+    // calculate deductions
+    const deductFromTourist = Math.min(currentTourist, usedHeroDice);
+    const remainingAfterTourist = usedHeroDice - deductFromTourist;
+    const deductFromHero = Math.min(currentHero, remainingAfterTourist);
+
+    // prepare update payload
+    const updates = {};
+    if (deductFromTourist > 0)
+      updates['system.tourist_dice.value'] = currentTourist - deductFromTourist;
+    if (deductFromHero > 0) updates['system.hero_dice.value'] = currentHero - deductFromHero;
+
+    // nothing to update (e.g. actor has no dice) -> exit
+    if (Object.keys(updates).length === 0) return;
+
+    await this.update(updates);
+  }
+
+  async updateResourceDice(resource, diceQuantity = 0) {
+    if (!resource || !diceQuantity) return;
+
+    if (!(resource in this.system)) return;
+
+    const current = Math.max(0, this.system[resource]?.value || 0);
+    const newDiceValue = Math.max(current - diceQuantity, 0);
     await this.update({
-      'system.hero_dice.value': newHeroDiceValue
+      [`system.${resource}.value`]: newDiceValue
     });
   }
 
   async updateBloodDice(usedBloodDice = 0) {
-    if (!usedBloodDice) return;
-
-    const current = Math.max(0, this.system.blood_dice?.value || 0);
-    const newBloodDiceValue = Math.max(current - usedBloodDice, 0);
-    await this.update({
-      'system.blood_dice.value': newBloodDiceValue
-    });
+    return this.updateResourceDice('blood_dice', usedBloodDice);
   }
 
   async addOneBloodDie() {
@@ -1167,88 +1199,88 @@ export class SdmActor extends Actor {
   }
 
   async applyDamage(damageValue = 0, multiplier = 1) {
-  const life = this.system.life;
-  const tempLife = this.system.temporary_life;
-  const bloodClad = this.system.blood_clad;
+    const life = this.system.life;
+    const tempLife = this.system.temporary_life;
+    const bloodClad = this.system.blood_dice.enabled;
 
-  if (!damageValue || !Number.isNumeric(damageValue)) return;
+    if (!damageValue || !Number.isNumeric(damageValue)) return;
 
-  // Net amount: positive = damage, negative = healing
-  const netAmount = damageValue * multiplier;
+    // Net amount: positive = damage, negative = healing
+    const netAmount = damageValue * multiplier;
 
-  // Call the hook/logging you already had
-  await postLifeChange(this, damageValue, multiplier);
+    // Call the hook/logging you already had
+    await postLifeChange(this, damageValue, multiplier);
 
-  // Helper clamps (in case your environment doesn't have Math.clamp)
-  const clamp = (v, a, b) => Math.min(Math.max(v, a), b);
+    // Helper clamps (in case your environment doesn't have Math.clamp)
+    const clamp = (v, a, b) => Math.min(Math.max(v, a), b);
 
-  // --- DAMAGE PATH (netAmount > 0) ---
-  if (netAmount > 0) {
-    let remainingDamage = netAmount;
-    let newTempValue = tempLife?.value ?? 0;
-    let newLifeValue = life.value;
+    // --- DAMAGE PATH (netAmount > 0) ---
+    if (netAmount > 0) {
+      let remainingDamage = netAmount;
+      let newTempValue = tempLife?.value ?? 0;
+      let newLifeValue = life.value;
 
-    // If temporary life is enabled and > 0, consume it first
-    if (tempLife?.enabled && (newTempValue > 0)) {
-      const takenFromTemp = Math.min(newTempValue, remainingDamage);
-      newTempValue = clamp(newTempValue - takenFromTemp, 0, tempLife.max ?? newTempValue);
-      remainingDamage -= takenFromTemp;
+      // If temporary life is enabled and > 0, consume it first
+      if (tempLife?.enabled && newTempValue > 0) {
+        const takenFromTemp = Math.min(newTempValue, remainingDamage);
+        newTempValue = clamp(newTempValue - takenFromTemp, 0, tempLife.max ?? newTempValue);
+        remainingDamage -= takenFromTemp;
+      }
+
+      // Any remaining damage reduces real life
+      if (remainingDamage > 0) {
+        newLifeValue = clamp(newLifeValue - remainingDamage, 0, life.max);
+      }
+
+      // If multiplier === 1 and some damage was applied (same condition as before), keep adding blood die
+      if (multiplier === 1 && netAmount && bloodClad) {
+        await this.addOneBloodDie();
+      }
+
+      // Build update object (include temp only if the system has it)
+      const updateData = { 'system.life.value': newLifeValue };
+      if (typeof tempLife !== 'undefined' && 'enabled' in tempLife) {
+        updateData['system.temporary_life.value'] = newTempValue;
+      }
+
+      await this.update(updateData);
+      return;
     }
 
-    // Any remaining damage reduces real life
-    if (remainingDamage > 0) {
-      newLifeValue = clamp(newLifeValue - remainingDamage, 0, life.max);
+    // --- HEALING PATH (netAmount < 0) ---
+    if (netAmount < 0) {
+      let remainingHeal = Math.abs(netAmount);
+      let newLifeValue = life.value;
+      let newTempValue = tempLife?.value ?? 0;
+
+      // First heal real life up to its max
+      if (newLifeValue < life.max) {
+        const healToLife = Math.min(remainingHeal, life.max - newLifeValue);
+        newLifeValue = clamp(newLifeValue + healToLife, 0, life.max);
+        remainingHeal -= healToLife;
+      }
+
+      // Any overflow can go to temporary life (if enabled)
+      if (remainingHeal > 0 && tempLife?.enabled) {
+        const tempMax = tempLife.max ?? newTempValue;
+        const healToTemp = Math.min(remainingHeal, tempMax - newTempValue);
+        newTempValue = clamp(newTempValue + healToTemp, 0, tempMax);
+        remainingHeal -= healToTemp;
+      }
+
+      // Update the document (include temp only if the system has it)
+      const updateData = { 'system.life.value': newLifeValue };
+      if (typeof tempLife !== 'undefined' && 'enabled' in tempLife) {
+        updateData['system.temporary_life.value'] = newTempValue;
+      }
+
+      await this.update(updateData);
+      return;
     }
 
-    // If multiplier === 1 and some damage was applied (same condition as before), keep adding blood die
-    if (multiplier === 1 && netAmount && bloodClad) {
-      await this.addOneBloodDie();
-    }
-
-    // Build update object (include temp only if the system has it)
-    const updateData = { 'system.life.value': newLifeValue };
-    if (typeof tempLife !== 'undefined' && ('enabled' in tempLife)) {
-      updateData['system.temporary_life.value'] = newTempValue;
-    }
-
-    await this.update(updateData);
-    return;
+    // If netAmount === 0 we already returned earlier due to the initial guard,
+    // but keep this for clarity.
   }
-
-  // --- HEALING PATH (netAmount < 0) ---
-  if (netAmount < 0) {
-    let remainingHeal = Math.abs(netAmount);
-    let newLifeValue = life.value;
-    let newTempValue = tempLife?.value ?? 0;
-
-    // First heal real life up to its max
-    if (newLifeValue < life.max) {
-      const healToLife = Math.min(remainingHeal, life.max - newLifeValue);
-      newLifeValue = clamp(newLifeValue + healToLife, 0, life.max);
-      remainingHeal -= healToLife;
-    }
-
-    // Any overflow can go to temporary life (if enabled)
-    if (remainingHeal > 0 && tempLife?.enabled) {
-      const tempMax = tempLife.max ?? newTempValue;
-      const healToTemp = Math.min(remainingHeal, tempMax - newTempValue);
-      newTempValue = clamp(newTempValue + healToTemp, 0, tempMax);
-      remainingHeal -= healToTemp;
-    }
-
-    // Update the document (include temp only if the system has it)
-    const updateData = { 'system.life.value': newLifeValue };
-    if (typeof tempLife !== 'undefined' && ('enabled' in tempLife)) {
-      updateData['system.temporary_life.value'] = newTempValue;
-    }
-
-    await this.update(updateData);
-    return;
-  }
-
-  // If netAmount === 0 we already returned earlier due to the initial guard,
-  // but keep this for clarity.
-}
 
   async performHudAction(action, identifier = '', args = {}, isShift = false, isCtrl = false) {
     // Resolve composite strings like "ability|str"
@@ -1333,6 +1365,10 @@ export class SdmActor extends Actor {
         bloodDiceRoll: {
           handler: '_onBloodDiceRoll',
           dataset: { action: 'bloodDiceRoll', index: actionKey }
+        },
+        touristDiceRoll: {
+          handler: '_onTouristDiceRoll',
+          dataset: { action: 'touristDiceRoll', index: actionKey }
         },
         item: {
           handler: '_onRoll',

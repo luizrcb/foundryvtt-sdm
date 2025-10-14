@@ -69,7 +69,7 @@
       "system": {},
       "changes": [
         {
-          "key": "system.blood_clad",
+          "key": "system.blood_dice.enabled",
           "mode": 5,
           "value": "true",
           "priority": null
@@ -99,7 +99,7 @@
         "systemId": "sdm",
         "systemVersion": "0.4.5",
         "createdTime": 1760191818246,
-        "modifiedTime": 1760191861627,
+        "modifiedTime": 1760448729131,
         "lastModifiedBy": "XnQAppzUXfkn5LcX"
       },
       "_key": "!items.effects!b3ARMDI5CkXmS253.M4kcARwMskCfCtFs"

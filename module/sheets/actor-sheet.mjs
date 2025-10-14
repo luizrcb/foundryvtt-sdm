@@ -20,7 +20,7 @@ import {
 } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { openItemTransferDialog } from '../items/transfer.mjs';
-import { healingHeroDice, bloodDiceRoll } from '../rolls/hero_dice/index.mjs';
+import { healingHeroDice, bloodDiceRoll, directResourceDiceRoll } from '../rolls/hero_dice/index.mjs';
 import SDMRoll, { sanitizeExpression } from '../rolls/sdmRoll.mjs';
 import {
   renderNPCMoraleResult,
@@ -88,6 +88,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       deleteDoc: this._deleteDoc,
       heroicHealing: { handler: this._onHeroHealing, buttons: [0, 2] },
       bloodDiceRoll: this._onBloodDiceRoll,
+      touristDiceRoll: this._onTouristDiceRoll,
       onEditImage: this._onEditImage,
       reactionRoll: this._onReactionRoll,
       roll: this._onRoll,
@@ -1482,12 +1483,20 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     await healingHeroDice(event, this.actor, onlySpendWithoutRolling);
   }
 
-    static async _onBloodDiceRoll(event, target) {
+  static async _onBloodDiceRoll(event, target) {
     event.preventDefault(); // Don't open context menu
     event.stopPropagation(); // Don't trigger other events
 
     // Get common data attributes
-    await bloodDiceRoll(event, this.actor);
+    await directResourceDiceRoll(event, this.actor, 'blood_dice');
+  }
+
+  static async _onTouristDiceRoll(event, target) {
+    event.preventDefault(); // Don't open context menu
+    event.stopPropagation(); // Don't trigger other events
+
+    // Get common data attributes
+    await directResourceDiceRoll(event, this.actor, 'tourist_dice');
   }
 
   static async _openDoc(event, target) {
