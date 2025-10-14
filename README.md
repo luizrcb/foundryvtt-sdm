@@ -151,7 +151,7 @@ This project compendiums and macros use names of creatures, items, traits, power
     - Path of the Traveler
     - Path of the Fighter
     - Other Paths
-      - Barbarian, Bluelander, Bourgeois, Golem, Greenlander, Holy Fool, Manager, Noble, Noömagus, Orangelander, Purplelander, Redlander, Scion, Servant, Skeleton, Soldier, Tourist Trickster, Weapon (Weapon and Bearer), Yellowlander.
+      - Barbarian, Bluelander, Bourgeois, Golem, Greenlander, Holy Fool, Manager, Noble, Noömagus, Orangelander, Purplelander, Redlander, Scion, Servant, Skeleton, Soldier, Tourist, Trickster, Weapon (Weapon and Bearer), Yellowlander.
   - SDM Macros (Referee Macros):
     - Give (or take) cash.
     - Give (or take) hero dice.
