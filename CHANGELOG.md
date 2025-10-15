@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.5.1
+
+- Fix a bug that prevented roll results from being applied as damage to NPC tokens
+
 ## v0.5.0
 
 - Add new Traits to the system Compendium

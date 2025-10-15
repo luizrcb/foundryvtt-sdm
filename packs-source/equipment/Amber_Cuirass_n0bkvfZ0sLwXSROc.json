@@ -99,7 +99,7 @@
         "startRound": null,
         "startTurn": null
       },
-      "description": "",
+      "description": "<p>Ghostly memories grant +1 thought.</p>",
       "tint": "#ffffff",
       "transfer": true,
       "statuses": [],
@@ -109,12 +109,12 @@
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null,
-        "coreVersion": "13.347",
+        "coreVersion": "13.350",
         "systemId": "sdm",
         "systemVersion": "0.1.32",
         "createdTime": 1756410070295,
-        "modifiedTime": 1756410109598,
-        "lastModifiedBy": "0fqTkfNvjooZ2og7"
+        "modifiedTime": 1760479694971,
+        "lastModifiedBy": "XnQAppzUXfkn5LcX"
       },
       "_key": "!items.effects!n0bkvfZ0sLwXSROc.ruttjYKtm6OBKB5V"
     }

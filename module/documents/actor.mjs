@@ -1201,7 +1201,7 @@ export class SdmActor extends Actor {
   async applyDamage(damageValue = 0, multiplier = 1) {
     const life = this.system.life;
     const tempLife = this.system.temporary_life;
-    const bloodClad = this.system.blood_dice.enabled;
+    const bloodClad = !!this.system.blood_dice?.enabled;
 
     if (!damageValue || !Number.isNumeric(damageValue)) return;
 

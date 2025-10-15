@@ -99,7 +99,7 @@
         "startRound": null,
         "startTurn": null
       },
-      "description": "",
+      "description": "<p>carry +1 sack (10 stones)</p>",
       "tint": "#ffffff",
       "transfer": true,
       "statuses": [],
@@ -109,12 +109,12 @@
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null,
-        "coreVersion": "13.348",
+        "coreVersion": "13.350",
         "systemId": "sdm",
         "systemVersion": "0.1.36",
         "createdTime": 1756569002071,
-        "modifiedTime": 1756569168390,
-        "lastModifiedBy": "0fqTkfNvjooZ2og7"
+        "modifiedTime": 1760480175697,
+        "lastModifiedBy": "XnQAppzUXfkn5LcX"
       },
       "_key": "!items.effects!bsuYRl8nErObUQQ7.ymdUiKXm8zIiwrj5"
     }

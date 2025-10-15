@@ -35,7 +35,7 @@ export async function handleHeroDice(event, message, flags) {
     );
     return;
   }
-  const touristDice = actor.system.tourist_dice.enabled ? actor.system.tourist_dice.value : 0;
+  const touristDice = actor.system.tourist_dice?.enabled ? actor.system.tourist_dice.value : 0;
   const maxDice = actor.system.hero_dice.value + touristDice;
   const bonusHDPool = game.settings.get('sdm', 'bonusHeroDicePool');
 

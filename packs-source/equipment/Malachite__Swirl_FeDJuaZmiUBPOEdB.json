@@ -99,7 +99,7 @@
         "startRound": null,
         "startTurn": null
       },
-      "description": "",
+      "description": "<p>Burn mode [[/r 1d20]]: gain +5 strength or 30 life forcefield</p>",
       "tint": "#ffffff",
       "transfer": true,
       "statuses": [],
@@ -109,12 +109,12 @@
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null,
-        "coreVersion": "13.347",
+        "coreVersion": "13.350",
         "systemId": "sdm",
         "systemVersion": "0.1.32",
         "createdTime": 1756411759472,
-        "modifiedTime": 1756411800382,
-        "lastModifiedBy": "0fqTkfNvjooZ2og7"
+        "modifiedTime": 1760479755343,
+        "lastModifiedBy": "XnQAppzUXfkn5LcX"
       },
       "_key": "!items.effects!FeDJuaZmiUBPOEdB.YJERID0zZjjsKoot"
     },
@@ -143,7 +143,7 @@
         "startRound": null,
         "startTurn": null
       },
-      "description": "",
+      "description": "<p>Burn mode [[/r 1d20]]: gain +5 strength or 30 life forcefield</p>",
       "tint": "#ffffff",
       "transfer": true,
       "statuses": [],
@@ -153,12 +153,12 @@
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null,
-        "coreVersion": "13.347",
+        "coreVersion": "13.350",
         "systemId": "sdm",
         "systemVersion": "0.1.32",
         "createdTime": 1756411801645,
-        "modifiedTime": 1756411842133,
-        "lastModifiedBy": "0fqTkfNvjooZ2og7"
+        "modifiedTime": 1760479752769,
+        "lastModifiedBy": "XnQAppzUXfkn5LcX"
       },
       "_key": "!items.effects!FeDJuaZmiUBPOEdB.yQF8jD2UJ8W5aRUB"
     }

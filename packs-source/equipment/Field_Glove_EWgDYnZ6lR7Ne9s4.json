@@ -99,7 +99,7 @@
         "startRound": null,
         "startTurn": null
       },
-      "description": "",
+      "description": "<p>Spend 1 life to boost defense by [[/r 1d6]] until the end of the next round (<em>edit active effect and toggle it to trigger the boost defense</em>)</p>",
       "tint": "#ffffff",
       "transfer": true,
       "statuses": [],
@@ -109,12 +109,12 @@
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null,
-        "coreVersion": "13.347",
+        "coreVersion": "13.350",
         "systemId": "sdm",
         "systemVersion": "0.1.32",
         "createdTime": 1756406927771,
-        "modifiedTime": 1756407230454,
-        "lastModifiedBy": "0fqTkfNvjooZ2og7"
+        "modifiedTime": 1760479477810,
+        "lastModifiedBy": "XnQAppzUXfkn5LcX"
       },
       "_key": "!items.effects!EWgDYnZ6lR7Ne9s4.W9OSlIMHOcVBdpo0"
     }
