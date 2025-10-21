@@ -104,10 +104,10 @@ export async function randomNPCGenerator() {
 
   // Call system API
   let npc;
-  if (data.level && !isNaN(data.level)) {
+  if (data.level !== null) {
     npc = await game.sdm.api.createNPCByLevel(
       npcData?.name,
-      parseInt(data.level),
+      Math.abs(parseInt(data.level, 10)),
       npcData.table,
       npcData.initiative
     );
@@ -118,7 +118,7 @@ export async function randomNPCGenerator() {
   ui.notifications.info(
     game.i18n.format('SDM.NPCCreated', {
       name: npc?.name,
-      level: npc?.system?.level || '-'
+      level: npc?.system?.level
     })
   );
 }

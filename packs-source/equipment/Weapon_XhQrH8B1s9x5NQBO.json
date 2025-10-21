@@ -1,0 +1,21 @@
+{
+  "type": "Item",
+  "folder": "IWH8BMAmaCB1YpE4",
+  "name": "Weapon",
+  "color": null,
+  "sorting": "a",
+  "_id": "XhQrH8B1s9x5NQBO",
+  "description": "",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "sdm",
+    "systemVersion": "0.5.1",
+    "lastModifiedBy": null
+  },
+  "_key": "!folders!XhQrH8B1s9x5NQBO"
+}

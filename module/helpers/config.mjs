@@ -232,6 +232,7 @@ SDM.characterPropertiesToActiveEffects = [
   'system.reaction_bonus',
   'system.all_save_bonus',
   'system.borrowed_life.enabled',
+  'system.borrowed_life.max_limit',
   'system.temporary_life.max',
   'system.temporary_life.enabled',
   'system.life.bonus',
@@ -299,8 +300,9 @@ SDM.rangeType = {
 SDM.SupplyType = {
   animal: 'SDM.SupplyTypeAnimal',
   human: 'SDM.SupplyTypeHuman',
-  machine: 'SDM.SupplyTypeMachine'
-}
+  machine: 'SDM.SupplyTypeMachine',
+  undead: 'SDM.SupplyTypeUndead',
+};
 
 SDM.skillMod = {
   1: 'SDM.SkillSkilled',

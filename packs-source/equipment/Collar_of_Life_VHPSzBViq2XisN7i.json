@@ -1,0 +1,148 @@
+{
+  "folder": "7zXs21ImfGnJq9NO",
+  "name": "Collar of Life",
+  "type": "gear",
+  "_id": "VHPSzBViq2XisN7i",
+  "img": "icons/equipment/neck/amulet-heart.webp",
+  "system": {
+    "readied": false,
+    "status": "",
+    "resources": "",
+    "cost": 150,
+    "cost_frequency": "",
+    "description": "<p>Store up to 3 life for powers. It doesn't care where you got it.</p><p><em>(A Borrowed life field limited to 3 will be displayed on your character sheet. If the character is also a vampire, use the active effect key system.borrowed_life.max_limit to update the max borrowed life to be their max life+3)</em></p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "type": "ward",
+    "starting_kit": false,
+    "is_supply": false,
+    "supply_type": "human",
+    "packed_remaining_items": 10,
+    "power": {
+      "img": "icons/svg/book.svg",
+      "name": "",
+      "description": "",
+      "level": 1,
+      "range": "",
+      "target": "",
+      "duration": "",
+      "overcharge": "",
+      "roll_formula": "",
+      "overcharge_roll_formula": ""
+    },
+    "powers_current_index": 0,
+    "max_powers": 3,
+    "powers": [],
+    "armor": {
+      "value": 0,
+      "type": "",
+      "cumbersome": false,
+      "powered": null
+    },
+    "ward": {
+      "value": 1,
+      "type": "wearable",
+      "armor": 0
+    },
+    "weapon": {
+      "damage": {
+        "base": "1d4",
+        "versatile": "1d4",
+        "bonus": ""
+      },
+      "range": "",
+      "versatile": false
+    }
+  },
+  "effects": [
+    {
+      "name": "Active Effect",
+      "origin": "Compendium.sdm.equipment.Item.VHPSzBViq2XisN7i",
+      "img": "icons/equipment/neck/amulet-heart.webp",
+      "_id": "LLt1NeiqWvOmC4rR",
+      "type": "base",
+      "system": {},
+      "changes": [
+        {
+          "key": "system.borrowed_life.enabled",
+          "mode": 5,
+          "value": "true",
+          "priority": null
+        },
+        {
+          "key": "system.borrowed_life.max_limit",
+          "mode": 2,
+          "value": "3",
+          "priority": null
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.350",
+        "systemId": "sdm",
+        "systemVersion": "0.5.1",
+        "createdTime": 1760813691234,
+        "modifiedTime": 1760814126795,
+        "lastModifiedBy": "XnQAppzUXfkn5LcX"
+      },
+      "_key": "!items.effects!VHPSzBViq2XisN7i.LLt1NeiqWvOmC4rR"
+    }
+  ],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "XnQAppzUXfkn5LcX": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "sdm",
+    "systemVersion": "0.5.1",
+    "createdTime": 1760813638913,
+    "modifiedTime": 1760814441370,
+    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+  },
+  "_key": "!items!VHPSzBViq2XisN7i"
+}

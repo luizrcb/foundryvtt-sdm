@@ -3,7 +3,7 @@
   "name": "2. Expert Friends",
   "type": "trait",
   "_id": "5A2G12Jholrzv7hv",
-  "img": "icons/magic/nature/wolf-paw-glow-large-orange.webp",
+  "img": "icons/magic/nature/wolf-paw-glow-large-purple-teal.webp",
   "system": {
     "readied": false,
     "status": "",
@@ -74,7 +74,7 @@
     "systemId": "sdm",
     "systemVersion": "0.4.5",
     "createdTime": 1760375336011,
-    "modifiedTime": 1760375486595,
+    "modifiedTime": 1760816841926,
     "lastModifiedBy": "XnQAppzUXfkn5LcX"
   },
   "_key": "!items!5A2G12Jholrzv7hv"

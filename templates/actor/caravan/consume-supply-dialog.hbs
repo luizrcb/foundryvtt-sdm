@@ -6,7 +6,7 @@
       <div class="grid grid-2col">
 
       <label class="flexrow grid-span-1" style="justify-content:space-between; align-items:center;">
-        <span><strong>{{localize "SDM.HumanSupplies"}}</strong> <i class="fas fa-mug-hot"></i></span>
+        <span><strong>{{localize "SDM.HumanSupplies"}}</strong> <i class="fa-solid fa-mug-hot"></i></span>
       </label>
 
       {{#if totalHumanSupplies}}
@@ -45,7 +45,7 @@
       <div class="grid grid-2col">
 
       <label class="flexrow grid-span-1" style="justify-content:space-between; align-items:center;">
-        <span><strong>{{localize "SDM.AnimalSupplies"}}</strong> <i class="fas fa-seedling"></i></span>
+        <span><strong>{{localize "SDM.AnimalSupplies"}}</strong> <i class="fa-solid fa-seedling"></i></span>
       </label>
 
       {{#if totalAnimalSupplies}}
@@ -83,7 +83,7 @@
       <div class="grid grid-2col">
 
       <label class="flexrow grid-span-1" style="justify-content:space-between; align-items:center;">
-        <span><strong>{{localize "SDM.MachineSupplies"}}</strong> <i class="fas fa-gas-pump"></i></span>
+        <span><strong>{{localize "SDM.MachineSupplies"}}</strong> <i class="fa-solid fa-gas-pump"></i></span>
       </label>
 
       {{#if totalMachineSupplies}}
@@ -113,6 +113,44 @@
         />
       {{/if}}
       <label class="grid-span-1"><span class="tag">{{localize "SDM.Available"}}: <strong>{{totalMachineSupplies}}</strong></span></label>
+      </div>
+    </div>
+
+    {{!-- Undead Supplies --}}
+    <div class="form-group">
+      <div class="grid grid-2col">
+
+      <label class="flexrow grid-span-1" style="justify-content:space-between; align-items:center;">
+        <span><strong>{{localize "SDM.UndeadSupplies"}}</strong> <i class="fa-solid fa-skull"></i></span>
+      </label>
+
+      {{#if totalUndeadSupplies}}
+        <input
+          class="grid-span-1"
+          type="number"
+          name="consumeUndead"
+          min="0"
+          max="{{totalUndeadSupplies}}"
+          step="1"
+          value="0"
+          data-type="Number"
+          aria-label="{{localize 'SDM.UndeadSupplies'}}"
+        />
+      {{else}}
+        <input
+          class="grid-span-1"
+          type="number"
+          name="consumeUndead"
+          min="0"
+          max="0"
+          step="1"
+          value="0"
+          data-type="Number"
+          disabled
+          aria-label="{{localize 'SDM.UndeadSupplies'}}"
+        />
+      {{/if}}
+      <label class="grid-span-1"><span class="tag">{{localize "SDM.Available"}}: <strong>{{totalUndeadSupplies}}</strong></span></label>
       </div>
     </div>
 

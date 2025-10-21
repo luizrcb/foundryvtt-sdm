@@ -1,0 +1,142 @@
+{
+  "folder": "aUP1ueaA4AzR2GkN",
+  "name": "Mightier Pen",
+  "type": "gear",
+  "_id": "1fMqs4jxvwjttX1a",
+  "img": "icons/tools/scribal/pen-steel-grey-brown.webp",
+  "system": {
+    "readied": false,
+    "status": "",
+    "resources": "",
+    "cost": 700,
+    "cost_frequency": "",
+    "description": "<p>Bonus to legal and oldtech scrolls. Also, opens ministry doors.</p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "soaps"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "type": "",
+    "starting_kit": false,
+    "is_supply": false,
+    "supply_type": "human",
+    "packed_remaining_items": 10,
+    "power": {
+      "img": "icons/svg/book.svg",
+      "name": "",
+      "description": "",
+      "level": 1,
+      "range": "",
+      "target": "",
+      "duration": "",
+      "overcharge": "",
+      "roll_formula": "",
+      "overcharge_roll_formula": ""
+    },
+    "powers_current_index": 0,
+    "max_powers": 3,
+    "powers": [],
+    "armor": {
+      "value": 0,
+      "type": "",
+      "cumbersome": false,
+      "powered": null
+    },
+    "ward": {
+      "value": 0,
+      "type": "",
+      "armor": 0
+    },
+    "weapon": {
+      "damage": {
+        "base": "1d4",
+        "versatile": "1d4",
+        "bonus": ""
+      },
+      "range": "",
+      "versatile": false
+    }
+  },
+  "effects": [
+    {
+      "name": "+1 Aura",
+      "origin": "Compendium.sdm.equipment.Item.1fMqs4jxvwjttX1a",
+      "img": "icons/tools/scribal/pen-steel-grey-brown.webp",
+      "_id": "ZiuFjr9HDsY9V8I8",
+      "type": "base",
+      "system": {},
+      "changes": [
+        {
+          "key": "system.abilities.aur.bonus",
+          "mode": 2,
+          "value": "1",
+          "priority": null
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.350",
+        "systemId": "sdm",
+        "systemVersion": "0.5.1",
+        "createdTime": 1760804673302,
+        "modifiedTime": 1760804687442,
+        "lastModifiedBy": "XnQAppzUXfkn5LcX"
+      },
+      "_key": "!items.effects!1fMqs4jxvwjttX1a.ZiuFjr9HDsY9V8I8"
+    }
+  ],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "XnQAppzUXfkn5LcX": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "sdm",
+    "systemVersion": "0.5.1",
+    "createdTime": 1760804625870,
+    "modifiedTime": 1760804666020,
+    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+  },
+  "_key": "!items!1fMqs4jxvwjttX1a"
+}

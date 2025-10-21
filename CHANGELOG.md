@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.5.2
+
+- Fix random NPC generator not creating level 0 NPCs
+- Add Trait Items (240 items, 6 weapon forms, and 2 new powers)
+- Add support for undead-type supply gear
+
 ## v0.5.1
 
 - Fix a bug that prevented roll results from being applied as damage to NPC tokens

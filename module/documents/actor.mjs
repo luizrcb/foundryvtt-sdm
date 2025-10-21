@@ -283,7 +283,12 @@ export class SdmActor extends Actor {
     life.max = life.base + life.bonus - life.imbued;
 
     const borrowed = data.borrowed_life;
-    borrowed.max = life.base + life.bonus;
+    if (borrowed.max_limit > 0) {
+      borrowed.max = borrowed.max_limit;
+    } else {
+      borrowed.max = life.base + life.bonus;
+    }
+
 
     // 3. Processar atributos
     for (const [key, ability] of Object.entries(data.abilities)) {
@@ -673,6 +678,7 @@ export class SdmActor extends Actor {
     const animalSupplies = supplyItems.filter(item => item.system.supply_type === 'animal');
     const humanSupplies = supplyItems.filter(item => item.system.supply_type === 'human');
     const machineSupplies = supplyItems.filter(item => item.system.supply_type === 'machine');
+    const undeadSupplies = supplyItems.filter(item => item.system.supply_type === 'undead');
 
     const totalAnimalSupplies = animalSupplies.reduce((acc, item) => {
       return acc + item.system.quantity;
@@ -686,10 +692,15 @@ export class SdmActor extends Actor {
       return acc + item.system.quantity;
     }, 0);
 
+    const totalUndeadSupplies = undeadSupplies.reduce((acc, item) => {
+      return acc + item.system.quantity;
+    }, 0);
+
     const templateData = {
       totalAnimalSupplies,
       totalHumanSupplies,
       totalMachineSupplies,
+      totalUndeadSupplies,
       weeklySupply: this.system.supply
     };
 
@@ -721,8 +732,9 @@ export class SdmActor extends Actor {
     const animalToConsume = Math.max(0, parseInt(data.consumeAnimal, 10) || 0);
     const humanToConsume = Math.max(0, parseInt(data.consumeHuman, 10) || 0);
     const machineToConsume = Math.max(0, parseInt(data.consumeMachine, 10) || 0);
+    const undeadToConsume = Math.max(0, parseInt(data.consumeUndead, 10) || 0);
 
-    if (animalToConsume === 0 && humanToConsume === 0 && machineToConsume === 0) return;
+    if (animalToConsume === 0 && humanToConsume === 0 && machineToConsume === 0 && undeadToConsume) return;
 
     // Sort by cost asc (undefined -> 0)
     const byCostAsc = (a, b) => Number(a.system?.cost ?? 0) - Number(b.system?.cost ?? 0);
@@ -730,6 +742,7 @@ export class SdmActor extends Actor {
     const animalSorted = animalSupplies.slice().sort(byCostAsc);
     const humanSorted = humanSupplies.slice().sort(byCostAsc);
     const machineSorted = machineSupplies.slice().sort(byCostAsc);
+    const undeadSorted = undeadSupplies.slice().sort(byCostAsc);
 
     const updates = [];
     const deletions = [];
@@ -812,6 +825,7 @@ export class SdmActor extends Actor {
     consumeFromItems.call(this, animalSorted, animalToConsume);
     consumeFromItems.call(this, humanSorted, humanToConsume);
     consumeFromItems.call(this, machineSorted, machineToConsume);
+    consumeFromItems.call(this, undeadSorted, undeadToConsume);
 
     // Apply item updates/deletions in batches
     if (updates.length) await this.updateEmbeddedDocuments('Item', updates);

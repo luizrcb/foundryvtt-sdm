@@ -34,7 +34,7 @@ export default class SdmGear extends SdmItemBase {
       required: true,
       blank: true,
       initial: 'human',
-      choices: CONFIG.SDM.SuppyType
+      choices: CONFIG.SDM.SupplyType
     });
 
     schema.packed_remaining_items = new fields.NumberField({
