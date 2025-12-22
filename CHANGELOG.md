@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## V0.5.3
+
+- Fixed item transfers from NPC actors not removing the original item from the actor
+- Fixed incorrect chat card creation when the caravan Consume Supplies action is cancelled
+
 ## v0.5.2
 
 - Fix random NPC generator not creating level 0 NPCs

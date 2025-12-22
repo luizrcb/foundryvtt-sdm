@@ -325,32 +325,32 @@ async function performItemTransfer(
         }
 
         // Adjust source inventory
-        if (sourceActorType === ActorType.NPC) {
-          // NPC: never delete the original item
-          if (hasStacks) {
-            const newQty = Math.max(0, availableQty - reqQty);
+        // if (sourceActorType === ActorType.NPC) {
+        //   // NPC: never delete the original item
+        //   if (hasStacks) {
+        //     const newQty = Math.max(0, availableQty - reqQty);
+        //     await sourceActor.updateEmbeddedDocuments(DocumentType.ITEM, [
+        //       { _id: freshItem.id, system: { quantity: newQty } }
+        //     ]);
+        //   } else {
+        //     // non-stackable from NPC -> leave as-is (copy behavior)
+        //   }
+        // } else {
+          // Non-NPC (e.g. PC)
+        if (hasStacks) {
+          const newQty = availableQty - reqQty;
+          if (newQty > 0) {
             await sourceActor.updateEmbeddedDocuments(DocumentType.ITEM, [
               { _id: freshItem.id, system: { quantity: newQty } }
             ]);
           } else {
-            // non-stackable from NPC -> leave as-is (copy behavior)
-          }
-        } else {
-          // Non-NPC (e.g. PC)
-          if (hasStacks) {
-            const newQty = availableQty - reqQty;
-            if (newQty > 0) {
-              await sourceActor.updateEmbeddedDocuments(DocumentType.ITEM, [
-                { _id: freshItem.id, system: { quantity: newQty } }
-              ]);
-            } else {
-              await sourceActor.deleteEmbeddedDocuments(DocumentType.ITEM, [freshItem.id]);
-            }
-          } else {
-            // non-stackable from PC -> move the single item
             await sourceActor.deleteEmbeddedDocuments(DocumentType.ITEM, [freshItem.id]);
           }
+        } else {
+          // non-stackable from PC -> move the single item
+          await sourceActor.deleteEmbeddedDocuments(DocumentType.ITEM, [freshItem.id]);
         }
+       // }
       } catch (err) {
         // Rollback: delete any created docs on the target
         if (createdDocs?.length) {

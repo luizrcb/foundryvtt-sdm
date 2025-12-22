@@ -838,6 +838,9 @@ export class SdmActor extends Actor {
 
     // Build a final array you can log/use for chat, etc.
     const consumedSummary = Array.from(consumedMap.values());
+
+    if (!consumedSummary.length) return;
+
     await postConsumeSupplies(this, consumedSummary);
   }
 
