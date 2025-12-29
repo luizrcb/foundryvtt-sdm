@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.5.4
+
+- Fix burden pernalty bonuses (a bonus that allow burdens to be ignored) been wrongly applied to roll results
+- Fix typos in compendium items and traits
+- Fix typo on item effects template
+
 ## V0.5.3
 
 - Fixed item transfers from NPC actors not removing the original item from the actor

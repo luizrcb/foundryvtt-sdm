@@ -117,7 +117,7 @@ The SDM system provides companion add-on modules to integrate with the following
 
 ### Localization
 
-- Full localization for Brazilian Portuguese (pt-BR).
+- System localization for Brazilian Portuguese (pt-BR).
 
 ## Compendiums
 

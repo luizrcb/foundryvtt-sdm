@@ -227,9 +227,8 @@ export default class SDMRoll {
     }
 
     const burdenPenalty = actorData?.burden_penalty || 0;
-    const burdenPenaltyBonus = actorData?.burden_penalty_bonus || 0; // ignored burdens
     const skillMod = this.skill?.mod || 0;
-    const allBonuses = burdenPenaltyBonus - burdenPenalty + abilityMod + skillMod;
+    const allBonuses = - burdenPenalty + abilityMod + skillMod;
     const modifierComponents = this.#parseModifierString(this.modifier);
     const fixedAndDice = this.#separateFixedAndDice([...modifierComponents, `${allBonuses}`]);
 

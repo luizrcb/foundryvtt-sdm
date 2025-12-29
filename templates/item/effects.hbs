@@ -14,7 +14,7 @@
         <a class='effect-control' data-action='createDoc' data-document-class='ActiveEffect'
           data-origin="{{@root.item.uuid}}" data-img="icons/svg/aura.svg" {{#if (eq section.type "inactive" )}}
           data-disabled="true" {{else if (eq section.type "temporary" )}} data-duration.rounds="1" {{/if}}
-          data-tooltip='{{localize "SDM.DOCUMENT.Create" type=(localize ' TYPE.Effect')}}'>
+          data-tooltip='{{localize "SDM.DOCUMENT.Create" type=(localize 'TYPE.Effect')}}'>
           <i class='fa-solid fa-plus'></i>
           {{localize 'SDM.DOCUMENT.New' type=(localize 'TYPE.Effect')}}
         </a>
@@ -37,13 +37,13 @@
           </a>
           {{/if}}
           <a class='effect-control' data-action='viewDoc' data-document-class='ActiveEffect'
-            data-tooltip='{{localize "DOCUMENT.Update" type=(localize ' TYPE.Effect')}}'>
+            data-tooltip='{{localize "DOCUMENT.Update" type=(localize 'TYPE.Effect')}}'>
             <i class='fa-solid fa-edit'></i>
           </a>
           {{#if @root.isGM}}
           {{#if @root.editable}}
           <a class='effect-control' data-action='deleteDoc' data-document-class='ActiveEffect'
-            data-tooltip='{{localize "DOCUMENT.Delete" type=(localize ' TYPE.Effect')}}'>
+            data-tooltip='{{localize "DOCUMENT.Delete" type=(localize 'TYPE.Effect')}}'>
             <i class='fa-solid fa-trash'></i>
           </a>
           {{/if}}

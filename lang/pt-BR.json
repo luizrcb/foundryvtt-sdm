@@ -599,7 +599,7 @@
   "SDM.ItemTabEffects": "Efeitos",
   "SDM.ItemToggleReadied": "Muda Estado Equipado",
   "SDM.ItemTraitType": "Tipo de Traço",
-  "SDM.ItemWard": "Resguardo",
+  "SDM.ItemWard": "Égide",
   "SDM.LifeBefore": "Vida Antes",
   "SDM.MachineSupplies": "Suprimentos para Máquinas",
   "SDM.Magitech": "Tecnomagia",
@@ -919,7 +919,7 @@
   "SDM.WardTypePortable": "Portátil",
   "SDM.WardTypeTrinket": "Bugiganga",
   "SDM.WardTypeWearable": "Vestível",
-  "SDM.WardValue": "Resguardo",
+  "SDM.WardValue": "Égide",
   "SDM.WeaponDamage": "Dano",
   "SDM.WeaponRange": "Alcance",
   "SDM.WeaponVersatile": "Versátil",
@@ -946,6 +946,6 @@
   "TYPES.Item.skill": "Perícia",
   "TYPES.Item.trait": "Traço",
   "TYPES.Item.vehicle": "Veículo",
-  "TYPES.Item.ward": "Resguardo",
+  "TYPES.Item.ward": "Égide",
   "TYPES.Item.weapon": "Arma"
 }
