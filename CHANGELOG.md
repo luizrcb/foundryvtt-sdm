@@ -2,7 +2,7 @@
 
 ## v0.5.4
 
-- Fix burden pernalty bonuses (a bonus that allow burdens to be ignored) been wrongly applied to roll results
+- Fix burden penalty bonuses (a bonus that allow burdens to be ignored) been wrongly applied to roll results
 - Fix typos in compendium items and traits
 - Fix typo on item effects template
 

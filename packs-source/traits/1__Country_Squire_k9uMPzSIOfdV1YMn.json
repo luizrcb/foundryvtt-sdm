@@ -1,16 +1,16 @@
 {
-  "folder": "S5wPQyYpj6Hth8p4",
-  "name": "3.  Inquisition Agent",
+  "folder": "gbxTC0v879hgS8TX",
+  "name": "1. Country Squire",
   "type": "trait",
-  "_id": "ueuOOKrzY6dTL70C",
-  "img": "icons/magic/control/silhouette-aura-energy.webp",
+  "_id": "k9uMPzSIOfdV1YMn",
+  "img": "icons/commodities/currency/coins-assorted-mix-silver.webp",
   "system": {
     "readied": false,
     "status": "",
     "resources": "",
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p>The Human Authority does not have a secret police force. Such suggestions are illegal. You are certainly not skilled with interrogation techniques, nor possess a license to kill.</p>",
+    "description": "<p>You make money the proper way: resource concessions in the vastlands and the ruinlands. A remote rural estate gives you €15/wk and all the spite olives you can spit.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -34,13 +34,13 @@
       "level": 0,
       "experience": "0"
     },
-    "type": "skill",
+    "type": "",
     "learning": {
       "sources": 0,
       "required_successes": 0
     },
     "skill": {
-      "rank": 1,
+      "rank": 0,
       "modifier_step": 3,
       "modifier_bonus": 0,
       "modifier_final": 0,
@@ -73,9 +73,9 @@
     "coreVersion": "13.350",
     "systemId": "sdm",
     "systemVersion": "0.4.5",
-    "createdTime": 1760204365768,
-    "modifiedTime": 1760204477089,
+    "createdTime": 1760201121379,
+    "modifiedTime": 1760201171447,
     "lastModifiedBy": "XnQAppzUXfkn5LcX"
   },
-  "_key": "!items!ueuOOKrzY6dTL70C"
+  "_key": "!items!k9uMPzSIOfdV1YMn"
 }

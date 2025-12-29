@@ -99,9 +99,58 @@
       "system": "sdm"
     },
     {
-      "name": "equipment",
-      "label": "Equipment",
-      "path": "./packs/equipment",
+      "name": "ability_scores",
+      "label": "Ability Scores",
+      "path": "./packs/ability_scores",
+      "type": "RollTable",
+      "system": "sdm"
+    },
+    {
+      "name": "consumables",
+      "label": "Consumables",
+      "path": "./packs/consumables",
+      "type": "Item",
+      "system": "sdm"
+    },
+    {
+      "name": "gadgets",
+      "label": "Gadgets",
+      "path": "./packs/gadgets",
+      "type": "Item",
+      "system": "sdm"
+    },
+     {
+      "name": "powers",
+      "label": "Powers",
+      "path": "./packs/powers",
+      "type": "Item",
+      "system": "sdm"
+    },
+    {
+      "name": "armors",
+      "label": "Armors",
+      "path": "./packs/armors",
+      "type": "Item",
+      "system": "sdm"
+    },
+    {
+      "name": "trait_items",
+      "label": "Trait Items",
+      "path": "./packs/trait_items",
+      "type": "Item",
+      "system": "sdm"
+    },
+    {
+      "name": "wards",
+      "label": "Wards",
+      "path": "./packs/wards",
+      "type": "Item",
+      "system": "sdm"
+    },
+    {
+      "name": "weapons",
+      "label": "Weapons",
+      "path": "./packs/weapons",
       "type": "Item",
       "system": "sdm"
     },
@@ -120,7 +169,38 @@
       "system": "sdm"
     }
   ],
-  "packFolders": [],
+  "packFolders": [
+    {
+			"name": "Character Creation",
+			"sorting": "a",
+			"color": "#66a54a",
+			"packs": ["ability_scores", "player_macros", "traits"]
+		},
+    {
+			"name": "Items",
+			"sorting": "a",
+			"color": "#bc5c5c",
+			"packs": ["consumables", "gadgets", "armors", "trait_items", "wards", "weapons"]
+		},
+    {
+			"name": "Powers",
+			"sorting": "a",
+			"color": "#5f62bf",
+			"packs": ["powers"]
+		},
+    {
+			"name": "Referee Tools",
+			"sorting": "a",
+			"color": "#bf57c1",
+			"packs": ["rolltables", "macros"]
+		},
+    {
+			"name": "Zoa",
+			"sorting": "a",
+			"color": "#c2a042",
+			"packs": ["creatures"]
+		}
+  ],
   "socket": true,
   "background": "systems/sdm/assets/sdm-compatible.png",
   "grid": {

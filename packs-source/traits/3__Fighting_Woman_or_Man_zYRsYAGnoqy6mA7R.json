@@ -1,16 +1,16 @@
 {
-  "folder": "S5wPQyYpj6Hth8p4",
-  "name": "1.  Competent Appearance",
+  "folder": "eMGOQWZ2I2RSgHq4",
+  "name": "3. Fighting Woman or Man",
   "type": "trait",
-  "_id": "aBkyepOEFWO84SFq",
-  "img": "icons/skills/social/thumbsup-approval-like.webp",
+  "_id": "zYRsYAGnoqy6mA7R",
+  "img": "icons/skills/melee/spear-tips-quintuple-orange.webp",
   "system": {
     "readied": false,
     "status": "",
     "resources": "",
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p>You always appear competent when appearing to do something that could appear to be your job.</p>",
+    "description": "<p>You are skilled with your weapon (your master) and weapons like it. Once per round, as a single action, you can attack a number of adjacent level 0–1 foes equal to your level.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -73,9 +73,9 @@
     "coreVersion": "13.350",
     "systemId": "sdm",
     "systemVersion": "0.4.5",
-    "createdTime": 1760204260598,
-    "modifiedTime": 1760204291798,
+    "createdTime": 1760379658044,
+    "modifiedTime": 1760380150835,
     "lastModifiedBy": "XnQAppzUXfkn5LcX"
   },
-  "_key": "!items!aBkyepOEFWO84SFq"
+  "_key": "!items!zYRsYAGnoqy6mA7R"
 }
