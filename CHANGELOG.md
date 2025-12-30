@@ -2,8 +2,8 @@
 
 ## v0.5.5
 
-- Break-down Equipment compendium into multiple compendiums
-- Group releated compendium in thematic folders
+- Break down the Equipment compendium into multiple compendiums
+- Group releated compendiums into thematic folders
 
 ## v0.5.4
 
