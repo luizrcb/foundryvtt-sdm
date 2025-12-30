@@ -1,0 +1,205 @@
+{
+  "name": "Barbarian",
+  "description": "<p>A random table created from the contents of the Barbarian Folder.</p>",
+  "results": [
+    {
+      "name": "0. Barbarian",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.93Cksho4qTqgiUKW",
+      "img": "icons/equipment/head/helm-barbute-horned-gold-purple.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "QyA3QppRQCFdR25A",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!vHTnEczodRYhSKCe.QyA3QppRQCFdR25A"
+    },
+    {
+      "name": "4. Feral",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.B018Kdvt5avldird",
+      "img": "icons/creatures/mammals/wolf-shadow-black.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "SSKPuVHCQfwUVQ6o",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!vHTnEczodRYhSKCe.SSKPuVHCQfwUVQ6o"
+    },
+    {
+      "name": "3. Culling",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.UK8ZhjIwlfhFo56e",
+      "img": "icons/magic/unholy/silhouette-evil-horned-giant.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "iteIkLHkSstYmRU0",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!vHTnEczodRYhSKCe.iteIkLHkSstYmRU0"
+    },
+    {
+      "name": "6. Wild Survivor",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.a5TlPGOCezlqEr0R",
+      "img": "icons/environment/wilderness/cave-entrance.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "9Aiv8UOjh2D3k8Jy",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!vHTnEczodRYhSKCe.9Aiv8UOjh2D3k8Jy"
+    },
+    {
+      "name": "2. Blood Clad",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.b3ARMDI5CkXmS253",
+      "img": "icons/skills/wounds/blood-cells-vessel-red-orange.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "RIwZtJ7U2zdOz4mO",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!vHTnEczodRYhSKCe.RIwZtJ7U2zdOz4mO"
+    },
+    {
+      "name": "5. Lost Songs",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.kMLmDaGySJeKM04r",
+      "img": "icons/skills/trades/music-singing-voice-blue.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "nx4iITIwz1LB7BGy",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!vHTnEczodRYhSKCe.nx4iITIwz1LB7BGy"
+    },
+    {
+      "name": "1. Antimagus",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.kUMZFPiIlzuxXvwq",
+      "img": "icons/magic/defensive/shield-barrier-flaming-pentagon-magenta.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "Amz4OMWKtsKAJmHR",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!vHTnEczodRYhSKCe.Amz4OMWKtsKAJmHR"
+    }
+  ],
+  "formula": "1d7",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8gXEqCY7Gctq4hdt",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.4",
+    "createdTime": 1767048505731,
+    "modifiedTime": 1767049263906,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "vHTnEczodRYhSKCe",
+  "sort": 1200000,
+  "_key": "!tables!vHTnEczodRYhSKCe"
+}

@@ -1,0 +1,141 @@
+{
+  "folder": "BQn42yWNyDgTXQBP",
+  "name": "Empire Armor",
+  "type": "gear",
+  "_id": "xbw4cHySeVARg6jQ",
+  "img": "icons/equipment/shoulder/pauldron-segmented-red-white.webp",
+  "system": {
+    "readied": false,
+    "status": "",
+    "resources": "",
+    "cost": 2500,
+    "cost_frequency": "",
+    "description": "<p>Sanguine plates over flesh-mesh. Feed 1 life per day or half bonus.</p><p><em>(enable the active effect to get the full armor bonus)</em></p>",
+    "quantity": 1,
+    "size": {
+      "value": 3,
+      "unit": "stones"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "type": "armor",
+    "starting_kit": false,
+    "is_supply": false,
+    "supply_type": "human",
+    "packed_remaining_items": 10,
+    "power": {
+      "img": "icons/svg/book.svg",
+      "name": "",
+      "description": "",
+      "level": 1,
+      "range": "",
+      "target": "",
+      "duration": "",
+      "overcharge": "",
+      "roll_formula": "",
+      "overcharge_roll_formula": ""
+    },
+    "powers_current_index": 0,
+    "max_powers": 3,
+    "powers": [],
+    "armor": {
+      "value": 4,
+      "type": "heavy",
+      "cumbersome": false,
+      "powered": null
+    },
+    "ward": {
+      "value": 0,
+      "type": "",
+      "armor": 0
+    },
+    "weapon": {
+      "damage": {
+        "base": "1d4",
+        "versatile": "1d4",
+        "bonus": ""
+      },
+      "range": "",
+      "versatile": false
+    }
+  },
+  "effects": [
+    {
+      "name": "Empire Armor bonus",
+      "origin": "Compendium.sdm.equipment.Item.xbw4cHySeVARg6jQ",
+      "img": "icons/equipment/shoulder/pauldron-segmented-red-white.webp",
+      "_id": "2Amt8K6CbHlE2dPk",
+      "type": "base",
+      "system": {},
+      "changes": [
+        {
+          "key": "system.armor_bonus",
+          "value": "4",
+          "priority": null,
+          "mode": 2
+        }
+      ],
+      "disabled": true,
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "<p>Feed 1 life per day,</p>",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!items.effects!xbw4cHySeVARg6jQ.2Amt8K6CbHlE2dPk"
+    }
+  ],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "XnQAppzUXfkn5LcX": 3,
+    "9g1Dzw4zdMZGGuY3": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.4",
+    "createdTime": 1767011792616,
+    "modifiedTime": 1767011792616,
+    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+  },
+  "_key": "!items!xbw4cHySeVARg6jQ"
+}

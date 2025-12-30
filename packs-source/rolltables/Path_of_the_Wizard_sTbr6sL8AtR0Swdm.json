@@ -192,14 +192,14 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.348",
+    "coreVersion": "13.351",
     "systemId": "sdm",
     "systemVersion": "0.1.35",
     "createdTime": 1756510845818,
-    "modifiedTime": 1756510856410,
-    "lastModifiedBy": "3vgxDetPOGhfUfqu"
+    "modifiedTime": 1767049263906,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
   },
   "_id": "sTbr6sL8AtR0Swdm",
-  "sort": 100000,
+  "sort": 1800000,
   "_key": "!tables!sTbr6sL8AtR0Swdm"
 }

@@ -1,0 +1,205 @@
+{
+  "name": "Golem",
+  "description": "<p>A random table created from the contents of the Golem Folder.</p>",
+  "results": [
+    {
+      "name": "2. Powered",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.68zpwxNPo9y2ZaAI",
+      "img": "icons/magic/lightning/fist-unarmed-strike-blue.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "Tz9Kp4slc35aiSVV",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!3BimBzjuOxK3DKGb.Tz9Kp4slc35aiSVV"
+    },
+    {
+      "name": "0. Golem",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.J8HVnIantrAFyU1v",
+      "img": "icons/creatures/magical/construct-stone-earth-gray.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "36yBWfFyGKRraIrU",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!3BimBzjuOxK3DKGb.36yBWfFyGKRraIrU"
+    },
+    {
+      "name": "4. Undying Synthetic",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.a2VDnr04jX4dX4IP",
+      "img": "icons/magic/death/skull-fire-white-yellow.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "f7ZWbujIg7wMX4t9",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!3BimBzjuOxK3DKGb.f7ZWbujIg7wMX4t9"
+    },
+    {
+      "name": "1. Hardened",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.eehMkzDI73jcVleP",
+      "img": "icons/magic/defensive/armor-stone-skin.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "rWKyQxhoWck9YjEm",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!3BimBzjuOxK3DKGb.rWKyQxhoWck9YjEm"
+    },
+    {
+      "name": "3. Synthetic Soul",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.jGoIMvz2dfJUy25u",
+      "img": "icons/magic/symbols/squares-3d-green.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "7H4SL7swEnnZXcwo",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!3BimBzjuOxK3DKGb.7H4SL7swEnnZXcwo"
+    },
+    {
+      "name": "5. Ur-War Program",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.sYjPxjnALUNfnfx0",
+      "img": "icons/commodities/tech/dial-meter-gauge-blue.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "hUDafOi4glNFonpa",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!3BimBzjuOxK3DKGb.hUDafOi4glNFonpa"
+    },
+    {
+      "name": "6. Very Strong",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.znjL0g6PdFhOxSst",
+      "img": "icons/magic/control/buff-strength-muscle-damage-red.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "Eb9hSdhpXJIMRN5E",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!3BimBzjuOxK3DKGb.Eb9hSdhpXJIMRN5E"
+    }
+  ],
+  "formula": "1d7",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8gXEqCY7Gctq4hdt",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.4",
+    "createdTime": 1767048511518,
+    "modifiedTime": 1767049263906,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "3BimBzjuOxK3DKGb",
+  "sort": 1500000,
+  "_key": "!tables!3BimBzjuOxK3DKGb"
+}

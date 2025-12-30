@@ -1,0 +1,22 @@
+{
+  "type": "Item",
+  "folder": null,
+  "name": "Noömagus",
+  "color": null,
+  "sorting": "a",
+  "_id": "7zXs21ImfGnJq9NO",
+  "description": "",
+  "sort": 1000000,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.4",
+    "lastModifiedBy": "9g1Dzw4zdMZGGuY3",
+    "modifiedTime": 1767011794164
+  },
+  "_key": "!folders!7zXs21ImfGnJq9NO"
+}

@@ -1,0 +1,21 @@
+{
+  "type": "Item",
+  "folder": null,
+  "name": "Modern and Ancient Shields",
+  "color": null,
+  "sorting": "m",
+  "_id": "J4DborPBqJGVOOS8",
+  "description": "",
+  "sort": -400000,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.4",
+    "lastModifiedBy": null
+  },
+  "_key": "!folders!J4DborPBqJGVOOS8"
+}

@@ -1,0 +1,205 @@
+{
+  "name": "Redlander",
+  "description": "<p>A random table created from the contents of the Redlander Folder.</p>",
+  "results": [
+    {
+      "name": "0. Redlander",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.1lf2Y9aR8wfy2Ca2",
+      "img": "icons/weapons/artillery/cannon-simple.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "EzRdiBPWk9M4qTC5",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!198Zvb8Kbgh2EJKO.EzRdiBPWk9M4qTC5"
+    },
+    {
+      "name": "5. Vintner",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.79AysdOfMMfSH3Rg",
+      "img": "icons/skills/toxins/cup-glass-poisoned-held.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "g0dhslteVlC962ni",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!198Zvb8Kbgh2EJKO.g0dhslteVlC962ni"
+    },
+    {
+      "name": "6. Werker",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.8buCZ1Fnv3fCyFdB",
+      "img": "icons/commodities/tech/console-steel.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "4Mv1Ia6ra9O28egz",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!198Zvb8Kbgh2EJKO.4Mv1Ia6ra9O28egz"
+    },
+    {
+      "name": "3. Ruster",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.R84pwq1Zpw6l1TEF",
+      "img": "icons/commodities/tech/cog-brass.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "19h0qut84Fyv0cX7",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!198Zvb8Kbgh2EJKO.19h0qut84Fyv0cX7"
+    },
+    {
+      "name": "1. Hexad Member",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.T3bepUlv9MkylDRZ",
+      "img": "icons/magic/symbols/rune-sigil-red-orange.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "4Ky2Ny1fVH9HOPX7",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!198Zvb8Kbgh2EJKO.4Ky2Ny1fVH9HOPX7"
+    },
+    {
+      "name": "4. Vampire",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.n86evPTJ5tKUzTFE",
+      "img": "icons/magic/death/mouth-bite-fangs-vampire.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "U9yqtDkspFveryb9",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!198Zvb8Kbgh2EJKO.U9yqtDkspFveryb9"
+    },
+    {
+      "name": "2. Falscher",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.xctK5UpHLmvvuXNR",
+      "img": "icons/magic/control/silhouette-hold-change-green.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "Dz55b0Y3fKD0J7UC",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!198Zvb8Kbgh2EJKO.Dz55b0Y3fKD0J7UC"
+    }
+  ],
+  "formula": "1d7",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8gXEqCY7Gctq4hdt",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.4",
+    "createdTime": 1767049244427,
+    "modifiedTime": 1767049263906,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "198Zvb8Kbgh2EJKO",
+  "sort": 100000,
+  "_key": "!tables!198Zvb8Kbgh2EJKO"
+}

@@ -7,7 +7,8 @@ const folders = true;
 
 const packs = await fs.readdir('./packs-source');
 for (const pack of packs) {
-  if (pack === '.gitattributes') continue;
+  if (pack === '.gitattributes' || pack.includes('archived')) continue;
+
   console.log('Packing ' + pack);
   await compilePack(`${SYSTEM_ID}/packs-source/${pack}`, `${SYSTEM_ID}/packs/${pack}`, {
     yaml,

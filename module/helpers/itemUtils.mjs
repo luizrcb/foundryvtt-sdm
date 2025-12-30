@@ -1,5 +1,5 @@
 export const UnarmedDamageItem =
-  'Compendium.sdm.equipment.Item.uKcbcZUs1jQZskQ4';
+  'Compendium.sdm.weapons.Item.uKcbcZUs1jQZskQ4';
 import { GearType, ItemType, SizeUnit } from './constants.mjs';
 /**
  * Convert any size unit to sacks.

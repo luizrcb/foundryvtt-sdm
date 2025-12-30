@@ -2,11 +2,11 @@
   "id": "sdm",
   "title": "Synthetic Dream Machine",
   "description": "An unofficial system for playing Ultraviolet Grasslands (UVG) and Our Golden Age (OGA) using the Synthetic Dream Machine (SDM) RPG system.",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "url": "https://github.com/luizrcb/foundryvtt-sdm",
   "bugs": "https://github.com/luizrcb/foundryvtt-sdm/issues",
   "manifest": "https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/main/system.json",
-  "download": "https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.5.4/sdm-0.5.4.zip",
+  "download": "https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.5.5/sdm-0.5.5.zip",
   "compatibility": {
     "minimum": "13",
     "verified": "13.351"
@@ -167,38 +167,58 @@
       "path": "./packs/creatures",
       "type": "Actor",
       "system": "sdm"
+    },
+     {
+      "name": "npc_generator",
+      "label": "NPC Generator",
+      "path": "./packs/npc_generator",
+      "type": "Macro",
+      "system": "sdm"
+    },
+    {
+      "name": "handouts",
+      "label": "Handouts",
+      "path": "./packs/handouts",
+      "type": "JournalEntry",
+      "system": "sdm"
     }
   ],
   "packFolders": [
     {
 			"name": "Character Creation",
 			"sorting": "a",
-			"color": "#66a54a",
+			"color": "#688B75",
 			"packs": ["ability_scores", "player_macros", "traits"]
 		},
     {
 			"name": "Items",
 			"sorting": "a",
-			"color": "#bc5c5c",
+			"color": "#E25C65",
 			"packs": ["consumables", "gadgets", "armors", "trait_items", "wards", "weapons"]
 		},
     {
+      "name": "Journals",
+      "sorting": "a",
+      "color": "#EC843D",
+      "packs": ["handouts"]
+    },
+    {
 			"name": "Powers",
 			"sorting": "a",
-			"color": "#5f62bf",
+			"color": "#497DAD",
 			"packs": ["powers"]
 		},
     {
 			"name": "Referee Tools",
 			"sorting": "a",
-			"color": "#bf57c1",
+			"color": "#785DAA",
 			"packs": ["rolltables", "macros"]
 		},
     {
 			"name": "Zoa",
 			"sorting": "a",
-			"color": "#c2a042",
-			"packs": ["creatures"]
+			"color": "#b3ab56",
+			"packs": ["creatures", "npc_generator"]
 		}
   ],
   "socket": true,

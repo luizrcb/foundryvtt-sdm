@@ -1,0 +1,205 @@
+{
+  "name": "Scion",
+  "description": "<p>A random table created from the contents of the Scion Folder.</p>",
+  "results": [
+    {
+      "name": "2. Faceless",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.5ARAaoSwLe0OgIrQ",
+      "img": "icons/magic/perception/silhouette-stealth-shadow.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "F1sQCYF5McngZnn4",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rf7MBYLCOyKLEzo1.F1sQCYF5McngZnn4"
+    },
+    {
+      "name": "3. Of-World",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.BTh6JyM1ZD16kdjI",
+      "img": "icons/magic/water/elemental-water.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "KVFpWVQKrFEobQEO",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rf7MBYLCOyKLEzo1.KVFpWVQKrFEobQEO"
+    },
+    {
+      "name": "6. Superuser",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.i9M18EBcJgmAhl3U",
+      "img": "icons/magic/holy/barrier-shield-winged-blue.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "nyd1BjqIm2JoU0uX",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rf7MBYLCOyKLEzo1.nyd1BjqIm2JoU0uX"
+    },
+    {
+      "name": "4. Perfect",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.nYKnk83kNMTbyVOy",
+      "img": "icons/magic/holy/angel-winged-humanoid-blue.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "HvL2XHnKZVtjiYJb",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rf7MBYLCOyKLEzo1.HvL2XHnKZVtjiYJb"
+    },
+    {
+      "name": "5. Subconscious Decay",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.t1KtSN1UvPGJrFlc",
+      "img": "icons/creatures/slimes/slime-face-melting-green.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "kbWwLFxNJ6KK92SH",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rf7MBYLCOyKLEzo1.kbWwLFxNJ6KK92SH"
+    },
+    {
+      "name": "0. Scion",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.y86z6kh8N6GhE7j0",
+      "img": "icons/magic/light/explosion-beam-impact-silhouette.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "Wmqe7QTX2qnUZMfF",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rf7MBYLCOyKLEzo1.Wmqe7QTX2qnUZMfF"
+    },
+    {
+      "name": "1. Dreamwalker",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.yc8D0CVgW7enfxRX",
+      "img": "icons/magic/control/debuff-energy-hold-blue-yellow.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "k0Dq1jOMEWHtFlsS",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rf7MBYLCOyKLEzo1.k0Dq1jOMEWHtFlsS"
+    }
+  ],
+  "formula": "1d7",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8gXEqCY7Gctq4hdt",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.4",
+    "createdTime": 1767049246428,
+    "modifiedTime": 1767049263906,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "rf7MBYLCOyKLEzo1",
+  "sort": 300000,
+  "_key": "!tables!rf7MBYLCOyKLEzo1"
+}

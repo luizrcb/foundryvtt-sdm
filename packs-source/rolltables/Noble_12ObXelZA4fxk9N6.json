@@ -1,0 +1,205 @@
+{
+  "name": "Noble",
+  "description": "<p>A random table created from the contents of the Noble Folder.</p>",
+  "results": [
+    {
+      "name": "5. Sculpted Beauty",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.9LnP0eRXxiwGI9Ol",
+      "img": "icons/magic/control/mouth-smile-deception-purple.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "nkj7exv73nFTZYKq",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!12ObXelZA4fxk9N6.nkj7exv73nFTZYKq"
+    },
+    {
+      "name": "2. Knight Reflexes",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.EJCoIbPXbzmV7ARh",
+      "img": "icons/skills/movement/figure-running-gray.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "t0qUWaFaAlGYRaHN",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!12ObXelZA4fxk9N6.t0qUWaFaAlGYRaHN"
+    },
+    {
+      "name": "3. Dissipated",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.Q6iNaQQozNXwjYGV",
+      "img": "icons/consumables/potions/potion-round-corked-glowing-green.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "sU5fq6atxTefa9bO",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!12ObXelZA4fxk9N6.sU5fq6atxTefa9bO"
+    },
+    {
+      "name": "6. Perfected Germline",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.RHp4kVf1j5hfULzn",
+      "img": "icons/magic/control/silhouette-hold-change-blue.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "deLG4t8l76lmXsN4",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!12ObXelZA4fxk9N6.deLG4t8l76lmXsN4"
+    },
+    {
+      "name": "4. Divine Blood",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.WT6OhjF3S968M1cV",
+      "img": "icons/magic/life/heart-hand-gold-green.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "yNivAIbqJ0W7uks7",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!12ObXelZA4fxk9N6.yNivAIbqJ0W7uks7"
+    },
+    {
+      "name": "0. Noble",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.XvAZmxxnnH2Swfej",
+      "img": "icons/equipment/head/crown-gold-red.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "7VW8eKTQnhcKqyTw",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!12ObXelZA4fxk9N6.7VW8eKTQnhcKqyTw"
+    },
+    {
+      "name": "1. Hexer Meritocrat",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.vSHqPCMPSw6AGKgG",
+      "img": "icons/magic/holy/saint-glass-portrait-halo.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "UZqsN9BLN3jWEO5p",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!12ObXelZA4fxk9N6.UZqsN9BLN3jWEO5p"
+    }
+  ],
+  "formula": "1d7",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8gXEqCY7Gctq4hdt",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.4",
+    "createdTime": 1767048739291,
+    "modifiedTime": 1767049263906,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "12ObXelZA4fxk9N6",
+  "sort": 800000,
+  "_key": "!tables!12ObXelZA4fxk9N6"
+}

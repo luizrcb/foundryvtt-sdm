@@ -1,0 +1,205 @@
+{
+  "name": "Skeleton",
+  "description": "<p>A random table created from the contents of the Skeleton Folder.</p>",
+  "results": [
+    {
+      "name": "0. Skeleton",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.1qtRDALm8B5t48Zp",
+      "img": "icons/magic/death/undead-skeleton-rags-fire-green.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "8WitQIj3QP7WCcIf",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!TW6sH3bykWZIOVyL.8WitQIj3QP7WCcIf"
+    },
+    {
+      "name": "3. Void Ward",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.JYjRW9m6eIjd1SGc",
+      "img": "icons/magic/death/skull-energy-light-white.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "oSdxso8kUF9UQMzB",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!TW6sH3bykWZIOVyL.oSdxso8kUF9UQMzB"
+    },
+    {
+      "name": "2. My Bones Engraved",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.PUyZnhnc4bZWYYIN",
+      "img": "icons/magic/death/bones-crossed-orange.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "c8Beu8r3Lrw1VsuW",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!TW6sH3bykWZIOVyL.c8Beu8r3Lrw1VsuW"
+    },
+    {
+      "name": "4. From Dust, Returning",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.hxOzB9k4KE1WNuKJ",
+      "img": "icons/magic/death/hand-dirt-undead-zombie.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "HRDqXupOBGLL5VlE",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!TW6sH3bykWZIOVyL.HRDqXupOBGLL5VlE"
+    },
+    {
+      "name": "6. Soul Thief",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.u8SIxXE72KL3aiFu",
+      "img": "icons/magic/death/weapon-scythe-rune-green.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "55NVLmVoAOrmtKqB",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!TW6sH3bykWZIOVyL.55NVLmVoAOrmtKqB"
+    },
+    {
+      "name": "1. Glowing Skeleton",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.x9H0xc4pCzLzplXi",
+      "img": "icons/magic/death/undead-skeleton-energy-green.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "fltZKdyGC2trxhUA",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!TW6sH3bykWZIOVyL.fltZKdyGC2trxhUA"
+    },
+    {
+      "name": "5. Cold New Flesh",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.xyHCVN5IOuvUCThr",
+      "img": "icons/magic/death/undead-zombie-grave-green.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "FpLg9UUdlDrfc74x",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!TW6sH3bykWZIOVyL.FpLg9UUdlDrfc74x"
+    }
+  ],
+  "formula": "1d7",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8gXEqCY7Gctq4hdt",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.4",
+    "createdTime": 1767049250905,
+    "modifiedTime": 1767049263906,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "TW6sH3bykWZIOVyL",
+  "sort": 500000,
+  "_key": "!tables!TW6sH3bykWZIOVyL"
+}

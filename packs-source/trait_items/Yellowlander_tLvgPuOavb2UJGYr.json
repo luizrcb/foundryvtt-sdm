@@ -1,0 +1,22 @@
+{
+  "type": "Item",
+  "folder": null,
+  "name": "Yellowlander",
+  "color": null,
+  "sorting": "a",
+  "_id": "tLvgPuOavb2UJGYr",
+  "description": "",
+  "sort": 2000000,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.4",
+    "lastModifiedBy": "9g1Dzw4zdMZGGuY3",
+    "modifiedTime": 1767011809745
+  },
+  "_key": "!folders!tLvgPuOavb2UJGYr"
+}

@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.5.5
+
+- Break-down Equipment compendium into multiple compendiums
+- Group releated compendium in thematic folders
+
 ## v0.5.4
 
 - Fix burden penalty bonuses (a bonus that allow burdens to be ignored) been wrongly applied to roll results

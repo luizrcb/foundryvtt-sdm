@@ -1,0 +1,99 @@
+{
+  "folder": "ACx0Jk3FTwU2SxL6",
+  "name": "Shipsteel Stiletto",
+  "type": "gear",
+  "_id": "Vd5k7Q44OYNTHdcu",
+  "img": "icons/weapons/daggers/dagger-simple-blue.webp",
+  "system": {
+    "readied": false,
+    "status": "",
+    "resources": "",
+    "cost": 750,
+    "cost_frequency": "",
+    "description": "<p>Long, thin, sharp blade of perfect metal. Easily concealed.</p>",
+    "quantity": 1,
+    "size": {
+      "value": 3,
+      "unit": "soaps"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "type": "weapon",
+    "starting_kit": false,
+    "is_supply": false,
+    "supply_type": "human",
+    "packed_remaining_items": 10,
+    "power": {
+      "img": "icons/svg/book.svg",
+      "name": "",
+      "description": "",
+      "level": 1,
+      "range": "",
+      "target": "",
+      "duration": "",
+      "overcharge": "",
+      "roll_formula": "",
+      "overcharge_roll_formula": ""
+    },
+    "powers_current_index": 0,
+    "max_powers": 3,
+    "powers": [],
+    "armor": {
+      "value": 0,
+      "type": "",
+      "cumbersome": false,
+      "powered": null
+    },
+    "ward": {
+      "value": 0,
+      "type": "",
+      "armor": 0
+    },
+    "weapon": {
+      "damage": {
+        "base": "1d4+1",
+        "versatile": "1d4",
+        "bonus": ""
+      },
+      "range": "",
+      "versatile": false
+    },
+    "default_ability": ""
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "XnQAppzUXfkn5LcX": 3,
+    "9g1Dzw4zdMZGGuY3": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.4",
+    "createdTime": 1767011807028,
+    "modifiedTime": 1767011807028,
+    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+  },
+  "_key": "!items!Vd5k7Q44OYNTHdcu"
+}

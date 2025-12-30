@@ -8,7 +8,16 @@ const foldersToDelete = [
   'packs/rolltables',
   'packs/equipment',
   'packs/traits',
-  'packs/creatures'
+  'packs/creatures',
+  'packs/ability_scores',
+  'packs/consumables',
+  'packs/gadgets',
+  'packs/powers',
+  'packs/armors',
+  'packs/wards',
+  'packs/weapons',
+  'packs/handouts',
+  'packs/npc_generator'
 ];
 
 const rootDir = path.join(__dirname, '..');

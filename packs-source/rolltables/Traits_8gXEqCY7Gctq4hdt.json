@@ -3,7 +3,7 @@
   "folder": null,
   "name": "Traits",
   "color": null,
-  "sorting": "m",
+  "sorting": "a",
   "_id": "8gXEqCY7Gctq4hdt",
   "description": "",
   "sort": 0,
@@ -12,12 +12,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.348",
+    "coreVersion": "13.351",
     "systemId": "sdm",
     "systemVersion": "0.1.35",
     "createdTime": 1756510497461,
-    "modifiedTime": 1756510849631,
-    "lastModifiedBy": "3vgxDetPOGhfUfqu"
+    "modifiedTime": 1767049302193,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
   },
   "_key": "!folders!8gXEqCY7Gctq4hdt"
 }

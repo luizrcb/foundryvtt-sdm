@@ -1,0 +1,22 @@
+{
+  "type": "Item",
+  "folder": null,
+  "name": "Bluelander",
+  "color": null,
+  "sorting": "a",
+  "_id": "KWmBklBUo88M0pbN",
+  "description": "",
+  "sort": 300000,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.4",
+    "lastModifiedBy": "9g1Dzw4zdMZGGuY3",
+    "modifiedTime": 1767011782792
+  },
+  "_key": "!folders!KWmBklBUo88M0pbN"
+}

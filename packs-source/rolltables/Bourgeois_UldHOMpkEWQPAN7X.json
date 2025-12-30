@@ -1,0 +1,205 @@
+{
+  "name": "Bourgeois",
+  "description": "<p>A random table created from the contents of the Bourgeois Folder.</p>",
+  "results": [
+    {
+      "name": "4. Legal Immunity",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.GqbpoztsyMRU2P7l",
+      "img": "icons/skills/social/trading-injustice-scale-gray.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "3rTCYOematL4mvCd",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!UldHOMpkEWQPAN7X.3rTCYOematL4mvCd"
+    },
+    {
+      "name": "5. Old Money",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.QbNbjp8n0mCgQWhk",
+      "img": "icons/commodities/currency/coin-embossed-crown-gold.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "vqCWFQ9Vw89bm5ju",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!UldHOMpkEWQPAN7X.vqCWFQ9Vw89bm5ju"
+    },
+    {
+      "name": "3. Expensive Training",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.VUavxELCCze34l8t",
+      "img": "icons/commodities/currency/coins-plain-stack-gold.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "z2iMMFIo2ZZ3BmOx",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!UldHOMpkEWQPAN7X.z2iMMFIo2ZZ3BmOx"
+    },
+    {
+      "name": "6. Urbane",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.YSCcNR7DUnkQfCir",
+      "img": "icons/environment/settlement/city-hall.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "XY7GeDiJ8kjSmQsG",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!UldHOMpkEWQPAN7X.XY7GeDiJ8kjSmQsG"
+    },
+    {
+      "name": "0. Bourgeois",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.aXpwuI66fwsHwGJ1",
+      "img": "icons/skills/trades/academics-merchant-scribe.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "ZMGmOigLxavStKRI",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!UldHOMpkEWQPAN7X.ZMGmOigLxavStKRI"
+    },
+    {
+      "name": "2. Enterprising",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.hlBOdySvIKn2OOhG",
+      "img": "icons/commodities/currency/coins-assorted-crown-blue.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "avcSoWCxOSfyta5G",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!UldHOMpkEWQPAN7X.avcSoWCxOSfyta5G"
+    },
+    {
+      "name": "1. Double-Platinum Deathless Backup",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.rTONDIsV2VjNOUpU",
+      "img": "icons/commodities/gems/pearl-white-oval.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "eGcT4cawOnBkuZSO",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!UldHOMpkEWQPAN7X.eGcT4cawOnBkuZSO"
+    }
+  ],
+  "formula": "1d7",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8gXEqCY7Gctq4hdt",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.4",
+    "createdTime": 1767048509842,
+    "modifiedTime": 1767049263906,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "UldHOMpkEWQPAN7X",
+  "sort": 1400000,
+  "_key": "!tables!UldHOMpkEWQPAN7X"
+}

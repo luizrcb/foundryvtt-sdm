@@ -1,0 +1,22 @@
+{
+  "type": "Item",
+  "folder": null,
+  "name": "Redlander",
+  "color": null,
+  "sorting": "a",
+  "_id": "ZuY98GDyyjLCNQNn",
+  "description": "",
+  "sort": 1300000,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.4",
+    "lastModifiedBy": "9g1Dzw4zdMZGGuY3",
+    "modifiedTime": 1767011798321
+  },
+  "_key": "!folders!ZuY98GDyyjLCNQNn"
+}

@@ -1,0 +1,205 @@
+{
+  "name": "Greenlander",
+  "description": "<p>A random table created from the contents of the Greenlander Folder.</p>",
+  "results": [
+    {
+      "name": "2. Deeply Embodied",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.FOZHyq5l3OaVF09U",
+      "img": "icons/magic/control/debuff-energy-hold-levitate-green.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "ilbGIJ0qU7j9JRoZ",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!YKikwIKOdaqBqcdh.ilbGIJ0qU7j9JRoZ"
+    },
+    {
+      "name": "4. Metropolitan",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.FgVpKYNU49hnmDRi",
+      "img": "icons/environment/settlement/palast.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "KLI3Pg74a4Di26wo",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!YKikwIKOdaqBqcdh.KLI3Pg74a4Di26wo"
+    },
+    {
+      "name": "5. Mossblood",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.Y4Dkmq9TDIPVqOy7",
+      "img": "icons/magic/nature/elemental-plant-humanoid.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "Q1cEiBucq1EvvtqW",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!YKikwIKOdaqBqcdh.Q1cEiBucq1EvvtqW"
+    },
+    {
+      "name": "1. Country Squire",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.k9uMPzSIOfdV1YMn",
+      "img": "icons/commodities/currency/coins-assorted-mix-silver.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "jaVwb0qq5qzm1zNh",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!YKikwIKOdaqBqcdh.jaVwb0qq5qzm1zNh"
+    },
+    {
+      "name": "3. Informant",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.mDac4uazZhmsfq4E",
+      "img": "icons/magic/perception/orb-eye-scrying.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "vdUrB14D0EzTaxM5",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!YKikwIKOdaqBqcdh.vdUrB14D0EzTaxM5"
+    },
+    {
+      "name": "0. Greenlander",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.nBawOu3roou75RV9",
+      "img": "icons/commodities/tech/plug.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "85YjJfSe8DTpJP0N",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!YKikwIKOdaqBqcdh.85YjJfSe8DTpJP0N"
+    },
+    {
+      "name": "6. Soiltwined",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.uk2jwNU1JnaY7iWk",
+      "img": "icons/magic/nature/root-vine-entangled-humanoid.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "MS61S10ek2Zujg6D",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!YKikwIKOdaqBqcdh.MS61S10ek2Zujg6D"
+    }
+  ],
+  "formula": "1d7",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8gXEqCY7Gctq4hdt",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.4",
+    "createdTime": 1767048513029,
+    "modifiedTime": 1767049263906,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "YKikwIKOdaqBqcdh",
+  "sort": 1700000,
+  "_key": "!tables!YKikwIKOdaqBqcdh"
+}
