@@ -1,10 +1,10 @@
 {
-  "type": "Item",
+  "type": "RollTable",
   "folder": null,
-  "name": "Soldier",
+  "name": "Items",
   "color": null,
   "sorting": "a",
-  "_id": "YGSUpoMT7YvtsB9I",
+  "_id": "DnouzxEjZMIdrIqA",
   "description": "",
   "sort": 0,
   "flags": {},
@@ -14,10 +14,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
-    "createdTime": 1767097416216,
-    "modifiedTime": 1767097416216,
+    "systemVersion": "0.1.35",
+    "createdTime": 1756510131255,
+    "modifiedTime": 1767193062556,
     "lastModifiedBy": "6KLfb35TARh0OlRZ"
   },
-  "_key": "!folders!YGSUpoMT7YvtsB9I"
+  "_key": "!folders!DnouzxEjZMIdrIqA"
 }

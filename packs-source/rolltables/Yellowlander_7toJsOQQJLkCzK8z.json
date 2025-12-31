@@ -1,0 +1,330 @@
+{
+  "name": "Yellowlander",
+  "description": "A random table created from the contents of the Yellowlander Folder.",
+  "results": [
+    {
+      "name": "Yellow Dart",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.0kWVhz0n43y6DYow",
+      "img": "icons/weapons/polearms/spear-flared-bronze-teal.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "9baTReHBFT5eo9DO",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!7toJsOQQJLkCzK8z.9baTReHBFT5eo9DO"
+    },
+    {
+      "name": "Declaration of Pause",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.27KMQemjOg0OGUpK",
+      "img": "icons/magic/sonic/projectile-sound-rings-wave.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "d5Fj7XtlbrNUNmEK",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!7toJsOQQJLkCzK8z.d5Fj7XtlbrNUNmEK"
+    },
+    {
+      "name": "Dust Face",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.30dsPzO0eFvYeoZG",
+      "img": "icons/equipment/head/mask-plague-grey.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "BPL8qZtrBU18ggKo",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!7toJsOQQJLkCzK8z.BPL8qZtrBU18ggKo"
+    },
+    {
+      "name": "Hard Leash",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.44Z3e4dapYQA5Uyk",
+      "img": "icons/sundries/survival/rope-braided-yellow.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "PAUEcGv01py73B6F",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!7toJsOQQJLkCzK8z.PAUEcGv01py73B6F"
+    },
+    {
+      "name": "Machination Kit",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.5GMqG0BWewoJ63oC",
+      "img": "icons/commodities/tech/wire-blue.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "nwNO4LFvRD1JkmEj",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!7toJsOQQJLkCzK8z.nwNO4LFvRD1JkmEj"
+    },
+    {
+      "name": "Water Extractor",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.9xvkCf6cissuMrqC",
+      "img": "icons/magic/water/waves-water-blue.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "vmGg2F78nd2piSTH",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!7toJsOQQJLkCzK8z.vmGg2F78nd2piSTH"
+    },
+    {
+      "name": "Tikker Clicker",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.IbdYMW4iTKz2QcdL",
+      "img": "icons/magic/time/clock-spinning-gold-pink.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "bW5mmoDecUOyfngy",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!7toJsOQQJLkCzK8z.bW5mmoDecUOyfngy"
+    },
+    {
+      "name": "Saffron Snuf",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.InO4mfRjIMCmRItS",
+      "img": "icons/commodities/materials/bowl-powder-gold.webp",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "Tmq8K1Nzpd4CM3lD",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!7toJsOQQJLkCzK8z.Tmq8K1Nzpd4CM3lD"
+    },
+    {
+      "name": "Yellow Poncho",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.aVg2M64PKi3jzYoD",
+      "img": "icons/equipment/back/cape-layered-orange.webp",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "FHnxwKAYjL3rrrBz",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!7toJsOQQJLkCzK8z.FHnxwKAYjL3rrrBz"
+    },
+    {
+      "name": "Rib Bow",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.jFbh2hM8JQvk6M8q",
+      "img": "icons/weapons/crossbows/crossbow-white.webp",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "4Gw6AnzMDXJloxFz",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!7toJsOQQJLkCzK8z.4Gw6AnzMDXJloxFz"
+    },
+    {
+      "name": "Plug-In Chimeric",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.snKpNMDU1l9ImWwv",
+      "img": "icons/magic/lightning/projectile-orb-blue.webp",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_id": "witUolmUr7xcik5p",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!7toJsOQQJLkCzK8z.witUolmUr7xcik5p"
+    },
+    {
+      "name": "Sand Dragon Scale",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.ycZ7nDNG8pHLjbXx",
+      "img": "icons/commodities/metal/mail-scale-steel.webp",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_id": "NOgoGJgcwLK7RxGt",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!7toJsOQQJLkCzK8z.NOgoGJgcwLK7RxGt"
+    }
+  ],
+  "formula": "1d12",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8iXTxWS7BmWPt7Io",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.5",
+    "createdTime": 1767193490546,
+    "modifiedTime": 1767193807175,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "7toJsOQQJLkCzK8z",
+  "sort": 1000000,
+  "_key": "!tables!7toJsOQQJLkCzK8z"
+}

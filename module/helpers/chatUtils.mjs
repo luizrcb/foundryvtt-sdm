@@ -70,13 +70,13 @@ export async function createChatMessage({
 }) {
   try {
     const finalSpeaker = speaker || ChatMessage.getSpeaker({ actor });
-
+    const luckySevenRule = game.settings.get('sdm', 'luckySevenRule') || false;
     const rollArray = rolls?.filter(r => r instanceof Roll) ?? [];
 
     // Detect nat1 or nat20 across all provided rolls
     if (checkCritical) {
       for (const roll of rollArray) {
-        const { isNat1, isNat20, is13 } = detectNat1OrNat20(roll);
+        const { isNat1, isNat20, is13, is7 } = detectNat1OrNat20(roll);
 
         if (!content) content = await roll.render();
 
@@ -93,6 +93,13 @@ export async function createChatMessage({
           );
           content = content.replace('dice-total', 'dice-total force');
           content += `<div class='flex-group-center mt-10'><span  class='force'>${$l10n('SDM.DepletedResources').toUpperCase()}</span></div>`;
+        } else if (luckySevenRule && is7) {
+           content = content.replace(
+            '<li class="roll die d20">7</li>',
+            '<li class="roll die d20 is7">7</li>'
+          );
+          content = content.replace('dice-total', 'dice-total lucky');
+          content += `<div class='flex-group-center mt-10'><span  class='lucky'>${$l10n('SDM.LuckySeven').toUpperCase()}</span></div>`;
         }
       }
     }

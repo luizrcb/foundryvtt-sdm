@@ -5,7 +5,7 @@
     {
       "name": "Shield Mk74c",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.xJ46HdpJPypHJ618",
+      "documentUuid": "Compendium.sdm.armors.Item.xJ46HdpJPypHJ618",
       "img": "icons/equipment/shield/heater-steel-boss-red.webp",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "Strapguard",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.VW4kHqcBKohL0qR2",
+      "documentUuid": "Compendium.sdm.armors.Item.VW4kHqcBKohL0qR2",
       "img": "icons/equipment/wrist/bracer-banded-leather-black.webp",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Field Glove",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.EWgDYnZ6lR7Ne9s4",
+      "documentUuid": "Compendium.sdm.armors.Item.EWgDYnZ6lR7Ne9s4",
       "img": "icons/equipment/hand/gauntlet-plate-steel-grey.webp",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Blazeglass",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.beJKy8w0VGOqCIZT",
+      "documentUuid": "Compendium.sdm.armors.Item.beJKy8w0VGOqCIZT",
       "img": "icons/equipment/shield/heater-crystal-blue.webp",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Void Infantry Dissipator",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.nqtbAexm1CMapyHQ",
+      "documentUuid": "Compendium.sdm.armors.Item.nqtbAexm1CMapyHQ",
       "img": "icons/equipment/shield/Scutum-steel-worn.webp",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Hard Light Targe",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.27YcJ2YjxiMAhYCR",
+      "documentUuid": "Compendium.sdm.armors.Item.27YcJ2YjxiMAhYCR",
       "img": "icons/equipment/shield/shield-round-boss-wood-brown.webp",
       "weight": 1,
       "range": [

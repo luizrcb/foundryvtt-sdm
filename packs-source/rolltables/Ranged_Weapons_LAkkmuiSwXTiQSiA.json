@@ -5,7 +5,7 @@
     {
       "name": "Redland District Submachine Gun",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.XbeBMLtditR95b0R",
+      "documentUuid": "Compendium.sdm.weapons.Item.XbeBMLtditR95b0R",
       "img": "icons/weapons/guns/gun-red.webp",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "Crossbow",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.cZMO2QZCSA0n1RnN",
+      "documentUuid": "Compendium.sdm.weapons.Item.cZMO2QZCSA0n1RnN",
       "img": "icons/weapons/crossbows/crossbow-loaded-black.webp",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Golem Lance",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.eacggpo0Xugwd4gx",
+      "documentUuid": "Compendium.sdm.weapons.Item.eacggpo0Xugwd4gx",
       "img": "icons/commodities/tech/conduit-transmission-red.webp",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Scavenger Bolter",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.ltpia6YOIecgAjKT",
+      "documentUuid": "Compendium.sdm.weapons.Item.ltpia6YOIecgAjKT",
       "img": "icons/weapons/guns/rifle-brown.webp",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Inquisition  Squirtgun",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.mp7cuVdA4E1udA8m",
+      "documentUuid": "Compendium.sdm.weapons.Item.mp7cuVdA4E1udA8m",
       "img": "icons/weapons/guns/gun-pistol-flintlock-metal.webp",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Bow",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.qDvcnyymY1YS9sqx",
+      "documentUuid": "Compendium.sdm.weapons.Item.qDvcnyymY1YS9sqx",
       "img": "icons/weapons/bows/bow-ornamental-silver-black.webp",
       "weight": 1,
       "range": [

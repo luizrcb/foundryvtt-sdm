@@ -1,0 +1,330 @@
+{
+  "name": "Holy Fool",
+  "description": "A random table created from the contents of the Holy Fool Folder.",
+  "results": [
+    {
+      "name": "Book of Hellaesthetics",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.21GUwu6h72zzST10",
+      "img": "icons/sundries/books/book-tooled-eye-gold-red.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "ciaBx6KzatZpuvgY",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VYO59mrtJkVw6Seh.ciaBx6KzatZpuvgY"
+    },
+    {
+      "name": "Walking Bed",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.Dmoebn9xiM1SjKxY",
+      "img": "icons/commodities/tech/platform-spring.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "bIoBOcm4ZTb5k9g7",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VYO59mrtJkVw6Seh.bIoBOcm4ZTb5k9g7"
+    },
+    {
+      "name": "Better Life Pamphlets",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.JOG47arS8XsLQQrx",
+      "img": "icons/sundries/documents/document-symbol-person-brown.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "ibVITZVeeWAB6KkM",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VYO59mrtJkVw6Seh.ibVITZVeeWAB6KkM"
+    },
+    {
+      "name": "Radioactive Rodent Skull",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.JZvL4usnqg2fGQOL",
+      "img": "icons/commodities/bones/skull-feline-beige.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "cpO2mIBLVLL47uD8",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VYO59mrtJkVw6Seh.cpO2mIBLVLL47uD8"
+    },
+    {
+      "name": "Void-Certified Sleeping Bag",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.K9yJBu8uo7Z1TowB",
+      "img": "icons/sundries/survival/bedroll-pink.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "Y22JIu8ORcgIHnHB",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VYO59mrtJkVw6Seh.Y22JIu8ORcgIHnHB"
+    },
+    {
+      "name": "Mermaid's Kiss",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.KiyJHff1dRVKcFJe",
+      "img": "icons/containers/kitchenware/jug-clay-brown.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "HUI0oa3grksAvD3E",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VYO59mrtJkVw6Seh.HUI0oa3grksAvD3E"
+    },
+    {
+      "name": "Rotting Angel's Ring",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.N1S1p6jkLKYpsoIH",
+      "img": "icons/equipment/finger/ring-crown-teal-gold.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "mevbrzgNsalYExpr",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VYO59mrtJkVw6Seh.mevbrzgNsalYExpr"
+    },
+    {
+      "name": "Dream Bone Knife",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.OZXnfpd2SENX6vYd",
+      "img": "icons/weapons/daggers/dagger-bone-worn-black.webp",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "lFKO0py00TZ8P3io",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VYO59mrtJkVw6Seh.lFKO0py00TZ8P3io"
+    },
+    {
+      "name": "Cordwood™ Jumpsuit &  Headset",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.XbtPcSL4eUQppXxW",
+      "img": "icons/equipment/neck/pendant-enamel.webp",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "UhfHNl1l3qxCM7gw",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VYO59mrtJkVw6Seh.UhfHNl1l3qxCM7gw"
+    },
+    {
+      "name": "Flower Pot of the Living Avatar",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.kRScxyEAd8Da8lYV",
+      "img": "icons/sundries/misc/plant-potted.webp",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "opj5P0YpB0AWKoG7",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VYO59mrtJkVw6Seh.opj5P0YpB0AWKoG7"
+    },
+    {
+      "name": "Golem Carcass",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.oTH3rQ5I499hwGZ1",
+      "img": "icons/equipment/head/greathelm-slotted-steel.webp",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_id": "USgxS29stxYfjjZ3",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VYO59mrtJkVw6Seh.USgxS29stxYfjjZ3"
+    },
+    {
+      "name": "Sun's Caress",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.tFUVZDR4MMskkDKH",
+      "img": "icons/magic/light/beams-rays-orange-purple-large.webp",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_id": "Psvs5JZ77NMc9sWf",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VYO59mrtJkVw6Seh.Psvs5JZ77NMc9sWf"
+    }
+  ],
+  "formula": "1d12",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8iXTxWS7BmWPt7Io",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.5",
+    "createdTime": 1767193804895,
+    "modifiedTime": 1767193807175,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "VYO59mrtJkVw6Seh",
+  "sort": 300000,
+  "_key": "!tables!VYO59mrtJkVw6Seh"
+}

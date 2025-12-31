@@ -5,7 +5,7 @@
     {
       "name": "Disintegrity Spray",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.W1WaMiYMQ5Me3ebj",
+      "documentUuid": "Compendium.sdm.gadgets.Item.W1WaMiYMQ5Me3ebj",
       "img": "icons/consumables/potions/bottle-conical-corked-labeled-skull-poison-green.webp",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "Mechatronic Picks",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.1Pp3Z5o01ro53V0j",
+      "documentUuid": "Compendium.sdm.gadgets.Item.1Pp3Z5o01ro53V0j",
       "img": "icons/tools/hand/lockpicks-steel-grey.webp",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Multi-Auto Tool",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.FJX7Ea1VRKS6AubF",
+      "documentUuid": "Compendium.sdm.gadgets.Item.FJX7Ea1VRKS6AubF",
       "img": "icons/commodities/tech/sensor-brown.webp",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Interface Gauntlet",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.hGFxue7mxbEs0eu7",
+      "documentUuid": "Compendium.sdm.gadgets.Item.hGFxue7mxbEs0eu7",
       "img": "icons/equipment/hand/gauntlet-armored-leather-teal-orange.webp",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Augmented Reality",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.eOPUMmQ1GbrBFZDN",
+      "documentUuid": "Compendium.sdm.gadgets.Item.eOPUMmQ1GbrBFZDN",
       "img": "icons/equipment/head/goggles-leather-blue.webp",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Omni-Utilitool",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.pcAmfnNx13j8RqSn",
+      "documentUuid": "Compendium.sdm.gadgets.Item.pcAmfnNx13j8RqSn",
       "img": "icons/commodities/tech/smoke-bomb-red-yellow.webp",
       "weight": 1,
       "range": [

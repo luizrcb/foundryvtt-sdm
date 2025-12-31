@@ -1,11 +1,11 @@
 {
   "name": "Foods",
-  "description": "A random table created from the contents of the Foods Folder.",
+  "description": "<p>A random table created from the contents of the Foods Folder.</p>",
   "results": [
     {
       "name": "Green Ortholentils",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.PoTLmYQ3XSagOlYj",
+      "documentUuid": "Compendium.sdm.consumables.Item.PoTLmYQ3XSagOlYj",
       "img": "icons/consumables/vegetable/root-alien-green.webp",
       "weight": 1,
       "range": [
@@ -20,17 +20,18 @@
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null,
-        "coreVersion": "13.348",
+        "coreVersion": "13.351",
         "systemId": "sdm",
         "systemVersion": "0.1.37",
-        "lastModifiedBy": null
+        "lastModifiedBy": "6KLfb35TARh0OlRZ",
+        "modifiedTime": 1767194479092
       },
       "_key": "!tables.results!7Ya3HU52ArU8w8td.FGCtnqE0lnl1PO8j"
     },
     {
       "name": "Purple Worm Sausages",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.wXhHiQ2Jw8Xjon3c",
+      "documentUuid": "Compendium.sdm.consumables.Item.wXhHiQ2Jw8Xjon3c",
       "img": "icons/creatures/invertebrates/beetle-grub-larvae-gray.webp",
       "weight": 1,
       "range": [
@@ -45,17 +46,18 @@
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null,
-        "coreVersion": "13.348",
+        "coreVersion": "13.351",
         "systemId": "sdm",
         "systemVersion": "0.1.37",
-        "lastModifiedBy": null
+        "lastModifiedBy": "6KLfb35TARh0OlRZ",
+        "modifiedTime": 1767194479092
       },
       "_key": "!tables.results!7Ya3HU52ArU8w8td.jSwnyxNMJKgCFyPP"
     },
     {
       "name": "Blue Spacecake",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.jPJYE5TRHE7VfUZq",
+      "documentUuid": "Compendium.sdm.consumables.Item.jPJYE5TRHE7VfUZq",
       "img": "icons/consumables/food/candy-taffy-blue-white.webp",
       "weight": 1,
       "range": [
@@ -70,17 +72,18 @@
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null,
-        "coreVersion": "13.348",
+        "coreVersion": "13.351",
         "systemId": "sdm",
         "systemVersion": "0.1.37",
-        "lastModifiedBy": null
+        "lastModifiedBy": "6KLfb35TARh0OlRZ",
+        "modifiedTime": 1767194479092
       },
       "_key": "!tables.results!7Ya3HU52ArU8w8td.JJRC4G4vXCbFXVjC"
     },
     {
       "name": "Red Nutrislurry",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.No9swMOwJhqLUovg",
+      "documentUuid": "Compendium.sdm.consumables.Item.No9swMOwJhqLUovg",
       "img": "icons/commodities/materials/bowl-liquid-red.webp",
       "weight": 1,
       "range": [
@@ -95,17 +98,18 @@
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null,
-        "coreVersion": "13.348",
+        "coreVersion": "13.351",
         "systemId": "sdm",
         "systemVersion": "0.1.37",
-        "lastModifiedBy": null
+        "lastModifiedBy": "6KLfb35TARh0OlRZ",
+        "modifiedTime": 1767194479092
       },
       "_key": "!tables.results!7Ya3HU52ArU8w8td.NRciq0scOHaZecjL"
     },
     {
       "name": "Yellowbrain  Choux Crême",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.OITROVjjKTWaG6Xx",
+      "documentUuid": "Compendium.sdm.consumables.Item.OITROVjjKTWaG6Xx",
       "img": "icons/commodities/materials/bowl-powder-yellow.webp",
       "weight": 1,
       "range": [
@@ -120,17 +124,18 @@
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null,
-        "coreVersion": "13.348",
+        "coreVersion": "13.351",
         "systemId": "sdm",
         "systemVersion": "0.1.37",
-        "lastModifiedBy": null
+        "lastModifiedBy": "6KLfb35TARh0OlRZ",
+        "modifiedTime": 1767194479092
       },
       "_key": "!tables.results!7Ya3HU52ArU8w8td.65jfJVJGlPW5dYfu"
     },
     {
       "name": "Orange Ratgum",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.NipXKSi4QhM39Uha",
+      "documentUuid": "Compendium.sdm.consumables.Item.NipXKSi4QhM39Uha",
       "img": "icons/consumables/fruit/orange-citrus-ripe.webp",
       "weight": 1,
       "range": [
@@ -145,10 +150,11 @@
         "compendiumSource": null,
         "duplicateSource": null,
         "exportSource": null,
-        "coreVersion": "13.348",
+        "coreVersion": "13.351",
         "systemId": "sdm",
         "systemVersion": "0.1.37",
-        "lastModifiedBy": null
+        "lastModifiedBy": "6KLfb35TARh0OlRZ",
+        "modifiedTime": 1767194479092
       },
       "_key": "!tables.results!7Ya3HU52ArU8w8td.19W24so897PhQZML"
     }
@@ -167,12 +173,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.348",
+    "coreVersion": "13.351",
     "systemId": "sdm",
     "systemVersion": "0.1.37",
     "createdTime": 1756597708137,
-    "modifiedTime": 1756597714938,
-    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+    "modifiedTime": 1767194482758,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
   },
   "_id": "7Ya3HU52ArU8w8td",
   "sort": 100000,

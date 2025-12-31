@@ -1,21 +1,22 @@
 {
   "type": "RollTable",
-  "folder": "MQfAWYx9K2WEu1eo",
+  "folder": "DnouzxEjZMIdrIqA",
   "name": "Consumable",
   "color": null,
   "sorting": "m",
   "_id": "GwbaoQHXMA2LEdba",
   "description": "",
-  "sort": 0,
+  "sort": 500000,
   "flags": {},
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.348",
+    "coreVersion": "13.351",
     "systemId": "sdm",
     "systemVersion": "0.1.37",
-    "lastModifiedBy": null
+    "lastModifiedBy": "6KLfb35TARh0OlRZ",
+    "modifiedTime": 1767193067116
   },
   "_key": "!folders!GwbaoQHXMA2LEdba"
 }

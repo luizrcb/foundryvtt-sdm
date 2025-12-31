@@ -1,0 +1,330 @@
+{
+  "name": "Orangelander",
+  "description": "A random table created from the contents of the Orangelander Folder.",
+  "results": [
+    {
+      "name": "Omnifleisch",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.3xvP14A14fN0PUYq",
+      "img": "icons/commodities/biological/pustules-red.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "1W5d2Gb6O03fL7bC",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!sobXLDFiK1DdtlTw.1W5d2Gb6O03fL7bC"
+    },
+    {
+      "name": "Tree-Plug",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.9OOvp7LuH575LzvU",
+      "img": "icons/magic/nature/mushrooms-fire-glow-blue.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "t66GyM7EVHarCS2l",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!sobXLDFiK1DdtlTw.t66GyM7EVHarCS2l"
+    },
+    {
+      "name": "Poly-Ocular Visor",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.GhkaGjc7wLMayvpL",
+      "img": "icons/creatures/eyes/icy-cluster-blue.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "NP0n4J8R1ERWMHCc",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!sobXLDFiK1DdtlTw.NP0n4J8R1ERWMHCc"
+    },
+    {
+      "name": "Hedonic Accumulator",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.K4fwJFuDNQC1XWyz",
+      "img": "icons/commodities/tech/detonator-timer.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "TDhHoAFRMghqC2ju",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!sobXLDFiK1DdtlTw.TDhHoAFRMghqC2ju"
+    },
+    {
+      "name": "Synthetic Subsystem",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.KaLgYEo42NNLZRFT",
+      "img": "icons/commodities/biological/organ-liver-red.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "GAvAhdrr7ZoJqlZQ",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!sobXLDFiK1DdtlTw.GAvAhdrr7ZoJqlZQ"
+    },
+    {
+      "name": "Tree-Reader",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.KcdzFvyST9bq6mhm",
+      "img": "icons/magic/nature/root-vines-face-glow-green.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "4IxNso6lTKCOOKEg",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!sobXLDFiK1DdtlTw.4IxNso6lTKCOOKEg"
+    },
+    {
+      "name": "Zunkwaffel Wandgun",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.ciTpkcUF9gMIMjeJ",
+      "img": "icons/weapons/wands/wand-skull-horned.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "kZElOwBghegyc6sf",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!sobXLDFiK1DdtlTw.kZElOwBghegyc6sf"
+    },
+    {
+      "name": "Hunting Lance",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.hGKath3hGL20LlJR",
+      "img": "icons/magic/unholy/projectile-spear-glow-pink.webp",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "24qNugprytoUyndH",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!sobXLDFiK1DdtlTw.24qNugprytoUyndH"
+    },
+    {
+      "name": "Cad Bird",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.iA1gHyCSTlU2NY7m",
+      "img": "icons/magic/death/undead-bird-skeleton-purple.webp",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "KMeKI84JSnoE590A",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!sobXLDFiK1DdtlTw.KMeKI84JSnoE590A"
+    },
+    {
+      "name": "Air Compressor",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.k7o5XcRBE2sFNeNX",
+      "img": "icons/equipment/head/mask-carved-gargoyle-grey.webp",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "UFT51cKk5PbhXs2S",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!sobXLDFiK1DdtlTw.UFT51cKk5PbhXs2S"
+    },
+    {
+      "name": "Maintain Bracelet",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.oho0aOqpEVmiLpNk",
+      "img": "icons/equipment/wrist/bracer-ornate-pink-green.webp",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_id": "R2Fyu7ohWIfPHJHq",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!sobXLDFiK1DdtlTw.R2Fyu7ohWIfPHJHq"
+    },
+    {
+      "name": "Amber Suit",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.x5n75oWncjW8NkuK",
+      "img": "icons/equipment/leg/pants-cloth-tasset-bronze.webp",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_id": "1nY39DPGiWO24BGN",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!sobXLDFiK1DdtlTw.1nY39DPGiWO24BGN"
+    }
+  ],
+  "formula": "1d12",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8iXTxWS7BmWPt7Io",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.5",
+    "createdTime": 1767193811331,
+    "modifiedTime": 1767193811331,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "sobXLDFiK1DdtlTw",
+  "sort": 0,
+  "_key": "!tables!sobXLDFiK1DdtlTw"
+}

@@ -5,7 +5,7 @@
     {
       "name": "Folding Chair",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.MOaDyT6ReINbbpZI",
+      "documentUuid": "Compendium.sdm.gadgets.Item.MOaDyT6ReINbbpZI",
       "img": "icons/commodities/wood/furniture-stool-brown.webp",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "Musical Instrument",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.Cgd7EP023IsnbTQE",
+      "documentUuid": "Compendium.sdm.gadgets.Item.Cgd7EP023IsnbTQE",
       "img": "icons/tools/instruments/lute-gold-brown.webp",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Campaign Bed",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.3ZxNyrt6HKpSjUDp",
+      "documentUuid": "Compendium.sdm.gadgets.Item.3ZxNyrt6HKpSjUDp",
       "img": "icons/sundries/survival/bedroll-grey.webp",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Enviro Tent",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.JKlkDJCI0Os1yQid",
+      "documentUuid": "Compendium.sdm.gadgets.Item.JKlkDJCI0Os1yQid",
       "img": "icons/environment/settlement/tent.webp",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Portable Illusion",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.yhirx7u1p6Zral0U",
+      "documentUuid": "Compendium.sdm.gadgets.Item.yhirx7u1p6Zral0U",
       "img": "icons/tools/laboratory/alembic-glass-ball-blue.webp",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Radiothermal Stove",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.vlNhe5YNi739oAMJ",
+      "documentUuid": "Compendium.sdm.gadgets.Item.vlNhe5YNi739oAMJ",
       "img": "icons/tools/smithing/furnace-fire-metal-orange.webp",
       "weight": 1,
       "range": [

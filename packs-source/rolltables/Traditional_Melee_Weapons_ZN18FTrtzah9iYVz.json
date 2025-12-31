@@ -5,7 +5,7 @@
     {
       "name": "Stun Baton Wand",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.5CV0LEfvJl3WrT9M",
+      "documentUuid": "Compendium.sdm.weapons.Item.5CV0LEfvJl3WrT9M",
       "img": "icons/weapons/staves/staff-orb-red.webp",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "Machete",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.72hJKgB42MvVuFgz",
+      "documentUuid": "Compendium.sdm.weapons.Item.72hJKgB42MvVuFgz",
       "img": "icons/weapons/swords/sword-machete-white.webp",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Wrench Hammer",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.9JXku0CpoFjICjl7",
+      "documentUuid": "Compendium.sdm.weapons.Item.9JXku0CpoFjICjl7",
       "img": "icons/weapons/hammers/hammer-double-engraved.webp",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Gentleman’s Cane",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.EA5uv6xvuX1318tD",
+      "documentUuid": "Compendium.sdm.weapons.Item.EA5uv6xvuX1318tD",
       "img": "icons/weapons/staves/staff-ornate.webp",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Shiv",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.EWDh7VPfiwyCdcLC",
+      "documentUuid": "Compendium.sdm.weapons.Item.EWDh7VPfiwyCdcLC",
       "img": "icons/weapons/daggers/dagger-simple-green.webp",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Burdenbeast Whip",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.kCKLugHtUzZOyDVq",
+      "documentUuid": "Compendium.sdm.weapons.Item.kCKLugHtUzZOyDVq",
       "img": "icons/weapons/misc/whip-red-yellow.webp",
       "weight": 1,
       "range": [
@@ -155,7 +155,7 @@
     {
       "name": "Spear",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.usP7z6fJMW7bbC7p",
+      "documentUuid": "Compendium.sdm.weapons.Item.usP7z6fJMW7bbC7p",
       "img": "icons/weapons/polearms/glaive-simple.webp",
       "weight": 1,
       "range": [
@@ -180,7 +180,7 @@
     {
       "name": "Battle Stick",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.ym0vgYdyeE35FOsi",
+      "documentUuid": "Compendium.sdm.weapons.Item.ym0vgYdyeE35FOsi",
       "img": "icons/weapons/staves/staff-simple-brown.webp",
       "weight": 1,
       "range": [

@@ -5,7 +5,7 @@
     {
       "name": "Builderbang",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.7ofZpaQ038s7eb9D",
+      "documentUuid": "Compendium.sdm.weapons.Item.7ofZpaQ038s7eb9D",
       "img": "icons/weapons/thrown/bomb-fuse-brown.webp",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "Bola",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.CAPGWVzHieYFtgyf",
+      "documentUuid": "Compendium.sdm.weapons.Item.CAPGWVzHieYFtgyf",
       "img": "icons/weapons/thrown/bolas-stone.webp",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Slowtime",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.EEFuZ5mEIYdFHCZu",
+      "documentUuid": "Compendium.sdm.weapons.Item.EEFuZ5mEIYdFHCZu",
       "img": "icons/weapons/thrown/bomb-purple.webp",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Concussive",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.IC164NsVZ3jrm47a",
+      "documentUuid": "Compendium.sdm.weapons.Item.IC164NsVZ3jrm47a",
       "img": "icons/weapons/thrown/grenade-round.webp",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Flarestick",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.Jv86TRZM5r1eOBmY",
+      "documentUuid": "Compendium.sdm.weapons.Item.Jv86TRZM5r1eOBmY",
       "img": "icons/consumables/fruit/dragonfruit-red-green.webp",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Flasher",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.MG62AoeMXN6IrLxD",
+      "documentUuid": "Compendium.sdm.weapons.Item.MG62AoeMXN6IrLxD",
       "img": "icons/creatures/eyes/slime-single-red.webp",
       "weight": 1,
       "range": [
@@ -155,7 +155,7 @@
     {
       "name": "Stone",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.i2LDGCUEeKEjJ2yl",
+      "documentUuid": "Compendium.sdm.weapons.Item.i2LDGCUEeKEjJ2yl",
       "img": "icons/commodities/stone/boulder-grey.webp",
       "weight": 1,
       "range": [
@@ -180,7 +180,7 @@
     {
       "name": "Throwing Knife",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.x0LdHXFJBBCef3jn",
+      "documentUuid": "Compendium.sdm.weapons.Item.x0LdHXFJBBCef3jn",
       "img": "icons/weapons/thrown/daggers-guard-gold.webp",
       "weight": 1,
       "range": [

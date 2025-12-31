@@ -1,0 +1,330 @@
+{
+  "name": "Scion",
+  "description": "A random table created from the contents of the Scion Folder.",
+  "results": [
+    {
+      "name": "Personal Daemon",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.HF1nCTy7IyuoFmha",
+      "img": "icons/commodities/treasure/figurine-idol.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "4KM5afFEFye2uEma",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HXLLLNGDVSQ48CkS.4KM5afFEFye2uEma"
+    },
+    {
+      "name": "Black Mandible",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.KRDBGWSft1eoTZCH",
+      "img": "icons/commodities/bones/bone-jaw-teeth-brown.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "HdHOqthWTnCegLCr",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HXLLLNGDVSQ48CkS.HdHOqthWTnCegLCr"
+    },
+    {
+      "name": "Spirit Hand",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.Ns0TkPCkd8ENzoHh",
+      "img": "icons/equipment/hand/glove-simple-leather-blue.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "9xghGoC7MYplegcW",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HXLLLNGDVSQ48CkS.9xghGoC7MYplegcW"
+    },
+    {
+      "name": "Builder Blade",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.OllPutCrksiEf3nU",
+      "img": "icons/weapons/daggers/dagger-crooked-ice-blue.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "ZQrgaLnHiBpYXPgz",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HXLLLNGDVSQ48CkS.ZQrgaLnHiBpYXPgz"
+    },
+    {
+      "name": "Second Skin",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.SZb7sQI0ibIgium0",
+      "img": "icons/equipment/chest/vest-cloth-tattered-tan.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "ExNe2iebes8ezBM9",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HXLLLNGDVSQ48CkS.ExNe2iebes8ezBM9"
+    },
+    {
+      "name": "Pet Bird",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.UxXvrC2cYouFiLlu",
+      "img": "icons/creatures/birds/corvid-call-sound-blue.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "GdkOkCKhYzObhfHZ",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HXLLLNGDVSQ48CkS.GdkOkCKhYzObhfHZ"
+    },
+    {
+      "name": "Builderhorse",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.WQWzkwxBMxFOFHO7",
+      "img": "icons/environment/creatures/horse-white.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "0lC0xPoyk7w0LmOr",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HXLLLNGDVSQ48CkS.0lC0xPoyk7w0LmOr"
+    },
+    {
+      "name": "Force Harness",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.XNJ9WxEAYul0SLi3",
+      "img": "icons/equipment/shoulder/pauldron-steel-worn.webp",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "fANi7NBydGYqXnTL",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HXLLLNGDVSQ48CkS.fANi7NBydGYqXnTL"
+    },
+    {
+      "name": "Living Shoes",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.qPkY9AO1LqlYZhs4",
+      "img": "icons/commodities/leather/boot-torn-tan.webp",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "RFRZmIIqaDhvPkjk",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HXLLLNGDVSQ48CkS.RFRZmIIqaDhvPkjk"
+    },
+    {
+      "name": "Godbone Exoskeleton",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.rIOxCkzTzyxiPTO3",
+      "img": "icons/commodities/bones/bones-broken-rib-tan.webp",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "usv7dT3tcTHN3bta",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HXLLLNGDVSQ48CkS.usv7dT3tcTHN3bta"
+    },
+    {
+      "name": "Power Broker Amulet",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.rSpHY4R7Wqhgve1X",
+      "img": "icons/equipment/neck/amulet-round-silver-teal.webp",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_id": "g3U2fN2UOJSEBWVv",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HXLLLNGDVSQ48CkS.g3U2fN2UOJSEBWVv"
+    },
+    {
+      "name": "Illusion Gun",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.xinVuYh4jNwShKBU",
+      "img": "icons/skills/ranged/wand-attack-beam-blue.webp",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_id": "xOCROikMSyeGlXv8",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HXLLLNGDVSQ48CkS.xOCROikMSyeGlXv8"
+    }
+  ],
+  "formula": "1d12",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8iXTxWS7BmWPt7Io",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.5",
+    "createdTime": 1767193814998,
+    "modifiedTime": 1767193814998,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "HXLLLNGDVSQ48CkS",
+  "sort": 0,
+  "_key": "!tables!HXLLLNGDVSQ48CkS"
+}

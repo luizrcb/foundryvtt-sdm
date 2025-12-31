@@ -5,7 +5,7 @@
     {
       "name": "Invisibilly Bomb",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.opEhvwBcykmbqnBS",
+      "documentUuid": "Compendium.sdm.gadgets.Item.opEhvwBcykmbqnBS",
       "img": "icons/weapons/thrown/bomb-gas-grey-purple.webp",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "Signal Jammer",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.jTSLt4GBUFM0ZYrt",
+      "documentUuid": "Compendium.sdm.gadgets.Item.jTSLt4GBUFM0ZYrt",
       "img": "icons/commodities/tech/detonator-radio.webp",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Portable EM Pulser",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.JbY07RzWndNS4ypk",
+      "documentUuid": "Compendium.sdm.gadgets.Item.JbY07RzWndNS4ypk",
       "img": "icons/commodities/treasure/puzzle-box-glowing-blue.webp",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Nanopear Spray",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.ax99AqSz5PhwITuS",
+      "documentUuid": "Compendium.sdm.gadgets.Item.ax99AqSz5PhwITuS",
       "img": "icons/commodities/treasure/brooch-pink-orbs.webp",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Aug-Harness",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.SdLD04WviKRZnm1p",
+      "documentUuid": "Compendium.sdm.gadgets.Item.SdLD04WviKRZnm1p",
       "img": "icons/equipment/waist/belt-armored-steel-purple.webp",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Nulla Charger",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.LGfoJTddbH8ZZIBa",
+      "documentUuid": "Compendium.sdm.gadgets.Item.LGfoJTddbH8ZZIBa",
       "img": "icons/magic/lightning/bolt-cloud-sky-green.webp",
       "weight": 1,
       "range": [

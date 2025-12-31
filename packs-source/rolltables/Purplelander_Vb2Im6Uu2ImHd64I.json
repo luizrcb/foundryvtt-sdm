@@ -1,0 +1,330 @@
+{
+  "name": "Purplelander",
+  "description": "A random table created from the contents of the Purplelander Folder.",
+  "results": [
+    {
+      "name": "Cat Collar",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.1RRUrkjQYY3IT1yP",
+      "img": "icons/sundries/misc/pet-collar-red.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "3C9bcy4UBRQcu7s5",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Vb2Im6Uu2ImHd64I.3C9bcy4UBRQcu7s5"
+    },
+    {
+      "name": "Null Thermos",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.4APGBgcMN5MZKdNJ",
+      "img": "icons/containers/kitchenware/vase-clay-painted-brown-white.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "guTTnkAIao4OqFgz",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Vb2Im6Uu2ImHd64I.guTTnkAIao4OqFgz"
+    },
+    {
+      "name": "Dumb Veil",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.58Mi68hbvQvnbCCJ",
+      "img": "icons/equipment/head/hood-simple-leather-purple.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "RGUhN3RD3Ot4zsFJ",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Vb2Im6Uu2ImHd64I.RGUhN3RD3Ot4zsFJ"
+    },
+    {
+      "name": "Fairy Key",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.6rvBm9wfgmi09dYa",
+      "img": "icons/sundries/misc/key-steel-purple.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "ZvHPk6yJWf4zjNwy",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Vb2Im6Uu2ImHd64I.ZvHPk6yJWf4zjNwy"
+    },
+    {
+      "name": "Plantation Pick",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.BH6SYdJuy13fCUhv",
+      "img": "icons/tools/hand/pickaxe-worn-steel-grey.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "bY0tKsKyaI7kWkm4",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Vb2Im6Uu2ImHd64I.bY0tKsKyaI7kWkm4"
+    },
+    {
+      "name": "Rational Helm",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.J2rXdWQ85z7yYVOW",
+      "img": "icons/equipment/head/helm-barbute-rounded-steel.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "ti3W5Koz2vcDjbUf",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Vb2Im6Uu2ImHd64I.ti3W5Koz2vcDjbUf"
+    },
+    {
+      "name": "Folk Hero Source Code",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.KUoiT6nJzbWv0W6p",
+      "img": "icons/sundries/gaming/playing-cards-brown.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "1OwgVib1yeUMkkT0",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Vb2Im6Uu2ImHd64I.1OwgVib1yeUMkkT0"
+    },
+    {
+      "name": "Tinkling Shoes",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.RHSzH8h079PYoaCu",
+      "img": "icons/equipment/feet/boots-layered-blue.webp",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "XvEW1Jo6vWN934AG",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Vb2Im6Uu2ImHd64I.XvEW1Jo6vWN934AG"
+    },
+    {
+      "name": "Nip Lotion",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.ZTb13BW9GEjH2Uz6",
+      "img": "icons/magic/nature/leaf-glow-triple-teal.webp",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "wtcygaWDnV8gxfP6",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Vb2Im6Uu2ImHd64I.wtcygaWDnV8gxfP6"
+    },
+    {
+      "name": "War Furs",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.o5jLtYv0qF3ndUW5",
+      "img": "icons/commodities/leather/fur-white.webp",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "YjnL4AT7ApuXEzpH",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Vb2Im6Uu2ImHd64I.YjnL4AT7ApuXEzpH"
+    },
+    {
+      "name": "Scave Bolter",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.vug5CDURX3ttt3Tf",
+      "img": "icons/weapons/crossbows/crossbow-simple-black.webp",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_id": "ybCArXUYk6tKkDKw",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Vb2Im6Uu2ImHd64I.ybCArXUYk6tKkDKw"
+    },
+    {
+      "name": "Coffee Bonbons",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.xZk6BELSTkHUB9o4",
+      "img": "icons/consumables/food/candy-pattie-pink-white.webp",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_id": "bGIwXbtb2IaxNV8H",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Vb2Im6Uu2ImHd64I.bGIwXbtb2IaxNV8H"
+    }
+  ],
+  "formula": "1d12",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8iXTxWS7BmWPt7Io",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.5",
+    "createdTime": 1767193812378,
+    "modifiedTime": 1767193812378,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "Vb2Im6Uu2ImHd64I",
+  "sort": 0,
+  "_key": "!tables!Vb2Im6Uu2ImHd64I"
+}

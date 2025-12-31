@@ -5,7 +5,7 @@
     {
       "name": "Cat Coffee",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.bTeAm4kjMzQajcm8",
+      "documentUuid": "Compendium.sdm.consumables.Item.bTeAm4kjMzQajcm8",
       "img": "icons/consumables/drinks/alcohol-spirits-bottle-green.webp",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "You Go",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.glOXlansoqW6pz6t",
+      "documentUuid": "Compendium.sdm.consumables.Item.glOXlansoqW6pz6t",
       "img": "icons/consumables/drinks/clay-jar-glowing-orange-blue.webp",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Keep It Up Cha",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.FczoKZhuNUMWuaZB",
+      "documentUuid": "Compendium.sdm.consumables.Item.FczoKZhuNUMWuaZB",
       "img": "icons/consumables/drinks/wine-amphora-clay-blue.webp",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Synthetic Blood",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.POb7QXkGcVpGv6YU",
+      "documentUuid": "Compendium.sdm.consumables.Item.POb7QXkGcVpGv6YU",
       "img": "icons/consumables/drinks/wine-bottle-glass-white.webp",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Photosynth Sap",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.REGVf6sbyW0dGQVB",
+      "documentUuid": "Compendium.sdm.consumables.Item.REGVf6sbyW0dGQVB",
       "img": "icons/consumables/drinks/tea-jug-glowing-brown-pink.webp",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Soul Juice",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.A4fWtchnj2VhTPHd",
+      "documentUuid": "Compendium.sdm.consumables.Item.A4fWtchnj2VhTPHd",
       "img": "icons/consumables/potions/vial-ornet-silver-black.webp",
       "weight": 1,
       "range": [

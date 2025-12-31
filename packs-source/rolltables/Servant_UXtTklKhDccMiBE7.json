@@ -1,0 +1,330 @@
+{
+  "name": "Servant",
+  "description": "A random table created from the contents of the Servant Folder.",
+  "results": [
+    {
+      "name": "Master Eyeball",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.3A1R3NRpLBaXY3Hg",
+      "img": "icons/commodities/biological/eye-red-pink.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "Q1tsVw0lWGEzVEyH",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!UXtTklKhDccMiBE7.Q1tsVw0lWGEzVEyH"
+    },
+    {
+      "name": "Motogolem",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.4WzAhL5nz3VWNxHB",
+      "img": "icons/commodities/tech/pipe-metal.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "GNEzCkWjo4h1d28W",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!UXtTklKhDccMiBE7.GNEzCkWjo4h1d28W"
+    },
+    {
+      "name": "Noble Riding Gear",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.6FiGhzqbehryJtCD",
+      "img": "icons/equipment/shoulder/shoulderguard-segmented-studded-leather-brass.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "D4HRrGdbGYWalmi6",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!UXtTklKhDccMiBE7.D4HRrGdbGYWalmi6"
+    },
+    {
+      "name": "Harshfield Uniform",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.6cG7Erfzj2MXcWOQ",
+      "img": "icons/equipment/chest/breastplate-layered-leather-stitched.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "k0oiphey9gKDp9tL",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!UXtTklKhDccMiBE7.k0oiphey9gKDp9tL"
+    },
+    {
+      "name": "Builder Blaster",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.7DYd9qb4SX8PqIJ9",
+      "img": "icons/magic/lightning/bolt-beam-strike-blue.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "jYJrtLr43vTkgrt2",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!UXtTklKhDccMiBE7.jYJrtLr43vTkgrt2"
+    },
+    {
+      "name": "Jousting Staff",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.AuDnmGoJ23JFofag",
+      "img": "icons/weapons/staves/staff-simple-gold.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "V42icWFJdzLrJ7TD",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!UXtTklKhDccMiBE7.V42icWFJdzLrJ7TD"
+    },
+    {
+      "name": "Collar of Happiness",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.TLeh2JCosnNKExJs",
+      "img": "icons/sundries/misc/pet-collar-spiked-yellow.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "988Fz0YQt24ppYQa",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!UXtTklKhDccMiBE7.988Fz0YQt24ppYQa"
+    },
+    {
+      "name": "Pouch of Rubies",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.VxF5P5FYekNTWfxd",
+      "img": "icons/commodities/gems/gem-faceted-radiant-red.webp",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "UZWKLxxJ1WhhFhky",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!UXtTklKhDccMiBE7.UZWKLxxJ1WhhFhky"
+    },
+    {
+      "name": "Odd Lock Picks",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.WygUy56WACjY1dZX",
+      "img": "icons/tools/hand/lockpicks-steel-grey.webp",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "SyMSEAe3HgPGv0NV",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!UXtTklKhDccMiBE7.SyMSEAe3HgPGv0NV"
+    },
+    {
+      "name": "Mental Shackles",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.bJVayRyEgUbthBrh",
+      "img": "icons/magic/symbols/runes-triangle-blue.webp",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "hIeQcDL4xnfXyb1p",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!UXtTklKhDccMiBE7.hIeQcDL4xnfXyb1p"
+    },
+    {
+      "name": "Social Credit Tattoo",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.fFgOZ9wQSxGGqRZb",
+      "img": "icons/magic/symbols/circled-gem-pink.webp",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_id": "1zsH2qvmwsdhgmVo",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!UXtTklKhDccMiBE7.1zsH2qvmwsdhgmVo"
+    },
+    {
+      "name": "Face Crab",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.ypbz8GRqKz1p0Ikx",
+      "img": "icons/creatures/fish/crab-blue-purple.webp",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_id": "QiB2aqOhi1Yncwzg",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!UXtTklKhDccMiBE7.QiB2aqOhi1Yncwzg"
+    }
+  ],
+  "formula": "1d12",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8iXTxWS7BmWPt7Io",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.5",
+    "createdTime": 1767193816188,
+    "modifiedTime": 1767193816188,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "UXtTklKhDccMiBE7",
+  "sort": 0,
+  "_key": "!tables!UXtTklKhDccMiBE7"
+}

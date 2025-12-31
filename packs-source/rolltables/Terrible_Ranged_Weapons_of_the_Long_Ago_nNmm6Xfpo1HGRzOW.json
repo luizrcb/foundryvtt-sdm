@@ -5,7 +5,7 @@
     {
       "name": "Replacer Rod",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.1Y5F0wj4SM6aMbHB",
+      "documentUuid": "Compendium.sdm.weapons.Item.1Y5F0wj4SM6aMbHB",
       "img": "icons/commodities/tech/coil-tesla-large.webp",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "White City Matter Creator",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.2ovbTfig8Z3aBEvb",
+      "documentUuid": "Compendium.sdm.weapons.Item.2ovbTfig8Z3aBEvb",
       "img": "icons/commodities/tech/coil-steel-grey.webp",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Porcelain Death Mask",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.ACeAU1cGsI9FFzeV",
+      "documentUuid": "Compendium.sdm.weapons.Item.ACeAU1cGsI9FFzeV",
       "img": "icons/equipment/head/mask-carved-bird-grey-pink.webp",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Ego Echo Wandpistol",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.ASIFYD6udTR3mHQx",
+      "documentUuid": "Compendium.sdm.weapons.Item.ASIFYD6udTR3mHQx",
       "img": "icons/weapons/wands/wand-gem-red.webp",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Aerolith Impactor",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.GE51UUuq0RPkUGVv",
+      "documentUuid": "Compendium.sdm.weapons.Item.GE51UUuq0RPkUGVv",
       "img": "icons/weapons/wands/wand-carved-fire.webp",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Magnificent Fireball Wandpistol",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.H9nuHDKYI2ztxxEW",
+      "documentUuid": "Compendium.sdm.weapons.Item.H9nuHDKYI2ztxxEW",
       "img": "icons/magic/fire/projectiles-salvo-trio-orange.webp",
       "weight": 1,
       "range": [
@@ -155,7 +155,7 @@
     {
       "name": "Autoportal Conflux",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.Hi0NPKcRnhslzRlZ",
+      "documentUuid": "Compendium.sdm.weapons.Item.Hi0NPKcRnhslzRlZ",
       "img": "icons/commodities/tech/bulb-vacuum.webp",
       "weight": 1,
       "range": [
@@ -180,7 +180,7 @@
     {
       "name": "Telempathy Blaster",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.It0Sugv5CBbFk7sm",
+      "documentUuid": "Compendium.sdm.weapons.Item.It0Sugv5CBbFk7sm",
       "img": "icons/weapons/wands/wand-totem.webp",
       "weight": 1,
       "range": [
@@ -205,7 +205,7 @@
     {
       "name": "Blue God Blaster",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.LTMIvUkwZOAJSKOE",
+      "documentUuid": "Compendium.sdm.weapons.Item.LTMIvUkwZOAJSKOE",
       "img": "icons/commodities/tech/tube-chamber-lightning.webp",
       "weight": 1,
       "range": [
@@ -230,7 +230,7 @@
     {
       "name": "Angelroarer",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.Ljpx9q1nSFCXiEo4",
+      "documentUuid": "Compendium.sdm.weapons.Item.Ljpx9q1nSFCXiEo4",
       "img": "icons/tools/scribal/lens-blue.webp",
       "weight": 1,
       "range": [
@@ -255,7 +255,7 @@
     {
       "name": "Satrap  Radiant Gun",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.NSwwFk4kLam16ioG",
+      "documentUuid": "Compendium.sdm.weapons.Item.NSwwFk4kLam16ioG",
       "img": "icons/weapons/wands/wand-carved-pink.webp",
       "weight": 1,
       "range": [
@@ -280,7 +280,7 @@
     {
       "name": "Jetolene Igniter",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.OGlMt8XXVID1OuKP",
+      "documentUuid": "Compendium.sdm.weapons.Item.OGlMt8XXVID1OuKP",
       "img": "icons/commodities/tech/smoke-spout-blue.webp",
       "weight": 1,
       "range": [
@@ -305,7 +305,7 @@
     {
       "name": "Lamarckian Needler",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.PTTwxaqTDagRnVfV",
+      "documentUuid": "Compendium.sdm.weapons.Item.PTTwxaqTDagRnVfV",
       "img": "icons/weapons/wands/wand-gem-green.webp",
       "weight": 1,
       "range": [
@@ -330,7 +330,7 @@
     {
       "name": "Ultra Blaster",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.RhaYonS3y4c1Ydpb",
+      "documentUuid": "Compendium.sdm.weapons.Item.RhaYonS3y4c1Ydpb",
       "img": "icons/commodities/tech/smoke-bomb-yellow.webp",
       "weight": 1,
       "range": [
@@ -355,7 +355,7 @@
     {
       "name": "Fold-Field Array",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.WjU6ISgcE9WBPpaf",
+      "documentUuid": "Compendium.sdm.weapons.Item.WjU6ISgcE9WBPpaf",
       "img": "icons/commodities/tech/antenna-powered-purple.webp",
       "weight": 1,
       "range": [
@@ -380,7 +380,7 @@
     {
       "name": "Solipsism Shotgun",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.XRZT2baDTfmeZekc",
+      "documentUuid": "Compendium.sdm.weapons.Item.XRZT2baDTfmeZekc",
       "img": "icons/weapons/guns/gun-double-barrel.webp",
       "weight": 1,
       "range": [
@@ -405,7 +405,7 @@
     {
       "name": "Eye Solar",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.Yw5380CPB0dgMcoo",
+      "documentUuid": "Compendium.sdm.weapons.Item.Yw5380CPB0dgMcoo",
       "img": "icons/magic/light/explosion-star-large-orange.webp",
       "weight": 1,
       "range": [
@@ -430,7 +430,7 @@
     {
       "name": "Phase Handgun",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.bJ7RfNbDMZl8wcov",
+      "documentUuid": "Compendium.sdm.weapons.Item.bJ7RfNbDMZl8wcov",
       "img": "icons/commodities/tech/diode-copper.webp",
       "weight": 1,
       "range": [
@@ -455,7 +455,7 @@
     {
       "name": "Golem Killer",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.cWchSW05vtyIVJuD",
+      "documentUuid": "Compendium.sdm.weapons.Item.cWchSW05vtyIVJuD",
       "img": "icons/skills/ranged/cannon-barrel-firing-orange.webp",
       "weight": 1,
       "range": [
@@ -480,7 +480,7 @@
     {
       "name": "Transfer Gun",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.eXPPiplEN17nnx5N",
+      "documentUuid": "Compendium.sdm.weapons.Item.eXPPiplEN17nnx5N",
       "img": "icons/tools/instruments/horn-red-brown.webp",
       "weight": 1,
       "range": [
@@ -505,7 +505,7 @@
     {
       "name": "Mouth of the Void",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.fxILIoyiCAFuKSHu",
+      "documentUuid": "Compendium.sdm.weapons.Item.fxILIoyiCAFuKSHu",
       "img": "icons/creatures/abilities/mouth-teeth-rows-needles-purple.webp",
       "weight": 1,
       "range": [
@@ -530,7 +530,7 @@
     {
       "name": "Hellfire Hand Cannon",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.pUvAIKBkSRzrLGhB",
+      "documentUuid": "Compendium.sdm.weapons.Item.pUvAIKBkSRzrLGhB",
       "img": "icons/commodities/tech/metal-insert.webp",
       "weight": 1,
       "range": [
@@ -555,7 +555,7 @@
     {
       "name": "Dusk Emitter",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.q7a8DmUlCiPdbQme",
+      "documentUuid": "Compendium.sdm.weapons.Item.q7a8DmUlCiPdbQme",
       "img": "icons/weapons/wands/wand-gem-purple.webp",
       "weight": 1,
       "range": [
@@ -580,7 +580,7 @@
     {
       "name": "Gate Daemon Actuator",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.qwbsP4FJYM6TCLm3",
+      "documentUuid": "Compendium.sdm.weapons.Item.qwbsP4FJYM6TCLm3",
       "img": "icons/commodities/tech/fan-ventilator-copper.webp",
       "weight": 1,
       "range": [
@@ -605,7 +605,7 @@
     {
       "name": "Diagnostic Wand",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.tQNowywlTmLxavAB",
+      "documentUuid": "Compendium.sdm.weapons.Item.tQNowywlTmLxavAB",
       "img": "icons/weapons/wands/wand-simple-eye.webp",
       "weight": 1,
       "range": [
@@ -630,7 +630,7 @@
     {
       "name": "Crystal Siege Rod",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.wtf9zvdsjznSuejK",
+      "documentUuid": "Compendium.sdm.weapons.Item.wtf9zvdsjznSuejK",
       "img": "icons/weapons/staves/staff-ornate-banded-purple.webp",
       "weight": 1,
       "range": [
@@ -655,7 +655,7 @@
     {
       "name": "Reality Flense",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.xKrfbwAvjq3oQGeJ",
+      "documentUuid": "Compendium.sdm.weapons.Item.xKrfbwAvjq3oQGeJ",
       "img": "icons/skills/toxins/bottle-open-vapors-pink.webp",
       "weight": 1,
       "range": [
@@ -680,7 +680,7 @@
     {
       "name": "Radiothermal Horn",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.y4N1XoaqhULuaT4h",
+      "documentUuid": "Compendium.sdm.weapons.Item.y4N1XoaqhULuaT4h",
       "img": "icons/tools/instruments/horn-red-grey.webp",
       "weight": 1,
       "range": [
@@ -705,7 +705,7 @@
     {
       "name": "Ultra Ba \"Leapfrog\"",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.f9MWWXjmIVcauiPJ",
+      "documentUuid": "Compendium.sdm.weapons.Item.f9MWWXjmIVcauiPJ",
       "img": "icons/magic/death/skull-weapon-staff-glow-pink.webp",
       "weight": 1,
       "range": [
@@ -730,7 +730,7 @@
     {
       "name": "Mazing Crown",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.64nsgbJFK7ZdUbz1",
+      "documentUuid": "Compendium.sdm.weapons.Item.64nsgbJFK7ZdUbz1",
       "img": "icons/equipment/head/crown-gold-blue.webp",
       "weight": 1,
       "range": [

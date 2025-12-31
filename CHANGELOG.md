@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.5.6
+
+- Fix broken rollable table references to compendium items
+- Add configuration to enable Lucky Seven rule
+
 ## v0.5.5
 
 - Break down the Equipment compendium into multiple compendiums

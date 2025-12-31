@@ -5,7 +5,7 @@
     {
       "name": "Alarwurm Box",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.C1f3XpKxZQ9miKDA",
+      "documentUuid": "Compendium.sdm.gadgets.Item.C1f3XpKxZQ9miKDA",
       "img": "icons/containers/boxes/crate-reinforced-green.webp",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "Distraction Projector",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.6HjpFxDWSfTnd3pq",
+      "documentUuid": "Compendium.sdm.gadgets.Item.6HjpFxDWSfTnd3pq",
       "img": "icons/commodities/treasure/glass-cube-teal.webp",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Ear Jewels",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.ksGMLhtu4sa8MZrM",
+      "documentUuid": "Compendium.sdm.gadgets.Item.ksGMLhtu4sa8MZrM",
       "img": "icons/commodities/treasure/pearl-shell.webp",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Ear Slug",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.OVnNwxnFrhjIZplp",
+      "documentUuid": "Compendium.sdm.gadgets.Item.OVnNwxnFrhjIZplp",
       "img": "icons/creatures/invertebrates/snail-movement-tan.webp",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Control Choke",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.KRLx08EMp6YP9ScC",
+      "documentUuid": "Compendium.sdm.gadgets.Item.KRLx08EMp6YP9ScC",
       "img": "icons/commodities/tech/metal-panel.webp",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Credenticard",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.iKGaFrQreLHkYXix",
+      "documentUuid": "Compendium.sdm.gadgets.Item.iKGaFrQreLHkYXix",
       "img": "icons/sundries/documents/document-symbol-triangle-pink.webp",
       "weight": 1,
       "range": [

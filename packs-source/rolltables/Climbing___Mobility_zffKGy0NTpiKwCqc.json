@@ -5,7 +5,7 @@
     {
       "name": "Grappling Hook",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.iBLk17M6sN0LwuoO",
+      "documentUuid": "Compendium.sdm.gadgets.Item.iBLk17M6sN0LwuoO",
       "img": "icons/tools/fasteners/chain-hook-grey.webp",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "Smart Rope",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.IlzXc8yjw6NbeJlD",
+      "documentUuid": "Compendium.sdm.gadgets.Item.IlzXc8yjw6NbeJlD",
       "img": "icons/sundries/survival/rope-wrapped-purple.webp",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Climbing Gear",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.q881ByRLSbQTkvmz",
+      "documentUuid": "Compendium.sdm.gadgets.Item.q881ByRLSbQTkvmz",
       "img": "icons/sundries/survival/climbing-anchor-steel-grey.webp",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Inflatable Raft",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.YS5komrhVuzBsZIj",
+      "documentUuid": "Compendium.sdm.gadgets.Item.YS5komrhVuzBsZIj",
       "img": "icons/magic/air/wind-weather-sailing-ship.webp",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Aerolith Anchor",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.3RI1DQkrfoPdam4T",
+      "documentUuid": "Compendium.sdm.gadgets.Item.3RI1DQkrfoPdam4T",
       "img": "icons/tools/nautical/anchor-blue-orange.webp",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Exoskelegolem",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.bsuYRl8nErObUQQ7",
+      "documentUuid": "Compendium.sdm.gadgets.Item.bsuYRl8nErObUQQ7",
       "img": "icons/magic/control/silhouette-hold-beam-blue.webp",
       "weight": 1,
       "range": [

@@ -146,6 +146,16 @@ export function registerSystemSettings() {
     requiresReload: true
   });
 
+  game.settings.register('sdm', 'luckySevenRule', {
+    name: 'SDM.SettingsLuckySevenRule',
+    hint: 'SDM.SettingsLuckySevenRuleHint',
+    scope: 'world',
+    restricted: true,
+    type: Boolean,
+    default: false,
+    requiresReload: false
+  });
+
   game.settings.register('sdm', 'defaultMaxPowers', {
     name: 'SDM.SettingsDefaultMaxPowers',
     hint: 'SDM.SettingsDefaultMaxPowersHint',

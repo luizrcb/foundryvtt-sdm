@@ -1,0 +1,330 @@
+{
+  "name": "Greenlander",
+  "description": "A random table created from the contents of the Greenlander Folder.",
+  "results": [
+    {
+      "name": "Mosswear",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.0bWRn1J8ZoFZGZJ5",
+      "img": "icons/magic/nature/root-vine-barrier-wall-brown.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "YHY5J5WJqdtXKw5C",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Bxvlx7ofggjEkR88.YHY5J5WJqdtXKw5C"
+    },
+    {
+      "name": "Green Figurine",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.4TIypia81EDyZMn8",
+      "img": "icons/commodities/treasure/statuette-gargoyle-green-gold.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "2zDqnPOMQFuX0WgK",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Bxvlx7ofggjEkR88.2zDqnPOMQFuX0WgK"
+    },
+    {
+      "name": "Shipgun",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.AbKaawsLMpNUSWAt",
+      "img": "icons/weapons/guns/gun-worn-steel.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "Cv7j5igrryM99gCP",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Bxvlx7ofggjEkR88.Cv7j5igrryM99gCP"
+    },
+    {
+      "name": "Sungwood Shield",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.GvktWj5QEvCMBUqE",
+      "img": "icons/equipment/shield/targe-copper-eye.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "eJN9uEDv5iy6MHr7",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Bxvlx7ofggjEkR88.eJN9uEDv5iy6MHr7"
+    },
+    {
+      "name": "Blood Deed",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.JDervYaEJYZgEYFq",
+      "img": "icons/sundries/documents/document-symbol-skull-tan.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "JcXciYUUyr6mK3Ye",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Bxvlx7ofggjEkR88.JcXciYUUyr6mK3Ye"
+    },
+    {
+      "name": "Simmersuit",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.JirwqkuD2mAzXkx6",
+      "img": "icons/equipment/leg/cuisses-plate-reticulated-steel-blue.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "hq2UxvGUmWmre463",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Bxvlx7ofggjEkR88.hq2UxvGUmWmre463"
+    },
+    {
+      "name": "Driver License",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.OoB0vCk7yGec9T4S",
+      "img": "icons/sundries/documents/document-symbol-lightning-brown.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "rxHyxWJqTH9uftUj",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Bxvlx7ofggjEkR88.rxHyxWJqTH9uftUj"
+    },
+    {
+      "name": "Twilight Shades",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.T32R6jXm9aSWvgxS",
+      "img": "icons/equipment/back/cloak-layered-tattered-purple.webp",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "1a6MNYKRKK2pcVtB",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Bxvlx7ofggjEkR88.1a6MNYKRKK2pcVtB"
+    },
+    {
+      "name": "Doormaker",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.TsXzzTvTDdRPxpcP",
+      "img": "icons/tools/hand/brush-paint-brown-tan.webp",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "YmfRdgpn4iVde4ou",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Bxvlx7ofggjEkR88.YmfRdgpn4iVde4ou"
+    },
+    {
+      "name": "Astral Pin",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.fCeguiZvOMO3DKAR",
+      "img": "icons/tools/fasteners/pin-spiked.webp",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "iGO10X1q5xME4JMW",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Bxvlx7ofggjEkR88.iGO10X1q5xME4JMW"
+    },
+    {
+      "name": "Estate Key",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.ix5aa4muWFOC2m0d",
+      "img": "icons/sundries/misc/key-ring-long-gold.webp",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_id": "RgYv6pASOZ8VQtT3",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Bxvlx7ofggjEkR88.RgYv6pASOZ8VQtT3"
+    },
+    {
+      "name": "Mindwipers",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.rwYYie1i76drfT7H",
+      "img": "icons/commodities/materials/glass-orb-green.webp",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_id": "aJLOP0WqRsfFd8Bn",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Bxvlx7ofggjEkR88.aJLOP0WqRsfFd8Bn"
+    }
+  ],
+  "formula": "1d12",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8iXTxWS7BmWPt7Io",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.5",
+    "createdTime": 1767193802245,
+    "modifiedTime": 1767193807175,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "Bxvlx7ofggjEkR88",
+  "sort": 100000,
+  "_key": "!tables!Bxvlx7ofggjEkR88"
+}

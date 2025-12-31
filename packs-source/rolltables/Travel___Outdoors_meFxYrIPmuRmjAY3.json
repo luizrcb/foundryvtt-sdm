@@ -5,7 +5,7 @@
     {
       "name": "Water Pills",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.VT0zsSYkx5N6zg0Z",
+      "documentUuid": "Compendium.sdm.gadgets.Item.VT0zsSYkx5N6zg0Z",
       "img": "icons/consumables/potions/potion-faceted-corked-blue.webp",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "Void Thermos",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.uqgX2IN7ZtFEkT0Q",
+      "documentUuid": "Compendium.sdm.gadgets.Item.uqgX2IN7ZtFEkT0Q",
       "img": "icons/containers/kitchenware/jug-wrapped-red.webp",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Oculars",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.P0r3tBwKDrtSuVl7",
+      "documentUuid": "Compendium.sdm.gadgets.Item.P0r3tBwKDrtSuVl7",
       "img": "icons/equipment/head/helm-goggles-leather.webp",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Astral Compass",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.0QhJAs7gXPsLpKzC",
+      "documentUuid": "Compendium.sdm.gadgets.Item.0QhJAs7gXPsLpKzC",
       "img": "icons/tools/navigation/compass-plain-blue.webp",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Ray Banes",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.AOxS9ma33Mmi4nh4",
+      "documentUuid": "Compendium.sdm.gadgets.Item.AOxS9ma33Mmi4nh4",
       "img": "icons/equipment/head/goggles-leather-grey.webp",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Solar Lamp",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.EZ9TMsy1LfmhhbVP",
+      "documentUuid": "Compendium.sdm.gadgets.Item.EZ9TMsy1LfmhhbVP",
       "img": "icons/sundries/lights/lantern-iron-lit-yellow.webp",
       "weight": 1,
       "range": [

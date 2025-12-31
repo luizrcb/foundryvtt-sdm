@@ -5,7 +5,7 @@
     {
       "name": "Heretech Scribbles",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.gVSphXhwQPlSY8si",
+      "documentUuid": "Compendium.sdm.wards.Item.gVSphXhwQPlSY8si",
       "img": "icons/sundries/scrolls/scroll-symbol-triangle-brown.webp",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "Safety Scarab",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.gFCTeanDPkvarztc",
+      "documentUuid": "Compendium.sdm.wards.Item.gFCTeanDPkvarztc",
       "img": "icons/creatures/invertebrates/beetle-stag-yellow-green.webp",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Bone Necklace",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.MQM5xvNDVy4aevg6",
+      "documentUuid": "Compendium.sdm.wards.Item.MQM5xvNDVy4aevg6",
       "img": "icons/equipment/neck/necklace-simple-bone-skull.webp",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Violet Cat Egg",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.p94qIJ2yzgk9TEwo",
+      "documentUuid": "Compendium.sdm.wards.Item.p94qIJ2yzgk9TEwo",
       "img": "icons/consumables/eggs/egg-cracked-purple.webp",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Shadow Shawl",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.3tVz2bRPWWhryqmG",
+      "documentUuid": "Compendium.sdm.wards.Item.3tVz2bRPWWhryqmG",
       "img": "icons/equipment/back/cloak-heavy-black-red.webp",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Empty Glasses",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.4pzlm2KzybTERN1z",
+      "documentUuid": "Compendium.sdm.wards.Item.4pzlm2KzybTERN1z",
       "img": "icons/equipment/head/goggles-leather-grey.webp",
       "weight": 1,
       "range": [

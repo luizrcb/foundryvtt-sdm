@@ -1,0 +1,330 @@
+{
+  "name": "Noble",
+  "description": "A random table created from the contents of the Noble Folder.",
+  "results": [
+    {
+      "name": "Old Friend's Poem",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.0WnAmWJtCqzcAbd6",
+      "img": "icons/sundries/scrolls/scroll-yellow-teal.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "2eyuKwmH25XoGlg7",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HGYyNJpdqRQEK4YQ.2eyuKwmH25XoGlg7"
+    },
+    {
+      "name": "Golem Steed",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.A32nWaBRzwPvcyLq",
+      "img": "icons/magic/fire/blast-jet-stream-embers-orange.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "BM6ndqPvevxS9uaH",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HGYyNJpdqRQEK4YQ.BM6ndqPvevxS9uaH"
+    },
+    {
+      "name": "Oldtech Dagger-Axe",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.LZydiJuSLJIwtPt9",
+      "img": "icons/weapons/axes/axe-battle-simple.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "yAd6wOYGke7oMuZT",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HGYyNJpdqRQEK4YQ.yAd6wOYGke7oMuZT"
+    },
+    {
+      "name": "Gorotorok",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.SAQgCUzeDqmcfBey",
+      "img": "icons/weapons/swords/greatsword-guard-split-eyes.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "3O6aQu91Qd3xItcm",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HGYyNJpdqRQEK4YQ.3O6aQu91Qd3xItcm"
+    },
+    {
+      "name": "Daemonskin Mask",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.UrMpqXQScbCAg70D",
+      "img": "icons/equipment/head/mask-horned-brown.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "3A9kwKr1tDI0a7mJ",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HGYyNJpdqRQEK4YQ.3A9kwKr1tDI0a7mJ"
+    },
+    {
+      "name": "Spotted Lion's Paw",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.Y7BDUxpTp8e2gr4I",
+      "img": "icons/magic/nature/wolf-paw-glow-large-orange.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "GAxGwhFAddVjcGeJ",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HGYyNJpdqRQEK4YQ.GAxGwhFAddVjcGeJ"
+    },
+    {
+      "name": "Sacrificial Robes",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.YKuunCm45c23KEqT",
+      "img": "icons/equipment/back/cloak-collared-pink-gold.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "ya3N013AMZyyEzus",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HGYyNJpdqRQEK4YQ.ya3N013AMZyyEzus"
+    },
+    {
+      "name": "Garden Jezail",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.oNmbRQQigr1rnWN6",
+      "img": "icons/weapons/guns/gun-brown.webp",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "kHeIuxpZiCvPW7Lh",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HGYyNJpdqRQEK4YQ.kHeIuxpZiCvPW7Lh"
+    },
+    {
+      "name": "Phylake Clavus",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.s0hFs2iAVY7teYt9",
+      "img": "icons/sundries/misc/key-jeweled-gold-purple.webp",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "uhYgStPbny6iIgBL",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HGYyNJpdqRQEK4YQ.uhYgStPbny6iIgBL"
+    },
+    {
+      "name": "Court Kit",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.wGXeXusCtUym6A11",
+      "img": "icons/containers/bags/pack-leather-red.webp",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "H6rEE3yAOzCdZpEC",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HGYyNJpdqRQEK4YQ.H6rEE3yAOzCdZpEC"
+    },
+    {
+      "name": "Empire Armor",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.xbw4cHySeVARg6jQ",
+      "img": "icons/equipment/shoulder/pauldron-segmented-red-white.webp",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_id": "ejvP1Bk4pFQFNW0S",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HGYyNJpdqRQEK4YQ.ejvP1Bk4pFQFNW0S"
+    },
+    {
+      "name": "Travel Deck",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.y5Tk8h1fPGStVMb9",
+      "img": "icons/sundries/gaming/playing-cards-black.webp",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_id": "B4ZjFhtP5ofP6sba",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HGYyNJpdqRQEK4YQ.B4ZjFhtP5ofP6sba"
+    }
+  ],
+  "formula": "1d12",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8iXTxWS7BmWPt7Io",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.5",
+    "createdTime": 1767193808797,
+    "modifiedTime": 1767193808797,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "HGYyNJpdqRQEK4YQ",
+  "sort": 0,
+  "_key": "!tables!HGYyNJpdqRQEK4YQ"
+}

@@ -1,0 +1,330 @@
+{
+  "name": "Bluelander",
+  "description": "A random table created from the contents of the Bluelander Folder.",
+  "results": [
+    {
+      "name": "Abominable Paw",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.21mKiy8RjfoP2Qmm",
+      "img": "icons/commodities/claws/claw-brown-black.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "JliarSbImjV96uGx",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0nEoYiZ7a70WerpN.JliarSbImjV96uGx"
+    },
+    {
+      "name": "Organic Paste",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.7NWzyW8zaK1hiqBC",
+      "img": "icons/commodities/materials/slime-red.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "Qsd1p36DvA3AZTkh",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0nEoYiZ7a70WerpN.Qsd1p36DvA3AZTkh"
+    },
+    {
+      "name": "Fungal Harness",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.KTL6pjNtht3VPu1i",
+      "img": "icons/equipment/chest/breastplate-collared-steel-green.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "l0fyEaVhxQ7i4ybS",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0nEoYiZ7a70WerpN.l0fyEaVhxQ7i4ybS"
+    },
+    {
+      "name": "Vicious Bird",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.SptI5kpGIKJnOV6D",
+      "img": "icons/creatures/birds/corvid-call-sound-glowing.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "pxs1Siu4T8XZBklY",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0nEoYiZ7a70WerpN.pxs1Siu4T8XZBklY"
+    },
+    {
+      "name": "Shipstone Skull",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.TvikNzn0fAs0iIfr",
+      "img": "icons/commodities/bones/skull-deformed-white.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "BrJhixbdydMvvum8",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0nEoYiZ7a70WerpN.BrJhixbdydMvvum8"
+    },
+    {
+      "name": "Vidy Unity Box",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.hZDWZsxIZUsul7nx",
+      "img": "icons/commodities/treasure/puzzle-box-glowing-blue.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "iPT5qHAwKCxPnKqG",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0nEoYiZ7a70WerpN.iPT5qHAwKCxPnKqG"
+    },
+    {
+      "name": "Golden Horn",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.iB3tvJQpxrDgySvw",
+      "img": "icons/weapons/daggers/dagger-curved-guard.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "8g2gi6w31m6LVFUT",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0nEoYiZ7a70WerpN.8g2gi6w31m6LVFUT"
+    },
+    {
+      "name": "Indigo Face",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.kVAeSdPlhBhrIsWo",
+      "img": "icons/magic/water/orb-ice-opaque.webp",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "xuQHcSD0s44vatdF",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0nEoYiZ7a70WerpN.xuQHcSD0s44vatdF"
+    },
+    {
+      "name": "Dead God Tooth",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.lUCqyEb7TxvvEkRL",
+      "img": "icons/commodities/bones/teeth-sharp-white.webp",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "qKL3a8HpKQPLxkIT",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0nEoYiZ7a70WerpN.qKL3a8HpKQPLxkIT"
+    },
+    {
+      "name": "Golem Grenade",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.mpU6s0x5yxrLXQlW",
+      "img": "icons/weapons/thrown/bomb-metal-brown.webp",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "AHomMG9h9jBO4SBa",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0nEoYiZ7a70WerpN.AHomMG9h9jBO4SBa"
+    },
+    {
+      "name": "Folding Boat",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.olFyq7XjeiVfMDsJ",
+      "img": "icons/commodities/materials/material-woven.webp",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_id": "HSvjNomlnM3SFujJ",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0nEoYiZ7a70WerpN.HSvjNomlnM3SFujJ"
+    },
+    {
+      "name": "Drywood Gourd",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.z7B64SNZbzbOu0Hm",
+      "img": "icons/consumables/drinks/water-jug-clay-brown.webp",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_id": "uzttFeuSvgs7aamG",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0nEoYiZ7a70WerpN.uzttFeuSvgs7aamG"
+    }
+  ],
+  "formula": "1d12",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8iXTxWS7BmWPt7Io",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.5",
+    "createdTime": 1767193649445,
+    "modifiedTime": 1767193807175,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "0nEoYiZ7a70WerpN",
+  "sort": 500000,
+  "_key": "!tables!0nEoYiZ7a70WerpN"
+}

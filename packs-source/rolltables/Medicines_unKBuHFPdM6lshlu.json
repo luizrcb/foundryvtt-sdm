@@ -5,7 +5,7 @@
     {
       "name": "Curative Snake Oil",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.pkxaNux6wydYXmqU",
+      "documentUuid": "Compendium.sdm.consumables.Item.pkxaNux6wydYXmqU",
       "img": "icons/consumables/potions/bottle-circular-corked-labeled-green.webp",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "Violet City Healotion",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.6eXv2VUPZCrEtEHm",
+      "documentUuid": "Compendium.sdm.consumables.Item.6eXv2VUPZCrEtEHm",
       "img": "icons/consumables/potions/conical-ornate-purple.webp",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Flesh Soil",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.w5iIOa7gLBOszmKl",
+      "documentUuid": "Compendium.sdm.consumables.Item.w5iIOa7gLBOszmKl",
       "img": "icons/tools/laboratory/bowl-powder-red.webp",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Healmachine",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.FN02O37gKbF7fmqu",
+      "documentUuid": "Compendium.sdm.consumables.Item.FN02O37gKbF7fmqu",
       "img": "icons/tools/laboratory/bowl-liquid-black.webp",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Ultra-Purga",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.mRY2GsLnbsLndLja",
+      "documentUuid": "Compendium.sdm.consumables.Item.mRY2GsLnbsLndLja",
       "img": "icons/consumables/potions/potion-bottle-skull-label-poison-teal.webp",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Full-Heal Kit",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.kkqCTxBuVC80euW9",
+      "documentUuid": "Compendium.sdm.consumables.Item.kkqCTxBuVC80euW9",
       "img": "icons/tools/laboratory/vials-blue-pink.webp",
       "weight": 1,
       "range": [

@@ -1,0 +1,330 @@
+{
+  "name": "Barbarian",
+  "description": "A random table created from the contents of the Barbarian Folder.",
+  "results": [
+    {
+      "name": "The Spear Named  Blood Drinker",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.0jY9JnzOpHLrn4Rk",
+      "img": "icons/weapons/polearms/spear-hooked-double-engraved.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "Y3hrlZ2h6tORByG6",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!iUJUQHbRCtOCUQW6.Y3hrlZ2h6tORByG6"
+    },
+    {
+      "name": "Godskin Mask",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.5Q544ggLF4CcFc6j",
+      "img": "icons/equipment/head/mask-carved-scream-tan.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "MxCV916IVYyeBCNz",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!iUJUQHbRCtOCUQW6.MxCV916IVYyeBCNz"
+    },
+    {
+      "name": "Old Friend's Head",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.8Uo9laxNDapfxllk",
+      "img": "icons/commodities/bones/skull-hollow-beige.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "jZwTlyvWY3gcpTfU",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!iUJUQHbRCtOCUQW6.jZwTlyvWY3gcpTfU"
+    },
+    {
+      "name": "Wratosek",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.JPVmN6STo50Pj4u1",
+      "img": "icons/weapons/swords/greatsword-sheathed.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "ctrv8iOQh7HjStLm",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!iUJUQHbRCtOCUQW6.ctrv8iOQh7HjStLm"
+    },
+    {
+      "name": "Traveler Kit",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.LQUKZfEeWnDSjXwS",
+      "img": "icons/containers/bags/satchel-worn-leather-red.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "8wZ25p2AvfwEb9k3",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!iUJUQHbRCtOCUQW6.8wZ25p2AvfwEb9k3"
+    },
+    {
+      "name": "Holy Human Herbs",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.QSvK0ZEq5QhQbOw7",
+      "img": "icons/consumables/plants/herb-tied-bundle-dried-yellow.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "n32waVkZzxZBkVp1",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!iUJUQHbRCtOCUQW6.n32waVkZzxZBkVp1"
+    },
+    {
+      "name": "Spotted Lion's Cloak",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.Tsu3tchgGHR70Lj8",
+      "img": "icons/equipment/back/cape-layered-simple-brown.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "QNj1rQ7PtoYqCo0p",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!iUJUQHbRCtOCUQW6.QNj1rQ7PtoYqCo0p"
+    },
+    {
+      "name": "Pre-Fall Firemaker",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.XMIPOATv1tVmCtkf",
+      "img": "icons/magic/fire/flame-burning-embers-orange.webp",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "j40l8M6WvIyEd73j",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!iUJUQHbRCtOCUQW6.j40l8M6WvIyEd73j"
+    },
+    {
+      "name": "Fallen Empire Armor",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.mRTGFbSyVwPEjV5v",
+      "img": "icons/equipment/head/helm-basinet-shemagh-steel.webp",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "gt1ybMgSdzeatdRf",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!iUJUQHbRCtOCUQW6.gt1ybMgSdzeatdRf"
+    },
+    {
+      "name": "Metal Steed",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.pE6QLYs2wxgHXFw0",
+      "img": "icons/magic/lightning/barrier-wall-shield-gray.webp",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "XsONLcH0SAQ4fQBO",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!iUJUQHbRCtOCUQW6.XsONLcH0SAQ4fQBO"
+    },
+    {
+      "name": "Ancient Jezail",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.tnRTrQhOaFut8Nz3",
+      "img": "icons/weapons/guns/gun-pistol-flintlock.webp",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_id": "wijlYrHTzFALoQ9B",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!iUJUQHbRCtOCUQW6.wijlYrHTzFALoQ9B"
+    },
+    {
+      "name": "Ceremonial Axe",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.w23Osn1airJyRm15",
+      "img": "icons/weapons/axes/axe-tomahawk-engraved.webp",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_id": "lqq4CZsKYlFljk2L",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!iUJUQHbRCtOCUQW6.lqq4CZsKYlFljk2L"
+    }
+  ],
+  "formula": "1d12",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8iXTxWS7BmWPt7Io",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.5",
+    "createdTime": 1767193624842,
+    "modifiedTime": 1767193807175,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "iUJUQHbRCtOCUQW6",
+  "sort": 400000,
+  "_key": "!tables!iUJUQHbRCtOCUQW6"
+}

@@ -5,7 +5,7 @@
     {
       "name": "Chain Sword",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.32GErRz1iWywC6AN",
+      "documentUuid": "Compendium.sdm.weapons.Item.32GErRz1iWywC6AN",
       "img": "icons/weapons/swords/sword-guard-serrated.webp",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "Arzax Lance",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.AOcSCO2oWMAF2x5m",
+      "documentUuid": "Compendium.sdm.weapons.Item.AOcSCO2oWMAF2x5m",
       "img": "icons/weapons/polearms/spear-ice-crystal-blue.webp",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Pleasure Thorn",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.ISVyKwieIZcmFXoM",
+      "documentUuid": "Compendium.sdm.weapons.Item.ISVyKwieIZcmFXoM",
       "img": "icons/weapons/daggers/dagger-straight-thin-black.webp",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Wire-Ghoul  Hammer-Axe",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.S0zXIOaxG7DxgjGo",
+      "documentUuid": "Compendium.sdm.weapons.Item.S0zXIOaxG7DxgjGo",
       "img": "icons/weapons/axes/axe-battle-eyes-red.webp",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Black City Blade",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.XOGYXrO6F7kUbufi",
+      "documentUuid": "Compendium.sdm.weapons.Item.XOGYXrO6F7kUbufi",
       "img": "icons/weapons/swords/sword-guard-flanged.webp",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Skip Knife",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.YvwJsB5t8XVt43xo",
+      "documentUuid": "Compendium.sdm.weapons.Item.YvwJsB5t8XVt43xo",
       "img": "icons/tools/cooking/knife-chef-steel-black.webp",
       "weight": 1,
       "range": [
@@ -155,7 +155,7 @@
     {
       "name": "Soul Siphon Spear",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.ZteNSXBaRUbC5CuU",
+      "documentUuid": "Compendium.sdm.weapons.Item.ZteNSXBaRUbC5CuU",
       "img": "icons/weapons/polearms/spear-flared-silver-pink.webp",
       "weight": 1,
       "range": [
@@ -180,7 +180,7 @@
     {
       "name": "Forty-Pound  Uranium Rod",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.c0H7EAxKMb1Ni1Oq",
+      "documentUuid": "Compendium.sdm.weapons.Item.c0H7EAxKMb1Ni1Oq",
       "img": "icons/weapons/staves/staff-ornate-green.webp",
       "weight": 1,
       "range": [
@@ -205,7 +205,7 @@
     {
       "name": "Ghost Bone Axe",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.mFMUBdpTDO3yVLAF",
+      "documentUuid": "Compendium.sdm.weapons.Item.mFMUBdpTDO3yVLAF",
       "img": "icons/weapons/axes/axe-battle-skull-black.webp",
       "weight": 1,
       "range": [
@@ -230,7 +230,7 @@
     {
       "name": "Noetic Blade",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.vf9R7QAvpP5cVaHK",
+      "documentUuid": "Compendium.sdm.weapons.Item.vf9R7QAvpP5cVaHK",
       "img": "icons/weapons/swords/sword-guard-flanged-purple.webp",
       "weight": 1,
       "range": [
@@ -255,7 +255,7 @@
     {
       "name": "Agon Whip",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.w2WOCk1WLqyRPM6Q",
+      "documentUuid": "Compendium.sdm.weapons.Item.w2WOCk1WLqyRPM6Q",
       "img": "icons/magic/control/debuff-chains-purple.webp",
       "weight": 1,
       "range": [
@@ -280,7 +280,7 @@
     {
       "name": "Access Flenser",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.ziSFtT3nY0ADW13h",
+      "documentUuid": "Compendium.sdm.weapons.Item.ziSFtT3nY0ADW13h",
       "img": "icons/weapons/swords/sword-broad-serrated-blue.webp",
       "weight": 1,
       "range": [

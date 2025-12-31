@@ -1,0 +1,330 @@
+{
+  "name": "Tourist",
+  "description": "A random table created from the contents of the Tourist Folder.",
+  "results": [
+    {
+      "name": "Shapeless Hat",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.8BrVWXNGF7UCnKkJ",
+      "img": "icons/equipment/head/hat-belted-simple-brown.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "oxvZ9WFecYCKkqPc",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!wdK6YPzERdzJiMbV.oxvZ9WFecYCKkqPc"
+    },
+    {
+      "name": "Guide Book",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.ArlaMPo8gt8tKvzL",
+      "img": "icons/sundries/books/book-rounded-blue.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "dHHE3bPSatMuPACt",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!wdK6YPzERdzJiMbV.dHHE3bPSatMuPACt"
+    },
+    {
+      "name": "Sturdy Stick",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.IgHntB1jmyvE3Ksz",
+      "img": "icons/weapons/staves/staff-simple-wrapped.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "6g5CAfAN77vrj6Rd",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!wdK6YPzERdzJiMbV.6g5CAfAN77vrj6Rd"
+    },
+    {
+      "name": "This Old Thing",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.LcCt09Liv1OUzQDD",
+      "img": "icons/equipment/leg/pants-mud-leather-pants.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "gp0hzu0q7RX8BscJ",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!wdK6YPzERdzJiMbV.gp0hzu0q7RX8BscJ"
+    },
+    {
+      "name": "Caius the Comprehender",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.LdWjfv6C4ZRRWC1f",
+      "img": "icons/equipment/finger/ring-stone-snake-gold.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "Upa9NkeWUrm5fN2x",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!wdK6YPzERdzJiMbV.Upa9NkeWUrm5fN2x"
+    },
+    {
+      "name": "Photomeme",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.VnDxzhSac2MYJbIu",
+      "img": "icons/commodities/gems/pearl-rough-turquoise.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "ausxMlfo9uZBeng4",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!wdK6YPzERdzJiMbV.ausxMlfo9uZBeng4"
+    },
+    {
+      "name": "Escape Button",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.YeIt5uQshc6rFbGm",
+      "img": "icons/commodities/tech/detonator-radio.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "dQyl8LTtvZHnwUs2",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!wdK6YPzERdzJiMbV.dQyl8LTtvZHnwUs2"
+    },
+    {
+      "name": "Comfy Sandals",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.coGYBU3LUcCZpZBV",
+      "img": "icons/equipment/feet/shoes-leather-blue.webp",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "Dtu4jSIPtrr0d6RL",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!wdK6YPzERdzJiMbV.Dtu4jSIPtrr0d6RL"
+    },
+    {
+      "name": "Safety Blanket",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.ghF7CltRlFnnIFNl",
+      "img": "icons/commodities/cloth/cloth-bolt-glow-white.webp",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "qG9vZdXd6l5avbyR",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!wdK6YPzERdzJiMbV.qG9vZdXd6l5avbyR"
+    },
+    {
+      "name": "Umbrella Gun",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.mZWmTm3k0ZLzyQHk",
+      "img": "icons/skills/ranged/bullet-sparks-yellow.webp",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "f8R4aa7CYzPCuXZN",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!wdK6YPzERdzJiMbV.f8R4aa7CYzPCuXZN"
+    },
+    {
+      "name": "Metapills",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.sH6mBEAFevKDumhD",
+      "img": "icons/consumables/food/berries-ration-round-red.webp",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_id": "bW7xtN7mdzhtgqh8",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!wdK6YPzERdzJiMbV.bW7xtN7mdzhtgqh8"
+    },
+    {
+      "name": "Pass Person",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.x89aqGGBMZyyRee1",
+      "img": "icons/sundries/documents/document-sealed-red-white.webp",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_id": "vmOVNkIZBIlV8mHb",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!wdK6YPzERdzJiMbV.vmOVNkIZBIlV8mHb"
+    }
+  ],
+  "formula": "1d12",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8iXTxWS7BmWPt7Io",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.5",
+    "createdTime": 1767193832444,
+    "modifiedTime": 1767193832444,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "wdK6YPzERdzJiMbV",
+  "sort": 0,
+  "_key": "!tables!wdK6YPzERdzJiMbV"
+}

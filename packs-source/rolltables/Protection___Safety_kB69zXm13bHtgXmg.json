@@ -5,7 +5,7 @@
     {
       "name": "Nasal Filters",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.PTbpqrUDlyyD9gRS",
+      "documentUuid": "Compendium.sdm.gadgets.Item.PTbpqrUDlyyD9gRS",
       "img": "icons/commodities/cloth/cloth-roll-worn-tan.webp",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "Emergency Flare",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.gUCBf2WxSc4664DV",
+      "documentUuid": "Compendium.sdm.gadgets.Item.gUCBf2WxSc4664DV",
       "img": "icons/magic/light/beam-horizon-strike-yellow.webp",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Glo Paint",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.PHxAPbpkKL4OVZSK",
+      "documentUuid": "Compendium.sdm.gadgets.Item.PHxAPbpkKL4OVZSK",
       "img": "icons/magic/air/wind-stream-purple-blue.webp",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Hyper Adhesive",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.r03iKP9NvGJlcsUu",
+      "documentUuid": "Compendium.sdm.gadgets.Item.r03iKP9NvGJlcsUu",
       "img": "icons/magic/control/debuff-energy-snare-purple-blue.webp",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Enviro Mask",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.fv63EIG142c2mNk1",
+      "documentUuid": "Compendium.sdm.gadgets.Item.fv63EIG142c2mNk1",
       "img": "icons/equipment/head/mask-plague-leather-brown.webp",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Rebreather",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.30kvok73zJmEXbKV",
+      "documentUuid": "Compendium.sdm.gadgets.Item.30kvok73zJmEXbKV",
       "img": "icons/tools/nautical/diving-helmet.webp",
       "weight": 1,
       "range": [

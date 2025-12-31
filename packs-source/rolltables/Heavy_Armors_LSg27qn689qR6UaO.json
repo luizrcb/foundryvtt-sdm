@@ -5,7 +5,7 @@
     {
       "name": "Splinter Suit",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.vb7eETYg6RoiyXIi",
+      "documentUuid": "Compendium.sdm.armors.Item.vb7eETYg6RoiyXIi",
       "img": "icons/equipment/chest/breastplate-banded-steel.webp",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "Bone Mesh",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.aQStDj4d9d7Pxh8g",
+      "documentUuid": "Compendium.sdm.armors.Item.aQStDj4d9d7Pxh8g",
       "img": "icons/equipment/chest/robe-collared-pink.webp",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Assault Suit",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.OijNIHxXQHb7Dzr8",
+      "documentUuid": "Compendium.sdm.armors.Item.OijNIHxXQHb7Dzr8",
       "img": "icons/equipment/chest/breastplate-cuirass-steel-blue.webp",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Bullet Plate Weave",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.H8gWuBS3Is2EvEnT",
+      "documentUuid": "Compendium.sdm.armors.Item.H8gWuBS3Is2EvEnT",
       "img": "icons/equipment/chest/breastplate-gorget-steel.webp",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Jade Mail",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.ZDxWuYZb3j2lNGK1",
+      "documentUuid": "Compendium.sdm.armors.Item.ZDxWuYZb3j2lNGK1",
       "img": "icons/equipment/chest/breastplate-layered-steel-green.webp",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Voidsuit",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.daVOtlRFqSg6piVH",
+      "documentUuid": "Compendium.sdm.armors.Item.daVOtlRFqSg6piVH",
       "img": "icons/equipment/head/helm-barbute-steel.webp",
       "weight": 1,
       "range": [
@@ -155,7 +155,7 @@
     {
       "name": "Bunker Crawler",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.dvQRSg4bW5nUjTke",
+      "documentUuid": "Compendium.sdm.armors.Item.dvQRSg4bW5nUjTke",
       "img": "icons/equipment/head/helm-norman-brutal.webp",
       "weight": 1,
       "range": [
@@ -180,7 +180,7 @@
     {
       "name": "Umbral Panoply",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.TL7hMkzZDEhR6Abf",
+      "documentUuid": "Compendium.sdm.armors.Item.TL7hMkzZDEhR6Abf",
       "img": "icons/equipment/chest/breastplate-banded-steel-grey.webp",
       "weight": 1,
       "range": [

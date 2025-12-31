@@ -5,7 +5,7 @@
     {
       "name": "UV Lotion",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.YrX4o5hjp8ImCJHR",
+      "documentUuid": "Compendium.sdm.consumables.Item.YrX4o5hjp8ImCJHR",
       "img": "icons/consumables/potions/potion-tube-corked-blue.webp",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "Philip Juice",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.XB0ucMLGa2Ln3jE4",
+      "documentUuid": "Compendium.sdm.consumables.Item.XB0ucMLGa2Ln3jE4",
       "img": "icons/consumables/potions/potion-jar-corked-labeled-red.webp",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Octarine Oil",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.UwZs5v8mtarGOHse",
+      "documentUuid": "Compendium.sdm.consumables.Item.UwZs5v8mtarGOHse",
       "img": "icons/consumables/potions/potion-jar-corked-orange.webp",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Otherface Cream",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.S14mmV1yFfeHX0Yl",
+      "documentUuid": "Compendium.sdm.consumables.Item.S14mmV1yFfeHX0Yl",
       "img": "icons/consumables/potions/flask-ornate-skull-green.webp",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Eggplant Elixir",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.SXIHOIqUX8U874CY",
+      "documentUuid": "Compendium.sdm.consumables.Item.SXIHOIqUX8U874CY",
       "img": "icons/consumables/potions/bottle-bulb-corked-purple.webp",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Tonic Harmony",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.dPIvzjzOoJm6JoSM",
+      "documentUuid": "Compendium.sdm.consumables.Item.dPIvzjzOoJm6JoSM",
       "img": "icons/consumables/potions/bottle-metal-yellow-gray.webp",
       "weight": 1,
       "range": [

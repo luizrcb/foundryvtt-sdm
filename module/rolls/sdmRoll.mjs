@@ -60,6 +60,7 @@ export default class SDMRoll {
     const formulaComponents = [multipliedExpression, diceModifiers, fixedModifiers];
 
     const escalatorDie = game.settings.get('sdm', 'escalatorDie') ?? 0;
+    const luckySevenRule = game.settings.get('sdm', 'luckySevenRule') || false;
 
     if (escalatorDie > 0) formulaComponents.push(escalatorDie);
     const isAttack = this.type === RollType.ATTACK;
@@ -116,7 +117,7 @@ export default class SDMRoll {
       const targetDefense = this.targetActor?.system[property] || 0;
 
       const attackResult = rollInstance.total;
-      const { isNat1, isNat20, is13 } = detectNat1OrNat20(rollInstance);
+      const { isNat1, isNat20, is13, is7 } = detectNat1OrNat20(rollInstance);
       const isSuccess = !isNat1 && (isNat20 || attackResult > targetDefense);
       const forceOrFail = attackResult === targetDefense;
 
@@ -133,6 +134,14 @@ export default class SDMRoll {
         '<li class="roll die d20">13</li>',
         '<li class="roll die d20 is13">13</li>'
       );
+
+      if (luckySevenRule) {
+        content = content.replace(
+        '<li class="roll die d20">7</li>',
+        '<li class="roll die d20 is7">7</li>'
+      );
+      }
+
 
       if (isNat1) {
         resultMessage = $l10n('SDM.CriticalFailure').toUpperCase();
@@ -163,7 +172,9 @@ export default class SDMRoll {
             ? `
         <div class="flex-group-center"><span class="is13"><b>${$l10n('SDM.DepletedResources')}</b></span></div>
         `
-            : ''
+          : (is7 && luckySevenRule)
+              ?
+        `<div class="flex-group-center"><span class="is7"><b>${$l10n('SDM.LuckySeven')}</b></span></div>` : ''
         }
       <div>`;
     }
@@ -333,7 +344,7 @@ export function collectAllDice(term) {
  * Detects whether a d20 in the Roll resulted in a natural 1 or 20.
  * Only checks the first result on each d20 die.
  * @param {Roll} roll - An evaluated Roll object.
- * @returns {{ isNat1: boolean, isNat20: boolean }}
+ * @returns {{ isNat1: boolean, isNat20: boolean, is13: boolean, is7: boolean }}
  */
 export function detectNat1OrNat20(roll) {
   let results = [];
@@ -370,14 +381,18 @@ export function detectNat1OrNat20(roll) {
   results = results.sort((a, b) => b - a);
 
   if (results[0] === 13) {
-    return { isNat1: false, is13: true, isNat20: false };
+    return { isNat1: false, is13: true, is7: false, isNat20: false };
+  }
+
+  if (results[0] === 7) {
+    return { isNat1: false, is13: false, is7: true, isNat20: false };
   }
 
   // Determina se houve nat1 ou nat20
   for (const r of results.sort((a, b) => b - a)) {
-    if (r === 1) return { isNat1: true, is13: false, isNat20: false };
-    if (r === 20) return { isNat1: false, is13: false, isNat20: true };
+    if (r === 1) return { isNat1: true, is13: false, is7: false, isNat20: false };
+    if (r === 20) return { isNat1: false, is13: false, is7: false, isNat20: true };
   }
 
-  return { isNat1: false, is13: false, isNat20: false };
+  return { isNat1: false, is13: false, is7: false, isNat20: false };
 }

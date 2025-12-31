@@ -1,0 +1,21 @@
+{
+  "type": "RollTable",
+  "folder": "8iXTxWS7BmWPt7Io",
+  "name": "Weapon",
+  "color": null,
+  "sorting": "a",
+  "_id": "twVNJp7ykPUJ26M7",
+  "description": "",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.5",
+    "lastModifiedBy": null
+  },
+  "_key": "!folders!twVNJp7ykPUJ26M7"
+}

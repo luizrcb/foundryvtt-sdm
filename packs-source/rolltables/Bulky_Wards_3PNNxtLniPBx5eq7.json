@@ -5,7 +5,7 @@
     {
       "name": "Prayer Engine",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.QQYQrTbfjnBDZgpn",
+      "documentUuid": "Compendium.sdm.wards.Item.QQYQrTbfjnBDZgpn",
       "img": "icons/commodities/tech/cog-large-steel-white.webp",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "Living Coffin",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.7w5Do1GfggOR40AJ",
+      "documentUuid": "Compendium.sdm.wards.Item.7w5Do1GfggOR40AJ",
       "img": "icons/containers/boxes/crate-wooden-brown.webp",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Necrolexicon NEC",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.bOTzCPrQA0NfYtcL",
+      "documentUuid": "Compendium.sdm.wards.Item.bOTzCPrQA0NfYtcL",
       "img": "icons/sundries/books/book-face-black.webp",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Basic Homunculo",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.WJpA72EA1O68oH4d",
+      "documentUuid": "Compendium.sdm.wards.Item.WJpA72EA1O68oH4d",
       "img": "icons/creatures/magical/fae-fairy-winged-glowing-green.webp",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Monochrome  Mirror",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.vxMN6WVgHmzQtiTx",
+      "documentUuid": "Compendium.sdm.wards.Item.vxMN6WVgHmzQtiTx",
       "img": "icons/commodities/treasure/gem-framed-spiral-purple.webp",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Second Soul",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.SczLZ4Z1ioFxhEHN",
+      "documentUuid": "Compendium.sdm.wards.Item.SczLZ4Z1ioFxhEHN",
       "img": "icons/magic/unholy/silhouette-robe-evil-power.webp",
       "weight": 1,
       "range": [

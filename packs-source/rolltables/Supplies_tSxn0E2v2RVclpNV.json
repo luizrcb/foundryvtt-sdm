@@ -5,7 +5,7 @@
     {
       "name": "Goat Bricks",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.hgsWmRqglPlW4kZJ",
+      "documentUuid": "Compendium.sdm.consumables.Item.hgsWmRqglPlW4kZJ",
       "img": "icons/consumables/grains/sack-rice-flour-brown.webp",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "Voyager Supplies",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.OtSW92hR1GOt3MV2",
+      "documentUuid": "Compendium.sdm.consumables.Item.OtSW92hR1GOt3MV2",
       "img": "icons/containers/bags/sack-open-grain-red-tan.webp",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Injectable Fodder",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.G5GTXbPZQJmZNgGV",
+      "documentUuid": "Compendium.sdm.consumables.Item.G5GTXbPZQJmZNgGV",
       "img": "icons/commodities/materials/liquid-green.webp",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Standard Corpsolene",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.yRCMWLvz8OaelAIn",
+      "documentUuid": "Compendium.sdm.consumables.Item.yRCMWLvz8OaelAIn",
       "img": "icons/consumables/drinks/pitcher-dripping-white.webp",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Void Paste",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.bJ3slPMlBt3lDYi5",
+      "documentUuid": "Compendium.sdm.consumables.Item.bJ3slPMlBt3lDYi5",
       "img": "icons/consumables/food/berries-ration-round-red.webp",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Song-Ghost Fuel",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.jLUXP2Y8MV6Pzdbz",
+      "documentUuid": "Compendium.sdm.consumables.Item.jLUXP2Y8MV6Pzdbz",
       "img": "icons/consumables/potions/potion-jug-corked-skull-poison-brown-green.webp",
       "weight": 1,
       "range": [

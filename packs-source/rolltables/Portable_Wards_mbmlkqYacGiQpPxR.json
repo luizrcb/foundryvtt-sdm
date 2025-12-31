@@ -5,7 +5,7 @@
     {
       "name": "Box of Eyes",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.RF2h0UGuF6kfrTwx",
+      "documentUuid": "Compendium.sdm.wards.Item.RF2h0UGuF6kfrTwx",
       "img": "icons/commodities/biological/eye-blue-gold.webp",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "Kingshead Flask",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.IeTpQvHHOqDrZyLK",
+      "documentUuid": "Compendium.sdm.wards.Item.IeTpQvHHOqDrZyLK",
       "img": "icons/consumables/potions/flask-ornate-skull-green.webp",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Tome of Metal B",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.TpFIFflxOa4oQYtA",
+      "documentUuid": "Compendium.sdm.wards.Item.TpFIFflxOa4oQYtA",
       "img": "icons/sundries/books/symbol-axe-gold-grey.webp",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Antimagic Mouth",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.Q89OIfuAqAudgbYz",
+      "documentUuid": "Compendium.sdm.wards.Item.Q89OIfuAqAudgbYz",
       "img": "icons/creatures/abilities/mouth-teeth-misshapen-pink.webp",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Vile Recorder",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.E1iToZqu1mg23yc6",
+      "documentUuid": "Compendium.sdm.wards.Item.E1iToZqu1mg23yc6",
       "img": "icons/commodities/tech/metal-blue.webp",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Savehead Jar",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.ldXF3DP2cEzeAMEV",
+      "documentUuid": "Compendium.sdm.wards.Item.ldXF3DP2cEzeAMEV",
       "img": "icons/equipment/head/helm-barbute-horned-glowing.webp",
       "weight": 1,
       "range": [

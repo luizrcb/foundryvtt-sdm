@@ -1,11 +1,11 @@
 {
   "name": "Drugs",
-  "description": "A random table created from the contents of the Drugs Folder.",
+  "description": "<p>A random table created from the contents of the Drugs Folder.</p>",
   "results": [
     {
       "name": "Feliz Whizz",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.ggUAeAA9W7BYMU2e",
+      "documentUuid": "Compendium.sdm.consumables.Item.ggUAeAA9W7BYMU2e",
       "img": "icons/consumables/drinks/tea-jug-gourd-brown.webp",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "Purple Haze",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.WQ8Phf3SlbT2XN7m",
+      "documentUuid": "Compendium.sdm.consumables.Item.WQ8Phf3SlbT2XN7m",
       "img": "icons/tools/laboratory/bowl-powder-purple.webp",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Black Light Lotus",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.u5Cer9NXE7ioM7tv",
+      "documentUuid": "Compendium.sdm.consumables.Item.u5Cer9NXE7ioM7tv",
       "img": "icons/commodities/flowers/lotus-purple.webp",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Lemma Worm",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.4HG2s2cdIML0haka",
+      "documentUuid": "Compendium.sdm.consumables.Item.4HG2s2cdIML0haka",
       "img": "icons/commodities/biological/tongue-violet.webp",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Whiskers",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.gVP3ybZHmlbTWuqM",
+      "documentUuid": "Compendium.sdm.consumables.Item.gVP3ybZHmlbTWuqM",
       "img": "icons/consumables/mushrooms/ovate-thin-blue.webp",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Glitchvidy",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.Y3XzGMuQyPe2KDTn",
+      "documentUuid": "Compendium.sdm.consumables.Item.Y3XzGMuQyPe2KDTn",
       "img": "icons/magic/light/explosion-star-glow-silhouette.webp",
       "weight": 1,
       "range": [
@@ -167,12 +167,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.348",
+    "coreVersion": "13.351",
     "systemId": "sdm",
     "systemVersion": "0.1.37",
     "createdTime": 1756597728935,
-    "modifiedTime": 1756597744663,
-    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+    "modifiedTime": 1767194469694,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
   },
   "_id": "VUhKsixiQ6svQzKh",
   "sort": 300000,

@@ -5,7 +5,7 @@
     {
       "name": "Skull Garland",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.ka1DT5FEr4JkmoeV",
+      "documentUuid": "Compendium.sdm.wards.Item.ka1DT5FEr4JkmoeV",
       "img": "icons/commodities/bones/skull-hollow-grey.webp",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "Pointy Slippers",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.EB4yl09rxu2KxpFS",
+      "documentUuid": "Compendium.sdm.wards.Item.EB4yl09rxu2KxpFS",
       "img": "icons/equipment/feet/shoes-pointed-blue.webp",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Jade Mask",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.mTBx3cjza9KQ1BVl",
+      "documentUuid": "Compendium.sdm.wards.Item.mTBx3cjza9KQ1BVl",
       "img": "icons/commodities/treasure/mask-wood-tan.webp",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Pectoral of Red",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.k7EDvq7G8GmGu46U",
+      "documentUuid": "Compendium.sdm.wards.Item.k7EDvq7G8GmGu46U",
       "img": "icons/equipment/chest/shirt-collared-pink.webp",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Robe of Eyes",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.kjcsL8bUYXEOBPfL",
+      "documentUuid": "Compendium.sdm.wards.Item.kjcsL8bUYXEOBPfL",
       "img": "icons/equipment/back/cloak-layered-pink.webp",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Full-Spectrum Suit",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.3sO6S0zu62SEKxBb",
+      "documentUuid": "Compendium.sdm.wards.Item.3sO6S0zu62SEKxBb",
       "img": "icons/magic/unholy/strike-body-explode-disintegrate.webp",
       "weight": 1,
       "range": [

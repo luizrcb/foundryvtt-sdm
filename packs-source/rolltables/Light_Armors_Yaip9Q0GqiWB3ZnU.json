@@ -5,7 +5,7 @@
     {
       "name": "Nomad Robes",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.n9HAt1hBBEg5rdyK",
+      "documentUuid": "Compendium.sdm.armors.Item.n9HAt1hBBEg5rdyK",
       "img": "icons/equipment/chest/vest-leather-tattered-white.webp",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "Artyhide",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.l0ysHjIBhhHaaDNa",
+      "documentUuid": "Compendium.sdm.armors.Item.l0ysHjIBhhHaaDNa",
       "img": "icons/equipment/chest/breastplate-sculpted-grey.webp",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Riot Pleather Suit",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.cVCfL5dmN5G7wCC0",
+      "documentUuid": "Compendium.sdm.armors.Item.cVCfL5dmN5G7wCC0",
       "img": "icons/equipment/chest/breastplate-layered-steel-grey.webp",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Ballistic Linen Suit",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.M8P5P4zhHPr0FBSb",
+      "documentUuid": "Compendium.sdm.armors.Item.M8P5P4zhHPr0FBSb",
       "img": "icons/equipment/chest/vest-leather-pink.webp",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Silk Vest",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.eeG58lmOG0xsizZP",
+      "documentUuid": "Compendium.sdm.armors.Item.eeG58lmOG0xsizZP",
       "img": "icons/equipment/chest/robe-layered-white.webp",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Hazviral Suit",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.uSNqYfZuTHy6iJfp",
+      "documentUuid": "Compendium.sdm.armors.Item.uSNqYfZuTHy6iJfp",
       "img": "icons/equipment/chest/breastplate-layered-leather-studded-black.webp",
       "weight": 1,
       "range": [
@@ -155,7 +155,7 @@
     {
       "name": "Syncsuit",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.RJNtdAwRl6RvEETo",
+      "documentUuid": "Compendium.sdm.armors.Item.RJNtdAwRl6RvEETo",
       "img": "icons/equipment/chest/breastplate-sculpted-green.webp",
       "weight": 1,
       "range": [
@@ -180,7 +180,7 @@
     {
       "name": "Shipmetal Shirt",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.6V3ujWkl3EtBnZz6",
+      "documentUuid": "Compendium.sdm.armors.Item.6V3ujWkl3EtBnZz6",
       "img": "icons/equipment/chest/breastplate-layered-leather-green.webp",
       "weight": 1,
       "range": [

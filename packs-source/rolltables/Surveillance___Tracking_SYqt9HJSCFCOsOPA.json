@@ -5,7 +5,7 @@
     {
       "name": "Chronometer",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.zyS1zptSMJK7Ltvr",
+      "documentUuid": "Compendium.sdm.gadgets.Item.zyS1zptSMJK7Ltvr",
       "img": "icons/tools/navigation/watch-simple-blue.webp",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "Electronic Ear",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.YapxuFqE7bYvmn81",
+      "documentUuid": "Compendium.sdm.gadgets.Item.YapxuFqE7bYvmn81",
       "img": "icons/commodities/biological/ear-grey-brown.webp",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Clicker Casket",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.EL2LAAPsRCHsgCPG",
+      "documentUuid": "Compendium.sdm.gadgets.Item.EL2LAAPsRCHsgCPG",
       "img": "icons/commodities/treasure/box-jade-tassel.webp",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Microgolem",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.llpprtA1lMcn46hM",
+      "documentUuid": "Compendium.sdm.gadgets.Item.llpprtA1lMcn46hM",
       "img": "icons/creatures/unholy/demon-hairy-winged-pink.webp",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Holomap",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.eQe3ubjxQDzOJ2Yu",
+      "documentUuid": "Compendium.sdm.gadgets.Item.eQe3ubjxQDzOJ2Yu",
       "img": "icons/commodities/tech/blueprint.webp",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Bioscanner",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.NIMlh2pMBflQN9Y5",
+      "documentUuid": "Compendium.sdm.gadgets.Item.NIMlh2pMBflQN9Y5",
       "img": "icons/commodities/treasure/token-brass-round.webp",
       "weight": 1,
       "range": [

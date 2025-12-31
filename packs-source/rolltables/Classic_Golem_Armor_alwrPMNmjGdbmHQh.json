@@ -5,7 +5,7 @@
     {
       "name": "Spectral Parasite",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.TVuqKPuLoYdYte7O",
+      "documentUuid": "Compendium.sdm.armors.Item.TVuqKPuLoYdYte7O",
       "img": "icons/creatures/magical/construct-golem-stone-blue.webp",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "Malachite  Swirl",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.FeDJuaZmiUBPOEdB",
+      "documentUuid": "Compendium.sdm.armors.Item.FeDJuaZmiUBPOEdB",
       "img": "icons/creatures/magical/construct-stone-earth-gray.webp",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Onyx Ghost",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.iGyUS3p7dQPAAzlk",
+      "documentUuid": "Compendium.sdm.armors.Item.iGyUS3p7dQPAAzlk",
       "img": "icons/creatures/magical/humanoid-silhouette-green.webp",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Porcelain  Walker",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.HVbDfQ9tCQZ4CGOi",
+      "documentUuid": "Compendium.sdm.armors.Item.HVbDfQ9tCQZ4CGOi",
       "img": "icons/creatures/magical/spirit-undead-masked-blue.webp",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Full Archaic",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.UVqt8yXGQrhX86oc",
+      "documentUuid": "Compendium.sdm.armors.Item.UVqt8yXGQrhX86oc",
       "img": "icons/creatures/magical/humanoid-horned-rider.webp",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Brazen Minotaur",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.b3qEDVWOaYuv9nMv",
+      "documentUuid": "Compendium.sdm.armors.Item.b3qEDVWOaYuv9nMv",
       "img": "icons/creatures/magical/construct-iron-stomping-yellow.webp",
       "weight": 1,
       "range": [

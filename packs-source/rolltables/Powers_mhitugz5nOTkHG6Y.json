@@ -5,7 +5,7 @@
     {
       "name": "Wing And Prayer",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.0UpweATkobFSr7oG",
+      "documentUuid": "Compendium.sdm.powers.Item.0UpweATkobFSr7oG",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "Floating Disc",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.0W3XgwXtSPYtEaq0",
+      "documentUuid": "Compendium.sdm.powers.Item.0W3XgwXtSPYtEaq0",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Gem Bomb",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.0g37ZeE8yxwZ0T5m",
+      "documentUuid": "Compendium.sdm.powers.Item.0g37ZeE8yxwZ0T5m",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Yellow Foresight",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.0wTjrRzvs81m5294",
+      "documentUuid": "Compendium.sdm.powers.Item.0wTjrRzvs81m5294",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Orange Dream",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.1AFmtHEZe1OqJodX",
+      "documentUuid": "Compendium.sdm.powers.Item.1AFmtHEZe1OqJodX",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Counterfire",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.24rPNndkgQFXN4rD",
+      "documentUuid": "Compendium.sdm.powers.Item.24rPNndkgQFXN4rD",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -155,7 +155,7 @@
     {
       "name": "Depleted Heavy Metal Rain",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.2yL6lTBGTRVNXexN",
+      "documentUuid": "Compendium.sdm.powers.Item.2yL6lTBGTRVNXexN",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -180,7 +180,7 @@
     {
       "name": "Raise Dead",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.3Kfirgv7rYO9tWko",
+      "documentUuid": "Compendium.sdm.powers.Item.3Kfirgv7rYO9tWko",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -205,7 +205,7 @@
     {
       "name": "Motor Fixative",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.4OY7e1L0eOVOz6Dy",
+      "documentUuid": "Compendium.sdm.powers.Item.4OY7e1L0eOVOz6Dy",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -230,7 +230,7 @@
     {
       "name": "Suspended Insight",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.5Dhg8C7RPbr07jwB",
+      "documentUuid": "Compendium.sdm.powers.Item.5Dhg8C7RPbr07jwB",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -255,7 +255,7 @@
     {
       "name": "Toxin Render",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.6HRDOy73RHB0KXSI",
+      "documentUuid": "Compendium.sdm.powers.Item.6HRDOy73RHB0KXSI",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -280,7 +280,7 @@
     {
       "name": "Dampen Mass",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.7g7FCHk4COB7CGx1",
+      "documentUuid": "Compendium.sdm.powers.Item.7g7FCHk4COB7CGx1",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -305,7 +305,7 @@
     {
       "name": "Eyes of the Arrow",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.9Zqi6pWhTob2LkN7",
+      "documentUuid": "Compendium.sdm.powers.Item.9Zqi6pWhTob2LkN7",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -330,7 +330,7 @@
     {
       "name": "Speak With Husk",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.9dnTnoj3JQtDQCOH",
+      "documentUuid": "Compendium.sdm.powers.Item.9dnTnoj3JQtDQCOH",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -355,7 +355,7 @@
     {
       "name": "Three-Point Immobility",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.AgT3GR63o3raQEgv",
+      "documentUuid": "Compendium.sdm.powers.Item.AgT3GR63o3raQEgv",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -380,7 +380,7 @@
     {
       "name": "Supplicate the Rotting God",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.BPC72mUt9cuKalUl",
+      "documentUuid": "Compendium.sdm.powers.Item.BPC72mUt9cuKalUl",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -405,7 +405,7 @@
     {
       "name": "Primary Desenescence",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.ClEi0dTQCpQDe16e",
+      "documentUuid": "Compendium.sdm.powers.Item.ClEi0dTQCpQDe16e",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -430,7 +430,7 @@
     {
       "name": "Roadfinder",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.DPdg0Tm3HLKkRFHY",
+      "documentUuid": "Compendium.sdm.powers.Item.DPdg0Tm3HLKkRFHY",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -455,7 +455,7 @@
     {
       "name": "Better Pastures",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.DbJnTKP2PxQnJHSa",
+      "documentUuid": "Compendium.sdm.powers.Item.DbJnTKP2PxQnJHSa",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -480,7 +480,7 @@
     {
       "name": "Essence Sift",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.DbP7DVD8jzBTP5OB",
+      "documentUuid": "Compendium.sdm.powers.Item.DbP7DVD8jzBTP5OB",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -505,7 +505,7 @@
     {
       "name": "Pyreball",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.EQneCAZWYdltSFXS",
+      "documentUuid": "Compendium.sdm.powers.Item.EQneCAZWYdltSFXS",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -530,7 +530,7 @@
     {
       "name": "Dryland Sculpture",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.EW904QJqp5L8OcJe",
+      "documentUuid": "Compendium.sdm.powers.Item.EW904QJqp5L8OcJe",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -555,7 +555,7 @@
     {
       "name": "Purple Memories",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.GJVO6xbLDmFdCGWQ",
+      "documentUuid": "Compendium.sdm.powers.Item.GJVO6xbLDmFdCGWQ",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -580,7 +580,7 @@
     {
       "name": "Highway Cruiser",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.GhxxJrR0x38IbSbJ",
+      "documentUuid": "Compendium.sdm.powers.Item.GhxxJrR0x38IbSbJ",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -605,7 +605,7 @@
     {
       "name": "Process Food",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.IzdVLwOgpy73j4Ow",
+      "documentUuid": "Compendium.sdm.powers.Item.IzdVLwOgpy73j4Ow",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -630,7 +630,7 @@
     {
       "name": "Dissolution and Resolution of the Spirit",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.JTUZMeEhOUFHYO26",
+      "documentUuid": "Compendium.sdm.powers.Item.JTUZMeEhOUFHYO26",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -655,7 +655,7 @@
     {
       "name": "Tragic Missile",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.KjO6irgJ70h3Ri48",
+      "documentUuid": "Compendium.sdm.powers.Item.KjO6irgJ70h3Ri48",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -680,7 +680,7 @@
     {
       "name": "Invoke Ub Dragon",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.LmfGUcUlFI3ruLpw",
+      "documentUuid": "Compendium.sdm.powers.Item.LmfGUcUlFI3ruLpw",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -705,7 +705,7 @@
     {
       "name": "Imbue Edge",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.PnMwDe4ep5WtjPNg",
+      "documentUuid": "Compendium.sdm.powers.Item.PnMwDe4ep5WtjPNg",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -730,7 +730,7 @@
     {
       "name": "Open Person",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.QKhneN81qMD8wFkA",
+      "documentUuid": "Compendium.sdm.powers.Item.QKhneN81qMD8wFkA",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -755,7 +755,7 @@
     {
       "name": "Anti-Babylon",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.QttLgsPwwn8H5Ty8",
+      "documentUuid": "Compendium.sdm.powers.Item.QttLgsPwwn8H5Ty8",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -780,7 +780,7 @@
     {
       "name": "Thornstone Obelisk",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.QzVNCdU1oJWEKwud",
+      "documentUuid": "Compendium.sdm.powers.Item.QzVNCdU1oJWEKwud",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -805,7 +805,7 @@
     {
       "name": "Akaula's Sacrificial Hero",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.R29KoaPbHrCJ10QT",
+      "documentUuid": "Compendium.sdm.powers.Item.R29KoaPbHrCJ10QT",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -830,7 +830,7 @@
     {
       "name": "Burdenbeast Modification",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.SJVVY9VM1HAvKt8c",
+      "documentUuid": "Compendium.sdm.powers.Item.SJVVY9VM1HAvKt8c",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -855,7 +855,7 @@
     {
       "name": "Magic Jar",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.SSV9dL0NcCljWp25",
+      "documentUuid": "Compendium.sdm.powers.Item.SSV9dL0NcCljWp25",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -880,7 +880,7 @@
     {
       "name": "Recall Soul",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.TMlq4lYHHCZ20DbR",
+      "documentUuid": "Compendium.sdm.powers.Item.TMlq4lYHHCZ20DbR",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -905,7 +905,7 @@
     {
       "name": "Yellow Cloud",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.V1EAZIPbEViHvYjZ",
+      "documentUuid": "Compendium.sdm.powers.Item.V1EAZIPbEViHvYjZ",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -930,7 +930,7 @@
     {
       "name": "Can Trip",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.V601Cc4psvs9WhZz",
+      "documentUuid": "Compendium.sdm.powers.Item.V601Cc4psvs9WhZz",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -955,7 +955,7 @@
     {
       "name": "Reason’s Harvest",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.VKCRUwI9rE26Yw5J",
+      "documentUuid": "Compendium.sdm.powers.Item.VKCRUwI9rE26Yw5J",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -980,7 +980,7 @@
     {
       "name": "Egregious Topology",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.X4WWBPEB9fl6qwKm",
+      "documentUuid": "Compendium.sdm.powers.Item.X4WWBPEB9fl6qwKm",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -1005,7 +1005,7 @@
     {
       "name": "Real-time Rebuild",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.XVwqxKEEzRIK2ZkH",
+      "documentUuid": "Compendium.sdm.powers.Item.XVwqxKEEzRIK2ZkH",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -1030,7 +1030,7 @@
     {
       "name": "Knock / Lock",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.Xpd3xl4YDD2bzOZn",
+      "documentUuid": "Compendium.sdm.powers.Item.Xpd3xl4YDD2bzOZn",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -1055,7 +1055,7 @@
     {
       "name": "Blue Lotus",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.Yra8Qz5WFY8wVWud",
+      "documentUuid": "Compendium.sdm.powers.Item.Yra8Qz5WFY8wVWud",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -1080,7 +1080,7 @@
     {
       "name": "Mother of Bullets",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.ZO05stEklZz8lb67",
+      "documentUuid": "Compendium.sdm.powers.Item.ZO05stEklZz8lb67",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -1105,7 +1105,7 @@
     {
       "name": "Parasoma Transference",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.bwQeiUJJ1VuqeZbq",
+      "documentUuid": "Compendium.sdm.powers.Item.bwQeiUJJ1VuqeZbq",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -1130,7 +1130,7 @@
     {
       "name": "Ring of Lead",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.fsVkHnunMrz6XIoQ",
+      "documentUuid": "Compendium.sdm.powers.Item.fsVkHnunMrz6XIoQ",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -1155,7 +1155,7 @@
     {
       "name": "Roadmaker",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.gDiuvAyAdiIRKv2a",
+      "documentUuid": "Compendium.sdm.powers.Item.gDiuvAyAdiIRKv2a",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -1180,7 +1180,7 @@
     {
       "name": "Stoyevod’s Irreducible Crystallization of the Ego Complex",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.gNi0oSZHtAPdreCt",
+      "documentUuid": "Compendium.sdm.powers.Item.gNi0oSZHtAPdreCt",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -1205,7 +1205,7 @@
     {
       "name": "Burden Share",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.iodUpfHdxkIR6x31",
+      "documentUuid": "Compendium.sdm.powers.Item.iodUpfHdxkIR6x31",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -1230,7 +1230,7 @@
     {
       "name": "Red Mist",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.jBq6pmWb0wAq2KR1",
+      "documentUuid": "Compendium.sdm.powers.Item.jBq6pmWb0wAq2KR1",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -1255,7 +1255,7 @@
     {
       "name": "Alter Self",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.jJDkCPAUq9BSYTv5",
+      "documentUuid": "Compendium.sdm.powers.Item.jJDkCPAUq9BSYTv5",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -1280,7 +1280,7 @@
     {
       "name": "Dancing In The Hail",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.kxK7CBdxAeAXM8jJ",
+      "documentUuid": "Compendium.sdm.powers.Item.kxK7CBdxAeAXM8jJ",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -1305,7 +1305,7 @@
     {
       "name": "Anne Astec",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.lfMNdFE6y6gW6PKb",
+      "documentUuid": "Compendium.sdm.powers.Item.lfMNdFE6y6gW6PKb",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -1330,7 +1330,7 @@
     {
       "name": "Restorative Slumber",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.mo9Ixs345yoUhYlo",
+      "documentUuid": "Compendium.sdm.powers.Item.mo9Ixs345yoUhYlo",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -1355,7 +1355,7 @@
     {
       "name": "Access Noötree",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.nwZH4E5a6yWDNMaE",
+      "documentUuid": "Compendium.sdm.powers.Item.nwZH4E5a6yWDNMaE",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -1380,7 +1380,7 @@
     {
       "name": "Cerebral Purge",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.oNNGKX0DJY2N4Lah",
+      "documentUuid": "Compendium.sdm.powers.Item.oNNGKX0DJY2N4Lah",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -1405,7 +1405,7 @@
     {
       "name": "Green Haven",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.ouzJeCx2u3VeulNP",
+      "documentUuid": "Compendium.sdm.powers.Item.ouzJeCx2u3VeulNP",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -1430,7 +1430,7 @@
     {
       "name": "Entropic Reversal",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.p90OPNjPUWxnNJvO",
+      "documentUuid": "Compendium.sdm.powers.Item.p90OPNjPUWxnNJvO",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -1455,7 +1455,7 @@
     {
       "name": "Metempsychosis",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.ppsHg8bwEKvhGCxK",
+      "documentUuid": "Compendium.sdm.powers.Item.ppsHg8bwEKvhGCxK",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -1480,7 +1480,7 @@
     {
       "name": "Nihil Est!",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.rN3Yqwt6oPs2Wyoi",
+      "documentUuid": "Compendium.sdm.powers.Item.rN3Yqwt6oPs2Wyoi",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -1505,7 +1505,7 @@
     {
       "name": "Eyes of Akaula",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.uKxsMjYhb8SMkld2",
+      "documentUuid": "Compendium.sdm.powers.Item.uKxsMjYhb8SMkld2",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -1530,7 +1530,7 @@
     {
       "name": "Animate Corpse",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.uuzpRJniKhBhLkxF",
+      "documentUuid": "Compendium.sdm.powers.Item.uuzpRJniKhBhLkxF",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -1555,7 +1555,7 @@
     {
       "name": "Hlod Person",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.xOXJly1gLYLRBljs",
+      "documentUuid": "Compendium.sdm.powers.Item.xOXJly1gLYLRBljs",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -1580,7 +1580,7 @@
     {
       "name": "Linked Portals",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.yUMiVaBgI7MiFPf2",
+      "documentUuid": "Compendium.sdm.powers.Item.yUMiVaBgI7MiFPf2",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [
@@ -1605,7 +1605,7 @@
     {
       "name": "Big Wish",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.zne8ZzbDf4m1Nqyf",
+      "documentUuid": "Compendium.sdm.powers.Item.zne8ZzbDf4m1Nqyf",
       "img": "icons/svg/fire.svg",
       "weight": 1,
       "range": [

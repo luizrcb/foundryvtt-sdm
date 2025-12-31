@@ -1,0 +1,330 @@
+{
+  "name": "Manager",
+  "description": "A random table created from the contents of the Manager Folder.",
+  "results": [
+    {
+      "name": "Mightier Pen",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.1fMqs4jxvwjttX1a",
+      "img": "icons/tools/scribal/pen-steel-grey-brown.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "WTdFBVDPk9zxncbd",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VBJzr63OJ8H34iI2.WTdFBVDPk9zxncbd"
+    },
+    {
+      "name": "Reading Monocle",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.613hoIAQY5fHGC9Z",
+      "img": "icons/tools/scribal/spectacles-glasses.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "qNpg3txTlHZQUAtn",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VBJzr63OJ8H34iI2.qNpg3txTlHZQUAtn"
+    },
+    {
+      "name": "Soup Thermos",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.EKJ50DRczWu6NVic",
+      "img": "icons/consumables/food/soup-broth-bowl-wooden-yellow.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "4YbxMxciyvagX8uy",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VBJzr63OJ8H34iI2.4YbxMxciyvagX8uy"
+    },
+    {
+      "name": "City Shoes",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.L8MpYSmVrl9Dy0JV",
+      "img": "icons/equipment/feet/shoes-collared-leather-blue.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "9HxXb9nIjVTHvRRL",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VBJzr63OJ8H34iI2.9HxXb9nIjVTHvRRL"
+    },
+    {
+      "name": "Sensory Overloader",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.PJGky4UKtEAnEIXD",
+      "img": "icons/magic/light/explosion-star-large-teal.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "t2MNxKuOoltqPSEY",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VBJzr63OJ8H34iI2.t2MNxKuOoltqPSEY"
+    },
+    {
+      "name": "Book of Regulations",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.QhoQXKN6LWMVzExX",
+      "img": "icons/sundries/books/book-worn-purple.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "VznwL79a08hn35QA",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VBJzr63OJ8H34iI2.VznwL79a08hn35QA"
+    },
+    {
+      "name": "Fireward Circlet",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.ZpqfrpXTGIROcF4g",
+      "img": "icons/equipment/finger/ring-horseshoe-gold-red.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "FZfF98pzwK1Bhd4s",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VBJzr63OJ8H34iI2.FZfF98pzwK1Bhd4s"
+    },
+    {
+      "name": "Battle Briefcase",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.buUB9YvQWbBJA0Et",
+      "img": "icons/containers/bags/pouch-leather-silver-grey.webp",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "8XSde4Ljvs4pbMWK",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VBJzr63OJ8H34iI2.8XSde4Ljvs4pbMWK"
+    },
+    {
+      "name": "Ruffle Coat",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.gQVwqQE9FQc4YGuR",
+      "img": "icons/equipment/chest/robe-layered-red.webp",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "PLhCSaidjHes7ywm",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VBJzr63OJ8H34iI2.PLhCSaidjHes7ywm"
+    },
+    {
+      "name": "Walking Stick Sword",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.gjAqVCw7rLXwZ2GX",
+      "img": "icons/weapons/staves/staff-ornate-purple.webp",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "ydmObtnEOTqu8HT7",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VBJzr63OJ8H34iI2.ydmObtnEOTqu8HT7"
+    },
+    {
+      "name": "Articulated G-Wagon",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.hkrTctlGhAmv0lmr",
+      "img": "icons/commodities/tech/cog-copper.webp",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_id": "AmVwBD3jTpQpr65P",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VBJzr63OJ8H34iI2.AmVwBD3jTpQpr65P"
+    },
+    {
+      "name": "Cunning Watch",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.pC4QWyd915DkUyxs",
+      "img": "icons/commodities/tech/watch.webp",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_id": "t57uwCRGWFNfxai2",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VBJzr63OJ8H34iI2.t57uwCRGWFNfxai2"
+    }
+  ],
+  "formula": "1d12",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8iXTxWS7BmWPt7Io",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.5",
+    "createdTime": 1767193807163,
+    "modifiedTime": 1767193807175,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "VBJzr63OJ8H34iI2",
+  "sort": 200000,
+  "_key": "!tables!VBJzr63OJ8H34iI2"
+}

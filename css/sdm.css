@@ -470,6 +470,16 @@ input[type=radio]::after {
   filter: sepia(0.5) hue-rotate(0deg);
 }
 
+.lucky {
+  color: #6d1783;
+  font-weight: bold;
+}
+
+.is7 {
+  color: #6d1783;
+  filter: sepia(0.5) hue-rotate(0deg);
+}
+
 .hero-dice-btn {
   margin-top: 10px;
 }

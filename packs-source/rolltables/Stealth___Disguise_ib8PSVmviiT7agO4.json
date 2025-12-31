@@ -5,7 +5,7 @@
     {
       "name": "Dampsound Shoes",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.YID6ILzuXkiRrFSQ",
+      "documentUuid": "Compendium.sdm.gadgets.Item.YID6ILzuXkiRrFSQ",
       "img": "icons/equipment/feet/shoes-rounded-pink.webp",
       "weight": 1,
       "range": [
@@ -30,7 +30,7 @@
     {
       "name": "Unnoticeability Mask",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.otJTTrFSMh9QZBAx",
+      "documentUuid": "Compendium.sdm.gadgets.Item.otJTTrFSMh9QZBAx",
       "img": "icons/magic/control/fear-fright-white.webp",
       "weight": 1,
       "range": [
@@ -55,7 +55,7 @@
     {
       "name": "Voice Modulator",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.FwrABfOjXDA4FP1o",
+      "documentUuid": "Compendium.sdm.gadgets.Item.FwrABfOjXDA4FP1o",
       "img": "icons/equipment/neck/necklace-animal-scarab.webp",
       "weight": 1,
       "range": [
@@ -80,7 +80,7 @@
     {
       "name": "Wall-Blender",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.xM0Vg1HIZRXDcZVW",
+      "documentUuid": "Compendium.sdm.gadgets.Item.xM0Vg1HIZRXDcZVW",
       "img": "icons/magic/control/silhouette-hold-change-green.webp",
       "weight": 1,
       "range": [
@@ -105,7 +105,7 @@
     {
       "name": "Dark-Vision Goggles",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.8xc6TKx2c3rF9Lwa",
+      "documentUuid": "Compendium.sdm.gadgets.Item.8xc6TKx2c3rF9Lwa",
       "img": "icons/equipment/head/goggles-leather-tan.webp",
       "weight": 1,
       "range": [
@@ -130,7 +130,7 @@
     {
       "name": "Soft-Hands Gloves",
       "type": "document",
-      "documentUuid": "Compendium.sdm.equipment.Item.PPYa8oK9eh8go30M",
+      "documentUuid": "Compendium.sdm.gadgets.Item.PPYa8oK9eh8go30M",
       "img": "icons/equipment/hand/glove-cuffed-studded-red.webp",
       "weight": 1,
       "range": [
