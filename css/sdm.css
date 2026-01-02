@@ -947,7 +947,7 @@ input[type=radio]::after {
   .life-temp-after {
     position: absolute;
     right: 8px;
-    top: 50%;
+    top: 45%;
     transform: translateY(-50%);
     font-size: 0.9rem;
     font-weight: 500;
