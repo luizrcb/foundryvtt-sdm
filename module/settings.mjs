@@ -1,4 +1,4 @@
-import { DiceType } from './helpers/constants.mjs';
+import { DEFAULT_CASH_ICON, DiceType } from './helpers/constants.mjs';
 import { $fmt, $l10n } from './helpers/globalUtils.mjs';
 import { handleHeroDice } from './rolls/hero_dice/index.mjs';
 
@@ -9,7 +9,6 @@ export const NPC_DEFAULT_MORALE_FORMULA = '2d6';
 export const SAVING_THROW_BASE_FORMULA = '1d20x';
 export const DEFAULT_LEVEL_UP_SOUND =
   'systems/sdm/assets/audio/sound_effects/single_church_bell.mp3';
-export const DEFAULT_CURRENCY_IMG = 'icons/commodities/currency/coins-stitched-pouch-brown.webp';
 export const DEFAULT_MAX_POWERS = 3;
 export const DEFAULT_HARD_LIMIT = 13;
 export const DEFAULT_SAVE_VALUE = 13;
@@ -88,9 +87,9 @@ export function registerSystemSettings() {
     restricted: true,
     type: new foundry.data.fields.FilePathField({
       categories: ['IMAGE'],
-      default: DEFAULT_CURRENCY_IMG
+      default: DEFAULT_CASH_ICON
     }),
-    default: DEFAULT_CURRENCY_IMG
+    default: DEFAULT_CASH_ICON
   });
 
   game.settings.register('sdm', 'shouldPlayLevelUpSoundFx', {

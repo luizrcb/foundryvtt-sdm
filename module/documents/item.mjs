@@ -1,6 +1,9 @@
 import { createChatMessage } from '../helpers/chatUtils.mjs';
 import {
   ActorType,
+  DEFAULT_BURDEN_ICON,
+  DEFAULT_GEAR_ICON,
+  DEFAULT_TRAIT_ICON,
   GearType,
   ItemStatusType,
   ItemType,
@@ -18,6 +21,20 @@ const { renderTemplate } = foundry.applications.handlebars;
  * @extends {Item}
  */
 export class SdmItem extends Item {
+  static getDefaultArtwork(itemData) {
+    let icon = DEFAULT_GEAR_ICON;
+
+    if (itemData.type === ItemType.TRAIT) {
+      icon = DEFAULT_TRAIT_ICON;
+    }
+
+    if (itemData.type === ItemType.BURDEN) {
+      icon = DEFAULT_BURDEN_ICON;
+    }
+
+    return { img: icon };
+  }
+
   async _preCreate(data, options, userId) {
     // if (userId !== game.user.id) return;
 
@@ -185,7 +202,7 @@ export class SdmItem extends Item {
     return title;
   }
 
-  getPowerShortTitle(powerData, actorPowerCost = 2, powerCostBonus = 0, overcharge = false, ) {
+  getPowerShortTitle(powerData, actorPowerCost = 2, powerCostBonus = 0, overcharge = false) {
     const powerName = powerData.name || this.name;
     const powerLevel = powerData?.level;
 

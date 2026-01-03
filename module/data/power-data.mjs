@@ -1,4 +1,5 @@
 import { getDefaultAbility } from '../helpers/globalUtils.mjs';
+import { DEFAULT_POWER_ICON } from '../helpers/constants.mjs';
 
 export default class PowerDataModel extends foundry.abstract.DataModel {
   static defineSchema() {
@@ -9,7 +10,7 @@ export default class PowerDataModel extends foundry.abstract.DataModel {
         nullable: true,
         blank: true,
         categories: ['IMAGE'],
-        initial: 'icons/svg/book.svg'
+        initial: DEFAULT_POWER_ICON
       }),
       name: new fields.StringField({ required: false, blank: true, initial: '' }),
       description: new fields.HTMLField(),

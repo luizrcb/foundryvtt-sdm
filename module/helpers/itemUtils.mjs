@@ -1,6 +1,6 @@
 export const UnarmedDamageItem =
   'Compendium.sdm.weapons.Item.uKcbcZUs1jQZskQ4';
-import { GearType, ItemType, SizeUnit } from './constants.mjs';
+import { DEFAULT_POWER_ICON, GearType, ItemType, SizeUnit } from './constants.mjs';
 /**
  * Convert any size unit to sacks.
  * @param {number} size - The size value.
@@ -122,7 +122,7 @@ export function getSlotsTaken(itemSystem) {
 
 export async function makePowerItem({
   name,
-  img = 'icons/svg/fire.svg',
+  img = DEFAULT_POWER_ICON,
   description,
   level,
   range,

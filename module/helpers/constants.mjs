@@ -146,3 +146,26 @@ export const SkillMod = Object.freeze({
   PHYLAKE: 4,
   BUILDER: 5
 });
+
+export const DEFAULT_CHARACTER_ICON = 'icons/svg/mystery-man.svg';
+export const DEFAULT_NPC_ICON = 'icons/svg/mystery-man-black.svg';
+export const DEFAULT_CARAVAN_ICON = 'icons/svg/target.svg';
+
+export const DEFAULT_BURDEN_ICON = 'icons/svg/stoned.svg';
+export const DEFAULT_GEAR_ICON = 'icons/svg/item-bag.svg';
+export const DEFAULT_TRAIT_ICON = 'icons/svg/aura.svg';
+export const DEFAULT_ARMOR_ICON = 'icons/svg/shield.svg';
+export const DEFAULT_POWER_ICON = 'icons/svg/fire.svg';
+export const DEFAULT_POWER_ALBUM_ICON = 'icons/svg/book.svg';
+export const DEFAULT_WARD_ICON = 'icons/svg/frozen.svg';
+export const DEFAULT_WEAPON_ICON = 'icons/svg/sword.svg';
+export const DEFAULT_CASH_ICON = 'icons/commodities/currency/coins-stitched-pouch-brown.webp';
+
+export const GEAR_ICONS = [
+  DEFAULT_GEAR_ICON,
+  DEFAULT_ARMOR_ICON,
+  DEFAULT_POWER_ALBUM_ICON,
+  DEFAULT_POWER_ICON,
+  DEFAULT_WARD_ICON,
+  DEFAULT_WEAPON_ICON
+];

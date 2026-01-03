@@ -1,3 +1,4 @@
+import { DEFAULT_CASH_ICON } from '../../helpers/constants.mjs';
 import { templatePath } from '../../helpers/templates.mjs';
 
 const { DialogV2 } = foundry.applications.api;
@@ -133,7 +134,7 @@ export async function giveCash(
   const defaultCurrencyName = game.settings.get('sdm', 'currencyName') || 'cash';
   const defaultCurrencyImage =
     game.settings.get('sdm', 'currencyImage') ||
-    'icons/commodities/currency/coins-stitched-pouch-brown.webp';
+    DEFAULT_CASH_ICON;
 
   const characters = game.actors.filter(a => a.type === 'character');
   const caravans = game.actors.filter(a => a.type === 'caravan');

@@ -36,30 +36,22 @@ import { SdmActorSheet } from './sheets/actor-sheet.mjs';
 import { SdmCaravanSheet } from './sheets/caravan-sheet.mjs';
 import { SdmItemSheet } from './sheets/item-sheet.mjs';
 
+import {
+  DEFAULT_ARMOR_ICON,
+  DEFAULT_CASH_ICON,
+  DEFAULT_GEAR_ICON,
+  DEFAULT_POWER_ALBUM_ICON,
+  DEFAULT_POWER_ICON,
+  DEFAULT_TRAIT_ICON,
+  DEFAULT_WARD_ICON,
+  DEFAULT_WEAPON_ICON,
+  GEAR_ICONS
+} from './helpers/constants.mjs';
+
 const { ActiveEffectConfig } = foundry.applications.sheets;
 const { Actors, Items } = foundry.documents.collections;
 const { DocumentSheetConfig } = foundry.applications.apps;
 const sheets = foundry.appv1.sheets;
-
-const NPC_DEFAULT_ICON = 'icons/svg/mystery-man-black.svg';
-const CARAVAN_DEFAULT_ICON = 'icons/svg/target.svg';
-const GEAR_DEFAULT_ICON = 'icons/svg/item-bag.svg';
-const BURDEN_DEFAULT_ICON = 'icons/svg/stoned.svg';
-const TRAIT_DEFAULT_ICON = 'icons/svg/aura.svg';
-const DEFAULT_ARMOR_ICON = 'icons/svg/shield.svg';
-const DEFAULT_POWER_ICON = 'icons/svg/fire.svg';
-const DEFAULT_POWER_ALBUM_ICON = 'icons/svg/book.svg';
-const DEFAULT_WARD_ICON = 'icons/svg/frozen.svg';
-const DEFAULT_WEAPON_ICON = 'icons/svg/sword.svg';
-
-const GEAR_ICONS = [
-  GEAR_DEFAULT_ICON,
-  DEFAULT_ARMOR_ICON,
-  DEFAULT_POWER_ALBUM_ICON,
-  DEFAULT_POWER_ICON,
-  DEFAULT_WARD_ICON,
-  DEFAULT_WEAPON_ICON
-];
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -209,14 +201,6 @@ Hooks.on('createActor', async (actor, _options, _id) => {
     updateData['system.experience'] = '300';
   }
 
-  if (actor.type === ActorType.CARAVAN) {
-    updateData['img'] = CARAVAN_DEFAULT_ICON;
-  }
-
-  if (actor.type === ActorType.NPC) {
-    updateData['img'] = NPC_DEFAULT_ICON;
-  }
-
   await actor.update(updateData);
 });
 
@@ -225,14 +209,6 @@ Hooks.on('createItem', async (item, _options, _id) => {
   if (item.getFlag?.('sdm', 'fromCompendium') === UnarmedDamageItem) return;
 
   const updateData = { 'system.readied': false };
-
-  if (item.type === ItemType.TRAIT && item.img === GEAR_DEFAULT_ICON) {
-    updateData['img'] = TRAIT_DEFAULT_ICON;
-  }
-
-  if (item.type === ItemType.BURDEN && item.img === GEAR_DEFAULT_ICON) {
-    updateData['img'] = BURDEN_DEFAULT_ICON;
-  }
 
   await item.update(updateData);
 });
@@ -245,13 +221,14 @@ Hooks.on('updateActor', async actor => {
 });
 
 Hooks.on('updateItem', async item => {
-  const defaultCurrencyImage =
-    game.settings.get('sdm', 'currencyImage') ||
-    'icons/commodities/currency/coins-stitched-pouch-brown.webp';
+  const defaultCurrencyImage = game.settings.get('sdm', 'currencyImage') || DEFAULT_CASH_ICON;
 
   if (!item.isOwner) return;
   const updateData = {};
-  if (item.type === ItemType.GEAR && (GEAR_ICONS.includes(item.img) || item.img === defaultCurrencyImage)) {
+  if (
+    item.type === ItemType.GEAR &&
+    (GEAR_ICONS.includes(item.img) || item.img === defaultCurrencyImage)
+  ) {
     switch (item.system.type) {
       case GearType.ARMOR:
         updateData['img'] = DEFAULT_ARMOR_ICON;
@@ -270,7 +247,7 @@ Hooks.on('updateItem', async item => {
         break;
 
       case '':
-        updateData['img'] = GEAR_DEFAULT_ICON;
+        updateData['img'] = DEFAULT_GEAR_ICON;
     }
 
     if (item.system.size.unit === SizeUnit.CASH) {
@@ -280,7 +257,7 @@ Hooks.on('updateItem', async item => {
 
   if (
     item.type === ItemType.TRAIT &&
-    item.img === TRAIT_DEFAULT_ICON &&
+    item.img === DEFAULT_TRAIT_ICON &&
     item.system.type === TraitType.POWER
   ) {
     updateData['img'] = DEFAULT_POWER_ICON;

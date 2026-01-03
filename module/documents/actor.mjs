@@ -7,7 +7,10 @@ import {
   postConsumeSupplies,
   postLifeChange
 } from '../helpers/actorUtils.mjs';
-import { ActorType, GearType, ItemType, SizeUnit, TraitType } from '../helpers/constants.mjs';
+import {
+  ActorType, DEFAULT_CARAVAN_ICON, DEFAULT_CHARACTER_ICON,
+  DEFAULT_NPC_ICON, GearType, ItemType, SizeUnit, TraitType
+} from '../helpers/constants.mjs';
 import { $l10n, capitalizeFirstLetter, safeEvaluate } from '../helpers/globalUtils.mjs';
 import {
   BURDEN_ITEM_TYPES,
@@ -29,6 +32,20 @@ const { DialogV2 } = foundry.applications.api;
  * @extends {Actor}
  */
 export class SdmActor extends Actor {
+  static getDefaultArtwork(actorData) {
+    let icon = DEFAULT_CHARACTER_ICON;
+
+    if (actorData.type === ActorType.NPC) {
+      icon = DEFAULT_NPC_ICON;
+    }
+
+    if (actorData.type === ActorType.CARAVAN) {
+      icon = DEFAULT_CARAVAN_ICON;
+    }
+
+    return { img: icon };
+  }
+
   // Override the _onUpdate method to handle level changes
   /** @override */
   async _onUpdate(changed, options, userId) {
@@ -288,7 +305,6 @@ export class SdmActor extends Actor {
     } else {
       borrowed.max = life.base + life.bonus;
     }
-
 
     // 3. Processar atributos
     for (const [key, ability] of Object.entries(data.abilities)) {
@@ -734,7 +750,8 @@ export class SdmActor extends Actor {
     const machineToConsume = Math.max(0, parseInt(data.consumeMachine, 10) || 0);
     const undeadToConsume = Math.max(0, parseInt(data.consumeUndead, 10) || 0);
 
-    if (animalToConsume === 0 && humanToConsume === 0 && machineToConsume === 0 && undeadToConsume) return;
+    if (animalToConsume === 0 && humanToConsume === 0 && machineToConsume === 0 && undeadToConsume)
+      return;
 
     // Sort by cost asc (undefined -> 0)
     const byCostAsc = (a, b) => Number(a.system?.cost ?? 0) - Number(b.system?.cost ?? 0);
@@ -1146,9 +1163,10 @@ export class SdmActor extends Actor {
     // current values (safe defaults)
     const currentHero = Math.max(0, Number(this.system?.hero_dice?.value ?? 0));
     const touristEnabled = Boolean(this.system?.tourist_dice?.enabled);
-    const currentTourist = (touristEnabled && shouldUseTouristDice)
-      ? Math.max(0, Number(this.system?.tourist_dice?.value ?? 0))
-      : 0;
+    const currentTourist =
+      touristEnabled && shouldUseTouristDice
+        ? Math.max(0, Number(this.system?.tourist_dice?.value ?? 0))
+        : 0;
 
     // calculate deductions
     const deductFromTourist = Math.min(currentTourist, usedHeroDice);

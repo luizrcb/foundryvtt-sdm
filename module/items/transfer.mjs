@@ -1,4 +1,4 @@
-import { ActorType, DocumentType, SizeUnit } from '../helpers/constants.mjs';
+import { ActorType, DEFAULT_CASH_ICON, DocumentType, SizeUnit } from '../helpers/constants.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 import { getSlotsTaken } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
@@ -60,7 +60,7 @@ async function addCashWithMaxStack(actor, amount, defaultCurrencyName, defaultCu
     creates.push({
       name: defaultCurrencyName || 'cash',
       type: 'gear',
-      img: defaultCurrencyImage || 'icons/commodities/currency/coins-stitched-pouch-brown.webp',
+      img: defaultCurrencyImage || DEFAULT_CASH_ICON,
       system: { size: { unit: SizeUnit.CASH }, quantity: add }
     });
     remaining -= add;
@@ -249,7 +249,7 @@ async function performItemTransfer(
       const currencyName = game.settings.get('sdm', 'currencyName') || 'cash';
       const currencyImage =
         game.settings.get('sdm', 'currencyImage') ||
-        'icons/commodities/currency/coins-stitched-pouch-brown.webp';
+        DEFAULT_CASH_ICON;
 
       itemName = `${amount} ${currencyName}`;
       sourceName = sourceActor.name;
