@@ -43,7 +43,7 @@ export class SdmActor extends Actor {
       icon = DEFAULT_CARAVAN_ICON;
     }
 
-    return { img: icon };
+    return { img: icon, texture: { src: icon } };
   }
 
   // Override the _onUpdate method to handle level changes
