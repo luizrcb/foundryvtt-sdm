@@ -1,6 +1,6 @@
 {
   "folder": "7B3OwXDTVGFSaUls",
-  "name": "Malachite  Swirl",
+  "name": "Malachite Swirl",
   "type": "gear",
   "_id": "FeDJuaZmiUBPOEdB",
   "img": "icons/creatures/magical/construct-stone-earth-gray.webp",
@@ -175,8 +175,8 @@
     "systemId": "sdm",
     "systemVersion": "0.5.4",
     "createdTime": 1767011671983,
-    "modifiedTime": 1767011671983,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1767208362403,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
   },
   "_key": "!items!FeDJuaZmiUBPOEdB"
 }

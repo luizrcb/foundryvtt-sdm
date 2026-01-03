@@ -13,7 +13,7 @@ import {
 } from './helpers/actorUtils.mjs';
 import { configureChatListeners } from './helpers/chatUtils.mjs';
 import { SDM } from './helpers/config.mjs';
-import { ActorType, ItemType } from './helpers/constants.mjs';
+import { ActorType, GearType, ItemType, SizeUnit, TraitType } from './helpers/constants.mjs';
 import { makePowerItem, UnarmedDamageItem } from './helpers/itemUtils.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
@@ -40,6 +40,26 @@ const { ActiveEffectConfig } = foundry.applications.sheets;
 const { Actors, Items } = foundry.documents.collections;
 const { DocumentSheetConfig } = foundry.applications.apps;
 const sheets = foundry.appv1.sheets;
+
+const NPC_DEFAULT_ICON = 'icons/svg/mystery-man-black.svg';
+const CARAVAN_DEFAULT_ICON = 'icons/svg/target.svg';
+const GEAR_DEFAULT_ICON = 'icons/svg/item-bag.svg';
+const BURDEN_DEFAULT_ICON = 'icons/svg/stoned.svg';
+const TRAIT_DEFAULT_ICON = 'icons/svg/aura.svg';
+const DEFAULT_ARMOR_ICON = 'icons/svg/shield.svg';
+const DEFAULT_POWER_ICON = 'icons/svg/fire.svg';
+const DEFAULT_POWER_ALBUM_ICON = 'icons/svg/book.svg';
+const DEFAULT_WARD_ICON = 'icons/svg/frozen.svg';
+const DEFAULT_WEAPON_ICON = 'icons/svg/sword.svg';
+
+const GEAR_ICONS = [
+  GEAR_DEFAULT_ICON,
+  DEFAULT_ARMOR_ICON,
+  DEFAULT_POWER_ALBUM_ICON,
+  DEFAULT_POWER_ICON,
+  DEFAULT_WARD_ICON,
+  DEFAULT_WEAPON_ICON
+];
 
 /* -------------------------------------------- */
 /*  Init Hook                                   */
@@ -176,10 +196,6 @@ Hooks.on('createActor', async (actor, _options, _id) => {
     lockRotation: true
   };
 
-  // if (actor.type === ActorType.NPC) {
-  //   tokenData.appendNumber = true;
-  // }
-
   if ([ActorType.CHARACTER, ActorType.CARAVAN].includes(actor.type)) {
     tokenData.disposition = CONST.TOKEN_DISPOSITIONS.FRIENDLY;
     tokenData.sight = {};
@@ -193,13 +209,32 @@ Hooks.on('createActor', async (actor, _options, _id) => {
     updateData['system.experience'] = '300';
   }
 
+  if (actor.type === ActorType.CARAVAN) {
+    updateData['img'] = CARAVAN_DEFAULT_ICON;
+  }
+
+  if (actor.type === ActorType.NPC) {
+    updateData['img'] = NPC_DEFAULT_ICON;
+  }
+
   await actor.update(updateData);
 });
 
 Hooks.on('createItem', async (item, _options, _id) => {
   if (!item.isOwner) return;
   if (item.getFlag?.('sdm', 'fromCompendium') === UnarmedDamageItem) return;
-  await item.update({ 'system.readied': false });
+
+  const updateData = { 'system.readied': false };
+
+  if (item.type === ItemType.TRAIT && item.img === GEAR_DEFAULT_ICON) {
+    updateData['img'] = TRAIT_DEFAULT_ICON;
+  }
+
+  if (item.type === ItemType.BURDEN && item.img === GEAR_DEFAULT_ICON) {
+    updateData['img'] = BURDEN_DEFAULT_ICON;
+  }
+
+  await item.update(updateData);
 });
 
 Hooks.on('updateActor', async actor => {
@@ -207,6 +242,51 @@ Hooks.on('updateActor', async actor => {
   // await addCompendiumItemToActor(actor, UnarmedDamageItem);
   const name = actor.name;
   await actor.update({ 'prototypeToken.name': name });
+});
+
+Hooks.on('updateItem', async item => {
+  const defaultCurrencyImage =
+    game.settings.get('sdm', 'currencyImage') ||
+    'icons/commodities/currency/coins-stitched-pouch-brown.webp';
+
+  if (!item.isOwner) return;
+  const updateData = {};
+  if (item.type === ItemType.GEAR && (GEAR_ICONS.includes(item.img) || item.img === defaultCurrencyImage)) {
+    switch (item.system.type) {
+      case GearType.ARMOR:
+        updateData['img'] = DEFAULT_ARMOR_ICON;
+        break;
+      case GearType.POWER:
+        updateData['img'] = DEFAULT_POWER_ICON;
+        break;
+      case GearType.POWER_ALBUM:
+        updateData['img'] = DEFAULT_POWER_ALBUM_ICON;
+        break;
+      case GearType.WARD:
+        updateData['img'] = DEFAULT_WARD_ICON;
+        break;
+      case GearType.WEAPON:
+        updateData['img'] = DEFAULT_WEAPON_ICON;
+        break;
+
+      case '':
+        updateData['img'] = GEAR_DEFAULT_ICON;
+    }
+
+    if (item.system.size.unit === SizeUnit.CASH) {
+      updateData['img'] = defaultCurrencyImage;
+    }
+  }
+
+  if (
+    item.type === ItemType.TRAIT &&
+    item.img === TRAIT_DEFAULT_ICON &&
+    item.system.type === TraitType.POWER
+  ) {
+    updateData['img'] = DEFAULT_POWER_ICON;
+  }
+
+  await item.update(updateData);
 });
 
 Hooks.on('updateCombat', async (combat, update) => {
@@ -252,12 +332,22 @@ Hooks.on('renderGamePause', (app, html) => {
 Hooks.on('getChatMessageContextOptions', (html, options) => {
   const canApply = li => {
     const message = game.messages.get(li.dataset.messageId);
-    return (!message.blind || game.user.isGM) && message.rolls && message.rolls.length && canvas.tokens.controlled.length;
+    return (
+      (!message.blind || game.user.isGM) &&
+      message.rolls &&
+      message.rolls.length &&
+      canvas.tokens.controlled.length
+    );
   };
 
   const noTokenSelected = li => {
     const message = game.messages.get(li.dataset.messageId);
-    return (!message.blind || game.user.isGM) && message.rolls && message.rolls.length && !canvas.tokens.controlled.length;
+    return (
+      (!message.blind || game.user.isGM) &&
+      message.rolls &&
+      message.rolls.length &&
+      !canvas.tokens.controlled.length
+    );
   };
 
   options.push(
@@ -352,7 +442,7 @@ Hooks.on('getChatMessageContextOptions', (html, options) => {
         );
       },
       group: 'healing'
-    },
+    }
 
     // NEW: Double Healing
     // {

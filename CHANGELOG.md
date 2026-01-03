@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v0.6.0
+
+- Add new time-related fields to the Caravan sheet (extra days tallied, weeks and month)
+- Change default icons for NPC and Caravan actors
+- Change default icons for Trait and Burden items
+- Change default icon for power, album of power, armor, ward and weapon items
+
 ## v0.5.6
 
 - Fix broken rollable table references to compendium items

@@ -14,8 +14,5 @@ $source_margin: 3px;
     margin-right: $source_margin;
     margin-bottom: $source_margin;
 
-    &[for$='0'] {
-      border-width: 2px;
-    }
   }
 }

@@ -301,7 +301,7 @@ SDM.SupplyType = {
   animal: 'SDM.SupplyTypeAnimal',
   human: 'SDM.SupplyTypeHuman',
   machine: 'SDM.SupplyTypeMachine',
-  undead: 'SDM.SupplyTypeUndead',
+  undead: 'SDM.SupplyTypeUndead'
 };
 
 SDM.skillMod = {
@@ -324,3 +324,18 @@ SDM.wardType = Object.values(WardType).reduce((acc, wardType) => {
   acc[wardType] = `SDM.WardType${capitalizeFirstLetter(wardType)}`;
   return acc;
 }, {});
+
+SDM.months = {
+  1: 'SDM.Month.1',
+  2: 'SDM.Month.2',
+  3: 'SDM.Month.3',
+  4: 'SDM.Month.4',
+  5: 'SDM.Month.5',
+  6: 'SDM.Month.6',
+  7: 'SDM.Month.7',
+  8: 'SDM.Month.8',
+  9: 'SDM.Month.9',
+  10: 'SDM.Month.10',
+  11: 'SDM.Month.11',
+  12: 'SDM.Month.12'
+};

@@ -56,7 +56,8 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       deleteTransport: this._deleteTransport,
       addRoute: this._addRoute,
       deleteRoute: this._deleteRoute,
-      consumeSupplies: this._consumeSupplies
+      consumeSupplies: this._consumeSupplies,
+      radioToggle: this._radioToggle
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: '[data-drop], [data-item-id]' }],
@@ -622,6 +623,47 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       left: this.position.left + 10
     });
     return fp.browse();
+  }
+
+  static _radioToggle(event) {
+    let target = event.target;
+    if (!(target instanceof Element)) return;
+
+    // If click landed on/inside a <label>, resolve the control
+    if (target.tagName === 'LABEL' || target.closest('label')) {
+      const label = target.tagName === 'LABEL' ? target : target.closest('label');
+      const forId = label.getAttribute('for');
+      const control =
+        label.control ||
+        (forId ? document.getElementById(forId) : null) ||
+        label.querySelector('input,select,textarea,button,[tabindex]');
+      if (control) target = control;
+    }
+
+    const isInput = target instanceof HTMLInputElement;
+    const isChecked = isInput ? target.checked : false;
+
+    // Use the element you attached the listener to as the search root
+    const root = event.currentTarget instanceof HTMLElement ? event.currentTarget : document;
+
+    if (isChecked || event.type === 'contextmenu') {
+      // find the next lowest-value radio with the same name and click it
+      if (!isInput) return;
+      const name = target.name;
+      const cur = parseInt(target.value, 10);
+      if (!name || Number.isNaN(cur)) {
+        target.click();
+        return;
+      }
+
+      const prevVal = String(cur - 1);
+      const selector = `input[type="radio"][name="${name}"][value="${prevVal}"]`;
+      const next = root.querySelector(selector) || document.querySelector(selector); // fallback
+
+      if (next instanceof HTMLInputElement) next.click();
+    } else {
+      if (target instanceof HTMLElement) target.click();
+    }
   }
 
   /**

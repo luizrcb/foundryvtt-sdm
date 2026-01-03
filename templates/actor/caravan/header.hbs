@@ -73,6 +73,7 @@
             {{selectOptions @root.config.speedOptions localize=true selected=system.speed inverted=true}}
           </select>
         </div>
+
         <div class="grid-span-1" data-tooltip="{{#if system.overloaded}}{{localize 'SDM.StatusOverloaded'}}{{/if}}">
           <label for="system.capacity" class='resource-label {{#if system.overloaded}}fumble{{/if}}'>
             {{localize 'SDM.FieldCapacity'}} {{#if system.overloaded}} <i class="fa fa-weight-hanging fumble"></i>{{/if}}
@@ -105,6 +106,48 @@
             {{localize 'SDM.FieldCurrentDestination'}}
           </label>
           <input name='system.current_destination' type='text' value='{{system.current_destination}}' />
+        </div>
+
+
+        <div class="grid-span-2">
+          <label for="system.extraDays" class='resource-label'>
+            {{localize 'SDM.ExtraDaysTallied'}}
+          </label>
+          <div class="resource-content sources flex-group-center mt-5">
+            {{#multiboxes system.extraDays}}
+              <input type="radio" id="extraDays-{{actor.id}}-0" name="system.extraDays" value="0" checked="checked" data-dtype='Radio' style="cursor:pointer;">
+              {{#times_from 1 7}}
+                <input type="radio" id="extraDays-{{../actor.id}}-{{this}}" name="system.extraDays" value="{{this}}" data-dtype='Radio' style="cursor:pointer;" />
+                <label class="radio-toggle" data-action="radioToggle" for="extraDays-{{../actor.id}}-{{this}}" style="cursor:pointer;" data-tooltip="{{this}}"></label>
+              {{/times_from}}
+            {{/multiboxes}}
+          </div>
+        </div>
+
+
+        <div class="grid-span-2">
+          <label for="system.weeks" class='resource-label'>
+            {{localize 'SDM.Weeks'}}
+          </label>
+          <div class="resource-content sources flex-group-center mt-5">
+            {{#multiboxes system.weeks}}
+              <input type="radio" id="weeks-{{actor.id}}-0" name="system.weeks" value="0" checked="checked" data-dtype='Radio' style="cursor:pointer;">
+              {{#times_from 1 13}}
+                <input type="radio" id="weeks-{{../actor.id}}-{{this}}" name="system.weeks" value="{{this}}" data-dtype='Radio' style="cursor:pointer;" />
+                <label class="radio-toggle" data-action="radioToggle" for="weeks-{{../actor.id}}-{{this}}" style="cursor:pointer;" data-tooltip="{{this}}"></label>
+              {{/times_from}}
+            {{/multiboxes}}
+          </div>
+        </div>
+
+        <div class="grid-span-2">
+          <label for="system.month" class='resource-label'>
+            {{localize 'SDM.MonthTrucking'}}
+          </label>
+          <select name="system.month" class="resource-content" data-dtype="Number">
+            {{selectOptions @root.config.months localize=true selected=system.month blank=""}}
+          </select>
+
         </div>
       </div>
     </div>

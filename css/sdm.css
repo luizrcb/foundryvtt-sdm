@@ -1828,9 +1828,6 @@ input[type=radio]::after {
   margin-right: 3px;
   margin-bottom: 3px;
 }
-.sdm .sources input ~ label[for$="0"] {
-  border-width: 2px;
-}
 .sdm :root {
   --sdm-font-primary: "Baron Neue";
   --sdm-font-secondary: "Alegreya", sans-serif;

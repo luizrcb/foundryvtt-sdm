@@ -75,6 +75,27 @@ export default class SdmCarvan extends SdmActorBase {
       initial: ''
     });
 
+
+    schema.extraDays = new fields.NumberField({
+      ...requiredInteger,
+      initial: 0,
+      min: 0,
+      max: 7
+    });
+
+    schema.weeks = new fields.NumberField({
+      ...requiredInteger,
+      initial: 0,
+      min: 0,
+      max: 13
+    });
+
+    schema.month = new fields.NumberField({
+      required: false,
+      nullable: true,
+      choices: CONFIG.SDM.months,
+    });
+
     schema.speed = new fields.NumberField({
       ...requiredInteger,
       initial: 0,
