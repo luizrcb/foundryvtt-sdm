@@ -840,7 +840,8 @@ input[type='radio']::after {
     overflow: hidden;
     border: 1px solid rgba(0, 0, 0, 0.35);
   }
-  .life-hp-fill, .life-temp-fill {
+  .life-hp-fill,
+  .life-temp-fill {
     height: 100%;
     width: 0;
     transition: width 300ms ease;
@@ -991,6 +992,12 @@ input[type='radio']::after {
     background: rgba(255, 255, 255, 0.04);
   }
 
+  select option:checked,
+  select option[selected] {
+    font-weight: bold;
+    background: color-mix(in srgb, var(--sdm-c-highlight) 40%, white);
+  }
+
   .theme-dark select option {
     background: var(--background);
     color: var(--sdm-c-font);
@@ -1007,8 +1014,9 @@ input[type='radio']::after {
 
   .theme-dark select option:checked,
   .theme-dark select option[selected] {
-    background: var(--sdm-c-highlight);
+   background: color-mix(in srgb, var(--sdm-c-highlight) 60%, black);
     color: var(--sdm-c-font);
+    font-weight: bold;
   }
 
   .theme-dark select option:focus {
