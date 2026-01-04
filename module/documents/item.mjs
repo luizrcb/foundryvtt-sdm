@@ -107,12 +107,116 @@ export class SdmItem extends Item {
   }
 
   /**
+   * Apply this ActiveEffect to a provided Actor.
+   * @param {Item} item                   The Actor to whom this effect should be applied
+   * @param {EffectChangeData} change       The change data being applied
+   * @returns {Record<string, *>}           An object of property paths and their updated values.
+   */
+
+  apply(item, change) {
+    let field;
+    const changes = {};
+    if (change.key.startsWith('system.')) {
+      if (item.system instanceof foundry.abstract.DataModel) {
+        field = item.system.schema.getField(change.key.slice(7));
+      }
+    } else field = item.schema.getField(change.key);
+    if (field) changes[change.key] = this.constructor.applyField(actor, change, field);
+    // else this._applyLegacy(item, change, changes);
+    return changes;
+  }
+
+  /**
    * Augment the basic Item data model with additional dynamic data.
    */
   prepareData() {
     // As with the actor class, items are documents that can have their data
     // preparation methods overridden (such as prepareBaseData()).
     super.prepareData();
+  }
+
+  /**
+   * Enable Active Effects on Item
+   */
+  prepareEmbeddedDocuments() {
+    // console.log("SR6E | SR6Item.prepareEmbeddedDocuments() DEBUG", this.uuid, this.name);
+    super.prepareEmbeddedDocuments();
+    if (this.actor) this.applyActiveEffects();
+  }
+
+  /**
+   * An object that tracks which tracks the changes to the data model which were applied by active effects
+   * @type {object}
+   */
+  overrides = this.overrides ?? {};
+
+  /**
+   * Apply any transformations to the Item data which are caused by ActiveEffects.
+   */
+  applyActiveEffects() {
+    const overrides = {};
+
+    // Organize non-disabled effects by their application priority
+    const changes = [];
+    for (const effect of this.allApplicableEffects()) {
+      if (!effect.active) continue;
+      changes.push(
+        ...effect.changes.map(change => {
+          const c = foundry.utils.deepClone(change);
+          c.effect = effect;
+          c.priority = c.priority ?? c.mode * 10;
+          return c;
+        })
+      );
+      for (const statusId of effect.statuses) this.statuses.add(statusId);
+    }
+    changes.sort((a, b) => a.priority - b.priority);
+
+    // Apply all changes
+    for (let change of changes) {
+      if (!change.key) continue;
+      if (typeof change.value === 'string' && change.value?.startsWith('@actor') && this.actor) {
+        const key = change.value.substring(7);
+        change.value = foundry.utils.getProperty(this.actor, key);
+      }
+      if (typeof change.value === 'string' && change.value?.startsWith('@item')) {
+        const key = change.value.substring(6);
+        change.value = foundry.utils.getProperty(this, key);
+      }
+
+      const changes = change.effect.apply(this, change);
+      Object.assign(overrides, changes);
+    }
+
+    // Expand the set of final overrides
+    this.overrides = foundry.utils.expandObject(overrides);
+  }
+
+  /**
+   * Get all ActiveEffects that may apply to this Item.
+   * @yields {ActiveEffect}
+   * @returns {Generator<ActiveEffect, void, void>}
+   */
+  *allApplicableEffects(returnAll = false) {
+    const effects = this.effects;
+
+    // Lets first apply Active Effects embedded in this item, to this Item
+    for (const effect of this.effects) {
+      // Only use effects that aren't transfered to the Actor
+      if (returnAll || !effect.transfer) yield effect;
+    }
+  }
+
+  /**
+   * Retrieve the list of ActiveEffects that are embedded on this Item, or on its Mods
+   * @type {ActiveEffect[]}
+   */
+  get allEffects() {
+    const effects = [];
+    for (const effect of this.allApplicableEffects(true)) {
+      effects.push(effect);
+    }
+    return effects;
   }
 
   getCostTitle(addParentheses = true) {

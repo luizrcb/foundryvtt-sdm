@@ -1,4 +1,6 @@
 import SdmActiveEffectConfig from './app/active-effect-config.mjs';
+import SdmActiveEffectConfig14 from './app/active-effect-config14.mjs';
+
 import * as models from './data/_module.mjs';
 import { SdmActor } from './documents/actor.mjs';
 import { SdmCombatant } from './documents/combatant.mjs';
@@ -13,7 +15,13 @@ import {
 } from './helpers/actorUtils.mjs';
 import { configureChatListeners } from './helpers/chatUtils.mjs';
 import { SDM } from './helpers/config.mjs';
-import { ActorType, GearType, ItemType, SizeUnit, TraitType } from './helpers/constants.mjs';
+import {
+  ActorType,
+  GearType,
+  ItemType,
+  SizeUnit,
+  TraitType
+} from './helpers/constants.mjs';
 import { makePowerItem, UnarmedDamageItem } from './helpers/itemUtils.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
@@ -42,6 +50,7 @@ import {
   DEFAULT_GEAR_ICON,
   DEFAULT_POWER_ALBUM_ICON,
   DEFAULT_POWER_ICON,
+  DEFAULT_SKILL_ICON,
   DEFAULT_TRAIT_ICON,
   DEFAULT_WARD_ICON,
   DEFAULT_WEAPON_ICON,
@@ -213,13 +222,6 @@ Hooks.on('createItem', async (item, _options, _id) => {
   await item.update(updateData);
 });
 
-Hooks.on('updateActor', async actor => {
-  if (!actor.isOwner) return;
-  // await addCompendiumItemToActor(actor, UnarmedDamageItem);
-  const name = actor.name;
-  await actor.update({ 'prototypeToken.name': name });
-});
-
 Hooks.on('updateItem', async item => {
   const defaultCurrencyImage = game.settings.get('sdm', 'currencyImage') || DEFAULT_CASH_ICON;
 
@@ -257,10 +259,19 @@ Hooks.on('updateItem', async item => {
 
   if (
     item.type === ItemType.TRAIT &&
-    item.img === DEFAULT_TRAIT_ICON &&
-    item.system.type === TraitType.POWER
+    (item.img === DEFAULT_TRAIT_ICON ||
+      item.img === DEFAULT_POWER_ICON ||
+      item.img === DEFAULT_SKILL_ICON)
   ) {
-    updateData['img'] = DEFAULT_POWER_ICON;
+    updateData['img'] = DEFAULT_TRAIT_ICON;
+
+    if (item.system.type === TraitType.POWER) {
+      updateData['img'] = DEFAULT_POWER_ICON;
+    }
+
+    if (item.system.type === TraitType.SKILL) {
+      updateData['img'] = DEFAULT_SKILL_ICON;
+    }
   }
 
   await item.update(updateData);
@@ -446,6 +457,12 @@ Hooks.once('init', function () {
   globalThis.sdm = game.sdm = Object.assign(game.system, globalThis.sdm);
   CONFIG.SDM = SDM;
 
+  // v14
+  CONFIG.ActiveEffect.phases = {
+    initial: { label: 'Init' },
+    final: { label: 'Final' }
+  };
+
   // Define custom Document and DataModel classes
   CONFIG.Actor.documentClass = SdmActor;
 
@@ -490,7 +507,16 @@ Hooks.once('init', function () {
   });
 
   DocumentSheetConfig.unregisterSheet(ActiveEffect, 'core', ActiveEffectConfig);
-  DocumentSheetConfig.registerSheet(ActiveEffect, 'sdm', SdmActiveEffectConfig, {
+
+  let activeEffectConfigClass;
+
+  if (game.release.generation === 13) {
+    activeEffectConfigClass = SdmActiveEffectConfig;
+  } else {
+    activeEffectConfigClass = SdmActiveEffectConfig14;
+  }
+
+  DocumentSheetConfig.registerSheet(ActiveEffect, 'sdm', activeEffectConfigClass, {
     makeDefault: true
   });
 

@@ -67,6 +67,10 @@ export class SdmActor extends Actor {
       await this.update(updates);
     }
 
+    if (changed.name !== undefined) {
+      await this.update({ 'prototypeToken.name': changed.name });
+    }
+
     if (changed.system?.experience !== undefined) {
       let resultingExperience = safeEvaluate(changed.system?.experience);
       resultingExperience = parseInt(resultingExperience, 10);

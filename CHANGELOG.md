@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.6.1
+
+- Fix how we get the default icons for actors and items
+- Change trait, ward and skill default icons
+- Allow active effects to be applied on item properties
+
 ## v0.6.0
 
 - Add new time-related fields to the Caravan sheet (extra days tallied, weeks and month)

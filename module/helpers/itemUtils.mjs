@@ -89,16 +89,16 @@ export async function onItemCreateActiveEffects(item) {
 
 async function toggleEffectTransfer(effect, shouldBeActive) {
   const effectUpdates = {};
-
+  if (!effect.transfer) return;
   if (shouldBeActive) {
     // Enable transfer and activate effect
     effectUpdates.disabled = false;
     effectUpdates['flags.core.statusId'] = null; // Clear disabled status
-    effectUpdates.transfer = true;
+    //effectUpdates.transfer = true;
   } else {
     // Disable transfer and deactivate effect
     effectUpdates.disabled = true;
-    effectUpdates.transfer = false;
+   // effectUpdates.transfer = false;
   }
 
   await effect.update(effectUpdates);

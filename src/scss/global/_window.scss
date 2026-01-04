@@ -992,11 +992,11 @@ input[type='radio']::after {
     background: rgba(255, 255, 255, 0.04);
   }
 
-  select option:checked,
-  select option[selected] {
-    font-weight: bold;
-    background: color-mix(in srgb, var(--sdm-c-highlight) 40%, white);
-  }
+  // select option:checked,
+  // select option[selected] {
+  //   font-weight: bold;
+  //   background: color-mix(in srgb, var(--sdm-c-highlight) 40%, white);
+  // }
 
   .theme-dark select option {
     background: var(--background);
