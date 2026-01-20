@@ -34,6 +34,7 @@
         {{/if}}
       </div>
 
+     {{#if (eq item.system.type 'power')}}
       <div class='resource'>
         <label class='resource-label' for="system.charges.max">{{localize 'SDM.ItemCharges'}}</label>
         <div class='resource-content flexrow flex-center flex-between flex-group-center'>
@@ -46,6 +47,7 @@
           />
         </div>
       </div>
+      {{/if}}
 
       {{#if item.system.is_hallmark}}
       <div class='resource'>

@@ -35,6 +35,9 @@
         </div>
       {{/if}}
       {{#if trait.system.is_hallmark}}<i class="fa-regular fa-star hallmark" data-tooltip="{{localize 'SDM.HallmarkItem'}}"></i>{{/if}}
+       {{#if (gt trait.system.charges.max 0) }} <span
+       data-tooltip="{{localize 'SDM.ItemCharges'}}"
+      >({{trait.system.charges.value}}/{{trait.system.charges.max}})&nbsp;</span>{{/if}}
       {{trait.name}}
       {{#if (and (eq trait.system.type 'skill') (gt trait.system.skill.modifier_final 0))}}
         (+{{trait.system.skill.modifier_final}})

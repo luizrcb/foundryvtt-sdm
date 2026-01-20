@@ -554,6 +554,18 @@ export class SdmItem extends Item {
     });
   }
 
+  async updateCurrentCharges(difference = 0) {
+    const newCurrentCharges = Math.clamp(
+      this.system.charges.value + difference,
+      0,
+      this.system.charges.max
+    );
+
+    await this.update({
+      'system.charges.value': newCurrentCharges
+    });
+  }
+
   /**
    * Prepare a data object which defines the data schema used by dice roll commands against this Item
    * @override

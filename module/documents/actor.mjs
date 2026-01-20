@@ -980,6 +980,32 @@ export class SdmActor extends Actor {
           await this.sheet.unpackStartingKitItem(target);
         }
       },
+       {
+        name: 'SDM.Item.AddOneCharge',
+        icon: '<i class="fa-solid fa-circle-plus"></i>',
+        condition: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          if (item.system.charges.max === 0) return false;
+          return this.isOwner && (item.system.charges.value < item.system.charges.max);
+        },
+        callback: async target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          await item.updateCurrentCharges(1);
+        }
+      },
+       {
+        name: 'SDM.Item.RemoveOneCharge',
+        icon: '<i class="fa-solid fa-circle-minus"></i>',
+        condition: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          if (item.system.charges.max === 0) return false;
+          return this.isOwner && (item.system.charges.value > 0);
+        },
+        callback: async target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          await item.updateCurrentCharges(-1);
+        }
+      },
       {
         name: 'SDM.Item.Recharge',
         icon: '<i class="fa-solid fa-battery-full"></i>',
