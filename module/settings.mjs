@@ -58,7 +58,7 @@ export function registerSystemSettings() {
     scope: 'world',
     restricted: true,
     type: Boolean,
-    default: false
+    default: true
   });
 
   game.settings.register('sdm', 'reverseShiftKey', {
@@ -392,6 +392,37 @@ export function registerSystemSettings() {
     restricted: true,
     type: Boolean, // Data type: String, Number, Boolean, etc
     default: false
+  });
+
+  game.settings.register('sdm', 'seasonsStarsIntegration', {
+    name: 'SDM.SettingsSeasonStarsIntegration',
+    hint: 'SDM.SettingsSeasonStarsIntegrationHint',
+    scope: 'world', // "world" = GM only, "client" = per user
+    restricted: true,
+    type: Boolean, // Data type: String, Number, Boolean, etc
+    default: false,
+    onChange: value => {
+      const hasSeasonsModule = game.seasonsStars;
+      let language = game.i18n.lang.toLowerCase();
+      if (language !== 'pt-br') {
+        language = 'en';
+      }
+      const rainbowlands = 'rainbowlands';
+      const rainbowlandsLang = `${rainbowlands}-${language}`;
+      const calendars = game.seasonsStars ? game.seasonsStars.api.getAvailableCalendars() : [];
+      const oldVersionCalendar = calendars.includes(rainbowlands);
+      const hasRainbowlandsCalendar = calendars.includes(rainbowlandsLang);
+      const calendarToUse = hasRainbowlandsCalendar ? rainbowlandsLang : rainbowlands;
+
+      if (!value) return;
+
+      if (value && hasSeasonsModule && (hasRainbowlandsCalendar || oldVersionCalendar)) {
+        game.seasonsStars.api.setActiveCalendar(calendarToUse);
+      } else {
+        ui.notifications.error($l10n('SDM.seasonsStarsIntegrationError'));
+        game.settings.set('sdm', 'seasonsStarsIntegration', false);
+      }
+    }
   });
 }
 

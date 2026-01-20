@@ -128,3 +128,65 @@ export const foundryVersionIsAtLeast = (v) => {
   // true if current >= v
   return !foundry.utils.isNewerVersion(v, current);
 };
+
+const months = [
+  { name: "Newfirst", days: 31 },
+  { name: "Lastmonth", days: 30 },
+  { name: "Firstmonth", days: 30 },
+  { name: "Greenmonth", days: 31 },
+  { name: "Redmonth", days: 30 },
+  { name: "Orangemonth", days: 30 },
+  { name: "Yellowmonth", days: 31 },
+  { name: "Oldsecond", days: 30 },
+  { name: "Unity", days: 30 },
+  { name: "Violetmonth", days: 31 },
+  { name: "Snowbringer", days: 30 },
+  { name: "Deadwinter", days: 30 }
+];
+
+const seasons = [
+  { name: "Winter", startMonth: 12, endMonth: 2 },
+  { name: "Spring", startMonth: 3, endMonth: 5 },
+  { name: "Summer", startMonth: 6, endMonth: 8 },
+  { name: "Autumn", startMonth: 9, endMonth: 11 }
+];
+
+export const getSeasonAndWeek = (day, monthNumber) => {
+  // Encontrar estação
+  const season = seasons.find(s => {
+    if (s.startMonth <= s.endMonth) {
+      return monthNumber >= s.startMonth && monthNumber <= s.endMonth;
+    } else {
+      // estação que atravessa o ano (Winter)
+      return monthNumber >= s.startMonth || monthNumber <= s.endMonth;
+    }
+  });
+
+  if (!season) {
+    throw new Error("Estação não encontrada");
+  }
+
+  // Calcular dias passados desde o início da estação
+  let daysPassed = 0;
+
+  let currentMonth = season.startMonth;
+
+  while (currentMonth !== monthNumber) {
+    const monthIndex = currentMonth - 1;
+    daysPassed += months[monthIndex].days;
+
+    currentMonth++;
+    if (currentMonth > 12) currentMonth = 1;
+  }
+
+  daysPassed += (day - 1);
+
+  // Calcular semana da estação
+  let weekOfSeason = Math.floor(daysPassed / 7) + 1;
+  if (weekOfSeason > 13) weekOfSeason = 13;
+
+  return {
+    season: season.name,
+    week: weekOfSeason
+  };
+}

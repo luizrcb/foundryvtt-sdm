@@ -27,6 +27,16 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       choices: CONFIG.SDM.itemResources,
     });
 
+    schema.charges = new fields.SchemaField({
+      value: new fields.NumberField({
+        required: true,
+        nullable: false,
+        initial: 0,
+        min: 0
+      }),
+      max: new fields.NumberField({ requied: true, nullable: false, initial: 0, min: 0 })
+    }),
+
     schema.cost = new fields.NumberField({
       required: false,
       nullable: true,

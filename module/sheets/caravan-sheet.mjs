@@ -1,7 +1,7 @@
 import { UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
 import { ActorType, ItemType, SizeUnit } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
-import { $l10n, $fmt, foundryVersionIsAtLeast } from '../helpers/globalUtils.mjs';
+import { $l10n, $fmt, foundryVersionIsAtLeast, getSeasonAndWeek } from '../helpers/globalUtils.mjs';
 import {
   convertToCash,
   ITEMS_NOT_ALLOWED_IN_CARAVANS,
@@ -121,6 +121,41 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
 
   /** @override */
   async _prepareContext(options) {
+    let caravanWeek;
+    let caravanMonth;
+    let caravanDate;
+    let caravanDateShort;
+    let seasonsStarsIntegration = false;
+
+    if (game.seasonsStars) {
+      const currentDate = game.seasonsStars.api.getCurrentDate();
+      const { day, month, year, weekday } = currentDate;
+      const { week, season } = getSeasonAndWeek(day, month);
+      caravanWeek = week;
+      caravanMonth = month;
+
+      caravanDateShort = $fmt('SDM.FormattedDate', {
+        weekday: $l10n(`SDM.WeekDayShort.${weekday}`),
+        month: $l10n(`SDM.MonthShort.${month}`),
+        day,
+        year,
+        season: $l10n(`SDM.Season.${season}`),
+      });
+
+      caravanDate = $fmt('SDM.FormattedDate', {
+        weekday: $l10n(`SDM.WeekDay.${weekday}`),
+        month: $l10n(`SDM.Month.${month}`),
+        day,
+        year,
+        season: $l10n(`SDM.Season.${season}`),
+      });
+
+      const calendar = game.seasonsStars.api.getActiveCalendar();
+
+      seasonsStarsIntegration =
+        game.settings.get('sdm', 'seasonsStarsIntegration') && calendar.id.includes('rainbowlands');
+    }
+
     // Output initialization
     const context = {
       // Validates both permissions and compendium status
@@ -139,7 +174,12 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       fields: this.document.schema.fields,
       systemFields: this.document.system.schema.fields,
       // Add isGM to the context
-      isGM: game.user.isGM
+      isGM: game.user.isGM,
+      seasonsStarsIntegration,
+      caravanWeek,
+      caravanMonth,
+      caravanDate,
+      caravanDateShort,
     };
 
     // Offloading context prep to a helper function
@@ -363,6 +403,8 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
    * @override
    */
   _onRender(context, options) {
+    // Listen for date changes during advancement
+
     this.#dragDrop.forEach(d => d.bind(this.element));
     this.#disableOverrides();
     // You may want to add other special handling here
@@ -381,6 +423,8 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
    */
   async _onFirstRender(context, options) {
     await super._onFirstRender(context, options);
+
+    this._setupCalendarChangeListener();
 
     this._createContextMenu(
       this._getItemListContextOptions,
@@ -566,9 +610,24 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     this._itemListeners = null;
   }
 
+  _setupCalendarChangeListener() {
+    this._calendarListener = {
+      onDateChange: Hooks.on('seasons-stars:dateChanged', data => {
+        this.document.sheet.render(true);
+      })
+    };
+  }
+
+  _teardownCalendarListener() {
+    if (!this._calendarListener) return;
+    Hooks.off('seasons-stars:dateChanged', this._calendarListener.onDateChange);
+    this._calendarListener = null;
+  }
+
   /** @override */
   async close(options) {
     this._teardownItemListeners();
+    this._teardownCalendarListener();
     return super.close(options);
   }
 

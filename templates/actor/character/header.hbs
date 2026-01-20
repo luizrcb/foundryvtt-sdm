@@ -92,7 +92,7 @@
           center all of its child elements content and text. }}
           <div class="grid-span-1 flexrow flex-between">
 
-          <div class='graid-span-1 resource'>
+          <div class='grid-span-1 resource'>
             {{#if (or isEditMode (not @root.editable))}}
             <label for='system.life.max' class='resource-label flex-start'>
               {{localize 'SDM.FieldLifeMax'}}
@@ -114,7 +114,7 @@
             {{/if}}
           </div>
           {{#if system.borrowed_life.enabled }}
-          <div class='graid-span-1 resource'>
+          <div class='grid-span-1 resource'>
             {{#if (or isEditMode (not @root.editable))}}
             <label for='system.borrowed_life.max' class='resource-label flex-start'>
               Borrowed
@@ -138,7 +138,7 @@
           {{/if}}
 
           {{#if system.temporary_life.enabled }}
-          <div class='graid-span-1 resource'>
+          <div class='grid-span-1 resource'>
             {{#if (or isEditMode (not @root.editable))}}
             <label for='system.temporary_life.max' class='resource-label flex-start'>
               Temporary

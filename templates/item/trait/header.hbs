@@ -34,6 +34,19 @@
         {{/if}}
       </div>
 
+      <div class='resource'>
+        <label class='resource-label' for="system.charges.max">{{localize 'SDM.ItemCharges'}}</label>
+        <div class='resource-content flexrow flex-center flex-between flex-group-center'>
+          <input type='text' name="system.charges.value" value="{{system.charges.value}}" data-dtype='Number'
+            data-tooltip="{{localize 'SDM.ItemCurrentCharges'}}"
+          />
+          <span> / </span>
+          <input type='text' name="system.charges.max" value="{{system.charges.max}}" data-dtype='Number'
+            data-tooltip="{{localize 'SDM.ItemMaxCharges'}}"
+          />
+        </div>
+      </div>
+
       {{#if item.system.is_hallmark}}
       <div class='resource'>
         <label class='resource-label'>{{localize 'SDM.FieldLevel'}}

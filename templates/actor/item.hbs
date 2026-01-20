@@ -94,6 +94,9 @@
 
       {{#if (eq item.system.size.unit 'cash')}} {{item.system.quantity}} {{/if}}
       {{#if item.system.is_hallmark}}<i class="fa-regular fa-star hallmark" data-tooltip="{{localize 'SDM.HallmarkItem'}}"></i>{{/if}}
+      {{#if (gt item.system.charges.max 0) }} <span
+       data-tooltip="{{localize 'SDM.ItemCharges'}}"
+      >({{item.system.charges.value}}/{{item.system.charges.max}})&nbsp;</span>{{/if}}
       {{item.name}}
 
       {{#if (and (ne item.system.size.unit 'cash') (gt item.system.quantity 1))}}

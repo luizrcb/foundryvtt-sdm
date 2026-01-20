@@ -41,6 +41,21 @@ export class SDMClientSettingsConfig extends GroupBase {
   ];
 }
 
+export class SDMCalendarSettingsConfig extends GroupBase {
+  static DEFAULT_OPTIONS = {
+    ...super.DEFAULT_OPTIONS,
+    window: {
+      ...super.DEFAULT_OPTIONS.window,
+      title: 'SDM.Menu.Calendar.Label',
+      icon: 'fa-solid fa-calendar'
+    }
+  };
+  static LEGEND = 'SDM.Menu.Calendar.Name';
+  static KEYS = [
+    'seasonsStarsIntegration',
+  ];
+}
+
 /* 1) Combat & Initiative */
 export class SDMCombatSettingsConfig extends GroupBase {
   static DEFAULT_OPTIONS = {

@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v0.6.2
+
+- Add support for tracking item (gear) charges
+- Add configurable integration with "Seasons & Stars" and "Seasons & Stars: SDM" modules
+- Change the default value of the configuration that re-rolls initiative every combat round to true
+- Allow level 0 (no-cost) powers in Albums of Power. This enables the album item itself to be used as an attack source, where the level 0 power represents its damage roll (e.g., swinging the album as if it were a magic sword)
+
 ## v0.6.1
 
 - Fix how we get the default icons for actors and items

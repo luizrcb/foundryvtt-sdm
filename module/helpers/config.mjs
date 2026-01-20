@@ -326,16 +326,16 @@ SDM.wardType = Object.values(WardType).reduce((acc, wardType) => {
 }, {});
 
 SDM.months = {
-  1: 'SDM.Month.1',
-  2: 'SDM.Month.2',
-  3: 'SDM.Month.3',
-  4: 'SDM.Month.4',
-  5: 'SDM.Month.5',
-  6: 'SDM.Month.6',
-  7: 'SDM.Month.7',
-  8: 'SDM.Month.8',
-  9: 'SDM.Month.9',
-  10: 'SDM.Month.10',
-  11: 'SDM.Month.11',
-  12: 'SDM.Month.12'
+  1: 'SDM.MonthTrucking.1',
+  2: 'SDM.MonthTrucking.2',
+  3: 'SDM.MonthTrucking.3',
+  4: 'SDM.MonthTrucking.4',
+  5: 'SDM.MonthTrucking.5',
+  6: 'SDM.MonthTrucking.6',
+  7: 'SDM.MonthTrucking.7',
+  8: 'SDM.MonthTrucking.8',
+  9: 'SDM.MonthTrucking.9',
+  10: 'SDM.MonthTrucking.10',
+  11: 'SDM.MonthTrucking.11',
+  12: 'SDM.MonthTrucking.12'
 };

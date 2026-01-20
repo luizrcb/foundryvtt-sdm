@@ -8,9 +8,9 @@
 
 # Synthetic Dream Machine for Foundry VTT
 
-An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG) and Our Golden Age (OGA) using the [Synthetic Dream Machine](https://www.wizardthieffighter.com/synthetic-dream-machine/) RPG rules on [Foundry VTT](http://foundryvtt.com/).
+An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG) and Our Golden Age (OGA) using the [Synthetic Dream Machine](https://web.archive.org/web/20241220221626/https://www.wizardthieffighter.com/synthetic-dream-machine/) RPG rules on [Foundry VTT](http://foundryvtt.com/).
 
-*foundryvtt-sdm* is an independent production by community contributors, and is not affiliated with [Luka Rejec](https://patreon.com/wizardthieffighter) or [WTF Studio](https://www.wizardthieffighter.com/). It is published under the [Synthetic Dream Machine Third Party License](https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/main/SDM-3RD-PARTY-LICENSE-2.0.txt).
+*foundryvtt-sdm* is an independent production by community contributors, and is not affiliated with [Luka Rejec](https://patreon.com/wizardthieffighter) or [WTF Studio](https://wizardthieffighter.itch.io/). It is published under the [Synthetic Dream Machine Third Party License](https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/main/SDM-3RD-PARTY-LICENSE-2.0.txt).
 
 ## Credits
 
@@ -35,6 +35,7 @@ The SDM system provides companion add-on modules to integrate with the following
 
 - **Item Piles**: [Item Piles: SDM](https://github.com/luizrcb/item-piles-sdm)
 - **Token Action HUD**: [Token Action HUD SDM](https://github.com/luizrcb/token-action-hud-sdm)
+- **Seasons & Stars**: [Seasons & Stars: SDM](https://github.com/luizrcb/seasons-and-stars-sdm)
 
 ## System Features
 
@@ -134,7 +135,7 @@ This project compendiums and macros use names of creatures, items, traits, power
     - Gears: (VLG, pp. 82-85)
       - Gadgets
       - Consumables
-    - Powers (VLG, pp. 94-113 and [Powers Enumerated I](https://www.wizardthieffighter.com/2024/powers-enumerated-i/))
+    - Powers (VLG, pp. 94-113 and [Powers Enumerated I](https://web.archive.org/web/20241115135542/https://www.wizardthieffighter.com/2024/powers-enumerated-i/))
     - Wards (VLG, pp. 78-79):
       - Trinkets
       - Wearable Wards

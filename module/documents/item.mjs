@@ -104,6 +104,22 @@ export class SdmItem extends Item {
         'system.is_hallmark': false
       });
     }
+
+    if (changed?.system?.charges?.value !== undefined) {
+      if (changed.system?.charges?.value > this.system.charges.max) {
+        await this.update({
+          'system.charges.value': this.system.charges.max
+        });
+      }
+    }
+
+    if (changed?.system?.charges?.max !== undefined) {
+      if (changed.system?.charges?.max < this.system.charges.value) {
+        await this.update({
+          'system.charges.max': this.system.charges.value
+        });
+      }
+    }
   }
 
   /**
@@ -320,7 +336,7 @@ export class SdmItem extends Item {
   getPowerTitle(powerData, actorPowerCost = 2, powerCostBonus = 0) {
     const powerLevel = powerData?.level;
     const powerCostBase = Math.ceil(actorPowerCost * powerLevel);
-    const powerCost = Math.max(powerCostBase - powerCostBonus, 1);
+    const powerCost = Math.max(powerCostBase - powerCostBonus, powerLevel === 0 ? 0 : 1);
     const powerName = powerData.name || this.getNameTitle();
 
     let title = `<b>${powerName}</b>${!powerData?.name ? this.getCostTitle() : ''} (${$l10n('SDM.Cost').toLowerCase()}: ${powerCost})<br/>`;
@@ -484,7 +500,7 @@ export class SdmItem extends Item {
     if (this.system.is_hallmark && this.system.hallmark) {
       const currentExperience = parseInt(this.system.hallmark.experience);
       if (currentExperience > 0) {
-        ui.notifications.error($l10n('SMD.ErrorHallmarkExperience'));
+        ui.notifications.error($l10n('SDM.ErrorHallmarkExperience'));
         return;
       }
     }

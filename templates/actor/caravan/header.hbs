@@ -63,7 +63,11 @@
           <label for="system.date" class='resource-label'>
             {{localize 'SDM.FieldDate'}}
           </label>
-          <input name='system.date' type='text' value='{{system.date}}' />
+          {{#if @root.seasonsStarsIntegration}}
+            <input name='system.date' type='text' value='{{@root.caravanDateShort}}' disabled data-tooltip="{{@root.caravanDate}}"/>
+          {{else}}
+            <input name='system.date' type='text' value='{{system.date}}' />
+          {{/if}}
         </div>
         <div class="grid-span-1">
           <label for="system.speed" class='resource-label'>
@@ -130,24 +134,39 @@
             {{localize 'SDM.Weeks'}}
           </label>
           <div class="resource-content sources flex-group-center mt-5">
-            {{#multiboxes system.weeks}}
-              <input type="radio" id="weeks-{{actor.id}}-0" name="system.weeks" value="0" checked="checked" data-dtype='Radio' style="cursor:pointer;">
-              {{#times_from 1 13}}
-                <input type="radio" id="weeks-{{../actor.id}}-{{this}}" name="system.weeks" value="{{this}}" data-dtype='Radio' style="cursor:pointer;" />
-                <label class="radio-toggle" data-action="radioToggle" for="weeks-{{../actor.id}}-{{this}}" style="cursor:pointer;" data-tooltip="{{this}}"></label>
-              {{/times_from}}
-            {{/multiboxes}}
+            {{#if @root.seasonsStarsIntegration}}
+              {{#multiboxes @root.caravanWeek}}
+                <input type="radio" id="weeks-{{actor.id}}-0" name="system.weeks" value="0" checked="checked" data-dtype='Radio' style="cursor:pointer;" disabled>
+                {{#times_from 1 13}}
+                  <input type="radio" id="weeks-{{../actor.id}}-{{this}}" name="system.weeks" value="{{this}}" data-dtype='Radio' style="cursor:pointer;" disabled/>
+                  <label class="radio-toggle" for="weeks-{{../actor.id}}-{{this}}" style="cursor:pointer;" data-tooltip="{{this}}" disabled></label>
+                {{/times_from}}
+              {{/multiboxes}}
+            {{else}}
+              {{#multiboxes system.weeks}}
+                <input type="radio" id="weeks-{{actor.id}}-0" name="system.weeks" value="0" checked="checked" data-dtype='Radio' style="cursor:pointer;">
+                {{#times_from 1 13}}
+                  <input type="radio" id="weeks-{{../actor.id}}-{{this}}" name="system.weeks" value="{{this}}" data-dtype='Radio' style="cursor:pointer;" />
+                  <label class="radio-toggle" data-action="radioToggle" for="weeks-{{../actor.id}}-{{this}}" style="cursor:pointer;" data-tooltip="{{this}}"></label>
+                {{/times_from}}
+              {{/multiboxes}}
+            {{/if}}
           </div>
         </div>
 
         <div class="grid-span-2">
           <label for="system.month" class='resource-label'>
-            {{localize 'SDM.MonthTrucking'}}
+            {{localize 'SDM.MonthTruckingLabel'}}
           </label>
-          <select name="system.month" class="resource-content" data-dtype="Number">
-            {{selectOptions @root.config.months localize=true selected=system.month blank=""}}
-          </select>
-
+          {{#if @root.seasonsStarsIntegration}}
+            <select name="system.month" class="resource-content" data-dtype="Number" disabled>
+              {{selectOptions @root.config.months localize=true selected=@root.caravanMonth blank=""}}
+            </select>
+          {{else}}
+            <select name="system.month" class="resource-content" data-dtype="Number">
+              {{selectOptions @root.config.months localize=true selected=system.month blank=""}}
+            </select>
+          {{/if}}
         </div>
       </div>
     </div>

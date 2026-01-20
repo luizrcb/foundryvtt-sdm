@@ -365,13 +365,15 @@ export class SdmActor extends Actor {
       return;
     }
 
-    this.update({
+    let updateData = {
       'system.inventory_value': estimatedWealth,
       'system.total_cash': totalCash,
       'system.wealth': totalCash + estimatedWealth,
       'system.overloaded': overloaded,
       _id: this.id
-    });
+    };
+
+    this.update(updateData);
   }
 
   _prepareNpcData() {}
