@@ -1,0 +1,142 @@
+{
+  "folder": "QDc6hA9i2zrZXWPG",
+  "name": "3. Noösphere Native",
+  "type": "trait",
+  "_id": "6Rf6kCfpstgfvlih",
+  "img": "icons/magic/light/explosion-star-glow-silhouette.webp",
+  "system": {
+    "readied": false,
+    "status": "",
+    "resources": "",
+    "cost": 0,
+    "cost_frequency": "",
+    "description": "<p>You were born in a generation hooked to the noösphere. You can access and use it, but you also add your skill bonus to all defenses in the noösphere... and against daemons in general.</p><p><em>Update the <strong>Noösphere Native</strong> active effect when this skill levels up. Activate the <strong>Noösphere Native</strong> active effect when in the noösphere.</em></p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "type": "skill",
+    "learning": {
+      "sources": 0,
+      "required_successes": 0
+    },
+    "skill": {
+      "rank": 1,
+      "modifier_step": 3,
+      "modifier_bonus": 0,
+      "modifier_final": 0,
+      "custom_modifiers": false
+    },
+    "power": {
+      "img": "icons/svg/book.svg",
+      "name": "",
+      "description": "",
+      "level": 1,
+      "range": "",
+      "target": "",
+      "duration": "",
+      "overcharge": "",
+      "roll_formula": "",
+      "overcharge_roll_formula": ""
+    }
+  },
+  "effects": [
+    {
+      "name": "Noösphere Native",
+      "origin": "Compendium.sdm.traits.Item.6Rf6kCfpstgfvlih",
+      "img": "icons/magic/light/explosion-star-glow-silhouette.webp",
+      "_id": "DbaovJERpHYiw96h",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.defense_bonus",
+            "value": 3,
+            "priority": null,
+            "type": "add",
+            "phase": "initial"
+          },
+          {
+            "key": "system.mental_defense_bonus",
+            "value": 3,
+            "priority": null,
+            "type": "add",
+            "phase": "initial"
+          },
+          {
+            "key": "system.social_defense_bonus",
+            "value": 3,
+            "priority": null,
+            "type": "add",
+            "phase": "initial"
+          }
+        ]
+      },
+      "disabled": true,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.353",
+        "systemId": "sdm",
+        "systemVersion": "0.4.5",
+        "createdTime": 1760220802496,
+        "modifiedTime": 1760220942891,
+        "lastModifiedBy": "XnQAppzUXfkn5LcX"
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!6Rf6kCfpstgfvlih.DbaovJERpHYiw96h"
+    }
+  ],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "XnQAppzUXfkn5LcX": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.353",
+    "systemId": "sdm",
+    "systemVersion": "0.4.5",
+    "createdTime": 1760220496980,
+    "modifiedTime": 1760220941076,
+    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+  },
+  "_key": "!items!6Rf6kCfpstgfvlih"
+}

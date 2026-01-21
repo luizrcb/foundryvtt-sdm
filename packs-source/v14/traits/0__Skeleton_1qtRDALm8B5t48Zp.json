@@ -1,0 +1,81 @@
+{
+  "folder": "BG7SHXKqcTTUjjNj",
+  "name": "0. Skeleton",
+  "type": "trait",
+  "_id": "1qtRDALm8B5t48Zp",
+  "img": "icons/magic/death/undead-skeleton-rags-fire-green.webp",
+  "system": {
+    "readied": false,
+    "status": "",
+    "resources": "",
+    "cost": 0,
+    "cost_frequency": "",
+    "description": "<p>You were dead. Now you are un. A dread force animates you. You need no food, water, air or sleep. You speak, though you have no larynx.</p><p><span style=\"text-decoration:underline\">You take minimum damage from piercing attacks and half from slashing, but double from blunt.</span></p><p>Also, you are skilled in a timelost weapon.</p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "type": "skill",
+    "learning": {
+      "sources": 0,
+      "required_successes": 0
+    },
+    "skill": {
+      "rank": 1,
+      "modifier_step": 3,
+      "modifier_bonus": 0,
+      "modifier_final": 0,
+      "custom_modifiers": false
+    },
+    "power": {
+      "img": "icons/svg/book.svg",
+      "name": "",
+      "description": "",
+      "level": 1,
+      "range": "",
+      "target": "",
+      "duration": "",
+      "overcharge": "",
+      "roll_formula": "",
+      "overcharge_roll_formula": ""
+    }
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "XnQAppzUXfkn5LcX": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "sdm",
+    "systemVersion": "0.4.5",
+    "createdTime": 1760319140460,
+    "modifiedTime": 1760319215444,
+    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+  },
+  "_key": "!items!1qtRDALm8B5t48Zp"
+}

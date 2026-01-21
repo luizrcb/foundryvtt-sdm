@@ -1,0 +1,128 @@
+{
+  "folder": "azq3HyXsnywN2mNv",
+  "name": "6. I Am Legion",
+  "type": "trait",
+  "_id": "djd5SqnPqysHGabl",
+  "img": "icons/skills/melee/blade-tip-chipped-blood-red.webp",
+  "system": {
+    "readied": false,
+    "status": "",
+    "resources": "",
+    "cost": 0,
+    "cost_frequency": "",
+    "description": "<p>You know everything about armies. Also, track the enemies you kill in a battle. Every enemy killed gives you a cumulative bonus of +1 damage until the end of the battle. After the first kill, blood gushes from you until the killing stops. Expert: the bonus is +2 per kill. Master: +3.</p><p><em>Active and edit the <strong>I Am Legion</strong> active effect to add the damage bonus.</em></p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "type": "skill",
+    "learning": {
+      "sources": 0,
+      "required_successes": 0
+    },
+    "skill": {
+      "rank": 1,
+      "modifier_step": 1,
+      "modifier_bonus": 0,
+      "modifier_final": 0,
+      "custom_modifiers": true
+    },
+    "power": {
+      "img": "icons/svg/book.svg",
+      "name": "",
+      "description": "",
+      "level": 1,
+      "range": "",
+      "target": "",
+      "duration": "",
+      "overcharge": "",
+      "roll_formula": "",
+      "overcharge_roll_formula": ""
+    }
+  },
+  "effects": [
+    {
+      "name": "I Am Legion",
+      "origin": "Compendium.sdm.traits.Item.djd5SqnPqysHGabl",
+      "img": "icons/skills/melee/blade-tip-chipped-blood-red.webp",
+      "_id": "Cs6IxE1obe4uOJ4Z",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.damage_bonus",
+            "value": 1,
+            "priority": null,
+            "type": "add",
+            "phase": "initial"
+          }
+        ]
+      },
+      "disabled": true,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.353",
+        "systemId": "sdm",
+        "systemVersion": "0.4.5",
+        "createdTime": 1760378762130,
+        "modifiedTime": 1760379449538,
+        "lastModifiedBy": "XnQAppzUXfkn5LcX"
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!djd5SqnPqysHGabl.Cs6IxE1obe4uOJ4Z"
+    }
+  ],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "XnQAppzUXfkn5LcX": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.353",
+    "systemId": "sdm",
+    "systemVersion": "0.4.5",
+    "createdTime": 1760378692984,
+    "modifiedTime": 1760379443556,
+    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+  },
+  "_key": "!items!djd5SqnPqysHGabl"
+}

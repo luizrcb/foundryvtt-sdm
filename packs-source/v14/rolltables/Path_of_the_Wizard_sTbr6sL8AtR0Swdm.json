@@ -1,0 +1,205 @@
+{
+  "name": "Path of the Wizard",
+  "description": "<p>A random table created from the contents of the Path of the Wizard Folder.</p>",
+  "results": [
+    {
+      "name": "0. Wizard",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.51b1THOLN8dXgk9r",
+      "img": "icons/equipment/head/hood-pink-gilded.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "b42wpKfYs3cOGpUO",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.35",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!sTbr6sL8AtR0Swdm.b42wpKfYs3cOGpUO"
+    },
+    {
+      "name": "1. Burner",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.uKOfxWQDOVdiMJqf",
+      "img": "icons/magic/fire/flame-burning-hand-white.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "zEQlMVfY06QJ3t3x",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.35",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!sTbr6sL8AtR0Swdm.zEQlMVfY06QJ3t3x"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "name": "2. Cronic",
+      "img": "icons/magic/water/wave-water-teal.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.f1F9tkdVT85d9tKC",
+      "_id": "uIPtHt6DFtBLwoP4",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.35",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!sTbr6sL8AtR0Swdm.uIPtHt6DFtBLwoP4"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "name": "3. Exuberant",
+      "img": "icons/magic/unholy/silhouette-light-fire-blue.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.7BbBWfIKN4ACbo80",
+      "_id": "JIlb8WWkRbqCKPp8",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.35",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!sTbr6sL8AtR0Swdm.JIlb8WWkRbqCKPp8"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "name": "4. Mind Palace",
+      "img": "icons/magic/symbols/runes-star-pentagon-orange.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.tPtjYDbvF2EdlFCr",
+      "_id": "m4vb9oPMHcEeLzh9",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.35",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!sTbr6sL8AtR0Swdm.m4vb9oPMHcEeLzh9"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "name": "5. Oblique Reality",
+      "img": "icons/magic/defensive/barrier-shield-dome-deflect-blue.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.khfWM4ulsuHs8888",
+      "_id": "zjCI3CVhwsQxNgHM",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.35",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!sTbr6sL8AtR0Swdm.zjCI3CVhwsQxNgHM"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "name": "6. Recast",
+      "img": "icons/magic/fire/flame-burning-hand-orange.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.Clk2Vs411qDLnwzA",
+      "_id": "lenmEDzbUvvBhRz9",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.35",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!sTbr6sL8AtR0Swdm.lenmEDzbUvvBhRz9"
+    }
+  ],
+  "formula": "1d7",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8gXEqCY7Gctq4hdt",
+  "ownership": {
+    "default": 0,
+    "3vgxDetPOGhfUfqu": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.1.35",
+    "createdTime": 1756510845818,
+    "modifiedTime": 1767049263906,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "sTbr6sL8AtR0Swdm",
+  "sort": 1800000,
+  "_key": "!tables!sTbr6sL8AtR0Swdm"
+}

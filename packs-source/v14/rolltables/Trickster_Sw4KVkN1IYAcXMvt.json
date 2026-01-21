@@ -1,0 +1,205 @@
+{
+  "name": "Trickster",
+  "description": "<p>A random table created from the contents of the Trickster Folder.</p>",
+  "results": [
+    {
+      "name": "2. Expert Friends",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.5A2G12Jholrzv7hv",
+      "img": "icons/magic/nature/wolf-paw-glow-large-purple-teal.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "s1SqW5ysd29guUVq",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Sw4KVkN1IYAcXMvt.s1SqW5ysd29guUVq"
+    },
+    {
+      "name": "5. Bystander",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.BUNKB4ITAxWYLWHj",
+      "img": "icons/creatures/mammals/livestock-sheep-green.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "ReCHwhVaQkg7E2zR",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Sw4KVkN1IYAcXMvt.ReCHwhVaQkg7E2zR"
+    },
+    {
+      "name": "0. Trickster",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.FqNAd7R29vYeK5ED",
+      "img": "icons/magic/control/hypnosis-mesmerism-eye.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "tevjCx2qymSIOtVb",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Sw4KVkN1IYAcXMvt.tevjCx2qymSIOtVb"
+    },
+    {
+      "name": "1. Backstabber",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.Jl5fVO1LYNrnKcpu",
+      "img": "icons/skills/melee/strike-dagger-poison-dripping-green.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "S7WtBhMOuJlW6v3R",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Sw4KVkN1IYAcXMvt.S7WtBhMOuJlW6v3R"
+    },
+    {
+      "name": "4. Pickpocket",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.KHIbyBz3uDQYUAoX",
+      "img": "icons/skills/social/theft-pickpocket-bribery-brown.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "LeiGstNIZvbZbBkY",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Sw4KVkN1IYAcXMvt.LeiGstNIZvbZbBkY"
+    },
+    {
+      "name": "3. Fake Out",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.Xvnna40jebYuaj6G",
+      "img": "icons/magic/unholy/strike-body-life-soul-green.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "jb41cvqbJFvoZVUG",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Sw4KVkN1IYAcXMvt.jb41cvqbJFvoZVUG"
+    },
+    {
+      "name": "6. Silver-Tongued",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.ct2VeeDfp9vZ5WyZ",
+      "img": "icons/commodities/biological/tongue-blue.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "VjDf7emouqnASFGG",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Sw4KVkN1IYAcXMvt.VjDf7emouqnASFGG"
+    }
+  ],
+  "formula": "1d7",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8gXEqCY7Gctq4hdt",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.4",
+    "createdTime": 1767049265579,
+    "modifiedTime": 1767049265579,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "Sw4KVkN1IYAcXMvt",
+  "sort": 0,
+  "_key": "!tables!Sw4KVkN1IYAcXMvt"
+}

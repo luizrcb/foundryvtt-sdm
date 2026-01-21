@@ -1,0 +1,81 @@
+{
+  "folder": "bXR36hlKvI4kOMnc",
+  "name": "6. Werker",
+  "type": "trait",
+  "_id": "8buCZ1Fnv3fCyFdB",
+  "img": "icons/commodities/tech/console-steel.webp",
+  "system": {
+    "readied": false,
+    "status": "",
+    "resources": "",
+    "cost": 0,
+    "cost_frequency": "",
+    "description": "<p>Your ancestors were bioengineered to maintain the builders' machinery. You have an intuitive understanding of oldtech devices and processes. Spend 1 life to interface with a device and ascertain if it can be fixed and, at least roughly, how.</p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "type": "",
+    "learning": {
+      "sources": 0,
+      "required_successes": 0
+    },
+    "skill": {
+      "rank": 0,
+      "modifier_step": 3,
+      "modifier_bonus": 0,
+      "modifier_final": 0,
+      "custom_modifiers": false
+    },
+    "power": {
+      "img": "icons/svg/book.svg",
+      "name": "",
+      "description": "",
+      "level": 1,
+      "range": "",
+      "target": "",
+      "duration": "",
+      "overcharge": "",
+      "roll_formula": "",
+      "overcharge_roll_formula": ""
+    }
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "XnQAppzUXfkn5LcX": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "sdm",
+    "systemVersion": "0.4.5",
+    "createdTime": 1760300064991,
+    "modifiedTime": 1760300138867,
+    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+  },
+  "_key": "!items!8buCZ1Fnv3fCyFdB"
+}

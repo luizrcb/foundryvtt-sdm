@@ -1,0 +1,21 @@
+{
+  "type": "Item",
+  "folder": null,
+  "name": "Heavy Armors",
+  "color": null,
+  "sorting": "m",
+  "_id": "Wi5pnjm13Nsnkove",
+  "description": "",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.4",
+    "lastModifiedBy": null
+  },
+  "_key": "!folders!Wi5pnjm13Nsnkove"
+}

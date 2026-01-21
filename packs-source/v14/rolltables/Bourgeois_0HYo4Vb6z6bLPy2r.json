@@ -1,0 +1,305 @@
+{
+  "name": "Bourgeois",
+  "description": "A random table created from the contents of the Bourgeois Folder.",
+  "results": [
+    {
+      "name": "Elegant Eater Sword",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.6kBs6lG15ZYU5hKx",
+      "img": "icons/weapons/daggers/dagger-magical-glowing-blue.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "rCmumXs2IMntJIZ2",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0HYo4Vb6z6bLPy2r.rCmumXs2IMntJIZ2"
+    },
+    {
+      "name": "Felix Whizz Six-Pack",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.75l24ER9XnXUFiVR",
+      "img": "icons/consumables/drinks/alcohol-jug-spirits-brown.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "TnIKTed1nonXcCsN",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0HYo4Vb6z6bLPy2r.TnIKTed1nonXcCsN"
+    },
+    {
+      "name": "Cloak of the City",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.CLbVAPPdnlTD0L6s",
+      "img": "icons/equipment/back/cloak-layered-grey.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "MTvfHWqQrUzXNktM",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0HYo4Vb6z6bLPy2r.MTvfHWqQrUzXNktM"
+    },
+    {
+      "name": "In-Arm Pistol",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.GZts0u7CZVpgfvpw",
+      "img": "icons/weapons/guns/gun-pistol-brown.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "MgsCCTVoh3D3rA8h",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0HYo4Vb6z6bLPy2r.MgsCCTVoh3D3rA8h"
+    },
+    {
+      "name": "Jet Credit Ring",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.KGWrEAT4cxyGPSfZ",
+      "img": "icons/equipment/finger/ring-band-thin-silver-teal.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "I8ul71fUEHkXyXYR",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0HYo4Vb6z6bLPy2r.I8ul71fUEHkXyXYR"
+    },
+    {
+      "name": "Echoing Top Hat",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.O8kI8S84Ecg0J6DA",
+      "img": "icons/equipment/head/hat-belted-grey.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "Ar9n1AbLSYxRW7mr",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0HYo4Vb6z6bLPy2r.Ar9n1AbLSYxRW7mr"
+    },
+    {
+      "name": "Swagger Stick (*BILI Brand)",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.QvarpFl0Seb8KuJY",
+      "img": "icons/weapons/staves/staff-ornate-hook.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "vnXmIG17spxEjUPU",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0HYo4Vb6z6bLPy2r.vnXmIG17spxEjUPU"
+    },
+    {
+      "name": "Nu-Face Mk III",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.af7jEkGaFdt5aAxi",
+      "img": "icons/magic/death/skull-humanoid-white-blue.webp",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "9UFrclbLHFjld6JS",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0HYo4Vb6z6bLPy2r.9UFrclbLHFjld6JS"
+    },
+    {
+      "name": "Limousine Golem",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.lBYOyPEAaRleVVGR",
+      "img": "icons/commodities/tech/pipe-exhaust.webp",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "jeKawSMq24Pqgl9T",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0HYo4Vb6z6bLPy2r.jeKawSMq24Pqgl9T"
+    },
+    {
+      "name": "Buffer Harness II",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.oaKrT36iJ9yyiwKc",
+      "img": "icons/equipment/shoulder/pauldren-segmented-pink.webp",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "O5l0cJ1Hhh7zGZvp",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0HYo4Vb6z6bLPy2r.O5l0cJ1Hhh7zGZvp"
+    },
+    {
+      "name": "Booster Bracelet",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.tA2OrWiSjUQudRK2",
+      "img": "icons/equipment/wrist/bracer-studded-copper.webp",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_id": "7KTCmH72fGVIs01P",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0HYo4Vb6z6bLPy2r.7KTCmH72fGVIs01P"
+    }
+  ],
+  "formula": "1d11",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8iXTxWS7BmWPt7Io",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.5",
+    "createdTime": 1767193681784,
+    "modifiedTime": 1767193807175,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "0HYo4Vb6z6bLPy2r",
+  "sort": 700000,
+  "_key": "!tables!0HYo4Vb6z6bLPy2r"
+}

@@ -1,0 +1,128 @@
+{
+  "folder": "8AYyfRvJaxotOYXS",
+  "name": "2. Blessed",
+  "type": "trait",
+  "_id": "aIu8YiKEtY6PwM1i",
+  "img": "icons/magic/holy/chalice-glowing-gold-water.webp",
+  "system": {
+    "readied": false,
+    "status": "",
+    "resources": "",
+    "cost": 0,
+    "cost_frequency": "",
+    "description": "<p>When only luck will do, you have an advantage. That's also a bonus to all saves.</p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "type": "",
+    "learning": {
+      "sources": 0,
+      "required_successes": 0
+    },
+    "skill": {
+      "rank": 0,
+      "modifier_step": 3,
+      "modifier_bonus": 0,
+      "modifier_final": 0,
+      "custom_modifiers": false
+    },
+    "power": {
+      "img": "icons/svg/book.svg",
+      "name": "",
+      "description": "",
+      "level": 1,
+      "range": "",
+      "target": "",
+      "duration": "",
+      "overcharge": "",
+      "roll_formula": "",
+      "overcharge_roll_formula": ""
+    }
+  },
+  "effects": [
+    {
+      "name": "All save bonus",
+      "origin": "Compendium.sdm.traits.Item.aIu8YiKEtY6PwM1i",
+      "img": "icons/magic/holy/chalice-glowing-gold-water.webp",
+      "_id": "ImRfDB424XjKk2a1",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.all_save_bonus",
+            "type": "add",
+            "value": 3,
+            "priority": 20,
+            "phase": "initial"
+          }
+        ]
+      },
+      "disabled": false,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.353",
+        "systemId": "sdm",
+        "systemVersion": "0.6.2",
+        "createdTime": 1760203387795,
+        "modifiedTime": 1769001733298,
+        "lastModifiedBy": "6KLfb35TARh0OlRZ"
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!aIu8YiKEtY6PwM1i.ImRfDB424XjKk2a1"
+    }
+  ],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "XnQAppzUXfkn5LcX": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.353",
+    "systemId": "sdm",
+    "systemVersion": "0.4.5",
+    "createdTime": 1760203348426,
+    "modifiedTime": 1760203386425,
+    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+  },
+  "_key": "!items!aIu8YiKEtY6PwM1i"
+}

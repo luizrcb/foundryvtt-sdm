@@ -1,0 +1,142 @@
+{
+  "folder": "eMGOQWZ2I2RSgHq4",
+  "name": "6. Shackleminded",
+  "type": "trait",
+  "_id": "Rmp7yyT1Mt2mEU1k",
+  "img": "icons/magic/symbols/runes-carved-stone-green.webp",
+  "system": {
+    "readied": false,
+    "status": "",
+    "resources": "",
+    "cost": 0,
+    "cost_frequency": "",
+    "description": "<p>Your brain has been augmented with glyph-scribed nails and holy wires immunizing you against mental attacks, psychic effects, and individual initiative. Gain +2 ward and +1 endurance, but lose -1 thought.</p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "type": "",
+    "learning": {
+      "sources": 0,
+      "required_successes": 0
+    },
+    "skill": {
+      "rank": 0,
+      "modifier_step": 3,
+      "modifier_bonus": 0,
+      "modifier_final": 0,
+      "custom_modifiers": false
+    },
+    "power": {
+      "img": "icons/svg/book.svg",
+      "name": "",
+      "description": "",
+      "level": 1,
+      "range": "",
+      "target": "",
+      "duration": "",
+      "overcharge": "",
+      "roll_formula": "",
+      "overcharge_roll_formula": ""
+    }
+  },
+  "effects": [
+    {
+      "name": "Shackleminded",
+      "origin": "Compendium.sdm.traits.Item.Rmp7yyT1Mt2mEU1k",
+      "img": "icons/magic/symbols/runes-carved-stone-green.webp",
+      "_id": "0cfyncWPRb94v6mh",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.ward_bonus",
+            "value": 2,
+            "priority": null,
+            "type": "add",
+            "phase": "initial"
+          },
+          {
+            "key": "system.abilities.end.bonus",
+            "value": 1,
+            "priority": null,
+            "type": "add",
+            "phase": "initial"
+          },
+          {
+            "key": "system.abilities.tho.bonus",
+            "value": -1,
+            "priority": null,
+            "type": "add",
+            "phase": "initial"
+          }
+        ]
+      },
+      "disabled": false,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.353",
+        "systemId": "sdm",
+        "systemVersion": "0.4.5",
+        "createdTime": 1760379755993,
+        "modifiedTime": 1760379797426,
+        "lastModifiedBy": "XnQAppzUXfkn5LcX"
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!Rmp7yyT1Mt2mEU1k.0cfyncWPRb94v6mh"
+    }
+  ],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "XnQAppzUXfkn5LcX": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.353",
+    "systemId": "sdm",
+    "systemVersion": "0.4.5",
+    "createdTime": 1760379691337,
+    "modifiedTime": 1760379751026,
+    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+  },
+  "_key": "!items!Rmp7yyT1Mt2mEU1k"
+}

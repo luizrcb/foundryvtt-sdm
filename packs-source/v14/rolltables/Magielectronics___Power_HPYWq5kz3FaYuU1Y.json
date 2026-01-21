@@ -1,0 +1,180 @@
+{
+  "name": "Magielectronics & Power",
+  "description": "A random table created from the contents of the Magielectronics &amp; Power Folder.",
+  "results": [
+    {
+      "name": "Invisibilly Bomb",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.gadgets.Item.opEhvwBcykmbqnBS",
+      "img": "icons/weapons/thrown/bomb-gas-grey-purple.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "8Yt3kYuJaK3XhPm0",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HPYWq5kz3FaYuU1Y.8Yt3kYuJaK3XhPm0"
+    },
+    {
+      "name": "Signal Jammer",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.gadgets.Item.jTSLt4GBUFM0ZYrt",
+      "img": "icons/commodities/tech/detonator-radio.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "1yiPSTLnYVCCQhAd",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HPYWq5kz3FaYuU1Y.1yiPSTLnYVCCQhAd"
+    },
+    {
+      "name": "Portable EM Pulser",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.gadgets.Item.JbY07RzWndNS4ypk",
+      "img": "icons/commodities/treasure/puzzle-box-glowing-blue.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "iqumIH44ltgoqpTt",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HPYWq5kz3FaYuU1Y.iqumIH44ltgoqpTt"
+    },
+    {
+      "name": "Nanopear Spray",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.gadgets.Item.ax99AqSz5PhwITuS",
+      "img": "icons/commodities/treasure/brooch-pink-orbs.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "BzguI9nSVNKHg50P",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HPYWq5kz3FaYuU1Y.BzguI9nSVNKHg50P"
+    },
+    {
+      "name": "Aug-Harness",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.gadgets.Item.SdLD04WviKRZnm1p",
+      "img": "icons/equipment/waist/belt-armored-steel-purple.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "Y2HTWxgGuCWWAo4b",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HPYWq5kz3FaYuU1Y.Y2HTWxgGuCWWAo4b"
+    },
+    {
+      "name": "Nulla Charger",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.gadgets.Item.LGfoJTddbH8ZZIBa",
+      "img": "icons/magic/lightning/bolt-cloud-sky-green.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "RLx2b9MuUG9hgnxQ",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HPYWq5kz3FaYuU1Y.RLx2b9MuUG9hgnxQ"
+    }
+  ],
+  "formula": "1d6",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "HRL8AeuDUw26tJDf",
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.36",
+    "createdTime": 1756574630228,
+    "modifiedTime": 1756574635106,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_id": "HPYWq5kz3FaYuU1Y",
+  "sort": 500000,
+  "_key": "!tables!HPYWq5kz3FaYuU1Y"
+}

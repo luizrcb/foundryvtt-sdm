@@ -1,0 +1,230 @@
+{
+  "name": "Throwing Weapons",
+  "description": "A random table created from the contents of the Throwing Weapons Folder.",
+  "results": [
+    {
+      "name": "Builderbang",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.weapons.Item.7ofZpaQ038s7eb9D",
+      "img": "icons/weapons/thrown/bomb-fuse-brown.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "0K3hWXkdWkSnYMFi",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nL9uAGl4Py9OGSuC.0K3hWXkdWkSnYMFi"
+    },
+    {
+      "name": "Bola",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.weapons.Item.CAPGWVzHieYFtgyf",
+      "img": "icons/weapons/thrown/bolas-stone.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "rDM74e9wfFxaxO6F",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nL9uAGl4Py9OGSuC.rDM74e9wfFxaxO6F"
+    },
+    {
+      "name": "Slowtime",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.weapons.Item.EEFuZ5mEIYdFHCZu",
+      "img": "icons/weapons/thrown/bomb-purple.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "N2zl2yPfKFexAICu",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nL9uAGl4Py9OGSuC.N2zl2yPfKFexAICu"
+    },
+    {
+      "name": "Concussive",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.weapons.Item.IC164NsVZ3jrm47a",
+      "img": "icons/weapons/thrown/grenade-round.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "o0Sj42X8uHQgUeBS",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nL9uAGl4Py9OGSuC.o0Sj42X8uHQgUeBS"
+    },
+    {
+      "name": "Flarestick",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.weapons.Item.Jv86TRZM5r1eOBmY",
+      "img": "icons/consumables/fruit/dragonfruit-red-green.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "yYVPMtVF5IaGraPL",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nL9uAGl4Py9OGSuC.yYVPMtVF5IaGraPL"
+    },
+    {
+      "name": "Flasher",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.weapons.Item.MG62AoeMXN6IrLxD",
+      "img": "icons/creatures/eyes/slime-single-red.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "lS2jWxudsPe9lZTi",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nL9uAGl4Py9OGSuC.lS2jWxudsPe9lZTi"
+    },
+    {
+      "name": "Stone",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.weapons.Item.i2LDGCUEeKEjJ2yl",
+      "img": "icons/commodities/stone/boulder-grey.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "jhhQlRChYFp2J8M7",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nL9uAGl4Py9OGSuC.jhhQlRChYFp2J8M7"
+    },
+    {
+      "name": "Throwing Knife",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.weapons.Item.x0LdHXFJBBCef3jn",
+      "img": "icons/weapons/thrown/daggers-guard-gold.webp",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "k8hKQRKH7wR4PAkE",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!nL9uAGl4Py9OGSuC.k8hKQRKH7wR4PAkE"
+    }
+  ],
+  "formula": "1d8",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "bgYIDMfG5Smh4RFQ",
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.32",
+    "createdTime": 1756392557370,
+    "modifiedTime": 1756510278823,
+    "lastModifiedBy": "3vgxDetPOGhfUfqu"
+  },
+  "_id": "nL9uAGl4Py9OGSuC",
+  "sort": 400000,
+  "_key": "!tables!nL9uAGl4Py9OGSuC"
+}

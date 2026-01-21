@@ -1,0 +1,205 @@
+{
+  "name": "Holy Fool",
+  "description": "<p>A random table created from the contents of the Holy Fool Folder.</p>",
+  "results": [
+    {
+      "name": "6. Wanderer",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.AKgZqrOFBm30ZXGS",
+      "img": "icons/skills/movement/feet-bladed-boots-fire.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "X9GG06oLQWKun1iW",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!pr094geSwmBdYGSY.X9GG06oLQWKun1iW"
+    },
+    {
+      "name": "3. Holy Diver",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.HgIYIXCnoAt627Tv",
+      "img": "icons/magic/light/explosion-star-glow-yellow.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "tk0r5RcNIk9BJaCT",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!pr094geSwmBdYGSY.tk0r5RcNIk9BJaCT"
+    },
+    {
+      "name": "0. Holy Fool",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.I9x2XlLXGLxe0Hwm",
+      "img": "icons/environment/people/cleric-orange.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "sYw4OkIzZeUe4ox1",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!pr094geSwmBdYGSY.sYw4OkIzZeUe4ox1"
+    },
+    {
+      "name": "1. Abandoned",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.Upch1i0c2ZSKvQd0",
+      "img": "icons/magic/death/projectile-skull-flaming-yellow.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "FUT4noDr6hMV4QPO",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!pr094geSwmBdYGSY.FUT4noDr6hMV4QPO"
+    },
+    {
+      "name": "2. Blessed",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.aIu8YiKEtY6PwM1i",
+      "img": "icons/magic/holy/chalice-glowing-gold-water.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "ac8xWeGjSbZYqrE5",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!pr094geSwmBdYGSY.ac8xWeGjSbZYqrE5"
+    },
+    {
+      "name": "4. Phylake’s Child",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.h99nx1GKYqWZdFX1",
+      "img": "icons/creatures/unholy/demon-horned-winged-laughing.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "rSdkvzmlHRNgZpxH",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!pr094geSwmBdYGSY.rSdkvzmlHRNgZpxH"
+    },
+    {
+      "name": "5. Soothsayer",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.z7jCCGwpXrq4O54O",
+      "img": "icons/creatures/slimes/slime-giant-face-eyes.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "FOTkH3qmefIevSTA",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!pr094geSwmBdYGSY.FOTkH3qmefIevSTA"
+    }
+  ],
+  "formula": "1d7",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8gXEqCY7Gctq4hdt",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.4",
+    "createdTime": 1767048724051,
+    "modifiedTime": 1767049263906,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "pr094geSwmBdYGSY",
+  "sort": 1600000,
+  "_key": "!tables!pr094geSwmBdYGSY"
+}

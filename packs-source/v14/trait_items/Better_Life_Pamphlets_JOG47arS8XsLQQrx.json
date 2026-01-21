@@ -1,0 +1,98 @@
+{
+  "folder": "McGDiPYkndd6q3ZG",
+  "name": "Better Life Pamphlets",
+  "type": "gear",
+  "_id": "JOG47arS8XsLQQrx",
+  "img": "icons/sundries/documents/document-symbol-person-brown.webp",
+  "system": {
+    "readied": false,
+    "status": "",
+    "resources": "",
+    "cost": 5,
+    "cost_frequency": "",
+    "description": "<p>Promises</p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "type": "ward",
+    "starting_kit": false,
+    "is_supply": false,
+    "supply_type": "human",
+    "packed_remaining_items": 10,
+    "power": {
+      "img": "icons/svg/book.svg",
+      "name": "",
+      "description": "",
+      "level": 1,
+      "range": "",
+      "target": "",
+      "duration": "",
+      "overcharge": "",
+      "roll_formula": "",
+      "overcharge_roll_formula": ""
+    },
+    "powers_current_index": 0,
+    "max_powers": 3,
+    "powers": [],
+    "armor": {
+      "value": 0,
+      "type": "",
+      "cumbersome": false,
+      "powered": null
+    },
+    "ward": {
+      "value": 1,
+      "type": "trinket",
+      "armor": 0
+    },
+    "weapon": {
+      "damage": {
+        "base": "1d4",
+        "versatile": "1d4",
+        "bonus": ""
+      },
+      "range": "",
+      "versatile": false
+    }
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "XnQAppzUXfkn5LcX": 3,
+    "9g1Dzw4zdMZGGuY3": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.4",
+    "createdTime": 1767011789882,
+    "modifiedTime": 1767011789882,
+    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+  },
+  "_key": "!items!JOG47arS8XsLQQrx"
+}

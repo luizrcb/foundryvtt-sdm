@@ -1,0 +1,330 @@
+{
+  "name": "Skeleton",
+  "description": "A random table created from the contents of the Skeleton Folder.",
+  "results": [
+    {
+      "name": "Round Door Shield",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.0DZZOd4Thw6YCRK6",
+      "img": "icons/equipment/shield/round-wooden-boss-steel-brown.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "ZOIni59AU9o17Wha",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VgWs1e4H6fk0k6le.ZOIni59AU9o17Wha"
+    },
+    {
+      "name": "Little Pyramid",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.0n5QEBgUXVtvimHr",
+      "img": "icons/commodities/treasure/puzzle-pyramid.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "gsYjzcr1dYdP0mwS",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VgWs1e4H6fk0k6le.gsYjzcr1dYdP0mwS"
+    },
+    {
+      "name": "Old Key",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.0xgnNHh8zb57Eg8W",
+      "img": "icons/sundries/misc/key-ornate-iron-black.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "Sxs5BX1ofxWqqIxg",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VgWs1e4H6fk0k6le.Sxs5BX1ofxWqqIxg"
+    },
+    {
+      "name": "Fresh Face",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.4pi1nbZRnlP3VEIR",
+      "img": "icons/magic/death/skull-energy-light-purple.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "ao9mHflZhJGzjGTy",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VgWs1e4H6fk0k6le.ao9mHflZhJGzjGTy"
+    },
+    {
+      "name": "Dusty Orb",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.DvDyR96M8vQsJofP",
+      "img": "icons/commodities/materials/glass-orb.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "qpi9GDdqjIbmDp2r",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VgWs1e4H6fk0k6le.qpi9GDdqjIbmDp2r"
+    },
+    {
+      "name": "Zu Helmet",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.KFtTkYOsQ7hOJAm0",
+      "img": "icons/equipment/head/helm-spangen-horned-worn.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "4GFzSbqWuqrG42hs",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VgWs1e4H6fk0k6le.4GFzSbqWuqrG42hs"
+    },
+    {
+      "name": "Leatherman Suit",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.N8uMhfaHFMsMGHOR",
+      "img": "icons/equipment/chest/breastplate-layered-leather-brown-silver.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "xgyor0QxFELUlHfQ",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VgWs1e4H6fk0k6le.xgyor0QxFELUlHfQ"
+    },
+    {
+      "name": "Void Gun",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.UMGVuzmkNUzCmbuj",
+      "img": "icons/weapons/thrown/shuriken-double-red.webp",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "mMi4LyGX1aXz57WX",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VgWs1e4H6fk0k6le.mMi4LyGX1aXz57WX"
+    },
+    {
+      "name": "Glass Skull",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.X2rlwZhOtXjcqn8G",
+      "img": "icons/commodities/bones/skull-hollow-worn-blue.webp",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "exBNWKNgCet4lqtA",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VgWs1e4H6fk0k6le.exBNWKNgCet4lqtA"
+    },
+    {
+      "name": "One Pound of Living Flesh",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.jCtCjwVyBYF5QDrL",
+      "img": "icons/consumables/meat/ribs-bone-raw-red.webp",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "gcceHD4LckOdvY4V",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VgWs1e4H6fk0k6le.gcceHD4LckOdvY4V"
+    },
+    {
+      "name": "Holy Arrow",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.lyOg8kgQQ6BJGo9b",
+      "img": "icons/weapons/ammunition/arrow-broadhead-glowing-orange.webp",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_id": "BAd7eHcOJ5KJJ5MT",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VgWs1e4H6fk0k6le.BAd7eHcOJ5KJJ5MT"
+    },
+    {
+      "name": "Ghost Bone Sabre",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.nbgkXgOzCOuylGQ5",
+      "img": "icons/weapons/swords/scimitar-bone.webp",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_id": "iHPmdxeGcNiCx8tA",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VgWs1e4H6fk0k6le.iHPmdxeGcNiCx8tA"
+    }
+  ],
+  "formula": "1d12",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8iXTxWS7BmWPt7Io",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.5",
+    "createdTime": 1767193817425,
+    "modifiedTime": 1767193817425,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "VgWs1e4H6fk0k6le",
+  "sort": 0,
+  "_key": "!tables!VgWs1e4H6fk0k6le"
+}

@@ -1,0 +1,330 @@
+{
+  "name": "Golem",
+  "description": "A random table created from the contents of the Golem Folder.",
+  "results": [
+    {
+      "name": "Copypasta Egg",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.28FpKQIL49VwsarL",
+      "img": "icons/consumables/eggs/egg-spiked-brown.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "s1ffy2SuSKbPqylE",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!CgWOEhopfmMUU8MA.s1ffy2SuSKbPqylE"
+    },
+    {
+      "name": "Gold Leaf",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.BYDZAMd8Df0kLDyF",
+      "img": "icons/consumables/plants/dried-herb-bundle-brown.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "UR1ZWBCqsJrfvrRE",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!CgWOEhopfmMUU8MA.UR1ZWBCqsJrfvrRE"
+    },
+    {
+      "name": "EM Harness",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.CVFIBFWkA8AS3zpc",
+      "img": "icons/commodities/tech/cable-end.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "NRz0myo6cJ7VEmcp",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!CgWOEhopfmMUU8MA.NRz0myo6cJ7VEmcp"
+    },
+    {
+      "name": "Piezo Mace",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.Hdf3GcWOrHRmKYUY",
+      "img": "icons/weapons/maces/mace-round-studded.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "p7O28YtvhYyxuTha",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!CgWOEhopfmMUU8MA.p7O28YtvhYyxuTha"
+    },
+    {
+      "name": "Ceramic Visage",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.I18F1hXPqXtC8a1D",
+      "img": "icons/equipment/head/mask-carved-wood-white.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "HhgE3MSQtOTO4Rtf",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!CgWOEhopfmMUU8MA.HhgE3MSQtOTO4Rtf"
+    },
+    {
+      "name": "Lucky Bone Orb",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.Vq9vtb17ZsinqNKZ",
+      "img": "icons/magic/death/skeleton-worn-skull-tan.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "RmsvfOmvnfmVSwHl",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!CgWOEhopfmMUU8MA.RmsvfOmvnfmVSwHl"
+    },
+    {
+      "name": "Potted Plant",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.aJWq9TmuFahJAOBC",
+      "img": "icons/commodities/materials/plant-sprout-brown-green.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "v7ZGdmWlflqmgheS",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!CgWOEhopfmMUU8MA.v7ZGdmWlflqmgheS"
+    },
+    {
+      "name": "Living Suit",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.eEZ5g7pfjjRgoSXi",
+      "img": "icons/magic/nature/root-vine-fire-entangled-hand.webp",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "2YYsWDC3hNgwK2HK",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!CgWOEhopfmMUU8MA.2YYsWDC3hNgwK2HK"
+    },
+    {
+      "name": "Eyegun",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.k3QcwKCtkXgLcMwA",
+      "img": "icons/commodities/biological/eye-tentacle-green-yellow.webp",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "Ub8GQSKvhhqRRSyk",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!CgWOEhopfmMUU8MA.Ub8GQSKvhhqRRSyk"
+    },
+    {
+      "name": "Golemechanic Kit",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.mSHpxU5cHMBkJM50",
+      "img": "icons/tools/smithing/tongs-steel-grey.webp",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "fuNL4uTbdePqoB8B",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!CgWOEhopfmMUU8MA.fuNL4uTbdePqoB8B"
+    },
+    {
+      "name": "Centaur Cradle (vehicle mod)",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.oIU8MlJj1552Mcjv",
+      "img": "icons/commodities/tech/transmission.webp",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_id": "0UstBabEyayCnmC3",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!CgWOEhopfmMUU8MA.0UstBabEyayCnmC3"
+    },
+    {
+      "name": "Smart Lubricants",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.sUdibm7Yv9a9nVcn",
+      "img": "icons/creatures/fish/fish-bioluminous-blue.webp",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_id": "VYAd9rYY7VwxsRKf",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!CgWOEhopfmMUU8MA.VYAd9rYY7VwxsRKf"
+    }
+  ],
+  "formula": "1d12",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8iXTxWS7BmWPt7Io",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.5",
+    "createdTime": 1767193683414,
+    "modifiedTime": 1767193807175,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "CgWOEhopfmMUU8MA",
+  "sort": 600000,
+  "_key": "!tables!CgWOEhopfmMUU8MA"
+}

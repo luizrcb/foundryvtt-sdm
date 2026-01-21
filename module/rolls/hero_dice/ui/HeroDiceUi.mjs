@@ -40,7 +40,7 @@ export class HeroDiceUI {
         bonusHeroDice > 0
           ? `
         <div class="form-group mt-10">
-          <label for"bonusQty">${$l10n('SDM.BonusHeroDice')}</label>
+          <label for="bonusQty">${$l10n('SDM.BonusHeroDice')}</label>
           <input type="text" name="bonusQty" value="${bonusHeroDice}" data-dtype="Number" disabled/>
         </div>`
           : ''

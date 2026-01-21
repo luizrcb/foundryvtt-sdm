@@ -1,0 +1,128 @@
+{
+  "folder": "77idWlDdAnk8JdQH",
+  "name": "5. Pet Sidekick",
+  "type": "trait",
+  "_id": "g3hsF3GPqZWZfdt7",
+  "img": "icons/sundries/misc/pet-collar-blue.webp",
+  "system": {
+    "readied": false,
+    "status": "",
+    "resources": "",
+    "cost": 0,
+    "cost_frequency": "",
+    "description": "<p>You treat the pet as your master. They are the same level as you. You can swap roles, making the pet the PC (generate its ability scores normally). You grasp the thoughts and emotions of creatures similar to the pet. Gain +1 aura.</p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "type": "",
+    "learning": {
+      "sources": 0,
+      "required_successes": 0
+    },
+    "skill": {
+      "rank": 0,
+      "modifier_step": 3,
+      "modifier_bonus": 0,
+      "modifier_final": 0,
+      "custom_modifiers": false
+    },
+    "power": {
+      "img": "icons/svg/book.svg",
+      "name": "",
+      "description": "",
+      "level": 1,
+      "range": "",
+      "target": "",
+      "duration": "",
+      "overcharge": "",
+      "roll_formula": "",
+      "overcharge_roll_formula": ""
+    }
+  },
+  "effects": [
+    {
+      "name": "+1 Aura",
+      "origin": "Compendium.sdm.traits.Item.g3hsF3GPqZWZfdt7",
+      "img": "icons/sundries/misc/pet-collar-blue.webp",
+      "_id": "UQZTKoumVkSXZQUR",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.abilities.aur.bonus",
+            "type": "add",
+            "value": 1,
+            "priority": 20,
+            "phase": "initial"
+          }
+        ]
+      },
+      "disabled": false,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.353",
+        "systemId": "sdm",
+        "systemVersion": "0.6.2",
+        "createdTime": 1760292632386,
+        "modifiedTime": 1769004203140,
+        "lastModifiedBy": "6KLfb35TARh0OlRZ"
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!g3hsF3GPqZWZfdt7.UQZTKoumVkSXZQUR"
+    }
+  ],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "XnQAppzUXfkn5LcX": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.353",
+    "systemId": "sdm",
+    "systemVersion": "0.4.5",
+    "createdTime": 1760292476844,
+    "modifiedTime": 1760292625384,
+    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+  },
+  "_key": "!items!g3hsF3GPqZWZfdt7"
+}

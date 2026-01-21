@@ -1,0 +1,28 @@
+{
+  "name": "give cash",
+  "type": "script",
+  "author": "ubbQuuuaFUXKToRg",
+  "img": "icons/commodities/currency/coins-stitched-pouch-brown.webp",
+  "scope": "global",
+  "command": "await sdm.api.gm.giveCash();",
+  "folder": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.20",
+    "createdTime": 1750710498596,
+    "modifiedTime": 1757422097768,
+    "lastModifiedBy": "m8JkkFk55TmjXFHQ"
+  },
+  "ownership": {
+    "default": 0,
+    "ubbQuuuaFUXKToRg": 0
+  },
+  "_id": "sqxpRBa4eD38y4rH",
+  "sort": 600000,
+  "_key": "!macros!sqxpRBa4eD38y4rH"
+}

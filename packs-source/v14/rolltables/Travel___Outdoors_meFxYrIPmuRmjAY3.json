@@ -1,0 +1,180 @@
+{
+  "name": "Travel & Outdoors",
+  "description": "A random table created from the contents of the Travel &amp; Outdoors Folder.",
+  "results": [
+    {
+      "name": "Water Pills",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.gadgets.Item.VT0zsSYkx5N6zg0Z",
+      "img": "icons/consumables/potions/potion-faceted-corked-blue.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "pDT4dbsZpcgwOTCo",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!meFxYrIPmuRmjAY3.pDT4dbsZpcgwOTCo"
+    },
+    {
+      "name": "Void Thermos",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.gadgets.Item.uqgX2IN7ZtFEkT0Q",
+      "img": "icons/containers/kitchenware/jug-wrapped-red.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "xkPx37x8LJ2LG6eb",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!meFxYrIPmuRmjAY3.xkPx37x8LJ2LG6eb"
+    },
+    {
+      "name": "Oculars",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.gadgets.Item.P0r3tBwKDrtSuVl7",
+      "img": "icons/equipment/head/helm-goggles-leather.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "930lWw00QC1L5KOG",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!meFxYrIPmuRmjAY3.930lWw00QC1L5KOG"
+    },
+    {
+      "name": "Astral Compass",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.gadgets.Item.0QhJAs7gXPsLpKzC",
+      "img": "icons/tools/navigation/compass-plain-blue.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "Nibel8ydI4tolDTs",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!meFxYrIPmuRmjAY3.Nibel8ydI4tolDTs"
+    },
+    {
+      "name": "Ray Banes",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.gadgets.Item.AOxS9ma33Mmi4nh4",
+      "img": "icons/equipment/head/goggles-leather-grey.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "RcBazjVk1U5Jbtw7",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!meFxYrIPmuRmjAY3.RcBazjVk1U5Jbtw7"
+    },
+    {
+      "name": "Solar Lamp",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.gadgets.Item.EZ9TMsy1LfmhhbVP",
+      "img": "icons/sundries/lights/lantern-iron-lit-yellow.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "HrYpD17lCvHk9Bou",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!meFxYrIPmuRmjAY3.HrYpD17lCvHk9Bou"
+    }
+  ],
+  "formula": "1d6",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "HRL8AeuDUw26tJDf",
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.36",
+    "createdTime": 1756574633481,
+    "modifiedTime": 1756574635106,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_id": "meFxYrIPmuRmjAY3",
+  "sort": 300000,
+  "_key": "!tables!meFxYrIPmuRmjAY3"
+}

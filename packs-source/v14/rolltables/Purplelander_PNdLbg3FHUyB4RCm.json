@@ -1,0 +1,205 @@
+{
+  "name": "Purplelander",
+  "description": "<p>A random table created from the contents of the Purplelander Folder.</p>",
+  "results": [
+    {
+      "name": "1. Arboreal",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.CvhRje7xGkIpKj2V",
+      "img": "icons/magic/nature/tree-roots-glow-yellow.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "f4eoM3sq0lAQ9Dgy",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!PNdLbg3FHUyB4RCm.f4eoM3sq0lAQ9Dgy"
+    },
+    {
+      "name": "3. Human Library",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.ICFpWoEImEIQEnwm",
+      "img": "icons/sundries/books/book-embossed-spiral-purple-white.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "BKd3IwdY8hbjqoQx",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!PNdLbg3FHUyB4RCm.BKd3IwdY8hbjqoQx"
+    },
+    {
+      "name": "6. Telempath",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.KhlAka74PWjziLXg",
+      "img": "icons/magic/defensive/illusion-evasion-echo-purple.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "wLW4ukcfceaDKr9e",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!PNdLbg3FHUyB4RCm.wLW4ukcfceaDKr9e"
+    },
+    {
+      "name": "5. Pet Sidekick",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.g3hsF3GPqZWZfdt7",
+      "img": "icons/sundries/misc/pet-collar-blue.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "3LEIT61cnBpZWo7O",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!PNdLbg3FHUyB4RCm.3LEIT61cnBpZWo7O"
+    },
+    {
+      "name": "0. Purplelander",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.hm5vkvhL2J7k9xSZ",
+      "img": "icons/creatures/magical/humanoid-silhouette-glowing-pink.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "sAsbkY4HiGlgLQEg",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!PNdLbg3FHUyB4RCm.sAsbkY4HiGlgLQEg"
+    },
+    {
+      "name": "2. Colonist",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.kzzbrjCiGE9arh7W",
+      "img": "icons/creatures/invertebrates/ant-strength-green.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "gew7bvYcJ1WJzezv",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!PNdLbg3FHUyB4RCm.gew7bvYcJ1WJzezv"
+    },
+    {
+      "name": "4. Kaffetropist",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.w8eyGzOF6sMoMTHt",
+      "img": "icons/consumables/fruit/nanking-cherry-leaf-red.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "KsuMSW2KwrBkzAdy",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!PNdLbg3FHUyB4RCm.KsuMSW2KwrBkzAdy"
+    }
+  ],
+  "formula": "1d7",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8gXEqCY7Gctq4hdt",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.4",
+    "createdTime": 1767049242564,
+    "modifiedTime": 1767049263906,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "PNdLbg3FHUyB4RCm",
+  "sort": 900000,
+  "_key": "!tables!PNdLbg3FHUyB4RCm"
+}

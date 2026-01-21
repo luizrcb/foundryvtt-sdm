@@ -1,0 +1,205 @@
+{
+  "name": "Bluelander",
+  "description": "<p>A random table created from the contents of the Bluelander Folder.</p>",
+  "results": [
+    {
+      "name": "3. Oppressed Faith",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.1qbYL2h1rxWV2yky",
+      "img": "icons/magic/unholy/hands-praying-fire-green.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "vOgnwlWiiBXvV9WB",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0fj6JTff9nFB9QTy.vOgnwlWiiBXvV9WB"
+    },
+    {
+      "name": "5. Spelunker",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.AFGyTJRBg6HPfzRz",
+      "img": "icons/environment/wilderness/mine-interior-dungeon-door.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "yTYoPnLggzym1Hug",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0fj6JTff9nFB9QTy.yTYoPnLggzym1Hug"
+    },
+    {
+      "name": "6. Sporemark",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.E0nFIv39fHp39KBG",
+      "img": "icons/consumables/mushrooms/campanulate-bell-shiny-blue.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "KvnkikUa44gTl6Bw",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0fj6JTff9nFB9QTy.KvnkikUa44gTl6Bw"
+    },
+    {
+      "name": "2. Cheesemaker",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.RwrLLjktMSdUfHHt",
+      "img": "icons/consumables/food/cheese-round-glowing-yellow.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "kvi4AWgxMAfTccCh",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0fj6JTff9nFB9QTy.kvi4AWgxMAfTccCh"
+    },
+    {
+      "name": "4. Reanimator",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.SwSEMrnRynbek0ql",
+      "img": "icons/magic/death/undead-bird-skeleton-purple.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "Z0eoWA7wqfYjpNUx",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0fj6JTff9nFB9QTy.Z0eoWA7wqfYjpNUx"
+    },
+    {
+      "name": "1. Boatmaster",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.c7rYd9L2c9Rsam0v",
+      "img": "icons/skills/trades/profession-sailing-ship.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "ZqxZ1pvWjTxvRJYb",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0fj6JTff9nFB9QTy.ZqxZ1pvWjTxvRJYb"
+    },
+    {
+      "name": "0. Bluelander",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.n8ddBk3aouOx0Pef",
+      "img": "icons/tools/fishing/hook-multi-steel-brown.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "l4OK4vp069K5zQgt",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0fj6JTff9nFB9QTy.l4OK4vp069K5zQgt"
+    }
+  ],
+  "formula": "1d7",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8gXEqCY7Gctq4hdt",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.4",
+    "createdTime": 1767048507835,
+    "modifiedTime": 1767049263906,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "0fj6JTff9nFB9QTy",
+  "sort": 1300000,
+  "_key": "!tables!0fj6JTff9nFB9QTy"
+}

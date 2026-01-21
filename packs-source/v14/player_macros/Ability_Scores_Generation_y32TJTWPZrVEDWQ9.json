@@ -1,0 +1,28 @@
+{
+  "name": "Ability Scores Generation",
+  "type": "script",
+  "author": "ubbQuuuaFUXKToRg",
+  "img": "icons/sundries/gaming/dice-pair-white-green.webp",
+  "scope": "global",
+  "command": "await sdm.api.player.abilityGeneration();",
+  "folder": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.20",
+    "createdTime": 1751505603791,
+    "modifiedTime": 1757421982402,
+    "lastModifiedBy": "m8JkkFk55TmjXFHQ"
+  },
+  "ownership": {
+    "default": 0,
+    "ubbQuuuaFUXKToRg": 3
+  },
+  "_id": "y32TJTWPZrVEDWQ9",
+  "sort": 0,
+  "_key": "!macros!y32TJTWPZrVEDWQ9"
+}

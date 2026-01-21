@@ -1,0 +1,28 @@
+{
+  "name": "give xp",
+  "type": "script",
+  "author": "ubbQuuuaFUXKToRg",
+  "img": "icons/svg/upgrade.svg",
+  "scope": "global",
+  "command": "await sdm.api.gm.giveExperience();",
+  "folder": null,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.20",
+    "createdTime": 1750710555879,
+    "modifiedTime": 1757422116642,
+    "lastModifiedBy": "m8JkkFk55TmjXFHQ"
+  },
+  "ownership": {
+    "default": 0,
+    "ubbQuuuaFUXKToRg": 0
+  },
+  "_id": "gCpPYUuDkw9IsJLy",
+  "sort": 700000,
+  "_key": "!macros!gCpPYUuDkw9IsJLy"
+}

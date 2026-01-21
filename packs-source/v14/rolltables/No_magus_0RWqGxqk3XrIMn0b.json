@@ -1,0 +1,330 @@
+{
+  "name": "Noömagus",
+  "description": "A random table created from the contents of the Noömagus Folder.",
+  "results": [
+    {
+      "name": "Solaris Disc",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.5NRYirtg34oWHkmu",
+      "img": "icons/magic/fire/barrier-wall-flame-ring-yellow.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "x33OmIFYLIpiInVv",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0RWqGxqk3XrIMn0b.x33OmIFYLIpiInVv"
+    },
+    {
+      "name": "Snakeskin Shoes",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.6Dfqi0cHTaXFAPwB",
+      "img": "icons/equipment/feet/boots-leather-green.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "QQka2EpwtwTZshOh",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0RWqGxqk3XrIMn0b.QQka2EpwtwTZshOh"
+    },
+    {
+      "name": "Bodylectric Bracers",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.71XvzvOHXMIr5V0N",
+      "img": "icons/equipment/wrist/bracer-shadow.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "Ztvlv3CoSQIDxsUR",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0RWqGxqk3XrIMn0b.Ztvlv3CoSQIDxsUR"
+    },
+    {
+      "name": "Hard Light Scepter",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.8uM23J0qoZ9kdZLt",
+      "img": "icons/weapons/staves/staff-ornate-jeweled-blue.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "KZHYIxmj10sLCv7d",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0RWqGxqk3XrIMn0b.KZHYIxmj10sLCv7d"
+    },
+    {
+      "name": "Scroll Disk Belt",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.D1ZdyjaNoR3eoHnn",
+      "img": "icons/equipment/waist/belt-armored-studded-steel.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "gCa0zZbAdirdMOq6",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0RWqGxqk3XrIMn0b.gCa0zZbAdirdMOq6"
+    },
+    {
+      "name": "Omnibatteries",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.IS0kB7Bx4uC4lMPd",
+      "img": "icons/commodities/treasure/token-silver-blue.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "GT1AAJaPVUFyYkte",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0RWqGxqk3XrIMn0b.GT1AAJaPVUFyYkte"
+    },
+    {
+      "name": "Anti-Static Robes",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.OIU4i1Layl86oHB7",
+      "img": "icons/equipment/back/cloakcollared-red-gold.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "2p927LWWtCs1bJ7W",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0RWqGxqk3XrIMn0b.2p927LWWtCs1bJ7W"
+    },
+    {
+      "name": "Power Scroll Printer",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.QY7Q5nxSEKybYYqk",
+      "img": "icons/sundries/scrolls/scroll-plain-red.webp",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "6kwNNMSzU9j4GMbk",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0RWqGxqk3XrIMn0b.6kwNNMSzU9j4GMbk"
+    },
+    {
+      "name": "Lifestealer Syringe",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.Tu67FORVWzQK6VSh",
+      "img": "icons/weapons/ammunition/arrow-broadhead-bent-teal.webp",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "e953Dd22jxsgHh7C",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0RWqGxqk3XrIMn0b.e953Dd22jxsgHh7C"
+    },
+    {
+      "name": "Collar of Life",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.VHPSzBViq2XisN7i",
+      "img": "icons/equipment/neck/amulet-heart.webp",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "CmqvRlFRUP7gWlQL",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0RWqGxqk3XrIMn0b.CmqvRlFRUP7gWlQL"
+    },
+    {
+      "name": "Dead Language Daemon",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.WwLrFfUECxOgeYAV",
+      "img": "icons/tools/laboratory/alembic-glass-ball-blue.webp",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_id": "qUHdiA0DUzbFYRDS",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0RWqGxqk3XrIMn0b.qUHdiA0DUzbFYRDS"
+    },
+    {
+      "name": "Noöjack",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.ggLmgMzVejK5DvOg",
+      "img": "icons/tools/fasteners/bolts-roundhead.webp",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_id": "VYKgHWOtLwJlSCHn",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0RWqGxqk3XrIMn0b.VYKgHWOtLwJlSCHn"
+    }
+  ],
+  "formula": "1d12",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8iXTxWS7BmWPt7Io",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.5",
+    "createdTime": 1767193810084,
+    "modifiedTime": 1767193810084,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "0RWqGxqk3XrIMn0b",
+  "sort": 0,
+  "_key": "!tables!0RWqGxqk3XrIMn0b"
+}

@@ -235,42 +235,6 @@ export class SdmActor extends Actor {
     await this.createEmbeddedDocuments('ActiveEffect', [effectData]);
   }
 
-  async addFatigueHalfLife() {
-    // In your effect creation code
-    const actorMaxLife = this.system.life.max; // Fetch directly from actor data
-    const actorCurrentLife = this.system.life.value;
-    const halfMaxLife = Math.floor(actorMaxLife * 0.5);
-
-    const effectData = {
-      name: 'half life (fatigue)',
-      label: 'half life (fatigue)',
-      icon: 'icons/svg/skull.svg',
-      changes: [
-        {
-          key: 'system.life.max',
-          value: halfMaxLife.toString(), // Ensure value is a string
-          mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE
-        }
-      ],
-      flags: {
-        sdm: {
-          effectType: 'halfLife',
-          source: 'fatigue'
-        }
-      }
-    };
-
-    if (actorCurrentLife > halfMaxLife) {
-      effectData.changes.push({
-        key: 'system.life.value',
-        value: halfMaxLife.toString(), // Ensure value is a string
-        mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE
-      });
-    }
-
-    await this.createEmbeddedDocuments('ActiveEffect', [effectData]);
-  }
-
   /** @override */
   prepareData() {
     // Prepare data for the actor. Calling the super version of this executes
@@ -282,6 +246,7 @@ export class SdmActor extends Actor {
 
   /** @override */
   prepareBaseData() {
+    super.prepareBaseData();
     // Data modifications in this step occur before processing embedded
     // documents or derived data.
   }

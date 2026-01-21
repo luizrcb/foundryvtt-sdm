@@ -3,21 +3,23 @@ const fs = require('fs');
 const path = require('path');
 
 const foldersToDelete = [
-  'packs/macros',
-  'packs/player_macros',
-  'packs/rolltables',
-  'packs/equipment',
-  'packs/traits',
-  'packs/creatures',
   'packs/ability_scores',
-  'packs/consumables',
-  'packs/gadgets',
-  'packs/powers',
   'packs/armors',
-  'packs/wards',
-  'packs/weapons',
+  'packs/consumables',
+  'packs/creatures',
+  'packs/equipment',
+  'packs/gadgets',
   'packs/handouts',
-  'packs/npc_generator'
+  'packs/item_piles',
+  'packs/macros',
+  'packs/npc_generator',
+  'packs/player_macros',
+  'packs/powers',
+  'packs/rolltables',
+  'packs/trait_items',
+  'packs/traits',
+  'packs/wards',
+  'packs/weapons'
 ];
 
 const rootDir = path.join(__dirname, '..');

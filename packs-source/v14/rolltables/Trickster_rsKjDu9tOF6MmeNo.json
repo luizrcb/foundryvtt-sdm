@@ -1,0 +1,330 @@
+{
+  "name": "Trickster",
+  "description": "A random table created from the contents of the Trickster Folder.",
+  "results": [
+    {
+      "name": "Ring of Divisibility",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.8ZmKK3iAlMpkqwvK",
+      "img": "icons/equipment/finger/ring-fish-silver.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "ipIqHCdw7WvZjgmD",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rsKjDu9tOF6MmeNo.ipIqHCdw7WvZjgmD"
+    },
+    {
+      "name": "Smart Rope",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.DRXGqZHIoZtTqWVm",
+      "img": "icons/sundries/survival/rope-wrapped-red.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "MLkQhY9XUz28MLaZ",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rsKjDu9tOF6MmeNo.MLkQhY9XUz28MLaZ"
+    },
+    {
+      "name": "Friend Spider “Sooty”",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.HlEs7nTT2pff2HCS",
+      "img": "icons/creatures/invertebrates/spider-mandibles-brown.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "52P7OLu7J9q0mpJ9",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rsKjDu9tOF6MmeNo.52P7OLu7J9q0mpJ9"
+    },
+    {
+      "name": "Stranger in a Bottle",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.KP2N7q6p8NVTBVvz",
+      "img": "icons/containers/kitchenware/jug-bottle-clay-brown-gold-blue.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "WfkaRaBMUAiFh2I4",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rsKjDu9tOF6MmeNo.WfkaRaBMUAiFh2I4"
+    },
+    {
+      "name": "Twelve Sleepy Coins",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.QgRpRcQNxHne1hpH",
+      "img": "icons/commodities/currency/coins-plain-gold.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "nSY2UOJ4C4a6IktI",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rsKjDu9tOF6MmeNo.nSY2UOJ4C4a6IktI"
+    },
+    {
+      "name": "Shipsteel Stiletto",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.Vd5k7Q44OYNTHdcu",
+      "img": "icons/weapons/daggers/dagger-simple-blue.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "qApm6YUQVSBICsBy",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rsKjDu9tOF6MmeNo.qApm6YUQVSBICsBy"
+    },
+    {
+      "name": "Cryptic Clavus",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.VirgfXHp0PFqE4R3",
+      "img": "icons/sundries/misc/admission-ticket-blue.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "CwlS0EBY1ufMh42H",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rsKjDu9tOF6MmeNo.CwlS0EBY1ufMh42H"
+    },
+    {
+      "name": "Dale Four-Four",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.ZjDeLInahlRUXQSR",
+      "img": "icons/weapons/crossbows/handcrossbow-green.webp",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "0MB3fTqpckU0jGFC",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rsKjDu9tOF6MmeNo.0MB3fTqpckU0jGFC"
+    },
+    {
+      "name": "Camelskin Jerkin",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.d8ejbiG6uF3ZSFXb",
+      "img": "icons/equipment/chest/vest-leather-brown.webp",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "DBhWpgaK1Z2ZJj71",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rsKjDu9tOF6MmeNo.DBhWpgaK1Z2ZJj71"
+    },
+    {
+      "name": "Glitter Ball",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.naSTHYMKusoTUKGH",
+      "img": "icons/commodities/gems/pearl-swirl-teal.webp",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "XwookKb25arjj4It",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rsKjDu9tOF6MmeNo.XwookKb25arjj4It"
+    },
+    {
+      "name": "Second Face",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.tWJ3XaRRTApwOEsE",
+      "img": "icons/magic/death/skull-humanoid-white-red.webp",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_id": "qwtcoCP5ry09cIc3",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rsKjDu9tOF6MmeNo.qwtcoCP5ry09cIc3"
+    },
+    {
+      "name": "Skin Glove",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.yzBJ0Z3XoCsLfc8Y",
+      "img": "icons/equipment/hand/glove-tooled-leather-red.webp",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_id": "ZtXLEEKIvOGkMBGW",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rsKjDu9tOF6MmeNo.ZtXLEEKIvOGkMBGW"
+    }
+  ],
+  "formula": "1d12",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8iXTxWS7BmWPt7Io",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.5",
+    "createdTime": 1767193497052,
+    "modifiedTime": 1767193807175,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "rsKjDu9tOF6MmeNo",
+  "sort": 800000,
+  "_key": "!tables!rsKjDu9tOF6MmeNo"
+}

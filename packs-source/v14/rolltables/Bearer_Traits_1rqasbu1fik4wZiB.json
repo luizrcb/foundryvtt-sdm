@@ -1,0 +1,205 @@
+{
+  "name": "Bearer Traits",
+  "description": "<p>A random table created from the contents of the Bearer Traits Folder.</p>",
+  "results": [
+    {
+      "name": "4. Loyal",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.8SbRAxM3rohFFYEf",
+      "img": "icons/magic/control/control-influence-puppet.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "6BgR4jRG0pwJv0fK",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!1rqasbu1fik4wZiB.6BgR4jRG0pwJv0fK"
+    },
+    {
+      "name": "2. Doombringer",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.E99GxosPZfs7bJWh",
+      "img": "icons/skills/melee/strike-axe-blood-red.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "Lod1gZRJs9sEenug",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!1rqasbu1fik4wZiB.Lod1gZRJs9sEenug"
+    },
+    {
+      "name": "1. Burglar",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.EnINQOr6bgdE6ici",
+      "img": "icons/environment/traps/cage-grey-steel.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "NKKEzFCOJiR6rV9L",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!1rqasbu1fik4wZiB.NKKEzFCOJiR6rV9L"
+    },
+    {
+      "name": "6. Shackleminded",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.Rmp7yyT1Mt2mEU1k",
+      "img": "icons/magic/symbols/runes-carved-stone-green.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "psAdio3Cf4M25sgu",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!1rqasbu1fik4wZiB.psAdio3Cf4M25sgu"
+    },
+    {
+      "name": "5. Revenant-in-Waiting",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.iBrznNnplMCuQRQC",
+      "img": "icons/magic/death/undead-skeleton-worn-blue.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "tbNCPHZsN44Z1wMU",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!1rqasbu1fik4wZiB.tbNCPHZsN44Z1wMU"
+    },
+    {
+      "name": "3. Fighting Woman or Man",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.zYRsYAGnoqy6mA7R",
+      "img": "icons/skills/melee/spear-tips-quintuple-orange.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "r5FSWUbQc41nLBvU",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!1rqasbu1fik4wZiB.r5FSWUbQc41nLBvU"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "name": "0. Weapon",
+      "img": "icons/weapons/staves/staff-skull-brown.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.KdbRc0hfAdefwDOL",
+      "_id": "nE0LLZlvhm45CUht",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!1rqasbu1fik4wZiB.nE0LLZlvhm45CUht"
+    }
+  ],
+  "formula": "1d6",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "a0K0TT7n3nS5gW7r",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.4",
+    "createdTime": 1767049268122,
+    "modifiedTime": 1767049311715,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "1rqasbu1fik4wZiB",
+  "sort": 100000,
+  "_key": "!tables!1rqasbu1fik4wZiB"
+}

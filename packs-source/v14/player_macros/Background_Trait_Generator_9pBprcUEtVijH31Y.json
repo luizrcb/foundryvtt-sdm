@@ -1,0 +1,28 @@
+{
+  "name": "Background Trait Generator",
+  "type": "script",
+  "command": "await sdm.api.player.generateRandomBackground();",
+  "img": "icons/sundries/documents/document-sealed-red-tan.webp",
+  "author": "0fqTkfNvjooZ2og7",
+  "scope": "global",
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.36",
+    "createdTime": 1756564474357,
+    "modifiedTime": 1757422069249,
+    "lastModifiedBy": "m8JkkFk55TmjXFHQ"
+  },
+  "_id": "9pBprcUEtVijH31Y",
+  "sort": 0,
+  "_key": "!macros!9pBprcUEtVijH31Y"
+}

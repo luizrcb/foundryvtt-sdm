@@ -1,0 +1,23 @@
+{
+  "type": "Item",
+  "folder": null,
+  "name": "Manager",
+  "color": null,
+  "sorting": "a",
+  "_id": "S5wPQyYpj6Hth8p4",
+  "description": "",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "sdm",
+    "systemVersion": "0.4.5",
+    "createdTime": 1760204118746,
+    "modifiedTime": 1760204118746,
+    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+  },
+  "_key": "!folders!S5wPQyYpj6Hth8p4"
+}

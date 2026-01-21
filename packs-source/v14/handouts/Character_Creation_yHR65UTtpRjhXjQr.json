@@ -1,0 +1,433 @@
+{
+  "name": "Character Creation",
+  "pages": [
+    {
+      "sort": 200000,
+      "name": "Character Creation",
+      "type": "text",
+      "_id": "JRGyMTykuDFNnmkE",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<blockquote><pre><code>Players must configure their main character in the User Configuration menu (right-click the bottom left user panel)</code></pre><p>[@Vastlands_Guidebook, p. 10]</p><ol><li>generate your level 1 character's <strong>ability scores</strong></li><li>generate a <strong>background trait</strong></li><li>... and a <strong>path trait</strong></li><li>... and a <strong>free trait</strong></li><li><strong>equip</strong> them</li><li><s>generate other </s><strong><s>attributes</s></strong><em><strong> </strong>(automated)</em></li><li>give them a <strong>motivation</strong></li><li><s>invest </s><strong><s>experience</s> </strong><em>(automated)</em></li><li>and <strong>name</strong> them</li></ol></blockquote>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": "6KLfb35TARh0OlRZ",
+        "modifiedTime": 1767117593443
+      },
+      "ownership": {
+        "default": -1
+      },
+      "_key": "!journal.pages!yHR65UTtpRjhXjQr.JRGyMTykuDFNnmkE"
+    },
+    {
+      "sort": 300000,
+      "name": "Ability Scores",
+      "type": "text",
+      "_id": "vnYeBGIE89jIE1ci",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<blockquote><p>[@Vastlands_Guidebook, pp. 12-13]</p></blockquote><p>Abilities represent the natural, inherent aptitudes of a character.</p><p>They come in three colors (active, dynamic, static) and two flavors (mind and matter).</p><p>PCs' ability scores are always 0 or higher. Human ability scores range from 0 to 5. Inhuman characters may have higher scores.</p><p></p><div class=\"ability-explanation\"><h3><strong>Static Abilities</strong></h3><p>Resisting things. Body, matter, structure, form, persistence, courage, <em>ha</em>. The resolve and stamina to bear and withstand.</p><ul><li><p><span class=\"ability-type\"><strong>Aura</strong></span> <span class=\"ability-flavor\">is the mental ability of resilience in the face of fortune's outrageous slings. It is not wisdom (that is a trait). It may allow a character to use powers beyond mortal ken longer than usual.</span></p></li><li><p><span class=\"ability-type\"><strong>Endurance</strong></span> <span class=\"ability-flavor\">is the physical ability of resistance. How much pain and strain a character can take. How much staying power they have.</span></p><p></p></li></ul><h3><strong>Active Abilities</strong></h3><p>Doing things. Fire, drive, energy, vigor, thrust, movement, <em>ka</em>. The will and force to dominate and overcome.</p><ul><li><p><span class=\"ability-type\"><strong>Charisma</strong></span> <span class=\"ability-flavor\">is the mental ability of divine fortune, luck and conviction. It lets a character get their way and win arguments through sheer force of personality.</span></p></li><li><p><span class=\"ability-type\"><strong>Strength</strong></span> <span class=\"ability-flavor\">is the physical ability of lifting bars, bending gates, punching guards, throwing rocks, and climbing ladders. It also increases how much a character can carry.</span></p><p></p></li></ul><h3><strong>Dynamic Abilities</strong></h3><p>Changing things. Psyche, intellect, change, dexterity, path, speed, <em>ba</em>. The wit and flexibility to adapt and adjust.</p><ul><li><p><span class=\"ability-type\"><strong>Thought</strong></span> <span class=\"ability-flavor\">is the mental ability of absorbing, processing, and manipulating information. It is not education (that is a trait). It also increases how many traits a PC can have.</span></p></li><li><p><span class=\"ability-type\"><strong>Agility</strong></span> <span class=\"ability-flavor\">is the physical ability of speed and precision within the character's environment. Dodging, aiming, manipulating, balancing, flexibility, and more. It provides a bonus to defense.</span></p></li></ul></div><p></p><h3>Roll d100 once to generate abilities (assign unlabeled scores)</h3><p>@UUID[Compendium.sdm.ability_scores.RollTable.Wq2H7Tf7Vkt9eKX8]{Ability Scores}</p><h3><em>Alternative Generation 1</em></h3><p>roll d100 for each ability in order @UUID[Compendium.sdm.player_macros.Macro.y32TJTWPZrVEDWQ9]{Ability Scores Generation}</p><p></p><h3><em>Alternative Generation 2</em></h3><p>assign 7 points to your abilities as you like with a maximum of 3 in any one ability. This is the way of those who mistrust chaos.</p><p></p><p>→ Next: generate your background trait</p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": "6KLfb35TARh0OlRZ",
+        "modifiedTime": 1767387604297
+      },
+      "ownership": {
+        "default": -1
+      },
+      "_key": "!journal.pages!yHR65UTtpRjhXjQr.vnYeBGIE89jIE1ci"
+    },
+    {
+      "sort": 400000,
+      "name": "Background Trait",
+      "type": "text",
+      "_id": "xT3IKEdSWilzZ69Z",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<blockquote><p>[@Vastlands_Guidebook, pp. 14-15]</p></blockquote><p>Traits are the innate acquired and inherited qualities and characteristics that make a character unique. This includes characteristics such as backgrounds, professions, mutations, downloaded skill packages, implanted prosthetics, corruptions, and memorized powers.</p><p>Individual traits may provide various benefits, including community membership, skill modifiers to actions, social standing, specific mechanical benefits, and new game options.</p><div class=\"inventory-box\"><p>You have <strong>7 + thought</strong> inventory slots for traits.</p><p>Each trait occupies a trait inventory slot. Other traits, items, and events can increase the number of trait slots.</p><p>At level 1 you <strong>start with three traits</strong>.</p><p>A level 0 character has two traits. Characters can choose to gain a new trait every time they level up.</p></div><h3><strong>Trait Skill Modifiers</strong></h3><p>Choose the same trait multiple times to increase its skill modifier.</p><table><thead><tr><th></th><th></th><th></th></tr></thead><tbody><tr><td>Skilled</td><td>+3 bonus to rolls</td><td>good enough to make a living</td></tr><tr><td>Expert</td><td>+6 bonus to rolls</td><td>good enough to teach</td></tr><tr><td>Master</td><td>+9 bonus to rolls</td><td>a rare master of this art</td></tr></tbody></table><p>A trait selected multiple times does not take up additional trait slots. Note a trait's bonus (+3 / +6 / +9) to track how many times you have selected it.</p><h4>Applying Trait Skill Modifiers</h4><p>Trait descriptions list some situations where skill modifiers apply. Players and the referee can use dialogue and common sense to figure out if a trait could apply in a new or unexpected situation.</p><h4>Other Trait Benefits</h4><p>If traits provide other benefits, note them. You may also invent or discover new benefits to existing traits through play. This is good.</p><h4>Inventing New Traits</h4><p>Players and referees can make up new traits together. Any profession, quality, background, mutation, or space oddity that sounds fun is fair game.</p><p></p><h3><strong>Traditional Background Generator</strong></h3><p>Roll a few times to invent some reasonably traditional civilized Circle Sea backgrounds. You can mix-and-match columns. Keep one you enjoy and note it in a trait inventory slot along with its modifier (+3). @UUID[Compendium.sdm.player_macros.Macro.9pBprcUEtVijH31Y]{Background Trait Generator}</p><p></p><table><thead><tr><th><em>[[/r d40]]</em></th><th><strong>Flavor</strong></th><th><strong>Role 1-</strong></th><th><strong>-Role 2</strong></th><th><strong>Task</strong></th><th><strong>Spin</strong></th></tr></thead><tbody><tr><td>1</td><td>blue land</td><td>narco</td><td>apothecary</td><td>mix potions, poisons, drugs</td><td>drug-fuelled dream travel</td></tr><tr><td>2</td><td>dead god</td><td>scholar</td><td>of Long Ago</td><td>explore the false past of lost times</td><td>psychokinetic acrobatics</td></tr><tr><td>3</td><td>peacemaker</td><td>big game</td><td>tourist</td><td>find and enjoy strange beasts</td><td>pray, love, eat monsters?</td></tr><tr><td>4</td><td>moon</td><td>bio</td><td>mechanic</td><td>modify and create living things</td><td>body-horror technomagic</td></tr><tr><td>5</td><td>coaster</td><td>cat</td><td>groom</td><td>make cats [or other masters] happy</td><td>pet's hired muscle</td></tr><tr><td>6</td><td>scavenger</td><td>all</td><td>chemist</td><td>manipulate the basic iksr of matter</td><td>explosive philosophies</td></tr><tr><td>7</td><td>purple land</td><td>therapist</td><td>barista</td><td>make coffee and make peace</td><td>small-business expertise</td></tr><tr><td>8</td><td>feline</td><td>error</td><td>censor</td><td>prevent bad-think, fix mistakes</td><td>inquisition tactics</td></tr><tr><td>9</td><td>plantation</td><td>puppet</td><td>performer</td><td>undo ennui, create moderate joy</td><td>distraction or destruction?</td></tr><tr><td>10</td><td>steppe</td><td>wood</td><td>singer</td><td>shape plants, sculpt furnishings</td><td>talk to trees, hear herbs</td></tr><tr><td>11</td><td>violet city</td><td>living</td><td>stoner</td><td>shape stone, sing houses</td><td>carry landcoral in your skin</td></tr><tr><td>12</td><td>red land</td><td>aqua</td><td>farmer</td><td>protein and fruits from the waters</td><td>speak with strange fish</td></tr><tr><td>13</td><td>vampire</td><td>nöosphere</td><td>caller</td><td>talk to the hidden archive daemons</td><td>access divine communications</td></tr><tr><td>14</td><td>rust</td><td>gun</td><td>maker</td><td>craft the forbidden tools of Long Ago</td><td>rebuild illegal devices</td></tr><tr><td>15</td><td>vintner</td><td>soil</td><td>laborer</td><td>optimize primary production</td><td>understand survival basics</td></tr><tr><td>16</td><td>RL district</td><td>life</td><td>generator</td><td>create compelling human content</td><td>spin stories and lies</td></tr><tr><td>17</td><td>hexad</td><td>town</td><td>sanitizer</td><td>keep the town clean and alive</td><td>travel unseen in urban bowels</td></tr><tr><td>18</td><td>doghead</td><td>daemon</td><td>summoner</td><td>interface with disembodied minds</td><td>manipulate the old minds</td></tr><tr><td>19</td><td>orange land</td><td>mule</td><td>whisperer</td><td>interface with beast-bodied minds</td><td>uplift downtrodden animals</td></tr><tr><td>20</td><td>halfling</td><td>herbalist</td><td>officer</td><td>ensure adequate public harmony</td><td>cloud minds for shared goals</td></tr><tr><td>21</td><td>council</td><td>necromancer</td><td>lawyer</td><td>uphold postmortal legal rights</td><td>ensure proper reincarnation</td></tr><tr><td>22</td><td>ancestor</td><td>old</td><td>technician</td><td>chant the mantras of maintenance</td><td>use Long Long Ago tools</td></tr><tr><td>23</td><td>agent</td><td>golem</td><td>engineer</td><td>keep the machine humans running</td><td>service the electric overlords</td></tr><tr><td>24</td><td>pirate</td><td>middle</td><td>manager</td><td>assign assigned assignations</td><td>navigate cruel bureaucracies</td></tr><tr><td>25</td><td>plateau</td><td>road</td><td>walker</td><td>keep the roads alive and respected</td><td>travel safely off the grid</td></tr><tr><td>26</td><td>yellow land</td><td>inspector</td><td>private</td><td>look, listen, and report to authority</td><td>find and keep grim secrets</td></tr><tr><td>27</td><td>diesel dwarfer</td><td>licensed</td><td>merchant</td><td>truck and barter for the greater good</td><td>maximize short-term gains</td></tr><tr><td>28</td><td>decapolitan</td><td>protocol</td><td>soldier</td><td>keep the martial traditions alive</td><td>cross tea &amp; high dot etiquette</td></tr><tr><td>29</td><td>saffron</td><td>astrologer</td><td>general</td><td>divine strategies from the stars</td><td>maintain order and discipline</td></tr><tr><td>30</td><td>horser</td><td>accountant</td><td>monk</td><td>ensure the holy numbers go up</td><td>keep the cog flower turning</td></tr><tr><td>31</td><td>golden desert</td><td>machine</td><td>herder</td><td>keep the synthetic flocks in line</td><td>oil and multiply machines</td></tr><tr><td>32</td><td>green land</td><td>content</td><td>promoter</td><td>popularize the latest entertainment</td><td>tamp down false ideas</td></tr><tr><td>33</td><td>metropolitan</td><td>advertising</td><td>servant</td><td>promote the corporate bottom line</td><td>subversive subterfuge</td></tr><tr><td>34</td><td>elfer</td><td>autodoc</td><td>nurse</td><td>support a smarter golem than you</td><td>parasite machine minds</td></tr><tr><td>35</td><td>falscher</td><td>professional</td><td>consumer</td><td>embody proper ethics</td><td>develop exquisite taste</td></tr><tr><td>36</td><td>timelost</td><td>leisure</td><td>maximizer</td><td>enjoy the fruits of civilization</td><td>schmoozer socialite spy</td></tr><tr><td>37</td><td>astral</td><td>rogue</td><td>trader</td><td>skirt the rules for profit</td><td>shave the coins for memories</td></tr><tr><td>38</td><td>ministry</td><td>show</td><td>hobo</td><td>be a warning to the lazy</td><td>dullway tunnel rat</td></tr><tr><td>39</td><td>barbarian</td><td>primary</td><td>noble</td><td>focus aspirations and social desires</td><td>overwhelm the given order</td></tr><tr><td>40</td><td>voidwalker</td><td>public</td><td>relative</td><td>share social love and vibes</td><td>unlock doors with your blood</td></tr></tbody></table><p>→ <em>Next: pick a path trait. This provides the adventuring competence your random background trait may lack.</em></p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": "6KLfb35TARh0OlRZ",
+        "modifiedTime": 1767098341438
+      },
+      "ownership": {
+        "default": -1
+      },
+      "_key": "!journal.pages!yHR65UTtpRjhXjQr.xT3IKEdSWilzZ69Z"
+    },
+    {
+      "sort": 500000,
+      "name": "Path Trait",
+      "type": "text",
+      "_id": "AKrU3YyfvwAUtYsL",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<blockquote><p>[@Vastlands_Guidebook, pp. 16-17]</p></blockquote><p>Paths are compilations of traits that create archetypal characters.</p><p>Review and <strong>choose a path</strong> (or roll d6):</p><table><thead><tr><th><em>[[/r d6]]</em></th><th><strong>Path</strong></th></tr></thead><tbody><tr><td>1–2</td><td><strong>Path of the Wizard</strong></td></tr><tr><td>3–4</td><td><strong>Path of the Traveler</strong></td></tr><tr><td>5–6</td><td><strong>Path of the Fighter</strong></td></tr></tbody></table><h4>Not Classes</h4><p>Paths are not classes. You are not bound to one path. You can choose traits from any path, in any order, mixing-and-matching as you level up.</p><h4>No Prerequisites</h4><p>Some traits complement one another, but you can pick them in any order as you level up or otherwise acquire new traits through play. If you want, you can even skip the superbasic, number zero trait.<br /></p><h3>@UUID[Compendium.sdm.rolltables.RollTable.sTbr6sL8AtR0Swdm]{PATH OF THE WIZARD}</h3><p>A scholar who uses the old technologies.</p><h3>@UUID[Compendium.sdm.rolltables.RollTable.6s6QYmH5VIqwCmru]{PATH OF THE TRAVELER}</h3><p>A merchant focused on overland voyaging. A trickster?</p><h3>@UUID[Compendium.sdm.rolltables.RollTable.e32f1fVfCm8UaOQz]{PATH OF THE FIGHTER}</h3><p>A caravan guard who wears armor and wields weapons.</p><p></p><p>→ Next: generate your character's free trait.</p><p></p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": "6KLfb35TARh0OlRZ",
+        "modifiedTime": 1767098592125
+      },
+      "ownership": {
+        "default": -1
+      },
+      "_key": "!journal.pages!yHR65UTtpRjhXjQr.AKrU3YyfvwAUtYsL"
+    },
+    {
+      "sort": 600000,
+      "name": "Other Paths",
+      "type": "text",
+      "_id": "WpsXEITDlcK0mjqH",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<blockquote><p>[@Vastlands_Guidebook, pp. 114-115]</p></blockquote><p>Beyond the wizard, traveler, and fighter, there are other paths characters may tread. Each also leads to its own spread with vignettes, named characters, six more associated traits, and items mundane and wondrous that one on this path might seek. Remember, a path is just a path. Follow it, or not. Pick traits from one or another; enjoy, use, and adapt.</p><p>[[/r d20]]</p><ol><li><p><strong>@UUID[Compendium.sdm.rolltables.RollTable.vHTnEczodRYhSKCe]{Barbarian}</strong>. You're an outlander or outsider, skilled with dead weapons and armors, free of oldtech or fantascience. Bone or iron, hide or gun. Also, you can hide, survive, and thrive in ruinland or waste land, dusty steppe or rugged mountain.</p></li><li><p><strong>@UUID[Compendium.sdm.rolltables.RollTable.0fj6JTff9nFB9QTy]{Bluelander}</strong>. Child of war and strange gods and ruined land. Skilled on a boat and in a mountain, laced with fungal and bacterial tech. Wield the fisher spear, knife, net, and climbing hook. Also, if you suffer corruption, you can reroll the result.</p></li><li><p><strong>@UUID[Compendium.sdm.rolltables.RollTable.UldHOMpkEWQPAN7X]{Bourgeois}</strong>. Citizen creator or conniving climber? Use the tools of civil society: the market in stocks, the hand invisible, the law of bureaucracy, the greased palm effective. Wield stick and sword, pistol and oldtech hand weapon. Also, spend a hero die to convince an official you know your stuff.</p></li><li><p><strong>@UUID[Compendium.sdm.rolltables.RollTable.3BimBzjuOxK3DKGb]{Golem}</strong>. You have made, remade, and unmade yourself. You have a timelost civilian profession, such as tea protocollier or soothstrologist. You become skilled (+3 bonus) in any activity you closely observe for a day, encoding it as a skill lemma stored in an inventory slot. You cannot improve a skill lemma. Removing it takes 10 minutes.</p></li><li><p><strong>@UUID[Compendium.sdm.rolltables.RollTable.YKikwIKOdaqBqcdh]{Greenlander}</strong>. You are the child of industry. Skilled at using civilian oldtech magics and fantascience, commanding golems, controlling vehicles, and supplicating at the temples. You wield oldtech guns and traditional voidship weapons.</p></li><li><p><strong>@UUID[Compendium.sdm.rolltables.RollTable.pr094geSwmBdYGSY]{Holy Fool}</strong>. You call yourself a prophet, your birth machine calls you a very naughty human. You read dreams, listen to stars, sing to the sea. Also, when you have no relevant skill, you can spend 1 life or ability point to get +1d6 to a single roll.</p></li><li><p><strong>@UUID[Compendium.sdm.rolltables.RollTable.QL3ryj2BNrFzrjab]{Manager}</strong>. An avatar of law, order, and procedure. You navigate forms and traditions, temples and bureaus. You wield the uniform, armor, and tools of your guild. Also, you can spend 1 life to detect if a creature is lying or not (90% accurate).</p></li><li><p><strong>@UUID[Compendium.sdm.rolltables.RollTable.12ObXelZA4fxk9N6]{Noble}</strong>. You were born better. You don’t need to do anything, you just have to be. You are skilled with prestigious weapons and armors, rich with oldtech, imbued with fantascience. Also, spend a hero die to make lower class human see things your way.</p></li><li><p><strong>@UUID[Compendium.sdm.rolltables.RollTable.XTNKMc5wRgAHr5Hm]{Noömagus}</strong>. You call yourself a neon knight. Rejoice in memetic rituals and wield the powers electric, luminous and daemonic. Use synthetic and lumi nous weapons. Also, spend a hero die to remember a fact about any unknown item you hold.</p></li><li><p><strong>@UUID[Compendium.sdm.rolltables.RollTable.9e64adDHZ5ONyhqG]{Orangelander}</strong>. You should consider yourself happy. Show off your games, arts, musics, and sports. Wield the racket, stick, hunting bow, and death polo lance. Also, spend a hero die to halt nearby undead.</p></li><li><p><strong>@UUID[Compendium.sdm.rolltables.RollTable.PNdLbg3FHUyB4RCm]{Purplelander}</strong>. You are a sufficiently advanced magical creation to pass as human. Skilled with telemental and mathempsychic machineries. Wield the tools of the recovered steppes, from bolter to pick. Also, you count as post-human, granting you a +3 bonus against effects that target humans.</p></li><li><p><strong>@UUID[Compendium.sdm.rolltables.RollTable.198Zvb8Kbgh2EJKO]{Redlander}</strong>. You are a free, refined, distilled human. Build bunkers, cultivate vines, and seal your mind to lies. Wield divine liberation weapons: cannon and chainsaw, hammer and sickle. Also, armor you wear grants an additional +1 defense per stone.</p></li><li><p><strong>@UUID[Compendium.sdm.rolltables.RollTable.rf7MBYLCOyKLEzo1]{Scion}</strong>. You are the child of a divine ancestor. Your blood holds skills and keys to divine powers, ancient customs, and buildertech devices. Spend 1 life to dive into ancestral memories for a fact about the Long Long Ago. Also, spend a hero die to boost an ability score by 1d6 for about an hour.</p></li><li><p><strong>@UUID[Compendium.sdm.rolltables.RollTable.I1KLzbo44EcaPh2Z]{Servant}</strong>. You were born, or made, to serve. You are skilled in a blue collar trade, but also in relations, deceptions, and flatteries. You gain +1 life per point of endurance. Also, spend a hero die to make the higher classes overlook or underestimate you.</p></li><li><p><strong>@UUID[Compendium.sdm.rolltables.RollTable.TW6sH3bykWZIOVyL]{Skeleton}</strong>. You were dead. Now you are un. A dread force animates you. You need no food, water, air or sleep. You speak, though you have no larynx. You take minimum damage from piercing attacks and half from slashing, but double from blunt. Also, you are skilled in a timelost weapon.</p></li><li><p><strong>@UUID[Compendium.sdm.rolltables.RollTable.6L8RbQwszsaw2NnV]{Soldier}</strong>. You served in the not-wars at the edge of time. You know the weapons and armors of regulation; wandgun and shield, blade and combat suit. You gain +2 defense (+4 at expert, +6 at master). Also, when an ally stands next to you, they add your charisma to their defense score.</p></li><li><p><strong>@UUID[Compendium.sdm.rolltables.RollTable.io4wCUYhzcpEm4qb]{Tourist}</strong>. You are not from around here. Stumble into places you shouldn’t be. Visit sights meant to be hidden. By accident, of course. Wield the book, stick, and umbrella. Also, spend a hero die to enter a sealed or locked place.</p></li><li><p><strong>@UUID[Compendium.sdm.rolltables.RollTable.Sw4KVkN1IYAcXMvt]{Trickster}</strong>. Call yourself wind, dawn, and sun. Practice linguistic tricks, technomagical illusions, and gymnosophic techniques. Spend a hero die and someone you tricked thinks you helped them.</p></li><li><p><strong>Weapon (@UUID[Compendium.sdm.rolltables.RollTable.vSZpk3aFuSHmYkIC]{Weapon Traits} and @UUID[Compendium.sdm.rolltables.RollTable.1rqasbu1fik4wZiB]{Bearer Traits})</strong>. Most precious thing, gift to humanity! Wield rhetoric, persuasion, manipulation, and ture psychic powers. Use humans and tools like yourself. Also, spend a hero die to seem worthless.</p></li><li><p><strong>@UUID[Compendium.sdm.rolltables.RollTable.s83Bifm9z47GEs6L]{Yellowlander}</strong>. You are a merchant, a maintainer, a mercenary. Bargain and appraise, repair and juryrig, extort and betray. Wield bow and spear, bola, lasso and garotte. Also, spend an ability point to run away from a fight safely.</p></li></ol>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": "6KLfb35TARh0OlRZ",
+        "modifiedTime": 1767098644844
+      },
+      "ownership": {
+        "default": -1
+      },
+      "_key": "!journal.pages!yHR65UTtpRjhXjQr.WpsXEITDlcK0mjqH"
+    },
+    {
+      "sort": 700000,
+      "name": "Free Trait",
+      "type": "text",
+      "_id": "LQ23tVSruYKZxwzq",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<blockquote><p>[@Vastlands_Guidebook, pp. 18-19]</p></blockquote><p>Level 0 characters start with 2 traits and gain one per level. Since PCs start at 1st level, they get a third trait. This trait can be another background or path trait, a trait from other sources, or even something you invented.</p><h4>Roll a Random Trait</h4><p>[[/r d6]] for background and path traits (58 options) or</p><p>[[/r d10]] to include corruption and other paths (~240 options)</p><ul><li>1–3: roll [[/r d40]] on the @UUID[Compendium.sdm.handouts.JournalEntry.yHR65UTtpRjhXjQr.JournalEntryPage.xT3IKEdSWilzZ69Z#traditional-background-generator]{background} trait table (p14)</li><li>4: roll [[/r d6]] on the@UUID[Compendium.sdm.rolltables.RollTable.sTbr6sL8AtR0Swdm]{ wizard path trait} table (p16)</li><li>5: roll [[/r d6]] on the @UUID[Compendium.sdm.rolltables.RollTable.6s6QYmH5VIqwCmru]{traveler path trait} table(p17)</li><li>6: roll [[/r d6]] on the @UUID[Compendium.sdm.rolltables.RollTable.e32f1fVfCm8UaOQz]{fighter path trait} table(p17)</li><li>7–9: roll [[/r d20]] to determine @UUID[Compendium.sdm.handouts.JournalEntry.yHR65UTtpRjhXjQr.JournalEntryPage.WpsXEITDlcK0mjqH]{another path} (p114); then [[/r d6]] on the corresponding trait table</li><li>10 (0): roll [[/r d6]] to determine corruption intensity: (1) severe, (2–3) moderate, (4–6) mild; then [[/r d20]] for the corresponding corruption trait column (p99)</li></ul><h4>Choose a New Trait</h4><p>Choose any new trait you like. Either from the tables listed above or from other sources.</p><h4>Choose an Existing Trait and Become an Expert</h4><p>When you select the same trait a second time, your trait's skill modifier increases from +3 (skilled) to +6 (expert). Depending on the trait, expertise may provide additional benefits. Selecting a trait twice does not increase the number of trait inventory slots it occupies. As you progress further, you can select the same trait a third time, becoming a master and increasing its skill modifier to +9 (master).</p><h4>Invent a New Trait</h4><p>To create a new trait, discuss with the rest of the table:</p><ol><li>Is it fun and evocative to roleplay?</li><li>Can you describe it with a short, memorable title?</li><li>Does it enhance rather than overshadow other characters?</li><li>Is it versatile enough for various situations?</li></ol><p>Aim for vivid, specific concepts like \"Anointed Gladiator\" or \"Desire Detective\" over staid ones like \"Wizard,\" \"Thief,\" or \"Fighter.\" The referee helps fit the new trait to the table's game and can rule certain traits off limits. If a trait proves problematic in play, discuss with other players and adjust as needed. Remember, retconning to improve the game experience is not a sin.</p><p></p><h2>Trait Idea Seeds</h2><table><thead><tr><th>[[/r d20]]</th><th>What Strange Traits?</th><th>Who Would Wield Them?</th><th>But At What Cost?</th></tr></thead><tbody><tr><td>1</td><td>beauty to bend soul or society</td><td>servant or slave of the muses</td><td>strange passions kindled</td></tr><tr><td>2</td><td>clockwork discipline, fervent uplift</td><td>wired rationalist legionnaire</td><td>freedom denied, disorder banished</td></tr><tr><td>3</td><td>cyber-ascendance, plastic evolution</td><td>pitiless machine or vome</td><td>flesh despised, biology mistaken</td></tr><tr><td>4</td><td>distributed, eusocial experience</td><td>many-bodied colony or polybody</td><td>loneliness a curse, solitude a terror</td></tr><tr><td>5</td><td>divine injustice, blind righteousness</td><td>cruel zealot of a wild deity</td><td>nuance is lost, detail is obscured</td></tr><tr><td>6</td><td>evolution o'er reason, root o'er brick</td><td>power-hungry tree-hugger</td><td>technology is incomprehensible</td></tr><tr><td>7</td><td>finwizardry, capitalist supremacy</td><td>cunning trader or wily industrialist</td><td>moloch dominates, culture is sold</td></tr><tr><td>8</td><td>flesh as clay, face as paint</td><td>skin-changing biomancer</td><td>stability is lost, the past forgotten</td></tr><tr><td>9</td><td>forbidden geometries, foolish hubris</td><td>unhinged sorcerer, mad sciencer</td><td>nature disdained, tradition scorned</td></tr><tr><td>10</td><td>imaginary bonds of organization</td><td>dedicated ruthless administrator</td><td>ossification nears, change is scary</td></tr><tr><td>11</td><td>life over death, death over life</td><td>hunter or destroyer of the dead</td><td>a pleasure is lost, a joy turns to ashes</td></tr><tr><td>12</td><td>lost arts, hidden mysteries</td><td>resurrected ancient traveler</td><td>mistakes abound, talk is fraught</td></tr><tr><td>13</td><td>machine logic, alien intuition</td><td>code-addled golem mechanic</td><td>love withers, community fractures</td></tr><tr><td>14</td><td>physical mastery, material design</td><td>holy wizard of the ancient machine</td><td>soul grows dim, spirit becomes hard</td></tr><tr><td>15</td><td>senses of doom, visions of hope</td><td>prophet of a strange new future</td><td>another wall, grass is greener</td></tr><tr><td>16</td><td>signs in the fast stars, truths obscure</td><td>void-bound shaman of old</td><td>food grows stale, drink tasteless</td></tr><tr><td>17</td><td>silent death, painful trickery</td><td>prowling thief or cultish bandit</td><td>society retreats, friendships founder</td></tr><tr><td>18</td><td>strength, thews, and primal vigor</td><td>warrior beast from the edge of time</td><td>books and words make less sense</td></tr><tr><td>19</td><td>unfolded spaces, broken mirrors</td><td>bodiless angel or daemon</td><td>senses turn aside, anxieties mount</td></tr><tr><td>20</td><td>feral unity, survival in the ruins</td><td>solitary wasteland strider</td><td>progress falters, dreams grow small</td></tr></tbody></table><p>→ <em>Next: equip your character.</em></p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": "6KLfb35TARh0OlRZ",
+        "modifiedTime": 1767099097652
+      },
+      "ownership": {
+        "default": -1
+      },
+      "_key": "!journal.pages!yHR65UTtpRjhXjQr.LQ23tVSruYKZxwzq"
+    },
+    {
+      "sort": 800000,
+      "name": "Character Equipment",
+      "type": "text",
+      "_id": "9gnE7C8pa1xeGidM",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<blockquote><p>[@Vastlands_Guidebook, pp. 20-22]</p></blockquote><p>Items are all the tools and treasures that expand a character's abilities and possibilities. From a mundane wrench to a magitechnical spell anchor, from a suit of pleather armor to a biomechanical crab-head, all are items.</p><div class=\"inventory-box\"><p>You have <strong>7 + strength</strong> inventory slots for items.</p><p>Each loose item or package occupies at least one item inventory slot. Other traits, items, and events can increase the number of item slots. Each item inventory slot is 1 stone in size.</p><p><strong>At level 1 you start with:</strong></p><ul><li>One strange item of ill-disclosed origin.</li><li>One useful kit—a sack of quantum gear that fits your background.</li><li>Some starting cash. €100 to be exact.</li></ul><p>A level 0 character starts without the strange item and with just €50 cash. A higher level character starts with more cash.</p></div><p></p><h3>HOW ITEMS WORK</h3><h4>Sizes</h4><p>Item sizes in the Vastlands use abstract units that combine weight and bulk.</p><table><thead><tr><th>Size</th><th>Equals</th><th>Example</th></tr></thead><tbody><tr><td>1 sack (sk)</td><td>10 stones</td><td>Basic cargo unit, about as much as a human.</td></tr><tr><td>1 stone (st)</td><td>10 soaps</td><td>Significant item; a saber, spear, shield, or shovel. About 7 kilograms or 15 pounds.</td></tr><tr><td>1 soap (sp)</td><td>25 cash</td><td>Small item; a signal whistle, signet ring, spike, or bar of soap (surprisingly useful in the wastes!).</td></tr><tr><td>1 cash (€)</td><td>some change</td><td>Standard currency unit equal to a laborer's day wages. Named in a nod to ancient Chinese cash.</td></tr></tbody></table><p>Unless otherwise specified, an item takes up 1 stone of inventory space. 250 cash units take up 1 stone. A PC's money is usually a mix of cards, credit, notes, and units that fit in a wallet. Treat the wallet as part of their clothing.</p><h4>Available Items and Packed Items</h4><p>Available items take up at least one inventory slot each, regardless of size, but a character can use them immediately.</p><blockquote><p><em>Example: A readied dagger (5 sp) takes up a whole inventory slot (1 st).</em></p></blockquote><p>Items can be packed away to save space. Readying a packed item for use takes at least one action.</p><blockquote><p><em>Example: Packed in a bundle, two daggers fit in a single inventory slot.</em></p></blockquote><p>Some equipment such as backpacks, pouches, purses, ammo belts, or clothing with hidden pockets can allow characters to pack away more gear than usual, effectively increasing their inventory.</p><div class=\"example-box\"><p><em>Example: Onion's synthetic skin backpack (1 st) allows him to pack away and carry 3 stones worth of small gear. Effectively, Onion can stuff 4 stones of items into a single inventory slot. However, retrieving a specific item from his backpack takes a whole action. Onion had better not pack away his inquisition squirtgun if he plans to use it.</em></p><p></p></div><h3>DROPPING ITEMS</h3><p>A character can quickly drop one item or pack as a free action on their turn, reducing any penalties suffered from encumbrance. A quickly dropped item may break, get damaged, roll away, or otherwise suffer the consequences. The referee chooses a save target.</p><blockquote><p><em>Example: A pair of shoes chucked onto a grassy slope may roll downhill, a sack of stolen glass statuettes dropped on a marble floor may produce a lot of sharp glass caltrops.</em></p></blockquote><p>A character taking an action to carefully drop an item or pack avoids any risk of damaging their precious property.</p><p></p><h3>IMPROVISING WITH ITEMS</h3><p>Items are not just bundles of game mechanics. They improve a character's performance and let them do new things. Use common sense and imagination to figure out how to take advantage of your PC's equipment.</p><blockquote><p><em>Example: Rafts let characters float, while climbing gear helps scale surfaces that are impossible to free-climb.</em></p></blockquote><h3>HUMAN CLOTHES</h3><p>Baseline humans have evolved to wear clothes. Any garments suitable for a tropical or temperate climate that such a character wears take up no inventory slots. You can describe them on the back of the character sheet.</p><blockquote><p><em>Example: boiler suit, ship overalls, field loincloth, civilian sarong.</em></p></blockquote><p>Additional sets of clothes, or garments that provide benefits or modifiers, occupy inventory slots as usual.</p><div class=\"example-box\"><p><em>Example: a corporate suit (1 st) provides status benefits and access to temples of finance, a classical toga (3 st) blocks one arm and marks the wearer as a member of the ruling class in some Decapolitan republics, nomad robes (1 st) serve as armor, very warm clothes (2 st) are useful in the domains of Winterwhite, an environment suit (1 st) protects against radiation ghosts, etc.</em></p></div><p>Characters who are not evolved to wear clothes, such as cat lords, spectrum satraps, some golems, and other strange creatures, do not get a free inventory slot for the garments they wear.</p><div class=\"example-box\"><p><em>Example: a cat lord wearing a cute little jump suit (1 st) and knit cap with foopy antennae may not look annoyed, but they can't carry quite as many sacrificial mouse victims as they might wish.</em></p><p></p></div><h2>ONE STRANGE ITEM</h2><p>Exactly what this item does is a mystery. It could turn out to be an item of prophecy, linked to your character's destiny or your community's fortunes. It might also just be daemon garbage or a broken piece of forgotten history.</p><table><thead><tr><th>[[/r d50]]</th><th>Item</th><th>Size</th></tr></thead><tbody><tr><td>1</td><td>One lost soul trapped in a stoneware pot.</td><td>1 st</td></tr><tr><td>2</td><td>Half a crystal skull and two dream powders.</td><td>1 st</td></tr><tr><td>3</td><td>Purple brick, dims ambient lights.</td><td>1 st</td></tr><tr><td>4</td><td>Teal vase with an undead rose.</td><td>5 sp</td></tr><tr><td>5</td><td>Three gilded wooden geese with needle teeth.</td><td>3 st</td></tr><tr><td>6</td><td>Dead grey daemon slab of obsidian and steel.</td><td>2 sp</td></tr><tr><td>7</td><td>Gold book proclaiming eternal peace.</td><td>2 st</td></tr><tr><td>8</td><td>Cameo sapphire amulet of a banker priest.</td><td>1 sp</td></tr><tr><td>9</td><td>Briolette black pearl of the weeping architect.</td><td>1 sp</td></tr><tr><td>10</td><td>Ammolite relic of the void mollusc period.</td><td>5 sp</td></tr><tr><td>11</td><td>Tin head filled with echoes of epic poetry.</td><td>1 st</td></tr><tr><td>12</td><td>Psychic ash trapped in pink amber.</td><td>2 sp</td></tr><tr><td>13</td><td>Golem reprogramming probe in a jewel box.</td><td>1 st</td></tr><tr><td>14</td><td>Agave plant that mutates daily. Water monthly.</td><td>1 st</td></tr><tr><td>15</td><td>Shed lingish face skin in a velvet pouch.</td><td>5 sp</td></tr><tr><td>16</td><td>Anthracite eating ooze in a plastic bottle.</td><td>1 st</td></tr><tr><td>17</td><td>Astraporter network manual. Outdated.</td><td>1 st</td></tr><tr><td>18</td><td>Pretty ritual tea set of grown posthuman bone.</td><td>1 st</td></tr><tr><td>19</td><td>Taxidermied head of a doghead pistolier (L5).</td><td>1 st</td></tr><tr><td>20</td><td>Opaque hallucinatory mask of bravery.</td><td>1 st</td></tr><tr><td>21</td><td>Large carnivorous motile monstera (L3).</td><td>3 st</td></tr><tr><td>22</td><td>Stone cat (L2). Feed blood to awaken for a day.</td><td>1 st</td></tr><tr><td>23</td><td>Brain shaving kit. Delusion tape included.</td><td>1 st</td></tr><tr><td>24</td><td>Bluish, mildly anti-gravitic rock—an astrolith.</td><td>1 st</td></tr><tr><td>25</td><td>Red and green mechanical foot.</td><td>1 st</td></tr><tr><td>26</td><td>Jar of pickled space worm meat.</td><td>1 st</td></tr><tr><td>27</td><td>Semi-sentient fibrous colony blanket.</td><td>1 st</td></tr><tr><td>28</td><td>Box of ochre ancestor summoning chalks.</td><td>1 st</td></tr><tr><td>29</td><td>Elegant mechanical pit viper (L1).</td><td>1 st</td></tr><tr><td>30</td><td>Seven single-use capsules of universal solvent.</td><td>1 sp</td></tr><tr><td>31</td><td>Zircon personality jewel of a scion duplicate.</td><td>1 sp</td></tr><tr><td>32</td><td>Mummified cucumber with six human teeth.</td><td>5 sp</td></tr><tr><td>33</td><td>Safety orange cultist robe with fruit glyphs.</td><td>1 st</td></tr><tr><td>34</td><td>Moonling undershirt of woven hardlight.</td><td>5 sp</td></tr><tr><td>35</td><td>Yellowed great-human ivory dining set.</td><td>1 st</td></tr><tr><td>36</td><td>Congealed shadow horn of decaying fruits.</td><td>2 st</td></tr><tr><td>37</td><td>Gray sphere. Weighs six times more than gold.</td><td>1 st</td></tr><tr><td>38</td><td>Tangerine radiant onion scepter.</td><td>1 st</td></tr><tr><td>39</td><td>Electromechanical backup V.I.L.E. brain.</td><td>2 st</td></tr><tr><td>40</td><td>Three old guns reforged into a blue ax.</td><td>1 st</td></tr><tr><td>41</td><td>Sentient greenish plastic bucket (L1). Cursed?</td><td>1 st</td></tr><tr><td>42</td><td>Ever-growing tooth carved into a spear.</td><td>2 st</td></tr><tr><td>43</td><td>Plastinated sacred hand of a relative.</td><td>5 sp</td></tr><tr><td>44</td><td>Square glasses of perfect vision. 3x zoom.</td><td>2 sp</td></tr><tr><td>45</td><td>Porcelain and jade pipe and no-bacco box set.</td><td>1 st</td></tr><tr><td>46</td><td>A shapechanger's preserved hide.</td><td>2 st</td></tr><tr><td>47</td><td>Procedural entertainment box-and-screen.</td><td>3 st</td></tr><tr><td>48</td><td>Ebony haruspicy liver and odds casting tables.</td><td>1 st</td></tr><tr><td>49</td><td>Artificial you. Only the face and one hand.</td><td>2 st</td></tr><tr><td>50</td><td>Living seed of your ancestral house.</td><td>1 sp</td></tr></tbody></table><p><br />Selling Your Strange Item</p><p>Figuring out what it does is a hassle. Why don't you just sell it for quick cash? Everything will be ok!</p><table><thead><tr><th>Buyer</th><th>Where</th><th>Quick Cash</th></tr></thead><tbody><tr><td>Random Merchant</td><td>Anywhere, really. Here?</td><td>€[[/r 1d6x * 10]]</td></tr><tr><td>Sage Patron</td><td>A remote location.</td><td>€[[/r 1d6x * 100]]</td></tr><tr><td>Legendary Collector</td><td>A dangerous location, behind a difficult quest.</td><td>€[[/r 1d6x * 1000]]</td></tr></tbody></table><p>The x denotes an exploding die. On a roll of 6, roll again and add the results together. Keep rolling and adding dice as long as you keep rolling sixes.<br /><br />→ <em>Next: Your useful starting kit.</em></p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": "6KLfb35TARh0OlRZ",
+        "modifiedTime": 1767099246356
+      },
+      "ownership": {
+        "default": -1
+      },
+      "_key": "!journal.pages!yHR65UTtpRjhXjQr.9gnE7C8pa1xeGidM"
+    },
+    {
+      "sort": 900000,
+      "name": "Useful Kit and Starting Cash",
+      "type": "text",
+      "_id": "1q5Aw8o4q8kIs51W",
+      "system": {},
+      "title": {
+        "show": false,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<blockquote><p>[@Vastlands_Guidebook, p. 23]</p></blockquote><h2>ONE USEFUL KIT</h2><p>A kit is a packed bundle of mundane tools that let a character do their job. A settled character can use their kit to make a living.</p><p>You have <strong>a kit for one of your background traits</strong>. A kit is a gear item with the starting kit flag ticked, like: @UUID[Compendium.sdm.gadgets.Item.4Y6UXEQrWZFCHfmU]{Starting Kit}</p><p>The kit measures a whole sack (10 stones) in heft and includes up to 10 individual items. You don't need to choose in advance exactly what is in your character's kit—the items are in a quantum superposition until you define them as you play.</p><div class=\"example-box\"><p><em>Example: Noë has a background as a plumber (don't ask) and starts with a plumber's kit. Noë doesn't list each individual item in the kit. As she adventures, she produces useful O-rings, allen wrenches, lengths of pipe, and sealing tape from her kit. She lists these in her kit box, leaving space for 6 more quantum items.</em></p></div><p>The kit includes nothing better than a civilian weapon (1d6 damage) and no armor. You can buy more weapons and armor with your starting cash.</p><p><em>(To unpack an item from your starting kit, right-click the starting kit item on your character sheet and select the option Unpack item.)</em></p><p></p><h2>STARTING CASH</h2><p>Many kinds of cash are possible: the traditional luminous cowrie of the coastal communities (lb), the high-end plastic Casino gold piece (cgp) of the Red Land District, the traditional bunker-era duraplastic chit (dpc) of the Red and Orange Coprosperity Merchant Region, the sky-dragon scale (sds) of the Cat-affiliated knowledge societies, the prized ferroceramic puck-and-triangle of the Emerald City (fpck), and the completely ethereal noöspheric digital cash of the Dream Canopy (vdx).</p><p>For simplicity, the abstract \"€\" symbol covers them all.</p><div class=\"inventory-box\"><p>You have <strong>€50 + €50 per level</strong> in physical currency. Enough to live on for a few months, if you are careful and boring. You're not, though.</p><p>That's not much per level, honestly.</p></div><h4>What Cash Buys</h4><p>Precisely how much €1 buys varies with place and time (and referee whim), but a reasonable baseline is 100 theoretical convertible imperial universal dollars from Finite Earth A.D. 2025 to €1. Example purchases:</p><table><thead><tr><th>Price</th><th>Purchase</th></tr></thead><tbody><tr><td>€0.1</td><td>common meal or ingredient, mass tourist souvenir</td></tr><tr><td>€1</td><td>day's food and lodging for two proletarian baseline humans, basic tool, uncommon ingredient, fancy meal</td></tr><tr><td>€10</td><td>day's food and lodging for two mildly enhanced bourgeois humans, professional tool, rare ingredient, opera ticket</td></tr><tr><td>€100</td><td>day's food and lodging for two betterfolk aesthetically-augmented humans, rare or expert tool, very rare ingredients, basic vehicle, hut, small farm</td></tr><tr><td>€1k</td><td>day's food and lodging for two abmortal oligarchs, uncommon vehicle, small cottage, middling farm</td></tr><tr><td>€10k</td><td>hour's rock-hitting trip for an imperial executive unit, rare vehicle, comfortable residence, large farm or ranch</td></tr><tr><td>€100k</td><td>nearly super-heroic augment, luxurious residence, plantation</td></tr><tr><td>€1m</td><td>abmortality, seat on the neo-imperial shadow parliament, modest palace</td></tr></tbody></table><p>A character can dream, right?</p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": "6KLfb35TARh0OlRZ",
+        "modifiedTime": 1767118148899
+      },
+      "ownership": {
+        "default": -1
+      },
+      "_key": "!journal.pages!yHR65UTtpRjhXjQr.1q5Aw8o4q8kIs51W"
+    },
+    {
+      "sort": 1000000,
+      "name": "Motive",
+      "type": "text",
+      "_id": "WzbZ6bbvYXxuKUi4",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<blockquote><p>[@Vastlands_Guidebook, p. 29]</p></blockquote><p>Why leave the lovely cement greatcoat of tradition and town behind?</p><p>Why abandon the embrace of hierarchy and rigor of etiquette?</p><p>Why head out into the waste lands, the strange lands, the Vastlands?</p><div class=\"inventory-box\"><p><strong>Roll d50 and Find a Possible Reason</strong></p></div><table><thead><tr><th>[[/r d50]]</th><th>Motive</th></tr></thead><tbody><tr><td>1</td><td>Sent by a grim corporation.</td></tr><tr><td>2</td><td>Glory, like in the great romantic novels.</td></tr><tr><td>3</td><td>Blood memories of a great patrimony.</td></tr><tr><td>4</td><td>Tracking a missing ledger.</td></tr><tr><td>5</td><td>Seeking new converts.</td></tr><tr><td>6</td><td>Rumors of a fabulous autofac.</td></tr><tr><td>7</td><td>Found clue to abmortality.</td></tr><tr><td>8</td><td>Ordered by an ominous disembodied voice.</td></tr><tr><td>9</td><td>Map to an unclaimed aerolith.</td></tr><tr><td>10</td><td>Soul of loved one stolen by a horror.</td></tr><tr><td>11</td><td>Stories of a secret healing vegetable.</td></tr><tr><td>12</td><td>Portents of a deadly machine demon.</td></tr><tr><td>13</td><td>Paintings of a gorgeous cyan seaside.</td></tr><tr><td>14</td><td>Pursued by loving enemies.</td></tr><tr><td>15</td><td>Grandmother's lost autowagon.</td></tr><tr><td>16</td><td>Sibling was stripped into a ba-zombie.</td></tr><tr><td>17</td><td>Master boneworker sent an invitation.</td></tr><tr><td>18</td><td>Delivering a letter of inheritance to a count.</td></tr><tr><td>19</td><td>Cure for a plague that killed your child.</td></tr><tr><td>20</td><td>Biomantic bible in a lost library.</td></tr><tr><td>21</td><td>Repaying debts to the butcher bank.</td></tr><tr><td>22</td><td>Visions of a world ending in falling fire.</td></tr><tr><td>23</td><td>Bearing a priceless pearl for a princess.</td></tr><tr><td>24</td><td>Tracking a vile intruder from the void.</td></tr><tr><td>25</td><td>Mind entwined with a dying sentience.</td></tr><tr><td>26</td><td>Nightly dreams of a lost world.</td></tr><tr><td>27</td><td>Seeking a prosthetic body for mother.</td></tr><tr><td>28</td><td>Ordered by the clan quest golem.</td></tr><tr><td>29</td><td>Keeping tabs on a rival explorer.</td></tr><tr><td>30</td><td>Exploring clues to the great forgetting.</td></tr><tr><td>31</td><td>Possessed by a demon in childhood.</td></tr><tr><td>32</td><td>Seeking allies for a revolution.</td></tr><tr><td>33</td><td>Looking for new lands for lost tribe.</td></tr><tr><td>34</td><td>Compulsion after meeting a seer.</td></tr><tr><td>35</td><td>Sheer industrial greed.</td></tr><tr><td>36</td><td>Determined to end a crippling disease.</td></tr><tr><td>37</td><td>Found the testament of a dead god.</td></tr><tr><td>38</td><td>Pursued by furies and a dark fate.</td></tr><tr><td>39</td><td>Visions of glory and rebirth.</td></tr><tr><td>40</td><td>Queer unease after reading a metal book.</td></tr><tr><td>41</td><td>Experience of a tragic vomish outbreak.</td></tr><tr><td>42</td><td>Their aged clone whispered prophecies.</td></tr><tr><td>43</td><td>Hallucinatory star, guiding, leading West.</td></tr><tr><td>44</td><td>Songs in the blood of a Flesh God scion.</td></tr><tr><td>45</td><td>Mystic manual talked of a divine workshop.</td></tr><tr><td>46</td><td>Post-mortal messenger gave a portal key.</td></tr><tr><td>47</td><td>Bone-deep ennui at an unchanging order.</td></tr><tr><td>48</td><td>Dying grandparent's oath to a lacquer queen.</td></tr><tr><td>49</td><td>Promise to take a friend's ashes to the last sea.</td></tr><tr><td>50</td><td>Dream quest order to destroy an invisible ring.</td></tr></tbody></table>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": "6KLfb35TARh0OlRZ",
+        "modifiedTime": 1767099405118
+      },
+      "ownership": {
+        "default": -1
+      },
+      "_key": "!journal.pages!yHR65UTtpRjhXjQr.WzbZ6bbvYXxuKUi4"
+    },
+    {
+      "sort": 1100000,
+      "name": "Name",
+      "type": "text",
+      "_id": "rzcqkOe0WTcDK0s2",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<blockquote><p>[@Vastlands_Guidebook, p. 33]</p></blockquote><p>A name says a lot. It says where a character is from, who they want to be, what they want to achieve. Choose or roll or invent a name you find funny, meaningful, or interesting. Above all, choose one you enjoy.</p><table><thead><tr><th>[[/r d8]]</th><th>[1] High Common (upper-class)</th><th>[2] Vulgar Common (middle-class)</th><th>[3] Purple Land (cat-magical)</th><th>[4] Blue Land (moldificent)</th><th>[5] Green Land (very civilized)</th></tr></thead><tbody><tr><td>1</td><td>Elsedéz Diës</td><td>Alba Nigra</td><td>Arha Skivayi</td><td>Aleia Unomor</td><td>Axil i'Eliseis</td></tr><tr><td>2</td><td>Ennui a'Sheval</td><td>Equreis Liber</td><td>Buqa Loban</td><td>Gorto per Cultur</td><td>Eralda Fiusc</td></tr><tr><td>3</td><td>Jai Ping-Noun</td><td>Nutra Griza</td><td>Kalis Elfbayi</td><td>Halaver pre Lapan</td><td>Fiet i'Muru</td></tr><tr><td>4</td><td>Oelan Outani</td><td>Paloma Blanka</td><td>Stebra Osta</td><td>Imssi bra Cupa</td><td>Iacum di Vila</td></tr><tr><td>5</td><td>Ouestin Haus</td><td>Qalen Vegeta</td><td>Turi Uma</td><td>Muria bra Salsur</td><td>Issandir di Metropol</td></tr><tr><td>6</td><td>Phædred Enshin</td><td>Solo Carburetto</td><td>Yasa Furfurea</td><td>Qephi per Linter</td><td>Lun Diralup</td></tr><tr><td>7</td><td>Vruit d'Ajai</td><td>Uino Sepolto</td><td>Yilis Olorka.</td><td>Via Alpin.</td><td>Xriso di Ust.</td></tr><tr><td>8</td><td>Yuin a'Romeö</td><td>Urora Squra</td><td></td><td></td><td></td></tr></tbody></table><table><thead><tr><th>[[/r d8]]</th><th>[6] Yellow Land (mercantile)</th><th>[7] Orange Land (post-mortal)</th><th>[8] Red Land (vintner vamp)</th><th>[9] Kriol &amp; Cant (out-class)</th><th>[10] DWARF (working-class)</th></tr></thead><tbody><tr><td>1</td><td>Cortez an'Opera</td><td>Amber' Osscale</td><td>Amfo s'Teran</td><td>Anater En-Ein</td><td>Amdt 'Logistic</td></tr><tr><td>2</td><td>Dona de Cuiyot</td><td>Presid' Uniuersal</td><td>Cozarin s'Berberin</td><td>Hors To-Burk</td><td>Del 'Machinist</td></tr><tr><td>3</td><td>Horto 'n Caravan</td><td>Ranalo Fianviye</td><td>Dolon duc Marbec</td><td>Lama Denk-Zen</td><td>Kur 'Notcurrently</td></tr><tr><td>4</td><td>Limon an'Vest</td><td>Safauzi Vruje</td><td>Imbic Terminal</td><td>Munti Trul</td><td>Pem 'Cleaningspec</td></tr><tr><td>5</td><td>Pansa de Rancho</td><td>Sofixa Vulja</td><td>Namur Rinfosc</td><td>Pilk Bagato</td><td>Ru 'C</td></tr><tr><td>6</td><td>Saldo an'Nanc</td><td>Tifixa Boscaneve</td><td>Perin duc Piñor</td><td>Sembet Kuat-Lun</td><td>Tam 'HR</td></tr><tr><td>7</td><td>Yaro Despolie</td><td>Uale Xerive</td><td>Torron Valpin</td><td>Ski Senk-Karti</td><td>Vek 'Driver</td></tr><tr><td>8</td><td>Ylva 'n Vusta.</td><td>Xuli' Ueronesi.</td><td>Zinf Ander.</td><td>Tosk Perfors</td><td>Yon 'Engine</td></tr></tbody></table><table><thead><tr><th>[[/r d8]]</th><th>[11] Steppe Lands (semi nomadic)</th><th>[12] Timelost (re-made)</th><th>[13] Distributed (polybody)</th><th>[14] Post-Human (ultra ghost)</th><th>[15] Golem (machine human)</th></tr></thead><tbody><tr><td>1</td><td>Acid Spirit</td><td>Cryo 523-Amber</td><td>AkaulaRe-Dust-4</td><td>AsperaMors</td><td>ClayApostrophe</td></tr><tr><td>2</td><td>Citrus Elevator</td><td>Eggs Perimeter-4</td><td>Fordite14-belt</td><td>KarnNeu</td><td>ClockTangerine</td></tr><tr><td>3</td><td>Forth Bone</td><td>Kloen Offlord</td><td>HesterCarn-27</td><td>LutaKontinu</td><td>Dons-the-Mantle</td></tr><tr><td>4</td><td>Newt Incorporeal</td><td>Ohn Smit</td><td>Jewel13-drone</td><td>OmRifax</td><td>Haubize-Vier</td></tr><tr><td>5</td><td>Rise Ghost</td><td>Settler Unitschild</td><td>KarigaliRe-Ink-6</td><td>TarqoRosso</td><td>Hole-in-the-Sky</td></tr><tr><td>6</td><td>Sevenfold Center</td><td>Sidhe Reäl</td><td>NumeroE</td><td>TrisKelly</td><td>John316</td></tr><tr><td>7</td><td>Starfall Perimeter</td><td>Winterbird</td><td>UlbiraHead-4</td><td>YadriAurore</td><td>KFT479+\"Fly\"</td></tr><tr><td>8</td><td>Wayfarer Sanctum</td><td></td><td>WlkLN-3</td><td></td><td>MaryGautamaReve</td></tr></tbody></table><table><thead><tr><th>[[/r d8]]</th><th>[16] Quarterling (parahuman)</th><th>[17] Clan (non-corporate)</th><th>[18] Ancestor (pre-jubilee)</th><th>[19] Sacred (incorporated)</th><th>[20] Reasonable (ministry code)</th></tr></thead><tbody><tr><td>1</td><td>117\"Troubleman\"</td><td>EngineMother</td><td>Beles Isehot</td><td>BigDog</td><td>Administeriä Manu</td></tr><tr><td>2</td><td>Mouse5\"Pablo\"</td><td>Jewelhead</td><td>Dokonosatu</td><td>Black Obelisk</td><td>Anarhiä Stahlya</td></tr><tr><td>3</td><td>∑645\"Oorkan\"</td><td>Malachite</td><td>Isekonosetu</td><td>M.O.O.N.</td><td>Kromeä Resa</td></tr><tr><td>4</td><td>UA-23x10^4\"Paco\"</td><td>NewClone</td><td>OdTamotiya</td><td>Otto Corp</td><td>Loögiä Nuanua</td></tr><tr><td>5</td><td>Vaulter\"Yggdrasil\"</td><td>Stalkwalker</td><td>Osamisin</td><td>PearV \"Fruiting\"</td><td>Primaï Serten</td></tr><tr><td>6</td><td>WingSailorca078</td><td>UpliftedVole</td><td>Tekhetas</td><td>Tower of Heaven</td><td>Publië Soudat</td></tr><tr><td>7</td><td>ZetaZeta\"Agar\"</td><td>Vomebreaker</td><td>Toboto</td><td>U+</td><td>Rayone Feü</td></tr><tr><td>8</td><td></td><td></td><td></td><td></td><td>Tersiï Komanté</td></tr></tbody></table><p>→ <em>Finally: let's review your character.</em></p>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": "6KLfb35TARh0OlRZ",
+        "modifiedTime": 1767099453403
+      },
+      "ownership": {
+        "default": -1
+      },
+      "_key": "!journal.pages!yHR65UTtpRjhXjQr.rzcqkOe0WTcDK0s2"
+    },
+    {
+      "sort": 1200000,
+      "name": "Final Check",
+      "type": "text",
+      "_id": "guLJsphE2lBzY9ob",
+      "system": {},
+      "title": {
+        "show": true,
+        "level": 1
+      },
+      "image": {},
+      "text": {
+        "format": 1,
+        "content": "<blockquote><p>[@Vastlands_Guidebook, p. 34]</p></blockquote><p>Your starting human PC should have the following attributes:</p><div class=\"final-checklist\"><ol><li>Six ability scores ranging from 0 to 5.</li><li>At least one background trait.</li><li>At least one path trait.</li><li>A free trait. Traits may provide a +3 bonus to rolls (if skilled) or +6 (if expert).</li><li>A strange item. A kit of quantum gear. €100 in strange currency.</li><li><em>(fully automated by the system) </em>One level. Eight or more life. One hero die. A save target, usually 13. Four attack types with bonuses ranging from 0 to +11 (or so). A defense score of 7 or more. Three inventories for traits (7–12), items (7–12), and burdens (20).</li><li>At least one reason for going a-venturing.</li><li>(<em>done by the system</em>) 300 invested xp.</li><li>One or more names.</li><li>Final check. Error. Infinite Recursion.</li></ol></div><p>A non-human PC, such as a cat or a golem or a skeleton, may start with other attributes.</p><p></p><h2>YOU ARE READY</h2><p>You look about.</p><p>The grand phylakes rise atop their pylons; unbowed strangers, angels or demons, guardians or wardens, biomachines or demigods. Some are alive, some are undead, some are ruined. They are the stamp of civilization, the sign of the Garden, the boot that keeps out barbarism, war, and change. So say the administrator priests.</p><p>Here, on the fringe of the Vast, the peace fields are frayed, the thrum of history not quite stopped. No human patrol nor feline lord, no vegetable eye nor gentling bird. You are free, without prods or shackles to guide and help you (aside from the pesky daemon \"Player\" murmuring in your head).</p><p>It is morning and the cat coffee is nearly brewed.</p><p>Share a thought with your fellow travelers, for soon you pitch headlong into turmoil and temptation, into the epic of adventure. As you travel and share stories over campfires, you may reveal more of yourself. Till then, this is enough.</p><h3>Begin.</h3>"
+      },
+      "video": {
+        "controls": true,
+        "volume": 0.5
+      },
+      "src": null,
+      "category": null,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": "6KLfb35TARh0OlRZ",
+        "modifiedTime": 1767099491404
+      },
+      "ownership": {
+        "default": -1
+      },
+      "_key": "!journal.pages!yHR65UTtpRjhXjQr.guLJsphE2lBzY9ob"
+    }
+  ],
+  "folder": null,
+  "categories": [],
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.4",
+    "createdTime": 1767042652845,
+    "modifiedTime": 1767099707270,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "ownership": {
+    "default": 0,
+    "9g1Dzw4zdMZGGuY3": 3
+  },
+  "_id": "yHR65UTtpRjhXjQr",
+  "sort": 0,
+  "_key": "!journal!yHR65UTtpRjhXjQr"
+}

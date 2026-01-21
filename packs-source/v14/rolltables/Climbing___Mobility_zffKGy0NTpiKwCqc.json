@@ -1,0 +1,180 @@
+{
+  "name": "Climbing & Mobility",
+  "description": "A random table created from the contents of the Climbing &amp; Mobility Folder.",
+  "results": [
+    {
+      "name": "Grappling Hook",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.gadgets.Item.iBLk17M6sN0LwuoO",
+      "img": "icons/tools/fasteners/chain-hook-grey.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "gxz7hXW7dnAcfjyB",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!zffKGy0NTpiKwCqc.gxz7hXW7dnAcfjyB"
+    },
+    {
+      "name": "Smart Rope",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.gadgets.Item.IlzXc8yjw6NbeJlD",
+      "img": "icons/sundries/survival/rope-wrapped-purple.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "QMN1mpudUnct2Wf9",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!zffKGy0NTpiKwCqc.QMN1mpudUnct2Wf9"
+    },
+    {
+      "name": "Climbing Gear",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.gadgets.Item.q881ByRLSbQTkvmz",
+      "img": "icons/sundries/survival/climbing-anchor-steel-grey.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "nuv93fcy0HqUKCSR",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!zffKGy0NTpiKwCqc.nuv93fcy0HqUKCSR"
+    },
+    {
+      "name": "Inflatable Raft",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.gadgets.Item.YS5komrhVuzBsZIj",
+      "img": "icons/magic/air/wind-weather-sailing-ship.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "QMHvvnpir4fr47mF",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!zffKGy0NTpiKwCqc.QMHvvnpir4fr47mF"
+    },
+    {
+      "name": "Aerolith Anchor",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.gadgets.Item.3RI1DQkrfoPdam4T",
+      "img": "icons/tools/nautical/anchor-blue-orange.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "3gXeIEtv26CMhEW2",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!zffKGy0NTpiKwCqc.3gXeIEtv26CMhEW2"
+    },
+    {
+      "name": "Exoskelegolem",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.gadgets.Item.bsuYRl8nErObUQQ7",
+      "img": "icons/magic/control/silhouette-hold-beam-blue.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "VtemBueEozHVar94",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.36",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!zffKGy0NTpiKwCqc.VtemBueEozHVar94"
+    }
+  ],
+  "formula": "1d6",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "HRL8AeuDUw26tJDf",
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.36",
+    "createdTime": 1756574620567,
+    "modifiedTime": 1756574635106,
+    "lastModifiedBy": "0fqTkfNvjooZ2og7"
+  },
+  "_id": "zffKGy0NTpiKwCqc",
+  "sort": 700000,
+  "_key": "!tables!zffKGy0NTpiKwCqc"
+}

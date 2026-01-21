@@ -1,0 +1,205 @@
+{
+  "name": "Noömagus",
+  "description": "<p>A random table created from the contents of the Noömagus Folder.</p>",
+  "results": [
+    {
+      "name": "3. Noösphere Native",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.6Rf6kCfpstgfvlih",
+      "img": "icons/magic/light/explosion-star-glow-silhouette.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "rfElruzPvUCXzttl",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!XTNKMc5wRgAHr5Hm.rfElruzPvUCXzttl"
+    },
+    {
+      "name": "4. Power Scroller",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.HTPF2LM48atdY3VY",
+      "img": "icons/sundries/scrolls/scroll-bound-sealed-red-green.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "UCdH9xB0YIz9I7Yv",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!XTNKMc5wRgAHr5Hm.UCdH9xB0YIz9I7Yv"
+    },
+    {
+      "name": "6. Veteran of the Psychic Wars",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.YoqYdiTKBJqY3896",
+      "img": "icons/magic/control/control-influence-rally-purple.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "BvCk9KEQafy3pkEs",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!XTNKMc5wRgAHr5Hm.BvCk9KEQafy3pkEs"
+    },
+    {
+      "name": "2. Hackmagic",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.ZrLoZcpnXXxN4THo",
+      "img": "icons/magic/control/debuff-chains-orb-movement-blue.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "ifdNcgP0peg8ujlz",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!XTNKMc5wRgAHr5Hm.ifdNcgP0peg8ujlz"
+    },
+    {
+      "name": "5. Soul Fuel",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.l8YqayamFhGKgyhc",
+      "img": "icons/magic/control/energy-stream-link-orange.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "XxyNP3thEANvpqCr",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!XTNKMc5wRgAHr5Hm.XxyNP3thEANvpqCr"
+    },
+    {
+      "name": "1. Cosmic Qanat",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.oPnI0wiGmDLlHo8k",
+      "img": "icons/magic/perception/eye-ringed-glow-angry-large-teal.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "vgCgc6ZoSgGzGD8p",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!XTNKMc5wRgAHr5Hm.vgCgc6ZoSgGzGD8p"
+    },
+    {
+      "name": "0. Noömagus",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.sz9BhMukFlaQVBpE",
+      "img": "icons/magic/light/orb-hands-humanoid-yellow.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "ftR4uvA9WxDlqXSr",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!XTNKMc5wRgAHr5Hm.ftR4uvA9WxDlqXSr"
+    }
+  ],
+  "formula": "1d7",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8gXEqCY7Gctq4hdt",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.4",
+    "createdTime": 1767048741088,
+    "modifiedTime": 1767049263906,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "XTNKMc5wRgAHr5Hm",
+  "sort": 1000000,
+  "_key": "!tables!XTNKMc5wRgAHr5Hm"
+}

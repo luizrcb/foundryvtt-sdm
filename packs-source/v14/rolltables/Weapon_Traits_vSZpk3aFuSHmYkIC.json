@@ -1,0 +1,205 @@
+{
+  "name": "Weapon Traits",
+  "description": "<p>A random table created from the contents of the Weapon Traits Folder.</p>",
+  "results": [
+    {
+      "name": "3. Death Hunger",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.4d7mC859EOOde7jD",
+      "img": "icons/creatures/abilities/mouth-teeth-long-red.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "P9oOJkEvxfeY2hrK",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!vSZpk3aFuSHmYkIC.P9oOJkEvxfeY2hrK"
+    },
+    {
+      "name": "4. Demolisher",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.4nsW9P3WpnhFva6U",
+      "img": "icons/skills/melee/strike-hammer-destructive-blue.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "KZehEHGksRZSFfAI",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!vSZpk3aFuSHmYkIC.KZehEHGksRZSFfAI"
+    },
+    {
+      "name": "5. Fatespun",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.90FDcyNx5LgIaZa6",
+      "img": "icons/skills/melee/sword-winged-holy-orange.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "ZcmzPOP7mka27Eru",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!vSZpk3aFuSHmYkIC.ZcmzPOP7mka27Eru"
+    },
+    {
+      "name": "1. Cleanser",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.Yre8zc2bdEcHRQfw",
+      "img": "icons/magic/air/air-wave-gust-blue.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "0C20aykshTwQtH3j",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!vSZpk3aFuSHmYkIC.0C20aykshTwQtH3j"
+    },
+    {
+      "name": "2. Curse-Blessed",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.ddbEeqiki98SaH43",
+      "img": "icons/magic/control/debuff-chains-shackles-movement-blue.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "lAWTc7WcpYS0FM5g",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!vSZpk3aFuSHmYkIC.lAWTc7WcpYS0FM5g"
+    },
+    {
+      "name": "6. I Am Legion",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.djd5SqnPqysHGabl",
+      "img": "icons/skills/melee/blade-tip-chipped-blood-red.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "votk094hdyKpZvXi",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!vSZpk3aFuSHmYkIC.votk094hdyKpZvXi"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "name": "0. Weapon",
+      "img": "icons/weapons/staves/staff-skull-brown.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.KdbRc0hfAdefwDOL",
+      "_id": "85NjEwniz0tGBuIh",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!vSZpk3aFuSHmYkIC.85NjEwniz0tGBuIh"
+    }
+  ],
+  "formula": "1d6",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "a0K0TT7n3nS5gW7r",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.4",
+    "createdTime": 1767049340103,
+    "modifiedTime": 1767049340103,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "vSZpk3aFuSHmYkIC",
+  "sort": 0,
+  "_key": "!tables!vSZpk3aFuSHmYkIC"
+}

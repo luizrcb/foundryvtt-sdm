@@ -1,0 +1,180 @@
+{
+  "name": "Modern and Ancient Shields",
+  "description": "A random table created from the contents of the Modern and Ancient Shields Folder.",
+  "results": [
+    {
+      "name": "Shield Mk74c",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.armors.Item.xJ46HdpJPypHJ618",
+      "img": "icons/equipment/shield/heater-steel-boss-red.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "JBM5weycbVStYVEd",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!LgFiJ9IeoXfE8aSw.JBM5weycbVStYVEd"
+    },
+    {
+      "name": "Strapguard",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.armors.Item.VW4kHqcBKohL0qR2",
+      "img": "icons/equipment/wrist/bracer-banded-leather-black.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "6zcnted0mQoOJhiG",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!LgFiJ9IeoXfE8aSw.6zcnted0mQoOJhiG"
+    },
+    {
+      "name": "Field Glove",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.armors.Item.EWgDYnZ6lR7Ne9s4",
+      "img": "icons/equipment/hand/gauntlet-plate-steel-grey.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "VGinjwIlUq5FEgcV",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!LgFiJ9IeoXfE8aSw.VGinjwIlUq5FEgcV"
+    },
+    {
+      "name": "Blazeglass",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.armors.Item.beJKy8w0VGOqCIZT",
+      "img": "icons/equipment/shield/heater-crystal-blue.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "6pRNqzCCZmeycrvi",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!LgFiJ9IeoXfE8aSw.6pRNqzCCZmeycrvi"
+    },
+    {
+      "name": "Void Infantry Dissipator",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.armors.Item.nqtbAexm1CMapyHQ",
+      "img": "icons/equipment/shield/Scutum-steel-worn.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "nGP2WPz88n0V5XCW",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!LgFiJ9IeoXfE8aSw.nGP2WPz88n0V5XCW"
+    },
+    {
+      "name": "Hard Light Targe",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.armors.Item.27YcJ2YjxiMAhYCR",
+      "img": "icons/equipment/shield/shield-round-boss-wood-brown.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "KcAR3lQA6v1yUbuz",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.347",
+        "systemId": "sdm",
+        "systemVersion": "0.1.32",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!LgFiJ9IeoXfE8aSw.KcAR3lQA6v1yUbuz"
+    }
+  ],
+  "formula": "1d6",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "19Xqobp7oJQI6uJl",
+  "ownership": {
+    "default": 0,
+    "0fqTkfNvjooZ2og7": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.1.32",
+    "createdTime": 1756412821921,
+    "modifiedTime": 1756510153918,
+    "lastModifiedBy": "3vgxDetPOGhfUfqu"
+  },
+  "_id": "LgFiJ9IeoXfE8aSw",
+  "sort": 100000,
+  "_key": "!tables!LgFiJ9IeoXfE8aSw"
+}

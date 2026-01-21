@@ -1,0 +1,22 @@
+{
+  "type": "Item",
+  "folder": "6Yjiv2Z80S052LbC",
+  "name": "Weapon Traits",
+  "color": null,
+  "sorting": "a",
+  "_id": "azq3HyXsnywN2mNv",
+  "description": "",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "sdm",
+    "systemVersion": "0.4.5",
+    "lastModifiedBy": "XnQAppzUXfkn5LcX",
+    "modifiedTime": 1760379336517
+  },
+  "_key": "!folders!azq3HyXsnywN2mNv"
+}

@@ -1,0 +1,180 @@
+{
+  "name": "Weapon Form",
+  "description": "A random table created from the contents of the Weapon Form Folder.",
+  "results": [
+    {
+      "name": "The Hard Ring",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.5vHl6z4nYvnmejwx",
+      "img": "icons/equipment/finger/ring-eye-silver-brown.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "BdGkTORkupkysCSz",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0c1nB0kCnGyHsIsj.BdGkTORkupkysCSz"
+    },
+    {
+      "name": "The Humblest of Tools",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.TSAYHnFaZdoklo0Y",
+      "img": "icons/weapons/sickles/sickle-curved.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "jyu4mGdUaHS7hDIM",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0c1nB0kCnGyHsIsj.jyu4mGdUaHS7hDIM"
+    },
+    {
+      "name": "Weapon of Nobility",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.bpM7O465PMFO8aKG",
+      "img": "icons/weapons/swords/sword-gold-holy.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "BPaFibnG4qTzD0FU",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0c1nB0kCnGyHsIsj.BPaFibnG4qTzD0FU"
+    },
+    {
+      "name": "Great Weapon",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.cBcIwLD4Ureh52on",
+      "img": "icons/weapons/axes/axe-battle-heavy-jagged.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "2Y33B2AaLvCQPTLO",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0c1nB0kCnGyHsIsj.2Y33B2AaLvCQPTLO"
+    },
+    {
+      "name": "Tooth of the Root Worm",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.fYIUxoWgnGvdqB6o",
+      "img": "icons/weapons/fist/claw-leather-black.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "eNsvz715OQmHQhNq",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0c1nB0kCnGyHsIsj.eNsvz715OQmHQhNq"
+    },
+    {
+      "name": "Ur Gun",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.qruFCb7FafobKe6f",
+      "img": "icons/skills/ranged/bullets-triple-ball-ice-blue.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "hiRmWBOznPA6RSMI",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!0c1nB0kCnGyHsIsj.hiRmWBOznPA6RSMI"
+    }
+  ],
+  "formula": "1d6",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "twVNJp7ykPUJ26M7",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.5",
+    "createdTime": 1767193486763,
+    "modifiedTime": 1767193486763,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "0c1nB0kCnGyHsIsj",
+  "sort": 0,
+  "_key": "!tables!0c1nB0kCnGyHsIsj"
+}

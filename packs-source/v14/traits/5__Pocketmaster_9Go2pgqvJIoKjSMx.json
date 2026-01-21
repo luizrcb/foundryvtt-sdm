@@ -1,0 +1,127 @@
+{
+  "folder": "0jRDCg5QpYpV2sr7",
+  "name": "5. Pocketmaster",
+  "type": "trait",
+  "_id": "9Go2pgqvJIoKjSMx",
+  "img": "icons/containers/bags/coinpouch-simple-leather-tan.webp",
+  "system": {
+    "readied": false,
+    "cost": 0,
+    "cost_frequency": "",
+    "description": "<p>Conceal a number of small objects equal to your level for free, ignoring inventory. A knife is small.</p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "type": "",
+    "skill": {
+      "rank": 0,
+      "modifier_step": 3,
+      "modifier_bonus": 0,
+      "modifier_final": 0,
+      "custom_modifiers": false
+    },
+    "power": {
+      "img": "icons/svg/book.svg",
+      "name": "",
+      "description": "",
+      "level": 1,
+      "range": "",
+      "target": "",
+      "duration": "",
+      "overcharge": "",
+      "roll_formula": "",
+      "overcharge_roll_formula": ""
+    },
+    "status": "",
+    "resources": "",
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "learning": {
+      "sources": 0,
+      "required_successes": 0
+    }
+  },
+  "effects": [
+    {
+      "name": "concealed small items",
+      "origin": "Compendium.sdm.traits.Item.9Go2pgqvJIoKjSMx",
+      "img": "icons/containers/bags/coinpouch-simple-leather-tan.webp",
+      "_id": "GRd2PM6gBgPRckaP",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.small_item_slots_bonus",
+            "type": "add",
+            "value": "@level",
+            "priority": 20,
+            "phase": "initial"
+          }
+        ]
+      },
+      "disabled": false,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.353",
+        "systemId": "sdm",
+        "systemVersion": "0.6.2",
+        "createdTime": 1756496907788,
+        "modifiedTime": 1769003484046,
+        "lastModifiedBy": "6KLfb35TARh0OlRZ"
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!9Go2pgqvJIoKjSMx.GRd2PM6gBgPRckaP"
+    }
+  ],
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.353",
+    "systemId": "sdm",
+    "systemVersion": "0.6.2",
+    "createdTime": 1756496854942,
+    "modifiedTime": 1769003490652,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_key": "!items!9Go2pgqvJIoKjSMx"
+}

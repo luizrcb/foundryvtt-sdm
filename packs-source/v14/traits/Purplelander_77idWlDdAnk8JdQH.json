@@ -1,0 +1,23 @@
+{
+  "type": "Item",
+  "folder": null,
+  "name": "Purplelander",
+  "color": null,
+  "sorting": "a",
+  "_id": "77idWlDdAnk8JdQH",
+  "description": "",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "sdm",
+    "systemVersion": "0.4.5",
+    "createdTime": 1760291035791,
+    "modifiedTime": 1760291035791,
+    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+  },
+  "_key": "!folders!77idWlDdAnk8JdQH"
+}

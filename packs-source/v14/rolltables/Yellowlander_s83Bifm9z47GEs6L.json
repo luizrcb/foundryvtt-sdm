@@ -1,0 +1,205 @@
+{
+  "name": "Yellowlander",
+  "description": "<p>A random table created from the contents of the Yellowlander Folder.</p>",
+  "results": [
+    {
+      "name": "2. Dust Rat",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.2Hg96KuCL89ijkHc",
+      "img": "icons/magic/air/fog-gas-smoke-brown.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "LYxfxi1cHUo4ncyB",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!s83Bifm9z47GEs6L.LYxfxi1cHUo4ncyB"
+    },
+    {
+      "name": "3. Rancher",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.Q6k9aW95K3l36TMh",
+      "img": "icons/environment/settlement/house-farmland.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "7jeBPuBCs5kcnVxf",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!s83Bifm9z47GEs6L.7jeBPuBCs5kcnVxf"
+    },
+    {
+      "name": "4. Ruderalist",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.S6R6CDHCKHsQqQIA",
+      "img": "icons/environment/wilderness/wall-ruins.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "BRghhtAX2A8Kj4s0",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!s83Bifm9z47GEs6L.BRghhtAX2A8Kj4s0"
+    },
+    {
+      "name": "0. Yellowlander",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.T3Uitk6kduGe6M9e",
+      "img": "icons/weapons/bows/shortbow-recurve-yellow.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "CuZUxyfwitK38FXO",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!s83Bifm9z47GEs6L.CuZUxyfwitK38FXO"
+    },
+    {
+      "name": "6. Thorny",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.TKJj7AEvDaZ4bJBa",
+      "img": "icons/magic/nature/thorns-hand-glow-green.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "tAsSVzJLv8gzz8xn",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!s83Bifm9z47GEs6L.tAsSVzJLv8gzz8xn"
+    },
+    {
+      "name": "5. Saffron Eater",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.gP6iRjuX1Ywtpnra",
+      "img": "icons/creatures/abilities/paw-glowing-yellow.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "NVyEAcjq98ki7aju",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!s83Bifm9z47GEs6L.NVyEAcjq98ki7aju"
+    },
+    {
+      "name": "1. Diesel Dwarf",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.qvDCcxDYrtqQthfq",
+      "img": "icons/magic/symbols/circle-ouroboros.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "UNOmV07q7Z3YQjBM",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!s83Bifm9z47GEs6L.UNOmV07q7Z3YQjBM"
+    }
+  ],
+  "formula": "1d7",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8gXEqCY7Gctq4hdt",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.4",
+    "createdTime": 1767049662017,
+    "modifiedTime": 1767049662017,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "s83Bifm9z47GEs6L",
+  "sort": 0,
+  "_key": "!tables!s83Bifm9z47GEs6L"
+}

@@ -1,0 +1,205 @@
+{
+  "name": "Path of the Fighter",
+  "description": "<p>A random table created from the contents of the Path of the Fighter Folder.</p>",
+  "results": [
+    {
+      "name": "0. Fighter",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.9HoyHK566sXyATK5",
+      "img": "icons/environment/people/infantry-armored.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "h6omQILKVzira4U3",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.35",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!e32f1fVfCm8UaOQz.h6omQILKVzira4U3"
+    },
+    {
+      "name": "1. Armiger",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.lUSuhOHzAb1vDNIa",
+      "img": "icons/weapons/polearms/javelin.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "Xwu22AAu2ZHHwQzg",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.35",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!e32f1fVfCm8UaOQz.Xwu22AAu2ZHHwQzg"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "name": "2. Defender",
+      "img": "icons/equipment/shield/heater-steel-crystal-red.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.5AS4Q6I83LVX5wBL",
+      "_id": "u9gZc6MfNip15yiO",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.35",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!e32f1fVfCm8UaOQz.u9gZc6MfNip15yiO"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "name": "3. Grit",
+      "img": "icons/magic/life/heart-cross-purple-orange.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.NQLG4EEMff3aNYA5",
+      "_id": "HWHczwDLPkbwWXq0",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.35",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!e32f1fVfCm8UaOQz.HWHczwDLPkbwWXq0"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "name": "4. Irresistible",
+      "img": "icons/magic/holy/projectiles-blades-salvo-yellow.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.zaeTWt9DcQyx40jo",
+      "_id": "003HAcOHsVrZmlGH",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.35",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!e32f1fVfCm8UaOQz.003HAcOHsVrZmlGH"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "name": "5. Second Chance",
+      "img": "icons/magic/unholy/strike-body-life-soul-purple.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.iQYWt9LjguVBdNaC",
+      "_id": "b9s28ejq85eDlgPx",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.35",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!e32f1fVfCm8UaOQz.b9s28ejq85eDlgPx"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "name": "6. Terrifying",
+      "img": "icons/magic/control/fear-fright-monster-grin-red-orange.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.QI06MGUdA1jXwNKt",
+      "_id": "C4TNKumplMWuk2rR",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.348",
+        "systemId": "sdm",
+        "systemVersion": "0.1.35",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!e32f1fVfCm8UaOQz.C4TNKumplMWuk2rR"
+    }
+  ],
+  "formula": "1d7",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8gXEqCY7Gctq4hdt",
+  "ownership": {
+    "default": 0,
+    "3vgxDetPOGhfUfqu": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.1.35",
+    "createdTime": 1756510856402,
+    "modifiedTime": 1767049263906,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "e32f1fVfCm8UaOQz",
+  "sort": 2000000,
+  "_key": "!tables!e32f1fVfCm8UaOQz"
+}

@@ -1,0 +1,330 @@
+{
+  "name": "Bearer Items",
+  "description": "A random table created from the contents of the Bearer Items Folder.",
+  "results": [
+    {
+      "name": "Leather Harness",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.7ftFidx7bnKhYCq4",
+      "img": "icons/equipment/chest/vest-leather-pink.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "QySjfYOMWNk5JDET",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lnKIrYs8oCBVpmq6.QySjfYOMWNk5JDET"
+    },
+    {
+      "name": "Blisscandy",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.8FqIxHyxqWN1TRyr",
+      "img": "icons/magic/control/buff-flight-wings-runes-purple-orange.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "9rqoqU2ndQD6J7PH",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lnKIrYs8oCBVpmq6.9rqoqU2ndQD6J7PH"
+    },
+    {
+      "name": "Friendly Anklet",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.F3d7y1fpKbd20H6k",
+      "img": "icons/equipment/neck/pendant-round-teal.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "Vdz0JgI3L4Qdl53k",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lnKIrYs8oCBVpmq6.Vdz0JgI3L4Qdl53k"
+    },
+    {
+      "name": "Fur Kilt",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.KevN39v4kUucafYg",
+      "img": "icons/equipment/leg/tasset-fur-studded-leather.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "TvUO88RSNfqDcQ0w",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lnKIrYs8oCBVpmq6.TvUO88RSNfqDcQ0w"
+    },
+    {
+      "name": "Sacribracers",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.LgaOsPdfuYjAS1V1",
+      "img": "icons/equipment/wrist/bracelet-embossed-steel.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "zToviqNHw1IgTtAi",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lnKIrYs8oCBVpmq6.zToviqNHw1IgTtAi"
+    },
+    {
+      "name": "Third Ear",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.WaM5g8RpDQYXhuRs",
+      "img": "icons/commodities/biological/ear-grey-brown.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "rx9vOxk6KKYi670I",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lnKIrYs8oCBVpmq6.rx9vOxk6KKYi670I"
+    },
+    {
+      "name": "Flesh Pocket",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.Z2iZYs342Xd72dpe",
+      "img": "icons/equipment/leg/pants-orange-red-fabric-pants.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "zpJ8wi1iVWMgGDTT",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lnKIrYs8oCBVpmq6.zpJ8wi1iVWMgGDTT"
+    },
+    {
+      "name": "Book of True Thought",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.e044IpKTuxEWaqxJ",
+      "img": "icons/sundries/books/book-eye-purple.webp",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "wTr6FxZCvJw7hE9f",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lnKIrYs8oCBVpmq6.wTr6FxZCvJw7hE9f"
+    },
+    {
+      "name": "Bravery Goggles",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.gt0VbAjtYxKagqzr",
+      "img": "icons/equipment/head/goggles-leather-grey.webp",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "bZmKGh4DXumGDhOc",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lnKIrYs8oCBVpmq6.bZmKGh4DXumGDhOc"
+    },
+    {
+      "name": "Shrunken Head",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.vKyygy98LVqrXM6k",
+      "img": "icons/commodities/bones/skull-hollow-brown.webp",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "ZAhAwLjFLta3PCHf",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lnKIrYs8oCBVpmq6.ZAhAwLjFLta3PCHf"
+    },
+    {
+      "name": "Polishing Kit",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.vXIhTvjYSn9hhbAe",
+      "img": "icons/commodities/cloth/cloth-roll-purple.webp",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_id": "7TmxeJBuFZXpn5m5",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lnKIrYs8oCBVpmq6.7TmxeJBuFZXpn5m5"
+    },
+    {
+      "name": "Red Juice",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.x7XMRmT2RpHSdwqQ",
+      "img": "icons/consumables/potions/potion-flask-stopped-red.webp",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_id": "AMFZm3oiSbPCto4y",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lnKIrYs8oCBVpmq6.AMFZm3oiSbPCto4y"
+    }
+  ],
+  "formula": "1d12",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "twVNJp7ykPUJ26M7",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.5",
+    "createdTime": 1767193475801,
+    "modifiedTime": 1767193483869,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "lnKIrYs8oCBVpmq6",
+  "sort": 100000,
+  "_key": "!tables!lnKIrYs8oCBVpmq6"
+}

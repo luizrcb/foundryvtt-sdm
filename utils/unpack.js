@@ -1,21 +1,23 @@
 const { execSync } = require('child_process');
 
+const foundryVersion = 'v14';
+
 const packs = [
-  { name: 'npc_generator', output: 'packs-source/npc_generator'},
-  { name: 'rolltables', output: 'packs-source/rolltables' },
-  { name: 'macros', output: 'packs-source/macros' },
-  { name: 'player_macros', output: 'packs-source/player_macros' },
-  { name: 'traits', output: 'packs-source/traits' },
-  { name: 'creatures', output: 'packs-source/creatures' },
-  { name: 'ability_scores', output: 'packs-source/ability_scores'},
-  { name: 'consumables', output: 'packs-source/consumables' },
-  { name: 'gadgets', output: 'packs-source/gadgets' },
-  { name: 'powers', output: 'packs-source/powers' },
-  { name: 'armors', output: 'packs-source/armors' },
-  { name: 'wards', output: 'packs-source/wards'},
-  { name: 'weapons', output: 'packs-source/weapons'},
-  { name: 'handouts', output: 'packs-source/handouts'},
-  { name: 'trait_items', output: 'packs-source/trait_items' }
+  { name: 'ability_scores', output: `packs-source/${foundryVersion}/ability_scores` },
+  { name: 'armors', output: `packs-source/${foundryVersion}/armors` },
+  { name: 'consumables', output: `packs-source/${foundryVersion}/consumables` },
+  { name: 'creatures', output: `packs-source/${foundryVersion}/creatures` },
+  { name: 'gadgets', output: `packs-source/${foundryVersion}/gadgets` },
+  { name: 'handouts', output: `packs-source/${foundryVersion}/handouts` },
+  { name: 'macros', output: `packs-source/${foundryVersion}/macros` },
+  { name: 'npc_generator', output: `packs-source/${foundryVersion}/npc_generator` },
+  { name: 'player_macros', output: `packs-source/${foundryVersion}/player_macros` },
+  { name: 'powers', output: `packs-source/${foundryVersion}/powers` },
+  { name: 'rolltables', output: `packs-source/${foundryVersion}/rolltables` },
+  { name: 'trait_items', output: `packs-source/${foundryVersion}/trait_items` },
+  { name: 'traits', output: `packs-source/${foundryVersion}/traits` },
+  { name: 'wards', output: `packs-source/${foundryVersion}/wards` },
+  { name: 'weapons', output: `packs-source/${foundryVersion}/weapons` }
 ];
 
 try {

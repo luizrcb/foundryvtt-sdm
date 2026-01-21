@@ -1,0 +1,188 @@
+{
+  "folder": "aHFB4BeCAI4x0oN1",
+  "name": "3. Dissipated",
+  "type": "trait",
+  "_id": "Q6iNaQQozNXwjYGV",
+  "img": "icons/consumables/potions/potion-round-corked-glowing-green.webp",
+  "system": {
+    "readied": false,
+    "status": "",
+    "resources": "",
+    "cost": 0,
+    "cost_frequency": "",
+    "description": "<p>Chemical cocktails drive you, but without them you are weak and wan.</p><p><span style=\"text-decoration:underline\"><span style=\"text-decoration:underline\">Spend €5 x level per week to gain +2 strength and agility.</span></span></p><p><strong>Without</strong>: suffer -2 strength and endurance.</p><p><em>Manually enable or disable the With Chemicals and Without Chemicals active effects. The bonuses will change the full ability values, adjust current values accordinly. </em></p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "type": "",
+    "learning": {
+      "sources": 0,
+      "required_successes": 0
+    },
+    "skill": {
+      "rank": 0,
+      "modifier_step": 3,
+      "modifier_bonus": 0,
+      "modifier_final": 0,
+      "custom_modifiers": false
+    },
+    "power": {
+      "img": "icons/svg/book.svg",
+      "name": "",
+      "description": "",
+      "level": 1,
+      "range": "",
+      "target": "",
+      "duration": "",
+      "overcharge": "",
+      "roll_formula": "",
+      "overcharge_roll_formula": ""
+    }
+  },
+  "effects": [
+    {
+      "name": "With Chemical",
+      "origin": "Compendium.sdm.traits.Item.Q6iNaQQozNXwjYGV",
+      "img": "icons/consumables/potions/potion-round-corked-glowing-green.webp",
+      "_id": "jBlFNMip6OfSnYPB",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.abilities.str.bonus",
+            "type": "add",
+            "value": 2,
+            "priority": 20,
+            "phase": "initial"
+          },
+          {
+            "key": "system.abilities.agi.bonus",
+            "type": "add",
+            "value": 2,
+            "priority": 20,
+            "phase": "initial"
+          }
+        ]
+      },
+      "disabled": true,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.353",
+        "systemId": "sdm",
+        "systemVersion": "0.6.2",
+        "createdTime": 1760207818455,
+        "modifiedTime": 1769001878455,
+        "lastModifiedBy": "6KLfb35TARh0OlRZ"
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!Q6iNaQQozNXwjYGV.jBlFNMip6OfSnYPB"
+    },
+    {
+      "name": "Without Chemical",
+      "origin": "Compendium.sdm.traits.Item.Q6iNaQQozNXwjYGV",
+      "img": "icons/skills/wounds/injury-face-impact-orange.webp",
+      "disabled": true,
+      "_id": "qLk4fk5jHBVg105t",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.abilities.str.bonus",
+            "type": "add",
+            "value": -2,
+            "priority": 20,
+            "phase": "initial"
+          },
+          {
+            "key": "system.abilities.end.bonus",
+            "type": "add",
+            "value": -2,
+            "priority": 20,
+            "phase": "initial"
+          }
+        ]
+      },
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.353",
+        "systemId": "sdm",
+        "systemVersion": "0.6.2",
+        "createdTime": 1760208139163,
+        "modifiedTime": 1769001884005,
+        "lastModifiedBy": "6KLfb35TARh0OlRZ"
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!Q6iNaQQozNXwjYGV.qLk4fk5jHBVg105t"
+    }
+  ],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "XnQAppzUXfkn5LcX": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.353",
+    "systemId": "sdm",
+    "systemVersion": "0.4.5",
+    "createdTime": 1760207667274,
+    "modifiedTime": 1760207810887,
+    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+  },
+  "_key": "!items!Q6iNaQQozNXwjYGV"
+}

@@ -179,8 +179,8 @@ export function checkIfItemIsAlsoAnArmor(item) {
   if (!effects.length) return false;
 
   const isArmor = effects.some(effect => {
-    if (!effect || !Array.isArray(effect.changes)) return false;
-    return effect.changes.some(change => String(change?.key ?? '') === 'system.armor_bonus');
+    if (!effect || !Array.isArray(effect.system.changes)) return false;
+    return effect.system.changes.some(change => String(change?.key ?? '') === 'system.armor_bonus');
   });
 
   return !!isArmor;

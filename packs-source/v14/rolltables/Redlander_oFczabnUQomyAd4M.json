@@ -1,0 +1,330 @@
+{
+  "name": "Redlander",
+  "description": "A random table created from the contents of the Redlander Folder.",
+  "results": [
+    {
+      "name": "Blood Brandy",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.8C4o6XLW4KMP2BTw",
+      "img": "icons/containers/kitchenware/goblet-jeweled-red.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "hHVedIJgMKBygj5s",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oFczabnUQomyAd4M.hHVedIJgMKBygj5s"
+    },
+    {
+      "name": "Cinnabar Shoes",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.C19fXbHtiOme5zWR",
+      "img": "icons/equipment/feet/boots-collared-red.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "ERACSMeDTNvzMFnc",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oFczabnUQomyAd4M.ERACSMeDTNvzMFnc"
+    },
+    {
+      "name": "Rustbeast Cloak",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.C1RJ3o8db2nkQWCt",
+      "img": "icons/equipment/back/cape-layered-red.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "7MTpOR34MSOut2Xn",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oFczabnUQomyAd4M.7MTpOR34MSOut2Xn"
+    },
+    {
+      "name": "Blindgod",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.IePjkI1HyZWiCbST",
+      "img": "icons/commodities/treasure/bust-pharaoh-gold-blue.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "Euqbu76PasqhmKuh",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oFczabnUQomyAd4M.Euqbu76PasqhmKuh"
+    },
+    {
+      "name": "Mindvault Helm",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.KSFNw6zrhTTNDs8j",
+      "img": "icons/equipment/head/helm-barbute-engraved-steel.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "SlGhULfqD5lCgtGF",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oFczabnUQomyAd4M.SlGhULfqD5lCgtGF"
+    },
+    {
+      "name": "Acrylic Reliquary",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.Vech52Xp644bhH3g",
+      "img": "icons/commodities/gems/pearl-purple-dark.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "vYRYWsAz3Tl1HITN",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oFczabnUQomyAd4M.vYRYWsAz3Tl1HITN"
+    },
+    {
+      "name": "Stakehammer",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.WFmZfrzrd5VoGcLl",
+      "img": "icons/weapons/hammers/hammer-war-spiked.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "eMCpwVfNiQ3nMLYI",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oFczabnUQomyAd4M.eMCpwVfNiQ3nMLYI"
+    },
+    {
+      "name": "Bunker Pass",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.XNnvskZwv4MtZQPa",
+      "img": "icons/equipment/neck/necklace-carved-lantern-gold.webp",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "5R5ygVF7w11IXvk4",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oFczabnUQomyAd4M.5R5ygVF7w11IXvk4"
+    },
+    {
+      "name": "Crow Armor",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.eCuKYi4BA9fGP5jH",
+      "img": "icons/equipment/shoulder/pauldron-decorative-bird-blue.webp",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "RgJe7OKactTwhbLb",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oFczabnUQomyAd4M.RgJe7OKactTwhbLb"
+    },
+    {
+      "name": "Rotblood Scent",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.o3HHMvAnp6FoiylT",
+      "img": "icons/consumables/potions/vial-cork-red.webp",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "X9sCuDOICxFxDgKe",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oFczabnUQomyAd4M.X9sCuDOICxFxDgKe"
+    },
+    {
+      "name": "Glass Cannon",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.wWAt6O6cHCrwV9La",
+      "img": "icons/magic/acid/projectile-needles-salvo-green.webp",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_id": "q1O1faSeyS3TWYIv",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oFczabnUQomyAd4M.q1O1faSeyS3TWYIv"
+    },
+    {
+      "name": "Second Heart",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.whW1qAiEMY3YS9t2",
+      "img": "icons/commodities/biological/organ-heart-red.webp",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_id": "Vb4gDT5JpfnIIDMi",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oFczabnUQomyAd4M.Vb4gDT5JpfnIIDMi"
+    }
+  ],
+  "formula": "1d12",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8iXTxWS7BmWPt7Io",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.5",
+    "createdTime": 1767193813786,
+    "modifiedTime": 1767193813786,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "oFczabnUQomyAd4M",
+  "sort": 0,
+  "_key": "!tables!oFczabnUQomyAd4M"
+}

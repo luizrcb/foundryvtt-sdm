@@ -1,0 +1,23 @@
+{
+  "type": "Item",
+  "folder": null,
+  "name": "Golem",
+  "color": null,
+  "sorting": "a",
+  "_id": "aRY61uQNITto5wmP",
+  "description": "",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "sdm",
+    "systemVersion": "0.4.5",
+    "createdTime": 1760199866176,
+    "modifiedTime": 1760199866176,
+    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+  },
+  "_key": "!folders!aRY61uQNITto5wmP"
+}

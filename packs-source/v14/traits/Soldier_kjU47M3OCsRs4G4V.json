@@ -1,0 +1,23 @@
+{
+  "type": "Item",
+  "folder": null,
+  "name": "Soldier",
+  "color": null,
+  "sorting": "a",
+  "_id": "kjU47M3OCsRs4G4V",
+  "description": "",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "sdm",
+    "systemVersion": "0.4.5",
+    "createdTime": 1760318860519,
+    "modifiedTime": 1760318860519,
+    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+  },
+  "_key": "!folders!kjU47M3OCsRs4G4V"
+}

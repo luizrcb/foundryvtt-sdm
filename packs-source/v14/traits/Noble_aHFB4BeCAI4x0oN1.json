@@ -1,0 +1,23 @@
+{
+  "type": "Item",
+  "folder": null,
+  "name": "Noble",
+  "color": null,
+  "sorting": "a",
+  "_id": "aHFB4BeCAI4x0oN1",
+  "description": "",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.350",
+    "systemId": "sdm",
+    "systemVersion": "0.4.5",
+    "createdTime": 1760207308641,
+    "modifiedTime": 1760207308641,
+    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+  },
+  "_key": "!folders!aHFB4BeCAI4x0oN1"
+}

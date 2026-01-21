@@ -1,0 +1,330 @@
+{
+  "name": "Soldier",
+  "description": "A random table created from the contents of the Soldier Folder.",
+  "results": [
+    {
+      "name": "Soul-Eater Nightblade",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.3UU9F5vzJrAmtP7n",
+      "img": "icons/weapons/swords/sword-flanged-lightning.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "ih5UBxA7krln5rgr",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!fbXYbEWtkCEBPqEI.ih5UBxA7krln5rgr"
+    },
+    {
+      "name": "Friend Horse",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.FOfVRG9xXJ7QDRaG",
+      "img": "icons/environment/creatures/horse-brown.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "WRSQK3qvAh88BORj",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!fbXYbEWtkCEBPqEI.WRSQK3qvAh88BORj"
+    },
+    {
+      "name": "War Mask",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.TAIgCoF7VezMsEwE",
+      "img": "icons/equipment/head/mask-horned-skull.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "fnfz4PfEw2tNH80P",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!fbXYbEWtkCEBPqEI.fnfz4PfEw2tNH80P"
+    },
+    {
+      "name": "Hard Light Shield",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.cBQ2eykKoBv3ZTbk",
+      "img": "icons/equipment/wrist/bracer-armored-steel-blue.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "1UrCGeXWJ9AzT4xm",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!fbXYbEWtkCEBPqEI.1UrCGeXWJ9AzT4xm"
+    },
+    {
+      "name": "Standing Bed",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.cTn8xTsCch3tJ8yg",
+      "img": "icons/sundries/survival/bedroll-worn-tan.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "QtG1PmevU3Jo2Jxx",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!fbXYbEWtkCEBPqEI.QtG1PmevU3Jo2Jxx"
+    },
+    {
+      "name": "Portable Shadow",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.fdoDVIfljMQ4J2ma",
+      "img": "icons/magic/unholy/orb-swirling-teal.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "Buv83tQuGN8wUqR2",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!fbXYbEWtkCEBPqEI.Buv83tQuGN8wUqR2"
+    },
+    {
+      "name": "Spectral Combat Suit",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.k5xzuAByMpx6ppbU",
+      "img": "icons/tools/nautical/diving-helmet.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "ZZV5Kav35mvFBFdU",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!fbXYbEWtkCEBPqEI.ZZV5Kav35mvFBFdU"
+    },
+    {
+      "name": "Motor Chung",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.lRDOkKJH8l0tAbat",
+      "img": "icons/consumables/potions/flask-corked-purple-glow.webp",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "drawn": false,
+      "_id": "N0trx5an47pNKdb3",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!fbXYbEWtkCEBPqEI.N0trx5an47pNKdb3"
+    },
+    {
+      "name": "Amber Wandgun",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.mh7RvDIb1izzZnA8",
+      "img": "icons/weapons/wands/wand-crook-yellow.webp",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "drawn": false,
+      "_id": "RD8jdRRQkzMNjmbg",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!fbXYbEWtkCEBPqEI.RD8jdRRQkzMNjmbg"
+    },
+    {
+      "name": "Patchflesh Parasite",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.pcdYMFCu1dZlRtp6",
+      "img": "icons/creatures/invertebrates/bug-sixlegged-gray.webp",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "drawn": false,
+      "_id": "6lkuC1hfF3lIa6wV",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!fbXYbEWtkCEBPqEI.6lkuC1hfF3lIa6wV"
+    },
+    {
+      "name": "Eisen Doppler Amulet",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.serLGpms5oaGCFtc",
+      "img": "icons/equipment/neck/amulet-round-engraved-spiral-gold.webp",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "drawn": false,
+      "_id": "HFlotMDog3gFE8Xq",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!fbXYbEWtkCEBPqEI.HFlotMDog3gFE8Xq"
+    },
+    {
+      "name": "Pointy Helmet",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.trait_items.Item.vXx57Vsg0bgSfmdw",
+      "img": "icons/equipment/head/helm-spangen-rounded.webp",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "drawn": false,
+      "_id": "xjJCyChkdsOVvtHw",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.5",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!fbXYbEWtkCEBPqEI.xjJCyChkdsOVvtHw"
+    }
+  ],
+  "formula": "1d12",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8iXTxWS7BmWPt7Io",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.5",
+    "createdTime": 1767193818563,
+    "modifiedTime": 1767193818563,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "fbXYbEWtkCEBPqEI",
+  "sort": 0,
+  "_key": "!tables!fbXYbEWtkCEBPqEI"
+}

@@ -1,0 +1,205 @@
+{
+  "name": "Tourist",
+  "description": "<p>A random table created from the contents of the Tourist Folder.</p>",
+  "results": [
+    {
+      "name": "4. Underestimated",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.1OEg6Z0UNcmfb6oT",
+      "img": "icons/creatures/magical/fae-fairy-winged-glowing-green.webp",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "drawn": false,
+      "_id": "qoN757Qx4DyLtXL1",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!io4wCUYhzcpEm4qb.qoN757Qx4DyLtXL1"
+    },
+    {
+      "name": "2. Clueless Outsider",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.39LgbAiq6VBgu6qp",
+      "img": "icons/skills/social/diplomacy-offering-ritual.webp",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "drawn": false,
+      "_id": "JdImnddg9oQ32XXC",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!io4wCUYhzcpEm4qb.JdImnddg9oQ32XXC"
+    },
+    {
+      "name": "1. Personal Daimon",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.3PGZ9JkNEaxZVEco",
+      "img": "icons/skills/trades/academics-book-study-purple.webp",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "drawn": false,
+      "_id": "ECiWLJF3y4PaBWza",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!io4wCUYhzcpEm4qb.ECiWLJF3y4PaBWza"
+    },
+    {
+      "name": "5. Intestinal Fortitude",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.AYUeIfPc5tfHHwh0",
+      "img": "icons/magic/acid/dissolve-vomit-green-brown.webp",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "drawn": false,
+      "_id": "0s5lh0XvjzcDY3WS",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!io4wCUYhzcpEm4qb.0s5lh0XvjzcDY3WS"
+    },
+    {
+      "name": "0. Tourist",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.SZjt5NBK4grAu7cQ",
+      "img": "icons/containers/bags/pack-leather-stitched-tan.webp",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "drawn": false,
+      "_id": "T1kuFt5GCbpZNGQ3",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!io4wCUYhzcpEm4qb.T1kuFt5GCbpZNGQ3"
+    },
+    {
+      "name": "6. Hashtag Blessed",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.TGvlHNtosFuDRVhz",
+      "img": "icons/magic/holy/prayer-hands-glowing-yellow.webp",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "drawn": false,
+      "_id": "LNNpy6l8y2mpXF9J",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!io4wCUYhzcpEm4qb.LNNpy6l8y2mpXF9J"
+    },
+    {
+      "name": "3. Fortunate One",
+      "type": "document",
+      "documentUuid": "Compendium.sdm.traits.Item.vvnklFU8P8R2KoHN",
+      "img": "icons/skills/social/peace-luck-insult.webp",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "drawn": false,
+      "_id": "NUvw8ddQ2GMWkWb9",
+      "description": "",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.5.4",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!io4wCUYhzcpEm4qb.NUvw8ddQ2GMWkWb9"
+    }
+  ],
+  "formula": "1d7",
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "8gXEqCY7Gctq4hdt",
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.5.4",
+    "createdTime": 1767049263898,
+    "modifiedTime": 1767049263906,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "io4wCUYhzcpEm4qb",
+  "sort": 200000,
+  "_key": "!tables!io4wCUYhzcpEm4qb"
+}

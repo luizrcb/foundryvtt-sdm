@@ -1,38 +1,15 @@
 <section class="tab changes {{#if tab.active}}active{{/if}}" data-group="{{tab.group}}" data-tab="{{tab.id}}">
   <header>
     <div class="key">{{localize "SDM.Effect.ChangeProperty"}}</div>
-    <div class="type">{{localize "EFFECT.FIELDS.changes.element.type.label"}}</div>
-    <div class="value">{{localize "EFFECT.FIELDS.changes.element.value.label"}}</div>
-    <div class="priority">{{localize "EFFECT.FIELDS.changes.element.priority.label"}}</div>
+    <div class="type">{{localize "EFFECT.ChangeMode"}}</div>
+    <div class="value">{{localize "EFFECT.ChangeValue"}}</div>
+    <div class="priority">{{localize "EFFECT.ChangePriority"}}</div>
     <div class="controls">
-      <a data-action="addChange"><i class="fa-regular fa-square-plus"></i></a></div>
+      <button type="button" class="inline-control icon fa-regular fa-square-plus" data-action="addChange"></button>
   </header>
-  <ol class="scrollable" data-changes>
-    {{#each source.changes as |change i|}}
-    {{#with ../fields.changes.element.fields as |changeFields|}}
-    <li data-index="{{i}}">
-      <div class="key">
-        <input class="changes-key" type="text" id="changes.{{i}}.key" name="changes.{{i}}.key" value="{{change.key}}" list="key-datalist-{{i}}"
-          placeholder="{{localize 'SDM.Effect.ChangeProperty'}}">
-        <datalist id="key-datalist-{{i}}">
-          {{#each @root.selectableKeys}}
-          <option value="{{this.value}}">{{this.label}}</option>
-          {{/each}}
-        </datalist>
-      </div>
-      <div class="type">
-        {{formInput changeFields.type name=(concat "changes." i ".type") value=change.type choices=@root.changeTypes}}
-      </div>
-      <div class="value">
-        {{formInput changeFields.value name=(concat "changes." i ".value") value=change.value elementType="input"}}
-      </div>
-      <div class="priority">
-        {{formInput changeFields.priority name=(concat "changes." i ".priority") value=change.priority
-        placeholder=(lookup (lookup @root.changeTypes change.type) "priority")}}
-      </div>
-      <div class="controls"><a data-action="deleteChange"><i class="fa-solid fa-trash"></i></a></div>
-    </li>
-    {{/with}}
+ <ol class="scrollable" data-changes>
+    {{#each changes as |change|}}
+      {{{change}}}
     {{/each}}
   </ol>
 </section>

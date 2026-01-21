@@ -1,0 +1,128 @@
+{
+  "folder": "77idWlDdAnk8JdQH",
+  "name": "4. Kaffetropist",
+  "type": "trait",
+  "_id": "w8eyGzOF6sMoMTHt",
+  "img": "icons/consumables/fruit/nanking-cherry-leaf-red.webp",
+  "system": {
+    "readied": false,
+    "status": "",
+    "resources": "",
+    "cost": 0,
+    "cost_frequency": "",
+    "description": "<p>You metabolize caffeine into other useful drugs. Drinking a coffee can put you to sleep, wake you up, purge you of other toxins (lose [[/r 1d3]] life throwing up), or give you visions (gain ward +5 but your motor skills are impaired).</p><p><em>(Enable the <strong>Visions</strong> active effect to get the +5 ward bonus)</em></p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "type": "",
+    "learning": {
+      "sources": 0,
+      "required_successes": 0
+    },
+    "skill": {
+      "rank": 0,
+      "modifier_step": 3,
+      "modifier_bonus": 0,
+      "modifier_final": 0,
+      "custom_modifiers": false
+    },
+    "power": {
+      "img": "icons/svg/book.svg",
+      "name": "",
+      "description": "",
+      "level": 1,
+      "range": "",
+      "target": "",
+      "duration": "",
+      "overcharge": "",
+      "roll_formula": "",
+      "overcharge_roll_formula": ""
+    }
+  },
+  "effects": [
+    {
+      "name": "Visions",
+      "origin": "Compendium.sdm.traits.Item.w8eyGzOF6sMoMTHt",
+      "img": "icons/consumables/fruit/nanking-cherry-leaf-red.webp",
+      "disabled": true,
+      "_id": "Cm4uiCD8jChZiGPM",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.ward_bonus",
+            "value": 5,
+            "priority": null,
+            "type": "add",
+            "phase": "initial"
+          }
+        ]
+      },
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.353",
+        "systemId": "sdm",
+        "systemVersion": "0.4.5",
+        "createdTime": 1760292181836,
+        "modifiedTime": 1760292418631,
+        "lastModifiedBy": "XnQAppzUXfkn5LcX"
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!w8eyGzOF6sMoMTHt.Cm4uiCD8jChZiGPM"
+    }
+  ],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "XnQAppzUXfkn5LcX": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.353",
+    "systemId": "sdm",
+    "systemVersion": "0.4.5",
+    "createdTime": 1760291994265,
+    "modifiedTime": 1760292458713,
+    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+  },
+  "_key": "!items!w8eyGzOF6sMoMTHt"
+}

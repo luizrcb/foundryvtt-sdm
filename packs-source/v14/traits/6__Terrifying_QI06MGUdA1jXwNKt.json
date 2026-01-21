@@ -1,0 +1,80 @@
+{
+  "folder": "SoSFz2ZUtNtRPhQx",
+  "name": "6. Terrifying",
+  "type": "trait",
+  "_id": "QI06MGUdA1jXwNKt",
+  "img": "icons/magic/control/fear-fright-monster-grin-red-orange.webp",
+  "system": {
+    "readied": false,
+    "cost": 0,
+    "cost_frequency": "",
+    "description": "<p>You’re skilled at frightening people. That’s also a +2 bonus when breaking your foes’ morale. Expert: +4; master: +6<br /><em>(morale bonuses should be manually added to rolls)</em></p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "type": "skill",
+    "skill": {
+      "rank": 1,
+      "modifier_step": 2,
+      "modifier_bonus": 0,
+      "modifier_final": 0,
+      "custom_modifiers": true
+    },
+    "power": {
+      "img": "icons/svg/book.svg",
+      "name": "",
+      "description": "",
+      "level": 1,
+      "range": "",
+      "target": "",
+      "duration": "",
+      "overcharge": "",
+      "roll_formula": "",
+      "overcharge_roll_formula": ""
+    },
+    "status": "",
+    "resources": "",
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "learning": {
+      "sources": 0,
+      "required_successes": 0
+    }
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.348",
+    "systemId": "sdm",
+    "systemVersion": "0.3.2",
+    "createdTime": 1756498226768,
+    "modifiedTime": 1757957401277,
+    "lastModifiedBy": "xN5KQ8c8JiOFyOLU"
+  },
+  "_key": "!items!QI06MGUdA1jXwNKt"
+}

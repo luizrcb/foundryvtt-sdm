@@ -132,7 +132,7 @@ export class SdmItem extends Item {
   apply(item, change) {
     let field;
     const changes = {};
-    if (change.key.startsWith('system.')) {
+    if (change.key?.startsWith('system.')) {
       if (item.system instanceof foundry.abstract.DataModel) {
         field = item.system.schema.getField(change.key.slice(7));
       }
@@ -177,7 +177,7 @@ export class SdmItem extends Item {
     for (const effect of this.allApplicableEffects()) {
       if (!effect.active) continue;
       changes.push(
-        ...effect.changes.map(change => {
+        ...effect.system.changes.map(change => {
           const c = foundry.utils.deepClone(change);
           c.effect = effect;
           c.priority = c.priority ?? c.mode * 10;
