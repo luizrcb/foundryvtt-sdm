@@ -224,6 +224,7 @@ Hooks.on('createItem', async (item, _options, _id) => {
 
 Hooks.on('updateItem', async item => {
   const defaultCurrencyImage = game.settings.get('sdm', 'currencyImage') || DEFAULT_CASH_ICON;
+  const defaultCurrencyName = game.settings.get('sdm', 'currencyName') || 'cash';
 
   if (!item.isOwner) return;
   const updateData = {};
@@ -254,6 +255,7 @@ Hooks.on('updateItem', async item => {
 
     if (item.system.size.unit === SizeUnit.CASH) {
       updateData['img'] = defaultCurrencyImage;
+      updateData['name'] = defaultCurrencyName;
     }
   }
 
