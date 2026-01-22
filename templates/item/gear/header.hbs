@@ -68,7 +68,7 @@
         </div>
         {{/if}}
 
-
+        {{#unless (eq system.size.unit 'cash')}}
         <div class='resource'>
           <label class='resource-label' for="system.charges.max">{{localize 'SDM.ItemCharges'}}</label>
           <div class='resource-content flexrow flex-center flex-between flex-group-center'>
@@ -77,6 +77,7 @@
             <input type='text' name="system.charges.max" value="{{system.charges.max}}" data-dtype='Number' data-tooltip="{{localize 'SDM.ItemMaxCharges'}}"/>
           </div>
         </div>
+        {{/unless}}
 
       </div>
   </header>

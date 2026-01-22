@@ -20,7 +20,10 @@ import {
 } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { openItemTransferDialog } from '../items/transfer.mjs';
-import { healingHeroDice, bloodDiceRoll, directResourceDiceRoll } from '../rolls/hero_dice/index.mjs';
+import {
+  healingHeroDice,
+  directResourceDiceRoll
+} from '../rolls/hero_dice/index.mjs';
 import SDMRoll, { sanitizeExpression } from '../rolls/sdmRoll.mjs';
 import {
   renderNPCMoraleResult,
@@ -193,6 +196,13 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     let shouldExplode = !isDamage && !isPower && !isPowerAlbum;
     let selectedAbility = isAttack ? actorAttack?.default_ability : ability;
 
+    const selectedRollMode =
+      isAttack && isCharacter
+        ? this.actor.system[attack].roll_mode
+        : isAbility && isCharacter
+          ? this.actor.system.abilities[selectedAbility].roll_mode
+          : RollMode.NORMAL;
+
     const actorData = this.actor?.system;
     const damageMultiplier = CONFIG.SDM.getDamageMultiplier(actorData.base_damage_multiplier || 2);
 
@@ -206,6 +216,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       selectedSkill,
       multiplierOptions: damageMultiplier,
       rollModes: CONFIG.SDM.rollMode,
+      selectedRollMode: selectedRollMode || RollMode.NORMAL,
       type,
       isCharacterActor,
       attackTargetChoices: CONFIG.SDM.attackTarget,
@@ -1088,7 +1099,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         const powerItem = this._getEmbeddedDocument(target);
         rollItem = powerItem;
         const powerData = powerItem.system.power;
-        label = powerItem.getPowerShortTitle(powerData, this.actor.system.power_cost, this.actor.system.power_cost_bonus);
+        label = powerItem.getPowerShortTitle(
+          powerData,
+          this.actor.system.power_cost,
+          this.actor.system.power_cost_bonus
+        );
         ability = powerData.default_ability;
         formula = powerData.roll_formula;
         overchargeFormula = powerData.overcharge_roll_formula;
@@ -1096,8 +1111,17 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         powerOptions = [
           {
             index: 0,
-            name: powerItem.getPowerShortTitle(powerData, this.actor.system.power_cost, this.actor.system.power_cost_bonus),
-            overcharge: powerItem.getPowerShortTitle(powerData, this.actor.system.power_cost, this.actor.system.power_cost_bonus, true),
+            name: powerItem.getPowerShortTitle(
+              powerData,
+              this.actor.system.power_cost,
+              this.actor.system.power_cost_bonus
+            ),
+            overcharge: powerItem.getPowerShortTitle(
+              powerData,
+              this.actor.system.power_cost,
+              this.actor.system.power_cost_bonus,
+              true
+            ),
             formula: powerData.roll_formula,
             overchargeFormula: powerData.overcharge_roll_formula,
             canOvercharge: !!powerData.overcharge,
@@ -1120,8 +1144,17 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         powerOptions = powers.map((power, index) => {
           return {
             index,
-            name: powerAlbum.getPowerShortTitle(power, this.actor.system.power_cost, this.actor.system.power_cost_bonus),
-            overcharge: powerAlbum.getPowerShortTitle(power, this.actor.system.power_cost, this.actor.system.power_cost_bonus, true),
+            name: powerAlbum.getPowerShortTitle(
+              power,
+              this.actor.system.power_cost,
+              this.actor.system.power_cost_bonus
+            ),
+            overcharge: powerAlbum.getPowerShortTitle(
+              power,
+              this.actor.system.power_cost,
+              this.actor.system.power_cost_bonus,
+              true
+            ),
             formula: power.roll_formula,
             overchargeFormula: power.overcharge_roll_formula,
             canOvercharge: !!power.overcharge,
@@ -1249,6 +1282,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const isShift = reverseShift !== !!event.shiftKey;
     const isCtrl = !!event.ctrlKey;
     let data = { modifier: '', charismaOperator: 1, customBaseFormula: '' };
+    const selectedRollMode = this.actor.system.abilities['cha'].roll_mode || RollMode.NORMAL;
 
     if (!isShift) {
       data = await DialogV2.wait({
@@ -1261,6 +1295,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         },
         content: await renderTemplate(templatePath('reaction-roll-dialog'), {
           rollModes: CONFIG.SDM.rollMode,
+          selectedRollMode,
           blindGMRoll: isCtrl
         }),
         buttons: [
@@ -1386,6 +1421,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       selectedSkill: '',
       multiplierOptions: damageMultiplier,
       rollModes: CONFIG.SDM.rollMode,
+      selectedRollMode: abilityData.roll_mode || RollMode.NORMAL,
       type: RollType.SAVE,
       isCharacterActor: true,
       attackTargetChoices: CONFIG.SDM.attackTarget,

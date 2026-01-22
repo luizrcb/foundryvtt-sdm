@@ -1,5 +1,5 @@
 import { MAX_CARRY_WEIGHT_CASH, UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
-import { DieScale } from '../helpers/constants.mjs';
+import { DieScale, RollMode } from '../helpers/constants.mjs';
 import { getDefaultAbility } from '../helpers/globalUtils.mjs';
 
 import SdmActorBase from './base-actor.mjs';
@@ -42,7 +42,7 @@ export default class SdmCharacter extends SdmActorBase {
     });
 
     schema.readied_armor_take_no_slots = new fields.BooleanField({
-      initial: false,
+      initial: false
     });
 
     schema.defense = new fields.NumberField({
@@ -114,7 +114,7 @@ export default class SdmCharacter extends SdmActorBase {
     schema.readied_item_slots_bonus = new fields.NumberField({
       ...requiredInteger,
       initial: 0
-    })
+    });
 
     schema.burden_slots_bonus = new fields.NumberField({
       ...requiredInteger,
@@ -209,7 +209,7 @@ export default class SdmCharacter extends SdmActorBase {
       max: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 }),
       max_limit: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 }),
       bonus: new fields.NumberField({ ...requiredInteger, initial: 0 }),
-      imbued: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 }),
+      imbued: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 })
     });
 
     schema.temporary_life = new fields.SchemaField({
@@ -221,7 +221,7 @@ export default class SdmCharacter extends SdmActorBase {
       }),
       max: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 }),
       bonus: new fields.NumberField({ ...requiredInteger, initial: 0 }),
-      imbued: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 }),
+      imbued: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 })
     });
 
     schema.level = new fields.NumberField({ ...requiredInteger, min: 0, initial: 0, max: 9 });
@@ -348,7 +348,14 @@ export default class SdmCharacter extends SdmActorBase {
         initial: 0
       }),
       favorite_skill: new fields.DocumentUUIDField({ required: false, blank: true, initial: '' }),
-      default_ability: getDefaultAbility('str')
+      default_ability: getDefaultAbility('str'),
+      roll_mode: new fields.StringField({
+        nullable: false,
+        required: true,
+        blank: false,
+        initial: RollMode.NORMAL,
+        choices: CONFIG.SDM.rollMode
+      })
     });
 
     schema.ranged = new fields.SchemaField({
@@ -357,7 +364,14 @@ export default class SdmCharacter extends SdmActorBase {
         initial: 0
       }),
       favorite_skill: new fields.DocumentUUIDField({ required: false, blank: true, initial: '' }),
-      default_ability: getDefaultAbility('agi')
+      default_ability: getDefaultAbility('agi'),
+      roll_mode: new fields.StringField({
+        nullable: false,
+        required: true,
+        blank: false,
+        initial: RollMode.NORMAL,
+        choices: CONFIG.SDM.rollMode
+      })
     });
 
     schema.power_cost = new fields.NumberField({
@@ -378,7 +392,14 @@ export default class SdmCharacter extends SdmActorBase {
         initial: 0
       }),
       favorite_skill: new fields.DocumentUUIDField({ required: false, blank: true, initial: '' }),
-      default_ability: getDefaultAbility('tho')
+      default_ability: getDefaultAbility('tho'),
+      roll_mode: new fields.StringField({
+        nullable: false,
+        required: true,
+        blank: false,
+        initial: RollMode.NORMAL,
+        choices: CONFIG.SDM.rollMode
+      })
     });
 
     schema.fantascience = new fields.SchemaField({
@@ -387,7 +408,14 @@ export default class SdmCharacter extends SdmActorBase {
         initial: 0
       }),
       favorite_skill: new fields.DocumentUUIDField({ required: false, blank: true, initial: '' }),
-      default_ability: getDefaultAbility('cha')
+      default_ability: getDefaultAbility('cha'),
+      roll_mode: new fields.StringField({
+        nullable: false,
+        required: true,
+        blank: false,
+        initial: RollMode.NORMAL,
+        choices: CONFIG.SDM.rollMode
+      })
     });
 
     // Iterate over abilities names and create a new SchemaField for each.
@@ -420,6 +448,13 @@ export default class SdmCharacter extends SdmActorBase {
           save_bonus: new fields.NumberField({
             ...requiredInteger,
             initial: 0
+          }),
+          roll_mode: new fields.StringField({
+            nullable: false,
+            required: true,
+            blank: false,
+            initial: RollMode.NORMAL,
+            choices: CONFIG.SDM.rollMode
           })
         });
         return obj;

@@ -5,6 +5,7 @@ const ApplicationV2 = foundry.applications?.api?.ApplicationV2 ?? class {};
 const HandlebarsApplicationMixin =
   foundry.applications?.api?.HandlebarsApplicationMixin ?? (cls => cls);
 const { FilePathField } = foundry.data.fields || {};
+const FilePicker = foundry.applications.apps.FilePicker.implementation;
 
 export default class BaseSettingsConfig extends HandlebarsApplicationMixin(ApplicationV2) {
   static get NAMESPACE() {
@@ -29,6 +30,7 @@ export default class BaseSettingsConfig extends HandlebarsApplicationMixin(Appli
     this.options.actions.pickFile = this._onPickFile.bind(this);
     this.options.actions.cancel = this._onCancel.bind(this);
     this.options.actions.resetDefaults = this._onResetDefaults.bind(this);
+    this.options.actions.previewAudio = this._onPreviewAudio.bind(this);
   }
 
   static PARTS = {
@@ -83,27 +85,83 @@ export default class BaseSettingsConfig extends HandlebarsApplicationMixin(Appli
           ? 'video'
           : 'image';
 
-      // Only show the preview for images
-      const isImagePicker = pickerType === 'image';
       const safeVal = foundry.utils.escapeHTML(value ?? '');
-      const previewImg = isImagePicker
-        ? `<img data-preview-for="${name}" src="${safeVal}" alt="" width="32" height="32"
-            style="width:32px;height:32px;object-fit:contain;margin-right:8px;${value ? '' : 'display:none'}">`
-        : '';
 
-      return {
-        key: name,
-        label,
-        hint,
-        inputHTML: `
-      <div class="flexrow setting-filepicker">
-        ${previewImg}
-        <input type="text" name="${name}" value="${safeVal}">
-        <a class="button" data-action="pickFile" data-target="${name}" data-picker="${pickerType}">
-          <i class="fas fa-file-import"></i>
-        </a>
-      </div>`
-      };
+      // For image pickers: show image preview
+      if (pickerType === 'image') {
+        const previewImg = `<img data-preview-for="${name}" src="${safeVal}" alt="" width="32" height="32"
+            style="width:32px;height:32px;object-fit:contain;margin-right:8px;${value ? '' : 'display:none'}">`;
+
+        return {
+          key: name,
+          label,
+          hint,
+          inputHTML: `
+          <div class="flexrow setting-filepicker">
+            ${previewImg}
+            <input type="text" name="${name}" value="${safeVal}" class="file-path-input">
+            <a class="button" data-action="pickFile" data-target="${name}" data-picker="${pickerType}">
+              <i class="fas fa-file-import"></i>
+            </a>
+          </div>`
+        };
+      }
+
+      // For audio pickers: show audio preview with controls
+      if (pickerType === 'audio') {
+        const audioPlayer = value
+          ? `
+          <div class="audio-preview" data-preview-for="${name}" style="margin-right:8px;">
+            <audio controls style="height:32px; max-width:200px;">
+              <source src="${safeVal}" type="audio/mpeg">
+              ${game.i18n.localize('SDM.Settings.AudioNotSupported')}
+            </audio>
+          </div>
+        `
+          : `<div class="audio-preview" data-preview-for="${name}" style="display:none; margin-right:8px;"></div>`;
+
+        return {
+          key: name,
+          label,
+          hint,
+          inputHTML: `
+          <div class="flexrow setting-filepicker">
+            ${audioPlayer}
+            <input type="text" name="${name}" value="${safeVal}" class="file-path-input">
+            <a class="button" data-action="pickFile" data-target="${name}" data-picker="${pickerType}">
+              <i class="fas fa-file-import"></i>
+            </a>
+          </div>`
+        };
+      }
+
+      // For video pickers (optional, if you want video preview)
+      if (pickerType === 'video') {
+        const videoPlayer = value
+          ? `
+          <div class="video-preview" data-preview-for="${name}" style="margin-right:8px;">
+            <video width="64" height="36" style="object-fit:contain;">
+              <source src="${safeVal}" type="video/mp4">
+              ${game.i18n.localize('SDM.Settings.VideoNotSupported')}
+            </video>
+          </div>
+        `
+          : `<div class="video-preview" data-preview-for="${name}" style="display:none; margin-right:8px;"></div>`;
+
+        return {
+          key: name,
+          label,
+          hint,
+          inputHTML: `
+          <div class="flexrow setting-filepicker">
+            ${videoPlayer}
+            <input type="text" name="${name}" value="${safeVal}" class="file-path-input">
+            <a class="button" data-action="pickFile" data-target="${name}" data-picker="${pickerType}">
+              <i class="fas fa-file-import"></i>
+            </a>
+          </div>`
+        };
+      }
     }
 
     if (def.type === Boolean) {
@@ -146,7 +204,7 @@ export default class BaseSettingsConfig extends HandlebarsApplicationMixin(Appli
     const pickerType = button.dataset.picker || 'image';
     const target = button.dataset.target;
     const form = button.closest('form');
-    const input = form?.elements?.namedItem?.(target);
+    const input = form?.querySelector(`input[name="${target}"]`);
 
     const fp = new FilePicker({
       type: pickerType,
@@ -154,15 +212,154 @@ export default class BaseSettingsConfig extends HandlebarsApplicationMixin(Appli
       callback: path => {
         if (input) input.value = path;
 
-        // Update preview (only present for image pickers)
-        const preview = form?.querySelector(`img[data-preview-for="${CSS.escape(target)}"]`);
-        if (preview) {
+        // Update preview based on picker type
+        const previewContainer = form?.querySelector(`[data-preview-for="${CSS.escape(target)}"]`);
+        if (!previewContainer) return;
+
+        if (pickerType === 'image') {
+          // Image preview
+          const preview = previewContainer;
           preview.src = path || '';
           preview.style.display = path ? '' : 'none';
+        } else if (pickerType === 'audio') {
+          // Audio preview
+          if (path) {
+            previewContainer.style.display = '';
+
+            // Check if audio element already exists
+            let audio = previewContainer.querySelector('audio');
+            if (!audio) {
+              // Create new audio player
+              audio = document.createElement('audio');
+              audio.controls = true;
+              audio.style.height = '32px';
+              audio.style.maxWidth = '200px';
+
+              const source = document.createElement('source');
+              audio.appendChild(source);
+              previewContainer.appendChild(audio);
+
+              // Add play button if not present
+              if (!previewContainer.querySelector('.audio-preview-btn')) {
+                const playBtn = document.createElement('a');
+                playBtn.className = 'button audio-preview-btn';
+                playBtn.dataset.action = 'previewAudio';
+                playBtn.dataset.target = target;
+                playBtn.title = game.i18n.localize('SDM.Settings.PlayPreview');
+                playBtn.innerHTML = '<i class="fas fa-play"></i>';
+                previewContainer.appendChild(playBtn);
+              }
+            }
+
+            // Update source
+            const source = audio.querySelector('source');
+            source.src = path;
+            source.type = this._getAudioMimeType(path);
+            audio.load();
+          } else {
+            previewContainer.style.display = 'none';
+          }
+        } else if (pickerType === 'video') {
+          // Video preview
+          if (path) {
+            previewContainer.style.display = '';
+
+            let video = previewContainer.querySelector('video');
+            if (!video) {
+              video = document.createElement('video');
+              video.width = 64;
+              video.height = 36;
+              video.style.objectFit = 'contain';
+
+              const source = document.createElement('source');
+              video.appendChild(source);
+              previewContainer.appendChild(video);
+            }
+
+            const source = video.querySelector('source');
+            source.src = path;
+            source.type = this._getVideoMimeType(path);
+            video.load();
+          } else {
+            previewContainer.style.display = 'none';
+          }
         }
       }
     });
     fp.render(true);
+  }
+
+  // Helper method to determine audio MIME type from file extension
+  _getAudioMimeType(path) {
+    const ext = path.split('.').pop().toLowerCase();
+    switch (ext) {
+      case 'mp3':
+        return 'audio/mpeg';
+      case 'wav':
+        return 'audio/wav';
+      case 'ogg':
+        return 'audio/ogg';
+      case 'flac':
+        return 'audio/flac';
+      case 'm4a':
+        return 'audio/mp4';
+      case 'aac':
+        return 'audio/aac';
+      default:
+        return 'audio/mpeg';
+    }
+  }
+
+  // Helper method to determine video MIME type from file extension
+  _getVideoMimeType(path) {
+    const ext = path.split('.').pop().toLowerCase();
+    switch (ext) {
+      case 'mp4':
+        return 'video/mp4';
+      case 'webm':
+        return 'video/webm';
+      case 'ogg':
+        return 'video/ogg';
+      case 'mov':
+        return 'video/quicktime';
+      default:
+        return 'video/mp4';
+    }
+  }
+
+  // Action to play audio preview
+  _onPreviewAudio(event, button) {
+    event?.preventDefault();
+
+    const target = button.dataset.target;
+    const form = button.closest('form');
+    const input = form?.querySelector(`input[name="${target}"]`);
+    const path = input?.value;
+
+    if (!path) return;
+
+    // Find audio element
+    const previewContainer = form?.querySelector(`[data-preview-for="${CSS.escape(target)}"]`);
+    const audio = previewContainer?.querySelector('audio');
+
+    if (audio) {
+      if (audio.paused) {
+        audio.play().catch(e => {
+          console.error('Error playing audio:', e);
+          ui.notifications.error(game.i18n.localize('SDM.Settings.AudioPlayError'));
+        });
+      } else {
+        audio.pause();
+        audio.currentTime = 0;
+      }
+    } else {
+      // Create and play audio if it doesn't exist
+      const audioElement = new Audio(path);
+      audioElement.play().catch(e => {
+        console.error('Error playing audio:', e);
+        ui.notifications.error(game.i18n.localize('SDM.Settings.AudioPlayError'));
+      });
+    }
   }
 
   _onCancel(event, button) {

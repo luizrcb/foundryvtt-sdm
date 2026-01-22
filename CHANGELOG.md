@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v0.7.0
+
+- Right-click items on the character sheet to add and remove charges (when max charges is not zero)
+- Added a preview option for audio settings (specifically for the level-up sound)
+- Added support for traits that make ability or attack rolls always use advantage or disadvantage (using `roll_mode` key in active effects)
+- When you convert a gear item to cash, its name and image will now update automatically
+
 ## v0.6.2
 
 - Add support for tracking item (gear) charges
