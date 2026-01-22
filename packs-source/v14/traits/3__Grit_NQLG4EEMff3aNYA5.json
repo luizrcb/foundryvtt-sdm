@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p>Gain 1 life per level and <span style=\"text-decoration:underline\"><span style=\"text-decoration:underline\">advantage when you roll endurance</span></span> (<em>not automated</em>).</p><p><em>(life bonuses will only apply to the max life value, you need to adjust the current value accordinly)</em></p>",
+    "description": "<p>Gain 1 life per level and advantage when you roll endurance.</p><p><em>(life bonuses will only apply to the max life value, you need to adjust the current value accordinly)</em></p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -74,6 +74,13 @@
             "value": "@level",
             "priority": 20,
             "phase": "initial"
+          },
+          {
+            "key": "system.abilities.end.roll_mode",
+            "type": "override",
+            "value": "advantage",
+            "priority": null,
+            "phase": "initial"
           }
         ]
       },
@@ -96,9 +103,9 @@
         "exportSource": null,
         "coreVersion": "14.353",
         "systemId": "sdm",
-        "systemVersion": "0.6.2",
+        "systemVersion": "1.0.0",
         "createdTime": 1756497896357,
-        "modifiedTime": 1769003005634,
+        "modifiedTime": 1769097599092,
         "lastModifiedBy": "6KLfb35TARh0OlRZ"
       },
       "showIcon": 1,
@@ -118,9 +125,9 @@
     "exportSource": null,
     "coreVersion": "14.353",
     "systemId": "sdm",
-    "systemVersion": "0.6.2",
+    "systemVersion": "1.0.0",
     "createdTime": 1756497823226,
-    "modifiedTime": 1769003020694,
+    "modifiedTime": 1769097564860,
     "lastModifiedBy": "6KLfb35TARh0OlRZ"
   },
   "_key": "!items!NQLG4EEMff3aNYA5"

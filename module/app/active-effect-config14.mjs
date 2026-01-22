@@ -1,6 +1,7 @@
 import { templatePath } from '../helpers/templates.mjs';
 
 const { ActiveEffectConfig } = foundry.applications.sheets;
+const { renderTemplate } = foundry.applications.handlebars;
 
 export default class SdmActiveEffectConfig14 extends ActiveEffectConfig {
   static DEFAULT_OPTIONS = {
