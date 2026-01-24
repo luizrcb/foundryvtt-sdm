@@ -4,7 +4,9 @@ import { templatePath } from '../../../helpers/templates.mjs';
 import {
   renderSaveResult,
   renderNPCMoraleResult,
-  renderReactionResult
+  renderCorruptionResult,
+  renderReactionResult,
+  renderDefeatResult
 } from '../../ui/renderResults.mjs';
 
 const { renderTemplate } = foundry.applications.handlebars;
@@ -18,10 +20,12 @@ export class HeroDiceUI {
     includeModeToggle = true,
     resource = 'hero_dice',
     includeTouristDice = false
-
   ) {
     const maxHeroDice = actor.system[resource]?.value ?? 0;
-    const touristDice = (resource === 'hero_dice' && actor.system.tourist_dice.enabled) ? actor.system.tourist_dice.value : 0;
+    const touristDice =
+      resource === 'hero_dice' && actor.system.tourist_dice.enabled
+        ? actor.system.tourist_dice.value
+        : 0;
     const diceAmount = includeTouristDice ? maxHeroDice + touristDice : maxHeroDice;
     const options = Array.from(
       { length: diceAmount },
@@ -172,10 +176,32 @@ export class HeroDiceUI {
       );
     }
 
+    if (flags && flags?.sdm?.corruption) {
+      const { speaker } = flags.sdm.corruption;
+      await renderCorruptionResult(
+        { roll: heroResultRoll },
+        {
+          fromHeroDice: true,
+          speaker
+        }
+      );
+    }
+
     if (flags && flags?.sdm?.reaction) {
       const { charismaOperator, speaker } = flags.sdm.reaction;
       await renderReactionResult(
         { roll: heroResultRoll, charismaOperator },
+        {
+          fromHeroDice: true,
+          speaker
+        }
+      );
+    }
+
+    if (flags && flags?.sdm?.defeat) {
+      const { selectedAbility, speaker } = flags.sdm.defeat;
+      await renderDefeatResult(
+        { roll: heroResultRoll, selectedAbility },
         {
           fromHeroDice: true,
           speaker

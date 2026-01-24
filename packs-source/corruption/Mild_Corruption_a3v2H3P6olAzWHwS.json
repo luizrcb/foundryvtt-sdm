@@ -1,0 +1,510 @@
+{
+  "name": "Mild Corruption",
+  "description": "<p>You feel fine. Possibly euphoric. Over a week and a day, gain a new trait.</p>",
+  "formula": "1d20",
+  "results": [
+    {
+      "range": [
+        1,
+        1
+      ],
+      "description": "Separated from you, your flesh crawls like a self-willed thing (L1, protean).",
+      "_id": "7d5waLl1tN5AoSQ9",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!a3v2H3P6olAzWHwS.7d5waLl1tN5AoSQ9"
+    },
+    {
+      "range": [
+        2,
+        2
+      ],
+      "description": "Mouth widens from ear to ear or nearly disappears.",
+      "_id": "kJWyDvkW44qMOhCK",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!a3v2H3P6olAzWHwS.kJWyDvkW44qMOhCK"
+    },
+    {
+      "range": [
+        3,
+        3
+      ],
+      "description": "Vestigial fingers and toes grow. They become functional in a few weeks.",
+      "_id": "EtJTZpV6GNRbSLFq",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!a3v2H3P6olAzWHwS.EtJTZpV6GNRbSLFq"
+    },
+    {
+      "range": [
+        4,
+        4
+      ],
+      "description": "Skin or hair color becomes strange and unnatural.",
+      "_id": "86h2sEnQ4hqN6T25",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!a3v2H3P6olAzWHwS.86h2sEnQ4hqN6T25"
+    },
+    {
+      "range": [
+        5,
+        5
+      ],
+      "description": "Skull becomes rounder or more elongated. Eyes grow larger.",
+      "_id": "iZwR9rA0g3ZHeQcX",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!a3v2H3P6olAzWHwS.iZwR9rA0g3ZHeQcX"
+    },
+    {
+      "range": [
+        6,
+        6
+      ],
+      "description": "Lips, nose, or ears grow or disappear.",
+      "_id": "OOtmCuoip0hoLC07",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!a3v2H3P6olAzWHwS.OOtmCuoip0hoLC07"
+    },
+    {
+      "range": [
+        7,
+        7
+      ],
+      "description": "A concealed bioweapon grows in your body (str or agi attack, 1d6 dmg).",
+      "_id": "uoFu8AAs5xu3uEvC",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!a3v2H3P6olAzWHwS.uoFu8AAs5xu3uEvC"
+    },
+    {
+      "range": [
+        8,
+        8
+      ],
+      "description": "Eyes change color or shape, becoming radically weird.",
+      "_id": "uea57nawG3iGUhwM",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!a3v2H3P6olAzWHwS.uea57nawG3iGUhwM"
+    },
+    {
+      "range": [
+        9,
+        9
+      ],
+      "description": "A finger or other small appendage disappears and you gain 1 life. Sacrifice two more for 1 more life.",
+      "_id": "X4gwDGflBEzD9T9J",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!a3v2H3P6olAzWHwS.X4gwDGflBEzD9T9J"
+    },
+    {
+      "range": [
+        10,
+        10
+      ],
+      "description": "Hair disappears or becomes voluminous and omnipresent.",
+      "_id": "u2CfEuTmEx4I2wZo",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!a3v2H3P6olAzWHwS.u2CfEuTmEx4I2wZo"
+    },
+    {
+      "range": [
+        11,
+        11
+      ],
+      "description": "Fingers become elongated multi-tool assemblages of chitin and bone.",
+      "_id": "3T6Q3a1trV3DMDKb",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!a3v2H3P6olAzWHwS.3T6Q3a1trV3DMDKb"
+    },
+    {
+      "range": [
+        12,
+        12
+      ],
+      "description": "Can digest all organic substances and gain immunity to most toxins.",
+      "_id": "3ZN9PpewYaBnnweV",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!a3v2H3P6olAzWHwS.3ZN9PpewYaBnnweV"
+    },
+    {
+      "range": [
+        13,
+        13
+      ],
+      "description": "Blood changes color, becoming blue or green. Gain 1 endurance.",
+      "_id": "WAQsZWysno7nQMqb",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!a3v2H3P6olAzWHwS.WAQsZWysno7nQMqb"
+    },
+    {
+      "range": [
+        14,
+        14
+      ],
+      "description": "Muscles grow extremely slim or bulky. Gain 1 strength or agility.",
+      "_id": "Blfn7OZSqZABzo9i",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!a3v2H3P6olAzWHwS.Blfn7OZSqZABzo9i"
+    },
+    {
+      "range": [
+        15,
+        15
+      ],
+      "description": "A sense becomes incredibly acute and sensitive. And vulnerable.",
+      "_id": "JQMstO5PgDqBsMhL",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!a3v2H3P6olAzWHwS.JQMstO5PgDqBsMhL"
+    },
+    {
+      "range": [
+        16,
+        16
+      ],
+      "description": "Tele-empathy, like a cat. Gain 1 aura.",
+      "_id": "ykbMlvDcdudVVyxy",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!a3v2H3P6olAzWHwS.ykbMlvDcdudVVyxy"
+    },
+    {
+      "range": [
+        17,
+        17
+      ],
+      "description": "Golem-like secondary reason routines. Gain 1 thought.",
+      "_id": "ddLbcgCekhWGmTQf",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!a3v2H3P6olAzWHwS.ddLbcgCekhWGmTQf"
+    },
+    {
+      "range": [
+        18,
+        18
+      ],
+      "description": "Noble augmentation: health, beauty, and authority. Gain 1 charisma.",
+      "_id": "GynDYeBoNFBeyriV",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!a3v2H3P6olAzWHwS.GynDYeBoNFBeyriV"
+    },
+    {
+      "range": [
+        19,
+        19
+      ],
+      "description": "Precognitive flashes. Harmless, but you can spend 1 hero die per session to completely negate any roll.",
+      "_id": "DaAI32U0SiTZSTsN",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!a3v2H3P6olAzWHwS.DaAI32U0SiTZSTsN"
+    },
+    {
+      "range": [
+        20,
+        20
+      ],
+      "description": "Visions of a higher truth. You know you live in a synthetic hell, not a true heaven. Gain +1 to all saves.",
+      "_id": "tbS4SryMlQUhtGIN",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!a3v2H3P6olAzWHwS.tbS4SryMlQUhtGIN"
+    }
+  ],
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.7.0",
+    "createdTime": 1769274258196,
+    "modifiedTime": 1769274260502,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "a3v2H3P6olAzWHwS",
+  "sort": 200000,
+  "_key": "!tables!a3v2H3P6olAzWHwS"
+}

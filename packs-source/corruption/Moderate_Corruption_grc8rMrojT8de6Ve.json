@@ -1,0 +1,510 @@
+{
+  "name": "Moderate Corruption",
+  "description": "<p>Terrible visions. Lose [[/r 1d6]] life. Over a day and a night, gain a new trait.</p>",
+  "formula": "1d20",
+  "results": [
+    {
+      "range": [
+        1,
+        1
+      ],
+      "description": "Face comes... off. Leaving a living, grinning skull.",
+      "_id": "eVu7kcsahkxDAsg9",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!grc8rMrojT8de6Ve.eVu7kcsahkxDAsg9"
+    },
+    {
+      "range": [
+        2,
+        2
+      ],
+      "description": "Flesh and skin become waxy and translucent.",
+      "_id": "JoBe6fEJF7CWu93a",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!grc8rMrojT8de6Ve.JoBe6fEJF7CWu93a"
+    },
+    {
+      "range": [
+        3,
+        3
+      ],
+      "description": "Joints become weaker but hypermobile.",
+      "_id": "VobtR2hpcNtDKF1W",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!grc8rMrojT8de6Ve.VobtR2hpcNtDKF1W"
+    },
+    {
+      "range": [
+        4,
+        4
+      ],
+      "description": "Ears wither away or turn into bony horns. Or tentacles.",
+      "_id": "NKq4fijFPCQS7ezF",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!grc8rMrojT8de6Ve.NKq4fijFPCQS7ezF"
+    },
+    {
+      "range": [
+        5,
+        5
+      ],
+      "description": "Tongue fused to jaw or covered in sharp radulae. Speech is strange.",
+      "_id": "SHvEaQWnkUdLEZcF",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!grc8rMrojT8de6Ve.SHvEaQWnkUdLEZcF"
+    },
+    {
+      "range": [
+        6,
+        6
+      ],
+      "description": "New vestigial arm or tail. It becomes functional over a few weeks.",
+      "_id": "JrcWeEWgmNs6tMBS",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!grc8rMrojT8de6Ve.JrcWeEWgmNs6tMBS"
+    },
+    {
+      "range": [
+        7,
+        7
+      ],
+      "description": "Eyes turn milky and blind. Only ultraviolet light remains visible.",
+      "_id": "Wdjf5H9vEuHI8fOw",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!grc8rMrojT8de6Ve.Wdjf5H9vEuHI8fOw"
+    },
+    {
+      "range": [
+        8,
+        8
+      ],
+      "description": "Fingers wither, become raw, until only undead bones remain.",
+      "_id": "pswL471j0uFWwCDG",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!grc8rMrojT8de6Ve.pswL471j0uFWwCDG"
+    },
+    {
+      "range": [
+        9,
+        9
+      ],
+      "description": "Gills or gas-breathing organs. They're functional after a few weeks.",
+      "_id": "VYPtWKtHxeun3FKT",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!grc8rMrojT8de6Ve.VYPtWKtHxeun3FKT"
+    },
+    {
+      "range": [
+        10,
+        10
+      ],
+      "description": "Grow taller or shorter. Possibly much taller or shorter.",
+      "_id": "NbSbuvWpxn9N8YwP",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!grc8rMrojT8de6Ve.NbSbuvWpxn9N8YwP"
+    },
+    {
+      "range": [
+        11,
+        11
+      ],
+      "description": "Voice becomes posthuman. A cascade of colors and sensations.",
+      "_id": "odRzIYylq9UrvLdS",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!grc8rMrojT8de6Ve.odRzIYylq9UrvLdS"
+    },
+    {
+      "range": [
+        12,
+        12
+      ],
+      "description": "Skin becomes patterned, shifting, chameleon or cuttlefish-like.",
+      "_id": "ebpnAndSoQTtrIyU",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!grc8rMrojT8de6Ve.ebpnAndSoQTtrIyU"
+    },
+    {
+      "range": [
+        13,
+        13
+      ],
+      "description": "Small horns or platelets cover the skin, like armor.",
+      "_id": "sAo2MTVG4pFdmSSN",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!grc8rMrojT8de6Ve.sAo2MTVG4pFdmSSN"
+    },
+    {
+      "range": [
+        14,
+        14
+      ],
+      "description": "Features and skull become bestial. Lupine, vulpine, ursine, what not.",
+      "_id": "5QYOzcEMcsstZ457",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!grc8rMrojT8de6Ve.5QYOzcEMcsstZ457"
+    },
+    {
+      "range": [
+        15,
+        15
+      ],
+      "description": "Body becomes bulkier or gracile, as though adapting to an alien gravity.",
+      "_id": "2Aw97Sh7DkKHePe0",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!grc8rMrojT8de6Ve.2Aw97Sh7DkKHePe0"
+    },
+    {
+      "range": [
+        16,
+        16
+      ],
+      "description": "Alien organ. It activates on death, reviving a version of the character.",
+      "_id": "RgnjslvyC9fbmz9j",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!grc8rMrojT8de6Ve.RgnjslvyC9fbmz9j"
+    },
+    {
+      "range": [
+        17,
+        17
+      ],
+      "description": "Eerie sense: vibration, echolocation, electricity, or magnetism.",
+      "_id": "QyN9VibOyz8gQuSB",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!grc8rMrojT8de6Ve.QyN9VibOyz8gQuSB"
+    },
+    {
+      "range": [
+        18,
+        18
+      ],
+      "description": "Labor augmentation: no longer bored with dull, repetitive tasks.",
+      "_id": "UnQIppDXtwO3BpyG",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!grc8rMrojT8de6Ve.UnQIppDXtwO3BpyG"
+    },
+    {
+      "range": [
+        19,
+        19
+      ],
+      "description": "Mule. Can carry twice as much as normal. May also look a bit asinine.",
+      "_id": "Al68sy4Uy9IWQZ7d",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!grc8rMrojT8de6Ve.Al68sy4Uy9IWQZ7d"
+    },
+    {
+      "range": [
+        20,
+        20
+      ],
+      "description": "Suffused with sparkly spores, you now glow.",
+      "_id": "JtALWUlTpSzww7OO",
+      "type": "text",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!grc8rMrojT8de6Ve.JtALWUlTpSzww7OO"
+    }
+  ],
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.7.0",
+    "createdTime": 1769274193979,
+    "modifiedTime": 1769274258206,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "grc8rMrojT8de6Ve",
+  "sort": 300000,
+  "_key": "!tables!grc8rMrojT8de6Ve"
+}

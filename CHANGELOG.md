@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## v0.8.0
+
+- Added defeat rolls to the character sheet
+- Added a set of defeat-related burdens to a compendium
+- Added new 'corruption' type for items and traits
+- When you drag a corruption item to a character sheet you can select either creating it as an item or a trait. Corruptions take one inventory slot and don't need to be readied (equipped)
+- Also added the severe, moderate, and mild corruption rollable tables
+- Added corruption severity roll to the character sheet
+
 ## v0.7.0
 
 - Right-click items on the character sheet to add and remove charges (when max charges is not zero)

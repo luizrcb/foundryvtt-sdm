@@ -283,6 +283,7 @@ SDM.itemType = {
 
 SDM.gearType = {
   armor: 'TYPES.Item.armor',
+  corruption: 'TYPES.Item.corruption',
   power: 'TYPES.Item.power',
   power_album: 'TYPES.Item.power_album',
   ward: 'TYPES.Item.ward',
@@ -290,6 +291,7 @@ SDM.gearType = {
 };
 
 SDM.traitType = {
+  corruption: 'TYPES.Item.corruption',
   power: 'TYPES.Item.power',
   skill: 'TYPES.Item.skill'
 };
@@ -349,3 +351,9 @@ SDM.months = {
   11: 'SDM.MonthTrucking.11',
   12: 'SDM.MonthTrucking.12'
 };
+
+
+SDM.defeatAbilities =  {
+  'end': 'SDM.DefeatAbilityEndurance',
+  'aur': 'SDM.DefeatAbilityAura'
+}

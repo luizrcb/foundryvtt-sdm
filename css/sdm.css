@@ -380,6 +380,10 @@
   color: var(--sdm-c-plum);
 }
 
+.violet {
+  color: var(--sdm-c-violet);
+}
+
 .blood {
   color: var(--sdm-c-blood);
 }

@@ -1,17 +1,17 @@
 {
-  "folder": "7B3OwXDTVGFSaUls",
-  "name": "Porcelain  Walker",
+  "folder": "VVAAtWb7IMLM0ST8",
+  "name": "Soul Siphon Spear",
   "type": "gear",
-  "_id": "HVbDfQ9tCQZ4CGOi",
-  "img": "icons/creatures/magical/spirit-undead-masked-blue.webp",
+  "_id": "ZteNSXBaRUbC5CuU",
+  "img": "icons/weapons/polearms/spear-flared-silver-pink.webp",
   "system": {
     "readied": false,
-    "cost": 600,
+    "cost": 3000,
     "cost_frequency": "",
-    "description": "<p>The best in princely technology, with shiny polychrome ceramic plates. </p><p>Burn mode [[/r 1d20]]: walks itself for several hours.</p><p><strong>Features:</strong> re 3 [[/r 1d20]], bulky, cool, intravenous</p>",
+    "description": "<p>Whips like a cobra, drinking souls and leaving empty husks. Holds three souls.</p><p>Spend one to animate it as a @UUID[Compendium.sdm.creatures.Actor.RrHPo1p4xq14BKO3]{Spear Snake} (L3/12 life) or to regain [[/r 1d6x]] life</p><p><strong>Features:</strong> 2H, attune, fantascience</p>",
     "quantity": 1,
     "size": {
-      "value": 3,
+      "value": 1,
       "unit": "stones"
     },
     "features": "",
@@ -27,7 +27,7 @@
       "bonus": 1,
       "damage": "1d4"
     },
-    "type": "armor",
+    "type": "weapon",
     "power": {
       "img": "icons/svg/book.svg",
       "name": "",
@@ -44,8 +44,8 @@
     "max_powers": 3,
     "powers": [],
     "armor": {
-      "value": 7,
-      "type": "golem",
+      "value": 0,
+      "type": "",
       "cumbersome": false,
       "powered": null
     },
@@ -56,15 +56,20 @@
     },
     "weapon": {
       "damage": {
-        "base": "1d4",
+        "base": "2d6",
         "versatile": "1d4",
         "bonus": ""
       },
-      "range": "",
+      "range": "close",
       "versatile": false
     },
+    "default_ability": "",
     "status": "",
     "resources": "",
+    "charges": {
+      "value": 0,
+      "max": 3
+    },
     "is_hallmark": false,
     "hallmark": {
       "level": 0,
@@ -76,7 +81,7 @@
     "supply_type": "human"
   },
   "effects": [],
-  "sort": 0,
+  "sort": 1100000,
   "ownership": {
     "default": 0,
     "9g1Dzw4zdMZGGuY3": 3
@@ -89,9 +94,9 @@
     "coreVersion": "13.351",
     "systemId": "sdm",
     "systemVersion": "0.5.4",
-    "createdTime": 1767011671983,
-    "modifiedTime": 1767011671983,
+    "createdTime": 1767011720662,
+    "modifiedTime": 1767011720662,
     "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
   },
-  "_key": "!items!HVbDfQ9tCQZ4CGOi"
+  "_key": "!items!ZteNSXBaRUbC5CuU"
 }

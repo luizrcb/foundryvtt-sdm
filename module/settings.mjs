@@ -3,6 +3,8 @@ import { $fmt, $l10n } from './helpers/globalUtils.mjs';
 import { handleHeroDice } from './rolls/hero_dice/index.mjs';
 
 export const BASE_REACTION_FORMULA = '2d6';
+export const BASE_DEFEAT_FORMULA = '2d6';
+export const BASE_CORRUPTION_FORMULA = '2d6';
 export const CHARACTER_DEFAULT_INITIATIVE = '2d6 + @abilities.agi.current + @initiative_bonus';
 export const NPC_DEFAULT_INITIATIVE = '2d6 + @bonus';
 export const NPC_DEFAULT_MORALE_FORMULA = '2d6';
@@ -318,6 +320,26 @@ export function registerSystemSettings() {
     requiresReload: true,
     type: String, // Data type: String, Number, Boolean, etc
     default: BASE_REACTION_FORMULA
+  });
+
+  game.settings.register('sdm', 'baseCorruptionFormula', {
+    name: 'SDM.SettingsBaseCorruptionFormula',
+    hint: 'SDM.SettingsBaseCorruptionFormulaHint',
+    scope: 'world', // "world" = GM only, "client" = per user
+    restricted: true,
+    requiresReload: true,
+    type: String, // Data type: String, Number, Boolean, etc
+    default: BASE_CORRUPTION_FORMULA
+  });
+
+  game.settings.register('sdm', 'baseDefeatFormula', {
+    name: 'SDM.SettingsBaseDefeatFormula',
+    hint: 'SDM.SettingsBaseDefeatFormulaHint',
+    scope: 'world', // "world" = GM only, "client" = per user
+    restricted: true,
+    requiresReload: true,
+    type: String, // Data type: String, Number, Boolean, etc
+    default: BASE_DEFEAT_FORMULA
   });
 
   game.settings.register('sdm', 'defaultHeroDiceType', {

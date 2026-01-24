@@ -118,6 +118,7 @@
     {{#if (and
       (ne actorType 'caravan')
       (ne item.system.status 'broken')
+      (ne item.system.type 'corruption')
     )}}
     <a class="item-control">
       <i
@@ -132,20 +133,17 @@
       </i>
     </a>
     {{/if}}
-    {{#if (and
-      (ne item.system.size.unit 'cash')
-      (ne actorType 'caravan')
-    )}}
-    {{/if}}
-    <a class="item-control">
-      <i
-        class="fa-regular fa-exchange"
-        data-action="transferItem"
-        data-tooltip="{{localize 'DOCUMENT.Transfer'
-        type=(localize 'TYPE.Item' )}}"
-      >
-      </i>
-    </a>
+      {{#if (ne item.system.type 'corruption')}}
+      <a class="item-control">
+        <i
+          class="fa-regular fa-exchange"
+          data-action="transferItem"
+          data-tooltip="{{localize 'DOCUMENT.Transfer'
+          type=(localize 'TYPE.Item' )}}"
+        >
+        </i>
+      </a>
+      {{/if}}
     {{/if}}
   </div>
 </li>
