@@ -127,15 +127,6 @@ Hooks.on('getSceneControlButtons', function (controls) {
         if (active) await game.sdm.api.gm.groupInitiative();
       }
     };
-    controls.tokens.tools['sdm-dice-oracles'] = {
-      icon: 'fa-solid fa-dice',
-      name: 'sdm-dice-oracles',
-      title: 'SDM.GMDiceOracles',
-      button: true,
-      onChange: async (event, active) => {
-        if (active) await game.sdm.api.gm.diceOracles();
-      }
-    };
     controls.tokens.tools['sdm-generate-npc'] = {
       icon: 'fa-solid fa-spaghetti-monster-flying',
       name: 'sdm-generate-npc',
@@ -146,6 +137,15 @@ Hooks.on('getSceneControlButtons', function (controls) {
       }
     };
   }
+  controls.tokens.tools['sdm-dice-oracles'] = {
+    icon: 'fa-solid fa-dice',
+    name: 'sdm-dice-oracles',
+    title: 'SDM.DiceOracles',
+    button: true,
+    onChange: async (event, active) => {
+      if (active) await game.sdm.api.player.diceOracles();
+    }
+  };
 });
 
 Hooks.on('updateCombat', async (combat, update) => {

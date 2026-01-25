@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.9.0
+
+- Added support for dice oracles and a new Dice So Nice theme for oracle dice
+
 ## v0.8.0
 
 - Added defeat rolls to the character sheet

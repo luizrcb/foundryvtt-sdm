@@ -211,6 +211,20 @@ export function registerSystemSettings() {
     }
   });
 
+  game.settings.register('sdm', 'oracleDice', {
+    scope: 'client', // "world" = GM only, "client" = per user
+    config: false, // Show in configuration view
+    type: String, // Data type: String, Number, Boolean, etc
+    default: 'quick-d6',
+    choices: [
+      'quick-d6',
+      'bell-2d6',
+      'd10-oracle',
+      'bell-2d10',
+      'skilled-d20'
+    ]
+  });
+
   game.settings.register('sdm', 'bonusHeroDicePool', {
     scope: 'world',
     config: false,
@@ -1193,6 +1207,22 @@ export function configurePlayerChromatype() {
         fontScale: DICE_SCALE
       };
       dice3d.addColorset(romanticData);
+
+      const mysticOracle = {
+        name: 'sdm-oracle',
+        description: 'SDM Oracle Dice',
+        category: 'Colors',
+        foreground: ['#D4AF37', '#FDB827', '#FDB827'],
+        background: ['#4B0082', '#460752', '#483D8B'],
+        outline: '#000000',
+        edge: '#D4AF37',
+        texture: 'stars',
+        material: 'metal',
+        font: 'Baron Neue',
+        fontColor: '#FDB827',
+        shadow: 'rgba(212, 175, 55, 0.5)'
+      };
+      dice3d.addColorset(mysticOracle);
 
       // const metallicData = {
       //   name: 'sdm-metallic',

@@ -117,8 +117,11 @@ export function registerHandlebarsHelpers() {
     return item.getInventoryTitle();
   });
 
-  $$('toSacks', function (slotsInStones) {
+  $$('toSacks', function (slotsInStones, displayUnit=true) {
     const inSacks = convertToSacks(slotsInStones, SizeUnit.STONES);
+
+    if (!displayUnit) return inSacks;
+
     return `${inSacks} ${$l10n('SDM.UnitSacksAbbr')}`;
   });
 
