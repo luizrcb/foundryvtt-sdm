@@ -1,7 +1,7 @@
 {
-  "name": "Nauseating",
+  "name": "Brain injury",
   "type": "burden",
-  "_id": "C7vdjk7wsRAm6X4R",
+  "_id": "aRKkLGnzGAa0ilut",
   "img": "icons/svg/stoned.svg",
   "system": {
     "readied": false,
@@ -13,7 +13,7 @@
     },
     "cost": 0,
     "cost_frequency": "",
-    "description": "",
+    "description": "<p>-1 thought</p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -42,18 +42,18 @@
   },
   "effects": [
     {
-      "name": "-1 agility",
-      "origin": "Compendium.sdm.burdens.Item.C7vdjk7wsRAm6X4R",
+      "name": "-1 thought",
+      "origin": "Compendium.sdm.burdens.Item.aRKkLGnzGAa0ilut",
       "img": "icons/svg/aura.svg",
-      "_id": "yMUDdvGdreOXpUNV",
+      "_id": "3GCreSx3dyhXjBma",
       "type": "base",
       "system": {},
       "changes": [
         {
-          "key": "system.abilities.agi.bonus",
+          "key": "system.abilities.tho.bonus",
           "mode": 2,
           "value": "-1",
-          "priority": null
+          "priority": 20
         }
       ],
       "disabled": false,
@@ -66,7 +66,7 @@
         "startRound": null,
         "startTurn": null
       },
-      "description": "<p>-1 agility</p>",
+      "description": "",
       "tint": "#ffffff",
       "transfer": true,
       "statuses": [],
@@ -79,11 +79,11 @@
         "coreVersion": "13.351",
         "systemId": "sdm",
         "systemVersion": "0.7.0",
-        "createdTime": 1769255766088,
-        "modifiedTime": 1769255813627,
+        "createdTime": 1769255270483,
+        "modifiedTime": 1769255678828,
         "lastModifiedBy": "6KLfb35TARh0OlRZ"
       },
-      "_key": "!items.effects!C7vdjk7wsRAm6X4R.yMUDdvGdreOXpUNV"
+      "_key": "!items.effects!aRKkLGnzGAa0ilut.3GCreSx3dyhXjBma"
     }
   ],
   "folder": null,
@@ -100,9 +100,9 @@
     "coreVersion": "13.351",
     "systemId": "sdm",
     "systemVersion": "0.7.0",
-    "createdTime": 1769255758132,
-    "modifiedTime": 1769255758132,
+    "createdTime": 1769255268711,
+    "modifiedTime": 1769255791965,
     "lastModifiedBy": "6KLfb35TARh0OlRZ"
   },
-  "_key": "!items!C7vdjk7wsRAm6X4R"
+  "_key": "!items!aRKkLGnzGAa0ilut"
 }

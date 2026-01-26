@@ -1,0 +1,108 @@
+{
+  "name": "Nauseating",
+  "type": "burden",
+  "_id": "C7vdjk7wsRAm6X4R",
+  "img": "icons/svg/stoned.svg",
+  "system": {
+    "readied": false,
+    "status": "",
+    "resources": "",
+    "charges": {
+      "value": 0,
+      "max": 0
+    },
+    "cost": 0,
+    "cost_frequency": "",
+    "description": "<p>-1 agility</p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "type": "",
+    "power": null
+  },
+  "effects": [
+    {
+      "name": "-1 agility",
+      "origin": "Compendium.sdm.burdens.Item.C7vdjk7wsRAm6X4R",
+      "img": "icons/svg/aura.svg",
+      "_id": "yMUDdvGdreOXpUNV",
+      "type": "base",
+      "system": {},
+      "changes": [
+        {
+          "key": "system.abilities.agi.bonus",
+          "mode": 2,
+          "value": "-1",
+          "priority": null
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "createdTime": 1769255766088,
+        "modifiedTime": 1769255813627,
+        "lastModifiedBy": "6KLfb35TARh0OlRZ"
+      },
+      "_key": "!items.effects!C7vdjk7wsRAm6X4R.yMUDdvGdreOXpUNV"
+    }
+  ],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.7.0",
+    "createdTime": 1769255758132,
+    "modifiedTime": 1769255758132,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_key": "!items!C7vdjk7wsRAm6X4R"
+}

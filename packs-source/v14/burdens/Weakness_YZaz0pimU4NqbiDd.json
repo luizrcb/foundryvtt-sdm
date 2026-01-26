@@ -1,0 +1,108 @@
+{
+  "name": "Weakness",
+  "type": "burden",
+  "_id": "YZaz0pimU4NqbiDd",
+  "img": "icons/svg/stoned.svg",
+  "system": {
+    "readied": false,
+    "status": "",
+    "resources": "",
+    "charges": {
+      "value": 0,
+      "max": 0
+    },
+    "cost": 0,
+    "cost_frequency": "",
+    "description": "<p>-1 strength</p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": "",
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4"
+    },
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "type": "",
+    "power": null
+  },
+  "effects": [
+    {
+      "name": "-1 strength",
+      "origin": "Compendium.sdm.burdens.Item.YZaz0pimU4NqbiDd",
+      "img": "icons/svg/aura.svg",
+      "_id": "Mn2YSgVLZZNYWy6K",
+      "type": "base",
+      "system": {},
+      "changes": [
+        {
+          "key": "system.abilities.str.bonus",
+          "mode": 2,
+          "value": "-1",
+          "priority": null
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "createdTime": 1769255714655,
+        "modifiedTime": 1769255734044,
+        "lastModifiedBy": "6KLfb35TARh0OlRZ"
+      },
+      "_key": "!items.effects!YZaz0pimU4NqbiDd.Mn2YSgVLZZNYWy6K"
+    }
+  ],
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.7.0",
+    "createdTime": 1769255711057,
+    "modifiedTime": 1769255823112,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_key": "!items!YZaz0pimU4NqbiDd"
+}
