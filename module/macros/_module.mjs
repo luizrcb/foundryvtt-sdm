@@ -1,4 +1,5 @@
 import { abilityGeneration } from './player/abilityGeneration.mjs';
+import { diceOracles } from './player/diceOracles.mjs'
 import { escalatorDie } from './gm/escalatorDie.mjs';
 import { generateRandomBackground } from './player/generateRandomBackground.mjs';
 import { giveCash } from './gm/giveCash.mjs';
@@ -13,10 +14,11 @@ const gm = {
   giveExperience,
   giveHeroDice,
   groupInitiative,
-  randomNPCGenerator
+  randomNPCGenerator,
 };
 
 const player = {
+  diceOracles,
   abilityGeneration,
   generateRandomBackground
 };

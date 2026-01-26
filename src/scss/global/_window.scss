@@ -192,6 +192,10 @@
   color: colors.$c-plum;
 }
 
+.violet {
+  color: colors.$c-violet;
+}
+
 .blood {
   color: colors.$c-blood;
 }
@@ -1014,7 +1018,7 @@ input[type='radio']::after {
 
   .theme-dark select option:checked,
   .theme-dark select option[selected] {
-   background: color-mix(in srgb, var(--sdm-c-highlight) 60%, black);
+    background: color-mix(in srgb, var(--sdm-c-highlight) 60%, black);
     color: var(--sdm-c-font);
     font-weight: bold;
   }
@@ -1030,5 +1034,60 @@ input[type='radio']::after {
 
   .theme-dark select::-ms-expand {
     filter: invert(1);
+  }
+
+  .uvg-oracle-result {
+    border: 1px solid #7c2da2;
+    border-radius: 5px;
+    padding: 10px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #e0e0ff;
+  }
+
+  .oracle-header {
+    border-bottom: 1px solid #7c2da2;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+  }
+
+  .oracle-header h5 {
+    color: #e0aaff;
+    margin: 0;
+  }
+
+  .oracle-question {
+    font-style: italic;
+    color: #aaccff;
+    margin-top: 5px;
+    margin-bottom: 0;
+  }
+
+  .oracle-roll {
+    background: rgba(124, 45, 162, 0.2);
+    padding: 8px;
+    border-radius: 3px;
+    margin: 10px 0;
+  }
+
+  .oracle-outcome {
+    background: rgba(224, 170, 255, 0.1);
+    padding: 10px;
+    border-radius: 3px;
+    border-left: 3px solid #e0aaff;
+    margin: 10x 0;
+    margin-bottom: 0;
+  }
+
+  .oracle-outcome h6 {
+    color: #e0aaff;
+    margin: 0 0 5px 0;
+  }
+
+  .oracle-details {
+    font-size: 0.9em;
+    color: #8888cc;
+    border-top: 1px solid #444477;
+    padding-top: 10px;
+    margin-top: 10px;
   }
 }

@@ -89,8 +89,18 @@
       </div>
       {{/if}}
 
-      {{#if (and (gt item.system.slots_taken 1) (ne item.system.size.unit 'sacks'))}}[{{item.system.slots_taken}}] {{/if}}
-      {{#if (and (gt item.system.slots_taken 1) (eq item.system.size.unit 'sacks'))}}[{{toSacks item.system.slots_taken}}] {{/if}}
+      {{#if (and (gt item.system.slots_taken 1) (ne item.system.size.unit 'sacks'))}}
+      <span
+       data-tooltip="{{item.system.slots_taken}} {{localize 'SDM.UnitStones'}}"
+      >[{{item.system.slots_taken}}]&nbsp;
+      </span>
+      {{/if}}
+      {{#if (and (gt item.system.slots_taken 1) (eq item.system.size.unit 'sacks'))}}
+      <span
+       data-tooltip="{{toSacks item.system.slots_taken false}} {{ifThen (gt (toSacks item.system.slots_taken false) 1) (localize 'SDM.UnitSacks') (localize 'SDM.UnitSack')}}"
+      >[{{toSacks item.system.slots_taken}}]&nbsp;
+      </span>
+      {{/if}}
 
       {{#if (eq item.system.size.unit 'cash')}} {{item.system.quantity}} {{/if}}
       {{#if item.system.is_hallmark}}<i class="fa-regular fa-star hallmark" data-tooltip="{{localize 'SDM.HallmarkItem'}}"></i>{{/if}}
@@ -118,6 +128,7 @@
     {{#if (and
       (ne actorType 'caravan')
       (ne item.system.status 'broken')
+      (ne item.system.type 'corruption')
     )}}
     <a class="item-control">
       <i
@@ -132,20 +143,17 @@
       </i>
     </a>
     {{/if}}
-    {{#if (and
-      (ne item.system.size.unit 'cash')
-      (ne actorType 'caravan')
-    )}}
-    {{/if}}
-    <a class="item-control">
-      <i
-        class="fa-regular fa-exchange"
-        data-action="transferItem"
-        data-tooltip="{{localize 'DOCUMENT.Transfer'
-        type=(localize 'TYPE.Item' )}}"
-      >
-      </i>
-    </a>
+      {{#if (ne item.system.type 'corruption')}}
+      <a class="item-control">
+        <i
+          class="fa-regular fa-exchange"
+          data-action="transferItem"
+          data-tooltip="{{localize 'DOCUMENT.Transfer'
+          type=(localize 'TYPE.Item' )}}"
+        >
+        </i>
+      </a>
+      {{/if}}
     {{/if}}
   </div>
 </li>

@@ -1,0 +1,512 @@
+{
+  "name": "Severe Corruption",
+  "formula": "1d20",
+  "description": "<p>Violently ill. Lose [[/r 1d6]] ability points. Over some hours permanently reduce an ability by 1 and gain a new trait.</p>",
+  "results": [
+    {
+      "range": [
+        1,
+        1
+      ],
+      "description": "Only bones remain. You are now a chaos skeleton.",
+      "type": "text",
+      "weight": 1,
+      "drawn": false,
+      "_id": "Csz1phzSFK8Cd6Fl",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!BBgSMXyZ7cPuZuCM.Csz1phzSFK8Cd6Fl"
+    },
+    {
+      "range": [
+        2,
+        2
+      ],
+      "description": "Bones become soft or brittle. Gelatinous prognosis.",
+      "type": "text",
+      "weight": 1,
+      "drawn": false,
+      "_id": "0g5SIGbLM2Zt5fmW",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!BBgSMXyZ7cPuZuCM.0g5SIGbLM2Zt5fmW"
+    },
+    {
+      "range": [
+        3,
+        3
+      ],
+      "description": "Eyes collapse and evaporate, leaving sockets that see the astral light.",
+      "type": "text",
+      "weight": 1,
+      "drawn": false,
+      "_id": "LVsLhe0X5EkrO4xZ",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!BBgSMXyZ7cPuZuCM.LVsLhe0X5EkrO4xZ"
+    },
+    {
+      "range": [
+        4,
+        4
+      ],
+      "description": "Back hunches, fuses, turns into a shell-like carapace over a few weeks.",
+      "type": "text",
+      "weight": 1,
+      "drawn": false,
+      "_id": "sBWPcyG8CIas1DXg",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!BBgSMXyZ7cPuZuCM.sBWPcyG8CIas1DXg"
+    },
+    {
+      "range": [
+        5,
+        5
+      ],
+      "description": "Strange bones erupt into spikes and thorns, piercing the skin.",
+      "type": "text",
+      "weight": 1,
+      "drawn": false,
+      "_id": "6cA01kZHCUqJtfHr",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!BBgSMXyZ7cPuZuCM.6cA01kZHCUqJtfHr"
+    },
+    {
+      "range": [
+        6,
+        6
+      ],
+      "description": "Hair develops into ropey keratin tentacles. Not quite snakes.",
+      "type": "text",
+      "weight": 1,
+      "drawn": false,
+      "_id": "H5rXqc2gdWPVHKDo",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!BBgSMXyZ7cPuZuCM.H5rXqc2gdWPVHKDo"
+    },
+    {
+      "range": [
+        7,
+        7
+      ],
+      "description": "Suffused with the void, shadows permanently shroud the character.",
+      "type": "text",
+      "weight": 1,
+      "drawn": false,
+      "_id": "AEUNGzlkwnxWAvgh",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!BBgSMXyZ7cPuZuCM.AEUNGzlkwnxWAvgh"
+    },
+    {
+      "range": [
+        8,
+        8
+      ],
+      "description": "Teeth fall out or become needle sharp. Click-clack.",
+      "type": "text",
+      "weight": 1,
+      "drawn": false,
+      "_id": "CzqBrAek6mzuHIC8",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!BBgSMXyZ7cPuZuCM.CzqBrAek6mzuHIC8"
+    },
+    {
+      "range": [
+        9,
+        9
+      ],
+      "description": "<p>Hand withers and locks into a dagger-like claw ([[/r 1d4]] damage).</p>",
+      "type": "text",
+      "weight": 1,
+      "drawn": false,
+      "_id": "mKUvt544yrF4zrSG",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "documentUuid": null,
+      "_key": "!tables.results!BBgSMXyZ7cPuZuCM.mKUvt544yrF4zrSG"
+    },
+    {
+      "range": [
+        10,
+        10
+      ],
+      "description": "<p>Skin rots and develops suppurating boils. Your fluids can serve as ink.</p>",
+      "type": "text",
+      "weight": 1,
+      "drawn": false,
+      "_id": "HlMSWQq3sDLNvHJD",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "documentUuid": null,
+      "_key": "!tables.results!BBgSMXyZ7cPuZuCM.HlMSWQq3sDLNvHJD"
+    },
+    {
+      "range": [
+        11,
+        11
+      ],
+      "description": "Secondary brain. It slowly develops independent thought.",
+      "type": "text",
+      "weight": 1,
+      "drawn": false,
+      "_id": "orsIkj76RJC4wITf",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!BBgSMXyZ7cPuZuCM.orsIkj76RJC4wITf"
+    },
+    {
+      "range": [
+        12,
+        12
+      ],
+      "description": "Lower extremities turn into hooves, paws, or bird feet.",
+      "type": "text",
+      "weight": 1,
+      "drawn": false,
+      "_id": "3sMwQmAQXdCGCGyx",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!BBgSMXyZ7cPuZuCM.3sMwQmAQXdCGCGyx"
+    },
+    {
+      "range": [
+        13,
+        13
+      ],
+      "description": "Personality becomes alien, oblique, orthogonal to humanity.",
+      "type": "text",
+      "weight": 1,
+      "drawn": false,
+      "_id": "X6cyFLe0bfBCx5op",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!BBgSMXyZ7cPuZuCM.X6cyFLe0bfBCx5op"
+    },
+    {
+      "range": [
+        14,
+        14
+      ],
+      "description": "Wings or flagellae. They grow capable of flight over a few weeks.",
+      "type": "text",
+      "weight": 1,
+      "drawn": false,
+      "_id": "cXQ9dncW9Dn7DFSg",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!BBgSMXyZ7cPuZuCM.cXQ9dncW9Dn7DFSg"
+    },
+    {
+      "range": [
+        15,
+        15
+      ],
+      "description": "Secrete corrosive fluids, ruining clothes and eating through metals.",
+      "type": "text",
+      "weight": 1,
+      "drawn": false,
+      "_id": "xb7FuQsHbr5jqaV8",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!BBgSMXyZ7cPuZuCM.xb7FuQsHbr5jqaV8"
+    },
+    {
+      "range": [
+        16,
+        16
+      ],
+      "description": "Strange vampiric metabolism. Consume unusual organs to thrive.",
+      "type": "text",
+      "weight": 1,
+      "drawn": false,
+      "_id": "Us4Ns6bZFBCJtE88",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!BBgSMXyZ7cPuZuCM.Us4Ns6bZFBCJtE88"
+    },
+    {
+      "range": [
+        17,
+        17
+      ],
+      "description": "Secondary form. Like Jekyll's Hyde or a wolf's were.",
+      "type": "text",
+      "weight": 1,
+      "drawn": false,
+      "_id": "XObG4iVo7t3D9mr3",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!BBgSMXyZ7cPuZuCM.XObG4iVo7t3D9mr3"
+    },
+    {
+      "range": [
+        18,
+        18
+      ],
+      "description": "Vomit up three remote organs. One sees, one hears, one is stranger. If one is destroyed, permanently lose 1 life.",
+      "type": "text",
+      "weight": 1,
+      "drawn": false,
+      "_id": "7HOaks43ytyh6K1H",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!BBgSMXyZ7cPuZuCM.7HOaks43ytyh6K1H"
+    },
+    {
+      "range": [
+        19,
+        19
+      ],
+      "description": "Undying. But not undecaying. This becomes dreadful in a few decades without replacement parts.",
+      "type": "text",
+      "weight": 1,
+      "drawn": false,
+      "_id": "DzLicOrp0HFp1l8T",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!BBgSMXyZ7cPuZuCM.DzLicOrp0HFp1l8T"
+    },
+    {
+      "range": [
+        20,
+        20
+      ],
+      "description": "Psionic evolution. Acquire a magic-like power as an innate trait.",
+      "type": "text",
+      "weight": 1,
+      "drawn": false,
+      "_id": "gTfEe8EbMYhihpz3",
+      "name": "",
+      "img": "icons/svg/d20-black.svg",
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.7.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!BBgSMXyZ7cPuZuCM.gTfEe8EbMYhihpz3"
+    }
+  ],
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "6KLfb35TARh0OlRZ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.7.0",
+    "createdTime": 1769274143342,
+    "modifiedTime": 1769274258206,
+    "lastModifiedBy": "6KLfb35TARh0OlRZ"
+  },
+  "_id": "BBgSMXyZ7cPuZuCM",
+  "sort": 100000,
+  "_key": "!tables!BBgSMXyZ7cPuZuCM"
+}

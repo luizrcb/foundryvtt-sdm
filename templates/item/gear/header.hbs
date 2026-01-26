@@ -2,6 +2,7 @@
   <header class='sheet-header'>
     <div class="flexcol flex-between flex-center">
       <img class='profile-img' src='{{item.img}}' data-edit='img' data-action='onEditImage' data-tooltip='{{item.name}}' />
+      {{#if (ne system.type 'corruption')}}
       <div class="align-center mb-10 mr-10 rollable" {{#if system.readied}}
         data-tooltip="{{localize 'SDM.ItemReadied' }}" {{else}} data-tooltip="{{localize 'SDM.ItemNotReadied'}}" {{/if}}
         data-action="toggleReadied">
@@ -14,13 +15,14 @@
         </div>
           <i class="fa-regular fa-shield {{ifThen system.readied 'readied' 'not-readied'}}"></i>
       </div>
+      {{/if}}
     </div>
 
     <div class='header-fields mt-10'>
       <div class='document-name'>
         <div class="flexrow flex-between">
           <input name='name' class="resource-label flexultra" type='text' value='{{item.name}}' placeholder='Name' />
-          {{#unless (eq system.size.unit 'cash')}}
+          {{#unless (or (eq system.size.unit 'cash') (eq system.type 'corruption'))}}
           <div class="flex flex-group-center flexcol rollable" data-action="toggleIsHallmark" style="cursor:pointer;">
             <label class='resource-label'>{{localize 'SDM.HallmarkItem'}}</label>
             <i class="fa-regular fa-star mt-5 {{#if item.system.is_hallmark}}hallmark{{/if}}"></i>
@@ -28,6 +30,7 @@
            {{/unless}}
         </div>
       </div>
+      {{#unless (eq system.type 'corruption')}}
       <div class='grid grid-{{ifThen item.system.is_hallmark 3 2}}col'>
         <div class='resource'>
           <label class='resource-label'>{{localize 'SDM.ItemQuantity'}}
@@ -68,7 +71,7 @@
         </div>
         {{/if}}
 
-        {{#unless (eq system.size.unit 'cash')}}
+        {{#unless (or (eq system.size.unit 'cash')(eq system.type 'corruption'))}}
         <div class='resource'>
           <label class='resource-label' for="system.charges.max">{{localize 'SDM.ItemCharges'}}</label>
           <div class='resource-content flexrow flex-center flex-between flex-group-center'>
@@ -80,6 +83,7 @@
         {{/unless}}
 
       </div>
+      {{/unless}}
   </header>
   <header>
     <div class='grid grid-3col'>

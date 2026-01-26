@@ -34,9 +34,13 @@ export class SDMClientSettingsConfig extends GroupBase {
   };
   static LEGEND = 'SDM.Menu.Client.Name';
   static KEYS = [
+    'reverseShiftKey',
     'chromatype',
     'diceSoNiceChromatype',
-    'reverseShiftKey',
+    'hero_dice_style',
+    'blood_dice_style',
+    'tourist_dice_style',
+    'oracle_dice_style',
     'shouldPlayLevelUpSoundFx'
   ];
 }
@@ -51,9 +55,7 @@ export class SDMCalendarSettingsConfig extends GroupBase {
     }
   };
   static LEGEND = 'SDM.Menu.Calendar.Name';
-  static KEYS = [
-    'seasonsStarsIntegration',
-  ];
+  static KEYS = ['seasonsStarsIntegration'];
 }
 
 /* 1) Combat & Initiative */
@@ -92,7 +94,7 @@ export class SDMCoreRulesSettingsConfig extends GroupBase {
     'useHardLimitRule',
     'defaultHardLimitValue',
     'defaultHeroDiceType',
-    'healingHouseRule',
+    'healingHouseRule'
   ];
 }
 

@@ -15,13 +15,7 @@ import {
 } from './helpers/actorUtils.mjs';
 import { configureChatListeners } from './helpers/chatUtils.mjs';
 import { SDM } from './helpers/config.mjs';
-import {
-  ActorType,
-  GearType,
-  ItemType,
-  SizeUnit,
-  TraitType
-} from './helpers/constants.mjs';
+import { ActorType, GearType, ItemType, SizeUnit, TraitType } from './helpers/constants.mjs';
 import { makePowerItem, UnarmedDamageItem } from './helpers/itemUtils.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
@@ -50,6 +44,7 @@ import {
   DEFAULT_GEAR_ICON,
   DEFAULT_POWER_ALBUM_ICON,
   DEFAULT_POWER_ICON,
+  DEFAULT_CORRUPTION_ICON,
   DEFAULT_SKILL_ICON,
   DEFAULT_TRAIT_ICON,
   DEFAULT_WARD_ICON,
@@ -142,6 +137,15 @@ Hooks.on('getSceneControlButtons', function (controls) {
       }
     };
   }
+  controls.tokens.tools['sdm-dice-oracles'] = {
+    icon: 'fa-solid fa-dice',
+    name: 'sdm-dice-oracles',
+    title: 'SDM.DiceOracles',
+    button: true,
+    onChange: async (event, active) => {
+      if (active) await game.sdm.api.player.diceOracles();
+    }
+  };
 });
 
 Hooks.on('updateCombat', async (combat, update) => {
@@ -236,6 +240,9 @@ Hooks.on('updateItem', async item => {
       case GearType.ARMOR:
         updateData['img'] = DEFAULT_ARMOR_ICON;
         break;
+      case GearType.CORRUPTION:
+        updateData['img'] = DEFAULT_CORRUPTION_ICON;
+        break;
       case GearType.POWER:
         updateData['img'] = DEFAULT_POWER_ICON;
         break;
@@ -263,9 +270,14 @@ Hooks.on('updateItem', async item => {
     item.type === ItemType.TRAIT &&
     (item.img === DEFAULT_TRAIT_ICON ||
       item.img === DEFAULT_POWER_ICON ||
-      item.img === DEFAULT_SKILL_ICON)
+      item.img === DEFAULT_SKILL_ICON ||
+      item.img === DEFAULT_CORRUPTION_ICON)
   ) {
     updateData['img'] = DEFAULT_TRAIT_ICON;
+
+    if (item.system.type === TraitType.CORRUPTION) {
+      updateData['img'] = DEFAULT_CORRUPTION_ICON;
+    }
 
     if (item.system.type === TraitType.POWER) {
       updateData['img'] = DEFAULT_POWER_ICON;

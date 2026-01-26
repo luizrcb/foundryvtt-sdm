@@ -294,6 +294,10 @@ export class SdmItem extends Item {
     return `(+${$l10n(CONFIG.SDM.abilityAbbreviations[defaultAbility])})`;
   }
 
+  getCorruptionTitle() {
+    return `${$l10n('SDM.Corruption')}: ${this.getNameTitle()}`;
+  }
+
   getDefaultTitle() {
     let title = '';
 
@@ -421,6 +425,7 @@ export class SdmItem extends Item {
       [GearType.WARD]: () => this.getWardTitle(),
       [ItemType.MOUNT]: () => this.getDefaultTitle(),
       [ItemType.VEHICLE]: () => this.getDefaultTitle(),
+      [GearType.CORRUPTION]: () => this.getCorruptionTitle(),
       '': () => this.getDefaultTitle()
     };
 

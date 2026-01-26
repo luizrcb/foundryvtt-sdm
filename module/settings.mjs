@@ -3,6 +3,8 @@ import { $fmt, $l10n } from './helpers/globalUtils.mjs';
 import { handleHeroDice } from './rolls/hero_dice/index.mjs';
 
 export const BASE_REACTION_FORMULA = '2d6';
+export const BASE_DEFEAT_FORMULA = '2d6';
+export const BASE_CORRUPTION_FORMULA = '2d6';
 export const CHARACTER_DEFAULT_INITIATIVE = '2d6 + @abilities.agi.current + @initiative_bonus';
 export const NPC_DEFAULT_INITIATIVE = '2d6 + @bonus';
 export const NPC_DEFAULT_MORALE_FORMULA = '2d6';
@@ -41,6 +43,60 @@ export function registerSystemSettings() {
     },
     type: String,
     default: 'same'
+  });
+
+
+  game.settings.register('sdm', 'diceSoNiceChromatype', {
+    name: 'SDM.SettingsDiceSoNiceChromatype',
+    hint: 'SDM.SettingsDiceSoNiceChromatypeHint',
+    scope: 'client', // or "world"
+    requiresReload: true,
+    choices: {
+      same: 'SDM.DSNChromatypeSame',
+      ...CONFIG.SDM.accentColorOptions
+    },
+    type: String,
+    default: 'same'
+  });
+
+  game.settings.register('sdm', 'hero_dice_style', {
+    name: 'SDM.SettingsHeroDiceStyle',
+    hint: 'SDM.SettingsHeroDiceStyleHint',
+    scope: 'client', // or "world"
+    requiresReload: true,
+    type: String,
+    choices: CONFIG.SDM.diceThemeOptions,
+    default: 'sdm-black'
+  });
+
+  game.settings.register('sdm', 'blood_dice_style', {
+    name: 'SDM.SettingsBloodDiceStyle',
+    hint: 'SDM.SettingsBloodDiceStyleHint',
+    scope: 'client', // or "world"
+    requiresReload: true,
+    type: String,
+    choices: CONFIG.SDM.diceThemeOptions,
+    default: 'sdm-crimson'
+  });
+
+  game.settings.register('sdm', 'tourist_dice_style', {
+    name: 'SDM.SettingsTouristDiceStyle',
+    hint: 'SDM.SettingsTouristDiceStyleHint',
+    scope: 'client', // or "world"
+    requiresReload: true,
+    type: String,
+    choices: CONFIG.SDM.diceThemeOptions,
+    default: 'sdm-green'
+  });
+
+  game.settings.register('sdm', 'oracle_dice_style', {
+    name: 'SDM.SettingsOracleDiceStyle',
+    hint: 'SDM.SettingsOracleDiceStyleHint',
+    scope: 'client', // or "world"
+    requiresReload: true,
+    type: String,
+    choices: CONFIG.SDM.diceThemeOptions,
+    default: 'sdm-oracle'
   });
 
   game.settings.register('sdm', 'groupPlayersToFriendlyTokens', {
@@ -209,6 +265,20 @@ export function registerSystemSettings() {
     }
   });
 
+  game.settings.register('sdm', 'oracleDice', {
+    scope: 'client', // "world" = GM only, "client" = per user
+    config: false, // Show in configuration view
+    type: String, // Data type: String, Number, Boolean, etc
+    default: 'quick-d6',
+    choices: [
+      'quick-d6',
+      'bell-2d6',
+      'd10-oracle',
+      'bell-2d10',
+      'skilled-d20'
+    ]
+  });
+
   game.settings.register('sdm', 'bonusHeroDicePool', {
     scope: 'world',
     config: false,
@@ -318,6 +388,26 @@ export function registerSystemSettings() {
     requiresReload: true,
     type: String, // Data type: String, Number, Boolean, etc
     default: BASE_REACTION_FORMULA
+  });
+
+  game.settings.register('sdm', 'baseCorruptionFormula', {
+    name: 'SDM.SettingsBaseCorruptionFormula',
+    hint: 'SDM.SettingsBaseCorruptionFormulaHint',
+    scope: 'world', // "world" = GM only, "client" = per user
+    restricted: true,
+    requiresReload: true,
+    type: String, // Data type: String, Number, Boolean, etc
+    default: BASE_CORRUPTION_FORMULA
+  });
+
+  game.settings.register('sdm', 'baseDefeatFormula', {
+    name: 'SDM.SettingsBaseDefeatFormula',
+    hint: 'SDM.SettingsBaseDefeatFormulaHint',
+    scope: 'world', // "world" = GM only, "client" = per user
+    restricted: true,
+    requiresReload: true,
+    type: String, // Data type: String, Number, Boolean, etc
+    default: BASE_DEFEAT_FORMULA
   });
 
   game.settings.register('sdm', 'defaultHeroDiceType', {
@@ -1016,8 +1106,8 @@ export function configurePlayerChromatype() {
     if (dice3d) {
       const colorData = {
         name: 'sdm-chromatype',
-        description: 'SDM Chromatype Dice',
-        category: 'Colors',
+        description: $l10n('SDM.DiceTheme.Chromatype'),
+        category: 'SDM: Chromatype Dice',
         foreground: [foreground],
         background: [background],
         outline: 'black',
@@ -1034,8 +1124,8 @@ export function configurePlayerChromatype() {
 
       const rainbowData = {
         name: 'sdm-rainbowlands',
-        description: 'SDM Rainbowlands Dice',
-        category: 'Colors',
+        description: $l10n('SDM.DiceTheme.Rainbowlands'),
+        category: 'SDM: Theme',
         foreground: foregroundRainbow,
         background: backgroundRainbow,
         outline: 'black',
@@ -1048,8 +1138,8 @@ export function configurePlayerChromatype() {
 
       const neonData = {
         name: 'sdm-neon',
-        description: 'SDM Neon Dice',
-        category: 'Colors',
+        description: $l10n('SDM.DiceTheme.Neon'),
+        category: 'SDM: Theme',
         foreground: foregroundNeon,
         background: backgroundNeon,
         outline: 'black',
@@ -1062,8 +1152,8 @@ export function configurePlayerChromatype() {
 
       const luxuryData = {
         name: 'sdm-luxury',
-        description: 'SDM Luxury Dice',
-        category: 'Colors',
+        description: $l10n('SDM.DiceTheme.Luxury'),
+        category: 'SDM: Theme',
         foreground: foregroundLuxury,
         background: backgroundLuxury,
         outline: 'black',
@@ -1102,10 +1192,31 @@ export function configurePlayerChromatype() {
       // };
       // dice3d.addColorset(earthData);
 
+      for (let colorValue of Object.keys(colorMapping)) {
+        const diceData = {
+          name: `sdm-${colorValue}`,
+          description: $l10n(CONFIG.SDM.accentColorOptions[colorValue]),
+          category: 'SDM: Color',
+          foreground: colorMapping[colorValue].dice.foreground,
+          background: colorMapping[colorValue].dice.background,
+          outline: 'black',
+          texture: 'none',
+          material: 'plastic',
+          font: 'Our Golden Age',
+          fontScale: DICE_SCALE
+        };
+
+        if (colorMapping[colorValue].dice.edge) {
+          diceData['edge'] = colorMapping[colorValue].dice.edge;
+        }
+
+        dice3d.addColorset(diceData);
+      }
+
       const warmData = {
         name: 'sdm-warm',
-        description: 'SDM Warm Dice',
-        category: 'Colors',
+        description: $l10n('SDM.DiceTheme.Warm'),
+        category: 'SDM: Theme',
         foreground: foregroundWarm,
         background: backgroundWarm,
         outline: 'black',
@@ -1118,8 +1229,8 @@ export function configurePlayerChromatype() {
 
       const coolData = {
         name: 'sdm-cool',
-        description: 'SDM Cool Dice',
-        category: 'Colors',
+        description: $l10n('SDM.DiceTheme.Cool'),
+        category: 'SDM: Theme',
         foreground: foregroundCool,
         background: backgroundCool,
         outline: 'black',
@@ -1132,8 +1243,8 @@ export function configurePlayerChromatype() {
 
       const darkData = {
         name: 'sdm-dark',
-        description: 'SDM Dark Dice',
-        category: 'Colors',
+        description: $l10n('SDM.DiceTheme.Dark'),
+        category: 'SDM: Theme',
         foreground: foregroundDark,
         background: backgroundDark,
         outline: 'black',
@@ -1146,8 +1257,8 @@ export function configurePlayerChromatype() {
 
       const lightData = {
         name: 'sdm-light',
-        description: 'SDM Light Dice',
-        category: 'Colors',
+        description: $l10n('SDM.DiceTheme.Light'),
+        category: 'SDM: Theme',
         foreground: foregroundLight,
         background: backgroundLight,
         outline: 'black',
@@ -1160,8 +1271,8 @@ export function configurePlayerChromatype() {
 
       const romanticData = {
         name: 'sdm-romantic',
-        description: 'SDM Romantic Dice',
-        category: 'Colors',
+        description: $l10n('SDM.DiceTheme.Romantic'),
+        category: 'SDM: Theme',
         foreground: foregroundRomantic,
         background: backgroundRomantic,
         outline: 'black',
@@ -1171,6 +1282,37 @@ export function configurePlayerChromatype() {
         fontScale: DICE_SCALE
       };
       dice3d.addColorset(romanticData);
+
+      const mysticOracle = {
+        name: 'sdm-oracle',
+        description: $l10n('SDM.DiceOracles'),
+        category: 'SDM: Oracle Dice',
+        foreground: ['#D4AF37', '#FDB827', '#FDB827'],
+        background: ['#4B0082', '#460752', '#483D8B'],
+        outline: '#000000',
+        edge: '#D4AF37',
+        texture: 'stars',
+        material: 'metal',
+        font: 'Baron Neue',
+        fontColor: '#FDB827',
+        shadow: 'rgba(212, 175, 55, 0.5)'
+      };
+      dice3d.addColorset(mysticOracle);
+
+      const heroDice = {
+        name: 'sdm-hero',
+        description: $l10n('SDM.FieldHeroDice'),
+        category: 'SDM: Hero Dice',
+        foreground: ['#99fcde'],
+        background: ['#2c5679'],
+        outline: '#000000',
+        edge: '#99fcde',
+        font: 'Baron Neue',
+        shadow: 'rgba(71, 182, 247, 0.5)',
+        material: 'wood',
+      };
+
+      dice3d.addColorset(heroDice);
 
       // const metallicData = {
       //   name: 'sdm-metallic',

@@ -156,6 +156,201 @@ export async function renderReactionResult(
   await createChatMessage(chatMessageData);
 }
 
+export async function renderDefeatResult(
+  { roll, selectedAbility },
+  { fromHeroDice = false, speaker, isCtrl = false }
+) {
+  const rollTotal = roll.total;
+
+  const defeatConfig = [
+    {
+      min: -Infinity,
+      max: 1,
+      outcome: 'SDM.DefeatOutcome1',
+      message: 'SDM.DefeatMessage1'
+    },
+    {
+      min: 2,
+      max: 6,
+      outcome: 'SDM.DefeatOutcome2to6',
+      message: 'SDM.DefeatMessage2to6'
+    },
+    {
+      min: 7,
+      max: 7,
+      outcome: 'SDM.DefeatOutcome7',
+      message: 'SDM.DefeatMessage7'
+    },
+    {
+      min: 8,
+      max: 8,
+      outcome: 'SDM.DefeatOutcome8',
+      message: 'SDM.DefeatMessage8'
+    },
+    {
+      min: 9,
+      max: 9,
+      outcome: 'SDM.DefeatOutcome9',
+      message: 'SDM.DefeatMessage9'
+    },
+    {
+      min: 10,
+      max: 10,
+      outcome: 'SDM.DefeatOutcome10',
+      message: 'SDM.DefeatMessage10'
+    },
+    {
+      min: 11,
+      max: 11,
+      outcome: 'SDM.DefeatOutcome11',
+      message: 'SDM.DefeatMessage11'
+    },
+    {
+      min: 12,
+      max: Infinity,
+      outcome: 'SDM.DefeatOutcome12plus',
+      message: 'SDM.DefeatMessage12plus'
+    }
+  ];
+
+  const matchedConfig =
+    defeatConfig.find(config => rollTotal >= config.min && rollTotal <= config.max) ||
+    defeatConfig[defeatConfig.length - 1];
+
+  const outcome = $l10n(matchedConfig.outcome);
+  const message = $l10n(matchedConfig.message);
+
+  const templateData = {
+    outcome,
+    message,
+    formula: roll.formula,
+    total: roll.total,
+    rollTooltip: await roll.getTooltip()
+  };
+
+  let damageType = '';
+
+  if (selectedAbility === 'end') {
+    damageType = ` (${$l10n('SDM.AttackPhysical')})`;
+  }
+
+  if (selectedAbility === 'aur') {
+    damageType = ` (${$l10n('SDM.AttackMental')})`;
+  }
+
+  const defeatLabel = $l10n('SDM.Defeat');
+
+  let flavor = `[${$fmt('SDM.RollType', { type: defeatLabel })}]${damageType}`;
+
+  const flags = {};
+
+  if (fromHeroDice === true) {
+    flags['sdm.isHeroResult'] = true;
+  } else {
+    flags['sdm.defeat'] = {
+      speaker,
+      selectedAbility
+    };
+  }
+
+  const chatMessageData = {
+    content: await renderTemplate(templatePath('chat/reaction-roll-result'), templateData),
+    flavor,
+    rolls: [roll],
+    flags,
+    speaker
+  };
+
+  if (isCtrl) {
+    chatMessageData.rollMode = CONST.DICE_ROLL_MODES.BLIND;
+  }
+
+  await createChatMessage(chatMessageData);
+}
+
+export async function renderCorruptionResult(
+  { roll },
+  { fromHeroDice = false, speaker, isCtrl = false }
+) {
+  const rollTotal = roll.total;
+
+  const corruptionConfig = [
+    {
+      min: -Infinity,
+      max: 2,
+      outcome: 'SDM.CorruptionOutcome2less',
+      message: 'SDM.CorruptionMessage2less'
+    },
+    {
+      min: 3,
+      max: 6,
+      outcome: 'SDM.CorruptionOutcome3to6',
+      message: 'SDM.CorruptionMessage3to6'
+    },
+    {
+      min: 7,
+      max: 10,
+      outcome: 'SDM.CorruptionOutcome7to10',
+      message: 'SDM.CorruptionMessage7to10'
+    },
+    {
+      min: 11,
+      max: 12,
+      outcome: 'SDM.CorruptionOutcome11to12',
+      message: 'SDM.CorruptionMessage11to12'
+    },
+    {
+      min: 13,
+      max: Infinity,
+      outcome: 'SDM.CorruptionOutcome13plus',
+      message: 'SDM.CorruptionMessage13plus'
+    }
+  ];
+
+  const matchedConfig =
+    corruptionConfig.find(config => rollTotal >= config.min && rollTotal <= config.max) ||
+    corruptionConfig[corruptionConfig.length - 1];
+
+  const outcome = $l10n(matchedConfig.outcome);
+  const message = $l10n(matchedConfig.message);
+
+  const templateData = {
+    outcome,
+    message,
+    formula: roll.formula,
+    total: roll.total,
+    rollTooltip: await roll.getTooltip()
+  };
+
+  const corruptionLabel = $l10n('SDM.CorruptionExposureSeverity');
+
+  let flavor = `[${$fmt('SDM.RollType', { type: corruptionLabel })}]`;
+
+  const flags = {};
+
+  if (fromHeroDice === true) {
+    flags['sdm.isHeroResult'] = true;
+  } else {
+    flags['sdm.corruption'] = {
+      speaker
+    };
+  }
+
+  const chatMessageData = {
+    content: await renderTemplate(templatePath('chat/reaction-roll-result'), templateData),
+    flavor,
+    rolls: [roll],
+    flags,
+    speaker
+  };
+
+  if (isCtrl) {
+    chatMessageData.rollMode = CONST.DICE_ROLL_MODES.BLIND;
+  }
+
+  await createChatMessage(chatMessageData);
+}
+
 export async function renderSaveResult(
   { roll, label, targetNumber },
   { fromHeroDice = false, speaker, isCtrl = false }

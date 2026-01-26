@@ -20,14 +20,13 @@ import {
 } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { openItemTransferDialog } from '../items/transfer.mjs';
-import {
-  healingHeroDice,
-  directResourceDiceRoll
-} from '../rolls/hero_dice/index.mjs';
+import { healingHeroDice, directResourceDiceRoll } from '../rolls/hero_dice/index.mjs';
 import SDMRoll, { sanitizeExpression } from '../rolls/sdmRoll.mjs';
 import {
   renderNPCMoraleResult,
   renderReactionResult,
+  renderCorruptionResult,
+  renderDefeatResult,
   renderSaveResult
 } from '../rolls/ui/renderResults.mjs';
 import { DEFAULT_SAVE_VALUE, SAVING_THROW_BASE_FORMULA } from '../settings.mjs';
@@ -94,6 +93,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       touristDiceRoll: this._onTouristDiceRoll,
       onEditImage: this._onEditImage,
       reactionRoll: this._onReactionRoll,
+      corruptionRoll: this._onCorruptionRoll,
+      defeatRoll: this._onDefeatRoll,
       roll: this._onRoll,
       rollNPCDamage: this._onRollNPCDamage,
       rollNPCMorale: this._onRollNPCMorale,
@@ -1272,6 +1273,77 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     await renderNPCMoraleResult({ roll, targetNumber }, { fromHeroDice: false, speaker, isCtrl });
   }
 
+  static async _onCorruptionRoll(event, target) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (event.detail > 1) return;
+    const reverseShift = game.settings.get('sdm', 'reverseShiftKey');
+    const isShift = reverseShift !== !!event.shiftKey;
+    const isCtrl = !!event.ctrlKey;
+    let data = { modifier: '', selectedAbility: '' };
+
+    if (!isShift) {
+      data = await DialogV2.wait({
+        window: {
+          title: $fmt('SDM.RollType', { type: $l10n('SDM.Corruption') })
+        },
+        position: {
+          width: 500,
+          height: 265
+        },
+        content: await renderTemplate(templatePath('corruption-roll-dialog'), {
+          rollModes: CONFIG.SDM.rollMode,
+          blindGMRoll: isCtrl
+        }),
+        buttons: [
+          {
+            label: $l10n('SDM.Corruption'),
+            icon: 'fa-solid fa-biohazard',
+            callback: (event, button) => ({
+              ...new foundry.applications.ux.FormDataExtended(button.form).object
+            })
+          }
+        ],
+        rejectClose: false
+      });
+    }
+
+    if (!data) {
+      return;
+    }
+
+    const { modifier = '', rollMode = RollMode.NORMAL } = data;
+
+    const baseFormula = game.settings.get('sdm', 'baseCorruptionFormula') || '2d6';
+
+    // const reactionBonus = this.actor.system.reaction_bonus || 0;
+    const burdenPenalty = this.actor.system.burden_penalty || 0;
+    const abilityMod = this.actor.system.abilities['aur'].current;
+    const burdenPart = burdenPenalty > 0 ? -1 * burdenPenalty : 0;
+    const totalBonuses = abilityMod + burdenPart;
+    const bonusPart =
+      totalBonuses === 0 ? '' : totalBonuses > 0 ? `+${totalBonuses}` : totalBonuses;
+    const modPart = foundry.dice.Roll.validate(modifier) ? ` +${modifier}` : '';
+
+    const keepModifier =
+      rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
+
+    const diceExpression = keepModifier
+      ? `{${baseFormula}, ${baseFormula}}${keepModifier}`
+      : baseFormula;
+
+    const formula = `${diceExpression}${bonusPart}${modPart}`;
+    const sanitizedFormula = sanitizeExpression(formula);
+
+    let roll = new Roll(sanitizedFormula);
+    roll = await roll.evaluate();
+
+    const speaker = ChatMessage.getSpeaker({ actor: this.actor });
+
+    await renderCorruptionResult({ roll }, { fromHeroDice: false, speaker, isCtrl });
+  }
+
   static async _onReactionRoll(event, target) {
     event.preventDefault();
     event.stopPropagation();
@@ -1368,6 +1440,78 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       { roll, charismaOperator },
       { fromHeroDice: false, speaker, isCtrl }
     );
+  }
+
+  static async _onDefeatRoll(event, target) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (event.detail > 1) return;
+    const reverseShift = game.settings.get('sdm', 'reverseShiftKey');
+    const isShift = reverseShift !== !!event.shiftKey;
+    const isCtrl = !!event.ctrlKey;
+    let data = { modifier: '', selectedAbility: '' };
+
+    if (!isShift) {
+      data = await DialogV2.wait({
+        window: {
+          title: $fmt('SDM.RollType', { type: $l10n('SDM.Defeat') })
+        },
+        position: {
+          width: 500,
+          height: 300
+        },
+        content: await renderTemplate(templatePath('defeat-roll-dialog'), {
+          rollModes: CONFIG.SDM.rollMode,
+          abilities: CONFIG.SDM.defeatAbilities,
+          blindGMRoll: isCtrl
+        }),
+        buttons: [
+          {
+            label: $l10n('SDM.DefeatRoll'),
+            icon: 'fa-solid fa-bed-pulse',
+            callback: (event, button) => ({
+              ...new foundry.applications.ux.FormDataExtended(button.form).object
+            })
+          }
+        ],
+        rejectClose: false
+      });
+    }
+
+    if (!data) {
+      return;
+    }
+
+    const { modifier = '', selectedAbility = '', rollMode = RollMode.NORMAL } = data;
+
+    const baseFormula = game.settings.get('sdm', 'baseDefeatFormula') || '2d6';
+
+    // const reactionBonus = this.actor.system.reaction_bonus || 0;
+    const burdenPenalty = this.actor.system.burden_penalty || 0;
+    const abilityMod = selectedAbility ? this.actor.system.abilities[selectedAbility].current : 0;
+    const burdenPart = burdenPenalty > 0 ? -1 * burdenPenalty : 0;
+    const totalBonuses = abilityMod + burdenPart;
+    const bonusPart =
+      totalBonuses === 0 ? '' : totalBonuses > 0 ? `+${totalBonuses}` : totalBonuses;
+    const modPart = foundry.dice.Roll.validate(modifier) ? ` +${modifier}` : '';
+
+    const keepModifier =
+      rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
+
+    const diceExpression = keepModifier
+      ? `{${baseFormula}, ${baseFormula}}${keepModifier}`
+      : baseFormula;
+
+    const formula = `${diceExpression}${bonusPart}${modPart}`;
+    const sanitizedFormula = sanitizeExpression(formula);
+
+    let roll = new Roll(sanitizedFormula);
+    roll = await roll.evaluate();
+
+    const speaker = ChatMessage.getSpeaker({ actor: this.actor });
+
+    await renderDefeatResult({ roll, selectedAbility }, { fromHeroDice: false, speaker, isCtrl });
   }
 
   static async _onRollSavingThrow(event, target) {
@@ -1776,6 +1920,29 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       let clonedItem = foundry.utils.duplicate(item);
 
       if (!itemPower) {
+        clonedItem.type = ItemType.TRAIT;
+        return this._onDropItemCreate(clonedItem, event);
+      }
+
+      clonedItem.type = ItemType.GEAR;
+      return this._onDropItemCreate(clonedItem, event);
+    }
+
+    if (item.system?.type === GearType.CORRUPTION) {
+      const itemCorruption = await DialogV2.confirm({
+        window: { title: $l10n('SDM.CreateCorruptionItem') },
+        content: `<h3>${$l10n('SDM.CreateCorruptionItem')}</h3>`,
+        modal: true,
+        rejectClose: false,
+        yes: { label: $l10n('TYPE.Item'), icon: 'fa fa-sack-xmark' },
+        no: { label: $l10n('TYPE.Trait'), icon: 'fa fa-brain' }
+      });
+
+      if (itemCorruption === null) return;
+
+      let clonedItem = foundry.utils.duplicate(item);
+
+      if (!itemCorruption) {
         clonedItem.type = ItemType.TRAIT;
         return this._onDropItemCreate(clonedItem, event);
       }

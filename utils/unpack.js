@@ -5,7 +5,9 @@ const foundryVersion = 'v14';
 const packs = [
   { name: 'ability_scores', output: `packs-source/${foundryVersion}/ability_scores` },
   { name: 'armors', output: `packs-source/${foundryVersion}/armors` },
+  { name: 'burdens', output: `packs-source/${foundryVersion}/burdens` },
   { name: 'consumables', output: `packs-source/${foundryVersion}/consumables` },
+  { name: 'corruption', output: `packs-source/${foundryVersion}/corruption` },
   { name: 'creatures', output: `packs-source/${foundryVersion}/creatures` },
   { name: 'gadgets', output: `packs-source/${foundryVersion}/gadgets` },
   { name: 'handouts', output: `packs-source/${foundryVersion}/handouts` },

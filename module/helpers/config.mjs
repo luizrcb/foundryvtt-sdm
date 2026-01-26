@@ -113,6 +113,49 @@ SDM.accentColorOptions = {
   yellow: 'SDM.ColorYellow'
 };
 
+SDM.diceThemeOptions = {
+  'sdm-aqua': 'SDM.ColorAqua',
+  'sdm-black': 'SDM.ColorBlack',
+  'sdm-blue': 'SDM.ColorBlue',
+  'sdm-brown': 'SDM.ColorBrown',
+  'sdm-chomatype': 'SDM.DSNChromatypeSame',
+  'sdm-cool': 'SDM.DiceTheme.Cool',
+  'sdm-crimson': 'SDM.ColorCrimson',
+  'sdm-dark': 'SDM.DiceTheme.Dark',
+  'sdm-electricBlue': 'SDM.ColorElectricBlue',
+  'sdm-emerald': 'SDM.ColorEmerald',
+  'sdm-gold': 'SDM.ColorGold',
+  'sdm-green': 'SDM.ColorGreen',
+  'sdm-hero': 'SDM.HeroDiceDefaultStyle',
+  'sdm-ice': 'SDM.ColorIce',
+  'sdm-light': 'SDM.DiceTheme.Light',
+  'sdm-lime': 'SDM.ColorLime',
+  'sdm-luxury': 'SDM.DiceTheme.Luxury',
+  'sdm-mint': 'SDM.ColorMint',
+  'sdm-neon': 'SDM.DiceTheme.Neon',
+  'sdm-neonPurple': 'SDM.ColorNeonPurple',
+  'sdm-neonRose': 'SDM.ColorNeonRose',
+  'sdm-neonYellow': 'SDM.ColorNeonYellow',
+  'sdm-olive': 'SDM.ColorOlive',
+  'sdm-oracle': 'SDM.OracleDiceDefaultStyle',
+  'sdm-orange': 'SDM.ColorOrange',
+  'sdm-pink': 'SDM.ColorPink',
+  'sdm-purple': 'SDM.ColorPurple',
+  'sdm-rainbowlands': 'SDM.DiceTheme.Rainbowlands',
+  'sdm-red': 'SDM.ColorRed',
+  'sdm-romantic': 'SDM.DiceTheme.Romantic',
+  'sdm-roseGold': 'SDM.ColorRoseGold',
+  'sdm-silver': 'SDM.ColorSilver',
+  'sdm-sky': 'SDM.ColorSky',
+  'sdm-tangerine': 'SDM.ColorTangerine',
+  'sdm-teal': 'SDM.ColorTeal',
+  'sdm-ultraviolet': 'SDM.ColorUltraviolet',
+  'sdm-violet': 'SDM.ColorViolet',
+  'sdm-warm': 'SDM.DiceTheme.Warm',
+  'sdm-white': 'SDM.ColorWhite',
+  'sdm-yellow': 'SDM.ColorYellow'
+};
+
 function getOrderedAbilities(language = 'en') {
   let lang = Object.keys(SDM.abilitiesOrder).includes(language) ? language : 'en';
   const reorderedAbilities = {};
@@ -283,6 +326,7 @@ SDM.itemType = {
 
 SDM.gearType = {
   armor: 'TYPES.Item.armor',
+  corruption: 'TYPES.Item.corruption',
   power: 'TYPES.Item.power',
   power_album: 'TYPES.Item.power_album',
   ward: 'TYPES.Item.ward',
@@ -290,6 +334,7 @@ SDM.gearType = {
 };
 
 SDM.traitType = {
+  corruption: 'TYPES.Item.corruption',
   power: 'TYPES.Item.power',
   skill: 'TYPES.Item.skill'
 };
@@ -349,3 +394,9 @@ SDM.months = {
   11: 'SDM.MonthTrucking.11',
   12: 'SDM.MonthTrucking.12'
 };
+
+
+SDM.defeatAbilities =  {
+  'end': 'SDM.DefeatAbilityEndurance',
+  'aur': 'SDM.DefeatAbilityAura'
+}

@@ -295,7 +295,7 @@
   </header>
   <header class=''>
     <div class="main flexrow flex-group-center">
-      <div class='resources grid grid-5col'>
+      <div class='resources grid grid-6col' style="margin-top: 0px">
         {{!-- <div class='abilities flexcol'> --}}
           <div class='resources grid grid-3col'>
             {{#each system.abilities as |ability key|}}
@@ -333,6 +333,22 @@
                     data-action="reactionRoll"  data-context='rollable'
                   ></i>
                   {{/if}}
+
+                  {{!-- {{#if (eq key 'end')}}
+                  <i
+                    class="fa-solid fa-skull rollable {{lookup @root.config.abilityColors @index}}"
+                    data-tooltip="Defeat Table"
+                    data-action=""  data-context='rollable'
+                  ></i>
+                  {{/if}}
+
+                  {{#if (eq key 'aur')}}
+                  <i
+                    class="fa-solid fa-biohazard rollable {{lookup @root.config.abilityColors @index}}"
+                    data-tooltip="Corruption"
+                    data-action=""  data-context='rollable'
+                  ></i>
+                  {{/if}} --}}
                 </div>
 
                 <input
@@ -425,7 +441,7 @@
             </div>
           </div>
           {{else}}
-          <div class='resources grid grid-2col'>
+          <div class='resources grid grid-3col'>
             <div class="ability grid-span-1 flexrow">
               <div
                 class='resource-label rollable'
@@ -451,6 +467,16 @@
             <div class="ability grid-span-1 flexrow">
               <div
                 class='resource-label rollable'
+                data-action='defeatRoll'
+                data-context='rollable'
+              >
+                <div>{{localize 'SDM.Defeat'}}</div>
+                <i class="fa-solid fa-skull"></i>
+              </div>
+            </div>
+            <div class="ability grid-span-1 flexrow">
+              <div
+                class='resource-label rollable'
                 data-type='attack'
                 data-action='roll'
                 data-attack="fantascience"
@@ -468,6 +494,16 @@
                 data-label="{{localize 'SDM.AttackOldtech'}}">
                 <div>{{localize 'SDM.AttackOldtech'}}</div>
                 <i class="fa-solid fa-gamepad {{@root.config.attackColors.oldtech}}"></i>
+              </div>
+            </div>
+            <div class="ability grid-span-1 flexrow">
+              <div
+                class='resource-label rollable'
+                data-action='corruptionRoll'
+                data-context='rollable'
+               >
+                <div>{{localize 'SDM.Corruption'}}</div>
+                <i class="violet fa-solid fa-biohazard"></i>
               </div>
             </div>
           </div>

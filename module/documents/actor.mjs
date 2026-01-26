@@ -8,8 +8,14 @@ import {
   postLifeChange
 } from '../helpers/actorUtils.mjs';
 import {
-  ActorType, DEFAULT_CARAVAN_ICON, DEFAULT_CHARACTER_ICON,
-  DEFAULT_NPC_ICON, GearType, ItemType, SizeUnit, TraitType
+  ActorType,
+  DEFAULT_CARAVAN_ICON,
+  DEFAULT_CHARACTER_ICON,
+  DEFAULT_NPC_ICON,
+  GearType,
+  ItemType,
+  SizeUnit,
+  TraitType
 } from '../helpers/constants.mjs';
 import { $l10n, capitalizeFirstLetter, safeEvaluate } from '../helpers/globalUtils.mjs';
 import {
@@ -373,6 +379,7 @@ export class SdmActor extends Actor {
 
     const skillTraits = itemsArray.filter(
       item =>
+        item.system.type !== TraitType.CORRUPTION &&
         item.type === ItemType.TRAIT &&
         (!item.system?.learning ||
           item.system?.learning?.required_successes === 0 ||
@@ -694,7 +701,7 @@ export class SdmActor extends Actor {
     const data = await DialogV2.wait({
       window: { title: game.i18n.localize('SDM.ConsumeSupply') },
       position: {
-        width: 820,
+        width: 850,
         height: 370
       },
       content: await renderTemplate(
@@ -945,26 +952,26 @@ export class SdmActor extends Actor {
           await this.sheet.unpackStartingKitItem(target);
         }
       },
-       {
+      {
         name: 'SDM.Item.AddOneCharge',
         icon: '<i class="fa-solid fa-circle-plus"></i>',
         condition: target => {
           const item = this.sheet._getEmbeddedDocument(target);
           if (item.system.charges.max === 0) return false;
-          return this.isOwner && (item.system.charges.value < item.system.charges.max);
+          return this.isOwner && item.system.charges.value < item.system.charges.max;
         },
         callback: async target => {
           const item = this.sheet._getEmbeddedDocument(target);
           await item.updateCurrentCharges(1);
         }
       },
-       {
+      {
         name: 'SDM.Item.RemoveOneCharge',
         icon: '<i class="fa-solid fa-circle-minus"></i>',
         condition: target => {
           const item = this.sheet._getEmbeddedDocument(target);
           if (item.system.charges.max === 0) return false;
-          return this.isOwner && (item.system.charges.value > 0);
+          return this.isOwner && item.system.charges.value > 0;
         },
         callback: async target => {
           const item = this.sheet._getEmbeddedDocument(target);
@@ -976,7 +983,12 @@ export class SdmActor extends Actor {
         icon: '<i class="fa-solid fa-battery-full"></i>',
         condition: target => {
           const item = this.sheet._getEmbeddedDocument(target);
-          if (item.system.size.unit === SizeUnit.CASH || item.type !== ItemType.GEAR) return false;
+          if (
+            item.system.size.unit === SizeUnit.CASH ||
+            item.type !== ItemType.GEAR ||
+            item.system.type === GearType.CORRUPTION
+          )
+            return false;
           return this.isOwner && item.system.resources !== '';
         },
         callback: async target => {
@@ -989,7 +1001,12 @@ export class SdmActor extends Actor {
         icon: '<i class="fa-solid fa-battery-quarter"></i>',
         condition: target => {
           const item = this.sheet._getEmbeddedDocument(target);
-          if (item.system.size.unit === SizeUnit.CASH || item.type !== ItemType.GEAR) return false;
+          if (
+            item.system.size.unit === SizeUnit.CASH ||
+            item.type !== ItemType.GEAR ||
+            item.system.type === GearType.CORRUPTION
+          )
+            return false;
           return this.isOwner && item.system.resources === '';
         },
         callback: async target => {
@@ -1002,7 +1019,12 @@ export class SdmActor extends Actor {
         icon: '<i class="fa-solid fa-battery-empty"></i>',
         condition: target => {
           const item = this.sheet._getEmbeddedDocument(target);
-          if (item.system.size.unit === SizeUnit.CASH || item.type !== ItemType.GEAR) return false;
+          if (
+            item.system.size.unit === SizeUnit.CASH ||
+            item.type !== ItemType.GEAR ||
+            item.system.type === GearType.CORRUPTION
+          )
+            return false;
           return this.isOwner && item.system.resources === 'running_low';
         },
         callback: async target => {
@@ -1015,7 +1037,11 @@ export class SdmActor extends Actor {
         icon: '<i class="fa-solid fa-hammer"></i>',
         condition: target => {
           const item = this.sheet._getEmbeddedDocument(target);
-          if (item.system.size.unit === SizeUnit.CASH || item.type === ItemType.BURDEN)
+          if (
+            item.system.size.unit === SizeUnit.CASH ||
+            item.type === ItemType.BURDEN ||
+            item.system.type === GearType.CORRUPTION
+          )
             return false;
           if (item.type === ItemType.TRAIT && item.system.type !== GearType.POWER) return false;
           return this.isOwner && item.system.status !== '';
@@ -1030,7 +1056,11 @@ export class SdmActor extends Actor {
         icon: '<i class="fa-solid fa-circle-dot"></i>',
         condition: target => {
           const item = this.sheet._getEmbeddedDocument(target);
-          if (item.system.size.unit === SizeUnit.CASH || item.type === ItemType.BURDEN)
+          if (
+            item.system.size.unit === SizeUnit.CASH ||
+            item.type === ItemType.BURDEN ||
+            item.system.type === GearType.CORRUPTION
+          )
             return false;
           if (item.type === ItemType.TRAIT && item.system.type !== GearType.POWER) return false;
           return this.isOwner && item.system.status === '';
@@ -1045,7 +1075,12 @@ export class SdmActor extends Actor {
         icon: '<i class="fa-solid fa-ban"></i>',
         condition: target => {
           const item = this.sheet._getEmbeddedDocument(target);
-          if (item.system.size.unit === 'cash' || item.type === 'burden') return false;
+          if (
+            item.system.size.unit === 'cash' ||
+            item.type === 'burden' ||
+            item.system.type === GearType.CORRUPTION
+          )
+            return false;
           if (item.type === 'trait' && item.system.type !== 'power') return false;
           return this.isOwner && item.system.status === 'notched';
         },
@@ -1380,6 +1415,14 @@ export class SdmActor extends Actor {
         reaction: {
           handler: '_onReactionRoll',
           dataset: { action: 'reaction', reaction: actionKey }
+        },
+        defeat: {
+          handler: '_onDefeatRoll',
+          dataset: { action: 'defeat', reaction: actionKey }
+        },
+        corruption: {
+          handler: '_onCorruptionRoll',
+          dataset: { action: 'corruption', reaction: actionKey }
         },
         roll: { handler: '_onRoll', dataset: { action: 'roll', roll: actionKey } },
         rollNPCDamage: {
