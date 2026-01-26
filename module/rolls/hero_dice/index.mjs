@@ -124,8 +124,10 @@ export async function healingHeroDice(event, actor, onlySpendWithoutRolling = fa
       quantity: heroicDiceQty,
       faces: Die[heroDiceType],
       displayDice: false,
-      healingHouseRule
+      healingHouseRule,
+      resource: 'hero_dice'
     });
+    roll._formula = roll._formula.replace(/\[[^\]]*\]/g, '');
     rolls.push(roll);
     flags['sdm.isHeroResult'] = true;
   } else {
@@ -204,8 +206,10 @@ export async function directResourceDiceRoll(event, actor, resource) {
     quantity: diceQty,
     faces: Die[diceType],
     displayDice: false,
-    healingHouseRule: false
+    healingHouseRule: false,
+    resource
   });
+  roll._formula = roll._formula.replace(/\[[^\]]*\]/g, '');
   rolls.push(roll);
   flags['sdm.isHeroResult'] = true;
 
@@ -272,7 +276,8 @@ export async function bloodDiceRoll(event, actor) {
     quantity: bloodDiceQty,
     faces: Die[bloodDiceType],
     displayDice: false,
-    healingHouseRule: false
+    healingHouseRule: false,
+    resource: 'blood_dice'
   });
   rolls.push(roll);
   flags['sdm.isHeroResult'] = true;

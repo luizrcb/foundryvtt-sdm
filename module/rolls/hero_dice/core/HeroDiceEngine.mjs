@@ -89,7 +89,8 @@ export class HeroDiceEngine {
       faces: Die[heroDiceType],
       fixedResult,
       displayDice,
-      healingHouseRule
+      healingHouseRule,
+      resource: 'hero_dice'
     });
 
     const heroicResultsArr =
@@ -162,9 +163,12 @@ export class HeroDiceEngine {
     faces = Die.d6,
     fixedResult,
     displayDice = true,
-    healingHouseRule = false
+    healingHouseRule = false,
+    resource = 'hero_dice'
   }) {
-    const diceFormula = `${quantity}d${faces}`;
+    const resourceSetting = game.settings.get('sdm', `${resource}_style`);
+
+    const diceFormula = `${quantity}d${faces}[${resourceSetting}]`;
     let roll = new Roll(diceFormula);
 
     if (healingHouseRule) {
