@@ -41,16 +41,17 @@ import { SdmItemSheet } from './sheets/item-sheet.mjs';
 import {
   DEFAULT_ARMOR_ICON,
   DEFAULT_CASH_ICON,
+  DEFAULT_CORRUPTION_ICON,
   DEFAULT_GEAR_ICON,
   DEFAULT_POWER_ALBUM_ICON,
   DEFAULT_POWER_ICON,
-  DEFAULT_CORRUPTION_ICON,
   DEFAULT_SKILL_ICON,
   DEFAULT_TRAIT_ICON,
   DEFAULT_WARD_ICON,
   DEFAULT_WEAPON_ICON,
   GEAR_ICONS
 } from './helpers/constants.mjs';
+import { $l10n } from './helpers/globalUtils.mjs';
 
 const { ActiveEffectConfig } = foundry.applications.sheets;
 const { Actors, Items } = foundry.documents.collections;
@@ -146,6 +147,41 @@ Hooks.on('getSceneControlButtons', function (controls) {
       if (active) await game.sdm.api.player.diceOracles();
     }
   };
+});
+
+Hooks.on('renderSidebarTab', (app, html) => {
+  if (!game.user.isGM) return;
+});
+
+Hooks.on('renderActorDirectory', (app, html) => {
+  if (!game.user.isGM) return;
+
+  html.querySelector('.directory-header .create-folder').insertAdjacentHTML(
+    'afterend',
+    `<button type="button" class="random-npc"><i class="fa-solid fa-spaghetti-monster-flying" inert></i><span>${$l10n('SDM.CreateRandomNPC')}</span></button>`
+  );
+  // Add a click listener to the button to render the app
+  html.querySelector('.random-npc').addEventListener('click', ev => {
+    game.sdm.api.gm.randomNPCGenerator();
+  });
+});
+
+Hooks.on('renderCombatTracker', (app, html) => {
+  if (!game.user.isGM) return;
+
+  const selector = html.querySelector(
+    '#combat > header > div > div.control-buttons.left.flexrow > button.inline-control.combat-control.icon.fa-solid.fa-users'
+  );
+
+  selector.insertAdjacentHTML(
+    'beforebegin',
+    `<button data-tooltip="SDM.GMGroupInitiative" class="group-initiative inline-control combat-control icon fa-solid fa-people-group"></button>`
+  );
+
+  // Add a click listener to the button to render the app
+  html.querySelector('.group-initiative').addEventListener('click', ev => {
+    game.sdm.api.gm.groupInitiative();
+  });
 });
 
 Hooks.on('updateCombat', async (combat, update) => {
@@ -701,6 +737,18 @@ function _configureFonts() {
           style: 'italic'
         }
       ]
+    },
+    'Bitcount Single': {
+      editor: true,
+      fonts: [{ urls: ['systems/sdm/fonts/bitcount_single/BitcountSingle.ttf'] }]
+    },
+    'Bonheur Royale': {
+      editor: true,
+      fonts: [{ urls: ['systems/sdm/fonts/bonheur_royale/BonheurRoyale-Regular.ttf'] }]
+    },
+    'Medieval Sharp': {
+      editor: true,
+      fonts: [{ urls: ['systems/sdm/fonts/medieval_sharp/MedievalSharp-Regular.ttf'] }]
     },
     'Our Golden Age': {
       editor: true,

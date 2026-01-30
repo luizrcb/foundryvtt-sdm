@@ -1145,7 +1145,7 @@ export function configurePlayerChromatype() {
         outline: 'black',
         texture: 'none',
         material: 'plastic',
-        font: 'Our Golden Age',
+        font: 'Bitcount Single',
         fontScale: DICE_SCALE
       };
       dice3d.addColorset(neonData);
@@ -1159,8 +1159,7 @@ export function configurePlayerChromatype() {
         outline: 'black',
         texture: 'none',
         material: 'plastic',
-        font: 'Our Golden Age',
-        fontScale: DICE_SCALE
+        font: 'Bonheur Royale',
       };
       dice3d.addColorset(luxuryData);
 
@@ -1278,8 +1277,7 @@ export function configurePlayerChromatype() {
         outline: 'black',
         texture: 'none',
         material: 'plastic',
-        font: 'Our Golden Age',
-        fontScale: DICE_SCALE
+        font: 'Bonheur Royale'
       };
       dice3d.addColorset(romanticData);
 
@@ -1293,7 +1291,7 @@ export function configurePlayerChromatype() {
         edge: '#D4AF37',
         texture: 'stars',
         material: 'metal',
-        font: 'Baron Neue',
+        font: 'Medieval Sharp',
         fontColor: '#FDB827',
         shadow: 'rgba(212, 175, 55, 0.5)'
       };
@@ -1307,54 +1305,12 @@ export function configurePlayerChromatype() {
         background: ['#2c5679'],
         outline: '#000000',
         edge: '#99fcde',
-        font: 'Baron Neue',
+        font: 'Bitcount Single',
         shadow: 'rgba(71, 182, 247, 0.5)',
         material: 'wood',
       };
 
       dice3d.addColorset(heroDice);
-
-      // const metallicData = {
-      //   name: 'sdm-metallic',
-      //   description: 'SDM Metallic Dice',
-      //   category: 'Colors',
-      //   foreground: foregroundMetallic,
-      //   background: backgroundMetallic,
-      //   outline: 'black',
-      //   texture: 'none',
-      //   material: 'plastic',
-      //   font: 'Our Golden Age',
-      //   fontScale: DICE_SCALE
-      // };
-      // dice3d.addColorset(metallicData);
-
-      // const brightData = {
-      //   name: 'sdm-bright',
-      //   description: 'SDM Bright Dice',
-      //   category: 'Colors',
-      //   foreground: foregroundBright,
-      //   background: backgroundBright,
-      //   outline: 'black',
-      //   texture: 'none',
-      //   material: 'plastic',
-      //   font: 'Our Golden Age',
-      //   fontScale: DICE_SCALE
-      // };
-      // dice3d.addColorset(brightData);
-
-      // const royalData = {
-      //   name: 'sdm-royal',
-      //   description: 'SDM Royal Dice',
-      //   category: 'Colors',
-      //   foreground: foregroundRoyal,
-      //   background: backgroundRoyal,
-      //   outline: 'black',
-      //   texture: 'none',
-      //   material: 'plastic',
-      //   font: 'Our Golden Age',
-      //   fontScale: DICE_SCALE
-      // };
-      // dice3d.addColorset(royalData);
     }
   });
 
