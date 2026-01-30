@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v0.9.1
+
+- Added configuration options to customize hero dice, blood dice, tourist dice and oracle dice colors (Dice So Nice)
+- Added new fonts for some 3D dice themes
+- Added a referee button in the Actors tab to generate random NPCs
+- Added a referee button in the Combat Tracker to roll group initiative
+
 ## v0.9.0
 
 - Added support for dice oracles and a new Dice So Nice theme for oracle dice
