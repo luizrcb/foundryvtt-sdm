@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.9.3
+
+- Fixed initiative tie breaking config not working when disabled
+
 ## v0.9.2
 
 - Added configuration to use or not a tiebreaking logic in group initiatives
