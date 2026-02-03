@@ -189,7 +189,7 @@ Hooks.on('updateCombat', async (combat, update) => {
 
   if (update && update.round && update.round > 1) {
     const reroll = game.settings.get('sdm', 'rerollInitiativeEveryRound');
-    if (reroll) await game.sdm.api.gm.groupInitiative();
+    if (reroll) await game.sdm.api.gm.groupInitiative({ reroll: true });
   }
 });
 

@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v0.9.2
+
+- Added configuration to use or not a tiebreaking logic in group initiatives
+- Changed group initiative button to behave like Roll All and Roll NPCs buttons (you need to reset initiative to roll group initiative again)
+- Added a random decimal to combatants inside a same group, so initiatives orders inside a group won't always stay the same
+- Added rolled dice to the dice oracles result chat card
+
 ## v0.9.1
 
 - Added configuration options to customize hero dice, blood dice, tourist dice and oracle dice colors (Dice So Nice)

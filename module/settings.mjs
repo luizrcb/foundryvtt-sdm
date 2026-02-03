@@ -99,6 +99,16 @@ export function registerSystemSettings() {
     default: 'sdm-oracle'
   });
 
+  game.settings.register('sdm', 'initiativeTieBreak', {
+    name: 'SDM.SettingsInitiativeTiebreak',
+    hint: 'SDM.SettingsInitiativeTiebreakHint',
+    scope: "world",
+    config: true,
+    restricted: true,
+    type: Boolean,
+    default: true,
+  });
+
   game.settings.register('sdm', 'groupPlayersToFriendlyTokens', {
     name: 'SDM.SettingsGroupPlayersToFriendlyTokens',
     hint: 'SDM.SettingsGroupPlayersToFriendlyTokensHint',
