@@ -8,7 +8,7 @@ function getUniqueRandomDecimals(count = 5) {
 }
 
 function getUniqueIntraGroupDecimals(count) {
-  const available = Array.from({length: 9}, (_, i) => i + 1);
+  const available = Array.from({ length: 9 }, (_, i) => i + 1);
   const shuffled = [...available].sort(() => Math.random() - 0.5);
   return shuffled.slice(0, count).map(digit => digit / 100);
 }
@@ -66,7 +66,7 @@ export async function groupInitiative({ reroll = false } = {}) {
     secret: []
   };
 
-  const initiativeTieBreak = game.settings.get('sdm', 'initiativeTieBreak');
+  const useInitiativeTiebreaking = game.settings.get('sdm', 'initiativeTieBreak');
 
   const groupPlayersToFriendlyTokens = game.settings.get('sdm', 'groupPlayersToFriendlyTokens');
 
@@ -99,7 +99,7 @@ export async function groupInitiative({ reroll = false } = {}) {
     }
   }
 
-  const processGroup = async (group, groupIndex) => {
+  const processGroup = async (group, groupIndex, useInitiativeTiebreaking = false) => {
     if (group.length === 0) return;
 
     const roller = pickRandom(group);
@@ -107,7 +107,7 @@ export async function groupInitiative({ reroll = false } = {}) {
     await game.combat.rollInitiative([roller.combatant.id]);
 
     const baseInitiative = Math.floor(roller.combatant.initiative);
-    const groupTieBreaker = initiativeTieBreak ? groupTieBreakers[groupIndex] : 0;
+    const groupTieBreaker = useInitiativeTiebreaking ? groupTieBreakers[groupIndex] : 0;
 
     const intraGroupTieBreakers = getUniqueIntraGroupDecimals(group.length);
     const shuffledIntraBreakers = [...intraGroupTieBreakers].sort(() => Math.random() - 0.5);
@@ -116,13 +116,10 @@ export async function groupInitiative({ reroll = false } = {}) {
       const token = group[i];
       await ensureCombatant(token);
 
-      let finalInitiative;
-      if (token === roller) {
+      let finalInitiative = baseInitiative;
+      if (useInitiativeTiebreaking) {
         const rollerTieBreaker = shuffledIntraBreakers[i];
         finalInitiative = safeDecimalAdd(baseInitiative, groupTieBreaker, rollerTieBreaker);
-      } else {
-        const tokenTieBreaker = shuffledIntraBreakers[i];
-        finalInitiative = safeDecimalAdd(baseInitiative, groupTieBreaker, tokenTieBreaker);
       }
 
       await token.combatant.update({ initiative: finalInitiative });
@@ -131,7 +128,7 @@ export async function groupInitiative({ reroll = false } = {}) {
 
   for (const [index, group] of Object.values(groups).entries()) {
     if (group.length) {
-      await processGroup(group, index);
+      await processGroup(group, index, useInitiativeTiebreaking);
     }
   }
 

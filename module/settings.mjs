@@ -45,7 +45,6 @@ export function registerSystemSettings() {
     default: 'same'
   });
 
-
   game.settings.register('sdm', 'diceSoNiceChromatype', {
     name: 'SDM.SettingsDiceSoNiceChromatype',
     hint: 'SDM.SettingsDiceSoNiceChromatypeHint',
@@ -102,11 +101,10 @@ export function registerSystemSettings() {
   game.settings.register('sdm', 'initiativeTieBreak', {
     name: 'SDM.SettingsInitiativeTiebreak',
     hint: 'SDM.SettingsInitiativeTiebreakHint',
-    scope: "world",
-    config: true,
+    scope: 'world',
     restricted: true,
     type: Boolean,
-    default: true,
+    default: true
   });
 
   game.settings.register('sdm', 'groupPlayersToFriendlyTokens', {
@@ -280,13 +278,7 @@ export function registerSystemSettings() {
     config: false, // Show in configuration view
     type: String, // Data type: String, Number, Boolean, etc
     default: 'quick-d6',
-    choices: [
-      'quick-d6',
-      'bell-2d6',
-      'd10-oracle',
-      'bell-2d10',
-      'skilled-d20'
-    ]
+    choices: ['quick-d6', 'bell-2d6', 'd10-oracle', 'bell-2d10', 'skilled-d20']
   });
 
   game.settings.register('sdm', 'bonusHeroDicePool', {
@@ -1169,7 +1161,7 @@ export function configurePlayerChromatype() {
         outline: 'black',
         texture: 'none',
         material: 'plastic',
-        font: 'Bonheur Royale',
+        font: 'Bonheur Royale'
       };
       dice3d.addColorset(luxuryData);
 
@@ -1317,7 +1309,7 @@ export function configurePlayerChromatype() {
         edge: '#99fcde',
         font: 'Bitcount Single',
         shadow: 'rgba(71, 182, 247, 0.5)',
-        material: 'wood',
+        material: 'wood'
       };
 
       dice3d.addColorset(heroDice);
