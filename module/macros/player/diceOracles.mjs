@@ -361,7 +361,7 @@ export async function diceOracles() {
 
   <div class="form-group">
     <label>${$l10n('SDM.RollModifier')}</label>
-    <input type="number" name="modifier" class="form-control" value="0" autofocus>
+    <input type="number" name="modifier" class="form-control" value="0">
   </div>
 
   <div class="form-group">
@@ -405,10 +405,9 @@ export async function diceOracles() {
     render: (event, dialog) => {
       const html = dialog.element;
 
-      const modifierInput = html.querySelector('input[name="modifier"]');
-      if (modifierInput) {
-        modifierInput.focus();
-        modifierInput.select();
+      const questionArea = html.querySelector('textarea[name="question"]');
+      if (questionArea) {
+        questionArea.placeholder = $l10n('SDM.DiceOraclesQuestionPlaceholder')
       }
 
       const inputs = html.querySelectorAll('input, select, textarea');
@@ -487,6 +486,9 @@ async function rollOracle({ oracleType, modifier, rollMode, question }, oracle_c
   const description = $l10n(outcomeEntry.description);
   const grade = outcomeEntry.grade ? $l10n(outcomeEntry.grade) : null;
 
+  let rollContent = await roll.render();
+  rollContent = rollContent.replaceAll('sdm-oracle', '').replaceAll('[]', '');
+
   const content = `
 <div class="uvg-oracle-result">
   <div class="oracle-header">
@@ -495,7 +497,7 @@ async function rollOracle({ oracleType, modifier, rollMode, question }, oracle_c
   </div>
 
   <div class="oracle-roll">
-    <p><strong>${$l10n('SDM.PowerRollFormulaAbbr')}:</strong> ${formula.replace(/\[[^\]]*\]/g, '')} = ${roll.total}</p>
+    ${rollContent}
     ${clampedResult !== roll.total ? `<p><strong>${$l10n('SDM.Result')}:</strong> ${clampedResult} (${$l10n('SDM.ClampedFrom')} ${roll.total})</p>` : ''}
   </div>
 

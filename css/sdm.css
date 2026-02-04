@@ -1093,11 +1093,12 @@ input[type=radio]::after {
   .oracle-header {
     border-bottom: 1px solid #7c2da2;
     margin-bottom: 10px;
-    padding-bottom: 10px;
+    padding-bottom: 5px;
   }
   .oracle-header h5 {
     color: #e0aaff;
     margin: 0;
+    font-size: 18px;
   }
   .oracle-question {
     font-style: italic;

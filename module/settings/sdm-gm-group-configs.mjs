@@ -70,6 +70,7 @@ export class SDMCombatSettingsConfig extends GroupBase {
   };
   static LEGEND = 'SDM.Menu.Combat.Name';
   static KEYS = [
+    'initiativeTieBreak',
     'groupPlayersToFriendlyTokens',
     'rerollInitiativeEveryRound',
     'initiativeFormula',
