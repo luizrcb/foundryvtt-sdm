@@ -1,7 +1,7 @@
 import { UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
 import { ActorType, ItemType, SizeUnit } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
-import { $l10n, $fmt, foundryVersionIsAtLeast, getSeasonAndWeek } from '../helpers/globalUtils.mjs';
+import { $fmt, $l10n, foundryVersionIsAtLeast, getSeasonAndWeek } from '../helpers/globalUtils.mjs';
 import {
   convertToCash,
   ITEMS_NOT_ALLOWED_IN_CARAVANS,
@@ -9,7 +9,6 @@ import {
   onItemUpdate
 } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
-import { splitStackIntoSingles } from '../helpers/stackUtils.mjs';
 import { openItemTransferDialog } from '../items/transfer.mjs';
 
 const { api, sheets } = foundry.applications;
@@ -54,10 +53,12 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       openDoc: { handler: this._openDoc, buttons: [0] },
       addTransport: this._addTransport,
       deleteTransport: this._deleteTransport,
+      deleteCrew: this._deleteCrew,
       addRoute: this._addRoute,
       deleteRoute: this._deleteRoute,
       consumeSupplies: this._consumeSupplies,
-      radioToggle: this._radioToggle
+      radioToggle: this._radioToggle,
+      viewNPC: this._viewCrewMember
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: '[data-drop], [data-item-id]' }],
@@ -112,7 +113,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     options.parts = ['header', 'tabs'];
     // Don't show the other tabs if only limited view
     if (!this.document.limited) {
-      options.parts.push('inventory', 'transport', 'routes', 'notes', 'effects');
+      options.parts.push('inventory', 'crew', 'transport', 'routes', 'notes', 'effects');
     }
     options.parts.push('biography');
   }
@@ -139,7 +140,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
         month: $l10n(`SDM.MonthShort.${month}`),
         day,
         year,
-        season: $l10n(`SDM.Season.${season}`),
+        season: $l10n(`SDM.Season.${season}`)
       });
 
       caravanDate = $fmt('SDM.FormattedDate', {
@@ -147,7 +148,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
         month: $l10n(`SDM.Month.${month}`),
         day,
         year,
-        season: $l10n(`SDM.Season.${season}`),
+        season: $l10n(`SDM.Season.${season}`)
       });
 
       const calendar = game.seasonsStars.api.getActiveCalendar();
@@ -179,7 +180,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       caravanWeek,
       caravanMonth,
       caravanDate,
-      caravanDateShort,
+      caravanDateShort
     };
 
     // Offloading context prep to a helper function
@@ -271,7 +272,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
         case 'crew':
           tab.id = 'crew';
           tab.label += 'Crew';
-          tab.icon = 'fa fa-people-group';
+          tab.icon = 'fa fa-screwdriver-wrench';
           break;
         case 'transport':
           tab.id = 'transport';
@@ -987,6 +988,55 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     await this.actor.update(deleteOperation);
   }
 
+  static async _deleteCrew(event, target) {
+    const dataset = target.dataset;
+    const key = dataset.key;
+    const forceProceed = !!dataset?.proceed;
+
+    const crew = this.actor.system.crew[key];
+    if (!forceProceed) {
+       const proceed = await DialogV2.confirm({
+        content: `<b>${$fmt('SDM.DeleteDocConfirmation', { doc: crew.name })}</b>`,
+        modal: true,
+        rejectClose: false,
+        yes: { label: $l10n('SDM.ButtonYes') },
+        no: { label: $l10n('SDM.ButtonNo') }
+      });
+      if (!proceed) return;
+    }
+
+    let deleteOperation;
+
+    if (foundryVersionIsAtLeast('14')) {
+      deleteOperation = {
+        [`system.crew.${key}`]: _del
+      };
+    } else {
+      deleteOperation = {
+        [`system.crew.-=${key}`]: null
+      };
+    }
+
+    await this.actor.update(deleteOperation);
+  }
+
+  static async _viewCrewMember(event, target) {
+    const dataset = target.dataset;
+    const key = dataset.key;
+
+    const { detail } = event;
+    if (detail <= 1 || detail > 2) return;
+
+    const crewId = this.actor.system.crew[key].id;
+
+    const npc = await fromUuid(crewId);
+    if (!npc) {
+      target.dataset.proceed = true;
+      return SdmCaravanSheet._deleteCrew.call(this, event, target);
+    }
+    await npc.sheet.render(true);
+  }
+
   static async _consumeSupplies() {
     return this.actor.consumeSupplies();
   }
@@ -1182,6 +1232,150 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
    */
   async _onDropActor(event, data) {
     if (!this.actor.isOwner) return false;
+    if (event.currentTarget.id !== 'crew-tab') return false;
+
+    const droppedActor = await fromUuid(data.uuid);
+    if (droppedActor.type !== ActorType.NPC) return false;
+
+    const skills = droppedActor.getAvailableSkills();
+    const skillList = Object.values(skills);
+
+    // Get current crew data
+    const currentCrew = this.actor.system.crew || {};
+
+    // Find all keys with the same actor ID
+    const duplicateKeys = [];
+    for (const [key, crewMember] of Object.entries(currentCrew)) {
+      if (crewMember.id === droppedActor.uuid) {
+        duplicateKeys.push(key);
+      }
+    }
+
+    // Prepare update object
+    const updateData = {};
+
+    if (duplicateKeys.length > 0) {
+      // UPDATE EXISTING ENTRY - use the first duplicate found
+      const existingKey = duplicateKeys[0];
+      const existingCrew = currentCrew[existingKey];
+
+      // Create mapping of skill ID to skillKey from existing available_skills
+      const existingSkillMap = {};
+      if (existingCrew.available_skills) {
+        Object.entries(existingCrew.available_skills).forEach(([skillKey, skillData]) => {
+          existingSkillMap[skillData.id] = {
+            key: skillKey,
+            data: skillData
+          };
+        });
+      }
+
+      // Build updated available_skills object
+      const updatedAvailableSkills = {};
+      const newSkillIds = new Set(); // Track which skills are in the updated list
+
+      // Process each skill from the dropped actor
+      skillList.forEach((skill, index) => {
+        const skillId = skill.id;
+        newSkillIds.add(skillId);
+
+        // Check if this skill already exists in available_skills
+        if (existingSkillMap[skillId]) {
+          // Use existing skillKey and update the skill data
+          const existingSkillKey = existingSkillMap[skillId].key;
+          updatedAvailableSkills[existingSkillKey] = {
+            id: skill.id,
+            name: skill.name,
+            mod: skill.mod,
+            label: skill.label
+          };
+
+          // If this was the selected skill, keep it selected
+          if (existingCrew.skill === existingSkillMap[skillId].id) {
+            // We'll handle this below when setting the skill field
+          }
+        } else {
+          // Generate new skillKey for new skill
+          const newSkillKey = foundry.utils.randomID();
+          updatedAvailableSkills[newSkillKey] = {
+            id: skill.id,
+            name: skill.name,
+            mod: skill.mod,
+            label: skill.label
+          };
+        }
+      });
+
+      // Determine the new skill field value
+      let newSkillValue = null;
+
+      // First, check if the currently selected skill still exists
+      if (existingCrew.skill) {
+        const selectedSkill  = Object.values(existingCrew.available_skills).find(skill => skill.id === existingCrew.skill);
+        if (selectedSkill && newSkillIds.has(selectedSkill.id)) {
+          newSkillValue = selectedSkill.id;
+        }
+      }
+
+      // If no valid selected skill, use the first skill from the updated list
+      if (!newSkillValue && skillList.length > 0) {
+        // Find the key for the first skill in the list
+        const firstSkillId = skillList[0].id;
+        const firstSkillKey = Object.keys(updatedAvailableSkills).find(
+          key => updatedAvailableSkills[key].id === firstSkillId
+        );
+        if (firstSkillKey) {
+          newSkillValue = firstSkillKey;
+        }
+      }
+
+
+      // Update the existing entry
+      updateData[`system.crew.${existingKey}`] = {
+        ...existingCrew, // Keep existing data
+        id: droppedActor.uuid,
+        name: droppedActor.name,
+        available_skills: updatedAvailableSkills,
+        skill: newSkillValue,
+        supply: droppedActor.system.supply,
+        cost: droppedActor.system.cost,
+        // supply and cost remain unchanged from existingCrew
+      };
+    } else {
+      // CREATE NEW ENTRY (same as before, but refined)
+      const newKey = foundry.utils.randomID();
+
+      // Build available_skills object with skill IDs as keys (or generate random keys)
+      const available_skills = {};
+      let firstSkillKey = null;
+
+      skillList.forEach((skill, index) => {
+        const skillKey = foundry.utils.randomID();
+        available_skills[skillKey] = {
+          id: skill.id,
+          name: skill.name,
+          mod: skill.mod,
+          label: skill.label
+        };
+
+        if (index === 0) {
+          firstSkillKey = skill.id;
+        }
+      });
+
+      // Create the new crew member entry
+      updateData[`system.crew.${newKey}`] = {
+        id: droppedActor.uuid,
+        name: droppedActor.name,
+        available_skills: available_skills,
+        skill: firstSkillKey,
+        supply: droppedActor.system.supply,
+        cost: droppedActor.system.cost
+      };
+    }
+
+    // Apply all changes in a single update
+    await this.actor.update(updateData);
   }
 
   /* -------------------------------------------- */

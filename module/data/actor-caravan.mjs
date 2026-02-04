@@ -75,7 +75,6 @@ export default class SdmCarvan extends SdmActorBase {
       initial: ''
     });
 
-
     schema.extraDays = new fields.NumberField({
       ...requiredInteger,
       initial: 0,
@@ -93,7 +92,7 @@ export default class SdmCarvan extends SdmActorBase {
     schema.month = new fields.NumberField({
       required: false,
       nullable: true,
-      choices: CONFIG.SDM.months,
+      choices: CONFIG.SDM.months
     });
 
     schema.speed = new fields.NumberField({
@@ -124,13 +123,20 @@ export default class SdmCarvan extends SdmActorBase {
     schema.crew = new fields.TypedObjectField(
       new fields.SchemaField(
         {
-          character: new fields.StringField({ required: true }),
-          skill: new fields.StringField({
-            required: false,
-            nullable: true,
-            blank: true,
-            initial: ''
-          }),
+          id: new fields.DocumentUUIDField({ required: true }),
+          name: new fields.StringField({ required: true }),
+          skill: new fields.StringField({ required: false, nullable: true, blank: true }),
+          available_skills: new fields.TypedObjectField(
+            new fields.SchemaField({
+              id: new fields.DocumentUUIDField({ required: true }),
+              name: new fields.StringField({ required: true }),
+              mod: new fields.NumberField({
+                ...requiredInteger,
+                initial: 3
+              }),
+              label: new fields.StringField({ required: true }),
+            }),
+          { initial: {} }),
           cost: new fields.StringField({
             required: false,
             nullable: true,
@@ -198,5 +204,4 @@ export default class SdmCarvan extends SdmActorBase {
 
     return schema;
   }
-
 }

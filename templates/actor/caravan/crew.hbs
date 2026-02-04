@@ -1,4 +1,72 @@
 {{! Crew Tab }}
-<section class='tab routes scrollable {{tab.cssClass}}' data-group='primary' data-tab='crew'>
-  <div>crew tab</div>
+<section class='tab routes scrollable {{tab.cssClass}}' data-group='primary' data-tab='crew' data-drop="true" id="crew-tab">
+   <div class="grid grid-5col">
+    <div class="main grid-span-5">
+      <section>
+        <ol class='items-list full-list'>
+          <li class='item flexrow items-header caravan-item-header' style="position: sticky;">
+            <div class=''></div>
+            <div class=''></div>
+            <div class=''></div>
+            <div class=''></div>
+            <div class=''>
+              {{#if @root.editable}}
+                Drop NPCs to add to Crew
+              {{/if}}
+            </div>
+          </li>
+          {{#each system.crew as |crewMember key|}}
+          <li class='item grid grid-5col flexrow list-border route-item'>
+
+            <div class='resource grid-span-1'>
+              <label class='resource-label'>
+                {{localize 'SDM.FieldName'}}
+              </label>
+              <div class='resource-content flex' style="cursor: pointer;" data-action="viewNPC"  data-key="{{key}}" data-tooltip="{{localize 'SDM.CaravanCrewOpenNPCSheet' name=crewMember.name}}">
+                 <input type='text' name='system.crew.{{key}}.name' value='{{crewMember.name}}' class="disabled"/>
+              </div>
+            </div>
+
+
+            <div class='resource grid-span-2'>
+              <label class='resource-label'>
+                {{localize 'SDM.FieldSkills'}}
+              </label>
+              <div class='resource-content'>
+                <select name="system.crew.{{key}}.skill" id="selectedSkill">
+                  {{selectOptions crewMember.available_skills valueAttr="id" labelAttr="label" selected=crewMember.skill sort=true blank=""}}
+                </select>
+              </div>
+            </div>
+
+           <div class='resource grid-span-1'>
+              <label class='resource-label'>
+                {{localize 'SDM.FieldCostPerWeek'}}
+              </label>
+              <div class='resource-content'>
+                <input type='text' name='system.crew.{{key}}.cost' value='{{crewMember.cost}}' />
+              </div>
+            </div>
+
+            <div class='resource grid-span-1'>
+              <label class='resource-label flex flex-between'>
+                {{localize 'SDM.FieldSupplyPerWeek'}}
+                <a
+                  data-action="deleteCrew"
+                  data-key="{{key}}"
+                  data-tooltip="{{localize 'DOCUMENT.Delete' type=(localize 'SDM.Crew')}}"
+                >
+                  <i class="fa-solid fa-trash"></i>
+                </a>
+              </label>
+              <div class='resource-content'>
+                <input type='text' name='system.crew.{{key}}.supply' value='{{crewMember.supply}}'/>
+              </div>
+            </div>
+          </li>
+          {{/each}}
+        </ol>
+      </section>
+    </div>
+  </div>
 </section>
