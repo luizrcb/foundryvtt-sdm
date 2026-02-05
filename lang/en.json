@@ -394,6 +394,7 @@
   "SDM.DistributeXP": "Distribute XP",
   "SDM.DOCUMENT.Create": "Create {type}",
   "SDM.DOCUMENT.New": "New {type}",
+  "SDM.DOCUMENT.NewF": "New {type}",
   "SDM.DoubleClickToEdit": "Double-click to Edit",
   "SDM.DSNChromatypeSame": "Same as the Chromatype",
   "SDM.Effect.ChangeProperty": "Property",
@@ -1262,5 +1263,6 @@
   "TYPES.Item.trait": "Trait",
   "TYPES.Item.vehicle": "Vehicle",
   "TYPES.Item.ward": "Ward",
-  "TYPES.Item.weapon": "Weapon"
+  "TYPES.Item.weapon": "Weapon",
+  "SDM.CaravanDropNPCs": "Drop an NPC to add them to the caravan crew"
 }

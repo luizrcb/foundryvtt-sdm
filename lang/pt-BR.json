@@ -394,6 +394,7 @@
   "SDM.DistributeXP": "Distribuir EXP",
   "SDM.DOCUMENT.Create": "Criar {type}",
   "SDM.DOCUMENT.New": "Novo {type}",
+  "SDM.DOCUMENT.NewF": "Nova {type}",
   "SDM.DoubleClickToEdit": "Dois cliques para Editar",
   "SDM.DSNChromatypeSame": "Mesma do Cromatipo",
   "SDM.Effect.ChangeProperty": "Propriedade",
@@ -1262,5 +1263,6 @@
   "TYPES.Item.trait": "Traço",
   "TYPES.Item.vehicle": "Veículo",
   "TYPES.Item.ward": "Égide",
-  "TYPES.Item.weapon": "Arma"
+  "TYPES.Item.weapon": "Arma",
+  "SDM.CaravanDropNPCs": "Arraste e solte um NPC para adicioná-lo à equipe da caravana"
 }

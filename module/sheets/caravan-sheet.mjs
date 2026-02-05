@@ -893,7 +893,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     await this.actor.update({
       'system.transport': {
         [`${newKey}`]: {
-          name: `New transport (${transportLength})`,
+          name: `${$fmt('SDM.DOCUMENT.New', { type: $l10n('SDM.Transport') })} (${transportLength})`,
           level: 0,
           capacity: 1,
           cargo: '',
@@ -995,7 +995,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
 
     const crew = this.actor.system.crew[key];
     if (!forceProceed) {
-       const proceed = await DialogV2.confirm({
+      const proceed = await DialogV2.confirm({
         content: `<b>${$fmt('SDM.DeleteDocConfirmation', { doc: crew.name })}</b>`,
         modal: true,
         rejectClose: false,
@@ -1311,7 +1311,9 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
 
       // First, check if the currently selected skill still exists
       if (existingCrew.skill) {
-        const selectedSkill  = Object.values(existingCrew.available_skills).find(skill => skill.id === existingCrew.skill);
+        const selectedSkill = Object.values(existingCrew.available_skills).find(
+          skill => skill.id === existingCrew.skill
+        );
         if (selectedSkill && newSkillIds.has(selectedSkill.id)) {
           newSkillValue = selectedSkill.id;
         }
@@ -1329,7 +1331,6 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
         }
       }
 
-
       // Update the existing entry
       updateData[`system.crew.${existingKey}`] = {
         ...existingCrew, // Keep existing data
@@ -1338,7 +1339,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
         available_skills: updatedAvailableSkills,
         skill: newSkillValue,
         supply: droppedActor.system.supply,
-        cost: droppedActor.system.cost,
+        cost: droppedActor.system.cost
         // supply and cost remain unchanged from existingCrew
       };
     } else {
