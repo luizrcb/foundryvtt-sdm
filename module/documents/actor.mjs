@@ -414,12 +414,12 @@ export class SdmActor extends Actor {
 
     const skillTraits = itemsArray.filter(
       item =>
-        item.system.type !== TraitType.CORRUPTION &&
-        item.type === ItemType.TRAIT &&
+        (item.type === ItemType.GEAR && item.system.type === GearType.CORRUPTION) ||
+        (item.type === ItemType.TRAIT &&
         (!item.system?.learning ||
           item.system?.learning?.required_successes === 0 ||
           item.system?.skill?.rank > 0 ||
-          item.system?.learning?.required_successes === item.system?.learning?.sources)
+          item.system?.learning?.required_successes === item.system?.learning?.sources))
     );
     const defaultModifierStep = game.settings.get('sdm', 'skillModifierStep');
     skillTraits.forEach(trait => {

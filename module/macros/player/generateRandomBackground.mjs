@@ -1,11 +1,6 @@
 export async function generateRandomBackground() {
   let actor = game.user?.character || canvas?.tokens?.controlled[0]?.actor;
 
-  if (!actor) {
-    ui.notifications.error(game.i18n.localize('SDM.BackgroundInvalidCharacter'));
-    return;
-  }
-
   // ----- 1. Sorteio das 10 linhas -----
   const BACKGROUND_TABLE = Array.from({ length: 40 }, (_, i) => ({
     flavor: game.i18n.localize(`SDM.BackgroundRow${String(i + 1).padStart(2, '0')}.Flavor`),
@@ -195,10 +190,7 @@ export async function generateRandomBackground() {
           const spin = html.querySelector('#preview-spin')?.value || selected.spin;
 
           actor = game.user?.character || canvas?.tokens?.controlled[0]?.actor;
-          if (!actor) {
-            ui.notifications.error(game.i18n.localize('SDM.BackgroundInvalidCharacter'));
-            return;
-          }
+
           if (!combined) return;
 
           await game.sdm.api.createBackgroundTrait(actor, {
@@ -211,7 +203,7 @@ export async function generateRandomBackground() {
             game.i18n.format('SDM.BackgroundTraitCreated', {
               flavor: combined,
               role: '',
-              name: actor.name
+              name: actor?.name
             })
           );
         }

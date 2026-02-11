@@ -104,7 +104,7 @@ export function registerSystemSettings() {
     scope: 'world',
     restricted: true,
     type: Boolean,
-    default: true
+    default: false
   });
 
   game.settings.register('sdm', 'groupPlayersToFriendlyTokens', {

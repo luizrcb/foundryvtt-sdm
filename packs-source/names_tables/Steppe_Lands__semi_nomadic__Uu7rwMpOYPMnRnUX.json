@@ -1,0 +1,222 @@
+{
+  "name": "Steppe Lands (semi nomadic)",
+  "formula": "1d8",
+  "description": "<p></p>",
+  "results": [
+    {
+      "range": [
+        1,
+        1
+      ],
+      "name": "Acid Spirit",
+      "_id": "idGtNGEtQMaNi6SU",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Uu7rwMpOYPMnRnUX.idGtNGEtQMaNi6SU"
+    },
+    {
+      "range": [
+        2,
+        2
+      ],
+      "name": "Citrus Elevator",
+      "_id": "Zsk9z4gjr1FtmLOb",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Uu7rwMpOYPMnRnUX.Zsk9z4gjr1FtmLOb"
+    },
+    {
+      "range": [
+        3,
+        3
+      ],
+      "name": "Forth Bone",
+      "_id": "dc1x8XxJKPcNH8Mn",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Uu7rwMpOYPMnRnUX.dc1x8XxJKPcNH8Mn"
+    },
+    {
+      "range": [
+        4,
+        4
+      ],
+      "name": "Newt Incorporeal",
+      "_id": "A1qjEtmlrWWXZ7KU",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Uu7rwMpOYPMnRnUX.A1qjEtmlrWWXZ7KU"
+    },
+    {
+      "range": [
+        5,
+        5
+      ],
+      "name": "Rise Ghost",
+      "_id": "i6CDEQYJY1SIyZ9K",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Uu7rwMpOYPMnRnUX.i6CDEQYJY1SIyZ9K"
+    },
+    {
+      "range": [
+        6,
+        6
+      ],
+      "name": "Sevenfold Center",
+      "_id": "fTFYeg19Oni1MCfL",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Uu7rwMpOYPMnRnUX.fTFYeg19Oni1MCfL"
+    },
+    {
+      "range": [
+        7,
+        7
+      ],
+      "name": "Starfall Perimeter",
+      "_id": "6DjKJADWonPNUdtB",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Uu7rwMpOYPMnRnUX.6DjKJADWonPNUdtB"
+    },
+    {
+      "range": [
+        8,
+        8
+      ],
+      "name": "Wayfarer Sanctum",
+      "_id": "LayGfQ4J7LaiEs1V",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!Uu7rwMpOYPMnRnUX.LayGfQ4J7LaiEs1V"
+    }
+  ],
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "6nG6apxhfcD63CwQ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.9.3",
+    "createdTime": 1770656450532,
+    "modifiedTime": 1770656450532,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+  },
+  "_id": "Uu7rwMpOYPMnRnUX",
+  "sort": 0,
+  "_key": "!tables!Uu7rwMpOYPMnRnUX"
+}

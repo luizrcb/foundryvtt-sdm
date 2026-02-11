@@ -1,0 +1,533 @@
+{
+  "name": "Other Paths",
+  "img": "icons/svg/d20-grey.svg",
+  "description": "",
+  "results": [
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "name": "Barbarian",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.rolltables.RollTable.vHTnEczodRYhSKCe",
+      "_id": "4u8CnuQn9wpqJHM3",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5DQuOEZbj4yIoEIU.4u8CnuQn9wpqJHM3"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "name": "Bluelander",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.rolltables.RollTable.0fj6JTff9nFB9QTy",
+      "_id": "XgwSazJ5Ijr1HiRu",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5DQuOEZbj4yIoEIU.XgwSazJ5Ijr1HiRu"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "name": "Bourgeois",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.rolltables.RollTable.UldHOMpkEWQPAN7X",
+      "_id": "6k8v5YQRWjK2kQ6C",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": "6nG6apxhfcD63CwQ",
+        "modifiedTime": 1770727252574
+      },
+      "_key": "!tables.results!5DQuOEZbj4yIoEIU.6k8v5YQRWjK2kQ6C"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "name": "Golem",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.rolltables.RollTable.3BimBzjuOxK3DKGb",
+      "_id": "B9Y3BTC9gYkaUNy1",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5DQuOEZbj4yIoEIU.B9Y3BTC9gYkaUNy1"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "name": "Greenlander",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.rolltables.RollTable.YKikwIKOdaqBqcdh",
+      "_id": "oW2YyZBMANWDO7oW",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5DQuOEZbj4yIoEIU.oW2YyZBMANWDO7oW"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "name": "Holy Fool",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.rolltables.RollTable.pr094geSwmBdYGSY",
+      "_id": "6tXvDwKimSNX4CGK",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5DQuOEZbj4yIoEIU.6tXvDwKimSNX4CGK"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "name": "Manager",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.rolltables.RollTable.QL3ryj2BNrFzrjab",
+      "_id": "zgs4AQ2pIJHx9Dga",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5DQuOEZbj4yIoEIU.zgs4AQ2pIJHx9Dga"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "name": "Noble",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.rolltables.RollTable.12ObXelZA4fxk9N6",
+      "_id": "MYkY0Mmb2PG4uyhj",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5DQuOEZbj4yIoEIU.MYkY0Mmb2PG4uyhj"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "name": "Noömagus",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.rolltables.RollTable.XTNKMc5wRgAHr5Hm",
+      "_id": "ebhTRNBtHbzVjsM7",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5DQuOEZbj4yIoEIU.ebhTRNBtHbzVjsM7"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "name": "Orangelander",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.rolltables.RollTable.9e64adDHZ5ONyhqG",
+      "_id": "DCvuU5hPufayo4uU",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5DQuOEZbj4yIoEIU.DCvuU5hPufayo4uU"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "name": "Purplelander",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.rolltables.RollTable.PNdLbg3FHUyB4RCm",
+      "_id": "m4TrtRQ6i4QCZL6p",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5DQuOEZbj4yIoEIU.m4TrtRQ6i4QCZL6p"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "name": "Redlander",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.rolltables.RollTable.198Zvb8Kbgh2EJKO",
+      "_id": "blAdbk4ow7mmnGsk",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5DQuOEZbj4yIoEIU.blAdbk4ow7mmnGsk"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        13,
+        13
+      ],
+      "name": "Scion",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.rolltables.RollTable.rf7MBYLCOyKLEzo1",
+      "_id": "hfPuQposjbNUa20f",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5DQuOEZbj4yIoEIU.hfPuQposjbNUa20f"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        14,
+        14
+      ],
+      "name": "Servant",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.rolltables.RollTable.I1KLzbo44EcaPh2Z",
+      "_id": "mauGMMWJ7zMMEtpr",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5DQuOEZbj4yIoEIU.mauGMMWJ7zMMEtpr"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        15,
+        15
+      ],
+      "name": "Skeleton",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.rolltables.RollTable.TW6sH3bykWZIOVyL",
+      "_id": "77Gq6DzD9UKl7s6d",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5DQuOEZbj4yIoEIU.77Gq6DzD9UKl7s6d"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        16,
+        16
+      ],
+      "name": "Soldier",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.rolltables.RollTable.6L8RbQwszsaw2NnV",
+      "_id": "G2yvWEy8FKGDQtRE",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5DQuOEZbj4yIoEIU.G2yvWEy8FKGDQtRE"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        17,
+        17
+      ],
+      "name": "Tourist",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.rolltables.RollTable.io4wCUYhzcpEm4qb",
+      "_id": "u2W0qInK0tdCZwZM",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5DQuOEZbj4yIoEIU.u2W0qInK0tdCZwZM"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        18,
+        18
+      ],
+      "name": "Trickster",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.rolltables.RollTable.Sw4KVkN1IYAcXMvt",
+      "_id": "SWWUXqlkKnpFiGlh",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5DQuOEZbj4yIoEIU.SWWUXqlkKnpFiGlh"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        20,
+        20
+      ],
+      "name": "Yellowlander",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.rolltables.RollTable.s83Bifm9z47GEs6L",
+      "_id": "l8ZJ7LEnT5pbpB2x",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5DQuOEZbj4yIoEIU.l8ZJ7LEnT5pbpB2x"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        19,
+        19
+      ],
+      "name": "Weapon Path",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.traits_tables.RollTable.pEzaYZUnNgq7EUmm",
+      "_id": "atjjbrZ1uToPYuW8",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "createdTime": 1770643293938,
+        "modifiedTime": 1770643293938,
+        "lastModifiedBy": "Ex9ibz7imBNLfqpb"
+      },
+      "_key": "!tables.results!5DQuOEZbj4yIoEIU.atjjbrZ1uToPYuW8"
+    }
+  ],
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "XDunMG5iNmel9OUX",
+  "ownership": {
+    "default": 0,
+    "Ex9ibz7imBNLfqpb": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.9.3",
+    "createdTime": 1770643263669,
+    "modifiedTime": 1770654211233,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+  },
+  "formula": "1d20",
+  "_id": "5DQuOEZbj4yIoEIU",
+  "sort": 200000,
+  "_key": "!tables!5DQuOEZbj4yIoEIU"
+}

@@ -1,0 +1,222 @@
+{
+  "name": "Yellow Land (mercantile)",
+  "formula": "1d8",
+  "description": "<p></p>",
+  "results": [
+    {
+      "range": [
+        1,
+        1
+      ],
+      "name": "Cortez an'Opera",
+      "_id": "L6L05Eb75UkvdW3D",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!s81tuiq1XKBmSKwZ.L6L05Eb75UkvdW3D"
+    },
+    {
+      "range": [
+        2,
+        2
+      ],
+      "name": "Dona de Cuiyot",
+      "_id": "TTbwSsNGPKlwDuyE",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!s81tuiq1XKBmSKwZ.TTbwSsNGPKlwDuyE"
+    },
+    {
+      "range": [
+        3,
+        3
+      ],
+      "name": "Horto 'n Caravan",
+      "_id": "gTHkzVbYCkmr5JiD",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!s81tuiq1XKBmSKwZ.gTHkzVbYCkmr5JiD"
+    },
+    {
+      "range": [
+        4,
+        4
+      ],
+      "name": "Limon an'Vest",
+      "_id": "0uDywex8y2WmI3PL",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!s81tuiq1XKBmSKwZ.0uDywex8y2WmI3PL"
+    },
+    {
+      "range": [
+        5,
+        5
+      ],
+      "name": "Pansa de Rancho",
+      "_id": "LSS2bpEmJklJ2EPA",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!s81tuiq1XKBmSKwZ.LSS2bpEmJklJ2EPA"
+    },
+    {
+      "range": [
+        6,
+        6
+      ],
+      "name": "Saldo an'Nanc",
+      "_id": "fV5WKNCPcp76j3g6",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!s81tuiq1XKBmSKwZ.fV5WKNCPcp76j3g6"
+    },
+    {
+      "range": [
+        7,
+        7
+      ],
+      "name": "Yaro Despolie",
+      "_id": "Ov21cSDSYtVSuXCu",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!s81tuiq1XKBmSKwZ.Ov21cSDSYtVSuXCu"
+    },
+    {
+      "range": [
+        8,
+        8
+      ],
+      "name": "Ylva 'n Vusta",
+      "_id": "IW9r6kNZ5eUMY5I2",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!s81tuiq1XKBmSKwZ.IW9r6kNZ5eUMY5I2"
+    }
+  ],
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "6nG6apxhfcD63CwQ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.9.3",
+    "createdTime": 1770656454552,
+    "modifiedTime": 1770656454552,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+  },
+  "_id": "s81tuiq1XKBmSKwZ",
+  "sort": 0,
+  "_key": "!tables!s81tuiq1XKBmSKwZ"
+}

@@ -1,0 +1,994 @@
+{
+  "name": "Background Traits 1d40",
+  "formula": "1d40",
+  "description": "",
+  "results": [
+    {
+      "range": [
+        1,
+        1
+      ],
+      "name": "blue land narco apothecary",
+      "description": "Task:mix potions, poisons, drugs|Spin:drug-fuelled dream travel",
+      "_id": "rWyolBWzvwn1G7j1",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.rWyolBWzvwn1G7j1"
+    },
+    {
+      "range": [
+        2,
+        2
+      ],
+      "name": "dead god scholar of Long Ago",
+      "description": "Task:explore the false past of lost times|Spin:psychokinetic acrobatics",
+      "_id": "oJmG7dW4Wuytz9bn",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.oJmG7dW4Wuytz9bn"
+    },
+    {
+      "range": [
+        3,
+        3
+      ],
+      "name": "peacemaker big game tourist",
+      "description": "Task:find and enjoy strange beasts|Spin:pray, love, eat monsters?",
+      "_id": "XxI94c4gjwqtWd8L",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.XxI94c4gjwqtWd8L"
+    },
+    {
+      "range": [
+        4,
+        4
+      ],
+      "name": "moon bio mechanic",
+      "description": "Task:modify and create living things|Spin:body-horror technomagic",
+      "_id": "R3SvsfMjkl685EBr",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.R3SvsfMjkl685EBr"
+    },
+    {
+      "range": [
+        5,
+        5
+      ],
+      "name": "coaster cat groom",
+      "description": "Task:make cats [or other masters] happy|Spin:pet's hired muscle",
+      "_id": "kWkKV0X3qu1EDto5",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.kWkKV0X3qu1EDto5"
+    },
+    {
+      "range": [
+        6,
+        6
+      ],
+      "name": "scavenger all chemist",
+      "description": "<p>Task:manipulate the basic iksr of matter|Spin:explosive philosophies</p>",
+      "_id": "IkdJRVW4nEq1Ec99",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": "6nG6apxhfcD63CwQ",
+        "modifiedTime": 1770747393016
+      },
+      "documentUuid": null,
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.IkdJRVW4nEq1Ec99"
+    },
+    {
+      "range": [
+        7,
+        7
+      ],
+      "name": "purple land therapist barista",
+      "description": "Task:make coffee and make peace|Spin:small-business expertise",
+      "_id": "HLwR5aGKPBwPfXlA",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.HLwR5aGKPBwPfXlA"
+    },
+    {
+      "range": [
+        8,
+        8
+      ],
+      "name": "feline error censor",
+      "description": "Task:prevent bad-think, fix mistakes|Spin:inquisition tactics",
+      "_id": "8sE0jF2may75NZgq",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.8sE0jF2may75NZgq"
+    },
+    {
+      "range": [
+        9,
+        9
+      ],
+      "name": "plantation puppet performer",
+      "description": "<p>Task:undo ennui, create moderate joy|Spin:distraction or destruction?</p>",
+      "_id": "UitIEVw1K4LXysjp",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": "6nG6apxhfcD63CwQ",
+        "modifiedTime": 1770747399939
+      },
+      "documentUuid": null,
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.UitIEVw1K4LXysjp"
+    },
+    {
+      "range": [
+        10,
+        10
+      ],
+      "name": "steppe wood singer",
+      "description": "Task:shape plants, sculpt furnishings|Spin:talk to trees, hear herbs",
+      "_id": "YZT1lfJZwIBqR1TB",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.YZT1lfJZwIBqR1TB"
+    },
+    {
+      "range": [
+        11,
+        11
+      ],
+      "name": "violet city living stoner",
+      "description": "Task:shape stone, sing houses|Spin:carry landcoral in your skin",
+      "_id": "ITp03iwDc1e25OR2",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.ITp03iwDc1e25OR2"
+    },
+    {
+      "range": [
+        12,
+        12
+      ],
+      "name": "red land aqua farmer",
+      "description": "Task:protein and fruits from the waters|Spin:speak with strange fish",
+      "_id": "CG3N0fV4AFbnKFCp",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.CG3N0fV4AFbnKFCp"
+    },
+    {
+      "range": [
+        13,
+        13
+      ],
+      "name": "vampire nöosphere caller",
+      "description": "Task:talk to the hidden archive daemons|Spin:access divine communications",
+      "_id": "h7vtdx7HakjQf3vk",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.h7vtdx7HakjQf3vk"
+    },
+    {
+      "range": [
+        14,
+        14
+      ],
+      "name": "rust gun maker",
+      "description": "Task:craft the forbidden tools of Long Ago|Spin:rebuild illegal devices",
+      "_id": "GTPngVTctg42uTpB",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.GTPngVTctg42uTpB"
+    },
+    {
+      "range": [
+        15,
+        15
+      ],
+      "name": "vintner soil laborer",
+      "description": "Task:optimize primary production|Spin:understand survival basics",
+      "_id": "lEgb7UvoiakEENC5",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.lEgb7UvoiakEENC5"
+    },
+    {
+      "range": [
+        16,
+        16
+      ],
+      "name": "RL district life generator",
+      "description": "Task:create compelling human content|Spin:spin stories and lies",
+      "_id": "grQXBqD6Px8equ9P",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.grQXBqD6Px8equ9P"
+    },
+    {
+      "range": [
+        17,
+        17
+      ],
+      "name": "hexad town sanitizer",
+      "description": "Task:keep the town clean and alive|Spin:travel unseen in urban bowels",
+      "_id": "aeZRBwPBy9DrUdcz",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.aeZRBwPBy9DrUdcz"
+    },
+    {
+      "range": [
+        18,
+        18
+      ],
+      "name": "doghead daemon summoner",
+      "description": "Task:interface with disembodied minds|Spin:manipulate the old minds",
+      "_id": "SZ7qt6Tkqha4mNyf",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.SZ7qt6Tkqha4mNyf"
+    },
+    {
+      "range": [
+        19,
+        19
+      ],
+      "name": "orange land mule whisperer",
+      "description": "Task:interface with beast-bodied minds|Spin:uplift downtrodden animals",
+      "_id": "4MIsL8szllsCWzyf",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.4MIsL8szllsCWzyf"
+    },
+    {
+      "range": [
+        20,
+        20
+      ],
+      "name": "halfling herbalist officer",
+      "description": "Task:ensure adequate public harmony|Spin:cloud minds for shared goals",
+      "_id": "sPqWRMFv1oc4oSs3",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.sPqWRMFv1oc4oSs3"
+    },
+    {
+      "range": [
+        21,
+        21
+      ],
+      "name": "council necromancer lawyer",
+      "description": "Task:uphold postmortal legal rights|Spin:ensure proper reincarnation",
+      "_id": "UnjOSZKVSfRtgNgZ",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.UnjOSZKVSfRtgNgZ"
+    },
+    {
+      "range": [
+        22,
+        22
+      ],
+      "name": "ancestor old technician",
+      "description": "Task:chant the mantras of maintenance|Spin:use Long Long Ago tools",
+      "_id": "x6jxN0zyP0XLzufu",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.x6jxN0zyP0XLzufu"
+    },
+    {
+      "range": [
+        23,
+        23
+      ],
+      "name": "agent golem engineer",
+      "description": "Task:keep the machine humans running|Spin:service the electric overlords",
+      "_id": "nnqnwbFntcZWyXyj",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.nnqnwbFntcZWyXyj"
+    },
+    {
+      "range": [
+        24,
+        24
+      ],
+      "name": "pirate middle manager",
+      "description": "Task:assign assigned assignations|Spin:navigate cruel bureaucracies",
+      "_id": "bmdy0qJFDW5X8NaN",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.bmdy0qJFDW5X8NaN"
+    },
+    {
+      "range": [
+        25,
+        25
+      ],
+      "name": "plateau road walker",
+      "description": "Task:keep the roads alive and respected|Spin:travel safely off the grid",
+      "_id": "uCGEsudakAE7MV3A",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.uCGEsudakAE7MV3A"
+    },
+    {
+      "range": [
+        26,
+        26
+      ],
+      "name": "yellow land inspector private",
+      "description": "Task:look, listen, and report to authority|Spin:find and keep grim secrets",
+      "_id": "svnc6izMlFtyAaqP",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.svnc6izMlFtyAaqP"
+    },
+    {
+      "range": [
+        27,
+        27
+      ],
+      "name": "diesel dwarfer licensed merchant",
+      "description": "Task:truck and barter for the greater good|Spin:maximize short-term gains",
+      "_id": "49XzPu0vagwyZuqv",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.49XzPu0vagwyZuqv"
+    },
+    {
+      "range": [
+        28,
+        28
+      ],
+      "name": "decapolitan protocol soldier",
+      "description": "Task:keep the martial traditions alive|Spin:cross tea &amp; high dot etiquette",
+      "_id": "RBK6pX2YUWQlhhoU",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.RBK6pX2YUWQlhhoU"
+    },
+    {
+      "range": [
+        29,
+        29
+      ],
+      "name": "saffron astrologer general",
+      "description": "Task:divine strategies from the stars|Spin:maintain order and discipline",
+      "_id": "dfyf56Y6WDulZN9A",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.dfyf56Y6WDulZN9A"
+    },
+    {
+      "range": [
+        30,
+        30
+      ],
+      "name": "horser accountant monk",
+      "description": "Task:ensure the holy numbers go up|Spin:keep the cog flower turning",
+      "_id": "ozwcmSi6ZpGTqD4x",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.ozwcmSi6ZpGTqD4x"
+    },
+    {
+      "range": [
+        31,
+        31
+      ],
+      "name": "golden desert machine herder",
+      "description": "Task:keep the synthetic flocks in line|Spin:oil and multiply machines",
+      "_id": "2YfHDO3l7YCQde0i",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.2YfHDO3l7YCQde0i"
+    },
+    {
+      "range": [
+        32,
+        32
+      ],
+      "name": "green land content promoter",
+      "description": "Task:popularize the latest entertainment|Spin:tamp down false ideas",
+      "_id": "K1ysH7MHSKLqWvAl",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.K1ysH7MHSKLqWvAl"
+    },
+    {
+      "range": [
+        33,
+        33
+      ],
+      "name": "metropolitan advertising servant",
+      "description": "Task:promote the corporate bottom line|Spin:subversive subterfuge",
+      "_id": "kcWxenqdYuWKvALh",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.kcWxenqdYuWKvALh"
+    },
+    {
+      "range": [
+        34,
+        34
+      ],
+      "name": "elfer autodoc nurse",
+      "description": "Task:support a smarter golem than you|Spin:parasite machine minds",
+      "_id": "uqZVt8Ms1Sls1Tga",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.uqZVt8Ms1Sls1Tga"
+    },
+    {
+      "range": [
+        35,
+        35
+      ],
+      "name": "falscher professional consumer",
+      "description": "Task:embody proper ethics|Spin:develop exquisite taste",
+      "_id": "CmwaSw5zNxGUWPHO",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.CmwaSw5zNxGUWPHO"
+    },
+    {
+      "range": [
+        36,
+        36
+      ],
+      "name": "timelost leisure maximizer",
+      "description": "Task:enjoy the fruits of civilization|Spin:schmoozer socialite spy",
+      "_id": "7TYZOpbmyI90E7zn",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.7TYZOpbmyI90E7zn"
+    },
+    {
+      "range": [
+        37,
+        37
+      ],
+      "name": "astral rogue trader",
+      "description": "Task:skirt the rules for profit|Spin:shave the coins for memories",
+      "_id": "DmZm9ZRjhGKRPurx",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.DmZm9ZRjhGKRPurx"
+    },
+    {
+      "range": [
+        38,
+        38
+      ],
+      "name": "ministry show hobo",
+      "description": "Task:be a warning to the lazy|Spin:dullway tunnel rat",
+      "_id": "YmacHxTyUkSLdxF7",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.YmacHxTyUkSLdxF7"
+    },
+    {
+      "range": [
+        39,
+        39
+      ],
+      "name": "barbarian primary noble",
+      "description": "Task:focus aspirations and social desires|Spin:overwhelm the given order",
+      "_id": "b5lz9Iw6qFilUqTt",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.b5lz9Iw6qFilUqTt"
+    },
+    {
+      "range": [
+        40,
+        40
+      ],
+      "name": "voidwalker public relative",
+      "description": "Task:share social love and vibes|Spin:unlock doors with your blood",
+      "_id": "Y23R290wkTp5BsXK",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!rGG0mOFXsKQbqiQQ.Y23R290wkTp5BsXK"
+    }
+  ],
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "SwkRaJM5VJ1eCvAC",
+  "ownership": {
+    "default": 0,
+    "6nG6apxhfcD63CwQ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.9.3",
+    "createdTime": 1770654508816,
+    "modifiedTime": 1770657325813,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+  },
+  "_id": "rGG0mOFXsKQbqiQQ",
+  "sort": 0,
+  "_key": "!tables!rGG0mOFXsKQbqiQQ"
+}

@@ -156,13 +156,20 @@ Hooks.on('renderSidebarTab', (app, html) => {
 Hooks.on('renderActorDirectory', (app, html) => {
   if (!game.user.isGM) return;
 
-  html.querySelector('.directory-header .create-folder').insertAdjacentHTML(
-    'afterend',
-    `<button type="button" class="random-npc"><i class="fa-solid fa-spaghetti-monster-flying" inert></i><span>${$l10n('SDM.CreateRandomNPC')}</span></button>`
+  html.querySelector('.directory-header .create-entry').insertAdjacentHTML(
+    'beforebegin',
+    `<button type="button" class="random-pc create-entry"><i class="fa-solid fa-person" inert></i><span>${$l10n('SDM.CreateRandomCharacter')}</span></button>
+     <button type="button" class="random-npc create-entry"><i class="fa-solid fa-spaghetti-monster-flying" inert></i><span>${$l10n('SDM.CreateRandomNPC')}</span></button>`
   );
+
   // Add a click listener to the button to render the app
   html.querySelector('.random-npc').addEventListener('click', ev => {
     game.sdm.api.gm.randomNPCGenerator();
+  });
+
+  // Add a click listener to the button to render the app
+  html.querySelector('.random-pc').addEventListener('click', ev => {
+    game.sdm.api.player.characterGeneratorDialog();
   });
 });
 

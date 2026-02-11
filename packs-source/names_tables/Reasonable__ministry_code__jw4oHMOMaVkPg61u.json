@@ -1,0 +1,222 @@
+{
+  "name": "Reasonable (ministry code)",
+  "formula": "1d8",
+  "description": "<p></p>",
+  "results": [
+    {
+      "range": [
+        1,
+        1
+      ],
+      "name": "Administeriä Manu",
+      "_id": "6n6Es8H4Wk7yfG2e",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!jw4oHMOMaVkPg61u.6n6Es8H4Wk7yfG2e"
+    },
+    {
+      "range": [
+        2,
+        2
+      ],
+      "name": "Anarhiä Stahlya",
+      "_id": "hLEFR4BqorflcoS8",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!jw4oHMOMaVkPg61u.hLEFR4BqorflcoS8"
+    },
+    {
+      "range": [
+        3,
+        3
+      ],
+      "name": "Kromeä Resa",
+      "_id": "Bai0rYyR4iZRmgaZ",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!jw4oHMOMaVkPg61u.Bai0rYyR4iZRmgaZ"
+    },
+    {
+      "range": [
+        4,
+        4
+      ],
+      "name": "Loögiä Nuanua",
+      "_id": "mImw7hNDTaH4iHKs",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!jw4oHMOMaVkPg61u.mImw7hNDTaH4iHKs"
+    },
+    {
+      "range": [
+        5,
+        5
+      ],
+      "name": "Primaï Serten",
+      "_id": "syWcsdQAGy2xRcSg",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!jw4oHMOMaVkPg61u.syWcsdQAGy2xRcSg"
+    },
+    {
+      "range": [
+        6,
+        6
+      ],
+      "name": "Publië Soudat",
+      "_id": "fmup7auB7QjxXFEW",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!jw4oHMOMaVkPg61u.fmup7auB7QjxXFEW"
+    },
+    {
+      "range": [
+        7,
+        7
+      ],
+      "name": "Rayone Feü",
+      "_id": "VxRPdmSyiQLRGjtn",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!jw4oHMOMaVkPg61u.VxRPdmSyiQLRGjtn"
+    },
+    {
+      "range": [
+        8,
+        8
+      ],
+      "name": "Tersiï Komanté",
+      "_id": "YMTYpc0XL4ziZWZB",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!jw4oHMOMaVkPg61u.YMTYpc0XL4ziZWZB"
+    }
+  ],
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "6nG6apxhfcD63CwQ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.9.3",
+    "createdTime": 1770656446478,
+    "modifiedTime": 1770656446478,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+  },
+  "_id": "jw4oHMOMaVkPg61u",
+  "sort": 0,
+  "_key": "!tables!jw4oHMOMaVkPg61u"
+}

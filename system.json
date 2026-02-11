@@ -105,7 +105,7 @@
       "type": "RollTable",
       "system": "sdm"
     },
-     {
+    {
       "name": "corruption",
       "label": "Corruption Tables",
       "path": "./packs/corruption",
@@ -133,7 +133,7 @@
       "type": "Item",
       "system": "sdm"
     },
-     {
+    {
       "name": "powers",
       "label": "Powers",
       "path": "./packs/powers",
@@ -182,7 +182,7 @@
       "type": "Actor",
       "system": "sdm"
     },
-     {
+    {
       "name": "npc_generator",
       "label": "NPC Generator",
       "path": "./packs/npc_generator",
@@ -195,21 +195,79 @@
       "path": "./packs/handouts",
       "type": "JournalEntry",
       "system": "sdm"
+    },
+    {
+      "name": "strange_items",
+      "label": "Strange Items",
+      "path": "./packs/strange_items",
+      "type": "Item",
+      "system": "sdm"
+    },
+    {
+      "name": "strange_items_table",
+      "label": "Strange Items Table",
+      "path": "./packs/strange_items_table",
+      "type": "RollTable",
+      "system": "sdm"
+    },
+    {
+      "name": "motive_table",
+      "label": "Motive Table",
+      "path": "./packs/motive_table",
+      "type": "RollTable",
+      "system": "sdm"
+    },
+    {
+      "name": "traits_tables",
+      "label": "Traits Tables",
+      "path": "./packs/traits_tables",
+      "type": "RollTable",
+      "system": "sdm"
+    },
+    {
+      "name": "names_tables",
+      "label": "Names Tables",
+      "path": "./packs/names_tables",
+      "type": "RollTable",
+      "system": "sdm"
     }
   ],
   "packFolders": [
     {
-			"name": "Character Creation",
-			"sorting": "a",
-			"color": "#688B75",
-			"packs": ["ability_scores", "player_macros", "burdens", "corruption", "traits"]
-		},
+      "name": "Character Creation",
+      "sorting": "a",
+      "color": "#688B75",
+      "packs": [
+        "ability_scores",
+        "player_macros",
+        "burdens",
+        "corruption",
+        "strange_items_table",
+        "motive_table",
+        "names_tables"
+      ],
+      "folders": [
+        {
+          "name": "Traits",
+          "sorting": "a",
+          "packs": ["traits", "traits_tables"]
+        }
+      ]
+    },
     {
-			"name": "Items",
-			"sorting": "a",
-			"color": "#E25C65",
-			"packs": ["consumables", "gadgets", "armors", "trait_items", "wards", "weapons"]
-		},
+      "name": "Items",
+      "sorting": "a",
+      "color": "#E25C65",
+      "packs": [
+        "consumables",
+        "gadgets",
+        "armors",
+        "trait_items",
+        "strange_items",
+        "wards",
+        "weapons"
+      ]
+    },
     {
       "name": "Journals",
       "sorting": "a",
@@ -217,23 +275,23 @@
       "packs": ["handouts"]
     },
     {
-			"name": "Powers",
-			"sorting": "a",
-			"color": "#497DAD",
-			"packs": ["powers"]
-		},
+      "name": "Powers",
+      "sorting": "a",
+      "color": "#497DAD",
+      "packs": ["powers"]
+    },
     {
-			"name": "Referee Tools",
-			"sorting": "a",
-			"color": "#785DAA",
-			"packs": ["rolltables", "macros"]
-		},
+      "name": "Referee Tools",
+      "sorting": "a",
+      "color": "#785DAA",
+      "packs": ["rolltables", "macros"]
+    },
     {
-			"name": "Zoa",
-			"sorting": "a",
-			"color": "#b3ab56",
-			"packs": ["creatures", "npc_generator"]
-		}
+      "name": "Zoa",
+      "sorting": "a",
+      "color": "#b3ab56",
+      "packs": ["creatures", "npc_generator"]
+    }
   ],
   "socket": true,
   "background": "systems/sdm/assets/sdm-compatible.png",

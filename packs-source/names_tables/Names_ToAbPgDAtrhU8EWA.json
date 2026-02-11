@@ -1,0 +1,530 @@
+{
+  "name": "Names",
+  "img": "icons/svg/d20-grey.svg",
+  "description": "",
+  "results": [
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "name": "High Common (upper-class)",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.names_tables.RollTable.UJuNswCzYgTV6OD2",
+      "_id": "hizJ76Py69AzuuSp",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ToAbPgDAtrhU8EWA.hizJ76Py69AzuuSp"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "name": "Vulgar Common (middle-class)",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.names_tables.RollTable.IzxtywR7hIp18GAb",
+      "_id": "xJmizGt0OAmAtdLl",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ToAbPgDAtrhU8EWA.xJmizGt0OAmAtdLl"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "name": "Purple Land (cat-magical)",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.names_tables.RollTable.NjCh1tPEGt2Nbtj0",
+      "_id": "HypvwgOoJdy1usCh",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ToAbPgDAtrhU8EWA.HypvwgOoJdy1usCh"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "name": "Blue Land (moldificent)",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.names_tables.RollTable.oMuzeZtlR06crqop",
+      "_id": "t4xjVMcDwSMUYP21",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ToAbPgDAtrhU8EWA.t4xjVMcDwSMUYP21"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "name": "Green Land (very civilized)",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.names_tables.RollTable.eIfsXaP55XWw6pSv",
+      "_id": "kAnSgOr4wZzQfqIJ",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ToAbPgDAtrhU8EWA.kAnSgOr4wZzQfqIJ"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "name": "Yellow Land (mercantile)",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.names_tables.RollTable.s81tuiq1XKBmSKwZ",
+      "_id": "hCpoLVsVXY1aAlmH",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ToAbPgDAtrhU8EWA.hCpoLVsVXY1aAlmH"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "name": "Orange Land (post-mortal)",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.names_tables.RollTable.NU1X0On5AcjKtpW2",
+      "_id": "H5BnBqejkENKS4vb",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ToAbPgDAtrhU8EWA.H5BnBqejkENKS4vb"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "name": "Red Land (vintner vamp)",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.names_tables.RollTable.CnNgQD23xbGlcHyq",
+      "_id": "mbNkAQtIpKIM24qT",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ToAbPgDAtrhU8EWA.mbNkAQtIpKIM24qT"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "name": "Kriol & Cant (out-class)",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.names_tables.RollTable.8Lx1aq15XnO5vPIi",
+      "_id": "MFrxPR4atL0NIYtM",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ToAbPgDAtrhU8EWA.MFrxPR4atL0NIYtM"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "name": "DWARF (working-class)",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.names_tables.RollTable.riTiiWiOYx9tXPJD",
+      "_id": "JR0nyQljoHSdZD3r",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ToAbPgDAtrhU8EWA.JR0nyQljoHSdZD3r"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "name": "Steppe Lands (semi nomadic)",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.names_tables.RollTable.Uu7rwMpOYPMnRnUX",
+      "_id": "AokbIFw9J0Nv6ENT",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ToAbPgDAtrhU8EWA.AokbIFw9J0Nv6ENT"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "name": "Timelost (re-made)",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.names_tables.RollTable.i9J64t1wSH5mz3A3",
+      "_id": "AmjivVa4d850Fthn",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ToAbPgDAtrhU8EWA.AmjivVa4d850Fthn"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        13,
+        13
+      ],
+      "name": "Distributed (polybody)",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.names_tables.RollTable.giiKMIODXwh78LCq",
+      "_id": "V6IrV05Ndw7fe5qG",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ToAbPgDAtrhU8EWA.V6IrV05Ndw7fe5qG"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        14,
+        14
+      ],
+      "name": "Post-Human (ultra ghost)",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.names_tables.RollTable.47CzYxKNTXDeDF73",
+      "_id": "RDN1lbAHkIsWNsg7",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ToAbPgDAtrhU8EWA.RDN1lbAHkIsWNsg7"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        15,
+        15
+      ],
+      "name": "Golem (machine human)",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.names_tables.RollTable.pAh9ZBMpt1F7uk34",
+      "_id": "Bh79GoXvJoVoEpx3",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ToAbPgDAtrhU8EWA.Bh79GoXvJoVoEpx3"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        16,
+        16
+      ],
+      "name": "Quarterling (parahuman)",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.names_tables.RollTable.U7RwKdcQlGUnotOi",
+      "_id": "8fjuX1fb4kJrfqeg",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ToAbPgDAtrhU8EWA.8fjuX1fb4kJrfqeg"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        17,
+        17
+      ],
+      "name": "Clan (non-corporate)",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.names_tables.RollTable.HqZ9SEy4BUdTapHV",
+      "_id": "G8oaW3opR3lIab17",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ToAbPgDAtrhU8EWA.G8oaW3opR3lIab17"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        18,
+        18
+      ],
+      "name": "Ancestor (pre-jubilee)",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.names_tables.RollTable.gLMxcGSWOJZvQT4l",
+      "_id": "nH0tHKu1PN1VhNPf",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ToAbPgDAtrhU8EWA.nH0tHKu1PN1VhNPf"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        19,
+        19
+      ],
+      "name": "Sacred (incorporated)",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.names_tables.RollTable.HoJh8ybRTbrNJ7Uw",
+      "_id": "k234Nb37LOKgzQ70",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ToAbPgDAtrhU8EWA.k234Nb37LOKgzQ70"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        20,
+        20
+      ],
+      "name": "Reasonable (ministry code)",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.names_tables.RollTable.jw4oHMOMaVkPg61u",
+      "_id": "81cAJ5Gxmk3NtbVO",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!ToAbPgDAtrhU8EWA.81cAJ5Gxmk3NtbVO"
+    }
+  ],
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "6nG6apxhfcD63CwQ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.9.3",
+    "createdTime": 1770656801338,
+    "modifiedTime": 1770656801338,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+  },
+  "formula": "1d20",
+  "_id": "ToAbPgDAtrhU8EWA",
+  "sort": 0,
+  "_key": "!tables!ToAbPgDAtrhU8EWA"
+}

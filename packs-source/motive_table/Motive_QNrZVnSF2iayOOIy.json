@@ -1,0 +1,1230 @@
+{
+  "name": "Motive",
+  "description": "<p>Why leave the lovely cement greatcoat of tradition and town behind?</p><p>Why abandon the embrace of hierarchy and rigor of etiquette?</p><p>Why head out into the waste lands, the strange lands, the Vastlands?</p>",
+  "formula": "1d50",
+  "results": [
+    {
+      "range": [
+        1,
+        1
+      ],
+      "description": "",
+      "_id": "qe6ITmTetXcbC12x",
+      "type": "text",
+      "name": "Sent by a grim corporation.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.qe6ITmTetXcbC12x"
+    },
+    {
+      "range": [
+        2,
+        2
+      ],
+      "description": "",
+      "_id": "CzpQTMlITW6A3x0u",
+      "type": "text",
+      "name": "Glory, like in the great romantic novels.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.CzpQTMlITW6A3x0u"
+    },
+    {
+      "range": [
+        3,
+        3
+      ],
+      "description": "",
+      "_id": "98PIndDoGUkqcL5r",
+      "type": "text",
+      "name": "Blood memories of a great patrimony.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.98PIndDoGUkqcL5r"
+    },
+    {
+      "range": [
+        4,
+        4
+      ],
+      "description": "",
+      "_id": "Gxj5mNnQNoCgcghO",
+      "type": "text",
+      "name": "Tracking a missing ledger.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.Gxj5mNnQNoCgcghO"
+    },
+    {
+      "range": [
+        5,
+        5
+      ],
+      "description": "",
+      "_id": "8TdU1RM6AUmaarg5",
+      "type": "text",
+      "name": "Seeking new converts.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.8TdU1RM6AUmaarg5"
+    },
+    {
+      "range": [
+        6,
+        6
+      ],
+      "description": "",
+      "_id": "46kYMUji7eBaSKBL",
+      "type": "text",
+      "name": "Rumors of a fabulous autofac.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.46kYMUji7eBaSKBL"
+    },
+    {
+      "range": [
+        7,
+        7
+      ],
+      "description": "",
+      "_id": "jDAHnahZf1fEpkYn",
+      "type": "text",
+      "name": "Found clue to abmortality.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.jDAHnahZf1fEpkYn"
+    },
+    {
+      "range": [
+        8,
+        8
+      ],
+      "description": "",
+      "_id": "9vls9wAdVqkAYUo0",
+      "type": "text",
+      "name": "Ordered by an ominous disembodied voice.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.9vls9wAdVqkAYUo0"
+    },
+    {
+      "range": [
+        9,
+        9
+      ],
+      "description": "",
+      "_id": "Vd0VvndFuLjXQtK7",
+      "type": "text",
+      "name": "Map to an unclaimed aerolith.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.Vd0VvndFuLjXQtK7"
+    },
+    {
+      "range": [
+        10,
+        10
+      ],
+      "description": "",
+      "_id": "YmvoyQj3N9qqJJsA",
+      "type": "text",
+      "name": "Soul of loved one stolen by a horror.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.YmvoyQj3N9qqJJsA"
+    },
+    {
+      "range": [
+        11,
+        11
+      ],
+      "description": "",
+      "_id": "JN4Pdlsql6ley0Qu",
+      "type": "text",
+      "name": "Stories of a secret healing vegetable.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.JN4Pdlsql6ley0Qu"
+    },
+    {
+      "range": [
+        12,
+        12
+      ],
+      "description": "",
+      "_id": "ksPA6OxH3FiAydtX",
+      "type": "text",
+      "name": "Portents of a deadly machine demon.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.ksPA6OxH3FiAydtX"
+    },
+    {
+      "range": [
+        13,
+        13
+      ],
+      "description": "",
+      "_id": "4eBnCTaLPBPmfF1y",
+      "type": "text",
+      "name": "Paintings of a gorgeous cyan seaside.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.4eBnCTaLPBPmfF1y"
+    },
+    {
+      "range": [
+        14,
+        14
+      ],
+      "description": "",
+      "_id": "pxAmryIoBR7Z9AJ1",
+      "type": "text",
+      "name": "Pursued by loving enemies.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.pxAmryIoBR7Z9AJ1"
+    },
+    {
+      "range": [
+        15,
+        15
+      ],
+      "description": "",
+      "_id": "A5NEINGhQmWzv6yz",
+      "type": "text",
+      "name": "Grandmother's lost autowagon.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.A5NEINGhQmWzv6yz"
+    },
+    {
+      "range": [
+        16,
+        16
+      ],
+      "description": "",
+      "_id": "MLsvSZhOR2BeNJjm",
+      "type": "text",
+      "name": "Sibling was stripped into a ba-zombie.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.MLsvSZhOR2BeNJjm"
+    },
+    {
+      "range": [
+        17,
+        17
+      ],
+      "description": "",
+      "_id": "nILylAPsH3COaxB9",
+      "type": "text",
+      "name": "Master boneworker sent an invitation.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.nILylAPsH3COaxB9"
+    },
+    {
+      "range": [
+        18,
+        18
+      ],
+      "description": "",
+      "_id": "ahguQ4YLNWd37NFU",
+      "type": "text",
+      "name": "Delivering a letter of inheritance to a count.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.ahguQ4YLNWd37NFU"
+    },
+    {
+      "range": [
+        19,
+        19
+      ],
+      "description": "",
+      "_id": "6n2J35XFPd7pdeov",
+      "type": "text",
+      "name": "Cure for a plague that killed your child.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.6n2J35XFPd7pdeov"
+    },
+    {
+      "range": [
+        20,
+        20
+      ],
+      "description": "",
+      "_id": "Ta3whDKbXtprxp9e",
+      "type": "text",
+      "name": "Biomantic bible in a lost library.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.Ta3whDKbXtprxp9e"
+    },
+    {
+      "range": [
+        21,
+        21
+      ],
+      "description": "",
+      "_id": "HIIypEsmZZeznJe8",
+      "type": "text",
+      "name": "Repaying debts to the butcher bank.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.HIIypEsmZZeznJe8"
+    },
+    {
+      "range": [
+        22,
+        22
+      ],
+      "description": "",
+      "_id": "L8J9HVi3tKWt8HYy",
+      "type": "text",
+      "name": "Visions of a world ending in falling fire.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.L8J9HVi3tKWt8HYy"
+    },
+    {
+      "range": [
+        23,
+        23
+      ],
+      "description": "",
+      "_id": "7jHPt6NIhPT2xlV0",
+      "type": "text",
+      "name": "Bearing a priceless pearl for a princess.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.7jHPt6NIhPT2xlV0"
+    },
+    {
+      "range": [
+        24,
+        24
+      ],
+      "description": "",
+      "_id": "Nvnz1ys4eXnkrhT3",
+      "type": "text",
+      "name": "Tracking a vile intruder from the void.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.Nvnz1ys4eXnkrhT3"
+    },
+    {
+      "range": [
+        25,
+        25
+      ],
+      "description": "",
+      "_id": "HoqdY84SIICffnvi",
+      "type": "text",
+      "name": "Mind entwined with a dying sentience.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.HoqdY84SIICffnvi"
+    },
+    {
+      "range": [
+        26,
+        26
+      ],
+      "description": "",
+      "_id": "yGxzHe9txYMiHJWP",
+      "type": "text",
+      "name": "Nightly dreams of a lost world.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.yGxzHe9txYMiHJWP"
+    },
+    {
+      "range": [
+        27,
+        27
+      ],
+      "description": "",
+      "_id": "1cxCejf3vI3V1tw1",
+      "type": "text",
+      "name": "Seeking a prosthetic body for mother.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.1cxCejf3vI3V1tw1"
+    },
+    {
+      "range": [
+        28,
+        28
+      ],
+      "description": "",
+      "_id": "ygoIZcLOqWS97rew",
+      "type": "text",
+      "name": "Ordered by the clan quest golem.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.ygoIZcLOqWS97rew"
+    },
+    {
+      "range": [
+        29,
+        29
+      ],
+      "description": "",
+      "_id": "hUb24aJODvjBWass",
+      "type": "text",
+      "name": "Keeping tabs on a rival explorer.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.hUb24aJODvjBWass"
+    },
+    {
+      "range": [
+        30,
+        30
+      ],
+      "description": "",
+      "_id": "6O2kEZu9COFprifO",
+      "type": "text",
+      "name": "Exploring clues to the great forgetting.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.6O2kEZu9COFprifO"
+    },
+    {
+      "range": [
+        31,
+        31
+      ],
+      "description": "",
+      "_id": "ZGLcfSqaULGkNkhW",
+      "type": "text",
+      "name": "Possessed by a demon in childhood.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.ZGLcfSqaULGkNkhW"
+    },
+    {
+      "range": [
+        32,
+        32
+      ],
+      "description": "",
+      "_id": "bHMY7Rm9UWPKWqTB",
+      "type": "text",
+      "name": "Seeking allies for a revolution.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.bHMY7Rm9UWPKWqTB"
+    },
+    {
+      "range": [
+        33,
+        33
+      ],
+      "description": "",
+      "_id": "LFp2fN3FyoPSYxs6",
+      "type": "text",
+      "name": "Looking for new lands for lost tribe.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.LFp2fN3FyoPSYxs6"
+    },
+    {
+      "range": [
+        34,
+        34
+      ],
+      "description": "",
+      "_id": "PEUzKvhO38spXT6J",
+      "type": "text",
+      "name": "Compulsion after meeting a seer.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.PEUzKvhO38spXT6J"
+    },
+    {
+      "range": [
+        35,
+        35
+      ],
+      "description": "",
+      "_id": "yidrDFGywz5tLOn5",
+      "type": "text",
+      "name": "Sheer industrial greed.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.yidrDFGywz5tLOn5"
+    },
+    {
+      "range": [
+        36,
+        36
+      ],
+      "description": "",
+      "_id": "cM6br7BniL5BY7WY",
+      "type": "text",
+      "name": "Determined to end a crippling disease.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.cM6br7BniL5BY7WY"
+    },
+    {
+      "range": [
+        37,
+        37
+      ],
+      "description": "",
+      "_id": "VyL7lf4Wmac66Nvy",
+      "type": "text",
+      "name": "Found the testament of a dead god.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.VyL7lf4Wmac66Nvy"
+    },
+    {
+      "range": [
+        38,
+        38
+      ],
+      "description": "",
+      "_id": "z6Icc9TIIG4mRVLT",
+      "type": "text",
+      "name": "Pursued by furies and a dark fate.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.z6Icc9TIIG4mRVLT"
+    },
+    {
+      "range": [
+        39,
+        39
+      ],
+      "description": "",
+      "_id": "69s9TsdFSFyHzFT3",
+      "type": "text",
+      "name": "Visions of glory and rebirth.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.69s9TsdFSFyHzFT3"
+    },
+    {
+      "range": [
+        40,
+        40
+      ],
+      "description": "",
+      "_id": "NnCClwMqcH2Y2cFa",
+      "type": "text",
+      "name": "Queer unease after reading a metal book.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.NnCClwMqcH2Y2cFa"
+    },
+    {
+      "range": [
+        41,
+        41
+      ],
+      "description": "",
+      "_id": "QfWo44c3mGlo13eP",
+      "type": "text",
+      "name": "Experience of a tragic vomish outbreak.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.QfWo44c3mGlo13eP"
+    },
+    {
+      "range": [
+        42,
+        42
+      ],
+      "description": "",
+      "_id": "CcR8UIOS9iy9HtZs",
+      "type": "text",
+      "name": "Their aged clone whispered prophecies.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.CcR8UIOS9iy9HtZs"
+    },
+    {
+      "range": [
+        43,
+        43
+      ],
+      "description": "",
+      "_id": "emAxQUBHu5s5qmyi",
+      "type": "text",
+      "name": "Hallucinatory star, guiding, leading West.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.emAxQUBHu5s5qmyi"
+    },
+    {
+      "range": [
+        44,
+        44
+      ],
+      "description": "",
+      "_id": "0bEI1Bbe8sdo40Pq",
+      "type": "text",
+      "name": "Songs in the blood of a Flesh God scion.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.0bEI1Bbe8sdo40Pq"
+    },
+    {
+      "range": [
+        45,
+        45
+      ],
+      "description": "",
+      "_id": "YfqRlGPQGSHdeWoR",
+      "type": "text",
+      "name": "Mystic manual talked of a divine workshop.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.YfqRlGPQGSHdeWoR"
+    },
+    {
+      "range": [
+        46,
+        46
+      ],
+      "description": "",
+      "_id": "RuqD7rgLnhFwV4Ja",
+      "type": "text",
+      "name": "Post-mortal messenger gave a portal key.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.RuqD7rgLnhFwV4Ja"
+    },
+    {
+      "range": [
+        47,
+        47
+      ],
+      "description": "",
+      "_id": "n5t3NZVtAEiCU0sQ",
+      "type": "text",
+      "name": "Bone-deep ennui at an unchanging order.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.n5t3NZVtAEiCU0sQ"
+    },
+    {
+      "range": [
+        48,
+        48
+      ],
+      "description": "",
+      "_id": "NzcKZJk8n3QzSjH1",
+      "type": "text",
+      "name": "Dying grandparent's oath to a lacquer queen.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.NzcKZJk8n3QzSjH1"
+    },
+    {
+      "range": [
+        49,
+        49
+      ],
+      "description": "",
+      "_id": "1m2AgPHH9MSYm99T",
+      "type": "text",
+      "name": "Promise to take a friend's ashes to the last sea.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.1m2AgPHH9MSYm99T"
+    },
+    {
+      "range": [
+        50,
+        50
+      ],
+      "description": "",
+      "_id": "nbV5w5IfoDID4SyZ",
+      "type": "text",
+      "name": "Dream quest order to destroy an invisible ring.",
+      "img": null,
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!QNrZVnSF2iayOOIy.nbV5w5IfoDID4SyZ"
+    }
+  ],
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "Ex9ibz7imBNLfqpb": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.9.3",
+    "createdTime": 1770582874449,
+    "modifiedTime": 1770582874449,
+    "lastModifiedBy": "Ex9ibz7imBNLfqpb"
+  },
+  "_id": "QNrZVnSF2iayOOIy",
+  "sort": 0,
+  "_key": "!tables!QNrZVnSF2iayOOIy"
+}

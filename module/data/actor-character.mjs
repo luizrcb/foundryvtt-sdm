@@ -142,7 +142,6 @@ export default class SdmCharacter extends SdmActorBase {
       initial: 0
     });
 
-    //TODO: remove total carry weight and encumbered active effects, to use slots system and burden penalties
     // in CASH
     schema.carry_weight = new fields.SchemaField({
       unencumbered: new fields.NumberField({

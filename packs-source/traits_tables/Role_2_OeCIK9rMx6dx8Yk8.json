@@ -1,0 +1,990 @@
+{
+  "name": "Role 2",
+  "formula": "1d40",
+  "description": "<p></p>",
+  "results": [
+    {
+      "range": [
+        1,
+        1
+      ],
+      "name": "apothecary",
+      "_id": "yfFs8YelZR0L90p2",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.yfFs8YelZR0L90p2"
+    },
+    {
+      "range": [
+        2,
+        2
+      ],
+      "name": "of Long Ago",
+      "_id": "3hfHosLcyxV2ig5B",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.3hfHosLcyxV2ig5B"
+    },
+    {
+      "range": [
+        3,
+        3
+      ],
+      "name": "tourist",
+      "_id": "fzekvgFY3zq3jzjg",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.fzekvgFY3zq3jzjg"
+    },
+    {
+      "range": [
+        4,
+        4
+      ],
+      "name": "mechanic",
+      "_id": "dVl2B2HjuIc13ERC",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.dVl2B2HjuIc13ERC"
+    },
+    {
+      "range": [
+        5,
+        5
+      ],
+      "name": "groom",
+      "_id": "o7jmEQoVCYU6KlY4",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.o7jmEQoVCYU6KlY4"
+    },
+    {
+      "range": [
+        6,
+        6
+      ],
+      "name": "chemist",
+      "_id": "lxrbHlAtaK2OHdAS",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.lxrbHlAtaK2OHdAS"
+    },
+    {
+      "range": [
+        7,
+        7
+      ],
+      "name": "barista",
+      "_id": "PdBnvTz8FZxqyf1X",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.PdBnvTz8FZxqyf1X"
+    },
+    {
+      "range": [
+        8,
+        8
+      ],
+      "name": "censor",
+      "_id": "F94ZS9LdZUhrGvyV",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.F94ZS9LdZUhrGvyV"
+    },
+    {
+      "range": [
+        9,
+        9
+      ],
+      "name": "performer",
+      "_id": "t9cmCs3gX5XKC5qG",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.t9cmCs3gX5XKC5qG"
+    },
+    {
+      "range": [
+        10,
+        10
+      ],
+      "name": "singer",
+      "_id": "ZYk9cMdxqNNhyRTp",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.ZYk9cMdxqNNhyRTp"
+    },
+    {
+      "range": [
+        11,
+        11
+      ],
+      "name": "stoner",
+      "_id": "1cdm6coQs8Vctafa",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.1cdm6coQs8Vctafa"
+    },
+    {
+      "range": [
+        12,
+        12
+      ],
+      "name": "farmer",
+      "_id": "T79HjFVftWym0JB5",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.T79HjFVftWym0JB5"
+    },
+    {
+      "range": [
+        13,
+        13
+      ],
+      "name": "caller",
+      "_id": "2soVP5jZe9G1GvOp",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.2soVP5jZe9G1GvOp"
+    },
+    {
+      "range": [
+        14,
+        14
+      ],
+      "name": "maker",
+      "_id": "P8KjkMvuvgGSbbr5",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.P8KjkMvuvgGSbbr5"
+    },
+    {
+      "range": [
+        15,
+        15
+      ],
+      "name": "laborer",
+      "_id": "Zx5in7y7tMO9J41r",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.Zx5in7y7tMO9J41r"
+    },
+    {
+      "range": [
+        16,
+        16
+      ],
+      "name": "generator",
+      "_id": "7CNZrN9I79Bwk5qU",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.7CNZrN9I79Bwk5qU"
+    },
+    {
+      "range": [
+        17,
+        17
+      ],
+      "name": "sanitizer",
+      "_id": "IxfJsnLZYXwq2Wzc",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.IxfJsnLZYXwq2Wzc"
+    },
+    {
+      "range": [
+        18,
+        18
+      ],
+      "name": "summoner",
+      "_id": "lgIwUteGwGxS38ze",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.lgIwUteGwGxS38ze"
+    },
+    {
+      "range": [
+        19,
+        19
+      ],
+      "name": "whisperer",
+      "_id": "VIlGMYNPTAyqE3h9",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.VIlGMYNPTAyqE3h9"
+    },
+    {
+      "range": [
+        20,
+        20
+      ],
+      "name": "officer",
+      "_id": "KN3tykTo7ethmPjz",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.KN3tykTo7ethmPjz"
+    },
+    {
+      "range": [
+        21,
+        21
+      ],
+      "name": "lawyer",
+      "_id": "zlp0hn7ZBRtueawo",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.zlp0hn7ZBRtueawo"
+    },
+    {
+      "range": [
+        22,
+        22
+      ],
+      "name": "technician",
+      "_id": "vp67DgfdidAxAulB",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.vp67DgfdidAxAulB"
+    },
+    {
+      "range": [
+        23,
+        23
+      ],
+      "name": "engineer",
+      "_id": "bQ9SKdD1RUkTWHdr",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.bQ9SKdD1RUkTWHdr"
+    },
+    {
+      "range": [
+        24,
+        24
+      ],
+      "name": "manager",
+      "_id": "p9Mb0eqFzhOaO4HA",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.p9Mb0eqFzhOaO4HA"
+    },
+    {
+      "range": [
+        25,
+        25
+      ],
+      "name": "walker",
+      "_id": "rRXPmWqVHchT3lp6",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.rRXPmWqVHchT3lp6"
+    },
+    {
+      "range": [
+        26,
+        26
+      ],
+      "name": "private",
+      "_id": "AqJQP5DvNhTUule8",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.AqJQP5DvNhTUule8"
+    },
+    {
+      "range": [
+        27,
+        27
+      ],
+      "name": "merchant",
+      "_id": "xJnSz0kLQrbCrMvb",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.xJnSz0kLQrbCrMvb"
+    },
+    {
+      "range": [
+        28,
+        28
+      ],
+      "name": "soldier",
+      "_id": "KaOOhLHbYM61HJr2",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.KaOOhLHbYM61HJr2"
+    },
+    {
+      "range": [
+        29,
+        29
+      ],
+      "name": "general",
+      "_id": "0l3fgU3fMPmyITDj",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.0l3fgU3fMPmyITDj"
+    },
+    {
+      "range": [
+        30,
+        30
+      ],
+      "name": "monk",
+      "_id": "pO4cnZklSjORWuk3",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.pO4cnZklSjORWuk3"
+    },
+    {
+      "range": [
+        31,
+        31
+      ],
+      "name": "herder",
+      "_id": "yu0CuK1Yn9k1Ma4t",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.yu0CuK1Yn9k1Ma4t"
+    },
+    {
+      "range": [
+        32,
+        32
+      ],
+      "name": "promoter",
+      "_id": "SKQBXgLJ4nhcCiDi",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.SKQBXgLJ4nhcCiDi"
+    },
+    {
+      "range": [
+        33,
+        33
+      ],
+      "name": "servant",
+      "_id": "2CXqVWBhLRcaKvdr",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.2CXqVWBhLRcaKvdr"
+    },
+    {
+      "range": [
+        34,
+        34
+      ],
+      "name": "nurse",
+      "_id": "TVQM5yZxCe6i53xP",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.TVQM5yZxCe6i53xP"
+    },
+    {
+      "range": [
+        35,
+        35
+      ],
+      "name": "consumer",
+      "_id": "jfDraK04FCr8c8WK",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.jfDraK04FCr8c8WK"
+    },
+    {
+      "range": [
+        36,
+        36
+      ],
+      "name": "maximizer",
+      "_id": "GgpbvYZFgGffYxo2",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.GgpbvYZFgGffYxo2"
+    },
+    {
+      "range": [
+        37,
+        37
+      ],
+      "name": "trader",
+      "_id": "fcaoc6lm6nbtl5S3",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.fcaoc6lm6nbtl5S3"
+    },
+    {
+      "range": [
+        38,
+        38
+      ],
+      "name": "hobo",
+      "_id": "eRXDBEIvH19SVcS3",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.eRXDBEIvH19SVcS3"
+    },
+    {
+      "range": [
+        39,
+        39
+      ],
+      "name": "noble",
+      "_id": "R9tKovfkjAYPS5Kf",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.R9tKovfkjAYPS5Kf"
+    },
+    {
+      "range": [
+        40,
+        40
+      ],
+      "name": "relative",
+      "_id": "J1aXWERMHMkBrdVd",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!OeCIK9rMx6dx8Yk8.J1aXWERMHMkBrdVd"
+    }
+  ],
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "SwkRaJM5VJ1eCvAC",
+  "ownership": {
+    "default": 0,
+    "6nG6apxhfcD63CwQ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.9.3",
+    "createdTime": 1770654227010,
+    "modifiedTime": 1770654246055,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+  },
+  "_id": "OeCIK9rMx6dx8Yk8",
+  "sort": 500000,
+  "_key": "!tables!OeCIK9rMx6dx8Yk8"
+}
