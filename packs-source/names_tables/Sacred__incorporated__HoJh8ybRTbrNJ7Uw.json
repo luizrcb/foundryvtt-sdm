@@ -1,0 +1,222 @@
+{
+  "name": "Sacred (incorporated)",
+  "formula": "1d8",
+  "description": "<p></p>",
+  "results": [
+    {
+      "range": [
+        1,
+        1
+      ],
+      "name": "BigDog",
+      "_id": "orztSfnnRohtiDxi",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HoJh8ybRTbrNJ7Uw.orztSfnnRohtiDxi"
+    },
+    {
+      "range": [
+        2,
+        2
+      ],
+      "name": "Black Obelisk",
+      "_id": "3SHdGwUYqTenKk01",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HoJh8ybRTbrNJ7Uw.3SHdGwUYqTenKk01"
+    },
+    {
+      "range": [
+        3,
+        3
+      ],
+      "name": "M.O.O.N.",
+      "_id": "SyB3jC9UChtmcSGo",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HoJh8ybRTbrNJ7Uw.SyB3jC9UChtmcSGo"
+    },
+    {
+      "range": [
+        4,
+        4
+      ],
+      "name": "Neo-Delphi",
+      "_id": "5wxVuPnt9VLSVV5x",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HoJh8ybRTbrNJ7Uw.5wxVuPnt9VLSVV5x"
+    },
+    {
+      "range": [
+        5,
+        5
+      ],
+      "name": "Otto Corp",
+      "_id": "qPKwSX0dw4YaPpwa",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HoJh8ybRTbrNJ7Uw.qPKwSX0dw4YaPpwa"
+    },
+    {
+      "range": [
+        6,
+        6
+      ],
+      "name": "PearV \"Fruiting\"",
+      "_id": "TF32OPTOpgD92AuI",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HoJh8ybRTbrNJ7Uw.TF32OPTOpgD92AuI"
+    },
+    {
+      "range": [
+        7,
+        7
+      ],
+      "name": "Tower of Heaven",
+      "_id": "j0y2CwhhCcvcpmcj",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HoJh8ybRTbrNJ7Uw.j0y2CwhhCcvcpmcj"
+    },
+    {
+      "range": [
+        8,
+        8
+      ],
+      "name": "U+",
+      "_id": "Jcnw8OPD8X3eoWTf",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!HoJh8ybRTbrNJ7Uw.Jcnw8OPD8X3eoWTf"
+    }
+  ],
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "6nG6apxhfcD63CwQ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.9.3",
+    "createdTime": 1770656449014,
+    "modifiedTime": 1770656449014,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+  },
+  "_id": "HoJh8ybRTbrNJ7Uw",
+  "sort": 0,
+  "_key": "!tables!HoJh8ybRTbrNJ7Uw"
+}

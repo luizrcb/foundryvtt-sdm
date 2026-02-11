@@ -1,0 +1,990 @@
+{
+  "name": "Tasks",
+  "formula": "1d40",
+  "description": "<p></p>",
+  "results": [
+    {
+      "range": [
+        1,
+        1
+      ],
+      "name": "mix potions, poisons, drugs",
+      "_id": "pL1Wp5oJV5fsDq1b",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.pL1Wp5oJV5fsDq1b"
+    },
+    {
+      "range": [
+        2,
+        2
+      ],
+      "name": "explore the false past of lost times",
+      "_id": "PtyocB6NvL8toyjT",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.PtyocB6NvL8toyjT"
+    },
+    {
+      "range": [
+        3,
+        3
+      ],
+      "name": "find and enjoy strange beasts",
+      "_id": "bZqN0an4FSU2lnFX",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.bZqN0an4FSU2lnFX"
+    },
+    {
+      "range": [
+        4,
+        4
+      ],
+      "name": "modify and create living things",
+      "_id": "UfWMPDokLRWrf2qj",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.UfWMPDokLRWrf2qj"
+    },
+    {
+      "range": [
+        5,
+        5
+      ],
+      "name": "make cats [or other masters] happy",
+      "_id": "ZgFTXGmpiHMfIM2F",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.ZgFTXGmpiHMfIM2F"
+    },
+    {
+      "range": [
+        6,
+        6
+      ],
+      "name": "manipulate the basic iksr of matter",
+      "_id": "6IjY4LNhr6f641mI",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.6IjY4LNhr6f641mI"
+    },
+    {
+      "range": [
+        7,
+        7
+      ],
+      "name": "make coffee and make peace",
+      "_id": "qIBcfe4JRCTh4QBs",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.qIBcfe4JRCTh4QBs"
+    },
+    {
+      "range": [
+        8,
+        8
+      ],
+      "name": "prevent bad-think, fix mistakes",
+      "_id": "TI1KVycitLWcRLOP",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.TI1KVycitLWcRLOP"
+    },
+    {
+      "range": [
+        9,
+        9
+      ],
+      "name": "undo ennui, create moderate joy",
+      "_id": "fubQlNjXdN7S7PNt",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.fubQlNjXdN7S7PNt"
+    },
+    {
+      "range": [
+        10,
+        10
+      ],
+      "name": "shape plants, sculpt furnishings",
+      "_id": "8JmoEloTUZfavvW0",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.8JmoEloTUZfavvW0"
+    },
+    {
+      "range": [
+        11,
+        11
+      ],
+      "name": "shape stone, sing houses",
+      "_id": "sVOZpGs2fjDH6dwY",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.sVOZpGs2fjDH6dwY"
+    },
+    {
+      "range": [
+        12,
+        12
+      ],
+      "name": "protein and fruits from the waters",
+      "_id": "ET0mLKdmmre6O5re",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.ET0mLKdmmre6O5re"
+    },
+    {
+      "range": [
+        13,
+        13
+      ],
+      "name": "talk to the hidden archive daemons",
+      "_id": "VBQx2a8r8lLpL23k",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.VBQx2a8r8lLpL23k"
+    },
+    {
+      "range": [
+        14,
+        14
+      ],
+      "name": "craft the forbidden tools of Long Ago",
+      "_id": "nr6pvfkXWMQ0YMVA",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.nr6pvfkXWMQ0YMVA"
+    },
+    {
+      "range": [
+        15,
+        15
+      ],
+      "name": "optimize primary production",
+      "_id": "BQRuNNfOTz4eEjzd",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.BQRuNNfOTz4eEjzd"
+    },
+    {
+      "range": [
+        16,
+        16
+      ],
+      "name": "create compelling human content",
+      "_id": "67ArF5Wc1bnGhpB4",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.67ArF5Wc1bnGhpB4"
+    },
+    {
+      "range": [
+        17,
+        17
+      ],
+      "name": "keep the town clean and alive",
+      "_id": "IA80EittnudyOcek",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.IA80EittnudyOcek"
+    },
+    {
+      "range": [
+        18,
+        18
+      ],
+      "name": "interface with disembodied minds",
+      "_id": "DGSOGbIUlBftAJEE",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.DGSOGbIUlBftAJEE"
+    },
+    {
+      "range": [
+        19,
+        19
+      ],
+      "name": "interface with beast-bodied minds",
+      "_id": "HcmROsn3ll18h9Nd",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.HcmROsn3ll18h9Nd"
+    },
+    {
+      "range": [
+        20,
+        20
+      ],
+      "name": "ensure adequate public harmony",
+      "_id": "wKWGERxQ7vUJGR1h",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.wKWGERxQ7vUJGR1h"
+    },
+    {
+      "range": [
+        21,
+        21
+      ],
+      "name": "uphold postmortal legal rights",
+      "_id": "glYVjgSdsCDgSTQ2",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.glYVjgSdsCDgSTQ2"
+    },
+    {
+      "range": [
+        22,
+        22
+      ],
+      "name": "chant the mantras of maintenance",
+      "_id": "aS8gFKm3TUlNKLVP",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.aS8gFKm3TUlNKLVP"
+    },
+    {
+      "range": [
+        23,
+        23
+      ],
+      "name": "keep the machine humans running",
+      "_id": "Gj06JJy3yDGaK7Rk",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.Gj06JJy3yDGaK7Rk"
+    },
+    {
+      "range": [
+        24,
+        24
+      ],
+      "name": "assign assigned assignations",
+      "_id": "UNzVHw1qcVL97bhf",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.UNzVHw1qcVL97bhf"
+    },
+    {
+      "range": [
+        25,
+        25
+      ],
+      "name": "keep the roads alive and respected",
+      "_id": "bNPqFHniJ6myLXO6",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.bNPqFHniJ6myLXO6"
+    },
+    {
+      "range": [
+        26,
+        26
+      ],
+      "name": "look, listen, and report to authority",
+      "_id": "gengSCudWp8OdOwS",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.gengSCudWp8OdOwS"
+    },
+    {
+      "range": [
+        27,
+        27
+      ],
+      "name": "truck and barter for the greater good",
+      "_id": "QXKrmKiKM98NQWvE",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.QXKrmKiKM98NQWvE"
+    },
+    {
+      "range": [
+        28,
+        28
+      ],
+      "name": "keep the martial traditions alive",
+      "_id": "wzWbTu6cCmakdTyj",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.wzWbTu6cCmakdTyj"
+    },
+    {
+      "range": [
+        29,
+        29
+      ],
+      "name": "divine strategies from the stars",
+      "_id": "HVDGxVO71kx5uj8N",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.HVDGxVO71kx5uj8N"
+    },
+    {
+      "range": [
+        30,
+        30
+      ],
+      "name": "ensure the holy numbers go up",
+      "_id": "7m7SJbojaBKY386B",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.7m7SJbojaBKY386B"
+    },
+    {
+      "range": [
+        31,
+        31
+      ],
+      "name": "keep the synthetic flocks in line",
+      "_id": "PlmkQNbZRfIdLocv",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.PlmkQNbZRfIdLocv"
+    },
+    {
+      "range": [
+        32,
+        32
+      ],
+      "name": "popularize the latest entertainment",
+      "_id": "E7bmfODZWKiBucPq",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.E7bmfODZWKiBucPq"
+    },
+    {
+      "range": [
+        33,
+        33
+      ],
+      "name": "promote the corporate bottom line",
+      "_id": "zVm4U3rEyWmSTmZu",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.zVm4U3rEyWmSTmZu"
+    },
+    {
+      "range": [
+        34,
+        34
+      ],
+      "name": "support a smarter golem than you",
+      "_id": "8p3KNcG0bMcxBmpq",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.8p3KNcG0bMcxBmpq"
+    },
+    {
+      "range": [
+        35,
+        35
+      ],
+      "name": "embody proper ethics",
+      "_id": "eH98dmN7eoYSQtQF",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.eH98dmN7eoYSQtQF"
+    },
+    {
+      "range": [
+        36,
+        36
+      ],
+      "name": "enjoy the fruits of civilization",
+      "_id": "ovmR9pQET5Jq7U8M",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.ovmR9pQET5Jq7U8M"
+    },
+    {
+      "range": [
+        37,
+        37
+      ],
+      "name": "skirt the rules for profit",
+      "_id": "T2Ky8tBX4g1ZZL9Y",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.T2Ky8tBX4g1ZZL9Y"
+    },
+    {
+      "range": [
+        38,
+        38
+      ],
+      "name": "be a warning to the lazy",
+      "_id": "rJdM3kyBrv1cUulV",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.rJdM3kyBrv1cUulV"
+    },
+    {
+      "range": [
+        39,
+        39
+      ],
+      "name": "focus aspirations and social desires",
+      "_id": "UsfeTeal9Y5aKYRQ",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.UsfeTeal9Y5aKYRQ"
+    },
+    {
+      "range": [
+        40,
+        40
+      ],
+      "name": "share social love and vibes",
+      "_id": "bWSCNcQkBcqw7vMw",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VefImcs6JgyloxFn.bWSCNcQkBcqw7vMw"
+    }
+  ],
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "SwkRaJM5VJ1eCvAC",
+  "ownership": {
+    "default": 0,
+    "6nG6apxhfcD63CwQ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.9.3",
+    "createdTime": 1770654230103,
+    "modifiedTime": 1770654246055,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+  },
+  "_id": "VefImcs6JgyloxFn",
+  "sort": 300000,
+  "_key": "!tables!VefImcs6JgyloxFn"
+}

@@ -1,3 +1,4 @@
+import { SdmItem } from '../documents/item.mjs';
 import { ActorType } from './constants.mjs';
 import { templatePath } from './templates.mjs';
 const { renderTemplate } = foundry.applications.handlebars;
@@ -307,20 +308,28 @@ export async function createNPCByLevel(name, lvl, tableName, initiative) {
   return npcData;
 }
 
-export async function createBackgroundTrait(targetActor, { title = '', task = '', spin = '' }) {
+export async function createBackgroundTrait(
+  targetActor = null,
+  { title = '', task = '', spin = '' }
+) {
   const description = `
 <p><strong>${game.i18n.localize('SDM.BackgroundTask')}:</strong> ${task}</p>
 <p><strong>${game.i18n.localize('SDM.BackgroundSpin')}:</strong> ${spin}</p>`;
 
-  await targetActor.createEmbeddedDocuments('Item', [
-    new Item({
-      name: title,
-      type: 'trait',
-      system: {
-        description
-      }
-    }).toObject()
-  ]);
+  const itemObject = new Item({
+    name: title,
+    type: 'trait',
+    system: {
+      description
+    }
+  }).toObject();
+
+  if (!targetActor) {
+    await SdmItem.create(itemObject);
+    return;
+  }
+
+  await targetActor.createEmbeddedDocuments('Item', [itemObject]);
 }
 
 export async function createFullAutoDestructionMode(

@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## v0.10.0
+
+- Group initiative tiebreaking setting now defaults to false
+- Added a character generator (GM only feature)
+- Added new compendiums (strange items, strange items table, motive table, traits tables, and names tables)
+- Corruption items (gears or traits) can now be used as a skill in relevant rolls
+- The background trait generator no longer requires a selected token
+- Added a corruption intensity table
+- Dragging items from one sheet to another while pressing Ctrl will cause the item to be copied over
+
 ## v0.9.3
 
 - Fixed initiative tie breaking config not working when disabled

@@ -1,0 +1,222 @@
+{
+  "name": "Kriol & Cant (out-class)",
+  "formula": "1d8",
+  "description": "<p></p>",
+  "results": [
+    {
+      "range": [
+        1,
+        1
+      ],
+      "name": "Anater En-Ein",
+      "_id": "fVYRUYZ9ER3oWz8A",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!8Lx1aq15XnO5vPIi.fVYRUYZ9ER3oWz8A"
+    },
+    {
+      "range": [
+        2,
+        2
+      ],
+      "name": "Hors To-Burk",
+      "_id": "aElowRPiDFKHd366",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!8Lx1aq15XnO5vPIi.aElowRPiDFKHd366"
+    },
+    {
+      "range": [
+        3,
+        3
+      ],
+      "name": "Lama Denk-Zen",
+      "_id": "IjMg5ud1xaGYqHgg",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!8Lx1aq15XnO5vPIi.IjMg5ud1xaGYqHgg"
+    },
+    {
+      "range": [
+        4,
+        4
+      ],
+      "name": "Munti Trul",
+      "_id": "K4gwYj8I0kAxijAJ",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!8Lx1aq15XnO5vPIi.K4gwYj8I0kAxijAJ"
+    },
+    {
+      "range": [
+        5,
+        5
+      ],
+      "name": "Pilk Bagato",
+      "_id": "oSprOEC1kcRMQz8c",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!8Lx1aq15XnO5vPIi.oSprOEC1kcRMQz8c"
+    },
+    {
+      "range": [
+        6,
+        6
+      ],
+      "name": "Sembet Kuat-Lun",
+      "_id": "hjo3tyjmd4wfnbkQ",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!8Lx1aq15XnO5vPIi.hjo3tyjmd4wfnbkQ"
+    },
+    {
+      "range": [
+        7,
+        7
+      ],
+      "name": "Ski Senk-Karti",
+      "_id": "9GW2RBt8XvXQPLof",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!8Lx1aq15XnO5vPIi.9GW2RBt8XvXQPLof"
+    },
+    {
+      "range": [
+        8,
+        8
+      ],
+      "name": "Tosk Perfors",
+      "_id": "lWwc7fLtJhlTM4PB",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!8Lx1aq15XnO5vPIi.lWwc7fLtJhlTM4PB"
+    }
+  ],
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "6nG6apxhfcD63CwQ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.9.3",
+    "createdTime": 1770656432981,
+    "modifiedTime": 1770656443099,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+  },
+  "_id": "8Lx1aq15XnO5vPIi",
+  "sort": 500000,
+  "_key": "!tables!8Lx1aq15XnO5vPIi"
+}

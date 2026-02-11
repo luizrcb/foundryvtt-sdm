@@ -21,7 +21,6 @@ import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
 import { gm as gmMacros, player as playerMacros } from './macros/_module.mjs';
 import {
-  CHARACTER_DEFAULT_INITIATIVE,
   configurePlayerChromatype,
   configureUseHeroDiceButton,
   createBonusHeroDiceDisplay,
@@ -156,13 +155,18 @@ Hooks.on('renderSidebarTab', (app, html) => {
 Hooks.on('renderActorDirectory', (app, html) => {
   if (!game.user.isGM) return;
 
-  html.querySelector('.directory-header .create-folder').insertAdjacentHTML(
-    'afterend',
-    `<button type="button" class="random-npc"><i class="fa-solid fa-spaghetti-monster-flying" inert></i><span>${$l10n('SDM.CreateRandomNPC')}</span></button>`
+  html.querySelector('.directory-header .create-entry').insertAdjacentHTML(
+    'beforebegin',
+    `<button type="button" class="random-pc create-entry"><i class="fa-solid fa-person" inert></i><span>${$l10n('SDM.CreateRandomCharacter')}</span></button>
+     <button type="button" class="random-npc create-entry"><i class="fa-solid fa-spaghetti-monster-flying" inert></i><span>${$l10n('SDM.CreateRandomNPC')}</span></button>`
   );
-  // Add a click listener to the button to render the app
+
   html.querySelector('.random-npc').addEventListener('click', ev => {
     game.sdm.api.gm.randomNPCGenerator();
+  });
+
+  html.querySelector('.random-pc').addEventListener('click', ev => {
+    game.sdm.api.gm.characterGeneratorDialog();
   });
 });
 
@@ -178,7 +182,6 @@ Hooks.on('renderCombatTracker', (app, html) => {
     `<button data-tooltip="SDM.GMGroupInitiative" class="group-initiative inline-control combat-control icon fa-solid fa-people-group"></button>`
   );
 
-  // Add a click listener to the button to render the app
   html.querySelector('.group-initiative').addEventListener('click', ev => {
     game.sdm.api.gm.groupInitiative();
   });
@@ -449,21 +452,6 @@ Hooks.on('getChatMessageContextOptions', (html, options) => {
       group: 'damage'
     },
 
-    // {
-    //   name: game.i18n.localize('SDM.ChatContextHalfHealing') || 'Apply Half Healing',
-    //   icon: '<i class="fa-solid fa-user-plus"></i>',
-    //   condition: canApply,
-    //   callback: async li => {
-    //     const message = game.messages.get(li.dataset.messageId);
-    //     if (!message?.rolls?.length) return;
-    //     const orig = message.rolls[0].total;
-    //     const healAmount = Math.ceil(orig / 2);
-
-    //     await Promise.all(canvas.tokens.controlled.map(t => t.actor?.applyDamage(healAmount, -1)));
-    //   },
-    //   group: 'healing'
-    // },
-
     {
       name: game.i18n.localize('SDM.ChatContextHealing'),
       icon: '<i class="fa-solid fa-user-plus"></i>',
@@ -481,22 +469,6 @@ Hooks.on('getChatMessageContextOptions', (html, options) => {
       },
       group: 'healing'
     }
-
-    // NEW: Double Healing
-    // {
-    //   name: game.i18n.localize('SDM.ChatContextDoubleHealing') || 'Apply Double Healing',
-    //   icon: '<i class="fa-solid fa-user-plus"></i>',
-    //   condition: canApply,
-    //   callback: async li => {
-    //     const message = game.messages.get(li.dataset.messageId);
-    //     if (!message?.rolls?.length) return;
-    //     const orig = message.rolls[0].total;
-    //     const healAmount = orig * 2;
-
-    //     await Promise.all(canvas.tokens.controlled.map(t => t.actor?.applyDamage(healAmount, -1)));
-    //   },
-    //   group: 'healing'
-    // }
   );
 
   return options;
@@ -531,15 +503,10 @@ Hooks.once('init', function () {
     burden: models.SdmBurden
   };
 
-  // Active Effects are never copied to the Actor,
-  // but will still apply to the Actor from within the Item
-  // if the transfer property on the Active Effect is true.
-  CONFIG.ActiveEffect.legacyTransferral = false;
 
   _configureFonts();
 
   // Register sheet application classes
-  Actors.unregisterSheet('core', sheets.ActorSheet);
   Actors.registerSheet('sdm', SdmActorSheet, {
     types: ['npc', 'character'],
     makeDefault: true,
@@ -550,7 +517,6 @@ Hooks.once('init', function () {
     makeDefault: true,
     label: 'SDM.SheetLabels.Actor'
   });
-  Items.unregisterSheet('core', sheets.ItemSheet);
   Items.registerSheet('sdm', SdmItemSheet, {
     makeDefault: true,
     label: 'SDM.SheetLabels.Item'
@@ -577,8 +543,6 @@ Hooks.once('init', function () {
    * Set an initiative formula for the system
    * @type {String}
    */
-  const characterInitiativeFormula =
-    game.settings.get('sdm', 'initiativeFormula') || CHARACTER_DEFAULT_INITIATIVE;
   CONFIG.Combat.initiative = {
     formula: game.settings.get('sdm', 'initiativeFormula'),
     decimals: 2
@@ -723,6 +687,7 @@ function rollItemMacro(itemUuid) {
     item.roll();
   });
 }
+
 function _configureFonts() {
   Object.assign(CONFIG.fontDefinitions, {
     'Baron Neue': {

@@ -6,7 +6,7 @@ const { NumberField } = foundry.data.fields;
 const { renderTemplate } = foundry.applications.handlebars;
 const MAX_STACK = 2500;
 
-async function addCashToActor(actor, amount, defaultCurrencyName, defaultCurrencyImage) {
+export async function addCashToActor(actor, amount, defaultCurrencyName, defaultCurrencyImage) {
   let remaining = Number(amount) || 0;
   if (remaining <= 0) return 0;
 

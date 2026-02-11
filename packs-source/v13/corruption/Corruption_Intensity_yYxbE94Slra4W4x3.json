@@ -1,0 +1,111 @@
+{
+  "name": "Corruption Intensity",
+  "_id": "yYxbE94Slra4W4x3",
+  "img": "icons/svg/d20-grey.svg",
+  "description": "",
+  "results": [
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "name": "Severe Corruption",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.corruption.RollTable.BBgSMXyZ7cPuZuCM",
+      "_id": "b4g1Bb6TrI1iRyKX",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "createdTime": 1770657791067,
+        "modifiedTime": 1770657791067,
+        "lastModifiedBy": "6nG6apxhfcD63CwQ"
+      },
+      "_key": "!tables.results!yYxbE94Slra4W4x3.b4g1Bb6TrI1iRyKX"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        2,
+        3
+      ],
+      "name": "Moderate Corruption",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.corruption.RollTable.grc8rMrojT8de6Ve",
+      "_id": "ki63G4pOvSTRETah",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "createdTime": 1770657795163,
+        "modifiedTime": 1770657795163,
+        "lastModifiedBy": "6nG6apxhfcD63CwQ"
+      },
+      "_key": "!tables.results!yYxbE94Slra4W4x3.ki63G4pOvSTRETah"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        4,
+        6
+      ],
+      "name": "Mild Corruption",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.corruption.RollTable.a3v2H3P6olAzWHwS",
+      "_id": "b2DvW9YbxsMydt8P",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "createdTime": 1770657797135,
+        "modifiedTime": 1770657797135,
+        "lastModifiedBy": "6nG6apxhfcD63CwQ"
+      },
+      "_key": "!tables.results!yYxbE94Slra4W4x3.b2DvW9YbxsMydt8P"
+    }
+  ],
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "6nG6apxhfcD63CwQ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.9.3",
+    "createdTime": 1770657779638,
+    "modifiedTime": 1770657813766,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+  },
+  "formula": "1d6",
+  "_key": "!tables!yYxbE94Slra4W4x3"
+}

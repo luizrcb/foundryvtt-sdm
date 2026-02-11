@@ -1,0 +1,222 @@
+{
+  "name": "Red Land (vintner vamp)",
+  "formula": "1d8",
+  "description": "<p></p>",
+  "results": [
+    {
+      "range": [
+        1,
+        1
+      ],
+      "name": "Amfo s'Teran",
+      "_id": "jCfEsWuEduDTPLfe",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!CnNgQD23xbGlcHyq.jCfEsWuEduDTPLfe"
+    },
+    {
+      "range": [
+        2,
+        2
+      ],
+      "name": "Cozarin s'Berberin",
+      "_id": "NsUOmhIciHuIVRUf",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!CnNgQD23xbGlcHyq.NsUOmhIciHuIVRUf"
+    },
+    {
+      "range": [
+        3,
+        3
+      ],
+      "name": "Dolon duc Marbec",
+      "_id": "fG0XpeZpVr8vRYlo",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!CnNgQD23xbGlcHyq.fG0XpeZpVr8vRYlo"
+    },
+    {
+      "range": [
+        4,
+        4
+      ],
+      "name": "Imbic Terminal",
+      "_id": "ugt0Skc6y6bo2DBB",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!CnNgQD23xbGlcHyq.ugt0Skc6y6bo2DBB"
+    },
+    {
+      "range": [
+        5,
+        5
+      ],
+      "name": "Namur Rinfosc",
+      "_id": "MiqZb87O5MkUl6bP",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!CnNgQD23xbGlcHyq.MiqZb87O5MkUl6bP"
+    },
+    {
+      "range": [
+        6,
+        6
+      ],
+      "name": "Perin duc Piñor",
+      "_id": "GYAUPs7nH6exDxPS",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!CnNgQD23xbGlcHyq.GYAUPs7nH6exDxPS"
+    },
+    {
+      "range": [
+        7,
+        7
+      ],
+      "name": "Torron Valpin",
+      "_id": "AgTNUZzqlAEVY1GF",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!CnNgQD23xbGlcHyq.AgTNUZzqlAEVY1GF"
+    },
+    {
+      "range": [
+        8,
+        8
+      ],
+      "name": "Zinf Ander",
+      "_id": "WRNSlu0MKu6ydPGF",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!CnNgQD23xbGlcHyq.WRNSlu0MKu6ydPGF"
+    }
+  ],
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "6nG6apxhfcD63CwQ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.9.3",
+    "createdTime": 1770656447776,
+    "modifiedTime": 1770656447776,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+  },
+  "_id": "CnNgQD23xbGlcHyq",
+  "sort": 0,
+  "_key": "!tables!CnNgQD23xbGlcHyq"
+}
