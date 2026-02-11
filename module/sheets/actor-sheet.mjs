@@ -2008,7 +2008,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       return [];
     }
 
-    if (itemData[0].parent?.isOwner) {
+    if (itemData[0].parent?.isOwner && !event.ctrlKey) {
       const item = fromUuidSync(itemData[0].uuid);
       await item.delete();
     }

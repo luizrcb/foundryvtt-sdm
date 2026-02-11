@@ -1,6 +1,6 @@
-import { addCashToActor } from '../gm/giveCash.mjs';
 import { SdmActor } from '../../documents/actor.mjs';
 import { ActorType } from '../../helpers/constants.mjs';
+import { addCashToActor } from './giveCash.mjs';
 
 const { DialogV2 } = foundry.applications.api;
 
@@ -182,28 +182,64 @@ async function generateAbilityScoresRollMethod(actor) {
 }
 
 async function createRandomBackgroundWithOptions(actor, method = 'single') {
-  // Define main tables based on method
   const mainTableUuid =
     method === 'single'
       ? 'Compendium.sdm.traits_tables.RollTable.rGG0mOFXsKQbqiQQ'
       : 'Compendium.sdm.traits_tables.RollTable.cFXq88o4lzuqxAPP';
 
-  // const extraTables = game.tables.filter(
-  //   table =>
-  //     table.name.toLowerCase().includes('background') ||
-  //     table.name.toLowerCase().includes('antecedente')
-  // );
-
-  const allTables = [mainTableUuid//, ...extraTables.map(t => t.uuid)
-  ];
-  const selectedIndex = Math.floor(Math.random() * allTables.length);
-  const selectedUuid = allTables[selectedIndex];
-
-  const drawnResult = await fromUuid(selectedUuid).then(t =>
-    t.draw({ displayChat: false, recursive: true })
+  const extraTables = game.tables.filter(
+    table =>
+      table.name.toLowerCase().includes('background') ||
+      table.name.toLowerCase().includes('antecedente')
   );
 
-  if (!drawnResult.results || drawnResult.results.length === 0) {
+  const allTables = [mainTableUuid, ...extraTables.map(t => t.uuid)];
+
+  function isValidResult(drawnResult, method) {
+    if (!drawnResult.results || drawnResult.results.length === 0) return false;
+
+    if (method === 'single') {
+      if (drawnResult.results.length !== 1) return false;
+      const r = drawnResult.results[0];
+      if (!r.name) return false;
+      const desc = r.description || '';
+      return desc.includes('Task:') && desc.includes('Spin:');
+    } else {
+      if (drawnResult.results.length !== 5) return false;
+      return drawnResult.results.every(r => r.name && r.name.trim() !== '');
+    }
+  }
+
+  let selectedUuid;
+  let drawnResult;
+  let attempts = 0;
+  let maxAttempts = 20;
+  let success = false;
+
+  while (!success && attempts < maxAttempts) {
+    const selectedIndex = Math.floor(Math.random() * allTables.length);
+    selectedUuid = allTables[selectedIndex];
+
+    const table = await fromUuid(selectedUuid);
+    if (!table) {
+      attempts++;
+      continue;
+    }
+
+    drawnResult = await table.draw({ displayChat: false, recursive: true });
+
+    if (isValidResult(drawnResult, method)) {
+      success = true;
+    } else {
+      console.warn(
+        `Background table "${table.name}" returned an invalid result for method "${method}". Retrying...`
+      );
+      attempts++;
+    }
+  }
+
+  if (!success) {
+    console.error(`Failed to obtain a valid background after ${maxAttempts} attempts.`);
     return;
   }
 
@@ -213,28 +249,28 @@ async function createRandomBackgroundWithOptions(actor, method = 'single') {
     const result = drawnResult.results[0];
     title = result.name || '';
 
-    // Parse the description which is in format: "Task:...|Spin:..."
     const description = result.description || '';
     const taskMatch = description.match(/Task:([^|]*)/);
     const spinMatch = description.match(/Spin:(.*)/);
 
     task = taskMatch ? taskMatch[1].trim() : '';
-    task = task.replaceAll('<p>', '').replaceAll('</p>');
+    task = task.replaceAll('<p>', '').replaceAll('</p>', '');
     spin = spinMatch ? spinMatch[1].trim() : '';
-    spin = spin.replaceAll('<p>', '').replaceAll('</p>');
+    spin = spin.replaceAll('<p>', '').replaceAll('</p>', '');
   } else {
     const results = drawnResult.results;
-    if (results.length >= 5) {
-      const flavor = results[0].name || '';
-      const role1 = results[1].name || '';
-      const role2 = results[2].name || '';
-      task = results[3].name || '';
-      spin = results[4].name || '';
-      title = `${flavor} ${role1} ${role2}`.trim();
-    }
+    const flavor = results[0].name || '';
+    const role1 = results[1].name || '';
+    const role2 = results[2].name || '';
+    task = results[3].name || '';
+    spin = results[4].name || '';
+    title = `${flavor} ${role1} ${role2}`.trim();
   }
 
-  if (!title || !task || !spin) return;
+  if (!title || !task || !spin) {
+    console.error('Parsed background values are incomplete:', { title, task, spin });
+    return;
+  }
 
   await game.sdm.api.createBackgroundTrait(actor, {
     title,
@@ -242,17 +278,13 @@ async function createRandomBackgroundWithOptions(actor, method = 'single') {
     spin
   });
 
-  return {
-    title,
-    task,
-    spin
-  };
+  return { title, task, spin };
 }
 
 async function addItemToCharacter(itemUuid, actor) {
   const item = await fromUuid(itemUuid);
   const itemObject = item.toObject();
-  console.debug('itemObject', itemObject);
+  // console.debug('itemObject', itemObject);
   itemObject.name = itemObject.name.replace(/^\d\.\s/, '');
 
   await actor.createEmbeddedDocuments('Item', [itemObject]);
@@ -271,16 +303,13 @@ const mainPathTables = {
 async function getPathOptionsList() {
   const options = [];
 
-  // Get extra tables
   const extraTables = game.tables.filter(
     table =>
       table.name.toLowerCase().includes('path:') || table.name.toLowerCase().includes('caminho:')
   );
 
-  // Total options: 23 main (1-3 from initial, 4-23 from advanced) + extra tables
   let currentIndex = 1;
 
-  // Initial table options (wizard, traveler, fighter)
   const initialTable = await fromUuid(mainPathTables.initial);
   const initialRolls = [2, 4, 6]; // Wizard, Traveler, Fighter
 
@@ -299,10 +328,8 @@ async function getPathOptionsList() {
     }
   }
 
-  // Advanced table options (4-23)
   const advancedTable = await fromUuid(mainPathTables.advanced);
 
-  // Advanced table has 20 results (rolls 1-20)
   for (let roll = 1; roll <= 20; roll++) {
     const result = advancedTable.getResultsForRoll(roll);
     if (result && result.length > 0 && result[0].documentUuid) {
@@ -318,12 +345,11 @@ async function getPathOptionsList() {
     }
   }
 
-  // Extra tables
   for (const extraTable of extraTables) {
     options.push({
       index: currentIndex,
       tableUuid: extraTable.uuid,
-      innerTableUuid: null, // Extra tables are directly the trait tables
+      innerTableUuid: null,
       name: extraTable.name.replace('path:', '').replace('caminho:').trim()
     });
     currentIndex++;
@@ -336,7 +362,6 @@ async function createPathTrait(actor, pathNumber = null, useFirstEntry = true) {
   const pathOptions = await getPathOptionsList();
   const totalOptions = pathOptions.length;
 
-  // Use provided number or generate random
   let selectedPathIndex;
   if (pathNumber !== null) {
     selectedPathIndex = parseInt(pathNumber, 10);
@@ -344,7 +369,6 @@ async function createPathTrait(actor, pathNumber = null, useFirstEntry = true) {
     selectedPathIndex = Math.floor(Math.random() * totalOptions) + 1;
   }
 
-  // Find the selected path
   const selectedPath = pathOptions.find(opt => opt.index === selectedPathIndex);
   if (!selectedPath) {
     throw new Error(`Invalid path number: ${selectedPathIndex}. Must be 1-${totalOptions}.`);
@@ -353,13 +377,12 @@ async function createPathTrait(actor, pathNumber = null, useFirstEntry = true) {
   let traitUUID;
 
   if (selectedPath.innerTableUuid) {
-    // Main table path (initial or advanced)
     const innerTable = await fromUuid(selectedPath.innerTableUuid);
 
     if (useFirstEntry) {
-      // Get first entry from inner table
       let firstResult = innerTable.getResultsForRoll(1);
 
+      // edge case for weapon path
       if (selectedPathIndex === 22) {
         const anotherInnerTable = await fromUuid(firstResult[0].documentUuid);
         firstResult = anotherInnerTable.getResultsForRoll(1);
@@ -369,7 +392,6 @@ async function createPathTrait(actor, pathNumber = null, useFirstEntry = true) {
         traitUUID = firstResult[0].documentUuid;
       }
     } else {
-      // Draw random from inner table
       const drawnResult = await innerTable.draw({ displayChat: false, recursive: true });
       if (drawnResult.results && drawnResult.results.length > 0) {
         const result = drawnResult.results[0];
@@ -379,17 +401,14 @@ async function createPathTrait(actor, pathNumber = null, useFirstEntry = true) {
       }
     }
   } else {
-    // Extra table path
     const extraTable = await fromUuid(selectedPath.tableUuid);
 
     if (useFirstEntry) {
-      // Get first entry from extra table
       const firstResult = await extraTable.getResultsForRoll(1);
       if (firstResult && firstResult.length > 0 && firstResult[0].documentUuid) {
         traitUUID = firstResult[0].documentUuid;
       }
     } else {
-      // Draw random from extra table
       const drawnResult = await extraTable.draw({ displayChat: false, recursive: true });
       if (drawnResult.results && drawnResult.results.length > 0) {
         const result = drawnResult.results[0];
@@ -404,7 +423,6 @@ async function createPathTrait(actor, pathNumber = null, useFirstEntry = true) {
     return;
   }
 
-  // Create the item
   try {
     const item = await fromUuid(traitUUID);
     if (!item) {
@@ -434,7 +452,7 @@ async function addInitialCash(actor) {
 
 async function drawAndAddFromTable(tableUUID, actor) {
   const drawnItemUUID = await drawFromDocumentTable(tableUUID);
-  console.log('drawnItemUUID', drawnItemUUID);
+  // console.log('drawnItemUUID', drawnItemUUID);
   if (drawnItemUUID) {
     const response = await fromUuid(drawnItemUUID);
     await addItemToCharacter(drawnItemUUID, actor);
@@ -447,7 +465,7 @@ async function drawAndAddFromTable(tableUUID, actor) {
 async function createFreeTrait(actor, rollNumber = undefined) {
   // Use provided number or generate random (1-9)
   const num = rollNumber || Math.floor(Math.random() * 9) + 1;
-  console.debug('num', num);
+  // console.debug('num', num);
   try {
     if (num >= 1 && num <= 3) {
       return await createRandomBackgroundWithOptions(actor, 'single');
@@ -473,35 +491,29 @@ async function createFreeTrait(actor, rollNumber = undefined) {
 async function addStrangeItemToActor(actor) {
   const mainTableUuid = 'Compendium.sdm.strange_items_table.RollTable.qxFOiAYqzqDiu4Yc';
 
-  // Get the main table
   const mainTable = await fromUuid(mainTableUuid);
   if (!mainTable) {
     console.error('Main strange items table not found:', mainTableUuid);
     return;
   }
 
-  // Get extra tables
   const strangeTables = game.tables.filter(table =>
     table.name.toLowerCase().match(/strange|estranho/)
   );
 
-  // Build list of all tables with their result counts
   const allTables = [];
   const tableCounts = [];
 
-  // Add main table
   const mainTableResultCount = mainTable.results.size;
   allTables.push({ uuid: mainTableUuid, count: mainTableResultCount, name: mainTable.name });
   tableCounts.push(mainTableResultCount);
 
-  // Add extra tables
   for (const table of strangeTables) {
     const tableResultCount = table.results.size;
     allTables.push({ uuid: table.uuid, count: tableResultCount, name: table.name });
     tableCounts.push(tableResultCount);
   }
 
-  // Calculate total results across all tables
   const totalResults = tableCounts.reduce((sum, count) => sum + count, 0);
 
   if (totalResults === 0) {
@@ -509,20 +521,15 @@ async function addStrangeItemToActor(actor) {
     return null;
   }
 
-  // Roll to determine which result to get
   const roll = Math.floor(Math.random() * totalResults) + 1;
 
-  // Find which table contains the rolled result
   let currentRange = 0;
   let targetTable = null;
-  let resultIndexInTable = 0;
 
   for (const table of allTables) {
     currentRange += table.count;
     if (roll <= currentRange) {
       targetTable = table;
-      // Calculate which result within this table (1-indexed)
-      resultIndexInTable = roll - (currentRange - table.count);
       break;
     }
   }
@@ -532,7 +539,6 @@ async function addStrangeItemToActor(actor) {
     return null;
   }
 
-  // Get the result from the target table
   const table = await fromUuid(targetTable.uuid);
   const drawnResult = await table.draw({ displayChat: false, recursive: true });
 
@@ -545,9 +551,7 @@ async function addStrangeItemToActor(actor) {
   let itemData;
   let itemName;
 
-  // Handle different result types
   if (result.type === 'document' && result.documentUuid) {
-    // Item from document UUID
     try {
       const itemFromUuid = await fromUuid(result.documentUuid);
       itemData = itemFromUuid.toObject();
@@ -562,11 +566,9 @@ async function addStrangeItemToActor(actor) {
       }).toObject();
     }
   } else if (result.type === 'text') {
-    // Text result - check if it has size information
-    itemName = result.text || result.name || 'Strange Item';
+    itemName = result.name || 'Strange Item';
 
-    // Try to extract size from the text
-    const text = result.text || result.name || '';
+    const text = result.name || '';
     const sizeMatch = text.match(/(\d+)\s*(st|sp|stones|soaps)/i);
 
     if (sizeMatch) {
@@ -804,7 +806,7 @@ async function generateCharacterWithOptions(options = {}) {
       name = await generateNameFromTable();
     }
 
-    console.debug('name', name);
+    // console.debug('name', name);
 
     // Create the actor
     const newActor = new SdmActor({
@@ -834,27 +836,30 @@ async function generateCharacterWithOptions(options = {}) {
       actor,
       options.backgroundMethod || 'single'
     );
-    console.debug('background', background);
+    // console.debug('background', background);
     // retry
     if (!background) {
-      const response = await createRandomBackgroundWithOptions(actor, options.backgroundMethod || 'single');
-      console.debug('background', response);
+      const response = await createRandomBackgroundWithOptions(
+        actor,
+        options.backgroundMethod || 'single'
+      );
+      // console.debug('background', response);
     }
 
     // Create path trait based on selected method
     if (options.pathMethod === 'specific' && options.pathTable) {
       // Use specific path table
       const pathTrait = await createPathTrait(actor, options.pathTable, false);
-      console.debug('pathTrait', pathTrait);
+      // console.debug('pathTrait', pathTrait);
     } else {
       // Use current logic
       const pathTrait = await createPathTrait(actor);
-      console.debug('pathTrait', pathTrait);
+      // console.debug('pathTrait', pathTrait);
     }
 
     // Add free trait
     const freeTrait = await createFreeTrait(actor);
-    console.debug('freeTrait', freeTrait);
+    // console.debug('freeTrait', freeTrait);
 
     // Add strange item if selected
     if (options.addStrangeItem !== false) {
@@ -887,12 +892,12 @@ async function generateCharacterWithOptions(options = {}) {
 export async function generateCharacter() {
   return generateCharacterWithOptions({
     abilityMethod: 'current',
-    backgroundMethod: 'single',
-    pathMethod: 'current',
+    addInitialCash: true,
     addMotive: true,
     addStrangeItem: true,
     addUsefulKit: true,
-    addInitialCash: true
+    backgroundMethod: 'single',
+    pathMethod: 'current'
   });
 }
 
