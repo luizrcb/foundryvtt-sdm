@@ -10,6 +10,8 @@
 @include meta.load-css('global/window');
 @include meta.load-css('global/grid');
 @include meta.load-css('global/flex');
+@include meta.load-css('global/burdenGenerator');
+@include meta.load-css('global/oracle');
 
 /* Estilos específicos para sheets .sdm */
 .sdm {

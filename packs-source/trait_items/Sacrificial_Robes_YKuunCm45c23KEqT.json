@@ -52,7 +52,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 2,

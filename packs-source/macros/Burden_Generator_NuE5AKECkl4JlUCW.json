@@ -1,0 +1,28 @@
+{
+  "name": "Burden Generator",
+  "type": "script",
+  "_id": "NuE5AKECkl4JlUCW",
+  "author": "6nG6apxhfcD63CwQ",
+  "img": "icons/svg/stoned.svg",
+  "scope": "global",
+  "command": "await game.sdm.api.gm.openBurdenGeneratorDialog();",
+  "folder": null,
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "6nG6apxhfcD63CwQ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.10.0",
+    "createdTime": 1770910111661,
+    "modifiedTime": 1770910148277,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+  },
+  "_key": "!macros!NuE5AKECkl4JlUCW"
+}

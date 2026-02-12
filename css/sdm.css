@@ -1083,54 +1083,6 @@ input[type=radio]::after {
   .theme-dark select::-ms-expand {
     filter: invert(1);
   }
-  .uvg-oracle-result {
-    border: 1px solid #7c2da2;
-    border-radius: 5px;
-    padding: 10px;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    color: #e0e0ff;
-  }
-  .oracle-header {
-    border-bottom: 1px solid #7c2da2;
-    margin-bottom: 10px;
-    padding-bottom: 5px;
-  }
-  .oracle-header h5 {
-    color: #e0aaff;
-    margin: 0;
-    font-size: 18px;
-  }
-  .oracle-question {
-    font-style: italic;
-    color: #aaccff;
-    margin-top: 5px;
-    margin-bottom: 0;
-  }
-  .oracle-roll {
-    background: rgba(124, 45, 162, 0.2);
-    padding: 8px;
-    border-radius: 3px;
-    margin: 10px 0;
-  }
-  .oracle-outcome {
-    background: rgba(224, 170, 255, 0.1);
-    padding: 10px;
-    border-radius: 3px;
-    border-left: 3px solid #e0aaff;
-    margin: 10x 0;
-    margin-bottom: 0;
-  }
-  .oracle-outcome h6 {
-    color: #e0aaff;
-    margin: 0 0 5px 0;
-  }
-  .oracle-details {
-    font-size: 0.9em;
-    color: #8888cc;
-    border-top: 1px solid #444477;
-    padding-top: 10px;
-    margin-top: 10px;
-  }
 }
 .grid,
 .grid-2col {
@@ -1341,6 +1293,170 @@ input[type=radio]::after {
   display: flex;
 }
 
+@layer burden-generator {
+  .burden-table {
+    border-collapse: collapse;
+    margin-bottom: 10px;
+    width: 100%;
+    margin-top: 0;
+  }
+  .burden-title {
+    margin-top: 0;
+    margin-bottom: 0;
+    font-family: var(--sdm-font-primary);
+  }
+  .burden-table th,
+  .burden-table td {
+    border: 1px solid #7a7971;
+    padding: 6px;
+    text-align: center;
+    font-family: var(--sdm-font-secondary);
+    width: 70px;
+    height: 40px;
+  }
+  .burden-table th {
+    background: rgba(0, 0, 0, 0.05);
+    font-weight: bold;
+  }
+  .burden-chips-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    min-height: 48px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 15px 0;
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 5px;
+    align-items: center;
+  }
+  .burden-chip {
+    display: inline-flex;
+    align-items: center;
+    background: #4b4a44;
+    color: var(--sdm-color-white);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-family: var(--sdm-font-tab);
+    font-size: 0.95em;
+    font-weight: bold;
+    cursor: move;
+    user-select: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+  .burden-chip button {
+    background: transparent;
+    border: none;
+    color: var(--sdm-color-white);
+    font-weight: bold;
+    margin-left: 8px;
+    padding: 0 4px;
+    font-size: 1.1em;
+    line-height: 1;
+    cursor: pointer;
+    border-radius: 50%;
+  }
+  .burden-chip button:hover {
+    background: rgba(255, 255, 255, 0.2);
+    color: #ff8a8a;
+  }
+  .flex-row {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    margin-bottom: 5px;
+    flex-wrap: wrap;
+  }
+  #last-roll-result {
+    font-style: italic;
+    color: #6b6b6b;
+  }
+  .burden-chips-container {
+    display: flex;
+    flex-wrap: nowrap; /* no wrapping – one single line */
+    overflow-x: auto; /* horizontal scroll if too many chips */
+    overflow-y: hidden;
+    white-space: nowrap;
+    gap: 8px;
+    min-height: 48px;
+    border: 1px solid #ccc;
+    padding: 10px;
+    margin: 0;
+    background: rgba(0, 0, 0, 0.03);
+    border-radius: 5px;
+    align-items: center;
+  }
+  /* Keep chips themselves inline */
+  .burden-chip {
+    display: inline-flex; /* inline-flex keeps them in flow */
+    flex-shrink: 0; /* never shrink chips */
+    background: var(--sdm-c-accent);
+    color: var(--sdm-c-white);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 0.95em;
+    cursor: move;
+    user-select: none;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+  }
+  /* Highlight for the rolled table cell */
+  .burden-table td.highlight {
+    background-color: var(--sdm-c-accent) !important;
+    color: black !important;
+    font-weight: bold;
+    transition: background-color 0.6s ease;
+  }
+}
+@layer dice-oracles {
+  .oracle-result {
+    border: 1px solid #7c2da2;
+    border-radius: 5px;
+    padding: 10px;
+    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+    color: #e0e0ff;
+  }
+  .oracle-header {
+    border-bottom: 1px solid #7c2da2;
+    margin-bottom: 10px;
+    padding-bottom: 5px;
+  }
+  .oracle-header h5 {
+    color: #e0aaff;
+    margin: 0;
+    font-size: 18px;
+  }
+  .oracle-question {
+    font-style: italic;
+    color: #aaccff;
+    margin-top: 5px;
+    margin-bottom: 0;
+  }
+  .oracle-roll {
+    background: rgba(124, 45, 162, 0.2);
+    padding: 8px;
+    border-radius: 3px;
+    margin: 10px 0;
+  }
+  .oracle-outcome {
+    background: rgba(224, 170, 255, 0.1);
+    padding: 10px;
+    border-radius: 3px;
+    border-left: 3px solid #e0aaff;
+    margin: 10x 0;
+    margin-bottom: 0;
+  }
+  .oracle-outcome h6 {
+    color: #e0aaff;
+    margin: 0 0 5px 0;
+  }
+  .oracle-details {
+    font-size: 0.9em;
+    color: #8888cc;
+    border-top: 1px solid #444477;
+    padding-top: 10px;
+    margin-top: 10px;
+  }
+}
 /* Estilos específicos para sheets .sdm */
 .sdm {
   /* Hide default checkbox */

@@ -1,6 +1,6 @@
 import { SdmItem } from '../documents/item.mjs';
 
-import { MAX_MODIFIER, UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
+import { MAX_MODIFIER } from '../helpers/actorUtils.mjs';
 import {
   ActorType,
   AttackTarget,
@@ -63,6 +63,12 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         label: 'Edit Mode / Play Mode',
         ownership: 'OWNER'
       });
+      controls.push({
+        action: 'rerollCharacter',
+        icon: 'fa-solid fa-recycle',
+        label: 'SDM.RerollCharacter',
+        ownership: 'OWNER'
+      });
       window.controls = controls;
     }
 
@@ -105,6 +111,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       transferItem: this._onTransferItem,
       updateAttack: this._onUpdateAttack,
       viewDoc: this._viewDoc,
+      rerollCharacter: this._onRerollCharacter,
       openDoc: { handler: this._openDoc, buttons: [0] },
       toggleItemStatus: { handler: this._toggleItemStatus, buttons: [0, 2] }
     },
@@ -695,7 +702,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     this._createContextMenu(
       this._getItemListContextOptions,
-      //'[data-document-class][data-item-id], [data-document-class][data-effect-id]',
       '[data-document-class][data-item-id]',
       {
         hookName: 'getItemListContextOptions',
@@ -738,8 +744,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       }),
       update: Hooks.on('updateItem', (item, changes, options, userId) => {
         if (item.parent?.id === actorId) {
-          // const shouldAllow = this._checkCarriedWeight(item, updateData);
-          // if (!shouldAllow) return false;
           return onItemUpdate(item, changes);
         }
       }),
@@ -861,37 +865,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
   async close(options) {
     this._teardownItemListeners();
     return super.close(options);
-  }
-
-  async _checkEncumbrance() {
-    const actor = this.actor;
-    const cumbersomeArmor =
-      this.actor.items.contents.filter(
-        item => item.type === ItemType.ARMOR && item.system.cumbersome && item.system.readied
-      ).length > 0;
-    // Calculate current encumbrance (SDM-specific calculation)
-
-    const carriedWeight = this.actor.getCarriedGear();
-    const encumbranceThreshold =
-      this.actor.system.carry_weight?.unencumbered ?? UNENCUMBERED_THRESHOLD_CASH;
-    const encumberedEffect = actor.effects.getName('encumbered');
-    const encumberedSlow = actor.effects.getName('slow (encumbered)');
-    const cumbersomeArmorEffect = actor.effects.getName('cumbersome (armor)');
-
-    // Update encumbrance effect
-    if (carriedWeight > encumbranceThreshold && !encumberedEffect) {
-      await actor.addEncumberedEffect();
-      await actor.addEncumberedSlow();
-    } else if (carriedWeight <= encumbranceThreshold && encumberedEffect) {
-      await encumberedEffect.delete();
-      await encumberedSlow.delete();
-    }
-
-    if (cumbersomeArmor && !cumbersomeArmorEffect) {
-      await actor.addCumbersomeArmor();
-    } else if (cumbersomeArmorEffect && !cumbersomeArmor) {
-      await cumbersomeArmorEffect.delete();
-    }
   }
 
   /**************
@@ -1045,6 +1018,14 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     await this.actor.setFlag('sdm', 'editMode', newMode);
     return this.render();
+  }
+
+  static async _onRerollCharacter(event, target) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.detail > 1) return; // Ignore repeated clicks
+
+    await game.sdm.api.gm.characterGeneratorDialog(this.actor);
   }
 
   /**
