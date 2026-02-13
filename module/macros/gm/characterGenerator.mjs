@@ -1,6 +1,8 @@
 import { SdmActor } from '../../documents/actor.mjs';
+import { addCompendiumItemToActor } from '../../helpers/actorUtils.mjs';
 import { ActorType } from '../../helpers/constants.mjs';
 import { $fmt, $l10n } from '../../helpers/globalUtils.mjs';
+import { UnarmedDamageItem } from '../../helpers/itemUtils.mjs';
 import { addCashToActor } from './giveCash.mjs';
 
 const { DialogV2 } = foundry.applications.api;
@@ -282,6 +284,25 @@ async function createRandomBackgroundWithOptions(actor, method = 'single') {
   return { title, task, spin };
 }
 
+async function addCorruptionFromTable(actor, tableUuid) {
+  const result = await drawFromTextTable(tableUuid);
+  const corruption = result.name || result.description;
+
+  if (!corruption) return;
+
+  const itemData = new Item({
+    name: corruption,
+    img: 'icons/svg/biohazard.svg',
+    type: 'trait',
+    system: {
+      type: 'corruption'
+    }
+  }).toObject();
+
+  const createdItems = await actor.createEmbeddedDocuments('Item', [itemData]);
+  return createdItems;
+}
+
 async function addItemToCharacter(itemUuid, actor) {
   const item = await fromUuid(itemUuid);
   const itemObject = item.toObject();
@@ -463,10 +484,10 @@ async function drawAndAddFromTable(tableUUID, actor) {
   return;
 }
 
-async function createFreeTrait(actor, rollNumber = undefined) {
-  // Use provided number or generate random (1-9)
-  const num = rollNumber || Math.floor(Math.random() * 9) + 1;
-  // console.debug('num', num);
+async function createFreeTrait(actor, includeCorruption = false, rollNumber = undefined) {
+  const maxRoll = includeCorruption ? 10 : 9;
+  const num = rollNumber || Math.floor(Math.random() * maxRoll) + 1;
+
   try {
     if (num >= 1 && num <= 3) {
       return await createRandomBackgroundWithOptions(actor, 'single');
@@ -482,6 +503,18 @@ async function createFreeTrait(actor, rollNumber = undefined) {
     } else if (num >= 7 && num <= 9) {
       const otherPaths = 'Compendium.sdm.traits_tables.RollTable.5DQuOEZbj4yIoEIU';
       return await drawAndAddFromTable(otherPaths, actor);
+    } else if (num === 10) {
+      const d6Roll = Math.floor(Math.random() * 6) + 1;
+      const corruptionTableMap = {
+        1: 'Compendium.sdm.corruption.RollTable.BBgSMXyZ7cPuZuCM',
+        2: 'Compendium.sdm.corruption.RollTable.grc8rMrojT8de6Ve',
+        3: 'Compendium.sdm.corruption.RollTable.grc8rMrojT8de6Ve',
+        4: 'Compendium.sdm.corruption.RollTable.a3v2H3P6olAzWHwS',
+        5: 'Compendium.sdm.corruption.RollTable.a3v2H3P6olAzWHwS',
+        6: 'Compendium.sdm.corruption.RollTable.a3v2H3P6olAzWHwS'
+      };
+      const tableUUID = corruptionTableMap[d6Roll];
+      return await addCorruptionFromTable(actor, tableUUID);
     }
   } catch (error) {
     console.error(`Error handling roll ${num}:`, error);
@@ -815,10 +848,7 @@ async function generateCharacterWithOptions(options = {}, existingActor) {
     }
 
     if (existingActor) {
-      // just leave unarmed attack and that active effect
       existingActor.items.contents.forEach(async item => {
-        if (item?.flags?.sdm?.fromCompendium === 'Compendium.sdm.weapons.Item.uKcbcZUs1jQZskQ4')
-          return;
         await item.delete();
       });
 
@@ -842,6 +872,10 @@ async function generateCharacterWithOptions(options = {}, existingActor) {
     await actor.update({
       'system.experience': '300'
     });
+
+    if (existingActor) {
+      await addCompendiumItemToActor(actor, UnarmedDamageItem);
+    }
 
     // Generate ability scores based on selected method
     if (options.abilityMethod === 'roll') {
@@ -909,9 +943,7 @@ async function generateCharacterWithOptions(options = {}, existingActor) {
     return actor;
   } catch (error) {
     console.error('Error generating character:', error);
-    ui.notifications.error(
-      $fmt('SDM.CharacterGenerationFailed', { error: error.message })
-    );
+    ui.notifications.error($fmt('SDM.CharacterGenerationFailed', { error: error.message }));
     throw error;
   }
 }

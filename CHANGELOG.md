@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.11.0
+
+- Added a burden generator (GM tool)
+- Added "Wear and tear" to burdens compendium
+- Added option for players to reroll their characters from the character sheet (in the toggle controls menu ...)
+
 ## v0.10.0
 
 - Group initiative tiebreaking setting now defaults to false

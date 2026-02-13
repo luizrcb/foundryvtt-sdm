@@ -213,10 +213,10 @@ async function createBurdenOnActor(selectedActor, name, ability, penalty) {
     name: name,
     type: 'burden',
     system: {
-      description: game.i18n.format('SDM.BurdenGenerator.ItemDescription', {
+      description:  penaltyValue ? game.i18n.format('SDM.BurdenGenerator.ItemDescription', {
         penalty: penaltyValue,
         ability: abilityLabel
-      })
+      }) : '',
     },
     effects: []
   };
