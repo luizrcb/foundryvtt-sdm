@@ -177,10 +177,12 @@ Hooks.on('renderActorDirectory', (app, html) => {
 Hooks.on('renderItemDirectory', (app, html) => {
   if (!game.user.isGM) return;
 
-  html.querySelector('.directory-header .create-entry').insertAdjacentHTML(
-    'beforebegin',
-    `<button type="button" class="burden-generator" style="flex-basis: 100%"><i class="fa-solid fa-face-dizzy" inert></i><span>${$l10n('SDM.BurdenGenerator.Title')}</span></button>`
-  );
+  html
+    .querySelector('.directory-header .create-entry')
+    .insertAdjacentHTML(
+      'beforebegin',
+      `<button type="button" class="burden-generator" style="flex-basis: 100%"><i class="fa-solid fa-face-dizzy" inert></i><span>${$l10n('SDM.BurdenGenerator.Title')}</span></button>`
+    );
 
   html.querySelector('.burden-generator').addEventListener('click', ev => {
     game.sdm.api.gm.openBurdenGeneratorDialog();
@@ -613,7 +615,10 @@ Hooks.once('ready', function () {
   //   console.log(canvas, data);
 
   //   const { uuid, x, y } = data;
-
+  //   const snappedPoint = canvas.grid.getSnappedPoint(
+  //     { x, y },
+  //     { mode: CONST.GRID_SNAPPING_MODES.TOP_LEFT_VERTEX }
+  //   );
   //   const item = await fromUuid(uuid);
   //   if (!item) return;
 
@@ -621,10 +626,15 @@ Hooks.once('ready', function () {
   //   const attributes = item.system.attributes;
   //   console.log(attributes);
 
-  //   const virtualActor = new SdmActor({type: 'npc', name: item.name, img: item.img, system: {...attributes} }).toObject();
+  //   const virtualActor = new SdmActor({
+  //     type: 'npc',
+  //     name: item.name,
+  //     img: item.img,
+  //     system: { ...attributes }
+  //   }).toObject();
   //   const actor = await SdmActor.create(virtualActor);
-  //   const tokenDoc = await actor.getTokenDocument({x, y });
-  //   await game.scenes.active.createEmbeddedDocuments("Token", [ tokenDoc.toObject() ]);
+  //   const tokenDoc = await actor.getTokenDocument({ x: snappedPoint.x, y: snappedPoint.y });
+  //   await game.scenes.active.createEmbeddedDocuments('Token', [tokenDoc.toObject()]);
   // });
 
   Hooks.once('setup', () => {

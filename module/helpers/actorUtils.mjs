@@ -236,9 +236,9 @@ function makeNPC(name, img = '', biography = '', data, initiative = '') {
   return {
     name,
     img,
-    biography,
     type: 'npc',
     system: {
+      biography,
       initiative,
       bonus: data.Bon,
       damage: data.Dmg,
@@ -289,7 +289,16 @@ export async function createNPC(name = 'NPC', tableName, initiative = '') {
 }
 
 // retorna NPC pelo nível (ou nível mais próximo abaixo)
-export async function createNPCByLevel(name, lvl, tableName, initiative) {
+export async function createNPCByLevel({
+  name,
+  lvl,
+  tableName,
+  initiative = '',
+  image = '',
+  biography = '',
+  ownership = null,
+  linked = false,
+}) {
   const table = NPCTables[tableName].table;
   if (!table) throw new Error(`Tabela não encontrada: ${tableName}`);
 
@@ -297,11 +306,40 @@ export async function createNPCByLevel(name, lvl, tableName, initiative) {
   const entry = [...table].reverse().find(e => e.Lvl <= lvl);
 
   if (!entry) throw new Error(`Nenhuma entrada encontrada para lvl ${lvl} em ${tableName}`);
-  const biography = '';
-  const img = '';
-  const npcData = makeNPC(name, img, biography, entry, initiative);
+
+  const actorBiography = biography;
+  const img = image;
+  const npcData = makeNPC(name, img, actorBiography, entry, initiative);
+  const isGM = userId => game.users.get(userId)?.isGM ?? false;
 
   const targetActor = await Actor.create(npcData);
+  let updateData = {
+    'prototypeToken.actorLink': linked,
+  };
+  let shouldBeFriendly = false;
+
+  if (ownership) {
+    await targetActor.update({ ownership: ownership });
+
+    if (ownership.default === 3) {
+      shouldBeFriendly = true;
+    } else {
+      for (let [userId, level] of Object.entries(ownership)) {
+        if (userId === 'default') continue;
+        if (level === 3 && !isGM(userId)) {
+          shouldBeFriendly = true;
+          break;
+        }
+      }
+    }
+  }
+
+  if (shouldBeFriendly) {
+    updateData['prototypeToken.disposition'] = CONST.TOKEN_DISPOSITIONS.FRIENDLY;
+  }
+
+  await targetActor.update(updateData);
+
   const traitsTable = NPCTables[tableName].traits;
 
   await createRandomTrait(targetActor, traitsTable);

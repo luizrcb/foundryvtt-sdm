@@ -1,6 +1,6 @@
 import PowerDataModel from '../data/power-data.mjs';
 import { SdmItem } from '../documents/item.mjs';
-import { getActorOptions } from '../helpers/actorUtils.mjs';
+import { createNPCByLevel, getActorOptions } from '../helpers/actorUtils.mjs';
 import { GearType, ItemType } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
@@ -19,6 +19,29 @@ const { performIntegerSort } = foundry.utils;
 export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemSheetV2) {
   constructor(options = {}) {
     super(options);
+
+    const classes = [...this.options.classes];
+    const window = { ...this.options.window };
+    const controls = [...this.options.window.controls];
+
+    // if (game.user.isGM) {
+    //   controls.push({
+    //     action: 'spawnNPC',
+    //     icon: 'fa-solid fa-robot',
+    //     label: 'Spawn NPC',
+    //     ownership: 'OWNER'
+    //   });
+    // }
+
+    window.controls = controls;
+
+    // Update options with the new classes array
+    this.options = {
+      ...this.options,
+      classes,
+      window
+    };
+
     this.#dragDrop = this.#createDragDropHandlers();
   }
 
@@ -43,7 +66,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       toggleReadied: this._toggleReadied,
       toggleItemStatus: { handler: this._toggleItemStatus, buttons: [0, 2] },
       toggleIsHallmark: this._toggleIsHallmark,
-      radioToggle: this._radioToggle
+      radioToggle: this._radioToggle,
+      spawnNPC: this._onSpawnNPC
     },
     form: {
       submitOnChange: true
@@ -646,6 +670,29 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
 
   static async _toggleItemStatus(event) {
     await this.item.toggleItemStatus(event);
+  }
+
+  static async _onSpawnNPC(event, target) {
+    // let's allow to spawn from table or directly from all attributes
+    const item = this.item;
+    const itemLevel = Math.max(item.system.hallmark.level, item.system.attributes.level);
+
+    const npcData = await createNPCByLevel({
+      name: item.name,
+      lvl: itemLevel,
+      tableName: 'generic-synthesized-creature',
+      image: item.img,
+      ownership: item.ownership,
+      linked: true,
+      biography: `<p>NPC Spawned from: @UUID[${item.uuid}]{${item.name}}</p>`
+    });
+
+    // const virtualActor = new SdmActor({
+    //   type: 'npc',
+    //   name: item.name,
+    //   img: item.img,
+    //   system: { ...attributes }
+    // }).toObject();
   }
 
   /** Helper Functions */
