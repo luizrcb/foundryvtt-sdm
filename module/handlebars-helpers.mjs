@@ -188,4 +188,8 @@ export function registerHandlebarsHelpers() {
     }
     return html;
   });
+
+  $$('has', function (set, value) {
+    return set.has(value);
+  });
 }

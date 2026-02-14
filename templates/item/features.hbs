@@ -1,0 +1,12 @@
+{{! Description Tab }}
+<section class='tab features scrollable {{tab.cssClass}}' data-group='primary' data-tab='features'>
+  {{formInput
+    systemFields.features
+    type="checkboxes"
+    name='system.features'
+    options=@root.itemFeatures
+    value=system.features
+    sort=true
+    localize=true
+  }}
+</section>

@@ -16,7 +16,7 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       nullable: true,
       blank: true,
       initial: '',
-      choices: CONFIG.SDM.itemStatus,
+      choices: CONFIG.SDM.itemStatus
     });
 
     schema.resources = new fields.StringField({
@@ -24,7 +24,7 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       nullable: true,
       blank: true,
       initial: '',
-      choices: CONFIG.SDM.itemResources,
+      choices: CONFIG.SDM.itemResources
     });
 
     schema.charges = new fields.SchemaField({
@@ -35,7 +35,17 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
         min: 0
       }),
       max: new fields.NumberField({ requied: true, nullable: false, initial: 0, min: 0 })
-    }),
+    });
+
+    schema.replenish = new fields.SchemaField({
+      value: new fields.NumberField({
+        required: true,
+        nullable: false,
+        integer: true,
+        initial: 0,
+        min: 0
+      })
+    });
 
     schema.cost = new fields.NumberField({
       required: false,
@@ -63,16 +73,21 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
 
     schema.size = new fields.EmbeddedDataField(ItemSizeDataModel);
 
-    schema.features = new fields.HTMLField();
+    schema.features = new fields.SetField(new fields.StringField(),[
+      ...CONFIG.SDM.baseFeatures,
+      ...CONFIG.SDM.wardFeatures,
+      ...CONFIG.SDM.armorFeatures,
+      ...CONFIG.SDM.weaponFeatures
+    ]);
 
     schema.attributes = new fields.EmbeddedDataField(NPCBaseDataModel);
 
     schema.is_hallmark = new fields.BooleanField({
       required: true,
-      initial: false,
+      initial: false
     });
 
-    schema.hallmark = new fields.EmbeddedDataField(HallmarkBaseDataModel)
+    schema.hallmark = new fields.EmbeddedDataField(HallmarkBaseDataModel);
 
     return schema;
   }

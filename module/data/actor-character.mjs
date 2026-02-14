@@ -3,7 +3,6 @@ import { DieScale, RollMode } from '../helpers/constants.mjs';
 import { getDefaultAbility } from '../helpers/globalUtils.mjs';
 
 import SdmActorBase from './base-actor.mjs';
-// import CharacterPetModel from './character-pet.mjs';
 
 export default class SdmCharacter extends SdmActorBase {
   static LOCALIZATION_PREFIXES = [...super.LOCALIZATION_PREFIXES, 'SDM.Actor.Character'];

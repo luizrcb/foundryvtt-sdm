@@ -395,8 +395,106 @@ SDM.months = {
   12: 'SDM.MonthTrucking.12'
 };
 
+SDM.defeatAbilities = {
+  end: 'SDM.DefeatAbilityEndurance',
+  aur: 'SDM.DefeatAbilityAura'
+};
 
-SDM.defeatAbilities =  {
-  'end': 'SDM.DefeatAbilityEndurance',
-  'aur': 'SDM.DefeatAbilityAura'
-}
+SDM.baseFeatures = [
+  {
+    value: 'charges',
+    label: 'SDM.ItemCharges'
+  },
+  {
+    value: 'replenish',
+    label: 'SDM.ItemReplenish'
+  }
+];
+
+SDM.wardFeatures = [
+  { value: 'album', label: 'SDM.ItemAlbum' },
+  { value: 'antimagic', label: 'SDM.ItemAntimagic' },
+  { value: 'armor', label: 'SDM.ItemArmor' },
+  { value: 'auto', label: 'SDM.ItemAuto' },
+  { value: 'corpsefed', label: 'SDM.ItemCorpsefed' },
+  { value: 'cramping', label: 'SDM.ItemCramping' },
+  { value: 'deathlike', label: 'SDM.ItemDeathlike' },
+  { value: 'emplaced', label: 'SDM.ItemEmplaced' },
+  { value: 'heretical', label: 'SDM.ItemHeretical' },
+  { value: 'implant', label: 'SDM.ItemImplant' },
+  { value: 'jade', label: 'SDM.ItemJade' },
+  { value: 'land', label: 'SDM.ItemLand' },
+  { value: 'spell eater', label: 'SDM.ItemSpellEater' },
+  { value: 'scary', label: 'SDM.ItemScary' },
+  { value: 'stealthy', label: 'SDM.ItemStealthy' },
+  { value: 'undreaming', label: 'SDM.ItemUndreaming' },
+  { value: 'vessel', label: 'SDM.ItemVessel' },
+  { value: 'watchful', label: 'SDM.ItemWatchful' },
+  { value: 'weapon', label: 'SDM.ItemWeapon' }
+];
+
+SDM.armorFeatures = [
+  { value: 'bulky', label: 'SDM.ItemBulky' },
+  { value: 'large', label: 'SDM.ItemLarge' },
+  { value: 'bulletproof', label: 'SDM.ItemBulletproof' },
+  { value: 'living', label: 'SDM.ItemLiving' },
+  { value: 'camo [lion]', label: 'SDM.ItemCamoLion' },
+  { value: 'lucent', label: 'SDM.ItemLucent' },
+  { value: 'cool', label: 'SDM.ItemCool' },
+  { value: 'mirror', label: 'SDM.ItemMirror' },
+  { value: 'oldtech', label: 'SDM.ItemOldtech' },
+  { value: 'environmental', label: 'SDM.ItemEnvironmental' },
+  { value: 'pocket', label: 'SDM.ItemPocket' },
+  { value: 'powered', label: 'SDM.ItemPowered' },
+  { value: 'flare', label: 'SDM.ItemFlare' },
+  { value: 'hot', label: 'SDM.ItemHot' },
+  { value: 'sunder', label: 'SDM.ItemSunder' },
+  { value: 'interfacing', label: 'SDM.ItemInterfacing' },
+  { value: 'spiked', label: 'SDM.ItemSpiked' },
+  { value: 'stylish', label: 'SDM.ItemStylish' },
+  { value: 'intra[venous]', label: 'SDM.ItemIntravenous' },
+  { value: 'weapon', label: 'SDM.ItemWeapon' }
+];
+
+SDM.weaponFeatures = [
+  { value: 'armor piercing', label: 'SDM.ItemArmorPiercing' },
+  { value: 'atrophy', label: 'SDM.ItemAtrophy' },
+  { value: 'attune', label: 'SDM.ItemAttune' },
+  { value: 'backfiring', label: 'SDM.ItemBackfiring' },
+  { value: 'blinding', label: 'SDM.ItemBlinding' },
+  { value: 'burdening', label: 'SDM.ItemBurdening' },
+  { value: 'cavalry', label: 'SDM.ItemCavalry' },
+  { value: 'confusing', label: 'SDM.ItemConfusing' },
+  { value: 'burst', label: 'SDM.ItemBurst' },
+  { value: 'clumsy', label: 'SDM.ItemClumsy' },
+  { value: 'concealed', label: 'SDM.ItemConcealed' },
+  { value: 'corrupting', label: 'SDM.ItemCorrupting' },
+  { value: 'deathly', label: 'SDM.ItemDeathly' },
+  { value: 'entangling', label: 'SDM.ItemEntangling' },
+  { value: 'fantascience', label: 'SDM.ItemFantascience' },
+  { value: 'fearsome', label: 'SDM.ItemFearsome' },
+  { value: 'frag', label: 'SDM.ItemFrag' },
+  { value: 'glowing', label: 'SDM.ItemGlowing' },
+  { value: 'hands-free', label: 'SDM.ItemHandsFree' },
+  { value: 'heat', label: 'SDM.ItemHeat' },
+  { value: 'intravenous', label: 'SDM.ItemIntravenous' },
+  { value: 'mad', label: 'SDM.ItemMad' },
+  { value: 'mercy', label: 'SDM.ItemMercy' },
+  { value: 'necrotic', label: 'SDM.ItemNecrotic' },
+  { value: 'oldtech', label: 'SDM.ItemOldtech' },
+  { value: 'petrifying', label: 'SDM.ItemPetrifying' },
+  { value: 'psychic', label: 'SDM.ItemPsychic' },
+  { value: 'radiant', label: 'SDM.ItemRadiant' },
+  { value: 'reach', label: 'SDM.ItemReach' },
+  { value: 'restricted', label: 'SDM.ItemRestricted' },
+  { value: 'semi-sentient', label: 'SDM.ItemSemiSentient' },
+  { value: 'silent', label: 'SDM.ItemSilent' },
+  { value: 'slow', label: 'SDM.ItemSlow' },
+  { value: 'slumber', label: 'SDM.ItemSlumber' },
+  { value: 'subdual', label: 'SDM.ItemSubdual' },
+  { value: 'throwing', label: 'SDM.ItemThrowing' },
+  { value: 'two-handed', label: 'SDM.ItemTwoHanded' },
+  { value: 'versatile', label: 'SDM.ItemVersatile' },
+  { value: 'vital', label: 'SDM.ItemVital' },
+  { value: 'vorpal', label: 'SDM.ItemVorpal' }
+];

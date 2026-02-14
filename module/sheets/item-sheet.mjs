@@ -101,6 +101,10 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     effects: {
       template: templatePath('item/effects'),
       scrollable: ['']
+    },
+    features: {
+      template: templatePath('item/features'),
+      scrollable: ['']
     }
   };
 
@@ -120,7 +124,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
         break;
     }
 
-    options.parts.push('description', 'effects');
+    options.parts.push('description', 'effects', 'features');
   }
 
   /* -------------------------------------------- */
@@ -162,6 +166,16 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       isGM: game.user.isGM
     };
 
+    if (this.item.type === ItemType.GEAR && this.item.system.type === GearType.WARD) {
+      context.itemFeatures = [...CONFIG.SDM.baseFeatures, ...CONFIG.SDM.wardFeatures];
+    } else if (this.item.type === ItemType.GEAR && this.item.system.type === GearType.ARMOR) {
+      context.itemFeatures = [...CONFIG.SDM.baseFeatures, ...CONFIG.SDM.armorFeatures];
+    } else if (this.item.type === ItemType.GEAR && this.item.system.type === GearType.WEAPON) {
+      context.itemFeatures = [...CONFIG.SDM.baseFeatures, ...CONFIG.SDM.weaponFeatures];
+    } else {
+      context.itemFeatures = [...CONFIG.SDM.baseFeatures] ;
+    }
+
     if (this.item.type === ItemType.GEAR && this.item.system.type === GearType.POWER_ALBUM) {
       // Calculate navigation states
       context.powers = context.system?.powers;
@@ -181,6 +195,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       case 'attributesFeature':
       case 'attributesMount':
       case 'powerAlbum':
+      case 'features':
         // Necessary for preserving active tab on re-render
         context.tab = context.tabs[partId];
         break;
@@ -256,6 +271,11 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
           tab.id = 'effects';
           tab.label += 'Effects';
           tab.icon = 'fa fa-bolt';
+          break;
+        case 'features':
+          tab.id = 'features';
+          tab.label += 'Features';
+          tab.icon = 'fa fa-gears';
           break;
       }
       if (this.tabGroups[tabGroup] === tab.id) tab.cssClass = 'active';

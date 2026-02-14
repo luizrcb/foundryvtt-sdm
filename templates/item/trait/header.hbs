@@ -36,7 +36,7 @@
         {{/if}}
       </div>
 
-     {{#if (eq item.system.type 'power')}}
+     {{#if (and (eq item.system.type 'power') (has item.system.features 'charges'))}}
       <div class='resource'>
         <label class='resource-label' for="system.charges.max">{{localize 'SDM.ItemCharges'}}</label>
         <div class='resource-content flexrow flex-center flex-between flex-group-center'>
