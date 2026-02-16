@@ -122,33 +122,32 @@ export const getDefaultAbility = (initialValue = '') => {
   });
 };
 
-
-export const foundryVersionIsAtLeast = (v) => {
+export const foundryVersionIsAtLeast = v => {
   const current = game.version ?? `${game.release?.generation}.${game.release?.build ?? 0}`;
   // true if current >= v
   return !foundry.utils.isNewerVersion(v, current);
 };
 
 const months = [
-  { name: "Newfirst", days: 31 },
-  { name: "Lastmonth", days: 30 },
-  { name: "Firstmonth", days: 30 },
-  { name: "Greenmonth", days: 31 },
-  { name: "Redmonth", days: 30 },
-  { name: "Orangemonth", days: 30 },
-  { name: "Yellowmonth", days: 31 },
-  { name: "Oldsecond", days: 30 },
-  { name: "Unity", days: 30 },
-  { name: "Violetmonth", days: 31 },
-  { name: "Snowbringer", days: 30 },
-  { name: "Deadwinter", days: 30 }
+  { name: 'Newfirst', days: 31 },
+  { name: 'Lastmonth', days: 30 },
+  { name: 'Firstmonth', days: 30 },
+  { name: 'Greenmonth', days: 31 },
+  { name: 'Redmonth', days: 30 },
+  { name: 'Orangemonth', days: 30 },
+  { name: 'Yellowmonth', days: 31 },
+  { name: 'Oldsecond', days: 30 },
+  { name: 'Unity', days: 30 },
+  { name: 'Violetmonth', days: 31 },
+  { name: 'Snowbringer', days: 30 },
+  { name: 'Deadwinter', days: 30 }
 ];
 
 const seasons = [
-  { name: "Winter", startMonth: 12, endMonth: 2 },
-  { name: "Spring", startMonth: 3, endMonth: 5 },
-  { name: "Summer", startMonth: 6, endMonth: 8 },
-  { name: "Autumn", startMonth: 9, endMonth: 11 }
+  { name: 'Winter', startMonth: 12, endMonth: 2 },
+  { name: 'Spring', startMonth: 3, endMonth: 5 },
+  { name: 'Summer', startMonth: 6, endMonth: 8 },
+  { name: 'Autumn', startMonth: 9, endMonth: 11 }
 ];
 
 export const getSeasonAndWeek = (day, monthNumber) => {
@@ -163,7 +162,7 @@ export const getSeasonAndWeek = (day, monthNumber) => {
   });
 
   if (!season) {
-    throw new Error("Estação não encontrada");
+    throw new Error('Estação não encontrada');
   }
 
   // Calcular dias passados desde o início da estação
@@ -179,7 +178,7 @@ export const getSeasonAndWeek = (day, monthNumber) => {
     if (currentMonth > 12) currentMonth = 1;
   }
 
-  daysPassed += (day - 1);
+  daysPassed += day - 1;
 
   // Calcular semana da estação
   let weekOfSeason = Math.floor(daysPassed / 7) + 1;
@@ -189,4 +188,89 @@ export const getSeasonAndWeek = (day, monthNumber) => {
     season: season.name,
     week: weekOfSeason
   };
+};
+function getFormulaAverage(expr) {
+  expr = expr.replace(/\s+/g, '');
+
+  function processTerm(term) {
+    if (/^\d+$/.test(term)) {
+      return parseInt(term, 10);
+    }
+    if (term.startsWith('{') && term.endsWith('}')) {
+      const inner = term.slice(1, -1);
+      if (inner === '') return 0;
+      const items = inner.split(',');
+      let sum = 0;
+      for (let item of items) {
+        sum += processGroupItem(item);
+      }
+      return sum;
+    }
+    return processDie(term);
+  }
+
+  function processGroupItem(item) {
+    if (/^\d+$/.test(item)) {
+      return parseInt(item, 10);
+    }
+    return processDie(item);
+  }
+
+  function processDie(dieStr) {
+    const match = dieStr.match(/^(\d*)d(\d+)(x?)$/);
+    if (!match) {
+      throw new Error(`Invalid dice expression: ${dieStr}`);
+    }
+    const numDice = match[1] === '' ? 1 : parseInt(match[1], 10);
+    const sides = parseInt(match[2], 10);
+    const explodes = match[3] === 'x';
+
+    let averagePerDie;
+    if (explodes) {
+      if (sides <= 1) {
+        averagePerDie = Infinity;
+      } else {
+        averagePerDie = ((sides + 1) / 2) * (sides / (sides - 1));
+      }
+    } else {
+      averagePerDie = (sides + 1) / 2;
+    }
+    return numDice * averagePerDie;
+  }
+
+  const terms = [];
+  let current = '';
+  let braceLevel = 0;
+  for (let i = 0; i < expr.length; i++) {
+    const c = expr[i];
+    if (c === '{') {
+      braceLevel++;
+      current += c;
+    } else if (c === '}') {
+      braceLevel--;
+      current += c;
+    } else if (c === '+' && braceLevel === 0) {
+      if (current !== '') {
+        terms.push(current);
+        current = '';
+      }
+    } else {
+      current += c;
+    }
+  }
+  if (current !== '') {
+    terms.push(current);
+  }
+
+  let total = 0;
+  for (let term of terms) {
+    total += processTerm(term);
+  }
+  return total;
+}
+
+export function isNewFormulaBetter(currentFormula, newFormula) {
+  const currentAverage = getFormulaAverage(currentFormula);
+  const newAverage = getFormulaAverage(newFormula);
+  return newAverage > currentAverage;
 }

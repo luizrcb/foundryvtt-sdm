@@ -13,6 +13,7 @@ import {
 import { $fmt, $l10n, capitalizeFirstLetter, safeEvaluate } from '../helpers/globalUtils.mjs';
 import { getSlotsTaken } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
+import { renderUsageResult } from '../rolls/ui/renderResults.mjs';
 
 const { renderTemplate } = foundry.applications.handlebars;
 
@@ -149,6 +150,9 @@ export class SdmItem extends Item {
     // As with the actor class, items are documents that can have their data
     // preparation methods overridden (such as prepareBaseData()).
     super.prepareData();
+    if (this.system.features.size) {
+      this.system.features = new Set([...this.system.features].sort());
+    }
   }
 
   /**
@@ -395,7 +399,7 @@ export class SdmItem extends Item {
 
     let title = `${this.getNameTitle()}${this.getCostTitle()}<br/>${$l10n('SDM.Damage')}: ${weaponData?.damage.base}`;
 
-    if (weaponData?.versatile) {
+    if (weaponData?.versatile || data.features.has('versatile')) {
       title += `/${weaponData?.damage.versatile}`;
     }
 
@@ -408,6 +412,26 @@ export class SdmItem extends Item {
     title += ` ${$l10n('SDM.WeaponRange')}: ${rangeLabel}`;
 
     return title;
+  }
+
+  footerTitleFunction (system) {
+    if (!system.features.size) return '';
+
+    let footer = '<br><br>';
+    footer += `<strong>${$l10n('SDM.ItemTabFeatures')}:</strong> `;
+
+    const featureStrings = [];
+
+    for (let feature of system.features) {
+      let str = $l10n('SDM.ItemFeature.' + feature + 'Abbr');
+      if (feature === 'replenish') {
+        str += ' ' + system.replenish.value;
+      }
+      featureStrings.push(str);
+    }
+
+    footer += featureStrings.join(', ');
+    return footer;
   }
 
   getInventoryTitle() {
@@ -431,7 +455,7 @@ export class SdmItem extends Item {
 
     const titleFunction = getInventoryItemTitle[data.type];
     title = titleFunction(this.system, this.actor.system);
-
+    title += this.footerTitleFunction(this.system);
     return title;
   }
 
@@ -528,6 +552,14 @@ export class SdmItem extends Item {
     }
 
     await this.update({ 'system.is_hallmark': !this.system.is_hallmark });
+  }
+
+  async usageRoll(target = 0) {
+    let roll = new Roll('1d20');
+    roll = await roll.evaluate();
+    const label = `[${$l10n('SDM.Item.UsageRoll')}] ${this.name}`;
+    const speaker = ChatMessage.getSpeaker({ actor: this.actor });
+    await renderUsageResult({ roll, label, target }, { fromHeroDice: false, speaker });
   }
 
   async toggleItemStatus(action = '') {

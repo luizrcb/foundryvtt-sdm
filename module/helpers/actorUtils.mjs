@@ -280,12 +280,20 @@ export async function createNPC(name = 'NPC', tableName, initiative = '') {
   const biography = '';
   const img = '';
   const npcData = makeNPC(name, img, biography, entry, initiative);
+  npcData.system['createdFromTable'] = tableName;
 
   const targetActor = await Actor.create(npcData);
   const traitsTable = NPCTables[tableName].traits;
 
   await createRandomTrait(targetActor, traitsTable);
   return npcData;
+}
+
+export function getNPCDataByLevel(tableName, level = 0) {
+  const npcTable = tableName || 'generic-synthesized-creature';
+  const table = NPCTables[npcTable].table;
+  const entry = [...table].reverse().find(e => e.Lvl <= level);
+  return entry;
 }
 
 // retorna NPC pelo nível (ou nível mais próximo abaixo)
@@ -299,17 +307,13 @@ export async function createNPCByLevel({
   ownership = null,
   linked = false,
 }) {
-  const table = NPCTables[tableName].table;
-  if (!table) throw new Error(`Tabela não encontrada: ${tableName}`);
-
-  // pega a maior entrada <= lvl
-  const entry = [...table].reverse().find(e => e.Lvl <= lvl);
-
+  const entry = getNPCDataByLevel(tableName, lvl);
   if (!entry) throw new Error(`Nenhuma entrada encontrada para lvl ${lvl} em ${tableName}`);
 
   const actorBiography = biography;
   const img = image;
   const npcData = makeNPC(name, img, actorBiography, entry, initiative);
+  npcData.system['createdFromTable'] = tableName;
   const isGM = userId => game.users.get(userId)?.isGM ?? false;
 
   const targetActor = await Actor.create(npcData);

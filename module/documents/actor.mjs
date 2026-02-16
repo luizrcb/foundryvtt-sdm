@@ -416,10 +416,10 @@ export class SdmActor extends Actor {
       item =>
         (item.type === ItemType.GEAR && item.system.type === GearType.CORRUPTION) ||
         (item.type === ItemType.TRAIT &&
-        (!item.system?.learning ||
-          item.system?.learning?.required_successes === 0 ||
-          item.system?.skill?.rank > 0 ||
-          item.system?.learning?.required_successes === item.system?.learning?.sources))
+          (!item.system?.learning ||
+            item.system?.learning?.required_successes === 0 ||
+            item.system?.skill?.rank > 0 ||
+            item.system?.learning?.required_successes === item.system?.learning?.sources))
     );
     const defaultModifierStep = game.settings.get('sdm', 'skillModifierStep');
     skillTraits.forEach(trait => {
@@ -988,12 +988,32 @@ export class SdmActor extends Actor {
         }
       },
       {
+        name: 'SDM.Item.UsageRoll',
+        icon: '<i class="fa-solid fa-arrow-rotate-right"></i>',
+        condition: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          if (item.system.resources === 'run_out') return false;
+          return (
+            this.isOwner &&
+            item.system.features.has('replenish')
+          );
+        },
+        callback: async target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          await item.usageRoll(item.system.replenish.value);
+        }
+      },
+      {
         name: 'SDM.Item.AddOneCharge',
         icon: '<i class="fa-solid fa-circle-plus"></i>',
         condition: target => {
           const item = this.sheet._getEmbeddedDocument(target);
           if (item.system.charges.max === 0) return false;
-          return this.isOwner && item.system.charges.value < item.system.charges.max;
+          return (
+            this.isOwner &&
+            item.system.features.has('charges') &&
+            item.system.charges.value < item.system.charges.max
+          );
         },
         callback: async target => {
           const item = this.sheet._getEmbeddedDocument(target);
@@ -1006,7 +1026,9 @@ export class SdmActor extends Actor {
         condition: target => {
           const item = this.sheet._getEmbeddedDocument(target);
           if (item.system.charges.max === 0) return false;
-          return this.isOwner && item.system.charges.value > 0;
+          return (
+            this.isOwner && item.system.features.has('charges') && item.system.charges.value > 0
+          );
         },
         callback: async target => {
           const item = this.sheet._getEmbeddedDocument(target);
@@ -1060,7 +1082,7 @@ export class SdmActor extends Actor {
             item.system.type === GearType.CORRUPTION
           )
             return false;
-          return this.isOwner && item.system.resources === 'running_low';
+          return this.isOwner && item.system.resources !== 'run_out';
         },
         callback: async target => {
           const item = this.sheet._getEmbeddedDocument(target);

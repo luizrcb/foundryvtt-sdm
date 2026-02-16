@@ -242,9 +242,21 @@
   font-family: var(--sdm-font-secondary);
 }
 
+.sheet multi-checkbox > label > input[type=checkbox]:focus {
+  border-bottom: 0px;
+}
+
+.sheet multi-checkbox > label:hover {
+  font-weight: bold;
+}
+
 .sheet input.resource-label {
   font-weight: bold;
   font-size: 15px;
+}
+
+.mt-2 {
+  margin-top: 2px;
 }
 
 .mt-5 {
@@ -269,6 +281,10 @@
 
 .mr-10 {
   margin-right: 10px;
+}
+
+.mb-5 {
+  margin-bottom: 5px;
 }
 
 .mb-10 {
@@ -338,6 +354,67 @@
   min-height: 0px;
   max-width: 0px;
   max-height: 0px;
+}
+
+.unlist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.unlist li {
+  margin: 0;
+}
+
+.features-label {
+  font-weight: bold;
+  padding-top: 2px;
+  font-family: var(--sdm-font-primary);
+}
+
+.pills {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+}
+
+.pills .pill {
+  font-family: var(--sdm-font-secondary);
+  font-size: 11px;
+  line-height: 1;
+  font-weight: 500;
+  text-transform: uppercase;
+  border: 1px dotted;
+  border-radius: 3px;
+  cursor: pointer;
+  padding: 0.1875rem 0.375rem;
+  display: flex;
+  gap: 0.25rem;
+  margin: 0;
+}
+
+.pills .pill.transparent {
+  background-color: transparent;
+}
+
+.pills .pill.mr-3 {
+  margin-right: 3px;
+}
+
+.pills .pill.pill-s {
+  font-size: 10px;
+  padding: 0.1875rem 0.1875rem;
+}
+
+.pills .pill > .separator {
+  color: var(--color-text-tertiary);
+}
+
+.pills .pill:hover {
+  background: var(--sdm-c-accent);
 }
 
 .rust {

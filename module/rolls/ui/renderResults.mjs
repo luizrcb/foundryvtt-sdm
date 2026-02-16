@@ -418,3 +418,63 @@ export async function renderSaveResult(
 
   await createChatMessage(chatMessageData);
 }
+
+export async function renderUsageResult(
+  { roll, label, target },
+  { fromHeroDice = false, speaker }
+) {
+  // Determine outcome and message
+  let outcome, message;
+  if (roll._total === 13) {
+    outcome = $l10n('SDM.ItemStatusRunningLow');
+    message = $l10n('SDM.DepletedResources');
+  } else if (roll._total > target) {
+    outcome = $l10n('SDM.ItemStatusHaveEnough');
+    message = $l10n('SDM.ResourcesKeepUsing');
+  } else {
+    outcome = $l10n('SDM.ItemStatusRunOut');
+    message = $l10n('SDM.AllResourcesDepleted');
+  }
+
+  let borderColor = '#aa0200';
+
+  if (roll._total === 13) {
+    borderColor = '#d4af37';
+  } else if (roll._total > target) {
+    borderColor = '#18520B';
+  }
+
+  const templateData = {
+    outcome,
+    message,
+    formula: roll.formula,
+    total: roll._total,
+    borderColor,
+    targetLabel: $l10n('SDM.Target'),
+    targetNumber: target,
+    rollTooltip: await roll.getTooltip()
+  };
+
+  const flags = {};
+
+  if (fromHeroDice === true) {
+    flags['sdm.isHeroResult'] = true;
+  } else {
+    flags['sdm.' + 'usage'] = {
+      label,
+      target,
+      speaker
+    };
+  }
+
+  const chatMessageData = {
+    content: await renderTemplate(templatePath('chat/saving-throw-result'), templateData),
+    flavor: label,
+    rolls: [roll],
+    checkCritical: false,
+    flags,
+    speaker
+  };
+
+  await createChatMessage(chatMessageData);
+}

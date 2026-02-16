@@ -73,12 +73,9 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
 
     schema.size = new fields.EmbeddedDataField(ItemSizeDataModel);
 
-    schema.features = new fields.SetField(new fields.StringField(),[
-      ...CONFIG.SDM.baseFeatures,
-      ...CONFIG.SDM.wardFeatures,
-      ...CONFIG.SDM.armorFeatures,
-      ...CONFIG.SDM.weaponFeatures
-    ]);
+    schema.features = new fields.SetField(new fields.StringField({ required: true, blank: false, nullable: false }), {
+      min: 0,
+    });
 
     schema.attributes = new fields.EmbeddedDataField(NPCBaseDataModel);
 

@@ -1,6 +1,6 @@
 import { SdmItem } from '../documents/item.mjs';
 
-import { MAX_MODIFIER } from '../helpers/actorUtils.mjs';
+import { getNPCDataByLevel, MAX_MODIFIER } from '../helpers/actorUtils.mjs';
 import {
   ActorType,
   AttackTarget,
@@ -10,7 +10,13 @@ import {
   RollType
 } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
-import { $fmt, $l10n, capitalizeFirstLetter, toPascalCase } from '../helpers/globalUtils.mjs';
+import {
+  $fmt,
+  $l10n,
+  capitalizeFirstLetter,
+  isNewFormulaBetter,
+  toPascalCase
+} from '../helpers/globalUtils.mjs';
 import {
   getSlotsTaken,
   ITEMS_NOT_ALLOWED_IN_CARAVANS,
@@ -54,6 +60,13 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     if (this.actor?.type === ActorType.NPC) {
       classes.push(ActorType.NPC);
+      controls.push({
+        action: 'levelUpNPC',
+        icon: 'fa-solid fa-angles-up',
+        label: 'Level UP NPC',
+        ownership: 'OWNER'
+      });
+      window.controls = controls;
     }
 
     if (this.actor?.type === ActorType.CHARACTER) {
@@ -112,6 +125,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       updateAttack: this._onUpdateAttack,
       viewDoc: this._viewDoc,
       rerollCharacter: this._onRerollCharacter,
+      levelUpNPC: this._onLevelUpNPC,
       openDoc: { handler: this._openDoc, buttons: [0] },
       toggleItemStatus: { handler: this._toggleItemStatus, buttons: [0, 2] }
     },
@@ -1070,7 +1084,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         ability = item.system.default_ability;
         formula = weaponDamage.base;
         bonusDamage = weaponDamage.bonus;
-        versatile = item.system?.weapon?.versatile || false;
+        versatile =
+          item.system?.weapon?.versatile || item.system?.features?.has('versatile') || false;
 
         if (versatile) {
           versatileFormula = weaponDamage.versatile;
@@ -1675,6 +1690,36 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     const item = this._getEmbeddedDocument(target);
     await item.toggleItemStatus(event);
+  }
+
+  static async _onLevelUpNPC(event, target) {
+    event.preventDefault(); // Don't open context menu
+    event.stopPropagation(); // Don't trigger other events
+
+    if (!this.actor.type === ActorType.NPC) return;
+    const npcData = this.actor.system;
+    const currentLevel = npcData.level || 0;
+    const npcTable = npcData.createdFromTable || '';
+    const nextLevel = currentLevel + 1;
+    const newData = getNPCDataByLevel(npcTable, nextLevel);
+
+    if (newData.Lvl < nextLevel) return;
+    const level = nextLevel;
+    const life = npcData.life.max < newData.Life ? newData.Life : npcData.life.max;
+    const morale = npcData.morale < newData.Mor ? newData.Mor : npcData.morale;
+    const defense = npcData.defense < newData.Def ? newData.Def : npcData.defense;
+    const bonus = npcData.bonus < newData.Bon ? newData.Bon : npcData.bonus;
+    const damage = isNewFormulaBetter(npcData.damage, newData.Dmg) ? newData.Dmg : npcData.damage;
+
+    await this.actor.update({
+      'system.level': level,
+      'system.life.value': life,
+      'system.life.max': life,
+      'system.morale': morale,
+      'system.defense': defense,
+      'system.bonus': bonus,
+      'system.damage': damage
+    });
   }
 
   /** Helper Functions */

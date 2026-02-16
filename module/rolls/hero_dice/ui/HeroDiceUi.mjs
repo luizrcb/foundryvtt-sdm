@@ -6,7 +6,8 @@ import {
   renderNPCMoraleResult,
   renderCorruptionResult,
   renderReactionResult,
-  renderDefeatResult
+  renderDefeatResult,
+  renderUsageResult
 } from '../../ui/renderResults.mjs';
 
 const { renderTemplate } = foundry.applications.handlebars;
@@ -213,6 +214,17 @@ export class HeroDiceUI {
       const { targetNumber, speaker } = flags.sdm.morale;
       await renderNPCMoraleResult(
         { roll: heroResultRoll, targetNumber },
+        {
+          fromHeroDice: true,
+          speaker
+        }
+      );
+    }
+
+    if (flags && flags?.sdm?.usage) {
+      const { label, target, speaker } = flags.sdm.usage;
+      await renderUsageResult(
+        { roll: heroResultRoll, label, target },
         {
           fromHeroDice: true,
           speaker

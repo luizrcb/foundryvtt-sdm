@@ -121,10 +121,19 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
         if (this.document.system.type === GearType.POWER_ALBUM) {
           options.parts.push('powerAlbum');
         }
+
+        options.parts.push('description')
+
+        if (this.document.system.type !== GearType.CORRUPTION) {
+          options.parts.push('features')
+        }
+
+        options.parts.push('effects');
+      break;
+      default:
+        options.parts.push('description', 'effects');
         break;
     }
-
-    options.parts.push('description', 'effects', 'features');
   }
 
   /* -------------------------------------------- */

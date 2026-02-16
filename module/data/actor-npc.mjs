@@ -33,6 +33,11 @@ export default class SdmNPC extends SdmActorBase {
         initial: false
       }),
 
+      createdFromTable: new fields.StringField({
+        required: false,
+        initial: '',
+      }),
+
       isHelper: new fields.BooleanField({
         required: true,
         initial: false

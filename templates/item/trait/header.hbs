@@ -51,6 +51,15 @@
       </div>
       {{/if}}
 
+      {{#if (and (eq item.system.type 'power') (has item.system.features 'replenish'))}}
+      <div class='resource'>
+        <label class='resource-label' for="system.replenish.value">{{localize 'SDM.ItemFeature.replenish'}}</label>
+        <div class='resource-content'>
+          <input type='text' name="system.replenish.value" value="{{system.replenish.value}}" data-dtype='Number' data-tooltip="{{localize 'SDM.ItemFeature.replenishAbbr'}}"/>
+        </div>
+      </div>
+      {{/if}}
+
       {{#if item.system.is_hallmark}}
       <div class='resource'>
         <label class='resource-label'>{{localize 'SDM.FieldLevel'}}

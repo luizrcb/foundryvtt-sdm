@@ -82,6 +82,15 @@
         </div>
         {{/unless}}
 
+        {{#if (has system.features 'replenish')}}
+        <div class='resource'>
+          <label class='resource-label' for="system.replenish.value">{{localize 'SDM.ItemFeature.replenish'}}</label>
+          <div class='resource-content'>
+            <input type='text' name="system.replenish.value" value="{{system.replenish.value}}" data-dtype='Number' data-tooltip="{{localize 'SDM.ItemFeature.replenish.description'}}"/>
+          </div>
+        </div>
+        {{/if}}
+
       </div>
       {{/unless}}
   </header>
@@ -154,17 +163,19 @@
         </select>
       </div>
 
-      <div class='resource align-center'>
+      {{!-- <div class='resource align-center'>
         <label class='resource-label'>
           {{localize 'SDM.WeaponVersatile'}}
         </label>
         <div class='resource-content align-center'>
           <input type='checkbox' name='system.weapon.versatile' {{checked system.weapon.versatile}} />
         </div>
+      </div> --}}
+      <div class="resource">
       </div>
 
       <div class='resource'>
-        {{#if system.weapon.versatile}}
+        {{#if (or system.weapon.versatile (has system.features 'versatile'))}}
         <label class='resource-label'>
           {{localize 'SDM.WeaponVersatileDamage'}}
         </label>
