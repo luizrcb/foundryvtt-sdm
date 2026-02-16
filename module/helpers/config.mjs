@@ -416,6 +416,7 @@ SDM.wardFeatures = [
   { value: 'antimagic', label: 'SDM.ItemFeature.antimagic' },
   { value: 'armor', label: 'SDM.ItemFeature.armor' },
   { value: 'auto', label: 'SDM.ItemFeature.auto' },
+  { value: 'booster', label: 'SDM.ItemFeature.booster' },
   { value: 'corpsefed', label: 'SDM.ItemFeature.corpsefed' },
   { value: 'cramping', label: 'SDM.ItemFeature.cramping' },
   { value: 'deathlike', label: 'SDM.ItemFeature.deathlike' },
