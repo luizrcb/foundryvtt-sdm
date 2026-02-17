@@ -125,6 +125,21 @@ export default class SdmCharacter extends SdmActorBase {
       initial: 0
     });
 
+    schema.pet_slots_bonus = new fields.NumberField({
+      ...requiredInteger,
+      initial: 0
+    });
+
+    schema.augment_slots_bonus = new fields.NumberField({
+      ...requiredInteger,
+      initial: 0
+    });
+
+    schema.affliction_slots_bonus = new fields.NumberField({
+      ...requiredInteger,
+      initial: 0
+    });
+
     schema.reaction_bonus = new fields.NumberField({
       ...requiredInteger,
       initial: 0

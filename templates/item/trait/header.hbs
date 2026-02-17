@@ -36,7 +36,7 @@
         {{/if}}
       </div>
 
-     {{#if (and (eq item.system.type 'power') (has item.system.features 'charges'))}}
+     {{!-- {{#if (and (eq item.system.type 'power') (has item.system.features 'charges'))}}
       <div class='resource'>
         <label class='resource-label' for="system.charges.max">{{localize 'SDM.ItemCharges'}}</label>
         <div class='resource-content flexrow flex-center flex-between flex-group-center'>
@@ -49,9 +49,9 @@
           />
         </div>
       </div>
-      {{/if}}
+      {{/if}} --}}
 
-      {{#if (and (eq item.system.type 'power') (has item.system.features 'replenish'))}}
+      {{!-- {{#if (and (eq item.system.type 'power') (has item.system.features 'replenish'))}}
       <div class='resource'>
         <label class='resource-label' for="system.replenish.value">{{localize 'SDM.ItemFeature.replenish'}}</label>
         <div class='resource-content'>
@@ -59,6 +59,24 @@
         </div>
       </div>
       {{/if}}
+
+      {{#if (and (eq item.system.type 'power') (has system.features 'flare'))}}
+        <div class='resource'>
+          <label class='resource-label' for="system.flare.value">{{localize 'SDM.ItemFeature.flare'}}</label>
+          <div class='resource-content'>
+            <input type='text' name="system.flare.value" value="{{system.flare.value}}" data-dtype='Number' data-tooltip="{{localize 'SDM.ItemFeature.flareDescription'}}"/>
+          </div>
+        </div>
+        {{/if}}
+
+        {{#if (and (eq item.system.type 'power') (has system.features 'pocket'))}}
+        <div class='resource'>
+          <label class='resource-label' for="system.pocket.value">{{localize 'SDM.ItemFeature.pocket'}}</label>
+          <div class='resource-content'>
+            <input type='text' name="system.pocket.value" value="{{system.pocket.value}}" data-dtype='Number' data-tooltip="{{localize 'SDM.ItemFeature.pocketDescription'}}"/>
+          </div>
+        </div>
+        {{/if}} --}}
 
       {{#if item.system.is_hallmark}}
       <div class='resource'>

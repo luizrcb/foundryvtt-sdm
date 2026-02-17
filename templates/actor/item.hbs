@@ -110,8 +110,8 @@
       >({{item.system.charges.value}}/{{item.system.charges.max}})</span>{{/if}}
 
       {{#if (and (has item.system.features 'replenish')(ne item.system.resources 'run_out'))}} <div class="pills flex" style="flex-basis:auto;flex-wrap:nowrap;"><span class="pill pill-s mr-3" style="flex-basis:auto;flex-wrap:nowrap;"
-       data-tooltip="{{localize 'SDM.ItemFeature.replenish'}}"
-      >{{localize 'SDM.ItemFeature.replenishAbbr'}} {{item.system.replenish.value}}</span></div>{{/if}}
+       data-tooltip="{{replace (localize 'SDM.ItemFeature.replenish') ' #'}}"
+      >{{replace (localize 'SDM.ItemFeature.replenishAbbr') ' #'}} {{item.system.replenish.value}}</span></div>{{/if}}
 
       {{item.name}}
 
@@ -135,6 +135,9 @@
       (ne actorType 'caravan')
       (ne item.system.status 'broken')
       (ne item.system.type 'corruption')
+      (ne item.system.type 'affliction')
+      (ne item.system.type 'augment')
+      (ne item.system.type 'pet')
     )}}
     <a class="item-control">
       <i
@@ -149,7 +152,10 @@
       </i>
     </a>
     {{/if}}
-      {{#if (ne item.system.type 'corruption')}}
+      {{#if (and
+        (ne item.system.type 'corruption')
+        (ne item.system.type 'affliction')
+      )}}
       <a class="item-control">
         <i
           class="fa-regular fa-exchange"

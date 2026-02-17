@@ -192,4 +192,12 @@ export function registerHandlebarsHelpers() {
   $$('has', function (set, value) {
     return set.has(value);
   });
+
+  $$('numberedFeature', function (feature) {
+    return ['replenish', 'flare', 'pocket'].includes(feature);
+  });
+
+  $$('replace', function (originalString = '', substring = '') {
+    return originalString.replace(substring, '');
+  });
 }

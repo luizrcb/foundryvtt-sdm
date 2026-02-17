@@ -58,9 +58,12 @@ export const ItemType = Object.freeze({
 });
 
 export const GearType = Object.freeze({
+  AFFLICTION: 'affliction',
+  AUGMENT: 'augment',
   WEAPON: 'weapon',
   ARMOR: 'armor',
   CORRUPTION: 'corruption',
+  PET: 'pet',
   POWER: 'power',
   POWER_ALBUM: 'power_album',
   WARD: 'ward'
@@ -77,8 +80,11 @@ export const ItemStatusType = Object.freeze({
 });
 
 export const TraitType = Object.freeze({
+  AFFLICTION: 'affliction',
+  AUGMENT: 'augment',
   CORRUPTION: 'corruption',
   SKILL: 'skill',
+  PET: 'pet',
   POWER: 'power'
 });
 
@@ -164,6 +170,9 @@ export const DEFAULT_SKILL_ICON = 'icons/svg/jump.svg';
 export const DEFAULT_TRAIT_ICON = 'icons/svg/walk.svg';
 export const DEFAULT_WARD_ICON = 'icons/svg/eye.svg';
 export const DEFAULT_WEAPON_ICON = 'icons/svg/sword.svg';
+export const DEFAULT_PET_ICON = 'icons/svg/pawprint.svg';
+export const DEFAULT_AFFLICTION_ICON = 'icons/svg/stoned.svg';
+export const DEFAULT_AUGMENT_ICON = 'icons/svg/upgrade.svg';
 
 export const GEAR_ICONS = [
   DEFAULT_GEAR_ICON,
@@ -172,5 +181,18 @@ export const GEAR_ICONS = [
   DEFAULT_POWER_ALBUM_ICON,
   DEFAULT_POWER_ICON,
   DEFAULT_WARD_ICON,
-  DEFAULT_WEAPON_ICON
+  DEFAULT_WEAPON_ICON,
+  DEFAULT_AFFLICTION_ICON,
+  DEFAULT_AUGMENT_ICON,
+  DEFAULT_PET_ICON
+];
+
+export const TRAIT_ICONS = [
+  DEFAULT_TRAIT_ICON,
+  DEFAULT_SKILL_ICON,
+  DEFAULT_POWER_ICON,
+  DEFAULT_CORRUPTION_ICON,
+  DEFAULT_AFFLICTION_ICON,
+  DEFAULT_AUGMENT_ICON,
+  DEFAULT_PET_ICON
 ];

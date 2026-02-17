@@ -263,6 +263,9 @@ SDM.characterPropertiesToActiveEffects = [
   'system.burden_slots_bonus',
   'system.burden_penalty_bonus',
   'system.power_slots_bonus',
+  'system.pet_slots_bonus',
+  'system.augment_slots_bonus',
+  'system.affliction_slots_bonus',
   'system.hero_dice.bonus',
   'system.hero_dice.dice_type',
   'system.tourist_dice.enabled',
@@ -325,24 +328,29 @@ SDM.itemType = {
 };
 
 SDM.gearType = {
+  affliction: 'TYPES.Item.affliction',
   armor: 'TYPES.Item.armor',
+  augment: 'TYPES.Item.augment',
   corruption: 'TYPES.Item.corruption',
-  power: 'TYPES.Item.power',
+  pet: 'TYPES.Item.pet',
   power_album: 'TYPES.Item.power_album',
+  power: 'TYPES.Item.power',
   ward: 'TYPES.Item.ward',
   weapon: 'TYPES.Item.weapon'
 };
 
 SDM.traitType = {
+  affliction: 'TYPES.Item.affliction',
+  augment: 'TYPES.Item.augment',
   corruption: 'TYPES.Item.corruption',
+  pet: 'TYPES.Item.pet',
   power: 'TYPES.Item.power',
   skill: 'TYPES.Item.skill'
 };
 
 SDM.burdenType = {
   '': 'TYPE.Burden',
-  ...SDM.gearType,
-  ...SDM.traitType
+  affliction: 'TYPES.Item.affliction'
 };
 
 SDM.rangeType = {
@@ -438,6 +446,7 @@ SDM.armorFeatures = [
   { value: 'bulky', label: 'SDM.ItemFeature.bulky' },
   { value: 'large', label: 'SDM.ItemFeature.large' },
   { value: 'bulletproof', label: 'SDM.ItemFeature.bulletproof' },
+  { value: 'burn', label: 'SDM.ItemFeature.burn' },
   { value: 'living', label: 'SDM.ItemFeature.living' },
   { value: 'camolion', label: 'SDM.ItemFeature.camolion' },
   { value: 'lucent', label: 'SDM.ItemFeature.lucent' },

@@ -49,8 +49,12 @@
             {{#each item.system.features}}
             <li class="pill transparent">
               <span data-tooltip aria-label="{{localize (concat 'SDM.ItemFeature.' this)}}: {{localize (concat 'SDM.ItemFeature.' this 'Description')}}">
-                {{localize (concat 'SDM.ItemFeature.' this 'Abbr')}}
-                {{ifThen (eq this 'replenish') ../item.system.replenish.value  ''}}
+                {{#if (numberedFeature this)}}
+                  {{replace (localize (concat 'SDM.ItemFeature.' this 'Abbr')) ' #'}}
+                {{else}}
+                  {{localize (concat 'SDM.ItemFeature.' this 'Abbr')}}
+                {{/if}}
+                {{ifThen (numberedFeature this) (lookup (lookup ../item.system this) 'value')  ''}}
               </span>
             </li>
             {{/each}}

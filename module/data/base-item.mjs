@@ -47,6 +47,26 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       })
     });
 
+    schema.flare = new fields.SchemaField({
+      value: new fields.NumberField({
+        required: true,
+        nullable: false,
+        integer: true,
+        initial: 0,
+        min: 0
+      })
+    });
+
+    schema.pocket = new fields.SchemaField({
+      value: new fields.NumberField({
+        required: true,
+        nullable: false,
+        integer: true,
+        initial: 0,
+        min: 0
+      })
+    });
+
     schema.cost = new fields.NumberField({
       required: false,
       nullable: true,

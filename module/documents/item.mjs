@@ -414,7 +414,7 @@ export class SdmItem extends Item {
     return title;
   }
 
-  footerTitleFunction (system) {
+  footerTitleFunction(system) {
     if (!system.features.size) return '';
 
     let footer = '<br><br>';
@@ -424,8 +424,9 @@ export class SdmItem extends Item {
 
     for (let feature of system.features) {
       let str = $l10n('SDM.ItemFeature.' + feature + 'Abbr');
-      if (feature === 'replenish') {
-        str += ' ' + system.replenish.value;
+      if (['replenish', 'flare', 'pocket'].includes(feature)) {
+        str = str.replace(' #', '');
+        str += ' ' + system[feature].value;
       }
       featureStrings.push(str);
     }
@@ -450,6 +451,9 @@ export class SdmItem extends Item {
       [ItemType.MOUNT]: () => this.getDefaultTitle(),
       [ItemType.VEHICLE]: () => this.getDefaultTitle(),
       [GearType.CORRUPTION]: () => this.getCorruptionTitle(),
+      [GearType.AFFLICTION]: () => this.getDefaultTitle(),
+      [GearType.AUGMENT]: () => this.getDefaultTitle(),
+      [GearType.PET]: () => this.getDefaultTitle(),
       '': () => this.getDefaultTitle()
     };
 

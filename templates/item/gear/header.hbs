@@ -82,11 +82,29 @@
         </div>
         {{/unless}}
 
+        {{#if (has system.features 'flare')}}
+        <div class='resource'>
+          <label class='resource-label' for="system.flare.value">{{localize 'SDM.ItemFeature.flare'}}</label>
+          <div class='resource-content'>
+            <input type='text' name="system.flare.value" value="{{system.flare.value}}" data-dtype='Number' data-tooltip="{{localize 'SDM.ItemFeature.flareDescription'}}"/>
+          </div>
+        </div>
+        {{/if}}
+
+        {{#if (has system.features 'pocket')}}
+        <div class='resource'>
+          <label class='resource-label' for="system.pocket.value">{{localize 'SDM.ItemFeature.pocket'}}</label>
+          <div class='resource-content'>
+            <input type='text' name="system.pocket.value" value="{{system.pocket.value}}" data-dtype='Number' data-tooltip="{{localize 'SDM.ItemFeature.pocketDescription'}}"/>
+          </div>
+        </div>
+        {{/if}}
+
         {{#if (has system.features 'replenish')}}
         <div class='resource'>
           <label class='resource-label' for="system.replenish.value">{{localize 'SDM.ItemFeature.replenish'}}</label>
           <div class='resource-content'>
-            <input type='text' name="system.replenish.value" value="{{system.replenish.value}}" data-dtype='Number' data-tooltip="{{localize 'SDM.ItemFeature.replenish.description'}}"/>
+            <input type='text' name="system.replenish.value" value="{{system.replenish.value}}" data-dtype='Number' data-tooltip="{{localize 'SDM.ItemFeature.replenishDescription'}}"/>
           </div>
         </div>
         {{/if}}

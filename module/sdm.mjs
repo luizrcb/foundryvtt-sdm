@@ -15,7 +15,17 @@ import {
 } from './helpers/actorUtils.mjs';
 import { configureChatListeners } from './helpers/chatUtils.mjs';
 import { SDM } from './helpers/config.mjs';
-import { ActorType, GearType, ItemType, SizeUnit, TraitType } from './helpers/constants.mjs';
+import {
+  ActorType,
+  DEFAULT_AFFLICTION_ICON,
+  DEFAULT_AUGMENT_ICON,
+  DEFAULT_PET_ICON,
+  GearType,
+  ItemType,
+  SizeUnit,
+  TRAIT_ICONS,
+  TraitType
+} from './helpers/constants.mjs';
 import { makePowerItem, UnarmedDamageItem } from './helpers/itemUtils.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
@@ -291,17 +301,38 @@ Hooks.on('updateItem', async item => {
   const defaultCurrencyName = game.settings.get('sdm', 'currencyName') || 'cash';
 
   if (!item.isOwner) return;
+
+  const isBurdenOrAffliction =
+    item.parent && (item.type === ItemType.BURDEN || item.system.type === GearType.AFFLICTION);
+
+  const cureSteps = item.system?.cure_steps;
+  const isCureComplete = cureSteps?.required > 0 && cureSteps.required === cureSteps.completed;
+
+  if (isBurdenOrAffliction && isCureComplete) {
+    await item.deleteDialog();
+    return;
+  }
+
   const updateData = {};
   if (
     item.type === ItemType.GEAR &&
     (GEAR_ICONS.includes(item.img) || item.img === defaultCurrencyImage)
   ) {
     switch (item.system.type) {
+      case GearType.AFFLICTION:
+        updateData['img'] = DEFAULT_AFFLICTION_ICON;
+        break;
+      case GearType.AUGMENT:
+        updateData['img'] = DEFAULT_AUGMENT_ICON;
+        break;
       case GearType.ARMOR:
         updateData['img'] = DEFAULT_ARMOR_ICON;
         break;
       case GearType.CORRUPTION:
         updateData['img'] = DEFAULT_CORRUPTION_ICON;
+        break;
+      case GearType.PET:
+        updateData['img'] = DEFAULT_PET_ICON;
         break;
       case GearType.POWER:
         updateData['img'] = DEFAULT_POWER_ICON;
@@ -315,9 +346,9 @@ Hooks.on('updateItem', async item => {
       case GearType.WEAPON:
         updateData['img'] = DEFAULT_WEAPON_ICON;
         break;
-
-      case '':
+      default:
         updateData['img'] = DEFAULT_GEAR_ICON;
+        break;
     }
 
     if (item.system.size.unit === SizeUnit.CASH) {
@@ -326,25 +357,30 @@ Hooks.on('updateItem', async item => {
     }
   }
 
-  if (
-    item.type === ItemType.TRAIT &&
-    (item.img === DEFAULT_TRAIT_ICON ||
-      item.img === DEFAULT_POWER_ICON ||
-      item.img === DEFAULT_SKILL_ICON ||
-      item.img === DEFAULT_CORRUPTION_ICON)
-  ) {
-    updateData['img'] = DEFAULT_TRAIT_ICON;
+  if (item.type === ItemType.TRAIT && TRAIT_ICONS.includes(item.img)) {
 
-    if (item.system.type === TraitType.CORRUPTION) {
-      updateData['img'] = DEFAULT_CORRUPTION_ICON;
-    }
-
-    if (item.system.type === TraitType.POWER) {
-      updateData['img'] = DEFAULT_POWER_ICON;
-    }
-
-    if (item.system.type === TraitType.SKILL) {
-      updateData['img'] = DEFAULT_SKILL_ICON;
+    switch (item.system.type) {
+      case TraitType.AFFLICTION:
+        updateData['img'] = DEFAULT_AFFLICTION_ICON;
+        break;
+      case TraitType.AUGMENT:
+        updateData['img'] = DEFAULT_AUGMENT_ICON;
+        break;
+      case TraitType.CORRUPTION:
+        updateData['img'] = DEFAULT_CORRUPTION_ICON;
+        break;
+      case TraitType.POWER:
+        updateData['img'] = DEFAULT_POWER_ICON;
+        break;
+      case TraitType.PET:
+        updateData['img'] = DEFAULT_PET_ICON;
+        break;
+      case TraitType.SKILL:
+        updateData['img'] = DEFAULT_SKILL_ICON;
+        break;
+      default:
+        updateData['img'] = DEFAULT_TRAIT_ICON;
+        break;
     }
   }
 

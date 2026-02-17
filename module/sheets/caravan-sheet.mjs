@@ -5,7 +5,8 @@ import {
   convertToCash,
   ITEMS_NOT_ALLOWED_IN_CARAVANS,
   onItemCreateActiveEffects,
-  onItemUpdate
+  onItemUpdate,
+  SUBTYPES_NOT_ALLOWED_IN_CARAVANS
 } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { openItemTransferDialog } from '../items/transfer.mjs';
@@ -1417,7 +1418,9 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     if (!this.actor.isOwner) return false;
 
     const item = await Item.implementation.fromDropData(data);
+
     if (ITEMS_NOT_ALLOWED_IN_CARAVANS.includes(item.type)) return false;
+    if (SUBTYPES_NOT_ALLOWED_IN_CARAVANS.includes(item.system.type)) return false;
 
     const capacity = Number(this.actor.system.capacity ?? 0);
     const targetIdx = this._getDropSackIndexFromEvent(event);

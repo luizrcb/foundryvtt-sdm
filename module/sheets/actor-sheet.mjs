@@ -22,7 +22,8 @@ import {
   ITEMS_NOT_ALLOWED_IN_CARAVANS,
   ITEMS_NOT_ALLOWED_IN_CHARACTERS,
   onItemCreateActiveEffects,
-  onItemUpdate
+  onItemUpdate,
+  SUBTYPES_NOT_ALLOWED_IN_CARAVANS
 } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { openItemTransferDialog } from '../items/transfer.mjs';
@@ -1703,7 +1704,13 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const nextLevel = currentLevel + 1;
     const newData = getNPCDataByLevel(npcTable, nextLevel);
 
-    if (newData.Lvl < nextLevel) return;
+    if (newData.Lvl < nextLevel) {
+      ui.notifications.error(
+        $fmt('SDM.NPCLevelUpLimit', { name: this.actor.name, level: currentLevel })
+      );
+      return;
+    }
+
     const level = nextLevel;
     const life = npcData.life.max < newData.Life ? newData.Life : npcData.life.max;
     const morale = npcData.morale < newData.Mor ? newData.Mor : npcData.morale;
@@ -1720,6 +1727,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       'system.bonus': bonus,
       'system.damage': damage
     });
+
+    ui.notifications.info($fmt('SDM.NPCLevelUp', { name: this.actor.name, level: level }));
   }
 
   /** Helper Functions */
@@ -1924,7 +1933,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       return false;
     }
 
-    if (isCaravan && ITEMS_NOT_ALLOWED_IN_CARAVANS.includes(item.type)) {
+    if (
+      isCaravan &&
+      (ITEMS_NOT_ALLOWED_IN_CARAVANS.includes(item.type) ||
+        SUBTYPES_NOT_ALLOWED_IN_CARAVANS.includes(item.system.type))
+    ) {
       return false;
     }
 
@@ -1933,8 +1946,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     if (item.system?.type === GearType.POWER) {
       const itemPower = await DialogV2.confirm({
-        window: { title: $l10n('SDM.CreatePowerItem') },
-        content: `<h3>${$l10n('SDM.CreatePowerItem')}</h3>`,
+        window: { title: $fmt('SDM.CreateItemTypeAs', { type: $l10n('TYPES.Item.power') }) },
+        content: `<h3>${$fmt('SDM.CreateItemTypeAs', { type: $l10n('TYPES.Item.power') })}</h3>`,
         modal: true,
         rejectClose: false,
         yes: { label: $l10n('TYPE.Item'), icon: 'fa fa-book' },
@@ -1956,8 +1969,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     if (item.system?.type === GearType.CORRUPTION) {
       const itemCorruption = await DialogV2.confirm({
-        window: { title: $l10n('SDM.CreateCorruptionItem') },
-        content: `<h3>${$l10n('SDM.CreateCorruptionItem')}</h3>`,
+        window: { title: $fmt('SDM.CreateItemTypeAs', { type: $l10n('TYPES.Item.corruption') }) },
+        content: `<h3>${$fmt('SDM.CreateItemTypeAs', { type: $l10n('TYPES.Item.corruption') })}</h3>`,
         modal: true,
         rejectClose: false,
         yes: { label: $l10n('TYPE.Item'), icon: 'fa fa-sack-xmark' },
@@ -1969,6 +1982,113 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       let clonedItem = foundry.utils.duplicate(item);
 
       if (!itemCorruption) {
+        clonedItem.type = ItemType.TRAIT;
+        return this._onDropItemCreate(clonedItem, event);
+      }
+
+      clonedItem.type = ItemType.GEAR;
+      return this._onDropItemCreate(clonedItem, event);
+    }
+
+    if (item.type === ItemType.BURDEN || item.system?.type === GearType.AFFLICTION) {
+      const buttons = [
+        {
+          action: 'gear',
+          label: game.i18n.localize('TYPE.Gear'),
+          icon: 'fa fa-sack-xmark',
+          callback: () => 'gear'
+        },
+        {
+          action: 'trait',
+          label: game.i18n.localize('TYPE.Trait'),
+          icon: 'fa fa-brain',
+          callback: () => 'trait'
+        },
+        {
+          action: 'burden',
+          label: game.i18n.localize('TYPE.Burden'),
+          icon: 'fa fa-skull',
+          callback: () => 'burden'
+        }
+      ];
+
+      const title = game.i18n.format('SDM.CreateItemTypeAs', {
+        type: game.i18n.localize(
+          item.type === ItemType.BURDEN ? 'TYPES.Item.burden' : 'TYPES.Item.affliction'
+        )
+      });
+
+      const choice = await DialogV2.wait({
+        window: {
+          title: title,
+          resizable: false
+        },
+        content: `<h3>${title}</h3>`,
+        buttons: buttons,
+        modal: true,
+        rejectClose: false
+      });
+
+      if (!choice) return;
+
+      let clonedItem = foundry.utils.duplicate(item);
+
+      switch (choice) {
+        case 'gear':
+          clonedItem.type = ItemType.GEAR;
+          clonedItem.system.type = GearType.AFFLICTION;
+          break;
+        case 'trait':
+          clonedItem.type = ItemType.TRAIT;
+          clonedItem.system.type = GearType.AFFLICTION;
+          break;
+        case 'burden':
+          clonedItem.type = ItemType.BURDEN;
+          clonedItem.system.type = '';
+          break;
+      }
+
+      return this._onDropItemCreate(clonedItem, event);
+    }
+
+    if (item.system.type === GearType.PET) {
+      const itemPet = await DialogV2.confirm({
+        window: { title: $fmt('SDM.CreateItemTypeAs', { type: $l10n('TYPES.Item.pet') }) },
+        content: `<h3>${$fmt('SDM.CreateItemTypeAs', { type: $l10n('TYPES.Item.pet') })}</h3>`,
+        modal: true,
+        rejectClose: false,
+        yes: { label: $l10n('TYPE.Item'), icon: 'fa fa-sack-xmark' },
+        no: { label: $l10n('TYPE.Trait'), icon: 'fa fa-brain' }
+      });
+
+      if (itemPet === null) return;
+
+      let clonedItem = foundry.utils.duplicate(item);
+
+      if (!itemPet) {
+        clonedItem.type = ItemType.TRAIT;
+        return this._onDropItemCreate(clonedItem, event);
+      }
+
+      clonedItem.type = ItemType.GEAR;
+      return this._onDropItemCreate(clonedItem, event);
+    }
+
+    if (item.system.type === GearType.AUGMENT) {
+      const itemAugment = await DialogV2.confirm({
+        window: { title: $fmt('SDM.CreateItemTypeAs', { type: $l10n('TYPES.Item.augment') }) },
+        content: `<h3>${$fmt('SDM.CreateItemTypeAs', { type: $l10n('TYPES.Item.augment') })}</h3>`,
+        modal: true,
+        rejectClose: false,
+        yes: { label: $l10n('TYPE.Item'), icon: 'fa fa-sack-xmark' },
+        no: { label: $l10n('TYPE.Trait'), icon: 'fa fa-brain' }
+      });
+
+      if (itemAugment === null) return;
+
+      let clonedItem = foundry.utils.duplicate(item);
+
+      if (!itemAugment) {
         clonedItem.type = ItemType.TRAIT;
         return this._onDropItemCreate(clonedItem, event);
       }
