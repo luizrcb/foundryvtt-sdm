@@ -68,6 +68,20 @@
       {{/if}}
 
       {{#if (and
+        (eq item.system.type 'pet')
+        (ne item.system.pet '')
+      )}}
+        <div
+          class='rollable flexrow'
+          data-action='openPetSheet'
+          data-label='{{item.name}}'
+          data-tooltip="SDM.OpenPetSheet"
+        >
+          <i class='fa-solid fa-paw roll-icon'></i>
+        </div>
+      {{/if}}
+
+      {{#if (and
         (ne actorType 'caravan')
         (ne item.system.status 'broken')
         (ne item.system.resources 'run_out')

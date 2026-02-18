@@ -56,6 +56,8 @@ export default class SdmTrait extends SdmItemBase {
       }),
     }, { nullable: false });
 
+    schema.pet = new fields.DocumentUUIDField({ required: true, blank: true, initial: '' });
+
     return schema;
   }
 

@@ -83,6 +83,8 @@ export default class SdmGear extends SdmItemBase {
       }),
     }, { nullable: false });
 
+    schema.pet = new fields.DocumentUUIDField({ required: true, blank: true, initial: '' });
+
     return schema;
   }
 

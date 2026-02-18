@@ -887,6 +887,24 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
    */
   async _onDropActor(event, data) {
     if (!this.item.isOwner) return false;
+    if (this.item.system.type !== GearType.PET) return false;
+
+    const droppedActor = await fromUuid(data.uuid);
+
+    if (this.item.parent.id === droppedActor.id) return false;
+
+    const { name: petName, img: petImg, system: petData } = droppedActor;
+    const { biography: petDescription } = petData;
+
+    let description = `<p>@UUID[${droppedActor.uuid}]{${petName}}</p>`
+    description += petDescription;
+
+    await this.item.update({
+      'name': petName,
+      'img': petImg,
+      'system.pet': droppedActor.uuid,
+      'system.description': description,
+    });
   }
 
   /* -------------------------------------------- */

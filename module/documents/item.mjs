@@ -280,6 +280,30 @@ export class SdmItem extends Item {
     return title;
   }
 
+  getPetTitle() {
+    let title = `${$l10n(`TYPES.Item.${this.system.type}`)}: ${this.getNameTitle()}`;
+    if (!this.system.pet) return title;
+
+    const petDocument = fromUuidSync(this.system.pet);
+    if (!petDocument) return;
+
+    if (petDocument.type === ActorType.NPC) {
+      const { level, defense, morale, bonus, life, damage } = petDocument.system;
+      title += `<br><br><b>${$l10n('SDM.FieldLevel')}:</b> ${level} <b>${$l10n('SDM.FieldLifeMax')}:</b> ${life.value}/${life.max} <b>${$l10n('SDM.Morale')}:</b> ${morale}<br>`;
+      title += `<b>${$l10n('SDM.FieldDefense')}:</b> ${defense} <b>${$l10n('SDM.FieldBonus')}:</b> ${bonus} <b>${$l10n('SDM.Damage')}:</b> ${damage}`;
+    } else {
+      const { level, defense, life } = petDocument.system;
+      title += `<br><br><b>${$l10n('SDM.FieldLevel')}:</b> ${level} <b>${$l10n('SDM.FieldLifeMax')}:</b> ${life.value}/${life.max} <b>${$l10n('SDM.FieldDefense')}:</b> ${defense} `;
+    }
+
+    return title;
+  }
+
+  getSubtypeTitle() {
+    const title = `${$l10n(`TYPES.Item.${this.system.type}`)}: ${this.getNameTitle()}`;
+    return title;
+  }
+
   getWardTitle() {
     const wardData = this.system?.ward;
     const wardValueLabel = `${$l10n('SDM.WardValue')}: ${wardData?.value}`;
@@ -296,10 +320,6 @@ export class SdmItem extends Item {
   getDefaultAbilityLabel(power) {
     const defaultAbility = power ? power.default_ability : this.system.default_ability;
     return `(+${$l10n(CONFIG.SDM.abilityAbbreviations[defaultAbility])})`;
-  }
-
-  getCorruptionTitle() {
-    return `${$l10n('SDM.Corruption')}: ${this.getNameTitle()}`;
   }
 
   getDefaultTitle() {
@@ -450,10 +470,10 @@ export class SdmItem extends Item {
       [GearType.WARD]: () => this.getWardTitle(),
       [ItemType.MOUNT]: () => this.getDefaultTitle(),
       [ItemType.VEHICLE]: () => this.getDefaultTitle(),
-      [GearType.CORRUPTION]: () => this.getCorruptionTitle(),
-      [GearType.AFFLICTION]: () => this.getDefaultTitle(),
-      [GearType.AUGMENT]: () => this.getDefaultTitle(),
-      [GearType.PET]: () => this.getDefaultTitle(),
+      [GearType.CORRUPTION]: () => this.getSubtypeTitle(),
+      [GearType.AFFLICTION]: () => this.getSubtypeTitle(),
+      [GearType.AUGMENT]: () => this.getSubtypeTitle(),
+      [GearType.PET]: () => this.getPetTitle(),
       '': () => this.getDefaultTitle()
     };
 

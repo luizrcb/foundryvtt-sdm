@@ -128,7 +128,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       rerollCharacter: this._onRerollCharacter,
       levelUpNPC: this._onLevelUpNPC,
       openDoc: { handler: this._openDoc, buttons: [0] },
-      toggleItemStatus: { handler: this._toggleItemStatus, buttons: [0, 2] }
+      toggleItemStatus: { handler: this._toggleItemStatus, buttons: [0, 2] },
+      openPetSheet: this._onOpenPetSheet,
     },
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
     form: {
@@ -1731,6 +1732,24 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     ui.notifications.info($fmt('SDM.NPCLevelUp', { name: this.actor.name, level: level }));
   }
 
+  static async _onOpenPetSheet(event, target) {
+    event.preventDefault(); // Don't open context menu
+    event.stopPropagation(); // Don't trigger other events
+
+    if (event.detail > 1) return;
+
+    const item = this._getEmbeddedDocument(target);
+
+    if (item.system.type !== GearType.PET) return;
+
+    if (!item.system.pet) return;
+
+    const petDocument = await fromUuid(item.system.pet);
+    if (!petDocument) return;
+
+    petDocument.sheet.render(true);
+  }
+
   /** Helper Functions */
 
   /**
@@ -1933,16 +1952,12 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       return false;
     }
 
-    if (
-      isCaravan &&
-      (ITEMS_NOT_ALLOWED_IN_CARAVANS.includes(item.type) ||
-        SUBTYPES_NOT_ALLOWED_IN_CARAVANS.includes(item.system.type))
-    ) {
-      return false;
-    }
-
     // Handle item sorting within the same Actor
     if (this.actor.uuid === item.parent?.uuid) return this._onSortItem(event, item);
+
+    if (item.parent) {
+      return this._onDropItemCreate(item, event);
+    }
 
     if (item.system?.type === GearType.POWER) {
       const itemPower = await DialogV2.confirm({
@@ -2097,7 +2112,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       return this._onDropItemCreate(clonedItem, event);
     }
 
-    // Create the owned item
     return this._onDropItemCreate(item, event);
   }
 
