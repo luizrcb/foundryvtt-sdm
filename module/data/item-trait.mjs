@@ -43,6 +43,19 @@ export default class SdmTrait extends SdmItemBase {
 
     schema.power = new fields.EmbeddedDataField(PowerDataModel);
 
+    schema.cure_steps = new fields.SchemaField({
+      completed: new fields.NumberField({
+        required: true,
+        initial: 0,
+        min: 0,
+      }),
+      required: new fields.NumberField({
+        required: true,
+        initial: 0,
+        min: 0,
+      }),
+    }, { nullable: false });
+
     return schema;
   }
 

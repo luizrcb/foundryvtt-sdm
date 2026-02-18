@@ -2,7 +2,7 @@
   <header class='sheet-header'>
     <div class="flexcol flex-between flex-center">
       <img class='profile-img' src='{{item.img}}' data-edit='img' data-action='onEditImage' data-tooltip='{{item.name}}' />
-      {{#if (ne system.type 'corruption')}}
+      {{#if (and (ne system.type 'corruption') (ne system.type 'affliction') (ne system.type 'pet') (ne system.type 'augment'))}}
       <div class="align-center mb-10 mr-10 rollable" {{#if system.readied}}
         data-tooltip="{{localize 'SDM.ItemReadied' }}" {{else}} data-tooltip="{{localize 'SDM.ItemNotReadied'}}" {{/if}}
         data-action="toggleReadied">
@@ -22,7 +22,7 @@
       <div class='document-name'>
         <div class="flexrow flex-between">
           <input name='name' class="resource-label flexultra" type='text' value='{{item.name}}' placeholder='Name' />
-          {{#unless (or (eq system.size.unit 'cash') (eq system.type 'corruption'))}}
+          {{#unless (or (eq system.size.unit 'cash') (eq system.type 'corruption') (eq system.type 'affliction') (eq system.type 'augment') (eq system.type 'pet'))}}
           <div class="flex flex-group-center flexcol rollable" data-action="toggleIsHallmark" style="cursor:pointer;">
             <label class='resource-label'>{{localize 'SDM.HallmarkItem'}}</label>
             <i class="fa-regular fa-star mt-5 {{#if item.system.is_hallmark}}hallmark{{/if}}"></i>
@@ -30,7 +30,32 @@
            {{/unless}}
         </div>
       </div>
-      {{#unless (eq system.type 'corruption')}}
+      {{#if (eq system.type 'affliction')}}
+      <div class="grid grid-2col">
+        <div class='resource mr-10'>
+          <label class='resource-label'>{{localize 'SDM.Burden.StepsToCure'}}
+            <input type='text' name='system.cure_steps.required' value='{{system.cure_steps.required}}' data-dtype='Number' />
+          </label>
+        </div>
+
+        <div class='resource flex-group-center'>
+          {{#if (gt system.cure_steps.required 0)}}
+          <label class='resource-label'>{{localize 'SDM.Burden.CompletedSteps'}}</label>
+          <div class="resource-content sources flex-group-center mt-5">
+            {{#multiboxes system.cure_steps.completed}}
+              <input type="radio" id="completed-{{item.id}}-0" name="system.cure_steps.completed" value="0" checked="checked" data-dtype='Radio' style="cursor:pointer;">
+              {{#times_from 1 system.cure_steps.required}}
+                <input type="radio" id="completed-{{../item.id}}-{{this}}" name="system.cure_steps.completed" value="{{this}}" data-dtype='Radio' style="cursor:pointer;">
+                <label class="radio-toggle" data-action="radioToggle" for="completed-{{../item.id}}-{{this}}" style="cursor:pointer;" data-tooltip="{{this}}"></label>
+              {{/times_from}}
+            {{/multiboxes}}
+          </div>
+          {{/if}}
+        </div>
+      </div>
+      {{/if}}
+
+      {{#unless (or (eq system.type 'corruption') (eq system.type 'affliction') (eq system.type 'augment') (eq system.type 'pet'))}}
       <div class='grid grid-{{ifThen item.system.is_hallmark 3 2}}col'>
         <div class='resource'>
           <label class='resource-label'>{{localize 'SDM.ItemQuantity'}}
@@ -71,7 +96,7 @@
         </div>
         {{/if}}
 
-        {{#unless (or (eq system.size.unit 'cash')(eq system.type 'corruption') (not (has system.features 'charges')))}}
+        {{#unless (or (eq system.size.unit 'cash') (eq system.type 'corruption') (eq system.type 'affliction') (not (has system.features 'charges')))}}
         <div class='resource'>
           <label class='resource-label' for="system.charges.max">{{localize 'SDM.ItemCharges'}}</label>
           <div class='resource-content flexrow flex-center flex-between flex-group-center'>

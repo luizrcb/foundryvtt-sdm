@@ -124,7 +124,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
 
         options.parts.push('description')
 
-        if (this.document.system.type !== GearType.CORRUPTION) {
+        if (![GearType.CORRUPTION, GearType.AFFLICTION, GearType.PET].includes(this.document.system.type) ) {
           options.parts.push('features')
         }
 

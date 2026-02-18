@@ -1,6 +1,5 @@
-export const UnarmedDamageItem =
-  'Compendium.sdm.weapons.Item.uKcbcZUs1jQZskQ4';
-import { DEFAULT_POWER_ICON, GEAR_ICONS, GearType, ItemType, SizeUnit } from './constants.mjs';
+export const UnarmedDamageItem = 'Compendium.sdm.weapons.Item.uKcbcZUs1jQZskQ4';
+import { DEFAULT_POWER_ICON, GearType, ItemType, SizeUnit } from './constants.mjs';
 /**
  * Convert any size unit to sacks.
  * @param {number} size - The size value.
@@ -73,6 +72,22 @@ export async function onItemUpdate(item, updateData) {
       for (const effect of item.effects) {
         await toggleEffectTransfer(effect, updateData?.system?.readied);
       }
+      return;
+    }
+    if (updateData?.system?.status === 'broken') {
+      for (const effect of item.effects) {
+        await toggleEffectTransfer(effect, false);
+      }
+      return;
+    }
+
+    if (updateData?.system?.status !== 'broken') {
+      if (['corruption', 'affliction', 'augment', 'pet'].includes(item.system.type)) {
+        for (const effect of item.effects) {
+          await toggleEffectTransfer(effect, true);
+        }
+      }
+      return;
     }
   }
 }
@@ -102,7 +117,7 @@ async function toggleEffectTransfer(effect, shouldBeActive) {
   } else {
     // Disable transfer and deactivate effect
     effectUpdates.disabled = true;
-   // effectUpdates.transfer = false;
+    // effectUpdates.transfer = false;
   }
 
   await effect.update(effectUpdates);

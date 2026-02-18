@@ -799,7 +799,7 @@
   "SDM.ItemFeature.cavalryDescription": "One-handed weapon for use with a steed. Deals double damage when charging",
   "SDM.ItemFeature.charges": "charges",
   "SDM.ItemFeature.chargesAbbr": "charges",
-  "SDM.ItemFeature.chargesDescription": "The exact number of bullets or other resource in a gun",
+  "SDM.ItemFeature.chargesDescription": "Track the exact number of bullets or other resource in a gun",
   "SDM.ItemFeature.clumsy": "clumsy",
   "SDM.ItemFeature.clumsyAbbr": "clumsy",
   "SDM.ItemFeature.clumsyDescription": "Penalty to attack rolls, obviously",

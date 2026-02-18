@@ -13,7 +13,7 @@
       </div>
     </div>
     <div class='grid grid-2col'>
-      {{#if (ne system.type 'corruption')}}
+      {{#if (and (ne system.type 'corruption') (ne system.type 'affliction') (ne system.type 'augment') (ne system.type 'pet'))}}
       <div class='resource mr-10'>
         <label class='resource-label'>{{localize 'SDM.SourcesToLearn'}}
           <input type='text' name='system.learning.required_successes' value='{{system.learning.required_successes}}' data-dtype='Number' />
@@ -21,8 +21,30 @@
       </div>
       {{/if}}
 
+      {{#if (eq system.type 'affliction')}}
+        <div class='resource mr-10'>
+          <label class='resource-label'>{{localize 'SDM.Burden.StepsToCure'}}
+            <input type='text' name='system.cure_steps.required' value='{{system.cure_steps.required}}' data-dtype='Number' />
+          </label>
+        </div>
+        <div class='resource flex-group-center'>
+          {{#if (gt system.cure_steps.required 0)}}
+          <label class='resource-label'>{{localize 'SDM.Burden.CompletedSteps'}}</label>
+          <div class="resource-content sources flex-group-center mt-5">
+            {{#multiboxes system.cure_steps.completed}}
+              <input type="radio" id="completed-{{item.id}}-0" name="system.cure_steps.completed" value="0" checked="checked" data-dtype='Radio' style="cursor:pointer;">
+              {{#times_from 1 system.cure_steps.required}}
+                <input type="radio" id="completed-{{../item.id}}-{{this}}" name="system.cure_steps.completed" value="{{this}}" data-dtype='Radio' style="cursor:pointer;">
+                <label class="radio-toggle" data-action="radioToggle" for="completed-{{../item.id}}-{{this}}" style="cursor:pointer;" data-tooltip="{{this}}"></label>
+              {{/times_from}}
+            {{/multiboxes}}
+          </div>
+          {{/if}}
+        </div>
+      {{/if}}
+
       <div class='resource flex-group-center'>
-        {{#if (gt system.learning.required_successes 0)}}
+        {{#if (and (gt system.learning.required_successes 0) (or (eq system.type '') (eq system.type 'skill')))}}
         <label class='resource-label'>{{localize 'SDM.Sources'}}</label>
         <div class="resource-content sources flex-group-center mt-5">
           {{#multiboxes system.learning.sources}}
