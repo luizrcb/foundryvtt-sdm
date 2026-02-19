@@ -8,13 +8,17 @@
     "readied": false,
     "cost": 1500,
     "cost_frequency": "",
-    "description": "<p>Modern smithing with old tailoring. Its loud metal parts hamper stealth but make for a more intimidating charge.</p><p><strong>Features:</strong> bulky, loud, hot</p>",
+    "description": "<p>Modern smithing with old tailoring. Its loud metal parts hamper stealth but make for a more intimidating charge.</p>",
     "quantity": 1,
     "size": {
       "value": 3,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "bulky",
+      "hot",
+      "loud"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -41,7 +45,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 8,
@@ -88,10 +92,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011671983,
-    "modifiedTime": 1767011671983,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771455480854,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!H8gWuBS3Is2EvEnT"
 }

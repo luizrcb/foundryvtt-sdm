@@ -10,13 +10,16 @@
     "resources": "",
     "cost": 9000,
     "cost_frequency": "",
-    "description": "<p>Each time it wounds a foe, it roars and gains +3 on its next attack. Resets when you switch foes. Two-handed, it deals 1d12 damage.<br /><em>(Edit the active effect for the attack bonus)</em></p><p><strong><br />Features:</strong> reach, versatile</p>",
+    "description": "<p>Each time it wounds a foe, it roars and gains +3 on its next attack. Resets when you switch foes. Two-handed, it deals 1d12 damage.<br /><em>(Edit the active effect for the attack bonus)</em></p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "reach",
+      "versatile"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -52,7 +55,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 0,
@@ -133,10 +136,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011774696,
-    "modifiedTime": 1767011774696,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771463383584,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!0jY9JnzOpHLrn4Rk"
 }

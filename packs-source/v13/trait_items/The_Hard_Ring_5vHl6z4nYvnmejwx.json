@@ -10,13 +10,13 @@
     "resources": "",
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p>You are a ring and occupy no inventory. You are made of (roll [[/r 1d6]]): (1) petrified tears, (2) graven ivory, (3) glittering gold, (4) black ice, (5) bleeding silver, or (6) captured light. You do no damage yourself, but you can use your bearer’s life and abilities to fuel your powers or deal damage directly. You gain the power @UUID[Compendium.sdm.equipment.Item.qryBY1xnpWKC9NSk]{Suspended in the Light}. List it in your item inventory.</p>",
+    "description": "<p>You are a ring and occupy no inventory. You are made of (roll [[/r 1d6]]): (1) petrified tears, (2) graven ivory, (3) glittering gold, (4) black ice, (5) bleeding silver, or (6) captured light. You do no damage yourself, but you can use your bearer’s life and abilities to fuel your powers or deal damage directly. You gain the power @UUID[Compendium.sdm.powers.Item.qryBY1xnpWKC9NSk]{Suspended in the Light}. List it in your item inventory.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "soaps"
     },
-    "features": "",
+    "features": [],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -52,7 +52,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 0,
@@ -132,10 +132,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011808302,
-    "modifiedTime": 1767011808302,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771465487376,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!5vHl6z4nYvnmejwx"
 }

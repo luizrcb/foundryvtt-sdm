@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## v0.11.0
+
+- Add new gear and trait item types: affliction (a kind of burden), augment and pet
+- Add steps to cure a burden. When the last step is marked the player is asked if the burden should be deleted
+- The bonus from the Friends trait is now automated
+- Changed item features from plain text in items descriptions to a set of configurable options
+- Versatile weapons now need the versatile feature
+- Added usage roll for items with the feature replenish
+- Added an option to level up NPCs from their sheet (in the toggle controls menu ...)
+- Added a burden generator (GM tool)
+- Added "Wear and tear" to burdens compendium
+- Added option for players to reroll their characters from the character sheet (in the toggle controls menu ...)
+
 ## v0.10.0
 
 - Group initiative tiebreaking setting now defaults to false

@@ -16,7 +16,10 @@
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "vorpal",
+      "weapon"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -34,7 +37,7 @@
       "level": 0,
       "experience": "0"
     },
-    "type": "weapon",
+    "type": "armor",
     "starting_kit": false,
     "is_supply": false,
     "supply_type": "human",
@@ -52,7 +55,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 3,
@@ -76,52 +79,7 @@
     },
     "default_ability": ""
   },
-  "effects": [
-    {
-      "name": "+3 Armor",
-      "origin": "Compendium.sdm.equipment.Item.cBQ2eykKoBv3ZTbk",
-      "img": "icons/equipment/wrist/bracer-armored-steel-blue.webp",
-      "_id": "DFdnq6gIw4fiPLfl",
-      "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "system.armor_bonus",
-          "mode": 2,
-          "value": "3",
-          "priority": null
-        }
-      ],
-      "disabled": false,
-      "duration": {
-        "startTime": null,
-        "combat": null,
-        "seconds": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
-      "description": "",
-      "tint": "#ffffff",
-      "transfer": true,
-      "statuses": [],
-      "sort": 0,
-      "flags": {},
-      "_stats": {
-        "compendiumSource": null,
-        "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "13.350",
-        "systemId": "sdm",
-        "systemVersion": "0.5.1",
-        "createdTime": 1760993506956,
-        "modifiedTime": 1760993527563,
-        "lastModifiedBy": "XnQAppzUXfkn5LcX"
-      },
-      "_key": "!items.effects!cBQ2eykKoBv3ZTbk.DFdnq6gIw4fiPLfl"
-    }
-  ],
+  "effects": [],
   "sort": 0,
   "ownership": {
     "default": 0,
@@ -132,12 +90,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.350",
+    "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.1",
+    "systemVersion": "0.10.0",
     "createdTime": 1760974765198,
-    "modifiedTime": 1760993493197,
-    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+    "modifiedTime": 1771464982174,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!cBQ2eykKoBv3ZTbk"
 }

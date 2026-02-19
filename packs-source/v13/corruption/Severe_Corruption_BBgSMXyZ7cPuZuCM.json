@@ -8,12 +8,12 @@
         1,
         1
       ],
-      "description": "Only bones remain. You are now a chaos skeleton.",
+      "description": "",
       "type": "text",
       "weight": 1,
       "drawn": false,
       "_id": "Csz1phzSFK8Cd6Fl",
-      "name": "",
+      "name": "Only bones remain. You are now a chaos skeleton.",
       "img": "icons/svg/d20-black.svg",
       "flags": {},
       "_stats": {
@@ -32,12 +32,12 @@
         2,
         2
       ],
-      "description": "Bones become soft or brittle. Gelatinous prognosis.",
+      "description": "",
       "type": "text",
       "weight": 1,
       "drawn": false,
       "_id": "0g5SIGbLM2Zt5fmW",
-      "name": "",
+      "name": "Bones become soft or brittle. Gelatinous prognosis.",
       "img": "icons/svg/d20-black.svg",
       "flags": {},
       "_stats": {
@@ -56,12 +56,12 @@
         3,
         3
       ],
-      "description": "Eyes collapse and evaporate, leaving sockets that see the astral light.",
+      "description": "",
       "type": "text",
       "weight": 1,
       "drawn": false,
       "_id": "LVsLhe0X5EkrO4xZ",
-      "name": "",
+      "name": "Eyes collapse and evaporate, leaving sockets that see the astral light.",
       "img": "icons/svg/d20-black.svg",
       "flags": {},
       "_stats": {
@@ -80,12 +80,12 @@
         4,
         4
       ],
-      "description": "Back hunches, fuses, turns into a shell-like carapace over a few weeks.",
+      "description": "",
       "type": "text",
       "weight": 1,
       "drawn": false,
       "_id": "sBWPcyG8CIas1DXg",
-      "name": "",
+      "name": "Back hunches, fuses, turns into a shell-like carapace over a few weeks.",
       "img": "icons/svg/d20-black.svg",
       "flags": {},
       "_stats": {
@@ -104,12 +104,12 @@
         5,
         5
       ],
-      "description": "Strange bones erupt into spikes and thorns, piercing the skin.",
+      "description": "",
       "type": "text",
       "weight": 1,
       "drawn": false,
       "_id": "6cA01kZHCUqJtfHr",
-      "name": "",
+      "name": "Strange bones erupt into spikes and thorns, piercing the skin.",
       "img": "icons/svg/d20-black.svg",
       "flags": {},
       "_stats": {
@@ -128,12 +128,12 @@
         6,
         6
       ],
-      "description": "Hair develops into ropey keratin tentacles. Not quite snakes.",
+      "description": "",
       "type": "text",
       "weight": 1,
       "drawn": false,
       "_id": "H5rXqc2gdWPVHKDo",
-      "name": "",
+      "name": "Hair develops into ropey keratin tentacles. Not quite snakes.",
       "img": "icons/svg/d20-black.svg",
       "flags": {},
       "_stats": {
@@ -152,12 +152,12 @@
         7,
         7
       ],
-      "description": "Suffused with the void, shadows permanently shroud the character.",
+      "description": "",
       "type": "text",
       "weight": 1,
       "drawn": false,
       "_id": "AEUNGzlkwnxWAvgh",
-      "name": "",
+      "name": "Suffused with the void, shadows permanently shroud the character.",
       "img": "icons/svg/d20-black.svg",
       "flags": {},
       "_stats": {
@@ -176,12 +176,12 @@
         8,
         8
       ],
-      "description": "Teeth fall out or become needle sharp. Click-clack.",
+      "description": "",
       "type": "text",
       "weight": 1,
       "drawn": false,
       "_id": "CzqBrAek6mzuHIC8",
-      "name": "",
+      "name": "Teeth fall out or become needle sharp. Click-clack.",
       "img": "icons/svg/d20-black.svg",
       "flags": {},
       "_stats": {
@@ -200,12 +200,12 @@
         9,
         9
       ],
-      "description": "<p>Hand withers and locks into a dagger-like claw ([[/r 1d4]] damage).</p>",
+      "description": "",
       "type": "text",
       "weight": 1,
       "drawn": false,
       "_id": "mKUvt544yrF4zrSG",
-      "name": "",
+      "name": "<p>Hand withers and locks into a dagger-like claw ([[/r 1d4]] damage).</p>",
       "img": "icons/svg/d20-black.svg",
       "flags": {},
       "_stats": {
@@ -225,12 +225,12 @@
         10,
         10
       ],
-      "description": "<p>Skin rots and develops suppurating boils. Your fluids can serve as ink.</p>",
+      "description": "",
       "type": "text",
       "weight": 1,
       "drawn": false,
       "_id": "HlMSWQq3sDLNvHJD",
-      "name": "",
+      "name": "<p>Skin rots and develops suppurating boils. Your fluids can serve as ink.</p>",
       "img": "icons/svg/d20-black.svg",
       "flags": {},
       "_stats": {
@@ -250,12 +250,12 @@
         11,
         11
       ],
-      "description": "Secondary brain. It slowly develops independent thought.",
+      "description": "",
       "type": "text",
       "weight": 1,
       "drawn": false,
       "_id": "orsIkj76RJC4wITf",
-      "name": "",
+      "name": "Secondary brain. It slowly develops independent thought.",
       "img": "icons/svg/d20-black.svg",
       "flags": {},
       "_stats": {
@@ -274,12 +274,12 @@
         12,
         12
       ],
-      "description": "Lower extremities turn into hooves, paws, or bird feet.",
+      "description": "",
       "type": "text",
       "weight": 1,
       "drawn": false,
       "_id": "3sMwQmAQXdCGCGyx",
-      "name": "",
+      "name": "Lower extremities turn into hooves, paws, or bird feet.",
       "img": "icons/svg/d20-black.svg",
       "flags": {},
       "_stats": {
@@ -298,12 +298,12 @@
         13,
         13
       ],
-      "description": "Personality becomes alien, oblique, orthogonal to humanity.",
+      "description": "",
       "type": "text",
       "weight": 1,
       "drawn": false,
       "_id": "X6cyFLe0bfBCx5op",
-      "name": "",
+      "name": "Personality becomes alien, oblique, orthogonal to humanity.",
       "img": "icons/svg/d20-black.svg",
       "flags": {},
       "_stats": {
@@ -322,12 +322,12 @@
         14,
         14
       ],
-      "description": "Wings or flagellae. They grow capable of flight over a few weeks.",
+      "description": "",
       "type": "text",
       "weight": 1,
       "drawn": false,
       "_id": "cXQ9dncW9Dn7DFSg",
-      "name": "",
+      "name": "Wings or flagellae. They grow capable of flight over a few weeks.",
       "img": "icons/svg/d20-black.svg",
       "flags": {},
       "_stats": {
@@ -346,12 +346,12 @@
         15,
         15
       ],
-      "description": "Secrete corrosive fluids, ruining clothes and eating through metals.",
+      "description": "",
       "type": "text",
       "weight": 1,
       "drawn": false,
       "_id": "xb7FuQsHbr5jqaV8",
-      "name": "",
+      "name": "Secrete corrosive fluids, ruining clothes and eating through metals.",
       "img": "icons/svg/d20-black.svg",
       "flags": {},
       "_stats": {
@@ -370,12 +370,12 @@
         16,
         16
       ],
-      "description": "Strange vampiric metabolism. Consume unusual organs to thrive.",
+      "description": "",
       "type": "text",
       "weight": 1,
       "drawn": false,
       "_id": "Us4Ns6bZFBCJtE88",
-      "name": "",
+      "name": "Strange vampiric metabolism. Consume unusual organs to thrive.",
       "img": "icons/svg/d20-black.svg",
       "flags": {},
       "_stats": {
@@ -394,12 +394,12 @@
         17,
         17
       ],
-      "description": "Secondary form. Like Jekyll's Hyde or a wolf's were.",
+      "description": "",
       "type": "text",
       "weight": 1,
       "drawn": false,
       "_id": "XObG4iVo7t3D9mr3",
-      "name": "",
+      "name": "Secondary form. Like Jekyll's Hyde or a wolf's were.",
       "img": "icons/svg/d20-black.svg",
       "flags": {},
       "_stats": {
@@ -418,12 +418,12 @@
         18,
         18
       ],
-      "description": "Vomit up three remote organs. One sees, one hears, one is stranger. If one is destroyed, permanently lose 1 life.",
+      "description": "",
       "type": "text",
       "weight": 1,
       "drawn": false,
       "_id": "7HOaks43ytyh6K1H",
-      "name": "",
+      "name": "Vomit up three remote organs. One sees, one hears, one is stranger. If one is destroyed, permanently lose 1 life.",
       "img": "icons/svg/d20-black.svg",
       "flags": {},
       "_stats": {
@@ -442,12 +442,12 @@
         19,
         19
       ],
-      "description": "Undying. But not undecaying. This becomes dreadful in a few decades without replacement parts.",
+      "description": "",
       "type": "text",
       "weight": 1,
       "drawn": false,
       "_id": "DzLicOrp0HFp1l8T",
-      "name": "",
+      "name": "Undying. But not undecaying. This becomes dreadful in a few decades without replacement parts.",
       "img": "icons/svg/d20-black.svg",
       "flags": {},
       "_stats": {
@@ -466,12 +466,12 @@
         20,
         20
       ],
-      "description": "Psionic evolution. Acquire a magic-like power as an innate trait.",
+      "description": "",
       "type": "text",
       "weight": 1,
       "drawn": false,
       "_id": "gTfEe8EbMYhihpz3",
-      "name": "",
+      "name": "Psionic evolution. Acquire a magic-like power as an innate trait.",
       "img": "icons/svg/d20-black.svg",
       "flags": {},
       "_stats": {

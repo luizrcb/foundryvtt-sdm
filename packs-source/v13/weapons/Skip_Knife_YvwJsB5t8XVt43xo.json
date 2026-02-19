@@ -8,13 +8,16 @@
     "readied": false,
     "cost": 1250,
     "cost_frequency": "",
-    "description": "<p>Cuts through time, skips the target forward 1d6 rounds (hard save). </p><p>Its mass is increased by its future anchors.</p><p><strong>Features:</strong> re 1 [[/r 1d20]], fantascience</p>",
+    "description": "<p>Cuts through time, skips the target forward 1d6 rounds (hard save).</p><p>Its mass is increased by its future anchors.</p>",
     "quantity": 1,
     "size": {
       "value": 7,
       "unit": "soaps"
     },
-    "features": "",
+    "features": [
+      "fantascience",
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -41,7 +44,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 0,
@@ -74,7 +77,10 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": "human"
+    "supply_type": "human",
+    "replenish": {
+      "value": 1
+    }
   },
   "effects": [],
   "sort": 1000000,
@@ -89,10 +95,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011720662,
-    "modifiedTime": 1767011720662,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771501831935,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!YvwJsB5t8XVt43xo"
 }

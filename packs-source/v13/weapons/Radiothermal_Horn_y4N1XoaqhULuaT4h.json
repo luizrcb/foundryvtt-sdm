@@ -8,13 +8,17 @@
     "readied": false,
     "cost": 400,
     "cost_frequency": "",
-    "description": "<p>Emits hard radiation. Causes illness (hard save). Backfires on a natural 1. Works as a portable stove.</p><p><strong>Features:</strong> short, re 2 [[/r 1d20]], glowing, oldtech</p>",
+    "description": "<p>Emits hard radiation. Causes illness (hard save). Backfires on a natural 1. Works as a portable stove.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "glowing",
+      "oldtech",
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -41,7 +45,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 0,
@@ -74,7 +78,10 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": "human"
+    "supply_type": "human",
+    "replenish": {
+      "value": 2
+    }
   },
   "effects": [],
   "sort": 500000,
@@ -89,10 +96,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011726802,
-    "modifiedTime": 1767011726802,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771502308850,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!y4N1XoaqhULuaT4h"
 }

@@ -8,13 +8,17 @@
     "readied": false,
     "cost": 5000,
     "cost_frequency": "",
-    "description": "<p>Converts the dross of mortal life into balls of fire. Hardly fair in the eyes of hobnoble land barons. </p><p>Drains the user of 1 life per shot.</p><p><strong>Features:</strong> short, area S, vital, attune, oldtech</p>",
+    "description": "<p>Converts the dross of mortal life into balls of fire. Hardly fair in the eyes of hobnoble land barons.</p><p>Drains the user of 1 life per shot.</p><p>Area S</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "attune",
+      "oldtech",
+      "vital"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -41,7 +45,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 0,
@@ -89,10 +93,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011726802,
-    "modifiedTime": 1767011726802,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771502927466,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!H9nuHDKYI2ztxxEW"
 }

@@ -10,13 +10,15 @@
     "resources": "",
     "cost": 200,
     "cost_frequency": "",
-    "description": "<p>Look like gold wrapped in plastic. Exposed to the air, they sublimate into a soporific cloud. Save or sleep.</p><p><strong>Features:</strong> re 2</p>",
+    "description": "<p>Look like gold wrapped in plastic. Exposed to the air, they sublimate into a soporific cloud. Save or sleep.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "soaps"
     },
-    "features": "",
+    "features": [
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -52,7 +54,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 0,
@@ -73,6 +75,9 @@
       },
       "range": "",
       "versatile": false
+    },
+    "replenish": {
+      "value": 2
     }
   },
   "effects": [],
@@ -89,10 +94,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011807028,
-    "modifiedTime": 1767011807028,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771465385065,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!QgRpRcQNxHne1hpH"
 }

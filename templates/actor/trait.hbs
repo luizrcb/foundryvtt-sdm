@@ -34,8 +34,24 @@
           <i class='fa-solid fa-dice-d20 roll-icon'></i>
         </div>
       {{/if}}
+
+       {{#if (and
+        (eq trait.system.type 'pet')
+        (ne trait.system.pet '')
+      )}}
+        <div
+          class='rollable flexrow'
+          data-action='openPetSheet'
+          data-label='{{trait.name}}'
+          data-tooltip="SDM.OpenPetSheet"
+        >
+          <i class='fa-solid fa-paw roll-icon'></i>
+        </div>
+      {{/if}}
+
+
       {{#if trait.system.is_hallmark}}<i class="fa-regular fa-star hallmark" data-tooltip="{{localize 'SDM.HallmarkItem'}}"></i>{{/if}}
-       {{#if (gt trait.system.charges.max 0) }} <span
+       {{#if (and (gt trait.system.charges.max 0) (has trait.system.features 'charges'))}} <span
        data-tooltip="{{localize 'SDM.ItemCharges'}}"
       >({{trait.system.charges.value}}/{{trait.system.charges.max}})&nbsp;</span>{{/if}}
       {{trait.name}}

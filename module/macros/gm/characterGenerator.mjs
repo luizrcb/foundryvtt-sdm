@@ -1,5 +1,8 @@
 import { SdmActor } from '../../documents/actor.mjs';
+import { addCompendiumItemToActor } from '../../helpers/actorUtils.mjs';
 import { ActorType } from '../../helpers/constants.mjs';
+import { $fmt, $l10n } from '../../helpers/globalUtils.mjs';
+import { UnarmedDamageItem } from '../../helpers/itemUtils.mjs';
 import { addCashToActor } from './giveCash.mjs';
 
 const { DialogV2 } = foundry.applications.api;
@@ -281,6 +284,25 @@ async function createRandomBackgroundWithOptions(actor, method = 'single') {
   return { title, task, spin };
 }
 
+async function addCorruptionFromTable(actor, tableUuid) {
+  const result = await drawFromTextTable(tableUuid);
+  const corruption = result.name || result.description;
+
+  if (!corruption) return;
+
+  const itemData = new Item({
+    name: corruption,
+    img: 'icons/svg/biohazard.svg',
+    type: 'trait',
+    system: {
+      type: 'corruption'
+    }
+  }).toObject();
+
+  const createdItems = await actor.createEmbeddedDocuments('Item', [itemData]);
+  return createdItems;
+}
+
 async function addItemToCharacter(itemUuid, actor) {
   const item = await fromUuid(itemUuid);
   const itemObject = item.toObject();
@@ -462,10 +484,10 @@ async function drawAndAddFromTable(tableUUID, actor) {
   return;
 }
 
-async function createFreeTrait(actor, rollNumber = undefined) {
-  // Use provided number or generate random (1-9)
-  const num = rollNumber || Math.floor(Math.random() * 9) + 1;
-  // console.debug('num', num);
+async function createFreeTrait(actor, includeCorruption = false, rollNumber = undefined) {
+  const maxRoll = includeCorruption ? 10 : 9;
+  const num = rollNumber || Math.floor(Math.random() * maxRoll) + 1;
+
   try {
     if (num >= 1 && num <= 3) {
       return await createRandomBackgroundWithOptions(actor, 'single');
@@ -481,6 +503,18 @@ async function createFreeTrait(actor, rollNumber = undefined) {
     } else if (num >= 7 && num <= 9) {
       const otherPaths = 'Compendium.sdm.traits_tables.RollTable.5DQuOEZbj4yIoEIU';
       return await drawAndAddFromTable(otherPaths, actor);
+    } else if (num === 10) {
+      const d6Roll = Math.floor(Math.random() * 6) + 1;
+      const corruptionTableMap = {
+        1: 'Compendium.sdm.corruption.RollTable.BBgSMXyZ7cPuZuCM',
+        2: 'Compendium.sdm.corruption.RollTable.grc8rMrojT8de6Ve',
+        3: 'Compendium.sdm.corruption.RollTable.grc8rMrojT8de6Ve',
+        4: 'Compendium.sdm.corruption.RollTable.a3v2H3P6olAzWHwS',
+        5: 'Compendium.sdm.corruption.RollTable.a3v2H3P6olAzWHwS',
+        6: 'Compendium.sdm.corruption.RollTable.a3v2H3P6olAzWHwS'
+      };
+      const tableUUID = corruptionTableMap[d6Roll];
+      return await addCorruptionFromTable(actor, tableUUID);
     }
   } catch (error) {
     console.error(`Error handling roll ${num}:`, error);
@@ -662,18 +696,13 @@ async function addMotiveToActor(actor) {
   if (!rolledMotive) return;
 
   await actor.update({
-    'system.biography': `<p><strong>${game.i18n.localize('SDM.MotiveLabel')}:</strong> ${rolledMotive}</p>`
+    'system.biography': `<p><strong>${$l10n('SDM.MotiveLabel')}:</strong> ${rolledMotive}</p>`
   });
 
   return rolledMotive;
 }
 
-async function characterGeneratorDialog() {
-  if (!game.user.isGM) {
-    ui.notifications.warn(game.i18n.localize('SDM.ErrorGMOnly'));
-    return;
-  }
-
+async function characterGeneratorDialog(actor) {
   // Get path options for the dialog
   const pathOptions = await getPathOptionsList();
 
@@ -686,43 +715,43 @@ async function characterGeneratorDialog() {
   // Build dialog content with i18n
   const content = `
 <fieldset>
-  <legend>${game.i18n.localize('SDM.CharacterGenerator.Title')}</legend>
+  <legend>${actor ? $fmt('SDM.RerollingCharacter', { name: actor.name }) : $l10n('SDM.CharacterGenerator.Title')}</legend>
 
   <div class="form-group">
-    <label>${game.i18n.localize('SDM.CharacterGenerator.AbilityMethod')}</label>
+    <label>${$l10n('SDM.CharacterGenerator.AbilityMethod')}</label>
     <select id="abilityMethod" name="abilityMethod" class="form-control">
-      <option value="current">${game.i18n.localize('SDM.CharacterGenerator.AbilityMethodCurrent')}</option>
-      <option value="roll">${game.i18n.localize('SDM.CharacterGenerator.AbilityMethodRoll')}</option>
+      <option value="current">${$l10n('SDM.CharacterGenerator.AbilityMethodCurrent')}</option>
+      <option value="roll">${$l10n('SDM.CharacterGenerator.AbilityMethodRoll')}</option>
     </select>
   </div>
 
   <hr>
 
   <div class="form-group">
-    <label>${game.i18n.localize('SDM.CharacterGenerator.CharacterName')}</label>
-    <input type="text" name="manualName" id="manualName" class="form-control" placeholder="${game.i18n.localize('SDM.CharacterGenerator.CharacterNamePlaceholder')}">
+    <label>${$l10n('SDM.CharacterGenerator.CharacterName')}</label>
+    <input type="text" name="manualName" id="manualName" value="${actor ? actor.name : ''}" class="form-control" placeholder="${$l10n('SDM.CharacterGenerator.CharacterNamePlaceholder')}">
   </div>
 
   <hr>
 
   <div class="form-group">
-    <label>${game.i18n.localize('SDM.CharacterGenerator.BackgroundTrait')}</label>
+    <label>${$l10n('SDM.CharacterGenerator.BackgroundTrait')}</label>
     <select id="backgroundMethod" name="backgroundMethod" class="form-control">
-      <option value="single">${game.i18n.localize('SDM.CharacterGenerator.BackgroundSingle')}</option>
-      <option value="multiple">${game.i18n.localize('SDM.CharacterGenerator.BackgroundMultiple')}</option>
+      <option value="single">${$l10n('SDM.CharacterGenerator.BackgroundSingle')}</option>
+      <option value="multiple">${$l10n('SDM.CharacterGenerator.BackgroundMultiple')}</option>
     </select>
   </div>
 
   <hr>
 
   <div class="form-group">
-    <label>${game.i18n.localize('SDM.CharacterGenerator.PathTrait')}</label>
+    <label>${$l10n('SDM.CharacterGenerator.PathTrait')}</label>
     <div style="margin-top: 5px;">
       <input type="radio" id="path-current" name="pathMethod" value="current" checked>
-      <label for="path-current" style="margin-right: 20px;">${game.i18n.localize('SDM.CharacterGenerator.PathRandomInitial')}</label>
+      <label for="path-current" style="margin-right: 20px;">${$l10n('SDM.CharacterGenerator.PathRandomInitial')}</label>
       <div style="margin-top: 5px;">
           <input type="radio" id="path-specific" name="pathMethod" value="specific">
-          <label for="path-specific">${game.i18n.localize('SDM.CharacterGenerator.PathRandomFromPath')}</label>
+          <label for="path-specific">${$l10n('SDM.CharacterGenerator.PathRandomFromPath')}</label>
           <select id="pathTableSelect" name="pathTable" class="form-control" style="margin-top: 10px; display: none;">
             ${pathOptionsHTML}
           </select>
@@ -733,19 +762,19 @@ async function characterGeneratorDialog() {
   <hr>
 
   <div class="form-group flex">
-    <label>${game.i18n.localize('SDM.CharacterGenerator.AdditionalOptions')}</label>
+    <label>${$l10n('SDM.CharacterGenerator.AdditionalOptions')}</label>
     <div class="flex-row" style="margin-top: 5px;">
       <input type="checkbox" id="addMotive" name="addMotive" checked>
-      <label for="addMotive" style="margin-right: 20px;">${game.i18n.localize('SDM.CharacterGenerator.AddMotive')}</label>
+      <label for="addMotive" style="margin-right: 20px;">${$l10n('SDM.CharacterGenerator.AddMotive')}</label>
 
       <input type="checkbox" id="addStrangeItem" name="addStrangeItem" checked>
-      <label for="addStrangeItem" style="margin-right: 20px;">${game.i18n.localize('SDM.CharacterGenerator.AddStrangeItem')}</label>
+      <label for="addStrangeItem" style="margin-right: 20px;">${$l10n('SDM.CharacterGenerator.AddStrangeItem')}</label>
 
       <input type="checkbox" id="addUsefulKit" name="addUsefulKit" checked>
-      <label for="addUsefulKit" style="margin-right: 20px;">${game.i18n.localize('SDM.CharacterGenerator.AddUsefulKit')}</label>
+      <label for="addUsefulKit" style="margin-right: 20px;">${$l10n('SDM.CharacterGenerator.AddUsefulKit')}</label>
 
       <input type="checkbox" id="addInitialCash" name="addInitialCash" checked>
-      <label for="addInitialCash">${game.i18n.localize('SDM.CharacterGenerator.AddInitialCash')}</label>
+      <label for="addInitialCash">${$l10n('SDM.CharacterGenerator.AddInitialCash')}</label>
     </div>
   </div>
 </fieldset>
@@ -753,13 +782,13 @@ async function characterGeneratorDialog() {
 
   // Create dialog instance
   const data = await DialogV2.wait({
-    window: { title: game.i18n.localize('SDM.CreateRandomCharacter') },
+    window: { title: $l10n('SDM.CreateRandomCharacter') },
     content,
     buttons: [
       {
         action: 'generate',
-        label: game.i18n.localize('SDM.GenerateCharacter'),
-        icon: 'fa-solid fa-user-plus',
+        label: actor ? $l10n('SDM.RerollCharacter') : $l10n('SDM.GenerateCharacter'),
+        icon: actor ? 'fa-solid fa-user-gear' : 'fa-solid fa-user-plus',
         callback: (event, button) => {
           const formData = new foundry.applications.ux.FormDataExtended(button.form).object;
           return formData;
@@ -767,7 +796,7 @@ async function characterGeneratorDialog() {
       },
       {
         action: 'cancel',
-        label: game.i18n.localize('SDM.ButtonCancel'),
+        label: $l10n('SDM.ButtonCancel'),
         icon: 'fa-solid fa-times'
       }
     ],
@@ -795,26 +824,58 @@ async function characterGeneratorDialog() {
   // If dialog was cancelled or no data, return
   if (!data || data === 'cancel') return;
 
+  if (actor) {
+    const proceed = await DialogV2.confirm({
+      content: $fmt('SDM.RerollCharacterConfirmation', { name: actor.name }),
+      modal: true,
+      window: { title: $fmt('SDM.RerollingCharacter', { name: actor.name }) },
+      rejectClose: false,
+      yes: { label: $l10n('SDM.ButtonYes') },
+      no: { label: $l10n('SDM.ButtonNo') }
+    });
+    if (!proceed) return;
+  }
+
   // Generate the character with the selected options
-  await generateCharacterWithOptions(data);
+  await generateCharacterWithOptions(data, actor);
 }
 
-async function generateCharacterWithOptions(options = {}) {
+async function generateCharacterWithOptions(options = {}, existingActor) {
   try {
     let name = options.manualName || (await generateNameFromTable());
     if (!name || name.trim() === '') {
       name = await generateNameFromTable();
     }
 
-    // console.debug('name', name);
+    if (existingActor) {
+      existingActor.items.contents.forEach(async item => {
+        await item.delete();
+      });
 
-    // Create the actor
+      existingActor.effects.contents.forEach(async effect => {
+        await effect.delete();
+      });
+    }
+
     const newActor = new SdmActor({
       type: ActorType.CHARACTER,
       name
     }).toObject();
 
-    const actor = await SdmActor.create(newActor);
+    const actor = existingActor || (await SdmActor.create(newActor));
+    await actor.update({
+      name: name,
+      'prototypeToken.name': name,
+      system: newActor.system
+    });
+
+    await actor.update({
+      'system.experience': '300'
+    });
+
+    if (existingActor) {
+      await addCompendiumItemToActor(actor, UnarmedDamageItem);
+    }
 
     // Generate ability scores based on selected method
     if (options.abilityMethod === 'roll') {
@@ -877,14 +938,12 @@ async function generateCharacterWithOptions(options = {}) {
     }
 
     // Show success notification
-    ui.notifications.info(game.i18n.format('SDM.CharacterGenerated', { name }));
+    ui.notifications.info($fmt('SDM.CharacterGenerated', { name }));
 
     return actor;
   } catch (error) {
     console.error('Error generating character:', error);
-    ui.notifications.error(
-      game.i18n.format('SDM.CharacterGenerationFailed', { error: error.message })
-    );
+    ui.notifications.error($fmt('SDM.CharacterGenerationFailed', { error: error.message }));
     throw error;
   }
 }

@@ -10,13 +10,15 @@
     "resources": "",
     "cost": 800,
     "cost_frequency": "",
-    "description": "<p>Words to cause pain or take it away. Spend 2 life to restore or remove (save) [[/r 1d6]] +1 life. Seal to recharge overnight.</p><p><strong>Features:</strong> re 5</p>",
+    "description": "<p>Words to cause pain or take it away. Spend 2 life to restore or remove (save) [[/r 1d6]] +1 life. Seal to recharge overnight.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -52,7 +54,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 0,
@@ -73,6 +75,9 @@
       },
       "range": "",
       "versatile": false
+    },
+    "replenish": {
+      "value": 5
     }
   },
   "effects": [
@@ -132,10 +137,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011789882,
-    "modifiedTime": 1767011789882,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771464017244,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!21GUwu6h72zzST10"
 }

@@ -8,13 +8,16 @@
     "readied": false,
     "cost": 950,
     "cost_frequency": "",
-    "description": "<p>A push-button shield of force.</p><p>In melee, it deals [[/r 1d4]] damage and severs limbs on a natural 17.</p><p><strong>Features:</strong> weapon, vorpal</p><p><em>armors with the weapon feature are weapons with armor bonus active effect</em></p>",
+    "description": "<p>A push-button shield of force.</p><p>In melee, it deals [[/r 1d4]] damage and severs limbs on a natural 17.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "vorpal",
+      "weapon"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -27,7 +30,7 @@
       "bonus": 1,
       "damage": "1d4"
     },
-    "type": "weapon",
+    "type": "armor",
     "power": {
       "img": "icons/svg/book.svg",
       "name": "",
@@ -41,7 +44,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 3,
@@ -76,50 +79,7 @@
     "is_supply": false,
     "supply_type": "human"
   },
-  "effects": [
-    {
-      "name": "armor +3",
-      "origin": "Compendium.sdm.equipment.Item.27YcJ2YjxiMAhYCR",
-      "img": "icons/equipment/shield/shield-round-boss-wood-brown.webp",
-      "_id": "pD1CwyKQz9f0358t",
-      "type": "base",
-      "system": {},
-      "changes": [
-        {
-          "key": "system.armor_bonus",
-          "value": "3",
-          "priority": null,
-          "mode": 2
-        }
-      ],
-      "disabled": false,
-      "duration": {
-        "startTime": null,
-        "combat": null,
-        "seconds": null,
-        "rounds": null,
-        "turns": null,
-        "startRound": null,
-        "startTurn": null
-      },
-      "description": "",
-      "tint": "#ffffff",
-      "transfer": true,
-      "statuses": [],
-      "sort": 0,
-      "flags": {},
-      "_stats": {
-        "compendiumSource": null,
-        "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "13.351",
-        "systemId": "sdm",
-        "systemVersion": "0.5.4",
-        "lastModifiedBy": null
-      },
-      "_key": "!items.effects!27YcJ2YjxiMAhYCR.pD1CwyKQz9f0358t"
-    }
-  ],
+  "effects": [],
   "sort": 0,
   "ownership": {
     "default": 0,
@@ -132,10 +92,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011671983,
-    "modifiedTime": 1767011671983,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771456145679,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!27YcJ2YjxiMAhYCR"
 }

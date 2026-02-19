@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 1500,
     "cost_frequency": "",
-    "description": "<p>Strands of ancestral memories trapped in amber. </p><p>Ghostly memories grant +1 thought.</p><p><strong>Features:</strong> bulky</p>",
+    "description": "<p>Strands of ancestral memories trapped in amber.</p><p>Ghostly memories grant +1 thought.</p>",
     "quantity": 1,
     "size": {
       "value": 2,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "bulky"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -41,7 +43,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 5,
@@ -131,10 +133,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011671983,
-    "modifiedTime": 1767011671983,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771455959767,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!n0bkvfZ0sLwXSROc"
 }

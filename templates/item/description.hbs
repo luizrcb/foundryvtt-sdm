@@ -1,5 +1,23 @@
 {{! Description Tab }}
 <section class='tab scrollable {{tab.cssClass}}' data-group='primary' data-tab='description'>
+  {{#if system.features.size}}
+    <div class="flex mt-5">
+      <span class="features-label">{{localize 'SDM.ItemTabFeatures'}}:</span>
+      <ul class="card-footer pills unlist">
+        {{#each system.features}}
+        <li class="pill transparent">
+          <span data-tooltip aria-label="{{localize (concat 'SDM.ItemFeature.' this 'Description')}}">
+            {{#if (numberedFeature this)}}
+              {{replace (localize (concat 'SDM.ItemFeature.' this 'Abbr')) '#' (lookup (lookup ../system this) 'value')}}
+            {{else}}
+              {{localize (concat 'SDM.ItemFeature.' this 'Abbr')}}
+            {{/if}}
+          </span>
+        </li>
+        {{/each}}
+      </ul>
+    </div>
+  {{/if}}
   {{! Editors must receive enriched text data from getData to properly handle rolls, UUID links, etc. }}
   {{#if editable}}
     <prose-mirror

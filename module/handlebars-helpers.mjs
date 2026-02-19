@@ -188,4 +188,16 @@ export function registerHandlebarsHelpers() {
     }
     return html;
   });
+
+  $$('has', function (set, value) {
+    return set.has(value);
+  });
+
+  $$('numberedFeature', function (feature) {
+    return ['replenish', 'flare', 'pocket', 'resistant'].includes(feature);
+  });
+
+  $$('replace', function (originalString = '', removedString = '', addedString = '') {
+    return originalString.replace(removedString, addedString);
+  });
 }

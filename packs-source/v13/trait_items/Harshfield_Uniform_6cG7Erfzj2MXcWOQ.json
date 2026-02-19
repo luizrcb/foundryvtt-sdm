@@ -10,13 +10,15 @@
     "resources": "",
     "cost": 75,
     "cost_frequency": "",
-    "description": "<p>Rugged striped outdoor labor suit with built-in climate control for work in hot and freezing conditions.</p><p><strong>Features:</strong> enviro.</p>",
+    "description": "<p>Rugged striped outdoor labor suit with built-in climate control for work in hot and freezing conditions.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "environmental"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -52,7 +54,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 2,
@@ -89,10 +91,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011801469,
-    "modifiedTime": 1767011801469,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771464846588,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!6cG7Erfzj2MXcWOQ"
 }

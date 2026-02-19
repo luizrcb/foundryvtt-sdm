@@ -8,13 +8,18 @@
     "readied": false,
     "cost": 17500,
     "cost_frequency": "",
-    "description": "<p>Raygun and skull-cap combo that translates your personality into another body after reducing the target to 0 life.</p><p><strong>Features:</strong> short, re 10 [[/r 1d20]], 2H, attune, fantascience</p>",
+    "description": "<p>Raygun and skull-cap combo that translates your personality into another body after reducing the target to 0 life.</p>",
     "quantity": 1,
     "size": {
       "value": 2,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "attune",
+      "fantascience",
+      "replenish",
+      "two_handed"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -41,7 +46,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 0,
@@ -74,7 +79,10 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": "human"
+    "supply_type": "human",
+    "replenish": {
+      "value": 10
+    }
   },
   "effects": [],
   "sort": 2800000,
@@ -89,10 +97,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011726802,
-    "modifiedTime": 1767011726802,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771503028333,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!f9MWWXjmIVcauiPJ"
 }

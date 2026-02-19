@@ -8,13 +8,18 @@
     "readied": false,
     "cost": 5000,
     "cost_frequency": "",
-    "description": "<p>Monstrosity of godmeat and astral bronze cooked up in the crypt vats of the Living Flesh God. Deals [[/r 1d10]] damage with unarmed attacks.</p><p>Bonds to its user; removal requires a day of prayer or [[/r 3d6]] life. </p><p>Burn mode [[/r 1d20]]: gain +6 strength and a 30 life forcefield (active effects)</p><p><strong>Features:</strong> large, re 3 [[/r 1d20]], bonded, weapon</p>",
+    "description": "<p>Monstrosity of godmeat and astral bronze cooked up in the crypt vats of the Living Flesh God. Deals [[/r 1d10]] damage with unarmed attacks.</p><p>Bonds to its user; removal requires a day of prayer or [[/r 3d6]] life.</p><p><strong>Burn mode (usage roll):</strong> gain +6 strength and a 30 life forcefield (active effects)</p>",
     "quantity": 1,
     "size": {
       "value": 4,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "burn",
+      "large",
+      "replenish",
+      "weapon"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -41,7 +46,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 7,
@@ -56,11 +61,11 @@
     },
     "weapon": {
       "damage": {
-        "base": "1d4",
+        "base": "1d10",
         "versatile": "1d4",
         "bonus": ""
       },
-      "range": "",
+      "range": "close",
       "versatile": false
     },
     "default_ability": "",
@@ -74,7 +79,10 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": "human"
+    "supply_type": "human",
+    "replenish": {
+      "value": 3
+    }
   },
   "effects": [
     {
@@ -174,10 +182,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011671983,
-    "modifiedTime": 1767011671983,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771455058008,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!b3qEDVWOaYuv9nMv"
 }

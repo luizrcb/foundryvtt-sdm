@@ -1,5 +1,4 @@
-export const UnarmedDamageItem =
-  'Compendium.sdm.weapons.Item.uKcbcZUs1jQZskQ4';
+export const UnarmedDamageItem = 'Compendium.sdm.weapons.Item.uKcbcZUs1jQZskQ4';
 import { DEFAULT_POWER_ICON, GearType, ItemType, SizeUnit } from './constants.mjs';
 /**
  * Convert any size unit to sacks.
@@ -64,6 +63,7 @@ export const TRAIT_ITEM_TYPES = ['trait'];
 export const BURDEN_ITEM_TYPES = ['burden'];
 export const ITEMS_NOT_ALLOWED_IN_CHARACTERS = [];
 export const ITEMS_NOT_ALLOWED_IN_CARAVANS = ['trait', 'burden'];
+export const SUBTYPES_NOT_ALLOWED_IN_CARAVANS = ['corruption', 'affliction'];
 
 // Add this method to handle item updates
 export async function onItemUpdate(item, updateData) {
@@ -72,6 +72,22 @@ export async function onItemUpdate(item, updateData) {
       for (const effect of item.effects) {
         await toggleEffectTransfer(effect, updateData?.system?.readied);
       }
+      return;
+    }
+    if (updateData?.system?.status === 'broken') {
+      for (const effect of item.effects) {
+        await toggleEffectTransfer(effect, false);
+      }
+      return;
+    }
+
+    if (updateData?.system?.status !== 'broken') {
+      if (['corruption', 'affliction', 'augment', 'pet'].includes(item.system.type)) {
+        for (const effect of item.effects) {
+          await toggleEffectTransfer(effect, true);
+        }
+      }
+      return;
     }
   }
 }
@@ -81,6 +97,9 @@ export async function onItemCreateActiveEffects(item) {
     if (item.getFlag?.('sdm', 'fromCompendium') === UnarmedDamageItem) {
       return;
     }
+
+    if (['corruption', 'affliction', 'augment', 'pet'].includes(item.system.type)) return;
+
     for (const effect of item.effects) {
       await toggleEffectTransfer(effect, false);
     }
@@ -98,7 +117,7 @@ async function toggleEffectTransfer(effect, shouldBeActive) {
   } else {
     // Disable transfer and deactivate effect
     effectUpdates.disabled = true;
-   // effectUpdates.transfer = false;
+    // effectUpdates.transfer = false;
   }
 
   await effect.update(effectUpdates);

@@ -33,16 +33,16 @@
     },
     "Item": {
       "gear": {
-        "htmlFields": ["description", "features", "powers.element.description"],
+        "htmlFields": ["description", "powers.element.description"],
         "filePathFields": {
           "powers.value.img": ["IMAGE"]
         }
       },
       "trait": {
-        "htmlFields": ["description", "features"]
+        "htmlFields": ["description"]
       },
       "burden": {
-        "htmlFields": ["description", "features"]
+        "htmlFields": ["description"]
       }
     }
   },

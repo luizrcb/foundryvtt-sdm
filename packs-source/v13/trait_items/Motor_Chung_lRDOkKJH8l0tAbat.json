@@ -10,13 +10,15 @@
     "resources": "",
     "cost": 3,
     "cost_frequency": "",
-    "description": "<p>Six glittery vials. Consume no more than an hour before use. Spend 1 life to gain a bonus action this turn.</p><p><strong>Features:</strong> re 3</p>",
+    "description": "<p>Six glittery vials. Consume no more than an hour before use. Spend 1 life to gain a bonus action this turn.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "soaps"
     },
-    "features": "",
+    "features": [
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -52,7 +54,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 0,
@@ -73,6 +75,9 @@
       },
       "range": "",
       "versatile": false
+    },
+    "replenish": {
+      "value": 3
     }
   },
   "effects": [],
@@ -86,12 +91,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.350",
+    "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.1",
+    "systemVersion": "0.10.0",
     "createdTime": 1760974693815,
-    "modifiedTime": 1760992559309,
-    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+    "modifiedTime": 1771465047329,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!lRDOkKJH8l0tAbat"
 }

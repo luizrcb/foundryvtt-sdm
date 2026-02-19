@@ -10,13 +10,16 @@
     "resources": "",
     "cost": 16000,
     "cost_frequency": "",
-    "description": "<p>Gruesome golem armor, replenished with your hero dice.</p><p><strong>Burn:</strong> gain +20 temporary life and +3 strength.</p><p><strong>Features:</strong> re 5</p><p><em>As a free action, you can activate burn mode for the rest of the scene by making a [[/r d20]] usage roll. Enable de Burn Mode active effect to get the bonuses.</em></p>",
+    "description": "<p>Gruesome golem armor, replenished with your hero dice.</p><p><strong>Burn:</strong> gain +20 temporary life and +3 strength.</p><p><em>As a free action, you can activate burn mode for the rest of the scene by making a [[/r d20]] usage roll. Enable de Burn Mode active effect to get the bonuses.</em></p>",
     "quantity": 1,
     "size": {
       "value": 3,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "burn",
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -52,7 +55,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 5,
@@ -73,6 +76,9 @@
       },
       "range": "",
       "versatile": false
+    },
+    "replenish": {
+      "value": 5
     }
   },
   "effects": [
@@ -144,10 +150,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011799539,
-    "modifiedTime": 1767011799539,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771464755547,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!rIOxCkzTzyxiPTO3"
 }

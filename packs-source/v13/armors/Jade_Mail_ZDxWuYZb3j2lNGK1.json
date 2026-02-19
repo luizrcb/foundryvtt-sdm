@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 2000,
     "cost_frequency": "",
-    "description": "<p>Stonesung links that also grant resistance against ghosts and immaterial daemons.</p><p><strong>Features:</strong> bulky</p>",
+    "description": "<p>Stonesung links that also grant resistance against ghosts and immaterial daemons.</p>",
     "quantity": 1,
     "size": {
       "value": 3,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "bulky"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -41,7 +43,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 7,
@@ -88,10 +90,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011671983,
-    "modifiedTime": 1767011671983,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771455550969,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!ZDxWuYZb3j2lNGK1"
 }

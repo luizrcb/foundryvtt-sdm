@@ -8,13 +8,13 @@
     "readied": false,
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p>You can have a number of pets or sidekicks equal to your level who don’t take up the usual inventory slot. (<em>still not automated</em>)</p>",
+    "description": "<p>You can have a number of pets or sidekicks equal to your level who don’t take up the usual inventory slot. <br />(<em>Update the value in the effects tab as your character levels up</em>)</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -59,7 +59,52 @@
       "required_successes": 0
     }
   },
-  "effects": [],
+  "effects": [
+    {
+      "name": "Pet slots bonus",
+      "origin": "Compendium.sdm.traits.Item.TStHHiUv6FdBqS60",
+      "img": "icons/creatures/mammals/dog-husky-white-blue.webp",
+      "_id": "dJmfohtGCNVA5gYj",
+      "type": "base",
+      "system": {},
+      "changes": [
+        {
+          "key": "system.pet_slots_bonus",
+          "mode": 2,
+          "value": "1",
+          "priority": null
+        }
+      ],
+      "disabled": false,
+      "duration": {
+        "startTime": null,
+        "combat": null,
+        "seconds": null,
+        "rounds": null,
+        "turns": null,
+        "startRound": null,
+        "startTurn": null
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.10.0",
+        "createdTime": 1771344017173,
+        "modifiedTime": 1771344170720,
+        "lastModifiedBy": "xKXaXe1j0K9b568n"
+      },
+      "_key": "!items.effects!TStHHiUv6FdBqS60.dJmfohtGCNVA5gYj"
+    }
+  ],
   "sort": 0,
   "ownership": {
     "default": 0
@@ -69,12 +114,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.348",
+    "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.3.2",
+    "systemVersion": "0.10.0",
     "createdTime": 1756496272137,
-    "modifiedTime": 1757957401277,
-    "lastModifiedBy": "xN5KQ8c8JiOFyOLU"
+    "modifiedTime": 1771344014656,
+    "lastModifiedBy": "xKXaXe1j0K9b568n"
   },
   "_key": "!items!TStHHiUv6FdBqS60"
 }

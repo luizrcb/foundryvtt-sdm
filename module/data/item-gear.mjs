@@ -70,6 +70,21 @@ export default class SdmGear extends SdmItemBase {
 
     schema.weapon = new fields.EmbeddedDataField(WeaponDataModel);
 
+    schema.cure_steps = new fields.SchemaField({
+      completed: new fields.NumberField({
+        required: true,
+        initial: 0,
+        min: 0,
+      }),
+      required: new fields.NumberField({
+        required: true,
+        initial: 0,
+        min: 0,
+      }),
+    }, { nullable: false });
+
+    schema.pet = new fields.DocumentUUIDField({ required: true, blank: true, initial: '' });
+
     return schema;
   }
 
@@ -81,6 +96,7 @@ export default class SdmGear extends SdmItemBase {
   /** @inheritDoc */
   static _migrateData(source) {
     SdmGear.#migrateRange(source);
+    SdmGear.#migrateFeatures(source);
   }
 
   /**
@@ -93,5 +109,17 @@ export default class SdmGear extends SdmItemBase {
     if (source.weapon.range === 'melee') source.weapon.range = 'close';
     if (source.weapon.range === 'long') source.weapon.range = 'medium';
     if (source.weapon.range === 'extreme') source.weapon.range = 'long';
+  }
+
+  static #migrateFeatures(source) {
+    if (typeof source.features === 'string') {
+      source.features = [];
+    }
+
+    if (source.features && source.features.length) {
+      source.features = [...source.features].filter(f => f && f.trim() !== '').sort();
+    }
+
+    return;
   }
 }

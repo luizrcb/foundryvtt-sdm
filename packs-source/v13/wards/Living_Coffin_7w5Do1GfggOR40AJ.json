@@ -8,13 +8,17 @@
     "readied": false,
     "cost": 2500,
     "cost_frequency": "",
-    "description": "<p>Field ward of the revolutionary ghouls of the 3rd Juniper Era. Works best when fed a fresh human.</p><p><strong>Features:</strong> auto, corpsefed, emplaced</p>",
+    "description": "<p>Field ward of the revolutionary ghouls of the 3rd Juniper Era. Works best when fed a fresh human.</p>",
     "quantity": 1,
     "size": {
       "value": 5,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "auto",
+      "corpsefed",
+      "emplaced"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -41,7 +45,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 0,
@@ -88,10 +92,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011700561,
-    "modifiedTime": 1767011700561,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771457182225,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!7w5Do1GfggOR40AJ"
 }

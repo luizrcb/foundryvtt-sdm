@@ -58,9 +58,21 @@
   font-family: typo.$font-secondary;
 }
 
+.sheet multi-checkbox > label > input[type='checkbox']:focus {
+  border-bottom: 0px;
+}
+
+.sheet multi-checkbox > label:hover {
+  font-weight: bold;
+}
+
 .sheet input.resource-label {
   font-weight: bold;
   font-size: 15px;
+}
+
+.mt-2 {
+  margin-top: 2px;
 }
 
 .mt-5 {
@@ -85,6 +97,10 @@
 
 .mr-10 {
   margin-right: 10px;
+}
+
+.mb-5 {
+  margin-bottom: 5px;
 }
 
 .mb-10 {
@@ -149,6 +165,67 @@
     min-height: 0px;
     max-width: 0px;
     max-height: 0px;
+  }
+}
+
+.unlist {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+
+  li {
+    margin: 0;
+  }
+}
+
+.features-label {
+  font-weight: bold;
+  margin-right: 5px;
+  font-family: var(--sdm-font-primary);
+}
+
+.pills {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.25rem;
+
+  .pill {
+    font-family: var(--sdm-font-secondary);
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 500;
+    text-transform: uppercase;
+    border: 1px dotted;
+    border-radius: 3px;
+    cursor: pointer;
+    padding: 0.1875rem 0.375rem;
+    display: flex;
+    gap: 0.25rem;
+    margin: 0;
+
+    &.transparent {
+      background-color: transparent;
+    }
+
+    &.mr-3 {
+      margin-right: 3px;
+    }
+
+    &.pill-s {
+      font-size: 10px;
+      padding: 0.1875rem 0.1875rem;
+    }
+
+    > .separator {
+      color: var(--color-text-tertiary);
+    }
+
+    &:hover {
+      background: var(--sdm-c-accent);
+    }
   }
 }
 
@@ -1034,61 +1111,5 @@ input[type='radio']::after {
 
   .theme-dark select::-ms-expand {
     filter: invert(1);
-  }
-
-  .uvg-oracle-result {
-    border: 1px solid #7c2da2;
-    border-radius: 5px;
-    padding: 10px;
-    background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
-    color: #e0e0ff;
-  }
-
-  .oracle-header {
-    border-bottom: 1px solid #7c2da2;
-    margin-bottom: 10px;
-    padding-bottom: 5px;
-  }
-
-  .oracle-header h5 {
-    color: #e0aaff;
-    margin: 0;
-    font-size: 18px;
-  }
-
-  .oracle-question {
-    font-style: italic;
-    color: #aaccff;
-    margin-top: 5px;
-    margin-bottom: 0;
-  }
-
-  .oracle-roll {
-    background: rgba(124, 45, 162, 0.2);
-    padding: 8px;
-    border-radius: 3px;
-    margin: 10px 0;
-  }
-
-  .oracle-outcome {
-    background: rgba(224, 170, 255, 0.1);
-    padding: 10px;
-    border-radius: 3px;
-    border-left: 3px solid #e0aaff;
-    margin: 10x 0;
-    margin-bottom: 0;
-  }
-
-  .oracle-outcome h6 {
-    color: #e0aaff;
-    margin: 0 0 5px 0;
-  }
-
-  .oracle-details {
-    font-size: 0.9em;
-    color: #8888cc;
-    border-top: 1px solid #444477;
-    padding-top: 10px;
-    margin-top: 10px;
   }
 }

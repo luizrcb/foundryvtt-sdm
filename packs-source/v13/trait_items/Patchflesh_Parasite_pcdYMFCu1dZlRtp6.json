@@ -10,13 +10,13 @@
     "resources": "",
     "cost": 75,
     "cost_frequency": "",
-    "description": "<p>A temporary fix. Recover [[/r 2d8]] + level life or [[/r 1d4]]+1 ability damage, but suffer 1 burden. Remove with salt. Addictive.</p><p><strong>Features:</strong> single use</p>",
+    "description": "<p>A temporary fix. Recover [[/r 2d8]] + level life or [[/r 1d4]]+1 ability damage, but suffer 1 burden. Remove with salt. Addictive. Single use.</p><p></p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "soaps"
     },
-    "features": "",
+    "features": [],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -52,7 +52,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 0,
@@ -86,12 +86,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.350",
+    "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.1",
+    "systemVersion": "0.10.0",
     "createdTime": 1760974721289,
-    "modifiedTime": 1760992860431,
-    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+    "modifiedTime": 1771465071539,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!pcdYMFCu1dZlRtp6"
 }

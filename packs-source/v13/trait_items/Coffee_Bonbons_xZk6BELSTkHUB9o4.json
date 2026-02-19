@@ -10,13 +10,15 @@
     "resources": "",
     "cost": 20,
     "cost_frequency": "",
-    "description": "<p>Candy that hides a burden for a day. May cause twitching.</p><p><strong>Features:</strong> re 2</p>",
+    "description": "<p>Candy that hides a burden for a day. May cause twitching.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -52,7 +54,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 0,
@@ -73,6 +75,9 @@
       },
       "range": "",
       "versatile": false
+    },
+    "replenish": {
+      "value": 2
     }
   },
   "effects": [
@@ -132,10 +137,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011796905,
-    "modifiedTime": 1767011796905,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771464553690,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!xZk6BELSTkHUB9o4"
 }

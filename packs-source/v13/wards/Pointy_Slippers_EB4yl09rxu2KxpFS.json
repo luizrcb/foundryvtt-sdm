@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 75,
     "cost_frequency": "",
-    "description": "<p>Very sharp points—your kicks deal [[/r 1d6]] damage.</p><p><strong>Features:</strong> weapon</p>",
+    "description": "<p>Very sharp points—your kicks deal [[/r 1d6]] damage.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "weapon"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -41,7 +43,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 0,
@@ -56,11 +58,11 @@
     },
     "weapon": {
       "damage": {
-        "base": "1d4",
+        "base": "1d6",
         "versatile": "1d4",
         "bonus": ""
       },
-      "range": "",
+      "range": "close",
       "versatile": false
     },
     "status": "",
@@ -73,7 +75,8 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": "human"
+    "supply_type": "human",
+    "default_ability": ""
   },
   "effects": [],
   "sort": 0,
@@ -88,10 +91,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011697088,
-    "modifiedTime": 1767011697088,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771456789785,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!EB4yl09rxu2KxpFS"
 }

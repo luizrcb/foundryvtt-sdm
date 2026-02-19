@@ -1,6 +1,6 @@
 import PowerDataModel from '../data/power-data.mjs';
 import { SdmItem } from '../documents/item.mjs';
-import { getActorOptions } from '../helpers/actorUtils.mjs';
+import { createNPCByLevel, getActorOptions } from '../helpers/actorUtils.mjs';
 import { GearType, ItemType } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
@@ -19,6 +19,29 @@ const { performIntegerSort } = foundry.utils;
 export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemSheetV2) {
   constructor(options = {}) {
     super(options);
+
+    const classes = [...this.options.classes];
+    const window = { ...this.options.window };
+    const controls = [...this.options.window.controls];
+
+    // if (game.user.isGM) {
+    //   controls.push({
+    //     action: 'spawnNPC',
+    //     icon: 'fa-solid fa-robot',
+    //     label: 'Spawn NPC',
+    //     ownership: 'OWNER'
+    //   });
+    // }
+
+    window.controls = controls;
+
+    // Update options with the new classes array
+    this.options = {
+      ...this.options,
+      classes,
+      window
+    };
+
     this.#dragDrop = this.#createDragDropHandlers();
   }
 
@@ -43,7 +66,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       toggleReadied: this._toggleReadied,
       toggleItemStatus: { handler: this._toggleItemStatus, buttons: [0, 2] },
       toggleIsHallmark: this._toggleIsHallmark,
-      radioToggle: this._radioToggle
+      radioToggle: this._radioToggle,
+      spawnNPC: this._onSpawnNPC
     },
     form: {
       submitOnChange: true
@@ -77,6 +101,10 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     effects: {
       template: templatePath('item/effects'),
       scrollable: ['']
+    },
+    features: {
+      template: templatePath('item/features'),
+      scrollable: ['']
     }
   };
 
@@ -93,10 +121,19 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
         if (this.document.system.type === GearType.POWER_ALBUM) {
           options.parts.push('powerAlbum');
         }
+
+        options.parts.push('description')
+
+        if (![GearType.CORRUPTION, GearType.AFFLICTION, GearType.PET].includes(this.document.system.type) ) {
+          options.parts.push('features')
+        }
+
+        options.parts.push('effects');
+      break;
+      default:
+        options.parts.push('description', 'effects');
         break;
     }
-
-    options.parts.push('description', 'effects');
   }
 
   /* -------------------------------------------- */
@@ -138,6 +175,16 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       isGM: game.user.isGM
     };
 
+    if (this.item.type === ItemType.GEAR && this.item.system.type === GearType.WARD) {
+      context.itemFeatures = [...CONFIG.SDM.baseFeatures, ...CONFIG.SDM.wardFeatures];
+    } else if (this.item.type === ItemType.GEAR && this.item.system.type === GearType.ARMOR) {
+      context.itemFeatures = [...CONFIG.SDM.baseFeatures, ...CONFIG.SDM.armorFeatures];
+    } else if (this.item.type === ItemType.GEAR && this.item.system.type === GearType.WEAPON) {
+      context.itemFeatures = [...CONFIG.SDM.baseFeatures, ...CONFIG.SDM.weaponFeatures];
+    } else {
+      context.itemFeatures = [...CONFIG.SDM.baseFeatures] ;
+    }
+
     if (this.item.type === ItemType.GEAR && this.item.system.type === GearType.POWER_ALBUM) {
       // Calculate navigation states
       context.powers = context.system?.powers;
@@ -157,6 +204,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       case 'attributesFeature':
       case 'attributesMount':
       case 'powerAlbum':
+      case 'features':
         // Necessary for preserving active tab on re-render
         context.tab = context.tabs[partId];
         break;
@@ -232,6 +280,11 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
           tab.id = 'effects';
           tab.label += 'Effects';
           tab.icon = 'fa fa-bolt';
+          break;
+        case 'features':
+          tab.id = 'features';
+          tab.label += 'Features';
+          tab.icon = 'fa fa-gears';
           break;
       }
       if (this.tabGroups[tabGroup] === tab.id) tab.cssClass = 'active';
@@ -648,6 +701,29 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     await this.item.toggleItemStatus(event);
   }
 
+  static async _onSpawnNPC(event, target) {
+    // let's allow to spawn from table or directly from all attributes
+    const item = this.item;
+    const itemLevel = Math.max(item.system.hallmark.level, item.system.attributes.level);
+
+    const npcData = await createNPCByLevel({
+      name: item.name,
+      lvl: itemLevel,
+      tableName: 'generic-synthesized-creature',
+      image: item.img,
+      ownership: item.ownership,
+      linked: true,
+      biography: `<p>NPC Spawned from: @UUID[${item.uuid}]{${item.name}}</p>`
+    });
+
+    // const virtualActor = new SdmActor({
+    //   type: 'npc',
+    //   name: item.name,
+    //   img: item.img,
+    //   system: { ...attributes }
+    // }).toObject();
+  }
+
   /** Helper Functions */
 
   /**
@@ -811,6 +887,24 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
    */
   async _onDropActor(event, data) {
     if (!this.item.isOwner) return false;
+    if (this.item.system.type !== GearType.PET) return false;
+
+    const droppedActor = await fromUuid(data.uuid);
+
+    if (this.item.parent.id === droppedActor.id) return false;
+
+    const { name: petName, img: petImg, system: petData } = droppedActor;
+    const { biography: petDescription } = petData;
+
+    let description = `<p>@UUID[${droppedActor.uuid}]{${petName}}</p>`
+    description += petDescription;
+
+    await this.item.update({
+      'name': petName,
+      'img': petImg,
+      'system.pet': droppedActor.uuid,
+      'system.description': description,
+    });
   }
 
   /* -------------------------------------------- */

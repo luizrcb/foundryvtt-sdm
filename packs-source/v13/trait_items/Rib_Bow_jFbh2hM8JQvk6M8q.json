@@ -10,13 +10,15 @@
     "resources": "",
     "cost": 25,
     "cost_frequency": "",
-    "description": "<p>Crossbow made from dead machine parts. Won't let you down.</p><p>Features: re 20</p>",
+    "description": "<p>Crossbow made from dead machine parts. Won't let you down.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -52,7 +54,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 0,
@@ -74,7 +76,10 @@
       "range": "medium",
       "versatile": false
     },
-    "default_ability": ""
+    "default_ability": "",
+    "replenish": {
+      "value": 20
+    }
   },
   "effects": [],
   "sort": 0,
@@ -90,10 +95,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011809701,
-    "modifiedTime": 1767011809701,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771465541441,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!jFbh2hM8JQvk6M8q"
 }

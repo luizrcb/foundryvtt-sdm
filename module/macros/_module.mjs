@@ -1,4 +1,5 @@
 import { characterGeneratorDialog } from './gm/characterGenerator.mjs';
+import { openBurdenGeneratorDialog } from './gm/burdenGenerator.mjs'
 import { escalatorDie } from './gm/escalatorDie.mjs';
 import { giveCash } from './gm/giveCash.mjs';
 import { giveExperience } from './gm/giveExperience.mjs';
@@ -17,6 +18,7 @@ const gm = {
   giveHeroDice,
   groupInitiative,
   randomNPCGenerator,
+  openBurdenGeneratorDialog,
 };
 
 const player = {

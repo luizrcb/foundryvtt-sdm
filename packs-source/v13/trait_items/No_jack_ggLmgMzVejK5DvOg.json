@@ -10,13 +10,15 @@
     "resources": "",
     "cost": 50,
     "cost_frequency": "",
-    "description": "<p>Extension plug to the local noösphere. Also stores 3 vidys (3 extra trait slots)</p><p><strong>Features:</strong> implant</p>",
+    "description": "<p>Extension plug to the local noösphere. Also stores 3 vidys (3 extra trait slots)</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "soaps"
     },
-    "features": "",
+    "features": [
+      "implant"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -52,7 +54,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 0,
@@ -132,10 +134,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011794132,
-    "modifiedTime": 1767011794132,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771464322269,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!ggLmgMzVejK5DvOg"
 }

@@ -236,9 +236,9 @@ function makeNPC(name, img = '', biography = '', data, initiative = '') {
   return {
     name,
     img,
-    biography,
     type: 'npc',
     system: {
+      biography,
       initiative,
       bonus: data.Bon,
       damage: data.Dmg,
@@ -280,6 +280,7 @@ export async function createNPC(name = 'NPC', tableName, initiative = '') {
   const biography = '';
   const img = '';
   const npcData = makeNPC(name, img, biography, entry, initiative);
+  npcData.system['createdFromTable'] = tableName;
 
   const targetActor = await Actor.create(npcData);
   const traitsTable = NPCTables[tableName].traits;
@@ -288,20 +289,61 @@ export async function createNPC(name = 'NPC', tableName, initiative = '') {
   return npcData;
 }
 
+export function getNPCDataByLevel(tableName, level = 0) {
+  const npcTable = tableName || 'generic-synthesized-creature';
+  const table = NPCTables[npcTable].table;
+  const entry = [...table].reverse().find(e => e.Lvl <= level);
+  return entry;
+}
+
 // retorna NPC pelo nível (ou nível mais próximo abaixo)
-export async function createNPCByLevel(name, lvl, tableName, initiative) {
-  const table = NPCTables[tableName].table;
-  if (!table) throw new Error(`Tabela não encontrada: ${tableName}`);
-
-  // pega a maior entrada <= lvl
-  const entry = [...table].reverse().find(e => e.Lvl <= lvl);
-
+export async function createNPCByLevel({
+  name,
+  lvl,
+  tableName,
+  initiative = '',
+  image = '',
+  biography = '',
+  ownership = null,
+  linked = false,
+}) {
+  const entry = getNPCDataByLevel(tableName, lvl);
   if (!entry) throw new Error(`Nenhuma entrada encontrada para lvl ${lvl} em ${tableName}`);
-  const biography = '';
-  const img = '';
-  const npcData = makeNPC(name, img, biography, entry, initiative);
+
+  const actorBiography = biography;
+  const img = image;
+  const npcData = makeNPC(name, img, actorBiography, entry, initiative);
+  npcData.system['createdFromTable'] = tableName;
+  const isGM = userId => game.users.get(userId)?.isGM ?? false;
 
   const targetActor = await Actor.create(npcData);
+  let updateData = {
+    'prototypeToken.actorLink': linked,
+  };
+  let shouldBeFriendly = false;
+
+  if (ownership) {
+    await targetActor.update({ ownership: ownership });
+
+    if (ownership.default === 3) {
+      shouldBeFriendly = true;
+    } else {
+      for (let [userId, level] of Object.entries(ownership)) {
+        if (userId === 'default') continue;
+        if (level === 3 && !isGM(userId)) {
+          shouldBeFriendly = true;
+          break;
+        }
+      }
+    }
+  }
+
+  if (shouldBeFriendly) {
+    updateData['prototypeToken.disposition'] = CONST.TOKEN_DISPOSITIONS.FRIENDLY;
+  }
+
+  await targetActor.update(updateData);
+
   const traitsTable = NPCTables[tableName].traits;
 
   await createRandomTrait(targetActor, traitsTable);

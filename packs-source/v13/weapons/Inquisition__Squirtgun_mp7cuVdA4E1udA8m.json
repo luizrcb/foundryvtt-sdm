@@ -8,13 +8,16 @@
     "readied": false,
     "cost": 300,
     "cost_frequency": "",
-    "description": "<p>Originally an effective tranquilizer delivery device. Now adapted for all kinds of fluids.</p><p><strong>Features:</strong> short, re 5 [[/r 1d20]], intravenous</p>",
+    "description": "<p>Originally an effective tranquilizer delivery device. Now adapted for all kinds of fluids.</p>",
     "quantity": 1,
     "size": {
       "value": 5,
       "unit": "soaps"
     },
-    "features": "",
+    "features": [
+      "intravenous",
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -41,7 +44,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 0,
@@ -74,7 +77,10 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": "human"
+    "supply_type": "human",
+    "replenish": {
+      "value": 5
+    }
   },
   "effects": [],
   "sort": 250000,
@@ -89,10 +95,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011722535,
-    "modifiedTime": 1767011722535,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771501964703,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!mp7cuVdA4E1udA8m"
 }

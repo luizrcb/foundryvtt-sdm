@@ -1,4 +1,3 @@
-import { UNENCUMBERED_THRESHOLD_CASH } from '../helpers/actorUtils.mjs';
 import { ActorType, ItemType, SizeUnit } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { $fmt, $l10n, foundryVersionIsAtLeast, getSeasonAndWeek } from '../helpers/globalUtils.mjs';
@@ -6,7 +5,8 @@ import {
   convertToCash,
   ITEMS_NOT_ALLOWED_IN_CARAVANS,
   onItemCreateActiveEffects,
-  onItemUpdate
+  onItemUpdate,
+  SUBTYPES_NOT_ALLOWED_IN_CARAVANS
 } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { openItemTransferDialog } from '../items/transfer.mjs';
@@ -429,7 +429,6 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
 
     this._createContextMenu(
       this._getItemListContextOptions,
-      //'[data-document-class][data-item-id], [data-document-class][data-effect-id]',
       '[data-document-class][data-item-id]',
       {
         hookName: 'getItemListContextOptions',
@@ -474,8 +473,6 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       }),
       update: Hooks.on('updateItem', (item, changes, options, userId) => {
         if (item.parent?.id === actorId) {
-          // const shouldAllow = this._checkCarriedWeight(item, updateData);
-          // if (!shouldAllow) return false;
           return onItemUpdate(item, changes);
         }
       }),
@@ -513,7 +510,6 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     const totalCapacityInSacks = this.actor.system.capacity + this.actor.system.capacity_bonus;
     const maxCarryWeight = convertToCash(totalCapacityInSacks, SizeUnit.SACKS);
 
-    // Only error if EXCEEDING max (not when equal)
     if (currentCarriedWeight > maxCarryWeight) {
       ui.notifications.warning('Updating this item would exceed your carry weight limit.');
       return false;
@@ -630,27 +626,6 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     this._teardownItemListeners();
     this._teardownCalendarListener();
     return super.close(options);
-  }
-
-  async _checkEncumbrance() {
-    const actor = this.actor;
-
-    // Calculate current encumbrance (SDM-specific calculation)
-
-    const carriedWeight = this.actor.getCarriedGear();
-    const encumbranceThreshold =
-      this.actor.system.carry_weight.unencumbered ?? UNENCUMBERED_THRESHOLD_CASH;
-    const encumberedEffect = actor.effects.getName('encumbered');
-    const encumberedSlow = actor.effects.getName('slow (encumbered)');
-
-    // Update encumbrance effect
-    if (carriedWeight > encumbranceThreshold && !encumberedEffect) {
-      await actor.addEncumberedEffect();
-      await actor.addEncumberedSlow();
-    } else if (carriedWeight <= encumbranceThreshold && encumberedEffect) {
-      await encumberedEffect.delete();
-      await encumberedSlow.delete();
-    }
   }
 
   /**************
@@ -1443,7 +1418,9 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     if (!this.actor.isOwner) return false;
 
     const item = await Item.implementation.fromDropData(data);
+
     if (ITEMS_NOT_ALLOWED_IN_CARAVANS.includes(item.type)) return false;
+    if (SUBTYPES_NOT_ALLOWED_IN_CARAVANS.includes(item.system.type)) return false;
 
     const capacity = Number(this.actor.system.capacity ?? 0);
     const targetIdx = this._getDropSackIndexFromEvent(event);

@@ -18,12 +18,12 @@
     <div class="flexrow">
       {{#if (eq item.system.resources 'running_low')}}
       <div data-tooltip="{{localize 'SDM.ItemStatusRunningLow'}}">
-        <i class="fa-solid fa-battery-quarter mr-5"></i>
+        <i class="fa-solid fa-battery-quarter mr-3"></i>
       </div>
       {{/if}}
       {{#if (eq item.system.resources 'run_out')}}
       <div data-tooltip="{{localize 'SDM.ItemStatusRunOut'}}">
-        <i class="fa-solid fa-battery-empty mr-5"></i>
+        <i class="fa-solid fa-battery-empty mr-3"></i>
       </div>
       {{/if}}
       {{#if (and
@@ -31,7 +31,7 @@
         (ne item.system.status 'broken')
         (ne item.system.resources 'run_out')
         (ne item.system.size.unit 'cash')
-        (eq item.system.type 'weapon')
+        (or (eq item.system.type 'weapon') (has item.system.features 'weapon'))
         item.system.readied
         item.system.weapon.damage.base
         @root.editable
@@ -68,6 +68,20 @@
       {{/if}}
 
       {{#if (and
+        (eq item.system.type 'pet')
+        (ne item.system.pet '')
+      )}}
+        <div
+          class='rollable flexrow'
+          data-action='openPetSheet'
+          data-label='{{item.name}}'
+          data-tooltip="SDM.OpenPetSheet"
+        >
+          <i class='fa-solid fa-paw roll-icon'></i>
+        </div>
+      {{/if}}
+
+      {{#if (and
         (ne actorType 'caravan')
         (ne item.system.status 'broken')
         (ne item.system.resources 'run_out')
@@ -90,23 +104,29 @@
       {{/if}}
 
       {{#if (and (gt item.system.slots_taken 1) (ne item.system.size.unit 'sacks'))}}
-      <span
+      <span class="mr-3"
        data-tooltip="{{item.system.slots_taken}} {{localize 'SDM.UnitStones'}}"
-      >[{{item.system.slots_taken}}]&nbsp;
+      >[{{item.system.slots_taken}}]
       </span>
       {{/if}}
       {{#if (and (gt item.system.slots_taken 1) (eq item.system.size.unit 'sacks'))}}
-      <span
+      <span class="mr-3"
        data-tooltip="{{toSacks item.system.slots_taken false}} {{ifThen (gt (toSacks item.system.slots_taken false) 1) (localize 'SDM.UnitSacks') (localize 'SDM.UnitSack')}}"
-      >[{{toSacks item.system.slots_taken}}]&nbsp;
+      >[{{toSacks item.system.slots_taken}}]
       </span>
       {{/if}}
 
       {{#if (eq item.system.size.unit 'cash')}} {{item.system.quantity}} {{/if}}
       {{#if item.system.is_hallmark}}<i class="fa-regular fa-star hallmark" data-tooltip="{{localize 'SDM.HallmarkItem'}}"></i>{{/if}}
-      {{#if (gt item.system.charges.max 0) }} <span
-       data-tooltip="{{localize 'SDM.ItemCharges'}}"
-      >({{item.system.charges.value}}/{{item.system.charges.max}})&nbsp;</span>{{/if}}
+
+      {{#if (and (gt item.system.charges.max 0) (has item.system.features 'charges')) }} <span
+       data-tooltip="{{localize 'SDM.ItemCharges'}}" class="mr-3"
+      >({{item.system.charges.value}}/{{item.system.charges.max}})</span>{{/if}}
+
+      {{#if (and (has item.system.features 'replenish')(ne item.system.resources 'run_out'))}} <div class="pills flex" style="flex-basis:auto;flex-wrap:nowrap;"><span class="pill pill-s mr-3" style="flex-basis:auto;flex-wrap:nowrap;"
+       data-tooltip="{{replace (localize 'SDM.ItemFeature.replenish') ' #' ''}}"
+      >{{replace (localize 'SDM.ItemFeature.replenishAbbr') '#' item.system.replenish.value}}</span></div>{{/if}}
+
       {{item.name}}
 
       {{#if (and (ne item.system.size.unit 'cash') (gt item.system.quantity 1))}}
@@ -129,6 +149,9 @@
       (ne actorType 'caravan')
       (ne item.system.status 'broken')
       (ne item.system.type 'corruption')
+      (ne item.system.type 'affliction')
+      (ne item.system.type 'augment')
+      (ne item.system.type 'pet')
     )}}
     <a class="item-control">
       <i
@@ -143,7 +166,10 @@
       </i>
     </a>
     {{/if}}
-      {{#if (ne item.system.type 'corruption')}}
+      {{#if (and
+        (ne item.system.type 'corruption')
+        (ne item.system.type 'affliction')
+      )}}
       <a class="item-control">
         <i
           class="fa-regular fa-exchange"

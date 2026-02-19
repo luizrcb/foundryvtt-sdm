@@ -381,10 +381,10 @@ export class SdmActor extends Actor {
       item =>
         (item.type === ItemType.GEAR && item.system.type === GearType.CORRUPTION) ||
         (item.type === ItemType.TRAIT &&
-        (!item.system?.learning ||
-          item.system?.learning?.required_successes === 0 ||
-          item.system?.skill?.rank > 0 ||
-          item.system?.learning?.required_successes === item.system?.learning?.sources))
+          (!item.system?.learning ||
+            item.system?.learning?.required_successes === 0 ||
+            item.system?.skill?.rank > 0 ||
+            item.system?.learning?.required_successes === item.system?.learning?.sources))
     );
     const defaultModifierStep = game.settings.get('sdm', 'skillModifierStep');
     skillTraits.forEach(trait => {
@@ -445,6 +445,10 @@ export class SdmActor extends Actor {
       return (a.sort || 0) - (b.sort || 0);
     });
 
+    const totalPocketValue = itemsArray.reduce((sum, item) => {
+      return sum + (item.system.pocket?.value || 0);
+    }, 0);
+
     let itemSlotsLimit = this.system.item_slots;
     let traitSlotsLimit = this.system.trait_slots;
 
@@ -453,22 +457,29 @@ export class SdmActor extends Actor {
       traitSlotsLimit = 100;
     }
 
-    const burdenPenalTyBonus = this.system.burden_penalty_bonus || 0;
+    let burdenPenalTyBonus = this.system.burden_penalty_bonus || 0;
     let powerSlotsBonus = this.system.power_slots_bonus || 0;
-    let smallItemBonus = this.system.small_item_slots_bonus || 0;
+    let petSlotsBonus = this.system.pet_slots_bonus || 0;
+    let augmentSlotsBonus = this.system.augment_slots_bonus || 0;
+    let afflictionSlotsBonus = this.system.affliction_slots_bonus || 0;
+    let smallItemBonus = (this.system.small_item_slots_bonus || 0) + (totalPocketValue || 0);
     let weaponItemBonus = this.system.weapon_item_slots_bonus || 0;
     let packedItemBonus = this.system.packed_item_slots_bonus || 0;
     let readiedItemBonus = this.system.readied_item_slots_bonus || 0;
     const readiedArmorTakeNoSlots = !!this.system.readied_armor_take_no_slots;
 
+
     // Iterate through items, allocating to containers
     for (let i of itemsArray) {
       const isGear = i.type === ItemType.GEAR;
+      const isAffliction = i.system.type === GearType.AFFLICTION;
       const isPower = i.system.type === GearType.POWER;
+      const isPet = i.system.type === GearType.PET;
+      const isAugment = i.system.type === GearType.AUGMENT;
       const isWeapon = i.system.type === GearType.WEAPON;
       const isWard = i.system.type === GearType.WARD;
       const isArmor = i.system.type === GearType.ARMOR;
-      const isSmallITem = i.system.size.unit === SizeUnit.SOAPS;
+      const isSmallItem = i.system.size.unit === SizeUnit.SOAPS;
       const isReadied = !!i.system.readied;
 
       let itemSlots = getSlotsTaken(i.system);
@@ -484,12 +495,20 @@ export class SdmActor extends Actor {
         itemSlots = 0;
       } else if (isPower && powerSlotsBonus > 0) {
         powerSlotsBonus -= 1;
-        // if (itemSlots >= 1) itemSlots -= 1;
+        itemSlots = 0;
+      } else if (isPet && petSlotsBonus > 0) {
+        petSlotsBonus -= 1;
+        itemSlots = 0;
+      } else if (isAugment && augmentSlotsBonus > 0) {
+        augmentSlotsBonus -= 1;
+        itemSlots = 0;
+      } else if (isAffliction && afflictionSlotsBonus > 0) {
+        afflictionSlotsBonus -= 1;
         itemSlots = 0;
       } else if (isGear && isWeapon && weaponItemBonus > 0) {
         weaponItemBonus -= 1;
         itemSlots = 0;
-      } else if (isGear && isSmallITem && isReadied && smallItemBonus > 0) {
+      } else if (isGear && isSmallItem && isReadied && smallItemBonus > 0) {
         smallItemBonus -= 1;
         // if (itemSlots >= 1) itemSlots -= 1;
         itemSlots = 0;
@@ -504,6 +523,10 @@ export class SdmActor extends Actor {
 
       // Append to inventory.
       if (isGear) {
+        if (isAffliction) {
+          burdenPenalTyBonus += 1;
+        }
+
         if (items.slotsTaken + itemSlots <= itemSlotsLimit) {
           items.slots.push(i);
           items.slotsTaken += itemSlots;
@@ -512,6 +535,9 @@ export class SdmActor extends Actor {
           burdens.slotsTaken += itemSlots;
         }
       } else if (i.type === ItemType.TRAIT) {
+        if (isAffliction) {
+          burdenPenalTyBonus += 1;
+        }
         if (traits.slotsTaken + itemSlots <= traitSlotsLimit) {
           traits.slots.push(i);
           traits.slotsTaken += itemSlots;
@@ -953,12 +979,29 @@ export class SdmActor extends Actor {
         }
       },
       {
+        name: 'SDM.Item.UsageRoll',
+        icon: '<i class="fa-solid fa-arrow-rotate-right"></i>',
+        condition: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          if (item.system.resources === 'run_out') return false;
+          return this.isOwner && item.system.features.has('replenish');
+        },
+        callback: async target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          await item.usageRoll(item.system.replenish.value);
+        }
+      },
+      {
         name: 'SDM.Item.AddOneCharge',
         icon: '<i class="fa-solid fa-circle-plus"></i>',
         condition: target => {
           const item = this.sheet._getEmbeddedDocument(target);
           if (item.system.charges.max === 0) return false;
-          return this.isOwner && item.system.charges.value < item.system.charges.max;
+          return (
+            this.isOwner &&
+            item.system.features.has('charges') &&
+            item.system.charges.value < item.system.charges.max
+          );
         },
         callback: async target => {
           const item = this.sheet._getEmbeddedDocument(target);
@@ -971,7 +1014,9 @@ export class SdmActor extends Actor {
         condition: target => {
           const item = this.sheet._getEmbeddedDocument(target);
           if (item.system.charges.max === 0) return false;
-          return this.isOwner && item.system.charges.value > 0;
+          return (
+            this.isOwner && item.system.features.has('charges') && item.system.charges.value > 0
+          );
         },
         callback: async target => {
           const item = this.sheet._getEmbeddedDocument(target);
@@ -986,7 +1031,9 @@ export class SdmActor extends Actor {
           if (
             item.system.size.unit === SizeUnit.CASH ||
             item.type !== ItemType.GEAR ||
-            item.system.type === GearType.CORRUPTION
+            item.system.type === GearType.CORRUPTION ||
+            item.system.type === GearType.AFFLICTION ||
+            item.system.type === GearType.PET
           )
             return false;
           return this.isOwner && item.system.resources !== '';
@@ -1004,7 +1051,9 @@ export class SdmActor extends Actor {
           if (
             item.system.size.unit === SizeUnit.CASH ||
             item.type !== ItemType.GEAR ||
-            item.system.type === GearType.CORRUPTION
+            item.system.type === GearType.CORRUPTION ||
+            item.system.type === GearType.AFFLICTION ||
+            item.system.type === GearType.PET
           )
             return false;
           return this.isOwner && item.system.resources === '';
@@ -1022,10 +1071,12 @@ export class SdmActor extends Actor {
           if (
             item.system.size.unit === SizeUnit.CASH ||
             item.type !== ItemType.GEAR ||
-            item.system.type === GearType.CORRUPTION
+            item.system.type === GearType.CORRUPTION ||
+            item.system.type === GearType.AFFLICTION ||
+            item.system.type === GearType.PET
           )
             return false;
-          return this.isOwner && item.system.resources === 'running_low';
+          return this.isOwner && item.system.resources !== 'run_out';
         },
         callback: async target => {
           const item = this.sheet._getEmbeddedDocument(target);
@@ -1040,7 +1091,9 @@ export class SdmActor extends Actor {
           if (
             item.system.size.unit === SizeUnit.CASH ||
             item.type === ItemType.BURDEN ||
-            item.system.type === GearType.CORRUPTION
+            item.system.type === GearType.CORRUPTION ||
+            item.system.type === GearType.AFFLICTION ||
+            item.system.type === GearType.PET
           )
             return false;
           if (item.type === ItemType.TRAIT && item.system.type !== GearType.POWER) return false;
@@ -1059,7 +1112,9 @@ export class SdmActor extends Actor {
           if (
             item.system.size.unit === SizeUnit.CASH ||
             item.type === ItemType.BURDEN ||
-            item.system.type === GearType.CORRUPTION
+            item.system.type === GearType.CORRUPTION ||
+            item.system.type === GearType.AFFLICTION ||
+            item.system.type === GearType.PET
           )
             return false;
           if (item.type === ItemType.TRAIT && item.system.type !== GearType.POWER) return false;
@@ -1078,7 +1133,9 @@ export class SdmActor extends Actor {
           if (
             item.system.size.unit === 'cash' ||
             item.type === 'burden' ||
-            item.system.type === GearType.CORRUPTION
+            item.system.type === GearType.CORRUPTION ||
+            item.system.type === GearType.AFFLICTION ||
+            item.system.type === GearType.PET
           )
             return false;
           if (item.type === 'trait' && item.system.type !== 'power') return false;
@@ -1103,9 +1160,7 @@ export class SdmActor extends Actor {
         condition: () => this.isOwner,
         callback: async target => {
           const document = this.sheet._getEmbeddedDocument(target);
-          //await this._deleteDoc.call(this, null, target);
-          if (document.hasGrantedItems) await document.advancementDeletionPrompt();
-          else await document.deleteDialog();
+          await document.deleteDialog();
         }
       }
     ];

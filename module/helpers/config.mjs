@@ -263,6 +263,9 @@ SDM.characterPropertiesToActiveEffects = [
   'system.burden_slots_bonus',
   'system.burden_penalty_bonus',
   'system.power_slots_bonus',
+  'system.pet_slots_bonus',
+  'system.augment_slots_bonus',
+  'system.affliction_slots_bonus',
   'system.hero_dice.bonus',
   'system.hero_dice.dice_type',
   'system.tourist_dice.enabled',
@@ -325,24 +328,29 @@ SDM.itemType = {
 };
 
 SDM.gearType = {
+  affliction: 'TYPES.Item.affliction',
   armor: 'TYPES.Item.armor',
+  augment: 'TYPES.Item.augment',
   corruption: 'TYPES.Item.corruption',
-  power: 'TYPES.Item.power',
+  pet: 'TYPES.Item.pet',
   power_album: 'TYPES.Item.power_album',
+  power: 'TYPES.Item.power',
   ward: 'TYPES.Item.ward',
   weapon: 'TYPES.Item.weapon'
 };
 
 SDM.traitType = {
+  affliction: 'TYPES.Item.affliction',
+  augment: 'TYPES.Item.augment',
   corruption: 'TYPES.Item.corruption',
+  pet: 'TYPES.Item.pet',
   power: 'TYPES.Item.power',
   skill: 'TYPES.Item.skill'
 };
 
 SDM.burdenType = {
   '': 'TYPE.Burden',
-  ...SDM.gearType,
-  ...SDM.traitType
+  affliction: 'TYPES.Item.affliction'
 };
 
 SDM.rangeType = {
@@ -395,8 +403,108 @@ SDM.months = {
   12: 'SDM.MonthTrucking.12'
 };
 
+SDM.defeatAbilities = {
+  end: 'SDM.DefeatAbilityEndurance',
+  aur: 'SDM.DefeatAbilityAura'
+};
 
-SDM.defeatAbilities =  {
-  'end': 'SDM.DefeatAbilityEndurance',
-  'aur': 'SDM.DefeatAbilityAura'
-}
+SDM.baseFeatures = [
+  { value: 'charges', label: 'SDM.ItemFeature.charges' },
+  { value: 'replenish', label: 'SDM.ItemFeature.replenish' },
+  { value: 'corpsefed', label: 'SDM.ItemFeature.corpsefed' },
+  { value: 'camolion', label: 'SDM.ItemFeature.camolion' },
+  { value: 'semi_sentient', label: 'SDM.ItemFeature.semi_sentient' },
+  { value: 'restricted', label: 'SDM.ItemFeature.restricted' },
+  { value: 'implant', label: 'SDM.ItemFeature.implant' },
+  { value: 'loud', label: 'SDM.ItemFeature.loud' },
+];
+
+SDM.wardFeatures = [
+  { value: 'album', label: 'SDM.ItemFeature.album' },
+  { value: 'antimagic', label: 'SDM.ItemFeature.antimagic' },
+  { value: 'armor', label: 'SDM.ItemFeature.armor' },
+  { value: 'auto', label: 'SDM.ItemFeature.auto' },
+  { value: 'booster', label: 'SDM.ItemFeature.booster' },
+  { value: 'cramping', label: 'SDM.ItemFeature.cramping' },
+  { value: 'deathlike', label: 'SDM.ItemFeature.deathlike' },
+  { value: 'emplaced', label: 'SDM.ItemFeature.emplaced' },
+  { value: 'glowing', label: 'SDM.ItemFeature.glowing' },
+  { value: 'heretical', label: 'SDM.ItemFeature.heretical' },
+  { value: 'jade', label: 'SDM.ItemFeature.jade' },
+  { value: 'limited_land', label: 'SDM.ItemFeature.limited_land' },
+  { value: 'spell_eater', label: 'SDM.ItemFeature.spell_eater' },
+  { value: 'scary', label: 'SDM.ItemFeature.scary' },
+  { value: 'stealthy', label: 'SDM.ItemFeature.stealthy' },
+  { value: 'undreaming', label: 'SDM.ItemFeature.undreaming' },
+  { value: 'vessel', label: 'SDM.ItemFeature.vessel' },
+  { value: 'watchful', label: 'SDM.ItemFeature.watchful' },
+  { value: 'weapon', label: 'SDM.ItemFeature.weapon' }
+];
+
+SDM.armorFeatures = [
+  { value: 'bulky', label: 'SDM.ItemFeature.bulky' },
+  { value: 'large', label: 'SDM.ItemFeature.large' },
+  { value: 'bulletproof', label: 'SDM.ItemFeature.bulletproof' },
+  { value: 'burn', label: 'SDM.ItemFeature.burn' },
+  { value: 'living', label: 'SDM.ItemFeature.living' },
+  { value: 'lucent', label: 'SDM.ItemFeature.lucent' },
+  { value: 'cool', label: 'SDM.ItemFeature.cool' },
+  { value: 'mirror', label: 'SDM.ItemFeature.mirror' },
+  { value: 'oldtech', label: 'SDM.ItemFeature.oldtech' },
+  { value: 'environmental', label: 'SDM.ItemFeature.environmental' },
+  { value: 'pocket', label: 'SDM.ItemFeature.pocket' },
+  { value: 'powered', label: 'SDM.ItemFeature.powered' },
+  { value: 'flare', label: 'SDM.ItemFeature.flare' },
+  { value: 'hands_free', label: 'SDM.ItemFeature.hands_free' },
+  { value: 'resistant', label: 'SDM.ItemFeature.resistant' },
+  { value: 'hot', label: 'SDM.ItemFeature.hot' },
+  { value: 'sunder', label: 'SDM.ItemFeature.sunder' },
+  { value: 'interfacing', label: 'SDM.ItemFeature.interfacing' },
+  { value: 'spiked', label: 'SDM.ItemFeature.spiked' },
+  { value: 'stylish', label: 'SDM.ItemFeature.stylish' },
+  { value: 'intravenous', label: 'SDM.ItemFeature.intravenous' },
+  { value: 'weapon', label: 'SDM.ItemFeature.weapon' },
+
+  { value: 'vorpal', label: 'SDM.ItemFeature.vorpal' }
+];
+
+SDM.weaponFeatures = [
+  { value: 'armor_piercing', label: 'SDM.ItemFeature.armor_piercing' },
+  { value: 'atrophy', label: 'SDM.ItemFeature.atrophy' },
+  { value: 'attune', label: 'SDM.ItemFeature.attune' },
+  { value: 'backfiring', label: 'SDM.ItemFeature.backfiring' },
+  { value: 'blinding', label: 'SDM.ItemFeature.blinding' },
+  { value: 'burdening', label: 'SDM.ItemFeature.burdening' },
+  { value: 'cavalry', label: 'SDM.ItemFeature.cavalry' },
+  { value: 'confusing', label: 'SDM.ItemFeature.confusing' },
+  { value: 'burst', label: 'SDM.ItemFeature.burst' },
+  { value: 'clumsy', label: 'SDM.ItemFeature.clumsy' },
+  { value: 'concealed', label: 'SDM.ItemFeature.concealed' },
+  { value: 'corrupting', label: 'SDM.ItemFeature.corrupting' },
+  { value: 'deathly', label: 'SDM.ItemFeature.deathly' },
+  { value: 'entangling', label: 'SDM.ItemFeature.entangling' },
+  { value: 'fantascience', label: 'SDM.ItemFeature.fantascience' },
+  { value: 'fearsome', label: 'SDM.ItemFeature.fearsome' },
+  { value: 'frag', label: 'SDM.ItemFeature.frag' },
+  { value: 'glowing', label: 'SDM.ItemFeature.glowing' },
+  { value: 'hands_free', label: 'SDM.ItemFeature.hands_free' },
+  { value: 'heat', label: 'SDM.ItemFeature.heat' },
+  { value: 'intravenous', label: 'SDM.ItemFeature.intravenous' },
+  { value: 'mad', label: 'SDM.ItemFeature.mad' },
+  { value: 'mercy', label: 'SDM.ItemFeature.mercy' },
+  { value: 'necrotic', label: 'SDM.ItemFeature.necrotic' },
+  { value: 'oldtech', label: 'SDM.ItemFeature.oldtech' },
+  { value: 'petrifying', label: 'SDM.ItemFeature.petrifying' },
+  { value: 'psychic', label: 'SDM.ItemFeature.psychic' },
+  { value: 'radiant', label: 'SDM.ItemFeature.radiant' },
+  { value: 'reach', label: 'SDM.ItemFeature.reach' },
+  { value: 'silent', label: 'SDM.ItemFeature.silent' },
+  { value: 'slow', label: 'SDM.ItemFeature.slow' },
+  { value: 'slumber', label: 'SDM.ItemFeature.slumber' },
+  { value: 'subdual', label: 'SDM.ItemFeature.subdual' },
+  { value: 'throwing', label: 'SDM.ItemFeature.throwing' },
+  { value: 'two_handed', label: 'SDM.ItemFeature.two_handed' },
+  { value: 'versatile', label: 'SDM.ItemFeature.versatile' },
+  { value: 'vital', label: 'SDM.ItemFeature.vital' },
+  { value: 'vorpal', label: 'SDM.ItemFeature.vorpal' }
+];

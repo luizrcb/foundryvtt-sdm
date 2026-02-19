@@ -10,13 +10,15 @@
     "resources": "",
     "cost": 500,
     "cost_frequency": "",
-    "description": "<p>Short range flesh-shredder that won't damage a voidhull. Deals triple damage to unarmored targets.</p><p><strong>Features:</strong> re 3</p>",
+    "description": "<p>Short range flesh-shredder that won't damage a voidhull. Deals triple damage to unarmored targets.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -52,7 +54,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 0,
@@ -74,7 +76,10 @@
       "range": "short",
       "versatile": false
     },
-    "default_ability": ""
+    "default_ability": "",
+    "replenish": {
+      "value": 3
+    }
   },
   "effects": [],
   "sort": 700000,
@@ -90,10 +95,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011788171,
-    "modifiedTime": 1767011788171,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771463992219,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!AbKaawsLMpNUSWAt"
 }

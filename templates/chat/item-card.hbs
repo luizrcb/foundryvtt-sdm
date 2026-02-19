@@ -43,6 +43,23 @@
         </div>
         {{/if}}
       </div>
+      {{#if item.system.features.size}}
+      <div class="mt-10">
+        <ul class="card-footer pills unlist">
+            {{#each item.system.features}}
+            <li class="pill transparent">
+              <span data-tooltip aria-label="{{localize (concat 'SDM.ItemFeature.' this)}}: {{localize (concat 'SDM.ItemFeature.' this 'Description')}}">
+                {{#if (numberedFeature this)}}
+                  {{replace (localize (concat 'SDM.ItemFeature.' this 'Abbr')) '#' (lookup (lookup ../item.system this) 'value')}}
+                {{else}}
+                  {{localize (concat 'SDM.ItemFeature.' this 'Abbr')}}
+                {{/if}}
+              </span>
+            </li>
+            {{/each}}
+        </ul>
+      </div>
+      {{/if}}
     </section>
   </section>
 </div>

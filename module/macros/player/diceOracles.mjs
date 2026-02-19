@@ -490,7 +490,7 @@ async function rollOracle({ oracleType, modifier, rollMode, question }, oracle_c
   rollContent = rollContent.replaceAll('sdm-oracle', '').replaceAll('[]', '');
 
   const content = `
-<div class="uvg-oracle-result">
+<div class="oracle-result">
   <div class="oracle-header">
     <h5><i class="fas fa-dice"></i> ${$l10n(config.label)}</h5>
     ${question ? `<p class="oracle-question"><strong>${$l10n('SDM.Question')}:</strong> ${question}</p>` : ''}

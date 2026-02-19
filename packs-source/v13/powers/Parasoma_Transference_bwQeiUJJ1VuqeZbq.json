@@ -26,7 +26,7 @@
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -40,7 +40,7 @@
       "damage": "1d4"
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 0,

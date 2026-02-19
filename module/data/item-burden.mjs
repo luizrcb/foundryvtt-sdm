@@ -24,6 +24,19 @@ export default class SdmBurden extends SdmItemBase {
       initial: null
     });
 
+    schema.cure_steps = new fields.SchemaField({
+      completed: new fields.NumberField({
+        required: true,
+        initial: 0,
+        min: 0,
+      }),
+      required: new fields.NumberField({
+        required: true,
+        initial: 0,
+        min: 0,
+      }),
+    }, { nullable: false });
+
     return schema;
   }
 }

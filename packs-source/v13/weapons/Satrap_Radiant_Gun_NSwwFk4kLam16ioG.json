@@ -8,13 +8,18 @@
     "readied": false,
     "cost": 1100,
     "cost_frequency": "",
-    "description": "<p>Semi-sentient laser weapon that communicates through its crystal soul display.</p><p><strong>Features:</strong> long, re 7 [[/r 1d20]], 2H, blinding, radiant</p>",
+    "description": "<p>Semi-sentient laser weapon that communicates through its crystal soul display.</p>",
     "quantity": 1,
     "size": {
       "value": 2,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "blinding",
+      "radiant",
+      "replenish",
+      "two_handed"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -41,7 +46,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 12,
     "powers": [],
     "armor": {
       "value": 0,
@@ -74,7 +79,10 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": "human"
+    "supply_type": "human",
+    "replenish": {
+      "value": 7
+    }
   },
   "effects": [],
   "sort": 1000000,
@@ -89,10 +97,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011726802,
-    "modifiedTime": 1767014399944,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771502468992,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!NSwwFk4kLam16ioG"
 }
