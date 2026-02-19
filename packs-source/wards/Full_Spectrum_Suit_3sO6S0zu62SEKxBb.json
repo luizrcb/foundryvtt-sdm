@@ -8,13 +8,16 @@
     "readied": false,
     "cost": 7500,
     "cost_frequency": "",
-    "description": "<p>Radiant 8-bit confusion tailoring.</p><p><strong>Features:</strong> cramping, glow</p>",
+    "description": "<p>Radiant 8-bit confusion tailoring.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "cramping",
+      "glowing"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -88,10 +91,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011697088,
-    "modifiedTime": 1767011697088,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771456698899,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!3sO6S0zu62SEKxBb"
 }

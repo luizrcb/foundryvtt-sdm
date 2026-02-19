@@ -10,13 +10,15 @@
     "resources": "",
     "cost": 100,
     "cost_frequency": "",
-    "description": "<p>Shoots arcing bolts of pain and fire. Short range.</p><p><strong>Features:</strong> re 3</p>",
+    "description": "<p>Shoots arcing bolts of pain and fire. Short range.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -74,7 +76,10 @@
       "range": "short",
       "versatile": false
     },
-    "default_ability": ""
+    "default_ability": "",
+    "replenish": {
+      "value": 3
+    }
   },
   "effects": [],
   "sort": 0,
@@ -87,12 +92,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.350",
+    "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.1",
+    "systemVersion": "0.10.0",
     "createdTime": 1760974728361,
-    "modifiedTime": 1760993268649,
-    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+    "modifiedTime": 1771464930902,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!mh7RvDIb1izzZnA8"
 }

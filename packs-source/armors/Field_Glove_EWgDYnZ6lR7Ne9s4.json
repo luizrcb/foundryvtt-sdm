@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 15,
     "cost_frequency": "",
-    "description": "<p>Plastic and living-wire gauntlet with a small protective field.</p><p>Spend 1 life to boost defense by [[/r 1d6]] until the end of the next round (<em>edit active effect and toggle it to trigger the boost defense</em>)</p><p><strong>Features:</strong> hands-free</p>",
+    "description": "<p>Plastic and living-wire gauntlet with a small protective field.</p><p>Spend 1 life to boost defense by [[/r 1d6]] until the end of the next round (<em>edit active effect and toggle it to trigger the boost defense</em>)</p>",
     "quantity": 1,
     "size": {
       "value": 5,
       "unit": "soaps"
     },
-    "features": [],
+    "features": [
+      "hands_free"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -131,10 +133,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011671983,
-    "modifiedTime": 1767011671983,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771456312767,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!EWgDYnZ6lR7Ne9s4"
 }

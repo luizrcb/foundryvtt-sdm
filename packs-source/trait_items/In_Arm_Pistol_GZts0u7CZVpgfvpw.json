@@ -10,13 +10,15 @@
     "resources": "",
     "cost": 1099,
     "cost_frequency": "",
-    "description": "<p>Concealed oldtech EM-ray (emmaray in the local patois). Spend 1 life to recharge.</p><p><strong>Features:</strong> re 4</p>",
+    "description": "<p>Concealed oldtech EM-ray (emmaray in the local patois). Spend 1 life to recharge.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -74,7 +76,10 @@
       "range": "short",
       "versatile": false
     },
-    "default_ability": ""
+    "default_ability": "",
+    "replenish": {
+      "value": 4
+    }
   },
   "effects": [],
   "sort": 0,
@@ -90,10 +95,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011784753,
-    "modifiedTime": 1767011784753,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771463570651,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!GZts0u7CZVpgfvpw"
 }

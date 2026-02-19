@@ -10,13 +10,16 @@
     "resources": "",
     "cost": 150,
     "cost_frequency": "",
-    "description": "<p>An elegant, long range gun from a simpler age.</p><p><strong>Features:</strong> re 2, 2H</p>",
+    "description": "<p>An elegant, long range gun from a simpler age.</p>",
     "quantity": 1,
     "size": {
       "value": 2,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "replenish",
+      "two_handed"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -74,7 +77,10 @@
       "range": "medium",
       "versatile": false
     },
-    "default_ability": ""
+    "default_ability": "",
+    "replenish": {
+      "value": 2
+    }
   },
   "effects": [],
   "sort": 0,
@@ -90,10 +96,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011796905,
-    "modifiedTime": 1767011796905,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771464605391,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!vug5CDURX3ttt3Tf"
 }

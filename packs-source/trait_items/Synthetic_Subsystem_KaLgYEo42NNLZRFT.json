@@ -10,13 +10,15 @@
     "resources": "",
     "cost": 2000,
     "cost_frequency": "",
-    "description": "<p>This battery-powered organ maintains vital functions when food, water, and air grow scarce. Plugs into most human phenotypes.</p><p><strong>Features:</strong> re 5</p>",
+    "description": "<p>This battery-powered organ maintains vital functions when food, water, and air grow scarce. Plugs into most human phenotypes.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -73,6 +75,9 @@
       },
       "range": "",
       "versatile": false
+    },
+    "replenish": {
+      "value": 5
     }
   },
   "effects": [],
@@ -89,10 +94,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011795483,
-    "modifiedTime": 1767011795483,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771464515442,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!KaLgYEo42NNLZRFT"
 }

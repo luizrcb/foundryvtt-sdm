@@ -10,13 +10,15 @@
     "resources": "",
     "cost": 1000,
     "cost_frequency": "",
-    "description": "<p>Looks like an eye, shoots like a lance.</p><p><strong>Features:</strong> re 5</p>",
+    "description": "<p>Looks like an eye, shoots like a lance.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "soaps"
     },
-    "features": [],
+    "features": [
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -74,7 +76,10 @@
       "range": "medium",
       "versatile": false
     },
-    "default_ability": ""
+    "default_ability": "",
+    "replenish": {
+      "value": 5
+    }
   },
   "effects": [],
   "sort": 0,
@@ -90,10 +95,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011786563,
-    "modifiedTime": 1767011786563,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771463613314,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!k3QcwKCtkXgLcMwA"
 }

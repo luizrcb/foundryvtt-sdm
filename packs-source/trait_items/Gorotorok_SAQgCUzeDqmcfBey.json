@@ -10,13 +10,15 @@
     "resources": "",
     "cost": 4500,
     "cost_frequency": "",
-    "description": "<p>Ominous semi-sentient two-handed chainsword assembled by source engineers on a distant star in a distant age.</p><p><strong>Features:</strong> 2H</p>",
+    "description": "<p>Ominous semi-sentient two-handed chainsword assembled by source engineers on a distant star in a distant age.</p>",
     "quantity": 1,
     "size": {
       "value": 2,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "two_handed"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -90,10 +92,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011792616,
-    "modifiedTime": 1767011792616,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771464213041,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!SAQgCUzeDqmcfBey"
 }

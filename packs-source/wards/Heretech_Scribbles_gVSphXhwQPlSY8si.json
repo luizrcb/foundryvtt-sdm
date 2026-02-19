@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 5,
     "cost_frequency": "",
-    "description": "<p>Reality fracturing equations on a synthskin scroll.</p><p><strong>Features:</strong> heretical</p>",
+    "description": "<p>Reality fracturing equations on a synthskin scroll.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "soaps"
     },
-    "features": [],
+    "features": [
+      "heretical"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -88,10 +90,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011695533,
-    "modifiedTime": 1767011695533,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771456570254,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!gVSphXhwQPlSY8si"
 }

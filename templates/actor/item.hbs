@@ -31,7 +31,7 @@
         (ne item.system.status 'broken')
         (ne item.system.resources 'run_out')
         (ne item.system.size.unit 'cash')
-        (eq item.system.type 'weapon')
+        (or (eq item.system.type 'weapon') (has item.system.features 'weapon'))
         item.system.readied
         item.system.weapon.damage.base
         @root.editable
@@ -124,8 +124,8 @@
       >({{item.system.charges.value}}/{{item.system.charges.max}})</span>{{/if}}
 
       {{#if (and (has item.system.features 'replenish')(ne item.system.resources 'run_out'))}} <div class="pills flex" style="flex-basis:auto;flex-wrap:nowrap;"><span class="pill pill-s mr-3" style="flex-basis:auto;flex-wrap:nowrap;"
-       data-tooltip="{{replace (localize 'SDM.ItemFeature.replenish') ' #'}}"
-      >{{replace (localize 'SDM.ItemFeature.replenishAbbr') ' #'}} {{item.system.replenish.value}}</span></div>{{/if}}
+       data-tooltip="{{replace (localize 'SDM.ItemFeature.replenish') ' #' ''}}"
+      >{{replace (localize 'SDM.ItemFeature.replenishAbbr') '#' item.system.replenish.value}}</span></div>{{/if}}
 
       {{item.name}}
 

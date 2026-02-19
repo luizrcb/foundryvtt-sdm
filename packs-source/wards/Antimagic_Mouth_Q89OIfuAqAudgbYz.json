@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 3000,
     "cost_frequency": "",
-    "description": "<p>Monstrous mouth-shaped box. Fits your head?!</p><p><strong>Features:</strong> antimagic (Spend [[/r 1d6+1]] life to nullify an effect (save))</p><p></p>",
+    "description": "<p>Monstrous mouth-shaped box. Fits your head?!</p><p>antimagic (Spend [[/r 1d6+1]] life to nullify an effect (save))</p><p></p>",
     "quantity": 1,
     "size": {
       "value": 2,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "antimagic"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -88,10 +90,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011698984,
-    "modifiedTime": 1767011698984,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771457067233,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!Q89OIfuAqAudgbYz"
 }

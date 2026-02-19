@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 250,
     "cost_frequency": "",
-    "description": "<p>Purroof of a catlord's great favor. And mastery.</p><p><strong>Features:</strong> purple land</p>",
+    "description": "<p>Purroof of a catlord's great favor. And mastery.</p><p><strong>Limited:</strong> purple land</p>",
     "quantity": 1,
     "size": {
       "value": 5,
       "unit": "soaps"
     },
-    "features": [],
+    "features": [
+      "limited_land"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -88,10 +90,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011695533,
-    "modifiedTime": 1767011695533,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771456606515,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!p94qIJ2yzgk9TEwo"
 }

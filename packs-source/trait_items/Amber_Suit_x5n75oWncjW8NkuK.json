@@ -10,7 +10,7 @@
     "resources": "",
     "cost": 700,
     "cost_frequency": "",
-    "description": "",
+    "description": "<p>Full suit of armor grown from a biomorphically slaved amber crab.</p>",
     "quantity": 1,
     "size": {
       "value": 3,
@@ -89,10 +89,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011795483,
-    "modifiedTime": 1767011795483,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771464447806,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!x5n75oWncjW8NkuK"
 }

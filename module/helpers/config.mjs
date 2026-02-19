@@ -409,14 +409,14 @@ SDM.defeatAbilities = {
 };
 
 SDM.baseFeatures = [
-  {
-    value: 'charges',
-    label: 'SDM.ItemFeature.charges',
-  },
-  {
-    value: 'replenish',
-    label: 'SDM.ItemFeature.replenish',
-  }
+  { value: 'charges', label: 'SDM.ItemFeature.charges' },
+  { value: 'replenish', label: 'SDM.ItemFeature.replenish' },
+  { value: 'corpsefed', label: 'SDM.ItemFeature.corpsefed' },
+  { value: 'camolion', label: 'SDM.ItemFeature.camolion' },
+  { value: 'semi_sentient', label: 'SDM.ItemFeature.semi_sentient' },
+  { value: 'restricted', label: 'SDM.ItemFeature.restricted' },
+  { value: 'implant', label: 'SDM.ItemFeature.implant' },
+  { value: 'loud', label: 'SDM.ItemFeature.loud' },
 ];
 
 SDM.wardFeatures = [
@@ -425,12 +425,11 @@ SDM.wardFeatures = [
   { value: 'armor', label: 'SDM.ItemFeature.armor' },
   { value: 'auto', label: 'SDM.ItemFeature.auto' },
   { value: 'booster', label: 'SDM.ItemFeature.booster' },
-  { value: 'corpsefed', label: 'SDM.ItemFeature.corpsefed' },
   { value: 'cramping', label: 'SDM.ItemFeature.cramping' },
   { value: 'deathlike', label: 'SDM.ItemFeature.deathlike' },
   { value: 'emplaced', label: 'SDM.ItemFeature.emplaced' },
+  { value: 'glowing', label: 'SDM.ItemFeature.glowing' },
   { value: 'heretical', label: 'SDM.ItemFeature.heretical' },
-  { value: 'implant', label: 'SDM.ItemFeature.implant' },
   { value: 'jade', label: 'SDM.ItemFeature.jade' },
   { value: 'limited_land', label: 'SDM.ItemFeature.limited_land' },
   { value: 'spell_eater', label: 'SDM.ItemFeature.spell_eater' },
@@ -448,7 +447,6 @@ SDM.armorFeatures = [
   { value: 'bulletproof', label: 'SDM.ItemFeature.bulletproof' },
   { value: 'burn', label: 'SDM.ItemFeature.burn' },
   { value: 'living', label: 'SDM.ItemFeature.living' },
-  { value: 'camolion', label: 'SDM.ItemFeature.camolion' },
   { value: 'lucent', label: 'SDM.ItemFeature.lucent' },
   { value: 'cool', label: 'SDM.ItemFeature.cool' },
   { value: 'mirror', label: 'SDM.ItemFeature.mirror' },
@@ -457,13 +455,17 @@ SDM.armorFeatures = [
   { value: 'pocket', label: 'SDM.ItemFeature.pocket' },
   { value: 'powered', label: 'SDM.ItemFeature.powered' },
   { value: 'flare', label: 'SDM.ItemFeature.flare' },
+  { value: 'hands_free', label: 'SDM.ItemFeature.hands_free' },
+  { value: 'resistant', label: 'SDM.ItemFeature.resistant' },
   { value: 'hot', label: 'SDM.ItemFeature.hot' },
   { value: 'sunder', label: 'SDM.ItemFeature.sunder' },
   { value: 'interfacing', label: 'SDM.ItemFeature.interfacing' },
   { value: 'spiked', label: 'SDM.ItemFeature.spiked' },
   { value: 'stylish', label: 'SDM.ItemFeature.stylish' },
   { value: 'intravenous', label: 'SDM.ItemFeature.intravenous' },
-  { value: 'weapon', label: 'SDM.ItemFeature.weapon' }
+  { value: 'weapon', label: 'SDM.ItemFeature.weapon' },
+
+  { value: 'vorpal', label: 'SDM.ItemFeature.vorpal' }
 ];
 
 SDM.weaponFeatures = [
@@ -496,8 +498,6 @@ SDM.weaponFeatures = [
   { value: 'psychic', label: 'SDM.ItemFeature.psychic' },
   { value: 'radiant', label: 'SDM.ItemFeature.radiant' },
   { value: 'reach', label: 'SDM.ItemFeature.reach' },
-  { value: 'restricted', label: 'SDM.ItemFeature.restricted' },
-  { value: 'semi_sentient', label: 'SDM.ItemFeature.semi_sentient' },
   { value: 'silent', label: 'SDM.ItemFeature.silent' },
   { value: 'slow', label: 'SDM.ItemFeature.slow' },
   { value: 'slumber', label: 'SDM.ItemFeature.slumber' },

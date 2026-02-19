@@ -10,13 +10,15 @@
     "resources": "",
     "cost": 1500,
     "cost_frequency": "",
-    "description": "<p>Satrapy steel-glass scales with atmo-symbiote. Scrubbers, filters, and bladders maintain environment for a few hours.</p><p><strong>Features:</strong> re 3</p>",
+    "description": "<p>Satrapy steel-glass scales with atmo-symbiote. Scrubbers, filters, and bladders maintain environment for a few hours.</p>",
     "quantity": 1,
     "size": {
       "value": 2,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -73,6 +75,9 @@
       },
       "range": "",
       "versatile": false
+    },
+    "replenish": {
+      "value": 3
     }
   },
   "effects": [],
@@ -86,12 +91,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.350",
+    "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.1",
+    "systemVersion": "0.10.0",
     "createdTime": 1760974772481,
-    "modifiedTime": 1760994487029,
-    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+    "modifiedTime": 1771465128111,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!k5xzuAByMpx6ppbU"
 }

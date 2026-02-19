@@ -8,13 +8,16 @@
     "readied": false,
     "cost": 100,
     "cost_frequency": "",
-    "description": "<p>You can shoot beam weapons through this polarized glass shield.</p><p><strong>Features:</strong> lucent, sunder</p>",
+    "description": "<p>You can shoot beam weapons through this polarized glass shield.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "lucent",
+      "sunder"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -88,10 +91,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011671983,
-    "modifiedTime": 1767011671983,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771456379144,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!beJKy8w0VGOqCIZT"
 }

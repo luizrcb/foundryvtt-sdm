@@ -10,13 +10,16 @@
     "resources": "",
     "cost": 50,
     "cost_frequency": "",
-    "description": "<p>Metal-and-bone spear. Spend 1 life to make it glow for an hour.</p><p><strong>Features:</strong> reach, 2H</p>",
+    "description": "<p>Metal-and-bone spear. Spend 1 life to make it glow for an hour.</p>",
     "quantity": 1,
     "size": {
       "value": 2,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "reach",
+      "two_handed"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -90,10 +93,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011809701,
-    "modifiedTime": 1767011809701,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771465579972,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!0kWVhz0n43y6DYow"
 }

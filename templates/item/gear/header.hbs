@@ -134,6 +134,15 @@
         </div>
         {{/if}}
 
+         {{#if (has system.features 'resistant')}}
+        <div class='resource'>
+          <label class='resource-label' for="system.replenish.value">{{localize 'SDM.ItemFeature.resistant'}}</label>
+          <div class='resource-content'>
+            <input type='text' name="system.resistant.value" value="{{system.resistant.value}}" data-tooltip="{{localize 'SDM.ItemFeature.resistantDescription'}}"/>
+          </div>
+        </div>
+        {{/if}}
+
       </div>
       {{/unless}}
   </header>
@@ -189,7 +198,7 @@
 
       {{/if}}
 
-      {{#if (eq system.type 'weapon')}}
+      {{#if (or (eq system.type 'weapon') (has system.features 'weapon'))}}
       <div class='resource'>
         <label class='resource-label'>
           {{localize 'SDM.WeaponDamage'}}
@@ -245,7 +254,7 @@
 
 
 
-      {{#if (eq item.system.type 'armor')}}
+      {{#if (or (eq item.system.type 'armor') (has item.system.features 'armor'))}}
       <div class='resource'>
         <label class='resource-label'>
           {{localize 'SDM.ArmorValue'}}

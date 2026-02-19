@@ -67,6 +67,14 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       })
     });
 
+    schema.resistant = new fields.SchemaField({
+      value: new fields.StringField({
+        required: true,
+        nullable: false,
+        initial: ''
+      })
+    });
+
     schema.cost = new fields.NumberField({
       required: false,
       nullable: true,
@@ -93,9 +101,12 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
 
     schema.size = new fields.EmbeddedDataField(ItemSizeDataModel);
 
-    schema.features = new fields.SetField(new fields.StringField({ required: true, blank: false, nullable: false }), {
-      min: 0,
-    });
+    schema.features = new fields.SetField(
+      new fields.StringField({ required: true, blank: false, nullable: false }),
+      {
+        min: 0
+      }
+    );
 
     schema.attributes = new fields.EmbeddedDataField(NPCBaseDataModel);
 

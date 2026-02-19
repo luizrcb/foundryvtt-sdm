@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 25000,
     "cost_frequency": "",
-    "description": "<p>This fragile mirror halves damage from all sources that are not monochrome: black, grey, or white.</p><p><strong>Features:</strong> emplaced</p>",
+    "description": "<p>This fragile mirror halves damage from all sources that are not monochrome: black, grey, or white.</p>",
     "quantity": 1,
     "size": {
       "value": 3,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "emplaced"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -88,10 +90,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011700561,
-    "modifiedTime": 1767011700561,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771457400271,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!vxMN6WVgHmzQtiTx"
 }

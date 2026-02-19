@@ -10,13 +10,15 @@
     "resources": "",
     "cost": 2000,
     "cost_frequency": "",
-    "description": "<p>A symbol of power. Spend 1 life to deal x2 dmg. Grants cha +2.</p><p>Features: 2H</p>",
+    "description": "<p>A symbol of power. Spend 1 life to deal x2 dmg. Grants cha +2.</p>",
     "quantity": 1,
     "size": {
       "value": 2,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "two_handed"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -133,10 +135,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011792616,
-    "modifiedTime": 1767011792616,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771464224924,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!LZydiJuSLJIwtPt9"
 }

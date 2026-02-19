@@ -10,13 +10,15 @@
     "resources": "",
     "cost": 250,
     "cost_frequency": "",
-    "description": "<p>Once, void marine wizards called this a lazgun. We know better now. Charge with an omnibattery. Adjustable energy output.</p><p><strong>Features:</strong> re 1</p>",
+    "description": "<p>Once, void marine wizards called this a lazgun. We know better now. Charge with an omnibattery. Adjustable energy output.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -74,7 +76,10 @@
       "range": "short",
       "versatile": false
     },
-    "default_ability": ""
+    "default_ability": "",
+    "replenish": {
+      "value": 1
+    }
   },
   "effects": [],
   "sort": 0,
@@ -90,10 +95,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011794132,
-    "modifiedTime": 1767011794132,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771464261970,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!8uM23J0qoZ9kdZLt"
 }

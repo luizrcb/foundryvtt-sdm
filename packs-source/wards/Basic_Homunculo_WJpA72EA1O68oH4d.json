@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 6995,
     "cost_frequency": "",
-    "description": "<p>Tiny fake human. Sacrifice it to absorb a technomagical effect. Or to fuel your powers.</p><p><strong>Features:</strong> auto</p>",
+    "description": "<p>Tiny fake human. Sacrifice it to absorb a technomagical effect. Or to fuel your powers.</p>",
     "quantity": 1,
     "size": {
       "value": 3,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "auto"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -88,10 +90,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011700561,
-    "modifiedTime": 1767011700561,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771457212668,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!WJpA72EA1O68oH4d"
 }

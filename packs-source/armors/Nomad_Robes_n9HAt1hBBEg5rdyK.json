@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 10,
     "cost_frequency": "",
-    "description": "<p>Great in the hot desert.</p><p><strong>Features:</strong> cool</p>",
+    "description": "<p>Great in the hot desert.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "cool"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -88,10 +90,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011671983,
-    "modifiedTime": 1767011671983,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771455912669,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!n9HAt1hBBEg5rdyK"
 }

@@ -194,10 +194,10 @@ export function registerHandlebarsHelpers() {
   });
 
   $$('numberedFeature', function (feature) {
-    return ['replenish', 'flare', 'pocket'].includes(feature);
+    return ['replenish', 'flare', 'pocket', 'resistant'].includes(feature);
   });
 
-  $$('replace', function (originalString = '', substring = '') {
-    return originalString.replace(substring, '');
+  $$('replace', function (originalString = '', removedString = '', addedString = '') {
+    return originalString.replace(removedString, addedString);
   });
 }

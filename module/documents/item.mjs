@@ -444,9 +444,8 @@ export class SdmItem extends Item {
 
     for (let feature of system.features) {
       let str = $l10n('SDM.ItemFeature.' + feature + 'Abbr');
-      if (['replenish', 'flare', 'pocket'].includes(feature)) {
-        str = str.replace(' #', '');
-        str += ' ' + system[feature].value;
+      if (['replenish', 'flare', 'pocket', 'resistant'].includes(feature)) {
+        str = str.replace('#', system[feature].value);
       }
       featureStrings.push(str);
     }

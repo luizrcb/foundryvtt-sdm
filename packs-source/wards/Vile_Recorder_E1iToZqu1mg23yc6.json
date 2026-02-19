@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 8500,
     "cost_frequency": "",
-    "description": "<p>For your up-to date backup. Implantable.</p><p><strong>Features:</strong> heretical</p>",
+    "description": "<p>For your up-to date backup. Implantable.</p>",
     "quantity": 1,
     "size": {
       "value": 2,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "heretical"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -88,10 +90,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011698984,
-    "modifiedTime": 1767011698984,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771457030363,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!E1iToZqu1mg23yc6"
 }
