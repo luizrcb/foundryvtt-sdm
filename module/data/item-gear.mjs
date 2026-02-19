@@ -70,18 +70,21 @@ export default class SdmGear extends SdmItemBase {
 
     schema.weapon = new fields.EmbeddedDataField(WeaponDataModel);
 
-    schema.cure_steps = new fields.SchemaField({
-      completed: new fields.NumberField({
-        required: true,
-        initial: 0,
-        min: 0,
-      }),
-      required: new fields.NumberField({
-        required: true,
-        initial: 0,
-        min: 0,
-      }),
-    }, { nullable: false });
+    schema.cure_steps = new fields.SchemaField(
+      {
+        completed: new fields.NumberField({
+          required: true,
+          initial: 0,
+          min: 0
+        }),
+        required: new fields.NumberField({
+          required: true,
+          initial: 0,
+          min: 0
+        })
+      },
+      { nullable: false }
+    );
 
     schema.pet = new fields.DocumentUUIDField({ required: true, blank: true, initial: '' });
 
@@ -119,7 +122,5 @@ export default class SdmGear extends SdmItemBase {
     if (source.features && source.features.length) {
       source.features = [...source.features].filter(f => f && f.trim() !== '').sort();
     }
-
-    return;
   }
 }

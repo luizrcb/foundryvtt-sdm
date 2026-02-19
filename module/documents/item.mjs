@@ -276,7 +276,12 @@ export class SdmItem extends Item {
     const armorTypeLabel = `${$l10n('SDM.ArmorType')}: ${
       $l10n(CONFIG.SDM.armorType[armorData?.type]) ?? ''
     }`;
-    const title = `${this.getNameTitle()}${this.getCostTitle()}<br/>${armorValueLabel} ${armorTypeLabel}`;
+    let title = `${this.getNameTitle()}${this.getCostTitle()}<br/>${armorValueLabel} ${armorTypeLabel}`;
+
+    if (this.system.features.has('weapon')) {
+      title += this.getWeaponTitle(false, false);
+    }
+
     return title;
   }
 
@@ -311,9 +316,14 @@ export class SdmItem extends Item {
     const wardTypeLabel = `${$l10n('SDM.WardType')}: ${
       $l10n(CONFIG.SDM.wardType[wardData?.type]) ?? ''
     }`;
-    const title = `${this.getNameTitle()}${this.getCostTitle()}<br/>${wardValueLabel}${
+    let title = `${this.getNameTitle()}${this.getCostTitle()}<br/>${wardValueLabel}${
       wardData?.armor ? ` ${armorValueLabel}` : ''
     } ${wardTypeLabel}`;
+
+    if (this.system.features.has('weapon')) {
+      title += this.getWeaponTitle(false, false);
+    }
+
     return title;
   }
 
@@ -413,11 +423,11 @@ export class SdmItem extends Item {
     return title;
   }
 
-  getWeaponTitle() {
+  getWeaponTitle(includeName = true, includeCost = true) {
     const data = this.system;
     const weaponData = data?.weapon;
 
-    let title = `${this.getNameTitle()}${this.getCostTitle()}<br/>${$l10n('SDM.Damage')}: ${weaponData?.damage.base}`;
+    let title = `${includeName ? this.getNameTitle() : ''}${includeCost ? this.getCostTitle() : ''}<br/>${$l10n('SDM.Damage')}: ${weaponData?.damage.base}`;
 
     if (weaponData?.versatile || data.features.has('versatile')) {
       title += `/${weaponData?.damage.versatile}`;

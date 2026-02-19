@@ -503,7 +503,6 @@ export class SdmActor extends Actor {
     let readiedItemBonus = this.system.readied_item_slots_bonus || 0;
     const readiedArmorTakeNoSlots = !!this.system.readied_armor_take_no_slots;
 
-
     // Iterate through items, allocating to containers
     for (let i of itemsArray) {
       const isGear = i.type === ItemType.GEAR;
@@ -663,11 +662,30 @@ export class SdmActor extends Actor {
       (sum, item) => sum + (item.system.ward.armor || 0),
       0
     );
-    // Sum the armor values
+
+    const crampingItems = itemsArray.filter(item => {
+      return (
+        item.system.features.has('cramping') &&
+        ([GearType.AFFLICTION, GearType.AUGMENT, GearType.CORRUPTION, GearType.PET].includes(
+          item.system.type
+        ) ||
+          (item.system.readied &&
+            [
+              '',
+              GearType.ARMOR,
+              GearType.POWER,
+              GearType.POWER_ALBUM,
+              GearType.WARD,
+              GearType.WEAPON
+            ].includes(item.system.type)))
+      );
+    });
+
+    const crampingPenalty = crampingItems.length * -1;
 
     const armorBonus = this.system.armor_bonus || 0;
 
-    return equippedArmorValue + equippedWardArmorBonus + armorBonus;
+    return equippedArmorValue + equippedWardArmorBonus + armorBonus + crampingPenalty;
   }
 
   getWard() {

@@ -26,35 +26,41 @@ export default class SdmTrait extends SdmItemBase {
       }, {})
     });
 
-    schema.learning = new fields.SchemaField({
-      sources: new fields.NumberField({
-        required: true,
-        initial: 0,
-        min: 0,
-      }),
-      required_successes: new fields.NumberField({
-        required: true,
-        initial: 0,
-        min: 0,
-      }),
-    }, { nullable: false });
+    schema.learning = new fields.SchemaField(
+      {
+        sources: new fields.NumberField({
+          required: true,
+          initial: 0,
+          min: 0
+        }),
+        required_successes: new fields.NumberField({
+          required: true,
+          initial: 0,
+          min: 0
+        })
+      },
+      { nullable: false }
+    );
 
     schema.skill = new fields.EmbeddedDataField(SkillDataModel);
 
     schema.power = new fields.EmbeddedDataField(PowerDataModel);
 
-    schema.cure_steps = new fields.SchemaField({
-      completed: new fields.NumberField({
-        required: true,
-        initial: 0,
-        min: 0,
-      }),
-      required: new fields.NumberField({
-        required: true,
-        initial: 0,
-        min: 0,
-      }),
-    }, { nullable: false });
+    schema.cure_steps = new fields.SchemaField(
+      {
+        completed: new fields.NumberField({
+          required: true,
+          initial: 0,
+          min: 0
+        }),
+        required: new fields.NumberField({
+          required: true,
+          initial: 0,
+          min: 0
+        })
+      },
+      { nullable: false }
+    );
 
     schema.pet = new fields.DocumentUUIDField({ required: true, blank: true, initial: '' });
 
@@ -68,5 +74,25 @@ export default class SdmTrait extends SdmItemBase {
     const skillStep = shouldUseCustomModifiers ? this.skill.modifier_step : defaultModifierStep;
 
     this.skill.modifier_final = this.skill.rank * skillStep + this.skill.modifier_bonus;
+  }
+
+  static migrateData(source) {
+    this._migrateData(source);
+    return super.migrateData(source);
+  }
+
+  /** @inheritDoc */
+  static _migrateData(source) {
+    SdmTrait.#migrateFeatures(source);
+  }
+
+  static #migrateFeatures(source) {
+    if (typeof source.features === 'string') {
+      source.features = [];
+    }
+
+    if (source.features && source.features.length) {
+      source.features = [...source.features].filter(f => f && f.trim() !== '').sort();
+    }
   }
 }
