@@ -8,13 +8,19 @@
     "readied": false,
     "cost": 7500,
     "cost_frequency": "",
-    "description": "<p>Fires itself and its user through itself into the destination, re-materializing with a bang. Natural 13: re-materialization delay; roll d6: @UUID[Compendium.sdm.rolltables.RollTable.CvZC0eXNX8sldMPP]{Re-materialization delay}<br /><strong>Features:</strong> long, area M, re 7 [[/r 1d20]], 2H, attune, slow, oldtech</p>",
+    "description": "<p>Fires itself and its user through itself into the destination, re-materializing with a bang. Natural 13: re-materialization delay; roll d6: @UUID[Compendium.sdm.rolltables.RollTable.CvZC0eXNX8sldMPP]{Re-materialization delay}<br />Area M</p>",
     "quantity": 1,
     "size": {
       "value": 2,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "attune",
+      "oldtech",
+      "replenish",
+      "slow",
+      "two_handed"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -74,7 +80,10 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": "human"
+    "supply_type": "human",
+    "replenish": {
+      "value": 7
+    }
   },
   "effects": [],
   "sort": 2600000,
@@ -89,10 +98,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011726802,
-    "modifiedTime": 1767011726802,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771502961393,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!Hi0NPKcRnhslzRlZ"
 }

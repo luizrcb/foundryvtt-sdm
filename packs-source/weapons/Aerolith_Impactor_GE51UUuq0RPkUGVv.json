@@ -8,13 +8,16 @@
     "readied": false,
     "cost": 800,
     "cost_frequency": "",
-    "description": "<p>Fires an aerolith seed reducing the target's weight by 1 sack per hit. </p><p>Effect lasts 10 minutes.</p><p><strong>Features:</strong> med, re 4 [[/r 1d20]], oldtech</p>",
+    "description": "<p>Fires an aerolith seed reducing the target's weight by 1 sack per hit.</p><p>Effect lasts 10 minutes.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "oldtech",
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -74,7 +77,10 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": "human"
+    "supply_type": "human",
+    "replenish": {
+      "value": 4
+    }
   },
   "effects": [],
   "sort": 700000,
@@ -89,10 +95,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011726802,
-    "modifiedTime": 1767011726802,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771502361259,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!GE51UUuq0RPkUGVv"
 }

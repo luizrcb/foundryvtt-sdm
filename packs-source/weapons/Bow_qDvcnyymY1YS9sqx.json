@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 20,
     "cost_frequency": "",
-    "description": "<p>Recurved metalbird pinion and laminated chitin strips. Its lack of features is a feature.</p><p><strong>Features:</strong> med, 2H</p>",
+    "description": "<p>Recurved metalbird pinion and laminated chitin strips. Its lack of features is a feature.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "two_handed"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -89,10 +91,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011722535,
-    "modifiedTime": 1767011722535,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771501908576,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!qDvcnyymY1YS9sqx"
 }

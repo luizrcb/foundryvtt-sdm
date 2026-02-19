@@ -8,13 +8,17 @@
     "readied": false,
     "cost": 4400,
     "cost_frequency": "",
-    "description": "<p>The Hard Sun’s divine eye smites your foes with its cruel, luminous hands.</p><p><strong>Features:</strong> med, 2H, vital, petrifying</p>",
+    "description": "<p>The Hard Sun’s divine eye smites your foes with its cruel, luminous hands.</p>",
     "quantity": 1,
     "size": {
       "value": 2,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "petrifying",
+      "two_handed",
+      "vital"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -89,10 +93,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011726802,
-    "modifiedTime": 1767011726802,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771502882698,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!Yw5380CPB0dgMcoo"
 }

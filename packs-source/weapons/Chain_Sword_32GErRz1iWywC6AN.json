@@ -8,13 +8,17 @@
     "readied": false,
     "cost": 450,
     "cost_frequency": "",
-    "description": "<p>An elegant weapon from the time of the great reincarnation error. </p><p>Decapitate on natural 20.</p><p><strong>Features:</strong> re 2 [[/r 1d20]], versatile, vorpal,</p>",
+    "description": "<p>An elegant weapon from the time of the great reincarnation error.</p><p>Decapitate on natural 20.</p>",
     "quantity": 1,
     "size": {
       "value": 2,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "replenish",
+      "versatile",
+      "vorpal"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -74,7 +78,10 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": "human"
+    "supply_type": "human",
+    "replenish": {
+      "value": 2
+    }
   },
   "effects": [],
   "sort": 500000,
@@ -89,10 +96,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011720662,
-    "modifiedTime": 1767011720662,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771501642025,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!32GErRz1iWywC6AN"
 }

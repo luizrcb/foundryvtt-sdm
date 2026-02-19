@@ -8,13 +8,16 @@
     "readied": false,
     "cost": 1500,
     "cost_frequency": "",
-    "description": "<p>Repurposed cracked levi drive. Reduces spatial dimensions in the target area by 50%. Targets are slowed and weakened (save).</p><p>On a natural 2, one target’s skull folds in on itself instead.</p><p><strong>Features:</strong> short, area S, re 10 [[/r 1d20]], oldtech</p>",
+    "description": "<p>Repurposed cracked levi drive. Reduces spatial dimensions in the target area by 50%. Targets are slowed and weakened (save).</p><p>On a natural 2, one target’s skull folds in on itself instead.</p><p>Area S</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "oldtech",
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -74,7 +77,10 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": "human"
+    "supply_type": "human",
+    "replenish": {
+      "value": 10
+    }
   },
   "effects": [],
   "sort": 1100000,
@@ -89,10 +95,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011726802,
-    "modifiedTime": 1767011726802,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771502498726,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!WjU6ISgcE9WBPpaf"
 }

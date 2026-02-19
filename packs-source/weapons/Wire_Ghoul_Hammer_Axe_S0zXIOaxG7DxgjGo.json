@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 750,
     "cost_frequency": "",
-    "description": "<p>A thing of undead biomachinery, overgrown with wriggling, acid-belching flagellae. Double damage to heavily-armored enemies.</p><p><strong>Features:</strong> necrotic</p>",
+    "description": "<p>A thing of undead biomachinery, overgrown with wriggling, acid-belching flagellae. Double damage to heavily-armored enemies.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "necrotic"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -89,10 +91,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011720662,
-    "modifiedTime": 1767014417510,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771501892005,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!S0zXIOaxG7DxgjGo"
 }

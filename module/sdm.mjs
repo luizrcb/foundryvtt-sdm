@@ -127,24 +127,24 @@ Hooks.on('getSceneControlButtons', function (controls) {
         if (active) await game.sdm.api.gm.giveExperience();
       }
     };
-    controls.tokens.tools['sdm-group-initiative'] = {
-      icon: 'fa-solid fa-people-group',
-      name: 'sdm-group-initiative',
-      title: 'SDM.GMGroupInitiative',
-      button: true,
-      onChange: async (event, active) => {
-        if (active) await game.sdm.api.gm.groupInitiative();
-      }
-    };
-    controls.tokens.tools['sdm-generate-npc'] = {
-      icon: 'fa-solid fa-spaghetti-monster-flying',
-      name: 'sdm-generate-npc',
-      title: 'SDM.GMGenerateRandomNPC',
-      button: true,
-      onChange: async (event, active) => {
-        if (active) await game.sdm.api.gm.randomNPCGenerator();
-      }
-    };
+    // controls.tokens.tools['sdm-group-initiative'] = {
+    //   icon: 'fa-solid fa-people-group',
+    //   name: 'sdm-group-initiative',
+    //   title: 'SDM.GMGroupInitiative',
+    //   button: true,
+    //   onChange: async (event, active) => {
+    //     if (active) await game.sdm.api.gm.groupInitiative();
+    //   }
+    // };
+    // controls.tokens.tools['sdm-generate-npc'] = {
+    //   icon: 'fa-solid fa-spaghetti-monster-flying',
+    //   name: 'sdm-generate-npc',
+    //   title: 'SDM.GMGenerateRandomNPC',
+    //   button: true,
+    //   onChange: async (event, active) => {
+    //     if (active) await game.sdm.api.gm.randomNPCGenerator();
+    //   }
+    // };
   }
   controls.tokens.tools['sdm-dice-oracles'] = {
     icon: 'fa-solid fa-dice',
@@ -155,15 +155,15 @@ Hooks.on('getSceneControlButtons', function (controls) {
       if (active) await game.sdm.api.player.diceOracles();
     }
   };
-  controls.tokens.tools['sdm-burden-generator'] = {
-    icon: 'fa-solid fa-face-dizzy',
-    name: 'sdm-burden-generator',
-    title: 'SDM.BurdenGenerator.Title',
-    button: true,
-    onChange: async (event, active) => {
-      if (active) await game.sdm.api.gm.openBurdenGeneratorDialog();
-    }
-  };
+  // controls.tokens.tools['sdm-burden-generator'] = {
+  //   icon: 'fa-solid fa-face-dizzy',
+  //   name: 'sdm-burden-generator',
+  //   title: 'SDM.BurdenGenerator.Title',
+  //   button: true,
+  //   onChange: async (event, active) => {
+  //     if (active) await game.sdm.api.gm.openBurdenGeneratorDialog();
+  //   }
+  // };
 });
 
 Hooks.on('renderActorDirectory', (app, html) => {

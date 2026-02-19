@@ -8,13 +8,16 @@
     "readied": false,
     "cost": 2,
     "cost_frequency": "",
-    "description": "<p>A blade on a stick. Combines well with shields and other spear bearers.</p><p><strong>Features:</strong> versatile, throwing</p>",
+    "description": "<p>A blade on a stick. Combines well with shields and other spear bearers.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "throwing",
+      "versatile"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -89,10 +92,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011718611,
-    "modifiedTime": 1767011718611,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771501397864,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!usP7z6fJMW7bbC7p"
 }

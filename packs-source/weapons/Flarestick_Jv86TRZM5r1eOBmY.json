@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 10,
     "cost_frequency": "",
-    "description": "<p>Fruit of the flambén tree, preserved with resin. Thrown, it bursts into bright, flaring light. As fuel, it burns for an hour with a low-heat flame.</p><p><strong>Features:</strong> heat</p>",
+    "description": "<p>Fruit of the flambén tree, preserved with resin. Thrown, it bursts into bright, flaring light. As fuel, it burns for an hour with a low-heat flame.</p>",
     "quantity": 1,
     "size": {
       "value": 2,
       "unit": "soaps"
     },
-    "features": [],
+    "features": [
+      "heat"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -89,10 +91,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011725078,
-    "modifiedTime": 1767011725078,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771502106699,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!Jv86TRZM5r1eOBmY"
 }

@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 25,
     "cost_frequency": "",
-    "description": "<p>Spend 1 life to stun (save). Retractable.</p><p><strong>Features:</strong> conceal</p>",
+    "description": "<p>Spend 1 life to stun (save). Retractable.</p>",
     "quantity": 1,
     "size": {
       "value": 5,
       "unit": "soaps"
     },
-    "features": [],
+    "features": [
+      "concealed"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -89,10 +91,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011718611,
-    "modifiedTime": 1767011718611,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771501541272,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!5CV0LEfvJl3WrT9M"
 }

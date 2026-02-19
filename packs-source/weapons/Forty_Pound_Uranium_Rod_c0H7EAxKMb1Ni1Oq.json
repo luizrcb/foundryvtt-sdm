@@ -8,13 +8,16 @@
     "readied": false,
     "cost": 900,
     "cost_frequency": "",
-    "description": "<p>Heavy metal staff for a heavy metal wizard.</p><p>Stuns for 1 round on matching damage dice.</p><p><strong>Features:</strong> 2H, slow</p>",
+    "description": "<p>Heavy metal staff for a heavy metal wizard.</p><p>Stuns for 1 round on matching damage dice.</p>",
     "quantity": 1,
     "size": {
       "value": 4,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "slow",
+      "two_handed"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -89,10 +92,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.10.0",
     "createdTime": 1767011720662,
-    "modifiedTime": 1767016077280,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1771501667352,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
   },
   "_key": "!items!c0H7EAxKMb1Ni1Oq"
 }
