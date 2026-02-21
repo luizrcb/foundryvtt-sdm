@@ -473,6 +473,7 @@
 .sidebar-info ul.links {
   gap: 0;
   margin-top: 6px;
+  font-family: var(--sdm-font-tab);
 }
 
 .sidebar-info ul.links li:not(:last-child)::after {
@@ -504,6 +505,7 @@
 .system-badge .system-info {
   position: relative;
   font-size: var(--font-size-16);
+  font-family: var(--sdm-font-primary);
 }
 
 .system-badge .system-info i {
@@ -619,6 +621,20 @@ input[type=radio]::after {
     mask-size: contain;
     object-fit: fill;
     /* you choose the visible color now */
+    background-color: var(--sdm-scrollbar-thumb);
+  }
+  .sdm-pause {
+    height: 120px;
+    width: 120px;
+    -webkit-mask-image: url("../assets/sdm-pause.png");
+    -webkit-mask-repeat: no-repeat;
+    -webkit-mask-position: center;
+    -webkit-mask-size: contain;
+    mask-image: url("../assets/sdm-pause.png");
+    mask-repeat: no-repeat;
+    mask-position: center;
+    mask-size: contain;
+    object-fit: fill;
     background-color: var(--sdm-scrollbar-thumb);
   }
   .route-item {
@@ -1153,6 +1169,10 @@ input[type=radio]::after {
     padding: 8px;
     background: rgba(255, 255, 255, 0.1);
     border-radius: 4px;
+  }
+  #settings > * > h4.divider {
+    font-family: var(--sdm-font-primary);
+    font-size: 18px;
   }
   .theme-dark select option {
     background: var(--background);

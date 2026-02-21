@@ -432,14 +432,17 @@ Hooks.on('createItem', async (item, _options, _id) => {
 Hooks.on('renderSettings', (app, html) => renderSettings(html));
 
 Hooks.on('renderGamePause', (app, html) => {
-  html.classList.add('sdme2');
-  const container = document.createElement('div');
-  container.classList.add('flexcol');
-  container.append(...html.children);
-  html.append(container);
+  html.classList.add('sdm');
   const img = html.querySelector('img');
-  img.src = 'systems/sdm/assets/sdm-pause.png';
-  img.className = '';
+  if (img) {
+    const div = document.createElement('div');
+    div.className = 'sdm-pause';
+    img.replaceWith(div);
+  }
+  const figcaption = html.querySelector('figcaption');
+  if (figcaption) {
+    figcaption.style.fontFamily = 'var(--sdm-font-dice)';
+  }
 });
 
 Hooks.on('getChatMessageContextOptions', (html, options) => {
