@@ -160,7 +160,7 @@ export class SDMEconomySettingsConfig extends GroupBase {
     }
   };
   static LEGEND = 'SDM.Menu.Economy.Name';
-  static KEYS = ['currencyName', 'currencyImage'];
+  static KEYS = ['currencyName', 'currencyImage', 'currencyWeight'];
 }
 
 /* 7) Audio (GM Assets) */

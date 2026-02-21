@@ -49,7 +49,7 @@ export async function randomNPCGenerator() {
   </div>
   <div class="form-group">
     <label>${game.i18n.format('SDM.OptionalField', { field: game.i18n.localize('SDM.FieldLevel') })}</label>
-    <input type="number" name="level" class="form-control" min="0">
+    <input type="number" name="level" class="form-control" min="0" value="0">
   </div>
 
   <div class="form-group">

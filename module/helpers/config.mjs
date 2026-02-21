@@ -349,8 +349,8 @@ SDM.traitType = {
 };
 
 SDM.burdenType = {
-  '': 'TYPE.Burden',
-  affliction: 'TYPES.Item.affliction'
+  affliction: 'TYPES.Item.affliction',
+  power: 'TYPES.Item.power'
 };
 
 SDM.rangeType = {

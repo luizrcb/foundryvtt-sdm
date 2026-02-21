@@ -120,16 +120,24 @@ const NPCTables = {
   },
   'humans-of-the-pananthropy': {
     table: [
-      { range: [1, 20], Lvl: 0, Life: 4, Mor: 2, Def: 7, Bon: 3, Dmg: '1d4' },
-      { range: [21, 39], Lvl: 1, Life: 8, Mor: 3, Def: 8, Bon: 4, Dmg: '1d6+1' },
-      { range: [40, 59], Lvl: 2, Life: 12, Mor: 4, Def: 9, Bon: 5, Dmg: '1d8+2' },
-      { range: [60, 74], Lvl: 3, Life: 16, Mor: 5, Def: 10, Bon: 6, Dmg: '1d10+3' },
-      { range: [75, 84], Lvl: 4, Life: 20, Mor: 6, Def: 11, Bon: 8, Dmg: '1d12+5' },
-      { range: [85, 92], Lvl: 5, Life: 24, Mor: 7, Def: 12, Bon: 10, Dmg: '2d8+6' },
-      { range: [93, 97], Lvl: 6, Life: 28, Mor: 8, Def: 13, Bon: 12, Dmg: '2d10+9' },
-      { range: [98, 98], Lvl: 7, Life: 32, Mor: 9, Def: 14, Bon: 14, Dmg: '2d12+12' },
-      { range: [99, 99], Lvl: 8, Life: 36, Mor: 10, Def: 15, Bon: 16, Dmg: '3d10+15' },
-      { range: [100, 100], Lvl: 9, Life: 40, Mor: 11, Def: 16, Bon: 18, Dmg: '4d12+20' }
+      { range: [1, 10], Lvl: 0, Life: 4, Mor: 2, Def: 7, Bon: 3, Dmg: '1d4' },
+      { range: [11, 20], Lvl: 1, Life: 8, Mor: 3, Def: 8, Bon: 4, Dmg: '1d6+1' },
+      { range: [21, 30], Lvl: 2, Life: 12, Mor: 4, Def: 9, Bon: 5, Dmg: '1d8+2' },
+      { range: [31, 39], Lvl: 3, Life: 16, Mor: 5, Def: 10, Bon: 6, Dmg: '1d10+3' },
+      { range: [40, 48], Lvl: 4, Life: 20, Mor: 6, Def: 11, Bon: 8, Dmg: '1d12+5' },
+      { range: [49, 56], Lvl: 5, Life: 24, Mor: 7, Def: 12, Bon: 10, Dmg: '2d8+6' },
+      { range: [57, 64], Lvl: 6, Life: 28, Mor: 8, Def: 13, Bon: 12, Dmg: '2d10+9' },
+      { range: [65, 70], Lvl: 7, Life: 32, Mor: 9, Def: 14, Bon: 14, Dmg: '2d12+12' },
+      { range: [71, 76], Lvl: 8, Life: 36, Mor: 10, Def: 15, Bon: 16, Dmg: '3d10+15' },
+      { range: [77, 82], Lvl: 9, Life: 40, Mor: 11, Def: 16, Bon: 18, Dmg: '4d12+20' },
+      { range: [83, 87], Lvl: 10, Life: 44, Mor: 12, Def: 17, Bon: 20, Dmg: '5d10+23' },
+      { range: [88, 91], Lvl: 11, Life: 48, Mor: 13, Def: 18, Bon: 22, Dmg: '6d12+26' },
+      { range: [92, 94], Lvl: 12, Life: 52, Mor: 14, Def: 19, Bon: 24, Dmg: '7d10+29' },
+      { range: [95, 96], Lvl: 13, Life: 56, Mor: 15, Def: 20, Bon: 26, Dmg: '8d12+32' },
+      { range: [97, 97], Lvl: 14, Life: 60, Mor: 16, Def: 21, Bon: 28, Dmg: '9d10+35' },
+      { range: [98, 98], Lvl: 15, Life: 64, Mor: 17, Def: 22, Bon: 30, Dmg: '10d12+38' },
+      { range: [99, 99], Lvl: 16, Life: 68, Mor: 18, Def: 23, Bon: 32, Dmg: '11d10+41' },
+      { range: [100, 100], Lvl: 17, Life: 72, Mor: 19, Def: 24, Bon: 34, Dmg: '12d12+44' }
     ],
     traits: [
       'SDM.NPCTraitBonded',
@@ -142,16 +150,24 @@ const NPCTables = {
   },
   'brick-bastions': {
     table: [
-      { range: [1, 25], Lvl: 0, Life: 12, Mor: 6, Def: 7, Bon: 0, Dmg: '1d6' },
-      { range: [26, 45], Lvl: 1, Life: 25, Mor: 7, Def: 7, Bon: 1, Dmg: '2d6' },
-      { range: [46, 59], Lvl: 2, Life: 40, Mor: 8, Def: 7, Bon: 1, Dmg: '3d6' },
-      { range: [60, 74], Lvl: 3, Life: 60, Mor: 9, Def: 7, Bon: 2, Dmg: '4d6' },
-      { range: [75, 84], Lvl: 4, Life: 85, Mor: 10, Def: 7, Bon: 2, Dmg: '5d6' },
-      { range: [85, 92], Lvl: 5, Life: 120, Mor: 11, Def: 7, Bon: 3, Dmg: '6d6' },
-      { range: [93, 97], Lvl: 6, Life: 160, Mor: 11, Def: 7, Bon: 3, Dmg: '7d6' },
-      { range: [98, 98], Lvl: 7, Life: 220, Mor: 11, Def: 7, Bon: 4, Dmg: '8d6' },
-      { range: [99, 99], Lvl: 8, Life: 300, Mor: 11, Def: 7, Bon: 4, Dmg: '9d6' },
-      { range: [100, 100], Lvl: 9, Life: 400, Mor: 11, Def: 7, Bon: 5, Dmg: '10d6' }
+      { range: [1, 10], Lvl: 0, Life: 12, Mor: 6, Def: 7, Bon: 0, Dmg: '1d6' },
+      { range: [11, 20], Lvl: 1, Life: 25, Mor: 7, Def: 7, Bon: 1, Dmg: '2d6' },
+      { range: [21, 30], Lvl: 2, Life: 40, Mor: 8, Def: 7, Bon: 1, Dmg: '3d6' },
+      { range: [31, 39], Lvl: 3, Life: 60, Mor: 9, Def: 7, Bon: 2, Dmg: '4d6' },
+      { range: [40, 48], Lvl: 4, Life: 85, Mor: 10, Def: 7, Bon: 2, Dmg: '5d6' },
+      { range: [49, 56], Lvl: 5, Life: 120, Mor: 11, Def: 7, Bon: 3, Dmg: '6d6' },
+      { range: [57, 64], Lvl: 6, Life: 160, Mor: 11, Def: 7, Bon: 3, Dmg: '7d6' },
+      { range: [65, 70], Lvl: 7, Life: 220, Mor: 11, Def: 7, Bon: 4, Dmg: '8d6' },
+      { range: [71, 76], Lvl: 8, Life: 300, Mor: 11, Def: 7, Bon: 4, Dmg: '9d6' },
+      { range: [77, 82], Lvl: 9, Life: 400, Mor: 11, Def: 7, Bon: 5, Dmg: '10d6' },
+      { range: [83, 87], Lvl: 10, Life: 433, Mor: 11, Def: 7, Bon: 5, Dmg: '11d6' },
+      { range: [88, 91], Lvl: 11, Life: 466, Mor: 11, Def: 7, Bon: 6, Dmg: '12d6' },
+      { range: [92, 94], Lvl: 12, Life: 499, Mor: 11, Def: 7, Bon: 6, Dmg: '13d6' },
+      { range: [95, 96], Lvl: 13, Life: 532, Mor: 11, Def: 7, Bon: 7, Dmg: '14d6' },
+      { range: [97, 97], Lvl: 14, Life: 565, Mor: 11, Def: 7, Bon: 7, Dmg: '15d6' },
+      { range: [98, 98], Lvl: 15, Life: 599, Mor: 11, Def: 7, Bon: 8, Dmg: '16d6' },
+      { range: [99, 99], Lvl: 16, Life: 632, Mor: 11, Def: 7, Bon: 8, Dmg: '17d6' },
+      { range: [100, 100], Lvl: 17, Life: 666, Mor: 11, Def: 7, Bon: 9, Dmg: '18d6' }
     ],
     traits: [
       'SDM.NPCTraitShieldfriend',
@@ -164,16 +180,24 @@ const NPCTables = {
   },
   'darting-dodgers': {
     table: [
-      { range: [1, 20], Lvl: 0, Life: 3, Mor: 2, Def: 13, Bon: 3, Dmg: '1d4x' },
-      { range: [21, 39], Lvl: 1, Life: 6, Mor: 3, Def: 14, Bon: 4, Dmg: '1d6x' },
-      { range: [40, 59], Lvl: 2, Life: 10, Mor: 4, Def: 15, Bon: 5, Dmg: '2d4x' },
-      { range: [60, 74], Lvl: 3, Life: 14, Mor: 4, Def: 16, Bon: 6, Dmg: '2d6x' },
-      { range: [75, 84], Lvl: 4, Life: 19, Mor: 5, Def: 18, Bon: 8, Dmg: '2d8x' },
-      { range: [85, 92], Lvl: 5, Life: 24, Mor: 6, Def: 20, Bon: 10, Dmg: '3d6x' },
-      { range: [93, 97], Lvl: 6, Life: 30, Mor: 7, Def: 22, Bon: 12, Dmg: '3d8x' },
-      { range: [98, 98], Lvl: 7, Life: 36, Mor: 7, Def: 24, Bon: 14, Dmg: '4d6x' },
-      { range: [99, 99], Lvl: 8, Life: 43, Mor: 8, Def: 26, Bon: 16, Dmg: '5d6x' },
-      { range: [100, 100], Lvl: 9, Life: 50, Mor: 9, Def: 28, Bon: 18, Dmg: '6d6x' }
+      { range: [1, 10], Lvl: 0, Life: 3, Mor: 2, Def: 13, Bon: 3, Dmg: '1d4x' },
+      { range: [11, 20], Lvl: 1, Life: 6, Mor: 3, Def: 14, Bon: 4, Dmg: '1d6x' },
+      { range: [21, 30], Lvl: 2, Life: 10, Mor: 4, Def: 15, Bon: 5, Dmg: '2d4x' },
+      { range: [31, 39], Lvl: 3, Life: 14, Mor: 4, Def: 16, Bon: 6, Dmg: '2d6x' },
+      { range: [40, 48], Lvl: 4, Life: 19, Mor: 5, Def: 18, Bon: 8, Dmg: '2d8x' },
+      { range: [49, 56], Lvl: 5, Life: 24, Mor: 6, Def: 20, Bon: 10, Dmg: '3d6x' },
+      { range: [57, 64], Lvl: 6, Life: 30, Mor: 7, Def: 22, Bon: 12, Dmg: '3d8x' },
+      { range: [65, 70], Lvl: 7, Life: 36, Mor: 7, Def: 24, Bon: 14, Dmg: '4d6x' },
+      { range: [71, 76], Lvl: 8, Life: 43, Mor: 8, Def: 26, Bon: 16, Dmg: '5d6x' },
+      { range: [77, 82], Lvl: 9, Life: 50, Mor: 9, Def: 28, Bon: 18, Dmg: '6d6x' },
+      { range: [83, 87], Lvl: 10, Life: 58, Mor: 10, Def: 30, Bon: 20, Dmg: '7d6x' },
+      { range: [88, 91], Lvl: 11, Life: 66, Mor: 11, Def: 32, Bon: 22, Dmg: '8d6x' },
+      { range: [92, 94], Lvl: 12, Life: 75, Mor: 11, Def: 34, Bon: 24, Dmg: '9d6x' },
+      { range: [95, 96], Lvl: 13, Life: 84, Mor: 11, Def: 36, Bon: 26, Dmg: '10d6x' },
+      { range: [97, 97], Lvl: 14, Life: 94, Mor: 11, Def: 38, Bon: 28, Dmg: '11d6x' },
+      { range: [98, 98], Lvl: 15, Life: 104, Mor: 11, Def: 40, Bon: 30, Dmg: '12d6x' },
+      { range: [99, 99], Lvl: 16, Life: 115, Mor: 11, Def: 42, Bon: 32, Dmg: '13d6x' },
+      { range: [100, 100], Lvl: 17, Life: 126, Mor: 11, Def: 44, Bon: 34, Dmg: '14d6x' }
     ],
     traits: [
       'SDM.NPCTraitCharger',
@@ -186,16 +210,24 @@ const NPCTables = {
   },
   'crystal-cannons': {
     table: [
-      { range: [1, 20], Lvl: 0, Life: 1, Mor: 2, Def: 12, Bon: 5, Dmg: '1d6+5' },
-      { range: [21, 39], Lvl: 1, Life: 2, Mor: 3, Def: 13, Bon: 6, Dmg: '1d8+6' },
-      { range: [40, 59], Lvl: 2, Life: 4, Mor: 3, Def: 14, Bon: 7, Dmg: '1d10+7' },
-      { range: [60, 74], Lvl: 3, Life: 7, Mor: 4, Def: 15, Bon: 8, Dmg: '1d12+8' },
-      { range: [75, 84], Lvl: 4, Life: 11, Mor: 4, Def: 16, Bon: 9, Dmg: '2d8+9' },
-      { range: [85, 92], Lvl: 5, Life: 16, Mor: 5, Def: 17, Bon: 10, Dmg: '3d6+10' },
-      { range: [93, 97], Lvl: 6, Life: 22, Mor: 5, Def: 18, Bon: 11, Dmg: '2d10+11' },
-      { range: [98, 98], Lvl: 7, Life: 29, Mor: 6, Def: 19, Bon: 12, Dmg: '2d12+12' },
-      { range: [99, 99], Lvl: 8, Life: 37, Mor: 6, Def: 20, Bon: 13, Dmg: '5d6+13' },
-      { range: [100, 100], Lvl: 9, Life: 46, Mor: 7, Def: 21, Bon: 14, Dmg: '6d6+14' }
+      { range: [1, 10], Lvl: 0, Life: 1, Mor: 2, Def: 12, Bon: 5, Dmg: '1d6+5' },
+      { range: [11, 20], Lvl: 1, Life: 2, Mor: 3, Def: 13, Bon: 6, Dmg: '1d8+6' },
+      { range: [21, 30], Lvl: 2, Life: 4, Mor: 3, Def: 14, Bon: 7, Dmg: '1d10+7' },
+      { range: [31, 39], Lvl: 3, Life: 7, Mor: 4, Def: 15, Bon: 8, Dmg: '1d12+8' },
+      { range: [40, 48], Lvl: 4, Life: 11, Mor: 4, Def: 16, Bon: 9, Dmg: '2d8+9' },
+      { range: [49, 56], Lvl: 5, Life: 16, Mor: 5, Def: 17, Bon: 10, Dmg: '3d6+10' },
+      { range: [57, 64], Lvl: 6, Life: 22, Mor: 5, Def: 18, Bon: 11, Dmg: '2d10+11' },
+      { range: [65, 70], Lvl: 7, Life: 29, Mor: 6, Def: 19, Bon: 12, Dmg: '2d12+12' },
+      { range: [71, 76], Lvl: 8, Life: 37, Mor: 6, Def: 20, Bon: 13, Dmg: '5d6+13' },
+      { range: [77, 82], Lvl: 9, Life: 46, Mor: 7, Def: 21, Bon: 14, Dmg: '6d6+14' },
+      { range: [83, 87], Lvl: 10, Life: 56, Mor: 7, Def: 22, Bon: 15, Dmg: '7d6+15' },
+      { range: [88, 91], Lvl: 11, Life: 67, Mor: 8, Def: 23, Bon: 16, Dmg: '8d6+16' },
+      { range: [92, 94], Lvl: 12, Life: 79, Mor: 8, Def: 24, Bon: 17, Dmg: '9d6+17' },
+      { range: [95, 96], Lvl: 13, Life: 92, Mor: 9, Def: 25, Bon: 18, Dmg: '10d6+18' },
+      { range: [97, 97], Lvl: 14, Life: 106, Mor: 9, Def: 26, Bon: 19, Dmg: '11d6+19' },
+      { range: [98, 98], Lvl: 15, Life: 121, Mor: 10, Def: 27, Bon: 20, Dmg: '12d6+20' },
+      { range: [99, 99], Lvl: 16, Life: 137, Mor: 10, Def: 28, Bon: 21, Dmg: '13d6+21' },
+      { range: [100, 100], Lvl: 17, Life: 154, Mor: 11, Def: 29, Bon: 22, Dmg: '14d6+22' }
     ],
     traits: [
       'SDM.NPCTraitOvercharge',
@@ -209,16 +241,24 @@ const NPCTables = {
 
   'erratic-expendables': {
     table: [
-      { range: [1, 20], Lvl: 0, Life: 1, Mor: 4, Def: 7, Bon: 3, Dmg: '1d4' },
-      { range: [21, 39], Lvl: 1, Life: 2, Mor: 5, Def: 8, Bon: 4, Dmg: '1d6' },
-      { range: [40, 59], Lvl: 2, Life: 3, Mor: 6, Def: 9, Bon: 5, Dmg: '1d8' },
-      { range: [60, 74], Lvl: 3, Life: 4, Mor: 7, Def: 10, Bon: 6, Dmg: '1d10' },
-      { range: [75, 84], Lvl: 4, Life: 5, Mor: 8, Def: 11, Bon: 7, Dmg: '1d12' },
-      { range: [85, 92], Lvl: 5, Life: 6, Mor: 9, Def: 12, Bon: 8, Dmg: '2d8' },
-      { range: [93, 97], Lvl: 6, Life: 7, Mor: 10, Def: 13, Bon: 9, Dmg: '2d10' },
-      { range: [98, 98], Lvl: 7, Life: 8, Mor: 11, Def: 14, Bon: 10, Dmg: '2d12' },
-      { range: [99, 99], Lvl: 8, Life: 9, Mor: 11, Def: 15, Bon: 11, Dmg: '3d8' },
-      { range: [100, 100], Lvl: 9, Life: 10, Mor: 11, Def: 16, Bon: 12, Dmg: '3d10' }
+      { range: [1, 10], Lvl: 0, Life: 1, Mor: 4, Def: 7, Bon: 3, Dmg: '1d4' },
+      { range: [11, 20], Lvl: 1, Life: 2, Mor: 5, Def: 8, Bon: 4, Dmg: '1d6' },
+      { range: [21, 30], Lvl: 2, Life: 3, Mor: 6, Def: 9, Bon: 5, Dmg: '1d8' },
+      { range: [31, 39], Lvl: 3, Life: 4, Mor: 7, Def: 10, Bon: 6, Dmg: '1d10' },
+      { range: [40, 48], Lvl: 4, Life: 5, Mor: 8, Def: 11, Bon: 7, Dmg: '1d12' },
+      { range: [49, 56], Lvl: 5, Life: 6, Mor: 9, Def: 12, Bon: 8, Dmg: '2d8' },
+      { range: [57, 64], Lvl: 6, Life: 7, Mor: 10, Def: 13, Bon: 9, Dmg: '2d10' },
+      { range: [65, 70], Lvl: 7, Life: 8, Mor: 11, Def: 14, Bon: 10, Dmg: '2d12' },
+      { range: [71, 76], Lvl: 8, Life: 9, Mor: 11, Def: 15, Bon: 11, Dmg: '3d8' },
+      { range: [77, 82], Lvl: 9, Life: 10, Mor: 11, Def: 16, Bon: 12, Dmg: '3d10' },
+      { range: [83, 87], Lvl: 10, Life: 11, Mor: 11, Def: 17, Bon: 13, Dmg: '3d12' },
+      { range: [88, 91], Lvl: 11, Life: 12, Mor: 11, Def: 18, Bon: 14, Dmg: '4d10' },
+      { range: [92, 94], Lvl: 12, Life: 13, Mor: 11, Def: 19, Bon: 15, Dmg: '4d12' },
+      { range: [95, 96], Lvl: 13, Life: 14, Mor: 11, Def: 20, Bon: 16, Dmg: '5d10' },
+      { range: [97, 97], Lvl: 14, Life: 15, Mor: 11, Def: 21, Bon: 17, Dmg: '5d12' },
+      { range: [98, 98], Lvl: 15, Life: 16, Mor: 11, Def: 22, Bon: 18, Dmg: '6d10' },
+      { range: [99, 99], Lvl: 16, Life: 17, Mor: 11, Def: 23, Bon: 19, Dmg: '6d12' },
+      { range: [100, 100], Lvl: 17, Life: 18, Mor: 11, Def: 24, Bon: 20, Dmg: '7d12' }
     ],
     traits: [
       'SDM.NPCTraitDeathCurse',
@@ -305,7 +345,7 @@ export async function createNPCByLevel({
   image = '',
   biography = '',
   ownership = null,
-  linked = false,
+  linked = false
 }) {
   const entry = getNPCDataByLevel(tableName, lvl);
   if (!entry) throw new Error(`Nenhuma entrada encontrada para lvl ${lvl} em ${tableName}`);
@@ -318,7 +358,7 @@ export async function createNPCByLevel({
 
   const targetActor = await Actor.create(npcData);
   let updateData = {
-    'prototypeToken.actorLink': linked,
+    'prototypeToken.actorLink': linked
   };
   let shouldBeFriendly = false;
 

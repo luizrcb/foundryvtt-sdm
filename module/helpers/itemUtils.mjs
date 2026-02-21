@@ -130,6 +130,13 @@ export function getSlotsTaken(itemSystem) {
 
   if (slotsTaken === 0 && itemSystem.size?.unit === SizeUnit.CASH) return slotsTaken;
 
+  if (itemSystem.size?.unit === SizeUnit.CASH) {
+    if (slotsTaken === 0) return slotsTaken;
+    const weightRules = game.settings.get('sdm', 'currencyWeight');
+    if (weightRules === 'weightless') return 0;
+    if (weightRules === 'single_stone') return 1;
+  }
+
   slotsTaken = Math.max(slotsTaken || 1, 1);
 
   if (itemSystem.size?.unit === SizeUnit.SOAPS && itemSystem.quantity > 1 && itemSystem.readied) {

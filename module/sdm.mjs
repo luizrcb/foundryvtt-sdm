@@ -17,8 +17,10 @@ import { configureChatListeners } from './helpers/chatUtils.mjs';
 import { SDM } from './helpers/config.mjs';
 import {
   ActorType,
+  BURDEN_ICONS,
   DEFAULT_AFFLICTION_ICON,
   DEFAULT_AUGMENT_ICON,
+  DEFAULT_BURDEN_ICON,
   DEFAULT_PET_ICON,
   GearType,
   ItemType,
@@ -358,7 +360,6 @@ Hooks.on('updateItem', async item => {
   }
 
   if (item.type === ItemType.TRAIT && TRAIT_ICONS.includes(item.img)) {
-
     switch (item.system.type) {
       case TraitType.AFFLICTION:
         updateData['img'] = DEFAULT_AFFLICTION_ICON;
@@ -380,6 +381,20 @@ Hooks.on('updateItem', async item => {
         break;
       default:
         updateData['img'] = DEFAULT_TRAIT_ICON;
+        break;
+    }
+  }
+
+  if (item.type === ItemType.BURDEN && BURDEN_ICONS.includes(item.img)) {
+    switch (item.system.type) {
+      case TraitType.AFFLICTION:
+        updateData['img'] = DEFAULT_AFFLICTION_ICON;
+        break;
+      case TraitType.POWER:
+        updateData['img'] = DEFAULT_POWER_ICON;
+        break;
+      default:
+        updateData['img'] = DEFAULT_BURDEN_ICON;
         break;
     }
   }

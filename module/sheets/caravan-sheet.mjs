@@ -3,6 +3,7 @@ import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { $fmt, $l10n, foundryVersionIsAtLeast, getSeasonAndWeek } from '../helpers/globalUtils.mjs';
 import {
   convertToCash,
+  getSlotsTaken,
   ITEMS_NOT_ALLOWED_IN_CARAVANS,
   onItemCreateActiveEffects,
   onItemUpdate,
@@ -357,7 +358,14 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     const firstFitIndex = need => sacks.findIndex(s => s.usedSlots + need <= s.maxSlots);
 
     for (const item of items) {
-      const need = Number(item.system?.slots_taken ?? 1) || 1;
+      let need = Number(item.system?.slots_taken ?? 1) || 1;
+
+      if (item.system?.size?.unit === SizeUnit.CASH) {
+        if (item.system.quantity === 0) need = 0;
+        const weightRules = game.settings.get('sdm', 'currencyWeight');
+        if (weightRules === 'weightless') need = 0;
+        if (weightRules === 'single_stone') need =  1;
+      }
 
       const flaggedIdx = Number(item.getFlag(FLAG_SCOPE, FLAG_SACK));
       const hasValidFlag = Number.isFinite(flaggedIdx) && flaggedIdx >= 0 && flaggedIdx < capacity;

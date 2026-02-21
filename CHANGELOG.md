@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## v0.12.0
+
+- Added support to burdens as powers (the weight of a malign knowledge)
+- Added new config for alternate cash weight rules
+- Improved UI for referee feature "Give Hero Dice"
+- Improved UI for referee feature "Give/Take Cash"
+- Added an option to evenly split a cash amount among selected characters
+- Improved UI for referee feature "Give Experience"
+
 ## v0.11.0
 
 - Add new gear and trait item types: affliction (a kind of burden), augment and pet

@@ -1073,11 +1073,27 @@ input[type='radio']::after {
     background: rgba(255, 255, 255, 0.04);
   }
 
-  // select option:checked,
-  // select option[selected] {
-  //   font-weight: bold;
-  //   background: color-mix(in srgb, var(--sdm-c-highlight) 40%, white);
-  // }
+  .actor-grid {
+    border: 1px solid #999;
+    padding: 8px;
+    margin: 10px 0;
+    max-height: 300px;
+    overflow-y: auto;
+  }
+  .actor-selector {
+    cursor: pointer;
+    background: rgba(0, 0, 0, 0.05);
+    transition: background 0.2s;
+  }
+  .actor-selector:hover {
+    background: rgba(0, 0, 0, 0.1);
+  }
+  .split-option {
+    margin: 10px 0;
+    padding: 8px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 4px;
+  }
 
   .theme-dark select option {
     background: var(--background);

@@ -1,4 +1,9 @@
-import { DEFAULT_CASH_ICON } from '../../helpers/constants.mjs';
+import {
+  ActorType,
+  DEFAULT_CARAVAN_ICON,
+  DEFAULT_CASH_ICON,
+  DEFAULT_CHARACTER_ICON
+} from '../../helpers/constants.mjs';
 import { templatePath } from '../../helpers/templates.mjs';
 
 const { DialogV2 } = foundry.applications.api;
@@ -132,10 +137,7 @@ export async function giveCash(
   if (!game.user.isGM) return;
 
   const defaultCurrencyName = game.settings.get('sdm', 'currencyName') || 'cash';
-  const defaultCurrencyImage =
-    game.settings.get('sdm', 'currencyImage') ||
-    DEFAULT_CASH_ICON;
-
+  const defaultCurrencyImage = game.settings.get('sdm', 'currencyImage') || DEFAULT_CASH_ICON;
   const characters = game.actors.filter(a => a.type === 'character');
   const caravans = game.actors.filter(a => a.type === 'caravan');
   const allTransferTarget = [...characters, ...caravans];
@@ -143,7 +145,6 @@ export async function giveCash(
   let data = null;
   const opOk = operationParam === 'add' || operationParam === 'remove';
   const amtOk = Number.isFinite(Number(amountParam)) && Number(amountParam) >= 0;
-
   let tgtOk = false;
   if (targetParam === 'all') {
     tgtOk = true;
@@ -156,11 +157,28 @@ export async function giveCash(
     data = {
       target: targetParam,
       amount: Number.parseInt(String(amountParam), 10),
-      operation: operationParam
+      operation: operationParam,
+      splitEvenly: false
     };
   }
 
   if (!data) {
+    const actorEntries = allTransferTarget
+      .map(actor => {
+        const isCharacter = actor.type === ActorType.CHARACTER;
+        const img = actor.img ||(isCharacter ? DEFAULT_CHARACTER_ICON : DEFAULT_CARAVAN_ICON);
+        const checkboxClass = `actor-checkbox ${isCharacter ? 'character-checkbox' : 'caravan-checkbox'}`;
+        const labelHtml = `
+        <label class="actor-selector" style="display:flex; align-items:center; gap:5px; padding:4px; border:1px solid #ccc; border-radius:4px;">
+          <input type="checkbox" name="actor-${actor.id}" value="${actor.uuid}" class="${checkboxClass}">
+          <img src="${img}" style="width:32px; height:32px; border-radius:4px; object-fit:cover;">
+          <span>${actor.name}</span>
+        </label>
+      `;
+        return `<div class="grid-span-1">${labelHtml}</div>`;
+      })
+      .join('');
+
     const cashInput = new NumberField({
       label: game.i18n.localize('SDM.Amount'),
       min: 0
@@ -169,13 +187,23 @@ export async function giveCash(
     const content = `
     <fieldset>
       <legend>${game.i18n.localize('SDM.CashManagement')}</legend>
+
       <div class="form-group">
-        <label>${game.i18n.localize('SDM.Target')}</label>
-        <select name="target" class="form-control">
-          <option value="all">${game.i18n.localize('SDM.AllCharacters')}</option>
-          ${allTransferTarget.map(c => `<option value="${c.uuid}">${c.name}</option>`).join('')}
-        </select>
+        <label style="display:flex; align-items:center; gap:5px;">
+          <input type="checkbox" id="select-all-characters">
+          <strong>${game.i18n.localize('SDM.SelectAllCharacters')}</strong>
+        </label>
       </div>
+      <div class="actor-grid grid grid-2col" id="actor-grid">
+        ${actorEntries}
+      </div>
+      <div class="split-option">
+        <label style="display:flex; align-items:center; gap:5px;">
+          <input type="checkbox" name="splitEvenly" id="splitEvenly">
+          ${game.i18n.localize('SDM.SplitTotalEvenly')}
+        </label>
+      </div>
+
       <div class="form-group">
         ${cashInput}
       </div>
@@ -183,7 +211,7 @@ export async function giveCash(
     `;
 
     data = await DialogV2.wait({
-      window: { title: game.i18n.localize('SDM.CashManagement'), resizable: false },
+      window: { title: game.i18n.localize('SDM.CashManagement') },
       modal: true,
       content,
       buttons: [
@@ -191,72 +219,142 @@ export async function giveCash(
           action: 'add',
           label: game.i18n.localize('SDM.CashManagementAddMoney'),
           icon: 'fa-solid fa-coins',
-          callback: (event, button) => ({
-            target: button.form.querySelector('[name="target"]').value,
-            amount: parseInt(button.form.querySelector('[name="amount"]').value),
-            operation: 'add'
-          })
+          callback: (event, button) => {
+            const form = button.form;
+            const selected = [...form.querySelectorAll('.actor-checkbox:checked')].map(
+              cb => cb.value
+            );
+            return {
+              target: selected,
+              amount: parseInt(form.querySelector('[name="amount"]').value) || 0,
+              operation: 'add',
+              splitEvenly: form.querySelector('#splitEvenly').checked
+            };
+          }
         },
         {
           action: 'remove',
           label: game.i18n.localize('SDM.CashManagementRemoveMoney'),
           icon: 'fa-solid fa-minus-circle',
-          callback: (event, button) => ({
-            target: button.form.querySelector('[name="target"]').value,
-            amount: parseInt(button.form.querySelector('[name="amount"]').value),
-            operation: 'remove'
-          })
+          callback: (event, button) => {
+            const form = button.form;
+            const selected = [...form.querySelectorAll('.actor-checkbox:checked')].map(
+              cb => cb.value
+            );
+            return {
+              target: selected,
+              amount: parseInt(form.querySelector('[name="amount"]').value) || 0,
+              operation: 'remove',
+              splitEvenly: form.querySelector('#splitEvenly').checked
+            };
+          }
         }
       ],
+      render: (event, dialog) => {
+        const html = dialog.element;
+        const selectAll = html.querySelector('#select-all-characters');
+        const characterCheckboxes = html.querySelectorAll('.character-checkbox');
+
+        if (!selectAll || !characterCheckboxes.length) return;
+
+        const updateSelectAll = () => {
+          const total = characterCheckboxes.length;
+          const checked = [...characterCheckboxes].filter(cb => cb.checked).length;
+          if (checked === 0) {
+            selectAll.checked = false;
+            selectAll.indeterminate = false;
+          } else if (checked === total) {
+            selectAll.checked = true;
+            selectAll.indeterminate = false;
+          } else {
+            selectAll.indeterminate = true;
+          }
+        };
+
+        selectAll.addEventListener('change', e => {
+          const isChecked = e.target.checked;
+          characterCheckboxes.forEach(cb => {
+            cb.checked = isChecked;
+          });
+          selectAll.indeterminate = false;
+        });
+
+        characterCheckboxes.forEach(cb => {
+          cb.addEventListener('change', updateSelectAll);
+        });
+
+        updateSelectAll();
+      },
       rejectClose: false
     });
   }
 
   if (!data?.amount && data?.amount !== 0) return;
-
   if (data.amount < 0 || !Number.isFinite(Number(data.amount))) {
     ui.notifications.error(game.i18n.localize('SDM.ErrorTransferAmountNotPositive'));
     return;
   }
 
-  let targets = [];
+  let targetUuids = [];
   if (data.target === 'all') {
-    targets = characters;
-  } else {
-    const actor = await resolveActorFromUUID(data.target);
-    if (actor) targets = [actor];
+    targetUuids = characters.map(c => c.uuid);
+  } else if (Array.isArray(data.target)) {
+    targetUuids = data.target;
+  } else if (typeof data.target === 'string') {
+    targetUuids = [data.target];
   }
 
-  if (!targets.length) {
+  const targets = [];
+  for (const uuid of targetUuids) {
+    const actor = await resolveActorFromUUID(uuid);
+    if (actor) targets.push(actor);
+  }
+
+  if (targets.length === 0) {
     ui.notifications.error(game.i18n.format('SDM.ErrorNoActorSelected', { type: 'target' }));
     return;
   }
+
+  let perActorAmounts = [];
+  const totalAmount = data.amount;
+  if (data.splitEvenly && targets.length > 0) {
+    const base = Math.floor(totalAmount / targets.length);
+    let remainder = totalAmount - base * targets.length;
+    perActorAmounts = targets.map(() => base);
+    for (let i = 0; i < remainder; i++) {
+      perActorAmounts[i] += 1;
+    }
+  } else {
+    perActorAmounts = targets.map(() => totalAmount);
+  }
+
+  const sumCash = actor =>
+    actor.items
+      .filter(i => i.type === 'gear' && i.system?.size?.unit === 'cash')
+      .reduce((s, it) => s + Math.max(0, Number(it.system?.quantity ?? 0)), 0);
 
   try {
     let successCount = 0;
     const cashChanges = [];
 
-    for (const target of targets) {
-      const sumCash = actor =>
-        actor.items
-          .filter(i => i.type === 'gear' && i.system?.size?.unit === 'cash')
-          .reduce((s, it) => s + Math.max(0, Number(it.system?.quantity ?? 0)), 0);
+    for (let i = 0; i < targets.length; i++) {
+      const target = targets[i];
+      const amountForThis = perActorAmounts[i];
+      if (amountForThis <= 0) continue;
 
       const before = sumCash(target);
+
       if (data.operation === 'add') {
         const added = await addCashToActor(
           target,
-          data.amount,
+          amountForThis,
           defaultCurrencyName,
           defaultCurrencyImage
         );
-        if (added > 0) {
-          successCount += 1;
-        } else {
-          continue;
-        }
+        if (added > 0) successCount++;
+        else continue;
       } else if (data.operation === 'remove') {
-        const removed = await removeCashFromActor(target, data.amount);
+        const removed = await removeCashFromActor(target, amountForThis);
         if (removed === false) {
           ui.notifications.warn(
             game.i18n.format('SDM.ErrorNotEnoughMoney', { target: target.name })
@@ -273,7 +371,7 @@ export async function giveCash(
           });
           continue;
         } else if (removed > 0) {
-          successCount += 1;
+          successCount++;
         } else {
           continue;
         }
@@ -319,7 +417,7 @@ export async function giveCash(
 
         await ChatMessage.create({
           content: html,
-          speaker: ChatMessage.getSpeaker({ alias: 'Gamemaster' }),
+          speaker: ChatMessage.getSpeaker({ alias: 'Gamemaster' })
         });
       }
 

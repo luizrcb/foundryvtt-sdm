@@ -129,7 +129,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       levelUpNPC: this._onLevelUpNPC,
       openDoc: { handler: this._openDoc, buttons: [0] },
       toggleItemStatus: { handler: this._toggleItemStatus, buttons: [0, 2] },
-      openPetSheet: this._onOpenPetSheet,
+      openPetSheet: this._onOpenPetSheet
     },
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
     form: {
@@ -1960,25 +1960,58 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     }
 
     if (item.system?.type === GearType.POWER) {
-      const itemPower = await DialogV2.confirm({
-        window: { title: $fmt('SDM.CreateItemTypeAs', { type: $l10n('TYPES.Item.power') }) },
-        content: `<h3>${$fmt('SDM.CreateItemTypeAs', { type: $l10n('TYPES.Item.power') })}</h3>`,
-        modal: true,
-        rejectClose: false,
-        yes: { label: $l10n('TYPE.Item'), icon: 'fa fa-book' },
-        no: { label: $l10n('TYPE.Trait'), icon: 'fa fa-brain' }
+      const buttons = [
+        {
+          action: 'gear',
+          label: game.i18n.localize('TYPE.Gear'),
+          icon: 'fa fa-book',
+          callback: () => 'gear'
+        },
+        {
+          action: 'trait',
+          label: game.i18n.localize('TYPE.Trait'),
+          icon: 'fa fa-brain',
+          callback: () => 'trait'
+        },
+        {
+          action: 'burden',
+          label: game.i18n.localize('TYPE.Burden'),
+          icon: 'fa fa-skull',
+          callback: () => 'burden'
+        }
+      ];
+
+      const title = game.i18n.format('SDM.CreateItemTypeAs', {
+        type: game.i18n.localize('TYPES.Item.power')
       });
 
-      if (itemPower === null) return;
+      const choice = await DialogV2.wait({
+        window: {
+          title: title,
+          resizable: false
+        },
+        content: `<h3>${title}</h3>`,
+        buttons: buttons,
+        modal: true,
+        rejectClose: false
+      });
+
+      if (!choice) return;
 
       let clonedItem = foundry.utils.duplicate(item);
-
-      if (!itemPower) {
-        clonedItem.type = ItemType.TRAIT;
-        return this._onDropItemCreate(clonedItem, event);
+      clonedItem.system.type = GearType.POWER;
+      switch (choice) {
+        case 'gear':
+          clonedItem.type = ItemType.GEAR;
+          break;
+        case 'trait':
+          clonedItem.type = ItemType.TRAIT;
+          break;
+        case 'burden':
+          clonedItem.type = ItemType.BURDEN;
+          break;
       }
 
-      clonedItem.type = ItemType.GEAR;
       return this._onDropItemCreate(clonedItem, event);
     }
 

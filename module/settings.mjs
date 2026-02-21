@@ -156,6 +156,21 @@ export function registerSystemSettings() {
     default: DEFAULT_CASH_ICON
   });
 
+  game.settings.register('sdm', 'currencyWeight', {
+    name: 'SDM.SettingsCurrencyWeight',
+    hint: 'SDM.SettingsCurrencyWeightHint',
+    scope: 'world',
+    restricted: true,
+    type: String,
+    choices: {
+      'standard': 'SDM.CurrencyWeigth.Standard',
+      'weightless': 'SDM.CurrencyWeigth.Weightless',
+      'single_stone': 'SDM.CurrencyWeigth.SingleStone'
+    },
+    default: 'standard',
+    requiresReload: true
+  });
+
   game.settings.register('sdm', 'shouldPlayLevelUpSoundFx', {
     name: 'SDM.SettingsShouldPlayLevelUpSoundFx',
     hint: 'SDM.SettingsShouldPlayLevelUpSoundFxHint',

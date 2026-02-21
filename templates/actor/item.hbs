@@ -147,6 +147,7 @@
 
     {{#if (and
       (ne actorType 'caravan')
+      (ne item.system.size.unit 'cash')
       (ne item.system.status 'broken')
       (ne item.system.type 'corruption')
       (ne item.system.type 'affliction')

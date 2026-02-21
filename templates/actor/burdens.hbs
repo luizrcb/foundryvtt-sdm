@@ -29,7 +29,23 @@
             <div class='item-image'>
               <img src='{{burden.img}}' width='24' height='24' />
             </div>
-            <div>{{burden.name}}</div>
+            <div class='flexrow'>
+              {{#if (and
+                (eq burden.system.type 'power')
+                (ne burden.system.status 'broken')
+              )}}
+                <div
+                  class='rollable flexrow'
+                  data-action='roll'
+                  data-type='power'
+                  data-label='{{burden.name}}'
+                  data-tooltip='{{localize "SDM.RollType" type=(localize 'SDM.Power')}}'
+                >
+                  <i class='fa-solid fa-dice-d20 roll-icon'></i>
+                </div>
+              {{/if}}
+              {{burden.name}}
+            </div>
           </div>
         </li>
       {{/if}}
