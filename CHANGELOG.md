@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v0.12.1
+
+- Removed readied icon from cash items sheet
+- Added burden penalty to NPC rolls
+- Changed menu fonts
+- Changed game paused font and color (uses chromatype setting)
+- Fixed notification message displayed when background trait generator creates a trait and no character is selected
+
 ## v0.12.0
 
 - Added support to burdens as powers (the weight of a malign knowledge)
