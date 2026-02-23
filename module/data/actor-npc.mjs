@@ -5,8 +5,9 @@ const fields = foundry.data.fields;
 
 export default class SdmNPC extends SdmActorBase {
   static LOCALIZATION_PREFIXES = [...super.LOCALIZATION_PREFIXES, 'SDM.Actor.NPC'];
-
   static defineSchema() {
+    const requiredInteger = { required: true, nullable: false, integer: true };
+
     const baseActorSchema = super.defineSchema();
 
     return {
@@ -35,7 +36,7 @@ export default class SdmNPC extends SdmActorBase {
 
       createdFromTable: new fields.StringField({
         required: false,
-        initial: '',
+        initial: ''
       }),
 
       isHelper: new fields.BooleanField({
@@ -61,6 +62,18 @@ export default class SdmNPC extends SdmActorBase {
         integer: true,
         initial: 0,
         choices: CONFIG.SDM.reverseSpeedValues
+      }),
+
+      burden_penalty: new fields.NumberField({
+        ...requiredInteger,
+        initial: 0,
+        min: 0
+      }),
+
+      burden_penalty_bonus: new fields.NumberField({
+        ...requiredInteger,
+        initial: 0,
+        min: 0
       })
     };
   }
@@ -68,11 +81,13 @@ export default class SdmNPC extends SdmActorBase {
   getRollData() {
     const data = {};
 
+    data.bonus = this.bonus;
+    data.burden_penalty = this.burden_penalty || 0;
+    data.burden_penalty_bonus = this.burden_penalty_bonus;
+    data.damage = this.damage;
+    data.defense = this.defense;
     data.level = this.level;
     data.life = this.life;
-    data.defense = this.defense;
-    data.bonus = this.bonus;
-    data.damage = this.damage;
 
     return data;
   }

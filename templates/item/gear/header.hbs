@@ -2,7 +2,13 @@
   <header class='sheet-header'>
     <div class="flexcol flex-between flex-center">
       <img class='profile-img' src='{{item.img}}' data-edit='img' data-action='onEditImage' data-tooltip='{{item.name}}' />
-      {{#if (and (ne system.type 'corruption') (ne system.type 'affliction') (ne system.type 'pet') (ne system.type 'augment'))}}
+      {{#if (and
+        (ne system.type 'corruption')
+        (ne system.type 'affliction')
+        (ne system.type 'pet')
+        (ne system.type 'augment')
+        (ne system.size.unit 'cash')
+      )}}
       <div class="align-center mb-10 mr-10 rollable" {{#if system.readied}}
         data-tooltip="{{localize 'SDM.ItemReadied' }}" {{else}} data-tooltip="{{localize 'SDM.ItemNotReadied'}}" {{/if}}
         data-action="toggleReadied">

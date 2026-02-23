@@ -832,16 +832,16 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       //if (item) return item.roll(event, versatile);
     }
 
-    const abilitiesLabel = $l10n(CONFIG.SDM.abilitiesLabel);
+    //const abilitiesLabel = $l10n(CONFIG.SDM.abilitiesLabel);
 
-    const ChatLabel = dataset.label ? `[${abilitiesLabel}] ${dataset.label}` : '';
+    // const ChatLabel = dataset.label ? `[${abilitiesLabel}] ${dataset.label}` : '';
 
-    // Handle rolls that supply the formula directly.
-    if (dataset.roll) {
-      // return RollHandler.performRoll(this.actor, null, ChatLabel, {
-      //   roll: dataset.roll
-      // });
-    }
+    // // Handle rolls that supply the formula directly.
+    // if (dataset.roll) {
+    //   // return RollHandler.performRoll(this.actor, null, ChatLabel, {
+    //   //   roll: dataset.roll
+    //   // });
+    // }
 
     const rolledFrom = dataset.rollType ?? 'ability';
     const rolledFromlabel = $l10n(CONFIG.SDM.rollSource[rolledFrom]);

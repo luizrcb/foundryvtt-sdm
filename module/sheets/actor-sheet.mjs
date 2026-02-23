@@ -1250,6 +1250,12 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       return;
     }
 
+    const burdenPenalty = this.actor.system.burden_penalty || 0;
+    const burdenPart = burdenPenalty > 0 ? -1 * burdenPenalty : 0;
+    const totalBonuses = burdenPart;
+    const bonusPart =
+      totalBonuses === 0 ? '' : totalBonuses > 0 ? `+${totalBonuses}` : totalBonuses;
+
     const { modifier = '', rollMode = 'normal' } = data;
     const modPart = foundry.dice.Roll.validate(modifier) ? `+${modifier}` : '';
     const basMoraleFormula = game.settings.get('sdm', 'baseMoraleFormula') || '2d6';
@@ -1261,7 +1267,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       ? `{${basMoraleFormula}, ${basMoraleFormula}}${keepModifier}`
       : basMoraleFormula;
 
-    const formula = `${diceExpression} ${modPart}`;
+    const formula = `${diceExpression}${bonusPart}${modPart}`;
     const sanitizedFormula = sanitizeExpression(formula);
     const targetNumber = this.actor.system.morale || 2;
 

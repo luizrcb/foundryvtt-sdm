@@ -260,7 +260,7 @@
   "SDM.BackgroundSpin": "Spin",
   "SDM.BackgroundSwapOrder": "swap",
   "SDM.BackgroundTask": "Task",
-  "SDM.BackgroundTraitCreated": "{flavor} {role} background trait created for {name} character!",
+  "SDM.BackgroundTraitCreated": "{flavor} background trait created!",
   "SDM.Before": "Before",
   "SDM.BiomagicalCorruption": "Biomagical Corruption",
   "SDM.BlindRoll": "Blind GM",

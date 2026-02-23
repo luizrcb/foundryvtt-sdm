@@ -201,11 +201,9 @@ export async function generateRandomBackground() {
           });
 
           ui.notifications.info(
-            game.i18n.format('SDM.BackgroundTraitCreated', {
-              flavor: combined,
-              role: '',
-              name: actor?.name
-            })
+            `${actor ? actor.name + ': ' : ''} ${game.i18n.format('SDM.BackgroundTraitCreated', {
+              flavor: combined
+            })}`
           );
         }
       },

@@ -382,7 +382,12 @@ export class SdmActor extends Actor {
     this.update(updateData);
   }
 
-  _prepareNpcData() {}
+  _prepareNpcData() {
+    const { burdenPenalty} = this.checkInventorySlots();
+    this.update({
+      'system.burden_penalty': burdenPenalty || 0,
+    })
+  }
 
   getTotalWeight() {
     switch (this.type) {
@@ -492,7 +497,7 @@ export class SdmActor extends Actor {
       traitSlotsLimit = 100;
     }
 
-    let burdenPenalTyBonus = this.system.burden_penalty_bonus || 0;
+    let burdenPenaltyBonus = this.system.burden_penalty_bonus || 0;
     let powerSlotsBonus = this.system.power_slots_bonus || 0;
     let petSlotsBonus = this.system.pet_slots_bonus || 0;
     let augmentSlotsBonus = this.system.augment_slots_bonus || 0;
@@ -558,7 +563,7 @@ export class SdmActor extends Actor {
       // Append to inventory.
       if (isGear) {
         if (isAffliction) {
-          burdenPenalTyBonus += 1;
+          burdenPenaltyBonus += 1;
         }
 
         if (items.slotsTaken + itemSlots <= itemSlotsLimit) {
@@ -570,7 +575,7 @@ export class SdmActor extends Actor {
         }
       } else if (i.type === ItemType.TRAIT) {
         if (isAffliction) {
-          burdenPenalTyBonus += 1;
+          burdenPenaltyBonus += 1;
         }
         if (traits.slotsTaken + itemSlots <= traitSlotsLimit) {
           traits.slots.push(i);
@@ -589,7 +594,7 @@ export class SdmActor extends Actor {
       items,
       burdens,
       traits,
-      burdenPenalty: burdens.slotsTaken + burdenPenalTyBonus
+      burdenPenalty: burdens.slotsTaken + burdenPenaltyBonus
     };
 
     return response;
