@@ -784,6 +784,7 @@ async function characterGeneratorDialog(actor) {
   const data = await DialogV2.wait({
     window: { title: $l10n('SDM.CreateRandomCharacter') },
     content,
+    modal: true,
     buttons: [
       {
         action: 'generate',

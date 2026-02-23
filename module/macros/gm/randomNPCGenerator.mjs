@@ -63,6 +63,7 @@ export async function randomNPCGenerator() {
   const data = await DialogV2.wait({
     window: { title: game.i18n.localize('SDM.CreateRandomNPC') },
     content,
+    modal: true,
     buttons: [
       {
         action: 'ok',

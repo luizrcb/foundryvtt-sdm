@@ -65,6 +65,7 @@ export async function promptSplitStackFirstQty(item, opts = {}) {
   const data = await foundry.applications.api.DialogV2.prompt({
     window: { title, resizable: false },
     content,
+    modal: true,
     ok: {
       icon: 'fa-solid fa-scissors',
       label: $l10n('SDM.Split') || 'Split',

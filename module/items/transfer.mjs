@@ -495,6 +495,7 @@ export async function openItemTransferDialog(item, sourceActor) {
     const dialogData = {
       window: { title: $fmt('SDM.Transfer', { type: $l10n('TYPE.Item') }) },
       content: template,
+      modal: true,
       ok: {
         icon: 'fa-solid fa-share',
         label: $fmt('SDM.Transfer', { type: '' }),

@@ -133,6 +133,7 @@ export async function generateRandomBackground() {
   await foundry.applications.api.DialogV2.wait({
     window: { title: game.i18n.localize('SDM.BackgroundGenerator') },
     content: buildDialogContent(selectedRows),
+    modal: true,
     buttons: [
       {
         action: 'confirm',

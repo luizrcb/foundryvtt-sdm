@@ -312,6 +312,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         window: {
           title: $fmt('SDM.RollType', { type: $l10n(`SDM.${titleType}`) })
         },
+        modal: true,
         powerOptions,
         content: template,
         position: {
@@ -456,6 +457,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
           type: $l10n(`SDM.Attack${capitalizedAttack}`)
         })
       },
+      modal: true,
       content: template,
       ok: {
         icon: 'fa-solid fa-floppy-disk',
@@ -1226,6 +1228,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
           title: $fmt('SDM.RollType', { type: $l10n('SDM.Morale') }),
           resizable: true
         },
+        modal: true,
         content: await renderTemplate(templatePath('actor/npc/morale-roll-dialog'), {
           rollModes: CONFIG.SDM.rollMode,
           blindGMRoll: isCtrl
@@ -1286,6 +1289,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         window: {
           title: $fmt('SDM.RollType', { type: $l10n('SDM.Corruption') })
         },
+        modal: true,
         position: {
           width: 500,
           height: 265
@@ -1359,9 +1363,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         window: {
           title: $fmt('SDM.RollType', { type: $l10n('SDM.Reaction') })
         },
+        modal: true,
         position: {
           width: 500,
-          height: 300
+          height: 330
         },
         content: await renderTemplate(templatePath('reaction-roll-dialog'), {
           rollModes: CONFIG.SDM.rollMode,
@@ -1455,6 +1460,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         window: {
           title: $fmt('SDM.RollType', { type: $l10n('SDM.Defeat') })
         },
+        modal: true,
         position: {
           width: 500,
           height: 300
@@ -1590,6 +1596,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         window: {
           title: $fmt('SDM.RollType', { type: $l10n('SDM.FieldSaveTarget') })
         },
+        modal: true,
         content: template,
         position: {
           width: 400

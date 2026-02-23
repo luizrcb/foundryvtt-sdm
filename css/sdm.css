@@ -189,8 +189,8 @@
   --sdm-left-edit: 10px;
 }
 
-.window-app {
-  font-family: var(--sdm-font-primary);
+.game {
+  font-family: var(--sdm-font-tab);
 }
 
 .rollable:hover, .rollable:focus {
@@ -589,6 +589,37 @@ input[type=radio]::after {
     --color-warm-1: var(--sdm-scrollbar-thumb);
     --color-warm-2: var(--sdm-scrollbar-thumb);
   }
+  #settings h1 {
+    font-family: var(--sdm-font-primary);
+    font-size: 13px;
+  }
+  :is(#chat,
+  #settings,
+  #settings-config,
+  footer,
+  #module-management,
+  #combat,
+  #actors,
+  #scenes,
+  #items,
+  #journal,
+  #tables,
+  #cards,
+  #macros,
+  #playlists,
+  #compendium) :is(button, a.button):not(.icon) {
+    font-family: var(--sdm-font-secondary);
+  }
+  .message-content,
+  textarea.chat-input {
+    font-family: var(--sdm-font-secondary);
+  }
+  h4.message-sender {
+    font-family: var(--sdm-font-tab);
+  }
+  h6 strong {
+    font-family: var(--sdm-font-tab);
+  }
   .item-piles-chat-card-title > p:first-of-type {
     display: flex;
     align-items: center;
@@ -611,11 +642,11 @@ input[type=radio]::after {
   .sdm-icon {
     width: 250px;
     height: 150px;
-    -webkit-mask-image: url("../assets/sdm-compatible.png");
+    -webkit-mask-image: url("../assets/sdm-pause.png");
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: center;
     -webkit-mask-size: contain;
-    mask-image: url("../assets/sdm-compatible.png");
+    mask-image: url("../assets/sdm-pause.png");
     mask-repeat: no-repeat;
     mask-position: center;
     mask-size: contain;

@@ -442,6 +442,8 @@ Hooks.on('renderGamePause', (app, html) => {
   const figcaption = html.querySelector('figcaption');
   if (figcaption) {
     figcaption.style.fontFamily = 'var(--sdm-font-dice)';
+    figcaption.style.color = 'var(--sdm-c-accent)';
+    figcaption.style.textShadow = '2px 2px black';
   }
 });
 

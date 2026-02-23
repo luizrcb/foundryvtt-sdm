@@ -70,6 +70,7 @@ export async function giveExperience() {
   const data = await DialogV2.prompt({
     window: { title: game.i18n.localize('SDM.ExperienceDistribution') },
     content,
+    modal: true,
     ok: {
       label: game.i18n.localize('SDM.DistributeXP'),
       icon: 'fa-solid fa-hand-holding-medical',
