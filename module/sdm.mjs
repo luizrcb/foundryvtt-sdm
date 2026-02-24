@@ -355,7 +355,9 @@ Hooks.on('updateItem', async item => {
 
     if (item.system.size.unit === SizeUnit.CASH) {
       updateData['img'] = defaultCurrencyImage;
-      updateData['name'] = defaultCurrencyName;
+      if (item.name === $l10n('TYPE.Gear')) {
+        updateData['name'] = defaultCurrencyName;
+      }
     }
   }
 
