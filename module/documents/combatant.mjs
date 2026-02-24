@@ -22,7 +22,7 @@ export class SdmCombatant extends Combatant {
   }
 
   _preCreate(data, options, userId) {
-    const actor = fromUuidSync('Actor.'+ data?.actorId);
+    const actor = game.actors.get(data?.actorId);
     if (actor?.type === ActorType.CARAVAN) return false;
   }
 }
