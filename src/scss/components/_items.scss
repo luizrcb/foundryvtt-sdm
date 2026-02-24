@@ -193,14 +193,14 @@
   vertical-align: middle;
 }
 
-/* Hide default checkbox */
+// Hide default checkbox
 .switch input {
   opacity: 0;
   width: 0;
   height: 0;
 }
 
-/* Slider Background */
+// Slider Background
 .slider {
   position: absolute;
   cursor: pointer;
@@ -231,18 +231,18 @@
   z-index: 2;
 }
 
-/* Checked State - Foundry Orange */
+// Checked State - Foundry Orange
 input:checked + .slider {
   background-color: colors.$c-dark;
 }
 
-/* Move slider on checked */
+// Move slider on checked
 input:checked + .slider .fa-gear {
   transform: translateX(20px);
   color: colors.$c-dark;
 }
 
-/* Rounded Slider */
+// Rounded Slider
 .slider.round {
   border-radius: 34px;
 }
@@ -251,7 +251,7 @@ input:checked + .slider .fa-gear {
   border-radius: 50%;
 }
 
-/* Disabled State */
+// Disabled State
 .switch input:disabled + .slider {
   opacity: 0.5;
   cursor: default;
@@ -282,6 +282,6 @@ li.item {
 
 @layer item-list {
   .items-list .item:hover {
-    background-color: var(--sdm-item-hover); /* Your ultraviolet color with transparency */
+    background-color: var(--sdm-item-hover); // Your ultraviolet color with transparency
   }
 }

@@ -29,27 +29,27 @@
   background: none;
   border: none;
   border-radius: 0;
-  border-bottom: 1px solid #888; /* the underline */
+  border-bottom: 1px solid #888; // the underline
   padding: 2px 0 2px 2px;
   outline: none;
   box-shadow: none;
   font-family: typo.$font-secondary;
 }
 
-/* Disabled or readonly inputs */
+// Disabled or readonly inputs
 .sheet input:disabled,
 .sheet input[readonly],
 .sheet textarea:disabled,
 .sheet textarea[readonly],
 .sheet select:disabled {
-  background: rgba(0, 0, 0, 0.05); /* subtle grey background */
-  border-bottom: 1px solid #aaa; /* differentiate from normal */
+  background: rgba(0, 0, 0, 0.05); // subtle grey background
+  border-bottom: 1px solid #aaa; // differentiate from normal
   color: #666;
   padding: 2px 0 2px 4px;
   font-family: typo.$font-secondary;
 }
 
-/* On focus, accent color */
+// On focus, accent color
 .sheet input:focus,
 .sheet textarea:focus,
 .sheet select:focus {
@@ -496,7 +496,7 @@ input[type='radio']::after {
     mask-size: contain;
     object-fit: fill;
 
-    /* you choose the visible color now */
+    // you choose the visible color now
     background-color: var(--sdm-scrollbar-thumb);
   }
 
@@ -565,8 +565,8 @@ input[type='radio']::after {
         gap: 0.25rem;
         overflow: hidden;
 
-        /* Immediate children vert margins
-         * are handled by the column gap */
+        // Immediate children vert margins
+         *
         > * {
           margin-block: 0;
         }
@@ -837,11 +837,11 @@ input[type='radio']::after {
   }
 
   .items-list .item:nth-child(even) {
-    background-color: rgba(0, 0, 0, 0.02); /* Light gray for even items */
+    background-color: rgba(0, 0, 0, 0.02); // Light gray for even items
   }
 
   .items-list .item:nth-child(odd) {
-    background-color: rgba(0, 0, 0, 0.05); /* Slightly darker for odd items */
+    background-color: rgba(0, 0, 0, 0.05); // Slightly darker for odd items
   }
 
   .theme-dark .items-list .item:nth-child(even) {
@@ -861,13 +861,13 @@ input[type='radio']::after {
     }
   }
 
-  /* Even / odd row backgrounds */
+  // Even / odd row backgrounds
   .adjustment-row:nth-child(odd) {
-    background-color: rgba(0, 0, 0, 0.05); /* light gray for odd rows */
+    background-color: rgba(0, 0, 0, 0.05); // light gray for odd rows
   }
 
   .adjustment-row:nth-child(even) {
-    background-color: rgba(0, 0, 0, 0.02); /* light gray for odd rows */
+    background-color: rgba(0, 0, 0, 0.02); // light gray for odd rows
   }
 
   .adjustment-value {
@@ -879,7 +879,7 @@ input[type='radio']::after {
     font-size: 14px;
   }
 
-  /* Positive / negative values */
+  // Positive / negative values
   .adjustment-value.positive {
     color: green;
   }
@@ -888,7 +888,7 @@ input[type='radio']::after {
     color: red;
   }
 
-  /* Row padding and flex layout */
+  // Row padding and flex layout
   .adjustment-row {
     display: flex;
     align-items: center;
@@ -898,24 +898,24 @@ input[type='radio']::after {
     transition: background-color 0.2s;
   }
 
-  /* Optional: hover highlight */
+  // Optional: hover highlight
   .adjustment-row:hover {
     background-color: rgba(0, 0, 0, 0.1);
   }
 
-  /* Actor image styling */
+  // Actor image styling
   .adjustment-row img {
     flex: 0 0 auto;
     border-radius: 3px;
   }
 
-  /* Cash image styling */
+  // Cash image styling
   .cash-img {
     vertical-align: text-bottom;
     height: 14px;
   }
 
-  /* Note styling */
+  // Note styling
   .adjustment-note {
     margin-left: 8px;
   }

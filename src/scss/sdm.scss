@@ -13,7 +13,7 @@
 @include meta.load-css('global/burdenGenerator');
 @include meta.load-css('global/oracle');
 
-/* Estilos específicos para sheets .sdm */
+// Estilos específicos para sheets .sdm
 .sdm {
   // Components com escopo
   @include meta.load-css('components/forms');

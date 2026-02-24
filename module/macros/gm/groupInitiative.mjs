@@ -1,3 +1,5 @@
+import { ActorType } from '../../helpers/constants.mjs';
+
 function getUniqueRandomDecimals(count = 5) {
   const nums = new Set();
   while (nums.size < count) {
@@ -36,16 +38,24 @@ export async function groupInitiative({ reroll = false } = {}) {
 
   if (combats && combats.length) {
     const combat = combats[0];
-    const combatTokens = combat.combatants.map(combatant => combatant.token);
+    const combatTokens = combat.combatants
+      .filter(combatant => {
+        return combatant?.actor?.type !== ActorType.CARAVAN;
+      })
+      .map(combatant => combatant.token);
 
     const alreadyRolled = combat.combatants.contents.every(c => c.initiative !== null);
 
-    if (alreadyRolled && !reroll) return;
+    if (combatTokens.length > 0  && alreadyRolled && !reroll) return;
 
     tokens = [...combatTokens];
   }
 
-  const canvasTokens = canvas.tokens.controlled.map(token => token.document);
+  const canvasTokens = canvas.tokens.controlled
+    .filter(combatant => {
+      return combatant?.actor?.type !== ActorType.CARAVAN;
+    })
+    .map(token => token.document);
 
   if (!tokens.length) {
     tokens = [...canvasTokens];
@@ -73,30 +83,30 @@ export async function groupInitiative({ reroll = false } = {}) {
   const { FRIENDLY, NEUTRAL, HOSTILE, SECRET } = CONST.TOKEN_DISPOSITIONS;
 
   for (const token of tokens) {
-    if (token?.hasPlayerOwner === true) {
-      if (groupPlayersToFriendlyTokens) {
-        groups.friendly.push(token);
-      } else {
-        groups.players.push(token);
-      }
-    } else {
-      const disp = token?.disposition;
-
-      switch (disp) {
-        case FRIENDLY:
+      if (token?.hasPlayerOwner === true) {
+        if (groupPlayersToFriendlyTokens) {
           groups.friendly.push(token);
-          break;
-        case SECRET:
-          groups.secret.push(token);
-          break;
-        case HOSTILE:
-          groups.hostile.push(token);
-          break;
-        case NEUTRAL:
-          groups.neutral.push(token);
-          break;
+        } else {
+          groups.players.push(token);
+        }
+      } else {
+        const disp = token?.disposition;
+
+        switch (disp) {
+          case FRIENDLY:
+            groups.friendly.push(token);
+            break;
+          case SECRET:
+            groups.secret.push(token);
+            break;
+          case HOSTILE:
+            groups.hostile.push(token);
+            break;
+          case NEUTRAL:
+            groups.neutral.push(token);
+            break;
+        }
       }
-    }
   }
 
   const processGroup = async (group, groupIndex, useInitiativeTiebreaking = false) => {

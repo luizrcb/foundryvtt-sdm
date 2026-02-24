@@ -1,9 +1,9 @@
 @charset "UTF-8";
 :root {
-  --sdm-font-primary: "Baron Neue";
-  --sdm-font-secondary: "Alegreya", sans-serif;
-  --sdm-font-dice: "Our Golden Age";
-  --sdm-font-tab: "Bebas Neue", sans-serif;
+  --sdm-font-primary: 'Baron Neue';
+  --sdm-font-secondary: 'Alegreya', sans-serif;
+  --sdm-font-dice: 'Our Golden Age';
+  --sdm-font-tab: 'Bebas Neue', sans-serif;
 }
 
 :root {
@@ -95,10 +95,10 @@
 }
 
 :root {
-  --sdm-font-primary: "Baron Neue";
-  --sdm-font-secondary: "Alegreya", sans-serif;
-  --sdm-font-dice: "Our Golden Age";
-  --sdm-font-tab: "Bebas Neue", sans-serif;
+  --sdm-font-primary: 'Baron Neue';
+  --sdm-font-secondary: 'Alegreya', sans-serif;
+  --sdm-font-dice: 'Our Golden Age';
+  --sdm-font-tab: 'Bebas Neue', sans-serif;
 }
 
 :root {
@@ -213,27 +213,25 @@
   background: none;
   border: none;
   border-radius: 0;
-  border-bottom: 1px solid #888; /* the underline */
+  border-bottom: 1px solid #888;
   padding: 2px 0 2px 2px;
   outline: none;
   box-shadow: none;
   font-family: var(--sdm-font-secondary);
 }
 
-/* Disabled or readonly inputs */
 .sheet input:disabled,
 .sheet input[readonly],
 .sheet textarea:disabled,
 .sheet textarea[readonly],
 .sheet select:disabled {
-  background: rgba(0, 0, 0, 0.05); /* subtle grey background */
-  border-bottom: 1px solid #aaa; /* differentiate from normal */
+  background: rgba(0, 0, 0, 0.05);
+  border-bottom: 1px solid #aaa;
   color: #666;
   padding: 2px 0 2px 4px;
   font-family: var(--sdm-font-secondary);
 }
 
-/* On focus, accent color */
 .sheet input:focus,
 .sheet textarea:focus,
 .sheet select:focus {
@@ -651,7 +649,6 @@ input[type=radio]::after {
     mask-position: center;
     mask-size: contain;
     object-fit: fill;
-    /* you choose the visible color now */
     background-color: var(--sdm-scrollbar-thumb);
   }
   .sdm-pause {
@@ -707,10 +704,8 @@ input[type=radio]::after {
     flex-direction: column;
     gap: 0.25rem;
     overflow: hidden;
-    /* Immediate children vert margins
-     * are handled by the column gap */
   }
-  .description .details > .wrapper > * {
+  .description .details > .wrapper * > * {
     margin-block: 0;
   }
   .description .details p {
@@ -791,27 +786,27 @@ input[type=radio]::after {
     height: 19px;
   }
   .dice-d4 {
-    --dice-image: url("../assets/icons/dice/d4.svg");
+    --dice-image: url('../assets/icons/dice/d4.svg');
     background-image: var(--dice-image);
   }
   .dice-d6 {
-    --dice-image: url("../assets/icons/dice/d6.svg");
+    --dice-image: url('../assets/icons/dice/d6.svg');
     background-image: var(--dice-image);
   }
   .dice-d8 {
-    --dice-image: url("../assets/icons/dice/d8.svg");
+    --dice-image: url('../assets/icons/dice/d8.svg');
     background-image: var(--dice-image);
   }
   .dice-d10 {
-    --dice-image: url("../assets/icons/dice/d10.svg");
+    --dice-image: url('../assets/icons/dice/d10.svg');
     background-image: var(--dice-image);
   }
   .dice-d12 {
-    --dice-image: url("../assets/icons/dice/d12.svg");
+    --dice-image: url('../assets/icons/dice/d12.svg');
     background-image: var(--dice-image);
   }
   .dice-d20 {
-    --dice-image: url("../assets/icons/dice/d20.svg");
+    --dice-image: url('../assets/icons/dice/d20.svg');
     background-image: var(--dice-image);
   }
   button i.die-label {
@@ -925,10 +920,10 @@ input[type=radio]::after {
     text-shadow: 0 0 10px var(--sdm-c-highlight);
   }
   .items-list .item:nth-child(even) {
-    background-color: rgba(0, 0, 0, 0.02); /* Light gray for even items */
+    background-color: rgba(0, 0, 0, 0.02);
   }
   .items-list .item:nth-child(odd) {
-    background-color: rgba(0, 0, 0, 0.05); /* Slightly darker for odd items */
+    background-color: rgba(0, 0, 0, 0.05);
   }
   .theme-dark .items-list .item:nth-child(even) {
     background-color: rgba(255, 255, 255, 0.02);
@@ -942,12 +937,11 @@ input[type=radio]::after {
     background: unset;
     text-shadow: unset;
   }
-  /* Even / odd row backgrounds */
   .adjustment-row:nth-child(odd) {
-    background-color: rgba(0, 0, 0, 0.05); /* light gray for odd rows */
+    background-color: rgba(0, 0, 0, 0.05);
   }
   .adjustment-row:nth-child(even) {
-    background-color: rgba(0, 0, 0, 0.02); /* light gray for odd rows */
+    background-color: rgba(0, 0, 0, 0.02);
   }
   .adjustment-value {
     align-self: flex-end;
@@ -956,14 +950,12 @@ input[type=radio]::after {
   .adjustment-meta {
     font-size: 14px;
   }
-  /* Positive / negative values */
   .adjustment-value.positive {
     color: green;
   }
   .adjustment-value.negative {
     color: red;
   }
-  /* Row padding and flex layout */
   .adjustment-row {
     display: flex;
     align-items: center;
@@ -972,21 +964,17 @@ input[type=radio]::after {
     border-radius: 4px;
     transition: background-color 0.2s;
   }
-  /* Optional: hover highlight */
   .adjustment-row:hover {
     background-color: rgba(0, 0, 0, 0.1);
   }
-  /* Actor image styling */
   .adjustment-row img {
     flex: 0 0 auto;
     border-radius: 3px;
   }
-  /* Cash image styling */
   .cash-img {
     vertical-align: text-bottom;
     height: 14px;
   }
-  /* Note styling */
   .adjustment-note {
     margin-left: 8px;
   }
@@ -1522,8 +1510,8 @@ input[type=radio]::after {
   }
   .burden-chips-container {
     display: flex;
-    flex-wrap: nowrap; /* no wrapping – one single line */
-    overflow-x: auto; /* horizontal scroll if too many chips */
+    flex-wrap: nowrap;
+    overflow-x: auto;
     overflow-y: hidden;
     white-space: nowrap;
     gap: 8px;
@@ -1535,10 +1523,9 @@ input[type=radio]::after {
     border-radius: 5px;
     align-items: center;
   }
-  /* Keep chips themselves inline */
   .burden-chip {
-    display: inline-flex; /* inline-flex keeps them in flow */
-    flex-shrink: 0; /* never shrink chips */
+    display: inline-flex;
+    flex-shrink: 0;
     background: var(--sdm-c-accent);
     color: var(--sdm-c-white);
     padding: 6px 12px;
@@ -1548,7 +1535,6 @@ input[type=radio]::after {
     user-select: none;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   }
-  /* Highlight for the rolled table cell */
   .burden-table td.highlight {
     background-color: var(--sdm-c-accent) !important;
     color: black !important;
@@ -1606,21 +1592,11 @@ input[type=radio]::after {
     margin-top: 10px;
   }
 }
-/* Estilos específicos para sheets .sdm */
-.sdm {
-  /* Hide default checkbox */
-  /* Slider Background */
-  /* Checked State - Foundry Orange */
-  /* Move slider on checked */
-  /* Rounded Slider */
-  /* Disabled State */
-  /* Toggle de modo */
-}
 .sdm :root {
-  --sdm-font-primary: "Baron Neue";
-  --sdm-font-secondary: "Alegreya", sans-serif;
-  --sdm-font-dice: "Our Golden Age";
-  --sdm-font-tab: "Bebas Neue", sans-serif;
+  --sdm-font-primary: 'Baron Neue';
+  --sdm-font-secondary: 'Alegreya', sans-serif;
+  --sdm-font-dice: 'Our Golden Age';
+  --sdm-font-tab: 'Bebas Neue', sans-serif;
 }
 .sdm :root {
   --sdm-c-dark: #191813;
@@ -1769,10 +1745,10 @@ input[type=radio]::after {
   margin-top: 0px;
 }
 .sdm :root {
-  --sdm-font-primary: "Baron Neue";
-  --sdm-font-secondary: "Alegreya", sans-serif;
-  --sdm-font-dice: "Our Golden Age";
-  --sdm-font-tab: "Bebas Neue", sans-serif;
+  --sdm-font-primary: 'Baron Neue';
+  --sdm-font-secondary: 'Alegreya', sans-serif;
+  --sdm-font-dice: 'Our Golden Age';
+  --sdm-font-tab: 'Bebas Neue', sans-serif;
 }
 .sdm .resource-label {
   font-family: var(--sdm-font-primary);
@@ -1793,10 +1769,10 @@ input[type=radio]::after {
   margin-right: 5px;
 }
 .sdm :root {
-  --sdm-font-primary: "Baron Neue";
-  --sdm-font-secondary: "Alegreya", sans-serif;
-  --sdm-font-dice: "Our Golden Age";
-  --sdm-font-tab: "Bebas Neue", sans-serif;
+  --sdm-font-primary: 'Baron Neue';
+  --sdm-font-secondary: 'Alegreya', sans-serif;
+  --sdm-font-dice: 'Our Golden Age';
+  --sdm-font-tab: 'Bebas Neue', sans-serif;
 }
 .sdm :root {
   --sdm-c-dark: #191813;
@@ -1943,13 +1919,15 @@ input[type=radio]::after {
 .sdm .items-list .item-controls {
   display: flex;
   flex: 0 0 100px;
-  justify-content: flex-end;
 }
 .sdm .items-list .item-controls.controls-2 {
   flex: 0 0 50px;
 }
 .sdm .items-list .item-controls.controls-1 {
   flex: 0 0 25px;
+}
+.sdm .items-list .item-controls {
+  justify-content: flex-end;
 }
 .sdm .items-list .item-controls a {
   font-size: 12px;
@@ -1959,10 +1937,12 @@ input[type=radio]::after {
 .sdm .items-list .item {
   align-items: center;
   padding: 0 2px;
-  border-bottom: 1px solid var(--sdm-c-faint);
 }
 .sdm .items-list .item.route-item {
   padding: 4px 6px;
+}
+.sdm .items-list .item {
+  border-bottom: 1px solid var(--sdm-c-faint);
 }
 .sdm .items-list .item:last-child {
   border-bottom: none;
@@ -2112,14 +2092,13 @@ input[type=radio]::after {
 }
 @layer item-list {
   .sdm .items-list .item:hover {
-    background-color: var(--sdm-item-hover); /* Your ultraviolet color with transparency */
+    background-color: var(--sdm-item-hover);
   }
 }
 .sdm .sources {
   display: flex;
   flex-direction: row;
   display: flex;
-  /* Hide the browser's default checkbox */
 }
 .sdm .sources label {
   height: 15px;
@@ -2148,10 +2127,10 @@ input[type=radio]::after {
   margin-bottom: 3px;
 }
 .sdm :root {
-  --sdm-font-primary: "Baron Neue";
-  --sdm-font-secondary: "Alegreya", sans-serif;
-  --sdm-font-dice: "Our Golden Age";
-  --sdm-font-tab: "Bebas Neue", sans-serif;
+  --sdm-font-primary: 'Baron Neue';
+  --sdm-font-secondary: 'Alegreya', sans-serif;
+  --sdm-font-dice: 'Our Golden Age';
+  --sdm-font-tab: 'Bebas Neue', sans-serif;
 }
 .sdm :root {
   --sdm-c-dark: #191813;
@@ -2350,10 +2329,10 @@ input[type=radio]::after {
   border: none;
 }
 .sdm :root {
-  --sdm-font-primary: "Baron Neue";
-  --sdm-font-secondary: "Alegreya", sans-serif;
-  --sdm-font-dice: "Our Golden Age";
-  --sdm-font-tab: "Bebas Neue", sans-serif;
+  --sdm-font-primary: 'Baron Neue';
+  --sdm-font-secondary: 'Alegreya', sans-serif;
+  --sdm-font-dice: 'Our Golden Age';
+  --sdm-font-tab: 'Bebas Neue', sans-serif;
 }
 .sdm :root {
   --sdm-c-dark: #191813;

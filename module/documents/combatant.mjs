@@ -20,4 +20,9 @@ export class SdmCombatant extends Combatant {
     // Fallback to global config
     return super._getInitiativeFormula();
   }
+
+  _preCreate(data, options, userId) {
+    const actor = fromUuidSync('Actor.'+ data?.actorId);
+    if (actor?.type === ActorType.CARAVAN) return false;
+  }
 }
