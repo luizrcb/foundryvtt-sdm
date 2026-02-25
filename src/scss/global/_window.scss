@@ -446,6 +446,18 @@ input[type='radio']::after {
     font-family: var(--sdm-font-secondary);
   }
 
+  span.fumble, span.critical, span.force, span.lucky {
+    font-family: var(--sdm-font-dice);
+  }
+
+  #chat div.custom-result > h4 {
+    font-family: var(--sdm-font-primary);
+  }
+
+  #chat div.custom-result > h6 {
+    font-family: var(--sdm-font-primary);
+  }
+
   .message-content,
   textarea.chat-input {
     font-family: var(--sdm-font-secondary);

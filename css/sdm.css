@@ -608,6 +608,15 @@ input[type=radio]::after {
   #compendium) :is(button, a.button):not(.icon) {
     font-family: var(--sdm-font-secondary);
   }
+  span.fumble, span.critical, span.force, span.lucky {
+    font-family: var(--sdm-font-dice);
+  }
+  #chat div.custom-result > h4 {
+    font-family: var(--sdm-font-primary);
+  }
+  #chat div.custom-result > h6 {
+    font-family: var(--sdm-font-primary);
+  }
   .message-content,
   textarea.chat-input {
     font-family: var(--sdm-font-secondary);
@@ -1559,6 +1568,7 @@ input[type=radio]::after {
     color: #e0aaff;
     margin: 0;
     font-size: 18px;
+    font-family: var(--sdm-font-dice);
   }
   .oracle-question {
     font-style: italic;
@@ -1583,6 +1593,8 @@ input[type=radio]::after {
   .oracle-outcome h6 {
     color: #e0aaff;
     margin: 0 0 5px 0;
+    font-size: 15px;
+    font-family: var(--sdm-font-primary);
   }
   .oracle-details {
     font-size: 0.9em;

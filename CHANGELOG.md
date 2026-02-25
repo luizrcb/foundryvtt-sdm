@@ -2,8 +2,10 @@
 
 ## v0.12.2
 
-- Removed caravan tokens from been added to the combat tracker
-- Added support to a pet tab in the Token Action HUD SDM module
+- Allowed gear pets to be sent to caravan sheets
+- New fonts on chat messages for fumble, critical success and usage roll results
+- Removed caravan tokens from being added to the combat tracker
+- Added support for a pet tab in the Token Action HUD SDM module
 
 ## v0.12.1
 

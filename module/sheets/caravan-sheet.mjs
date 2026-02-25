@@ -1,4 +1,4 @@
-import { ActorType, ItemType, SizeUnit } from '../helpers/constants.mjs';
+import { ActorType, GearType, ItemType, SizeUnit } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { $fmt, $l10n, foundryVersionIsAtLeast, getSeasonAndWeek } from '../helpers/globalUtils.mjs';
 import {
@@ -59,7 +59,8 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       deleteRoute: this._deleteRoute,
       consumeSupplies: this._consumeSupplies,
       radioToggle: this._radioToggle,
-      viewNPC: this._viewCrewMember
+      viewNPC: this._viewCrewMember,
+      openPetSheet: this._onOpenPetSheet
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: '[data-drop], [data-item-id]' }],
@@ -364,7 +365,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
         if (item.system.quantity === 0) need = 0;
         const weightRules = game.settings.get('sdm', 'currencyWeight');
         if (weightRules === 'weightless') need = 0;
-        if (weightRules === 'single_stone') need =  1;
+        if (weightRules === 'single_stone') need = 1;
       }
 
       const flaggedIdx = Number(item.getFlag(FLAG_SCOPE, FLAG_SACK));
@@ -1018,6 +1019,24 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       return SdmCaravanSheet._deleteCrew.call(this, event, target);
     }
     await npc.sheet.render(true);
+  }
+
+  static async _onOpenPetSheet(event, target) {
+    event.preventDefault(); // Don't open context menu
+    event.stopPropagation(); // Don't trigger other events
+
+    if (event.detail > 1) return;
+
+    const item = this._getEmbeddedDocument(target);
+
+    if (item.system.type !== GearType.PET) return;
+
+    if (!item.system.pet) return;
+
+    const petDocument = await fromUuid(item.system.pet);
+    if (!petDocument) return;
+
+    petDocument.sheet.render(true);
   }
 
   static async _consumeSupplies() {
