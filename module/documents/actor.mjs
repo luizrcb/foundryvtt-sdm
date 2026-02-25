@@ -1567,6 +1567,11 @@ export class SdmActor extends Actor {
           handler: '_onTransferItem',
           dataset: { action: 'roll', type: actionType },
           closestReturn: { dataset: { documentClass: 'Item', itemId: actionKey } }
+        },
+        openPetSheet: {
+          handler: '_onOpenPetSheet',
+          dataset: { action: 'roll', type: actionType },
+          closestReturn: { dataset: { documentClass: 'Item', itemId: actionKey } }
         }
       };
 
