@@ -872,6 +872,7 @@ function renderSettings(html) {
     <h4 class="divider">${game.i18n.localize('WORLD.FIELDS.system.label')}</h4>
     <div class="system-badge">
       <div class="sdm-icon" data-tooltip="${sdm.title}" alt="${sdm.title}"></div>
+      <span class="system-mote" data-tooltip="${sdm.title}">roleplay at the end of time</span>
       <span class="system-info">${sdm.version}</span>
     </div>
   `;

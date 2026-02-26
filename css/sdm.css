@@ -502,13 +502,18 @@
 
 .system-badge .system-info {
   position: relative;
-  font-size: var(--font-size-16);
+  font-size: var(--font-size-18);
   font-family: var(--sdm-font-primary);
 }
 
 .system-badge .system-info i {
   padding-inline-start: 2px;
   font-size: var(--font-size-12);
+}
+
+.system-badge .system-mote {
+  font-size: var(--font-size-13);
+  font-family: var(--sdm-font-dice);
 }
 
 hr {
@@ -608,7 +613,10 @@ input[type=radio]::after {
   #compendium) :is(button, a.button):not(.icon) {
     font-family: var(--sdm-font-secondary);
   }
-  span.fumble, span.critical, span.force, span.lucky {
+  span.fumble,
+  span.critical,
+  span.force,
+  span.lucky {
     font-family: var(--sdm-font-dice);
   }
   #chat div.custom-result > h4 {
@@ -647,8 +655,8 @@ input[type=radio]::after {
     font-size: 13px !important;
   }
   .sdm-icon {
-    width: 250px;
-    height: 150px;
+    width: 125px;
+    height: 125px;
     -webkit-mask-image: url("../assets/sdm-pause.png");
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: center;
