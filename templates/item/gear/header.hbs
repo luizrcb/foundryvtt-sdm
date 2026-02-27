@@ -7,6 +7,7 @@
         (ne system.type 'affliction')
         (ne system.type 'pet')
         (ne system.type 'augment')
+        (ne system.type 'container')
         (ne system.size.unit 'cash')
       )}}
       <div class="align-center mb-10 mr-10 rollable" {{#if system.readied}}
@@ -28,7 +29,14 @@
       <div class='document-name'>
         <div class="flexrow flex-between">
           <input name='name' class="resource-label flexultra" type='text' value='{{item.name}}' placeholder='Name' />
-          {{#unless (or (eq system.size.unit 'cash') (eq system.type 'corruption') (eq system.type 'affliction') (eq system.type 'augment') (eq system.type 'pet'))}}
+          {{#unless (or
+            (eq system.size.unit 'cash')
+            (eq system.type 'corruption')
+            (eq system.type 'affliction')
+            (eq system.type 'augment')
+            (eq system.type 'pet')
+            (eq system.type 'container')
+          )}}
           <div class="flex flex-group-center flexcol rollable" data-action="toggleIsHallmark" style="cursor:pointer;">
             <label class='resource-label'>{{localize 'SDM.HallmarkItem'}}</label>
             <i class="fa-regular fa-star mt-5 {{#if item.system.is_hallmark}}hallmark{{/if}}"></i>
@@ -61,11 +69,16 @@
       </div>
       {{/if}}
 
-      {{#unless (or (eq system.type 'corruption') (eq system.type 'affliction') (eq system.type 'augment') (eq system.type 'pet'))}}
+      {{#unless (or
+        (eq system.type 'corruption')
+        (eq system.type 'affliction')
+        (eq system.type 'augment')
+        (eq system.type 'pet')
+      )}}
       <div class='grid grid-{{ifThen item.system.is_hallmark 3 2}}col'>
         <div class='resource'>
           <label class='resource-label'>{{localize 'SDM.ItemQuantity'}}
-            <input type='text' name='system.quantity' value='{{system.quantity}}' data-dtype='Number' />
+            <input type='text' name='system.quantity' value='{{system.quantity}}' data-dtype='Number'  {{#if (eq system.type 'container')}}disabled{{/if}}/>
           </label>
         </div>
         <div class='resource'>

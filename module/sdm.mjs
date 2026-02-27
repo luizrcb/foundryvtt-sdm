@@ -13,7 +13,11 @@ import {
   createNPC,
   createNPCByLevel
 } from './helpers/actorUtils.mjs';
-import { configureChatListeners } from './helpers/chatUtils.mjs';
+import {
+  configureChatListeners,
+  sendInitialMessage,
+  WTFStudioDialog
+} from './helpers/chatUtils.mjs';
 import { SDM } from './helpers/config.mjs';
 import {
   ActorType,
@@ -21,6 +25,7 @@ import {
   DEFAULT_AFFLICTION_ICON,
   DEFAULT_AUGMENT_ICON,
   DEFAULT_BURDEN_ICON,
+  DEFAULT_CONTAINER_ICON,
   DEFAULT_PET_ICON,
   GearType,
   ItemType,
@@ -348,6 +353,9 @@ Hooks.on('updateItem', async item => {
       case GearType.WEAPON:
         updateData['img'] = DEFAULT_WEAPON_ICON;
         break;
+      case GearType.CONTAINER:
+        updateData['img'] = DEFAULT_CONTAINER_ICON;
+        break;
       default:
         updateData['img'] = DEFAULT_GEAR_ICON;
         break;
@@ -668,7 +676,7 @@ Hooks.once('ready', function () {
   createBonusHeroDiceDisplay();
   setupBonusHeroDiceBroadcast();
   updateBonusHeroDiceDisplay();
-
+  sendInitialMessage();
   // Hooks.on('dropCanvasData', async (canvas, data) => {
   //   console.log(canvas, data);
 
@@ -844,6 +852,9 @@ function _generateLinks() {
   links.classList.add('unlist', 'links');
   links.innerHTML = `
     <li>
+      <a class="info-link">Links</a>
+    </li>
+    <li>
       <a href="https://github.com/luizrcb/foundryvtt-sdm/releases/latest" target="_blank">
         ${game.i18n.localize('SDM.Notes')}
       </a>
@@ -871,12 +882,29 @@ function renderSettings(html) {
   section.innerHTML = `
     <h4 class="divider">${game.i18n.localize('WORLD.FIELDS.system.label')}</h4>
     <div class="system-badge">
-      <div class="sdm-icon" data-tooltip="${sdm.title}" alt="${sdm.title}"></div>
+      <div class="sdm-icon" data-tooltip="${sdm.title}" alt="${sdm.title}" style="cursor:pointer;"></div>
       <span class="system-mote" data-tooltip="${sdm.title}">roleplay at the end of time</span>
       <span class="system-info">${sdm.version}</span>
     </div>
   `;
   section.append(_generateLinks());
+  const infoLink = section.querySelector('.info-link');
+  if (infoLink) {
+    infoLink.addEventListener('click', event => {
+      event.preventDefault();
+      WTFStudioDialog();
+    });
+  }
   if (pip) section.querySelector('.system-info').insertAdjacentElement('beforeend', pip);
+
+  const icon = section.querySelector('.sdm-icon');
+  icon.addEventListener('click', event => {
+    event.preventDefault();
+    WTFStudioDialog();
+  });
+
+  const mote = section.querySelector('.system-mote');
+  mote.addEventListener('click', () => WTFStudioDialog());
+
   html.querySelector('.info').insertAdjacentElement('afterend', section);
 }

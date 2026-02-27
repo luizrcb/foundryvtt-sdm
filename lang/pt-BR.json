@@ -1745,6 +1745,7 @@
   "TYPES.Item.augment": "Aprimoramento",
   "TYPES.Item.burden": "Fardo",
   "TYPES.Item.cash": "Dinheiro",
+  "TYPES.Item.container": "Contêiner",
   "TYPES.Item.corruption": "Corrupção",
   "TYPES.Item.gear": "Equipamento",
   "TYPES.Item.mount": "Montaria",

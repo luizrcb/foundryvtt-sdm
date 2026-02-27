@@ -331,6 +331,7 @@ SDM.gearType = {
   affliction: 'TYPES.Item.affliction',
   armor: 'TYPES.Item.armor',
   augment: 'TYPES.Item.augment',
+  container: 'TYPES.Item.container',
   corruption: 'TYPES.Item.corruption',
   pet: 'TYPES.Item.pet',
   power_album: 'TYPES.Item.power_album',

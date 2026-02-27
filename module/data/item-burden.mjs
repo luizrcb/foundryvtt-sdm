@@ -33,7 +33,8 @@ export default class SdmBurden extends SdmItemBase {
         required: new fields.NumberField({
           required: true,
           initial: 0,
-          min: 0
+          min: 0,
+          max: 20
         })
       },
       { nullable: false }

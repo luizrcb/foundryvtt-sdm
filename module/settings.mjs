@@ -306,6 +306,13 @@ export function registerSystemSettings() {
     }
   });
 
+  game.settings.register('sdm', 'initialMessageSent', {
+    scope: 'world', // "world" = GM only, "client" = per user
+    config: false, // Show in configuration view
+    type: Boolean, // Data type: String, Number, Boolean, etc
+    default: false,
+  });
+
   game.settings.register('sdm', 'escalatorPosition', {
     scope: 'world',
     config: false,

@@ -36,7 +36,8 @@ export default class SdmTrait extends SdmItemBase {
         required_successes: new fields.NumberField({
           required: true,
           initial: 0,
-          min: 0
+          min: 0,
+          max: 20
         })
       },
       { nullable: false }
@@ -56,7 +57,8 @@ export default class SdmTrait extends SdmItemBase {
         required: new fields.NumberField({
           required: true,
           initial: 0,
-          min: 0
+          min: 0,
+          max: 20
         })
       },
       { nullable: false }

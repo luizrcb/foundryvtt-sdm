@@ -477,12 +477,11 @@ export class SdmItem extends Item {
       [TraitType.SKILL]: () => this.getSkillTitle(),
       [GearType.WEAPON]: () => this.getWeaponTitle(),
       [GearType.WARD]: () => this.getWardTitle(),
-      [ItemType.MOUNT]: () => this.getDefaultTitle(),
-      [ItemType.VEHICLE]: () => this.getDefaultTitle(),
       [GearType.CORRUPTION]: () => this.getSubtypeTitle(),
       [GearType.AFFLICTION]: () => this.getSubtypeTitle(),
       [GearType.AUGMENT]: () => this.getSubtypeTitle(),
       [GearType.PET]: () => this.getPetTitle(),
+      [GearType.CONTAINER]: () => this.getDefaultTitle(),
       '': () => this.getDefaultTitle()
     };
 

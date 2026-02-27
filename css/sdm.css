@@ -948,6 +948,11 @@ input[type=radio]::after {
   .theme-dark .items-list .item:nth-child(odd) {
     background-color: rgba(255, 255, 255, 0.05);
   }
+  .theme-dark a.info-link, .info-link {
+    color: var(--sdm-scrollbar-thumb);
+    text-decoration: underline;
+    cursor: pointer;
+  }
   span.system-info a.notification-pip {
     right: -15px;
     top: 2px;
@@ -1236,6 +1241,81 @@ input[type=radio]::after {
   }
   .theme-dark select::-ms-expand {
     filter: invert(1);
+  }
+  .intro-message {
+    background: #282423;
+    border: 1px solid #4a4a4a;
+    border-radius: 5px;
+    padding: 0.8rem 1rem;
+    margin: 0.25rem 0;
+    color: #e0e0e0;
+    text-align: center;
+  }
+  .system-title {
+    font-size: 17px;
+    padding: 2px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    font-family: var(--sdm-font-dice);
+    line-height: 32px;
+    background-color: #00817f;
+    color: white;
+    border-radius: 8px;
+  }
+  .system-author {
+    font-style: italic;
+    color: #b0b0b0;
+    margin-bottom: 0.8rem;
+    margin-top: 0.4rem;
+    font-size: 0.95rem;
+    font-family: var(--sdm-font-dice);
+  }
+  .outcome {
+    margin-top: 0.8rem;
+    padding-top: 0.5rem;
+    border-top: 1px solid #3a3a3a;
+  }
+  .outcome:first-of-type {
+    border-top: none;
+    margin-top: 0;
+    padding-top: 0;
+  }
+  .outcome-title {
+    font-weight: bold;
+    font-size: 1.1rem;
+    color: #c0c0c0;
+    margin-bottom: 0.3rem;
+    letter-spacing: 0.5px;
+  }
+  .outcome-title span {
+    background: #2a2a2a;
+    padding: 0.1rem 0.5rem;
+    border-radius: 3px;
+    border-left: 3px solid #00817f;
+  }
+  .outcome-description {
+    margin-left: 0.8rem;
+    margin-bottom: 0.25rem;
+    font-size: 0.95rem;
+  }
+  .outcome-description a {
+    color: #00817f;
+    text-decoration: none;
+    background: rgba(255, 255, 255, 0.05);
+    padding: 0.2rem 0.5rem;
+    border-radius: 3px;
+    display: inline-block;
+    transition: background 0.2s ease, color 0.2s ease;
+    border: 1px solid transparent;
+  }
+  .outcome-description a:hover {
+    background: #00817f;
+    color: #ffffff;
+    border-color: #2b807e;
+    text-decoration: none;
+  }
+  .outcome-description a:active {
+    transform: translateY(1px);
   }
 }
 .grid,

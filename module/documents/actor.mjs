@@ -1091,7 +1091,8 @@ export class SdmActor extends Actor {
             item.type !== ItemType.GEAR ||
             item.system.type === GearType.CORRUPTION ||
             item.system.type === GearType.AFFLICTION ||
-            item.system.type === GearType.PET
+            item.system.type === GearType.PET ||
+            item.system.type === GearType.CONTAINER
           )
             return false;
           return this.isOwner && item.system.resources !== '';
@@ -1111,7 +1112,8 @@ export class SdmActor extends Actor {
             item.type !== ItemType.GEAR ||
             item.system.type === GearType.CORRUPTION ||
             item.system.type === GearType.AFFLICTION ||
-            item.system.type === GearType.PET
+            item.system.type === GearType.PET ||
+            item.system.type === GearType.CONTAINER
           )
             return false;
           return this.isOwner && item.system.resources === '';
@@ -1131,7 +1133,8 @@ export class SdmActor extends Actor {
             item.type !== ItemType.GEAR ||
             item.system.type === GearType.CORRUPTION ||
             item.system.type === GearType.AFFLICTION ||
-            item.system.type === GearType.PET
+            item.system.type === GearType.PET ||
+            item.system.type === GearType.CONTAINER
           )
             return false;
           return this.isOwner && item.system.resources !== 'run_out';
@@ -1151,7 +1154,8 @@ export class SdmActor extends Actor {
             item.type === ItemType.BURDEN ||
             item.system.type === GearType.CORRUPTION ||
             item.system.type === GearType.AFFLICTION ||
-            item.system.type === GearType.PET
+            item.system.type === GearType.PET ||
+            item.system.type === GearType.CONTAINER
           )
             return false;
           if (item.type === ItemType.TRAIT && item.system.type !== GearType.POWER) return false;
@@ -1172,7 +1176,8 @@ export class SdmActor extends Actor {
             item.type === ItemType.BURDEN ||
             item.system.type === GearType.CORRUPTION ||
             item.system.type === GearType.AFFLICTION ||
-            item.system.type === GearType.PET
+            item.system.type === GearType.PET ||
+            item.system.type === GearType.CONTAINER
           )
             return false;
           if (item.type === ItemType.TRAIT && item.system.type !== GearType.POWER) return false;
@@ -1193,7 +1198,8 @@ export class SdmActor extends Actor {
             item.type === 'burden' ||
             item.system.type === GearType.CORRUPTION ||
             item.system.type === GearType.AFFLICTION ||
-            item.system.type === GearType.PET
+            item.system.type === GearType.PET ||
+            item.system.type === GearType.CONTAINER
           )
             return false;
           if (item.type === 'trait' && item.system.type !== 'power') return false;

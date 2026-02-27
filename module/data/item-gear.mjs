@@ -14,6 +14,11 @@ export default class SdmGear extends SdmItemBase {
 
     schema.default_ability = getDefaultAbility();
 
+    schema.container = new fields.DocumentUUIDField({
+      required: false,
+      blank: true
+    });
+
     schema.type = new fields.StringField({
       required: false,
       blank: true,
@@ -80,7 +85,8 @@ export default class SdmGear extends SdmItemBase {
         required: new fields.NumberField({
           required: true,
           initial: 0,
-          min: 0
+          min: 0,
+          max: 20
         })
       },
       { nullable: false }

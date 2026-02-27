@@ -2,6 +2,9 @@
 
 ## v0.12.2
 
+- Added initial system message with links to Luka Rejec's platforms
+- Added upper limit to: trait's sources to learn, and burden's steps to cure
+- Minor style changes to system icon
 - Allowed gear pets to be sent to caravan sheets
 - New fonts on chat messages for fumble, critical success and usage roll results
 - Removed caravan tokens from being added to the combat tracker

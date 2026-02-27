@@ -1745,6 +1745,7 @@
   "TYPES.Item.augment": "Augment",
   "TYPES.Item.burden": "Burden",
   "TYPES.Item.cash": "Cash",
+  "TYPES.Item.container": "Container",
   "TYPES.Item.corruption": "Corruption",
   "TYPES.Item.gear": "Gear",
   "TYPES.Item.mount": "Mount",
