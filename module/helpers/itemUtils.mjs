@@ -64,6 +64,15 @@ export const BURDEN_ITEM_TYPES = ['burden'];
 export const ITEMS_NOT_ALLOWED_IN_CHARACTERS = [];
 export const ITEMS_NOT_ALLOWED_IN_CARAVANS = ['trait', 'burden'];
 export const SUBTYPES_NOT_ALLOWED_IN_CARAVANS = ['corruption', 'affliction'];
+export const ITEMS_ALLOWED_IN_CONTAINERS = [
+  GearType.ARMOR,
+  GearType.POWER,
+  GearType.POWER_ALBUM,
+  GearType.WARD,
+  GearType.WEAPON,
+  GearType.PET,
+  ''
+];
 
 // Add this method to handle item updates
 export async function onItemUpdate(item, updateData) {

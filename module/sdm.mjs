@@ -15,8 +15,10 @@ import {
 } from './helpers/actorUtils.mjs';
 import {
   configureChatListeners,
+  LinksDialog,
+  luberLinks,
   sendInitialMessage,
-  WTFStudioDialog
+  wtfStudioLinks
 } from './helpers/chatUtils.mjs';
 import { SDM } from './helpers/config.mjs';
 import {
@@ -36,13 +38,13 @@ import {
 import { makePowerItem, UnarmedDamageItem } from './helpers/itemUtils.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
+import { setupPetDropSocket } from './items/petItem.mjs';
 import { gm as gmMacros, player as playerMacros } from './macros/_module.mjs';
 import {
   configurePlayerChromatype,
   configureUseHeroDiceButton,
   createBonusHeroDiceDisplay,
   createEscalatorDieDisplay,
-  DEFAULT_MAX_POWERS,
   registerSystemSettings,
   setupBonusHeroDiceBroadcast,
   setupEscalatorDiePositionBroadcast,
@@ -134,24 +136,6 @@ Hooks.on('getSceneControlButtons', function (controls) {
         if (active) await game.sdm.api.gm.giveExperience();
       }
     };
-    // controls.tokens.tools['sdm-group-initiative'] = {
-    //   icon: 'fa-solid fa-people-group',
-    //   name: 'sdm-group-initiative',
-    //   title: 'SDM.GMGroupInitiative',
-    //   button: true,
-    //   onChange: async (event, active) => {
-    //     if (active) await game.sdm.api.gm.groupInitiative();
-    //   }
-    // };
-    // controls.tokens.tools['sdm-generate-npc'] = {
-    //   icon: 'fa-solid fa-spaghetti-monster-flying',
-    //   name: 'sdm-generate-npc',
-    //   title: 'SDM.GMGenerateRandomNPC',
-    //   button: true,
-    //   onChange: async (event, active) => {
-    //     if (active) await game.sdm.api.gm.randomNPCGenerator();
-    //   }
-    // };
   }
   controls.tokens.tools['sdm-dice-oracles'] = {
     icon: 'fa-solid fa-dice',
@@ -294,15 +278,6 @@ Hooks.on('createActor', async (actor, _options, _id) => {
   await actor.update(updateData);
 });
 
-Hooks.on('createItem', async (item, _options, _id) => {
-  if (!item.isOwner) return;
-  if (item.getFlag?.('sdm', 'fromCompendium') === UnarmedDamageItem) return;
-
-  const updateData = { 'system.readied': false };
-
-  await item.update(updateData);
-});
-
 Hooks.on('updateItem', async item => {
   const defaultCurrencyImage = game.settings.get('sdm', 'currencyImage') || DEFAULT_CASH_ICON;
   const defaultCurrencyName = game.settings.get('sdm', 'currencyName') || 'cash';
@@ -427,16 +402,6 @@ Hooks.on('updateCombat', async (combat, update) => {
       await expired.update({ disabled: true });
     }
   }
-});
-
-Hooks.on('createItem', async (item, _options, _id) => {
-  if (!item.isOwner) return;
-
-  if (item.type !== ItemType.GEAR) return;
-
-  const defaultMaxPowers = game.settings.get('sdm', 'defaultMaxPowers') || DEFAULT_MAX_POWERS;
-
-  await item.update({ 'system.max_powers': defaultMaxPowers });
 });
 
 Hooks.on('renderSettings', (app, html) => renderSettings(html));
@@ -637,6 +602,7 @@ Hooks.once('init', function () {
   CONFIG.Combatant.documentClass = SdmCombatant;
 
   setupItemTransferSocket();
+  setupPetDropSocket();
   setupSettingsSocket();
 
   setupEscalatorDiePositionBroadcast();
@@ -677,31 +643,45 @@ Hooks.once('ready', function () {
   setupBonusHeroDiceBroadcast();
   updateBonusHeroDiceDisplay();
   sendInitialMessage();
-  // Hooks.on('dropCanvasData', async (canvas, data) => {
-  //   console.log(canvas, data);
 
-  //   const { uuid, x, y } = data;
-  //   const snappedPoint = canvas.grid.getSnappedPoint(
-  //     { x, y },
-  //     { mode: CONST.GRID_SNAPPING_MODES.TOP_LEFT_VERTEX }
-  //   );
-  //   const item = await fromUuid(uuid);
-  //   if (!item) return;
+  Hooks.on('dropCanvasData', async (canvas, data) => {
+    const { uuid, type, x, y } = data;
+    if (type !== 'Item') return;
 
-  //   console.log(item);
-  //   const attributes = item.system.attributes;
-  //   console.log(attributes);
+    const item = await fromUuid(uuid);
+    if (!item) return;
 
-  //   const virtualActor = new SdmActor({
-  //     type: 'npc',
-  //     name: item.name,
-  //     img: item.img,
-  //     system: { ...attributes }
-  //   }).toObject();
-  //   const actor = await SdmActor.create(virtualActor);
-  //   const tokenDoc = await actor.getTokenDocument({ x: snappedPoint.x, y: snappedPoint.y });
-  //   await game.scenes.active.createEmbeddedDocuments('Token', [tokenDoc.toObject()]);
-  // });
+    // Check if it's a pet item (you can reuse the same condition)
+    if (item.type !== ItemType.GEAR || item.system?.type !== GearType.PET) return;
+    if (!item.system.pet) return;
+
+    // If the user is GM, create the token directly (bypass socket)
+    if (game.user.isGM) {
+      const { x: canvasX, y: canvasY } = canvas.grid.getTopLeftPoint(data);
+      const petActor = await fromUuid(item.system.pet);
+      if (!petActor) {
+        ui.notifications.error('Linked pet actor not found.');
+        return;
+      }
+      const tokenDoc = await petActor.getTokenDocument({ x: canvasX, y: canvasY });
+      await canvas.scene.createEmbeddedDocuments('Token', [tokenDoc.toObject()]);
+      return;
+    }
+
+    const canPlayerDropPetOnCanvas = game.settings.get('sdm', 'canPlayerDropPetOnCanvas');
+
+    if (!canPlayerDropPetOnCanvas) return;
+
+    // Otherwise, request GM to create the token
+    game.socket.emit('system.sdm', {
+      action: 'createPetToken',
+      userId: game.user.id,
+      payload: { itemUuid: uuid, x, y }
+    });
+
+    // Optionally show a temporary notification
+    // ui.notifications.info('Requesting GM to place your pet...');
+  });
 
   Hooks.once('setup', () => {
     // Define the compendium name (matches your module.json "name" field)
@@ -852,18 +832,16 @@ function _generateLinks() {
   links.classList.add('unlist', 'links');
   links.innerHTML = `
     <li>
-      <a class="info-link">Links</a>
+      <a class="info-link author-links" data-tooltip="Luka Rejec">${$l10n('SDM.Author')}</a>
     </li>
     <li>
-      <a href="https://github.com/luizrcb/foundryvtt-sdm/releases/latest" target="_blank">
-        ${game.i18n.localize('SDM.Notes')}
-      </a>
+      <a class="info-link dev-links" data-tooltip="Luber (Luiz Bertoni)">System Dev</a>
     </li>
     <li>
-      <a href="https://github.com/luizrcb/foundryvtt-sdm/issues" target="_blank">${game.i18n.localize('SDM.Issues')}</a>
+      <a class="info-link" href="https://github.com/luizrcb/foundryvtt-sdm/issues" target="_blank" data-tooltip="SDM.ReportBugs">${game.i18n.localize('SDM.Issues')}</a>
     </li>
     <li>
-      <a href="https://github.com/luizrcb/foundryvtt-sdm/wiki" target="_blank">${game.i18n.localize('SDM.Wiki')}</a>
+      <a class="info-link" href="https://github.com/luizrcb/foundryvtt-sdm/wiki" target="_blank" data-tooltip="SDM.SystemDocumentation">${game.i18n.localize('SDM.Wiki')}</a>
     </li>
   `;
   return links;
@@ -878,33 +856,49 @@ function renderSettings(html) {
   html.querySelector('.info .system').remove();
 
   const section = document.createElement('section');
-  section.classList.add('sdme2', 'sidebar-info');
+  section.classList.add('sdm', 'sidebar-info');
   section.innerHTML = `
-    <h4 class="divider">${game.i18n.localize('WORLD.FIELDS.system.label')}</h4>
+    <div class="flex flex-around">
+      <span>${$l10n('SDM.SupportThisSystem')}</span>
+    </div>
+    <div class="flex flex-around">
+      <a href='https://ko-fi.com/R6R01IW3KM' target='_blank'>
+      <img class="kofi" data-tooltip="SDM.SupportThisSystem" height='30' style='border:0px;height:30px;cursor:pointer;' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+      </a>
+    </div>
+    <h4 class="divider">${$l10n('WORLD.FIELDS.system.label')}</h4>
     <div class="system-badge">
       <div class="sdm-icon" data-tooltip="${sdm.title}" alt="${sdm.title}" style="cursor:pointer;"></div>
       <span class="system-mote" data-tooltip="${sdm.title}">roleplay at the end of time</span>
-      <span class="system-info">${sdm.version}</span>
+      <a class="system-version system-info" data-tooltip="SDM.ReleaseNotes" href="https://github.com/luizrcb/foundryvtt-sdm/releases/tag/v${sdm.version}" target="_blank">${sdm.version}</a>
     </div>
   `;
   section.append(_generateLinks());
-  const infoLink = section.querySelector('.info-link');
-  if (infoLink) {
-    infoLink.addEventListener('click', event => {
+  const authorLinks = section.querySelector('.author-links');
+  if (authorLinks) {
+    authorLinks.addEventListener('click', event => {
       event.preventDefault();
-      WTFStudioDialog();
+      LinksDialog(wtfStudioLinks);
     });
   }
-  if (pip) section.querySelector('.system-info').insertAdjacentElement('beforeend', pip);
 
+  const devLinks = section.querySelector('.dev-links');
+  if (devLinks) {
+    devLinks.addEventListener('click', event => {
+      event.preventDefault();
+      LinksDialog(luberLinks);
+    });
+  }
+
+  if (pip) section.querySelector('.system-info').insertAdjacentElement('beforeend', pip);
   const icon = section.querySelector('.sdm-icon');
   icon.addEventListener('click', event => {
     event.preventDefault();
-    WTFStudioDialog();
+    LinksDialog(wtfStudioLinks);
   });
 
   const mote = section.querySelector('.system-mote');
-  mote.addEventListener('click', () => WTFStudioDialog());
+  mote.addEventListener('click', () => LinksDialog(wtfStudioLinks));
 
   html.querySelector('.info').insertAdjacentElement('afterend', section);
 }

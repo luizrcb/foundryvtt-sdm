@@ -265,8 +265,16 @@
   margin-top: 10px;
 }
 
+.ml-3 {
+  margin-left: 3px;
+}
+
 .mr-3 {
   margin-right: 3px;
+}
+
+.ml-5 {
+  margin-left: 5px;
 }
 
 .mr-5 {
@@ -275,6 +283,10 @@
 
 .mr-6 {
   margin-right: 6px;
+}
+
+.ml-10 {
+  margin-left: 10px;
 }
 
 .mr-10 {
@@ -504,9 +516,23 @@
   position: relative;
   font-size: var(--font-size-18);
   font-family: var(--sdm-font-primary);
+  text-decoration: underline;
 }
 
 .system-badge .system-info i {
+  padding-inline-start: 2px;
+  font-size: var(--font-size-12);
+}
+
+.system-badge .system-version {
+  position: relative;
+  font-size: var(--font-size-18);
+  font-family: var(--sdm-font-tab);
+  font-weight: bold;
+  text-decoration: unset;
+}
+
+.system-badge .system-version i {
   padding-inline-start: 2px;
   font-size: var(--font-size-12);
 }
@@ -655,8 +681,8 @@ input[type=radio]::after {
     font-size: 13px !important;
   }
   .sdm-icon {
-    width: 125px;
-    height: 125px;
+    width: 120px;
+    height: 120px;
     -webkit-mask-image: url("../assets/sdm-pause.png");
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: center;
@@ -666,6 +692,7 @@ input[type=radio]::after {
     mask-position: center;
     mask-size: contain;
     object-fit: fill;
+    cursor: pointer;
     background-color: var(--sdm-scrollbar-thumb);
   }
   .sdm-pause {
@@ -948,12 +975,26 @@ input[type=radio]::after {
   .theme-dark .items-list .item:nth-child(odd) {
     background-color: rgba(255, 255, 255, 0.05);
   }
-  .theme-dark a.info-link, .info-link {
+  .collapsible-items .item.stripe-even {
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+  .collapsible-items .item.stripe-odd {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  .theme-dark .collapsible-items .item.stripe-even {
+    background-color: rgba(255, 255, 255, 0.02);
+  }
+  .theme-dark .collapsible-items .item.stripe-odd {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+  .theme-dark a.info-link,
+  .info-link {
+    font-weight: bold;
     color: var(--sdm-scrollbar-thumb);
     text-decoration: underline;
     cursor: pointer;
   }
-  span.system-info a.notification-pip {
+  a.system-info a.notification-pip {
     right: -15px;
     top: 2px;
     background: unset;
@@ -1317,6 +1358,10 @@ input[type=radio]::after {
   .outcome-description a:active {
     transform: translateY(1px);
   }
+  .inContainer {
+    margin-left: 15px;
+    border-left: 1px dashed var(--sdm-c-beige) !important;
+  }
 }
 .grid,
 .grid-2col {
@@ -1525,6 +1570,10 @@ input[type=radio]::after {
 
 .flex {
   display: flex;
+}
+
+.flex-column {
+  flex-direction: column;
 }
 
 @layer burden-generator {

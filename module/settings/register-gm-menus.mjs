@@ -8,7 +8,8 @@ import {
   SDMBaselinesSettingsConfig,
   SDMNPCBehaviorSettingsConfig,
   SDMEconomySettingsConfig,
-  SDMAudioGMSettingsConfig
+  SDMAudioGMSettingsConfig,
+  SDMPlayerPermissionsSettingsConfig
 } from './sdm-gm-group-configs.mjs';
 
 export function registerSDMGMSettingMenus() {
@@ -21,7 +22,16 @@ export function registerSDMGMSettingMenus() {
     restricted: false
   });
 
-  game.settings.registerMenu('sdm', '01-calendar', {
+  game.settings.registerMenu('sdm', '01-playerPermissions', {
+    name: 'SDM.Menu.PlayerPermissions.Name',
+    hint: 'SDM.Menu.PlayerPermissions.Hint',
+    label: 'SDM.Menu.PlayerPermissions.Label',
+    icon: 'fa-solid fa-user-lock',
+    type: SDMPlayerPermissionsSettingsConfig,
+    restricted: true
+  });
+
+  game.settings.registerMenu('sdm', '02-calendar', {
     name: 'SDM.Menu.Calendar.Name',
     hint: 'SDM.Menu.Calendar.Hint',
     label: 'SDM.Menu.Calendar.Label',
@@ -30,7 +40,7 @@ export function registerSDMGMSettingMenus() {
     restricted: true
   });
 
-  game.settings.registerMenu('sdm', '02-combat', {
+  game.settings.registerMenu('sdm', '03-combat', {
     name: 'SDM.Menu.Combat.Name',
     hint: 'SDM.Menu.Combat.Hint',
     label: 'SDM.Menu.Combat.Label',
@@ -39,7 +49,7 @@ export function registerSDMGMSettingMenus() {
     restricted: true
   });
 
-  game.settings.registerMenu('sdm', '03-coreRules', {
+  game.settings.registerMenu('sdm', '04-coreRules', {
     name: 'SDM.Menu.CoreRules.Name',
     hint: 'SDM.Menu.CoreRules.Hint',
     label: 'SDM.Menu.CoreRules.Label',
@@ -48,7 +58,7 @@ export function registerSDMGMSettingMenus() {
     restricted: true
   });
 
-  game.settings.registerMenu('sdm', '04-skills', {
+  game.settings.registerMenu('sdm', '05-skills', {
     name: 'SDM.Menu.Skills.Name',
     hint: 'SDM.Menu.Skills.Hint',
     label: 'SDM.Menu.Skills.Label',
@@ -57,7 +67,7 @@ export function registerSDMGMSettingMenus() {
     restricted: true
   });
 
-  game.settings.registerMenu('sdm', '05-baselines', {
+  game.settings.registerMenu('sdm', '06-baselines', {
     name: 'SDM.Menu.Baselines.Name',
     hint: 'SDM.Menu.Baselines.Hint',
     label: 'SDM.Menu.Baselines.Label',
@@ -66,7 +76,7 @@ export function registerSDMGMSettingMenus() {
     restricted: true
   });
 
-  game.settings.registerMenu('sdm', '06-npc', {
+  game.settings.registerMenu('sdm', '07-npc', {
     name: 'SDM.Menu.NPC.Name',
     hint: 'SDM.Menu.NPC.Hint',
     label: 'SDM.Menu.NPC.Label',
@@ -75,7 +85,7 @@ export function registerSDMGMSettingMenus() {
     restricted: true
   });
 
-  game.settings.registerMenu('sdm', '07-economy', {
+  game.settings.registerMenu('sdm', '08-economy', {
     name: 'SDM.Menu.Economy.Name',
     hint: 'SDM.Menu.Economy.Hint',
     label: 'SDM.Menu.Economy.Label',
@@ -84,7 +94,7 @@ export function registerSDMGMSettingMenus() {
     restricted: true
   });
 
-  game.settings.registerMenu('sdm', '08-audioGM', {
+  game.settings.registerMenu('sdm', '09-audioGM', {
     name: 'SDM.Menu.AudioGM.Name',
     hint: 'SDM.Menu.AudioGM.Hint',
     label: 'SDM.Menu.AudioGM.Label',

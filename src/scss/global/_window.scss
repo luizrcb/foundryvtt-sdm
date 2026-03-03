@@ -83,8 +83,16 @@
   margin-top: 10px;
 }
 
+.ml-3 {
+  margin-left: 3px;
+}
+
 .mr-3 {
   margin-right: 3px;
+}
+
+.ml-5 {
+  margin-left: 5px;
 }
 
 .mr-5 {
@@ -93,6 +101,10 @@
 
 .mr-6 {
   margin-right: 6px;
+}
+
+.ml-10 {
+  margin-left: 10px;
 }
 
 .mr-10 {
@@ -334,6 +346,19 @@
     position: relative;
     font-size: var(--font-size-18);
     font-family: var(--sdm-font-primary);
+    text-decoration: underline;
+    i {
+      padding-inline-start: 2px;
+      font-size: var(--font-size-12);
+    }
+  }
+
+  .system-version {
+    position: relative;
+    font-size: var(--font-size-18);
+    font-family: var(--sdm-font-tab);
+    font-weight: bold;
+    text-decoration: unset;
     i {
       padding-inline-start: 2px;
       font-size: var(--font-size-12);
@@ -502,8 +527,8 @@ input[type='radio']::after {
   }
 
   .sdm-icon {
-    width: 125px;
-    height: 125px;
+    width: 120px;
+    height: 120px;
 
     -webkit-mask-image: url('../assets/sdm-pause.png');
     -webkit-mask-repeat: no-repeat;
@@ -515,7 +540,7 @@ input[type='radio']::after {
     mask-position: center;
     mask-size: contain;
     object-fit: fill;
-
+    cursor: pointer;
     // you choose the visible color now
     background-color: var(--sdm-scrollbar-thumb);
   }
@@ -856,28 +881,40 @@ input[type='radio']::after {
   }
 
   .items-list .item:nth-child(even) {
-    background-color: rgba(0, 0, 0, 0.02); // Light gray for even items
+    background-color: rgba(0, 0, 0, 0.02);
   }
-
   .items-list .item:nth-child(odd) {
-    background-color: rgba(0, 0, 0, 0.05); // Slightly darker for odd items
+    background-color: rgba(0, 0, 0, 0.05);
   }
-
   .theme-dark .items-list .item:nth-child(even) {
     background-color: rgba(255, 255, 255, 0.02);
   }
-
   .theme-dark .items-list .item:nth-child(odd) {
     background-color: rgba(255, 255, 255, 0.05);
   }
 
-  .theme-dark a.info-link, .info-link {
+  .collapsible-items .item.stripe-even {
+    background-color: rgba(0, 0, 0, 0.02);
+  }
+  .collapsible-items .item.stripe-odd {
+    background-color: rgba(0, 0, 0, 0.05);
+  }
+  .theme-dark .collapsible-items .item.stripe-even {
+    background-color: rgba(255, 255, 255, 0.02);
+  }
+  .theme-dark .collapsible-items .item.stripe-odd {
+    background-color: rgba(255, 255, 255, 0.05);
+  }
+
+  .theme-dark a.info-link,
+  .info-link {
+    font-weight: bold;
     color: var(--sdm-scrollbar-thumb);
     text-decoration: underline;
     cursor: pointer;
   }
 
-  span.system-info {
+  a.system-info {
     a.notification-pip {
       right: -15px;
       top: 2px;
@@ -886,7 +923,6 @@ input[type='radio']::after {
     }
   }
 
-  // Even / odd row backgrounds
   .adjustment-row:nth-child(odd) {
     background-color: rgba(0, 0, 0, 0.05); // light gray for odd rows
   }
@@ -1302,5 +1338,10 @@ input[type='radio']::after {
 
   .outcome-description a:active {
     transform: translateY(1px);
+  }
+
+  .inContainer {
+    margin-left: 15px;
+    border-left: 1px dashed var(--sdm-c-beige) !important;
   }
 }

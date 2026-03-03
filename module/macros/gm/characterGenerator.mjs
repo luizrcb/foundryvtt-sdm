@@ -849,7 +849,11 @@ async function generateCharacterWithOptions(options = {}, existingActor) {
     }
 
     if (existingActor) {
-      existingActor.items.contents.forEach(async item => {
+      existingActor.items.contents.filter(i => i.system?.container).forEach(async item => {
+        await item.delete();
+      });
+
+      existingActor.items.contents.filter(i => !i.system?.container).forEach(async item => {
         await item.delete();
       });
 

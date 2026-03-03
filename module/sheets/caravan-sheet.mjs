@@ -4,9 +4,8 @@ import { $fmt, $l10n, foundryVersionIsAtLeast, getSeasonAndWeek } from '../helpe
 import {
   convertToCash,
   getSlotsTaken,
+  ITEMS_ALLOWED_IN_CONTAINERS,
   ITEMS_NOT_ALLOWED_IN_CARAVANS,
-  onItemCreateActiveEffects,
-  onItemUpdate,
   SUBTYPES_NOT_ALLOWED_IN_CARAVANS
 } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
@@ -368,6 +367,10 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
         if (weightRules === 'single_stone') need = 1;
       }
 
+      if (item.system?.container) {
+        need = 0;
+      }
+
       const flaggedIdx = Number(item.getFlag(FLAG_SCOPE, FLAG_SACK));
       const hasValidFlag = Number.isFinite(flaggedIdx) && flaggedIdx >= 0 && flaggedIdx < capacity;
 
@@ -404,6 +407,88 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     return Number.isFinite(idx) ? idx : null;
   }
 
+  _reapplyStripes() {
+    const root = this.element.querySelector('.items-list.collapsible-items.list-border');
+    if (!root) return;
+
+    const items = Array.from(root.querySelectorAll('li.item'));
+    let visibleIndex = 0;
+
+    items.forEach(li => {
+      li.classList.remove('stripe-even', 'stripe-odd');
+      if (li.offsetParent !== null) {
+        li.classList.add(visibleIndex % 2 === 0 ? 'stripe-odd' : 'stripe-even');
+        visibleIndex++;
+      }
+    });
+  }
+
+  _handleContainers() {
+    const actor = this.actor;
+    const root = this.element;
+
+    const rows = Array.from(root.querySelectorAll('li.item'));
+
+    for (const li of rows) {
+      const item = actor.items.get(li.dataset.itemId);
+      if (!item) continue;
+
+      const parentId = item.system.container?.trim();
+      if (!parentId) continue;
+
+      const parentRow = root.querySelector(`li.item[data-item-id="${parentId}"]`);
+      if (!parentRow) continue;
+
+      parentRow.insertAdjacentElement('afterend', li);
+      li.classList.add('item-child');
+    }
+
+    for (const li of rows) {
+      const item = actor.items.get(li.dataset.itemId);
+      if (!item) continue;
+
+      const parentId = item.system.container?.trim();
+      if (!parentId) continue;
+
+      const parent = fromUuidSync(parentId);
+      const collapsed = parent?.getFlag('sdm', 'isCollapsed');
+
+      li.style.display = collapsed ? 'none' : '';
+    }
+
+    for (const li of rows) {
+      const item = actor.items.get(li.dataset.itemId);
+      if (!item || item.system.type !== 'container') continue;
+
+      const collapsed = item.getFlag('sdm', 'isCollapsed');
+      const nameDiv = li.querySelector('.item-name');
+
+      if (!nameDiv.querySelector('.container-indicator')) {
+        const icon = document.createElement('i');
+        icon.classList.add(
+          'fas',
+          collapsed ? 'fa-angle-right' : 'fa-angle-down',
+          'container-indicator'
+        );
+        icon.style.marginLeft = '5px;';
+        icon.style.padding = '8px';
+
+        li.addEventListener('click', async ev => {
+          ev.preventDefault();
+          if (ev.detail > 1) return;
+
+          await item.setFlag('sdm', 'isCollapsed', !collapsed);
+          this.render();
+        });
+
+        const nameRow = nameDiv.querySelector('.flexrow');
+        nameRow.append(icon);
+      }
+    }
+
+    this._reapplyStripes();
+  }
+
   /**
    * Actions performed after any render of the Application.
    * Post-render steps are not awaited by the render process.
@@ -422,7 +507,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     // That you may want to implement yourself.
 
     // Add item change listeners
-    this._setupItemListeners();
+    this._handleContainers();
   }
 
   /**
@@ -456,40 +541,40 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
    */
   // Update the item listeners to handle updates
   // Updated listener setup with proper hook handling
-  _setupItemListeners() {
-    const actorId = this.actor.id;
+  // _setupItemListeners() {
+  //   const actorId = this.actor.id;
 
-    this._teardownItemListeners();
+  //   this._teardownItemListeners();
 
-    this._itemListeners = {
-      preCreate: Hooks.on('preCreateItem', (item, options, userId) => {
-        if (item.parent?.id === actorId && !this._validateItemWeight(item)) return false;
-      }),
-      create: Hooks.on('createItem', async (item, options, userId) => {
-        if (item.parent?.id === actorId) {
-          const shouldAllow = this._checkCarriedWeight(item);
-          if (!shouldAllow) return false;
+  //   this._itemListeners = {
+  //     preCreate: Hooks.on('preCreateItem', (item, options, userId) => {
+  //       if (item.parent?.id === actorId && !this._validateItemWeight(item)) return false;
+  //     }),
+  //     create: Hooks.on('createItem', async (item, options, userId) => {
+  //       if (item.parent?.id === actorId) {
+  //         const shouldAllow = this._checkCarriedWeight(item);
+  //         if (!shouldAllow) return false;
 
-          // Run your existing effects hook
-          await onItemCreateActiveEffects(item);
-        }
-      }),
-      preUpdate: Hooks.on('preUpdateItem', (item, changedData) => {
-        if (item.parent?.id === actorId) {
-          const shouldAllow = this._checkCarriedWeight(item, changedData);
-          if (!shouldAllow) return false;
-        }
-      }),
-      update: Hooks.on('updateItem', (item, changes, options, userId) => {
-        if (item.parent?.id === actorId) {
-          return onItemUpdate(item, changes);
-        }
-      }),
-      delete: Hooks.on('deleteItem', (item, options, userId) => {
-        if (item.parent?.id === actorId) return;
-      })
-    };
-  }
+  //         // Run your existing effects hook
+  //         await onItemCreateActiveEffects(item);
+  //       }
+  //     }),
+  //     preUpdate: Hooks.on('preUpdateItem', (item, changedData) => {
+  //       if (item.parent?.id === actorId) {
+  //         const shouldAllow = this._checkCarriedWeight(item, changedData);
+  //         if (!shouldAllow) return false;
+  //       }
+  //     }),
+  //     update: Hooks.on('updateItem', (item, changes, options, userId) => {
+  //       if (item.parent?.id === actorId) {
+  //         return onItemUpdate(item, changes);
+  //       }
+  //     }),
+  //     delete: Hooks.on('deleteItem', (item, options, userId) => {
+  //       if (item.parent?.id === actorId) return;
+  //     })
+  //   };
+  // }
 
   // Add this method to handle item updates
   _onItemUpdate(item, updateData) {
@@ -606,15 +691,15 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
   /**
    * Remove item change listeners when sheet closes
    */
-  _teardownItemListeners() {
-    if (!this._itemListeners) return;
-    Hooks.off('preCreateItem', this._itemListeners.preCreate);
-    Hooks.off('preUpdateItem', this._itemListeners.preUpdate);
-    Hooks.off('createItem', this._itemListeners.create);
-    Hooks.off('updateItem', this._itemListeners.update);
-    Hooks.off('deleteItem', this._itemListeners.delete);
-    this._itemListeners = null;
-  }
+  // _teardownItemListeners() {
+  //   if (!this._itemListeners) return;
+  //   Hooks.off('preCreateItem', this._itemListeners.preCreate);
+  //   Hooks.off('preUpdateItem', this._itemListeners.preUpdate);
+  //   Hooks.off('createItem', this._itemListeners.create);
+  //   Hooks.off('updateItem', this._itemListeners.update);
+  //   Hooks.off('deleteItem', this._itemListeners.delete);
+  //   this._itemListeners = null;
+  // }
 
   _setupCalendarChangeListener() {
     this._calendarListener = {
@@ -632,7 +717,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
 
   /** @override */
   async close(options) {
-    this._teardownItemListeners();
+    //this._teardownItemListeners();
     this._teardownCalendarListener();
     return super.close(options);
   }
@@ -765,6 +850,11 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       if (['action', 'documentClass'].includes(dataKey)) continue;
       foundry.utils.setProperty(docData, dataKey, value);
     }
+
+    // Determine sort to place at bottom
+    const collection = docCls.documentName === 'Item' ? this.actor.items : this.actor.effects;
+    const maxSort = collection.reduce((max, doc) => Math.max(max, doc.sort || 0), 0);
+    docData.sort = maxSort + 100; // or any increment
 
     return await docCls.create(docData, { parent: this.actor });
   }
@@ -1390,7 +1480,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     return Number.isFinite(idx) ? idx : null;
   }
 
-  _buildUsageMap(actor, capacity, excludeItemId = null) {
+  _buildUsageMap(actor, capacity, excludeIds = []) {
     const usage = new Map();
 
     for (let i = 0; i < Math.max(capacity, 1); i++) {
@@ -1408,9 +1498,12 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
 
     for (const it of actor.items) {
       if (ITEMS_NOT_ALLOWED_IN_CARAVANS.includes(it.type)) continue;
-      if (excludeItemId && it.id === excludeItemId) continue;
+      if (excludeIds.includes(it.id)) continue; // ← changed
 
-      const s = Number(it.system?.slots_taken ?? 1) || 1;
+      let s = Number(it.system?.slots_taken ?? 1) || 1;
+      if (it.system?.container) {
+        s = 0;
+      }
       const idx = Number(it.getFlag(FLAG_SCOPE, FLAG_SACK));
       if (Number.isFinite(idx)) {
         if (!usage.has(idx)) usage.set(idx, { used: 0, max: SLOTS_PER_SACK });
@@ -1444,7 +1537,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
   async _onDropItem(event, data) {
     if (!this.actor.isOwner) return false;
 
-    const item = await Item.implementation.fromDropData(data);
+    let item = await Item.implementation.fromDropData(data);
 
     if (ITEMS_NOT_ALLOWED_IN_CARAVANS.includes(item.type)) return false;
     if (SUBTYPES_NOT_ALLOWED_IN_CARAVANS.includes(item.system.type)) return false;
@@ -1454,39 +1547,379 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     const aimedIdx = Number.isFinite(targetIdx) ? targetIdx : 0;
 
     const sameActor = item?.parent?.uuid === this.actor.uuid;
-    const need = Number(item?.system?.slots_taken ?? 1) || 1;
 
-    const usage = this._buildUsageMap(this.actor, capacity, sameActor ? item.id : null);
+    // --- Calculate total slots needed (container + children) ---
+    const baseNeed = Number(item?.system?.slots_taken ?? 1) || 1;
+    let totalNeed = baseNeed;
+    let childrenIds = [];
+
+    if (item.system.type === GearType.CONTAINER) {
+      const children = sameActor
+        ? this.actor.items.filter(i => i.system.container === item.uuid)
+        : item.parent?.items.filter(i => i.system.container === item.uuid) || [];
+      totalNeed = children.reduce(
+        (sum, child) => sum + (Number(child.system.slots_taken) || 1),
+        baseNeed
+      );
+      childrenIds = children.map(c => c.id);
+    }
+
+    // --- Build usage map, excluding the moved item(s) ---
+    const usage = this._buildUsageMap(this.actor, capacity);
     if (!usage.has(aimedIdx)) usage.set(aimedIdx, { used: 0, max: SLOTS_PER_SACK });
 
     let finalIdx = aimedIdx;
     const aimedInfo = usage.get(aimedIdx);
-    const isOfficial = aimedIdx < capacity;
+    if (aimedInfo.used + totalNeed > aimedInfo.max) {
+      finalIdx = this._findOrCreateOverflowIndex(usage, capacity, totalNeed);
+    }
 
-    const oldIdx = Number(item.getFlag(FLAG_SCOPE, FLAG_SACK)) || 0;
-    if (sameActor && oldIdx === aimedIdx) {
-      const dropOnItem = !!event.target.closest?.('[data-item-id]');
-      if (dropOnItem) return this._onSortItem(event, item);
+    // --- Same actor: internal reorganization ---
+    if (sameActor) {
+      const oldIdx = Number(item.getFlag(FLAG_SCOPE, FLAG_SACK)) || 0;
+      const dropTargetEl = event.target.closest('li[data-item-id]');
+      let targetItem = null;
+      if (dropTargetEl) {
+        targetItem = this.actor.items.get(dropTargetEl.dataset.itemId);
+      }
+
+      if (targetItem) {
+        const targetSackIdx = targetItem.getFlag(FLAG_SCOPE, FLAG_SACK) ?? 0;
+        if (oldIdx !== targetSackIdx) {
+          // Move the dropped item (and its children if container) to the target sack first
+          await this._moveItemToSack(item, targetSackIdx, oldIdx);
+          // After moving, re-fetch the dropped item (its ID remains the same)
+          const freshItem = this.actor.items.get(item.id);
+          if (!freshItem) return false;
+          item = freshItem;
+        }
+        await this._handleCaravanItemDrop(event, item, targetItem, targetSackIdx);
+        return this._reapplyStripes();
+      } else {
+        // Drop on empty space
+        if (oldIdx === finalIdx) {
+          // Same sack: remove from container and move to bottom of sack
+          if (item.system.type === GearType.CONTAINER) {
+            // Containers dropped on empty space in same sack: do nothing? actor sheet returns.
+            return false;
+          }
+          // Find max sort in this sack (excluding this item)
+          const itemsInSack = this.actor.items.filter(
+            i => (i.getFlag(FLAG_SCOPE, FLAG_SACK) ?? 0) === oldIdx && i.id !== item.id
+          );
+          const maxSort = itemsInSack.reduce((max, i) => Math.max(max, i.sort || 0), 0);
+          await item.update({
+            'system.container': '',
+            sort: maxSort + 100
+          });
+          return this._reapplyStripes();;
+        } else {
+          // Different sack: move the whole block
+          await this._moveItemToSack(item, finalIdx, oldIdx);
+          return this._reapplyStripes();
+        }
+      }
+    }
+
+    // --- Cross‑actor drop ---
+    // (capacity already checked, finalIdx is valid)
+    if (item.system.type === GearType.CONTAINER) {
+      // Transfer container with all its contents
+      const isCopy = false; // moving, not copying
+      await this._transferContainerWithContents(item, item.parent, this.actor, finalIdx, isCopy);
+      return this._reapplyStripes();;
+    } else {
+      // Normal item
+      const createData = item.toObject();
+      foundry.utils.setProperty(createData, `flags.${FLAG_SCOPE}.${FLAG_SACK}`, finalIdx);
+      createData.system.container = ''; // always root when moving to another actor
+
+      if (item.parent?.isOwner) {
+        const itemToDelete = fromUuidSync(item.uuid);
+        await itemToDelete.delete();
+      }
+
+      this.actor.createEmbeddedDocuments('Item', [createData]);
+      return this._reapplyStripes();
+    }
+  }
+
+  async _rebuildAllSacks() {
+    // Group items by sack index
+    const itemsBySack = new Map();
+    for (const item of this.actor.items) {
+      const sackIdx = item.getFlag(FLAG_SCOPE, FLAG_SACK) ?? 0;
+      if (!itemsBySack.has(sackIdx)) itemsBySack.set(sackIdx, []);
+      itemsBySack.get(sackIdx).push(item);
+    }
+
+    const updates = [];
+
+    for (const [sackIdx, items] of itemsBySack.entries()) {
+      // Separate containers and loose items, build container map
+      const containers = [];
+      const looseItems = [];
+      const containerMap = new Map();
+
+      for (const item of items) {
+        if (item.system.type === GearType.CONTAINER) {
+          containers.push(item);
+          containerMap.set(item.uuid, []);
+        } else if (!item.system.container) {
+          looseItems.push(item);
+        }
+      }
+
+      // Collect children
+      for (const item of items) {
+        const containerId = item.system.container;
+        if (containerId && containerMap.has(containerId)) {
+          containerMap.get(containerId).push(item);
+        }
+      }
+
+      // Sort containers and loose items by current sort (preserve user order)
+      containers.sort((a, b) => a.sort - b.sort);
+      looseItems.sort((a, b) => a.sort - b.sort);
+
+      const finalOrder = [];
+
+      finalOrder.push(...looseItems);
+
+      for (const container of containers) {
+        finalOrder.push(container);
+        const children = containerMap.get(container.uuid).sort((a, b) => a.sort - b.sort);
+        finalOrder.push(...children);
+      }
+
+      // Generate updates for this sack (spaced by 100 for future insertions)
+      finalOrder.forEach((item, index) => {
+        updates.push({
+          _id: item.id,
+          sort: (index + 1) * 100
+        });
+      });
+    }
+
+    if (updates.length) {
+      await this.actor.updateEmbeddedDocuments('Item', updates);
+    }
+  }
+
+  async _handleCaravanItemDrop(event, droppedItem, targetItem, sackIdx) {
+    const isDroppedContainer = droppedItem.system.type === GearType.CONTAINER;
+    const isTargetContainer = targetItem.system.type === GearType.CONTAINER;
+
+    // Helper to get a container and its direct children, sorted
+    const getBlock = container => {
+      const children = this.actor.items
+        .filter(i => i.system.container === container.uuid)
+        .sort((a, b) => a.sort - b.sort);
+      return [container, ...children];
+    };
+
+    // --- CASE 1: Dropped item is a container (restored) ---
+    if (isDroppedContainer) {
+      if (isTargetContainer) {
+        // Swap the two container blocks (container + all children)
+        const droppedBlock = getBlock(droppedItem);
+        const targetBlock = getBlock(targetItem);
+        const droppedSort = droppedBlock[0].sort;
+        const targetSort = targetBlock[0].sort;
+
+        const updates = [];
+        for (let i = 0; i < droppedBlock.length; i++) {
+          updates.push({ _id: droppedBlock[i].id, sort: targetSort + i });
+        }
+        for (let i = 0; i < targetBlock.length; i++) {
+          updates.push({ _id: targetBlock[i].id, sort: droppedSort + i });
+        }
+        await this.actor.updateEmbeddedDocuments('Item', updates);
+        await this._rebuildAllSacks();
+        return;
+      } else {
+        // Dropped container onto a non‑container (loose) item
+        // Cannot drop a container into another container's interior
+        if (targetItem.system.container) return false;
+
+        // Swap the container and the target item (standard sort)
+        await this._onSortItem(event, droppedItem);
+
+        // Renumber children to follow the container sequentially
+        const container = this.actor.items.get(droppedItem.id);
+        const children = this.actor.items
+          .filter(i => i.system.container === container.uuid)
+          .sort((a, b) => a.sort - b.sort);
+
+        if (children.length) {
+          const updates = [];
+          let base = container.sort;
+          for (let i = 0; i < children.length; i++) {
+            updates.push({
+              _id: children[i].id,
+              sort: base + i + 1
+            });
+          }
+          await this.actor.updateEmbeddedDocuments('Item', updates);
+        }
+        return;
+      }
+    }
+
+    // --- CASE 2: Dropped item is NOT a container ---
+    // Check if allowed inside a container (if target is a container)
+    if (isTargetContainer && !ITEMS_ALLOWED_IN_CONTAINERS.includes(droppedItem.system.type)) {
       return false;
     }
 
-    if (aimedInfo.used + need > aimedInfo.max) {
-      finalIdx = this._findOrCreateOverflowIndex(usage, capacity, need);
+    // Determine the new container UUID and the sack index that container resides in
+    let newContainer = '';
+    let newSackIdx = sackIdx; // default to the drop sack
+
+    if (isTargetContainer) {
+      newContainer = targetItem.uuid;
+      newSackIdx = targetItem.getFlag(FLAG_SCOPE, FLAG_SACK) ?? sackIdx;
+
+      // If the item is already inside this container, do nothing
+      if (droppedItem.system.container === newContainer) {
+        return false;
+      }
+    } else if (targetItem.system.container) {
+      newContainer = targetItem.system.container;
+      // Find the container item to get its sack
+      const containerItem = await fromUuid(newContainer);
+      if (containerItem) {
+        newSackIdx = containerItem.getFlag(FLAG_SCOPE, FLAG_SACK) ?? sackIdx;
+      }
+    } else {
+      newContainer = '';
+      // Dropping onto a loose item in same sack – sack index remains sackIdx
     }
 
-    if (sameActor) {
-      return item.update({ [`flags.${FLAG_SCOPE}.${FLAG_SACK}`]: finalIdx });
+    // Update container reference and sack flag if either changed
+    const containerChanged = droppedItem.system.container !== newContainer;
+    const sackChanged = droppedItem.getFlag(FLAG_SCOPE, FLAG_SACK) !== newSackIdx;
+    if (containerChanged || sackChanged) {
+      const updates = {
+        'system.container': newContainer,
+        [`flags.${FLAG_SCOPE}.${FLAG_SACK}`]: newSackIdx
+      };
+      const response = await droppedItem.update(updates);
+      if (!response) return false;
     }
 
-    const createData = item.toObject();
-    foundry.utils.setProperty(createData, `flags.${FLAG_SCOPE}.${FLAG_SACK}`, finalIdx);
+    // Handle sorting / placement
+    if (isTargetContainer) {
+      // Place the item at the end of the container's children
+      const children = this.actor.items
+        .filter(i => i.system.container === newContainer)
+        .sort((a, b) => a.sort - b.sort);
 
-    if (item.parent?.isOwner) {
-      const itemToDelete = fromUuidSync(item.uuid);
-      await itemToDelete.delete();
+      let newSort;
+      if (children.length) {
+        // If there are children, place after the last one
+        newSort = children[children.length - 1].sort + 1;
+      } else {
+        // No children, place immediately after the container
+        newSort = targetItem.sort + 1;
+      }
+      await droppedItem.update({ sort: newSort });
+      await this._rebuildAllSacks();
+    } else {
+      // Drop onto a non‑container item: swap sorts
+      await this._onSortItem(event, droppedItem);
+    }
+  }
+
+  _getMaxSortInSack(sackIdx, excludeIds = []) {
+    let maxSort = 0;
+    for (const it of this.actor.items) {
+      if (excludeIds.includes(it.id)) continue;
+      if ((it.getFlag(FLAG_SCOPE, FLAG_SACK) ?? 0) === sackIdx) {
+        maxSort = Math.max(maxSort, it.sort || 0);
+      }
+    }
+    return maxSort;
+  }
+
+  async _moveItemToSack(item, newSackIdx, oldSackIdx) {
+    const isContainer = item.system.type === GearType.CONTAINER;
+    const children = isContainer
+      ? this.actor.items
+          .filter(i => i.system.container === item.uuid)
+          .sort((a, b) => a.sort - b.sort)
+      : [];
+
+    const allMovingIds = [item.id, ...children.map(c => c.id)];
+    const maxSort = this._getMaxSortInSack(newSackIdx, allMovingIds);
+    let baseSort = maxSort + 100;
+
+    const updates = [];
+
+    // Update the container or single item
+    const updateObj = {
+      _id: item.id,
+      [`flags.${FLAG_SCOPE}.${FLAG_SACK}`]: newSackIdx,
+      sort: baseSort
+    };
+    if (!isContainer) {
+      updateObj['system.container'] = ''; // remove from old container when moving sacks
+    }
+    updates.push(updateObj);
+
+    // Update children (only if container) – they stay inside the container
+    for (let i = 0; i < children.length; i++) {
+      updates.push({
+        _id: children[i].id,
+        [`flags.${FLAG_SCOPE}.${FLAG_SACK}`]: newSackIdx,
+        sort: baseSort + i + 1
+      });
     }
 
-    return this.actor.createEmbeddedDocuments('Item', [createData]);
+    await this.actor.updateEmbeddedDocuments('Item', updates);
+  }
+
+  async _transferContainerWithContents(
+    containerItem,
+    sourceActor,
+    targetActor,
+    targetSackIdx,
+    isCopy = false
+  ) {
+    // Duplicate the container
+    const containerData = foundry.utils.duplicate(containerItem.toObject());
+    delete containerData._id;
+    delete containerData.sort;
+    delete containerData.folder;
+    foundry.utils.setProperty(containerData, `flags.${FLAG_SCOPE}.${FLAG_SACK}`, targetSackIdx);
+    containerData.system.container = ''; // root in the new actor
+
+    const [createdContainer] = await targetActor.createEmbeddedDocuments('Item', [containerData]);
+    const newContainerUuid = createdContainer.uuid;
+
+    // Find children in the source actor
+    const children = sourceActor.items.filter(i => i.system.container === containerItem.uuid);
+
+    if (children.length) {
+      const childrenData = children.map(child => {
+        const data = foundry.utils.duplicate(child.toObject());
+        delete data._id;
+        delete data.sort;
+        delete data.folder;
+        data.system.container = newContainerUuid;
+        foundry.utils.setProperty(data, `flags.${FLAG_SCOPE}.${FLAG_SACK}`, targetSackIdx);
+        return data;
+      });
+      await targetActor.createEmbeddedDocuments('Item', childrenData);
+    }
+
+    // Delete originals if this is a move (not a copy)
+    if (!isCopy) {
+      const idsToDelete = [containerItem.id, ...children.map(c => c.id)];
+      await sourceActor.deleteEmbeddedDocuments('Item', idsToDelete);
+    }
+
+    return createdContainer;
   }
 
   /**

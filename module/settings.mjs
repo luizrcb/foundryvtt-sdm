@@ -133,6 +133,29 @@ export function registerSystemSettings() {
     default: false
   });
 
+  /** Player Permissions */
+
+  game.settings.register('sdm', 'canPlayerRerollCharacter', {
+    name: 'SDM.SettingsCanPlayerRerollCharacter',
+    hint: 'SDM.SettingsCanPlayerRerollCharacterHint',
+    scope: 'world',
+    restricted: true,
+    requiresReload: true,
+    type: Boolean,
+    default: true
+  });
+
+  game.settings.register('sdm', 'canPlayerDropPetOnCanvas', {
+    name: 'SDM.SettingsCanPlayerDropPetOnCanvas',
+    hint: 'SDM.SettingsCanPlayerDropPetOnCanvasHint',
+    scope: 'world',
+    restricted: true,
+    type: Boolean,
+    default: true
+  });
+
+
+
   /** game world settings */
 
   game.settings.register('sdm', 'currencyName', {

@@ -3,20 +3,20 @@
   <div class="grid grid-5col">
     <div class="main grid-span-5">
       <section>
-        <ol class='items-list'>
+        <ol class='items-list collapsible-items'>
           <li class='item flexrow items-header caravan-item-header'>
             <div class='item-name'>
-              <div class="mr-10">
+              <div>
                 <span class="">{{localize 'SDM.CaravanItemSlots'}}</span>
                 <span>[{{totalUsedSlots}}/{{totalMaxSlots}}]</span>
               </div>
               {{#if system.overloaded}}
-                <div class="fumble">
+                <div class="fumble ml-5">
                   {{localize 'SDM.StatusOverloaded'}}
                   <i class="fa fa-weight-hanging fumble"></i>
                 </div>
               {{/if}}
-              <div class="rollable" style="align-self: flex-end;" data-action="consumeSupplies">
+              <div class="rollable ml-10" style="align-self: flex-end;" data-action="consumeSupplies">
                 <i class="fa-solid fa-sack-xmark" data-action="consumeSupplies"></i>
                 <span>{{localize 'SDM.ConsumeSupply'}}</span>
               </div>
@@ -64,7 +64,7 @@
              data-no-drag="true" />
       </div>
       <section>
-        <ol class='items-list list-border'>
+        <ol class='items-list collapsible-items list-border'>
         {{#each (@lookup sack 'items') as |item id|}}
           {{> ($$ "actor/item") item=item actorType=@root.actor.type}}
         {{/each}}
@@ -81,7 +81,7 @@
           <div><span>({{localize 'SDM.CashSymbol'}}{{getEstimatedValue overflow}})</span></div>
         </div>
         <section>
-          <ol class='items-list list-border'>
+          <ol class='items-list collapsible-items list-border'>
             {{#each (@lookup overflow 'items') as |item id|}}
               {{> ($$ "actor/item") item=item actorType=@root.actor.type}}
             {{/each}}

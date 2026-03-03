@@ -1,8 +1,14 @@
 # CHANGELOG
 
-## v0.12.2
+## v0.13.0
 
+- Added new gear type: container
+- Added context menu option (sheet item right-click) to delete container and all its contents
+- When a container is dropped or transferred to another actor, all content in the container will follow along
+- Users can drop pet items from Actor sheets into the scene canvas to create a pet token
+- Added referee settings to allow/block players from rerolling their characters and dropping pet items to the scene canvas
 - Added initial system message with links to Luka Rejec's platforms
+- Added initial system message with links to Luber's platforms
 - Added upper limit to: trait's sources to learn, and burden's steps to cure
 - Minor style changes to system icon
 - Allowed gear pets to be sent to caravan sheets

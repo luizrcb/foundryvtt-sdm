@@ -162,6 +162,15 @@
         </div>
         {{/if}}
 
+        {{#if (eq system.type 'container')}}
+        <div class='resource'>
+          <label class='resource-label' for="system.capacity.max">{{localize 'SDM.GearContainer.Capacity'}}</label>
+          <div class='resource-content'>
+            <input type='text' name="system.capacity.max" value="{{system.capacity.max}}" data-dtype='Number' data-tooltip="{{localize 'SDM.UnitStones'}}"/>
+          </div>
+        </div>
+        {{/if}}
+
       </div>
       {{/unless}}
   </header>

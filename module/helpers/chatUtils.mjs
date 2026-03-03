@@ -142,9 +142,9 @@ function _onChatCardToggleContent(event) {
   }
 }
 
-const wtfStudioLinks = `<div class="intro-message">
+export const wtfStudioLinks = `<div class="intro-message">
       <div class="system-title">Synthetic Dream Machine</div>
-        <div class="system-author">
+        <div class="system-author" data-tooltip="Luka Rejec">
           by Luka Rejec
         </div>
         <div class="outcome">
@@ -189,13 +189,60 @@ const wtfStudioLinks = `<div class="intro-message">
         </div>
     </div>`;
 
-export async function WTFStudioDialog() {
+export const luberLinks = `<div class="intro-message">
+      <div class="system-title">FoundryVTT SDM Development</div>
+        <div class="system-author" data-tooltip="Luiz Bertoni">
+          by Luber (Luiz Bertoni)
+        </div>
+        <div class="flex flex-around">
+          <a href='https://ko-fi.com/R6R01IW3KM' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+        </div>
+        <div class="outcome">
+          <div class="outcome-title">
+            <span>HOW TO REACH ME</span>
+          </div>
+          <div class="flex flex-around">
+            <div>
+              <div class="outcome-description">
+                <a href="https://github.com/luizrcb">Github</a>
+              </div>
+              <div class="outcome-description">
+                <a href="www.linkedin.com/in/luizbertoni">LinkedIn</a>
+              </div>
+            </div>
+            <div>
+              <div class="outcome-description">
+                <a href="https://discord.com/users/383555462668484608">Discord</a>
+              </div>
+              <div class="outcome-description">
+                <a href="https://t.me/luizbertoni">Telegram</a>
+              </div>
+            </div>
+          </div>
+        </div>
+         <div class="outcome">
+            <div class="outcome-title">
+              <span>My Foundry Modules</span>
+            </div>
+            <div class="outcome-description">
+              <a href="https://foundryvtt.com/packages/disposition-initiative">Disposition Initiative</a>
+            </div>
+            <div class="outcome-description">
+              <a href="https://foundryvtt.com/packages/dice-oracles">Dice Oracles</a>
+            </div>
+            <div class="outcome-description">
+                <a href="https://foundryvtt.com/community/luizbertoni/packages">All My Modules</a>
+            </div>
+        </div>
+    </div>`;
+
+export async function LinksDialog(content, width = 310, height = 550) {
   await DialogV2.prompt({
     position: {
-      width: 310,
-      height: 550
+      width,
+      height
     },
-    content: wtfStudioLinks,
+    content,
     modal: true,
     rejectClose: false
   });
@@ -207,6 +254,10 @@ export function sendInitialMessage() {
   const initialMessageSent = game.settings.get('sdm', 'initialMessageSent');
   if (initialMessageSent) return;
   setTimeout(() => {
+    createChatMessage({
+      speaker: ChatMessage.getSpeaker({ alias: 'Gamemaster' }),
+      content: luberLinks
+    });
     createChatMessage({
       speaker: ChatMessage.getSpeaker({ alias: 'Gamemaster' }),
       content: wtfStudioLinks

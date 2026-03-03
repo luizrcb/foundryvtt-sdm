@@ -1,4 +1,10 @@
-import { ActorType, DEFAULT_CASH_ICON, DocumentType, SizeUnit } from '../helpers/constants.mjs';
+import {
+  ActorType,
+  DEFAULT_CASH_ICON,
+  DocumentType,
+  GearType,
+  SizeUnit
+} from '../helpers/constants.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 import { getSlotsTaken } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
@@ -36,9 +42,9 @@ async function addCashWithMaxStack(actor, amount, defaultCurrencyName, defaultCu
   let remaining = Number(amount) || 0;
   if (remaining <= 0) return;
 
-  const items = listCashItems(actor).sort(
-    (a, b) => Number(a.system?.quantity ?? 0) - Number(b.system?.quantity ?? 0)
-  );
+  const items = listCashItems(actor)
+    .sort((a, b) => Number(a.system?.quantity ?? 0) - Number(b.system?.quantity ?? 0))
+    .filter(i => i.system.container === '');
 
   const updates = [];
   for (const it of items) {
@@ -194,10 +200,10 @@ async function performItemTransfer(
   targetActorId,
   cashAmount,
   quantity = 1,
-  totalCharged = 0,
+  totalCharged = 0
 ) {
   let sourceActor;
-
+  let items = [];
   // Resolve source actor
   if (sourceActorType === ActorType.NPC) {
     sourceActor = fromUuidSync(sourceActorId);
@@ -226,6 +232,7 @@ async function performItemTransfer(
   }
 
   const isCashTransfer = freshItem.system.size?.unit === SizeUnit.CASH;
+  const isContainerTransfer = freshItem.system.type === GearType.CONTAINER;
   let itemName,
     sourceName,
     targetUserIds = [];
@@ -247,9 +254,7 @@ async function performItemTransfer(
       }
 
       const currencyName = game.settings.get('sdm', 'currencyName') || 'cash';
-      const currencyImage =
-        game.settings.get('sdm', 'currencyImage') ||
-        DEFAULT_CASH_ICON;
+      const currencyImage = game.settings.get('sdm', 'currencyImage') || DEFAULT_CASH_ICON;
 
       itemName = `${amount} ${currencyName}`;
       sourceName = sourceActor.name;
@@ -270,6 +275,70 @@ async function performItemTransfer(
         ]);
         throw err;
       }
+    } else if (isContainerTransfer) {
+      // Collect container and its direct children (non‑containers)
+      const container = freshItem;
+      const children = sourceActor.items.filter(i => i.system.container === container.uuid);
+
+      const itemsToTransfer = [container, ...children];
+
+      // Validate total weight for the bundle
+      const totalSlots = itemsToTransfer.reduce((sum, i) => sum + getSlotsTaken(i.system), 0);
+      if (!targetActor.sheet._checkActorWeightLimit(totalSlots, container.type)) {
+        throw new Error($fmt('SDM.ErrorWeightLimit', { target: targetActor.name }));
+      }
+      // If any item is a hallmark, ensure target can accept it
+      if (itemsToTransfer.some(i => i.system.is_hallmark) && !targetActor.canAddHallmarkItem()) {
+        throw new Error($fmt('SDM.ErrorHallmarkLimit', { target: targetActor.name }));
+      }
+
+      itemName = container.name;
+      sourceName = sourceActor.name;
+      targetUserIds = game.users
+        .filter(u => u.active && !u.isGM && targetActor.testUserPermission(u, 'OWNER'))
+        .map(u => u.id);
+
+      // 1️ Create the container on the target
+      const containerData = foundry.utils.duplicate(container.toObject());
+      delete containerData._id;
+      delete containerData.sort;
+      delete containerData.folder;
+      containerData.system.readied = false;
+      containerData.flags = {
+        sdm: {
+          transferSource: sourceActor.id,
+          transferId: transferKey
+        }
+      };
+      const [createdContainer] = await targetActor.createEmbeddedDocuments('Item', [containerData]);
+      const newContainerUuid = createdContainer.uuid;
+
+      // 2️ Create the children, updating their container reference
+      if (children.length) {
+        const childrenData = children.map(child => {
+          const data = foundry.utils.duplicate(child.toObject());
+          delete data._id;
+          delete data.sort;
+          delete data.folder;
+          data.system.readied = false;
+          data.system.container = newContainerUuid;
+          data.flags = {
+            sdm: {
+              transferSource: sourceActor.id,
+              transferId: transferKey
+            }
+          };
+          return data;
+        });
+        await targetActor.createEmbeddedDocuments('Item', childrenData);
+      }
+
+      // 3️ Delete the originals from the source (since this is a move, not a copy)
+      const sourceIds = [container.id, ...children.map(c => c.id)];
+      await sourceActor.deleteEmbeddedDocuments('Item', sourceIds);
+
+      // Set items for the chat message (list of transferred source items)
+      items = itemsToTransfer;
     } else {
       // --- PHYSICAL ITEM PATH ---
       itemName = freshItem.name;
@@ -308,6 +377,7 @@ async function performItemTransfer(
           // Create a single doc on the target
           const newItemData = freshItem.toObject();
           newItemData.system.readied = false;
+          newItemData.system.container = '';
           newItemData.flags = {
             sdm: {
               transferSource: sourceActor.id,
@@ -336,7 +406,7 @@ async function performItemTransfer(
         //     // non-stackable from NPC -> leave as-is (copy behavior)
         //   }
         // } else {
-          // Non-NPC (e.g. PC)
+        // Non-NPC (e.g. PC)
         if (hasStacks) {
           const newQty = availableQty - reqQty;
           if (newQty > 0) {
@@ -350,7 +420,7 @@ async function performItemTransfer(
           // non-stackable from PC -> move the single item
           await sourceActor.deleteEmbeddedDocuments(DocumentType.ITEM, [freshItem.id]);
         }
-       // }
+        // }
       } catch (err) {
         // Rollback: delete any created docs on the target
         if (createdDocs?.length) {
@@ -362,8 +432,8 @@ async function performItemTransfer(
         throw err;
       }
     }
-    let items = [];
-    if (!isCashTransfer && freshItem) {
+
+    if (!isCashTransfer && !isContainerTransfer && freshItem) {
       items.push(freshItem);
     }
 
@@ -383,7 +453,7 @@ async function performItemTransfer(
       amount: isCashTransfer ? parseInt(cashAmount, 10) : undefined,
       currencyName: game.settings.get('sdm', 'currencyName') || 'cash',
       currencyImg: game.settings.get('sdm', 'currencyImage'),
-      totalValue: totalCharged,
+      totalValue: totalCharged
     };
 
     const content = await renderTemplate(templatePath('chat/transfer-summary-card'), ctx);
@@ -629,7 +699,7 @@ export async function openItemTransferDialog(item, sourceActor) {
           targetActorId,
           transferOptions.cashAmount,
           reqQty,
-          totalCharge,
+          totalCharge
         );
         ui.notifications.info($l10n('SDM.TransferComplete'));
       } catch (err) {

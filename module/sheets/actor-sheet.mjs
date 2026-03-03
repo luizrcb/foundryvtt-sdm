@@ -19,11 +19,8 @@ import {
 } from '../helpers/globalUtils.mjs';
 import {
   getSlotsTaken,
-  ITEMS_NOT_ALLOWED_IN_CARAVANS,
-  ITEMS_NOT_ALLOWED_IN_CHARACTERS,
-  onItemCreateActiveEffects,
-  onItemUpdate,
-  SUBTYPES_NOT_ALLOWED_IN_CARAVANS
+  ITEMS_ALLOWED_IN_CONTAINERS,
+  ITEMS_NOT_ALLOWED_IN_CHARACTERS
 } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { openItemTransferDialog } from '../items/transfer.mjs';
@@ -61,12 +58,15 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     if (this.actor?.type === ActorType.NPC) {
       classes.push(ActorType.NPC);
-      controls.push({
-        action: 'levelUpNPC',
-        icon: 'fa-solid fa-angles-up',
-        label: 'Level UP NPC',
-        ownership: 'OWNER'
-      });
+      if (game.user.isGM) {
+        controls.push({
+          action: 'levelUpNPC',
+          icon: 'fa-solid fa-angles-up',
+          label: 'Level UP NPC',
+          ownership: 'OWNER'
+        });
+      }
+
       window.controls = controls;
     }
 
@@ -77,12 +77,16 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         label: 'Edit Mode / Play Mode',
         ownership: 'OWNER'
       });
-      controls.push({
-        action: 'rerollCharacter',
-        icon: 'fa-solid fa-recycle',
-        label: 'SDM.RerollCharacter',
-        ownership: 'OWNER'
-      });
+
+      if (game.user.isGM || game.settings.get('sdm', 'canPlayerRerollCharacter')) {
+        controls.push({
+          action: 'rerollCharacter',
+          icon: 'fa-solid fa-recycle',
+          label: 'SDM.RerollCharacter',
+          ownership: 'OWNER'
+        });
+      }
+
       window.controls = controls;
     }
 
@@ -690,6 +694,88 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     }
   }
 
+  _reapplyStripes() {
+    const root = this.element.querySelector('.items-list.collapsible-items');
+    if (!root) return;
+
+    const items = Array.from(root.querySelectorAll('li.item'));
+    let visibleIndex = 0;
+
+    items.forEach(li => {
+      li.classList.remove('stripe-even', 'stripe-odd');
+      if (li.offsetParent !== null) {
+        li.classList.add(visibleIndex % 2 === 0 ? 'stripe-odd' : 'stripe-even');
+        visibleIndex++;
+      }
+    });
+  }
+
+  _handleContainers() {
+    const actor = this.actor;
+    const root = this.element;
+
+    const rows = Array.from(root.querySelectorAll('li.item'));
+
+    for (const li of rows) {
+      const item = actor.items.get(li.dataset.itemId);
+      if (!item) continue;
+
+      const parentId = item.system.container?.trim();
+      if (!parentId) continue;
+
+      const parentRow = root.querySelector(`li.item[data-item-id="${parentId}"]`);
+      if (!parentRow) continue;
+
+      parentRow.insertAdjacentElement('afterend', li);
+      li.classList.add('item-child');
+    }
+
+    for (const li of rows) {
+      const item = actor.items.get(li.dataset.itemId);
+      if (!item) continue;
+
+      const parentId = item.system.container?.trim();
+      if (!parentId) continue;
+
+      const parent = fromUuidSync(parentId);
+      const collapsed = parent?.getFlag('sdm', 'isCollapsed');
+
+      li.style.display = collapsed ? 'none' : '';
+    }
+
+    for (const li of rows) {
+      const item = actor.items.get(li.dataset.itemId);
+      if (!item || item.system.type !== 'container') continue;
+
+      const collapsed = item.getFlag('sdm', 'isCollapsed');
+      const nameDiv = li.querySelector('.item-name');
+
+      if (!nameDiv.querySelector('.container-indicator')) {
+        const icon = document.createElement('i');
+        icon.classList.add(
+          'fas',
+          collapsed ? 'fa-angle-right' : 'fa-angle-down',
+          'container-indicator'
+        );
+        icon.style.marginLeft = '5px;';
+        icon.style.padding = '8px';
+
+        li.addEventListener('click', async ev => {
+          ev.preventDefault();
+          if (ev.detail > 1) return;
+
+          await item.setFlag('sdm', 'isCollapsed', !collapsed);
+          this.render();
+        });
+
+        const nameRow = nameDiv.querySelector('.flexrow');
+        nameRow.append(icon);
+      }
+    }
+
+    this._reapplyStripes();
+  }
+
   /**
    * Actions performed after any render of the Application.
    * Post-render steps are not awaited by the render process.
@@ -705,8 +791,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     // Foundry comes with a large number of utility classes, e.g. SearchFilter
     // That you may want to implement yourself.
 
-    // Add item change listeners
-    this._setupItemListeners();
+    this._handleContainers();
   }
 
   /**
@@ -731,44 +816,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
   _getItemListContextOptions() {
     return this.actor._getItemListContextOptions();
-  }
-
-  /**
-   * Set up listeners for item changes specific to this actor
-   */
-  // Update the item listeners to handle updates
-  // Updated listener setup with proper hook handling
-  _setupItemListeners() {
-    const actorId = this.actor.id;
-
-    this._teardownItemListeners();
-
-    this._itemListeners = {
-      preCreate: Hooks.on('preCreateItem', (item, options, userId) => {
-        if (item.parent?.id === actorId && !this._validateItemWeight(item)) return false;
-      }),
-      create: Hooks.on('createItem', (item, options, userId) => {
-        if (item.parent?.id === actorId) {
-          const shouldAllow = this._checkCarriedWeight(item);
-          if (!shouldAllow) return false;
-          return onItemCreateActiveEffects(item);
-        }
-      }),
-      preUpdate: Hooks.on('preUpdateItem', (item, changedData) => {
-        if (item.parent?.id === actorId) {
-          const shouldAllow = this._checkCarriedWeight(item, changedData);
-          if (!shouldAllow) return false;
-        }
-      }),
-      update: Hooks.on('updateItem', (item, changes, options, userId) => {
-        if (item.parent?.id === actorId) {
-          return onItemUpdate(item, changes);
-        }
-      }),
-      delete: Hooks.on('deleteItem', (item, options, userId) => {
-        if (item.parent?.id === actorId) return;
-      })
-    };
   }
 
   _checkActorWeightLimit(additionalSlots = 0, itemType) {
@@ -864,25 +911,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     }
 
     return true;
-  }
-
-  /**
-   * Remove item change listeners when sheet closes
-   */
-  _teardownItemListeners() {
-    if (!this._itemListeners) return;
-    Hooks.off('preCreateItem', this._itemListeners.preCreate);
-    Hooks.off('preUpdateItem', this._itemListeners.preUpdate);
-    Hooks.off('createItem', this._itemListeners.create);
-    Hooks.off('updateItem', this._itemListeners.update);
-    Hooks.off('deleteItem', this._itemListeners.delete);
-    this._itemListeners = null;
-  }
-
-  /** @override */
-  async close(options) {
-    this._teardownItemListeners();
-    return super.close(options);
   }
 
   /**************
@@ -986,6 +1014,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       if (['action', 'documentClass'].includes(dataKey)) continue;
       foundry.utils.setProperty(docData, dataKey, value);
     }
+
+    // Determine sort to place at bottom
+    const collection = docCls.documentName === 'Item' ? this.actor.items : this.actor.effects;
+    const maxSort = collection.reduce((max, doc) => Math.max(max, doc.sort || 0), 0);
+    docData.sort = maxSort + 100; // or any increment
 
     return await docCls.create(docData, { parent: this.actor });
   }
@@ -1959,14 +1992,15 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     const item = await Item.implementation.fromDropData(data);
     const isCharacterOrNPC = [ActorType.CHARACTER, ActorType.NPC].includes(this.actor.type);
-    const isCaravan = this.actor.type === ActorType.CARAVAN;
 
     if (isCharacterOrNPC && ITEMS_NOT_ALLOWED_IN_CHARACTERS.includes(item.type)) {
       return false;
     }
 
     // Handle item sorting within the same Actor
-    if (this.actor.uuid === item.parent?.uuid) return this._onSortItem(event, item);
+    if (this.actor.uuid === item.parent?.uuid) {
+      return this._handleInventoryDrop(event, item);
+    }
 
     if (item.parent) {
       return this._onDropItemCreate(item, event);
@@ -2161,6 +2195,235 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     return this._onDropItemCreate(item, event);
   }
 
+  async _handleInventoryDrop(event, droppedItem) {
+    const dropTargetEl = event.target.closest('li[data-item-id]');
+    let targetItem = null;
+
+    const isDroppedContainer = droppedItem.system.type === GearType.CONTAINER;
+
+    if (dropTargetEl) {
+      targetItem = this.actor.items.get(dropTargetEl.dataset.itemId);
+    }
+
+    // ---------------------------------------------------------
+    // Dropped on empty inventory space (move to root)
+    // ---------------------------------------------------------
+    if (!targetItem) {
+      if (isDroppedContainer) return;
+
+      const allItems = Array.from(this.actor.items);
+      const maxSort = Math.max(...allItems.map(i => i.sort), 0);
+      await droppedItem.update({
+        'system.container': '',
+        'system.readied': false,
+        sort: maxSort + 100
+      });
+      await this._rebuildInventorySort();
+      return;
+    }
+
+    const isTargetContainer = targetItem.system.type === GearType.CONTAINER;
+    const isTargetInsideContainer = targetItem.system?.container !== '';
+
+    /* =========================================================
+     CASE 1: DROPPED ITEM IS A CONTAINER (unchanged)
+    ========================================================== */
+    if (isDroppedContainer) {
+      // CASE: Dropped item is a container
+      if (isTargetContainer) {
+        // Swap two container blocks (container + all children)
+        const droppedBlock = this.actor.items
+          .filter(i => i.id === droppedItem.id || i.system.container === droppedItem.uuid)
+          .sort((a, b) => a.sort - b.sort);
+
+        const targetBlock = this.actor.items
+          .filter(i => i.id === targetItem.id || i.system.container === targetItem.uuid)
+          .sort((a, b) => a.sort - b.sort);
+
+        const droppedSort = droppedBlock[0].sort;
+        const targetSort = targetBlock[0].sort;
+
+        const updates = [];
+
+        for (let i = 0; i < droppedBlock.length; i++) {
+          updates.push({ _id: droppedBlock[i].id, sort: targetSort + i });
+        }
+        for (let i = 0; i < targetBlock.length; i++) {
+          updates.push({ _id: targetBlock[i].id, sort: droppedSort + i });
+        }
+
+        await this.actor.updateEmbeddedDocuments('Item', updates);
+        await this._rebuildInventorySort();
+        return;
+      }
+
+      // Dropped container onto a non‑container item
+      if (targetItem.system.container) return; // cannot drop container into another container's interior
+
+      await this._onSortItem(event, droppedItem); // reorder the container itself
+
+      // After moving the container, renumber its children to follow immediately after
+      const container = this.actor.items.get(droppedItem.id);
+      const children = this.actor.items
+        .filter(i => i.system.container === container.uuid)
+        .sort((a, b) => a.sort - b.sort);
+
+      if (children.length) {
+        const updates = [];
+        let base = container.sort;
+        for (let i = 0; i < children.length; i++) {
+          updates.push({
+            _id: children[i].id,
+            sort: base + (i + 1)
+          });
+        }
+        await this.actor.updateEmbeddedDocuments('Item', updates);
+      }
+      return;
+    }
+
+    /* =========================================================
+     CASE 2: NORMAL ITEM
+    ========================================================== */
+    let newContainer = '';
+
+    if (isTargetContainer || isTargetInsideContainer) {
+      if (!ITEMS_ALLOWED_IN_CONTAINERS.includes(droppedItem.system.type)) return;
+    }
+
+    // ---------------------------------------------------------
+    // Dropped directly on container
+    // ---------------------------------------------------------
+    if (isTargetContainer) {
+      // If the dropped item is already inside this container, do nothing
+      if (droppedItem.system.container === targetItem.uuid) {
+        return false;
+      }
+
+      newContainer = targetItem.uuid;
+
+      // Update container reference
+      const response = await droppedItem.update({
+        'system.container': newContainer,
+        'system.readied': false
+      });
+      if (!response) return;
+
+      // Find all children of this container (including the just‑added item)
+      const children = this.actor.items
+        .filter(i => i.system.container === newContainer)
+        .sort((a, b) => a.sort - b.sort);
+
+      // Determine the maximum sort among the entire container block
+      const blockMaxSort = Math.max(targetItem.sort, ...children.map(c => c.sort || 0));
+
+      // Place new item after the block's maximum sort
+      const newSort = blockMaxSort + 1;
+      await droppedItem.update({ sort: newSort });
+      // Then rebuild to ensure all sorts are consistent
+      await this._rebuildInventorySort();
+      return;
+    }
+
+    // ---------------------------------------------------------
+    // Dropped on item inside a container
+    // ---------------------------------------------------------
+    if (targetItem.system.container) {
+      newContainer = targetItem.system.container;
+    } else {
+      newContainer = '';
+    }
+
+    // If both items are in the same container (or both loose), sort them
+    if (droppedItem.system.container === targetItem.system.container) {
+      await this._onSortItem(event, droppedItem);
+      await this._rebuildInventorySort();
+      return;
+    }
+
+    // Otherwise update container reference and then sort
+    if (droppedItem.system.container !== newContainer) {
+      const response = await droppedItem.update({
+        'system.container': newContainer,
+        'system.readied': false
+      });
+      if (!response) return;
+    }
+
+    await this._onSortItem(event, droppedItem);
+    await this._rebuildInventorySort();
+    return;
+  }
+
+  async _reorderContainers(droppedContainer, targetItem) {
+    const containers = this.actor.items
+      .filter(i => i.system.type === 'container')
+      .sort((a, b) => a.sort - b.sort);
+
+    const targetIsContainer = targetItem.system.type === 'container';
+
+    const targetContainer = targetIsContainer ? targetItem : null;
+
+    if (!targetContainer) return;
+
+    const siblings = containers.filter(c => c.id !== droppedContainer.id);
+
+    const sortUpdates = foundry.utils.performIntegerSort(droppedContainer, {
+      target: targetContainer,
+      siblings
+    });
+
+    const updates = sortUpdates.map(u => ({
+      _id: u.target.id,
+      ...u.update
+    }));
+
+    return this.actor.updateEmbeddedDocuments('Item', updates);
+  }
+
+  async _rebuildInventorySort() {
+    const items = Array.from(this.actor.items);
+
+    const containers = items
+      .filter(i => i.system.type === 'container')
+      .sort((a, b) => a.sort - b.sort);
+
+    const looseItems = items
+      .filter(i => i.system.type !== 'container' && !i.system.container)
+      .sort((a, b) => a.sort - b.sort);
+
+    const containerMap = new Map();
+
+    for (const container of containers) {
+      containerMap.set(container.uuid, []);
+    }
+
+    for (const item of items) {
+      if (item.system.container && containerMap.has(item.system.container)) {
+        containerMap.get(item.system.container).push(item);
+      }
+    }
+
+    const finalOrder = [];
+
+    finalOrder.push(...looseItems);
+
+    for (const container of containers) {
+      finalOrder.push(container);
+
+      const children = containerMap.get(container.uuid).sort((a, b) => a.sort - b.sort);
+
+      finalOrder.push(...children);
+    }
+
+    const updates = finalOrder.map((item, index) => ({
+      _id: item.id,
+      sort: (index + 1) * 100
+    }));
+
+    return this.actor.updateEmbeddedDocuments('Item', updates);
+  }
+
   /**
    * Handle dropping of a Folder on an Actor Sheet.
    * The core sheet currently supports dropping a Folder of Items to create all items as owned items.
@@ -2214,12 +2477,65 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       return [];
     }
 
-    if (itemData[0].parent?.isOwner && !event.ctrlKey) {
-      const item = fromUuidSync(itemData[0].uuid);
-      await item.delete();
+    // Detect cross-actor drop
+    const sourceItem = itemData[0].uuid ? fromUuidSync(itemData[0].uuid) : null;
+    const sourceActor = sourceItem?.parent;
+
+    const isCrossActor = sourceActor && sourceActor.uuid !== this.actor.uuid;
+    const isContainer = sourceItem && !!sourceItem.system?.capacity?.max;
+    const isCopy = event.ctrlKey;
+
+    if (isCrossActor && isContainer) {
+      return this._transferContainerWithContents(sourceItem, sourceActor, isCopy);
+    }
+
+    // Default behavior
+    if (sourceItem?.parent?.isOwner && !isCopy) {
+      await sourceItem.delete();
     }
 
     return this.actor.createEmbeddedDocuments('Item', itemData);
+  }
+
+  async _transferContainerWithContents(containerItem, sourceActor, isCopy) {
+    const targetActor = this.actor;
+
+    // 1️⃣ Duplicate container
+    const containerData = foundry.utils.duplicate(containerItem.toObject());
+    delete containerData._id;
+    delete containerData.sort;
+    delete containerData.folder;
+
+    const [createdContainer] = await targetActor.createEmbeddedDocuments('Item', [containerData]);
+
+    const oldUuid = containerItem.uuid;
+    const newUuid = createdContainer.uuid;
+
+    // 2️⃣ Find children
+    const children = sourceActor.items.filter(i => i.system.container === oldUuid);
+
+    if (children.length) {
+      const childData = children.map(child => {
+        const data = foundry.utils.duplicate(child.toObject());
+        delete data._id;
+        delete data.sort;
+        delete data.folder;
+        foundry.utils.setProperty(data, 'system.container', newUuid);
+        return data;
+      });
+
+      await targetActor.createEmbeddedDocuments('Item', childData);
+    }
+
+    // 3️⃣ Delete originals ONLY if move
+    if (!isCopy) {
+      await sourceActor.deleteEmbeddedDocuments('Item', [
+        containerItem.id,
+        ...children.map(c => c.id)
+      ]);
+    }
+
+    return createdContainer;
   }
 
   /**

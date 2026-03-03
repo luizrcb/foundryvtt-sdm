@@ -1,5 +1,5 @@
 <li
-  class='item flexrow {{item.system.status}}'
+  class='item flexrow {{item.system.status}} {{#if (ne item.system.container "")}}inContainer{{/if}}'
   data-item-id='{{item._id}}'
   data-drag='true'
   data-document-class='Item'
@@ -126,8 +126,11 @@
       {{#if (and (has item.system.features 'replenish')(ne item.system.resources 'run_out'))}} <div class="pills flex" style="flex-basis:auto;flex-wrap:nowrap;"><span class="pill pill-s mr-3" style="flex-basis:auto;flex-wrap:nowrap;"
        data-tooltip="{{replace (localize 'SDM.ItemFeature.replenish') ' #' ''}}"
       >{{replace (localize 'SDM.ItemFeature.replenishAbbr') '#' item.system.replenish.value}}</span></div>{{/if}}
-
       {{item.name}}
+
+      {{#if (eq system.type 'container')}}
+        <span class="ml-3" data-tooltip="SDM.GearContainer.Capacity">[{{item.system.container_taken}}/{{item.system.capacity.max}}]</span>
+      {{/if}}
 
       {{#if (and (ne item.system.size.unit 'cash') (gt item.system.quantity 1))}}
       x{{item.system.quantity}}
@@ -154,6 +157,7 @@
       (ne item.system.type 'augment')
       (ne item.system.type 'pet')
       (ne item.system.type 'container')
+      (eq item.system.container '')
     )}}
     <a class="item-control">
       <i

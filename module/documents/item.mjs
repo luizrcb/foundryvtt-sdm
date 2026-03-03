@@ -11,9 +11,10 @@ import {
   TraitType
 } from '../helpers/constants.mjs';
 import { $fmt, $l10n, capitalizeFirstLetter, safeEvaluate } from '../helpers/globalUtils.mjs';
-import { getSlotsTaken } from '../helpers/itemUtils.mjs';
+import { getSlotsTaken, UnarmedDamageItem } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { renderUsageResult } from '../rolls/ui/renderResults.mjs';
+import { DEFAULT_MAX_POWERS } from '../settings.mjs';
 
 const { renderTemplate } = foundry.applications.handlebars;
 
@@ -38,39 +39,108 @@ export class SdmItem extends Item {
 
   async _preCreate(data, options, userId) {
     // if (userId !== game.user.id) return;
-
-    await super._preCreate(data, options, userId);
-
-    // Avoid loops: if we’re creating as a result of a split, skip
-    if (options?._sdmFromSplit) return;
+    const result = await super._preCreate(data, options, userId);
+    if (result === false) return false;
 
     const actor = this.parent;
-    if (!actor || actor.type !== ActorType.CARAVAN) return;
+    if (!actor) return result;
 
-    // Use the incoming source data first (data), then existing fallbacks (this.system)
+    // ---- ALWAYS validate container ----
+    const containerId = data?.system?.container;
+    if (containerId) {
+      const simulatedSystem = foundry.utils.mergeObject(this.system.toObject(), data.system ?? {}, {
+        inplace: false
+      });
+
+      const ok = actor._validateContainerCapacity(containerId, {
+        simulatedItem: simulatedSystem
+      });
+
+      if (!ok) return false;
+    }
+
+    const hallMarkItem = data?.system?.is_hallmark;
+    if (hallMarkItem && !actor?.canAddHallmarkItem()) {
+      ui.notifications.error($fmt('SDM.ErrorHallmarkLimit', { target: this.actor.name }));
+      return false;
+    }
+
+    // ---- Only skip splitting logic, NOT validation ----
+    if (options?._sdmFromSplit) return result;
+
+    // ---- Split logic below ----
+
+    if (actor.type !== ActorType.CARAVAN) return result;
+
     const isSupply = !!(data?.system?.is_supply ?? this.system?.is_supply);
     const unit = data?.system?.size?.unit ?? this.system?.size?.unit;
     const qty = Number(data?.system?.quantity ?? this.system?.quantity ?? 1) || 1;
 
-    // Only auto-split "supplies in sacks" with qty > 1
-    if (!(isSupply && unit === SizeUnit.SACKS && qty > 1)) return;
+    if (!(isSupply && unit === SizeUnit.SACKS && qty > 1)) return result;
 
-    // Keep 1 on the original being created
     this.updateSource({ 'system.quantity': 1, 'system.readied': false });
 
-    // Build (qty - 1) additional single-quantity copies
     const singlesToCreate = qty - 1;
-    const base = this.toObject(); // includes flags, sack assignment, etc.
+    const base = this.toObject();
     delete base._id;
+
     foundry.utils.setProperty(base, 'system.quantity', 1);
     foundry.utils.setProperty(base, 'system.readied', false);
 
     const clones = Array.from({ length: singlesToCreate }, () => foundry.utils.duplicate(base));
 
-    // Create the extra singles. Pass a guard flag so their preCreate skips splitting.
     if (clones.length) {
       await actor.createEmbeddedDocuments('Item', clones, { _sdmFromSplit: true });
     }
+
+    return result;
+  }
+
+  async _preUpdate(changes, options, user) {
+    const result = await super._preUpdate(changes, options, user);
+    if (result === false) return false;
+
+    const actor = this.parent;
+    if (!actor) return result;
+
+    if (changes.system?.is_hallmark && !actor?.canAddHallmarkItem()) {
+      ui.notifications.error($fmt('SDM.ErrorHallmarkLimit', { target: this.actor.name }));
+      return false;
+    }
+
+
+    if (this.system.type === GearType.CONTAINER) {
+      if (changes.system?.capacity?.max !== undefined && changes.system?.capacity?.max < this.system.container_taken) {
+        // TODO ADD notification error message here
+        return false;
+      }
+    }
+
+    // Only care about container logic if container-related fields change
+    const affectsContainer =
+      changes.system?.container !== undefined ||
+      changes.system?.size !== undefined ||
+      changes.system?.quantity !== undefined;
+
+    if (!affectsContainer) return result;
+
+    const mergedSystem = foundry.utils.mergeObject(this.system.toObject(), changes.system ?? {}, {
+      inplace: false
+    });
+
+    const newContainer = mergedSystem.container;
+
+    if (newContainer) {
+      const ok = actor._validateContainerCapacity(newContainer, {
+        ignoreItemId: this.id,
+        simulatedItem: mergedSystem
+      });
+
+      if (!ok) return false;
+      // TODO ADD notification error message here
+    }
+
+    return true;
   }
 
   async _onUpdate(changed, options, userId) {
@@ -121,6 +191,27 @@ export class SdmItem extends Item {
         });
       }
     }
+  }
+
+  async _onCreate(data, options, userId) {
+    if (data.type !== ItemType.GEAR) return;
+
+    if (this.getFlag?.('sdm', 'fromCompendium') === UnarmedDamageItem) return;
+    let readiedStatus = false;
+
+    if (data._stats.compendiumSource === UnarmedDamageItem) {
+      readiedStatus = true;
+    }
+
+    const updateData = { 'system.readied': readiedStatus };
+
+    const defaultMaxPowers = game.settings.get('sdm', 'defaultMaxPowers') || DEFAULT_MAX_POWERS;
+    updateData['system.max_powers'] = defaultMaxPowers;
+    await this.update(updateData);
+  }
+
+  async _preDelete(options, user) {
+    console.log(options, user);
   }
 
   /**
@@ -481,7 +572,7 @@ export class SdmItem extends Item {
       [GearType.AFFLICTION]: () => this.getSubtypeTitle(),
       [GearType.AUGMENT]: () => this.getSubtypeTitle(),
       [GearType.PET]: () => this.getPetTitle(),
-      [GearType.CONTAINER]: () => this.getDefaultTitle(),
+      [GearType.CONTAINER]: () => this.getSubtypeTitle(),
       '': () => this.getDefaultTitle()
     };
 
@@ -547,6 +638,8 @@ export class SdmItem extends Item {
 
   async toggleReadied() {
     const BROKEN_ITEM_READIED = false;
+
+    if (this.system.container) return false;
 
     let nextValue = this.system.broken ? BROKEN_ITEM_READIED : !this.system.readied;
 

@@ -17,13 +17,15 @@ import {
   SizeUnit,
   TraitType
 } from '../helpers/constants.mjs';
-import { $l10n, capitalizeFirstLetter, safeEvaluate } from '../helpers/globalUtils.mjs';
+import { $fmt, $l10n, capitalizeFirstLetter, safeEvaluate } from '../helpers/globalUtils.mjs';
 import {
   BURDEN_ITEM_TYPES,
   checkIfItemIsAlsoAnArmor,
   convertToCash,
   GEAR_ITEM_TYPES,
-  getSlotsTaken
+  getSlotsTaken,
+  onItemCreateActiveEffects,
+  onItemUpdate
 } from '../helpers/itemUtils.mjs';
 import { mergeSimilarItems, splitStackIntoTwo } from '../helpers/stackUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
@@ -175,108 +177,6 @@ export class SdmActor extends Actor {
     }
   }
 
-  // Helper: Create encumbered effect
-  async addEncumberedEffect() {
-    const effectData = {
-      name: 'encumbered',
-      label: 'encumbered',
-      icon: 'icons/tools/smithing/anvil.webp',
-      changes: [],
-      flags: {
-        sdm: {
-          effectType: 'encumbered',
-          source: 'encumbrance'
-        }
-      }
-    };
-    await this.createEmbeddedDocuments('ActiveEffect', [effectData]);
-  }
-
-  async addCumbersomeArmor() {
-    const effectData = {
-      name: 'cumbersome (armor)',
-      label: 'cumbersome (armor)',
-      icon: 'icons/equipment/chest/breastplate-banded-steel.webp',
-      changes: [],
-      flags: {
-        sdm: {
-          effectType: 'encumbered',
-          source: 'armor'
-        }
-      }
-    };
-    await this.createEmbeddedDocuments('ActiveEffect', [effectData]);
-  }
-
-  async addEncumberedSlow() {
-    const effectData = {
-      name: 'slow (encumbered)', // Descriptive label
-      label: 'slow (encumbered)', // Descriptive label
-      icon: 'icons/creatures/invertebrates/snail-movement-green.webp',
-      changes: [],
-      flags: {
-        sdm: {
-          effectType: 'slow',
-          source: 'encumbrance'
-        }
-      }
-    };
-    await this.createEmbeddedDocuments('ActiveEffect', [effectData]);
-  }
-
-  // Add fatigue slow
-  async addFatigueSlow() {
-    const effectData = {
-      name: 'slow (fatigue)', // Descriptive label
-      label: 'slow (fatigue)', // Descriptive label
-      icon: 'icons/creatures/invertebrates/snail-movement-green.webp',
-      changes: [],
-      flags: {
-        sdm: {
-          effectType: 'slow',
-          source: 'fatigue'
-        }
-      }
-    };
-    await this.createEmbeddedDocuments('ActiveEffect', [effectData]);
-  }
-
-  async addFatigueHalfLife() {
-    // In your effect creation code
-    const actorMaxLife = this.system.life.max; // Fetch directly from actor data
-    const actorCurrentLife = this.system.life.value;
-    const halfMaxLife = Math.floor(actorMaxLife * 0.5);
-
-    const effectData = {
-      name: 'half life (fatigue)',
-      label: 'half life (fatigue)',
-      icon: 'icons/svg/skull.svg',
-      changes: [
-        {
-          key: 'system.life.max',
-          value: halfMaxLife.toString(), // Ensure value is a string
-          mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE
-        }
-      ],
-      flags: {
-        sdm: {
-          effectType: 'halfLife',
-          source: 'fatigue'
-        }
-      }
-    };
-
-    if (actorCurrentLife > halfMaxLife) {
-      effectData.changes.push({
-        key: 'system.life.value',
-        value: halfMaxLife.toString(), // Ensure value is a string
-        mode: CONST.ACTIVE_EFFECT_MODES.OVERRIDE
-      });
-    }
-
-    await this.createEmbeddedDocuments('ActiveEffect', [effectData]);
-  }
-
   /** @override */
   prepareData() {
     // Prepare data for the actor. Calling the super version of this executes
@@ -383,11 +283,265 @@ export class SdmActor extends Actor {
   }
 
   _prepareNpcData() {
-    const { burdenPenalty} = this.checkInventorySlots();
+    const { burdenPenalty } = this.checkInventorySlots();
     this.update({
-      'system.burden_penalty': burdenPenalty || 0,
-    })
+      'system.burden_penalty': burdenPenalty || 0
+    });
   }
+
+  async _onCreateDescendantDocuments(parent, collection, documents, data, options, userId) {
+    await super._onCreateDescendantDocuments(parent, collection, documents, data, options, userId);
+
+    if (collection !== 'items') return;
+
+    for (const item of documents) {
+      await onItemCreateActiveEffects(item);
+    }
+  }
+
+  // _getContainerTaken(containerId, ignoreItemId = null) {
+  //   return this.items
+  //     .filter(i => i.system.container === containerId && i.id !== ignoreItemId)
+  //     .reduce((sum, i) => sum + i.slots_taken, 0);
+  // }
+
+  _checkCarriedWeight(item, updateData) {
+    if (this.type === ActorType.NPC) {
+      return true;
+    }
+
+    let itemSlots = getSlotsTaken(item?.system);
+
+    if (updateData && !updateData.system) return true;
+
+    let updateDataSlots = updateData ? getSlotsTaken(updateData?.system) : null;
+
+    if (updateData && item.system.container) {
+      const oldContainerId = item.system.container;
+      const newContainerId = updateData.system?.container ?? oldContainerId;
+
+      // Simulate merged system
+      const simulatedSystem = foundry.utils.mergeObject(
+        item.system.toObject(),
+        updateData.system ?? {},
+        { inplace: false }
+      );
+
+      const projectedSlots = getSlotsTaken(simulatedSystem);
+
+      // If moving to different container
+      if (newContainerId !== oldContainerId) {
+        const newContainer = this.items.get(newContainerId);
+        if (newContainer) {
+          const siblings = this.items.filter(
+            i => i.system.container === newContainerId && i.id !== item.id
+          );
+
+          const total = siblings.reduce((sum, i) => sum + i.slots_taken, 0);
+          const projectedTotal = total + projectedSlots;
+
+          if (projectedTotal > newContainer.system.capacity.max) {
+            ui.notifications.error('Container capacity exceeded.');
+            return false;
+          }
+        }
+      }
+
+      // If staying in same container
+      if (newContainerId === oldContainerId) {
+        const container = this.items.get(oldContainerId);
+        if (container) {
+          const siblings = this.items.filter(
+            i => i.system.container === oldContainerId && i.id !== item.id
+          );
+
+          const total = siblings.reduce((sum, i) => sum + i.slots_taken, 0);
+          const projectedTotal = total + projectedSlots;
+
+          if (projectedTotal > container.system.capacity.max) {
+            ui.notifications.error('Container capacity exceeded.');
+            return false;
+          }
+        }
+      }
+    }
+
+    if (updateData?.system?.is_hallmark && !this.canAddHallmarkItem()) {
+      ui.notifications.error($fmt('SDM.ErrorHallmarkLimit', { target: this.name }));
+      return false;
+    }
+
+    if (updateData && updateDataSlots <= itemSlots) {
+      return true;
+    }
+
+    const slotsTaken = updateData ? updateDataSlots - itemSlots : itemSlots;
+    const validWeight = this._checkActorWeightLimit(slotsTaken, item.type);
+
+    if (!validWeight) {
+      ui.notifications.error($fmt('SDM.ErrorWeightLimit', { target: this.name }));
+      return false;
+    }
+    return true;
+  }
+
+  // async _preUpdateDescendantDocuments(parent, collection, changes, options, userId) {
+  //   const result = await super._preUpdateDescendantDocuments(
+  //     parent,
+  //     collection,
+  //     changes,
+  //     options,
+  //     userId
+  //   );
+
+  //   if (result === false) return false;
+
+  //   if (collection !== 'items') return;
+
+  //   for (const update of changes) {
+  //     const item = this.items.get(update._id);
+  //     if (!item) continue;
+
+  //     if (item.system.type === GearType.CONTAINER && update.system?.capacity?.max !== undefined) {
+  //       const ok = this._validateContainerCapacity(item.id);
+  //       if (!ok) return false;
+  //     }
+
+  //     const mergedSystem = foundry.utils.mergeObject(item.system.toObject(), update.system ?? {}, {
+  //       inplace: false
+  //     });
+
+  //     const oldContainer = item.system.container;
+  //     const newContainer = mergedSystem.container;
+
+  //     const affectsContainer =
+  //       update.system?.container !== undefined ||
+  //       update.system?.size !== undefined ||
+  //       update.system?.quantity !== undefined;
+
+  //     if (affectsContainer) {
+  //       // Validate old container if moving out
+  //       if (oldContainer && oldContainer !== newContainer) {
+  //         const okOld = this._validateContainerCapacity(oldContainer, {
+  //           ignoreItemId: item.id
+  //         });
+  //         if (!okOld) return false;
+  //       }
+
+  //       // Validate new container
+  //       if (newContainer) {
+  //         const okNew = this._validateContainerCapacity(newContainer, {
+  //           simulatedItem: mergedSystem
+  //         });
+  //         if (!okNew) return false;
+  //       }
+  //     }
+
+  //     if (!this._checkCarriedWeight(item, update)) return false;
+  //   }
+  // }
+
+  async _onUpdateDescendantDocuments(parent, collection, documents, changes, options, userId) {
+    await super._onUpdateDescendantDocuments(
+      parent,
+      collection,
+      documents,
+      changes,
+      options,
+      userId
+    );
+
+    if (collection !== 'items') return;
+
+    for (const item of documents) {
+      const itemChanges = changes?.find(c => c._id === item.id);
+      await onItemUpdate(item, itemChanges);
+    }
+  }
+
+  async _onDeleteDescendantDocuments(parent, collection, documents, ids, options, userId) {
+    await super._onDeleteDescendantDocuments(parent, collection, documents, ids, options, userId);
+
+    if (collection !== 'items') return;
+
+    for (const item of documents) {
+      if (item.system.type === GearType.CONTAINER) {
+        const contents = this.items.contents.filter(i => i.system.container === item.uuid);
+        for (const contained of contents) {
+          try {
+            await contained.update({ 'system.container': '' });
+          }
+          catch (error) {
+            console.log('Could not update item in container');
+          }
+        }
+      }
+    }
+  }
+
+  _checkActorWeightLimit(additionalSlots = 0, itemType) {
+    if (this.type === ActorType.NPC) {
+      return true;
+    }
+    const itemSlotsTaken = this.system.item_slots_taken;
+    const actorItemSlots = this.system.item_slots;
+    const traitSlotsTaken = this.system.trait_slots_taken;
+    const actorTraitSlots = this.system.trait_slots;
+
+    if (itemType === ItemType.GEAR) {
+      if (itemSlotsTaken + additionalSlots <= actorItemSlots) return true;
+    } else if (itemType === ItemType.TRAIT) {
+      if (traitSlotsTaken + additionalSlots <= actorTraitSlots) return true;
+    }
+
+    const actorBurdenPenalty = this.system.burden_penalty || 0;
+    const newBurdenPenalTy = additionalSlots + actorBurdenPenalty;
+    const maxBurdenSlots = this.system.burden_slots;
+
+    return newBurdenPenalTy <= maxBurdenSlots;
+  }
+
+  _validateContainerCapacity(containerId, { ignoreItemId = null, simulatedItem = null } = {}) {
+    const container = fromUuidSync(containerId);
+    if (!container) return true;
+
+    const actor = container.parent;
+    if (!actor) return true;
+
+    const max = container.system.capacity?.max ?? 0;
+
+    let total = 0;
+
+    for (const item of actor.items) {
+      if (item.system.container !== containerId) continue;
+      if (item.id === ignoreItemId) continue;
+
+      total += getSlotsTaken(item.system);
+    }
+
+    if (simulatedItem) {
+      total += getSlotsTaken(simulatedItem);
+    }
+
+    return total <= max;
+  }
+
+  // _checkContainerCapacityOnCreate(item) {
+  //   if (!item.system.container) return true;
+
+  //   const container = fromUuidSync(item.system.container);
+  //   if (!container) return true;
+
+  //   const taken = this._getContainerTaken(container.id);
+  //   const projected = taken + item.slots_taken;
+
+  //   if (projected > container.system.capacity.max) {
+  //     ui.notifications.error('Container capacity exceeded.');
+  //     return false;
+  //   }
+
+  //   return true;
+  // }
 
   getTotalWeight() {
     switch (this.type) {
@@ -459,145 +613,135 @@ export class SdmActor extends Actor {
   checkInventorySlots() {
     const isNPC = this.type === ActorType.NPC;
 
-    const items = {
-      slotsTaken: 0,
-      packedTaken: 0,
-      slots: []
-    };
+    const items = { slotsTaken: 0, packedTaken: 0, slots: [] };
+    const traits = { slotsTaken: 0, slots: [] };
+    const burdens = { slotsTaken: 0, slots: [] };
 
-    const traits = {
-      slotsTaken: 0,
-      slots: []
-    };
-
-    const burdens = {
-      slotsTaken: 0,
-      slots: []
-    };
-
-    const itemsArray = this.items.contents.sort((a, b) => {
-      // First, sort by 'readied' (true first)
-      if (a.system.readied !== b.system.readied) {
-        return a.system.readied ? -1 : 1;
-      }
-
-      // Then, sort by 'sort' value
+    // Sort items (readied first, then by sort)
+    const allItems = this.items.contents.sort((a, b) => {
+      if (a.system.readied !== b.system.readied) return a.system.readied ? -1 : 1;
       return (a.sort || 0) - (b.sort || 0);
     });
 
-    const totalPocketValue = itemsArray.reduce((sum, item) => {
-      return sum + (item.system.pocket?.value || 0);
-    }, 0);
+    const totalPocketValue = allItems.reduce(
+      (sum, item) => sum + (item.system.pocket?.value || 0),
+      0
+    );
 
-    let itemSlotsLimit = this.system.item_slots;
-    let traitSlotsLimit = this.system.trait_slots;
-
-    if (isNPC) {
-      itemSlotsLimit = 100;
-      traitSlotsLimit = 100;
-    }
+    let itemSlotsLimit = isNPC ? 100 : this.system.item_slots;
+    let traitSlotsLimit = isNPC ? 100 : this.system.trait_slots;
 
     let burdenPenaltyBonus = this.system.burden_penalty_bonus || 0;
     let powerSlotsBonus = this.system.power_slots_bonus || 0;
     let petSlotsBonus = this.system.pet_slots_bonus || 0;
     let augmentSlotsBonus = this.system.augment_slots_bonus || 0;
     let afflictionSlotsBonus = this.system.affliction_slots_bonus || 0;
-    let smallItemBonus = (this.system.small_item_slots_bonus || 0) + (totalPocketValue || 0);
+    let smallItemBonus = (this.system.small_item_slots_bonus || 0) + totalPocketValue;
     let weaponItemBonus = this.system.weapon_item_slots_bonus || 0;
     let packedItemBonus = this.system.packed_item_slots_bonus || 0;
     let readiedItemBonus = this.system.readied_item_slots_bonus || 0;
     const readiedArmorTakeNoSlots = !!this.system.readied_armor_take_no_slots;
 
-    // Iterate through items, allocating to containers
-    for (let i of itemsArray) {
-      const isGear = i.type === ItemType.GEAR;
-      const isAffliction = i.system.type === GearType.AFFLICTION;
-      const isPower = i.system.type === GearType.POWER;
-      const isPet = i.system.type === GearType.PET;
-      const isAugment = i.system.type === GearType.AUGMENT;
-      const isWeapon = i.system.type === GearType.WEAPON;
-      const isWard = i.system.type === GearType.WARD;
-      const isArmor = i.system.type === GearType.ARMOR;
-      const isSmallItem = i.system.size.unit === SizeUnit.SOAPS;
-      const isReadied = !!i.system.readied;
-
-      let itemSlots = getSlotsTaken(i.system);
-
-      if (isArmor && isReadied && readiedArmorTakeNoSlots) {
-        itemSlots = 0;
-      } else if (
-        (isWeapon || isWard) &&
-        isReadied &&
-        readiedArmorTakeNoSlots &&
-        !!checkIfItemIsAlsoAnArmor(i)
-      ) {
-        itemSlots = 0;
-      } else if (isPower && powerSlotsBonus > 0) {
-        powerSlotsBonus -= 1;
-        itemSlots = 0;
-      } else if (isPet && petSlotsBonus > 0) {
-        petSlotsBonus -= 1;
-        itemSlots = 0;
-      } else if (isAugment && augmentSlotsBonus > 0) {
-        augmentSlotsBonus -= 1;
-        itemSlots = 0;
-      } else if (isAffliction && afflictionSlotsBonus > 0) {
-        afflictionSlotsBonus -= 1;
-        itemSlots = 0;
-      } else if (isGear && isWeapon && weaponItemBonus > 0) {
-        weaponItemBonus -= 1;
-        itemSlots = 0;
-      } else if (isGear && isSmallItem && isReadied && smallItemBonus > 0) {
-        smallItemBonus -= 1;
-        // if (itemSlots >= 1) itemSlots -= 1;
-        itemSlots = 0;
-      } else if (isReadied && readiedItemBonus > 0 && itemSlots === 1) {
-        readiedItemBonus -= 1;
-        itemSlots = 0;
-      } else if (isGear && !isReadied && packedItemBonus > 0 && packedItemBonus >= itemSlots) {
-        packedItemBonus -= itemSlots || 1;
-        items.packedTaken += itemSlots || 1;
-        itemSlots = 0;
-      }
-
-      // Append to inventory.
-      if (isGear) {
-        if (isAffliction) {
-          burdenPenaltyBonus += 1;
-        }
-
-        if (items.slotsTaken + itemSlots <= itemSlotsLimit) {
-          items.slots.push(i);
-          items.slotsTaken += itemSlots;
-        } else {
-          burdens.slots.push(i);
-          burdens.slotsTaken += itemSlots;
-        }
-      } else if (i.type === ItemType.TRAIT) {
-        if (isAffliction) {
-          burdenPenaltyBonus += 1;
-        }
-        if (traits.slotsTaken + itemSlots <= traitSlotsLimit) {
-          traits.slots.push(i);
-          traits.slotsTaken += itemSlots;
-        } else {
-          burdens.slots.push(i);
-          burdens.slotsTaken += itemSlots;
-        }
-      } else if (BURDEN_ITEM_TYPES.includes(i.type)) {
-        burdens.slots.push(i);
-        burdens.slotsTaken += itemSlots;
+    // Build container hierarchy
+    const containerMap = new Map();
+    const rootItems = [];
+    for (const item of allItems) {
+      if (item.system.container) {
+        if (!containerMap.has(item.system.container)) containerMap.set(item.system.container, []);
+        containerMap.get(item.system.container).push(item);
+      } else {
+        rootItems.push(item);
       }
     }
 
-    const response = {
+    // Process root items (containers and loose items)
+    for (const item of rootItems) {
+      const isGear = item.type === ItemType.GEAR;
+      const isAffliction = item.system.type === GearType.AFFLICTION;
+      const isPower = item.system.type === GearType.POWER;
+      const isPet = item.system.type === GearType.PET;
+      const isAugment = item.system.type === GearType.AUGMENT;
+      const isWeapon = item.system.type === GearType.WEAPON;
+      const isWard = item.system.type === GearType.WARD;
+      const isArmor = item.system.type === GearType.ARMOR;
+      const isSmallItem = item.system.size.unit === SizeUnit.SOAPS;
+      const isReadied = !!item.system.readied;
+      const isContainer = item.system.type === GearType.CONTAINER;
+
+      let itemSlots = getSlotsTaken(item.system);
+
+      // Bonuses only apply to non‑container items
+      if (!isContainer) {
+        if (isArmor && isReadied && readiedArmorTakeNoSlots) {
+          itemSlots = 0;
+        } else if (
+          (isWeapon || isWard) &&
+          isReadied &&
+          readiedArmorTakeNoSlots &&
+          !!checkIfItemIsAlsoAnArmor(item)
+        ) {
+          itemSlots = 0;
+        } else if (isPower && powerSlotsBonus > 0) {
+          powerSlotsBonus -= 1;
+          itemSlots = 0;
+        } else if (isPet && petSlotsBonus > 0) {
+          petSlotsBonus -= 1;
+          itemSlots = 0;
+        } else if (isAugment && augmentSlotsBonus > 0) {
+          augmentSlotsBonus -= 1;
+          itemSlots = 0;
+        } else if (isAffliction && afflictionSlotsBonus > 0) {
+          afflictionSlotsBonus -= 1;
+          itemSlots = 0;
+        } else if (isGear && isWeapon && weaponItemBonus > 0) {
+          weaponItemBonus -= 1;
+          itemSlots = 0;
+        } else if (isGear && isSmallItem && isReadied && smallItemBonus > 0) {
+          smallItemBonus -= 1;
+          itemSlots = 0;
+        } else if (isReadied && readiedItemBonus > 0 && itemSlots === 1) {
+          readiedItemBonus -= 1;
+          itemSlots = 0;
+        } else if (isGear && !isReadied && packedItemBonus > 0 && packedItemBonus >= itemSlots) {
+          packedItemBonus -= itemSlots || 1;
+          items.packedTaken += itemSlots || 1;
+          itemSlots = 0;
+        }
+      }
+
+      // Determine which list this root item belongs to
+      let targetList = null;
+      if (isGear) {
+        if (isAffliction) burdenPenaltyBonus += 1;
+        targetList = items.slotsTaken + itemSlots <= itemSlotsLimit ? items : burdens;
+      } else if (item.type === ItemType.TRAIT) {
+        if (isAffliction) burdenPenaltyBonus += 1;
+        targetList = traits.slotsTaken + itemSlots <= traitSlotsLimit ? traits : burdens;
+      } else if (BURDEN_ITEM_TYPES.includes(item.type)) {
+        targetList = burdens;
+      }
+
+      if (targetList) {
+        targetList.slots.push(item);
+        targetList.slotsTaken += itemSlots;
+
+        // If this is a container, add its children to the same list (no slot cost)
+        if (isContainer && containerMap.has(item.uuid)) {
+          const children = containerMap.get(item.uuid);
+          for (const child of children) {
+            targetList.slots.push(child);
+            // Children do not affect slotsTaken or bonuses
+          }
+        }
+      }
+    }
+
+    return {
       items,
       burdens,
       traits,
       burdenPenalty: burdens.slotsTaken + burdenPenaltyBonus
     };
-
-    return response;
   }
 
   getCarriedGear() {
@@ -1212,7 +1356,7 @@ export class SdmActor extends Actor {
       },
       {
         name: 'SDM.Item.Share',
-        icon: '<i class="fa-solid fa-fw fa-share-from-square"></i>',
+        icon: '<i class="fa-solid fa-share-from-square"></i>',
         callback: async target => {
           const item = this.sheet._getEmbeddedDocument(target);
           await item.sendToChat({ actor: this, collapsed: false });
@@ -1220,11 +1364,37 @@ export class SdmActor extends Actor {
       },
       {
         name: 'SDM.Item.Delete',
-        icon: '<i class="fa-solid fa-fw fa-trash"></i>',
+        icon: '<i class="fa-solid fa-trash"></i>',
         condition: () => this.isOwner,
         callback: async target => {
           const document = this.sheet._getEmbeddedDocument(target);
           await document.deleteDialog();
+        }
+      },
+
+      {
+        name: 'SDM.Item.ContainerDelete',
+        icon: '<i class="fa-solid fa-folder-minus"></i>',
+        condition: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          return this.isOwner && item.system.type === GearType.CONTAINER;
+        },
+        callback: async target => {
+          const document = this.sheet._getEmbeddedDocument(target);
+          const containedItems = this.items.contents.filter(
+            i => i.system.container === document.uuid
+          );
+          const deleted = await document.deleteDialog({
+            window: {
+              title: `${$fmt('SDM.DeleteContainerConfirmation', { doc: document.name })}`
+            }
+          });
+
+          if (deleted) {
+            for (let contained of containedItems) {
+              await contained.delete();
+            }
+          }
         }
       }
     ];
