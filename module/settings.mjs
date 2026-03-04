@@ -1149,7 +1149,7 @@ export function configurePlayerChromatype() {
   const foregroundRoyal = royal.map(color => colorMapping[color].dice.foreground);
   const backgroundRoyal = royal.map(color => colorMapping[color].dice.background);
 
-  Hooks.once('diceSoNiceInit', dice3d => {
+  Hooks.once('diceSoNiceReady', dice3d => {
     if (dice3d) {
       const colorData = {
         name: 'sdm-chromatype',
