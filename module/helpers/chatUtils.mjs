@@ -258,11 +258,14 @@ export function sendInitialMessage() {
       speaker: ChatMessage.getSpeaker({ alias: 'Gamemaster' }),
       content: luberLinks
     });
+  }, 1000);
+
+  setTimeout(() => {
     createChatMessage({
       speaker: ChatMessage.getSpeaker({ alias: 'Gamemaster' }),
       content: wtfStudioLinks
     });
-  }, 1000);
+  }, 2000);
 
   game.settings.set('sdm', 'initialMessageSent', true);
 }
