@@ -2,7 +2,7 @@
 
 ## v0.13.1
 
-- Random Generated Humans NPCs without a name will get a random name rolled from names tables
+- Random Generated Humans NPCs without a name will get a random name rolled from names tables (thanks to _TheGiftOfGabes_ for the feature suggestion)
 - Added default game world settings on startup
 - Fixed wrong DiceSoNice hook used to register custom dice themes, causing oracle dices to get no texture
 - Small fix to new game world initial messages order
