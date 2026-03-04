@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v0.13.1
+
+- Random Generated Humans NPCs without a name will get a random name rolled from names tables
+- Added default game world settings on startup
+- Fixed wrong DiceSoNice hook used to register custom dice themes, causing oracle dices to get no texture
+- Small fix to new game world initial messages order
+
 ## v0.13.0
 
 - Added new gear type: container

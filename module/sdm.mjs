@@ -48,6 +48,7 @@ import {
   registerSystemSettings,
   setupBonusHeroDiceBroadcast,
   setupEscalatorDiePositionBroadcast,
+  setupInitialSettings,
   updateBonusHeroDiceDisplay
 } from './settings.mjs';
 import { registerSDMGMSettingMenus } from './settings/register-gm-menus.mjs';
@@ -259,13 +260,13 @@ Hooks.on('createActor', async (actor, _options, _id) => {
     displayName: CONST.TOKEN_DISPLAY_MODES.OWNER,
     displayBars: CONST.TOKEN_DISPLAY_MODES.OWNER,
     disposition: disposition,
-    lockRotation: true
+    lockRotation: true,
+    sight: {}
   };
+  tokenData.sight.enabled = true;
 
   if ([ActorType.CHARACTER, ActorType.CARAVAN].includes(actor.type)) {
     tokenData.disposition = CONST.TOKEN_DISPOSITIONS.FRIENDLY;
-    tokenData.sight = {};
-    tokenData.sight.enabled = true;
     tokenData.actorLink = true;
   }
 
@@ -630,14 +631,8 @@ Hooks.once('ready', function () {
   Hooks.on('hotbarDrop', (bar, data, slot) => createDocMacro(data, slot));
   // Create container element
 
-  const combatConfig = game.settings.get('core', 'combatTrackerConfig');
-  combatConfig.resource = 'life.value';
-  combatConfig.skipDefeated = true;
-  combatConfig.turnMarker.enabled = true;
-  combatConfig.turnMarker.disposition = true;
-  combatConfig.turnMarker.animation = 'spin';
-  game.settings.set('core', 'combatTrackerConfig', combatConfig);
 
+  setupInitialSettings();
   createEscalatorDieDisplay();
   createBonusHeroDiceDisplay();
   setupBonusHeroDiceBroadcast();

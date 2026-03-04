@@ -1,3 +1,5 @@
+import { generateNameFromTable } from './characterGenerator.mjs';
+
 const { DialogV2 } = foundry.applications.api;
 
 export async function randomNPCGenerator() {
@@ -90,10 +92,17 @@ export async function randomNPCGenerator() {
 
   // Render the dialog
   if (!data) return;
+  let npcName = data?.name;
 
   // Prepare NPC data
+  if (!npcName) {
+    if (data.table === 'humans-of-the-pananthropy') {
+      npcName = await generateNameFromTable();
+    }
+  }
+
   const npcData = {
-    name: data?.name || game.i18n.localize('SDM.UnnamedNPC'),
+    name: npcName || game.i18n.localize('SDM.UnnamedNPC'),
     table: data.table,
     initiative: ''
   };

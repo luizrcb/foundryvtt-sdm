@@ -7,7 +7,7 @@ import { addCashToActor } from './giveCash.mjs';
 
 const { DialogV2 } = foundry.applications.api;
 
-async function generateNameFromTable() {
+export async function generateNameFromTable() {
   const originalTableUuid = 'Compendium.sdm.names_tables.RollTable.ToAbPgDAtrhU8EWA';
 
   const extraTables = game.tables.filter(

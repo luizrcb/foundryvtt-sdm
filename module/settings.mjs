@@ -154,8 +154,6 @@ export function registerSystemSettings() {
     default: true
   });
 
-
-
   /** game world settings */
 
   game.settings.register('sdm', 'currencyName', {
@@ -186,9 +184,9 @@ export function registerSystemSettings() {
     restricted: true,
     type: String,
     choices: {
-      'standard': 'SDM.CurrencyWeigth.Standard',
-      'weightless': 'SDM.CurrencyWeigth.Weightless',
-      'single_stone': 'SDM.CurrencyWeigth.SingleStone'
+      standard: 'SDM.CurrencyWeigth.Standard',
+      weightless: 'SDM.CurrencyWeigth.Weightless',
+      single_stone: 'SDM.CurrencyWeigth.SingleStone'
     },
     default: 'standard',
     requiresReload: true
@@ -311,6 +309,14 @@ export function registerSystemSettings() {
     }
   });
 
+  game.settings.register('sdm', 'initialSettingsConfigured', {
+    scope: 'world', // "world" = GM only, "client" = per user
+    restricted: true,
+    config: false, // Show in configuration view
+    type: Boolean, // Data type: String, Number, Boolean, etc
+    default: false
+  });
+
   game.settings.register('sdm', 'oracleDice', {
     scope: 'client', // "world" = GM only, "client" = per user
     config: false, // Show in configuration view
@@ -333,7 +339,8 @@ export function registerSystemSettings() {
     scope: 'world', // "world" = GM only, "client" = per user
     config: false, // Show in configuration view
     type: Boolean, // Data type: String, Number, Boolean, etc
-    default: false,
+    restricted: true,
+    default: false
   });
 
   game.settings.register('sdm', 'escalatorPosition', {
@@ -1587,4 +1594,26 @@ export function setupBonusHeroDiceBroadcast() {
       }
     }
   });
+}
+
+export function setupInitialSettings() {
+  if (!game.user.isGM) return;
+
+  const initialSettingsConfigured = game.settings.get('sdm', 'initialSettingsConfigured');
+
+  if (initialSettingsConfigured) return;
+
+  const combatConfig = game.settings.get('core', 'combatTrackerConfig');
+  combatConfig.resource = 'life.value';
+  combatConfig.skipDefeated = true;
+  combatConfig.turnMarker.enabled = true;
+  combatConfig.turnMarker.disposition = true;
+  combatConfig.turnMarker.animation = 'spin';
+  game.settings.set('core', 'combatTrackerConfig', combatConfig);
+
+  game.settings.set('core', 'leftClickRelease', true);
+  game.settings.set('core', 'chatBubblesPan', false);
+  game.settings.set('core', 'tokenAutoRotate', false);
+
+  game.settings.set('sdm', 'initialSettingsConfigured', true);
 }

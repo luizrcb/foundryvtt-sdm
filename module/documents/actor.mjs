@@ -284,8 +284,14 @@ export class SdmActor extends Actor {
 
   _prepareNpcData() {
     const { burdenPenalty } = this.checkInventorySlots();
+
+    if (!this.id) {
+      return;
+    }
+
     this.update({
-      'system.burden_penalty': burdenPenalty || 0
+      'system.burden_penalty': burdenPenalty || 0,
+      _id: this.id
     });
   }
 
@@ -470,8 +476,7 @@ export class SdmActor extends Actor {
         for (const contained of contents) {
           try {
             await contained.update({ 'system.container': '' });
-          }
-          catch (error) {
+          } catch (error) {
             console.log('Could not update item in container');
           }
         }
