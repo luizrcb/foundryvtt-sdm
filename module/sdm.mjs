@@ -147,15 +147,6 @@ Hooks.on('getSceneControlButtons', function (controls) {
       if (active) await game.sdm.api.player.diceOracles();
     }
   };
-  // controls.tokens.tools['sdm-burden-generator'] = {
-  //   icon: 'fa-solid fa-face-dizzy',
-  //   name: 'sdm-burden-generator',
-  //   title: 'SDM.BurdenGenerator.Title',
-  //   button: true,
-  //   onChange: async (event, active) => {
-  //     if (active) await game.sdm.api.gm.openBurdenGeneratorDialog();
-  //   }
-  // };
 });
 
 Hooks.on('renderActorDirectory', (app, html) => {
@@ -252,31 +243,13 @@ Hooks.on('preUpdateActor', (actor, update) => {
 
 Hooks.on('createActor', async (actor, _options, _id) => {
   if (!actor.isOwner) return;
+  if (actor.type !== ActorType.CHARACTER) return;
+
   await addCompendiumItemToActor(actor, UnarmedDamageItem);
-  let disposition = CONST.TOKEN_DISPOSITIONS.NEUTRAL;
 
-  const tokenData = {
-    name: actor.name,
-    displayName: CONST.TOKEN_DISPLAY_MODES.OWNER,
-    displayBars: CONST.TOKEN_DISPLAY_MODES.OWNER,
-    disposition: disposition,
-    lockRotation: true,
-    sight: {}
-  };
-  tokenData.sight.enabled = true;
-
-  if ([ActorType.CHARACTER, ActorType.CARAVAN].includes(actor.type)) {
-    tokenData.disposition = CONST.TOKEN_DISPOSITIONS.FRIENDLY;
-    tokenData.actorLink = true;
-  }
-
-  const updateData = { prototypeToken: tokenData };
-
-  if (actor.type === ActorType.CHARACTER) {
-    updateData['system.experience'] = '300';
-  }
-
-  await actor.update(updateData);
+  await actor.update({
+    'system.experience': '300'
+  });
 });
 
 Hooks.on('updateItem', async item => {
@@ -630,7 +603,6 @@ Hooks.once('ready', function () {
 
   Hooks.on('hotbarDrop', (bar, data, slot) => createDocMacro(data, slot));
   // Create container element
-
 
   setupInitialSettings();
   createEscalatorDieDisplay();

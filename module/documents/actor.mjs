@@ -54,6 +54,32 @@ export class SdmActor extends Actor {
     return { img: icon, texture: { src: icon } };
   }
 
+  async _preCreate(data, options, user) {
+    await super._preCreate(data, options, user);
+    const updates = {};
+
+    let disposition = CONST.TOKEN_DISPOSITIONS.NEUTRAL;
+
+    const tokenData = {
+      name: data.name,
+      displayName: CONST.TOKEN_DISPLAY_MODES.OWNER,
+      displayBars: CONST.TOKEN_DISPLAY_MODES.OWNER,
+      disposition: disposition,
+      lockRotation: true,
+      sight: {}
+    };
+    tokenData.sight.enabled = true;
+
+    if ([ActorType.CHARACTER, ActorType.CARAVAN].includes(data.type)) {
+      tokenData.disposition = CONST.TOKEN_DISPOSITIONS.FRIENDLY;
+      tokenData.actorLink = true;
+    }
+
+    updates.prototypeToken = tokenData
+
+    this.updateSource(updates);
+  }
+
   // Override the _onUpdate method to handle level changes
   /** @override */
   async _onUpdate(changed, options, userId) {
@@ -305,12 +331,6 @@ export class SdmActor extends Actor {
     }
   }
 
-  // _getContainerTaken(containerId, ignoreItemId = null) {
-  //   return this.items
-  //     .filter(i => i.system.container === containerId && i.id !== ignoreItemId)
-  //     .reduce((sum, i) => sum + i.slots_taken, 0);
-  // }
-
   _checkCarriedWeight(item, updateData) {
     if (this.type === ActorType.NPC) {
       return true;
@@ -390,62 +410,6 @@ export class SdmActor extends Actor {
     }
     return true;
   }
-
-  // async _preUpdateDescendantDocuments(parent, collection, changes, options, userId) {
-  //   const result = await super._preUpdateDescendantDocuments(
-  //     parent,
-  //     collection,
-  //     changes,
-  //     options,
-  //     userId
-  //   );
-
-  //   if (result === false) return false;
-
-  //   if (collection !== 'items') return;
-
-  //   for (const update of changes) {
-  //     const item = this.items.get(update._id);
-  //     if (!item) continue;
-
-  //     if (item.system.type === GearType.CONTAINER && update.system?.capacity?.max !== undefined) {
-  //       const ok = this._validateContainerCapacity(item.id);
-  //       if (!ok) return false;
-  //     }
-
-  //     const mergedSystem = foundry.utils.mergeObject(item.system.toObject(), update.system ?? {}, {
-  //       inplace: false
-  //     });
-
-  //     const oldContainer = item.system.container;
-  //     const newContainer = mergedSystem.container;
-
-  //     const affectsContainer =
-  //       update.system?.container !== undefined ||
-  //       update.system?.size !== undefined ||
-  //       update.system?.quantity !== undefined;
-
-  //     if (affectsContainer) {
-  //       // Validate old container if moving out
-  //       if (oldContainer && oldContainer !== newContainer) {
-  //         const okOld = this._validateContainerCapacity(oldContainer, {
-  //           ignoreItemId: item.id
-  //         });
-  //         if (!okOld) return false;
-  //       }
-
-  //       // Validate new container
-  //       if (newContainer) {
-  //         const okNew = this._validateContainerCapacity(newContainer, {
-  //           simulatedItem: mergedSystem
-  //         });
-  //         if (!okNew) return false;
-  //       }
-  //     }
-
-  //     if (!this._checkCarriedWeight(item, update)) return false;
-  //   }
-  // }
 
   async _onUpdateDescendantDocuments(parent, collection, documents, changes, options, userId) {
     await super._onUpdateDescendantDocuments(
@@ -530,23 +494,6 @@ export class SdmActor extends Actor {
 
     return total <= max;
   }
-
-  // _checkContainerCapacityOnCreate(item) {
-  //   if (!item.system.container) return true;
-
-  //   const container = fromUuidSync(item.system.container);
-  //   if (!container) return true;
-
-  //   const taken = this._getContainerTaken(container.id);
-  //   const projected = taken + item.slots_taken;
-
-  //   if (projected > container.system.capacity.max) {
-  //     ui.notifications.error('Container capacity exceeded.');
-  //     return false;
-  //   }
-
-  //   return true;
-  // }
 
   getTotalWeight() {
     switch (this.type) {
