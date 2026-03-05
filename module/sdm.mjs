@@ -829,8 +829,8 @@ function renderSettings(html) {
       <span>${$l10n('SDM.SupportThisSystem')}</span>
     </div>
     <div class="flex flex-around">
-      <a class="mb-8 mt-4" href='https://ko-fi.com/R6R01IW3KM' target='_blank'>
-      <img class="kofi" data-tooltip="SDM.SupportThisSystem" height='30' style='border:0px;height:30px;cursor:pointer;' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+      <a class="mb-8 mt-4" href='https://ko-fi.com/R6R01IW3KM/tip' target='_blank'>
+      <img class="kofi" data-tooltip="SDM.SupportThisSystem" height='30' style='border:0px;height:30px;cursor:pointer;' src='' border='0' alt='Support me on ko-fi.com' /></a>
       </a>
     </div>
     <h4 class="divider">${$l10n('WORLD.FIELDS.system.label')}</h4>

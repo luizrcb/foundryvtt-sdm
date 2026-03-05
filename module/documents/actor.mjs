@@ -580,8 +580,8 @@ export class SdmActor extends Actor {
       0
     );
 
-    let itemSlotsLimit = isNPC ? 100 : this.system.item_slots;
-    let traitSlotsLimit = isNPC ? 100 : this.system.trait_slots;
+    let itemSlotsLimit = isNPC ? (this.system.capacity * 10) : this.system.item_slots;
+    let traitSlotsLimit = isNPC ? 7 : this.system.trait_slots;
 
     let burdenPenaltyBonus = this.system.burden_penalty_bonus || 0;
     let powerSlotsBonus = this.system.power_slots_bonus || 0;

@@ -195,7 +195,7 @@ export const luberLinks = `<div class="intro-message">
           by Luber (Luiz Bertoni)
         </div>
         <div class="flex flex-around">
-          <a href='https://ko-fi.com/R6R01IW3KM' target='_blank'><img height='36' style='border:0px;height:36px;' src='https://storage.ko-fi.com/cdn/kofi6.png?v=6' border='0' alt='Buy Me a Coffee at ko-fi.com' /></a>
+          <a href='https://ko-fi.com/R6R01IW3KM/tip' target='_blank'><img class="kofi" height='36' style='border:0px;height:36px;' border='0' alt='Support me on Ko-Fi' /></a>
         </div>
         <div class="outcome">
           <div class="outcome-title">

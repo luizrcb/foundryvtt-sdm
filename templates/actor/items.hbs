@@ -4,8 +4,8 @@
     <li class='item flexrow items-header'>
       <div class='item-name'></div>
       <div class='item-formula'>
-      {{localize 'SDM.InventoryItems'}} [{{@root.itemSlotsTaken}}{{#if (
-        eq @root.actor.type 'character')}}/{{@root.system.item_slots}}{{/if}}{{#if (
+      {{localize 'SDM.InventoryItems'}} [{{@root.itemSlotsTaken}}{{#if (or (
+        eq @root.actor.type 'character') (eq @root.actor.type 'npc'))}}/{{@root.system.item_slots}}{{/if}}{{#if (
           gt @root.system.packed_item_slots_bonus 0)}}<i class='fa-regular fa-shield readied'></i> {{@root.packedSlotsTaken}}/{{@root.system.packed_item_slots_bonus}}<i class='fa-regular fa-shield not-readied'></i>{{/if}}]
       </div>
       <div class='item-controls'>

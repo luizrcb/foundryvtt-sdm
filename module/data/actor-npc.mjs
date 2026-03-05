@@ -78,6 +78,14 @@ export default class SdmNPC extends SdmActorBase {
     };
   }
 
+  get item_slots() {
+    return this.capacity * 10;
+  }
+
+  get trait_slots() {
+    return game.settings.get('sdm', 'baseTraitSlots');
+  }
+
   getRollData() {
     const data = {};
 

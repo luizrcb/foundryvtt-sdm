@@ -158,7 +158,7 @@ export function setupItemTransferSocket() {
         .filter(
           a => a.type !== ActorType.NPC && a.id !== sourceActorSelf.id && !a.items.has(itemId)
         )
-        .map(a => ({ uuid: a.uuid, name: a.name }));
+        .map(a => ({ uuid: a.uuid, name: a.name , img: a.img}));
 
       game.socket.emit(CHANNEL, {
         action: 'transferTargetsResponse',
@@ -507,6 +507,7 @@ export async function openItemTransferDialog(item, sourceActor) {
     const npcCandidates = getEligibleNPCsForTransfer(item.id).map(entry => ({
       uuid: entry.token?.actor?.uuid ?? entry.actor.uuid,
       name: entry.fromScene && entry.token?.name ? '(token) ' + entry.token.name : entry.actor.name,
+      img:  entry.token?.document?.texture?.src || entry.actor.img,
       isNPC: true,
       fromScene: entry.fromScene
     }));
@@ -515,7 +516,7 @@ export async function openItemTransferDialog(item, sourceActor) {
     if (game.user.isGM) {
       playerActors = game.actors
         .filter(a => a.type !== ActorType.NPC && a.id !== sourceActor.id && !a.items.has(item.id))
-        .map(a => ({ uuid: a.uuid, name: a.name }));
+        .map(a => ({ uuid: a.uuid, name: a.name, img: a.img }));
     } else {
       if (!game.users.activeGM) {
         ui.notifications.warn($l10n('SDM.ErrorTransferNoActiveGM'));
@@ -545,6 +546,10 @@ export async function openItemTransferDialog(item, sourceActor) {
 
     const validActors = [...playerActors, ...npcCandidates];
 
+    const currencyName = game.settings.get('sdm', 'currencyName') || 'cash';
+    const currencyImage = game.settings.get('sdm', 'currencyImage') || DEFAULT_CASH_ICON;
+    const maxCashAmount = item.system?.size?.unit === SizeUnit.CASH ? item.system.quantity : null;
+
     // Render dialog (unchanged UI fields you already added)
     const template = await renderTemplate(templatePath('transfer-dialog'), {
       actors: validActors,
@@ -552,14 +557,19 @@ export async function openItemTransferDialog(item, sourceActor) {
       isGM: game.user.isGM,
       isCash: item.system?.size?.unit === SizeUnit.CASH,
       unitCost: Number(item.system?.cost ?? 0),
-      maxQuantity: Number.isFinite(Number(item.system?.quantity)) ? Number(item.system.quantity) : 1
+      maxQuantity: Number.isFinite(Number(item.system?.quantity))
+        ? Number(item.system.quantity)
+        : 1,
+      currencyName,
+      currencyImage,
+      maxCashAmount
     });
 
     const unitCost = Number(item.system?.cost ?? 0);
 
     const position = {
-      width: 700,
-      height: 300
+      // width: 700,
+      // height: 300
     };
 
     const dialogData = {
@@ -580,11 +590,46 @@ export async function openItemTransferDialog(item, sourceActor) {
         const form = root.querySelector('form');
         if (!form) return;
 
+        const hiddenInput = form.querySelector('#target-actor-uuid');
+        const actorRows = form.querySelectorAll('.actor-row');
+        let selectedRow = null;
+
+        const selectActor = row => {
+          if (selectedRow) selectedRow.classList.remove('selected');
+          row.classList.add('selected');
+          selectedRow = row;
+          hiddenInput.value = row.dataset.uuid;
+        };
+
+        actorRows.forEach(row => {
+          row.addEventListener('click', () => selectActor(row));
+        });
+
+        const cashInput = form.querySelector('input[name="cashAmount"]');
+        if (cashInput) {
+          const max = cashInput.max;
+          const hint = form.querySelector('.hint');
+          cashInput.addEventListener('input', () => {
+            let val = parseInt(cashInput.value, 10);
+            if (val > max) cashInput.value = max;
+            if (val < 1) cashInput.value = 1;
+          });
+        }
+
         const qty = form.querySelector('input[name="quantity"]');
+
+        if (qty) {
+          const max = qty.max;
+          qty.addEventListener('input', () => {
+            let val = parseInt(qty.value, 10);
+            if (val > max) qty.value = max;
+            if (val < 1) qty.value = 1;
+          });
+        }
+
         const enabled = form.querySelector('input[name="chargeEnabled"]');
         const amount = form.querySelector('input[name="chargeAmount"]');
         const totalEl = form.querySelector('#sdm-total-charge');
-
         const unit = unitCost;
 
         const recalc = () => {
@@ -604,7 +649,6 @@ export async function openItemTransferDialog(item, sourceActor) {
         qty?.addEventListener('input', recalc);
         amount?.addEventListener('input', recalc);
 
-        // initial state
         syncEnabled();
       }
     };
@@ -750,7 +794,7 @@ function getEligibleNPCsForTransfer(itemId) {
     if (actor.items.has(itemId)) continue;
 
     const disposition = token.document.disposition;
-    const hasPermission = actor.testUserPermission(game.user, 'OWNER');
+    const hasPermission = actor.testUserPermission(game.user, 'LIMITED');
 
     if (isGM || hasPermission || disposition >= CONST.TOKEN_DISPOSITIONS.FRIENDLY) {
       results.push({
@@ -773,7 +817,7 @@ function getEligibleNPCsForTransfer(itemId) {
 
     const prototypeDisposition =
       actor.prototypeToken?.disposition ?? CONST.TOKEN_DISPOSITIONS.NEUTRAL;
-    const hasPermission = actor.testUserPermission(game.user, 'OWNER');
+    const hasPermission = actor.testUserPermission(game.user, 'LIMITED');
 
     const includeDirectoryActor =
       isGM ||

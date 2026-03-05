@@ -154,9 +154,9 @@
 
 .application.sheet.sdm.actor.npc {
   min-width: 850px;
-  min-height: 500px;
+  min-height: 645px;
   max-width: 850px;
-  max-height: 500px;
+  max-height: 645px;
   &.minimized {
     min-width: 0px;
     min-height: 0px;
@@ -847,6 +847,10 @@ input[type='radio']::after {
     background: url('../assets/icons/equipment/melee-weapons/broadsword-lime-theme-dark.svg');
   }
 
+  .theme-dark .sheet {
+    --background: var(--color-cool-5);
+  }
+
   .melee-attack.white {
     background: url('../assets/icons/equipment/melee-weapons/broadsword-white.svg');
   }
@@ -1351,5 +1355,67 @@ input[type='radio']::after {
   .inContainer {
     margin-left: 15px;
     border-left: 1px dashed var(--sdm-c-beige) !important;
+  }
+
+  .actor-list.scrollable {
+    max-height: 250px;
+    overflow-y: auto;
+    border: 1px solid var(--color-border-light-tertiary);
+    border-radius: 3px;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 4px;
+  }
+
+  .actor-row {
+    display: flex;
+    align-items: center;
+    padding: 6px;
+    cursor: pointer;
+    border-radius: 3px;
+    transition: background 0.1s ease;
+  }
+
+  .actor-row:hover {
+    background: var(--sdm-item-hover);
+  }
+
+  .actor-row.selected {
+    background: var(--sdm-item-hover);
+    border: 2px solid var(--color-border-highlight);
+  }
+
+  .actor-row img {
+    width: 36px;
+    height: 36px;
+    margin-right: 8px;
+    border-radius: 3px;
+    object-fit: cover;
+    border: 1px solid var(--color-border-light-tertiary);
+  }
+
+  .cash-input-group {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .cash-input-group input {
+    flex: 1;
+  }
+
+  .currency-icon {
+    width: 24px;
+    height: 24px;
+    border: none;
+  }
+
+  .hint {
+    margin: 4px 0 0;
+    font-size: var(--font-size-12);
+    color: var(--color-text-light-primary);
+  }
+
+  .kofi {
+    content: url('../assets/support_me_on_kofi_red.png');
   }
 }

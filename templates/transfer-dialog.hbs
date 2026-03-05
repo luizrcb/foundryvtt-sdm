@@ -1,67 +1,60 @@
 <form>
-  <h5>{{localize 'SDM.TransferItem' type=item.name}}</h5>
+  <h5 class="flex" style="align-items: center;">{{localize 'SDM.TransferItem' type=item.name}} <img class="ml-5" src="{{item.img}}" alt="{{item.name}}" width="40"/></h5>
 
-  <div class='grid grid-2col flexcol'>
-
-    {{#if (eq item.system.size.unit 'cash')}}
-      <div class='form-group'>
-        <label>{{localize 'SDM.Amount'}}:</label>
-        <input type='number' name='cashAmount' min='1' max='{{item.system.quantity}}' required data-type='Number' />
-      </div>
-    {{/if}}
-
-    <div class='form-group'>
-      <label>{{localize 'SDM.TransferTo'}}:</label>
-      <select name='targetActor'>
-        <option value=''></option>
-        {{selectOptions actors valueAttr='uuid' labelAttr='name' sort=true}}
-      </select>
-    </div>
-
-    {{#if isGM}}
-      {{#unless (eq item.system.size.unit 'cash')}}
-        <div class='form-group'>
-          <label>{{localize 'SDM.ItemQuantity'}}:</label>
-          <input
-            type='number'
-            name='quantity'
-            min='1'
-            max='{{maxQuantity}}'
-            step='1'
-            value='{{item.system.quantity}}'
-            data-type='Number'
-          />
-        </div>
-
-        <div class='form-group'>
-          <label>
-            {{localize 'SDM.ChargeForThisTransfer'}}
-          </label>
-          {{!-- <label class="flexrow" style="gap:.5rem; align-items:center;"> --}}
-          <input type="checkbox" name="chargeEnabled" />
-        </div>
-        <div class="form-group">
-          <label>{{localize 'SDM.UnitPrice'}}:</label>
-          <input
-              type='number'
-              name='chargeAmount'
-              min='0'
-              step='1'
-              value='{{unitCost}}'
-              data-type='Number'
-              disabled
-            />
-        </div>
-        <div class="form-group">
-
-        </div>
-        <div class="form-group">
-          <div>
-            {{localize 'SDM.TotalToCharge'}}:
-            <strong>€<span id="sdm-total-charge">0</span></strong>
+  <div class="form-group">
+    <label>{{localize 'SDM.TransferTo'}}:</label>
+    <div class="actor-selection">
+      <input type="hidden" name="targetActor" id="target-actor-uuid" value="">
+      <div class="actor-list scrollable" style="max-heigth: 250px">
+        {{#each actors}}
+          <div class="actor-row" data-uuid="{{this.uuid}}">
+            <img src="{{this.img}}" alt="{{this.name}}" />
+            <span>{{this.name}}</span>
           </div>
-        </div>
-      {{/unless}}
-    {{/if}}
+        {{else}}
+          <p>{{localize 'SDM.NoActorsAvailable'}}</p>
+        {{/each}}
+      </div>
+    </div>
   </div>
+
+  {{#if isCash}}
+    <div class="form-group">
+      <label>{{localize 'SDM.Amount'}}:</label>
+      <div class="cash-input-group">
+        <input type="number" name="cashAmount" min="1" max="{{maxCashAmount}}" required data-type="Number" />
+        <img src="{{currencyImage}}" alt="{{currencyName}}" class="currency-icon" />
+        <span>{{currencyName}}</span>
+      </div>
+      <p class="hint">{{localize 'SDM.MaxAvailable'}}: {{localize 'SDM.CashSymbol'}}{{maxCashAmount}} </p>
+    </div>
+  {{/if}}
+
+  {{#unless isCash}}
+    <div class="form-group">
+      <label>{{localize 'SDM.ItemQuantity'}}:</label>
+      <input type="number" name="quantity" min="1" max="{{maxQuantity}}" step="1" value="{{maxQuantity}}" data-type="Number"  {{#if (eq maxQuantity 1)}}disabled{{/if}} />
+    </div>
+  {{/unless}}
+
+  {{#if isGM}}
+    {{#unless isCash}}
+      <div class="form-group">
+        <label>
+          {{localize 'SDM.ChargeForThisTransfer'}}
+          <input type="checkbox" name="chargeEnabled" />
+        </label>
+      </div>
+      <div class="form-group">
+        <label>{{localize 'SDM.UnitPrice'}}:</label>
+        <input type="number" name="chargeAmount" min="0" step="1" value="{{unitCost}}" data-type="Number" disabled />
+      </div>
+      <div class="form-group">
+        <div>
+          {{localize 'SDM.TotalToCharge'}}:
+          <strong>€<span id="sdm-total-charge">0</span></strong>
+        </div>
+      </div>
+    {{/unless}}
+  {{/if}}
 </form>

@@ -37,7 +37,9 @@ export function npcBaseFields() {
       initial: '1d4',
       validate: v => foundry.dice.Roll.validate(v),
       validationError: game.i18n.localize('SDM.ErrorValidationRollFormula')
-    })
+    }),
+
+    capacity: new fields.NumberField({ ...requiredInteger, initial: 1, min: 1 })
   };
 }
 

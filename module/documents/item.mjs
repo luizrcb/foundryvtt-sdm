@@ -384,8 +384,8 @@ export class SdmItem extends Item {
     if (!petDocument) return;
 
     if (petDocument.type === ActorType.NPC) {
-      const { level, defense, morale, bonus, life, damage } = petDocument.system;
-      title += `<br><br><b>${$l10n('SDM.FieldLevel')}:</b> ${level} <b>${$l10n('SDM.FieldLifeMax')}:</b> ${life.value}/${life.max} <b>${$l10n('SDM.Morale')}:</b> ${morale}<br>`;
+      const { level, defense, morale, bonus, life, damage, capacity } = petDocument.system;
+      title += `<br><br><b>${$l10n('SDM.FieldLevel')}:</b> ${level} <b>${$l10n('SDM.FieldCapacity')}:</b> ${capacity} <b>${$l10n('SDM.FieldLifeMax')}:</b> ${life.value}/${life.max} <b>${$l10n('SDM.Morale')}:</b> ${morale}<br>`;
       title += `<b>${$l10n('SDM.FieldDefense')}:</b> ${defense} <b>${$l10n('SDM.FieldBonus')}:</b> ${bonus} <b>${$l10n('SDM.Damage')}:</b> ${damage}`;
     } else {
       const { level, defense, life } = petDocument.system;

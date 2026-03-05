@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.13.2
+
+- Added Capacity (in sacks) to NPC sheets
+- Reordered the positions of some fields on NPC sheets
+- Improved UI for item and cash transfers
+
 ## v0.13.1
 
 - Random Generated Humans NPCs without a name will get a random name rolled from names tables (thanks to _TheGiftOfGabes_ for the feature suggestion)
