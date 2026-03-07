@@ -75,7 +75,7 @@ export class SdmActor extends Actor {
       tokenData.actorLink = true;
     }
 
-    updates.prototypeToken = tokenData
+    updates.prototypeToken = tokenData;
 
     this.updateSource(updates);
   }
@@ -267,20 +267,13 @@ export class SdmActor extends Actor {
 
     const { burdenPenalty, items, traits } = this.checkInventorySlots();
 
-    if (!this.id) {
-      return;
-    }
-
-    this.update({
-      'system.burden_penalty': burdenPenalty || 0,
-      'system.item_slots_taken': items.slotsTaken,
-      'system.trait_slots_taken': traits.slotsTaken,
-      'system.packed_item_slots_taken': items.packedTaken,
-      'system.inventory_value': estimatedWealth,
-      'system.total_cash': totalCash,
-      'system.wealth': totalCash + estimatedWealth,
-      _id: this.id
-    });
+    this.system.burden_penalty = burdenPenalty || 0;
+    this.system.item_slots_taken = items.slotsTaken;
+    this.system.trait_slots_taken = traits.slotsTaken;
+    this.system.packed_item_slots_taken = items.packedTaken;
+    this.system.inventory_value = estimatedWealth;
+    this.system.total_cash = totalCash;
+    this.system.wealth = totalCash + estimatedWealth;
   }
 
   _prepareCaravanData() {
@@ -293,32 +286,20 @@ export class SdmActor extends Actor {
     const maxCarryWeight = convertToCash(totalCapacityInSacks, SizeUnit.SACKS);
     const overloaded = currentCarriedWeight > maxCarryWeight;
 
-    if (!this.id) {
-      return;
-    }
-
-    let updateData = {
-      'system.inventory_value': estimatedWealth,
-      'system.total_cash': totalCash,
-      'system.wealth': totalCash + estimatedWealth,
-      'system.overloaded': overloaded,
-      _id: this.id
-    };
-
-    this.update(updateData);
+    this.system.inventory_value = estimatedWealth;
+    this.system.total_cash = totalCashestimatedWealth;
+    this.system.wealth = totalCash + estimatedWealth;
+    this.system.overloaded = overloadedestimatedWealth;
   }
 
   _prepareNpcData() {
     const { burdenPenalty } = this.checkInventorySlots();
 
-    if (!this.id) {
+    if (!this.id || this.inCompendium) {
       return;
     }
 
-    this.update({
-      'system.burden_penalty': burdenPenalty || 0,
-      _id: this.id
-    });
+    this.system.burden_penalty = burdenPenalty;
   }
 
   async _onCreateDescendantDocuments(parent, collection, documents, data, options, userId) {
@@ -580,7 +561,7 @@ export class SdmActor extends Actor {
       0
     );
 
-    let itemSlotsLimit = isNPC ? (this.system.capacity * 10) : this.system.item_slots;
+    let itemSlotsLimit = isNPC ? this.system.capacity * 10 : this.system.item_slots;
     let traitSlotsLimit = isNPC ? 7 : this.system.trait_slots;
 
     let burdenPenaltyBonus = this.system.burden_penalty_bonus || 0;

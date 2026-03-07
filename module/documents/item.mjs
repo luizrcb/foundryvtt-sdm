@@ -210,10 +210,6 @@ export class SdmItem extends Item {
     await this.update(updateData);
   }
 
-  async _preDelete(options, user) {
-    console.log(options, user);
-  }
-
   /**
    * Apply this ActiveEffect to a provided Actor.
    * @param {Item} item                   The Actor to whom this effect should be applied
