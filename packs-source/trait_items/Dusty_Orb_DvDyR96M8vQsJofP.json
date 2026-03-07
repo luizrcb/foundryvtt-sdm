@@ -62,7 +62,7 @@
     },
     "ward": {
       "value": 1,
-      "type": "",
+      "type": "trinket",
       "armor": 0
     },
     "weapon": {
