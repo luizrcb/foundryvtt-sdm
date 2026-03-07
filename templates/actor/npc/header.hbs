@@ -6,7 +6,6 @@
         height='100' width='100' />
     </div>
     <div class='header-fields'>
-      {{!-- <div class='document-name'> --}}
       <div class="grid grid-4col">
         <div class="grid-span-1">
           <label for="name" class='resource-label'>
@@ -42,24 +41,6 @@
             </div>
           </div>
 
-          {{!-- <div class='resource'>
-            <label class='resource-label'>
-              {{localize 'SDM.FieldDefense'}}
-            </label>
-            <div class='resource-content flexrow flex-center flex-between'>
-              <input type='text' name='system.defense' value='{{system.defense}}' data-dtype="Number" />
-            </div>
-          </div>
-
-          <div class='resource'>
-            <label class='resource-label'>
-              {{localize 'SDM.CustomInitiative'}}
-            </label>
-            <div class='resource-content flexrow flex-center flex-between'>
-              <input type='text' name='system.initiative' value='{{system.initiative}}' />
-            </div>
-          </div> --}}
-
           <div class='resource'>
             <label for='system.life.max' class='resource-label flex-start'>
               {{localize 'SDM.FieldLifeMax'}}
@@ -71,15 +52,6 @@
             </div>
           </div>
 
-          {{!-- <div class='resource'>
-            <label class='resource-label'>
-              {{localize 'SDM.Morale'}}
-            </label>
-            <div class='resource-content flexrow flex-center flex-between'>
-              <input type='text' name='system.morale' value='{{system.morale}}' data-dtype="Number" />
-            </div>
-          </div> --}}
-
           <div class='resource'>
             <label class='resource-label'>
               {{localize 'SDM.FieldExperience'}}
@@ -88,24 +60,6 @@
               <input type='text' name='system.experience' value='{{system.experience}}' />
             </div>
           </div>
-
-          {{!-- <div class='resource'>
-            <label class='resource-label'>
-              {{localize 'SDM.FieldBonus'}}
-            </label>
-            <div class='resource-content flexrow flex-center flex-between'>
-              <input type='text' name='system.bonus' value='{{system.bonus}}' data-dtype="Number" />
-            </div>
-          </div>
-
-          <div class='resource'>
-            <label class='resource-label'>
-              {{localize 'SDM.Damage'}}
-            </label>
-            <div class='resource-content flexrow flex-center flex-between'>
-              <input type='text' name='system.damage' value='{{system.damage}}' />
-            </div>
-          </div> --}}
 
           <div class='resource'>
             <label class='resource-label'>
@@ -136,7 +90,6 @@
         {{! "flex-group-center" is also defined in the _grid.scss file
         and it will add a small amount of padding, a border, and will
         center all of its child elements content and text. }}
-        {{#if @root.editable}}
          <div class='resource' data-tooltip="SDM.UnitSacks">
             <label class='resource-label'>
               {{localize 'SDM.FieldCapacity'}}
@@ -214,7 +167,6 @@
             <div>{{localize 'SDM.RollType' type=(localize 'SDM.FieldSaveTarget')}} <i class="saveIcon fa fa-shield-cat heart"></i></div>
           </div>
         </div>
-        {{/if}}
       </div>
     </div>
 </div>
