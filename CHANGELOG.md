@@ -5,6 +5,7 @@
 - Added Capacity (in sacks) to NPC sheets
 - Reordered the positions of some fields on NPC sheets
 - Improved UI for item and cash transfers
+- Added missing ward type to Dusty Orb item
 
 ## v0.13.1
 
