@@ -43,10 +43,18 @@
         </div>
         {{/if}}
       </div>
-      {{#if (or item.system.features.size (and (eq item.system.type 'power') (eq item.system.power.is_dangerous true)))}}
+      {{#if (or
+        (gt item.system.features.size 0)
+        (and (eq item.system.type 'power') (eq item.system.power.is_dangerous true))
+        (eq isDangerous true)
+      )}}
       <div class="mt-10">
         <ul class="card-footer pills unlist">
-            {{#if (and (eq item.system.type 'power') item.system.power.is_dangerous)}}
+            {{#if
+              (or
+              (eq isDangerous true)
+              (and (eq item.system.type 'power') item.system.power.is_dangerous)
+            )}}
              <li class="pill transparent">
               <span data-tooltip aria-label="{{localize 'SDM.ItemFeature.dangerous'}}: {{localize 'SDM.ItemFeature.dangerousDescription'}}">
                 {{localize 'SDM.ItemFeature.dangerousAbbr'}}

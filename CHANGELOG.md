@@ -2,8 +2,9 @@
 
 ## v0.13.3
 
-- Fix steps to learn for power traits
-- Added a flag to mark a power as dangerous
+- Fix steps to learn not working correctly for power traits
+- Added support to mark a power as dangerous
+- When using a power whose cost is higher than the actor level, a dangerous flag will be added to the chat card
 
 ## v0.13.2
 

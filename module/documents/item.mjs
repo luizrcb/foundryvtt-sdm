@@ -108,9 +108,11 @@ export class SdmItem extends Item {
       return false;
     }
 
-
     if (this.system.type === GearType.CONTAINER) {
-      if (changes.system?.capacity?.max !== undefined && changes.system?.capacity?.max < this.system.container_taken) {
+      if (
+        changes.system?.capacity?.max !== undefined &&
+        changes.system?.capacity?.max < this.system.container_taken
+      ) {
         // TODO ADD notification error message here
         return false;
       }
@@ -464,7 +466,7 @@ export class SdmItem extends Item {
     const powerCost = Math.max(powerCostBase - powerCostBonus, powerLevel === 0 ? 0 : 1);
     const powerName = powerData.name || this.getNameTitle();
 
-    let title = `<b>${powerName}</b>${!powerData?.name ? this.getCostTitle() : ''} (${$l10n('SDM.Cost').toLowerCase()}: ${powerCost})${powerData.is_dangerous ? ` (<b>${$l10n('SDM.ItemFeature.dangerousAbbr')}</b>)`: ''}<br/>`;
+    let title = `<b>${powerName}</b>${!powerData?.name ? this.getCostTitle() : ''} (${$l10n('SDM.Cost').toLowerCase()}: ${powerCost})${powerData.is_dangerous ? ` (<b>${$l10n('SDM.ItemFeature.dangerousAbbr')}</b>)` : ''}<br/>`;
 
     const powerLabel = `${$l10n('SDM.PowerLevelAbbr')}: ${powerLevel}`;
     const rangeLabel = `${$l10n('SDM.PowerRangeAbbr')}: ${powerData?.range}`;
@@ -580,7 +582,12 @@ export class SdmItem extends Item {
 
   getInventoryName() {}
 
-  async getItemChatCard({ collapsed = false, displayWeight = true }) {
+  async getItemChatCard({
+    collapsed = false,
+    displayWeight = true,
+    actor = null,
+    overcharged = false
+  }) {
     let type = this.system.type ? this.system.type : this.type;
 
     let costSubtitle = `${$l10n('SDM.CashSymbol')}${this.system.cost}`;
@@ -598,12 +605,29 @@ export class SdmItem extends Item {
       costSubtitle = '';
     }
 
+    let isDangerous = false;
+    if (actor && this.system.power) {
+      const powerData = this.system.power;
+      const powerLevel = powerData.level ?? 0;
+
+      const actorPowerCost = actor.system.power_cost ?? 2;
+      const powerCostBonus = actor.system.power_cost_bonus ?? 0;
+
+      let cost = Math.ceil(actorPowerCost * powerLevel);
+      if (overcharged) cost *= 2;
+      if (powerCostBonus > 0) cost = Math.max(cost - 2, 1);
+
+      const actorLevel = actor.system?.level ?? 0;
+      isDangerous = actorLevel < cost;
+    }
+
     const context = {
       config: CONFIG.SDM,
       item: this,
       type,
       costSubtitle,
       weightSubtitle: displayWeight ? weightSubtitle : '',
+      isDangerous,
       collapsed
     };
 
@@ -615,9 +639,10 @@ export class SdmItem extends Item {
     flavor = '',
     collapsed = false,
     displayWeight = true,
-    blindGMRoll = false
+    blindGMRoll = false,
+    overcharged = false
   }) {
-    const content = await this.getItemChatCard({ collapsed, displayWeight });
+    const content = await this.getItemChatCard({ collapsed, displayWeight, actor, overcharged });
 
     const chatMessageData = {
       actor,

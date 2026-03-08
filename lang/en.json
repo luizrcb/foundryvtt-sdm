@@ -831,7 +831,7 @@
   "SDM.ItemFeature.crampingDescription": "Penalty to defense. Usually -1",
   "SDM.ItemFeature.dangerous": "Dangerous",
   "SDM.ItemFeature.dangerousAbbr": "Dangerous",
-  "SDM.ItemFeature.dangerousDescription": "When you use a dangerous power, make a danger roll. The target number is the price of the power.",
+  "SDM.ItemFeature.dangerousDescription": "When you use a dangerous power, make a danger roll. The target number is the cost of the power.",
   "SDM.ItemFeature.deathlike": "deathlike",
   "SDM.ItemFeature.deathlikeAbbr": "deathlike",
   "SDM.ItemFeature.deathlikeDescription": "Makes you look undead",

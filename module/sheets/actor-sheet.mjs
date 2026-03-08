@@ -407,6 +407,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         powerOptions[powerIndex].overcharge + ` (${$l10n('SDM.PowerOvercharge').toLowerCase()})`;
       rollData.formula = powerOptions[powerIndex].overchargeFormula;
       rollData.powerDescription = `${powerOptions[powerIndex].description}<strong>${$l10n('SDM.PowerOvercharge')}</strong><br>${powerOptions[powerIndex].overchargeDescription}`;
+      rollData.overcharged = true;
     }
 
     if ((isPower || isPowerAlbum) && !rollData.formula) {
