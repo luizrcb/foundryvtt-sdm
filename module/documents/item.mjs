@@ -464,7 +464,7 @@ export class SdmItem extends Item {
     const powerCost = Math.max(powerCostBase - powerCostBonus, powerLevel === 0 ? 0 : 1);
     const powerName = powerData.name || this.getNameTitle();
 
-    let title = `<b>${powerName}</b>${!powerData?.name ? this.getCostTitle() : ''} (${$l10n('SDM.Cost').toLowerCase()}: ${powerCost})<br/>`;
+    let title = `<b>${powerName}</b>${!powerData?.name ? this.getCostTitle() : ''} (${$l10n('SDM.Cost').toLowerCase()}: ${powerCost})${powerData.is_dangerous ? ` (<b>${$l10n('SDM.ItemFeature.dangerousAbbr')}</b>)`: ''}<br/>`;
 
     const powerLabel = `${$l10n('SDM.PowerLevelAbbr')}: ${powerLevel}`;
     const rangeLabel = `${$l10n('SDM.PowerRangeAbbr')}: ${powerData?.range}`;

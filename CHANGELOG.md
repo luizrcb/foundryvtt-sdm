@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.13.3
+
+- Fix steps to learn for power traits
+- Added a flag to mark a power as dangerous
+
 ## v0.13.2
 
 - Added Capacity (in sacks) to NPC sheets

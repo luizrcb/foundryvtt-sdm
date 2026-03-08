@@ -44,7 +44,7 @@
       {{/if}}
 
       <div class='resource flex-group-center'>
-        {{#if (and (gt system.learning.required_successes 0) (or (eq system.type '') (eq system.type 'skill')))}}
+        {{#if (and (gt system.learning.required_successes 0) (or (eq system.type '') (eq system.type 'skill') (eq system.type 'power')))}}
         <label class='resource-label'>{{localize 'SDM.Sources'}}</label>
         <div class="resource-content sources flex-group-center mt-5">
           {{#multiboxes system.learning.sources}}

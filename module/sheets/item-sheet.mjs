@@ -521,7 +521,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       overcharge_roll_formula,
       roll_formula,
       default_ability,
-      description
+      description,
+      is_dangerous,
     } = data;
 
     return {
@@ -536,6 +537,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       overcharge,
       overcharge_roll_formula,
       roll_formula,
+      is_dangerous,
       default_ability
     };
   }
@@ -936,6 +938,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       overcharge,
       overcharge_roll_formula,
       roll_formula,
+      is_dangerous,
       default_ability
     } = droppedItem.system.power;
     const { description } = droppedItem.system;
@@ -952,6 +955,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       default_ability,
       img,
       name,
+      is_dangerous,
       description
     });
   }
