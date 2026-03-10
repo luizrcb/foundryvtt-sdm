@@ -2,9 +2,10 @@
 
 ## v0.13.3
 
-- Fix steps to learn not working correctly for power traits
+- Fixed steps to learn not working correctly for power traits
 - Added support to mark a power as dangerous
 - When using a power whose cost is higher than the actor level, a dangerous flag will be added to the chat card
+- Reordered some d10 oracle results, higher values should be better.
 
 ## v0.13.2
 
