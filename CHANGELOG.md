@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.13.4
+
+- Hotfix on caravan actors prepareData
+
 ## v0.13.3
 
 - Fixed steps to learn not working correctly for power traits

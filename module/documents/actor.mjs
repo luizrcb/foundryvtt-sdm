@@ -287,9 +287,9 @@ export class SdmActor extends Actor {
     const overloaded = currentCarriedWeight > maxCarryWeight;
 
     this.system.inventory_value = estimatedWealth;
-    this.system.total_cash = totalCashestimatedWealth;
+    this.system.total_cash = totalCash;
     this.system.wealth = totalCash + estimatedWealth;
-    this.system.overloaded = overloadedestimatedWealth;
+    this.system.overloaded = overloaded;
   }
 
   _prepareNpcData() {
