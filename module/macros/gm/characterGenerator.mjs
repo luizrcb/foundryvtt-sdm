@@ -206,7 +206,8 @@ async function createRandomBackgroundWithOptions(actor, method = 'single') {
       const r = drawnResult.results[0];
       if (!r.name) return false;
       const desc = r.description || '';
-      return desc.includes('Task:') && desc.includes('Spin:');
+      return (desc.includes('Task:') || desc.includes('Tarefa:')) &&
+      (desc.includes('Spin:') || desc.includes('Ênfase:'));
     } else {
       if (drawnResult.results.length !== 5) return false;
       return drawnResult.results.every(r => r.name && r.name.trim() !== '');
@@ -253,8 +254,8 @@ async function createRandomBackgroundWithOptions(actor, method = 'single') {
     title = result.name || '';
 
     const description = result.description || '';
-    const taskMatch = description.match(/Task:([^|]*)/);
-    const spinMatch = description.match(/Spin:(.*)/);
+    const taskMatch = description.match(/(?:Task|Tarefa):([^|]*)/);
+    const spinMatch = description.match(/(?:Spin|Ênfase):(.*)/);
 
     task = taskMatch ? taskMatch[1].trim() : '';
     task = task.replaceAll('<p>', '').replaceAll('</p>', '');

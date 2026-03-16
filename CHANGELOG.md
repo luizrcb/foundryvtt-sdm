@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.13.5
+
+- Fixed some pt-BR localization
+- Fixes some small UI issues on custom results chat cards (morale, reaction, corruption)
+- Fixed some typos on corruption tables
+
 ## v0.13.4
 
 - Hotfix on caravan actors prepareData
