@@ -2,7 +2,7 @@
 
 ## v0.13.6
 
-- Fixed chat cards wrongly displaying the dangerous tag
+- Fixed item chat cards wrongly displaying the dangerous tag
 - Added an optional biography field to the NPC generator dialog
 
 ## v0.13.5
