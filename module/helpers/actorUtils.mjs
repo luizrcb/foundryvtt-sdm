@@ -310,14 +310,13 @@ async function createRandomTrait(targetActor, traitsTable) {
 }
 
 // rola um d100 (00 = 100) e seleciona a linha correspondente
-export async function createNPC(name = 'NPC', tableName, initiative = '') {
+export async function createNPC(name = 'NPC', tableName, initiative = '', biography = '') {
   const table = NPCTables[tableName].table;
   if (!table) throw new Error(`Tabela não encontrada: ${tableName}`);
 
   let roll = Math.floor(Math.random() * 100) + 1; // 1 a 100
   const entry = table.find(e => roll >= e.range[0] && roll <= e.range[1]);
   if (!entry) throw new Error(`Nenhuma entrada encontrada para rolagem ${roll} em ${tableName}`);
-  const biography = '';
   const img = '';
   const npcData = makeNPC(name, img, biography, entry, initiative);
   npcData.system['createdFromTable'] = tableName;
@@ -329,7 +328,7 @@ export async function createNPC(name = 'NPC', tableName, initiative = '') {
   return npcData;
 }
 
-export function getNPCDataByLevel(tableName, level = 0) {
+export function getNPCDataByLevel(tableName, level = 0, biography = '') {
   const npcTable = tableName || 'generic-synthesized-creature';
   const table = NPCTables[npcTable].table;
   const entry = [...table].reverse().find(e => e.Lvl <= level);

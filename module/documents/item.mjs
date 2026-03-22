@@ -606,7 +606,7 @@ export class SdmItem extends Item {
     }
 
     let isDangerous = false;
-    if (actor && this.system.power) {
+    if (actor && this.system.type === GearType.POWER) {
       const powerData = this.system.power;
       const powerLevel = powerData.level ?? 0;
 
