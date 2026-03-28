@@ -30,6 +30,7 @@ import {
 import { mergeSimilarItems, splitStackIntoTwo } from '../helpers/stackUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { promptSplitStackFirstQty } from '../items/splitDialog.mjs';
+import { addCashToActor, removeCashFromActor } from '../macros/gm/giveCash.mjs';
 import { postDiceSummary } from '../macros/gm/giveHeroDice.mjs';
 
 const { renderTemplate } = foundry.applications.handlebars;
@@ -817,6 +818,20 @@ export class SdmActor extends Actor {
     }, 0);
 
     return totalCash;
+  }
+
+  async addCash(amount = 0) {
+    if (amount < 0) return;
+
+    await addCashToActor(this, amount);
+  }
+
+  async removeCash(amount = 0) {
+    const availableCash = this.getTotalCash();
+
+    if (availableCash < amount) return;
+
+    await removeCashFromActor(this, amount);
   }
 
   async consumeSupplies() {

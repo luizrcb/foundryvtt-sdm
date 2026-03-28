@@ -11,9 +11,12 @@ const { NumberField } = foundry.data.fields;
 const { renderTemplate } = foundry.applications.handlebars;
 const MAX_STACK = 2500;
 
-export async function addCashToActor(actor, amount, defaultCurrencyName, defaultCurrencyImage) {
+export async function addCashToActor(actor, amount) {
   let remaining = Number(amount) || 0;
   if (remaining <= 0) return 0;
+
+  const defaultCurrencyName = game.settings.get('sdm', 'currencyName') || 'cash';
+  const defaultCurrencyImage = game.settings.get('sdm', 'currencyImage') || DEFAULT_CASH_ICON;
 
   const items = listCashItems(actor).sort(
     (a, b) => Number(a.system?.quantity ?? 0) - Number(b.system?.quantity ?? 0)
@@ -54,7 +57,7 @@ export async function addCashToActor(actor, amount, defaultCurrencyName, default
   return Number(amount) - remaining;
 }
 
-async function removeCashFromActor(actor, amount) {
+export async function removeCashFromActor(actor, amount) {
   let remaining = Number(amount) || 0;
   if (remaining <= 0) return 0;
 
@@ -347,9 +350,7 @@ export async function giveCash(
       if (data.operation === 'add') {
         const added = await addCashToActor(
           target,
-          amountForThis,
-          defaultCurrencyName,
-          defaultCurrencyImage
+          amountForThis
         );
         if (added > 0) successCount++;
         else continue;

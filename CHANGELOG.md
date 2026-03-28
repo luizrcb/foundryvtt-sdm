@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.13.7
+
+- Added cash utility functions to Actors
+
 ## v0.13.6
 
 - Fixed item chat cards wrongly displaying the dangerous tag
