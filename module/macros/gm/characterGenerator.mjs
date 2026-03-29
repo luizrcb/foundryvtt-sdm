@@ -7,7 +7,7 @@ import { addCashToActor } from './giveCash.mjs';
 
 const { DialogV2 } = foundry.applications.api;
 
-async function generateNameFromTable() {
+export async function generateNameFromTable() {
   const originalTableUuid = 'Compendium.sdm.names_tables.RollTable.ToAbPgDAtrhU8EWA';
 
   const extraTables = game.tables.filter(
@@ -206,7 +206,8 @@ async function createRandomBackgroundWithOptions(actor, method = 'single') {
       const r = drawnResult.results[0];
       if (!r.name) return false;
       const desc = r.description || '';
-      return desc.includes('Task:') && desc.includes('Spin:');
+      return (desc.includes('Task:') || desc.includes('Tarefa:')) &&
+      (desc.includes('Spin:') || desc.includes('Ênfase:'));
     } else {
       if (drawnResult.results.length !== 5) return false;
       return drawnResult.results.every(r => r.name && r.name.trim() !== '');
@@ -253,8 +254,8 @@ async function createRandomBackgroundWithOptions(actor, method = 'single') {
     title = result.name || '';
 
     const description = result.description || '';
-    const taskMatch = description.match(/Task:([^|]*)/);
-    const spinMatch = description.match(/Spin:(.*)/);
+    const taskMatch = description.match(/(?:Task|Tarefa):([^|]*)/);
+    const spinMatch = description.match(/(?:Spin|Ênfase):(.*)/);
 
     task = taskMatch ? taskMatch[1].trim() : '';
     task = task.replaceAll('<p>', '').replaceAll('</p>', '');
@@ -784,6 +785,7 @@ async function characterGeneratorDialog(actor) {
   const data = await DialogV2.wait({
     window: { title: $l10n('SDM.CreateRandomCharacter') },
     content,
+    modal: true,
     buttons: [
       {
         action: 'generate',
@@ -848,7 +850,11 @@ async function generateCharacterWithOptions(options = {}, existingActor) {
     }
 
     if (existingActor) {
-      existingActor.items.contents.forEach(async item => {
+      existingActor.items.contents.filter(i => i.system?.container).forEach(async item => {
+        await item.delete();
+      });
+
+      existingActor.items.contents.filter(i => !i.system?.container).forEach(async item => {
         await item.delete();
       });
 

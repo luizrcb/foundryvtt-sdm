@@ -17,6 +17,7 @@
     color: #e0aaff;
     margin: 0;
     font-size: 18px;
+    font-family: var(--sdm-font-dice);
   }
 
   .oracle-question {
@@ -45,6 +46,8 @@
   .oracle-outcome h6 {
     color: #e0aaff;
     margin: 0 0 5px 0;
+    font-size: 15px;
+    font-family: var(--sdm-font-primary);
   }
 
   .oracle-details {

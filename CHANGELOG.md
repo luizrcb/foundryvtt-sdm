@@ -1,17 +1,93 @@
 # CHANGELOG
 
+## v0.13.7
+
+- Added cash utility functions to Actors
+
+## v0.13.6
+
+- Fixed item chat cards wrongly displaying the dangerous tag
+- Added an optional biography field to the NPC generator dialog
+
+## v0.13.5
+
+- Fixed some pt-BR localization
+- Fixes some small UI issues on custom results chat cards (morale, reaction, corruption)
+- Fixed some typos on corruption tables
+
+## v0.13.4
+
+- Hotfix on caravan actors prepareData
+
+## v0.13.3
+
+- Fixed steps to learn not working correctly for power traits
+- Added support to mark a power as dangerous
+- When using a power whose cost is higher than the actor level, a dangerous flag will be added to the chat card
+- Reordered some d10 oracle results, higher values should be better.
+
+## v0.13.2
+
+- Added Capacity (in sacks) to NPC sheets
+- Reordered the positions of some fields on NPC sheets
+- Improved UI for item and cash transfers
+- Added missing ward type to Dusty Orb item
+
+## v0.13.1
+
+- Random Generated Humans NPCs without a name will get a random name rolled from names tables (thanks to _TheGiftOfGabes_ for the feature suggestion)
+- Added default game world settings on startup
+- Fixed wrong DiceSoNice hook used to register custom dice themes, causing oracle dices to get no texture
+- Small fix to new game world initial messages order
+
+## v0.13.0
+
+- Added new gear type: container
+- Added context menu option (sheet item right-click) to delete container and all its contents
+- When a container is dropped or transferred to another actor, all content in the container will follow along
+- Users can drop pet items from Actor sheets into the scene canvas to create a pet token
+- Added referee settings to allow/block players from rerolling their characters and dropping pet items to the scene canvas
+- Added initial system message with links to Luka Rejec's platforms
+- Added initial system message with links to Luber's platforms
+- Added upper limit to: trait's sources to learn, and burden's steps to cure
+- Minor style changes to system icon
+- Allowed gear pets to be sent to caravan sheets
+- New fonts on chat messages for fumble, critical success and usage roll results
+- Removed caravan tokens from being added to the combat tracker
+- Added support for a pet tab in the Token Action HUD SDM module
+
+## v0.12.1
+
+- Removed readied icon from cash items sheet
+- Added burden penalty to NPC rolls
+- Changed menu fonts
+- Changed game paused font and color (uses chromatype setting)
+- Fixed notification message displayed when background trait generator creates a trait and no character is selected
+
+## v0.12.0
+
+- Added support to burdens as powers (the weight of a malign knowledge)
+- Added new config for alternate cash weight rules
+- Improved UI for referee feature "Give Hero Dice"
+- Improved UI for referee feature "Give/Take Cash"
+- Added an option to evenly split a cash amount among selected characters
+- Improved UI for referee feature "Give Experience"
+
 ## v0.11.0
 
 - Add new gear and trait item types: affliction (a kind of burden), augment and pet
 - Add steps to cure a burden. When the last step is marked the player is asked if the burden should be deleted
-- The bonus from the Friends trait is now automated
-- Changed item features from plain text in items descriptions to a set of configurable options
+- Changed item features from plain text in item descriptions to a set of configurable options
+- Updated all compendium items to use the new item features
 - Versatile weapons now need the versatile feature
+- The bonus from the Friends trait is now automated
+- Automated cramping feature defense penalty (-1 per item with the feature)
 - Added usage roll for items with the feature replenish
 - Added an option to level up NPCs from their sheet (in the toggle controls menu ...)
 - Added a burden generator (GM tool)
 - Added "Wear and tear" to burdens compendium
 - Added option for players to reroll their characters from the character sheet (in the toggle controls menu ...)
+- Removed redundant token control icons (create burden, create NPCs, group initiative)
 
 ## v0.10.0
 

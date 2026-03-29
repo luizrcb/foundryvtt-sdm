@@ -112,8 +112,13 @@
             </div>
         </div>
 
-         <div class='resource'>
+        <div class="resource align-center">
+          <label class='resource-label'>{{localize 'SDM.PowerIsDangerous'}}</label>
+          <div class='resource-content align-center'>
+            <input type='checkbox'name="{{concat 'system.powers.' @index '.is_dangerous'}}" {{checked power.is_dangerous}} />
+          </div>
         </div>
+
 
         <div class='resource'>
           <label class='resource-label'>

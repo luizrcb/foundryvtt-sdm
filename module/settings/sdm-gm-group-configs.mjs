@@ -58,6 +58,19 @@ export class SDMCalendarSettingsConfig extends GroupBase {
   static KEYS = ['seasonsStarsIntegration'];
 }
 
+export class SDMPlayerPermissionsSettingsConfig extends GroupBase {
+  static DEFAULT_OPTIONS = {
+    ...super.DEFAULT_OPTIONS,
+    window: {
+      ...super.DEFAULT_OPTIONS.window,
+      title: 'SDM.Menu.PlayerPermissions.Label',
+      icon: 'fa-solid fa-user-lock'
+    }
+  };
+  static LEGEND = 'SDM.Menu.PlayerPermissions.Name';
+  static KEYS = ['canPlayerRerollCharacter', 'canPlayerDropPetOnCanvas'];
+}
+
 /* 1) Combat & Initiative */
 export class SDMCombatSettingsConfig extends GroupBase {
   static DEFAULT_OPTIONS = {
@@ -160,7 +173,7 @@ export class SDMEconomySettingsConfig extends GroupBase {
     }
   };
   static LEGEND = 'SDM.Menu.Economy.Name';
-  static KEYS = ['currencyName', 'currencyImage'];
+  static KEYS = ['currencyName', 'currencyImage', 'currencyWeight'];
 }
 
 /* 7) Audio (GM Assets) */

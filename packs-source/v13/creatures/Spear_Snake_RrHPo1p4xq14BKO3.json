@@ -15,11 +15,18 @@
     "defense": 12,
     "bonus": 5,
     "damage": "2d6",
-    "cost": 0,
+    "cost": "0",
     "isWarrior": false,
     "isHelper": false,
     "isPorter": false,
-    "speed": 0
+    "speed": 0,
+    "capacity": 1,
+    "supply": "",
+    "createdFromTable": "",
+    "isPet": false,
+    "experience": "0",
+    "burden_penalty": 0,
+    "burden_penalty_bonus": 0
   },
   "prototypeToken": {
     "name": "Spear Snake",
@@ -77,7 +84,7 @@
       }
     },
     "sight": {
-      "enabled": false,
+      "enabled": true,
       "range": 0,
       "angle": 360,
       "visionMode": "basic",
@@ -118,23 +125,23 @@
   "items": [],
   "effects": [],
   "folder": null,
-  "ownership": {
-    "default": 0,
-    "0fqTkfNvjooZ2og7": 3
-  },
   "flags": {},
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.350",
+    "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.1.36",
-    "createdTime": 1756515647945,
-    "modifiedTime": 1760893957302,
-    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+    "systemVersion": "0.13.2",
+    "createdTime": 1772904481073,
+    "modifiedTime": 1772904558630,
+    "lastModifiedBy": "IGh4KUj5Z5Xs5wjw"
   },
   "_id": "RrHPo1p4xq14BKO3",
+  "ownership": {
+    "default": 0,
+    "IGh4KUj5Z5Xs5wjw": 3
+  },
   "sort": 300000,
   "_key": "!actors!RrHPo1p4xq14BKO3"
 }

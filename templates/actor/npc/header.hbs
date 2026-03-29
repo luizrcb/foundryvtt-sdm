@@ -6,14 +6,13 @@
         height='100' width='100' />
     </div>
     <div class='header-fields'>
-      {{!-- <div class='document-name'> --}}
-        <div class="grid grid-4col">
-          <div class="grid-span-1">
-            <label for="name" class='resource-label'>
-              {{localize 'SDM.FieldName'}}
-            </label>
-            <input name='name' type='text' value='{{actor.name}}' placeholder='Name' />
-          </div>
+      <div class="grid grid-4col">
+        <div class="grid-span-1">
+          <label for="name" class='resource-label'>
+            {{localize 'SDM.FieldName'}}
+          </label>
+          <input name='name' type='text' value='{{actor.name}}' placeholder='Name' />
+        </div>
 
           <div class='resource'>
             <label class='resource-label'>
@@ -21,6 +20,44 @@
             </label>
             <div class='resource-content flexrow flex-center flex-between'>
               <input type='text' name='system.level' value='{{system.level}}' data-dtype="Number" />
+            </div>
+          </div>
+
+          <div class='resource'>
+            <label class='resource-label'>
+              {{localize 'SDM.FieldCostPerWeek'}}
+            </label>
+            <div class='resource-content flexrow flex-center flex-between'>
+              <input type='text' name='system.cost' value='{{system.cost}}' />
+            </div>
+          </div>
+
+          <div class='resource'>
+            <label class='resource-label'>
+              {{localize 'SDM.FieldSupplyPerWeek'}}
+            </label>
+            <div class='resource-content flexrow flex-center flex-between'>
+              <input type='text' name='system.supply' value='{{system.supply}}' />
+            </div>
+          </div>
+
+          <div class='resource'>
+            <label for='system.life.max' class='resource-label flex-start'>
+              {{localize 'SDM.FieldLifeMax'}}
+            </label>
+            <div class='resource-content flexrow flex-center flex-between flex-group-center'>
+              <input type='text' name='system.life.value' value='{{system.life.value}}' data-dtype="Number"  data-tooltip='{{localize "SDM.FieldLife"}}' />
+              <span> / </span>
+              <input type='text' name='system.life.max' value='{{system.life.max}}' data-dtype="Number" data-tooltip='{{localize "SDM.FieldLifeMax"}}'/>
+            </div>
+          </div>
+
+          <div class='resource'>
+            <label class='resource-label'>
+              {{localize 'SDM.FieldExperience'}}
+            </label>
+            <div class='resource-content flexrow flex-center flex-between'>
+              <input type='text' name='system.experience' value='{{system.experience}}' />
             </div>
           </div>
 
@@ -42,14 +79,23 @@
             </div>
           </div>
 
-          <div class='resource'>
-            <label for='system.life.max' class='resource-label flex-start'>
-              {{localize 'SDM.FieldLifeMax'}}
+        </div>
+        {{!--
+      </div> --}}
+      {{! The grid classes are defined in scss/global/_grid.scss. To use,
+      use both the "grid" and "grid-Ncol" class where "N" can be any number
+      from 1 to 12 and will create that number of columns. }}
+      <div class='resources grid grid-4col'>
+
+        {{! "flex-group-center" is also defined in the _grid.scss file
+        and it will add a small amount of padding, a border, and will
+        center all of its child elements content and text. }}
+         <div class='resource' data-tooltip="SDM.UnitSacks">
+            <label class='resource-label'>
+              {{localize 'SDM.FieldCapacity'}}
             </label>
-            <div class='resource-content flexrow flex-center flex-between flex-group-center'>
-              <input type='text' name='system.life.value' value='{{system.life.value}}' data-dtype="Number"  data-tooltip='{{localize "SDM.FieldLife"}}' />
-              <span> / </span>
-              <input type='text' name='system.life.max' value='{{system.life.max}}' data-dtype="Number" data-tooltip='{{localize "SDM.FieldLifeMax"}}'/>
+            <div class='resource-content flexrow flex-center flex-between'>
+              <input type='text' name='system.capacity' value='{{system.capacity}}' data-dtype="Number" />
             </div>
           </div>
 
@@ -62,7 +108,7 @@
             </div>
           </div>
 
-          <div class='resource'>
+        <div class='resource'>
             <label class='resource-label'>
               {{localize 'SDM.FieldBonus'}}
             </label>
@@ -79,48 +125,6 @@
               <input type='text' name='system.damage' value='{{system.damage}}' />
             </div>
           </div>
-
-        </div>
-        {{!--
-      </div> --}}
-      {{! The grid classes are defined in scss/global/_grid.scss. To use,
-      use both the "grid" and "grid-Ncol" class where "N" can be any number
-      from 1 to 12 and will create that number of columns. }}
-      <div class='resources grid grid-4col'>
-
-        {{! "flex-group-center" is also defined in the _grid.scss file
-        and it will add a small amount of padding, a border, and will
-        center all of its child elements content and text. }}
-        {{#if @root.editable}}
-        <div class='resource'>
-          <label class='resource-label'>
-            {{localize 'SDM.FieldExperience'}}
-          </label>
-          <div class='resource-content flexrow flex-center flex-between'>
-            <input type='text' name='system.experience' value='{{system.experience}}' />
-          </div>
-        </div>
-
-         <div class='resource'>
-          <label class='resource-label'>
-            {{localize 'SDM.FieldCostPerWeek'}}
-          </label>
-          <div class='resource-content flexrow flex-center flex-between'>
-            <input type='text' name='system.cost' value='{{system.cost}}' />
-          </div>
-        </div>
-
-         <div class='resource'>
-          <label class='resource-label'>
-            {{localize 'SDM.FieldSupplyPerWeek'}}
-          </label>
-          <div class='resource-content flexrow flex-center flex-between'>
-            <input type='text' name='system.supply' value='{{system.supply}}' />
-          </div>
-        </div>
-
-        <div class='resource'>
-        </div>
 
         <div class='resource'>
         </div>
@@ -163,7 +167,6 @@
             <div>{{localize 'SDM.RollType' type=(localize 'SDM.FieldSaveTarget')}} <i class="saveIcon fa fa-shield-cat heart"></i></div>
           </div>
         </div>
-        {{/if}}
       </div>
     </div>
 </div>

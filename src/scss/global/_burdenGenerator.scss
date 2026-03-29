@@ -78,8 +78,8 @@
   }
   .burden-chips-container {
     display: flex;
-    flex-wrap: nowrap; /* no wrapping – one single line */
-    overflow-x: auto; /* horizontal scroll if too many chips */
+    flex-wrap: nowrap; // no wrapping – one single line
+    overflow-x: auto; // horizontal scroll if too many chips
     overflow-y: hidden;
     white-space: nowrap;
     gap: 8px;
@@ -92,10 +92,10 @@
     align-items: center;
   }
 
-  /* Keep chips themselves inline */
+  // Keep chips themselves inline
   .burden-chip {
-    display: inline-flex; /* inline-flex keeps them in flow */
-    flex-shrink: 0; /* never shrink chips */
+    display: inline-flex; // inline-flex keeps them in flow
+    flex-shrink: 0; // never shrink chips
     background: var(--sdm-c-accent);
     color: var(--sdm-c-white);
     padding: 6px 12px;
@@ -106,7 +106,7 @@
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
   }
 
-  /* Highlight for the rolled table cell */
+  // Highlight for the rolled table cell
   .burden-table td.highlight {
     background-color: var(--sdm-c-accent) !important;
     color: black !important;

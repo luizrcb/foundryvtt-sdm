@@ -58,7 +58,12 @@
   {{/if}}
 </div>
 
-<div class="resource"></div>
+<div class="resource align-center">
+  <label class='resource-label'>{{localize 'SDM.PowerIsDangerous'}}</label>
+  <div class='resource-content align-center'>
+    <input type='checkbox' name='system.power.is_dangerous' {{checked system.power.is_dangerous}} />
+  </div>
+</div>
 
 <div class='resource'>
   <label class='resource-label'>

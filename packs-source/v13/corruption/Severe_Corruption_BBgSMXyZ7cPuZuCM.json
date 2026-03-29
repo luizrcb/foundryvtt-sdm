@@ -205,7 +205,7 @@
       "weight": 1,
       "drawn": false,
       "_id": "mKUvt544yrF4zrSG",
-      "name": "<p>Hand withers and locks into a dagger-like claw ([[/r 1d4]] damage).</p>",
+      "name": "Hand withers and locks into a dagger-like claw (1d4 damage).</p>",
       "img": "icons/svg/d20-black.svg",
       "flags": {},
       "_stats": {
@@ -230,7 +230,7 @@
       "weight": 1,
       "drawn": false,
       "_id": "HlMSWQq3sDLNvHJD",
-      "name": "<p>Skin rots and develops suppurating boils. Your fluids can serve as ink.</p>",
+      "name": "Skin rots and develops suppurating boils. Your fluids can serve as ink.",
       "img": "icons/svg/d20-black.svg",
       "flags": {},
       "_stats": {

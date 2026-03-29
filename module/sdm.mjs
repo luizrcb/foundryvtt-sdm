@@ -13,12 +13,21 @@ import {
   createNPC,
   createNPCByLevel
 } from './helpers/actorUtils.mjs';
-import { configureChatListeners } from './helpers/chatUtils.mjs';
+import {
+  configureChatListeners,
+  LinksDialog,
+  luberLinks,
+  sendInitialMessage,
+  wtfStudioLinks
+} from './helpers/chatUtils.mjs';
 import { SDM } from './helpers/config.mjs';
 import {
   ActorType,
+  BURDEN_ICONS,
   DEFAULT_AFFLICTION_ICON,
   DEFAULT_AUGMENT_ICON,
+  DEFAULT_BURDEN_ICON,
+  DEFAULT_CONTAINER_ICON,
   DEFAULT_PET_ICON,
   GearType,
   ItemType,
@@ -29,16 +38,17 @@ import {
 import { makePowerItem, UnarmedDamageItem } from './helpers/itemUtils.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
+import { setupPetDropSocket } from './items/petItem.mjs';
 import { gm as gmMacros, player as playerMacros } from './macros/_module.mjs';
 import {
   configurePlayerChromatype,
   configureUseHeroDiceButton,
   createBonusHeroDiceDisplay,
   createEscalatorDieDisplay,
-  DEFAULT_MAX_POWERS,
   registerSystemSettings,
   setupBonusHeroDiceBroadcast,
   setupEscalatorDiePositionBroadcast,
+  setupInitialSettings,
   updateBonusHeroDiceDisplay
 } from './settings.mjs';
 import { registerSDMGMSettingMenus } from './settings/register-gm-menus.mjs';
@@ -127,24 +137,6 @@ Hooks.on('getSceneControlButtons', function (controls) {
         if (active) await game.sdm.api.gm.giveExperience();
       }
     };
-    // controls.tokens.tools['sdm-group-initiative'] = {
-    //   icon: 'fa-solid fa-people-group',
-    //   name: 'sdm-group-initiative',
-    //   title: 'SDM.GMGroupInitiative',
-    //   button: true,
-    //   onChange: async (event, active) => {
-    //     if (active) await game.sdm.api.gm.groupInitiative();
-    //   }
-    // };
-    // controls.tokens.tools['sdm-generate-npc'] = {
-    //   icon: 'fa-solid fa-spaghetti-monster-flying',
-    //   name: 'sdm-generate-npc',
-    //   title: 'SDM.GMGenerateRandomNPC',
-    //   button: true,
-    //   onChange: async (event, active) => {
-    //     if (active) await game.sdm.api.gm.randomNPCGenerator();
-    //   }
-    // };
   }
   controls.tokens.tools['sdm-dice-oracles'] = {
     icon: 'fa-solid fa-dice',
@@ -155,15 +147,6 @@ Hooks.on('getSceneControlButtons', function (controls) {
       if (active) await game.sdm.api.player.diceOracles();
     }
   };
-  // controls.tokens.tools['sdm-burden-generator'] = {
-  //   icon: 'fa-solid fa-face-dizzy',
-  //   name: 'sdm-burden-generator',
-  //   title: 'SDM.BurdenGenerator.Title',
-  //   button: true,
-  //   onChange: async (event, active) => {
-  //     if (active) await game.sdm.api.gm.openBurdenGeneratorDialog();
-  //   }
-  // };
 });
 
 Hooks.on('renderActorDirectory', (app, html) => {
@@ -260,40 +243,13 @@ Hooks.on('preUpdateActor', (actor, update) => {
 
 Hooks.on('createActor', async (actor, _options, _id) => {
   if (!actor.isOwner) return;
+  if (actor.type !== ActorType.CHARACTER) return;
+
   await addCompendiumItemToActor(actor, UnarmedDamageItem);
-  let disposition = CONST.TOKEN_DISPOSITIONS.NEUTRAL;
 
-  const tokenData = {
-    name: actor.name,
-    displayName: CONST.TOKEN_DISPLAY_MODES.OWNER,
-    displayBars: CONST.TOKEN_DISPLAY_MODES.OWNER,
-    disposition: disposition,
-    lockRotation: true
-  };
-
-  if ([ActorType.CHARACTER, ActorType.CARAVAN].includes(actor.type)) {
-    tokenData.disposition = CONST.TOKEN_DISPOSITIONS.FRIENDLY;
-    tokenData.sight = {};
-    tokenData.sight.enabled = true;
-    tokenData.actorLink = true;
-  }
-
-  const updateData = { prototypeToken: tokenData };
-
-  if (actor.type === ActorType.CHARACTER) {
-    updateData['system.experience'] = '300';
-  }
-
-  await actor.update(updateData);
-});
-
-Hooks.on('createItem', async (item, _options, _id) => {
-  if (!item.isOwner) return;
-  if (item.getFlag?.('sdm', 'fromCompendium') === UnarmedDamageItem) return;
-
-  const updateData = { 'system.readied': false };
-
-  await item.update(updateData);
+  await actor.update({
+    'system.experience': '300'
+  });
 });
 
 Hooks.on('updateItem', async item => {
@@ -346,6 +302,9 @@ Hooks.on('updateItem', async item => {
       case GearType.WEAPON:
         updateData['img'] = DEFAULT_WEAPON_ICON;
         break;
+      case GearType.CONTAINER:
+        updateData['img'] = DEFAULT_CONTAINER_ICON;
+        break;
       default:
         updateData['img'] = DEFAULT_GEAR_ICON;
         break;
@@ -353,12 +312,13 @@ Hooks.on('updateItem', async item => {
 
     if (item.system.size.unit === SizeUnit.CASH) {
       updateData['img'] = defaultCurrencyImage;
-      updateData['name'] = defaultCurrencyName;
+      if (item.name === $l10n('TYPE.Gear')) {
+        updateData['name'] = defaultCurrencyName;
+      }
     }
   }
 
   if (item.type === ItemType.TRAIT && TRAIT_ICONS.includes(item.img)) {
-
     switch (item.system.type) {
       case TraitType.AFFLICTION:
         updateData['img'] = DEFAULT_AFFLICTION_ICON;
@@ -384,6 +344,20 @@ Hooks.on('updateItem', async item => {
     }
   }
 
+  if (item.type === ItemType.BURDEN && BURDEN_ICONS.includes(item.img)) {
+    switch (item.system.type) {
+      case TraitType.AFFLICTION:
+        updateData['img'] = DEFAULT_AFFLICTION_ICON;
+        break;
+      case TraitType.POWER:
+        updateData['img'] = DEFAULT_POWER_ICON;
+        break;
+      default:
+        updateData['img'] = DEFAULT_BURDEN_ICON;
+        break;
+    }
+  }
+
   await item.update(updateData);
 });
 
@@ -404,27 +378,22 @@ Hooks.on('updateCombat', async (combat, update) => {
   }
 });
 
-Hooks.on('createItem', async (item, _options, _id) => {
-  if (!item.isOwner) return;
-
-  if (item.type !== ItemType.GEAR) return;
-
-  const defaultMaxPowers = game.settings.get('sdm', 'defaultMaxPowers') || DEFAULT_MAX_POWERS;
-
-  await item.update({ 'system.max_powers': defaultMaxPowers });
-});
-
 Hooks.on('renderSettings', (app, html) => renderSettings(html));
 
 Hooks.on('renderGamePause', (app, html) => {
-  html.classList.add('sdme2');
-  const container = document.createElement('div');
-  container.classList.add('flexcol');
-  container.append(...html.children);
-  html.append(container);
+  html.classList.add('sdm');
   const img = html.querySelector('img');
-  img.src = 'systems/sdm/assets/sdm-pause.png';
-  img.className = '';
+  if (img) {
+    const div = document.createElement('div');
+    div.className = 'sdm-pause';
+    img.replaceWith(div);
+  }
+  const figcaption = html.querySelector('figcaption');
+  if (figcaption) {
+    figcaption.style.fontFamily = 'var(--sdm-font-dice)';
+    figcaption.style.color = 'var(--sdm-c-accent)';
+    figcaption.style.textShadow = '2px 2px black';
+  }
 });
 
 Hooks.on('getChatMessageContextOptions', (html, options) => {
@@ -607,6 +576,7 @@ Hooks.once('init', function () {
   CONFIG.Combatant.documentClass = SdmCombatant;
 
   setupItemTransferSocket();
+  setupPetDropSocket();
   setupSettingsSocket();
 
   setupEscalatorDiePositionBroadcast();
@@ -634,44 +604,51 @@ Hooks.once('ready', function () {
   Hooks.on('hotbarDrop', (bar, data, slot) => createDocMacro(data, slot));
   // Create container element
 
-  const combatConfig = game.settings.get('core', 'combatTrackerConfig');
-  combatConfig.resource = 'life.value';
-  combatConfig.skipDefeated = true;
-  combatConfig.turnMarker.enabled = true;
-  combatConfig.turnMarker.disposition = true;
-  combatConfig.turnMarker.animation = 'spin';
-  game.settings.set('core', 'combatTrackerConfig', combatConfig);
-
+  setupInitialSettings();
   createEscalatorDieDisplay();
   createBonusHeroDiceDisplay();
   setupBonusHeroDiceBroadcast();
   updateBonusHeroDiceDisplay();
+  sendInitialMessage();
 
-  // Hooks.on('dropCanvasData', async (canvas, data) => {
-  //   console.log(canvas, data);
+  Hooks.on('dropCanvasData', async (canvas, data) => {
+    const { uuid, type, x, y } = data;
+    if (type !== 'Item') return;
 
-  //   const { uuid, x, y } = data;
-  //   const snappedPoint = canvas.grid.getSnappedPoint(
-  //     { x, y },
-  //     { mode: CONST.GRID_SNAPPING_MODES.TOP_LEFT_VERTEX }
-  //   );
-  //   const item = await fromUuid(uuid);
-  //   if (!item) return;
+    const item = await fromUuid(uuid);
+    if (!item) return;
 
-  //   console.log(item);
-  //   const attributes = item.system.attributes;
-  //   console.log(attributes);
+    // Check if it's a pet item (you can reuse the same condition)
+    if (item.type !== ItemType.GEAR || item.system?.type !== GearType.PET) return;
+    if (!item.system.pet) return;
 
-  //   const virtualActor = new SdmActor({
-  //     type: 'npc',
-  //     name: item.name,
-  //     img: item.img,
-  //     system: { ...attributes }
-  //   }).toObject();
-  //   const actor = await SdmActor.create(virtualActor);
-  //   const tokenDoc = await actor.getTokenDocument({ x: snappedPoint.x, y: snappedPoint.y });
-  //   await game.scenes.active.createEmbeddedDocuments('Token', [tokenDoc.toObject()]);
-  // });
+    // If the user is GM, create the token directly (bypass socket)
+    if (game.user.isGM) {
+      const { x: canvasX, y: canvasY } = canvas.grid.getTopLeftPoint(data);
+      const petActor = await fromUuid(item.system.pet);
+      if (!petActor) {
+        ui.notifications.error('Linked pet actor not found.');
+        return;
+      }
+      const tokenDoc = await petActor.getTokenDocument({ x: canvasX, y: canvasY });
+      await canvas.scene.createEmbeddedDocuments('Token', [tokenDoc.toObject()]);
+      return;
+    }
+
+    const canPlayerDropPetOnCanvas = game.settings.get('sdm', 'canPlayerDropPetOnCanvas');
+
+    if (!canPlayerDropPetOnCanvas) return;
+
+    // Otherwise, request GM to create the token
+    game.socket.emit('system.sdm', {
+      action: 'createPetToken',
+      userId: game.user.id,
+      payload: { itemUuid: uuid, x, y }
+    });
+
+    // Optionally show a temporary notification
+    // ui.notifications.info('Requesting GM to place your pet...');
+  });
 
   Hooks.once('setup', () => {
     // Define the compendium name (matches your module.json "name" field)
@@ -822,15 +799,16 @@ function _generateLinks() {
   links.classList.add('unlist', 'links');
   links.innerHTML = `
     <li>
-      <a href="https://github.com/luizrcb/foundryvtt-sdm/releases/latest" target="_blank">
-        ${game.i18n.localize('SDM.Notes')}
-      </a>
+      <a class="info-link author-links" data-tooltip="Luka Rejec">${$l10n('SDM.Author')}</a>
     </li>
     <li>
-      <a href="https://github.com/luizrcb/foundryvtt-sdm/issues" target="_blank">${game.i18n.localize('SDM.Issues')}</a>
+      <a class="info-link dev-links" data-tooltip="Luber (Luiz Bertoni)">System Dev</a>
     </li>
     <li>
-      <a href="https://github.com/luizrcb/foundryvtt-sdm/wiki" target="_blank">${game.i18n.localize('SDM.Wiki')}</a>
+      <a class="info-link" href="https://github.com/luizrcb/foundryvtt-sdm/issues" target="_blank" data-tooltip="SDM.ReportBugs">${game.i18n.localize('SDM.Issues')}</a>
+    </li>
+    <li>
+      <a class="info-link" href="https://github.com/luizrcb/foundryvtt-sdm/wiki" target="_blank" data-tooltip="SDM.SystemDocumentation">${game.i18n.localize('SDM.Wiki')}</a>
     </li>
   `;
   return links;
@@ -845,15 +823,49 @@ function renderSettings(html) {
   html.querySelector('.info .system').remove();
 
   const section = document.createElement('section');
-  section.classList.add('sdme2', 'sidebar-info');
+  section.classList.add('sdm', 'sidebar-info');
   section.innerHTML = `
-    <h4 class="divider">${game.i18n.localize('WORLD.FIELDS.system.label')}</h4>
+    <div class="flex flex-around">
+      <span>${$l10n('SDM.SupportThisSystem')}</span>
+    </div>
+    <div class="flex flex-around">
+      <a class="mb-8 mt-4" href='https://ko-fi.com/R6R01IW3KM/tip' target='_blank'>
+      <img class="kofi" data-tooltip="SDM.SupportThisSystem" height='30' style='border:0px;height:30px;cursor:pointer;' src='' border='0' alt='Support me on ko-fi.com' /></a>
+      </a>
+    </div>
+    <h4 class="divider">${$l10n('WORLD.FIELDS.system.label')}</h4>
     <div class="system-badge">
-      <div class="sdm-icon" data-tooltip="${sdm.title}" alt="${sdm.title}"></div>
-      <span class="system-info">${sdm.version}</span>
+      <div class="sdm-icon" data-tooltip="${sdm.title}" alt="${sdm.title}" style="cursor:pointer;"></div>
+      <span class="system-mote" data-tooltip="${sdm.title}">roleplay at the end of time</span>
+      <a class="system-version system-info" data-tooltip="SDM.ReleaseNotes" href="https://github.com/luizrcb/foundryvtt-sdm/releases/tag/v${sdm.version}" target="_blank">${sdm.version}</a>
     </div>
   `;
   section.append(_generateLinks());
+  const authorLinks = section.querySelector('.author-links');
+  if (authorLinks) {
+    authorLinks.addEventListener('click', event => {
+      event.preventDefault();
+      LinksDialog(wtfStudioLinks);
+    });
+  }
+
+  const devLinks = section.querySelector('.dev-links');
+  if (devLinks) {
+    devLinks.addEventListener('click', event => {
+      event.preventDefault();
+      LinksDialog(luberLinks);
+    });
+  }
+
   if (pip) section.querySelector('.system-info').insertAdjacentElement('beforeend', pip);
+  const icon = section.querySelector('.sdm-icon');
+  icon.addEventListener('click', event => {
+    event.preventDefault();
+    LinksDialog(wtfStudioLinks);
+  });
+
+  const mote = section.querySelector('.system-mote');
+  mote.addEventListener('click', () => LinksDialog(wtfStudioLinks));
+
   html.querySelector('.info').insertAdjacentElement('afterend', section);
 }

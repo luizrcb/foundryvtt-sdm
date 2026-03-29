@@ -387,6 +387,7 @@ export async function diceOracles() {
     window: {
       title: $l10n('SDM.DiceOracles')
     },
+    modal: true,
     position: {
       width: 500,
       height: 380

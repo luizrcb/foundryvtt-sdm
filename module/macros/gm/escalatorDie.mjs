@@ -32,6 +32,7 @@ export async function escalatorDie() {
     window: { title: game.i18n.localize('SDM.EscalatorDieControl') },
     content,
     buttons,
+    modal: true,
     submit: async result => {
       if (result === 'increment') {
         const newValue = currentValue + 1;

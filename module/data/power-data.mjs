@@ -14,6 +14,7 @@ export default class PowerDataModel extends foundry.abstract.DataModel {
       }),
       name: new fields.StringField({ required: false, blank: true, initial: '' }),
       description: new fields.HTMLField(),
+      is_dangerous: new fields.BooleanField({ required: true, initial: false }),
       level: new fields.NumberField({ required: true, initial: 1, min: 0 }),
       range: new fields.StringField({ required: true, blank: true, initial: '' }),
       target: new fields.StringField({ required: true, blank: true, initial: '' }),

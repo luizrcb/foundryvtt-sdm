@@ -14,6 +14,24 @@ export default class SdmGear extends SdmItemBase {
 
     schema.default_ability = getDefaultAbility();
 
+    schema.container = new fields.DocumentUUIDField({
+      required: true,
+      blank: true,
+      initial: ''
+    });
+
+    schema.capacity = new fields.SchemaField(
+      {
+        max: new fields.NumberField({
+          required: true,
+          initial: 1,
+          min: 1,
+          max: 10
+        })
+      },
+      { nullable: false }
+    );
+
     schema.type = new fields.StringField({
       required: false,
       blank: true,
@@ -70,18 +88,22 @@ export default class SdmGear extends SdmItemBase {
 
     schema.weapon = new fields.EmbeddedDataField(WeaponDataModel);
 
-    schema.cure_steps = new fields.SchemaField({
-      completed: new fields.NumberField({
-        required: true,
-        initial: 0,
-        min: 0,
-      }),
-      required: new fields.NumberField({
-        required: true,
-        initial: 0,
-        min: 0,
-      }),
-    }, { nullable: false });
+    schema.cure_steps = new fields.SchemaField(
+      {
+        completed: new fields.NumberField({
+          required: true,
+          initial: 0,
+          min: 0
+        }),
+        required: new fields.NumberField({
+          required: true,
+          initial: 0,
+          min: 0,
+          max: 20
+        })
+      },
+      { nullable: false }
+    );
 
     schema.pet = new fields.DocumentUUIDField({ required: true, blank: true, initial: '' });
 
@@ -119,7 +141,5 @@ export default class SdmGear extends SdmItemBase {
     if (source.features && source.features.length) {
       source.features = [...source.features].filter(f => f && f.trim() !== '').sort();
     }
-
-    return;
   }
 }

@@ -64,6 +64,15 @@ export const BURDEN_ITEM_TYPES = ['burden'];
 export const ITEMS_NOT_ALLOWED_IN_CHARACTERS = [];
 export const ITEMS_NOT_ALLOWED_IN_CARAVANS = ['trait', 'burden'];
 export const SUBTYPES_NOT_ALLOWED_IN_CARAVANS = ['corruption', 'affliction'];
+export const ITEMS_ALLOWED_IN_CONTAINERS = [
+  GearType.ARMOR,
+  GearType.POWER,
+  GearType.POWER_ALBUM,
+  GearType.WARD,
+  GearType.WEAPON,
+  GearType.PET,
+  ''
+];
 
 // Add this method to handle item updates
 export async function onItemUpdate(item, updateData) {
@@ -129,6 +138,13 @@ export function getSlotsTaken(itemSystem) {
   );
 
   if (slotsTaken === 0 && itemSystem.size?.unit === SizeUnit.CASH) return slotsTaken;
+
+  if (itemSystem.size?.unit === SizeUnit.CASH) {
+    if (slotsTaken === 0) return slotsTaken;
+    const weightRules = game.settings.get('sdm', 'currencyWeight');
+    if (weightRules === 'weightless') return 0;
+    if (weightRules === 'single_stone') return 1;
+  }
 
   slotsTaken = Math.max(slotsTaken || 1, 1);
 

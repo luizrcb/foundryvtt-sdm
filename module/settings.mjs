@@ -133,6 +133,27 @@ export function registerSystemSettings() {
     default: false
   });
 
+  /** Player Permissions */
+
+  game.settings.register('sdm', 'canPlayerRerollCharacter', {
+    name: 'SDM.SettingsCanPlayerRerollCharacter',
+    hint: 'SDM.SettingsCanPlayerRerollCharacterHint',
+    scope: 'world',
+    restricted: true,
+    requiresReload: true,
+    type: Boolean,
+    default: true
+  });
+
+  game.settings.register('sdm', 'canPlayerDropPetOnCanvas', {
+    name: 'SDM.SettingsCanPlayerDropPetOnCanvas',
+    hint: 'SDM.SettingsCanPlayerDropPetOnCanvasHint',
+    scope: 'world',
+    restricted: true,
+    type: Boolean,
+    default: true
+  });
+
   /** game world settings */
 
   game.settings.register('sdm', 'currencyName', {
@@ -154,6 +175,21 @@ export function registerSystemSettings() {
       default: DEFAULT_CASH_ICON
     }),
     default: DEFAULT_CASH_ICON
+  });
+
+  game.settings.register('sdm', 'currencyWeight', {
+    name: 'SDM.SettingsCurrencyWeight',
+    hint: 'SDM.SettingsCurrencyWeightHint',
+    scope: 'world',
+    restricted: true,
+    type: String,
+    choices: {
+      standard: 'SDM.CurrencyWeigth.Standard',
+      weightless: 'SDM.CurrencyWeigth.Weightless',
+      single_stone: 'SDM.CurrencyWeigth.SingleStone'
+    },
+    default: 'standard',
+    requiresReload: true
   });
 
   game.settings.register('sdm', 'shouldPlayLevelUpSoundFx', {
@@ -273,6 +309,14 @@ export function registerSystemSettings() {
     }
   });
 
+  game.settings.register('sdm', 'initialSettingsConfigured', {
+    scope: 'world', // "world" = GM only, "client" = per user
+    restricted: true,
+    config: false, // Show in configuration view
+    type: Boolean, // Data type: String, Number, Boolean, etc
+    default: false
+  });
+
   game.settings.register('sdm', 'oracleDice', {
     scope: 'client', // "world" = GM only, "client" = per user
     config: false, // Show in configuration view
@@ -289,6 +333,14 @@ export function registerSystemSettings() {
     onChange: value => {
       updateBonusHeroDiceDisplay();
     }
+  });
+
+  game.settings.register('sdm', 'initialMessageSent', {
+    scope: 'world', // "world" = GM only, "client" = per user
+    config: false, // Show in configuration view
+    type: Boolean, // Data type: String, Number, Boolean, etc
+    restricted: true,
+    default: false
   });
 
   game.settings.register('sdm', 'escalatorPosition', {
@@ -1104,7 +1156,7 @@ export function configurePlayerChromatype() {
   const foregroundRoyal = royal.map(color => colorMapping[color].dice.foreground);
   const backgroundRoyal = royal.map(color => colorMapping[color].dice.background);
 
-  Hooks.once('diceSoNiceInit', dice3d => {
+  Hooks.once('diceSoNiceReady', dice3d => {
     if (dice3d) {
       const colorData = {
         name: 'sdm-chromatype',
@@ -1542,4 +1594,26 @@ export function setupBonusHeroDiceBroadcast() {
       }
     }
   });
+}
+
+export function setupInitialSettings() {
+  if (!game.user.isGM) return;
+
+  const initialSettingsConfigured = game.settings.get('sdm', 'initialSettingsConfigured');
+
+  if (initialSettingsConfigured) return;
+
+  const combatConfig = game.settings.get('core', 'combatTrackerConfig');
+  combatConfig.resource = 'life.value';
+  combatConfig.skipDefeated = true;
+  combatConfig.turnMarker.enabled = true;
+  combatConfig.turnMarker.disposition = true;
+  combatConfig.turnMarker.animation = 'spin';
+  game.settings.set('core', 'combatTrackerConfig', combatConfig);
+
+  game.settings.set('core', 'leftClickRelease', true);
+  game.settings.set('core', 'chatBubblesPan', false);
+  game.settings.set('core', 'tokenAutoRotate', false);
+
+  game.settings.set('sdm', 'initialSettingsConfigured', true);
 }

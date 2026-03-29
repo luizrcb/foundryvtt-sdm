@@ -2,7 +2,14 @@
   <header class='sheet-header'>
     <div class="flexcol flex-between flex-center">
       <img class='profile-img' src='{{item.img}}' data-edit='img' data-action='onEditImage' data-tooltip='{{item.name}}' />
-      {{#if (and (ne system.type 'corruption') (ne system.type 'affliction') (ne system.type 'pet') (ne system.type 'augment'))}}
+      {{#if (and
+        (ne system.type 'corruption')
+        (ne system.type 'affliction')
+        (ne system.type 'pet')
+        (ne system.type 'augment')
+        (ne system.type 'container')
+        (ne system.size.unit 'cash')
+      )}}
       <div class="align-center mb-10 mr-10 rollable" {{#if system.readied}}
         data-tooltip="{{localize 'SDM.ItemReadied' }}" {{else}} data-tooltip="{{localize 'SDM.ItemNotReadied'}}" {{/if}}
         data-action="toggleReadied">
@@ -22,7 +29,14 @@
       <div class='document-name'>
         <div class="flexrow flex-between">
           <input name='name' class="resource-label flexultra" type='text' value='{{item.name}}' placeholder='Name' />
-          {{#unless (or (eq system.size.unit 'cash') (eq system.type 'corruption') (eq system.type 'affliction') (eq system.type 'augment') (eq system.type 'pet'))}}
+          {{#unless (or
+            (eq system.size.unit 'cash')
+            (eq system.type 'corruption')
+            (eq system.type 'affliction')
+            (eq system.type 'augment')
+            (eq system.type 'pet')
+            (eq system.type 'container')
+          )}}
           <div class="flex flex-group-center flexcol rollable" data-action="toggleIsHallmark" style="cursor:pointer;">
             <label class='resource-label'>{{localize 'SDM.HallmarkItem'}}</label>
             <i class="fa-regular fa-star mt-5 {{#if item.system.is_hallmark}}hallmark{{/if}}"></i>
@@ -55,11 +69,16 @@
       </div>
       {{/if}}
 
-      {{#unless (or (eq system.type 'corruption') (eq system.type 'affliction') (eq system.type 'augment') (eq system.type 'pet'))}}
+      {{#unless (or
+        (eq system.type 'corruption')
+        (eq system.type 'affliction')
+        (eq system.type 'augment')
+        (eq system.type 'pet')
+      )}}
       <div class='grid grid-{{ifThen item.system.is_hallmark 3 2}}col'>
         <div class='resource'>
           <label class='resource-label'>{{localize 'SDM.ItemQuantity'}}
-            <input type='text' name='system.quantity' value='{{system.quantity}}' data-dtype='Number' />
+            <input type='text' name='system.quantity' value='{{system.quantity}}' data-dtype='Number'  {{#if (eq system.type 'container')}}disabled{{/if}}/>
           </label>
         </div>
         <div class='resource'>
@@ -139,6 +158,15 @@
           <label class='resource-label' for="system.replenish.value">{{localize 'SDM.ItemFeature.resistant'}}</label>
           <div class='resource-content'>
             <input type='text' name="system.resistant.value" value="{{system.resistant.value}}" data-tooltip="{{localize 'SDM.ItemFeature.resistantDescription'}}"/>
+          </div>
+        </div>
+        {{/if}}
+
+        {{#if (eq system.type 'container')}}
+        <div class='resource'>
+          <label class='resource-label' for="system.capacity.max">{{localize 'SDM.GearContainer.Capacity'}}</label>
+          <div class='resource-content'>
+            <input type='text' name="system.capacity.max" value="{{system.capacity.max}}" data-dtype='Number' data-tooltip="{{localize 'SDM.UnitStones'}}"/>
           </div>
         </div>
         {{/if}}

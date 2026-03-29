@@ -15,6 +15,7 @@ async function _promptHeroOptions(actor, bonusHeroDice = 0) {
     window: {
       title: `${actor.name} ${$l10n('SDM.RollUseHeroDice')}`
     },
+    modal: true,
     content: HeroDiceUI.getHeroDiceSelect(actor, false, shouldPrompHealingHouseRule, bonusHeroDice, true, 'hero_dice', true),
     ok: {
       icon: `fa-solid fa-dice-${heroDiceType}`,
@@ -91,6 +92,7 @@ export async function healingHeroDice(event, actor, onlySpendWithoutRolling = fa
     window: {
       title
     },
+    modal: true,
     content: HeroDiceUI.getHeroDiceSelect(
       actor,
       false,
@@ -182,6 +184,7 @@ export async function directResourceDiceRoll(event, actor, resource) {
     window: {
       title
     },
+    modal: true,
     content: HeroDiceUI.getHeroDiceSelect(actor, false, false, 0, false, resource, false),
     ok: {
       icon: `die-label dice-${diceType}`,
@@ -252,6 +255,7 @@ export async function bloodDiceRoll(event, actor) {
     window: {
       title
     },
+    modal: true,
     content: HeroDiceUI.getHeroDiceSelect(actor, false, false, 0, false, 'blood_dice', false),
     ok: {
       icon: `die-label dice-${bloodDiceType}`,

@@ -1,5 +1,6 @@
 import { detectNat1OrNat20 } from '../rolls/sdmRoll.mjs';
 import { $l10n } from './globalUtils.mjs';
+const { DialogV2 } = foundry.applications.api;
 
 /**
  * Resolves an Actor associated with a chat message using multiple fallback strategies.
@@ -94,7 +95,7 @@ export async function createChatMessage({
           content = content.replace('dice-total', 'dice-total force');
           content += `<div class='flex-group-center mt-10'><span  class='force'>${$l10n('SDM.DepletedResources').toUpperCase()}</span></div>`;
         } else if (luckySevenRule && is7) {
-           content = content.replace(
+          content = content.replace(
             '<li class="roll die d20">7</li>',
             '<li class="roll die d20 is7">7</li>'
           );
@@ -139,4 +140,132 @@ function _onChatCardToggleContent(event) {
     event.preventDefault();
     header.classList.toggle('collapsed');
   }
+}
+
+export const wtfStudioLinks = `<div class="intro-message">
+      <div class="system-title">Synthetic Dream Machine</div>
+        <div class="system-author" data-tooltip="Luka Rejec">
+          by Luka Rejec
+        </div>
+        <div class="outcome">
+            <div class="outcome-title">
+              <span data-tooltip="WizardThiefFighter Studio">WTF Studio</span>
+            </div>
+            <div class="flex">
+              <div>
+                <div class="outcome-description">
+                  <a href="https://patreon.com/wizardthieffighter">Patreon</a>
+                </div>
+                <div class="outcome-description">
+                  <a href="https://www.drivethrurpg.com/en/publisher/14157/wtf-studio">DriveThruRPG</a>
+                </div>
+              </div>
+              <div>
+                <div class="outcome-description">
+                  <a href="https://wizardthieffighter.com">Shopify</a>
+                </div>
+                <div class="outcome-description">
+                  <a href=" https://wizardthieffighter.itch.io/">Itch.io</a>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="outcome">
+            <div class="outcome-title">
+              <span>Buy the Books</span>
+            </div>
+            <div class="outcome-description">
+                <a href="https://www.backerkit.com/c/projects/exalted-funeral/our-golden-age-an-ultra-violet-grasslands-rpg-sequel">Our Golden Age (pre-order)</a>
+            </div>
+            <div class="outcome-description">
+                <a href="https://www.exaltedfuneral.com/products/vastlands-guidebook-bootleg-beta-early-release-free-pdf">Vastlands Guidebook</a>
+            </div>
+            <div class="outcome-description">
+                <a href="https://www.drivethrurpg.com/en/product/447868/uvg-2e-ultraviolet-grasslands-and-the-black-city">UVG 2E (digital)</a>
+            </div>
+            <div class="outcome-description">
+                <a href="https://www.exaltedfuneral.com/products/uvg-2e">UVG 2E (physical)</a>
+            </div>
+        </div>
+    </div>`;
+
+export const luberLinks = `<div class="intro-message">
+      <div class="system-title">FoundryVTT SDM Development</div>
+        <div class="system-author" data-tooltip="Luiz Bertoni">
+          by Luber (Luiz Bertoni)
+        </div>
+        <div class="flex flex-around">
+          <a href='https://ko-fi.com/R6R01IW3KM/tip' target='_blank'><img class="kofi" height='36' style='border:0px;height:36px;' border='0' alt='Support me on Ko-Fi' /></a>
+        </div>
+        <div class="outcome">
+          <div class="outcome-title">
+            <span>HOW TO REACH ME</span>
+          </div>
+          <div class="flex flex-around">
+            <div>
+              <div class="outcome-description">
+                <a href="https://github.com/luizrcb">Github</a>
+              </div>
+              <div class="outcome-description">
+                <a href="www.linkedin.com/in/luizbertoni">LinkedIn</a>
+              </div>
+            </div>
+            <div>
+              <div class="outcome-description">
+                <a href="https://discord.com/users/383555462668484608">Discord</a>
+              </div>
+              <div class="outcome-description">
+                <a href="https://t.me/luizbertoni">Telegram</a>
+              </div>
+            </div>
+          </div>
+        </div>
+         <div class="outcome">
+            <div class="outcome-title">
+              <span>My Foundry Modules</span>
+            </div>
+            <div class="outcome-description">
+              <a href="https://foundryvtt.com/packages/disposition-initiative">Disposition Initiative</a>
+            </div>
+            <div class="outcome-description">
+              <a href="https://foundryvtt.com/packages/dice-oracles">Dice Oracles</a>
+            </div>
+            <div class="outcome-description">
+                <a href="https://foundryvtt.com/community/luizbertoni/packages">All My Modules</a>
+            </div>
+        </div>
+    </div>`;
+
+export async function LinksDialog(content, width = 310, height = 550) {
+  await DialogV2.prompt({
+    position: {
+      width,
+      height
+    },
+    content,
+    modal: true,
+    rejectClose: false
+  });
+}
+
+export function sendInitialMessage() {
+  if (!game.user.isGM) return;
+
+  const initialMessageSent = game.settings.get('sdm', 'initialMessageSent');
+  if (initialMessageSent) return;
+  setTimeout(() => {
+    createChatMessage({
+      speaker: ChatMessage.getSpeaker({ alias: 'Gamemaster' }),
+      content: luberLinks
+    });
+  }, 1000);
+
+  setTimeout(() => {
+    createChatMessage({
+      speaker: ChatMessage.getSpeaker({ alias: 'Gamemaster' }),
+      content: wtfStudioLinks
+    });
+  }, 2000);
+
+  game.settings.set('sdm', 'initialMessageSent', true);
 }

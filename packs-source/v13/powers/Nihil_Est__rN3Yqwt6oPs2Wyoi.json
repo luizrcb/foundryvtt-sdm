@@ -16,7 +16,8 @@
       "img": "icons/svg/book.svg",
       "name": "",
       "description": "",
-      "default_ability": ""
+      "default_ability": "",
+      "is_dangerous": true
     },
     "readied": false,
     "cost": 0,

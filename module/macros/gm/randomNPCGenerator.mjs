@@ -1,3 +1,5 @@
+import { generateNameFromTable } from './characterGenerator.mjs';
+
 const { DialogV2 } = foundry.applications.api;
 
 export async function randomNPCGenerator() {
@@ -49,19 +51,22 @@ export async function randomNPCGenerator() {
   </div>
   <div class="form-group">
     <label>${game.i18n.format('SDM.OptionalField', { field: game.i18n.localize('SDM.FieldLevel') })}</label>
-    <input type="number" name="level" class="form-control" min="0">
+    <input type="number" name="level" class="form-control" min="0" value="0">
   </div>
-
   <div class="form-group">
     <label>${game.i18n.format('SDM.OptionalField', { field: game.i18n.localize('SDM.CustomInitiative') })}</label>
     <input type="text" name="initiative" class="form-control" placeholder="e.g. 2d6+@bonus">
+  </div>
+  <label style="font-weight: bold;">${game.i18n.format('SDM.OptionalField', { field: game.i18n.localize('SDM.FieldBiography') })}</label>
+  <div class="form-group">
+    <prose-mirror name="biography"></prose-mirror>
   </div>
 </fieldset>
 `;
 
   // Create dialog instance
   const data = await DialogV2.wait({
-    window: { title: game.i18n.localize('SDM.CreateRandomNPC') },
+    window: { title: game.i18n.localize('SDM.CreateRandomNPC'), resizable: true },
     content,
     buttons: [
       {
@@ -89,17 +94,29 @@ export async function randomNPCGenerator() {
 
   // Render the dialog
   if (!data) return;
+  let npcName = data?.name;
 
   // Prepare NPC data
+  if (!npcName) {
+    if (data.table === 'humans-of-the-pananthropy') {
+      npcName = await generateNameFromTable();
+    }
+  }
+
   const npcData = {
-    name: data?.name || game.i18n.localize('SDM.UnnamedNPC'),
+    name: npcName || game.i18n.localize('SDM.UnnamedNPC'),
     table: data.table,
-    initiative: ''
+    initiative: '',
+    biography: ''
   };
 
   // Validate initiative as a Roll formula
   if (data.initiative) {
     npcData.initiative = data.initiative;
+  }
+
+  if (data.biography) {
+    npcData.biography = data.biography;
   }
 
   // Call system API
@@ -109,10 +126,11 @@ export async function randomNPCGenerator() {
       name: npcData?.name,
       lvl: Math.abs(parseInt(data.level, 10)),
       tableName: npcData.table,
-      initiative: npcData.initiative
+      initiative: npcData.initiative,
+      biography: npcData.biography,
     });
   } else {
-    npc = await game.sdm.api.createNPC(npcData?.name, npcData.table, npcData.initiative);
+    npc = await game.sdm.api.createNPC(npcData?.name, npcData.table, npcData.initiative, npcData.biography);
   }
 
   ui.notifications.info(

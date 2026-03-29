@@ -20,7 +20,8 @@ export default class SDMRoll {
     sendPowerToChat = false,
     powerDescription = '',
     item = null,
-    isCtrl = false
+    isCtrl = false,
+    overcharged = false
   }) {
     this.actor = actor;
     this.type = type;
@@ -39,6 +40,7 @@ export default class SDMRoll {
     this.powerDescription = powerDescription;
     this.item = item;
     this.isCtrl = isCtrl;
+    this.overcharged = overcharged;
   }
 
   async evaluate() {
@@ -48,7 +50,8 @@ export default class SDMRoll {
         flavor: this.#buildFlavorText(),
         collapsed: true,
         displayWeight: false,
-        blindGMRoll: this.isCtrl
+        blindGMRoll: this.isCtrl,
+        overcharged: this.overcharged
       });
     }
 
@@ -66,7 +69,7 @@ export default class SDMRoll {
     const isAttack = this.type === RollType.ATTACK;
     const isAbility = this.type === RollType.ABILITY;
     const isDamage = this.type === RollType.DAMAGE;
-    const isPower = this.type ===  RollType.POWER;
+    const isPower = this.type === RollType.POWER;
     const isPowerAlbum = this.type === RollType.POWER_ALBUM;
     const isDamageRoll = isDamage || isPower || isPowerAlbum;
     const damageBonus = this.actor.system?.damage_bonus || 0;
@@ -137,11 +140,10 @@ export default class SDMRoll {
 
       if (luckySevenRule) {
         content = content.replace(
-        '<li class="roll die d20">7</li>',
-        '<li class="roll die d20 is7">7</li>'
-      );
+          '<li class="roll die d20">7</li>',
+          '<li class="roll die d20 is7">7</li>'
+        );
       }
-
 
       if (isNat1) {
         resultMessage = $l10n('SDM.CriticalFailure').toUpperCase();
@@ -172,15 +174,20 @@ export default class SDMRoll {
             ? `
         <div class="flex-group-center"><span class="is13"><b>${$l10n('SDM.DepletedResources')}</b></span></div>
         `
-          : (is7 && luckySevenRule)
-              ?
-        `<div class="flex-group-center"><span class="is7"><b>${$l10n('SDM.LuckySeven')}</b></span></div>` : ''
+            : is7 && luckySevenRule
+              ? `<div class="flex-group-center"><span class="is7"><b>${$l10n('SDM.LuckySeven')}</b></span></div>`
+              : ''
         }
       <div>`;
     }
 
-    if (this.powerDescription) {
-      const powerCard = await this.item.getItemChatCard({ collapsed: true, displayWeight: false });
+    if (this.powerDescription || isPower || isPowerAlbum) {
+      const powerCard = await this.item.getItemChatCard({
+        collapsed: true,
+        displayWeight: false,
+        actor: this.actor,
+        overcharged: this.overcharged
+      });
       content += powerCard;
     }
 
@@ -239,7 +246,7 @@ export default class SDMRoll {
 
     const burdenPenalty = actorData?.burden_penalty || 0;
     const skillMod = this.skill?.mod || 0;
-    const allBonuses = - burdenPenalty + abilityMod + skillMod;
+    const allBonuses = -burdenPenalty + abilityMod + skillMod;
     const modifierComponents = this.#parseModifierString(this.modifier);
     const fixedAndDice = this.#separateFixedAndDice([...modifierComponents, `${allBonuses}`]);
 

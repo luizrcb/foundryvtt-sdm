@@ -1,7 +1,8 @@
+import { GearType } from '../helpers/constants.mjs';
 import { getSlotsTaken } from '../helpers/itemUtils.mjs';
-import NPCBaseDataModel from './npc-base-data.mjs';
-import ItemSizeDataModel from './item-size.mjs';
 import HallmarkBaseDataModel from './hallmark-base-data.mjs';
+import ItemSizeDataModel from './item-size.mjs';
+import NPCBaseDataModel from './npc-base-data.mjs';
 
 export default class SdmItemBase extends foundry.abstract.TypeDataModel {
   static defineSchema() {
@@ -120,7 +121,18 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
     return schema;
   }
 
-  prepareDerivedData() {
-    this.slots_taken = getSlotsTaken(this);
+  get container_taken() {
+    const parent = this.parent?.parent;
+    if (!parent) return 0;
+
+    if (this.type !== GearType.CONTAINER) return 0;
+
+    return parent.items
+      .filter(i => i.type === 'gear' && i.system?.container === this.parent.uuid)
+      .reduce((sum, i) => sum + getSlotsTaken(i.system, true), 0);
+  }
+
+  get slots_taken() {
+    return getSlotsTaken(this);
   }
 }

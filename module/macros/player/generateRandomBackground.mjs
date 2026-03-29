@@ -133,6 +133,7 @@ export async function generateRandomBackground() {
   await foundry.applications.api.DialogV2.wait({
     window: { title: game.i18n.localize('SDM.BackgroundGenerator') },
     content: buildDialogContent(selectedRows),
+    modal: true,
     buttons: [
       {
         action: 'confirm',
@@ -200,11 +201,9 @@ export async function generateRandomBackground() {
           });
 
           ui.notifications.info(
-            game.i18n.format('SDM.BackgroundTraitCreated', {
-              flavor: combined,
-              role: '',
-              name: actor?.name
-            })
+            `${actor ? actor.name + ': ' : ''} ${game.i18n.format('SDM.BackgroundTraitCreated', {
+              flavor: combined
+            })}`
           );
         }
       },

@@ -1,7 +1,6 @@
 {
   "name": "Vicious Bird",
   "type": "npc",
-  "_id": "NmWt8PHA0INeZhnO",
   "img": "icons/creatures/birds/corvid-call-sound-glowing.webp",
   "system": {
     "biography": "<p>This pet is no one's friend. It curses like a star sailor.<br class=\"Apple-interchange-newline\" /></p>",
@@ -23,7 +22,11 @@
     "isPorter": false,
     "isPet": false,
     "experience": "300",
-    "speed": 0
+    "speed": 0,
+    "capacity": 1,
+    "createdFromTable": "",
+    "burden_penalty": 0,
+    "burden_penalty_bonus": 0
   },
   "prototypeToken": {
     "name": "Vicious Bird",
@@ -81,7 +84,7 @@
       }
     },
     "sight": {
-      "enabled": false,
+      "enabled": true,
       "range": 0,
       "angle": 360,
       "visionMode": "basic",
@@ -122,22 +125,23 @@
   "items": [],
   "effects": [],
   "folder": null,
-  "sort": 100000,
-  "ownership": {
-    "default": 0,
-    "XnQAppzUXfkn5LcX": 3
-  },
   "flags": {},
   "_stats": {
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.350",
+    "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.1",
-    "createdTime": 1760643027564,
-    "modifiedTime": 1760893957302,
-    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+    "systemVersion": "0.13.2",
+    "createdTime": 1772904481073,
+    "modifiedTime": 1772904558630,
+    "lastModifiedBy": "IGh4KUj5Z5Xs5wjw"
   },
+  "_id": "NmWt8PHA0INeZhnO",
+  "ownership": {
+    "default": 0,
+    "IGh4KUj5Z5Xs5wjw": 3
+  },
+  "sort": 100000,
   "_key": "!actors!NmWt8PHA0INeZhnO"
 }
