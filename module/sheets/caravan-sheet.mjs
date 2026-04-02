@@ -1,6 +1,6 @@
 import { ActorType, GearType, ItemType, SizeUnit } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
-import { $fmt, $l10n, foundryVersionIsAtLeast, getSeasonAndWeek } from '../helpers/globalUtils.mjs';
+import { $fmt, $l10n, constructHTMLButton, foundryVersionIsAtLeast, getSeasonAndWeek } from '../helpers/globalUtils.mjs';
 import {
   convertToCash,
   getSlotsTaken,
@@ -59,7 +59,8 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       consumeSupplies: this._consumeSupplies,
       radioToggle: this._radioToggle,
       viewNPC: this._viewCrewMember,
-      openPetSheet: this._onOpenPetSheet
+      openPetSheet: this._onOpenPetSheet,
+      toggleCompact: this._onToggleCompact,
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: '[data-drop], [data-item-id]' }],
@@ -120,6 +121,21 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
   }
 
   /* -------------------------------------------- */
+
+  /** @inheritdoc */
+  async _renderFrame(options) {
+    const frame = await super._renderFrame(options);
+
+    const buttons = [constructHTMLButton({
+      label: "",
+      classes: ["header-control", "icon", "fa-solid", "fa-compress"],
+      dataset: { action: "toggleCompact", tooltip: "SDM.CompactMode" },
+    })];
+
+    this.window.controls.after(...buttons);
+
+    return frame;
+  }
 
   /** @override */
   async _prepareContext(options) {
@@ -183,6 +199,23 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       caravanDate,
       caravanDateShort
     };
+
+    const crew = context.system?.crew;
+    if (crew) {
+      for (const [key, member] of Object.entries(crew)) {
+        // Create a lookup object from available_skills
+        const skillsLookup = {};
+        if (member.available_skills) {
+          Object.entries(member.available_skills).forEach(([skillKey, skillData]) => {
+            skillsLookup[skillData.id] = skillData.label;
+          });
+        }
+        member.skillsLookup = skillsLookup;
+      }
+    }
+    context.isCompactMode = this.actor.getFlag('sdm', 'compactMode') ?? false;
+
+
 
     // Offloading context prep to a helper function
     await this._prepareItems(context);
@@ -301,6 +334,12 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
           tab.icon = 'fa fa-book';
           break;
       }
+
+      if (this.actor.getFlag('sdm', 'compactMode')) {
+        tab.tooltip = tab.label;
+        tab.label = '';
+      }
+
       if (this.tabGroups[tabGroup] === tab.id) tab.cssClass = 'active';
       tabs[partId] = tab;
       return tabs;
@@ -505,6 +544,11 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     // You may want to add other special handling here
     // Foundry comes with a large number of utility classes, e.g. SearchFilter
     // That you may want to implement yourself.
+
+    const isCompact = this.actor.getFlag('sdm', 'compactMode');
+    if (isCompact !== undefined) {
+      this.element.classList.toggle('compact', isCompact);
+    }
 
     // Add item change listeners
     this._handleContainers();
@@ -1127,6 +1171,21 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     if (!petDocument) return;
 
     petDocument.sheet.render(true);
+  }
+
+  static async _onToggleCompact(event, target) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.detail > 1) return; // Ignore repeated clicks
+
+    if (!this.actor.isOwner) return;
+
+    const currentMode = this.actor.getFlag('sdm', 'compactMode') ?? false;
+    const newMode = !currentMode;
+
+    await this.actor.setFlag('sdm', 'compactMode', newMode);
+    this.element.classList.toggle('compact', newMode);
+    return this.render();
   }
 
   static async _consumeSupplies() {

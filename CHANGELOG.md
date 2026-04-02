@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.14.0
+
+- Added compact mode to Character and Caravan sheets
+
 ## v0.13.7
 
 - Added cash utility functions to Actors

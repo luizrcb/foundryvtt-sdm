@@ -1,5 +1,47 @@
 {{! Biography Tab }}
 <section class='tab biography scrollable {{tab.cssClass}}' data-group='primary' data-tab='biography'>
+  {{#if (and (eq actor.type 'character') isCompactMode)}}
+  <div class='header-fields'>
+    <div class="grid grid-4col">
+      <div class='resource'>
+        <label class='resource-label'>
+          {{localize 'SDM.FieldLooks'}}
+        </label>
+        <div class='resource-content flexrow flex-center flex-between'>
+          <input type='text' name='system.looks' value='{{system.looks}}' />
+        </div>
+      </div>
+
+      <div class='resource'>
+          <label for="system.likes" class='resource-label'>
+            {{localize 'SDM.FieldLikes'}}
+          </label>
+          <div class='resource-content flexrow flex-center flex-between'>
+            <input type='text' name='system.likes' value='{{system.likes}}' />
+          </div>
+      </div>
+
+      <div class='resource'>
+        <label for="system.friends" class='resource-label'>
+          {{localize 'SDM.FieldFriends'}}
+        </label>
+        <div class='resource-content flexrow flex-center flex-between'>
+          <input type='text' name='system.friends' value='{{system.friends}}' />
+        </div>
+      </div>
+
+      <div class='resource'>
+        <label for="system.foes" class='resource-label'>
+          {{localize 'SDM.FieldFoes'}}
+        </label>
+        <div class='resource-content flexrow flex-center flex-between'>
+          <input type='text' name='system.foes' value='{{system.foes}}' />
+        </div>
+      </div>
+    </div>
+  </div>
+  {{/if}}
+
   {{! Editors must receive enriched text data from getData to properly handle rolls, UUID links, etc. }}
   {{#if editable}}
     <prose-mirror

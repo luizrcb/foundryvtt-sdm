@@ -64,8 +64,8 @@
             </div>
 
             <div class='resource grid-span-1'>
-              <label class='resource-label'>
-                {{localize 'SDM.FieldCostPerWeek'}}
+              <label class='resource-label' data-tooltip="SDM.FieldCostPerWeek">
+                {{localize 'SDM.FieldCost'}}
               </label>
               <div class='resource-content'>
                 <input type='text' name='system.transport.{{key}}.cost' value='{{transport.cost}}' />
@@ -73,8 +73,8 @@
             </div>
 
             <div class='resource grid-span-1'>
-              <label class='resource-label'>
-                {{localize 'SDM.FieldSupplyPerWeek'}}
+              <label class='resource-label' data-tooltip="SDM.FieldSupplyPerWeek">
+                {{localize 'SDM.FieldSupply'}}
               </label>
               <div class='resource-content flex flexrow flex-group-center'>
                 <input type='text' name='system.transport.{{key}}.supply' value='{{transport.supply}}' />

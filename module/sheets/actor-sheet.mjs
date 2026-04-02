@@ -14,6 +14,7 @@ import {
   $fmt,
   $l10n,
   capitalizeFirstLetter,
+  constructHTMLButton,
   isNewFormulaBetter,
   toPascalCase
 } from '../helpers/globalUtils.mjs';
@@ -24,13 +25,13 @@ import {
 } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { openItemTransferDialog } from '../items/transfer.mjs';
-import { healingHeroDice, directResourceDiceRoll } from '../rolls/hero_dice/index.mjs';
+import { directResourceDiceRoll, healingHeroDice } from '../rolls/hero_dice/index.mjs';
 import SDMRoll, { sanitizeExpression } from '../rolls/sdmRoll.mjs';
 import {
-  renderNPCMoraleResult,
-  renderReactionResult,
   renderCorruptionResult,
   renderDefeatResult,
+  renderNPCMoraleResult,
+  renderReactionResult,
   renderSaveResult
 } from '../rolls/ui/renderResults.mjs';
 import { DEFAULT_SAVE_VALUE, SAVING_THROW_BASE_FORMULA } from '../settings.mjs';
@@ -71,12 +72,12 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     }
 
     if (this.actor?.type === ActorType.CHARACTER) {
-      controls.push({
-        action: 'toggleMode',
-        icon: 'fa-solid fa-gear',
-        label: 'Edit Mode / Play Mode',
-        ownership: 'OWNER'
-      });
+      // controls.push({
+      //   action: 'toggleMode',
+      //   icon: 'fa-solid fa-gear',
+      //   label: 'SDM.ToggleModeLabel',
+      //   ownership: 'OWNER'
+      // });
 
       if (game.user.isGM || game.settings.get('sdm', 'canPlayerRerollCharacter')) {
         controls.push({
@@ -133,7 +134,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       levelUpNPC: this._onLevelUpNPC,
       openDoc: { handler: this._openDoc, buttons: [0] },
       toggleItemStatus: { handler: this._toggleItemStatus, buttons: [0, 2] },
-      openPetSheet: this._onOpenPetSheet
+      openPetSheet: this._onOpenPetSheet,
+      toggleCompact: this._onToggleCompact,
     },
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
     form: {
@@ -509,6 +511,46 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
   /* -------------------------------------------- */
 
+  /** @inheritdoc */
+  async _renderFrame(options) {
+    const frame = await super._renderFrame(options);
+
+    if (this.actor.type !== ActorType.CHARACTER) return frame;
+
+    const buttons = [
+      constructHTMLButton({
+        label: '',
+        classes: ['header-control', 'icon', 'fa-solid', 'fa-gear'],
+        dataset: { action: 'toggleMode', tooltip: 'SDM.ToggleModeLabel' }
+      }),
+
+      constructHTMLButton({
+        label: '',
+        classes: ['header-control', 'icon', 'fa-solid', 'fa-compress'],
+        dataset: { action: 'toggleCompact', tooltip: 'SDM.CompactMode' }
+      })
+    ];
+
+    this.window.controls.after(...buttons);
+
+    return frame;
+  }
+
+  static async _onToggleCompact(event, target) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.detail > 1) return; // Ignore repeated clicks
+
+    if (!this.actor.isOwner) return;
+
+    const currentMode = this.actor.getFlag('sdm', 'compactMode') ?? false;
+    const newMode = !currentMode;
+
+    await this.actor.setFlag('sdm', 'compactMode', newMode);
+    this.element.classList.toggle('compact', newMode);
+    return this.render();
+  }
+
   /** @override */
   async _prepareContext(options) {
     // Output initialization
@@ -539,6 +581,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       context.heroDiceType = heroDiceType;
       context.isEditMode = this.actor.getFlag('sdm', 'editMode') ?? false;
     }
+
+    context.isCompactMode = this.actor.getFlag('sdm', 'compactMode') ?? false;
 
     // Offloading context prep to a helper function
     this._prepareItems(context);
@@ -791,6 +835,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     // You may want to add other special handling here
     // Foundry comes with a large number of utility classes, e.g. SearchFilter
     // That you may want to implement yourself.
+
+    const isCompact = this.actor.getFlag('sdm', 'compactMode');
+    if (isCompact !== undefined) {
+      this.element.classList.toggle('compact', isCompact);
+    }
 
     this._handleContainers();
   }
@@ -1065,6 +1114,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     event.preventDefault();
     event.stopPropagation();
     if (event.detail > 1) return; // Ignore repeated clicks
+
+    if (!this.actor.isOwner) return;
+
     const currentMode = this.actor.getFlag('sdm', 'editMode') ?? false;
     const newMode = !currentMode;
 

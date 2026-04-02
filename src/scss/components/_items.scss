@@ -74,7 +74,7 @@
   // Control Buttons
   .item-controls {
     display: flex;
-    flex: 0 0 100px;
+    flex: 0 0 96px;
     &.controls-2 {
       flex: 0 0 50px;
     }
@@ -178,10 +178,8 @@
   }
 }
 
-// Example style for Sdm (can be removed if not needed).
 .item-formula {
-  flex: 0 0 125px;
-  padding: 0 8px;
+  flex: 0 0 95px;
 }
 
 .switch {

@@ -335,6 +335,12 @@
   max-height: 0px;
 }
 
+.application.sheet.sdm.actor.compact {
+  min-width: 680px;
+  max-width: 800px;
+  min-height: 790px;
+}
+
 .application.sheet.sdm.actor.npc {
   min-width: 850px;
   min-height: 645px;
@@ -360,6 +366,12 @@
   min-height: 0px;
   max-width: 0px;
   max-height: 0px;
+}
+
+.application.sheet.sdm.actor.caravan.compact {
+  min-width: 725px;
+  max-width: 900px;
+  min-height: 790px;
 }
 
 .application.sheet.sdm.item {
@@ -1904,8 +1916,6 @@ input[type=radio]::after {
   margin-top: 10px;
 }
 .sdm .sheet-header .caravan-profile-img {
-  flex: 0 0 150px;
-  height: 150px;
   margin-right: 10px;
   margin-top: 10px;
 }
@@ -2130,7 +2140,7 @@ input[type=radio]::after {
 }
 .sdm .items-list .item-controls {
   display: flex;
-  flex: 0 0 100px;
+  flex: 0 0 96px;
 }
 .sdm .items-list .item-controls.controls-2 {
   flex: 0 0 50px;
@@ -2225,8 +2235,7 @@ input[type=radio]::after {
   text-align: left;
 }
 .sdm .item-formula {
-  flex: 0 0 125px;
-  padding: 0 8px;
+  flex: 0 0 95px;
 }
 .sdm .switch {
   position: relative;

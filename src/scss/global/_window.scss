@@ -150,6 +150,11 @@
     max-width: 0px;
     max-height: 0px;
   }
+  &.compact {
+    min-width: 680px;
+    max-width: 800px;
+    min-height: 790px;
+  }
 }
 
 .application.sheet.sdm.actor.npc {
@@ -174,6 +179,11 @@
     min-height: 0px;
     max-width: 0px;
     max-height: 0px;
+  }
+  &.compact {
+    min-width: 725px;
+    max-width: 900px;
+    min-height: 790px;
   }
 }
 
