@@ -154,6 +154,12 @@
     min-width: 680px;
     max-width: 800px;
     min-height: 790px;
+      &.minimized {
+      min-width: 0px;
+      min-height: 0px;
+      max-width: 0px;
+      max-height: 0px;
+    }
   }
 }
 
@@ -184,6 +190,12 @@
     min-width: 725px;
     max-width: 900px;
     min-height: 790px;
+      &.minimized {
+      min-width: 0px;
+      min-height: 0px;
+      max-width: 0px;
+      max-height: 0px;
+    }
   }
 }
 
@@ -1427,5 +1439,86 @@ input[type='radio']::after {
 
   .kofi {
     content: url('../assets/support_me_on_kofi_red.png');
+  }
+
+  .crew-card {
+    border-radius: 12px;
+    padding: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    transition: all 0.1s ease;
+  }
+
+  .crew-hero {
+    background: #c4d9fd;
+    border-left: 4px solid #3a6ea5;
+  }
+  .crew-npc {
+    background: #fae0b6;
+    border-left: 4px solid #b97f44;
+  }
+
+  .crew-hero:hover {
+    box-shadow: 0 4px 12px rgba(58, 110, 165, 0.3);
+  }
+  .crew-npc:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  .stat-icon {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 0.85rem;
+    background: rgba(255, 255, 240, 0.6);
+    padding: 4px 8px;
+    border-radius: 20px;
+  }
+  .stat-icon i {
+    width: 20px;
+    text-align: center;
+    font-size: 1rem;
+  }
+  .abilities-row {
+    margin-top: 8px;
+    padding-top: 6px;
+    border-top: 1px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .theme-dark .crew-hero,
+  .theme-dark .crew-hero {
+    background: rgba(58, 110, 165, 0.487) !important;
+    border-left-color: #6ea8fe !important;
+    color: var(--sdm-c-font, #e6e6e6);
+  }
+
+  .theme-dark .crew-npc,
+  .theme-dark .crew-npc {
+    background: rgba(185, 126, 68, 0.37) !important;
+    border-left-color: #d99e4e !important;
+    color: var(--sdm-c-font, #e6e6e6);
+  }
+
+  .theme-dark .stat-icon {
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: #f0f0f0;
+  }
+
+  .theme-dark .stat-icon i {
+    color: var(--sdm-c-highlight, #ff96ff);
+  }
+
+  .theme-dark .abilities-row {
+    border-top-color: rgba(255, 255, 255, 0.2);
+  }
+
+  .theme-dark .crew-card {
+    //background: rgba(0, 0, 0, 0.3);
+    border-color: rgba(255, 255, 255, 0.15);
+  }
+
+  .theme-dark .crew-card .stat-value,
+  .theme-dark .crew-card .ability-value {
+    color: var(--sdm-c-font, #e0e0e0);
   }
 }

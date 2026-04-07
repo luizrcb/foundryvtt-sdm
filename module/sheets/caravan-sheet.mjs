@@ -1,6 +1,13 @@
 import { ActorType, GearType, ItemType, SizeUnit } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
-import { $fmt, $l10n, constructHTMLButton, foundryVersionIsAtLeast, getSeasonAndWeek } from '../helpers/globalUtils.mjs';
+import {
+  $fmt,
+  $l10n,
+  constructHTMLButton,
+  foundryVersionIsAtLeast,
+  getSeasonAndWeek
+} from '../helpers/globalUtils.mjs';
+import TokenPlacement from '../canvas/token-placement.mjs';
 import {
   convertToCash,
   getSlotsTaken,
@@ -58,9 +65,10 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       deleteRoute: this._deleteRoute,
       consumeSupplies: this._consumeSupplies,
       radioToggle: this._radioToggle,
-      viewNPC: this._viewCrewMember,
+      viewCrewMember: this._viewCrewMember,
       openPetSheet: this._onOpenPetSheet,
       toggleCompact: this._onToggleCompact,
+      placeCrewMembers: this._onPlaceCrewMembers,
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: '[data-drop], [data-item-id]' }],
@@ -126,11 +134,18 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
   async _renderFrame(options) {
     const frame = await super._renderFrame(options);
 
-    const buttons = [constructHTMLButton({
-      label: "",
-      classes: ["header-control", "icon", "fa-solid", "fa-compress"],
-      dataset: { action: "toggleCompact", tooltip: "SDM.CompactMode" },
-    })];
+    const buttons = [
+      constructHTMLButton({
+        label: '',
+        classes: ['header-control', 'icon', 'fa-solid', 'fa-location-pin'],
+        dataset: { action: 'placeCrewMembers', tooltip: 'SDM.PlaceCrewMembers' }
+      }),
+      constructHTMLButton({
+        label: '',
+        classes: ['header-control', 'icon', 'fa-solid', 'fa-compress'],
+        dataset: { action: 'toggleCompact', tooltip: 'SDM.CompactMode' }
+      })
+    ];
 
     this.window.controls.after(...buttons);
 
@@ -201,21 +216,28 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     };
 
     const crew = context.system?.crew;
+    const players = [];
+    const npcs = [];
     if (crew) {
       for (const [key, member] of Object.entries(crew)) {
-        // Create a lookup object from available_skills
-        const skillsLookup = {};
-        if (member.available_skills) {
-          Object.entries(member.available_skills).forEach(([skillKey, skillData]) => {
-            skillsLookup[skillData.id] = skillData.label;
-          });
+        const memberId = member.id;
+        const crewMember = await fromUuid(memberId);
+        member.name = crewMember.name;
+        member.img = crewMember.img;
+        member.system = crewMember.system;
+        member.key = key;
+        member.totalCash = crewMember.getTotalCash();
+
+        if (crewMember.type === ActorType.CHARACTER) {
+          players.push(member);
+        } else {
+          npcs.push(member);
         }
-        member.skillsLookup = skillsLookup;
       }
     }
+    context.crew_players = players;
+    context.crew_npcs = npcs;
     context.isCompactMode = this.actor.getFlag('sdm', 'compactMode') ?? false;
-
-
 
     // Offloading context prep to a helper function
     await this._prepareItems(context);
@@ -1147,12 +1169,12 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
 
     const crewId = this.actor.system.crew[key].id;
 
-    const npc = await fromUuid(crewId);
-    if (!npc) {
+    const crewMember = await fromUuid(crewId);
+    if (!crewMember) {
       target.dataset.proceed = true;
       return SdmCaravanSheet._deleteCrew.call(this, event, target);
     }
-    await npc.sheet.render(true);
+    await crewMember.sheet.render(true);
   }
 
   static async _onOpenPetSheet(event, target) {
@@ -1190,6 +1212,45 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
 
   static async _consumeSupplies() {
     return this.actor.consumeSupplies();
+  }
+
+  static async _onPlaceCrewMembers() {
+    if ( !game.user.isGM || !canvas.scene ) return;
+    const crew = this.actor.system.crew;
+    const members = [];
+
+     if (crew) {
+      for (const [key, member] of Object.entries(crew)) {
+        const memberId = member.id;
+        const crewMember = await fromUuid(memberId);
+        members.push(crewMember);
+      }
+    }
+
+    if ( !members.length ) return;
+    const minimized = !this.minimized;
+    await this.minimize();
+    const tokensData = [];
+
+    try {
+      const placements = await TokenPlacement.place({
+        tokens: members.map(actor => actor.prototypeToken)
+      });
+      for ( const placement of placements ) {
+        const actor = placement.prototypeToken.actor;
+        const appendNumber = !placement.prototypeToken.actorLink && placement.prototypeToken.appendNumber;
+        delete placement.prototypeToken;
+        const tokenDocument = await actor.getTokenDocument(placement);
+        if ( appendNumber ) TokenPlacement.adjustAppendedNumber(tokenDocument, placement);
+        tokensData.push(tokenDocument.toObject());
+      }
+    } catch(err) {
+      console.log(err)
+    } finally {
+      if ( minimized ) this.maximize();
+    }
+
+    await canvas.scene.createEmbeddedDocuments("Token", tokensData);
   }
 
   /** Helper Functions */
@@ -1386,10 +1447,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     if (event.currentTarget.id !== 'crew-tab') return false;
 
     const droppedActor = await fromUuid(data.uuid);
-    if (droppedActor.type !== ActorType.NPC) return false;
-
-    const skills = droppedActor.getAvailableSkills();
-    const skillList = Object.values(skills);
+    if (droppedActor.type == ActorType.CARAVAN) return false;
 
     // Get current crew data
     const currentCrew = this.actor.system.crew || {};
@@ -1410,119 +1468,18 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       const existingKey = duplicateKeys[0];
       const existingCrew = currentCrew[existingKey];
 
-      // Create mapping of skill ID to skillKey from existing available_skills
-      const existingSkillMap = {};
-      if (existingCrew.available_skills) {
-        Object.entries(existingCrew.available_skills).forEach(([skillKey, skillData]) => {
-          existingSkillMap[skillData.id] = {
-            key: skillKey,
-            data: skillData
-          };
-        });
-      }
-
-      // Build updated available_skills object
-      const updatedAvailableSkills = {};
-      const newSkillIds = new Set(); // Track which skills are in the updated list
-
-      // Process each skill from the dropped actor
-      skillList.forEach((skill, index) => {
-        const skillId = skill.id;
-        newSkillIds.add(skillId);
-
-        // Check if this skill already exists in available_skills
-        if (existingSkillMap[skillId]) {
-          // Use existing skillKey and update the skill data
-          const existingSkillKey = existingSkillMap[skillId].key;
-          updatedAvailableSkills[existingSkillKey] = {
-            id: skill.id,
-            name: skill.name,
-            mod: skill.mod,
-            label: skill.label
-          };
-
-          // If this was the selected skill, keep it selected
-          if (existingCrew.skill === existingSkillMap[skillId].id) {
-            // We'll handle this below when setting the skill field
-          }
-        } else {
-          // Generate new skillKey for new skill
-          const newSkillKey = foundry.utils.randomID();
-          updatedAvailableSkills[newSkillKey] = {
-            id: skill.id,
-            name: skill.name,
-            mod: skill.mod,
-            label: skill.label
-          };
-        }
-      });
-
-      // Determine the new skill field value
-      let newSkillValue = null;
-
-      // First, check if the currently selected skill still exists
-      if (existingCrew.skill) {
-        const selectedSkill = Object.values(existingCrew.available_skills).find(
-          skill => skill.id === existingCrew.skill
-        );
-        if (selectedSkill && newSkillIds.has(selectedSkill.id)) {
-          newSkillValue = selectedSkill.id;
-        }
-      }
-
-      // If no valid selected skill, use the first skill from the updated list
-      if (!newSkillValue && skillList.length > 0) {
-        // Find the key for the first skill in the list
-        const firstSkillId = skillList[0].id;
-        const firstSkillKey = Object.keys(updatedAvailableSkills).find(
-          key => updatedAvailableSkills[key].id === firstSkillId
-        );
-        if (firstSkillKey) {
-          newSkillValue = firstSkillKey;
-        }
-      }
-
       // Update the existing entry
       updateData[`system.crew.${existingKey}`] = {
         ...existingCrew, // Keep existing data
-        id: droppedActor.uuid,
-        name: droppedActor.name,
-        available_skills: updatedAvailableSkills,
-        skill: newSkillValue,
-        supply: droppedActor.system.supply,
-        cost: droppedActor.system.cost
-        // supply and cost remain unchanged from existingCrew
+        id: droppedActor.uuid
       };
     } else {
       // CREATE NEW ENTRY (same as before, but refined)
       const newKey = foundry.utils.randomID();
 
-      // Build available_skills object with skill IDs as keys (or generate random keys)
-      const available_skills = {};
-      let firstSkillKey = null;
-
-      skillList.forEach((skill, index) => {
-        const skillKey = foundry.utils.randomID();
-        available_skills[skillKey] = {
-          id: skill.id,
-          name: skill.name,
-          mod: skill.mod,
-          label: skill.label
-        };
-
-        if (index === 0) {
-          firstSkillKey = skill.id;
-        }
-      });
-
       // Create the new crew member entry
       updateData[`system.crew.${newKey}`] = {
-        id: droppedActor.uuid,
-        name: droppedActor.name,
-        available_skills: available_skills,
-        skill: firstSkillKey,
-        supply: droppedActor.system.supply,
-        cost: droppedActor.system.cost
+        id: droppedActor.uuid
       };
     }
 
@@ -1671,7 +1628,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
             'system.container': '',
             sort: maxSort + 100
           });
-          return this._reapplyStripes();;
+          return this._reapplyStripes();
         } else {
           // Different sack: move the whole block
           await this._moveItemToSack(item, finalIdx, oldIdx);
@@ -1686,7 +1643,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       // Transfer container with all its contents
       const isCopy = false; // moving, not copying
       await this._transferContainerWithContents(item, item.parent, this.actor, finalIdx, isCopy);
-      return this._reapplyStripes();;
+      return this._reapplyStripes();
     } else {
       // Normal item
       const createData = item.toObject();

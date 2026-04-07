@@ -15,6 +15,7 @@ import {
 } from './helpers/actorUtils.mjs';
 import {
   configureChatListeners,
+  getActorFromMessage,
   LinksDialog,
   luberLinks,
   sendInitialMessage,
@@ -213,6 +214,18 @@ Hooks.on('updateCombat', async (combat, update) => {
 Hooks.on('renderChatMessageHTML', (message, html, data) => {
   configureUseHeroDiceButton(message, html, data);
   configureChatListeners(html);
+  const dangerousElement = html.querySelector('[data-action="rollDangerous"]');
+  if (dangerousElement) {
+    dangerousElement.addEventListener('click', async event => {
+      const actor = getActorFromMessage(message);
+
+      if (!actor || !actor.isOwner) return;
+
+      const sheet = actor.sheet.constructor;
+
+      await sheet['_onRollDanger'].call(actor.sheet, event, dangerousElement);
+    });
+  }
 });
 
 Hooks.on('renderDialogV2', (dialog, html) => {

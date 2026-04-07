@@ -27,6 +27,7 @@ export const RollType = Object.freeze({
   ABILITY: 'ability',
   ATTACK: 'attack',
   DAMAGE: 'damage',
+  DANGER: 'danger',
   POWER: 'power',
   POWER_ALBUM: 'power_album',
   SAVE: 'save'

@@ -32,7 +32,8 @@ import {
   renderDefeatResult,
   renderNPCMoraleResult,
   renderReactionResult,
-  renderSaveResult
+  renderSaveResult,
+  renderDangerResult,
 } from '../rolls/ui/renderResults.mjs';
 import { DEFAULT_SAVE_VALUE, SAVING_THROW_BASE_FORMULA } from '../settings.mjs';
 
@@ -1608,6 +1609,123 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
 
     await renderDefeatResult({ roll, selectedAbility }, { fromHeroDice: false, speaker, isCtrl });
+  }
+
+  static async _onRollDanger(event, target) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.detail > 1) return;
+
+    const dataset = target.dataset;
+    const { ability = 'aur', targetNumber = 0 } = dataset;
+
+    const reverseShift = game.settings.get('sdm', 'reverseShiftKey');
+    const isShift = reverseShift !== !!event.shiftKey;
+    const isCtrl = !!event.ctrlKey;
+
+    let label = $fmt('SDM.RollType', {
+      type: $l10n('SDM.Danger')
+    });
+    const language = game.i18n.lang;
+    const availableSkills = this.actor.getAvailableSkills();
+
+    const template = await renderTemplate(templatePath('custom-roll-dialog'), {
+      rollTitlePrefix: '',
+      title: label,
+      abilities: CONFIG.SDM.getOrderedAbilities(language),
+      ability,
+      attack: '',
+      availableSkills: availableSkills,
+      selectedSkill: '',
+      rollModes: [RollMode.NORMAL],
+      selectedRollMode: RollMode.NORMAL,
+      type: RollType.DANGER,
+      isCharacterActor: true,
+      attackTargetChoices: CONFIG.SDM.attackTarget,
+      blindGMRoll: isCtrl
+    });
+
+    const buttons = [
+      {
+        action: 'save',
+        icon: 'fa-solid fa-dice-d20',
+        label: $l10n('SDM.ButtonRoll'),
+        callback: (event, button) => ({
+          versatile: false,
+          ...new foundry.applications.ux.FormDataExtended(button.form).object
+        })
+      }
+    ];
+
+    let rollOptions = {};
+
+    if (!isShift) {
+      rollOptions = await foundry.applications.api.DialogV2.wait({
+        window: {
+          title: $fmt('SDM.RollType', { type: $l10n('SDM.Danger') })
+        },
+        modal: true,
+        content: template,
+        position: {
+          width: 400
+        },
+        rejectClose: false,
+        buttons
+      });
+
+      if (rollOptions === null) {
+        return;
+      }
+    }
+
+    const modifier = rollOptions?.modifier;
+    const rollMode = rollOptions?.rollMode;
+    const selectedAbility = rollOptions?.selectedAbility;
+    const selectedSkill = rollOptions?.selectedSkill;
+    const modPart = foundry.dice.Roll.validate(modifier) ? `+${modifier}` : '';
+    const baseRollFormula =
+      game.settings.get('sdm', 'savingThrowBaseRollFormula') || SAVING_THROW_BASE_FORMULA;
+
+    const keepModifier =
+      rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
+
+    const diceExpression = keepModifier
+      ? `{${baseRollFormula}, ${baseRollFormula}}${keepModifier}`
+      : baseRollFormula;
+
+    const abilityData =
+      ability !== ActorType.NPC
+        ? this.actor.system.abilities[selectedAbility]
+        : { current: this.actor.system.bonus };
+
+    const finalAbility = abilityData?.current;
+    const burdenPenalty = this.actor.system?.burden_penalty || 0;
+
+    const skillPart = selectedSkill ? availableSkills[selectedSkill]?.mod : 0;
+    const dangerSum = finalAbility + skillPart - burdenPenalty;
+
+    const useHardLimitRule = game.settings.get('sdm', 'useHardLimitRule');
+    const defaultHardLimitValue = game.settings.get('sdm', 'defaultHardLimitValue') || MAX_MODIFIER;
+    const finalDangerBonus = useHardLimitRule
+      ? Math.min(dangerSum, defaultHardLimitValue)
+      : dangerSum;
+
+    const bonusPart =
+      finalDangerBonus === 0
+        ? ''
+        : finalDangerBonus > 0
+          ? `+${finalDangerBonus}`
+          : finalDangerBonus;
+
+    let formula = `${diceExpression}${bonusPart}${modPart}`;
+
+    formula = sanitizeExpression(formula);
+    let roll = new Roll(formula);
+    roll = await roll.evaluate();
+
+    const speaker = ChatMessage.getSpeaker({ actor: this.actor });
+
+    await renderDangerResult({ roll, label, targetNumber }, { fromHeroDice: false, speaker, isCtrl });
   }
 
   static async _onRollSavingThrow(event, target) {

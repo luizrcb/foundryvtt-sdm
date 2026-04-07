@@ -124,37 +124,8 @@ export default class SdmCarvan extends SdmActorBase {
       new fields.SchemaField(
         {
           id: new fields.DocumentUUIDField({ required: true }),
-          name: new fields.StringField({ required: true }),
-          skill: new fields.StringField({ required: false, nullable: true, blank: true }),
-          available_skills: new fields.TypedObjectField(
-            new fields.SchemaField({
-              id: new fields.DocumentUUIDField({ required: true }),
-              name: new fields.StringField({ required: true }),
-              mod: new fields.NumberField({
-                ...requiredInteger,
-                initial: 3
-              }),
-              label: new fields.StringField({ required: true }),
-            }),
-          { initial: {} }),
-          cost: new fields.StringField({
-            required: false,
-            nullable: true,
-            blank: true,
-            initial: ''
-          }),
-          supply: new fields.StringField({
-            required: false,
-            nullable: true,
-            blank: true,
-            initial: ''
-          })
-        },
+        }, { initial: {} }),
         { nullable: true }
-      ),
-      {
-        initial: {}
-      }
     );
 
     schema.routes = new fields.TypedObjectField(

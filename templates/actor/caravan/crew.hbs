@@ -1,68 +1,140 @@
 {{! Crew Tab }}
 <section class='tab routes scrollable {{tab.cssClass}}' data-group='primary' data-tab='crew' data-drop="true" id="crew-tab">
-   <div class="grid grid-5col">
-    <div class="main grid-span-5">
-      <section>
-        <ol class='items-list full-list'>
-          <li class='item flexrow items-header caravan-item-header' style="position: sticky;">
-            <div class='grid-span-5'>
-              {{#if @root.editable}}
-                {{localize 'SDM.CaravanDropNPCs'}}
-              {{/if}}
-            </div>
-          </li>
-          {{#each system.crew as |crewMember key|}}
-          <li class='item grid grid-5col flexrow list-border route-item'>
-
-            <div class='resource grid-span-1'>
-              <label class='resource-label'>
-                {{localize 'SDM.FieldName'}}
-              </label>
-              <div class='resource-content flex' style="cursor: pointer;" data-action="viewNPC"  data-key="{{key}}" data-tooltip="{{localize 'SDM.CaravanCrewOpenNPCSheet' name=crewMember.name}}">
-                 <input type='text' name='system.crew.{{key}}.name' value='{{crewMember.name}}' class="disabled"/>
-              </div>
-            </div>
-
-
-            <div class='resource grid-span-2'>
-              <label class='resource-label'>
-                {{localize 'SDM.Skill'}}
-              </label>
-              <div class='resource-content'>
-                <select name="system.crew.{{key}}.skill" id="selectedSkill" data-tooltip="{{lookup crewMember.skillsLookup crewMember.skill}}">
-                  {{selectOptions crewMember.available_skills valueAttr="id" labelAttr="label" selected=crewMember.skill sort=true blank=""}}
-                </select>
-              </div>
-            </div>
-
-           <div class='resource grid-span-1'>
-              <label class='resource-label' data-tooltip="SDM.FieldCostPerWeek">
-                {{localize 'SDM.FieldCost'}}
-              </label>
-              <div class='resource-content'>
-                <input type='text' name='system.crew.{{key}}.cost' value='{{crewMember.cost}}' />
-              </div>
-            </div>
-
-            <div class='resource grid-span-1'>
-              <label class='resource-label flex flex-between' data-tooltip="SDM.FieldSupplyPerWeek">
-                {{localize 'SDM.FieldSupply'}}
-                <a
-                  data-action="deleteCrew"
-                  data-key="{{key}}"
-                  data-tooltip="{{localize 'DOCUMENT.Delete' type=(localize 'SDM.Crew')}}"
-                >
-                  <i class="fa-solid fa-trash"></i>
-                </a>
-              </label>
-              <div class='resource-content'>
-                <input type='text' name='system.crew.{{key}}.supply' value='{{crewMember.supply}}'/>
-              </div>
-            </div>
-          </li>
-          {{/each}}
-        </ol>
-      </section>
-    </div>
+  {{#if (and (eq crew_players.length 0) (eq crew_npcs.length 0))}}
+  <div class="flex align-center mt-4">
+    <span>{{localize 'SDM.CaravanDropNPCs'}}</span>
   </div>
+  {{else}}
+   <div class="grid {{#if isCompactMode}}grid-2col{{else}}grid-3col{{/if}}">
+      {{#each crew_players as |crewMember key|}}
+        <div class="crew-card crew-hero grid-span-1">
+          <div class="grid grid-3col align-center">
+            <div class="grid-span-1 flex flex-center">
+              <div class="flex align-center" style="justify-self: start;">
+                <i class="fa fa-trash mr-5" style="cursor: pointer;" data-action="deleteCrew" data-key="{{crewMember.key}}" data-tooltip="{{localize 'DOCUMENT.Delete' type=(localize 'SDM.Crew')}}"></i>
+              </div>
+              <strong style="cursor: pointer;" data-action="viewCrewMember" data-key="{{crewMember.key}}" data-tooltip="{{localize 'SDM.CaravanCrewOpenSheet' name=crewMember.name}}">{{crewMember.name}}</strong>
+            </div>
+
+            <div class="stat-icon" data-tooltip="SDM.FieldLevel">
+              <i class="fa-solid fa-award"></i>
+              <span>{{crewMember.system.level}}</span>
+            </div>
+
+            <div class="stat-icon" data-tooltip="TYPES.Item.cash">
+              <i class="fa-solid fa-coins"></i>
+              <span>{{localize 'SDM.CashSymbol'}}{{crewMember.totalCash}}</span>
+            </div>
+
+            <div class="stat-icon" data-tooltip="SDM.FieldLifeMax">
+              <i class="fa-solid fa-heart lime"></i>
+              <span>{{crewMember.system.life.value}}/{{crewMember.system.life.max}}</span>
+            </div>
+
+            <div class="stat-icon" data-tooltip="{{localize 'SDM.FieldDefense'}}">
+              <i class="fa-solid fa-shield"></i>
+              <span>{{crewMember.system.defense}}</span>
+            </div>
+
+            <div class="stat-icon" data-tooltip="SDM.FieldHeroDice">
+              <i class="fa-solid fa-dice-d6"></i>
+              <span>{{crewMember.system.hero_dice.value}}/{{crewMember.system.hero_dice.max}}</span>
+            </div>
+
+            <div class="stat-icon" data-tooltip="SDM.AbilityStr">
+              <i class="fa-solid fa-hand-fist rust"></i>
+              <span>{{crewMember.system.abilities.str.current}}</span>
+            </div>
+
+            <div class="stat-icon" data-tooltip="SDM.AbilityEnd">
+              <i class="fa-solid fa-heartbeat pumpkin"></i>
+              <span>{{crewMember.system.abilities.end.current}}</span>
+            </div>
+
+            <div class="stat-icon" data-tooltip="SDM.AbilityAgi">
+              <i class="fa-solid fa-person-running amber"></i>
+              <span>{{crewMember.system.abilities.agi.current}}</span>
+            </div>
+
+            <div class="stat-icon" data-tooltip="SDM.AbilityCha">
+              <i class="fa-solid fa-clover sky"></i>
+              <span>{{crewMember.system.abilities.cha.current}}</span>
+            </div>
+
+            <div class="stat-icon" data-tooltip="SDM.AbilityAur">
+              <i class="fa-solid fa-splotch azure"></i>
+              <span>{{crewMember.system.abilities.aur.current}}</span>
+            </div>
+
+            <div class="stat-icon" data-tooltip="SDM.AbilityTho">
+              <i class="fa-solid fa-cloud royal"></i>
+              <span>{{crewMember.system.abilities.tho.current}}</span>
+            </div>
+          </div>
+        </div>
+      {{/each}}
+      {{#each crew_npcs as |crewMember key|}}
+        <div class="crew-card crew-npc grid-span-1">
+          <div class="grid grid-3col align-center">
+            <div class="grid-span-1 flex flex-center">
+              <div class="flex align-center" style="justify-self: start;">
+                <i class="fa fa-trash mr-5" style="cursor: pointer;" data-action="deleteCrew" data-key="{{crewMember.key}}" data-tooltip="{{localize 'DOCUMENT.Delete' type=(localize 'SDM.Crew')}}"></i>
+              </div>
+
+              <strong style="cursor: pointer;" data-action="viewCrewMember" data-key="{{crewMember.key}}" data-tooltip="{{localize 'SDM.CaravanCrewOpenSheet' name=crewMember.name}}">{{crewMember.name}}</strong>
+            </div>
+            <div class="stat-icon" data-tooltip="SDM.FieldLevel">
+              <i class="fa-solid fa-award"></i>
+              <span>{{crewMember.system.level}}</span>
+            </div>
+            <div class="stat-icon" data-tooltip="TYPES.Item.cash">
+              <i class="fa-solid fa-coins"></i>
+              <span>{{localize 'SDM.CashSymbol'}}{{crewMember.totalCash}}</span>
+            </div>
+
+            <div class="stat-icon" data-tooltip="SDM.FieldCapacity">
+              <i class="fa-solid fa-weight-hanging"></i>
+              <span>{{crewMember.system.capacity}}</span>
+            </div>
+
+            <div class="stat-icon" data-tooltip="SDM.FieldCostPerWeek">
+              <i class="fa-solid fa-file-invoice-dollar"></i>
+              <span>{{crewMember.system.cost}}</span>
+            </div>
+
+            <div class="stat-icon" data-tooltip="SDM.FieldSupplyPerWeek">
+              <i class="fa-solid fa-cart-arrow-down"></i>
+              <span>{{crewMember.system.supply}}</span>
+            </div>
+
+            <div class="stat-icon" data-tooltip="SDM.FieldLifeMax">
+              <i class="fa-solid fa-heart lime"></i>
+              <span>{{crewMember.system.life.value}}/{{crewMember.system.life.max}}</span>
+            </div>
+            <div class="stat-icon" data-tooltip="SDM.FieldDefense">
+              <i class="fa-solid fa-shield plum"></i>
+              <span>{{crewMember.system.defense}}</span>
+            </div>
+            <div class="stat-icon" data-tooltip="SDM.Morale">
+              <i class="fa-solid fa-person-running rust"></i>
+              <span>{{crewMember.system.morale}}</span>
+            </div>
+
+            <div class="stat-icon"></div>
+
+            <div class="stat-icon" data-tooltip="SDM.FieldBonus">
+              <i class="fa-solid fa-square-plus"></i>
+              <span>{{crewMember.system.bonus}}</span>
+            </div>
+
+            <div class="stat-icon" data-tooltip="SDM.Damage">
+              <i class="fa-solid fa-explosion sky"></i>
+              <span>{{crewMember.system.damage}}</span>
+            </div>
+
+          </div>
+        </div>
+      {{/each}}
+    </div>
+  {{/if}}
 </section>

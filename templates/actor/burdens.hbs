@@ -23,27 +23,29 @@
       {{#if (eq burden.type 'trait')}}
          {{> ($$ "actor/trait") trait=burden }}
       {{/if}}
-       {{#if (eq burden.type 'burden')}}
+      {{#if (eq burden.type 'burden')}}
         <li class='item flexrow' data-item-id='{{burden._id}}' data-drag='true' data-document-class='Item' data-tooltip="{{getItemTitle burden}}">
           <div class='item-name' style="cursor:pointer;" data-action='openDoc'>
-            <div class='item-image'>
-              <img src='{{burden.img}}' width='24' height='24' />
-            </div>
+            {{#if (and
+              (eq burden.system.type 'power')
+              (ne burden.system.status 'broken')
+            )}}
+              <div
+                class="item-image rollable-image"
+                data-action="roll"
+                data-type="power"
+                data-label="{{burden.name}}"
+                data-tooltip="{{localize 'SDM.RollType' type=(localize 'SDM.Power')}}"
+              >
+                <img class="normal-img" src="{{burden.img}}" width="24" height="24" />
+                <i class="fa-solid fa-dice-d20 hover-d20"></i>
+              </div>
+            {{else}}
+              <div class='item-image'>
+                <img src='{{burden.img}}' width='24' height='24' />
+              </div>
+            {{/if}}
             <div class='flexrow'>
-              {{#if (and
-                (eq burden.system.type 'power')
-                (ne burden.system.status 'broken')
-              )}}
-                <div
-                  class='rollable flexrow'
-                  data-action='roll'
-                  data-type='power'
-                  data-label='{{burden.name}}'
-                  data-tooltip='{{localize "SDM.RollType" type=(localize 'SDM.Power')}}'
-                >
-                  <i class='fa-solid fa-dice-d20 roll-icon'></i>
-                </div>
-              {{/if}}
               {{burden.name}}
             </div>
           </div>
@@ -51,5 +53,4 @@
       {{/if}}
     {{/each}}
   </ol>
-
 </section>

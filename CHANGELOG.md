@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v0.15.0
+
+- Refactored Agents & Helpers tab on Caravan sheets
+- Added support to place Caravan Crew tokens on the scene canvas using the Place Crew Members button
+- Inventory roll icons were moved to item images on hover
+- When the usage of a power is dangerous, you can click the dangerous tag to perform a Danger Roll
+
 ## v0.14.0
 
 - Added compact mode to Character and Caravan sheets

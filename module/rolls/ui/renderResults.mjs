@@ -478,3 +478,63 @@ export async function renderUsageResult(
 
   await createChatMessage(chatMessageData);
 }
+
+export async function renderDangerResult(
+  { roll, label, targetNumber },
+  { fromHeroDice = false, speaker, isCtrl = false }
+) {
+  let outcome, message;
+  const firstDie = roll.dice[0];
+  const isCriticalFailure = firstDie && firstDie.total === 1;
+
+  if (isCriticalFailure || roll._total <= targetNumber) {
+    outcome = $l10n('SDM.DangerRollFailureOutcome');
+    message =$l10n('SDM.DangerRollFailureMessage');
+  } else {
+    outcome = $l10n('SDM.DangerRollSucceessOutcome');
+    message = $l10n('SDM.DangerRollSucceessMessage');
+  }
+
+  let borderColor = '#aa0200';
+  if (roll._total > targetNumber) {
+    borderColor = '#18520B';
+  }
+
+  const templateData = {
+    outcome,
+    message,
+    formula: roll.formula,
+    total: roll._total,
+    borderColor,
+    targetLabel: $l10n('SDM.Target'),
+    targetNumber,
+    rollTooltip: await roll.getTooltip()
+  };
+
+  const flags = {};
+
+  if (fromHeroDice === true) {
+    flags['sdm.isHeroResult'] = true;
+  } else {
+    flags['sdm.' + 'danger'] = {
+      label,
+      targetNumber,
+      speaker
+    };
+  }
+
+  const chatMessageData = {
+    content: await renderTemplate(templatePath('chat/saving-throw-result'), templateData),
+    flavor: label,
+    rolls: [roll],
+    checkCritical: true,
+    flags,
+    speaker
+  };
+
+  if (isCtrl) {
+    chatMessageData.rollMode = CONST.DICE_ROLL_MODES.BLIND;
+  }
+
+  await createChatMessage(chatMessageData);
+}
