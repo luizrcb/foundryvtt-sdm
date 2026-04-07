@@ -456,7 +456,7 @@
   "SDM.CustomInitiative": "Custom Initiative",
   "SDM.Damage": "Damage",
   "SDM.Danger": "Danger",
-  "SDM.DangerRollFailureMessage": "1. Immediately gain a burden\n2. Roll for Corruption Exposure'",
+  "SDM.DangerRollFailureMessage": "1. Immediately gain a burden\n2. Roll for Corruption Exposure",
   "SDM.DangerRollFailureOutcome": "Corruption Exposure",
   "SDM.DangerRollSucceessMessage": "for now...",
   "SDM.DangerRollSucceessOutcome": "All Good!",
