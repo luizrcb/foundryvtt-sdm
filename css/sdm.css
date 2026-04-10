@@ -489,6 +489,10 @@
   color: var(--sdm-c-azure);
 }
 
+.dark {
+  color: var(--sdm-c-dark);
+}
+
 .royal {
   color: var(--sdm-c-royal);
 }

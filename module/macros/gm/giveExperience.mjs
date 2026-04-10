@@ -1,3 +1,4 @@
+import { ActorType } from '../../helpers/constants.mjs';
 import { $l10n } from '../../helpers/globalUtils.mjs';
 import { templatePath } from '../../helpers/templates.mjs';
 
@@ -5,10 +6,70 @@ const { DialogV2 } = foundry.applications.api;
 const { NumberField } = foundry.data.fields;
 const { renderTemplate } = foundry.applications.handlebars;
 
-export async function giveExperience() {
+export async function giveExperience(params) {
+  // --- DIRECT MODE: called with { actor, amount } ---------------------------------------
+  if (params && typeof params === 'object' && params.actor && params.amount !== undefined) {
+    const { actor, amount, displayChatSummary = true } = params;
+    const numericAmount = Number(amount);
+    if (isNaN(numericAmount) || numericAmount <= 0) {
+      console.error('Invalid XP amount');
+      return;
+    }
+
+    const isCharacter = actor.type === ActorType.CHARACTER;
+    const xpField = isCharacter ? 'system.player_experience' : 'system.experience';
+
+    const before = Number(foundry.utils.getProperty(actor, xpField) ?? 0);
+    const after = Math.max(0, before + numericAmount);
+    if (after === before) return;
+
+    await actor.update({ [xpField]: String(after) });
+
+    if (displayChatSummary) {
+      const xpChanges = [
+        {
+          actorId: actor.id,
+          actorName: actor.name,
+          actorImg: actor.img || null,
+          amount: numericAmount,
+          before,
+          after
+        }
+      ];
+
+      const ctx = {
+        messageId: foundry.utils.randomID(),
+        timestamp: new Date().toLocaleTimeString(),
+        senderName: game.user?.name || 'Gamemaster',
+        logId: `xp-${Date.now()}-${foundry.utils.randomID(4)}`,
+        eventLabel: $l10n('SDM.GMGiveExperience') ?? 'Experience Granted',
+        xpChanges
+      };
+
+      let html = await renderTemplate(templatePath('chat/adjustments-summary-card'), ctx);
+      if (typeof html !== 'string') {
+        if (html instanceof HTMLElement) html = html.outerHTML;
+        else if (html instanceof NodeList || html instanceof HTMLCollection) {
+          html = Array.from(html)
+            .map(n => n.outerHTML ?? String(n))
+            .join('');
+        } else html = String(html);
+      }
+
+      await ChatMessage.create({
+        content: html,
+        speaker: ChatMessage.getSpeaker({ alias: game.user?.name || 'Gamemaster' })
+      });
+    }
+
+    ui.notifications.info(`Granted ${numericAmount} XP to ${actor.name}.`);
+    return;
+  }
+
+  // --- ORIGINAL DIALOG MODE (multi‑target) ---------------------------------------------
   if (!game.user.isGM) return;
 
-  // Get all character actors (only characters)
+  // Get all character actors
   const characters = game.actors.filter(e => e.type === 'character');
 
   // Build actor grid with checkboxes (two columns)
@@ -88,7 +149,7 @@ export async function giveExperience() {
       const selectAll = html.querySelector('#select-all-actors');
       const charCheckboxes = html.querySelectorAll('.character-checkbox');
 
-      charCheckboxes.forEach(cb => cb.checked = true);
+      charCheckboxes.forEach(cb => (cb.checked = true));
 
       if (!selectAll || !charCheckboxes.length) return;
 
@@ -120,17 +181,14 @@ export async function giveExperience() {
 
   if (!data || !data.targets.length || data.xp <= 0) return;
 
-  // Get target actors
   const targets = data.targets.map(id => game.actors.get(id)).filter(Boolean);
   if (!targets.length) return;
 
-  // Prepare updates
   const updates = targets.map(actor => ({
     _id: actor.id,
     'system.player_experience': `${Math.max(parseInt(actor.system.player_experience) + data.xp, 0)}`
   }));
 
-  // Build summary
   const xpChanges = targets.map(actor => {
     const before = Number(actor.system?.player_experience ?? 0);
     const after = Math.max(0, before + data.xp);
@@ -146,7 +204,6 @@ export async function giveExperience() {
 
   await Actor.updateDocuments(updates);
 
-  // Post chat summary
   if (xpChanges.length) {
     const ctx = {
       messageId: foundry.utils.randomID(),

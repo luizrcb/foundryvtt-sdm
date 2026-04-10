@@ -5,6 +5,7 @@ import * as models from './data/_module.mjs';
 import { SdmActor } from './documents/actor.mjs';
 import { SdmCombatant } from './documents/combatant.mjs';
 import { SdmItem } from './documents/item.mjs';
+import registerTextEditorEnrichers from './enrichers.mjs';
 import { registerHandlebarsHelpers } from './handlebars-helpers.mjs';
 import {
   addCompendiumItemToActor,
@@ -38,8 +39,8 @@ import {
 } from './helpers/constants.mjs';
 import { makePowerItem, UnarmedDamageItem } from './helpers/itemUtils.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
-import { setupItemTransferSocket } from './items/transfer.mjs';
 import { setupPetDropSocket } from './items/petItem.mjs';
+import { setupItemTransferSocket } from './items/transfer.mjs';
 import { gm as gmMacros, player as playerMacros } from './macros/_module.mjs';
 import {
   configurePlayerChromatype,
@@ -603,6 +604,7 @@ Hooks.once('init', function () {
 /* -------------------------------------------- */
 
 registerHandlebarsHelpers();
+registerTextEditorEnrichers();
 
 /* -------------------------------------------- */
 /*  Ready Hook                                  */

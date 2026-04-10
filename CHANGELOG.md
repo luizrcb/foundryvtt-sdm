@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v0.16.0
+
+- Added support to many [text enrichers](https://github.com/luizrcb/foundryvtt-sdm/wiki/Text-Enrichers)
+- Added corruption roll enricher button to the failed danger roll chat card
+- Added defeat roll enricher button to the apply damage chat card when actor's current life is reduced to 0
+- Added burden item references to failed corruption rolls chat cards (you can drag and drop the burden item from the chat into a character sheet)
+- Added instructions about dropping actors on pet items to create a link
+
 ## v0.15.0
 
 - Refactored Agents & Helpers tab on Caravan sheets

@@ -33,7 +33,7 @@ import {
   renderNPCMoraleResult,
   renderReactionResult,
   renderSaveResult,
-  renderDangerResult,
+  renderDangerResult
 } from '../rolls/ui/renderResults.mjs';
 import { DEFAULT_SAVE_VALUE, SAVING_THROW_BASE_FORMULA } from '../settings.mjs';
 
@@ -136,7 +136,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       openDoc: { handler: this._openDoc, buttons: [0] },
       toggleItemStatus: { handler: this._toggleItemStatus, buttons: [0, 2] },
       openPetSheet: this._onOpenPetSheet,
-      toggleCompact: this._onToggleCompact,
+      toggleCompact: this._onToggleCompact
     },
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
     form: {
@@ -1412,9 +1412,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     const baseFormula = game.settings.get('sdm', 'baseCorruptionFormula') || '2d6';
 
-    // const reactionBonus = this.actor.system.reaction_bonus || 0;
     const burdenPenalty = this.actor.system.burden_penalty || 0;
-    const abilityMod = this.actor.system.abilities['aur'].current;
+    const abilityMod =
+      this.actor.type === ActorType.CHARACTER
+        ? this.actor.system.abilities['aur'].current
+        : this.actor.system?.bonus || 0;
     const burdenPart = burdenPenalty > 0 ? -1 * burdenPenalty : 0;
     const totalBonuses = abilityMod + burdenPart;
     const bonusPart =
@@ -1546,7 +1548,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const reverseShift = game.settings.get('sdm', 'reverseShiftKey');
     const isShift = reverseShift !== !!event.shiftKey;
     const isCtrl = !!event.ctrlKey;
-    let data = { modifier: '', selectedAbility: '' };
+    let data = { modifier: '', selectedAbility: 'end' };
 
     if (!isShift) {
       data = await DialogV2.wait({
@@ -1580,13 +1582,17 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       return;
     }
 
-    const { modifier = '', selectedAbility = '', rollMode = RollMode.NORMAL } = data;
+    const { modifier = '', selectedAbility = 'end', rollMode = RollMode.NORMAL } = data;
 
     const baseFormula = game.settings.get('sdm', 'baseDefeatFormula') || '2d6';
 
-    // const reactionBonus = this.actor.system.reaction_bonus || 0;
     const burdenPenalty = this.actor.system.burden_penalty || 0;
-    const abilityMod = selectedAbility ? this.actor.system.abilities[selectedAbility].current : 0;
+
+    const abilityMod =
+      this.actor.type === ActorType.CHARACTER
+        ? this.actor.system.abilities[selectedAbility].current
+        : this.actor.system?.bonus || 0;
+
     const burdenPart = burdenPenalty > 0 ? -1 * burdenPenalty : 0;
     const totalBonuses = abilityMod + burdenPart;
     const bonusPart =
@@ -1725,7 +1731,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
 
-    await renderDangerResult({ roll, label, targetNumber }, { fromHeroDice: false, speaker, isCtrl });
+    await renderDangerResult(
+      { roll, label, targetNumber },
+      { fromHeroDice: false, speaker, isCtrl }
+    );
   }
 
   static async _onRollSavingThrow(event, target) {
@@ -1735,7 +1744,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     // Get common data attributes
     const dataset = target.dataset;
-    const { ability } = dataset;
+    const { ability, rollTarget } = dataset;
     const abilityData =
       ability !== ActorType.NPC
         ? this.actor.system.abilities[ability]
@@ -1843,7 +1852,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     let formula = `${diceExpression}${bonusPart}${modPart}`;
 
-    const targetNumber = this.actor.system?.save_target || DEFAULT_SAVE_VALUE;
+    const targetNumber = rollTarget || this.actor.system?.save_target || DEFAULT_SAVE_VALUE;
     formula = sanitizeExpression(formula);
     // Create and evaluate the roll
     let roll = new Roll(formula);

@@ -5,8 +5,99 @@ import { templatePath } from '../../helpers/templates.mjs';
 const { renderTemplate } = foundry.applications.handlebars;
 const { DialogV2 } = foundry.applications.api;
 
-export async function giveHeroDice() {
-  if (!game.user.isGM) return;
+/**
+ * Adjust hero dice (or other resources) for one or more actors.
+ * @param {Object} options                         Optional direct‑call parameters
+ * @param {string} options.resourceName            Resource key (e.g. 'hero_dice')
+ * @param {Actor|Actor[]|string|Token} options.actor Actor(s), actor ID, or token
+ * @param {number} options.delta                   Change amount (positive = add, negative = spend)
+ * @returns {Promise<void>}
+ */
+export async function giveHeroDice({ resourceName, actor, delta } = {}) {
+  if (resourceName && actor && delta !== undefined && typeof delta === 'number') {
+    let actors = [];
+    if (Array.isArray(actor)) {
+      actors = actor.map(a => a instanceof Actor ? a : game.actors.get(a?.id ?? a)).filter(Boolean);
+    } else if (actor instanceof Actor) {
+      actors = [actor];
+    } else if (typeof actor === 'string') {
+      const found = game.actors.get(actor);
+      if (found) actors = [found];
+    } else if (actor?.actor instanceof Actor) {          // Token
+      actors = [actor.actor];
+    } else if (actor?.documentName === 'Actor') {       // Maybe a wrapped document
+      actors = [actor];
+    }
+
+    if (actors.length === 0) {
+      ui.notifications.warn(game.i18n.localize('SDM.MessageNoActorsSelected') || 'No valid actor provided.');
+      return;
+    }
+
+    // Helper to get current value and max (same as in dialog branch)
+    const getResourceValue = (actor, resource) => {
+      try {
+        const resObj = actor.system?.[resource] ?? {};
+        const value = Number(resObj?.value ?? 0);
+        const max = Number(resObj?.max ?? 1);
+        return {
+          current: Number.isFinite(value) ? Math.max(0, value) : 0,
+          maxLevel: Number.isFinite(max) ? Math.max(1, max) : 1
+        };
+      } catch (e) {
+        console.error('getResourceValue error for', actor, resource, e);
+        return { current: 0, maxLevel: 1 };
+      }
+    };
+
+    const clamp = (v, lo, hi) => Math.min(Math.max(v, lo), hi);
+
+    const updates = [];
+    const summaryTargets = [];
+
+    for (const act of actors) {
+      const { current, maxLevel } = getResourceValue(act, resourceName);
+      let newValue = current;
+      let actualAdjustment = 0;
+
+      if (delta !== 0) {
+        newValue = clamp(current + delta, 0, maxLevel);
+        actualAdjustment = newValue - current;
+      }
+
+      if (actualAdjustment !== 0) {
+        updates.push({
+          _id: act.id,
+          [`system.${resourceName}.value`]: newValue
+        });
+        summaryTargets.push({
+          actor: act,
+          resource: resourceName,
+          before: current,
+          after: newValue,
+          adjustment: actualAdjustment
+        });
+      }
+    }
+
+    if (updates.length > 0) {
+      try {
+        // Post chat summary (uses the same postDiceSummary helper)
+        await postDiceSummary(summaryTargets, {
+          operation: delta > 0 ? 'increment' : 'decrement',
+          adjustment: delta
+        });
+        await Actor.updateDocuments(updates);
+        ui.notifications.info(game.i18n.format('SDM.UpdatedHeroDice', { number: updates.length }));
+      } catch (err) {
+        console.error('Error applying direct dice update:', err);
+        ui.notifications.error(game.i18n.localize('SDM.ErrorGeneric') || 'Failed to update actors.');
+      }
+    } else {
+      ui.notifications.warn(game.i18n.localize('SDM.MessageNoChanges'));
+    }
+    return;
+  }
 
   const characters = game.actors.filter(a => a.type === ActorType.CHARACTER);
 
@@ -111,7 +202,6 @@ export async function giveHeroDice() {
   </form>
   `;
 
-  // Helper to collect form data in button callbacks
   const makeCallback = cbData => (event, button, dialog) => {
     const form = button.form;
     const selectedIds = [...form.querySelectorAll('.character-checkbox:checked')].map(
@@ -166,7 +256,6 @@ export async function giveHeroDice() {
 
       charCheckboxes.forEach(cb => cb.checked = true);
 
-
       if (!selectAll || !charCheckboxes.length) return;
 
       const updateSelectAll = () => {
@@ -201,7 +290,6 @@ export async function giveHeroDice() {
   const targets = data.targets.map(id => game.actors.get(id)).filter(Boolean);
   if (!targets.length) return;
 
-  // Utility functions (same as before)
   const getResourceValue = (actor, resource) => {
     try {
       const resObj = actor.system?.[resource] ?? {};
@@ -277,7 +365,6 @@ export async function giveHeroDice() {
   }
 }
 
-// postDiceSummary remains unchanged (already provided)
 export async function postDiceSummary(summaryTargets = [], dialogData = {}, opts = {}) {
   const senderName = opts.senderName ?? game.user?.name ?? 'Gamemaster';
   const eventLabel =

@@ -1454,20 +1454,25 @@ export class SdmActor extends Actor {
     await this.update(updates);
   }
 
-  async updateResourceDice(resource, diceQuantity = 0) {
-    if (!resource || !diceQuantity) return;
-
+  async updateResourceDice(resource, delta = 0) {
+    if (!resource || delta === 0) return;
     if (!(resource in this.system)) return;
 
-    const current = Math.max(0, this.system[resource]?.value || 0);
-    const newDiceValue = Math.max(current - diceQuantity, 0);
+    const current = this.system[resource]?.value ?? 0;
+    const min = 0;
+    const max = this.system[resource]?.max;
+
+    const newValue = Math.min(Math.max(current + delta, min), max);
+
+    if (newValue === current) return;
+
     await this.update({
-      [`system.${resource}.value`]: newDiceValue
+      [`system.${resource}.value`]: newValue
     });
   }
 
   async updateBloodDice(usedBloodDice = 0) {
-    return this.updateResourceDice('blood_dice', usedBloodDice);
+    return this.updateResourceDice('blood_dice', -usedBloodDice);
   }
 
   async addOneBloodDie() {
@@ -1637,7 +1642,10 @@ export class SdmActor extends Actor {
             label: $l10n(CONFIG.SDM.abilities[actionKey])
           }
         },
-        save: { handler: '_onRollSavingThrow', dataset: { action: 'save', ability: actionKey } },
+        save: {
+          handler: '_onRollSavingThrow',
+          dataset: { action: 'save', ability: actionKey, rollTarget: args?.rollTarget }
+        },
         attack: {
           handler: '_onRoll',
           dataset: {

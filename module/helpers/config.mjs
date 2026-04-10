@@ -17,6 +17,8 @@ SDM.abilities = {
   tho: 'SDM.AbilityTho'
 };
 
+SDM.abilitiesKeys = ['str', 'end', 'agi', 'cha', 'aur', 'tho'];
+
 SDM.abilityColors = ['rust', 'pumpkin', 'amber', 'sky', 'azure', 'royal'];
 
 SDM.attackColors = {
@@ -25,6 +27,14 @@ SDM.attackColors = {
   fantascience: 'heart',
   oldtech: 'plum'
 };
+
+SDM.resources = {
+  hero_dice: 'SDM.FieldHeroDice',
+  blood_dice: 'SDM.FieldBloodDice',
+  tourist_dice: 'SDM.FieldTouristDice'
+};
+
+SDM.resourcesKeys = ['hero_dice', 'blood_dice', 'tourist_dice'];
 
 SDM.abilitySaveIcons = {
   str: 'fa-solid fa-hand-fist',
@@ -417,7 +427,7 @@ SDM.baseFeatures = [
   { value: 'semi_sentient', label: 'SDM.ItemFeature.semi_sentient' },
   { value: 'restricted', label: 'SDM.ItemFeature.restricted' },
   { value: 'implant', label: 'SDM.ItemFeature.implant' },
-  { value: 'loud', label: 'SDM.ItemFeature.loud' },
+  { value: 'loud', label: 'SDM.ItemFeature.loud' }
 ];
 
 SDM.wardFeatures = [

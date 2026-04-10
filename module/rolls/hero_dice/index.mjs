@@ -231,7 +231,7 @@ export async function directResourceDiceRoll(event, actor, resource) {
     flags
   });
 
-  await actor.updateResourceDice(resource, diceQty);
+  await actor.updateResourceDice(resource, -diceQty);
 }
 
 /**
