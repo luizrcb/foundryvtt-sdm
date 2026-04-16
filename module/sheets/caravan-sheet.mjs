@@ -68,7 +68,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       viewCrewMember: this._viewCrewMember,
       openPetSheet: this._onOpenPetSheet,
       toggleCompact: this._onToggleCompact,
-      placeCrewMembers: this._onPlaceCrewMembers,
+      placeCrewMembers: this._onPlaceCrewMembers
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: '[data-drop], [data-item-id]' }],
@@ -159,8 +159,34 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     let caravanDate;
     let caravanDateShort;
     let seasonsStarsIntegration = false;
+    if (CALENDARIA) {
+      const currentDate = CALENDARIA.api.getCurrentDateTime();
+      const weekday = CALENDARIA.api.getCurrentWeekday();
+      const { day, month, year } = currentDate;
+      const { week, season } = getSeasonAndWeek(day, month);
+      caravanWeek = week;
+      caravanMonth = month;
 
-    if (game.seasonsStars) {
+      caravanDateShort = $fmt('SDM.FormattedDate', {
+        weekday: $l10n(`SDM.WeekDayShort.${weekday.index}`),
+        month: $l10n(`SDM.MonthShort.${month}`),
+        day,
+        year,
+        season: $l10n(`SDM.Season.${season}`)
+      });
+
+      caravanDate = $fmt('SDM.FormattedDate', {
+        weekday: $l10n(`SDM.WeekDay.${weekday.index}`),
+        month: $l10n(`SDM.Month.${month}`),
+        day,
+        year,
+        season: $l10n(`SDM.Season.${season}`)
+      });
+      const calendar = CALENDARIA.api.getActiveCalendar();
+      seasonsStarsIntegration =
+        game.settings.get('sdm', 'seasonsStarsIntegration') &&
+        calendar.metadata.id === 'rainbowlands';
+    } else if (game.seasonsStars) {
       const currentDate = game.seasonsStars.api.getCurrentDate();
       const { day, month, year, weekday } = currentDate;
       const { week, season } = getSeasonAndWeek(day, month);
@@ -754,22 +780,12 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     return true;
   }
 
-  /**
-   * Remove item change listeners when sheet closes
-   */
-  // _teardownItemListeners() {
-  //   if (!this._itemListeners) return;
-  //   Hooks.off('preCreateItem', this._itemListeners.preCreate);
-  //   Hooks.off('preUpdateItem', this._itemListeners.preUpdate);
-  //   Hooks.off('createItem', this._itemListeners.create);
-  //   Hooks.off('updateItem', this._itemListeners.update);
-  //   Hooks.off('deleteItem', this._itemListeners.delete);
-  //   this._itemListeners = null;
-  // }
-
   _setupCalendarChangeListener() {
     this._calendarListener = {
-      onDateChange: Hooks.on('seasons-stars:dateChanged', data => {
+      onSSDateChange: Hooks.on('seasons-stars:dateChanged', data => {
+        this.document.sheet.render(true);
+      }),
+      onCDateChange: Hooks.on('calendaria.dayChange', data => {
         this.document.sheet.render(true);
       })
     };
@@ -777,7 +793,8 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
 
   _teardownCalendarListener() {
     if (!this._calendarListener) return;
-    Hooks.off('seasons-stars:dateChanged', this._calendarListener.onDateChange);
+    Hooks.off('seasons-stars:dateChanged', this._calendarListener.onSSDateChange);
+    Hooks.off('calendaria.dayChange', this._calendarListener.onCDateChange);
     this._calendarListener = null;
   }
 
@@ -1215,11 +1232,11 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
   }
 
   static async _onPlaceCrewMembers() {
-    if ( !game.user.isGM || !canvas.scene ) return;
+    if (!game.user.isGM || !canvas.scene) return;
     const crew = this.actor.system.crew;
     const members = [];
 
-     if (crew) {
+    if (crew) {
       for (const [key, member] of Object.entries(crew)) {
         const memberId = member.id;
         const crewMember = await fromUuid(memberId);
@@ -1227,7 +1244,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       }
     }
 
-    if ( !members.length ) return;
+    if (!members.length) return;
     const minimized = !this.minimized;
     await this.minimize();
     const tokensData = [];
@@ -1236,21 +1253,22 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       const placements = await TokenPlacement.place({
         tokens: members.map(actor => actor.prototypeToken)
       });
-      for ( const placement of placements ) {
+      for (const placement of placements) {
         const actor = placement.prototypeToken.actor;
-        const appendNumber = !placement.prototypeToken.actorLink && placement.prototypeToken.appendNumber;
+        const appendNumber =
+          !placement.prototypeToken.actorLink && placement.prototypeToken.appendNumber;
         delete placement.prototypeToken;
         const tokenDocument = await actor.getTokenDocument(placement);
-        if ( appendNumber ) TokenPlacement.adjustAppendedNumber(tokenDocument, placement);
+        if (appendNumber) TokenPlacement.adjustAppendedNumber(tokenDocument, placement);
         tokensData.push(tokenDocument.toObject());
       }
-    } catch(err) {
-      console.log(err)
+    } catch (err) {
+      console.log(err);
     } finally {
-      if ( minimized ) this.maximize();
+      if (minimized) this.maximize();
     }
 
-    await canvas.scene.createEmbeddedDocuments("Token", tokensData);
+    await canvas.scene.createEmbeddedDocuments('Token', tokensData);
   }
 
   /** Helper Functions */

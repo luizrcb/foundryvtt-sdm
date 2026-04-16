@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.17.0
+
+- Added support to calendaria: SDM module
+
 ## v0.16.0
 
 - Added support to many [text enrichers](https://github.com/luizrcb/foundryvtt-sdm/wiki/Text-Enrichers)

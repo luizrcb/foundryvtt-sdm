@@ -2,7 +2,7 @@
 name: Release Creation
 
 env:
-  NODE_VERSION: 22
+  NODE_VERSION: 24
 
 on:
   push:
@@ -23,16 +23,13 @@ jobs:
         file_path: "./system.json"
 
     # Extract version embedded in the tag.
-    # This step expects the tag to be one of the following formats:
-    #   - "v<major>.<minor>.<patch>" (e.g., "v1.2.3")
-    #   - "<major>.<minor>.<patch>"  (e.g., "1.2.3")
-    #
-    # The version will be used by later steps to fill in the value for the
-    # "version" key required for a valid module manifest.
     - name: Extract Version From Tag
       id: get_version
-      uses: Simply007/get-version-action@v2
-
+      run: |
+        TAG="${GITHUB_REF_NAME}"
+        VERSION="${TAG#v}"
+        echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+        echo "version-without-v=${VERSION}" >> "$GITHUB_OUTPUT"
 
     # Set up our some variables for future use
     # Adapted from https://github.community/t/how-to-get-just-the-tag-name/16241/7
@@ -92,7 +89,7 @@ jobs:
         flags.hotReload: false
 
     - name: Use Node.js ${{ env.NODE_VERSION }}
-      uses: actions/setup-node@v4
+      uses: actions/setup-node@v6
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
