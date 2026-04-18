@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.17.1
+
+- Hotfix for Calendaria integration on Caravan sheet
+
 ## v0.17.0
 
 - Added support to calendaria: SDM module

@@ -159,9 +159,9 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     let caravanDate;
     let caravanDateShort;
     let seasonsStarsIntegration = false;
-    if (CALENDARIA) {
-      const currentDate = CALENDARIA.api.getCurrentDateTime();
-      const weekday = CALENDARIA.api.getCurrentWeekday();
+    if (globalThis.CALENDARIA) {
+      const currentDate = globalThis.CALENDARIA.api.getCurrentDateTime();
+      const weekday = globalThis.CALENDARIA.api.getCurrentWeekday();
       const { day, month, year } = currentDate;
       const { week, season } = getSeasonAndWeek(day, month);
       caravanWeek = week;
@@ -182,7 +182,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
         year,
         season: $l10n(`SDM.Season.${season}`)
       });
-      const calendar = CALENDARIA.api.getActiveCalendar();
+      const calendar = globalThis.CALENDARIA.api.getActiveCalendar();
       seasonsStarsIntegration =
         game.settings.get('sdm', 'seasonsStarsIntegration') &&
         calendar.metadata.id === 'rainbowlands';
