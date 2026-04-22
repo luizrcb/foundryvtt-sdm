@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.17.2
+
+- Fixed corruption roll enricher on danger roll chat card result
+
 ## v0.17.1
 
 - Hotfix for Calendaria integration on Caravan sheet

@@ -456,7 +456,7 @@
   "SDM.CustomInitiative": "Iniciativa Customizada",
   "SDM.Damage": "Dano",
   "SDM.Danger": "Perigo",
-  "SDM.DangerRollFailureMessage": "1. Imediatamente ganhe um fardo\n2. [[corruption check]]",
+  "SDM.DangerRollFailureMessage": "1. Imediatamente ganhe um fardo\n2. [[corruption roll]]",
   "SDM.DangerRollFailureOutcome": "Exposição à Corrupção",
   "SDM.DangerRollSucceessMessage": "por enquanto...",
   "SDM.DangerRollSucceessOutcome": "Tudo Bem!",
