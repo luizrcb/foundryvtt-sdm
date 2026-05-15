@@ -5,6 +5,7 @@ import * as models from './data/_module.mjs';
 import { SdmActor } from './documents/actor.mjs';
 import { SdmCombatant } from './documents/combatant.mjs';
 import { SdmItem } from './documents/item.mjs';
+import registerTextEditorEnrichers from './enrichers.mjs';
 import { registerHandlebarsHelpers } from './handlebars-helpers.mjs';
 import {
   addCompendiumItemToActor,
@@ -15,6 +16,7 @@ import {
 } from './helpers/actorUtils.mjs';
 import {
   configureChatListeners,
+  getActorFromMessage,
   LinksDialog,
   luberLinks,
   sendInitialMessage,
@@ -37,8 +39,8 @@ import {
 } from './helpers/constants.mjs';
 import { makePowerItem, UnarmedDamageItem } from './helpers/itemUtils.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
-import { setupItemTransferSocket } from './items/transfer.mjs';
 import { setupPetDropSocket } from './items/petItem.mjs';
+import { setupItemTransferSocket } from './items/transfer.mjs';
 import { gm as gmMacros, player as playerMacros } from './macros/_module.mjs';
 import {
   configurePlayerChromatype,
@@ -213,6 +215,18 @@ Hooks.on('updateCombat', async (combat, update) => {
 Hooks.on('renderChatMessageHTML', (message, html, data) => {
   configureUseHeroDiceButton(message, html, data);
   configureChatListeners(html);
+  const dangerousElement = html.querySelector('[data-action="rollDangerous"]');
+  if (dangerousElement) {
+    dangerousElement.addEventListener('click', async event => {
+      const actor = getActorFromMessage(message);
+
+      if (!actor || !actor.isOwner) return;
+
+      const sheet = actor.sheet.constructor;
+
+      await sheet['_onRollDanger'].call(actor.sheet, event, dangerousElement);
+    });
+  }
 });
 
 Hooks.on('renderDialogV2', (dialog, html) => {
@@ -590,6 +604,7 @@ Hooks.once('init', function () {
 /* -------------------------------------------- */
 
 registerHandlebarsHelpers();
+registerTextEditorEnrichers();
 
 /* -------------------------------------------- */
 /*  Ready Hook                                  */

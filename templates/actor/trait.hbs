@@ -6,36 +6,44 @@
   data-tooltip='{{getItemTitle trait}}'
 >
   <div class='item-name' style="cursor:pointer;" data-action='openDoc'>
-    <div class='item-image'>
-      <img src='{{trait.img}}' width='24' height='24' />
-      {{#if (eq trait.system.status 'notched')}}
-       <i class="fa fa-hammer overlay-icon notched-icon"></i>
-      {{/if}}
-      {{#if (eq trait.system.status 'broken')}}
-        <i class="fa fa-ban overlay-icon broken-icon"></i>
-      {{/if}}
-    </div>
+    {{#if (and
+      (eq trait.system.type 'power')
+      (ne trait.system.status 'broken')
+      (or
+        (eq trait.system.learning.required_successes 0)
+        (lte trait.system.learning.required_successes trait.system.learning.sources)
+      )
+    )}}
+      <div
+        class="item-image rollable-image"
+        data-action="roll"
+        data-type="power"
+        data-label="{{trait.name}}"
+        data-tooltip="{{localize 'SDM.RollType' type=(localize 'SDM.Power')}}"
+      >
+        <img class="normal-img" src="{{trait.img}}" width="24" height="24" />
+        <i class="fa-solid fa-dice-d20 hover-d20"></i>
+        {{#if (eq trait.system.status 'notched')}}
+          <i class="fa fa-hammer overlay-icon notched-icon"></i>
+        {{/if}}
+        {{#if (eq trait.system.status 'broken')}}
+          <i class="fa fa-ban overlay-icon broken-icon"></i>
+        {{/if}}
+      </div>
+    {{else}}
+      <div class="item-image">
+        <img src="{{trait.img}}" width="24" height="24" />
+        {{#if (eq trait.system.status 'notched')}}
+          <i class="fa fa-hammer overlay-icon notched-icon"></i>
+        {{/if}}
+        {{#if (eq trait.system.status 'broken')}}
+          <i class="fa fa-ban overlay-icon broken-icon"></i>
+        {{/if}}
+      </div>
+    {{/if}}
+
     <div class='flexrow'>
       {{#if (and
-        (eq trait.system.type 'power')
-        (ne trait.system.status 'broken')
-        (or
-          (eq trait.system.learning.required_successes 0)
-          (lte trait.system.learning.required_successes trait.system.learning.sources)
-        )
-      )}}
-        <div
-          class='rollable flexrow'
-          data-action='roll'
-          data-type='power'
-          data-label='{{trait.name}}'
-          data-tooltip='{{localize "SDM.RollType" type=(localize 'SDM.Power')}}'
-        >
-          <i class='fa-solid fa-dice-d20 roll-icon'></i>
-        </div>
-      {{/if}}
-
-       {{#if (and
         (eq trait.system.type 'pet')
         (ne trait.system.pet '')
       )}}
@@ -49,11 +57,10 @@
         </div>
       {{/if}}
 
-
       {{#if trait.system.is_hallmark}}<i class="fa-regular fa-star hallmark" data-tooltip="{{localize 'SDM.HallmarkItem'}}"></i>{{/if}}
-       {{#if (and (gt trait.system.charges.max 0) (has trait.system.features 'charges'))}} <span
-       data-tooltip="{{localize 'SDM.ItemCharges'}}"
-      >({{trait.system.charges.value}}/{{trait.system.charges.max}})&nbsp;</span>{{/if}}
+      {{#if (and (gt trait.system.charges.max 0) (has trait.system.features 'charges'))}}
+        <span data-tooltip="{{localize 'SDM.ItemCharges'}}">({{trait.system.charges.value}}/{{trait.system.charges.max}})&nbsp;</span>
+      {{/if}}
       {{trait.name}}
       {{#if (and (eq trait.system.type 'skill') (gt trait.system.skill.modifier_final 0))}}
         (+{{trait.system.skill.modifier_final}})

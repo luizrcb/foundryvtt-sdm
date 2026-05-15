@@ -55,11 +55,11 @@
               (eq isDangerous true)
               (and (eq item.system.type 'power') item.system.power.is_dangerous)
             )}}
-             <li class="pill transparent">
-              <span data-tooltip aria-label="{{localize 'SDM.ItemFeature.dangerous'}}: {{localize 'SDM.ItemFeature.dangerousDescription'}}">
+              <li class="pill transparent rollable" data-action="rollDangerous" data-target-number="{{@root.finalPowerCost}}">
+                <span data-tooltip aria-label="{{localize 'SDM.ItemFeature.dangerous'}}: {{localize 'SDM.ItemFeature.dangerousDescription'}}">
                 {{localize 'SDM.ItemFeature.dangerousAbbr'}}
-              </span>
-            </li>
+                </span>
+              </li>
             {{/if}}
             {{#each item.system.features}}
             <li class="pill transparent">

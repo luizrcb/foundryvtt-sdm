@@ -606,6 +606,7 @@ export class SdmItem extends Item {
     }
 
     let isDangerous = false;
+    let finalPowerCost = 0;
     if (actor && this.system.type === GearType.POWER) {
       const powerData = this.system.power;
       const powerLevel = powerData.level ?? 0;
@@ -618,6 +619,7 @@ export class SdmItem extends Item {
       if (powerCostBonus > 0) cost = Math.max(cost - 2, 1);
 
       const actorLevel = actor.system?.level ?? 0;
+      finalPowerCost = cost;
       isDangerous = actorLevel < cost;
     }
 
@@ -628,7 +630,8 @@ export class SdmItem extends Item {
       costSubtitle,
       weightSubtitle: displayWeight ? weightSubtitle : '',
       isDangerous,
-      collapsed
+      collapsed,
+      finalPowerCost,
     };
 
     return await renderTemplate(templatePath('chat/item-card'), context);

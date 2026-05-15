@@ -14,6 +14,7 @@ import {
   $fmt,
   $l10n,
   capitalizeFirstLetter,
+  constructHTMLButton,
   isNewFormulaBetter,
   toPascalCase
 } from '../helpers/globalUtils.mjs';
@@ -24,14 +25,15 @@ import {
 } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { openItemTransferDialog } from '../items/transfer.mjs';
-import { healingHeroDice, directResourceDiceRoll } from '../rolls/hero_dice/index.mjs';
+import { directResourceDiceRoll, healingHeroDice } from '../rolls/hero_dice/index.mjs';
 import SDMRoll, { sanitizeExpression } from '../rolls/sdmRoll.mjs';
 import {
-  renderNPCMoraleResult,
-  renderReactionResult,
   renderCorruptionResult,
   renderDefeatResult,
-  renderSaveResult
+  renderNPCMoraleResult,
+  renderReactionResult,
+  renderSaveResult,
+  renderDangerResult
 } from '../rolls/ui/renderResults.mjs';
 import { DEFAULT_SAVE_VALUE, SAVING_THROW_BASE_FORMULA } from '../settings.mjs';
 
@@ -71,12 +73,12 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     }
 
     if (this.actor?.type === ActorType.CHARACTER) {
-      controls.push({
-        action: 'toggleMode',
-        icon: 'fa-solid fa-gear',
-        label: 'Edit Mode / Play Mode',
-        ownership: 'OWNER'
-      });
+      // controls.push({
+      //   action: 'toggleMode',
+      //   icon: 'fa-solid fa-gear',
+      //   label: 'SDM.ToggleModeLabel',
+      //   ownership: 'OWNER'
+      // });
 
       if (game.user.isGM || game.settings.get('sdm', 'canPlayerRerollCharacter')) {
         controls.push({
@@ -133,7 +135,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       levelUpNPC: this._onLevelUpNPC,
       openDoc: { handler: this._openDoc, buttons: [0] },
       toggleItemStatus: { handler: this._toggleItemStatus, buttons: [0, 2] },
-      openPetSheet: this._onOpenPetSheet
+      openPetSheet: this._onOpenPetSheet,
+      toggleCompact: this._onToggleCompact
     },
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: null }],
     form: {
@@ -509,6 +512,46 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
   /* -------------------------------------------- */
 
+  /** @inheritdoc */
+  async _renderFrame(options) {
+    const frame = await super._renderFrame(options);
+
+    if (this.actor.type !== ActorType.CHARACTER) return frame;
+
+    const buttons = [
+      constructHTMLButton({
+        label: '',
+        classes: ['header-control', 'icon', 'fa-solid', 'fa-gear'],
+        dataset: { action: 'toggleMode', tooltip: 'SDM.ToggleModeLabel' }
+      }),
+
+      constructHTMLButton({
+        label: '',
+        classes: ['header-control', 'icon', 'fa-solid', 'fa-compress'],
+        dataset: { action: 'toggleCompact', tooltip: 'SDM.CompactMode' }
+      })
+    ];
+
+    this.window.controls.after(...buttons);
+
+    return frame;
+  }
+
+  static async _onToggleCompact(event, target) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.detail > 1) return; // Ignore repeated clicks
+
+    if (!this.actor.isOwner) return;
+
+    const currentMode = this.actor.getFlag('sdm', 'compactMode') ?? false;
+    const newMode = !currentMode;
+
+    await this.actor.setFlag('sdm', 'compactMode', newMode);
+    this.element.classList.toggle('compact', newMode);
+    return this.render();
+  }
+
   /** @override */
   async _prepareContext(options) {
     // Output initialization
@@ -539,6 +582,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       context.heroDiceType = heroDiceType;
       context.isEditMode = this.actor.getFlag('sdm', 'editMode') ?? false;
     }
+
+    context.isCompactMode = this.actor.getFlag('sdm', 'compactMode') ?? false;
 
     // Offloading context prep to a helper function
     this._prepareItems(context);
@@ -791,6 +836,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     // You may want to add other special handling here
     // Foundry comes with a large number of utility classes, e.g. SearchFilter
     // That you may want to implement yourself.
+
+    const isCompact = this.actor.getFlag('sdm', 'compactMode');
+    if (isCompact !== undefined) {
+      this.element.classList.toggle('compact', isCompact);
+    }
 
     this._handleContainers();
   }
@@ -1065,6 +1115,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     event.preventDefault();
     event.stopPropagation();
     if (event.detail > 1) return; // Ignore repeated clicks
+
+    if (!this.actor.isOwner) return;
+
     const currentMode = this.actor.getFlag('sdm', 'editMode') ?? false;
     const newMode = !currentMode;
 
@@ -1359,9 +1412,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     const baseFormula = game.settings.get('sdm', 'baseCorruptionFormula') || '2d6';
 
-    // const reactionBonus = this.actor.system.reaction_bonus || 0;
     const burdenPenalty = this.actor.system.burden_penalty || 0;
-    const abilityMod = this.actor.system.abilities['aur'].current;
+    const abilityMod =
+      this.actor.type === ActorType.CHARACTER
+        ? this.actor.system.abilities['aur'].current
+        : this.actor.system?.bonus || 0;
     const burdenPart = burdenPenalty > 0 ? -1 * burdenPenalty : 0;
     const totalBonuses = abilityMod + burdenPart;
     const bonusPart =
@@ -1493,7 +1548,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const reverseShift = game.settings.get('sdm', 'reverseShiftKey');
     const isShift = reverseShift !== !!event.shiftKey;
     const isCtrl = !!event.ctrlKey;
-    let data = { modifier: '', selectedAbility: '' };
+    let data = { modifier: '', selectedAbility: 'end' };
 
     if (!isShift) {
       data = await DialogV2.wait({
@@ -1527,13 +1582,17 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       return;
     }
 
-    const { modifier = '', selectedAbility = '', rollMode = RollMode.NORMAL } = data;
+    const { modifier = '', selectedAbility = 'end', rollMode = RollMode.NORMAL } = data;
 
     const baseFormula = game.settings.get('sdm', 'baseDefeatFormula') || '2d6';
 
-    // const reactionBonus = this.actor.system.reaction_bonus || 0;
     const burdenPenalty = this.actor.system.burden_penalty || 0;
-    const abilityMod = selectedAbility ? this.actor.system.abilities[selectedAbility].current : 0;
+
+    const abilityMod =
+      this.actor.type === ActorType.CHARACTER
+        ? this.actor.system.abilities[selectedAbility].current
+        : this.actor.system?.bonus || 0;
+
     const burdenPart = burdenPenalty > 0 ? -1 * burdenPenalty : 0;
     const totalBonuses = abilityMod + burdenPart;
     const bonusPart =
@@ -1558,6 +1617,126 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     await renderDefeatResult({ roll, selectedAbility }, { fromHeroDice: false, speaker, isCtrl });
   }
 
+  static async _onRollDanger(event, target) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.detail > 1) return;
+
+    const dataset = target.dataset;
+    const { ability = 'aur', targetNumber = 0 } = dataset;
+
+    const reverseShift = game.settings.get('sdm', 'reverseShiftKey');
+    const isShift = reverseShift !== !!event.shiftKey;
+    const isCtrl = !!event.ctrlKey;
+
+    let label = $fmt('SDM.RollType', {
+      type: $l10n('SDM.Danger')
+    });
+    const language = game.i18n.lang;
+    const availableSkills = this.actor.getAvailableSkills();
+
+    const template = await renderTemplate(templatePath('custom-roll-dialog'), {
+      rollTitlePrefix: '',
+      title: label,
+      abilities: CONFIG.SDM.getOrderedAbilities(language),
+      ability,
+      attack: '',
+      availableSkills: availableSkills,
+      selectedSkill: '',
+      rollModes: [RollMode.NORMAL],
+      selectedRollMode: RollMode.NORMAL,
+      type: RollType.DANGER,
+      isCharacterActor: true,
+      attackTargetChoices: CONFIG.SDM.attackTarget,
+      blindGMRoll: isCtrl
+    });
+
+    const buttons = [
+      {
+        action: 'save',
+        icon: 'fa-solid fa-dice-d20',
+        label: $l10n('SDM.ButtonRoll'),
+        callback: (event, button) => ({
+          versatile: false,
+          ...new foundry.applications.ux.FormDataExtended(button.form).object
+        })
+      }
+    ];
+
+    let rollOptions = {};
+
+    if (!isShift) {
+      rollOptions = await foundry.applications.api.DialogV2.wait({
+        window: {
+          title: $fmt('SDM.RollType', { type: $l10n('SDM.Danger') })
+        },
+        modal: true,
+        content: template,
+        position: {
+          width: 400
+        },
+        rejectClose: false,
+        buttons
+      });
+
+      if (rollOptions === null) {
+        return;
+      }
+    }
+
+    const modifier = rollOptions?.modifier;
+    const rollMode = rollOptions?.rollMode;
+    const selectedAbility = rollOptions?.selectedAbility;
+    const selectedSkill = rollOptions?.selectedSkill;
+    const modPart = foundry.dice.Roll.validate(modifier) ? `+${modifier}` : '';
+    const baseRollFormula =
+      game.settings.get('sdm', 'savingThrowBaseRollFormula') || SAVING_THROW_BASE_FORMULA;
+
+    const keepModifier =
+      rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
+
+    const diceExpression = keepModifier
+      ? `{${baseRollFormula}, ${baseRollFormula}}${keepModifier}`
+      : baseRollFormula;
+
+    const abilityData =
+      ability !== ActorType.NPC
+        ? this.actor.system.abilities[selectedAbility]
+        : { current: this.actor.system.bonus };
+
+    const finalAbility = abilityData?.current;
+    const burdenPenalty = this.actor.system?.burden_penalty || 0;
+
+    const skillPart = selectedSkill ? availableSkills[selectedSkill]?.mod : 0;
+    const dangerSum = finalAbility + skillPart - burdenPenalty;
+
+    const useHardLimitRule = game.settings.get('sdm', 'useHardLimitRule');
+    const defaultHardLimitValue = game.settings.get('sdm', 'defaultHardLimitValue') || MAX_MODIFIER;
+    const finalDangerBonus = useHardLimitRule
+      ? Math.min(dangerSum, defaultHardLimitValue)
+      : dangerSum;
+
+    const bonusPart =
+      finalDangerBonus === 0
+        ? ''
+        : finalDangerBonus > 0
+          ? `+${finalDangerBonus}`
+          : finalDangerBonus;
+
+    let formula = `${diceExpression}${bonusPart}${modPart}`;
+
+    formula = sanitizeExpression(formula);
+    let roll = new Roll(formula);
+    roll = await roll.evaluate();
+
+    const speaker = ChatMessage.getSpeaker({ actor: this.actor });
+
+    await renderDangerResult(
+      { roll, label, targetNumber },
+      { fromHeroDice: false, speaker, isCtrl }
+    );
+  }
+
   static async _onRollSavingThrow(event, target) {
     event.preventDefault(); // Don't open context menu
     event.stopPropagation(); // Don't trigger other events
@@ -1565,7 +1744,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     // Get common data attributes
     const dataset = target.dataset;
-    const { ability } = dataset;
+    const { ability, rollTarget } = dataset;
     const abilityData =
       ability !== ActorType.NPC
         ? this.actor.system.abilities[ability]
@@ -1673,7 +1852,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     let formula = `${diceExpression}${bonusPart}${modPart}`;
 
-    const targetNumber = this.actor.system?.save_target || DEFAULT_SAVE_VALUE;
+    const targetNumber = rollTarget || this.actor.system?.save_target || DEFAULT_SAVE_VALUE;
     formula = sanitizeExpression(formula);
     // Create and evaluate the roll
     let roll = new Roll(formula);

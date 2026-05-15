@@ -137,6 +137,100 @@ export async function giveCash(
   operationParam,
   displayTransferNotification = true
 ) {
+  // --- DIRECT MODE: called with actor, amount, operation ---------------------------------
+  if (targetParam && typeof targetParam === 'object' && targetParam.actor) {
+    const { actor, amount, operation, displayChatSummary = true } = targetParam;
+    if (!actor || amount === undefined || !operation) {
+      console.error('giveCash direct mode requires actor, amount, operation');
+      return;
+    }
+    const validOps = ['add', 'remove'];
+    if (!validOps.includes(operation)) {
+      console.error(`Invalid operation: ${operation}`);
+      return;
+    }
+    const numericAmount = Number(amount);
+    if (isNaN(numericAmount) || numericAmount <= 0) return;
+
+    const defaultCurrencyName = game.settings.get('sdm', 'currencyName') || 'cash';
+
+    // Helper to sum cash for this actor
+    const sumCash = act =>
+      act.items
+        .filter(i => i.type === 'gear' && i.system?.size?.unit === 'cash')
+        .reduce((s, it) => s + Math.max(0, Number(it.system?.quantity ?? 0)), 0);
+
+    const before = sumCash(actor);
+
+    let success = false;
+    let delta = 0;
+    if (operation === 'add') {
+      const added = await addCashToActor(actor, numericAmount);
+      if (added > 0) {
+        success = true;
+        delta = added;
+      }
+    } else if (operation === 'remove') {
+      const removed = await removeCashFromActor(actor, numericAmount);
+      if (removed !== false && removed > 0) {
+        success = true;
+        delta = -removed;
+      } else {
+        ui.notifications.warn(`${actor.name} does not have enough cash.`);
+        return;
+      }
+    }
+
+    if (success && displayChatSummary) {
+      const after = sumCash(actor);
+      const cashChanges = [
+        {
+          actorId: actor.id,
+          actorName: actor.name,
+          actorImg: actor.img || null,
+          amount: delta,
+          before,
+          after,
+          currency: defaultCurrencyName,
+          note: undefined
+        }
+      ];
+
+      const ctx = {
+        messageId: foundry.utils.randomID(),
+        timestamp: new Date().toLocaleTimeString(),
+        senderName: game.user?.name || 'Gamemaster',
+        logId: `cash-${Date.now()}-${foundry.utils.randomID(4)}`,
+        eventLabel: operation === 'add' ? 'Cash Added' : 'Cash Removed',
+        cashChanges
+      };
+
+      let html = await renderTemplate(templatePath('chat/adjustments-summary-card'), ctx);
+      if (typeof html !== 'string') {
+        if (html instanceof HTMLElement) html = html.outerHTML;
+        else if (html instanceof NodeList || html instanceof HTMLCollection) {
+          html = Array.from(html)
+            .map(n => n.outerHTML ?? String(n))
+            .join('');
+        } else html = String(html);
+      }
+
+      await ChatMessage.create({
+        content: html,
+        speaker: ChatMessage.getSpeaker({ alias: game.user?.name || 'Gamemaster' })
+      });
+      ui.notifications.info(
+        `${operation === 'add' ? 'Added' : 'Removed'} ${Math.abs(delta)} cash ${operation === 'add' ? 'to' : 'from'} ${actor.name}.`
+      );
+    } else if (success) {
+      ui.notifications.info(
+        `${operation === 'add' ? 'Added' : 'Removed'} ${Math.abs(delta)} cash ${operation === 'add' ? 'to' : 'from'} ${actor.name}.`
+      );
+    }
+    return;
+  }
+
+  // --- ORIGINAL DIALOG MODE (multi‑target, UI) -----------------------------------------
   if (!game.user.isGM) return;
 
   const defaultCurrencyName = game.settings.get('sdm', 'currencyName') || 'cash';
@@ -169,7 +263,7 @@ export async function giveCash(
     const actorEntries = allTransferTarget
       .map(actor => {
         const isCharacter = actor.type === ActorType.CHARACTER;
-        const img = actor.img ||(isCharacter ? DEFAULT_CHARACTER_ICON : DEFAULT_CARAVAN_ICON);
+        const img = actor.img || (isCharacter ? DEFAULT_CHARACTER_ICON : DEFAULT_CARAVAN_ICON);
         const checkboxClass = `actor-checkbox ${isCharacter ? 'character-checkbox' : 'caravan-checkbox'}`;
         const labelHtml = `
         <label class="actor-selector" style="display:flex; align-items:center; gap:5px; padding:4px; border:1px solid #ccc; border-radius:4px;">
@@ -348,10 +442,7 @@ export async function giveCash(
       const before = sumCash(target);
 
       if (data.operation === 'add') {
-        const added = await addCashToActor(
-          target,
-          amountForThis
-        );
+        const added = await addCashToActor(target, amountForThis);
         if (added > 0) successCount++;
         else continue;
       } else if (data.operation === 'remove') {

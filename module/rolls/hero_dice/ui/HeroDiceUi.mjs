@@ -7,7 +7,8 @@ import {
   renderCorruptionResult,
   renderReactionResult,
   renderDefeatResult,
-  renderUsageResult
+  renderUsageResult,
+  renderDangerResult
 } from '../../ui/renderResults.mjs';
 
 const { renderTemplate } = foundry.applications.handlebars;
@@ -225,6 +226,17 @@ export class HeroDiceUI {
       const { label, target, speaker } = flags.sdm.usage;
       await renderUsageResult(
         { roll: heroResultRoll, label, target },
+        {
+          fromHeroDice: true,
+          speaker
+        }
+      );
+    }
+
+    if (flags && flags?.sdm?.danger) {
+      const { label, targetNumber, speaker } = flags.sdm.danger;
+      await renderDangerResult(
+        { roll: heroResultRoll, label, targetNumber },
         {
           fromHeroDice: true,
           speaker

@@ -539,32 +539,49 @@ export function registerSystemSettings() {
   });
 
   game.settings.register('sdm', 'seasonsStarsIntegration', {
-    name: 'SDM.SettingsSeasonStarsIntegration',
-    hint: 'SDM.SettingsSeasonStarsIntegrationHint',
+    name: 'SDM.SettingsCalendarIntegration',
+    hint: 'SDM.SettingsCalendarIntegrationHint',
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
     type: Boolean, // Data type: String, Number, Boolean, etc
     default: false,
     onChange: value => {
-      const hasSeasonsModule = game.seasonsStars;
-      let language = game.i18n.lang.toLowerCase();
-      if (language !== 'pt-br') {
-        language = 'en';
-      }
-      const rainbowlands = 'rainbowlands';
-      const rainbowlandsLang = `${rainbowlands}-${language}`;
-      const calendars = game.seasonsStars ? game.seasonsStars.api.getAvailableCalendars() : [];
-      const oldVersionCalendar = calendars.includes(rainbowlands);
-      const hasRainbowlandsCalendar = calendars.includes(rainbowlandsLang);
-      const calendarToUse = hasRainbowlandsCalendar ? rainbowlandsLang : rainbowlands;
-
       if (!value) return;
 
-      if (value && hasSeasonsModule && (hasRainbowlandsCalendar || oldVersionCalendar)) {
-        game.seasonsStars.api.setActiveCalendar(calendarToUse);
-      } else {
-        ui.notifications.error($l10n('SDM.seasonsStarsIntegrationError'));
+      const hasSeasonsModule = !!game.seasonsStars;
+      const hasCalendaria = !!globalThis.CALENDARIA;
+
+      if (!hasSeasonsModule && !hasCalendaria) {
+        ui.notifications.error($l10n('SDM.calendarIntegrationError'));
         game.settings.set('sdm', 'seasonsStarsIntegration', false);
+        return;
+      }
+
+      if (hasCalendaria) {
+        const calendar = globalThis.CALENDARIA.api.getActiveCalendar();
+
+        if (value && calendar.metadata.id !== 'rainbowlands') {
+          ui.notifications.error($l10n('SDM.calendariaIntegrationError'));
+          game.settings.set('sdm', 'seasonsStarsIntegration', false);
+        }
+      } else if (hasSeasonsModule) {
+        let language = game.i18n.lang.toLowerCase();
+        if (language !== 'pt-br') {
+          language = 'en';
+        }
+        const rainbowlands = 'rainbowlands';
+        const rainbowlandsLang = `${rainbowlands}-${language}`;
+        const calendars = game.seasonsStars ? game.seasonsStars.api.getAvailableCalendars() : [];
+        const oldVersionCalendar = calendars.includes(rainbowlands);
+        const hasRainbowlandsCalendar = calendars.includes(rainbowlandsLang);
+        const calendarToUse = hasRainbowlandsCalendar ? rainbowlandsLang : rainbowlands;
+
+        if (value && hasSeasonsModule && (hasRainbowlandsCalendar || oldVersionCalendar)) {
+          game.seasonsStars.api.setActiveCalendar(calendarToUse);
+        } else {
+          ui.notifications.error($l10n('SDM.seasonsStarsIntegrationError'));
+          game.settings.set('sdm', 'seasonsStarsIntegration', false);
+        }
       }
     }
   });
