@@ -1,0 +1,222 @@
+{
+  "name": "Timelost (re-made)",
+  "formula": "1d8",
+  "description": "<p></p>",
+  "results": [
+    {
+      "range": [
+        1,
+        1
+      ],
+      "name": "Cryo 523-Amber",
+      "_id": "BnHvyykKxQj3M6FB",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!i9J64t1wSH5mz3A3.BnHvyykKxQj3M6FB"
+    },
+    {
+      "range": [
+        2,
+        2
+      ],
+      "name": "Eggs Perimeter-4",
+      "_id": "FBau12kcy9AtiCps",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!i9J64t1wSH5mz3A3.FBau12kcy9AtiCps"
+    },
+    {
+      "range": [
+        3,
+        3
+      ],
+      "name": "Kloen Offlord",
+      "_id": "V94uSp97Aja4AyRl",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!i9J64t1wSH5mz3A3.V94uSp97Aja4AyRl"
+    },
+    {
+      "range": [
+        4,
+        4
+      ],
+      "name": "Ohn Smit",
+      "_id": "ZT730UuqYyW69dlH",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!i9J64t1wSH5mz3A3.ZT730UuqYyW69dlH"
+    },
+    {
+      "range": [
+        5,
+        5
+      ],
+      "name": "Oï Yu",
+      "_id": "aj2K3pguZ6wShBNE",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!i9J64t1wSH5mz3A3.aj2K3pguZ6wShBNE"
+    },
+    {
+      "range": [
+        6,
+        6
+      ],
+      "name": "Settler Unitschild",
+      "_id": "lEGPLEyIftIMKgfm",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!i9J64t1wSH5mz3A3.lEGPLEyIftIMKgfm"
+    },
+    {
+      "range": [
+        7,
+        7
+      ],
+      "name": "Sidhe Reäl",
+      "_id": "xTYFpbjPYtdmtxz7",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!i9J64t1wSH5mz3A3.xTYFpbjPYtdmtxz7"
+    },
+    {
+      "range": [
+        8,
+        8
+      ],
+      "name": "Winterbird",
+      "_id": "4zxcHSdkaiAQrATD",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!i9J64t1wSH5mz3A3.4zxcHSdkaiAQrATD"
+    }
+  ],
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "6nG6apxhfcD63CwQ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.9.3",
+    "createdTime": 1770656451751,
+    "modifiedTime": 1770656451751,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+  },
+  "_id": "i9J64t1wSH5mz3A3",
+  "sort": 0,
+  "_key": "!tables!i9J64t1wSH5mz3A3"
+}

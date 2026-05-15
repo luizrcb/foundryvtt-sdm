@@ -1,0 +1,80 @@
+{
+  "name": "Weapon Path",
+  "img": "icons/svg/d20-grey.svg",
+  "description": "",
+  "results": [
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "name": "Weapon Traits",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.rolltables.RollTable.vSZpk3aFuSHmYkIC",
+      "_id": "KSGjBsT9unx4yX52",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!pEzaYZUnNgq7EUmm.KSGjBsT9unx4yX52"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "name": "Bearer Traits",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.rolltables.RollTable.1rqasbu1fik4wZiB",
+      "_id": "IAKgGjrCVraLJ4aZ",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!pEzaYZUnNgq7EUmm.IAKgGjrCVraLJ4aZ"
+    }
+  ],
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "XDunMG5iNmel9OUX",
+  "ownership": {
+    "default": 0,
+    "Ex9ibz7imBNLfqpb": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.9.3",
+    "createdTime": 1770643259287,
+    "modifiedTime": 1770654214010,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+  },
+  "_id": "pEzaYZUnNgq7EUmm",
+  "sort": 400000,
+  "formula": "1d2",
+  "_key": "!tables!pEzaYZUnNgq7EUmm"
+}

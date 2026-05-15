@@ -1,0 +1,105 @@
+{
+  "name": "Path Traits",
+  "img": "icons/svg/d20-grey.svg",
+  "description": "",
+  "results": [
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        1,
+        2
+      ],
+      "name": "Path of the Wizard",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.rolltables.RollTable.sTbr6sL8AtR0Swdm",
+      "_id": "JbG0OyifogTwtOQH",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!652LEhbha7y6KFci.JbG0OyifogTwtOQH"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        3,
+        4
+      ],
+      "name": "Path of the Traveler",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.rolltables.RollTable.6s6QYmH5VIqwCmru",
+      "_id": "eIEHtPpgfRuZNSmj",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!652LEhbha7y6KFci.eIEHtPpgfRuZNSmj"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        5,
+        6
+      ],
+      "name": "Path of the Fighter",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.rolltables.RollTable.e32f1fVfCm8UaOQz",
+      "_id": "n5k3RGx2gjlHRc2v",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!652LEhbha7y6KFci.n5k3RGx2gjlHRc2v"
+    }
+  ],
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "XDunMG5iNmel9OUX",
+  "ownership": {
+    "default": 0,
+    "Ex9ibz7imBNLfqpb": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.9.3",
+    "createdTime": 1770643256127,
+    "modifiedTime": 1770657195144,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+  },
+  "formula": "1d6",
+  "_id": "652LEhbha7y6KFci",
+  "sort": 300000,
+  "_key": "!tables!652LEhbha7y6KFci"
+}

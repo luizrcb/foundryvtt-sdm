@@ -1,0 +1,222 @@
+{
+  "name": "DWARF (working-class)",
+  "formula": "1d8",
+  "description": "<p></p>",
+  "results": [
+    {
+      "range": [
+        1,
+        1
+      ],
+      "name": "Amdt 'Logistic",
+      "_id": "sBOb6t50uxk31CZg",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!riTiiWiOYx9tXPJD.sBOb6t50uxk31CZg"
+    },
+    {
+      "range": [
+        2,
+        2
+      ],
+      "name": "Del 'Machinist",
+      "_id": "AJjwpNhslx2Nuwej",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!riTiiWiOYx9tXPJD.AJjwpNhslx2Nuwej"
+    },
+    {
+      "range": [
+        3,
+        3
+      ],
+      "name": "Kur 'Notcurrently",
+      "_id": "rFdXXg0LA2Ks8h7I",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!riTiiWiOYx9tXPJD.rFdXXg0LA2Ks8h7I"
+    },
+    {
+      "range": [
+        4,
+        4
+      ],
+      "name": "Pem 'Cleaningspec",
+      "_id": "8F1QiqPXZEfKQJWM",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!riTiiWiOYx9tXPJD.8F1QiqPXZEfKQJWM"
+    },
+    {
+      "range": [
+        5,
+        5
+      ],
+      "name": "Ru 'C",
+      "_id": "RGUaqnaai6ELunGx",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!riTiiWiOYx9tXPJD.RGUaqnaai6ELunGx"
+    },
+    {
+      "range": [
+        6,
+        6
+      ],
+      "name": "Tam 'HR",
+      "_id": "s8iSvHryLfoaJzsj",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!riTiiWiOYx9tXPJD.s8iSvHryLfoaJzsj"
+    },
+    {
+      "range": [
+        7,
+        7
+      ],
+      "name": "Vek 'Driver",
+      "_id": "ztMZbuQCC5MWm64F",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!riTiiWiOYx9tXPJD.ztMZbuQCC5MWm64F"
+    },
+    {
+      "range": [
+        8,
+        8
+      ],
+      "name": "Yon 'Engine",
+      "_id": "y4f1P2uVE4YzcMax",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!riTiiWiOYx9tXPJD.y4f1P2uVE4YzcMax"
+    }
+  ],
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "6nG6apxhfcD63CwQ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.9.3",
+    "createdTime": 1770656424038,
+    "modifiedTime": 1770656443099,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+  },
+  "_id": "riTiiWiOYx9tXPJD",
+  "sort": 900000,
+  "_key": "!tables!riTiiWiOYx9tXPJD"
+}

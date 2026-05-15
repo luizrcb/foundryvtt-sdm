@@ -1,0 +1,222 @@
+{
+  "name": "Vulgar Common (middle-class)",
+  "formula": "1d8",
+  "description": "<p></p>",
+  "results": [
+    {
+      "range": [
+        1,
+        1
+      ],
+      "name": "Alba Nigra",
+      "_id": "NRa0GFvGEoDTjDvb",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!IzxtywR7hIp18GAb.NRa0GFvGEoDTjDvb"
+    },
+    {
+      "range": [
+        2,
+        2
+      ],
+      "name": "Equreis Liber",
+      "_id": "MgZgiKzlwCgTOONT",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!IzxtywR7hIp18GAb.MgZgiKzlwCgTOONT"
+    },
+    {
+      "range": [
+        3,
+        3
+      ],
+      "name": "Nutra Griza",
+      "_id": "0pFVEgWGegZSUBPL",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!IzxtywR7hIp18GAb.0pFVEgWGegZSUBPL"
+    },
+    {
+      "range": [
+        4,
+        4
+      ],
+      "name": "Paloma Blanka",
+      "_id": "jggDg5Tm7gp1unFy",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!IzxtywR7hIp18GAb.jggDg5Tm7gp1unFy"
+    },
+    {
+      "range": [
+        5,
+        5
+      ],
+      "name": "Qalen Vegeta",
+      "_id": "nx8y0RvfNHbQK2Tt",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!IzxtywR7hIp18GAb.nx8y0RvfNHbQK2Tt"
+    },
+    {
+      "range": [
+        6,
+        6
+      ],
+      "name": "Solo Carburetto",
+      "_id": "KQrwDCAc3kU1if14",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!IzxtywR7hIp18GAb.KQrwDCAc3kU1if14"
+    },
+    {
+      "range": [
+        7,
+        7
+      ],
+      "name": "Uino Sepolto",
+      "_id": "wkaovHDO6jtVsnRQ",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!IzxtywR7hIp18GAb.wkaovHDO6jtVsnRQ"
+    },
+    {
+      "range": [
+        8,
+        8
+      ],
+      "name": "Urora Squra",
+      "_id": "yqzy2olQsXZnru2e",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!IzxtywR7hIp18GAb.yqzy2olQsXZnru2e"
+    }
+  ],
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "6nG6apxhfcD63CwQ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.9.3",
+    "createdTime": 1770656452945,
+    "modifiedTime": 1770656452945,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+  },
+  "_id": "IzxtywR7hIp18GAb",
+  "sort": 0,
+  "_key": "!tables!IzxtywR7hIp18GAb"
+}

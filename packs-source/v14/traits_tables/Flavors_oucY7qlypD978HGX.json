@@ -1,0 +1,990 @@
+{
+  "name": "Flavors",
+  "formula": "1d40",
+  "description": "<p></p>",
+  "results": [
+    {
+      "range": [
+        1,
+        1
+      ],
+      "name": "blue land",
+      "_id": "iFvyMnpevdkBCO6K",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.iFvyMnpevdkBCO6K"
+    },
+    {
+      "range": [
+        2,
+        2
+      ],
+      "name": "dead god",
+      "_id": "ZpMCUBLVu6H8YpEh",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.ZpMCUBLVu6H8YpEh"
+    },
+    {
+      "range": [
+        3,
+        3
+      ],
+      "name": "peacemaker",
+      "_id": "Ehc66Bgdv3KCYwa4",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.Ehc66Bgdv3KCYwa4"
+    },
+    {
+      "range": [
+        4,
+        4
+      ],
+      "name": "moon",
+      "_id": "qwPzHLL47sHo4TIt",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.qwPzHLL47sHo4TIt"
+    },
+    {
+      "range": [
+        5,
+        5
+      ],
+      "name": "coaster",
+      "_id": "Hqt11M3ugBgHUMlV",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.Hqt11M3ugBgHUMlV"
+    },
+    {
+      "range": [
+        6,
+        6
+      ],
+      "name": "scavenger",
+      "_id": "m2vMrAkFVrSqXqom",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.m2vMrAkFVrSqXqom"
+    },
+    {
+      "range": [
+        7,
+        7
+      ],
+      "name": "purple land",
+      "_id": "oSNET3xNQya4pep0",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.oSNET3xNQya4pep0"
+    },
+    {
+      "range": [
+        8,
+        8
+      ],
+      "name": "feline",
+      "_id": "umfZ18YPoQcboAkg",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.umfZ18YPoQcboAkg"
+    },
+    {
+      "range": [
+        9,
+        9
+      ],
+      "name": "plantation",
+      "_id": "rbCiRptHVnRItune",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.rbCiRptHVnRItune"
+    },
+    {
+      "range": [
+        10,
+        10
+      ],
+      "name": "steppe",
+      "_id": "3yVz6DGjV92dpSRE",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.3yVz6DGjV92dpSRE"
+    },
+    {
+      "range": [
+        11,
+        11
+      ],
+      "name": "violet city",
+      "_id": "8oHFPwSCJoMByCAy",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.8oHFPwSCJoMByCAy"
+    },
+    {
+      "range": [
+        12,
+        12
+      ],
+      "name": "red land",
+      "_id": "LLTnFo89mkVflo6B",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.LLTnFo89mkVflo6B"
+    },
+    {
+      "range": [
+        13,
+        13
+      ],
+      "name": "vampire",
+      "_id": "NLCZmD9BLpqWGUsT",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.NLCZmD9BLpqWGUsT"
+    },
+    {
+      "range": [
+        14,
+        14
+      ],
+      "name": "rust",
+      "_id": "pCwgbKFpN2SwQQfI",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.pCwgbKFpN2SwQQfI"
+    },
+    {
+      "range": [
+        15,
+        15
+      ],
+      "name": "vintner",
+      "_id": "So7FyD6WyfY6JR55",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.So7FyD6WyfY6JR55"
+    },
+    {
+      "range": [
+        16,
+        16
+      ],
+      "name": "RL district",
+      "_id": "1S9wd0pi3ISMhEft",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.1S9wd0pi3ISMhEft"
+    },
+    {
+      "range": [
+        17,
+        17
+      ],
+      "name": "hexad",
+      "_id": "AQT0KcQykKLXmRLm",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.AQT0KcQykKLXmRLm"
+    },
+    {
+      "range": [
+        18,
+        18
+      ],
+      "name": "doghead",
+      "_id": "MnH4Z6sexjAnRct6",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.MnH4Z6sexjAnRct6"
+    },
+    {
+      "range": [
+        19,
+        19
+      ],
+      "name": "orange land",
+      "_id": "X8ZCals7exdLDL5k",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.X8ZCals7exdLDL5k"
+    },
+    {
+      "range": [
+        20,
+        20
+      ],
+      "name": "halfling",
+      "_id": "yKaRMg8kzjmD51xv",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.yKaRMg8kzjmD51xv"
+    },
+    {
+      "range": [
+        21,
+        21
+      ],
+      "name": "council",
+      "_id": "BPmP6eBK2ScbZEQy",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.BPmP6eBK2ScbZEQy"
+    },
+    {
+      "range": [
+        22,
+        22
+      ],
+      "name": "ancestor",
+      "_id": "OBfumVZsNVhpy8DK",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.OBfumVZsNVhpy8DK"
+    },
+    {
+      "range": [
+        23,
+        23
+      ],
+      "name": "agent",
+      "_id": "Stytz9jOGS0YcIMU",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.Stytz9jOGS0YcIMU"
+    },
+    {
+      "range": [
+        24,
+        24
+      ],
+      "name": "pirate",
+      "_id": "CzmG1cc8x7f5W2oZ",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.CzmG1cc8x7f5W2oZ"
+    },
+    {
+      "range": [
+        25,
+        25
+      ],
+      "name": "plateau",
+      "_id": "L7BRrK4FCSZsV48m",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.L7BRrK4FCSZsV48m"
+    },
+    {
+      "range": [
+        26,
+        26
+      ],
+      "name": "yellow land",
+      "_id": "XYHnLoKpDmLhnJse",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.XYHnLoKpDmLhnJse"
+    },
+    {
+      "range": [
+        27,
+        27
+      ],
+      "name": "diesel dwarfer",
+      "_id": "WEtPw6czV75EmYyh",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.WEtPw6czV75EmYyh"
+    },
+    {
+      "range": [
+        28,
+        28
+      ],
+      "name": "decapolitan",
+      "_id": "SWhynPB8YB0Wo7Bz",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.SWhynPB8YB0Wo7Bz"
+    },
+    {
+      "range": [
+        29,
+        29
+      ],
+      "name": "saffron",
+      "_id": "eS0bhzjea2RnkJCt",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.eS0bhzjea2RnkJCt"
+    },
+    {
+      "range": [
+        30,
+        30
+      ],
+      "name": "horser",
+      "_id": "NvgRcUG2S45viS3M",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.NvgRcUG2S45viS3M"
+    },
+    {
+      "range": [
+        31,
+        31
+      ],
+      "name": "golden desert",
+      "_id": "5wpwSLV0ZLRTvYD7",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.5wpwSLV0ZLRTvYD7"
+    },
+    {
+      "range": [
+        32,
+        32
+      ],
+      "name": "green land",
+      "_id": "1yEut7Wwy0NhHBOk",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.1yEut7Wwy0NhHBOk"
+    },
+    {
+      "range": [
+        33,
+        33
+      ],
+      "name": "metropolitan",
+      "_id": "WUgEOqOXBlEDbHkr",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.WUgEOqOXBlEDbHkr"
+    },
+    {
+      "range": [
+        34,
+        34
+      ],
+      "name": "elfer",
+      "_id": "IQrdOwEkhXrzlhON",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.IQrdOwEkhXrzlhON"
+    },
+    {
+      "range": [
+        35,
+        35
+      ],
+      "name": "falscher",
+      "_id": "F2HA8YXQp6G8wiqu",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.F2HA8YXQp6G8wiqu"
+    },
+    {
+      "range": [
+        36,
+        36
+      ],
+      "name": "timelost",
+      "_id": "2b0cVr14o4PAwMJw",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.2b0cVr14o4PAwMJw"
+    },
+    {
+      "range": [
+        37,
+        37
+      ],
+      "name": "astral",
+      "_id": "Frjd750Mcrt0Y8Gt",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.Frjd750Mcrt0Y8Gt"
+    },
+    {
+      "range": [
+        38,
+        38
+      ],
+      "name": "ministry",
+      "_id": "lgLHHJdil1iglFPy",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.lgLHHJdil1iglFPy"
+    },
+    {
+      "range": [
+        39,
+        39
+      ],
+      "name": "barbarian",
+      "_id": "nUoYfs7gauzNFLCR",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.nUoYfs7gauzNFLCR"
+    },
+    {
+      "range": [
+        40,
+        40
+      ],
+      "name": "voidwalker",
+      "_id": "DgrVz8ryQS5sG9Jm",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!oucY7qlypD978HGX.DgrVz8ryQS5sG9Jm"
+    }
+  ],
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "SwkRaJM5VJ1eCvAC",
+  "ownership": {
+    "default": 0,
+    "6nG6apxhfcD63CwQ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.9.3",
+    "createdTime": 1770654223662,
+    "modifiedTime": 1770654246055,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+  },
+  "_id": "oucY7qlypD978HGX",
+  "sort": 400000,
+  "_key": "!tables!oucY7qlypD978HGX"
+}

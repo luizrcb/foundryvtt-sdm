@@ -1,0 +1,165 @@
+{
+  "name": "Background Traits 5d40",
+  "img": "icons/svg/d20-grey.svg",
+  "description": "",
+  "results": [
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "name": "Flavors",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.traits_tables.RollTable.oucY7qlypD978HGX",
+      "_id": "C6FCSpPl9SWcAOVC",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "createdTime": 1770654251471,
+        "modifiedTime": 1770654251471,
+        "lastModifiedBy": "6nG6apxhfcD63CwQ"
+      },
+      "_key": "!tables.results!cFXq88o4lzuqxAPP.C6FCSpPl9SWcAOVC"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "name": "Role 1",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.traits_tables.RollTable.wYl1CY3n9caiQBMU",
+      "_id": "GvypELuGagApRtZK",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "createdTime": 1770654253416,
+        "modifiedTime": 1770654253416,
+        "lastModifiedBy": "6nG6apxhfcD63CwQ"
+      },
+      "_key": "!tables.results!cFXq88o4lzuqxAPP.GvypELuGagApRtZK"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "name": "Role 2",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.traits_tables.RollTable.OeCIK9rMx6dx8Yk8",
+      "_id": "bNjewWCwMUAHVXoE",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "createdTime": 1770654257989,
+        "modifiedTime": 1770654257989,
+        "lastModifiedBy": "6nG6apxhfcD63CwQ"
+      },
+      "_key": "!tables.results!cFXq88o4lzuqxAPP.bNjewWCwMUAHVXoE"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "name": "Tasks",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.traits_tables.RollTable.VefImcs6JgyloxFn",
+      "_id": "4yGXitbYbDm9ULVE",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "createdTime": 1770654339202,
+        "modifiedTime": 1770654339202,
+        "lastModifiedBy": "6nG6apxhfcD63CwQ"
+      },
+      "_key": "!tables.results!cFXq88o4lzuqxAPP.4yGXitbYbDm9ULVE"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "name": "Spins",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.traits_tables.RollTable.VeaDsQ1gzMpqaQaZ",
+      "_id": "5qt64pxqGMz4tvaa",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "createdTime": 1770654344425,
+        "modifiedTime": 1770654344425,
+        "lastModifiedBy": "6nG6apxhfcD63CwQ"
+      },
+      "_key": "!tables.results!cFXq88o4lzuqxAPP.5qt64pxqGMz4tvaa"
+    }
+  ],
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "SwkRaJM5VJ1eCvAC",
+  "ownership": {
+    "default": 0,
+    "6nG6apxhfcD63CwQ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.9.3",
+    "createdTime": 1770654246050,
+    "modifiedTime": 1770654348285,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+  },
+  "formula": "1d1",
+  "_id": "cFXq88o4lzuqxAPP",
+  "sort": 200000,
+  "_key": "!tables!cFXq88o4lzuqxAPP"
+}

@@ -1,0 +1,222 @@
+{
+  "name": "Quarterling (parahuman)",
+  "formula": "1d8",
+  "description": "<p></p>",
+  "results": [
+    {
+      "range": [
+        1,
+        1
+      ],
+      "name": "117\"Troubleman\"",
+      "_id": "FbpwsVJNHZTAl6Tf",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!U7RwKdcQlGUnotOi.FbpwsVJNHZTAl6Tf"
+    },
+    {
+      "range": [
+        2,
+        2
+      ],
+      "name": "Mouse5\"Pablo\"",
+      "_id": "aWZWyMQfmFOHpVPR",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!U7RwKdcQlGUnotOi.aWZWyMQfmFOHpVPR"
+    },
+    {
+      "range": [
+        3,
+        3
+      ],
+      "name": "∑645\"Oorkan\"",
+      "_id": "4GE5aqbNEnyXrbr7",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!U7RwKdcQlGUnotOi.4GE5aqbNEnyXrbr7"
+    },
+    {
+      "range": [
+        4,
+        4
+      ],
+      "name": "UA-23x10^4\"Paco\"",
+      "_id": "n8E1Qj8YDxu2tLKK",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!U7RwKdcQlGUnotOi.n8E1Qj8YDxu2tLKK"
+    },
+    {
+      "range": [
+        5,
+        5
+      ],
+      "name": "Unit≈\"Komokomo\"",
+      "_id": "uMRlHEZdXhYpQbck",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!U7RwKdcQlGUnotOi.uMRlHEZdXhYpQbck"
+    },
+    {
+      "range": [
+        6,
+        6
+      ],
+      "name": "Vaulter\"Yggdrasil\"",
+      "_id": "Q9LpamTsEB7HsWwO",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!U7RwKdcQlGUnotOi.Q9LpamTsEB7HsWwO"
+    },
+    {
+      "range": [
+        7,
+        7
+      ],
+      "name": "WingSailorca078",
+      "_id": "ZbH0XISKgbWJnabA",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!U7RwKdcQlGUnotOi.ZbH0XISKgbWJnabA"
+    },
+    {
+      "range": [
+        8,
+        8
+      ],
+      "name": "ZetaZeta\"Agar\"",
+      "_id": "DioKV6P8DBWhg7CQ",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!U7RwKdcQlGUnotOi.DioKV6P8DBWhg7CQ"
+    }
+  ],
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "6nG6apxhfcD63CwQ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.9.3",
+    "createdTime": 1770656445247,
+    "modifiedTime": 1770656445247,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+  },
+  "_id": "U7RwKdcQlGUnotOi",
+  "sort": 0,
+  "_key": "!tables!U7RwKdcQlGUnotOi"
+}

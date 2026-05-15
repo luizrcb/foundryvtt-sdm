@@ -1,0 +1,222 @@
+{
+  "name": "Golem (machine human)",
+  "formula": "1d8",
+  "description": "<p></p>",
+  "results": [
+    {
+      "range": [
+        1,
+        1
+      ],
+      "name": "ClayApostrophe",
+      "_id": "kWKNN5LHefXHQ4Fl",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!pAh9ZBMpt1F7uk34.kWKNN5LHefXHQ4Fl"
+    },
+    {
+      "range": [
+        2,
+        2
+      ],
+      "name": "ClockTangerine",
+      "_id": "g6od3YP4K9cPylzW",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!pAh9ZBMpt1F7uk34.g6od3YP4K9cPylzW"
+    },
+    {
+      "range": [
+        3,
+        3
+      ],
+      "name": "Dons-the-Mantle",
+      "_id": "eqJ7dIue3OMYwie4",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!pAh9ZBMpt1F7uk34.eqJ7dIue3OMYwie4"
+    },
+    {
+      "range": [
+        4,
+        4
+      ],
+      "name": "Haubize-Vier",
+      "_id": "10n51ad4Rt156TY4",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!pAh9ZBMpt1F7uk34.10n51ad4Rt156TY4"
+    },
+    {
+      "range": [
+        5,
+        5
+      ],
+      "name": "Hole-in-the-Sky",
+      "_id": "K8k9r2Hz9sOqFdVa",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!pAh9ZBMpt1F7uk34.K8k9r2Hz9sOqFdVa"
+    },
+    {
+      "range": [
+        6,
+        6
+      ],
+      "name": "John316",
+      "_id": "ocsw5hjBIiRqicl0",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!pAh9ZBMpt1F7uk34.ocsw5hjBIiRqicl0"
+    },
+    {
+      "range": [
+        7,
+        7
+      ],
+      "name": "KFT479+\"Fly\"",
+      "_id": "gIPNhOZhdSIVhsJd",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!pAh9ZBMpt1F7uk34.gIPNhOZhdSIVhsJd"
+    },
+    {
+      "range": [
+        8,
+        8
+      ],
+      "name": "MaryGautamaReve",
+      "_id": "teLwj0vBL8IZnJk7",
+      "type": "text",
+      "img": null,
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!pAh9ZBMpt1F7uk34.teLwj0vBL8IZnJk7"
+    }
+  ],
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": null,
+  "ownership": {
+    "default": 0,
+    "6nG6apxhfcD63CwQ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.9.3",
+    "createdTime": 1770656427688,
+    "modifiedTime": 1770656443099,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+  },
+  "_id": "pAh9ZBMpt1F7uk34",
+  "sort": 800000,
+  "_key": "!tables!pAh9ZBMpt1F7uk34"
+}

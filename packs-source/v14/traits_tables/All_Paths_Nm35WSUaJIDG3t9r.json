@@ -1,0 +1,84 @@
+{
+  "name": "All Paths",
+  "_id": "Nm35WSUaJIDG3t9r",
+  "img": "icons/svg/d20-grey.svg",
+  "description": "",
+  "results": [
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "name": "Path Traits",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.traits_tables.RollTable.652LEhbha7y6KFci",
+      "_id": "eX1ILNo8ha1mE73D",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "createdTime": 1770643405593,
+        "modifiedTime": 1770643405593,
+        "lastModifiedBy": "Ex9ibz7imBNLfqpb"
+      },
+      "_key": "!tables.results!Nm35WSUaJIDG3t9r.eX1ILNo8ha1mE73D"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "name": "Other Paths",
+      "img": "icons/svg/d20-grey.svg",
+      "documentUuid": "Compendium.sdm.traits_tables.RollTable.5DQuOEZbj4yIoEIU",
+      "_id": "HxxCuM93nKm9KLSp",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "createdTime": 1770643407946,
+        "modifiedTime": 1770643407946,
+        "lastModifiedBy": "Ex9ibz7imBNLfqpb"
+      },
+      "_key": "!tables.results!Nm35WSUaJIDG3t9r.HxxCuM93nKm9KLSp"
+    }
+  ],
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "XDunMG5iNmel9OUX",
+  "sort": 100000,
+  "ownership": {
+    "default": 0,
+    "Ex9ibz7imBNLfqpb": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.9.3",
+    "createdTime": 1770643401872,
+    "modifiedTime": 1770654209736,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+  },
+  "formula": "1d2",
+  "_key": "!tables!Nm35WSUaJIDG3t9r"
+}

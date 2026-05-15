@@ -7,7 +7,7 @@ const packs = [
   { name: 'armors', source: `packs-source/${foundryVersion}/armors` },
   { name: 'burdens', source: `packs-source/${foundryVersion}/burdens` },
   { name: 'consumables', source: `packs-source/${foundryVersion}/consumables` },
-  { name: 'corruption', source: `packs-source/${foundryVersion}corruption` },
+  { name: 'corruption', source: `packs-source/${foundryVersion}/corruption` },
   { name: 'creatures', source: `packs-source/${foundryVersion}/creatures` },
   { name: 'gadgets', source: `packs-source/${foundryVersion}/gadgets` },
   { name: 'handouts', source: `packs-source/${foundryVersion}/handouts` },

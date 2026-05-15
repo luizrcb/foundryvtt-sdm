@@ -1,0 +1,992 @@
+{
+  "name": "Spins",
+  "formula": "1d40",
+  "description": "",
+  "results": [
+    {
+      "range": [
+        1,
+        1
+      ],
+      "name": "drug-fuelled dream travel",
+      "_id": "cmsIFw7NjNEndbhx",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.cmsIFw7NjNEndbhx"
+    },
+    {
+      "range": [
+        2,
+        2
+      ],
+      "name": "psychokinetic acrobatics",
+      "_id": "ArNpw1SvtvM6m9GE",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.ArNpw1SvtvM6m9GE"
+    },
+    {
+      "range": [
+        3,
+        3
+      ],
+      "name": "pray, love, eat monsters?",
+      "_id": "CMzN8KW2D3KgMEXy",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.CMzN8KW2D3KgMEXy"
+    },
+    {
+      "range": [
+        4,
+        4
+      ],
+      "name": "body-horror technomagic",
+      "_id": "yDcDeft72lBhbmtv",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.yDcDeft72lBhbmtv"
+    },
+    {
+      "range": [
+        5,
+        5
+      ],
+      "name": "pet's hired muscle",
+      "_id": "PW7uctmHGLpQsdf4",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": "6nG6apxhfcD63CwQ",
+        "modifiedTime": 1770747354122
+      },
+      "documentUuid": null,
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.PW7uctmHGLpQsdf4"
+    },
+    {
+      "range": [
+        6,
+        6
+      ],
+      "name": "explosive philosophies",
+      "_id": "onvfwOFlN7kqktLN",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.onvfwOFlN7kqktLN"
+    },
+    {
+      "range": [
+        7,
+        7
+      ],
+      "name": "small-business expertise",
+      "_id": "2eVUmuAxSoCFg7TA",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.2eVUmuAxSoCFg7TA"
+    },
+    {
+      "range": [
+        8,
+        8
+      ],
+      "name": "inquisition tactics",
+      "_id": "FVhEKyU2XsSFUCpa",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.FVhEKyU2XsSFUCpa"
+    },
+    {
+      "range": [
+        9,
+        9
+      ],
+      "name": "distraction or destruction?",
+      "_id": "Cb0XaIvRjx30ME5I",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.Cb0XaIvRjx30ME5I"
+    },
+    {
+      "range": [
+        10,
+        10
+      ],
+      "name": "talk to trees, hear herbs",
+      "_id": "npIUwcOp96E2AtzX",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.npIUwcOp96E2AtzX"
+    },
+    {
+      "range": [
+        11,
+        11
+      ],
+      "name": "carry landcoral in your skin",
+      "_id": "Xnudw4Fxf5o2yXzp",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.Xnudw4Fxf5o2yXzp"
+    },
+    {
+      "range": [
+        12,
+        12
+      ],
+      "name": "speak with strange fish",
+      "_id": "x267qlmaFDkhrK9O",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.x267qlmaFDkhrK9O"
+    },
+    {
+      "range": [
+        13,
+        13
+      ],
+      "name": "access divine communications",
+      "_id": "VEI1su8AWyof5xBQ",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.VEI1su8AWyof5xBQ"
+    },
+    {
+      "range": [
+        14,
+        14
+      ],
+      "name": "rebuild illegal devices",
+      "_id": "V1XJzMtEJdoOeBFt",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.V1XJzMtEJdoOeBFt"
+    },
+    {
+      "range": [
+        15,
+        15
+      ],
+      "name": "understand survival basics",
+      "_id": "qSNARQYsGB4pperI",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.qSNARQYsGB4pperI"
+    },
+    {
+      "range": [
+        16,
+        16
+      ],
+      "name": "spin stories and lies",
+      "_id": "2qJs7rzYDoabe5qx",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.2qJs7rzYDoabe5qx"
+    },
+    {
+      "range": [
+        17,
+        17
+      ],
+      "name": "travel unseen in urban bowels",
+      "_id": "OeA5LsXShfE0X1Lq",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.OeA5LsXShfE0X1Lq"
+    },
+    {
+      "range": [
+        18,
+        18
+      ],
+      "name": "manipulate the old minds",
+      "_id": "6mElWkN2AxpMCIJa",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.6mElWkN2AxpMCIJa"
+    },
+    {
+      "range": [
+        19,
+        19
+      ],
+      "name": "uplift downtrodden animals",
+      "_id": "feDDDz8iVO9Sl5j1",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.feDDDz8iVO9Sl5j1"
+    },
+    {
+      "range": [
+        20,
+        20
+      ],
+      "name": "cloud minds for shared goals",
+      "_id": "bHuC4flj1j5tHZC0",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.bHuC4flj1j5tHZC0"
+    },
+    {
+      "range": [
+        21,
+        21
+      ],
+      "name": "ensure proper reincarnation",
+      "_id": "j12pUqG67WMBueb6",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.j12pUqG67WMBueb6"
+    },
+    {
+      "range": [
+        22,
+        22
+      ],
+      "name": "use Long Long Ago tools",
+      "_id": "KAV4OWJEukcwuabc",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.KAV4OWJEukcwuabc"
+    },
+    {
+      "range": [
+        23,
+        23
+      ],
+      "name": "service the electric overlords",
+      "_id": "JjhlmRTb9MYzQltF",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.JjhlmRTb9MYzQltF"
+    },
+    {
+      "range": [
+        24,
+        24
+      ],
+      "name": "navigate cruel bureaucracies",
+      "_id": "xD9dyE8JYmWSBtk0",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.xD9dyE8JYmWSBtk0"
+    },
+    {
+      "range": [
+        25,
+        25
+      ],
+      "name": "travel safely off the grid",
+      "_id": "J519d4jKHEeULfua",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.J519d4jKHEeULfua"
+    },
+    {
+      "range": [
+        26,
+        26
+      ],
+      "name": "find and keep grim secrets",
+      "_id": "63lQV1dEOBFt7Tgl",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.63lQV1dEOBFt7Tgl"
+    },
+    {
+      "range": [
+        27,
+        27
+      ],
+      "name": "maximize short-term gains",
+      "_id": "BX51x8PUugoFRNse",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.BX51x8PUugoFRNse"
+    },
+    {
+      "range": [
+        28,
+        28
+      ],
+      "name": "cross tea & high dot etiquette",
+      "_id": "WL0L9gy3SZrialWs",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.WL0L9gy3SZrialWs"
+    },
+    {
+      "range": [
+        29,
+        29
+      ],
+      "name": "maintain order and discipline",
+      "_id": "HPd9VWjaBZCngEFU",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.HPd9VWjaBZCngEFU"
+    },
+    {
+      "range": [
+        30,
+        30
+      ],
+      "name": "keep the cog flower turning",
+      "_id": "gQQqcAL9bmSyuaUY",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.gQQqcAL9bmSyuaUY"
+    },
+    {
+      "range": [
+        31,
+        31
+      ],
+      "name": "oil and multiply machines",
+      "_id": "ux2PSndByBVEcLLj",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.ux2PSndByBVEcLLj"
+    },
+    {
+      "range": [
+        32,
+        32
+      ],
+      "name": "tamp down false ideas",
+      "_id": "DbVA2C02yujT9ITg",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.DbVA2C02yujT9ITg"
+    },
+    {
+      "range": [
+        33,
+        33
+      ],
+      "name": "subversive subterfuge",
+      "_id": "Mi8QnVu1JOXK4ykr",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.Mi8QnVu1JOXK4ykr"
+    },
+    {
+      "range": [
+        34,
+        34
+      ],
+      "name": "parasite machine minds",
+      "_id": "7NcgGbifZaPMNdXn",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.7NcgGbifZaPMNdXn"
+    },
+    {
+      "range": [
+        35,
+        35
+      ],
+      "name": "develop exquisite taste",
+      "_id": "awOPKabZ9TfHFBCJ",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.awOPKabZ9TfHFBCJ"
+    },
+    {
+      "range": [
+        36,
+        36
+      ],
+      "name": "schmoozer socialite spy",
+      "_id": "8sBywisUYWXzCOC5",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.8sBywisUYWXzCOC5"
+    },
+    {
+      "range": [
+        37,
+        37
+      ],
+      "name": "shave the coins for memories",
+      "_id": "9MlZP8HcbMeGaM7n",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.9MlZP8HcbMeGaM7n"
+    },
+    {
+      "range": [
+        38,
+        38
+      ],
+      "name": "dullway tunnel rat",
+      "_id": "h7LQz3LprfvN3Eeb",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.h7LQz3LprfvN3Eeb"
+    },
+    {
+      "range": [
+        39,
+        39
+      ],
+      "name": "overwhelm the given order",
+      "_id": "8soYMYMEfZfui9dq",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.8soYMYMEfZfui9dq"
+    },
+    {
+      "range": [
+        40,
+        40
+      ],
+      "name": "unlock doors with your blood",
+      "_id": "n3wIPZ5NWzyM0Z2M",
+      "type": "text",
+      "img": "icons/svg/d20-black.svg",
+      "description": "",
+      "weight": 1,
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "13.351",
+        "systemId": "sdm",
+        "systemVersion": "0.9.3",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!VeaDsQ1gzMpqaQaZ.n3wIPZ5NWzyM0Z2M"
+    }
+  ],
+  "img": "icons/svg/d20-grey.svg",
+  "replacement": true,
+  "displayRoll": true,
+  "folder": "SwkRaJM5VJ1eCvAC",
+  "ownership": {
+    "default": 0,
+    "6nG6apxhfcD63CwQ": 3
+  },
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "13.351",
+    "systemId": "sdm",
+    "systemVersion": "0.9.3",
+    "createdTime": 1770654228497,
+    "modifiedTime": 1770747351625,
+    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+  },
+  "_id": "VeaDsQ1gzMpqaQaZ",
+  "sort": 100000,
+  "_key": "!tables!VeaDsQ1gzMpqaQaZ"
+}
