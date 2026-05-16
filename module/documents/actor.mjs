@@ -992,7 +992,7 @@ export class SdmActor extends Actor {
           action: 'ok',
           label: game.i18n.localize('SDM.ConsumeSupply'),
           icon: 'fa-solid fa-sack-xmark',
-          callback: (event, button) =>
+          onClick: (event, button) =>
             new foundry.applications.ux.FormDataExtended(button.form).object
         },
         { action: 'cancel', label: game.i18n.localize('SDM.BackgroundCancel') }
@@ -1163,21 +1163,21 @@ export class SdmActor extends Actor {
   _getItemListContextOptions() {
     return [
       {
-        name: 'SDM.Item.View',
+        label: 'SDM.Item.View',
         icon: '<i class="fa-solid fa-eye"></i>',
-        callback: async target => {
+        onClick: async (event, target) => {
           const document = this.sheet._getEmbeddedDocument(target);
           await document.sheet.render({ force: true });
         }
       },
       {
-        name: 'SDM.Item.SplitItems',
+        label: 'SDM.Item.SplitItems',
         icon: '<i class="fa-solid fa-arrows-split-up-and-left"></i>',
-        condition: target => {
+        visible: target => {
           const item = this.sheet._getEmbeddedDocument(target);
           return item.type === ItemType.GEAR && item.parent && item.system.quantity > 1;
         },
-        callback: async target => {
+        onClick: async (event, target) => {
           const item = this.sheet._getEmbeddedDocument(target);
           const firstQty = await promptSplitStackFirstQty(item);
           if (firstQty == null) return; // user canceled
@@ -1185,21 +1185,21 @@ export class SdmActor extends Actor {
         }
       },
       {
-        name: 'SDM.Item.MergeItems',
+        label: 'SDM.Item.MergeItems',
         icon: '<i class="fa-solid fa-code-merge"></i>',
-        condition: target => {
+        visible: target => {
           const item = this.sheet._getEmbeddedDocument(target);
           return item.type === ItemType.GEAR && item.parent && this.canMergeItem(item);
         },
-        callback: async target => {
+        onClick: async (event, target) => {
           const item = this.sheet._getEmbeddedDocument(target);
           await mergeSimilarItems(item);
         }
       },
       {
-        name: 'SDM.Item.ConsumeSupply',
+        label: 'SDM.Item.ConsumeSupply',
         icon: '<i class="fa-solid fa-sack-xmark"></i>',
-        condition: target => {
+        visible: target => {
           const item = this.sheet._getEmbeddedDocument(target);
           return (
             item.type === ItemType.GEAR &&
@@ -1209,15 +1209,15 @@ export class SdmActor extends Actor {
             item.parent?.type === ActorType.CARAVAN
           );
         },
-        callback: async target => {
+        onClick: async (event, target) => {
           const item = this.sheet._getEmbeddedDocument(target);
           await this.consumeSupply(item);
         }
       },
       {
-        name: 'SDM.Item.Unpack',
+        label: 'SDM.Item.Unpack',
         icon: '<i class="fa-solid fa-box-archive"></i>',
-        condition: target => {
+        visible: target => {
           const item = this.sheet._getEmbeddedDocument(target);
           return (
             item.type === ItemType.GEAR &&
@@ -1227,27 +1227,27 @@ export class SdmActor extends Actor {
             item.system.status !== 'broken'
           );
         },
-        callback: async target => {
+        onClick: async (event, target) => {
           await this.sheet.unpackStartingKitItem(target);
         }
       },
       {
-        name: 'SDM.Item.UsageRoll',
+        label: 'SDM.Item.UsageRoll',
         icon: '<i class="fa-solid fa-arrow-rotate-right"></i>',
-        condition: target => {
+        visible: target => {
           const item = this.sheet._getEmbeddedDocument(target);
           if (item.system.resources === 'run_out') return false;
           return this.isOwner && item.system.features.has('replenish');
         },
-        callback: async target => {
+        onClick: async (event, target) => {
           const item = this.sheet._getEmbeddedDocument(target);
           await item.usageRoll(item.system.replenish.value);
         }
       },
       {
-        name: 'SDM.Item.AddOneCharge',
+        label: 'SDM.Item.AddOneCharge',
         icon: '<i class="fa-solid fa-circle-plus"></i>',
-        condition: target => {
+        visible: target => {
           const item = this.sheet._getEmbeddedDocument(target);
           if (item.system.charges.max === 0) return false;
           return (
@@ -1256,30 +1256,30 @@ export class SdmActor extends Actor {
             item.system.charges.value < item.system.charges.max
           );
         },
-        callback: async target => {
+        onClick: async (event, target) => {
           const item = this.sheet._getEmbeddedDocument(target);
           await item.updateCurrentCharges(1);
         }
       },
       {
-        name: 'SDM.Item.RemoveOneCharge',
+        label: 'SDM.Item.RemoveOneCharge',
         icon: '<i class="fa-solid fa-circle-minus"></i>',
-        condition: target => {
+        visible: target => {
           const item = this.sheet._getEmbeddedDocument(target);
           if (item.system.charges.max === 0) return false;
           return (
             this.isOwner && item.system.features.has('charges') && item.system.charges.value > 0
           );
         },
-        callback: async target => {
+        onClick: async (event, target) => {
           const item = this.sheet._getEmbeddedDocument(target);
           await item.updateCurrentCharges(-1);
         }
       },
       {
-        name: 'SDM.Item.Recharge',
+        label: 'SDM.Item.Recharge',
         icon: '<i class="fa-solid fa-battery-full"></i>',
-        condition: target => {
+        visible: target => {
           const item = this.sheet._getEmbeddedDocument(target);
           if (
             item.system.size.unit === SizeUnit.CASH ||
@@ -1292,15 +1292,15 @@ export class SdmActor extends Actor {
             return false;
           return this.isOwner && item.system.resources !== '';
         },
-        callback: async target => {
+        onClick: async (event, target) => {
           const item = this.sheet._getEmbeddedDocument(target);
           await item.toggleItemResources('');
         }
       },
       {
-        name: 'SDM.Item.RunningLow',
+        label: 'SDM.Item.RunningLow',
         icon: '<i class="fa-solid fa-battery-quarter"></i>',
-        condition: target => {
+        visible: target => {
           const item = this.sheet._getEmbeddedDocument(target);
           if (
             item.system.size.unit === SizeUnit.CASH ||
@@ -1313,15 +1313,15 @@ export class SdmActor extends Actor {
             return false;
           return this.isOwner && item.system.resources === '';
         },
-        callback: async target => {
+        onClick: async (event, target) => {
           const item = this.sheet._getEmbeddedDocument(target);
           await item.toggleItemResources('running_low');
         }
       },
       {
-        name: 'SDM.Item.RunOut',
+        label: 'SDM.Item.RunOut',
         icon: '<i class="fa-solid fa-battery-empty"></i>',
-        condition: target => {
+        visible: target => {
           const item = this.sheet._getEmbeddedDocument(target);
           if (
             item.system.size.unit === SizeUnit.CASH ||
@@ -1334,15 +1334,15 @@ export class SdmActor extends Actor {
             return false;
           return this.isOwner && item.system.resources !== 'run_out';
         },
-        callback: async target => {
+        onClick: async (event, target) => {
           const item = this.sheet._getEmbeddedDocument(target);
           await item.toggleItemResources('run_out');
         }
       },
       {
-        name: 'SDM.Item.Repair',
+        label: 'SDM.Item.Repair',
         icon: '<i class="fa-solid fa-hammer"></i>',
-        condition: target => {
+        visible: target => {
           const item = this.sheet._getEmbeddedDocument(target);
           if (
             item.system.size.unit === SizeUnit.CASH ||
@@ -1356,15 +1356,15 @@ export class SdmActor extends Actor {
           if (item.type === ItemType.TRAIT && item.system.type !== GearType.POWER) return false;
           return this.isOwner && item.system.status !== '';
         },
-        callback: async target => {
+        onClick: async (event, target) => {
           const item = this.sheet._getEmbeddedDocument(target);
           await item.toggleItemStatus('repair');
         }
       },
       {
-        name: 'SDM.Item.Notched',
+        label: 'SDM.Item.Notched',
         icon: '<i class="fa-solid fa-circle-dot"></i>',
-        condition: target => {
+        visible: target => {
           const item = this.sheet._getEmbeddedDocument(target);
           if (
             item.system.size.unit === SizeUnit.CASH ||
@@ -1378,15 +1378,15 @@ export class SdmActor extends Actor {
           if (item.type === ItemType.TRAIT && item.system.type !== GearType.POWER) return false;
           return this.isOwner && item.system.status === '';
         },
-        callback: async target => {
+        onClick: async (event, target) => {
           const item = this.sheet._getEmbeddedDocument(target);
           await item.toggleItemStatus();
         }
       },
       {
-        name: 'SDM.Item.Broken',
+        label: 'SDM.Item.Broken',
         icon: '<i class="fa-solid fa-ban"></i>',
-        condition: target => {
+        visible: target => {
           const item = this.sheet._getEmbeddedDocument(target);
           if (
             item.system.size.unit === 'cash' ||
@@ -1400,37 +1400,37 @@ export class SdmActor extends Actor {
           if (item.type === 'trait' && item.system.type !== 'power') return false;
           return this.isOwner && item.system.status === 'notched';
         },
-        callback: async target => {
+        onClick: async (event, target) => {
           const item = this.sheet._getEmbeddedDocument(target);
           await item.toggleItemStatus();
         }
       },
       {
-        name: 'SDM.Item.Share',
+        label: 'SDM.Item.Share',
         icon: '<i class="fa-solid fa-share-from-square"></i>',
-        callback: async target => {
+        onClick: async (event, target) => {
           const item = this.sheet._getEmbeddedDocument(target);
           await item.sendToChat({ actor: this, collapsed: false });
         }
       },
       {
-        name: 'SDM.Item.Delete',
+        label: 'SDM.Item.Delete',
         icon: '<i class="fa-solid fa-trash"></i>',
-        condition: () => this.isOwner,
-        callback: async target => {
+        visible: () => this.isOwner,
+        onClick: async (event, target) => {
           const document = this.sheet._getEmbeddedDocument(target);
           await document.deleteDialog();
         }
       },
 
       {
-        name: 'SDM.Item.ContainerDelete',
+        label: 'SDM.Item.ContainerDelete',
         icon: '<i class="fa-solid fa-folder-minus"></i>',
-        condition: target => {
+        visible: target => {
           const item = this.sheet._getEmbeddedDocument(target);
           return this.isOwner && item.system.type === GearType.CONTAINER;
         },
-        callback: async target => {
+        onClick: async (event, target) => {
           const document = this.sheet._getEmbeddedDocument(target);
           const containedItems = this.items.contents.filter(
             i => i.system.container === document.uuid
@@ -1644,7 +1644,7 @@ export class SdmActor extends Actor {
         newLifeValue = clamp(newLifeValue - remainingDamage, 0, life.max);
       }
 
-      // If multiplier === 1 and some damage was applied (same condition as before), keep adding blood die
+      // If multiplier === 1 and some damage was applied (same visible as before), keep adding blood die
       if (multiplier === 1 && netAmount && bloodClad) {
         await this.addOneBloodDie();
       }

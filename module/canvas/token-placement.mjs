@@ -85,7 +85,7 @@ export default class TokenPlacement {
           uniqueTokens.set(actorId, (uniqueTokens.get(actorId) ?? -1) + 1);
           placement.index = { total: total++, unique: uniqueTokens.get(actorId) };
           placements.push(placement);
-        } else obj.clear();
+        } else obj.destroy();
       }
       return placements;
     } finally {
@@ -108,6 +108,7 @@ export default class TokenPlacement {
       if ( tokenData.randomImg ) tokenData.texture.src = prototypeToken.actor.img;
       const cls = getDocumentClass("Token");
       const doc = new cls(tokenData, { parent: canvas.scene });
+      doc.object._previewType = "creation";
       this.#placements.push({
         prototypeToken, x: 0, y: 0, elevation: this.config.origin?.elevation ?? 0, rotation: tokenData.rotation ?? 0
       });
@@ -121,7 +122,9 @@ export default class TokenPlacement {
    * Clear any previews from the scene.
    */
   #destroyPreviews() {
-    this.#previews.forEach(p => p.object.destroy());
+    this.#previews.forEach(p => {
+      if ( p.object && !p.object.destroyed ) p.object.destroy();
+    });
   }
 
   /* -------------------------------------------- */
@@ -183,7 +186,7 @@ export default class TokenPlacement {
     preview.updateSource({x: dest.x, y: dest.y});
     this.#placements[idx].x = preview.x;
     this.#placements[idx].y = preview.y;
-    canvas.tokens.preview.children[this.#currentPlacement]?.refresh();
+    this.#previews[this.#currentPlacement].object.refresh();
     requestAnimationFrame(() => this.#throttle = false);
   }
 
@@ -201,7 +204,7 @@ export default class TokenPlacement {
     const preview = this.#previews[this.#currentPlacement];
     this.#placements[this.#currentPlacement].rotation += snap * Math.sign(event.deltaY);
     preview.updateSource({ rotation: this.#placements[this.#currentPlacement].rotation });
-    canvas.tokens.preview.children[this.#currentPlacement]?.refresh();
+    this.#previews[this.#currentPlacement].object.refresh();
   }
 
   /* -------------------------------------------- */

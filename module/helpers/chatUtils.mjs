@@ -62,7 +62,7 @@ export async function createChatMessage({
   actor,
   user = game.user.id,
   speaker,
-  rollMode = game.settings.get('core', 'rollMode'),
+  rollMode = game.settings.get('core', 'messageMode'),
   flavor,
   content,
   rolls,
@@ -114,7 +114,7 @@ export async function createChatMessage({
       flags
     };
 
-    chatData = ChatMessage.applyRollMode(chatData, rollMode);
+    chatData = ChatMessage.applyMode(chatData, rollMode);
 
     return ChatMessage.create(chatData);
   } catch (e) {

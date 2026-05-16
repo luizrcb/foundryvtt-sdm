@@ -510,7 +510,7 @@ async function rollOracle({ oracleType, modifier, rollMode, question }, oracle_c
 </div>
 `;
 
-  const chatMode = game.settings.get('core', 'rollMode');
+  const chatMode = game.settings.get('core', 'messageMode');
   let chatData = {
     content,
     speaker,
@@ -519,6 +519,6 @@ async function rollOracle({ oracleType, modifier, rollMode, question }, oracle_c
     flags: { 'sdm.isHeroResult': true }
   };
 
-  chatData = ChatMessage.applyRollMode(chatData, chatMode);
+  chatData = ChatMessage.applyMode(chatData, chatMode);
   await ChatMessage.create(chatData);
 }

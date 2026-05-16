@@ -1724,6 +1724,7 @@ input[type=radio]::after {
 .align-center {
   justify-content: center;
   text-align: center;
+  align-items: center;
 }
 
 .flex-around {
@@ -2227,7 +2228,7 @@ input[type=radio]::after {
 }
 .sdm .items-list .item-controls {
   display: flex;
-  flex: 0 0 96px;
+  flex: 0 0 98px;
 }
 .sdm .items-list .item-controls.controls-2 {
   flex: 0 0 50px;
@@ -2239,7 +2240,7 @@ input[type=radio]::after {
   justify-content: flex-end;
 }
 .sdm .items-list .item-controls a {
-  font-size: 12px;
+  font-size: 11px;
   text-align: center;
   margin: 0 6px;
 }
@@ -2358,6 +2359,9 @@ input[type=radio]::after {
 .sdm .items-list .items-header .item-name {
   padding-left: 5px;
   text-align: left;
+}
+.sdm .items-list .items-header .item-formula {
+  flex: 0 0 90px;
 }
 .sdm .item-formula {
   flex: 0 0 95px;

@@ -74,7 +74,7 @@
   // Control Buttons
   .item-controls {
     display: flex;
-    flex: 0 0 96px;
+    flex: 0 0 98px;
     &.controls-2 {
       flex: 0 0 50px;
     }
@@ -83,7 +83,7 @@
     }
     justify-content: flex-end;
     a {
-      font-size: 12px;
+      font-size: 11px;
       text-align: center;
       margin: 0 6px;
     }
@@ -219,6 +219,10 @@
       padding-left: 5px;
       text-align: left;
       // font-size: 16px;
+    }
+
+    .item-formula {
+      flex: 0 0 90px;
     }
   }
 }

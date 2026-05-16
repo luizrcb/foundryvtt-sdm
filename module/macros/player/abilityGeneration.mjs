@@ -43,7 +43,7 @@ export async function abilityGeneration() {
     </ul>
     `;
 
-    const rollMode = game.settings.get('core', 'rollMode');
+    const rollMode = game.settings.get('core', 'messageMode');
 
     let chatData = {
       content,
@@ -51,7 +51,7 @@ export async function abilityGeneration() {
       flags: { 'sdm.isAbilityScoreRoll': true }
     };
 
-    chatData = ChatMessage.applyRollMode(chatData, rollMode);
+    chatData = ChatMessage.applyMode(chatData, rollMode);
 
     ChatMessage.create(chatData);
   };

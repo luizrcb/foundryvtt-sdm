@@ -779,7 +779,7 @@ export class SdmItem extends Item {
 
     // Initialize chat data.
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
-    const rollMode = game.settings.get('core', 'rollMode');
+    const rollMode = game.settings.get('core', 'messageMode');
     const itemTypeLabel = game.i18n.localize(`TYPES.Item.${item.type}`);
     let label = `[${itemTypeLabel}] ${item.name}`;
 
