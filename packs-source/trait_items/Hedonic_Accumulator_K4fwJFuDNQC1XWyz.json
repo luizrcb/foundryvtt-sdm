@@ -6,6 +6,7 @@
   "img": "icons/commodities/tech/detonator-timer.webp",
   "system": {
     "readied": false,
+    "categories": ["orangelander"],
     "status": "",
     "resources": "",
     "cost": 5,

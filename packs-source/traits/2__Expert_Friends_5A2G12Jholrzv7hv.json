@@ -6,6 +6,7 @@
   "img": "icons/magic/nature/wolf-paw-glow-large-purple-teal.webp",
   "system": {
     "readied": false,
+    "categories": ["trickster"],
     "status": "",
     "resources": "",
     "cost": 0,

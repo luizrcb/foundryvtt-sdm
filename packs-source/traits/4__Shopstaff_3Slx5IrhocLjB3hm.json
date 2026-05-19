@@ -6,6 +6,7 @@
   "img": "icons/skills/social/diplomacy-unity-alliance.webp",
   "system": {
     "readied": false,
+    "categories": ["servant"],
     "status": "",
     "resources": "",
     "cost": 0,

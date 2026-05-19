@@ -6,6 +6,7 @@
   "img": "icons/environment/settlement/city-hall.webp",
   "system": {
     "readied": false,
+    "categories": ["bourgeois"],
     "status": "",
     "resources": "",
     "cost": 0,

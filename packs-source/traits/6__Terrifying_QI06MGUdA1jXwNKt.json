@@ -6,6 +6,7 @@
   "img": "icons/magic/control/fear-fright-monster-grin-red-orange.webp",
   "system": {
     "readied": false,
+    "categories": ["fighter"],
     "cost": 0,
     "cost_frequency": "",
     "description": "<p>You’re skilled at frightening people. That’s also a +2 bonus when breaking your foes’ morale. Expert: +4; master: +6<br /><em>(morale bonuses should be manually added to rolls)</em></p>",

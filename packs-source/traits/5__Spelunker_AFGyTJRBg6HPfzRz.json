@@ -6,6 +6,7 @@
   "img": "icons/environment/wilderness/mine-interior-dungeon-door.webp",
   "system": {
     "readied": false,
+    "categories": ["bluelander"],
     "status": "",
     "resources": "",
     "cost": 0,

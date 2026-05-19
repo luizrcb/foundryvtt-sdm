@@ -6,6 +6,7 @@
   "img": "icons/environment/people/infantry-armored.webp",
   "system": {
     "readied": false,
+    "categories": ["fighter"],
     "cost": 0,
     "cost_frequency": "",
     "description": "<p>You call yourself a warden, warrior, or weaponmaster.</p><p>You are skilled at using traditional weapons and armors; from knife to sword, blaster to rifle, chitin shield to buffer harness.</p><p>Also, you are skilled at defense. That’s a +3 bonus to defense and attack. Expert: +6; master: +9.</p><p><em>(update the defense bonus in the effects tab as this skill rank increases)</em></p>",

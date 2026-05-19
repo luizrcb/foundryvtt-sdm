@@ -6,6 +6,7 @@
   "img": "icons/magic/unholy/hands-praying-fire-green.webp",
   "system": {
     "readied": false,
+    "categories": ["bluelander"],
     "status": "",
     "resources": "",
     "cost": 0,

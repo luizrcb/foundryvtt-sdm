@@ -6,6 +6,7 @@
   "img": "icons/equipment/shield/heater-steel-crystal-red.webp",
   "system": {
     "readied": false,
+    "categories": ["fighter"],
     "cost": 0,
     "cost_frequency": "",
     "description": "<p>You’re skilled at physical defense and all kinds of defensive equipment. Also, even if unar mored, gain a +3 armor bonus. Expert: +6 armor; master: +9 armor.</p><p><br /><em>(update the armor bonus in the effects tab when this skill rank increases)</em></p>",

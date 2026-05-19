@@ -6,6 +6,7 @@
   "img": "icons/equipment/neck/necklace-carved-lantern-gold.webp",
   "system": {
     "readied": false,
+    "categories": ["redlander"],
     "status": "",
     "resources": "",
     "cost": 650,

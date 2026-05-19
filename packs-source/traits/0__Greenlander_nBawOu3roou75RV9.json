@@ -6,6 +6,7 @@
   "img": "icons/commodities/tech/plug.webp",
   "system": {
     "readied": false,
+    "categories": ["greenlander"],
     "status": "",
     "resources": "",
     "cost": 0,

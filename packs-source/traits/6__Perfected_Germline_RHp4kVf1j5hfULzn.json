@@ -6,6 +6,7 @@
   "img": "icons/magic/control/silhouette-hold-change-blue.webp",
   "system": {
     "readied": false,
+    "categories": ["noble"],
     "status": "",
     "resources": "",
     "cost": 0,

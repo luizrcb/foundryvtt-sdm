@@ -6,6 +6,7 @@
   "img": "icons/magic/death/undead-skeleton-energy-green.webp",
   "system": {
     "readied": false,
+    "categories": ["skeleton"],
     "status": "",
     "resources": "",
     "cost": 0,

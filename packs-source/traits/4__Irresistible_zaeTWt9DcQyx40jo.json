@@ -6,6 +6,7 @@
   "img": "icons/magic/holy/projectiles-blades-salvo-yellow.webp",
   "system": {
     "readied": false,
+    "categories": ["fighter"],
     "cost": 0,
     "cost_frequency": "",
     "description": "<p>Every round you deal damage equal to your level to one foe you attacked, whether your attack roll hit or missed. <em>(not automated)</em></p>",

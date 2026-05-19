@@ -6,6 +6,7 @@
   "img": "icons/commodities/gems/pearl-white-oval.webp",
   "system": {
     "readied": false,
+    "categories": ["bourgeois"],
     "status": "",
     "resources": "",
     "cost": 0,

@@ -6,6 +6,7 @@
   "img": "icons/magic/unholy/silhouette-light-fire-blue.webp",
   "system": {
     "readied": false,
+    "categories": ["wizard"],
     "cost": 0,
     "cost_frequency": "",
     "description": "<p>Each of your life points is worth double when paying for powers.</p><p>(<em>reduce by half your power cost in the character sheet edit mode</em>)</p>",

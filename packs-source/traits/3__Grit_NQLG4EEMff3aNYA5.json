@@ -6,6 +6,7 @@
   "img": "icons/magic/life/heart-cross-purple-orange.webp",
   "system": {
     "readied": false,
+    "categories": ["fighter"],
     "cost": 0,
     "cost_frequency": "",
     "description": "<p>Gain 1 life per level (<em>update value in the effects tab every level</em>) and advantage when you roll endurance.</p><p><em>(life bonuses will only apply to the max life value, you need to adjust the current value accordinly)</em></p>",

@@ -6,6 +6,7 @@
   "img": "icons/weapons/wands/wand-gem-blue.webp",
   "system": {
     "readied": false,
+    "categories": ["soldier"],
     "status": "",
     "resources": "",
     "cost": 0,

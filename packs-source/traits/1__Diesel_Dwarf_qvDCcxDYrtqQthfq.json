@@ -6,6 +6,7 @@
   "img": "icons/magic/symbols/circle-ouroboros.webp",
   "system": {
     "readied": false,
+    "categories": ["yellowlander"],
     "status": "",
     "resources": "",
     "cost": 0,

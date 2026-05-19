@@ -6,6 +6,7 @@
   "img": "icons/magic/nature/thorns-hand-glow-green.webp",
   "system": {
     "readied": false,
+    "categories": ["yellowlander"],
     "status": "",
     "resources": "",
     "cost": 0,

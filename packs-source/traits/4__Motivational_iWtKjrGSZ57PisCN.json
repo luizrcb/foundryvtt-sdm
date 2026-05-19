@@ -6,6 +6,7 @@
   "img": "icons/magic/control/energy-stream-link-large-white.webp",
   "system": {
     "readied": false,
+    "categories": ["manager"],
     "status": "",
     "resources": "",
     "cost": 0,

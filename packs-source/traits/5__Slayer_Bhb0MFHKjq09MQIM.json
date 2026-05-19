@@ -6,6 +6,7 @@
   "img": "icons/skills/melee/maneuver-daggers-paired-orange.webp",
   "system": {
     "readied": false,
+    "categories": ["soldier"],
     "status": "",
     "resources": "",
     "cost": 0,

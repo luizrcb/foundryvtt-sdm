@@ -6,6 +6,7 @@
   "img": "icons/commodities/treasure/bust-pharaoh-gold-blue.webp",
   "system": {
     "readied": false,
+    "categories": ["redlander"],
     "status": "",
     "resources": "",
     "cost": 3000,

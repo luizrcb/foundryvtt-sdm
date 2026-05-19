@@ -6,6 +6,7 @@
   "img": "icons/magic/fire/flame-burning-hand-orange.webp",
   "system": {
     "readied": false,
+    "categories": ["wizard"],
     "cost": 0,
     "cost_frequency": "",
     "description": "<p>When your power fails or a target makes its save, you can use the power again for free. <strong>Once.</strong> Recharge your recast with a hero die.</p>",

@@ -6,6 +6,7 @@
   "img": "icons/skills/melee/strike-axe-blood-red.webp",
   "system": {
     "readied": false,
+    "categories": ["bearer"],
     "status": "",
     "resources": "",
     "cost": 0,

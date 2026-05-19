@@ -6,6 +6,7 @@
   "img": "icons/commodities/materials/slime-red.webp",
   "system": {
     "readied": false,
+    "categories": ["bluelander"],
     "status": "",
     "resources": "",
     "cost": 100,

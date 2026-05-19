@@ -6,6 +6,7 @@
   "img": "icons/containers/bags/coinpouch-simple-leather-tan.webp",
   "system": {
     "readied": false,
+    "categories": ["traveler"],
     "cost": 0,
     "cost_frequency": "",
     "description": "<p>Conceal a number of small objects equal to your level for free, ignoring inventory. A knife is small.</p><p><em>(every level update the value of the bonus in the effects tab)</em></p>",

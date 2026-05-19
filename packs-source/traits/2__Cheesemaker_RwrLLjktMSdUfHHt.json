@@ -6,6 +6,7 @@
   "img": "icons/consumables/food/cheese-round-glowing-yellow.webp",
   "system": {
     "readied": false,
+    "categories": ["bluelander"],
     "status": "",
     "resources": "",
     "cost": 0,

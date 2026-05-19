@@ -6,6 +6,7 @@
   "img": "icons/magic/defensive/illusion-evasion-echo-purple.webp",
   "system": {
     "readied": false,
+    "categories": ["purplelander"],
     "status": "",
     "resources": "",
     "cost": 0,

@@ -6,6 +6,7 @@
   "img": "icons/magic/life/heart-hand-gold-green.webp",
   "system": {
     "readied": false,
+    "categories": ["noble"],
     "status": "",
     "resources": "",
     "cost": 0,

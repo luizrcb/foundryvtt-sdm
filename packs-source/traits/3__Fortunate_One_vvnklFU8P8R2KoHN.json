@@ -6,6 +6,7 @@
   "img": "icons/skills/social/peace-luck-insult.webp",
   "system": {
     "readied": false,
+    "categories": ["tourist"],
     "status": "",
     "resources": "",
     "cost": 0,

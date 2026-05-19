@@ -6,6 +6,7 @@
   "img": "icons/equipment/head/helm-barbute-horned-gold-purple.webp",
   "system": {
     "readied": false,
+    "categories": ["barbarian"],
     "status": "",
     "resources": "",
     "cost": 0,

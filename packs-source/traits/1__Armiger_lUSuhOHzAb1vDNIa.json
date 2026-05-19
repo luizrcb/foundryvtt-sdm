@@ -6,6 +6,7 @@
   "img": "icons/weapons/polearms/javelin.webp",
   "system": {
     "readied": false,
+    "categories": ["fighter"],
     "cost": 0,
     "cost_frequency": "",
     "description": "<p>Carry a number of weapons equal to your level for free, ignoring inventory.</p><p><em>(update this bonus value in the effects tab every level)</em></p>",

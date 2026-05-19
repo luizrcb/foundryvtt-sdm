@@ -6,6 +6,7 @@
   "img": "icons/magic/control/debuff-energy-hold-blue-yellow.webp",
   "system": {
     "readied": false,
+    "categories": ["scion"],
     "status": "",
     "resources": "",
     "cost": 0,

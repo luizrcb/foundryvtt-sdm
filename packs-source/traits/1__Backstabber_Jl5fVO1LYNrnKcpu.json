@@ -6,6 +6,7 @@
   "img": "icons/skills/melee/strike-dagger-poison-dripping-green.webp",
   "system": {
     "readied": false,
+    "categories": ["trickster"],
     "status": "",
     "resources": "",
     "cost": 0,

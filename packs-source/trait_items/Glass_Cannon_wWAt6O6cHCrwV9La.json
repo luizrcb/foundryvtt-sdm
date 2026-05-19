@@ -6,6 +6,7 @@
   "img": "icons/magic/acid/projectile-needles-salvo-green.webp",
   "system": {
     "readied": false,
+    "categories": ["redlander"],
     "status": "",
     "resources": "",
     "cost": 4995,

@@ -6,6 +6,7 @@
   "img": "icons/environment/people/cleric-orange.webp",
   "system": {
     "readied": false,
+    "categories": ["holy_fool"],
     "status": "",
     "resources": "",
     "cost": 0,

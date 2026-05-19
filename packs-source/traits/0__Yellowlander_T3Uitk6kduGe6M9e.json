@@ -6,6 +6,7 @@
   "img": "icons/weapons/bows/shortbow-recurve-yellow.webp",
   "system": {
     "readied": false,
+    "categories": ["yellowlander"],
     "status": "",
     "resources": "",
     "cost": 0,

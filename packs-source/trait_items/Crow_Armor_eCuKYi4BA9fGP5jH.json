@@ -6,6 +6,7 @@
   "img": "icons/equipment/shoulder/pauldron-decorative-bird-blue.webp",
   "system": {
     "readied": false,
+    "categories": ["redlander"],
     "status": "",
     "resources": "",
     "cost": 450,

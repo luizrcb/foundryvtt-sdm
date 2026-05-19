@@ -6,6 +6,7 @@
   "img": "icons/commodities/materials/material-woven.webp",
   "system": {
     "readied": false,
+    "categories": ["bluelander"],
     "status": "",
     "resources": "",
     "cost": 75,

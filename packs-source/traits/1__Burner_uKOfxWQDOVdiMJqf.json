@@ -6,6 +6,7 @@
   "img": "icons/magic/fire/flame-burning-hand-white.webp",
   "system": {
     "readied": false,
+    "categories": ["wizard"],
     "cost": 0,
     "cost_frequency": "",
     "description": "<p>Once per turn, you can spend an ability point to overcharge a power, regardless of its cost</p>",

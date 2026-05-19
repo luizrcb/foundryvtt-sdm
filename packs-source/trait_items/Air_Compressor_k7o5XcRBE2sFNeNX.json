@@ -6,6 +6,7 @@
   "img": "icons/equipment/head/mask-carved-gargoyle-grey.webp",
   "system": {
     "readied": false,
+    "categories": ["orangelander"],
     "status": "",
     "resources": "",
     "cost": 85,

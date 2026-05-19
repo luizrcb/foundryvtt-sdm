@@ -6,6 +6,7 @@
   "img": "icons/creatures/abilities/paw-glowing-yellow.webp",
   "system": {
     "readied": false,
+    "categories": ["yellowlander"],
     "status": "",
     "resources": "",
     "cost": 0,

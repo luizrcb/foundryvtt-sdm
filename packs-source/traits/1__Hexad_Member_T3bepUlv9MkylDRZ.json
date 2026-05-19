@@ -6,6 +6,7 @@
   "img": "icons/magic/symbols/rune-sigil-red-orange.webp",
   "system": {
     "readied": false,
+    "categories": ["redlander"],
     "status": "",
     "resources": "",
     "cost": 0,

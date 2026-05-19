@@ -6,6 +6,7 @@
   "img": "icons/commodities/tech/cog-brass.webp",
   "system": {
     "readied": false,
+    "categories": ["redlander"],
     "status": "",
     "resources": "",
     "cost": 0,

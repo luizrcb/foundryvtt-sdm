@@ -6,6 +6,7 @@
   "img": "icons/environment/settlement/house-farmland.webp",
   "system": {
     "readied": false,
+    "categories": ["yellowlander"],
     "status": "",
     "resources": "",
     "cost": 0,

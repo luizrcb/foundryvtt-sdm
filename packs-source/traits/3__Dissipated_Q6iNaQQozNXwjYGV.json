@@ -6,6 +6,7 @@
   "img": "icons/consumables/potions/potion-round-corked-glowing-green.webp",
   "system": {
     "readied": false,
+    "categories": ["noble"],
     "status": "",
     "resources": "",
     "cost": 0,

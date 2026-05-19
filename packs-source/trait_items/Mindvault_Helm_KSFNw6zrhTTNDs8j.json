@@ -6,6 +6,7 @@
   "img": "icons/equipment/head/helm-barbute-engraved-steel.webp",
   "system": {
     "readied": false,
+    "categories": ["redlander"],
     "status": "",
     "resources": "",
     "cost": 7500,

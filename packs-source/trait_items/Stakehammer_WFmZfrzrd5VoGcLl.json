@@ -6,6 +6,7 @@
   "img": "icons/weapons/hammers/hammer-war-spiked.webp",
   "system": {
     "readied": false,
+    "categories": ["redlander"],
     "status": "",
     "resources": "",
     "cost": 1375,

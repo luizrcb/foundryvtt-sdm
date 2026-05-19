@@ -6,6 +6,7 @@
   "img": "icons/magic/control/mouth-smile-deception-purple.webp",
   "system": {
     "readied": false,
+    "categories": ["noble"],
     "status": "",
     "resources": "",
     "cost": 0,

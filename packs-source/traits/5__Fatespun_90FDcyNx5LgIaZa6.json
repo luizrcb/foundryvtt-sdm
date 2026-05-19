@@ -6,6 +6,7 @@
   "img": "icons/skills/melee/sword-winged-holy-orange.webp",
   "system": {
     "readied": false,
+    "categories": ["weapon"],
     "status": "",
     "resources": "",
     "cost": 0,

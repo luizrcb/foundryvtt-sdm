@@ -6,6 +6,7 @@
   "img": "icons/commodities/currency/coins-plain-stack-gold.webp",
   "system": {
     "readied": false,
+    "categories": ["bourgeois"],
     "status": "",
     "resources": "",
     "cost": 0,

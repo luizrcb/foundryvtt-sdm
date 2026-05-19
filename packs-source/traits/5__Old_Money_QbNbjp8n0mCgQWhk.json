@@ -6,6 +6,7 @@
   "img": "icons/commodities/currency/coin-embossed-crown-gold.webp",
   "system": {
     "readied": false,
+    "categories": ["bourgeois"],
     "status": "",
     "resources": "",
     "cost": 0,

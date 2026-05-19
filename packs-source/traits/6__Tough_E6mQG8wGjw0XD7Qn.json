@@ -6,6 +6,7 @@
   "img": "icons/magic/earth/strike-fist-stone.webp",
   "system": {
     "readied": false,
+    "categories": ["servant"],
     "status": "",
     "resources": "",
     "cost": 0,

@@ -6,6 +6,7 @@
   "img": "icons/weapons/staves/staff-skull-brown.webp",
   "system": {
     "readied": false,
+    "categories": ["weapon", "bearer"],
     "status": "",
     "resources": "",
     "cost": 0,

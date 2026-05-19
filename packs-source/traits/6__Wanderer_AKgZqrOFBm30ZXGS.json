@@ -6,6 +6,7 @@
   "img": "icons/skills/movement/feet-bladed-boots-fire.webp",
   "system": {
     "readied": false,
+    "categories": ["holy_fool"],
     "status": "",
     "resources": "",
     "cost": 0,

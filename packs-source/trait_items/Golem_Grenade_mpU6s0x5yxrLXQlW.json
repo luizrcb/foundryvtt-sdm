@@ -6,6 +6,7 @@
   "img": "icons/weapons/thrown/bomb-metal-brown.webp",
   "system": {
     "readied": false,
+    "categories": ["bluelander"],
     "status": "",
     "resources": "",
     "cost": 275,

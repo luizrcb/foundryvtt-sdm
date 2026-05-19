@@ -6,6 +6,7 @@
   "img": "icons/magic/water/orb-ice-opaque.webp",
   "system": {
     "readied": false,
+    "categories": ["bluelander"],
     "status": "",
     "resources": "",
     "cost": 640,

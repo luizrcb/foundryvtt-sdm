@@ -6,6 +6,7 @@
   "img": "icons/equipment/chest/breastplate-collared-steel-green.webp",
   "system": {
     "readied": false,
+    "categories": ["bluelander"],
     "status": "",
     "resources": "",
     "cost": 225,

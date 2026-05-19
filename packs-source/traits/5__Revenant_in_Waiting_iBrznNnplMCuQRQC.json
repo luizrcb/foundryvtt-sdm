@@ -6,6 +6,7 @@
   "img": "icons/magic/death/undead-skeleton-worn-blue.webp",
   "system": {
     "readied": false,
+    "categories": ["bearer"],
     "status": "",
     "resources": "",
     "cost": 0,

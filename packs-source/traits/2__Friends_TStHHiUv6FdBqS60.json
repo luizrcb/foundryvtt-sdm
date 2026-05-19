@@ -6,6 +6,7 @@
   "img": "icons/creatures/mammals/dog-husky-white-blue.webp",
   "system": {
     "readied": false,
+    "categories": ["traveler"],
     "cost": 0,
     "cost_frequency": "",
     "description": "<p>You can have a number of pets or sidekicks equal to your level who don’t take up the usual inventory slot. <br />(<em>Update the value in the effects tab as your character levels up</em>)</p>",

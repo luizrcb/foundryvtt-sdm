@@ -6,6 +6,7 @@
   "img": "icons/skills/trades/academics-book-study-purple.webp",
   "system": {
     "readied": false,
+    "categories": ["tourist"],
     "status": "",
     "resources": "",
     "cost": 0,

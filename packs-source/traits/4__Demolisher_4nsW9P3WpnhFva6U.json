@@ -6,6 +6,7 @@
   "img": "icons/skills/melee/strike-hammer-destructive-blue.webp",
   "system": {
     "readied": false,
+    "categories": ["weapon"],
     "status": "",
     "resources": "",
     "cost": 0,

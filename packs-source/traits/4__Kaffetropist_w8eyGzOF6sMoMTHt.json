@@ -6,6 +6,7 @@
   "img": "icons/consumables/fruit/nanking-cherry-leaf-red.webp",
   "system": {
     "readied": false,
+    "categories": ["purplelander"],
     "status": "",
     "resources": "",
     "cost": 0,

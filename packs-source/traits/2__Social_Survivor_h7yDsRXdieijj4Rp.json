@@ -6,6 +6,7 @@
   "img": "icons/skills/social/diplomacy-handshake-yellow.webp",
   "system": {
     "readied": false,
+    "categories": ["manager"],
     "status": "",
     "resources": "",
     "cost": 0,

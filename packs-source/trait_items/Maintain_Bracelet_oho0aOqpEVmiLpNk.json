@@ -6,6 +6,7 @@
   "img": "icons/equipment/wrist/bracer-ornate-pink-green.webp",
   "system": {
     "readied": false,
+    "categories": ["orangelander"],
     "status": "",
     "resources": "",
     "cost": 750,

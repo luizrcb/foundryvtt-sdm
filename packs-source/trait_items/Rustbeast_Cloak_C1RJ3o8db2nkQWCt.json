@@ -6,6 +6,7 @@
   "img": "icons/equipment/back/cape-layered-red.webp",
   "system": {
     "readied": false,
+    "categories": ["redlander"],
     "status": "",
     "resources": "",
     "cost": 225,

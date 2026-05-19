@@ -6,6 +6,7 @@
   "img": "icons/commodities/currency/coins-assorted-mix-silver.webp",
   "system": {
     "readied": false,
+    "categories": ["greenlander"],
     "status": "",
     "resources": "",
     "cost": 0,

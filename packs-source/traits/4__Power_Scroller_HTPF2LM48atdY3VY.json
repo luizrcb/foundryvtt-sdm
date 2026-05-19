@@ -6,6 +6,7 @@
   "img": "icons/sundries/scrolls/scroll-bound-sealed-red-green.webp",
   "system": {
     "readied": false,
+    "categories": ["noömagus"],
     "status": "",
     "resources": "",
     "cost": 0,

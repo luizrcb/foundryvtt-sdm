@@ -6,6 +6,7 @@
   "img": "icons/tools/navigation/compass-brass-blue-red.webp",
   "system": {
     "readied": false,
+    "categories": ["traveler"],
     "cost": 0,
     "cost_frequency": "",
     "description": "<p>You call yourself a vagabond, a wanderer, the wind. </p><p>You are skilled at managing a caravan, navigating with maps and stars and waypoints, making and concealing camps, finding water and food, and the etiquette of the vast open lands. </p><p>You wield the marching staff and the dagger and the traditional rifle.</p>",

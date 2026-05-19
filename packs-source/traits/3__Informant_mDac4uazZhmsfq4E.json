@@ -6,6 +6,7 @@
   "img": "icons/magic/perception/orb-eye-scrying.webp",
   "system": {
     "readied": false,
+    "categories": ["greenlander"],
     "status": "",
     "resources": "",
     "cost": 0,

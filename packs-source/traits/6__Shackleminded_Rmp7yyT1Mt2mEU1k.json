@@ -6,6 +6,7 @@
   "img": "icons/magic/symbols/runes-carved-stone-green.webp",
   "system": {
     "readied": false,
+    "categories": ["bearer"],
     "status": "",
     "resources": "",
     "cost": 0,

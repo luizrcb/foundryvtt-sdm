@@ -6,6 +6,7 @@
   "img": "icons/magic/control/buff-luck-fortune-green-gold.webp",
   "system": {
     "readied": false,
+    "categories": ["traveler"],
     "cost": 0,
     "cost_frequency": "",
     "description": "<p>You’re skilled at being lucky. That’s a +3 bonus to all saves.</p>",

@@ -6,6 +6,7 @@
   "img": "icons/magic/air/fog-gas-smoke-brown.webp",
   "system": {
     "readied": false,
+    "categories": ["yellowlander"],
     "status": "",
     "resources": "",
     "cost": 0,

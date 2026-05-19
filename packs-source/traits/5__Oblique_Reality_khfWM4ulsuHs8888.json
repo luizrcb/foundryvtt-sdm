@@ -6,6 +6,7 @@
   "img": "icons/magic/defensive/barrier-shield-dome-deflect-blue.webp",
   "system": {
     "readied": false,
+    "categories": ["wizard"],
     "cost": 0,
     "cost_frequency": "",
     "description": "<p>Spend one life or one hero die to deflect a power targeting you (or an adjacent target) to the left or the right (or up or down).</p>",

@@ -6,6 +6,7 @@
   "img": "icons/magic/light/explosion-beam-impact-silhouette.webp",
   "system": {
     "readied": false,
+    "categories": ["scion"],
     "status": "",
     "resources": "",
     "cost": 0,

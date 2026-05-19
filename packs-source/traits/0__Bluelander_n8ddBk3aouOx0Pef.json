@@ -6,6 +6,7 @@
   "img": "icons/tools/fishing/hook-multi-steel-brown.webp",
   "system": {
     "readied": false,
+    "categories": ["bluelander"],
     "status": "",
     "resources": "",
     "cost": 0,

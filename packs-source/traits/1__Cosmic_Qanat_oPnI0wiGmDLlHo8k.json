@@ -6,6 +6,7 @@
   "img": "icons/magic/perception/eye-ringed-glow-angry-large-teal.webp",
   "system": {
     "readied": false,
+    "categories": ["noömagus"],
     "status": "",
     "resources": "",
     "cost": 0,

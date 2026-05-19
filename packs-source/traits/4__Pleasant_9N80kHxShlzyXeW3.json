@@ -6,6 +6,7 @@
   "img": "icons/skills/social/diplomacy-handshake.webp",
   "system": {
     "readied": false,
+    "categories": ["traveler"],
     "cost": 0,
     "cost_frequency": "",
     "description": "<p>Charming conversation and an easy demeanor. You get people to like you.</p><p>That’s +2 to reaction rolls. Expert: +4; master: +6.</p><p>(update reaction bonus value in the effects tab, when this skill rank increases)</p>",

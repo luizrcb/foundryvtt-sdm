@@ -6,6 +6,7 @@
   "img": "icons/sundries/misc/admission-ticket-grey.webp",
   "system": {
     "readied": false,
+    "categories": ["manager"],
     "status": "",
     "resources": "",
     "cost": 0,

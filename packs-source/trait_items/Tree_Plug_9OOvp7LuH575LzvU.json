@@ -6,6 +6,7 @@
   "img": "icons/magic/nature/mushrooms-fire-glow-blue.webp",
   "system": {
     "readied": false,
+    "categories": ["orangelander"],
     "status": "",
     "resources": "",
     "cost": 150,

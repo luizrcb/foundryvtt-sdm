@@ -6,6 +6,7 @@
   "img": "icons/magic/movement/trail-streak-zigzag-teal.webp",
   "system": {
     "readied": false,
+    "categories": ["traveler"],
     "cost": 0,
     "cost_frequency": "",
     "description": "<p>Once per turn, spend one life or one hero die to get one extra action this round.</p>",

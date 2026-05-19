@@ -6,6 +6,7 @@
   "img": "icons/magic/defensive/shield-barrier-flaming-pentagon-magenta.webp",
   "system": {
     "readied": false,
+    "categories": ["barbarian"],
     "status": "",
     "resources": "",
     "cost": 0,

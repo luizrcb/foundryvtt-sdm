@@ -6,6 +6,7 @@
   "img": "icons/magic/holy/saint-glass-portrait-halo.webp",
   "system": {
     "readied": false,
+    "categories": ["noble"],
     "status": "",
     "resources": "",
     "cost": 0,

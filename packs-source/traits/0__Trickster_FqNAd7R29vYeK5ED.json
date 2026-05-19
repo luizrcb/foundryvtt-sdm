@@ -6,6 +6,7 @@
   "img": "icons/magic/control/hypnosis-mesmerism-eye.webp",
   "system": {
     "readied": false,
+    "categories": ["trickster"],
     "status": "",
     "resources": "",
     "cost": 0,

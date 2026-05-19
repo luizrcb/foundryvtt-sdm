@@ -6,6 +6,7 @@
   "img": "icons/magic/nature/tree-roots-glow-yellow.webp",
   "system": {
     "readied": false,
+    "categories": ["purplelander"],
     "status": "",
     "resources": "",
     "cost": 0,

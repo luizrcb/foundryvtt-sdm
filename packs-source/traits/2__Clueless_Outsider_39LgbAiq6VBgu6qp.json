@@ -6,6 +6,7 @@
   "img": "icons/skills/social/diplomacy-offering-ritual.webp",
   "system": {
     "readied": false,
+    "categories": ["tourist"],
     "status": "",
     "resources": "",
     "cost": 0,

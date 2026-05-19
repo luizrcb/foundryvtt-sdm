@@ -6,6 +6,7 @@
   "img": "icons/skills/trades/profession-sailing-ship.webp",
   "system": {
     "readied": false,
+    "categories": ["bluelander"],
     "status": "",
     "resources": "",
     "cost": 0,

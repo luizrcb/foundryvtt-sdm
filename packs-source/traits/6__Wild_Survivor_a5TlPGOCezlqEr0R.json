@@ -6,6 +6,7 @@
   "img": "icons/environment/wilderness/cave-entrance.webp",
   "system": {
     "readied": false,
+    "categories": ["barbarian"],
     "status": "",
     "resources": "",
     "cost": 0,

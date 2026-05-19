@@ -6,6 +6,7 @@
   "img": "icons/magic/water/wave-water-teal.webp",
   "system": {
     "readied": false,
+    "categories": ["wizard"],
     "cost": 0,
     "cost_frequency": "",
     "description": "<p>Spend a hero die to use a second power this round.</p>",

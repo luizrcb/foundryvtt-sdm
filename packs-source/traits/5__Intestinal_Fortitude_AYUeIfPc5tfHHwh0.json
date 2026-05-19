@@ -6,6 +6,7 @@
   "img": "icons/magic/acid/dissolve-vomit-green-brown.webp",
   "system": {
     "readied": false,
+    "categories": ["tourist"],
     "status": "",
     "resources": "",
     "cost": 0,

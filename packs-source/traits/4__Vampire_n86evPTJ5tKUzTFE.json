@@ -6,6 +6,7 @@
   "img": "icons/magic/death/mouth-bite-fangs-vampire.webp",
   "system": {
     "readied": false,
+    "categories": ["redlander"],
     "status": "",
     "resources": "",
     "cost": 0,

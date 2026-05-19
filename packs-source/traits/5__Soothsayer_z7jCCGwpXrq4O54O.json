@@ -6,6 +6,7 @@
   "img": "icons/creatures/slimes/slime-giant-face-eyes.webp",
   "system": {
     "readied": false,
+    "categories": ["holy_fool"],
     "status": "",
     "resources": "",
     "cost": 0,

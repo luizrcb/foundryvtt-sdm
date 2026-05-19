@@ -6,6 +6,7 @@
   "img": "icons/magic/symbols/runes-star-pentagon-orange.webp",
   "system": {
     "readied": false,
+    "categories": ["wizard"],
     "cost": 0,
     "cost_frequency": "",
     "description": "<p>Memorize a number of powers equal to your level for free, ignoring inventory.<br /><em>(edit every level the value in the effects tab)</em></p>",

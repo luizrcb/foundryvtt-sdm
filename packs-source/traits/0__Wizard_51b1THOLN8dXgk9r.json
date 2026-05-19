@@ -6,6 +6,7 @@
   "img": "icons/equipment/head/hood-pink-gilded.webp",
   "system": {
     "readied": false,
+    "categories": ["wizard"],
     "cost": 0,
     "cost_frequency": "",
     "description": "<p>You call yourself a magus, maker, or mechanic. You are skilled at casting spells (using <strong>oldtech powers</strong>). Perhaps you just know how to read the manuals of Long Ago and the Zero-One codes?</p><p><em>(change character </em><span style=\"text-decoration:underline\"><em><span style=\"text-decoration:underline\">power cost</span></em></span><em> value to 1 in the character sheet edit mode)</em></p>",

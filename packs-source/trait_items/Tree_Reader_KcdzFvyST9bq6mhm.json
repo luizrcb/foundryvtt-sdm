@@ -6,6 +6,7 @@
   "img": "icons/magic/nature/root-vines-face-glow-green.webp",
   "system": {
     "readied": false,
+    "categories": ["orangelander"],
     "status": "",
     "resources": "",
     "cost": 65,

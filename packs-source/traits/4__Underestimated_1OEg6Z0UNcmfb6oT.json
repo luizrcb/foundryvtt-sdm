@@ -6,6 +6,7 @@
   "img": "icons/creatures/magical/fae-fairy-winged-glowing-green.webp",
   "system": {
     "readied": false,
+    "categories": ["tourist"],
     "status": "",
     "resources": "",
     "cost": 0,

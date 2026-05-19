@@ -6,6 +6,7 @@
   "img": "icons/magic/defensive/armor-stone-skin.webp",
   "system": {
     "readied": false,
+    "categories": ["golem"],
     "status": "",
     "resources": "",
     "cost": 0,

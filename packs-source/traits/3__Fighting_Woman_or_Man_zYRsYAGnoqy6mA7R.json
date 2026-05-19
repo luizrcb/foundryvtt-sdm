@@ -6,6 +6,7 @@
   "img": "icons/skills/melee/spear-tips-quintuple-orange.webp",
   "system": {
     "readied": false,
+    "categories": ["bearer"],
     "status": "",
     "resources": "",
     "cost": 0,

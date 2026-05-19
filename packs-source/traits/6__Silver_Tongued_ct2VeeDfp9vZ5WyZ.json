@@ -6,6 +6,7 @@
   "img": "icons/commodities/biological/tongue-blue.webp",
   "system": {
     "readied": false,
+    "categories": ["trickster"],
     "status": "",
     "resources": "",
     "cost": 0,
