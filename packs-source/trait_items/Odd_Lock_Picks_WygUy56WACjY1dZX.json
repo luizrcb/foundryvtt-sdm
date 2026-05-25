@@ -6,6 +6,7 @@
   "img": "icons/tools/hand/lockpicks-steel-grey.webp",
   "system": {
     "readied": false,
+    "categories": ["servant"],
     "status": "",
     "resources": "",
     "cost": 20,

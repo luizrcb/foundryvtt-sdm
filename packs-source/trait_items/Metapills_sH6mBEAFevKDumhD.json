@@ -6,6 +6,7 @@
   "img": "icons/consumables/food/berries-ration-round-red.webp",
   "system": {
     "readied": false,
+    "categories": ["tourist"],
     "status": "",
     "resources": "",
     "cost": 300,

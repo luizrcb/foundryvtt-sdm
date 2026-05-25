@@ -6,6 +6,7 @@
   "img": "icons/weapons/ammunition/arrow-broadhead-bent-teal.webp",
   "system": {
     "readied": false,
+    "categories": ["noömagus"],
     "status": "",
     "resources": "",
     "cost": 75,

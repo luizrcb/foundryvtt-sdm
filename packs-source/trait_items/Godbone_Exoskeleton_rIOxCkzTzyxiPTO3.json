@@ -6,6 +6,7 @@
   "img": "icons/commodities/bones/bones-broken-rib-tan.webp",
   "system": {
     "readied": false,
+    "categories": ["scion"],
     "status": "",
     "resources": "",
     "cost": 16000,

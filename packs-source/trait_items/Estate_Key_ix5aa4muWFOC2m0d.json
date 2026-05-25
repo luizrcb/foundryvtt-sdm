@@ -6,6 +6,7 @@
   "img": "icons/sundries/misc/key-ring-long-gold.webp",
   "system": {
     "readied": false,
+    "categories": ["greenlander"],
     "status": "",
     "resources": "",
     "cost": 3500,

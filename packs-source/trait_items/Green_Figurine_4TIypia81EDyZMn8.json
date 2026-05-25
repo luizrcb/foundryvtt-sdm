@@ -6,6 +6,7 @@
   "img": "icons/commodities/treasure/statuette-gargoyle-green-gold.webp",
   "system": {
     "readied": false,
+    "categories": ["greenlander"],
     "status": "",
     "resources": "",
     "cost": 800,

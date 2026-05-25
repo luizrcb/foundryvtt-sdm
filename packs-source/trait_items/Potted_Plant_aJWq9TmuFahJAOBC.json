@@ -6,6 +6,7 @@
   "img": "icons/commodities/materials/plant-sprout-brown-green.webp",
   "system": {
     "readied": false,
+    "categories": ["golem"],
     "status": "",
     "resources": "",
     "cost": 1,

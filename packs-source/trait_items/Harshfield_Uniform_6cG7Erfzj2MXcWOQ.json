@@ -6,6 +6,7 @@
   "img": "icons/equipment/chest/breastplate-layered-leather-stitched.webp",
   "system": {
     "readied": false,
+    "categories": ["servant"],
     "status": "",
     "resources": "",
     "cost": 75,

@@ -6,6 +6,7 @@
   "img": "icons/equipment/head/goggles-leather-grey.webp",
   "system": {
     "readied": false,
+    "categories": ["bearer"],
     "status": "",
     "resources": "",
     "cost": 15,

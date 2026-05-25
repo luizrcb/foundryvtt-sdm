@@ -6,6 +6,7 @@
   "img": "icons/equipment/wrist/bracer-armored-steel-blue.webp",
   "system": {
     "readied": false,
+    "categories": ["soldier"],
     "status": "",
     "resources": "",
     "cost": 925,

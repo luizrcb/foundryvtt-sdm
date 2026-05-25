@@ -6,6 +6,7 @@
   "img": "icons/environment/creatures/horse-brown.webp",
   "system": {
     "readied": false,
+    "categories": ["soldier"],
     "status": "",
     "resources": "",
     "cost": 0,

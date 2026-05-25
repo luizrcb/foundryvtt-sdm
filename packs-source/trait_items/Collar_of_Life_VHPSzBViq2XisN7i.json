@@ -6,6 +6,7 @@
   "img": "icons/equipment/neck/amulet-heart.webp",
   "system": {
     "readied": false,
+    "categories": ["noömagus"],
     "status": "",
     "resources": "",
     "cost": 150,

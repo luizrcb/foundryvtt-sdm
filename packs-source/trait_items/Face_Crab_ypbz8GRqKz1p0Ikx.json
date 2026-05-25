@@ -6,6 +6,7 @@
   "img": "icons/creatures/fish/crab-blue-purple.webp",
   "system": {
     "readied": false,
+    "categories": ["servant"],
     "status": "",
     "resources": "",
     "cost": 5000,

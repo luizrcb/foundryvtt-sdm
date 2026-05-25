@@ -6,6 +6,7 @@
   "img": "icons/equipment/head/helm-basinet-shemagh-steel.webp",
   "system": {
     "readied": false,
+    "categories": ["barbarian"],
     "status": "",
     "resources": "",
     "cost": 300,

@@ -6,6 +6,7 @@
   "img": "icons/commodities/biological/eye-tentacle-green-yellow.webp",
   "system": {
     "readied": false,
+    "categories": ["golem"],
     "status": "",
     "resources": "",
     "cost": 1000,

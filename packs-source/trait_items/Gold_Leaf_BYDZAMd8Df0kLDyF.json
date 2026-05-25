@@ -6,6 +6,7 @@
   "img": "icons/consumables/plants/dried-herb-bundle-brown.webp",
   "system": {
     "readied": false,
+    "categories": ["golem"],
     "status": "",
     "resources": "",
     "cost": 100,

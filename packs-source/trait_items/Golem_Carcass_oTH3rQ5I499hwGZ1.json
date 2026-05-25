@@ -6,6 +6,7 @@
   "img": "icons/equipment/head/greathelm-slotted-steel.webp",
   "system": {
     "readied": false,
+    "categories": ["holy_fool"],
     "status": "",
     "resources": "",
     "cost": 50,

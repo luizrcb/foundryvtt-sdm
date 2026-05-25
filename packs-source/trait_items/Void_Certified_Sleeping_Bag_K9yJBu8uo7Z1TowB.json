@@ -6,6 +6,7 @@
   "img": "icons/sundries/survival/bedroll-pink.webp",
   "system": {
     "readied": false,
+    "categories": ["holy_fool"],
     "status": "",
     "resources": "",
     "cost": 100,

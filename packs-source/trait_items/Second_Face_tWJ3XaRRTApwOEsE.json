@@ -6,6 +6,7 @@
   "img": "icons/magic/death/skull-humanoid-white-red.webp",
   "system": {
     "readied": false,
+    "categories": ["trickster"],
     "status": "",
     "resources": "",
     "cost": 550,

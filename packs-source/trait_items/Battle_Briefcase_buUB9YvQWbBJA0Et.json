@@ -6,6 +6,7 @@
   "img": "icons/containers/bags/pouch-leather-silver-grey.webp",
   "system": {
     "readied": false,
+    "categories": ["manager"],
     "status": "",
     "resources": "",
     "cost": 100,

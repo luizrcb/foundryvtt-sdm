@@ -6,6 +6,7 @@
   "img": "icons/equipment/finger/ring-fish-silver.webp",
   "system": {
     "readied": false,
+    "categories": ["trickster"],
     "status": "",
     "resources": "",
     "cost": 3500,

@@ -6,6 +6,7 @@
   "img": "icons/magic/lightning/barrier-wall-shield-gray.webp",
   "system": {
     "readied": false,
+    "categories": ["barbarian"],
     "status": "",
     "resources": "",
     "cost": 700,

@@ -6,6 +6,7 @@
   "img": "icons/equipment/chest/vest-leather-pink.webp",
   "system": {
     "readied": false,
+    "categories": ["bearer"],
     "status": "",
     "resources": "",
     "cost": 30,

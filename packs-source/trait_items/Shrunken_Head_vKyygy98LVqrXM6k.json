@@ -6,6 +6,7 @@
   "img": "icons/commodities/bones/skull-hollow-brown.webp",
   "system": {
     "readied": false,
+    "categories": ["bearer"],
     "status": "",
     "resources": "",
     "cost": 69,

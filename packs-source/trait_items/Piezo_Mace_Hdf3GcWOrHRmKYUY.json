@@ -6,6 +6,7 @@
   "img": "icons/weapons/maces/mace-round-studded.webp",
   "system": {
     "readied": false,
+    "categories": ["golem"],
     "status": "",
     "resources": "",
     "cost": 125,

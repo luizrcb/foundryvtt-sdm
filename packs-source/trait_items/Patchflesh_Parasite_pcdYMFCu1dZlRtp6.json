@@ -6,6 +6,7 @@
   "img": "icons/creatures/invertebrates/bug-sixlegged-gray.webp",
   "system": {
     "readied": false,
+    "categories": ["soldier"],
     "status": "",
     "resources": "",
     "cost": 75,

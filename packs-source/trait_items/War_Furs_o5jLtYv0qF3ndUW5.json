@@ -6,6 +6,7 @@
   "img": "icons/commodities/leather/fur-white.webp",
   "system": {
     "readied": false,
+    "categories": ["purplelander"],
     "status": "",
     "resources": "",
     "cost": 750,

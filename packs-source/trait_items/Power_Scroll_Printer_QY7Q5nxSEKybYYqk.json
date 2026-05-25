@@ -6,6 +6,7 @@
   "img": "icons/sundries/scrolls/scroll-plain-red.webp",
   "system": {
     "readied": false,
+    "categories": ["noömagus"],
     "status": "",
     "resources": "",
     "cost": 1450,

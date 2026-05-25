@@ -6,6 +6,7 @@
   "img": "icons/environment/creatures/horse-white.webp",
   "system": {
     "readied": false,
+    "categories": ["scion"],
     "status": "",
     "resources": "",
     "cost": 2500,

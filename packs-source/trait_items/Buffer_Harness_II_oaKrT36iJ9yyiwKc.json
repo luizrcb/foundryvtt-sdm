@@ -6,6 +6,7 @@
   "img": "icons/equipment/shoulder/pauldren-segmented-pink.webp",
   "system": {
     "readied": false,
+    "categories": ["bourgeois"],
     "status": "",
     "resources": "",
     "cost": 949,

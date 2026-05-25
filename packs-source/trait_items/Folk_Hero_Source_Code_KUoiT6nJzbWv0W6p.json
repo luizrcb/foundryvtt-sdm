@@ -6,6 +6,7 @@
   "img": "icons/sundries/gaming/playing-cards-brown.webp",
   "system": {
     "readied": false,
+    "categories": ["purplelander"],
     "status": "",
     "resources": "",
     "cost": 4000,

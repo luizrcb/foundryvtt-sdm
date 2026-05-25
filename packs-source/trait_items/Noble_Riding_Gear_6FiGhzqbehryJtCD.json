@@ -6,6 +6,7 @@
   "img": "icons/equipment/shoulder/shoulderguard-segmented-studded-leather-brass.webp",
   "system": {
     "readied": false,
+    "categories": ["servant"],
     "status": "",
     "resources": "",
     "cost": 3500,

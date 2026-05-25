@@ -6,6 +6,7 @@
   "img": "icons/equipment/head/mask-horned-skull.webp",
   "system": {
     "readied": false,
+    "categories": ["soldier"],
     "status": "",
     "resources": "",
     "cost": 10,

@@ -6,6 +6,7 @@
   "img": "icons/tools/hand/brush-paint-brown-tan.webp",
   "system": {
     "readied": false,
+    "categories": ["greenlander"],
     "status": "",
     "resources": "",
     "cost": 4500,

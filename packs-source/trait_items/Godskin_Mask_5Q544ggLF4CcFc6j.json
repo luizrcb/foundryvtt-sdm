@@ -6,6 +6,7 @@
   "img": "icons/equipment/head/mask-carved-scream-tan.webp",
   "system": {
     "readied": false,
+    "categories": ["barbarian"],
     "status": "",
     "resources": "",
     "cost": 5000,

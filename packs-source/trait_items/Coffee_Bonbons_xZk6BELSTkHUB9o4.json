@@ -6,6 +6,7 @@
   "img": "icons/consumables/food/candy-pattie-pink-white.webp",
   "system": {
     "readied": false,
+    "categories": ["purplelander"],
     "status": "",
     "resources": "",
     "cost": 20,

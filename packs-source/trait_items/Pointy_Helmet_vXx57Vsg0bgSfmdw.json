@@ -6,6 +6,7 @@
   "img": "icons/equipment/head/helm-spangen-rounded.webp",
   "system": {
     "readied": false,
+    "categories": ["soldier"],
     "status": "",
     "resources": "",
     "cost": 5,

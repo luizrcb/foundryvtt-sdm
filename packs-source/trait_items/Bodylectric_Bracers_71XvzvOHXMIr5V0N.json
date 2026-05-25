@@ -6,6 +6,7 @@
   "img": "icons/equipment/wrist/bracer-shadow.webp",
   "system": {
     "readied": false,
+    "categories": ["noömagus"],
     "status": "",
     "resources": "",
     "cost": 150,

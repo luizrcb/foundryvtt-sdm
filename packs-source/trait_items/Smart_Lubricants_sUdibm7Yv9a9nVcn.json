@@ -6,6 +6,7 @@
   "img": "icons/creatures/fish/fish-bioluminous-blue.webp",
   "system": {
     "readied": false,
+    "categories": ["golem"],
     "status": "",
     "resources": "",
     "cost": 250,

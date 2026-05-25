@@ -6,6 +6,7 @@
   "img": "icons/sundries/documents/document-symbol-person-brown.webp",
   "system": {
     "readied": false,
+    "categories": ["holy_fool"],
     "status": "",
     "resources": "",
     "cost": 5,

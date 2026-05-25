@@ -6,6 +6,7 @@
   "img": "icons/consumables/drinks/alcohol-jug-spirits-brown.webp",
   "system": {
     "readied": false,
+    "categories": ["bourgeois"],
     "status": "",
     "resources": "",
     "cost": 49,

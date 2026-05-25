@@ -6,6 +6,7 @@
   "img": "icons/commodities/tech/platform-spring.webp",
   "system": {
     "readied": false,
+    "categories": ["holy_fool"],
     "status": "",
     "resources": "",
     "cost": 100,

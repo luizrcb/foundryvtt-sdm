@@ -6,6 +6,7 @@
   "img": "icons/weapons/swords/sword-flanged-lightning.webp",
   "system": {
     "readied": false,
+    "categories": ["soldier"],
     "status": "",
     "resources": "",
     "cost": 13500,

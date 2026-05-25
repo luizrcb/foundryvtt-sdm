@@ -6,6 +6,7 @@
   "img": "icons/equipment/leg/pants-mud-leather-pants.webp",
   "system": {
     "readied": false,
+    "categories": ["tourist"],
     "status": "",
     "resources": "",
     "cost": 4500,

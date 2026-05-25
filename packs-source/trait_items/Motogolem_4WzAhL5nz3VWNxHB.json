@@ -6,6 +6,7 @@
   "img": "icons/commodities/tech/pipe-metal.webp",
   "system": {
     "readied": false,
+    "categories": ["servant"],
     "status": "",
     "resources": "",
     "cost": 1690,

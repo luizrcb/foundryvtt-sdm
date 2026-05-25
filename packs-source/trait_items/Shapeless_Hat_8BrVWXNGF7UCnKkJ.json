@@ -6,6 +6,7 @@
   "img": "icons/equipment/head/hat-belted-simple-brown.webp",
   "system": {
     "readied": false,
+    "categories": ["tourist"],
     "status": "",
     "resources": "",
     "cost": 5,

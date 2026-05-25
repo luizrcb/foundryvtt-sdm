@@ -6,6 +6,7 @@
   "img": "icons/magic/nature/root-vine-fire-entangled-hand.webp",
   "system": {
     "readied": false,
+    "categories": ["golem"],
     "status": "",
     "resources": "",
     "cost": 2000,

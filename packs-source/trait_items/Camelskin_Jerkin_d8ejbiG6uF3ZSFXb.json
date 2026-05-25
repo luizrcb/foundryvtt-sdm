@@ -6,6 +6,7 @@
   "img": "icons/equipment/chest/vest-leather-brown.webp",
   "system": {
     "readied": false,
+    "categories": ["trickster"],
     "status": "",
     "resources": "",
     "cost": 600,

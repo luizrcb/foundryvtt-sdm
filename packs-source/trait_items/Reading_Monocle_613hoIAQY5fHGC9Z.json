@@ -6,6 +6,7 @@
   "img": "icons/tools/scribal/spectacles-glasses.webp",
   "system": {
     "readied": false,
+    "categories": ["manager"],
     "status": "",
     "resources": "",
     "cost": 70,

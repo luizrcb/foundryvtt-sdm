@@ -1,11 +1,12 @@
 {
   "folder": "ZG31nRsM8jd1BKjk",
-  "name": "The Spear Named  Blood Drinker",
+  "name": "The Spear Named Blood Drinker",
   "type": "gear",
   "_id": "0jY9JnzOpHLrn4Rk",
   "img": "icons/weapons/polearms/spear-hooked-double-engraved.webp",
   "system": {
     "readied": false,
+    "categories": ["barbarian"],
     "status": "",
     "resources": "",
     "cost": 9000,

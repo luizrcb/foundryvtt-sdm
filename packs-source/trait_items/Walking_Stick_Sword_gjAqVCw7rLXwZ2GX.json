@@ -6,6 +6,7 @@
   "img": "icons/weapons/staves/staff-ornate-purple.webp",
   "system": {
     "readied": false,
+    "categories": ["manager"],
     "status": "",
     "resources": "",
     "cost": 45,

@@ -6,6 +6,7 @@
   "img": "icons/equipment/shoulder/pauldron-steel-worn.webp",
   "system": {
     "readied": false,
+    "categories": ["scion"],
     "status": "",
     "resources": "",
     "cost": 9250,

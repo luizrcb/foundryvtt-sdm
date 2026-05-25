@@ -6,6 +6,7 @@
   "img": "icons/magic/fire/flame-burning-embers-orange.webp",
   "system": {
     "readied": false,
+    "categories": ["barbarian"],
     "status": "",
     "resources": "",
     "cost": 10,

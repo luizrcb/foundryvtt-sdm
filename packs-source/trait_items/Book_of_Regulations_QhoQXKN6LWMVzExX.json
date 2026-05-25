@@ -6,6 +6,7 @@
   "img": "icons/sundries/books/book-worn-purple.webp",
   "system": {
     "readied": false,
+    "categories": ["manager"],
     "status": "",
     "resources": "",
     "cost": 300,

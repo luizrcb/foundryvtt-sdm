@@ -6,6 +6,7 @@
   "img": "icons/sundries/survival/bedroll-worn-tan.webp",
   "system": {
     "readied": false,
+    "categories": ["soldier"],
     "status": "",
     "resources": "",
     "cost": 1,

@@ -6,6 +6,7 @@
   "img": "icons/equipment/finger/ring-band-thin-silver-teal.webp",
   "system": {
     "readied": false,
+    "categories": ["bourgeois"],
     "status": "",
     "resources": "",
     "cost": 49,

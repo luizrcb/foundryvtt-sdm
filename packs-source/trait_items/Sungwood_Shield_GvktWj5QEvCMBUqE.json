@@ -6,6 +6,7 @@
   "img": "icons/equipment/shield/targe-copper-eye.webp",
   "system": {
     "readied": false,
+    "categories": ["greenlander"],
     "status": "",
     "resources": "",
     "cost": 125,

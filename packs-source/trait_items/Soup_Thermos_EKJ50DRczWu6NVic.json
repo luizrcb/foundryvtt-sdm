@@ -6,6 +6,7 @@
   "img": "icons/consumables/food/soup-broth-bowl-wooden-yellow.webp",
   "system": {
     "readied": false,
+    "categories": ["manager"],
     "status": "",
     "resources": "",
     "cost": 25,

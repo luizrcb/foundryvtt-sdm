@@ -6,6 +6,7 @@
   "img": "icons/equipment/leg/tasset-fur-studded-leather.webp",
   "system": {
     "readied": false,
+    "categories": ["bearer"],
     "status": "",
     "resources": "",
     "cost": 120,

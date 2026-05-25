@@ -6,6 +6,7 @@
   "img": "icons/weapons/staves/staff-simple-wrapped.webp",
   "system": {
     "readied": false,
+    "categories": ["tourist"],
     "status": "",
     "resources": "",
     "cost": 1,

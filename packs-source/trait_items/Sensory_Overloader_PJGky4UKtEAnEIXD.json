@@ -6,6 +6,7 @@
   "img": "icons/magic/light/explosion-star-large-teal.webp",
   "system": {
     "readied": false,
+    "categories": ["manager"],
     "status": "",
     "resources": "",
     "cost": 650,

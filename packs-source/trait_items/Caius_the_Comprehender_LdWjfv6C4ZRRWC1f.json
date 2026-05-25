@@ -6,6 +6,7 @@
   "img": "icons/equipment/finger/ring-stone-snake-gold.webp",
   "system": {
     "readied": false,
+    "categories": ["tourist"],
     "status": "",
     "resources": "",
     "cost": 495,

@@ -6,6 +6,7 @@
   "img": "icons/magic/fire/barrier-wall-flame-ring-yellow.webp",
   "system": {
     "readied": false,
+    "categories": ["noömagus"],
     "status": "",
     "resources": "",
     "cost": 2500,

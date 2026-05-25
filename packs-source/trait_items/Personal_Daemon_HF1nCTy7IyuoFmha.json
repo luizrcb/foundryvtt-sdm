@@ -6,6 +6,7 @@
   "img": "icons/commodities/treasure/figurine-idol.webp",
   "system": {
     "readied": false,
+    "categories": ["scion"],
     "status": "",
     "resources": "",
     "cost": 500,

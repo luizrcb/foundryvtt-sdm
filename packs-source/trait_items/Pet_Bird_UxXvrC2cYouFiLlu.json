@@ -6,6 +6,7 @@
   "img": "icons/creatures/birds/corvid-call-sound-blue.webp",
   "system": {
     "readied": false,
+    "categories": ["scion"],
     "status": "",
     "resources": "",
     "cost": 5,

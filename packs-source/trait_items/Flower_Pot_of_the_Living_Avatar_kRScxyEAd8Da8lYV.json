@@ -6,6 +6,7 @@
   "img": "icons/sundries/misc/plant-potted.webp",
   "system": {
     "readied": false,
+    "categories": ["holy_fool"],
     "status": "",
     "resources": "",
     "cost": 700,

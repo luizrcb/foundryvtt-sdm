@@ -6,6 +6,7 @@
   "img": "icons/sundries/books/book-rounded-blue.webp",
   "system": {
     "readied": false,
+    "categories": ["tourist"],
     "status": "",
     "resources": "",
     "cost": 3,

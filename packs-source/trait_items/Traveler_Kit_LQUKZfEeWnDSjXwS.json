@@ -6,6 +6,7 @@
   "img": "icons/containers/bags/satchel-worn-leather-red.webp",
   "system": {
     "readied": false,
+    "categories": ["barbarian"],
     "status": "",
     "resources": "",
     "cost": 75,

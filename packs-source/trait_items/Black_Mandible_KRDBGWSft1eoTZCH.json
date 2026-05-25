@@ -6,6 +6,7 @@
   "img": "icons/commodities/bones/bone-jaw-teeth-brown.webp",
   "system": {
     "readied": false,
+    "categories": ["scion"],
     "status": "",
     "resources": "",
     "cost": 0,

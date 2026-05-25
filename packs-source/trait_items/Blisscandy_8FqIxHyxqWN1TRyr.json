@@ -6,6 +6,7 @@
   "img": "icons/magic/control/buff-flight-wings-runes-purple-orange.webp",
   "system": {
     "readied": false,
+    "categories": ["bearer"],
     "status": "",
     "resources": "",
     "cost": 150,
