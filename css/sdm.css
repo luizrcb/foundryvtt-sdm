@@ -322,7 +322,7 @@
 }
 
 .application.sheet.sdm.actor {
-  min-width: 950px;
+  min-width: 960px;
   min-height: 820px;
   max-width: 1500px;
   max-height: 1500px;
@@ -336,7 +336,7 @@
 }
 
 .application.sheet.sdm.actor.compact {
-  min-width: 680px;
+  min-width: 720px;
   max-width: 800px;
   min-height: 790px;
 }
@@ -2361,7 +2361,10 @@ input[type=radio]::after {
   text-align: left;
 }
 .sdm .items-list .items-header .item-formula {
-  flex: 0 0 90px;
+  flex: 0 0 95px;
+}
+.sdm .items-list .items-header .item-create {
+  margin-left: 0;
 }
 .sdm .item-formula {
   flex: 0 0 95px;
