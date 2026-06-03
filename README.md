@@ -60,6 +60,27 @@ You can also use one of the following alternative installation methods:
 2. Browsing the repository's [Releases](https://github.com/luizrcb/foundryvtt-sdm/releases) page, where you can copy any system.json link for use in the Install System dialog.
 3. Downloading one of the .zip archives from the Releases page and extracting it into your foundry Data folder, under `Data/systems/sdm`.
 
+## Installation Instructions
+
+### Foundry v13 manifest URL
+
+To install the lastest v13 supported version of SDM, use the following manifest URL:
+##
+    https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.17.2/system.json
+
+### Latest Foundry version (v14)
+
+The latest version of the system can be installed through the in-app System Browser by searching for any of the following: "SDM", "Synthetic Dream Machine", "UVG", "Ultraviolet Grasslands", "OGA", or "Our Golden Age".
+
+You can also use one of the following alternative installation methods:
+
+1. Pasting the following url into the **Install System** dialog on the Setup menu of the application.
+##
+    https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/main/system.json
+2. Browsing the repository's [Releases](https://github.com/luizrcb/foundryvtt-sdm/releases) page, where you can copy any system.json link for use in the Install System dialog.
+3. Downloading one of the .zip archives from the Releases page and extracting it into your foundry Data folder, under `Data/systems/sdm`.
+
+
 ## Licenses
 
 - **Content:** [When Time Fades Third Party License](https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/main/WTF-3RD-PARTY-LICENSE.txt)
