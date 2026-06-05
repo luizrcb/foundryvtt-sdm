@@ -5,6 +5,7 @@
   "version": "0.17.2",
   "url": "https://github.com/luizrcb/foundryvtt-sdm",
   "bugs": "https://github.com/luizrcb/foundryvtt-sdm/issues",
+  
   "manifest": "https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/main/system.json",
   "download": "https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.17.2/sdm-0.17.2.zip",
   "compatibility": {
@@ -50,7 +51,8 @@
     "hotReload": {
       "extensions": ["css", "html", "hbs", "json"],
       "paths": ["css", "lang", "templates"]
-    }
+    },
+    "allowBugReporter": true
   },
   "license": "LICENSE.txt",
   "readme": "README.md",
