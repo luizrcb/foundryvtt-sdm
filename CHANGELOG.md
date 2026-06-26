@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v1.0.1
+
+- Fixes an issue where equipment with a weapon feature does not display the damage roll icon (v14)
+
+## v1.0.0
+
+- V14 support
+
 ## v0.17.3
 
 - Fixes an issue where equipment with a weapon feature does not display the damage roll icon
