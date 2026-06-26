@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.17.3
+
+- Fixes an issue where equipment with a weapon feature does not display the damage roll icon
+
 ## v0.17.2
 
 - Fixed corruption roll enricher on danger roll chat card result
