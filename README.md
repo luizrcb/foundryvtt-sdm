@@ -26,7 +26,7 @@ This project uses names of creatures, items, traits, powers, locations, and rule
 
 To install the lastest v13 supported version of SDM, use the following manifest URL:
 ##
-    https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.17.2/system.json
+    https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.17.3/system.json
 
 ### Latest Foundry version (v14)
 
