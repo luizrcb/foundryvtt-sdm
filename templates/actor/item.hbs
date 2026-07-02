@@ -12,13 +12,13 @@
       (ne item.system.resources 'run_out')
       (ne item.system.size.unit 'cash')
       (or
-        (and (eq item.system.type 'weapon') item.system.readied item.system.weapon.damage.base)
+        (and (or (eq system.type 'weapon') (has system.features 'weapon')) item.system.readied item.system.weapon.damage.base)
         (and (eq item.system.type 'power') item.system.readied)
         (and (eq item.system.type 'power_album') item.system.readied (gt item.system.powers.length 0))
       )
       @root.editable
     )}}
-      {{#if (eq item.system.type 'weapon')}}
+      {{#if (or (eq system.type 'weapon') (has system.features 'weapon'))}}
         <div
           class="item-image rollable-image"
           data-action="roll"

@@ -1,6 +1,6 @@
 ![](https://github.com/luizrcb/foundryvtt-sdm/blob/main/assets/sdm-compatible.png?raw=true)
 
-![SDM System](https://img.shields.io/badge/dynamic/json.svg?url=https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/main/system.json&label=SDM%20System&query=$.version&colorB=blue&logo=gnometerminal&logoColor=white) ![FoundryVTT Verified](https://img.shields.io/badge/dynamic/json.svg?url=https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/main/system.json&label=FoundryVTT%20Verified&query=$.compatibility.verified&colorB=green&logo=roll20) ![FoundryVTT Supported](https://img.shields.io/endpoint?url=https://foundryshields.com/version?url=https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/main/system.json&label=FoundryVTT%20Supported&colorB=green)
+![SDM System](https://img.shields.io/badge/dynamic/json.svg?url=https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/v14/system.json&label=SDM%20System&query=$.version&colorB=blue&logo=gnometerminal&logoColor=white) ![FoundryVTT Verified](https://img.shields.io/badge/dynamic/json.svg?url=https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/v14/system.json&label=FoundryVTT%20Verified&query=$.compatibility.verified&colorB=green&logo=roll20) ![FoundryVTT Supported](https://img.shields.io/badge/Foundry_VTT_Supported-13.351--14.363-green?style=flat&logo=foundryvirtualtabletop&logoColor=white)
 
 ![GitHub Release Date](https://img.shields.io/github/release-date/luizrcb/foundryvtt-sdm?color=blue) [![GitHub commits](https://img.shields.io/github/commits-since/luizrcb/foundryvtt-sdm/latest)](https://github.com/luizrcb/foundryvtt-sdm/commits) ![GitHub contributors](https://img.shields.io/github/contributors/luizrcb/foundryvtt-sdm) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/luizrcb/foundryvtt-sdm/issues)
 
@@ -19,6 +19,27 @@ Synthetic Dream Machine (SDM), Ultraviolet Grasslands (UVG), Our Golden Age (OGA
 ## Acknowledgements
 
 This project uses names of creatures, items, traits, powers, locations, and rule sections from the [Vastlands Guidebook](https://www.exaltedfuneral.com/products/vastlands-guidebook-bootleg-beta-early-release-free-pdf) ([Luka Rejec](https://patreon.com/wizardthieffighter), VLG 2025)
+
+## Installation Instructions
+
+### Foundry v13 manifest URL
+
+To install the lastest v13 supported version of SDM, use the following manifest URL:
+##
+    https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.17.2/system.json
+
+### Latest Foundry version (v14)
+
+The latest version of the system can be installed through the in-app System Browser by searching for any of the following: "SDM", "Synthetic Dream Machine", "UVG", "Ultraviolet Grasslands", "OGA", or "Our Golden Age".
+
+You can also use one of the following alternative installation methods:
+
+1. Pasting the following url into the **Install System** dialog on the Setup menu of the application.
+##
+    https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/main/system.json
+2. Browsing the repository's [Releases](https://github.com/luizrcb/foundryvtt-sdm/releases) page, where you can copy any system.json link for use in the Install System dialog.
+3. Downloading one of the .zip archives from the Releases page and extracting it into your foundry Data folder, under `Data/systems/sdm`.
+
 
 ## Licenses
 
@@ -168,17 +189,6 @@ This project compendiums and macros use names of creatures, items, traits, power
     - Referee Title: a fun d10 table to choose referee title and referee session power (VLG, p. 7).
     - Rollable tables for every equipment category (Light Armor, Medium Armor, etc)
 
-## Installation Instructions
-
-The latest version of the system can be installed through the in-app System Browser by searching for any of the following: "SDM", "Synthetic Dream Machine", "UVG", "Ultraviolet Grasslands", "OGA", or "Our Golden Age".
-
-You can also use one of the following alternative installation methods:
-
-1. Pasting the following url into the **Install System** dialog on the Setup menu of the application.
-##
-    https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/main/system.json
-2. Browsing the repository's [Releases](https://github.com/luizrcb/foundryvtt-sdm/releases) page, where you can copy any system.json link for use in the Install System dialog.
-3. Downloading one of the .zip archives from the Releases page and extracting it into your foundry Data folder, under `Data/systems/sdm`.
 
 <!-- This system is made possible thanks to all of its contributors!
 
