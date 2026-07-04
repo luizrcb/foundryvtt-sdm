@@ -76,7 +76,7 @@ You can also use one of the following alternative installation methods:
 
 1. Pasting the following url into the **Install System** dialog on the Setup menu of the application.
 ##
-    https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/main/system.json
+    https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/v14/system.json
 2. Browsing the repository's [Releases](https://github.com/luizrcb/foundryvtt-sdm/releases) page, where you can copy any system.json link for use in the Install System dialog.
 3. Downloading one of the .zip archives from the Releases page and extracting it into your foundry Data folder, under `Data/systems/sdm`.
 
