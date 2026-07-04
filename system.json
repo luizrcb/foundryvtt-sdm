@@ -1,12 +1,12 @@
 {
   "id": "sdm",
-  "title": "Synthetic Dream Machine",
-  "description": "An unofficial system for playing Ultraviolet Grasslands (UVG) and Our Golden Age (OGA) using the Synthetic Dream Machine (SDM) RPG system.",
-  "version": "1.0.1",
+  "title": "When Time Fades",
+  "description": "An unofficial system for playing Ultraviolet Grasslands (UVG) and Our Golden Age (OGA) using When Time Fades (WTF) RPG system, formely known as the Synthetic Dream Machine (SDM).",
+  "version": "0.18.0",
   "url": "https://github.com/luizrcb/foundryvtt-sdm",
   "bugs": "https://github.com/luizrcb/foundryvtt-sdm/issues",
   "manifest": "https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/main/system.json",
-  "download": "https://github.com/luizrcb/foundryvtt-sdm/releases/download/v1.0.1/sdm-1.0.1.zip",
+  "download": "https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.18.0/sdm-0.18.0.zip",
   "compatibility": {
     "minimum": "14",
     "verified": "14.363"
@@ -59,8 +59,8 @@
   "media": [
     {
       "type": "setup",
-      "url": "systems/sdm/assets/sdm-compatible.png",
-      "thumbnail": "systems/sdm/assets/sdm-compatible.png"
+      "url": "systems/sdm/assets/wtf-compatible.png",
+      "thumbnail": "systems/sdm/assets/wtf-compatible.png"
     }
   ],
   "esmodules": ["module/sdm.mjs"],
@@ -80,14 +80,14 @@
   "packs": [
     {
       "name": "macros",
-      "label": "SDM Macros",
+      "label": "WFT Macros",
       "path": "./packs/macros",
       "type": "Macro",
       "system": "sdm"
     },
     {
       "name": "player_macros",
-      "label": "SDM Player Macros",
+      "label": "WFT Player Macros",
       "path": "./packs/player_macros",
       "type": "Macro",
       "system": "sdm"
@@ -235,67 +235,74 @@
   ],
   "packFolders": [
     {
-      "name": "Character Creation",
+      "name": "When Time Fades",
       "sorting": "a",
-      "color": "#688B75",
-      "packs": [
-        "ability_scores",
-        "player_macros",
-        "burdens",
-        "corruption",
-        "strange_items_table",
-        "motive_table",
-        "names_tables"
-      ],
+      "color": "#00817F",
       "folders": [
         {
-          "name": "Traits",
+          "name": "Character Creation",
           "sorting": "a",
-          "packs": ["traits", "traits_tables"]
+          "color": "#688B75",
+          "packs": [
+            "ability_scores",
+            "player_macros",
+            "burdens",
+            "corruption",
+            "strange_items_table",
+            "motive_table",
+            "names_tables"
+          ],
+          "folders": [
+            {
+              "name": "Traits",
+              "sorting": "a",
+              "packs": ["traits", "traits_tables"]
+            }
+          ]
+        },
+        {
+          "name": "Items",
+          "sorting": "a",
+          "color": "#E25C65",
+          "packs": [
+            "consumables",
+            "gadgets",
+            "armors",
+            "trait_items",
+            "strange_items",
+            "wards",
+            "weapons"
+          ]
+        },
+        {
+          "name": "Journals",
+          "sorting": "a",
+          "color": "#EC843D",
+          "packs": ["handouts"]
+        },
+        {
+          "name": "Powers",
+          "sorting": "a",
+          "color": "#497DAD",
+          "packs": ["powers"]
+        },
+        {
+          "name": "Referee Tools",
+          "sorting": "a",
+          "color": "#785DAA",
+          "packs": ["rolltables", "macros"]
+        },
+        {
+          "name": "Zoa",
+          "sorting": "a",
+          "color": "#b3ab56",
+          "packs": ["creatures", "npc_generator"]
         }
       ]
-    },
-    {
-      "name": "Items",
-      "sorting": "a",
-      "color": "#E25C65",
-      "packs": [
-        "consumables",
-        "gadgets",
-        "armors",
-        "trait_items",
-        "strange_items",
-        "wards",
-        "weapons"
-      ]
-    },
-    {
-      "name": "Journals",
-      "sorting": "a",
-      "color": "#EC843D",
-      "packs": ["handouts"]
-    },
-    {
-      "name": "Powers",
-      "sorting": "a",
-      "color": "#497DAD",
-      "packs": ["powers"]
-    },
-    {
-      "name": "Referee Tools",
-      "sorting": "a",
-      "color": "#785DAA",
-      "packs": ["rolltables", "macros"]
-    },
-    {
-      "name": "Zoa",
-      "sorting": "a",
-      "color": "#b3ab56",
-      "packs": ["creatures", "npc_generator"]
     }
   ],
   "socket": true,
-  "background": "systems/sdm/assets/sdm-compatible.png",
+  "background": "systems/sdm/assets/wtf-compatible.png",
   "grid": {
     "type": 1,
     "distance": 5,

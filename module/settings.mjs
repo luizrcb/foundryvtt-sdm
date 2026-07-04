@@ -335,7 +335,7 @@ export function registerSystemSettings() {
     }
   });
 
-  game.settings.register('sdm', 'initialMessageSent', {
+  game.settings.register('sdm', 'initialMessageSent-v2', {
     scope: 'world', // "world" = GM only, "client" = per user
     config: false, // Show in configuration view
     type: Boolean, // Data type: String, Number, Boolean, etc
@@ -1178,7 +1178,7 @@ export function configurePlayerChromatype() {
       const colorData = {
         name: 'sdm-chromatype',
         description: $l10n('SDM.DiceTheme.Chromatype'),
-        category: 'SDM: Chromatype Dice',
+        category: 'WTF: Chromatype Dice',
         foreground: [foreground],
         background: [background],
         outline: 'black',

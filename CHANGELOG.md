@@ -8,6 +8,11 @@
 
 - V14 support
 
+## v0.18.0
+
+- Renames the system to When Time Fades (WTF)
+- Updates logo, links and display text to reflect the system rename
+
 ## v0.17.3
 
 - Fixes an issue where equipment with a weapon feature does not display the damage roll icon
@@ -347,13 +352,13 @@
 - Fix the “SDM Compatible” icon appearing unintentionally on the character sheet
 - Fix the hallmark limit check when editing an item
 - Add a separate configuration for Dice So Nice Chromatype color
-- Change the font of the “SDM Chromatype Dice” theme
+- Change the font of the “WTF Chromatype Dice” theme
 
 ## v0.2.5
 
 - Add support to flag items as hallmark (hallmark item leveling is not automated)
 - Add a Chromatype configuration option for clients to choose a main color for UI elements
-- Users of the “Dice So Nice” module will find a special “SDM Chromatype Dice” theme to color their 3D dice according to their chromatype
+- Users of the “Dice So Nice” module will find a special “WTF Chromatype Dice” theme to color their 3D dice according to their chromatype
 
 ## v0.2.4
 
