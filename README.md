@@ -26,7 +26,7 @@ This project uses names of creatures, items, traits, powers, locations, and rule
 
 To install the lastest v13 supported version of WTF, use the following manifest URL:
 ##
-    https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.18.0/system.json
+    https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.18.1/system.json
 
 ### Latest Foundry version (v14)
 
