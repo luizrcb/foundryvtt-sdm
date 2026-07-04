@@ -73,7 +73,7 @@
         "versatile": "1d4",
         "bonus": ""
       },
-      "range": "",
+      "range": "long",
       "versatile": false
     },
     "default_ability": ""
