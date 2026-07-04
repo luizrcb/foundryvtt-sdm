@@ -721,11 +721,11 @@ input[type=radio]::after {
   .sdm-icon {
     width: 120px;
     height: 120px;
-    -webkit-mask-image: url("../assets/sdm-pause.png");
+    -webkit-mask-image: url("../assets/wtf-pause.png");
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: center;
     -webkit-mask-size: contain;
-    mask-image: url("../assets/sdm-pause.png");
+    mask-image: url("../assets/wtf-pause.png");
     mask-repeat: no-repeat;
     mask-position: center;
     mask-size: contain;
@@ -736,11 +736,11 @@ input[type=radio]::after {
   .sdm-pause {
     height: 120px;
     width: 120px;
-    -webkit-mask-image: url("../assets/sdm-pause.png");
+    -webkit-mask-image: url("../assets/wtf-pause.png");
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: center;
     -webkit-mask-size: contain;
-    mask-image: url("../assets/sdm-pause.png");
+    mask-image: url("../assets/wtf-pause.png");
     mask-repeat: no-repeat;
     mask-position: center;
     mask-size: contain;

@@ -143,7 +143,7 @@ function _onChatCardToggleContent(event) {
 }
 
 export const wtfStudioLinks = `<div class="intro-message">
-      <div class="system-title">Synthetic Dream Machine</div>
+      <div class="system-title">When Time Fades</div>
         <div class="system-author" data-tooltip="Luka Rejec">
           by Luka Rejec
         </div>
@@ -154,7 +154,7 @@ export const wtfStudioLinks = `<div class="intro-message">
             <div class="flex">
               <div>
                 <div class="outcome-description">
-                  <a href="https://patreon.com/wizardthieffighter">Patreon</a>
+                  <a href="https://wizardthieffighter.com">WTF Studio</a>
                 </div>
                 <div class="outcome-description">
                   <a href="https://www.drivethrurpg.com/en/publisher/14157/wtf-studio">DriveThruRPG</a>
@@ -162,10 +162,10 @@ export const wtfStudioLinks = `<div class="intro-message">
               </div>
               <div>
                 <div class="outcome-description">
-                  <a href="https://wizardthieffighter.com">Shopify</a>
+                  <a href="https://patreon.com/wizardthieffighter">Patreon</a>
                 </div>
                 <div class="outcome-description">
-                  <a href=" https://wizardthieffighter.itch.io/">Itch.io</a>
+                  <a href="https://wizardthieffighter.itch.io/">Itch.io</a>
                 </div>
               </div>
             </div>
@@ -178,10 +178,10 @@ export const wtfStudioLinks = `<div class="intro-message">
                 <a href="https://www.backerkit.com/c/projects/exalted-funeral/our-golden-age-an-ultra-violet-grasslands-rpg-sequel">Our Golden Age (pre-order)</a>
             </div>
             <div class="outcome-description">
-                <a href="https://www.exaltedfuneral.com/products/vastlands-guidebook-bootleg-beta-early-release-free-pdf">Vastlands Guidebook</a>
+                <a href="https://www.wizardthieffighter.com/products/vlg-vastlands-guidebook">Vastlands Guidebook</a>
             </div>
             <div class="outcome-description">
-                <a href="https://www.drivethrurpg.com/en/product/447868/uvg-2e-ultraviolet-grasslands-and-the-black-city">UVG 2E (digital)</a>
+                <a href="https://www.wizardthieffighter.com/products/ultraviolet-grasslands-2e">UVG 2E (digital)</a>
             </div>
             <div class="outcome-description">
                 <a href="https://www.exaltedfuneral.com/products/uvg-2e">UVG 2E (physical)</a>
@@ -190,7 +190,7 @@ export const wtfStudioLinks = `<div class="intro-message">
     </div>`;
 
 export const luberLinks = `<div class="intro-message">
-      <div class="system-title">FoundryVTT SDM Development</div>
+      <div class="system-title">FoundryVTT WTF Development</div>
         <div class="system-author" data-tooltip="Luiz Bertoni">
           by Luber (Luiz Bertoni)
         </div>
@@ -251,7 +251,7 @@ export async function LinksDialog(content, width = 310, height = 550) {
 export function sendInitialMessage() {
   if (!game.user.isGM) return;
 
-  const initialMessageSent = game.settings.get('sdm', 'initialMessageSent');
+  const initialMessageSent = game.settings.get('sdm', 'initialMessageSent-v2');
   if (initialMessageSent) return;
   setTimeout(() => {
     createChatMessage({
@@ -267,5 +267,5 @@ export function sendInitialMessage() {
     });
   }, 2000);
 
-  game.settings.set('sdm', 'initialMessageSent', true);
+  game.settings.set('sdm', 'initialMessageSent-v2', true);
 }

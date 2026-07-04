@@ -851,7 +851,7 @@ function renderSettings(html) {
     <h4 class="divider">${$l10n('WORLD.FIELDS.system.label')}</h4>
     <div class="system-badge">
       <div class="sdm-icon" data-tooltip="${sdm.title}" alt="${sdm.title}" style="cursor:pointer;"></div>
-      <span class="system-mote" data-tooltip="${sdm.title}">roleplay at the end of time</span>
+      <span class="system-mote" data-tooltip="${sdm.title}">roleplaying when time fades</span>
       <a class="system-version system-info" data-tooltip="SDM.ReleaseNotes" href="https://github.com/luizrcb/foundryvtt-sdm/releases/tag/v${sdm.version}" target="_blank">${sdm.version}</a>
     </div>
   `;

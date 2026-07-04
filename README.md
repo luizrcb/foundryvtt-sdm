@@ -1,36 +1,36 @@
-![](https://github.com/luizrcb/foundryvtt-sdm/blob/main/assets/sdm-compatible.png?raw=true)
+![](https://github.com/luizrcb/foundryvtt-sdm/blob/main/assets/wtf-compatible.png?raw=true)
 
-![SDM System](https://img.shields.io/badge/dynamic/json.svg?url=https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/v14/system.json&label=SDM%20System&query=$.version&colorB=blue&logo=gnometerminal&logoColor=white) ![FoundryVTT Verified](https://img.shields.io/badge/dynamic/json.svg?url=https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/v14/system.json&label=FoundryVTT%20Verified&query=$.compatibility.verified&colorB=green&logo=roll20) ![FoundryVTT Supported](https://img.shields.io/badge/Foundry_VTT_Supported-13.351--14.363-green?style=flat&logo=foundryvirtualtabletop&logoColor=white)
+![WTF System](https://img.shields.io/badge/dynamic/json.svg?url=https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/v14/system.json&label=WTF%20System&query=$.version&colorB=blue&logo=gnometerminal&logoColor=white) ![FoundryVTT Verified](https://img.shields.io/badge/dynamic/json.svg?url=https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/v14/system.json&label=FoundryVTT%20Verified&query=$.compatibility.verified&colorB=green&logo=roll20) ![FoundryVTT Supported](https://img.shields.io/badge/FoundryVTT_Supported-13.351--14.363-green?style=flat&logo=foundryvirtualtabletop&logoColor=white)
 
 ![GitHub Release Date](https://img.shields.io/github/release-date/luizrcb/foundryvtt-sdm?color=blue) [![GitHub commits](https://img.shields.io/github/commits-since/luizrcb/foundryvtt-sdm/latest)](https://github.com/luizrcb/foundryvtt-sdm/commits) ![GitHub contributors](https://img.shields.io/github/contributors/luizrcb/foundryvtt-sdm) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/luizrcb/foundryvtt-sdm/issues)
 
 ![GitHub downloads](https://img.shields.io/github/downloads/luizrcb/foundryvtt-sdm/total?label=Downloads) ![GitHub downloads Latest](https://img.shields.io/github/downloads/luizrcb/foundryvtt-sdm/latest/total?label=Downloads%20Latest%20Release) [![Report Bugs](https://img.shields.io/badge/Report%20Bugs%20on%20GitHub-2dba4e?logo=GitHub&amp;logoColor=white)](https://github.com/luizrcb/foundryvtt-sdm/issues)
 
-# Synthetic Dream Machine for Foundry VTT
+# When Time Fades for Foundry VTT
 
-An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG) and Our Golden Age (OGA) using the [Synthetic Dream Machine](https://web.archive.org/web/20241220221626/https://www.wizardthieffighter.com/synthetic-dream-machine/) RPG rules on [Foundry VTT](http://foundryvtt.com/).
+An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG) and Our Golden Age (OGA) using the When Time Fades (formerly Synthetic Dream Machine) RPG rules on [Foundry VTT](http://foundryvtt.com/).
 
-*foundryvtt-sdm* is an independent production by community contributors, and is not affiliated with [Luka Rejec](https://patreon.com/wizardthieffighter) or [WTF Studio](https://wizardthieffighter.itch.io/). It is published under the [Synthetic Dream Machine Third Party License](https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/main/SDM-3RD-PARTY-LICENSE-2.0.txt).
+*foundryvtt-wtf* is an independent production by community contributors, and is not affiliated with [Luka Rejec](https://patreon.com/wizardthieffighter) or [WTF Studio](https://wizardthieffighter.com/). It is published under the [When Time Fades Third Party License](https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/main/WTF-3RD-PARTY-LICENSE.txt).
 
 ## Credits
 
-Synthetic Dream Machine (SDM), Ultraviolet Grasslands (UVG), Our Golden Age (OGA), and the Vastlands Guidebook (VLG) are copyright [Luka Rejec](https://patreon.com/wizardthieffighter).
+When Time Fades (WTF), Ultraviolet Grasslands (UVG), Our Golden Age (OGA), and the [Vastlands Guidebook (VLG)](https://www.wizardthieffighter.com/products/vlg-vastlands-guidebook) are copyright [Luka Rejec](https://patreon.com/wizardthieffighter).
 
 ## Acknowledgements
 
-This project uses names of creatures, items, traits, powers, locations, and rule sections from the [Vastlands Guidebook](https://www.exaltedfuneral.com/products/vastlands-guidebook-bootleg-beta-early-release-free-pdf) ([Luka Rejec](https://patreon.com/wizardthieffighter), VLG 2025)
+This project uses names of creatures, items, traits, powers, locations, and rule sections from the [Vastlands Guidebook](https://www.wizardthieffighter.com/products/vlg-vastlands-guidebook) ([Luka Rejec](https://patreon.com/wizardthieffighter), VLG 2025)
 
 ## Installation Instructions
 
 ### Foundry v13 manifest URL
 
-To install the lastest v13 supported version of SDM, use the following manifest URL:
+To install the lastest v13 supported version of WTF, use the following manifest URL:
 ##
-    https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.17.3/system.json
+    https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.18.0/system.json
 
 ### Latest Foundry version (v14)
 
-The latest version of the system can be installed through the in-app System Browser by searching for any of the following: "SDM", "Synthetic Dream Machine", "UVG", "Ultraviolet Grasslands", "OGA", or "Our Golden Age".
+The latest version of the system can be installed through the in-app System Browser by searching for any of the following: "WTF","When Time Fades", "SDM", "Synthetic Dream Machine", "UVG", "Ultraviolet Grasslands", "OGA", or "Our Golden Age".
 
 You can also use one of the following alternative installation methods:
 
@@ -40,10 +40,9 @@ You can also use one of the following alternative installation methods:
 2. Browsing the repository's [Releases](https://github.com/luizrcb/foundryvtt-sdm/releases) page, where you can copy any system.json link for use in the Install System dialog.
 3. Downloading one of the .zip archives from the Releases page and extracting it into your foundry Data folder, under `Data/systems/sdm`.
 
-
 ## Licenses
 
-- **Content:** [Synthetic Dream Machine Third Party License](https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/main/SDM-3RD-PARTY-LICENSE-2.0.txt)
+- **Content:** [When Time Fades Third Party License](https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/main/WTF-3RD-PARTY-LICENSE.txt)
 - **Source Code:** All source code files (javascript, hbs, scss, css) are licensed under the [MIT License](https://en.wikipedia.org/wiki/MIT_License).
 - **Foundry VTT:** The project is created following the Foundry VTT [Limited License Agreement for module development](https://foundryvtt.com/article/license/).
 - **Icons:** Icons in the `/assets/icons/` folder are courtesy of [Game-icons.net](https://game-icons.net/) and licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).
@@ -52,11 +51,12 @@ You can also use one of the following alternative installation methods:
 
 ## Add-on Modules Integration
 
-The SDM system provides companion add-on modules to integrate with the following:
+The WTF system provides companion add-on modules to integrate with the following:
 
-- **Item Piles**: [Item Piles: SDM](https://github.com/luizrcb/item-piles-sdm)
-- **Token Action HUD**: [Token Action HUD SDM](https://github.com/luizrcb/token-action-hud-sdm)
-- **Seasons & Stars**: [Seasons & Stars: SDM](https://github.com/luizrcb/seasons-and-stars-sdm)
+- **Item Piles**: [Item Piles: WTF](https://github.com/luizrcb/item-piles-sdm)
+- **Token Action HUD**: [Token Action HUD WTF](https://github.com/luizrcb/token-action-hud-sdm)
+- **Calendaria: WTF** [Calendaria: WTF](https://github.com/luizrcb/calendaria-sdm)
+- **Seasons & Stars**: [Seasons & Stars: WTF](https://github.com/luizrcb/seasons-and-stars-sdm)
 
 ## System Features
 
@@ -134,7 +134,7 @@ The SDM system provides companion add-on modules to integrate with the following
 - Highly configurable core game values (base defenses, item and trait slots, etc.).
 - **Chromatype customization:**
   - Choose a main chromatype color for UI elements.
-  - Dice So Nice integration with the  "SDM Chromatype Dice” theme for Dice So Nice.
+  - Dice So Nice integration with the  "WTF Chromatype Dice” theme for Dice So Nice.
   - Separate configuration for Dice So Nice Chromatype color.
 
 ### Localization
@@ -174,14 +174,14 @@ This project compendiums and macros use names of creatures, items, traits, power
     - Path of the Fighter
     - Other Paths
       - Barbarian, Bluelander, Bourgeois, Golem, Greenlander, Holy Fool, Manager, Noble, Noömagus, Orangelander, Purplelander, Redlander, Scion, Servant, Skeleton, Soldier, Tourist, Trickster, Weapon (Weapon and Bearer), Yellowlander.
-  - SDM Macros (Referee Macros):
+  - WTF Macros (Referee Macros):
     - Give (or take) cash.
     - Give (or take) hero dice.
     - Give XP.
     - Group Initiative (select all tokens and use the macro, no need to create the encounter). Initiative will be grouped by token disposition (friendly, neutral, hostile, secret).
     - Escalator Die (UVG 1ed legacy feature). The escalator die value will be added to ability, attack, weapon, power, and album of power roll results.
     - Generate Random NPCs using tables from the Vastlands Guidebook (VLG, pp. 162-163)
-  - SDM Player Macros:
+  - WTF Player Macros:
     - Generate Ability Scores (method described in the Vastlands Guidebook (VLG, p. 12): rolls 1d100 for every ability score and displays the results in chat).
     - Character Background Trait Generator based in the Vastlands Guidebook Background table (VLG, p. 15)
   - Rollable Tables:
