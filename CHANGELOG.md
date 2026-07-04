@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.18.1
+
+- Fixes long range weapons changing to medium range
+
 ## v0.18.0
 
 - Renames the system to When Time Fades (WTF)

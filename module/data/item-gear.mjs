@@ -129,7 +129,6 @@ export default class SdmGear extends SdmItemBase {
     if (!source.weapon) return;
 
     if (source.weapon.range === 'melee') source.weapon.range = 'close';
-    if (source.weapon.range === 'long') source.weapon.range = 'medium';
     if (source.weapon.range === 'extreme') source.weapon.range = 'long';
   }
 
