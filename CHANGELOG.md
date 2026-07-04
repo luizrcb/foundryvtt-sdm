@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.1.2
+
+- Small fix to system version
+
 ## v1.1.1
 
 - Fixes gear features missing in v14
