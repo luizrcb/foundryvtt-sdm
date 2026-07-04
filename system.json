@@ -2,14 +2,14 @@
   "id": "sdm",
   "title": "When Time Fades",
   "description": "An unofficial system for playing Ultraviolet Grasslands (UVG) and Our Golden Age (OGA) using When Time Fades (WTF) RPG system, formely known as the Synthetic Dream Machine (SDM).",
-  "version": "0.18.0",
+  "version": "1.1.0",
   "url": "https://github.com/luizrcb/foundryvtt-sdm",
   "bugs": "https://github.com/luizrcb/foundryvtt-sdm/issues",
   "manifest": "https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/main/system.json",
-  "download": "https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.18.0/sdm-0.18.0.zip",
+  "download": "https://github.com/luizrcb/foundryvtt-sdm/releases/download/v1.1.0/sdm-1.1.0.zip",
   "compatibility": {
     "minimum": "14",
-    "verified": "14.363"
+    "verified": "14.364"
   },
   "authors": [
     {

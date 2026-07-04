@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v1.1.0
+
+- Renames the system to When Time Fades (WTF)
+- Updates logo, links and display text to reflect the system rename
+
 ## v1.0.1
 
 - Fixes an issue where equipment with a weapon feature does not display the damage roll icon (v14)
