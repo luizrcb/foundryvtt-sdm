@@ -33,7 +33,7 @@ export default class WeaponDataModel extends foundry.abstract.DataModel {
         required: false,
         blank: true,
         initial: '',
-        choices: CONFIG.SDM.rangeType
+        choices: CONFIG.SDM.rangeType,
       }),
 
       versatile: new fields.BooleanField({ required: true, initial: false })
