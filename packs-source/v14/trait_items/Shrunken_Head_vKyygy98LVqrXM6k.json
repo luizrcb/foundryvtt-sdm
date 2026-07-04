@@ -52,7 +52,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 1,
     "powers": [],
     "armor": {
       "value": 0,
@@ -113,7 +113,9 @@
         "coreVersion": "14.353",
         "systemId": "sdm",
         "systemVersion": "0.5.4",
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "createdTime": null,
+        "modifiedTime": null
       },
       "showIcon": 1,
       "folder": null,
@@ -132,12 +134,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "14.353",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011808302,
-    "modifiedTime": 1767011808373,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783180660208,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!vKyygy98LVqrXM6k"
 }

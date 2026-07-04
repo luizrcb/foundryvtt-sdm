@@ -10,13 +10,15 @@
     "resources": "",
     "cost": 200,
     "cost_frequency": "",
-    "description": "<p>Think a thought you would forget, then eat these pills.</p><p><strong>Features:</strong> re 5</p>",
+    "description": "<p>Think a thought you would forget, then eat these pills.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "soaps"
     },
-    "features": "",
+    "features": [
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -73,6 +75,9 @@
       },
       "range": "",
       "versatile": false
+    },
+    "replenish": {
+      "value": 5
     }
   },
   "effects": [],
@@ -87,12 +92,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011788171,
-    "modifiedTime": 1767011788171,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783174204931,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!rwYYie1i76drfT7H"
 }

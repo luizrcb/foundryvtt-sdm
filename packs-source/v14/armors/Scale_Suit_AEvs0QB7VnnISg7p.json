@@ -8,13 +8,16 @@
     "readied": false,
     "cost": 50,
     "cost_frequency": "",
-    "description": "<p>From de-extincted iron pangolin scales.</p><p><strong>Features:</strong> bulky, hot</p>",
+    "description": "<p>From de-extincted iron pangolin scales.</p>",
     "quantity": 1,
     "size": {
       "value": 2,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "bulky",
+      "hot"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -86,12 +89,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011671983,
-    "modifiedTime": 1767011671983,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783173422189,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!AEvs0QB7VnnISg7p"
 }

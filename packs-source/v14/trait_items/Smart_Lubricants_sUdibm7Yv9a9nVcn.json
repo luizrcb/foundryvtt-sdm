@@ -10,13 +10,15 @@
     "resources": "",
     "cost": 250,
     "cost_frequency": "",
-    "description": "<p>Tiny synthetic animalcules smooth your joints and reduce wear and tear. Each dose removes 1 golem burden.</p><p><strong>Features:</strong> re 4</p>",
+    "description": "<p>Tiny synthetic animalcules smooth your joints and reduce wear and tear. Each dose removes 1 golem burden.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -73,6 +75,9 @@
       },
       "range": "",
       "versatile": false
+    },
+    "replenish": {
+      "value": 4
     }
   },
   "effects": [],
@@ -87,12 +92,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011786563,
-    "modifiedTime": 1767011786563,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783174161179,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!sUdibm7Yv9a9nVcn"
 }

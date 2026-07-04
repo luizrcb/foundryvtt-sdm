@@ -10,13 +10,15 @@
     "resources": "",
     "cost": 1,
     "cost_frequency": "",
-    "description": "<p>The first lifeform you found after awakening on a dead fast star.</p><p><strong>Features:</strong> sentient</p>",
+    "description": "<p>The first lifeform you found after awakening on a dead fast star.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "semi_sentient"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -87,12 +89,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011786563,
-    "modifiedTime": 1767011786563,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783174146547,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!aJWq9TmuFahJAOBC"
 }

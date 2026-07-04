@@ -8,13 +8,16 @@
     "readied": false,
     "cost": 10000,
     "cost_frequency": "",
-    "description": "<p>Looks like a helmet. If you would die, it saves your head and skitters off like a creepy spider.</p><p><strong>Features:</strong> autonomous, spell eater (spend [[/r 1d4+1]] life to capture a spell)</p>",
+    "description": "<p>Looks like a helmet. If you would die, it saves your head and skitters off like a creepy spider.</p><p>autonomous, spell eater (spend [[/r 1d4+1]] life to capture a spell)</p>",
     "quantity": 1,
     "size": {
       "value": 2,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "auto",
+      "spell_eater"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -86,12 +89,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011698984,
-    "modifiedTime": 1767011698984,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783181400132,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!ldXF3DP2cEzeAMEV"
 }

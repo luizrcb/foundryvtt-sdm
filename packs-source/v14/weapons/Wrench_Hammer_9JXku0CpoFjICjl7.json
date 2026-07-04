@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 10,
     "cost_frequency": "",
-    "description": "<p>Maintainer caste tool for divine doors and holy hatches. Today, a badge of priestly office.</p><p><strong>Features:</strong> two-handed</p>",
+    "description": "<p>Maintainer caste tool for divine doors and holy hatches. Today, a badge of priestly office.</p>",
     "quantity": 1,
     "size": {
       "value": 2,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "two_handed"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -87,12 +89,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011718611,
-    "modifiedTime": 1767011718611,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783181634337,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!9JXku0CpoFjICjl7"
 }

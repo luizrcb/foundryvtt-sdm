@@ -16,7 +16,9 @@
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "vorpal"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -134,12 +136,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "14.353",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.1",
+    "systemVersion": "1.1.0",
     "createdTime": 1760974765198,
-    "modifiedTime": 1760993493197,
-    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+    "modifiedTime": 1783176007028,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!cBQ2eykKoBv3ZTbk"
 }

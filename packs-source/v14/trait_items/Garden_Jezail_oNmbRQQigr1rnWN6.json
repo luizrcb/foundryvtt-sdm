@@ -10,13 +10,16 @@
     "resources": "",
     "cost": 7500,
     "cost_frequency": "",
-    "description": "<p>Killed a Vile One in the Long Ago? Builder-charged, long range.</p><p><strong>Features:</strong> 2H, re 2</p>",
+    "description": "<p>Killed a Vile One in the Long Ago? Builder-charged, long range.</p>",
     "quantity": 1,
     "size": {
       "value": 3,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "replenish",
+      "two_handed"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -71,10 +74,13 @@
         "versatile": "1d4",
         "bonus": ""
       },
-      "range": "medium",
+      "range": "long",
       "versatile": false
     },
-    "default_ability": ""
+    "default_ability": "",
+    "replenish": {
+      "value": 2
+    }
   },
   "effects": [],
   "sort": 0,
@@ -88,12 +94,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011792616,
-    "modifiedTime": 1767011792616,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783185510078,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!oNmbRQQigr1rnWN6"
 }

@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 50,
     "cost_frequency": "",
-    "description": "<p>Add a friend's skull to boost bonuses by +1!</p><p><strong>Features:</strong> armor +2 (active effect)</p>",
+    "description": "<p>Add a friend's skull to boost bonuses by +1!</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "armor"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -44,8 +46,8 @@
     "max_powers": 3,
     "powers": [],
     "armor": {
-      "value": 0,
-      "type": "",
+      "value": 2,
+      "type": "small",
       "cumbersome": false,
       "powered": null
     },
@@ -75,52 +77,7 @@
     "is_supply": false,
     "supply_type": "human"
   },
-  "effects": [
-    {
-      "name": "Skull (+2 armor)",
-      "origin": "Compendium.sdm.equipment.Item.ka1DT5FEr4JkmoeV",
-      "img": "icons/commodities/bones/skull-hollow-orange.webp",
-      "_id": "JBifqj0yvm6EBvuh",
-      "type": "base",
-      "system": {
-        "changes": [
-          {
-            "key": "system.armor_bonus",
-            "value": 2,
-            "priority": null,
-            "type": "add",
-            "phase": "initial"
-          }
-        ]
-      },
-      "disabled": false,
-      "duration": {
-        "value": null,
-        "units": "seconds",
-        "expiry": null,
-        "expired": false
-      },
-      "description": "",
-      "tint": "#ffffff",
-      "transfer": true,
-      "statuses": [],
-      "sort": 0,
-      "flags": {},
-      "_stats": {
-        "compendiumSource": null,
-        "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "14.353",
-        "systemId": "sdm",
-        "systemVersion": "0.5.4",
-        "lastModifiedBy": null
-      },
-      "showIcon": 1,
-      "folder": null,
-      "start": null,
-      "_key": "!items.effects!ka1DT5FEr4JkmoeV.JBifqj0yvm6EBvuh"
-    }
-  ],
+  "effects": [],
   "sort": 0,
   "ownership": {
     "default": 0,
@@ -131,12 +88,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "14.353",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011697088,
-    "modifiedTime": 1767011697088,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783181170598,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!ka1DT5FEr4JkmoeV"
 }

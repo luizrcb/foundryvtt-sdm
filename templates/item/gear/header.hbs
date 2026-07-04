@@ -237,9 +237,8 @@
       </div>
       <div class="resource">
         <label class='resource-label'>{{localize 'SDM.WeaponRange'}}</label>
-        <select name='system.weapon.range' class="resource-content">
-          <option value=''></option>
-          {{selectOptions config.rangeType localize=true selected=system.weapon.range}}
+        <select id='weapon_range' name='system.weapon.range' class="resource-content">
+          {{selectOptions config.rangeType localize=true selected=system.weapon.range blank=''}}
         </select>
       </div>
 

@@ -10,13 +10,15 @@
     "resources": "",
     "cost": 50,
     "cost_frequency": "",
-    "description": "<p>Extension plug to the local noösphere. Also stores 3 vidys (3 extra trait slots)</p><p><strong>Features:</strong> implant</p>",
+    "description": "<p>Extension plug to the local noösphere. Also stores 3 vidys (3 extra trait slots)</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "soaps"
     },
-    "features": "",
+    "features": [
+      "implant"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -113,7 +115,9 @@
         "coreVersion": "14.353",
         "systemId": "sdm",
         "systemVersion": "0.5.4",
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "createdTime": null,
+        "modifiedTime": null
       },
       "showIcon": 1,
       "folder": null,
@@ -132,12 +136,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "14.353",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011794132,
-    "modifiedTime": 1767011794132,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783174523978,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!ggLmgMzVejK5DvOg"
 }

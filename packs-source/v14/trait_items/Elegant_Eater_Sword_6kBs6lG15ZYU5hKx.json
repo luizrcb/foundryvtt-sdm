@@ -10,13 +10,16 @@
     "resources": "",
     "cost": 2099,
     "cost_frequency": "",
-    "description": "<p>An energy blade. Vorpal. Cuts through most things.</p><p><strong>Features:</strong> re 5, vorpal</p>",
+    "description": "<p>An energy blade. Vorpal. Cuts through most things.</p>",
     "quantity": 1,
     "size": {
       "value": 5,
       "unit": "soaps"
     },
-    "features": "",
+    "features": [
+      "replenish",
+      "vorpal"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -74,7 +77,10 @@
       "range": "close",
       "versatile": false
     },
-    "default_ability": ""
+    "default_ability": "",
+    "replenish": {
+      "value": 5
+    }
   },
   "effects": [],
   "sort": 0,
@@ -88,12 +94,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011784753,
-    "modifiedTime": 1767011784753,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783174043990,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!6kBs6lG15ZYU5hKx"
 }

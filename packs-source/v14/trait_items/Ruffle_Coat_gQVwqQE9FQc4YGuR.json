@@ -16,7 +16,9 @@
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "pocket"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -73,6 +75,9 @@
       },
       "range": "",
       "versatile": false
+    },
+    "pocket": {
+      "value": 7
     }
   },
   "effects": [
@@ -113,7 +118,9 @@
         "coreVersion": "14.353",
         "systemId": "sdm",
         "systemVersion": "0.5.4",
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "createdTime": null,
+        "modifiedTime": null
       },
       "showIcon": 1,
       "folder": null,
@@ -132,12 +139,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "14.353",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011791312,
-    "modifiedTime": 1767011791312,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783174326680,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!gQVwqQE9FQc4YGuR"
 }

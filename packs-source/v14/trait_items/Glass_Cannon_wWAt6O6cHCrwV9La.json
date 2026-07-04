@@ -10,13 +10,16 @@
     "resources": "",
     "cost": 4995,
     "cost_frequency": "",
-    "description": "<p>Fires your blood as toxic shards. Targets are nauseated (save) and suffer a penalty to physical actions. Spend 3 life to reload.</p><p><strong>Features:</strong> re 5, 2H</p>",
+    "description": "<p>Fires your blood as toxic shards. Targets are nauseated (save) and suffer a penalty to physical actions. Spend 3 life to reload.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "replenish",
+      "two_handed"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -71,10 +74,13 @@
         "versatile": "1d4",
         "bonus": ""
       },
-      "range": "medium",
+      "range": "long",
       "versatile": false
     },
-    "default_ability": ""
+    "default_ability": "",
+    "replenish": {
+      "value": 5
+    }
   },
   "effects": [],
   "sort": 0,
@@ -88,12 +94,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011798288,
-    "modifiedTime": 1767011798288,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783185569874,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!wWAt6O6cHCrwV9La"
 }

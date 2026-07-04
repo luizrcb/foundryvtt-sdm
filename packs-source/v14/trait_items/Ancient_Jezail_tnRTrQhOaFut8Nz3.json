@@ -71,7 +71,7 @@
         "versatile": "1d4",
         "bonus": ""
       },
-      "range": "medium",
+      "range": "long",
       "versatile": false
     },
     "default_ability": ""
@@ -88,12 +88,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011774696,
-    "modifiedTime": 1767011774696,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783185466411,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!tnRTrQhOaFut8Nz3"
 }

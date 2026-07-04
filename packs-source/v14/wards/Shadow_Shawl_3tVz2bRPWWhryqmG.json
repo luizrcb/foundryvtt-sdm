@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 500,
     "cost_frequency": "",
-    "description": "<p>Woven from voidspider silk. Eats light and sound.</p><p><strong>Features:</strong> stealthy</p>",
+    "description": "<p>Woven from voidspider silk. Eats light and sound.</p>",
     "quantity": 1,
     "size": {
       "value": 5,
       "unit": "soaps"
     },
-    "features": "",
+    "features": [
+      "stealthy"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -86,12 +88,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011695533,
-    "modifiedTime": 1767011695533,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783180918808,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!3tVz2bRPWWhryqmG"
 }

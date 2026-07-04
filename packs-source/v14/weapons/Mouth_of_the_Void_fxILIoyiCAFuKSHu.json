@@ -8,13 +8,19 @@
     "readied": false,
     "cost": 3900,
     "cost_frequency": "",
-    "description": "<p>Hear the song of the cosmos, merge with your existential dread.</p><p>Adjacent creatures suffer [[/r 1d6]] damage. Stops a heart on a natural 13.</p><p><strong>Features:</strong> short, re 4 [[/r 1d20]], attune, fantascience, deathly, fearsome</p><p></p>",
+    "description": "<p>Hear the song of the cosmos, merge with your existential dread.</p><p>Adjacent creatures suffer [[/r 1d6]] damage. Stops a heart on a natural 13.</p><p></p>",
     "quantity": 1,
     "size": {
       "value": 6,
       "unit": "soaps"
     },
-    "features": "",
+    "features": [
+      "attune",
+      "deathly",
+      "fantascience",
+      "fearsome",
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -74,7 +80,10 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": "human"
+    "supply_type": "human",
+    "replenish": {
+      "value": 4
+    }
   },
   "effects": [],
   "sort": 2100000,
@@ -87,12 +96,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011726802,
-    "modifiedTime": 1767011726802,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783183146995,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!fxILIoyiCAFuKSHu"
 }

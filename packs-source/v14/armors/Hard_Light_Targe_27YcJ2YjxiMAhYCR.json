@@ -8,13 +8,16 @@
     "readied": false,
     "cost": 950,
     "cost_frequency": "",
-    "description": "<p>A push-button shield of force.</p><p>In melee, it deals [[/r 1d4]] damage and severs limbs on a natural 17.</p><p><strong>Features:</strong> weapon, vorpal</p><p><em>armors with the weapon feature are weapons with armor bonus active effect</em></p>",
+    "description": "<p>A push-button shield of force.</p><p>In melee, it deals [[/r 1d4]] damage and severs limbs on a natural 17.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "vorpal",
+      "weapon"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -27,7 +30,7 @@
       "bonus": 1,
       "damage": "1d4"
     },
-    "type": "weapon",
+    "type": "armor",
     "power": {
       "img": "icons/svg/book.svg",
       "name": "",
@@ -114,7 +117,9 @@
         "coreVersion": "14.353",
         "systemId": "sdm",
         "systemVersion": "0.5.4",
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "createdTime": null,
+        "modifiedTime": null
       },
       "showIcon": 1,
       "folder": null,
@@ -132,12 +137,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "14.353",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011671983,
-    "modifiedTime": 1767011671983,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783173611606,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!27YcJ2YjxiMAhYCR"
 }

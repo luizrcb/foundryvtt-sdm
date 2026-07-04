@@ -8,13 +8,18 @@
     "readied": false,
     "cost": 3000,
     "cost_frequency": "",
-    "description": "<p>Whips like a cobra, drinking souls and leaving empty husks. Holds three souls.</p><p>Spend one to animate it as a @UUID[Compendium.sdm.creatures.Actor.RrHPo1p4xq14BKO3]{Spear Snake} (L3/12 life) or to regain [[/r 1d6x]] life</p><p><strong>Features:</strong> 2H, attune, fantascience</p>",
+    "description": "<p>Whips like a cobra, drinking souls and leaving empty husks. Holds three souls.</p><p>Spend one to animate it as a @UUID[Compendium.sdm.creatures.Actor.RrHPo1p4xq14BKO3]{Spear Snake} (L3/12 life) or to regain [[/r 1d6x]] life</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "attune",
+      "charges",
+      "fantascience",
+      "two_handed"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -91,12 +96,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011720662,
-    "modifiedTime": 1767011720662,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783182007952,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!ZteNSXBaRUbC5CuU"
 }

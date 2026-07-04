@@ -10,13 +10,15 @@
     "resources": "",
     "cost": 600,
     "cost_frequency": "",
-    "description": "<p>A precise oldtech beam-spear. In melee it deals [[/r 1d8]] damage and consumes no charge.</p><p><strong>Features:</strong> re 7</p>",
+    "description": "<p>A precise oldtech beam-spear. In melee it deals [[/r 1d8]] damage and consumes no charge.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -68,13 +70,16 @@
     "weapon": {
       "damage": {
         "base": "1d12",
-        "versatile": "1d4",
+        "versatile": "",
         "bonus": ""
       },
-      "range": "medium",
+      "range": "long",
       "versatile": false
     },
-    "default_ability": ""
+    "default_ability": "",
+    "replenish": {
+      "value": 7
+    }
   },
   "effects": [],
   "sort": 0,
@@ -88,12 +93,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011795483,
-    "modifiedTime": 1767011795483,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783185538675,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!hGKath3hGL20LlJR"
 }

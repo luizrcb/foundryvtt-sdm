@@ -10,13 +10,15 @@
     "resources": "",
     "cost": 150,
     "cost_frequency": "",
-    "description": "<p>Keeps bad thoughts away, prevents betrayals. Reduces charisma and agility by 1. Bad thoughts and ability scores return after a day.</p><p><strong>Features:</strong> re 2</p>",
+    "description": "<p>Keeps bad thoughts away, prevents betrayals. Reduces charisma and agility by 1. Bad thoughts and ability scores return after a day.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "soaps"
     },
-    "features": "",
+    "features": [
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -73,6 +75,9 @@
       },
       "range": "",
       "versatile": false
+    },
+    "replenish": {
+      "value": 2
     }
   },
   "effects": [
@@ -120,7 +125,9 @@
         "coreVersion": "14.353",
         "systemId": "sdm",
         "systemVersion": "0.5.4",
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "createdTime": null,
+        "modifiedTime": null
       },
       "showIcon": 1,
       "folder": null,
@@ -139,12 +146,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "14.353",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011808302,
-    "modifiedTime": 1767011808302,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783180586420,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!8FqIxHyxqWN1TRyr"
 }

@@ -8,13 +8,16 @@
     "readied": false,
     "cost": 500,
     "cost_frequency": "",
-    "description": "<p>Trademark bone wizard product.</p><p><strong>Features:</strong> bulky, cool</p>",
+    "description": "<p>Trademark bone wizard product.</p>",
     "quantity": 1,
     "size": {
       "value": 3,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "bulky",
+      "cool"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -86,12 +89,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011671983,
-    "modifiedTime": 1767011671983,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783172941760,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!aQStDj4d9d7Pxh8g"
 }

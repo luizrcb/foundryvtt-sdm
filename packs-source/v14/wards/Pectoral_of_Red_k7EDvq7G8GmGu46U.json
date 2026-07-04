@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 200,
     "cost_frequency": "",
-    "description": "<p>Adds +2 bonus to damage or effects of red items.</p><p><strong>Features:</strong> booster</p>",
+    "description": "<p>Adds +2 bonus to damage or effects of red items.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "booster"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -86,12 +88,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011697088,
-    "modifiedTime": 1767011697088,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783181088617,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!k7EDvq7G8GmGu46U"
 }

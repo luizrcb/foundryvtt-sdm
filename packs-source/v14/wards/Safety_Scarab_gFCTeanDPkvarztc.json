@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 10,
     "cost_frequency": "",
-    "description": "<p>Undead beetle vome with your name on it.</p><p><strong>Features:</strong> corpsefed</p>",
+    "description": "<p>Undead beetle vome with your name on it.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "soaps"
     },
-    "features": "",
+    "features": [
+      "corpsefed"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -86,12 +88,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011695533,
-    "modifiedTime": 1767011695533,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783180967146,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!gFCTeanDPkvarztc"
 }

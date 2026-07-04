@@ -8,13 +8,18 @@
     "readied": false,
     "cost": 2800,
     "cost_frequency": "",
-    "description": "<p>This fleshy green wandgun turns your blood into corrupting serum. </p><p>Max damage: corrupted.</p><p><strong>Features:</strong> short, attune, vital, intravenous, corrupting</p>",
+    "description": "<p>This fleshy green wandgun turns your blood into corrupting serum.</p><p>Max damage: corrupted.</p>",
     "quantity": 1,
     "size": {
       "value": 5,
       "unit": "soaps"
     },
-    "features": "",
+    "features": [
+      "attune",
+      "corrupting",
+      "intravenous",
+      "vital"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -87,12 +92,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011726802,
-    "modifiedTime": 1767011726802,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783183008158,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!PTTwxaqTDagRnVfV"
 }

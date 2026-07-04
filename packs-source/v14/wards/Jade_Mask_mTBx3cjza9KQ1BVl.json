@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 150,
     "cost_frequency": "",
-    "description": "<p>Tinkling jade beads also add +1 charisma <em>(active effect</em>)</p><p><strong>Features:</strong> jade</p><p></p>",
+    "description": "<p>Tinkling jade beads also add +1 charisma <em>(active effect</em>)</p><p></p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "jade"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -113,7 +115,9 @@
         "coreVersion": "14.353",
         "systemId": "sdm",
         "systemVersion": "0.5.4",
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "createdTime": null,
+        "modifiedTime": null
       },
       "showIcon": 1,
       "folder": null,
@@ -131,12 +135,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "14.353",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011697088,
-    "modifiedTime": 1767011697088,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783181159990,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!mTBx3cjza9KQ1BVl"
 }

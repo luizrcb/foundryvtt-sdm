@@ -8,13 +8,19 @@
     "readied": false,
     "cost": 2400,
     "cost_frequency": "",
-    "description": "<p>Satrapy steel-glass scales and an enviromaker parasite.</p><p>Burn mode [[/r 1d20]]: gain +2 strength (active effect)</p><p><strong>Features:</strong> re 3 [[/r 1d20]], bulky, cool, enviro</p>",
+    "description": "<p>Satrapy steel-glass scales and an enviromaker parasite.</p><p>Burn mode [[/r 1d20]]: gain +2 strength (active effect)</p>",
     "quantity": 1,
     "size": {
       "value": 2,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "bulky",
+      "burn",
+      "cool",
+      "environmental",
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -74,7 +80,10 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": "human"
+    "supply_type": "human",
+    "replenish": {
+      "value": 3
+    }
   },
   "effects": [
     {
@@ -114,7 +123,9 @@
         "coreVersion": "14.353",
         "systemId": "sdm",
         "systemVersion": "0.5.4",
-        "lastModifiedBy": null
+        "lastModifiedBy": null,
+        "createdTime": null,
+        "modifiedTime": null
       },
       "showIcon": 1,
       "folder": null,
@@ -132,12 +143,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "14.353",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011671983,
-    "modifiedTime": 1767011671983,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783172604998,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!TVuqKPuLoYdYte7O"
 }

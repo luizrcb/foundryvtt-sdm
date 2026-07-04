@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 1,
     "cost_frequency": "",
-    "description": "<p>The classic combat shuriken of Rustlanders, alley dwellers, and other ne’er-do-wells.</p><p><strong>Features:</strong> concealed</p>",
+    "description": "<p>The classic combat shuriken of Rustlanders, alley dwellers, and other ne’er-do-wells.</p>",
     "quantity": 1,
     "size": {
       "value": 2,
       "unit": "soaps"
     },
-    "features": "",
+    "features": [
+      "concealed"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -87,12 +89,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011725078,
-    "modifiedTime": 1767011725078,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783182181949,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!x0LdHXFJBBCef3jn"
 }

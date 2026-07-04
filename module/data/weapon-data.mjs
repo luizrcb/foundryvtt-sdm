@@ -33,10 +33,7 @@ export default class WeaponDataModel extends foundry.abstract.DataModel {
         required: false,
         blank: true,
         initial: '',
-        choices: Object.values(RangeOption).reduce((acc, key) => {
-          acc[key] = game.i18n.localize(`SDM.Range${capitalizeFirstLetter(key)}`);
-          return acc;
-        }, {})
+        choices: CONFIG.SDM.rangeType
       }),
 
       versatile: new fields.BooleanField({ required: true, initial: false })

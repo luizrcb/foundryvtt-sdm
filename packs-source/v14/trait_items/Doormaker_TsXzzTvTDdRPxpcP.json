@@ -10,13 +10,16 @@
     "resources": "",
     "cost": 4500,
     "cost_frequency": "",
-    "description": "<p>This empathic brushpen lets you draw doors in livingstone and shipmetal structures. Originally made for Metropolis maintainers. Eraser sold separately.</p><p><strong>Features:</strong> re 7, restricted</p>",
+    "description": "<p>This empathic brushpen lets you draw doors in livingstone and shipmetal structures. Originally made for Metropolis maintainers. Eraser sold separately.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "replenish",
+      "restricted"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -73,6 +76,9 @@
       },
       "range": "",
       "versatile": false
+    },
+    "replenish": {
+      "value": 7
     }
   },
   "effects": [],
@@ -87,12 +93,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011788171,
-    "modifiedTime": 1767011788171,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783174184495,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!TsXzzTvTDdRPxpcP"
 }

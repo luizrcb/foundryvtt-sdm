@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v1.1.1
+
+- Fixes gear features missing in v14
+- Fixes long range weapons always changing to medium range
+
 ## v1.1.0
 
 - Renames the system to When Time Fades (WTF)

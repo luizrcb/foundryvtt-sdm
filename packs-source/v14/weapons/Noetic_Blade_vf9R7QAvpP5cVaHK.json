@@ -8,13 +8,16 @@
     "readied": false,
     "cost": 500,
     "cost_frequency": "",
-    "description": "<p>The onyx and ivory hilt projects a blade of pure psychic energy, slicing through mental and physical barriers. </p><p>Spend 1 aura to deal triple damage.</p><p><strong>Features</strong>: fantascience, armor piercing</p>",
+    "description": "<p>The onyx and ivory hilt projects a blade of pure psychic energy, slicing through mental and physical barriers.</p><p>Spend 1 aura to deal triple damage.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "armor_piercing",
+      "fantascience"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -87,12 +90,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011720662,
-    "modifiedTime": 1767011720662,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783181925696,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!vf9R7QAvpP5cVaHK"
 }

@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 300,
     "cost_frequency": "",
-    "description": "<p>Bonus against surprises, sneak attacks, and such.</p><p><strong>Features:</strong> watchful</p>",
+    "description": "<p>Bonus against surprises, sneak attacks, and such.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "watchful"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -86,12 +88,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "14.364",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.1.0",
     "createdTime": 1767011697088,
-    "modifiedTime": 1767011697088,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783181145051,
+    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
   },
   "_key": "!items!kjcsL8bUYXEOBPfL"
 }
