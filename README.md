@@ -44,13 +44,13 @@ You can also use one of the following alternative installation methods:
 
 ### Foundry v13 manifest URL
 
-To install the lastest v13 supported version of SDM, use the following manifest URL:
+To install the lastest v13 supported version of WTF, use the following manifest URL:
 ##
-    https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.17.3/system.json
+    https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.18.2/system.json
 
 ### Latest Foundry version (v14)
 
-The latest version of the system can be installed through the in-app System Browser by searching for any of the following: "SDM", "Synthetic Dream Machine", "UVG", "Ultraviolet Grasslands", "OGA", or "Our Golden Age".
+The latest version of the system can be installed through the in-app System Browser by searching for any of the following: "WTF","When Time Fades", "SDM", "Synthetic Dream Machine", "UVG", "Ultraviolet Grasslands", "OGA", or "Our Golden Age".
 
 You can also use one of the following alternative installation methods:
 
@@ -59,7 +59,6 @@ You can also use one of the following alternative installation methods:
     https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/main/system.json
 2. Browsing the repository's [Releases](https://github.com/luizrcb/foundryvtt-sdm/releases) page, where you can copy any system.json link for use in the Install System dialog.
 3. Downloading one of the .zip archives from the Releases page and extracting it into your foundry Data folder, under `Data/systems/sdm`.
-
 
 ## Licenses
 
