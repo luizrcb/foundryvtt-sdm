@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.1.3
+
+- Merges v13 compendium fixes and updates system version
+
 ## v1.1.2
 
 - Small fix to system version
