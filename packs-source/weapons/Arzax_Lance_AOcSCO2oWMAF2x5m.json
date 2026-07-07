@@ -8,13 +8,16 @@
     "readied": false,
     "cost": 200,
     "cost_frequency": "",
-    "description": "<p>Ultralight energy lance. Switch off the null-field to collapse into a short rod.</p><p>Stuns on natural 13.</p><p><strong>Features:</strong> reach, cavalry</p>",
+    "description": "<p>Ultralight energy lance. Switch off the null-field to collapse into a short rod.</p><p>Stuns on natural 13.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "cavalry",
+      "reach"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -89,10 +92,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.18.1",
     "createdTime": 1767011720662,
-    "modifiedTime": 1767011720662,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783373418808,
+    "lastModifiedBy": "4Xbxxjt2AkVYFBy0"
   },
   "_key": "!items!AOcSCO2oWMAF2x5m"
 }

@@ -8,13 +8,19 @@
     "readied": false,
     "cost": 1500,
     "cost_frequency": "",
-    "description": "<p>Implants the target with your personality homunculus (save).</p><p>Each round, each implanted personality tries to take control (aura rolls).</p><p><strong>Features:  </strong>reach, re 13 [[/r 1d20]], attune, fantasci, burdening</p>",
+    "description": "<p>Implants the target with your personality homunculus (save).</p><p>Each round, each implanted personality tries to take control (aura rolls).</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "attune",
+      "burdening",
+      "fantascience",
+      "reach",
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -74,7 +80,10 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": "human"
+    "supply_type": "human",
+    "replenish": {
+      "value": 13
+    }
   },
   "effects": [],
   "sort": 50000,
@@ -89,10 +98,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.18.1",
     "createdTime": 1767011720662,
-    "modifiedTime": 1767011720662,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1783373395977,
+    "lastModifiedBy": "4Xbxxjt2AkVYFBy0"
   },
   "_key": "!items!w2WOCk1WLqyRPM6Q"
 }

@@ -1,4 +1,10 @@
-const { execSync } = require('child_process');
+import { extractPack } from '@foundryvtt/foundryvtt-cli';
+import { existsSync } from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const PROJECT_ROOT = path.join(__dirname, '..'); // project root
 
 const packs = [
   { name: 'ability_scores', output: 'packs-source/ability_scores' },
@@ -25,14 +31,31 @@ const packs = [
   { name: 'weapons', output: 'packs-source/weapons' }
 ];
 
-try {
-  packs.forEach(pack => {
+const yaml = false;
+
+async function run() {
+  for (const pack of packs) {
+    // Define both paths inside the loop
+    const inputDb = path.join(PROJECT_ROOT, 'packs', pack.name);
+    const outputDir = path.join(PROJECT_ROOT, pack.output);
+
+    // Optional: check if .db exists before unpacking
+    if (!existsSync(inputDb)) {
+      console.log(`⚠️  ${inputDb} not found – skipping ${pack.name}`);
+      continue;
+    }
+
     console.log(`Unpacking ${pack.name}...`);
-    execSync(`fvtt package unpack -n "${pack.name}" --outputDirectory "${pack.output}"`, {
-      stdio: 'inherit'
-    });
-  });
-} catch (error) {
-  console.error('Unpacking failed:', error);
-  process.exit(1);
+    try {
+      await extractPack(inputDb, outputDir, { yaml });
+    } catch (err) {
+      console.error(`Failed on ${pack.name}:`, err.message);
+      // Optionally exit or continue
+    }
+  }
 }
+
+run().catch(err => {
+  console.error('Unpacking failed:', err);
+  process.exit(1);
+});

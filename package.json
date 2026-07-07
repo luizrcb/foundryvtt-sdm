@@ -1,15 +1,15 @@
 {
   "name": "sdm",
-  "version": "0.18.1",
+  "version": "0.18.2",
   "description": "CSS compiler for the Sdm system",
   "scripts": {
     "build": "sass src/scss/sdm.scss css/sdm.css --style=expanded --no-source-map",
     "watch": "sass src/scss/sdm.scss css/sdm.css --style=expanded --source-map --watch",
     "format": "prettier --write \"**/*.{js,mjs,html,hbs,json,css}\"",
     "local:build": "npm i && npm run build && npm run local:repack",
-    "local:clean": "node utils/cleanPacks.js",
-    "local:pack": "node utils/pack.js",
-    "local:unpack": "node utils/unpack.js",
+    "local:clean": "node utils/cleanPacks.mjs",
+    "local:pack": "node utils/pack.mjs",
+    "local:unpack": "node utils/unpack.mjs",
     "local:repack": "npm run local:clean && npm run local:pack",
     "createSymlinks": "node ./tools/create-symlinks.mjs",
     "postinstall": "npm run build && npm run createSymlinks",
@@ -31,5 +31,9 @@
     "prettier": "^3.6.2",
     "prettier-plugin-handlebars": "^0.0.1",
     "sass": "^1.53.0"
+  },
+  "allowScripts": {
+    "@parcel/watcher@2.5.6": true,
+    "classic-level@1.4.1": true
   }
 }

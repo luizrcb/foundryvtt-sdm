@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.18.2
+
+- Fixes two weapons without features (agon whip and arzax lance) - v13 only
+
 ## v0.18.1
 
 - Fixes long range weapons changing to medium range
