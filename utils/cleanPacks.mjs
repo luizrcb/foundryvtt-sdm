@@ -1,6 +1,6 @@
 // cleanPacks.js
-const fs = require('fs');
-const path = require('path');
+import { existsSync, rmSync } from 'fs';
+import { join } from 'path';
 
 const foldersToDelete = [
   'packs/ability_scores',
@@ -28,13 +28,13 @@ const foldersToDelete = [
   'packs/weapons'
 ];
 
-const rootDir = path.join(__dirname, '..');
+const rootDir = process.cwd();
 
 foldersToDelete.forEach(folder => {
-  const fullPath = path.join(rootDir, folder);
-  if (fs.existsSync(fullPath)) {
+  const fullPath = join(rootDir, folder);
+  if (existsSync(fullPath)) {
     console.log(`Deleting ${folder}...`);
-    fs.rmSync(fullPath, { recursive: true, force: true });
+    rmSync(fullPath, { recursive: true, force: true });
   } else {
     console.log(`${folder} not found, skipping...`);
   }

@@ -1,4 +1,10 @@
-const { execSync } = require('child_process');
+import { compilePack } from '@foundryvtt/foundryvtt-cli';
+import { promises as fs } from 'fs';
+import path from 'path';
+import { fileURLToPath } from 'url';
+
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const PROJECT_ROOT = process.cwd();
 
 const foundryVersion = 'v14';
 
@@ -27,15 +33,19 @@ const packs = [
   { name: 'weapons', source: `packs-source/${foundryVersion}/weapons` }
 ];
 
-try {
-  packs.forEach(pack => {
+const yaml = false;
+const folders = true;
+
+async function run() {
+  for (const pack of packs) {
     console.log(`Packing ${pack.name}...`);
-    execSync(
-      `fvtt package pack -n "${pack.name}" --inputDirectory "${pack.source}" --outputDirectory "packs"`,
-      { stdio: 'inherit' }
-    );
-  });
-} catch (error) {
-  console.error('Packing failed:', error);
-  process.exit(1);
+    const inputDir = path.join(PROJECT_ROOT, pack.source);
+    const outputDir = path.join(PROJECT_ROOT, 'packs', pack.name);
+    await compilePack(inputDir, outputDir, { yaml, recursive: folders });
+  }
 }
+
+run().catch(err => {
+  console.error('Packing failed:', err);
+  process.exit(1);
+});
