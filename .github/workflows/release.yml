@@ -182,10 +182,10 @@ jobs:
           **Installation:** To manually install this release, please use the following manifest URL: ${{ env.RELEASE_INSTALL_URL }}
 
     # Publish update to Foundry Admin interface via API
-    - name: Publish Module to FoundryVTT Website
-      id: publish-to-foundry-website
-      uses: cs96and/FoundryVTT-release-package@v1
-      with:
-        package-token: ${{ secrets.PACKAGE_TOKEN }}
-        manifest-url: ${{ env.RELEASE_INSTALL_URL }}
-        notes-url: https://github.com/${{github.repository}}/releases/tag/${{env.TAG_NAME}}
+    # - name: Publish Module to FoundryVTT Website
+    #   id: publish-to-foundry-website
+    #   uses: cs96and/FoundryVTT-release-package@v1
+    #   with:
+    #     package-token: ${{ secrets.PACKAGE_TOKEN }}
+    #     manifest-url: ${{ env.RELEASE_INSTALL_URL }}
+    #     notes-url: https://github.com/${{github.repository}}/releases/tag/${{env.TAG_NAME}}
