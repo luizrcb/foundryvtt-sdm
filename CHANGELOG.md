@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.19.0
+
+- Adds area feature
+- Fixes Bullet Plate Weave armor type to heavy
+
 ## v0.18.2
 
 - Fixes two weapons without features (agon whip and arzax lance) - v13 only

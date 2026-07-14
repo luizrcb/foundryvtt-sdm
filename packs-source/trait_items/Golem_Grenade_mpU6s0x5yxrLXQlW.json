@@ -10,13 +10,15 @@
     "resources": "",
     "cost": 275,
     "cost_frequency": "",
-    "description": "<p>Smart enough that you have to talk it into exploding. Large area.</p>",
+    "description": "<p>Smart enough that you have to talk it into exploding.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "area"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -74,7 +76,10 @@
       "range": "medium",
       "versatile": false
     },
-    "default_ability": ""
+    "default_ability": "",
+    "area": {
+      "value": "large"
+    }
   },
   "effects": [],
   "sort": 0,
@@ -90,10 +95,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.18.2",
     "createdTime": 1767011782775,
-    "modifiedTime": 1767011782775,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1784038882446,
+    "lastModifiedBy": "82Lz74CglpwcPzB4"
   },
   "_key": "!items!mpU6s0x5yxrLXQlW"
 }

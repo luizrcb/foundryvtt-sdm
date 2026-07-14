@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 30,
     "cost_frequency": "",
-    "description": "<p>A glitch-vome’s signaling eye set to St. Vitus.</p><p>Causes blindness, nausea, and/or robot dancing.</p><p>Area S</p>",
+    "description": "<p>A glitch-vome’s signaling eye set to St. Vitus.</p><p>Causes blindness, nausea, and/or robot dancing.</p>",
     "quantity": 1,
     "size": {
       "value": 2,
       "unit": "soaps"
     },
-    "features": [],
+    "features": [
+      "area"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -74,7 +76,10 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": "human"
+    "supply_type": "human",
+    "area": {
+      "value": "small"
+    }
   },
   "effects": [],
   "sort": 96875,
@@ -89,10 +94,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.10.0",
+    "systemVersion": "0.18.2",
     "createdTime": 1767011725078,
-    "modifiedTime": 1771502117194,
-    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+    "modifiedTime": 1784038398609,
+    "lastModifiedBy": "82Lz74CglpwcPzB4"
   },
   "_key": "!items!MG62AoeMXN6IrLxD"
 }

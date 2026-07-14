@@ -194,7 +194,7 @@ export function registerHandlebarsHelpers() {
   });
 
   $$('numberedFeature', function (feature) {
-    return ['replenish', 'flare', 'pocket', 'resistant'].includes(feature);
+    return ['area', 'replenish', 'flare', 'pocket', 'resistant'].includes(feature);
   });
 
   $$('replace', function (originalString = '', removedString = '', addedString = '') {
