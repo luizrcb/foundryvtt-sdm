@@ -48,6 +48,15 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       })
     });
 
+    schema.area = new fields.SchemaField({
+      value: new fields.StringField({
+        required: false,
+        blank: true,
+        nullable: true,
+        initial: '',
+      })
+    })
+
     schema.flare = new fields.SchemaField({
       value: new fields.NumberField({
         required: true,

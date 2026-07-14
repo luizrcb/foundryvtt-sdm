@@ -169,6 +169,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       pullModes: CONFIG.SDM.pullModes,
       possibleRiders: getActorOptions('character'),
       sizeUnits: CONFIG.SDM.sizeUnits,
+      areaValues: CONFIG.SDM.areaValues,
       skillMod: allSKillMods,
       skillModifierStep: defaultModifierStep,
       abilities: CONFIG.SDM.getOrderedAbilities(language),

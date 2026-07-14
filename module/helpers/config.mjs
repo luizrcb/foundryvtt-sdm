@@ -60,6 +60,13 @@ SDM.abilityAbbreviations = {
   tho: 'SDM.AbilityThoAbbr'
 };
 
+SDM.areaValues = {
+  single: 'SDM.AreaSingle',
+  small: 'SDM.AreaSmall',
+  medium: 'SDM.AreaMedium',
+  large: 'SDM.AreaLarge'
+};
+
 SDM.sizeUnits = {
   sacks: 'SDM.UnitSacks',
   stones: 'SDM.UnitStones',
@@ -420,6 +427,7 @@ SDM.defeatAbilities = {
 };
 
 SDM.baseFeatures = [
+  { value: 'area', label: 'SDM.ItemFeature.area' },
   { value: 'charges', label: 'SDM.ItemFeature.charges' },
   { value: 'replenish', label: 'SDM.ItemFeature.replenish' },
   { value: 'corpsefed', label: 'SDM.ItemFeature.corpsefed' },
@@ -475,11 +483,11 @@ SDM.armorFeatures = [
   { value: 'stylish', label: 'SDM.ItemFeature.stylish' },
   { value: 'intravenous', label: 'SDM.ItemFeature.intravenous' },
   { value: 'weapon', label: 'SDM.ItemFeature.weapon' },
-
   { value: 'vorpal', label: 'SDM.ItemFeature.vorpal' }
 ];
 
 SDM.weaponFeatures = [
+  { value: 'area', label: 'SDM.ItemFeature.area' },
   { value: 'armor_piercing', label: 'SDM.ItemFeature.armor_piercing' },
   { value: 'atrophy', label: 'SDM.ItemFeature.atrophy' },
   { value: 'attune', label: 'SDM.ItemFeature.attune' },

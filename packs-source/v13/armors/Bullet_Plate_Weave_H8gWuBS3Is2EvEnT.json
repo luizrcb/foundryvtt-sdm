@@ -49,7 +49,7 @@
     "powers": [],
     "armor": {
       "value": 8,
-      "type": "medium",
+      "type": "heavy",
       "cumbersome": false,
       "powered": null
     },
@@ -92,10 +92,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.10.0",
+    "systemVersion": "0.18.2",
     "createdTime": 1767011671983,
-    "modifiedTime": 1771455480854,
-    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+    "modifiedTime": 1783983682543,
+    "lastModifiedBy": "82Lz74CglpwcPzB4"
   },
   "_key": "!items!H8gWuBS3Is2EvEnT"
 }

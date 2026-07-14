@@ -2,7 +2,7 @@
 
 ## v1.1.3
 
-- Merges v13 compendium fixes and updates system version
+- Small fix to system version
 
 ## v1.1.2
 
@@ -25,6 +25,15 @@
 ## v1.0.0
 
 - V14 support
+
+## v0.19.0
+
+- Adds area feature
+- Fixes Bullet Plate Weave armor type to heavy
+
+## v0.18.2
+
+- Merges v13 compendium fixes and updates system version
 
 ## v0.18.0
 
