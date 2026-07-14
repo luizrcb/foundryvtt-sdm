@@ -8,13 +8,14 @@
     "readied": false,
     "cost": 450,
     "cost_frequency": "",
-    "description": "<p>Creates a bubble of altered spacetime that lasts several rounds. Those within (save) only act every other round. Ranged attacks through the bubble suffer a penalty.</p><p>area M</p><p></p>",
+    "description": "<p>Creates a bubble of altered spacetime that lasts several rounds. Those within (save) only act every other round. Ranged attacks through the bubble suffer a penalty.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
     "features": [
+      "area",
       "oldtech"
     ],
     "attributes": {
@@ -76,7 +77,10 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": "human"
+    "supply_type": "human",
+    "area": {
+      "value": "medium"
+    }
   },
   "effects": [],
   "sort": 150000,

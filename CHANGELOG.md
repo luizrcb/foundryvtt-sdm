@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v1.2.0
+
+- Adds area feature
+- Fixes Bullet Plate Weave armor type to heavy
+
 ## v1.1.3
 
 - Small fix to system version

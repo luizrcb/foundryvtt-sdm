@@ -8,13 +8,14 @@
     "readied": false,
     "cost": 7500,
     "cost_frequency": "",
-    "description": "<p>Fires itself and its user through itself into the destination, re-materializing with a bang. Natural 13: re-materialization delay; roll d6: @UUID[Compendium.sdm.rolltables.RollTable.CvZC0eXNX8sldMPP]{Re-materialization delay}<br>area M</p>",
+    "description": "<p>Fires itself and its user through itself into the destination, re-materializing with a bang. Natural 13: re-materialization delay; roll d6: @UUID[Compendium.sdm.rolltables.RollTable.CvZC0eXNX8sldMPP]{Re-materialization delay}</p>",
     "quantity": 1,
     "size": {
       "value": 2,
       "unit": "stones"
     },
     "features": [
+      "area",
       "attune",
       "oldtech",
       "replenish",
@@ -81,6 +82,9 @@
     "packed_remaining_items": 10,
     "is_supply": false,
     "supply_type": "human",
+    "area": {
+      "value": "medium"
+    },
     "replenish": {
       "value": 7
     }

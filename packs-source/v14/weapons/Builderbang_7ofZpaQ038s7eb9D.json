@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 250,
     "cost_frequency": "",
-    "description": "<p>The holy fragmentation grenade of elder times, treasured by inquisition grenadiers.</p><p><strong>Features:</strong> area L</p>",
+    "description": "<p>The holy fragmentation grenade of elder times, treasured by inquisition grenadiers.</p>",
     "quantity": 1,
     "size": {
       "value": 2,
       "unit": "soaps"
     },
-    "features": "",
+    "features": [
+      "area"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -74,7 +76,10 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": "human"
+    "supply_type": "human",
+    "area": {
+      "value": "large"
+    }
   },
   "effects": [],
   "sort": 100000,

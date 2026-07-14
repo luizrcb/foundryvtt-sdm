@@ -10,13 +10,14 @@
     "resources": "",
     "cost": 200,
     "cost_frequency": "",
-    "description": "<p>12 single-use NRFB batteries. Recharge any 1 stone item. Explode if punctured or thrown against a hard object.</p><p>area S</p>",
+    "description": "<p>12 single-use NRFB batteries. Recharge any 1 stone item. Explode if punctured or thrown against a hard object.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
     "features": [
+      "area",
       "replenish",
       "throwing"
     ],
@@ -41,6 +42,9 @@
     "starting_kit": false,
     "is_supply": false,
     "supply_type": "human",
+    "area": {
+      "value": "small"
+    },
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",

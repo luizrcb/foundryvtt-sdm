@@ -8,13 +8,14 @@
     "readied": false,
     "cost": 5000,
     "cost_frequency": "",
-    "description": "<p>Converts the dross of mortal life into balls of fire. Hardly fair in the eyes of hobnoble land barons.</p><p>Drains the user of 1 life per shot.</p><p>area S</p>",
+    "description": "<p>Converts the dross of mortal life into balls of fire. Hardly fair in the eyes of hobnoble land barons.</p><p>Drains the user of 1 life per shot.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
     "features": [
+      "area",
       "attune",
       "oldtech",
       "vital"
@@ -78,7 +79,10 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": "human"
+    "supply_type": "human",
+    "area": {
+      "value": "small"
+    }
   },
   "effects": [],
   "sort": 2500000,

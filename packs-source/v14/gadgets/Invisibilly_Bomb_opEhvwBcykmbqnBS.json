@@ -14,7 +14,9 @@
       "value": 1,
       "unit": "stones"
     },
-    "features": "",
+    "features": [
+      "area"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -72,6 +74,9 @@
     },
     "starting_kit": false,
     "packed_remaining_items": 10,
+    "area": {
+      "value": "small"
+    },
     "is_supply": false,
     "supply_type": "human"
   },

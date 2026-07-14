@@ -49,7 +49,7 @@
     "powers": [],
     "armor": {
       "value": 8,
-      "type": "medium",
+      "type": "heavy",
       "cumbersome": false,
       "powered": null
     },
