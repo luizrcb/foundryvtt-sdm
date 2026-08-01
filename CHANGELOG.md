@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.19.1
+
+- Fixes some missing features in many compendium items
+
 ## v0.19.0
 
 - Adds area feature
