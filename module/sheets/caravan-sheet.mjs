@@ -1365,6 +1365,9 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
    * @protected
    */
   async _onDrop(event) {
+    event.preventDefault();      // prevent default browser behaviour
+    event.stopPropagation();     // stop event from bubbling to other listeners
+
     const data = TextEditor.getDragEventData(event);
     const actor = this.actor;
     const allowed = Hooks.call('dropActorSheetData', actor, this, data);

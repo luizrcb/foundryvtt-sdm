@@ -17,15 +17,11 @@
           </li>
         {{/if}}
         {{#each system.features}}
-        <li class="pill transparent">
-          <span data-tooltip aria-label="{{localize (concat 'SDM.ItemFeature.' this 'Description')}}">
-            {{#if (numberedFeature this)}}
-              {{replace (localize (concat 'SDM.ItemFeature.' this 'Abbr')) '#' (lookup (lookup ../system this) 'value')}}
-            {{else}}
-              {{localize (concat 'SDM.ItemFeature.' this 'Abbr')}}
-            {{/if}}
-          </span>
-        </li>
+          <li class="pill transparent">
+            <span data-tooltip aria-label="{{localize (concat 'SDM.ItemFeature.' this 'Description')}}">
+              {{featureDisplay this ../system}}
+            </span>
+          </li>
         {{/each}}
       </ul>
     </div>

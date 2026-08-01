@@ -117,7 +117,7 @@ export function registerHandlebarsHelpers() {
     return item.getInventoryTitle();
   });
 
-  $$('toSacks', function (slotsInStones, displayUnit=true) {
+  $$('toSacks', function (slotsInStones, displayUnit = true) {
     const inSacks = convertToSacks(slotsInStones, SizeUnit.STONES);
 
     if (!displayUnit) return inSacks;
@@ -199,5 +199,21 @@ export function registerHandlebarsHelpers() {
 
   $$('replace', function (originalString = '', removedString = '', addedString = '') {
     return originalString.replace(removedString, addedString);
+  });
+
+  $$('featureDisplay', function (featureKey, parentSystem) {
+    let str = $l10n(`SDM.ItemFeature.${featureKey}Abbr`);
+    const numberedFeatures = ['area', 'replenish', 'flare', 'pocket', 'resistant'];
+    if (numberedFeatures.includes(featureKey)) {
+      const value = parentSystem[featureKey]?.value;
+      if (featureKey === 'area') {
+        const capitalized = value.charAt(0).toUpperCase() + value.slice(1);
+        const replacement = $l10n(`SDM.Area${capitalized}Abbr`);
+        str = str.replace('#', replacement);
+      } else {
+        str = str.replace('#', value);
+      }
+    }
+    return str;
   });
 }

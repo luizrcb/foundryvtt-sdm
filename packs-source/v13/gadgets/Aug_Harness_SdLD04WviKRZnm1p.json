@@ -14,7 +14,9 @@
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -73,7 +75,10 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": "human"
+    "supply_type": "human",
+    "replenish": {
+      "value": 5
+    }
   },
   "effects": [
     {
@@ -85,22 +90,10 @@
       "system": {},
       "changes": [
         {
-          "key": "system.abilities.str.current",
-          "value": "6",
-          "priority": null,
-          "mode": 2
-        },
-        {
           "key": "system.abilities.str.base",
+          "mode": 5,
           "value": "6",
-          "priority": null,
-          "mode": 2
-        },
-        {
-          "key": "system.abilities.str.bonus",
-          "value": "0",
-          "priority": null,
-          "mode": 2
+          "priority": null
         }
       ],
       "disabled": false,
@@ -126,7 +119,8 @@
         "coreVersion": "13.351",
         "systemId": "sdm",
         "systemVersion": "0.5.4",
-        "lastModifiedBy": null
+        "lastModifiedBy": "82Lz74CglpwcPzB4",
+        "modifiedTime": 1785447561546
       },
       "_key": "!items.effects!SdLD04WviKRZnm1p.XCv8Xj4RNHL6EOpb"
     }
@@ -143,10 +137,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.19.0",
     "createdTime": 1767014140961,
-    "modifiedTime": 1767014140961,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1785411337793,
+    "lastModifiedBy": "82Lz74CglpwcPzB4"
   },
   "_key": "!items!SdLD04WviKRZnm1p"
 }

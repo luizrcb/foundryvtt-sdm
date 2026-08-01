@@ -334,6 +334,10 @@ SDM.characterPropertiesToActiveEffects = [
   'system.abilities.tho.roll_bonus',
   'system.abilities.tho.save_bonus',
   'system.abilities.tho.roll_mode',
+  'system.corruption.roll_bonus',
+  'system.corruption.roll_mode',
+  'system.defeat.roll_bonus',
+  'system.defeat.roll_mode',
   'system.capacity',
   'system.speed'
 ];
@@ -434,6 +438,7 @@ SDM.baseFeatures = [
   { value: 'camolion', label: 'SDM.ItemFeature.camolion' },
   { value: 'semi_sentient', label: 'SDM.ItemFeature.semi_sentient' },
   { value: 'restricted', label: 'SDM.ItemFeature.restricted' },
+  { value: 'throwing', label: 'SDM.ItemFeature.throwing' },
   { value: 'implant', label: 'SDM.ItemFeature.implant' },
   { value: 'loud', label: 'SDM.ItemFeature.loud' }
 ];

@@ -25,6 +25,34 @@ export default class SdmCharacter extends SdmActorBase {
       initial: 0
     });
 
+    schema.defeat = new fields.SchemaField({
+      roll_bonus: new fields.NumberField({
+        ...requiredInteger,
+        initial: 0
+      }),
+      roll_mode: new fields.StringField({
+        nullable: false,
+        required: true,
+        blank: false,
+        initial: RollMode.NORMAL,
+        choices: CONFIG.SDM.rollMode
+      })
+    });
+
+    schema.corruption = new fields.SchemaField({
+      roll_bonus: new fields.NumberField({
+        ...requiredInteger,
+        initial: 0
+      }),
+      roll_mode: new fields.StringField({
+        nullable: false,
+        required: true,
+        blank: false,
+        initial: RollMode.NORMAL,
+        choices: CONFIG.SDM.rollMode
+      })
+    });
+
     schema.base_damage_multiplier = new fields.NumberField({
       ...requiredInteger,
       initial: 2

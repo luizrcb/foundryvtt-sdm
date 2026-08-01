@@ -1,5 +1,5 @@
 export const UnarmedDamageItem = 'Compendium.sdm.weapons.Item.uKcbcZUs1jQZskQ4';
-import { DEFAULT_POWER_ICON, GearType, ItemType, SizeUnit } from './constants.mjs';
+import { ActorType, DEFAULT_POWER_ICON, GearType, ItemType, SizeUnit } from './constants.mjs';
 /**
  * Convert any size unit to sacks.
  * @param {number} size - The size value.
@@ -110,7 +110,11 @@ export async function onItemCreateActiveEffects(item) {
     if (['corruption', 'affliction', 'augment', 'pet'].includes(item.system.type)) return;
 
     for (const effect of item.effects) {
-      await toggleEffectTransfer(effect, false);
+      let enabledEffect = false;
+      if (item.parent && item.parent.type === ActorType.CARAVAN) {
+        enabledEffect = true;
+      }
+      await toggleEffectTransfer(effect, enabledEffect);
     }
   }
 }
