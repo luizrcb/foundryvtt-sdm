@@ -1,6 +1,6 @@
 ![](https://github.com/luizrcb/foundryvtt-sdm/blob/main/assets/wtf-compatible.png?raw=true)
 
-![WTF System](https://img.shields.io/badge/dynamic/json.svg?url=https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/v14/system.json&label=WTF%20System&query=$.version&colorB=blue&logo=gnometerminal&logoColor=white) ![FoundryVTT Verified](https://img.shields.io/badge/dynamic/json.svg?url=https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/v14/system.json&label=FoundryVTT%20Verified&query=$.compatibility.verified&colorB=green&logo=roll20) ![FoundryVTT Supported](https://img.shields.io/badge/FoundryVTT_Supported-13.351--14.364-green?style=flat&logo=foundryvirtualtabletop&logoColor=white)
+![WTF System](https://img.shields.io/badge/dynamic/json.svg?url=https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/v14/system.json&label=WTF%20System&query=$.version&colorB=blue&logo=gnometerminal&logoColor=white) ![FoundryVTT Verified](https://img.shields.io/badge/dynamic/json.svg?url=https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/v14/system.json&label=FoundryVTT%20Verified&query=$.compatibility.verified&colorB=green&logo=roll20) ![FoundryVTT Supported](https://img.shields.io/badge/FoundryVTT_Supported-13.351--14.365-green?style=flat&logo=foundryvirtualtabletop&logoColor=white)
 
 ![GitHub Release Date](https://img.shields.io/github/release-date/luizrcb/foundryvtt-sdm?color=blue) [![GitHub commits](https://img.shields.io/github/commits-since/luizrcb/foundryvtt-sdm/latest)](https://github.com/luizrcb/foundryvtt-sdm/commits) ![GitHub contributors](https://img.shields.io/github/contributors/luizrcb/foundryvtt-sdm) [![contributions welcome](https://img.shields.io/badge/contributions-welcome-brightgreen.svg?style=flat)](https://github.com/luizrcb/foundryvtt-sdm/issues)
 
@@ -26,27 +26,7 @@ This project uses names of creatures, items, traits, powers, locations, and rule
 
 To install the lastest v13 supported version of WTF, use the following manifest URL:
 ##
-    https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.19.0/system.json
-
-### Latest Foundry version (v14)
-
-The latest version of the system can be installed through the in-app System Browser by searching for any of the following: "WTF","When Time Fades", "SDM", "Synthetic Dream Machine", "UVG", "Ultraviolet Grasslands", "OGA", or "Our Golden Age".
-
-You can also use one of the following alternative installation methods:
-
-1. Pasting the following url into the **Install System** dialog on the Setup menu of the application.
-##
-    https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/v14/system.json
-2. Browsing the repository's [Releases](https://github.com/luizrcb/foundryvtt-sdm/releases) page, where you can copy any system.json link for use in the Install System dialog.
-3. Downloading one of the .zip archives from the Releases page and extracting it into your foundry Data folder, under `Data/systems/sdm`.
-
-## Installation Instructions
-
-### Foundry v13 manifest URL
-
-To install the lastest v13 supported version of WTF, use the following manifest URL:
-##
-    https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.18.0/system.json
+    https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.19.1/system.json
 
 ### Latest Foundry version (v14)
 

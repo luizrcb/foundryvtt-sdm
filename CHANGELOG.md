@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.2.1
+
+- Fixes some missing features in many compendium items
+
 ## v1.2.0
 
 - Adds area feature
@@ -30,6 +34,10 @@
 ## v1.0.0
 
 - V14 support
+
+## v0.19.1
+
+- Fixes some missing features in many compendium items
 
 ## v0.19.0
 
