@@ -1376,6 +1376,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const isShift = reverseShift !== !!event.shiftKey;
     const isCtrl = !!event.ctrlKey;
     let data = { modifier: '', selectedAbility: '' };
+    const selectedRollMode = this.actor.system.corruption.roll_mode || RollMode.NORMAL;
 
     if (!isShift) {
       data = await DialogV2.wait({
@@ -1389,6 +1390,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         },
         content: await renderTemplate(templatePath('corruption-roll-dialog'), {
           rollModes: CONFIG.SDM.rollMode,
+          selectedRollMode,
           blindGMRoll: isCtrl
         }),
         buttons: [
@@ -1411,14 +1413,14 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const { modifier = '', rollMode = RollMode.NORMAL } = data;
 
     const baseFormula = game.settings.get('sdm', 'baseCorruptionFormula') || '2d6';
-
+    const corruptionBonus = this.actor.system.corruption.roll_bonus || 0;
     const burdenPenalty = this.actor.system.burden_penalty || 0;
     const abilityMod =
       this.actor.type === ActorType.CHARACTER
         ? this.actor.system.abilities['aur'].current
         : this.actor.system?.bonus || 0;
     const burdenPart = burdenPenalty > 0 ? -1 * burdenPenalty : 0;
-    const totalBonuses = abilityMod + burdenPart;
+    const totalBonuses = abilityMod + burdenPart + corruptionBonus;
     const bonusPart =
       totalBonuses === 0 ? '' : totalBonuses > 0 ? `+${totalBonuses}` : totalBonuses;
     const modPart = foundry.dice.Roll.validate(modifier) ? ` +${modifier}` : '';
@@ -1499,7 +1501,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const {
       modifier = '',
       charismaOperator = 1,
-      rollMode = 'normal',
+      rollMode = RollMode.NORMAL,
       customBaseFormula = ''
     } = data;
 
@@ -1549,6 +1551,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const isShift = reverseShift !== !!event.shiftKey;
     const isCtrl = !!event.ctrlKey;
     let data = { modifier: '', selectedAbility: 'end' };
+    const selectedRollMode = this.actor.system.defeat.roll_mode || RollMode.NORMAL;
 
     if (!isShift) {
       data = await DialogV2.wait({
@@ -1562,6 +1565,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         },
         content: await renderTemplate(templatePath('defeat-roll-dialog'), {
           rollModes: CONFIG.SDM.rollMode,
+          selectedRollMode,
           abilities: CONFIG.SDM.defeatAbilities,
           blindGMRoll: isCtrl
         }),
@@ -1594,7 +1598,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         : this.actor.system?.bonus || 0;
 
     const burdenPart = burdenPenalty > 0 ? -1 * burdenPenalty : 0;
-    const totalBonuses = abilityMod + burdenPart;
+    const defeatBonus = this.actor.system.defeat.roll_bonus || 0;
+    const totalBonuses = abilityMod + defeatBonus + burdenPart;
     const bonusPart =
       totalBonuses === 0 ? '' : totalBonuses > 0 ? `+${totalBonuses}` : totalBonuses;
     const modPart = foundry.dice.Roll.validate(modifier) ? ` +${modifier}` : '';

@@ -111,7 +111,7 @@
           <div class='grid-span-1 resource'>
             {{#if (or isEditMode (not @root.editable))}}
             <label for='system.borrowed_life.max' class='resource-label flex-start'>
-              Borrowed
+              {{localize 'SDM.Borrowed'}}
             </label>
             <div class='resource-content flexrow flex-center flex-between flex-group-center'>
               <input type='text' name='system.borrowed_life.value' value='{{system.borrowed_life.value}}' data-dtype='Number' />
@@ -119,8 +119,8 @@
               <input type='text' name='system.borrowed_life.max' value='{{system.borrowed_life.max}}' data-dtype='Number' disabled />
             </div>
             {{else}}
-            <label for='system.borrowed_life.max' class='resource-label flex-start' data-tooltip="Borrowed Life">
-               Borrowed
+            <label for='system.borrowed_life.max' class='resource-label flex-start' data-tooltip="SDM.BorrowedLife">
+              {{localize 'SDM.Borrowed'}}
             </label>
             <div class='resource-content flexrow flex-center flex-between flex-group-center'>
               <input type='text' name='system.borrowed_life.value' value='{{system.borrowed_life.value}}' />
@@ -135,7 +135,7 @@
           <div class='grid-span-1 resource'>
             {{#if (or isEditMode (not @root.editable))}}
             <label for='system.temporary_life.max' class='resource-label flex-start'>
-              Temporary
+              {{localize 'SDM.Temporary'}}
             </label>
             <div class='resource-content flexrow flex-center flex-between flex-group-center'>
               <input type='text' name='system.temporary_life.value' value='{{system.temporary_life.value}}' data-dtype='Number' />
@@ -143,8 +143,8 @@
               <input type='text' name='system.temporary_life.max' value='{{system.temporary_life.max}}' data-dtype='Number' disabled />
             </div>
             {{else}}
-            <label for='system.temporary_life.max' class='resource-label flex-start' data-tooltip="Temporary Life">
-               Temporary
+            <label for='system.temporary_life.max' class='resource-label flex-start' data-tooltip="SDM.TemporaryLife">
+              {{localize 'SDM.Temporary'}}
             </label>
             <div class='resource-content flexrow flex-center flex-between flex-group-center'>
               <input type='text' name='system.temporary_life.value' value='{{system.temporary_life.value}}' />
@@ -617,7 +617,7 @@
           <div class='grid-span-1 resource'>
             {{#if (or isEditMode (not @root.editable))}}
             <label for='system.borrowed_life.max' class='resource-label flex-start'>
-              Borrowed
+              {{localize 'SDM.Borrowed'}}
             </label>
             <div class='resource-content flexrow flex-center flex-between flex-group-center'>
               <input type='text' name='system.borrowed_life.value' value='{{system.borrowed_life.value}}' data-dtype='Number' />
@@ -625,8 +625,8 @@
               <input type='text' name='system.borrowed_life.max' value='{{system.borrowed_life.max}}' data-dtype='Number' disabled />
             </div>
             {{else}}
-            <label for='system.borrowed_life.max' class='resource-label flex-start' data-tooltip="Borrowed Life">
-               Borrowed
+            <label for='system.borrowed_life.max' class='resource-label flex-start' data-tooltip="SDM.BorrowedLife">
+               {{localize 'SDM.Borrowed'}}
             </label>
             <div class='resource-content flexrow flex-center flex-between flex-group-center'>
               <input type='text' name='system.borrowed_life.value' value='{{system.borrowed_life.value}}' />
@@ -641,7 +641,7 @@
           <div class='grid-span-1 resource'>
             {{#if (or isEditMode (not @root.editable))}}
             <label for='system.temporary_life.max' class='resource-label flex-start'>
-              Temporary
+              {{localize 'SDM.Temporary'}}
             </label>
             <div class='resource-content flexrow flex-center flex-between flex-group-center'>
               <input type='text' name='system.temporary_life.value' value='{{system.temporary_life.value}}' data-dtype='Number' />
@@ -649,8 +649,8 @@
               <input type='text' name='system.temporary_life.max' value='{{system.temporary_life.max}}' data-dtype='Number' disabled />
             </div>
             {{else}}
-            <label for='system.temporary_life.max' class='resource-label flex-start' data-tooltip="Temporary Life">
-               Temporary
+            <label for='system.temporary_life.max' class='resource-label flex-start' data-tooltip="SDM.TemporaryLife">
+               {{localize 'SDM.Temporary'}}
             </label>
             <div class='resource-content flexrow flex-center flex-between flex-group-center'>
               <input type='text' name='system.temporary_life.value' value='{{system.temporary_life.value}}' />
