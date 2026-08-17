@@ -173,6 +173,16 @@ export default class SdmCharacter extends SdmActorBase {
       initial: 0
     });
 
+    schema.group_chase_bonus = new fields.NumberField({
+      ...requiredInteger,
+      initial: 0
+    });
+
+     schema.relife_bonus = new fields.NumberField({
+      ...requiredInteger,
+      initial: 0
+    });
+
     // bonus to all saving throw rolls
     schema.all_save_bonus = new fields.NumberField({
       ...requiredInteger,

@@ -1,0 +1,654 @@
+@layer group-check {
+  .group-check {
+    // ----- container -----
+    .group-check-dialog {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      padding: 5px;
+      height: 100%;
+    }
+
+    // ----- layout -----
+    .dialog-layout {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      height: 100%;
+    }
+
+    .config-section {
+      flex: 1.5;
+      min-width: 300px;
+      max-height: 500px;
+      overflow-y: auto;
+      padding-right: 10px;
+    }
+
+    .actor-section {
+      flex: 1;
+      min-width: 200px;
+      max-height: 500px;
+      overflow-y: auto;
+      border-left: 1px solid var(--color-border-light);
+      padding-left: 15px;
+    }
+
+    // ----- fieldset -----
+    fieldset {
+      border: 1px solid var(--color-border-dark);
+      border-radius: 4px;
+      padding: 15px 15px 10px;
+      background: var(--color-bg-2);
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+
+      legend {
+        font-weight: bold;
+        color: var(--color-text-dark);
+        padding: 0 8px;
+        background: var(--color-bg-1);
+        border-radius: 3px;
+        font-size: 0.9rem;
+      }
+    }
+
+    // ----- form groups -----
+    .form-group {
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+
+      label {
+        flex: 0 0 100px;
+        font-weight: bold;
+        color: var(--color-text-dark);
+        font-size: 0.85rem;
+      }
+
+      .form-fields {
+        flex: 1;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex-wrap: wrap;
+
+        input,
+        select {
+          width: 100%;
+          padding: 4px 6px;
+          border: 1px solid var(--color-border-light);
+          border-radius: 3px;
+          background: var(--color-bg-1);
+          color: var(--color-text-dark);
+          font-size: 0.85rem;
+
+          &:focus {
+            border-color: var(--color-border-highlight);
+            outline: none;
+            box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+          }
+        }
+      }
+
+      .hint {
+        color: var(--color-text-muted);
+        font-size: 0.75rem;
+        font-style: italic;
+      }
+    }
+
+    // ---- DC row with stacked buttons ----
+    .dc-row {
+      .dc-input-wrap {
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        flex: 1;
+
+        input[type='number'] {
+          width: 80px;
+        }
+      }
+
+      .dc-adjust-buttons {
+        display: flex;
+        gap: 4px;
+
+        .dc-btn {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          padding: 2px 8px;
+          font-size: 0.65rem;
+          line-height: 1.2;
+          min-width: 36px;
+          background: var(--color-bg-1);
+          border: 1px solid var(--color-border-dark);
+          border-radius: 3px;
+          cursor: pointer;
+          color: var(--color-text-dark);
+          transition: all 0.15s ease;
+
+          &:hover {
+            background: var(--color-bg-2);
+            box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+          }
+
+          .dc-btn-label {
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+          }
+
+          .dc-btn-sub {
+            font-size: 0.55rem;
+            opacity: 0.7;
+          }
+        }
+      }
+    }
+
+    // ----- buttons -----
+    .button {
+      background: var(--color-bg-1);
+      border: 1px solid var(--color-border-dark);
+      border-radius: 3px;
+      padding: 4px 12px;
+      font-size: 0.8rem;
+      cursor: pointer;
+      transition: all 0.5s ease 0s;
+      color: var(--color-text-dark);
+
+      &:hover {
+        background: var(--color-bg-2);
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+      }
+
+      &.primary {
+        background: var(--color-button-primary);
+        border-color: var(--color-button-primary-border);
+        color: var(--color-button-primary-text);
+        font-weight: bold;
+
+        &:hover {
+          background: var(--color-button-primary-hover);
+        }
+      }
+
+      &.small {
+        padding: 2px 8px;
+        font-size: 0.75rem;
+      }
+
+      &:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        pointer-events: none;
+      }
+    }
+
+    // ----- actor list (checkboxes) -----
+    .actor-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 10px 0;
+
+      li {
+        padding: 4px 0;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        font-size: 0.85rem;
+        border-bottom: 1px solid var(--color-border-light-2);
+
+        &:last-child {
+          border-bottom: none;
+        }
+
+        .actor-img {
+          width: 28px;
+          height: 28px;
+          object-fit: cover;
+          border-radius: 4px;
+          border: 1px solid var(--color-border-light);
+          flex-shrink: 0;
+        }
+      }
+    }
+
+    // ----- challenge summary (GM view) -----
+    .challenge-summary {
+      background: var(--color-bg-3);
+      padding: 8px 12px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      border-left: 4px solid var(--color-primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      h3 {
+        margin: 0 0 4px;
+      }
+
+      p {
+        margin: 2px 0;
+      }
+    }
+
+    // ----- results table (alternative) -----
+    .results-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 5px;
+      font-size: 0.85rem;
+
+      th {
+        background: var(--color-bg-2);
+        padding: 6px 4px;
+        text-align: left;
+        font-weight: 600;
+        border-bottom: 2px solid var(--color-border-dark);
+        color: var(--color-text-dark);
+      }
+
+      td {
+        padding: 6px 4px;
+        border-bottom: 1px solid var(--color-border-light-2);
+        vertical-align: middle;
+      }
+
+      tr:last-child td {
+        border-bottom: none;
+      }
+    }
+
+    // ----- player info banner -----
+    .player-info-banner {
+      background: var(--color-bg-1);
+      padding: 12px 15px;
+      border-radius: 4px;
+      border-left: 4px solid var(--color-border-highlight);
+      margin-bottom: 10px;
+      font-size: 0.9rem;
+
+      p {
+        margin: 0;
+      }
+    }
+
+    // ----- GM control buttons (bottom) -----
+    .gm-controls {
+      display: flex;
+      gap: 10px;
+      justify-content: flex-end;
+      margin-top: 12px;
+      padding-top: 10px;
+      border-top: 1px solid var(--color-border-light);
+    }
+
+    // ----- scrollable containers -----
+    .scrollable {
+      overflow-y: auto;
+
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+      &::-webkit-scrollbar-track {
+        background: var(--color-bg-1);
+      }
+      &::-webkit-scrollbar-thumb {
+        background: var(--color-border-dark);
+        border-radius: 4px;
+      }
+    }
+
+    // ----- Tarot‑style actor cards -----
+    .actor-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+      gap: 16px;
+      margin-top: 12px;
+    }
+
+    .tarot-card {
+      position: relative;
+      background-size: cover;
+      background-position: center;
+      border-radius: 12px;
+      padding: 12px;
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      color: white;
+      text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+      border: 2px solid var(--color-border-light);
+      transition: all 0.5s ease 0s;
+
+      // Background image is set via inline style or data attribute
+      // but we keep it clean here
+
+      .card-overlay {
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4);
+        border-radius: 10px;
+        pointer-events: none;
+      }
+
+      .card-content {
+        position: relative;
+        z-index: 1;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        justify-content: space-between;
+
+        .card-name {
+          font-weight: bold;
+          font-size: 1.1em;
+          text-align: center;
+          padding: 4px 0;
+          border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .card-result {
+          flex: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: center;
+          padding: 8px 0;
+
+          .result-number {
+            font-size: 2em;
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 4px 12px;
+            border-radius: 8px;
+          }
+
+          .result-table {
+            font-size: 1.2em;
+            font-weight: bold;
+            background: rgba(0, 0, 0, 0.4);
+            padding: 4px 12px;
+            border-radius: 8px;
+            max-width: 100%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            color: white;
+            .table-result-enriched {
+              display: flex;
+              flex-direction: row; // Side by side instead of column
+              align-items: center;
+              justify-content: center;
+              gap: 8px;
+              flex-wrap: wrap; // Falls back to column on very small screens
+
+              // Image container
+              .table-result-img {
+                max-width: 65px;
+                max-height: 65px;
+                width: auto;
+                height: auto;
+                border-radius: 4px;
+                display: block;
+                margin: 0 auto;
+              }
+
+              // Content link
+              .content-link {
+                display: inline-flex;
+                align-items: center;
+                gap: 4px;
+                font-size: 0.7rem;
+                text-align: left;
+                overflow: hidden;
+                word-break: break-word;
+              }
+            }
+          }
+
+          .outcome-label {
+            font-size: 1.2em;
+            margin-top: 4px;
+            font-weight: bold;
+
+            &.success {
+              color: #2a9212;
+            }
+            &.sacrifice {
+              color: #f0c740;
+            }
+            &.failure {
+              color: #ce0400;
+            }
+          }
+
+          .roll-button {
+            background: none;
+            border: 2px solid white;
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+            font-size: 1.5em;
+            font-weight: bold;
+            color: white;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 0 2px 4px black;
+            //transition: all 0.5s ease 0s;
+
+            &:hover {
+              transform: scale(1.2);
+              box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            }
+
+            i {
+              font-size: 2em;
+            }
+            span {
+              font-size: 0.7em;
+              margin-top: 2px;
+            }
+          }
+        }
+
+        .card-actions {
+          display: flex;
+          justify-content: space-around;
+          align-items: flex-end;
+          gap: 8px;
+          margin-top: 4px;
+
+          .reroll-button {
+            background: rgba(255, 255, 255, 0.15);
+            border: 1px solid rgba(227, 178, 178, 0.4);
+            border-radius: 20px;
+            padding: 2px 12px;
+            font-size: 0.8em;
+            color: white;
+            cursor: pointer;
+
+            &:hover {
+              background: rgba(255, 255, 255, 0.50);
+            }
+          }
+
+          .hero-button {
+            background: none;
+            border: 2px solid gold;
+            border-radius: 50%;
+            width: 48px;
+            height: 48px;
+            font-size: 0.8em;
+            color: gold;
+            cursor: pointer;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-shadow: 0 2px 4px black;
+            transition: all 0.2s ease;
+
+            &:hover {
+              transform: scale(1.1);
+              box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+            }
+
+            i {
+              font-size: 1.5em;
+            }
+            span {
+              font-size: 0.6em;
+            }
+          }
+
+          .waiting-text {
+            color: rgba(255, 255, 255, 0.6);
+            font-style: italic;
+          }
+        }
+      }
+    }
+
+    // ----- Responsive tweaks -----
+    @media (max-width: 700px) {
+      .dialog-layout {
+        flex-direction: column;
+      }
+      .config-section,
+      .actor-section {
+        flex: unset;
+        max-height: unset;
+        border-left: none;
+        padding-left: 0;
+      }
+    }
+
+    // Utility: hidden
+    .hidden {
+      display: none !important;
+    }
+
+    // ----- Challenge summary (in dialog) -----
+    .challenge-summary {
+      background: var(--color-bg-3);
+      padding: 8px 12px;
+      border-radius: 6px;
+      margin-bottom: 12px;
+      border-left: 4px solid var(--color-primary);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+
+      h3 {
+        margin: 0 0 4px;
+      }
+
+      p {
+        margin: 2px 0;
+      }
+    }
+  }
+
+  .group-check-chat-results {
+    .chat-results-table {
+      width: 100%;
+      table-layout: fixed; // Ensures columns respect widths
+      border-collapse: collapse;
+      margin-top: 10px;
+
+      th,
+      td {
+        border: 1px solid #ccc;
+        padding: 6px 8px;
+        text-align: left;
+        vertical-align: middle;
+        word-break: break-word;
+      }
+
+      th {
+        background: var(--color-bg-2);
+        font-weight: 600;
+      }
+
+      // Column widths
+      th:first-child,
+      td:first-child {
+        width: 35%; // Actor name column
+      }
+
+      th:last-child,
+      td:last-child {
+        width: 35%; // Outcome column (if present)
+      }
+
+      // Result column (middle)
+      td.result-number,
+      th:not(:first-child):not(:last-child) {
+        width: auto;
+      }
+
+      .result-number {
+        text-align: center;
+      }
+
+      .outcome-cell {
+        font-size: 13px;
+        text-align: center;
+        font-weight: bold;
+
+        &.success {
+          color: #18520b;
+        }
+        &.sacrifice {
+          color: #d4af37;
+        }
+        &.failure {
+          color: #aa0200;
+        }
+      }
+
+      // Result content (image + link)
+      .table-result-enriched {
+        display: flex;
+        flex-direction: row; // Side by side instead of column
+        align-items: center;
+        justify-content: center;
+        gap: 8px;
+        flex-wrap: wrap; // Falls back to column on very small screens
+
+        // Image container
+        .table-result-img {
+          max-width: 45px;
+          max-height: 45px;
+          width: auto;
+          height: auto;
+          border-radius: 4px;
+          display: block;
+          margin: 0 auto;
+        }
+
+        // Content link
+        .content-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 4px;
+          font-size: 0.7rem;
+          text-align: left;
+          overflow: hidden;
+          word-break: break-word;
+        }
+      }
+    }
+  }
+}

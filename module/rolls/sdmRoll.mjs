@@ -21,7 +21,8 @@ export default class SDMRoll {
     powerDescription = '',
     item = null,
     isCtrl = false,
-    overcharged = false
+    overcharged = false,
+    extraFlags = {},
   }) {
     this.actor = actor;
     this.type = type;
@@ -41,6 +42,8 @@ export default class SDMRoll {
     this.item = item;
     this.isCtrl = isCtrl;
     this.overcharged = overcharged;
+    this.roll;
+    this.extraFlags = extraFlags;
   }
 
   async evaluate() {
@@ -80,7 +83,7 @@ export default class SDMRoll {
     }
 
     const formula = formulaComponents.join('+');
-    const sanitizedFormula = sanitizeExpression(formula); // ready to roll
+    const sanitizedFormula = sanitizeExpression(formula);
     const flavor = this.#buildFlavorText(fixedModifiers, diceModifiers, escalatorDie);
 
     const flags = {};
@@ -90,6 +93,7 @@ export default class SDMRoll {
     } else {
       flags['sdm.isTraitRoll'] = true;
     }
+
     const attackMapping = {
       [AttackTarget.PHYSICAL]: {
         icon: '<i class="fa-solid fa-shield-halved"></i>',
@@ -105,10 +109,10 @@ export default class SDMRoll {
       }
     };
 
-    const rollInstance = new Roll(sanitizedFormula, this.actor.system);
-    await rollInstance.evaluate();
+    this.roll = new Roll(sanitizedFormula, this.actor.system);
+    await this.roll.evaluate();
 
-    let content = await rollInstance.render();
+    let content = await this.roll.render();
 
     if (this.type === RollType.ATTACK && this.targetActor && this.targetActor !== this.actor) {
       checkCritical = false;
@@ -119,8 +123,8 @@ export default class SDMRoll {
 
       const targetDefense = this.targetActor?.system[property] || 0;
 
-      const attackResult = rollInstance.total;
-      const { isNat1, isNat20, is13, is7 } = detectNat1OrNat20(rollInstance);
+      const attackResult = this.roll.total;
+      const { isNat1, isNat20, is13, is7 } = detectNat1OrNat20(this.roll);
       const isSuccess = !isNat1 && (isNat20 || attackResult > targetDefense);
       const forceOrFail = attackResult === targetDefense;
 
@@ -193,7 +197,7 @@ export default class SDMRoll {
 
     const chatDataMessage = {
       actor: this.actor,
-      rolls: [rollInstance],
+      rolls: [this.roll],
       flavor,
       content,
       flags,
@@ -204,6 +208,7 @@ export default class SDMRoll {
       chatDataMessage.rollMode = CONST.DICE_ROLL_MODES.BLIND;
     }
 
+    chatDataMessage.flags = { ...chatDataMessage.flags, ...this.extraFlags };
     await createChatMessage(chatDataMessage);
   }
 
@@ -230,10 +235,38 @@ export default class SDMRoll {
   }
 
   #calculateModifiers(type) {
+    if (type === 'save') {
+      const abilityData = this.actor.type === ActorType.NPC
+        ? { current: this.actor.system.bonus || 0 }
+        : this.actor.system.abilities?.[this.ability] || { current: 0 };
+      const finalAbility = abilityData.current || 0;
+      const ward = this.actor.system?.ward || 0;
+      const burdenPenalty = this.actor.system?.burden_penalty || 0;
+      const saveBonus = abilityData?.save_bonus || 0;
+      const allSaveBonus = this.actor.system?.all_save_bonus || 0;
+      let total = finalAbility + ward + saveBonus + allSaveBonus - burdenPenalty;
+
+      const useHardLimitRule = game.settings.get('sdm', 'useHardLimitRule');
+      if (useHardLimitRule) {
+        const defaultHardLimitValue = game.settings.get('sdm', 'defaultHardLimitValue') || 20;
+        total = Math.min(total, defaultHardLimitValue);
+      }
+
+      // Adiciona o modifier extra (que pode conter dados)
+      const modifierComponents = this.#parseModifierString(this.modifier);
+      const { fixedModifiers: fixedExtra, diceModifiers: diceExtra } = this.#separateFixedAndDice(modifierComponents);
+
+      const fixed = (fixedExtra || 0) + total;
+      return { fixedModifiers: fixed, diceModifiers: diceExtra || '' };
+    }
+
     const actorData = this.actor?.system;
     let abilityMod = 0;
 
-    if (this.actor?.type === ActorType.CHARACTER) {
+    if (type === 'custom') {
+      abilityMod = 0;
+      this.ability = '';
+    } else if (this.actor?.type === ActorType.CHARACTER) {
       abilityMod = actorData?.abilities[this.ability]?.current ?? 0;
       const rollBonus = actorData?.abilities[this.ability]?.roll_bonus ?? 0;
       abilityMod += rollBonus;
@@ -265,6 +298,11 @@ export default class SDMRoll {
   }
 
   #buildFlavorText(fixedModifiers, diceModifiers) {
+    if (this.type === 'save') {
+      let text = this.from;
+      return text;
+    }
+
     const actorData = this.actor?.system;
     const damageMultiplier = CONFIG.SDM.getDamageMultiplier(actorData.base_damage_multiplier || 2);
     const rollMode =
@@ -314,12 +352,9 @@ export default class SDMRoll {
 
 export function sanitizeExpression(rollExpression) {
   const cleaned = rollExpression
-    // First handle operator sequences
-    .replace(/\+-+/g, '-') // Convert "+-" to "-"
-    .replace(/(?<!^)-+/g, '-') // Ensure single "-"
-    .replace(/\++/g, '+') // Convert multiple "+" to single "+"
-
-    // Then clean edges and whitespace
+    .replace(/\+-+/g, '-')
+    .replace(/(?<!^)-+/g, '-')
+    .replace(/\++/g, '+')
     .replace(/(^[+ ]+)|([+ ]+$)/g, '')
     .replace(/\s+/g, '');
 
@@ -327,12 +362,6 @@ export function sanitizeExpression(rollExpression) {
   return cleaned;
 }
 
-/**
- * Recursively collect all DieTerm instances from any RollTerm tree.
- * Supports PoolTerm, ParentheticalTerm, OperatorTerm, etc.
- * @param {RollTerm} term
- * @returns {Die[]}
- */
 export function collectAllDice(term) {
   if (term instanceof foundry.dice.terms.Die) return [term];
   if (term instanceof foundry.dice.terms.PoolTerm) {
@@ -347,18 +376,11 @@ export function collectAllDice(term) {
   return [];
 }
 
-/**
- * Detects whether a d20 in the Roll resulted in a natural 1 or 20.
- * Only checks the first result on each d20 die.
- * @param {Roll} roll - An evaluated Roll object.
- * @returns {{ isNat1: boolean, isNat20: boolean, is13: boolean, is7: boolean }}
- */
 export function detectNat1OrNat20(roll) {
   let results = [];
 
   for (const term of roll.terms) {
     if (term instanceof foundry.dice.terms.PoolTerm) {
-      // PoolTerm: checar sub-rolls ativos
       term.results.forEach((res, index) => {
         if (!res.active) return;
 
@@ -374,7 +396,6 @@ export function detectNat1OrNat20(roll) {
         }
       });
     } else {
-      // Termo normal: coleta recursiva
       const dice = collectAllDice(term);
       for (const die of dice) {
         if (!(die instanceof foundry.dice.terms.Die)) continue;
@@ -395,7 +416,6 @@ export function detectNat1OrNat20(roll) {
     return { isNat1: false, is13: false, is7: true, isNat20: false };
   }
 
-  // Determina se houve nat1 ou nat20
   for (const r of results.sort((a, b) => b - a)) {
     if (r === 1) return { isNat1: true, is13: false, is7: false, isNat20: false };
     if (r === 20) return { isNat1: false, is13: false, is7: false, isNat20: true };

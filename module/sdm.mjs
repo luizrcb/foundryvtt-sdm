@@ -1,5 +1,10 @@
 import SdmActiveEffectConfig from './app/active-effect-config.mjs';
 import SdmActiveEffectConfig14 from './app/active-effect-config14.mjs';
+import {
+  GroupCheckDialog,
+  registerGroupCheckSettings,
+  setupGroupCheckSocket
+} from './app/group-check/index.mjs';
 
 import * as models from './data/_module.mjs';
 import { SdmActor } from './documents/actor.mjs';
@@ -137,6 +142,21 @@ Hooks.on('getSceneControlButtons', function (controls) {
       button: true,
       onChange: async (event, active) => {
         if (active) await game.sdm.api.gm.giveExperience();
+      }
+    };
+    controls.tokens.tools['sdm-group-check'] = {
+      icon: 'fa-solid fa-people-carry-box',
+      name: 'sdm-group-check',
+      title: 'SDM.GroupCheck',
+      button: true,
+      onChange: async (event, active) => {
+        if (active) {
+          if (!GroupCheckDialog._instance) {
+            new GroupCheckDialog().render(true);
+          } else {
+            GroupCheckDialog._instance.render(true);
+          }
+        }
       }
     };
   }
@@ -577,6 +597,7 @@ Hooks.once('init', function () {
 
   registerSystemSettings();
   registerSDMGMSettingMenus();
+  registerGroupCheckSettings();
 
   /**
    * Set an initiative formula for the system
@@ -592,7 +613,7 @@ Hooks.once('init', function () {
   setupItemTransferSocket();
   setupPetDropSocket();
   setupSettingsSocket();
-
+  setupGroupCheckSocket();
   setupEscalatorDiePositionBroadcast();
 
   //Preload Handlebars templates.

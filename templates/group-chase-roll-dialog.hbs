@@ -1,0 +1,24 @@
+<div class='custom-roll-modal'>
+  <h4>{{#if blindGMRoll}}<i class="fa-solid fa-eye-slash"></i>{{/if}}{{localize 'SDM.RollTitle' prefix=(ifThen blindGMRoll (concat (localize 'SDM.BlindRoll') ' ') '') title=(localize 'SDM.GroupChase')}}</h4>
+  <form class='custom-roll-form'>
+    <div class="form-group mt-10">
+      <label for="selectedSkill">{{localize 'SDM.Skill'}}</label>
+      <select name="selectedSkill" id="selectedSkill">
+        {{selectOptions availableSkills valueAttr="id" labelAttr="label" selected=selectedSkill sort=true blank=""}}
+      </select>
+    </div>
+    <div class='form-group mt-10'>
+      <label for='modifier'>
+        {{localize 'SDM.RollModifier'}}
+      </label>
+      <input id='modifier' type='text' name='modifier' value='' />
+    </div>
+    <div class="form-group mt-10">
+      <label for="rollMode">{{localize 'SDM.RollMode'}}</label>
+      <select name="rollMode" id="rollMode">
+        {{selectOptions rollModes localize=true selected=selectedRollMode}}
+      </select>
+    </div>
+  </form>
+  <br />
+</div>

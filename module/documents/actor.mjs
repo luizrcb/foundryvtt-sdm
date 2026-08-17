@@ -1704,6 +1704,14 @@ export class SdmActor extends Actor {
           handler: '_onOpenPetSheet',
           dataset: { action: 'roll', type: actionType },
           closestReturn: { dataset: { documentClass: 'Item', itemId: actionKey } }
+        },
+        groupChase: {
+          handler: '_onGroupChaseRoll',
+
+        },
+        relife: {
+          handler: '_onRelifeRoll',
+          dataset: { action: 'relife', reaction: actionKey }
         }
       };
 

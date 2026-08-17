@@ -8,7 +8,9 @@ import {
   renderReactionResult,
   renderDefeatResult,
   renderUsageResult,
-  renderDangerResult
+  renderDangerResult,
+  renderGroupChaseResult,
+  renderRelifeResult
 } from '../../ui/renderResults.mjs';
 
 const { renderTemplate } = foundry.applications.handlebars;
@@ -147,13 +149,10 @@ export class HeroDiceUI {
     heroResultRoll._evaluated = true;
     heroResultRoll._total = total;
 
-    const flavor = $fmt('SDM.RollTitle', {
-      prefix: '',
-      title:
-        $l10n('SDM.FieldHeroDice') +
-        `${heroMode === 'decrease' ? `<br>${$l10n('SDM.HeroDiceModeDecrease')}` : ''}` +
-        `${heroicBonusQty > 0 ? ` (${$l10n('SDM.FieldBonus')}: ${heroicBonusQty})` : ''}`
-    }).replace(' :', ':');
+    const flavor =
+      `[${$l10n('SDM.FieldHeroDice')}]` +
+      `${heroMode === 'decrease' ? `<br>${$l10n('SDM.HeroDiceModeDecrease')}` : ''}` +
+      `${heroicBonusQty > 0 ? ` (${$l10n('SDM.FieldBonus')}: ${heroicBonusQty})` : ''}`;
 
     await createChatMessage({
       actor,
@@ -237,6 +236,28 @@ export class HeroDiceUI {
       const { label, targetNumber, speaker } = flags.sdm.danger;
       await renderDangerResult(
         { roll: heroResultRoll, label, targetNumber },
+        {
+          fromHeroDice: true,
+          speaker
+        }
+      );
+    }
+
+    if (flags && flags?.sdm?.groupChase) {
+      const { label, speaker } = flags.sdm.groupChase;
+      await renderGroupChaseResult(
+        { roll: heroResultRoll, label },
+        {
+          fromHeroDice: true,
+          speaker
+        }
+      );
+    }
+
+    if (flags && flags?.sdm?.relife) {
+      const { label, speaker, cost, ability } = flags.sdm.relife;
+      await renderRelifeResult(
+        { roll: heroResultRoll, label, cost, ability },
         {
           fromHeroDice: true,
           speaker

@@ -1,6 +1,6 @@
 import { createChatMessage } from '../../helpers/chatUtils.mjs';
 import { RollType } from '../../helpers/constants.mjs';
-import { $fmt, $l10n } from '../../helpers/globalUtils.mjs';
+import { $fmt, $l10n, toPascalCase } from '../../helpers/globalUtils.mjs';
 import { templatePath } from '../../helpers/templates.mjs';
 
 const { renderTemplate } = foundry.applications.handlebars;
@@ -240,7 +240,7 @@ export async function renderDefeatResult(
 
   const defeatLabel = $l10n('SDM.Defeat');
 
-  let flavor = `[${$fmt('SDM.RollType', { type: defeatLabel })}]${damageType}`;
+  let flavor = `[${defeatLabel}]${damageType}`;
 
   const flags = {};
 
@@ -324,7 +324,7 @@ export async function renderCorruptionResult(
 
   const corruptionLabel = $l10n('SDM.CorruptionExposureSeverity');
 
-  let flavor = `[${$fmt('SDM.RollType', { type: corruptionLabel })}]`;
+  let flavor = `[${corruptionLabel}]`;
 
   const flags = {};
 
@@ -489,7 +489,7 @@ export async function renderDangerResult(
 
   if (isCriticalFailure || roll._total <= targetNumber) {
     outcome = $l10n('SDM.DangerRollFailureOutcome');
-    message =$l10n('SDM.DangerRollFailureMessage');
+    message = $l10n('SDM.DangerRollFailureMessage');
   } else {
     outcome = $l10n('SDM.DangerRollSucceessOutcome');
     message = $l10n('SDM.DangerRollSucceessMessage');
@@ -528,6 +528,138 @@ export async function renderDangerResult(
     flavor: label,
     rolls: [roll],
     checkCritical: true,
+    flags,
+    speaker
+  };
+
+  if (isCtrl) {
+    chatMessageData.rollMode = CONST.DICE_ROLL_MODES.BLIND;
+  }
+
+  await createChatMessage(chatMessageData);
+}
+
+export async function renderGroupChaseResult(
+  { roll, label },
+  { fromHeroDice = false, speaker, isCtrl = false }
+) {
+  const total = roll.total;
+
+  let outcomeKey, messageKey;
+  if (total >= 1 && total <= 3) {
+    outcomeKey = 'SDM.GroupChaseOutcomeFailureCritical';
+    messageKey = 'SDM.GroupChaseMessageFailureCritical';
+  } else if (total >= 4 && total <= 7) {
+    outcomeKey = 'SDM.GroupChaseOutcomeFailure';
+    messageKey = 'SDM.GroupChaseMessageFailure';
+  } else if (total >= 8 && total <= 11) {
+    outcomeKey = 'SDM.GroupChaseOutcomeLosing';
+    messageKey = 'SDM.GroupChaseMessageLosing';
+  } else if (total >= 12 && total <= 14) {
+    outcomeKey = 'SDM.GroupChaseOutcomeGaining';
+    messageKey = 'SDM.GroupChaseMessageGaining';
+  } else if (total >= 15 && total <= 19) {
+    outcomeKey = 'SDM.GroupChaseOutcomeCaught';
+    messageKey = 'SDM.GroupChaseMessageCaught';
+  } else if (total >= 20 && total <= 24) {
+    outcomeKey = 'SDM.GroupChaseOutcomeCaughtWinning';
+    messageKey = 'SDM.GroupChaseMessageCaughtWinning';
+  } else if (total >= 25) {
+    outcomeKey = 'SDM.GroupChaseOutcomeSurprise';
+    messageKey = 'SDM.GroupChaseMessageSurprise';
+  } else {
+    outcomeKey = 'SDM.GroupChaseOutcomeDefault';
+    messageKey = 'SDM.GroupChaseMessageDefault';
+  }
+
+  const outcome = $l10n(outcomeKey);
+  const message = $l10n(messageKey);
+
+  const templateData = {
+    outcome,
+    message,
+    formula: roll.formula,
+    total: roll.total,
+    rollTooltip: await roll.getTooltip()
+  };
+
+  const flags = {};
+  if (fromHeroDice === true) {
+    flags['sdm.isHeroResult'] = true;
+  } else {
+    flags['sdm.groupChase'] = { speaker, label };
+  }
+
+  const chatMessageData = {
+    content: await renderTemplate(templatePath('chat/reaction-roll-result'), templateData),
+    flavor: label,
+    rolls: [roll],
+    flags,
+    speaker
+  };
+
+  if (isCtrl) {
+    chatMessageData.rollMode = CONST.DICE_ROLL_MODES.BLIND;
+  }
+
+  await createChatMessage(chatMessageData);
+}
+
+export async function renderRelifeResult(
+  { roll, label, cost, ability },
+  { fromHeroDice = false, speaker, isCtrl = false }
+) {
+  const total = roll.total;
+
+  let outcomeKey, messageKey;
+  if (total >= 1 && total <= 5) {
+    outcomeKey = `SDM.RelifeOutcome${ability}1to5`;
+    messageKey = `SDM.RelifeMessage${ability}1to5`;
+  } else if (total >= 6 && total <= 10) {
+    outcomeKey = `SDM.RelifeOutcome${ability}6to10`;
+    messageKey = `SDM.RelifeMessage${ability}6to10`;
+  } else if (total >= 11 && total <= 15) {
+    outcomeKey = `SDM.RelifeOutcome${ability}11to15`;
+    messageKey = `SDM.RelifeMessage${ability}11to15`;
+  } else if (total >= 16 && total <= 19) {
+    outcomeKey = `SDM.RelifeOutcome${ability}16to19`;
+    messageKey = `SDM.RelifeMessage${ability}16to19`;
+  } else if (total >= 20) {
+    outcomeKey = `SDM.RelifeOutcome${ability}20plus`;
+    messageKey = `SDM.RelifeMessage${ability}20plus`;
+  } else {
+    outcomeKey = 'SDM.RelifeOutcomeDefault';
+    messageKey = 'SDM.RelifeMessageDefault';
+  }
+
+  const outcome = $l10n(outcomeKey);
+  const message = $l10n(messageKey);
+
+  const templateData = {
+    outcome,
+    message,
+    cost,
+    formula: roll.formula,
+    total: roll.total,
+    rollTooltip: await roll.getTooltip()
+  };
+
+  const flags = {};
+  if (fromHeroDice === true) {
+    flags['sdm.isHeroResult'] = true;
+  } else {
+    flags['sdm.relife'] = {
+      label,
+      cost,
+      ability,
+      speaker
+    };
+  }
+
+  const chatMessageData = {
+    content: await renderTemplate(templatePath('chat/relife-roll-result'), templateData),
+    flavor: label,
+    rolls: [roll],
     flags,
     speaker
   };

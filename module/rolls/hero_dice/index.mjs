@@ -5,7 +5,7 @@ import { requestSettingUpdate } from '../../settingsSocket.mjs';
 import { HeroDiceEngine } from './core/HeroDiceEngine.mjs';
 import { HeroDiceUI } from './ui/HeroDiceUi.mjs';
 
-async function _promptHeroOptions(actor, bonusHeroDice = 0) {
+export async function _promptHeroOptions(actor, bonusHeroDice = 0) {
   const defaultHeroDiceType = game.settings.get('sdm', 'defaultHeroDiceType');
   const heroDiceType = actor?.system?.hero_dice?.dice_type || defaultHeroDiceType;
 

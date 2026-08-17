@@ -115,7 +115,6 @@ export async function createChatMessage({
     };
 
     chatData = ChatMessage.applyRollMode(chatData, rollMode);
-
     return ChatMessage.create(chatData);
   } catch (e) {
     console.error('createChatMessage: Failed to create message', e);
