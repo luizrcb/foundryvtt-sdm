@@ -193,6 +193,10 @@ export function registerHandlebarsHelpers() {
     return set.has(value);
   });
 
+  $$('isDefeated', function(statuses = new Set()) {
+    return statuses.has('dead');
+  })
+
   $$('numberedFeature', function (feature) {
     return ['area', 'replenish', 'flare', 'pocket', 'resistant'].includes(feature);
   });

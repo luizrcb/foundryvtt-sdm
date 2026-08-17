@@ -1,0 +1,24 @@
+<div class='custom-roll'>
+  <div class='dice-roll' data-action='expandRoll'>
+    <div class='dice-result'>
+      <div class='dice-formula'>
+        {{formula}}
+      </div>
+      {{{dynamicHTML rollTooltip}}}
+      <div class='dice-total'>
+        {{total}}
+      </div>
+    </div>
+  </div>
+  <div class='custom-result'>
+    <h6 style='margin:0; margin-top: 5px; text-transform: uppercase;'>
+      {{outcome}}
+    </h6>
+    <p style='margin:0; font-size: 14px;'>
+      {{message}}
+    </p>
+    <p style='margin:0; margin-top: 5px; font-size: 14px; font-style: italic;'>
+      <strong>{{localize 'SDM.Cost'}}:</strong> {{{cost}}}
+    </p>
+  </div>
+</div>

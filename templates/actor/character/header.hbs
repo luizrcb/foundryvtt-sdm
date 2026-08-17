@@ -3,8 +3,14 @@
   {{#if isCompactMode}}
  <header class='sheet-header'>
     <div class="flexcol flex-between flex-center" style="padding-bottom: 10px;">
-      <img class='profile-img' src='{{actor.img}}' data-edit='img' data-action='onEditImage' data-tooltip='{{actor.name}}'
-        height='100' width='100' />
+      <div class='profile-img'>
+        <img src='{{actor.img}}' data-edit='img' data-action='onEditImage' data-tooltip='{{actor.name}}'
+          height='100' width='100' />
+        {{#if (isDefeated @root.statuses)}}
+          <i class="fa fa-skull overlay-icon defeated-icon"></i>
+
+        {{/if}}
+      </div>
         {{#if (or isEditMode (not @root.editable))}}
         <div class="flexcol flex-group-center">
         {{else}}
@@ -42,7 +48,7 @@
           <div class="grid grid-2col" style="margin-bottom: 0px;">
             <div class="grid-span-1">
               <label for="name" class='resource-label'>
-                {{localize 'SDM.FieldName'}}
+                {{localize 'SDM.FieldName'}}{{#if (isDefeated @root.statuses)}} ({{localize 'SDM.DefeatOutcome2to6'}}){{/if}}
               </label>
               <input name='name' type='text' value='{{actor.name}}' placeholder='Name' />
             </div>
@@ -86,6 +92,7 @@
           center all of its child elements content and text. }}
           <div class="grid-span-1 flexrow flex-between">
 
+          {{#if (not (isDefeated @root.statuses))  }}
           <div class='grid-span-1 resource'>
             {{#if (or isEditMode (not @root.editable))}}
             <label for='system.life.max' class='resource-label flex-start'>
@@ -107,6 +114,18 @@
             </div>
             {{/if}}
           </div>
+          {{else}}
+            <div class='grid-span-1 resource-label flex-center flex-between flex-group-center rollable'
+              data-tooltip="{{localize 'SDM.RollType' type=(localize 'SDM.Relife')}}"
+              data-action="relifeRoll"  data-context='rollable'
+            >
+              {{localize 'SDM.Relife'}}
+              <i class="fa-solid fa-kit-medical rollable blood"></i>
+            </div>
+          {{/if}}
+
+
+
           {{#if system.borrowed_life.enabled }}
           <div class='grid-span-1 resource'>
             {{#if (or isEditMode (not @root.editable))}}
@@ -323,8 +342,16 @@
                   {{#if (eq key 'cha')}}
                   <i
                     class="fa-solid fa-masks-theater rollable {{lookup @root.config.abilityColors @index}}"
-                    data-tooltip="{{localize 'SDM.ReactionRoll'}}"
+                    data-tooltip="{{localize 'SDM.RollType' type=(localize 'SDM.Reaction')}}"
                     data-action="reactionRoll"  data-context='rollable'
+                  ></i>
+                  {{/if}}
+
+                  {{#if (eq key 'end')}}
+                  <i
+                    class="fa-solid fa-gauge-high rollable {{lookup @root.config.abilityColors @index}}"
+                    data-tooltip="{{localize 'SDM.RollType' type=(localize 'SDM.GroupChase')}}"
+                    data-action="groupChaseRoll"  data-context='rollable'
                   ></i>
                   {{/if}}
 
@@ -509,8 +536,12 @@
   {{else}}
   <header class='sheet-header'>
     <div class="flexcol flex-between flex-center">
-      <img class='profile-img' src='{{actor.img}}' data-edit='img' data-action='onEditImage' data-tooltip='{{actor.name}}'
-        height='100' width='100' />
+      <div class="profile-img">
+        <img src='{{actor.img}}' data-edit='img' data-action='onEditImage' data-tooltip='{{actor.name}}'
+          height='100' width='100' />
+        {{#if (isDefeated @root.statuses)}}<i class="fa fa-skull overlay-icon defeated-icon"></i>{{/if}}
+      </div>
+
         {{#if (or isEditMode (not @root.editable))}}
         <div class="flexcol {{#unless system.blood_dice.enabled}}mb-12{{/unless}} flex-group-center">
         {{else}}
@@ -591,7 +622,7 @@
           and it will add a small amount of padding, a border, and will
           center all of its child elements content and text. }}
           <div class="grid-span-1 flexrow flex-between">
-
+          {{#if (not (isDefeated @root.statuses))}}
           <div class='grid-span-1 resource'>
             {{#if (or isEditMode (not @root.editable))}}
             <label for='system.life.max' class='resource-label flex-start'>
@@ -613,6 +644,18 @@
             </div>
             {{/if}}
           </div>
+           {{else}}
+            <div class='grid-span-1 resource-label flex-center flex-between flex-group-center rollable'
+              data-tooltip="{{localize 'SDM.RollType' type=(localize 'SDM.Relife')}}"
+              data-action="relifeRoll"  data-context='rollable'
+            >
+              {{localize 'SDM.Relife'}}
+              <i class="fa-solid fa-kit-medical rollable blood"></i>
+            </div>
+          {{/if}}
+
+
+
           {{#if system.borrowed_life.enabled }}
           <div class='grid-span-1 resource'>
             {{#if (or isEditMode (not @root.editable))}}
@@ -829,8 +872,16 @@
                   {{#if (eq key 'cha')}}
                   <i
                     class="fa-solid fa-masks-theater rollable {{lookup @root.config.abilityColors @index}}"
-                    data-tooltip="{{localize 'SDM.ReactionRoll'}}"
+                    data-tooltip="{{localize 'SDM.RollType' type=(localize 'SDM.Reaction')}}"
                     data-action="reactionRoll"  data-context='rollable'
+                  ></i>
+                  {{/if}}
+
+                   {{#if (eq key 'end')}}
+                  <i
+                    class="fa-solid fa-gauge-high rollable {{lookup @root.config.abilityColors @index}}"
+                    data-tooltip="{{localize 'SDM.GroupChaseRoll'}}"
+                    data-action="groupChaseRoll"  data-context='rollable'
                   ></i>
                   {{/if}}
 

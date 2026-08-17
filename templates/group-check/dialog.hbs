@@ -1,0 +1,285 @@
+<div class="group-check group-check-dialog">
+
+  {{#if isGM}}
+    {{#unless started}}
+      <div class="config-section">
+        <fieldset>
+          <div class="form-group">
+            <label>{{localize "SDM.Description"}}</label>
+            <div class="form-fields">
+              <input type="text" name="description" value="{{description}}"
+                placeholder="{{localize 'SDM.GroupCheckDescriptionPlaceholder'}}" />
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label>{{localize "SDM.ButtonRoll"}}</label>
+            <div class="form-fields">
+              <select name="rollType" id="rollType">
+                {{#each rollTypeOptions}}
+                  <option value="{{this.value}}" {{#if (eq this.value ../rollType)}}selected{{/if}}>
+                    {{localize 'SDM.RollType' type=(localize this.label)}}
+                  </option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group {{#unless (or (eq rollType 'ability') (eq rollType 'saving'))}}hidden{{/unless}}">
+            <label>{{localize "SDM.Ability"}}</label>
+            <div class="form-fields">
+              <select name="abilityKey">
+                {{#each abilityKeys}}
+                  <option value="{{this}}" {{#if (eq this ../abilityKey)}}selected{{/if}}>
+                    {{localize (lookup ../abilities this)}}
+                  </option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group {{#if (ne rollType 'table')}}hidden{{/if}}">
+            <label>{{localize "SDM.Table"}}</label>
+            <div class="form-fields">
+              <select name="tableUuid">
+                {{#each tables}}
+                  <option value="{{this.uuid}}" {{#if (eq this.uuid ../tableUuid)}}selected{{/if}}>
+                    {{this.label}}
+                  </option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+
+          <div class="form-group {{#if (ne rollType 'custom')}}hidden{{/if}}">
+            <label>{{localize "SDM.PowerRollFormula"}}</label>
+            <div class="form-fields">
+              <input type="text" name="customFormula" value="{{customFormula}}" placeholder="e.g. 2d6+@abilities.str.current" />
+            </div>
+          </div>
+
+          <div class="form-group dc-row {{#if (or (eq rollType 'table') (eq rollType 'morale'))}}hidden{{/if}}">
+            <label>{{localize "SDM.Target"}}</label>
+            <div class="form-fields">
+              <div class="dc-input-wrap">
+                <button type="button" data-action="makeEasier" class="dc-btn" title="{{localize "SDM.MakeEasier"}}">
+                  <span>{{localize 'SDM.MakeEasier'}}</span>
+                </button>
+                <input type="number" name="dc" value="{{dc}}" step="1" min="0" />
+                <button type="button" data-action="makeHarder" class="dc-btn" title="{{localize "SDM.MakeHarder"}}">
+                  <span>{{localize 'SDM.MakeHarder'}}</span>
+                </button>
+                 <div class="flex {{#if (or (eq rollType 'table') (eq rollType 'morale'))}}hidden{{/if}}">
+                    <input type="checkbox" name="hideDC" data-action="toggleHideDC" data-tooltip="SDM.HideDC" {{#if hideDC}}checked{{/if}} />
+                    <label>{{localize "SDM.HideDC"}}</label>
+                  </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modifier -->
+          <div class="form-group {{#if (eq rollType 'table')}}hidden{{/if}}">
+            <label>{{localize "SDM.RollModifier"}}</label>
+            <div class="form-fields">
+              <input type="string" name="modifier" value="{{modifier}}" step="1" />
+            </div>
+          </div>
+
+          <!-- Roll Mode -->
+          <div class="form-group">
+            <label>{{localize "SDM.RollMode"}}</label>
+            <div class="form-fields">
+              <select name="rollMode">
+                {{#each rollModeOptions}}
+                  <option value="{{this.value}}" {{#if (eq this.value ../rollMode)}}selected{{/if}}>
+                    {{this.label}}
+                  </option>
+                {{/each}}
+              </select>
+            </div>
+          </div>
+
+          <!-- Hide DC checkbox -->
+
+
+          <!-- Actor selection -->
+          <div class="form-group">
+            <label>{{localize "SDM.Actors"}}</label>
+
+            <div class="actor-list grid grid-3col">
+              {{#each actors}}
+                <li>
+                  <input type="checkbox" name="actor-{{this.id}}" {{#if this.selected}}checked{{/if}} data-actor-id="{{this.id}}" />
+                  <img src="{{this.img}}" class="actor-img" />
+                  <span>{{this.name}}</span>
+                </li>
+              {{/each}}
+            </div>
+
+          </div>
+          <div class="form-group" style="flex-wrap: wrap; gap: 4px;">
+              {{!-- <button type="button" data-action="refreshActors" class="button small">{{localize "SDM.RefreshFromCrew"}}</button> --}}
+              <button type="button" data-action="toggleAllActors" data-select-all="true" class="button small">{{localize "SDM.SelectAll"}}</button>
+              <button type="button" data-action="toggleAllActors" data-select-all="false" class="button small">{{localize "SDM.UnselectAll"}}</button>
+          </div>
+          <!-- Start button -->
+          <div class="form-group" style="margin-top: 12px;">
+            <button type="button" data-action="startCheck" class="button primary" {{#unless hasActors}}disabled{{/unless}}>
+              {{localize "SDM.StartCheck"}}
+            </button>
+          </div>
+        </fieldset>
+      </div>
+    {{/unless}}
+
+    {{#if started}}
+      <!-- RESULTS VIEW (GM) -->
+      <div class="results-view">
+       <div class="challenge-summary">
+        <div>
+          {{#if (ne description '')}}<p><strong>{{localize "SDM.Description"}}:</strong> {{description}}</p>{{/if}}
+          <p><strong>{{localize "SDM.ButtonRoll"}}:</strong> {{_rollTypeLabel rollType}}
+            {{#if (or (eq rollType 'ability') (eq rollType 'saving'))}}
+              ({{localize (lookup abilities abilityKey)}})
+            {{/if}}
+            {{#if (eq rollType 'custom')}} ({{customFormula}}){{/if}}
+            {{#if (eq rollType 'table')}} {{selectedTableLabel}}{{/if}}
+            {{#if showDCInDialog}}
+              , <strong>{{localize "SDM.Target"}}:</strong> {{dc}}
+              {{#if hideDC}}
+                <i class="fa-solid fa-lock" style="margin-left: 4px;"></i>
+                <span style="font-size:0.8em; color: var(--color-text-muted);">({{localize 'SDM.Hidden'}})</span>
+              {{/if}}
+            {{/if}}
+            {{#if (ne modifier 0)}}, <strong>{{localize "SDM.RollModifier"}}:</strong> {{#if (gt modifier 0)}}+{{/if}}{{modifier}}{{/if}}
+          </p>
+        </div>
+        <button type="button" data-action="resetCheck" class="button small">
+          <i class="fa-solid fa-undo"></i> {{localize "SDM.Reset"}}
+        </button>
+      </div>
+
+
+        <div class="actor-cards">
+          {{#each actors}}
+            <div class="tarot-card" style="background-image: url('{{this.img}}');">
+              <div class="card-overlay"></div>
+              <div class="card-content">
+                <div class="card-name">{{this.name}}</div>
+                <div class="card-result">
+                  {{#if (eq this.status 'rolled')}}
+                    {{#if (eq ../rollType 'table')}}
+                      <div class="result-table">{{{this.tableResult}}}</div>
+                    {{else}}
+                      <div class="result-number">{{this.result}}</div>
+                      {{#if ../showDCInDialog}}
+                        <div class="outcome-label {{this.outcome}}">
+                          {{#if this.outcomeLabel}}{{this.outcomeLabel}}{{else}}{{#if (eq this.outcome 'success')}}{{localize "SDM.Success"}}{{else if (eq this.outcome 'sacrifice')}}{{localize "SDM.Sacrifice"}}{{else}}{{localize "SDM.Failure"}}{{/if}}{{/if}}
+                        </div>
+                      {{/if}}
+                    {{/if}}
+                  {{else}}
+                    {{#if this.canRoll}}
+                      <button type="button" data-action="rollActor" data-actor-id="{{this.id}}" class="roll-button">
+                        <i class="fa-solid fa-dice-d20"></i>
+                        <span>{{localize 'SDM.ButtonRoll'}}</span>
+                      </button>
+                    {{else}}
+                      <span class="waiting-text">{{localize "SDM.Waiting"}}</span>
+                    {{/if}}
+                  {{/if}}
+                </div>
+                <div class="card-actions">
+                  {{#if (eq this.status 'rolled')}}
+                    {{#if ../isGM}}
+                      <button type="button" data-action="reRollActor" data-actor-id="{{this.id}}" class="reroll-button">
+                        <i class="fa-solid fa-rotate-right"></i> {{localize "SDM.Reroll"}}
+                      </button>
+                    {{/if}}
+                    {{#if (and (ne ../rollType 'table') this.hasHeroDice (not this.hasUsedHeroDice))}}
+                      <button type="button" data-action="useHeroDice" data-actor-id="{{this.id}}" class="hero-button">
+                        <i class="fa-solid fa-dice-d6"></i>
+                        <span>HERO</span>
+                      </button>
+                    {{/if}}
+                  {{/if}}
+                </div>
+              </div>
+            </div>
+          {{/each}}
+        </div>
+
+        <div class="gm-controls">
+          <button type="button" data-action="notifyPlayers" class="button small">{{localize "SDM.NotifyPlayers"}}</button>
+          <button type="button" data-action="forceAll" class="button small">{{localize "SDM.ForceAll"}}</button>
+          <button type="button" data-action="postResults" class="button primary small" {{#unless canPost}}disabled{{/unless}}>{{localize "SDM.PostResults"}}</button>
+        </div>
+      </div>
+    {{/if}}
+
+  {{else}}
+    <!-- PLAYER VIEW -->
+    <div class="player-info-banner">
+      {{#if started}}
+        {{#if (ne description '')}}<p><em>{{description}}</em></p>{{/if}}
+        <p><strong>{{localize "SDM.ButtonRoll"}}:</strong> {{_rollTypeLabel rollType}}
+          {{#if (or (eq rollType 'ability') (eq rollType 'saving'))}}
+            ({{localize (lookup abilities abilityKey)}})
+          {{/if}}
+          {{#if (eq rollType 'custom')}} ({{customFormula}}){{/if}}
+          {{#if (eq rollType 'table')}} {{selectedTableLabel}}{{/if}}
+          {{#if showDCInDialog}}, <strong>{{localize "SDM.Target"}}:</strong> {{dc}}{{/if}}
+          {{#if (ne modifier 0)}}, <strong>{{localize "SDM.RollModifier"}}:</strong> {{#if (gt modifier 0)}}+{{/if}}{{modifier}}{{/if}}
+        </p>
+      {{else}}
+
+      {{/if}}
+    </div>
+
+    {{#if started}}
+      <div class="actor-cards">
+        {{#each actors}}
+          <div class="tarot-card" style="background-image: url('{{this.img}}');">
+            <div class="card-overlay"></div>
+            <div class="card-content">
+              <div class="card-name">{{this.name}}</div>
+              <div class="card-result">
+                {{#if (eq this.status 'rolled')}}
+                  {{#if (eq ../rollType 'table')}}
+                    <div class="result-table">{{{this.tableResult}}}</div>
+                  {{else}}
+                    <div class="result-number">{{this.result}}</div>
+                    {{#if ../showDCInDialog}}
+                      <div class="outcome-label {{this.outcome}}">
+                        {{#if this.outcomeLabel}}{{this.outcomeLabel}}{{else}}{{#if (eq this.outcome 'success')}}{{localize "SDM.Success"}}{{else if (eq this.outcome 'sacrifice')}}{{localize "SDM.Sacrifice"}}{{else}}{{localize "SDM.Failure"}}{{/if}}{{/if}}
+                      </div>
+                    {{/if}}
+                  {{/if}}
+                {{else}}
+                  {{#if this.canRoll}}
+                    <button type="button" data-action="rollActor" data-actor-id="{{this.id}}" class="roll-button">
+                      <i class="fa-solid fa-dice-d20"></i>
+                      <span>ROLL</span>
+                    </button>
+                  {{else}}
+                    <span class="waiting-text">{{localize "SDM.Waiting"}}</span>
+                  {{/if}}
+                {{/if}}
+              </div>
+              <div class="card-actions">
+                {{#if (eq this.status 'rolled')}}
+                  {{#if (and (ne ../rollType 'table') this.hasHeroDice (not this.hasUsedHeroDice))}}
+                    <button type="button" data-action="useHeroDice" data-actor-id="{{this.id}}" class="hero-button">
+                      <i class="fa-solid fa-dice-d6"></i>
+                      <span>HERO</span>
+                    </button>
+                  {{/if}}
+                {{/if}}
+              </div>
+            </div>
+          </div>
+        {{/each}}
+      </div>
+    {{/if}}
+  {{/if}}
+</div>

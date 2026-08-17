@@ -21,6 +21,21 @@
     margin-top: 10px;
   }
 
+  .profile-img .overlay-icon {
+    position: relative;
+    left: 50%;
+    top: -50%;
+    transform: translate(-50%, -50%);
+    font-size: 70px;
+    text-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
+    pointer-events: none;
+  }
+
+  .profile-img .defeated-icon {
+    color: var(--sdm-c-white, #FFFFFF);
+    opacity: 0.9;
+  }
+
   .caravan-profile-img {
     margin-right: 10px;
     margin-top: 10px;

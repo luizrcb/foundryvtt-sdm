@@ -424,7 +424,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
 
     const sacks = Array.from({ length: capacity }, (_, i) => ({
       index: i,
-      name: inventoryNames[i].name || `${game.i18n.localize('SDM.UnitSack')} ${i + 1}`,
+      name: inventoryNames[i].name || `${game.i18n.format('SDM.InventorySackLabel', { number: 1 + 1})}`,
       items: [],
       usedSlots: 0,
       maxSlots: SLOTS_PER_SACK

@@ -606,6 +606,7 @@ export async function postLifeChange(actor, damageValue = 0, multiplier = 1, opt
     actorId: actor.id,
     actorName: actor.name,
     actorImg: actor.prototypeToken?.texture?.src || actor.img || '',
+    actorType: actor.type,
     amountFormatted: String(amountAbs),
     amount: amountAbs,
     isHealing,
