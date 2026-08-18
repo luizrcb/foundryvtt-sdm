@@ -105,6 +105,9 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     features: {
       template: templatePath('item/features'),
       scrollable: ['']
+    },
+    categories: {
+      template: templatePath('item/categories'),
     }
   };
 
@@ -128,10 +131,11 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
           options.parts.push('features')
         }
 
-        options.parts.push('effects');
+        options.parts.push('effects', 'categories');
       break;
       default:
-        options.parts.push('description', 'effects');
+        options.parts.push('description', 'effects', 'categories');
+
         break;
     }
   }
@@ -206,6 +210,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       case 'attributesMount':
       case 'powerAlbum':
       case 'features':
+      case 'categories':
         // Necessary for preserving active tab on re-render
         context.tab = context.tabs[partId];
         break;
@@ -286,6 +291,11 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
           tab.id = 'features';
           tab.label += 'Features';
           tab.icon = 'fa fa-gears';
+          break;
+        case 'categories':
+          tab.id = 'categories';
+          tab.label += 'Categories';
+          tab.icon = 'fa fa-tag';
           break;
       }
       if (this.tabGroups[tabGroup] === tab.id) tab.cssClass = 'active';

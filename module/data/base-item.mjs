@@ -14,9 +14,6 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
 
     schema.categories = new fields.SetField(
       new fields.StringField({ required: true, blank: false, nullable: false }),
-      {
-        min: 0
-      }
     );
 
     schema.status = new fields.StringField({
