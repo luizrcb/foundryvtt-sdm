@@ -543,8 +543,12 @@ export class SdmItem extends Item {
 
     for (let feature of system.features) {
       let str = $l10n('SDM.ItemFeature.' + feature + 'Abbr');
-      if (['replenish', 'flare', 'pocket', 'resistant'].includes(feature)) {
-        str = str.replace('#', system[feature].value);
+      if (['area', 'replenish', 'flare', 'pocket', 'resistant'].includes(feature)) {
+        if (feature === 'area') {
+          str = str.replace('#', $l10n('SDM.Area'+ capitalizeFirstLetter(system[feature].value)+ 'Abbr'));
+        } else {
+          str = str.replace('#', system[feature].value);
+        }
       }
       featureStrings.push(str);
     }

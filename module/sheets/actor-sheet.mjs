@@ -33,7 +33,9 @@ import {
   renderNPCMoraleResult,
   renderReactionResult,
   renderSaveResult,
-  renderDangerResult
+  renderDangerResult,
+  renderGroupChaseResult,
+  renderRelifeResult
 } from '../rolls/ui/renderResults.mjs';
 import { DEFAULT_SAVE_VALUE, SAVING_THROW_BASE_FORMULA } from '../settings.mjs';
 
@@ -119,6 +121,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       touristDiceRoll: this._onTouristDiceRoll,
       onEditImage: this._onEditImage,
       reactionRoll: this._onReactionRoll,
+      relifeRoll: this._onRelifeRoll,
+      groupChaseRoll: this._onGroupChaseRoll,
       corruptionRoll: this._onCorruptionRoll,
       defeatRoll: this._onDefeatRoll,
       roll: this._onRoll,
@@ -565,6 +569,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       // Add the actor's data to context.data for easier access, as well as flags.
       system: this.actor.system,
       flags: this.actor.flags,
+      statuses: this.actor.statuses,
       // Adding a pointer to CONFIG.SDM
       config: CONFIG.SDM,
       tabs: this._getTabs(options.parts),
@@ -574,6 +579,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       // Add isGM to the context
       isGM: game.user.isGM
     };
+
+    // const language = game.i18n.lang;
+    // context.system.abilities = CONFIG.SDM.getOrderedAbilities(language);
 
     if (this.actor.type === 'character') {
       const heroDiceType =
@@ -1376,6 +1384,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const isShift = reverseShift !== !!event.shiftKey;
     const isCtrl = !!event.ctrlKey;
     let data = { modifier: '', selectedAbility: '' };
+    const selectedRollMode = this.actor.system.corruption.roll_mode || RollMode.NORMAL;
 
     if (!isShift) {
       data = await DialogV2.wait({
@@ -1385,10 +1394,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         modal: true,
         position: {
           width: 500,
-          height: 265
+          height: 260
         },
         content: await renderTemplate(templatePath('corruption-roll-dialog'), {
           rollModes: CONFIG.SDM.rollMode,
+          selectedRollMode,
           blindGMRoll: isCtrl
         }),
         buttons: [
@@ -1411,14 +1421,14 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const { modifier = '', rollMode = RollMode.NORMAL } = data;
 
     const baseFormula = game.settings.get('sdm', 'baseCorruptionFormula') || '2d6';
-
+    const corruptionBonus = this.actor.system.corruption.roll_bonus || 0;
     const burdenPenalty = this.actor.system.burden_penalty || 0;
     const abilityMod =
       this.actor.type === ActorType.CHARACTER
         ? this.actor.system.abilities['aur'].current
         : this.actor.system?.bonus || 0;
     const burdenPart = burdenPenalty > 0 ? -1 * burdenPenalty : 0;
-    const totalBonuses = abilityMod + burdenPart;
+    const totalBonuses = abilityMod + burdenPart + corruptionBonus;
     const bonusPart =
       totalBonuses === 0 ? '' : totalBonuses > 0 ? `+${totalBonuses}` : totalBonuses;
     const modPart = foundry.dice.Roll.validate(modifier) ? ` +${modifier}` : '';
@@ -1461,7 +1471,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         modal: true,
         position: {
           width: 500,
-          height: 330
+          height: 300
         },
         content: await renderTemplate(templatePath('reaction-roll-dialog'), {
           rollModes: CONFIG.SDM.rollMode,
@@ -1499,7 +1509,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const {
       modifier = '',
       charismaOperator = 1,
-      rollMode = 'normal',
+      rollMode = RollMode.NORMAL,
       customBaseFormula = ''
     } = data;
 
@@ -1540,6 +1550,218 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     );
   }
 
+  static async _onRelifeRoll(event, target) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (event.detail > 1) return;
+
+    const reverseShift = game.settings.get('sdm', 'reverseShiftKey');
+    const isShift = reverseShift !== !!event.shiftKey;
+    const isCtrl = !!event.ctrlKey;
+
+    // Get selected roll mode from actor (default to normal)
+    const selectedRollMode = this.actor.system.relife?.roll_mode || RollMode.NORMAL;
+
+    // Define relife types and their corresponding abilities
+    const relifeTypes = [
+      { id: 'body', label: 'SDM.RelifeTypeBody', ability: 'end' },
+      { id: 'head', label: 'SDM.RelifeTypeHead', ability: 'tho' },
+      { id: 'jewel', label: 'SDM.RelifeTypeJewel', ability: 'aur' },
+      { id: 'shattered', label: 'SDM.RelifeTypeShattered', ability: 'cha' }
+    ];
+
+    const relifeCosts = {
+      'body':  await TextEditor.enrichHTML($l10n('SDM.RelifeTypeBodyCost')),
+      'head':  await TextEditor.enrichHTML($l10n('SDM.RelifeTypeHeadCost')),
+      'jewel': await TextEditor.enrichHTML($l10n('SDM.RelifeTypeJewelCost')),
+      'shattered':  await TextEditor.enrichHTML($l10n('SDM.RelifeTypeShatteredCost')),
+    };
+
+    let data = {};
+    if (!isShift) {
+      data = await DialogV2.wait({
+        window: {
+          title: $fmt('SDM.RollType', { type: $l10n('SDM.Relife') })
+        },
+        modal: true,
+        position: {
+          width: 500,
+          height: 340,
+        },
+        content: await renderTemplate(templatePath('relife-roll-dialog'), {
+          rollModes: CONFIG.SDM.rollMode,
+          selectedRollMode,
+          selectedRelifeType: 'body',
+          relifeTypes,
+          relifeCosts,
+          blindGMRoll: isCtrl
+        }),
+        buttons: [
+          {
+            label: $l10n('SDM.Relife'),
+            icon: 'fa-solid fa-hand-holding-heart',
+            callback: (event, button) => ({
+              ...new foundry.applications.ux.FormDataExtended(button.form).object
+            })
+          }
+        ],
+        rejectClose: false,
+        render: (event, dialog) => {
+          const html = dialog.element;
+          const select = html.querySelector('#relifeType');
+          const cost = html.querySelector('#relifeCost');
+
+          if (select && cost) {
+            select.addEventListener('change', ev => {
+              const val = ev.target.value;
+              cost.innerHTML = relifeCosts[val] ?? '';
+            });
+          }
+        }
+      });
+    }
+
+    if (!data) return;
+
+    const { modifier = '', relifeType = 'body', rollMode = RollMode.NORMAL } = data;
+    const ability = relifeTypes.find(t => t.id === relifeType).ability;
+
+    // Base formula (default 1d20, can be overridden by setting)
+    const baseFormula = game.settings.get('sdm', 'baseRelifeFormula') || '1d20';
+
+    // Compute ability modifier
+    const abilityMod = this.actor.system.abilities[ability]?.current || 0;
+
+    // Relife bonus (actor field)
+    const relifeBonus = this.actor.system.relife_bonus || 0;
+
+    // Burden penalty (negative)
+    const burdenPenalty = this.actor.system.burden_penalty || 0;
+
+    // Sum before hard limit
+    let totalBonus = abilityMod + relifeBonus - burdenPenalty;
+
+    // Apply hard limit if enabled
+    const useHardLimit = game.settings.get('sdm', 'useHardLimitRule');
+    const hardLimit = game.settings.get('sdm', 'defaultHardLimitValue') || MAX_MODIFIER;
+    if (useHardLimit) {
+      totalBonus = Math.min(totalBonus, hardLimit);
+    }
+
+    const bonusPart = totalBonus === 0 ? '' : totalBonus > 0 ? `+${totalBonus}` : `${totalBonus}`;
+    const modPart = foundry.dice.Roll.validate(modifier) ? ` +${modifier}` : '';
+
+    // Apply advantage/disadvantage
+    const keepModifier =
+      rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
+
+    const diceExpression = keepModifier
+      ? `{${baseFormula}, ${baseFormula}}${keepModifier}`
+      : baseFormula;
+
+    const formula = `${diceExpression}${bonusPart}${modPart}`;
+    const sanitizedFormula = sanitizeExpression(formula);
+
+    let roll = new Roll(sanitizedFormula);
+    roll = await roll.evaluate();
+
+    const speaker = ChatMessage.getSpeaker({ actor: this.actor });
+    const label = `[${$l10n('SDM.Relife')}] ${$l10n(`SDM.RelifeType${toPascalCase(relifeType)}`)}`
+    await renderRelifeResult(
+      { roll, label, cost: relifeCosts[relifeType], ability },
+      { fromHeroDice: false, speaker, isCtrl }
+    );
+
+    const defeatedId = CONFIG.specialStatusEffects.DEFEATED;
+    await this.actor?.toggleStatusEffect(defeatedId, {
+      active: false
+    });
+  }
+
+  static async _onGroupChaseRoll(event, target) {
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (event.detail > 1) return;
+
+    const reverseShift = game.settings.get('sdm', 'reverseShiftKey');
+    const isShift = reverseShift !== !!event.shiftKey;
+    const isCtrl = !!event.ctrlKey;
+    let data = { modifier: '' };
+    const selectedRollMode = this.actor.system.abilities['end'].roll_mode || RollMode.NORMAL;
+    const availableSkills = this.actor.getAvailableSkills();
+    const label = $fmt('SDM.RollType', { type: $l10n('SDM.GroupChase') });
+    if (!isShift) {
+      data = await DialogV2.wait({
+        window: {
+          title: label
+        },
+        modal: true,
+        position: {
+          width: 500,
+          height: 300
+        },
+        content: await renderTemplate(templatePath('group-chase-roll-dialog'), {
+          rollModes: CONFIG.SDM.rollMode,
+          selectedRollMode,
+          availableSkills,
+          blindGMRoll: isCtrl
+        }),
+        buttons: [
+          {
+            label: $l10n('SDM.GroupChase'),
+            icon: 'fa-solid fa-truck-fast',
+            callback: (event, button) => ({
+              ...new foundry.applications.ux.FormDataExtended(button.form).object
+            })
+          }
+        ],
+        rejectClose: false
+      });
+    }
+
+    if (!data) {
+      return;
+    }
+
+    const { modifier = '', selectedSkill = '', rollMode = RollMode.NORMAL } = data;
+
+    const skillPart = selectedSkill ? availableSkills[selectedSkill]?.mod : 0;
+    const baseFormula = game.settings.get('sdm', 'baseGroupChaseFormula') || '1d20';
+
+    const groupChaseBonus = this.actor.system.group_chase_bonus || 0;
+    const burdenPenalty = this.actor.system.burden_penalty || 0;
+    const endMod = this.actor.system.abilities['end'].current;
+    const burdenPart = burdenPenalty > 0 ? -1 * burdenPenalty : 0;
+    const chaseSum = endMod + skillPart + groupChaseBonus + burdenPart;
+
+    const useHardLimitRule = game.settings.get('sdm', 'useHardLimitRule');
+    const defaultHardLimitValue = game.settings.get('sdm', 'defaultHardLimitValue') || MAX_MODIFIER;
+    const finalChaseBonus = useHardLimitRule ? Math.min(chaseSum, defaultHardLimitValue) : chaseSum;
+
+    const bonusPart =
+      finalChaseBonus === 0 ? '' : finalChaseBonus > 0 ? `+${finalChaseBonus}` : finalChaseBonus;
+    const modPart = foundry.dice.Roll.validate(modifier) ? ` +${modifier}` : '';
+
+    const keepModifier =
+      rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
+
+    const diceExpression = keepModifier
+      ? `{${baseFormula}, ${baseFormula}}${keepModifier}`
+      : baseFormula;
+
+    const formula = `${diceExpression}${bonusPart}${modPart}`;
+    const sanitizedFormula = sanitizeExpression(formula);
+
+    let roll = new Roll(sanitizedFormula);
+    roll = await roll.evaluate();
+
+    const speaker = ChatMessage.getSpeaker({ actor: this.actor });
+
+    await renderGroupChaseResult({ roll, label: `[${$l10n('SDM.GroupChase')}]` }, { fromHeroDice: false, speaker, isCtrl });
+  }
+
   static async _onDefeatRoll(event, target) {
     event.preventDefault();
     event.stopPropagation();
@@ -1549,6 +1771,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const isShift = reverseShift !== !!event.shiftKey;
     const isCtrl = !!event.ctrlKey;
     let data = { modifier: '', selectedAbility: 'end' };
+
+    if (this.actor.type !== ActorType.CHARACTER) return;
+
+    const selectedRollMode = this.actor.system?.defeat?.roll_mode || RollMode.NORMAL;
 
     if (!isShift) {
       data = await DialogV2.wait({
@@ -1562,6 +1788,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         },
         content: await renderTemplate(templatePath('defeat-roll-dialog'), {
           rollModes: CONFIG.SDM.rollMode,
+          selectedRollMode,
           abilities: CONFIG.SDM.defeatAbilities,
           blindGMRoll: isCtrl
         }),
@@ -1594,7 +1821,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         : this.actor.system?.bonus || 0;
 
     const burdenPart = burdenPenalty > 0 ? -1 * burdenPenalty : 0;
-    const totalBonuses = abilityMod + burdenPart;
+    const defeatBonus = this.actor.system.defeat.roll_bonus || 0;
+    const totalBonuses = abilityMod + defeatBonus + burdenPart;
     const bonusPart =
       totalBonuses === 0 ? '' : totalBonuses > 0 ? `+${totalBonuses}` : totalBonuses;
     const modPart = foundry.dice.Roll.validate(modifier) ? ` +${modifier}` : '';
@@ -1613,6 +1841,13 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     roll = await roll.evaluate();
 
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
+    const defeatedId = CONFIG.specialStatusEffects.DEFEATED;
+    if (roll.total <= 6) {
+      await this.actor?.toggleStatusEffect(defeatedId, {
+        overlay: true,
+        active: true
+      });
+    }
 
     await renderDefeatResult({ roll, selectedAbility }, { fromHeroDice: false, speaker, isCtrl });
   }
@@ -1629,7 +1864,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const isShift = reverseShift !== !!event.shiftKey;
     const isCtrl = !!event.ctrlKey;
 
-    let label = $fmt('SDM.RollType', {
+    const title = $fmt('SDM.RollType', {
       type: $l10n('SDM.Danger')
     });
     const language = game.i18n.lang;
@@ -1637,7 +1872,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     const template = await renderTemplate(templatePath('custom-roll-dialog'), {
       rollTitlePrefix: '',
-      title: label,
+      title,
       abilities: CONFIG.SDM.getOrderedAbilities(language),
       ability,
       attack: '',
@@ -1668,7 +1903,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     if (!isShift) {
       rollOptions = await foundry.applications.api.DialogV2.wait({
         window: {
-          title: $fmt('SDM.RollType', { type: $l10n('SDM.Danger') })
+          title,
         },
         modal: true,
         content: template,
@@ -1730,7 +1965,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     roll = await roll.evaluate();
 
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
-
+    const label = `[${$l10n('SDM.Danger')}]`;
     await renderDangerResult(
       { roll, label, targetNumber },
       { fromHeroDice: false, speaker, isCtrl }

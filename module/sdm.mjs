@@ -1,5 +1,10 @@
 import SdmActiveEffectConfig from './app/active-effect-config.mjs';
 import SdmActiveEffectConfig14 from './app/active-effect-config14.mjs';
+import {
+  GroupCheckDialog,
+  registerGroupCheckSettings,
+  setupGroupCheckSocket
+} from './app/group-check/index.mjs';
 
 import * as models from './data/_module.mjs';
 import { SdmActor } from './documents/actor.mjs';
@@ -137,6 +142,21 @@ Hooks.on('getSceneControlButtons', function (controls) {
       button: true,
       onChange: async (event, active) => {
         if (active) await game.sdm.api.gm.giveExperience();
+      }
+    };
+    controls.tokens.tools['sdm-group-check'] = {
+      icon: 'fa-solid fa-people-carry-box',
+      name: 'sdm-group-check',
+      title: 'SDM.GroupCheck',
+      button: true,
+      onChange: async (event, active) => {
+        if (active) {
+          if (!GroupCheckDialog._instance) {
+            new GroupCheckDialog().render(true);
+          } else {
+            GroupCheckDialog._instance.render(true);
+          }
+        }
       }
     };
   }
@@ -577,6 +597,7 @@ Hooks.once('init', function () {
 
   registerSystemSettings();
   registerSDMGMSettingMenus();
+  registerGroupCheckSettings();
 
   /**
    * Set an initiative formula for the system
@@ -592,7 +613,7 @@ Hooks.once('init', function () {
   setupItemTransferSocket();
   setupPetDropSocket();
   setupSettingsSocket();
-
+  setupGroupCheckSocket();
   setupEscalatorDiePositionBroadcast();
 
   //Preload Handlebars templates.
@@ -851,7 +872,7 @@ function renderSettings(html) {
     <h4 class="divider">${$l10n('WORLD.FIELDS.system.label')}</h4>
     <div class="system-badge">
       <div class="sdm-icon" data-tooltip="${sdm.title}" alt="${sdm.title}" style="cursor:pointer;"></div>
-      <span class="system-mote" data-tooltip="${sdm.title}">roleplay at the end of time</span>
+      <span class="system-mote" data-tooltip="${sdm.title}">roleplaying when time fades</span>
       <a class="system-version system-info" data-tooltip="SDM.ReleaseNotes" href="https://github.com/luizrcb/foundryvtt-sdm/releases/tag/v${sdm.version}" target="_blank">${sdm.version}</a>
     </div>
   `;

@@ -60,6 +60,13 @@ SDM.abilityAbbreviations = {
   tho: 'SDM.AbilityThoAbbr'
 };
 
+SDM.areaValues = {
+  single: 'SDM.AreaSingle',
+  small: 'SDM.AreaSmall',
+  medium: 'SDM.AreaMedium',
+  large: 'SDM.AreaLarge'
+};
+
 SDM.sizeUnits = {
   sacks: 'SDM.UnitSacks',
   stones: 'SDM.UnitStones',
@@ -327,6 +334,10 @@ SDM.characterPropertiesToActiveEffects = [
   'system.abilities.tho.roll_bonus',
   'system.abilities.tho.save_bonus',
   'system.abilities.tho.roll_mode',
+  'system.corruption.roll_bonus',
+  'system.corruption.roll_mode',
+  'system.defeat.roll_bonus',
+  'system.defeat.roll_mode',
   'system.capacity',
   'system.speed'
 ];
@@ -420,12 +431,14 @@ SDM.defeatAbilities = {
 };
 
 SDM.baseFeatures = [
+  { value: 'area', label: 'SDM.ItemFeature.area' },
   { value: 'charges', label: 'SDM.ItemFeature.charges' },
   { value: 'replenish', label: 'SDM.ItemFeature.replenish' },
   { value: 'corpsefed', label: 'SDM.ItemFeature.corpsefed' },
   { value: 'camolion', label: 'SDM.ItemFeature.camolion' },
   { value: 'semi_sentient', label: 'SDM.ItemFeature.semi_sentient' },
   { value: 'restricted', label: 'SDM.ItemFeature.restricted' },
+  { value: 'throwing', label: 'SDM.ItemFeature.throwing' },
   { value: 'implant', label: 'SDM.ItemFeature.implant' },
   { value: 'loud', label: 'SDM.ItemFeature.loud' }
 ];
@@ -475,11 +488,11 @@ SDM.armorFeatures = [
   { value: 'stylish', label: 'SDM.ItemFeature.stylish' },
   { value: 'intravenous', label: 'SDM.ItemFeature.intravenous' },
   { value: 'weapon', label: 'SDM.ItemFeature.weapon' },
-
   { value: 'vorpal', label: 'SDM.ItemFeature.vorpal' }
 ];
 
 SDM.weaponFeatures = [
+  { value: 'area', label: 'SDM.ItemFeature.area' },
   { value: 'armor_piercing', label: 'SDM.ItemFeature.armor_piercing' },
   { value: 'atrophy', label: 'SDM.ItemFeature.atrophy' },
   { value: 'attune', label: 'SDM.ItemFeature.attune' },

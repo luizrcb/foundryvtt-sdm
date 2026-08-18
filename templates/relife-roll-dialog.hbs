@@ -1,0 +1,28 @@
+<form autocomplete="off">
+  <div class="form-group">
+    <label>{{localize "SDM.RelifeType"}}</label>
+    <select name="relifeType" id="relifeType">
+      {{selectOptions relifeTypes localize=true selected=selectedRelifeType valueAttr="id" labelAttr="label"}}
+    </select>
+  </div>
+  <div class="form-group mt-10">
+    <label>{{localize "SDM.Cost"}}</label>
+    <div id="relifeCost" style="font-style:italic;">
+      {{{lookup relifeCosts selectedRelifeType}}}
+    </div>
+  </div>
+
+  <div class='form-group mt-10'>
+      <label for='modifier'>
+        {{localize 'SDM.RollModifier'}}
+      </label>
+      <input id='modifier' type='text' name='modifier' value='' />
+    </div>
+
+  <div class="form-group mt-10">
+      <label for="rollMode">{{localize 'SDM.RollMode'}}</label>
+      <select name="rollMode" id="rollMode">
+        {{selectOptions rollModes localize=true selected=selectedRollMode}}
+      </select>
+  </div>
+</form>

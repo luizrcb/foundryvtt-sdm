@@ -126,6 +126,15 @@
         </div>
         {{/unless}}
 
+        {{#if (has system.features 'area')}}
+        <div class='resource'>
+          <label class='resource-label' for="system.area.value">{{localize 'SDM.ItemFeature.area'}}</label>
+          <select name='system.area.value' data-tooltip="{{localize 'SDM.ItemFeature.areaDescription'}}">
+            {{selectOptions areaValues localize=true selected=system.area.value blank=''}}
+          </select>
+        </div>
+        {{/if}}
+
         {{#if (has system.features 'flare')}}
         <div class='resource'>
           <label class='resource-label' for="system.flare.value">{{localize 'SDM.ItemFeature.flare'}}</label>
@@ -237,9 +246,8 @@
       </div>
       <div class="resource">
         <label class='resource-label'>{{localize 'SDM.WeaponRange'}}</label>
-        <select name='system.weapon.range' class="resource-content">
-          <option value=''></option>
-          {{selectOptions config.rangeType localize=true selected=system.weapon.range}}
+        <select id="weapon_range" name='system.weapon.range' class="resource-content">
+          {{selectOptions config.rangeType localize=true selected=system.weapon.range blank=''}}
         </select>
       </div>
 

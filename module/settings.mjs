@@ -5,6 +5,8 @@ import { handleHeroDice } from './rolls/hero_dice/index.mjs';
 export const BASE_REACTION_FORMULA = '2d6';
 export const BASE_DEFEAT_FORMULA = '2d6';
 export const BASE_CORRUPTION_FORMULA = '2d6';
+export const BASE_GROUP_CHASE_FORMULA = '1d20x';
+export const BASE_RELIFE_FORMULA = '1d20x';
 export const CHARACTER_DEFAULT_INITIATIVE = '2d6 + @abilities.agi.current + @initiative_bonus';
 export const NPC_DEFAULT_INITIATIVE = '2d6 + @bonus';
 export const NPC_DEFAULT_MORALE_FORMULA = '2d6';
@@ -335,7 +337,7 @@ export function registerSystemSettings() {
     }
   });
 
-  game.settings.register('sdm', 'initialMessageSent', {
+  game.settings.register('sdm', 'initialMessageSent-v2', {
     scope: 'world', // "world" = GM only, "client" = per user
     config: false, // Show in configuration view
     type: Boolean, // Data type: String, Number, Boolean, etc
@@ -434,6 +436,16 @@ export function registerSystemSettings() {
     default: NPC_DEFAULT_MORALE_FORMULA
   });
 
+  game.settings.register('sdm', 'baseGroupChaseFormula', {
+    name: 'SDM.SettingsBaseGroupChaseFormula',
+    hint: 'SDM.SettingsBaseGroupChaseFormulaHint',
+    scope: 'world', // "world" = GM only, "client" = per user
+    restricted: true,
+    requiresReload: true,
+    type: String, // Data type: String, Number, Boolean, etc
+    default: BASE_GROUP_CHASE_FORMULA
+  });
+
   game.settings.register('sdm', 'baseReactionFormula', {
     name: 'SDM.SettingsBaseReactionFormula',
     hint: 'SDM.SettingsBaseReactionFormulaHint',
@@ -462,6 +474,16 @@ export function registerSystemSettings() {
     requiresReload: true,
     type: String, // Data type: String, Number, Boolean, etc
     default: BASE_DEFEAT_FORMULA
+  });
+
+ game.settings.register('sdm', 'baseRelifeFormula', {
+    name: 'SDM.SettingsBaseRelifeFormula',
+    hint: 'SDM.SettingsBaseRelifeFormulaHint',
+    scope: 'world', // "world" = GM only, "client" = per user
+    restricted: true,
+    requiresReload: true,
+    type: String, // Data type: String, Number, Boolean, etc
+    default: BASE_RELIFE_FORMULA
   });
 
   game.settings.register('sdm', 'defaultHeroDiceType', {
@@ -1178,7 +1200,7 @@ export function configurePlayerChromatype() {
       const colorData = {
         name: 'sdm-chromatype',
         description: $l10n('SDM.DiceTheme.Chromatype'),
-        category: 'SDM: Chromatype Dice',
+        category: 'WTF: Chromatype Dice',
         foreground: [foreground],
         background: [background],
         outline: 'black',

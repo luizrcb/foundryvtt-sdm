@@ -721,11 +721,11 @@ input[type=radio]::after {
   .sdm-icon {
     width: 120px;
     height: 120px;
-    -webkit-mask-image: url("../assets/sdm-pause.png");
+    -webkit-mask-image: url("../assets/wtf-pause.png");
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: center;
     -webkit-mask-size: contain;
-    mask-image: url("../assets/sdm-pause.png");
+    mask-image: url("../assets/wtf-pause.png");
     mask-repeat: no-repeat;
     mask-position: center;
     mask-size: contain;
@@ -736,11 +736,11 @@ input[type=radio]::after {
   .sdm-pause {
     height: 120px;
     width: 120px;
-    -webkit-mask-image: url("../assets/sdm-pause.png");
+    -webkit-mask-image: url("../assets/wtf-pause.png");
     -webkit-mask-repeat: no-repeat;
     -webkit-mask-position: center;
     -webkit-mask-size: contain;
-    mask-image: url("../assets/sdm-pause.png");
+    mask-image: url("../assets/wtf-pause.png");
     mask-repeat: no-repeat;
     mask-position: center;
     mask-size: contain;
@@ -1850,6 +1850,549 @@ input[type=radio]::after {
     transition: background-color 0.6s ease;
   }
 }
+@layer group-check {
+  .group-check .group-check-dialog {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 5px;
+    height: 100%;
+  }
+  .group-check .dialog-layout {
+    display: flex;
+    gap: 20px;
+    align-items: flex-start;
+    height: 100%;
+  }
+  .group-check .config-section {
+    flex: 1.5;
+    min-width: 300px;
+    max-height: 500px;
+    overflow-y: auto;
+    padding-right: 10px;
+  }
+  .group-check .actor-section {
+    flex: 1;
+    min-width: 200px;
+    max-height: 500px;
+    overflow-y: auto;
+    border-left: 1px solid var(--color-border-light);
+    padding-left: 15px;
+  }
+  .group-check fieldset {
+    border: 1px solid var(--color-border-dark);
+    border-radius: 4px;
+    padding: 15px 15px 10px;
+    background: var(--color-bg-2);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  }
+  .group-check fieldset legend {
+    font-weight: bold;
+    color: var(--color-text-dark);
+    padding: 0 8px;
+    background: var(--color-bg-1);
+    border-radius: 3px;
+    font-size: 0.9rem;
+  }
+  .group-check .form-group {
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .group-check .form-group label {
+    flex: 0 0 100px;
+    font-weight: bold;
+    color: var(--color-text-dark);
+    font-size: 0.85rem;
+  }
+  .group-check .form-group .form-fields {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .group-check .form-group .form-fields input,
+  .group-check .form-group .form-fields select {
+    width: 100%;
+    padding: 4px 6px;
+    border: 1px solid var(--color-border-light);
+    border-radius: 3px;
+    background: var(--color-bg-1);
+    color: var(--color-text-dark);
+    font-size: 0.85rem;
+  }
+  .group-check .form-group .form-fields input:focus,
+  .group-check .form-group .form-fields select:focus {
+    border-color: var(--color-border-highlight);
+    outline: none;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.2);
+  }
+  .group-check .form-group .hint {
+    color: var(--color-text-muted);
+    font-size: 0.75rem;
+    font-style: italic;
+  }
+  .group-check .dc-row .dc-input-wrap {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    flex: 1;
+  }
+  .group-check .dc-row .dc-input-wrap input[type=number] {
+    width: 80px;
+  }
+  .group-check .dc-row .dc-adjust-buttons {
+    display: flex;
+    gap: 4px;
+  }
+  .group-check .dc-row .dc-adjust-buttons .dc-btn {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2px 8px;
+    font-size: 0.65rem;
+    line-height: 1.2;
+    min-width: 36px;
+    background: var(--color-bg-1);
+    border: 1px solid var(--color-border-dark);
+    border-radius: 3px;
+    cursor: pointer;
+    color: var(--color-text-dark);
+    transition: all 0.15s ease;
+  }
+  .group-check .dc-row .dc-adjust-buttons .dc-btn:hover {
+    background: var(--color-bg-2);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  }
+  .group-check .dc-row .dc-adjust-buttons .dc-btn .dc-btn-label {
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+  }
+  .group-check .dc-row .dc-adjust-buttons .dc-btn .dc-btn-sub {
+    font-size: 0.55rem;
+    opacity: 0.7;
+  }
+  .group-check .button {
+    background: var(--color-bg-1);
+    border: 1px solid var(--color-border-dark);
+    border-radius: 3px;
+    padding: 4px 12px;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.5s ease 0s;
+    color: var(--color-text-dark);
+  }
+  .group-check .button:hover {
+    background: var(--color-bg-2);
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+  }
+  .group-check .button.primary {
+    background: var(--color-button-primary);
+    border-color: var(--color-button-primary-border);
+    color: var(--color-button-primary-text);
+    font-weight: bold;
+  }
+  .group-check .button.primary:hover {
+    background: var(--color-button-primary-hover);
+  }
+  .group-check .button.small {
+    padding: 2px 8px;
+    font-size: 0.75rem;
+  }
+  .group-check .button:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+    pointer-events: none;
+  }
+  .group-check .actor-list {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 10px 0;
+  }
+  .group-check .actor-list li {
+    padding: 4px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 0.85rem;
+    border-bottom: 1px solid var(--color-border-light-2);
+  }
+  .group-check .actor-list li:last-child {
+    border-bottom: none;
+  }
+  .group-check .actor-list li .actor-img {
+    width: 28px;
+    height: 28px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid var(--color-border-light);
+    flex-shrink: 0;
+  }
+  .group-check .challenge-summary {
+    background: var(--color-bg-3);
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    border-left: 4px solid var(--color-primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .group-check .challenge-summary h3 {
+    margin: 0 0 4px;
+  }
+  .group-check .challenge-summary p {
+    margin: 2px 0;
+  }
+  .group-check .results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 5px;
+    font-size: 0.85rem;
+  }
+  .group-check .results-table th {
+    background: var(--color-bg-2);
+    padding: 6px 4px;
+    text-align: left;
+    font-weight: 600;
+    border-bottom: 2px solid var(--color-border-dark);
+    color: var(--color-text-dark);
+  }
+  .group-check .results-table td {
+    padding: 6px 4px;
+    border-bottom: 1px solid var(--color-border-light-2);
+    vertical-align: middle;
+  }
+  .group-check .results-table tr:last-child td {
+    border-bottom: none;
+  }
+  .group-check .player-info-banner {
+    background: var(--color-bg-1);
+    padding: 12px 15px;
+    border-radius: 4px;
+    border-left: 4px solid var(--color-border-highlight);
+    margin-bottom: 10px;
+    font-size: 0.9rem;
+  }
+  .group-check .player-info-banner p {
+    margin: 0;
+  }
+  .group-check .gm-controls {
+    display: flex;
+    gap: 10px;
+    justify-content: flex-end;
+    margin-top: 12px;
+    padding-top: 10px;
+    border-top: 1px solid var(--color-border-light);
+  }
+  .group-check .scrollable {
+    overflow-y: auto;
+  }
+  .group-check .scrollable::-webkit-scrollbar {
+    width: 5px;
+  }
+  .group-check .scrollable::-webkit-scrollbar-track {
+    background: var(--color-bg-1);
+  }
+  .group-check .scrollable::-webkit-scrollbar-thumb {
+    background: var(--color-border-dark);
+    border-radius: 4px;
+  }
+  .group-check .actor-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 16px;
+    margin-top: 12px;
+  }
+  .group-check .tarot-card {
+    position: relative;
+    background-size: cover;
+    background-position: center;
+    border-radius: 12px;
+    padding: 12px;
+    min-height: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: white;
+    text-shadow: 0 2px 6px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+    border: 2px solid var(--color-border-light);
+    transition: all 0.5s ease 0s;
+  }
+  .group-check .tarot-card .card-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.4);
+    border-radius: 10px;
+    pointer-events: none;
+  }
+  .group-check .tarot-card .card-content {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: space-between;
+  }
+  .group-check .tarot-card .card-content .card-name {
+    font-weight: bold;
+    font-size: 1.1em;
+    text-align: center;
+    padding: 4px 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  .group-check .tarot-card .card-content .card-result {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 8px 0;
+  }
+  .group-check .tarot-card .card-content .card-result .result-number {
+    font-size: 2em;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 4px 12px;
+    border-radius: 8px;
+  }
+  .group-check .tarot-card .card-content .card-result .result-table {
+    font-size: 1.2em;
+    font-weight: bold;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 4px 12px;
+    border-radius: 8px;
+    max-width: 100%;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    color: white;
+  }
+  .group-check .tarot-card .card-content .card-result .result-table .table-result-enriched {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .group-check .tarot-card .card-content .card-result .result-table .table-result-enriched .table-result-img {
+    max-width: 65px;
+    max-height: 65px;
+    width: auto;
+    height: auto;
+    border-radius: 4px;
+    display: block;
+    margin: 0 auto;
+  }
+  .group-check .tarot-card .card-content .card-result .result-table .table-result-enriched .content-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.7rem;
+    text-align: left;
+    overflow: hidden;
+    word-break: break-word;
+  }
+  .group-check .tarot-card .card-content .card-result .outcome-label {
+    font-size: 1.2em;
+    margin-top: 4px;
+    font-weight: bold;
+  }
+  .group-check .tarot-card .card-content .card-result .outcome-label.success {
+    color: #2a9212;
+  }
+  .group-check .tarot-card .card-content .card-result .outcome-label.sacrifice {
+    color: #f0c740;
+  }
+  .group-check .tarot-card .card-content .card-result .outcome-label.failure {
+    color: #ce0400;
+  }
+  .group-check .tarot-card .card-content .card-result .roll-button {
+    background: none;
+    border: 2px solid white;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: white;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 0 2px 4px black;
+  }
+  .group-check .tarot-card .card-content .card-result .roll-button:hover {
+    transform: scale(1.2);
+    box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+  }
+  .group-check .tarot-card .card-content .card-result .roll-button i {
+    font-size: 2em;
+  }
+  .group-check .tarot-card .card-content .card-result .roll-button span {
+    font-size: 0.7em;
+    margin-top: 2px;
+  }
+  .group-check .tarot-card .card-content .card-actions {
+    display: flex;
+    justify-content: space-around;
+    align-items: flex-end;
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .group-check .tarot-card .card-content .card-actions .reroll-button {
+    background: rgba(255, 255, 255, 0.15);
+    border: 1px solid rgba(227, 178, 178, 0.4);
+    border-radius: 20px;
+    padding: 2px 12px;
+    font-size: 0.8em;
+    color: white;
+    cursor: pointer;
+  }
+  .group-check .tarot-card .card-content .card-actions .reroll-button:hover {
+    background: rgba(255, 255, 255, 0.5);
+  }
+  .group-check .tarot-card .card-content .card-actions .hero-button {
+    background: none;
+    border: 2px solid gold;
+    border-radius: 50%;
+    width: 48px;
+    height: 48px;
+    font-size: 0.8em;
+    color: gold;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-shadow: 0 2px 4px black;
+    transition: all 0.2s ease;
+  }
+  .group-check .tarot-card .card-content .card-actions .hero-button:hover {
+    transform: scale(1.1);
+    box-shadow: 0 0 20px rgba(255, 215, 0, 0.3);
+  }
+  .group-check .tarot-card .card-content .card-actions .hero-button i {
+    font-size: 1.5em;
+  }
+  .group-check .tarot-card .card-content .card-actions .hero-button span {
+    font-size: 0.6em;
+  }
+  .group-check .tarot-card .card-content .card-actions .waiting-text {
+    color: rgba(255, 255, 255, 0.6);
+    font-style: italic;
+  }
+  @media (max-width: 700px) {
+    .group-check .dialog-layout {
+      flex-direction: column;
+    }
+    .group-check .config-section,
+    .group-check .actor-section {
+      flex: unset;
+      max-height: unset;
+      border-left: none;
+      padding-left: 0;
+    }
+  }
+  .group-check .hidden {
+    display: none !important;
+  }
+  .group-check .challenge-summary {
+    background: var(--color-bg-3);
+    padding: 8px 12px;
+    border-radius: 6px;
+    margin-bottom: 12px;
+    border-left: 4px solid var(--color-primary);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .group-check .challenge-summary h3 {
+    margin: 0 0 4px;
+  }
+  .group-check .challenge-summary p {
+    margin: 2px 0;
+  }
+  .group-check-chat-results .chat-results-table {
+    width: 100%;
+    table-layout: fixed;
+    border-collapse: collapse;
+    margin-top: 10px;
+  }
+  .group-check-chat-results .chat-results-table th,
+  .group-check-chat-results .chat-results-table td {
+    border: 1px solid #ccc;
+    padding: 6px 8px;
+    text-align: left;
+    vertical-align: middle;
+    word-break: break-word;
+  }
+  .group-check-chat-results .chat-results-table th {
+    background: var(--color-bg-2);
+    font-weight: 600;
+  }
+  .group-check-chat-results .chat-results-table th:first-child,
+  .group-check-chat-results .chat-results-table td:first-child {
+    width: 35%;
+  }
+  .group-check-chat-results .chat-results-table th:last-child,
+  .group-check-chat-results .chat-results-table td:last-child {
+    width: 35%;
+  }
+  .group-check-chat-results .chat-results-table td.result-number,
+  .group-check-chat-results .chat-results-table th:not(:first-child):not(:last-child) {
+    width: auto;
+  }
+  .group-check-chat-results .chat-results-table .result-number {
+    text-align: center;
+  }
+  .group-check-chat-results .chat-results-table .outcome-cell {
+    font-size: 13px;
+    text-align: center;
+    font-weight: bold;
+  }
+  .group-check-chat-results .chat-results-table .outcome-cell.success {
+    color: #18520b;
+  }
+  .group-check-chat-results .chat-results-table .outcome-cell.sacrifice {
+    color: #d4af37;
+  }
+  .group-check-chat-results .chat-results-table .outcome-cell.failure {
+    color: #aa0200;
+  }
+  .group-check-chat-results .chat-results-table .table-result-enriched {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .group-check-chat-results .chat-results-table .table-result-enriched .table-result-img {
+    max-width: 45px;
+    max-height: 45px;
+    width: auto;
+    height: auto;
+    border-radius: 4px;
+    display: block;
+    margin: 0 auto;
+  }
+  .group-check-chat-results .chat-results-table .table-result-enriched .content-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 0.7rem;
+    text-align: left;
+    overflow: hidden;
+    word-break: break-word;
+  }
+}
 @layer dice-oracles {
   .oracle-result {
     border: 1px solid #7c2da2;
@@ -2001,6 +2544,19 @@ input[type=radio]::after {
   height: 100px;
   margin-right: 10px;
   margin-top: 10px;
+}
+.sdm .sheet-header .profile-img .overlay-icon {
+  position: relative;
+  left: 50%;
+  top: -50%;
+  transform: translate(-50%, -50%);
+  font-size: 70px;
+  text-shadow: 0 0 3px rgba(0, 0, 0, 0.6);
+  pointer-events: none;
+}
+.sdm .sheet-header .profile-img .defeated-icon {
+  color: var(--sdm-c-white, #FFFFFF);
+  opacity: 0.9;
 }
 .sdm .sheet-header .caravan-profile-img {
   margin-right: 10px;

@@ -14,13 +14,19 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v6
+    - uses: actions/checkout@v7
 
+    # Load system manifest using jq (replaces ActionsTools/read-json-action)
     - name: Load system manifest
       id: manifest
-      uses: ActionsTools/read-json-action@main
-      with:
-        file_path: "./system.json"
+      run: |
+        echo "id=$(jq -r '.id' system.json)" >> $GITHUB_OUTPUT
+        echo "version=$(jq -r '.version' system.json)" >> $GITHUB_OUTPUT
+        echo "download=$(jq -r '.download' system.json)" >> $GITHUB_OUTPUT
+        echo "esmodules=$(jq -c '.esmodules' system.json)" >> $GITHUB_OUTPUT
+        echo "languages=$(jq -c '.languages' system.json)" >> $GITHUB_OUTPUT
+        echo "packs=$(jq -c '.packs' system.json)" >> $GITHUB_OUTPUT
+        echo "styles=$(jq -c '.styles' system.json)" >> $GITHUB_OUTPUT
 
     # Extract version embedded in the tag.
     - name: Extract Version From Tag
@@ -51,7 +57,6 @@ jobs:
         echo "RELEASE_DOWNLOAD_URL=https://github.com/${{ github.repository }}/releases/download/$TAG/$PACKAGE_ID-$VERSION.zip" >> $GITHUB_ENV
         echo "RELEASE_INSTALL_URL=https://github.com/${{ github.repository }}/releases/download/$TAG/$PACKAGE_TYPE.json" >> $GITHUB_ENV
 
-
     # Run some tests to make sure our `system.json` is correct
     # Exit before setting up node if not
     - name: Verify correct naming
@@ -80,20 +85,16 @@ jobs:
           exit 1
         fi
 
-
+    # Adjust manifest (replace TomaszKandula/variable-substitution)
     - name: Adjust manifest
-      uses: TomaszKandula/variable-substitution@v1.0.2
-      with:
-        files: "system.json"
-      env:
-        flags.hotReload: false
+      run: |
+        jq '.flags.hotReload = false' system.json > tmp.json && mv tmp.json system.json
 
     - name: Use Node.js ${{ env.NODE_VERSION }}
       uses: actions/setup-node@v6
       with:
         node-version: ${{ env.NODE_VERSION }}
         cache: 'npm'
-
 
     # `npm ci` is recommended:
     # https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
@@ -105,9 +106,10 @@ jobs:
       run: |
         npm run prepareRelease
 
+    # Determine archive contents (using updated actions/github-script@v7)
     - name: Determine archive contents
       id: archive
-      uses: actions/github-script@v6
+      uses: actions/github-script@v8
       env:
         ESMODULES: ${{ steps.manifest.outputs.esmodules }}
         LANGUAGES: ${{ steps.manifest.outputs.languages }}
@@ -149,7 +151,6 @@ jobs:
 
           return includes.join(" ");
 
-
     - name: Zip package
       run: zip ${{ env.ZIP_NAME }} -r  ${{ steps.archive.outputs.result }}
 
@@ -161,7 +162,6 @@ jobs:
       with:
         tag: ${{ env.TAG_NAME }}
         doNotFailIfNotFound: true
-
 
     - name: Update Release with Files
       id: create_version_release
