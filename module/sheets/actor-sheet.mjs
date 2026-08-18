@@ -1771,7 +1771,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const isShift = reverseShift !== !!event.shiftKey;
     const isCtrl = !!event.ctrlKey;
     let data = { modifier: '', selectedAbility: 'end' };
-    const selectedRollMode = this.actor.system.defeat.roll_mode || RollMode.NORMAL;
 
     if (this.actor.type !== ActorType.CHARACTER) return;
 

@@ -775,6 +775,7 @@
   "SDM.HeroDiceModeIncrease": "Increase (boost roll result)",
   "SDM.HeroDicePl": "hero dice",
   "SDM.HeroDiceSpend": "{actor} spent {quantity} {diceLabel}",
+  "SDM.Hidden": "Hidden",
   "SDM.HideDC": "Hide Target Number",
   "SDM.humans-of-the-pananthropy": " Humans of the Pananthropy",
   "SDM.HumanSupplies": "Human Supplies",
