@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## v0.20.0
+
+- Added support to Group Checks
+- Added Group Chase rolls to character sheets
+- Added Relife rolls to character sheets
+
 ## v0.19.1
 
 - Fixes some missing features in many compendium items
