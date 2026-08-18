@@ -300,6 +300,11 @@ export default class SDMRoll {
   #buildFlavorText(fixedModifiers, diceModifiers) {
     if (this.type === 'save') {
       let text = this.from;
+      const ward = this.actor.system?.ward;
+      if (ward) {
+        text += ` (${$l10n('TYPES.Item.ward').toLowerCase()} +${ward})`;
+      }
+
       return text;
     }
 

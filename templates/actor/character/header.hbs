@@ -401,7 +401,7 @@
             {{/if}}
           </div>
           {{#if (or @root.isEditMode (not @root.editable))}}
-          <div class='resources grid grid-2col'>
+          <div class='resources grid grid-3col'>
             <div
               class="ability grid-span-1 flexcol align-center"
               data-tooltip="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackMelee')}}">
@@ -409,7 +409,7 @@
                 <div>{{localize 'SDM.AttackMelee'}}</div>
               </div>
               {{#if @root.editable}}
-              <i class="fa-solid fa-gear rollable" data-action='updateAttack' data-attack="melee"></i>
+              <i class="fa-solid fa-gear rollable azure" data-action='updateAttack' data-attack="melee"></i>
               {{/if}}
             </div>
             <div
@@ -419,31 +419,7 @@
                 <div>{{localize 'SDM.AttackRanged'}}</div>
               </div>
                {{#if @root.editable}}
-              <i class="fa-solid fa-gear rollable" data-action='updateAttack' data-attack="ranged"></i>
-              {{/if}}
-            </div>
-            <div
-              class="ability grid-span-1 flexcol align-center"
-              data-tooltip="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackFantascience')}}">
-              <div class='resource-label'>
-                <div>{{localize 'SDM.AttackFantascience'}}</div>
-              </div>
-               {{#if @root.editable}}
-              <i
-                class="fa-solid fa-gear rollable"
-                data-action='updateAttack'
-                data-attack="fantascience">
-              </i>
-              {{/if}}
-            </div>
-            <div
-              class="ability grid-span-1 flexcol align-center"
-              data-tooltip="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackOldtech')}}">
-              <div class='resource-label'>
-                <div>{{localize 'SDM.AttackOldtech'}}</div>
-              </div>
-               {{#if @root.editable}}
-              <i class="fa-solid fa-gear rollable" data-action='updateAttack' data-attack="oldtech"></i>
+              <i class="fa-solid fa-gear rollable azure" data-action='updateAttack' data-attack="ranged"></i>
               {{/if}}
             </div>
             <div class="ability grid-span-1" data-tooltip="{{localize 'SDM.PowerCostHint'}}">
@@ -460,6 +436,31 @@
                 />
               </div>
             </div>
+            <div
+              class="ability grid-span-1 flexcol align-center"
+              data-tooltip="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackFantascience')}}">
+              <div class='resource-label'>
+                <div>{{localize 'SDM.AttackFantascience'}}</div>
+              </div>
+               {{#if @root.editable}}
+              <i
+                class="fa-solid fa-gear rollable azure"
+                data-action='updateAttack'
+                data-attack="fantascience">
+              </i>
+              {{/if}}
+            </div>
+            <div
+              class="ability grid-span-1 flexcol align-center"
+              data-tooltip="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackOldtech')}}">
+              <div class='resource-label'>
+                <div>{{localize 'SDM.AttackOldtech'}}</div>
+              </div>
+               {{#if @root.editable}}
+              <i class="fa-solid fa-gear rollable azure" data-action='updateAttack' data-attack="oldtech"></i>
+              {{/if}}
+            </div>
+
           </div>
           {{else}}
           <div class='resources grid grid-3col' style="margin-bottom: 0px;margin-top: 0px;">
@@ -931,7 +932,7 @@
             {{/if}}
           </div>
           {{#if (or @root.isEditMode (not @root.editable))}}
-          <div class='resources grid grid-2col'>
+          <div class='resources grid grid-3col'>
             <div
               class="ability grid-span-1 flexcol align-center"
               data-tooltip="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackMelee')}}">
@@ -939,7 +940,7 @@
                 <div>{{localize 'SDM.AttackMelee'}}</div>
               </div>
               {{#if @root.editable}}
-              <i class="fa-solid fa-gear rollable" data-action='updateAttack' data-attack="melee"></i>
+              <i class="fa-solid fa-gear rollable azure" data-action='updateAttack' data-attack="melee"></i>
               {{/if}}
             </div>
             <div
@@ -949,31 +950,7 @@
                 <div>{{localize 'SDM.AttackRanged'}}</div>
               </div>
                {{#if @root.editable}}
-              <i class="fa-solid fa-gear rollable" data-action='updateAttack' data-attack="ranged"></i>
-              {{/if}}
-            </div>
-            <div
-              class="ability grid-span-1 flexcol align-center"
-              data-tooltip="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackFantascience')}}">
-              <div class='resource-label'>
-                <div>{{localize 'SDM.AttackFantascience'}}</div>
-              </div>
-               {{#if @root.editable}}
-              <i
-                class="fa-solid fa-gear rollable"
-                data-action='updateAttack'
-                data-attack="fantascience">
-              </i>
-              {{/if}}
-            </div>
-            <div
-              class="ability grid-span-1 flexcol align-center"
-              data-tooltip="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackOldtech')}}">
-              <div class='resource-label'>
-                <div>{{localize 'SDM.AttackOldtech'}}</div>
-              </div>
-               {{#if @root.editable}}
-              <i class="fa-solid fa-gear rollable" data-action='updateAttack' data-attack="oldtech"></i>
+              <i class="fa-solid fa-gear rollable azure" data-action='updateAttack' data-attack="ranged"></i>
               {{/if}}
             </div>
             <div class="ability grid-span-1" data-tooltip="{{localize 'SDM.PowerCostHint'}}">
@@ -989,6 +966,30 @@
                   style="text-align:center;"
                 />
               </div>
+            </div>
+            <div
+              class="ability grid-span-1 flexcol align-center"
+              data-tooltip="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackFantascience')}}">
+              <div class='resource-label'>
+                <div>{{localize 'SDM.AttackFantascience'}}</div>
+              </div>
+               {{#if @root.editable}}
+              <i
+                class="fa-solid fa-gear rollable azure"
+                data-action='updateAttack'
+                data-attack="fantascience">
+              </i>
+              {{/if}}
+            </div>
+            <div
+              class="ability grid-span-1 flexcol align-center"
+              data-tooltip="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackOldtech')}}">
+              <div class='resource-label'>
+                <div>{{localize 'SDM.AttackOldtech'}}</div>
+              </div>
+               {{#if @root.editable}}
+              <i class="fa-solid fa-gear rollable azure" data-action='updateAttack' data-attack="oldtech"></i>
+              {{/if}}
             </div>
           </div>
           {{else}}

@@ -638,13 +638,13 @@ export class GroupCheckDialog extends HandlebarsApplicationMixin(ApplicationV2) 
     }
     content += `</table>`;
 
-    const rollMode = game.settings.get('core', 'rollMode');
+    const rollMode = game.settings.get('core', 'messageMode');
     let chatData = {
       content: `<div class="group-check-chat-results">${content}</div>`,
       speaker: ChatMessage.getSpeaker({ user: game.user }),
       flavor: `[${$l10n('SDM.GroupCheck')}]`
     };
-    chatData = ChatMessage.applyRollMode(chatData, rollMode);
+    chatData = ChatMessage.applyMode(chatData, rollMode);
     await ChatMessage.create(chatData);
     this.socket.sendClose();
     this.close();
