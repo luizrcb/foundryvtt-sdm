@@ -6,7 +6,11 @@
   "img": "icons/magic/defensive/armor-stone-skin.webp",
   "system": {
     "readied": false,
-    "categories": ["golem"],
+    "categories": [
+      "golem",
+      "resistance",
+      "stun"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

@@ -1,0 +1,7 @@
+<nav class="tabs-horizontal" data-group="primary">
+  {{#each tabs}}
+    <a data-tab="{{tab}}" class="{{#if active}}active{{/if}}">
+      <i class="{{icon}}"></i> {{localize label}}
+    </a>
+  {{/each}}
+</nav>

@@ -6,7 +6,13 @@
   "img": "icons/skills/trades/academics-study-reading-book.webp",
   "system": {
     "readied": false,
-    "categories": ["manager"],
+    "categories": [
+      "manager",
+      "social",
+      "communication",
+      "armor",
+      "mental"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

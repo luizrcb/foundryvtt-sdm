@@ -6,7 +6,11 @@
   "img": "icons/skills/social/trading-injustice-scale-gray.webp",
   "system": {
     "readied": false,
-    "categories": ["bourgeois"],
+    "categories": [
+      "bourgeois",
+      "social",
+      "protection"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

@@ -1,0 +1,20 @@
+<div class="compendium-browser">
+  <nav class="tabs-horizontal" data-group="primary">
+    {{#each tabs}}
+      <a data-tab="{{tab}}" class="{{#if active}}active{{/if}}">
+        <i class="{{icon}}"></i> {{localize label}}
+      </a>
+    {{/each}}
+  </nav>
+  <div class="browser-content">
+    <div id="compendium-browser-sidebar" class="cb-sidebar flexcol">
+      {{> systems/sdm/templates/compendium/browser-filters.hbs }}
+    </div>
+    <div class="results-panel">
+      {{> systems/sdm/templates/compendium/browser-results.hbs }}
+    </div>
+  </div>
+  <footer class="footer">
+    {{> footer }}
+  </footer>
+</div>

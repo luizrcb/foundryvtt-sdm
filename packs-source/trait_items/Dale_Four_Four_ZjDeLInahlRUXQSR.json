@@ -6,7 +6,12 @@
   "img": "icons/weapons/crossbows/handcrossbow-green.webp",
   "system": {
     "readied": false,
-    "categories": ["trickster"],
+    "categories": [
+      "trickster",
+      "stun",
+      "burn",
+      "desintegrate"
+    ],
     "status": "",
     "resources": "",
     "cost": 4000,
@@ -40,7 +45,7 @@
     "type": "weapon",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",
@@ -96,10 +101,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.10.0",
+    "systemVersion": "0.20.0",
     "createdTime": 1767011807028,
-    "modifiedTime": 1771465312354,
-    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+    "modifiedTime": 1787672613664,
+    "lastModifiedBy": "S0Z93vgE3OnovNXB"
   },
   "_key": "!items!ZjDeLInahlRUXQSR"
 }

@@ -6,7 +6,12 @@
   "img": "icons/creatures/magical/construct-stone-earth-gray.webp",
   "system": {
     "readied": false,
-    "categories": ["golem"],
+    "categories": [
+      "golem",
+      "ability",
+      "mod",
+      "mental"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

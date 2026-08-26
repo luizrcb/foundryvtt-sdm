@@ -1,3 +1,4 @@
+import CompendiumBrowser from '../app/compendium-browser.mjs';
 import { SdmItem } from '../documents/item.mjs';
 
 import { getNPCDataByLevel, MAX_MODIFIER } from '../helpers/actorUtils.mjs';
@@ -29,13 +30,13 @@ import { directResourceDiceRoll, healingHeroDice } from '../rolls/hero_dice/inde
 import SDMRoll, { sanitizeExpression } from '../rolls/sdmRoll.mjs';
 import {
   renderCorruptionResult,
+  renderDangerResult,
   renderDefeatResult,
+  renderGroupChaseResult,
   renderNPCMoraleResult,
   renderReactionResult,
-  renderSaveResult,
-  renderDangerResult,
-  renderGroupChaseResult,
-  renderRelifeResult
+  renderRelifeResult,
+  renderSaveResult
 } from '../rolls/ui/renderResults.mjs';
 import { DEFAULT_SAVE_VALUE, SAVING_THROW_BASE_FORMULA } from '../settings.mjs';
 
@@ -131,6 +132,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       rollSavingThrow: this._onRollSavingThrow,
       toggleEffect: this._toggleEffect,
       toggleMode: this._onToggleMode,
+      openCompendiumBrowser: this._onOpenCompendiumBrowser,
       toggleReadied: this._toggleReadied,
       transferItem: this._onTransferItem,
       updateAttack: this._onUpdateAttack,
@@ -520,21 +522,31 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
   async _renderFrame(options) {
     const frame = await super._renderFrame(options);
 
-    if (this.actor.type !== ActorType.CHARACTER) return frame;
+    const buttons = [];
 
-    const buttons = [
+    if (this.actor.type === ActorType.CHARACTER) {
+      buttons.push(
+        constructHTMLButton({
+          label: '',
+          classes: ['header-control', 'icon', 'fa-solid', 'fa-gear'],
+          dataset: { action: 'toggleMode', tooltip: 'SDM.ToggleModeLabel' }
+        }),
+
+        constructHTMLButton({
+          label: '',
+          classes: ['header-control', 'icon', 'fa-solid', 'fa-compress'],
+          dataset: { action: 'toggleCompact', tooltip: 'SDM.CompactMode' }
+        })
+      );
+    }
+
+    buttons.push(
       constructHTMLButton({
         label: '',
-        classes: ['header-control', 'icon', 'fa-solid', 'fa-gear'],
-        dataset: { action: 'toggleMode', tooltip: 'SDM.ToggleModeLabel' }
-      }),
-
-      constructHTMLButton({
-        label: '',
-        classes: ['header-control', 'icon', 'fa-solid', 'fa-compress'],
-        dataset: { action: 'toggleCompact', tooltip: 'SDM.CompactMode' }
+        classes: ['header-control', 'icon', 'fa-solid', 'fa-book-open-reader'],
+        dataset: { action: 'openCompendiumBrowser', tooltip: 'SDM.CompendiumBrowser.Title' }
       })
-    ];
+    );
 
     this.window.controls.after(...buttons);
 
@@ -1133,6 +1145,14 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     return this.render();
   }
 
+  static async _onOpenCompendiumBrowser(event, target) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.detail > 1) return; // Ignore repeated clicks
+
+    return new CompendiumBrowser().render(true);
+  }
+
   static async _onRerollCharacter(event, target) {
     event.preventDefault();
     event.stopPropagation();
@@ -1572,10 +1592,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     ];
 
     const relifeCosts = {
-      'body':  await TextEditor.enrichHTML($l10n('SDM.RelifeTypeBodyCost')),
-      'head':  await TextEditor.enrichHTML($l10n('SDM.RelifeTypeHeadCost')),
-      'jewel': await TextEditor.enrichHTML($l10n('SDM.RelifeTypeJewelCost')),
-      'shattered':  await TextEditor.enrichHTML($l10n('SDM.RelifeTypeShatteredCost')),
+      body: await TextEditor.enrichHTML($l10n('SDM.RelifeTypeBodyCost')),
+      head: await TextEditor.enrichHTML($l10n('SDM.RelifeTypeHeadCost')),
+      jewel: await TextEditor.enrichHTML($l10n('SDM.RelifeTypeJewelCost')),
+      shattered: await TextEditor.enrichHTML($l10n('SDM.RelifeTypeShatteredCost'))
     };
 
     let data = {};
@@ -1587,7 +1607,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         modal: true,
         position: {
           width: 500,
-          height: 340,
+          height: 340
         },
         content: await renderTemplate(templatePath('relife-roll-dialog'), {
           rollModes: CONFIG.SDM.rollMode,
@@ -1667,7 +1687,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     roll = await roll.evaluate();
 
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
-    const label = `[${$l10n('SDM.Relife')}] ${$l10n(`SDM.RelifeType${toPascalCase(relifeType)}`)}`
+    const label = `[${$l10n('SDM.Relife')}] ${$l10n(`SDM.RelifeType${toPascalCase(relifeType)}`)}`;
     await renderRelifeResult(
       { roll, label, cost: relifeCosts[relifeType], ability },
       { fromHeroDice: false, speaker, isCtrl }
@@ -1759,7 +1779,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
 
-    await renderGroupChaseResult({ roll, label: `[${$l10n('SDM.GroupChase')}]` }, { fromHeroDice: false, speaker, isCtrl });
+    await renderGroupChaseResult(
+      { roll, label: `[${$l10n('SDM.GroupChase')}]` },
+      { fromHeroDice: false, speaker, isCtrl }
+    );
   }
 
   static async _onDefeatRoll(event, target) {
@@ -1903,7 +1926,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     if (!isShift) {
       rollOptions = await foundry.applications.api.DialogV2.wait({
         window: {
-          title,
+          title
         },
         modal: true,
         content: template,

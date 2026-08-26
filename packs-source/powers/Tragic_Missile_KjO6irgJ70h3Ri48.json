@@ -74,7 +74,12 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": "human"
+    "supply_type": "",
+    "categories": [
+      "attack",
+      "damage",
+      "mental"
+    ]
   },
   "effects": [],
   "sort": 0,

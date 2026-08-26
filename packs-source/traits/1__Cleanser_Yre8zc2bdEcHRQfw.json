@@ -6,7 +6,11 @@
   "img": "icons/magic/air/air-wave-gust-blue.webp",
   "system": {
     "readied": false,
-    "categories": ["weapon"],
+    "categories": [
+      "weapon",
+      "healing",
+      "protection"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

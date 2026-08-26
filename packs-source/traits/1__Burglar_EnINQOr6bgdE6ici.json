@@ -6,7 +6,12 @@
   "img": "icons/environment/traps/cage-grey-steel.webp",
   "system": {
     "readied": false,
-    "categories": ["bearer"],
+    "categories": [
+      "bearer",
+      "security",
+      "stealth",
+      "surveillance"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

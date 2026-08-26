@@ -6,7 +6,11 @@
   "img": "icons/creatures/abilities/paw-glowing-yellow.webp",
   "system": {
     "readied": false,
-    "categories": ["yellowlander"],
+    "categories": [
+      "yellowlander",
+      "resistance",
+      "poison"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

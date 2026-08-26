@@ -6,7 +6,13 @@
   "img": "icons/equipment/head/crown-gold-red.webp",
   "system": {
     "readied": false,
-    "categories": ["noble"],
+    "categories": [
+      "noble",
+      "weapon",
+      "armor",
+      "social",
+      "magielectronics"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

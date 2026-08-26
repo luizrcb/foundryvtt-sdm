@@ -6,7 +6,11 @@
   "img": "icons/tools/hand/wrench-iron-grey.webp",
   "system": {
     "readied": false,
-    "categories": ["servant"],
+    "categories": [
+      "servant",
+      "repair",
+      "security"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

@@ -6,7 +6,13 @@
   "img": "icons/magic/acid/dissolve-vomit-green-brown.webp",
   "system": {
     "readied": false,
-    "categories": ["tourist"],
+    "categories": [
+      "tourist",
+      "healing",
+      "resistance",
+      "poison",
+      "mental"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

@@ -6,7 +6,11 @@
   "img": "icons/skills/trades/academics-book-study-purple.webp",
   "system": {
     "readied": false,
-    "categories": ["tourist"],
+    "categories": [
+      "tourist",
+      "daemon",
+      "mental"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

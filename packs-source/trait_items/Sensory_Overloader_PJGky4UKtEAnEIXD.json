@@ -6,7 +6,10 @@
   "img": "icons/magic/light/explosion-star-large-teal.webp",
   "system": {
     "readied": false,
-    "categories": ["manager"],
+    "categories": [
+      "manager",
+      "blinding"
+    ],
     "status": "",
     "resources": "",
     "cost": 650,
@@ -40,7 +43,7 @@
     "type": "weapon",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",
@@ -96,10 +99,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.10.0",
+    "systemVersion": "0.20.0",
     "createdTime": 1767011791312,
-    "modifiedTime": 1771464102531,
-    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+    "modifiedTime": 1787666877725,
+    "lastModifiedBy": "S0Z93vgE3OnovNXB"
   },
   "_key": "!items!PJGky4UKtEAnEIXD"
 }

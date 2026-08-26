@@ -6,7 +6,10 @@
   "img": "icons/commodities/treasure/token-silver-blue.webp",
   "system": {
     "readied": false,
-    "categories": ["noömagus"],
+    "categories": [
+      "noömagus",
+      "recharge"
+    ],
     "status": "",
     "resources": "",
     "cost": 200,
@@ -42,7 +45,7 @@
     "type": "weapon",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",
@@ -101,10 +104,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.18.2",
+    "systemVersion": "0.20.0",
     "createdTime": 1767011794132,
-    "modifiedTime": 1784038755716,
-    "lastModifiedBy": "82Lz74CglpwcPzB4"
+    "modifiedTime": 1787667235448,
+    "lastModifiedBy": "S0Z93vgE3OnovNXB"
   },
   "_key": "!items!IS0kB7Bx4uC4lMPd"
 }

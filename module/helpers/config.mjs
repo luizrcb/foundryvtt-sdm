@@ -431,6 +431,7 @@ SDM.defeatAbilities = {
 };
 
 SDM.baseFeatures = [
+  { value: 'album', label: 'SDM.ItemFeature.album' },
   { value: 'area', label: 'SDM.ItemFeature.area' },
   { value: 'charges', label: 'SDM.ItemFeature.charges' },
   { value: 'replenish', label: 'SDM.ItemFeature.replenish' },
@@ -531,4 +532,107 @@ SDM.weaponFeatures = [
   { value: 'versatile', label: 'SDM.ItemFeature.versatile' },
   { value: 'vital', label: 'SDM.ItemFeature.vital' },
   { value: 'vorpal', label: 'SDM.ItemFeature.vorpal' }
+];
+
+const allFeatures = [
+  ...SDM.baseFeatures,
+  ...SDM.wardFeatures,
+  ...SDM.armorFeatures,
+  ...SDM.weaponFeatures
+];
+
+const uniqueFeatureValues = new Set(allFeatures.map(f => f.value));
+
+SDM.features = [...uniqueFeatureValues].sort();
+
+SDM.paths = [
+  'wizard',
+  'traveler',
+  'fighter',
+  'barbarian',
+  'bluelander',
+  'bourgeois',
+  'golem',
+  'greenlander',
+  'holy_fool',
+  'manager',
+  'noble',
+  'noömagus',
+  'orangelander',
+  'purplelander',
+  'redlander',
+  'scion',
+  'servant',
+  'skeleton',
+  'soldier',
+  'tourist',
+  'trickster',
+  'weapon',
+  'bearer',
+  'yellowlander'
+];
+
+SDM.categories = [
+  'ability',
+  'affliction',
+  'animal',
+  'appearance',
+  'armor',
+  'attack',
+  'blinding',
+  'burden',
+  'burn',
+  'communication',
+  'confusion',
+  'corruption',
+  'daemon',
+  'damage',
+  'defeat',
+  'defense',
+  'desintegrate',
+  'disguise',
+  'drink',
+  'drug',
+  'food',
+  'ghost',
+  'glowing',
+  'healing',
+  'illusion',
+  'imobilization',
+  'invisibility',
+  'level',
+  'levitation',
+  'light',
+  'machine',
+  'magielectronics',
+  'mental',
+  'mobility',
+  'mod',
+  'nightmare',
+  'personality',
+  'pet',
+  'petrification',
+  'poison',
+  'power',
+  'protection',
+  'recharge',
+  'regeneration',
+  'relife',
+  'repair',
+  'resistance',
+  'rest',
+  'save',
+  'security',
+  'sleep',
+  'social',
+  'stealth',
+  'stun',
+  'surveillance',
+  'tracking',
+  'travel',
+  'undead',
+  'vampire',
+  'vehicle',
+  'vision',
+  'vome'
 ];

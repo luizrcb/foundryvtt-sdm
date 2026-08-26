@@ -6,7 +6,9 @@
   "img": "icons/equipment/hand/glove-simple-leather-blue.webp",
   "system": {
     "readied": false,
-    "categories": ["scion"],
+    "categories": [
+      "scion"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

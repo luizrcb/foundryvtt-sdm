@@ -6,7 +6,10 @@
   "img": "icons/magic/control/debuff-chains-orb-movement-blue.webp",
   "system": {
     "readied": false,
-    "categories": ["noömagus"],
+    "categories": [
+      "noömagus",
+      "power"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

@@ -6,7 +6,13 @@
   "img": "icons/commodities/tech/plug.webp",
   "system": {
     "readied": false,
-    "categories": ["greenlander"],
+    "categories": [
+      "greenlander",
+      "machine",
+      "vehicle",
+      "weapon",
+      "magielectronics"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

@@ -6,7 +6,12 @@
   "img": "icons/magic/nature/thorns-hand-glow-green.webp",
   "system": {
     "readied": false,
-    "categories": ["yellowlander"],
+    "categories": [
+      "yellowlander",
+      "defense",
+      "armor",
+      "attack"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

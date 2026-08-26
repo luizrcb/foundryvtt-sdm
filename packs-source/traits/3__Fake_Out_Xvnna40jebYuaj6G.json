@@ -6,7 +6,10 @@
   "img": "icons/magic/unholy/strike-body-life-soul-green.webp",
   "system": {
     "readied": false,
-    "categories": ["trickster"],
+    "categories": [
+      "trickster",
+      "defense"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

@@ -6,7 +6,11 @@
   "img": "icons/consumables/mushrooms/campanulate-bell-shiny-blue.webp",
   "system": {
     "readied": false,
-    "categories": ["bluelander"],
+    "categories": [
+      "bluelander",
+      "communication",
+      "healing"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

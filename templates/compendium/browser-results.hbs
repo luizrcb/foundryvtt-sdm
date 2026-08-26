@@ -1,0 +1,15 @@
+{{#if results.length}}
+  <div class="item-grid">
+    {{#each results}}
+      {{> "systems/sdm/templates/compendium/browser-entry.hbs" .}}
+    {{/each}}
+  </div>
+{{else}}
+  <div class="empty-results">
+    {{#if emptyMessage}}
+      {{localize emptyMessage}}
+    {{else}}
+      {{localize 'SDM.CompendiumBrowser.NoResults'}}
+    {{/if}}
+  </div>
+{{/if}}

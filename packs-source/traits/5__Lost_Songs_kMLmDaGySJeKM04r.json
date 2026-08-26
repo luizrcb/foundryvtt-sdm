@@ -6,7 +6,12 @@
   "img": "icons/skills/trades/music-singing-voice-blue.webp",
   "system": {
     "readied": false,
-    "categories": ["barbarian"],
+    "categories": [
+      "barbarian",
+      "social",
+      "mental",
+      "ability"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

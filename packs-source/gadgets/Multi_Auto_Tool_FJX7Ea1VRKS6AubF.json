@@ -75,10 +75,13 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "replenish": {
       "value": 2
-    }
+    },
+    "categories": [
+      "security"
+    ]
   },
   "effects": [],
   "sort": 0,
@@ -93,10 +96,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.19.0",
+    "systemVersion": "0.20.0",
     "createdTime": 1767014140961,
-    "modifiedTime": 1785411397562,
-    "lastModifiedBy": "82Lz74CglpwcPzB4"
+    "modifiedTime": 1787608035802,
+    "lastModifiedBy": "S0Z93vgE3OnovNXB"
   },
   "_key": "!items!FJX7Ea1VRKS6AubF"
 }

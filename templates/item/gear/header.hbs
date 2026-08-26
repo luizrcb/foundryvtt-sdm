@@ -228,7 +228,7 @@
         <div class= "resource">
           <label class='resource-label '>{{localize 'SDM.SupplyType'}}</label>
           <select id='supply_type' name='system.supply_type' class="resource-content">
-            {{selectOptions config.SupplyType localize=true selected=system.supply_type sort=true}}
+            {{selectOptions config.SupplyType localize=true selected=system.supply_type sort=true blank=""}}
           </select>
         </div>
         {{/if}}

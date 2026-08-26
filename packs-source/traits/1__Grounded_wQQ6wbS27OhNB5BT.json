@@ -6,7 +6,12 @@
   "img": "icons/magic/holy/yin-yang-balance-symbol.webp",
   "system": {
     "readied": false,
-    "categories": ["servant"],
+    "categories": [
+      "servant",
+      "resistance",
+      "mental",
+      "rest"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

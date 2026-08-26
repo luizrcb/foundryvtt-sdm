@@ -12,12 +12,21 @@
             <span>{{ item.name }}</span>
             <span class="item-cost">{{costSubtitle}} </span>
           </div>
-          <div class="subtitle flex flex-between">
+          <div class="subtitle flex flex-center flex-between">
             <span>
               {{#if (eq item.system.type 'power')}}
                 {{localize 'SDM.PowerLevel'}}: {{item.system.power.level}}
               {{else}}
                 {{localize (concat 'TYPES.Item.' type)}}
+              {{/if}}
+              {{#if (or (eq item.system.type 'weapon') (has item.system.features 'weapon'))}}
+                <i class="fas fa-sword" data-tooltip="SDM.Damage"></i> <span data-tooltip="SDM.Damage">{{item.system.weapon.damage.base}}{{#if item.system.weapon.versatile}}/{{item.system.weapon.damage.versatile}}{{/if}}{{#if item.system.weapon.range}} ({{localize (lookup config.rangeType item.system.weapon.range)}}){{/if}}</span>
+              {{/if}}
+              {{#if (or (eq item.system.type 'armor') (has item.system.features 'armor'))}}
+                <i class="fas fa-shield-alt" data-tooltip="SDM.FieldArmor"></i><span data-tooltip="SDM.FieldArmor">{{item.system.armor.value}}</span>
+              {{/if}}
+              {{#if (eq item.system.type 'ward')}}
+                <i class="fas fa-eye" data-tooltip="TYPES.Item.ward"></i><span data-tooltip="TYPES.Item.ward">{{item.system.ward.value}}</span>
               {{/if}}
             </span>
             <span class="item-weight">

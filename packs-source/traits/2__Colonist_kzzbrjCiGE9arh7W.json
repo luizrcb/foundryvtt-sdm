@@ -6,7 +6,9 @@
   "img": "icons/creatures/invertebrates/ant-strength-green.webp",
   "system": {
     "readied": false,
-    "categories": ["purplelander"],
+    "categories": [
+      "purplelander"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

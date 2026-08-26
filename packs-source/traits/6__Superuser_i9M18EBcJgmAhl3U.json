@@ -6,7 +6,12 @@
   "img": "icons/magic/holy/barrier-shield-winged-blue.webp",
   "system": {
     "readied": false,
-    "categories": ["scion"],
+    "categories": [
+      "scion",
+      "machine",
+      "magielectronics",
+      "power"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

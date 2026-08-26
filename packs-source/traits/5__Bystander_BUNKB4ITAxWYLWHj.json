@@ -6,7 +6,12 @@
   "img": "icons/creatures/mammals/livestock-sheep-green.webp",
   "system": {
     "readied": false,
-    "categories": ["trickster"],
+    "categories": [
+      "trickster",
+      "defense",
+      "protection",
+      "stealth"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

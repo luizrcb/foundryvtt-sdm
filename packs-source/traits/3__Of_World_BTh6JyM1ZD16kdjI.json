@@ -6,7 +6,11 @@
   "img": "icons/magic/water/elemental-water.webp",
   "system": {
     "readied": false,
-    "categories": ["scion"],
+    "categories": [
+      "scion",
+      "travel",
+      "mobility"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

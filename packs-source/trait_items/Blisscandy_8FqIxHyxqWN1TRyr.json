@@ -6,7 +6,10 @@
   "img": "icons/magic/control/buff-flight-wings-runes-purple-orange.webp",
   "system": {
     "readied": false,
-    "categories": ["bearer"],
+    "categories": [
+      "bearer",
+      "ability"
+    ],
     "status": "",
     "resources": "",
     "cost": 150,
@@ -40,7 +43,7 @@
     "type": "ward",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",
@@ -144,10 +147,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.10.0",
+    "systemVersion": "0.20.0",
     "createdTime": 1767011808302,
-    "modifiedTime": 1771465401023,
-    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+    "modifiedTime": 1787672859089,
+    "lastModifiedBy": "S0Z93vgE3OnovNXB"
   },
   "_key": "!items!8FqIxHyxqWN1TRyr"
 }

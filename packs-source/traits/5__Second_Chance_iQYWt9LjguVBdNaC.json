@@ -6,7 +6,11 @@
   "img": "icons/magic/unholy/strike-body-life-soul-purple.webp",
   "system": {
     "readied": false,
-    "categories": ["fighter"],
+    "categories": [
+      "fighter",
+      "relife",
+      "resistance"
+    ],
     "cost": 0,
     "cost_frequency": "",
     "description": "<p>When you would fall to 0 life, you fall to 1 life instead. <strong>Once.</strong> </p><p>Recharge second chance with a hero die.</p>",

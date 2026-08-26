@@ -6,7 +6,9 @@
   "img": "icons/weapons/wands/wand-crook-yellow.webp",
   "system": {
     "readied": false,
-    "categories": ["soldier"],
+    "categories": [
+      "soldier"
+    ],
     "status": "",
     "resources": "",
     "cost": 100,
@@ -40,7 +42,7 @@
     "type": "weapon",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",

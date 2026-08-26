@@ -6,7 +6,9 @@
   "img": "icons/skills/movement/figure-running-gray.webp",
   "system": {
     "readied": false,
-    "categories": ["noble"],
+    "categories": [
+      "noble"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

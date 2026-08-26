@@ -6,7 +6,11 @@
   "img": "icons/containers/bags/pack-leather-stitched-tan.webp",
   "system": {
     "readied": false,
-    "categories": ["tourist"],
+    "categories": [
+      "tourist",
+      "travel",
+      "security"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

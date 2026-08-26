@@ -6,7 +6,11 @@
   "img": "icons/creatures/mammals/wolf-shadow-black.webp",
   "system": {
     "readied": false,
-    "categories": ["barbarian"],
+    "categories": [
+      "barbarian",
+      "save",
+      "resistance"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

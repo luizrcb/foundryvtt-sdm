@@ -6,7 +6,11 @@
   "img": "icons/magic/life/heart-hand-gold-green.webp",
   "system": {
     "readied": false,
-    "categories": ["noble"],
+    "categories": [
+      "noble",
+      "power",
+      "magielectronics"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

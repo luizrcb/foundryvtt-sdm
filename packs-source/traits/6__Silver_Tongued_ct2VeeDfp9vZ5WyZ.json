@@ -6,7 +6,11 @@
   "img": "icons/commodities/biological/tongue-blue.webp",
   "system": {
     "readied": false,
-    "categories": ["trickster"],
+    "categories": [
+      "trickster",
+      "social",
+      "communication"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

@@ -6,7 +6,11 @@
   "img": "icons/magic/death/undead-bird-skeleton-purple.webp",
   "system": {
     "readied": false,
-    "categories": ["bluelander"],
+    "categories": [
+      "bluelander",
+      "undead",
+      "pet"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

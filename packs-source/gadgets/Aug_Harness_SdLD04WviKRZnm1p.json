@@ -75,10 +75,14 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "replenish": {
       "value": 5
-    }
+    },
+    "categories": [
+      "ability",
+      "magielectronics"
+    ]
   },
   "effects": [
     {
@@ -137,10 +141,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.19.0",
+    "systemVersion": "0.20.0",
     "createdTime": 1767014140961,
-    "modifiedTime": 1785411337793,
-    "lastModifiedBy": "82Lz74CglpwcPzB4"
+    "modifiedTime": 1787607809636,
+    "lastModifiedBy": "S0Z93vgE3OnovNXB"
   },
   "_key": "!items!SdLD04WviKRZnm1p"
 }

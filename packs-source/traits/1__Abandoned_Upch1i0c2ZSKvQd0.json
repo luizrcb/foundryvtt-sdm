@@ -6,7 +6,12 @@
   "img": "icons/magic/death/projectile-skull-flaming-yellow.webp",
   "system": {
     "readied": false,
-    "categories": ["holy_fool"],
+    "categories": [
+      "holy_fool",
+      "communication",
+      "ghost",
+      "undead"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

@@ -6,7 +6,9 @@
   "img": "icons/commodities/currency/coins-assorted-crown-blue.webp",
   "system": {
     "readied": false,
-    "categories": ["bourgeois"],
+    "categories": [
+      "bourgeois"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

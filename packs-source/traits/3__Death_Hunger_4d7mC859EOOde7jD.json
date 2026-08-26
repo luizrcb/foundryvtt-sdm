@@ -6,7 +6,10 @@
   "img": "icons/creatures/abilities/mouth-teeth-long-red.webp",
   "system": {
     "readied": false,
-    "categories": ["weapon"],
+    "categories": [
+      "weapon",
+      "attack"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

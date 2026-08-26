@@ -1,0 +1,27 @@
+<div class="search-bar">
+  <search>
+    <input type="text" value="{{searchValue}}" placeholder="{{localize 'SDM.CompendiumBrowser.SearchPlaceholder'}}" data-action="search">
+    <button type="button" data-action="clearName" {{#unless searchValue}}hidden{{/unless}}>
+      <i class="fas fa-times"></i>
+    </button>
+    <button type="button" data-action="submitSearch" class="search-button">
+      <i class="fas fa-search"></i>
+    </button>
+  </search>
+</div>
+<div class="filter-groups">
+  {{#each filterGroups}}
+    <div class="filter-group" data-group="{{groupKey}}">
+      <div class="group-header" data-action="toggleGroup">
+        <i class="fas fa-chevron-{{#if expanded}}down{{else}}right{{/if}}"></i>
+        <span>{{localize groupLabel}}</span>
+        <span class="badge">{{count}}</span>
+      </div>
+      <div class="group-content {{#unless expanded}}collapsed{{/unless}}">
+        {{#each filters}}
+          {{> "systems/sdm/templates/compendium/browser-filter-set.hbs" .}}
+        {{/each}}
+      </div>
+    </div>
+  {{/each}}
+</div>

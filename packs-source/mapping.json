@@ -1,0 +1,942 @@
+{
+  "nwZH4E5a6yWDNMaE": {
+    "name": "Access Noötree",
+    "categories": ["communication", "mental", "vision"]
+  },
+  "R29KoaPbHrCJ10QT": {
+    "name": "Akaula's Sacrificial Hero",
+    "categories": ["daemon", "defeat", "burn"]
+  },
+  "jJDkCPAUq9BSYTv5": {
+    "name": "Alter Self",
+    "categories": ["appearance", "disguise"]
+  },
+  "uuzpRJniKhBhLkxF": {
+    "name": "Animate Corpse",
+    "categories": ["undead", "pet"]
+  },
+  "lfMNdFE6y6gW6PKb": {
+    "name": "Anne Astec",
+    "categories": ["healing", "burden"]
+  },
+  "QttLgsPwwn8H5Ty8": {
+    "name": "Anti-Babylon",
+    "categories": ["communication"]
+  },
+  "DbJnTKP2PxQnJHSa": {
+    "name": "Better Pastures",
+    "categories": ["travel", "tracking"]
+  },
+  "zne8ZzbDf4m1Nqyf": {
+    "name": "Big Wish",
+    "categories": ["daemon", "power"]
+  },
+  "Yra8Qz5WFY8wVWud": {
+    "name": "Blue Lotus",
+    "categories": ["drug", "sleep"]
+  },
+  "iodUpfHdxkIR6x31": {
+    "name": "Burden Share",
+    "categories": ["burden"]
+  },
+  "SJVVY9VM1HAvKt8c": {
+    "name": "Burdenbeast Modification",
+    "categories": ["burden", "mod"]
+  },
+  "V601Cc4psvs9WhZz": {
+    "name": "Can Trip",
+    "categories": ["attack", "imobilization"]
+  },
+  "oNNGKX0DJY2N4Lah": {
+    "name": "Cerebral Purge",
+    "categories": ["drug", "mental", "damage"]
+  },
+  "24rPNndkgQFXN4rD": {
+    "name": "Counterfire",
+    "categories": ["defense"]
+  },
+  "7g7FCHk4COB7CGx1": {
+    "name": "Dampen Mass",
+    "categories": ["burden"]
+  },
+  "kxK7CBdxAeAXM8jJ": {
+    "name": "Dancing In The Hail",
+    "categories": ["defense"]
+  },
+  "2yL6lTBGTRVNXexN": {
+    "name": "Depleted Heavy Metal Rain",
+    "categories": ["attack", "damage"]
+  },
+  "JTUZMeEhOUFHYO26": {
+    "name": "Dissolution and Resolution of the Spirit",
+    "categories": ["mental", "healing"]
+  },
+  "EW904QJqp5L8OcJe": {
+    "name": "Dryland Sculpture",
+    "categories": ["protection", "mod"]
+  },
+  "X4WWBPEB9fl6qwKm": {
+    "name": "Egregious Topology",
+    "categories": ["mobility"]
+  },
+  "p90OPNjPUWxnNJvO": {
+    "name": "Entropic Reversal",
+    "categories": ["repair", "damage"]
+  },
+  "DbP7DVD8jzBTP5OB": {
+    "name": "Essence Sift",
+    "categories": ["ability"]
+  },
+  "uKxsMjYhb8SMkld2": {
+    "name": "Eyes of Akaula",
+    "categories": ["vision", "ghost"]
+  },
+  "9Zqi6pWhTob2LkN7": {
+    "name": "Eyes of the Arrow",
+    "categories": ["vision", "surveillance"]
+  },
+  "0W3XgwXtSPYtEaq0": {
+    "name": "Floating Disc",
+    "categories": ["defense", "levitation"]
+  },
+  "0g37ZeE8yxwZ0T5m": {
+    "name": "Gem Bomb",
+    "categories": ["damage", "burn"]
+  },
+  "ouzJeCx2u3VeulNP": {
+    "name": "Green Haven",
+    "categories": ["protection", "defense"]
+  },
+  "GhxxJrR0x38IbSbJ": {
+    "name": "Highway Cruiser",
+    "categories": ["vehicle", "daemon", "travel"]
+  },
+  "xOXJly1gLYLRBljs": {
+    "name": "Hlod Person",
+    "categories": ["petrification", "imobilization"]
+  },
+  "PnMwDe4ep5WtjPNg": {
+    "name": "Imbue Edge",
+    "categories": ["attack", "damage", "ghost"]
+  },
+  "LmfGUcUlFI3ruLpw": {
+    "name": "Invoke Ub Dragon",
+    "categories": ["daemon", "damage"]
+  },
+  "Xpd3xl4YDD2bzOZn": {
+    "name": "Knock / Lock",
+    "categories": ["security"]
+  },
+  "yUMiVaBgI7MiFPf2": {
+    "name": "Linked Portals",
+    "categories": ["travel", "mobility"]
+  },
+  "SSV9dL0NcCljWp25": {
+    "name": "Magic Jar",
+    "categories": ["mental"]
+  },
+  "ppsHg8bwEKvhGCxK": {
+    "name": "Metempsychosis",
+    "categories": ["relife", "mental"]
+  },
+  "ZO05stEklZz8lb67": {
+    "name": "Mother of Bullets",
+    "categories": ["weapon", "recharge"]
+  },
+  "4OY7e1L0eOVOz6Dy": {
+    "name": "Motor Fixative",
+    "categories": ["ability", "mental"]
+  },
+  "rN3Yqwt6oPs2Wyoi": {
+    "name": "Nihil Est!",
+    "categories": ["defeat", "damage"]
+  },
+  "rGNmqWbm0QjoiUeq": {
+    "name": "Objective Telekinesis",
+    "categories": ["mobility"]
+  },
+  "QKhneN81qMD8wFkA": {
+    "name": "Open Person",
+    "categories": ["healing", "mod"]
+  },
+  "1AFmtHEZe1OqJodX": {
+    "name": "Orange Dream",
+    "categories": ["social", "mental"]
+  },
+  "bwQeiUJJ1VuqeZbq": {
+    "name": "Parasoma Transference",
+    "categories": ["healing"]
+  },
+  "ClEi0dTQCpQDe16e": {
+    "name": "Primary Desenescence",
+    "categories": ["healing", "regeneration"]
+  },
+  "IzdVLwOgpy73j4Ow": {
+    "name": "Process Food",
+    "categories": ["food"]
+  },
+  "GJVO6xbLDmFdCGWQ": {
+    "name": "Purple Memories",
+    "categories": ["mental", "social"]
+  },
+  "EQneCAZWYdltSFXS": {
+    "name": "Pyreball",
+    "categories": ["damage", "burn"]
+  },
+  "3Kfirgv7rYO9tWko": {
+    "name": "Raise Dead",
+    "categories": ["undead", "relife"]
+  },
+  "XVwqxKEEzRIK2ZkH": {
+    "name": "Real-time Rebuild",
+    "categories": ["healing", "regeneration"]
+  },
+  "VKCRUwI9rE26Yw5J": {
+    "name": "Reason's Harvest",
+    "categories": ["mental", "ability"]
+  },
+  "TMlq4lYHHCZ20DbR": {
+    "name": "Recall Soul",
+    "categories": ["ghost", "undead"]
+  },
+  "jBq6pmWb0wAq2KR1": {
+    "name": "Red Mist",
+    "categories": ["mental", "social"]
+  },
+  "mo9Ixs345yoUhYlo": {
+    "name": "Restorative Slumber",
+    "categories": ["healing", "rest", "sleep"]
+  },
+  "fsVkHnunMrz6XIoQ": {
+    "name": "Ring of Lead",
+    "categories": ["attack", "weapon"]
+  },
+  "DPdg0Tm3HLKkRFHY": {
+    "name": "Roadfinder",
+    "categories": ["travel", "tracking"]
+  },
+  "gDiuvAyAdiIRKv2a": {
+    "name": "Roadmaker",
+    "categories": ["travel", "mod"]
+  },
+  "9dnTnoj3JQtDQCOH": {
+    "name": "Speak With Husk",
+    "categories": ["communication", "ghost", "undead"]
+  },
+  "gNi0oSZHtAPdreCt": {
+    "name": "Stoyevod's Irreducible Crystallization of the Ego Complex",
+    "categories": ["relife", "corruption"]
+  },
+  "BPC72mUt9cuKalUl": {
+    "name": "Supplicate the Rotting God",
+    "categories": ["relife", "corruption"]
+  },
+  "qryBY1xnpWKC9NSk": {
+    "name": "Suspended in the Light",
+    "categories": ["attack", "light", "imobilization"]
+  },
+  "5Dhg8C7RPbr07jwB": {
+    "name": "Suspended Insight",
+    "categories": ["mental", "ability"]
+  },
+  "QzVNCdU1oJWEKwud": {
+    "name": "Thornstone Obelisk",
+    "categories": ["damage", "defense"]
+  },
+  "AgT3GR63o3raQEgv": {
+    "name": "Three-Point Immobility",
+    "categories": ["imobilization"]
+  },
+  "6HRDOy73RHB0KXSI": {
+    "name": "Toxin Render",
+    "categories": ["poison", "vehicle"]
+  },
+  "KjO6irgJ70h3Ri48": {
+    "name": "Tragic Missile",
+    "categories": ["attack", "damage", "mental"]
+  },
+  "IxZ8ITgfCb3FB4W8": {
+    "name": "Weapon Trait",
+    "categories": []
+  },
+  "0UpweATkobFSr7oG": {
+    "name": "Wing And Prayer",
+    "categories": ["repair", "vehicle"]
+  },
+  "V1EAZIPbEViHvYjZ": {
+    "name": "Yellow Cloud",
+    "categories": ["invisibility", "stealth"]
+  },
+  "0wTjrRzvs81m5294": {
+    "name": "Yellow Foresight",
+    "categories": ["vision", "surveillance"]
+  },
+  "93Cksho4qTqgiUKW": {
+    "name": "0. Barbarian",
+    "categories": ["barbarian", "weapon", "armor", "stealth"]
+  },
+  "n8ddBk3aouOx0Pef": {
+    "name": "0. Bluelander",
+    "categories": ["bluelander", "vehicle", "weapon", "corruption", "mobility"]
+  },
+  "aXpwuI66fwsHwGJ1": {
+    "name": "0. Bourgeois",
+    "categories": ["bourgeois", "weapon", "social", "communication"]
+  },
+  "9HoyHK566sXyATK5": {
+    "name": "0. Fighter",
+    "categories": ["fighter", "weapon", "armor", "defense"]
+  },
+  "J8HVnIantrAFyU1v": {
+    "name": "0. Golem",
+    "categories": ["golem", "ability", "mod", "mental"]
+  },
+  "nBawOu3roou75RV9": {
+    "name": "0. Greenlander",
+    "categories": ["greenlander", "machine", "vehicle", "weapon", "magielectronics"]
+  },
+  "I9x2XlLXGLxe0Hwm": {
+    "name": "0. Holy Fool",
+    "categories": ["holy_fool", "mental", "vision", "ability"]
+  },
+  "yDaULZjUJdikwAIT": {
+    "name": "0. Manager",
+    "categories": ["manager", "social", "communication", "armor", "mental"]
+  },
+  "sz9BhMukFlaQVBpE": {
+    "name": "0. Noömagus",
+    "categories": ["noömagus", "daemon", "light", "mental", "magielectronics"]
+  },
+  "XvAZmxxnnH2Swfej": {
+    "name": "0. Noble",
+    "categories": ["noble", "weapon", "armor", "social", "magielectronics"]
+  },
+  "aknJDTEyEAAkPhx2": {
+    "name": "0. Orangelander",
+    "categories": ["orangelander", "weapon", "undead", "social"]
+  },
+  "hm5vkvhL2J7k9xSZ": {
+    "name": "0. Purplelander",
+    "categories": ["purplelander", "mental", "machine", "magielectronics", "resistance"]
+  },
+  "1lf2Y9aR8wfy2Ca2": {
+    "name": "0. Redlander",
+    "categories": ["redlander", "weapon", "armor", "defense", "mental", "protection"]
+  },
+  "y86z6kh8N6GhE7j0": {
+    "name": "0. Scion",
+    "categories": ["scion", "ability", "mental", "power", "magielectronics"]
+  },
+  "0ErBuk1jeXWNYpPi": {
+    "name": "0. Servant",
+    "categories": ["servant", "social", "stealth"]
+  },
+  "1qtRDALm8B5t48Zp": {
+    "name": "0. Skeleton",
+    "categories": ["skeleton", "undead", "weapon", "resistance"]
+  },
+  "RUQt95lQWk1nYRL7": {
+    "name": "0. Soldier",
+    "categories": ["soldier", "weapon", "armor", "defense"]
+  },
+  "SZjt5NBK4grAu7cQ": {
+    "name": "0. Tourist",
+    "categories": ["tourist", "travel", "security"]
+  },
+  "XyM2RxZmnkj4cs8k": {
+    "name": "0. Traveler",
+    "categories": ["traveler", "travel", "tracking", "weapon"]
+  },
+  "FqNAd7R29vYeK5ED": {
+    "name": "0. Trickster",
+    "categories": ["trickster", "illusion", "social", "mental"]
+  },
+  "KdbRc0hfAdefwDOL": {
+    "name": "0. Weapon",
+    "categories": ["weapon", "bearer", "communication", "mental", "social"]
+  },
+  "51b1THOLN8dXgk9r": {
+    "name": "0. Wizard",
+    "categories": ["wizard", "power", "machine", "magielectronics"]
+  },
+  "T3Uitk6kduGe6M9e": {
+    "name": "0. Yellowlander",
+    "categories": ["yellowlander", "weapon", "repair", "social", "mobility"]
+  },
+  "Upch1i0c2ZSKvQd0": {
+    "name": "1. Abandoned",
+    "categories": ["holy_fool", "communication", "ghost", "undead"]
+  },
+  "kUMZFPiIlzuxXvwq": {
+    "name": "1. Antimagus",
+    "categories": ["barbarian", "resistance", "burden"]
+  },
+  "CvhRje7xGkIpKj2V": {
+    "name": "1. Arboreal",
+    "categories": ["purplelander", "mobility"]
+  },
+  "lUSuhOHzAb1vDNIa": {
+    "name": "1. Armiger",
+    "categories": ["fighter", "weapon"]
+  },
+  "tZi9l0vRGywj3qLJ": {
+    "name": "1. Armorborn",
+    "categories": ["soldier", "armor", "defense"]
+  },
+  "Jl5fVO1LYNrnKcpu": {
+    "name": "1. Backstabber",
+    "categories": ["trickster", "weapon", "attack", "stealth"]
+  },
+  "c7rYd9L2c9Rsam0v": {
+    "name": "1. Boatmaster",
+    "categories": ["bluelander", "vehicle", "travel"]
+  },
+  "EnINQOr6bgdE6ici": {
+    "name": "1. Burglar",
+    "categories": ["bearer", "security", "stealth", "surveillance"]
+  },
+  "uKOfxWQDOVdiMJqf": {
+    "name": "1. Burner",
+    "categories": ["wizard", "power"]
+  },
+  "uEpDVeovchkaUkvx": {
+    "name": "1. Cad",
+    "categories": ["orangelander", "resistance", "mod"]
+  },
+  "Yre8zc2bdEcHRQfw": {
+    "name": "1. Cleanser",
+    "categories": ["weapon", "healing", "protection"]
+  },
+  "aBkyepOEFWO84SFq": {
+    "name": "1. Competent Appearance",
+    "categories": ["manager", "social"]
+  },
+  "oPnI0wiGmDLlHo8k": {
+    "name": "1. Cosmic Qanat",
+    "categories": ["noömagus", "vision", "power", "corruption"]
+  },
+  "k9uMPzSIOfdV1YMn": {
+    "name": "1. Country Squire",
+    "categories": ["greenlander", "social"]
+  },
+  "qvDCcxDYrtqQthfq": {
+    "name": "1. Diesel Dwarf",
+    "categories": ["yellowlander", "vehicle", "machine", "food"]
+  },
+  "rTONDIsV2VjNOUpU": {
+    "name": "1. Double-Platinum Deathless Backup",
+    "categories": ["bourgeois", "relife", "protection"]
+  },
+  "yc8D0CVgW7enfxRX": {
+    "name": "1. Dreamwalker",
+    "categories": ["scion", "mental", "travel"]
+  },
+  "JXppeJy7EMRNMk6o": {
+    "name": "1. Escapist",
+    "categories": ["traveler", "save"]
+  },
+  "x9H0xc4pCzLzplXi": {
+    "name": "1. Glowing Skeleton",
+    "categories": ["skeleton", "glowing", "resistance", "damage"]
+  },
+  "wQQ6wbS27OhNB5BT": {
+    "name": "1. Grounded",
+    "categories": ["servant", "resistance", "mental", "rest"]
+  },
+  "eehMkzDI73jcVleP": {
+    "name": "1. Hardened",
+    "categories": ["golem", "resistance", "stun"]
+  },
+  "T3bepUlv9MkylDRZ": {
+    "name": "1. Hexad Member",
+    "categories": ["redlander", "social", "communication", "machine"]
+  },
+  "vSHqPCMPSw6AGKgG": {
+    "name": "1. Hexer Meritocrat",
+    "categories": ["noble", "ability"]
+  },
+  "3PGZ9JkNEaxZVEco": {
+    "name": "1. Personal Daimon",
+    "categories": ["tourist", "daemon", "mental"]
+  },
+  "fKAAH19N22FY2NXu": {
+    "name": "2. Blastermaster",
+    "categories": ["soldier", "weapon", "damage", "attack", "recharge"]
+  },
+  "aIu8YiKEtY6PwM1i": {
+    "name": "2. Blessed",
+    "categories": ["holy_fool", "save"]
+  },
+  "b3ARMDI5CkXmS253": {
+    "name": "2. Blood Clad",
+    "categories": ["barbarian", "damage", "defense"]
+  },
+  "RwrLLjktMSdUfHHt": {
+    "name": "2. Cheesemaker",
+    "categories": ["bluelander", "food", "communication"]
+  },
+  "Qi6FC1a7dGZ0uk9B": {
+    "name": "2. Citizen Living",
+    "categories": ["orangelander"]
+  },
+  "39LgbAiq6VBgu6qp": {
+    "name": "2. Clueless Outsider",
+    "categories": ["tourist", "social"]
+  },
+  "kzzbrjCiGE9arh7W": {
+    "name": "2. Colonist",
+    "categories": ["purplelander"]
+  },
+  "f1F9tkdVT85d9tKC": {
+    "name": "2. Cronic",
+    "categories": ["wizard", "power"]
+  },
+  "ddbEeqiki98SaH43": {
+    "name": "2. Curse-Blessed",
+    "categories": ["weapon", "mental", "social", "communication"]
+  },
+  "FOZHyq5l3OaVF09U": {
+    "name": "2. Deeply Embodied",
+    "categories": ["greenlander", "power"]
+  },
+  "5AS4Q6I83LVX5wBL": {
+    "name": "2. Defender",
+    "categories": ["fighter", "defense"]
+  },
+  "E99GxosPZfs7bJWh": {
+    "name": "2. Doombringer",
+    "categories": ["bearer", "attack", "defeat"]
+  },
+  "2Hg96KuCL89ijkHc": {
+    "name": "2. Dust Rat",
+    "categories": ["yellowlander"]
+  },
+  "hlBOdySvIKn2OOhG": {
+    "name": "2. Enterprising",
+    "categories": ["bourgeois"]
+  },
+  "5A2G12Jholrzv7hv": {
+    "name": "2. Expert Friends",
+    "categories": ["trickster", "ability", "social"]
+  },
+  "5ARAaoSwLe0OgIrQ": {
+    "name": "2. Faceless",
+    "categories": ["scion", "disguise", "appearance"]
+  },
+  "xctK5UpHLmvvuXNR": {
+    "name": "2. Falscher",
+    "categories": ["redlander", "resistance"]
+  },
+  "TStHHiUv6FdBqS60": {
+    "name": "2. Friends",
+    "categories": ["traveler", "pet"]
+  },
+  "ZrLoZcpnXXxN4THo": {
+    "name": "2. Hackmagic",
+    "categories": ["noömagus", "power"]
+  },
+  "EN9oZxwXjIYc2u62": {
+    "name": "2. Housemaker",
+    "categories": ["servant", "repair", "security"]
+  },
+  "EJCoIbPXbzmV7ARh": {
+    "name": "2. Knight Reflexes",
+    "categories": ["noble"]
+  },
+  "PUyZnhnc4bZWYYIN": {
+    "name": "2. My Bones Engraved",
+    "categories": ["skeleton", "power"]
+  },
+  "68zpwxNPo9y2ZaAI": {
+    "name": "2. Powered",
+    "categories": ["golem", "machine"]
+  },
+  "h7yDsRXdieijj4Rp": {
+    "name": "2. Social Survivor",
+    "categories": ["manager", "social"]
+  },
+  "apmmjsaQTX6Cx6kF": {
+    "name": "3. Citizen Maintainer",
+    "categories": ["orangelander", "undead", "repair", "communication"]
+  },
+  "UK8ZhjIwlfhFo56e": {
+    "name": "3. Culling",
+    "categories": ["barbarian", "attack"]
+  },
+  "4d7mC859EOOde7jD": {
+    "name": "3. Death Hunger",
+    "categories": ["weapon", "attack"]
+  },
+  "OrGOqJjwW5hzl2bq": {
+    "name": "3. Devastator",
+    "categories": ["soldier", "attack", "defeat"]
+  },
+  "Q6iNaQQozNXwjYGV": {
+    "name": "3. Dissipated",
+    "categories": ["noble", "drug"]
+  },
+  "VUavxELCCze34l8t": {
+    "name": "3. Expensive Training",
+    "categories": ["bourgeois", "ability"]
+  },
+  "7BbBWfIKN4ACbo80": {
+    "name": "3. Exuberant",
+    "categories": ["wizard", "power"]
+  },
+  "Xvnna40jebYuaj6G": {
+    "name": "3. Fake Out",
+    "categories": ["trickster", "defense"]
+  },
+  "zYRsYAGnoqy6mA7R": {
+    "name": "3. Fighting Woman or Man",
+    "categories": ["bearer", "attack"]
+  },
+  "vvnklFU8P8R2KoHN": {
+    "name": "3. Fortunate One",
+    "categories": ["tourist", "save"]
+  },
+  "NQLG4EEMff3aNYA5": {
+    "name": "3. Grit",
+    "categories": ["fighter", "resistance"]
+  },
+  "HgIYIXCnoAt627Tv": {
+    "name": "3. Holy Diver",
+    "categories": ["holy_fool", "travel", "vision"]
+  },
+  "ICFpWoEImEIQEnwm": {
+    "name": "3. Human Library",
+    "categories": ["purplelander", "mental"]
+  },
+  "WuHik39ZXGrMriKV": {
+    "name": "3. Hunter",
+    "categories": ["traveler", "tracking", "stealth", "attack"]
+  },
+  "mDac4uazZhmsfq4E": {
+    "name": "3. Informant",
+    "categories": ["greenlander", "social", "surveillance"]
+  },
+  "ueuOOKrzY6dTL70C": {
+    "name": "3. Inquisition Agent",
+    "categories": ["manager", "social", "mental"]
+  },
+  "6Rf6kCfpstgfvlih": {
+    "name": "3. Noösphere Native",
+    "categories": ["noömagus", "defense", "mental"]
+  },
+  "BTh6JyM1ZD16kdjI": {
+    "name": "3. Of-World",
+    "categories": ["scion", "travel", "mobility"]
+  },
+  "1qbYL2h1rxWV2yky": {
+    "name": "3. Oppressed Faith",
+    "categories": ["bluelander", "stealth", "communication"]
+  },
+  "Q6k9aW95K3l36TMh": {
+    "name": "3. Rancher",
+    "categories": ["yellowlander", "animal", "travel", "tracking"]
+  },
+  "ddIBJNQt2QYFwPzb": {
+    "name": "3. Resourceful",
+    "categories": ["servant", "stealth"]
+  },
+  "R84pwq1Zpw6l1TEF": {
+    "name": "3. Ruster",
+    "categories": ["redlander", "weapon", "stealth", "survival"]
+  },
+  "jGoIMvz2dfJUy25u": {
+    "name": "3. Synthetic Soul",
+    "categories": ["golem", "mental", "relife"]
+  },
+  "JYjRW9m6eIjd1SGc": {
+    "name": "3. Void Ward",
+    "categories": ["skeleton", "defense"]
+  },
+  "4nsW9P3WpnhFva6U": {
+    "name": "4. Demolisher",
+    "categories": ["weapon", "attack", "damage"]
+  },
+   "WT6OhjF3S968M1cV": {
+    "name": "4. Divine Blood",
+    "categories": ["noble", "power", "magielectronics"]
+  },
+  "T7PF9PnX538wrbqZ": {
+    "name": "4. Ducky",
+    "categories": ["orangelander", "social", "stealth", "weapon"]
+  },
+  "B018Kdvt5avldird": {
+    "name": "4. Feral",
+    "categories": ["barbarian", "save", "resistance"]
+  },
+  "hxOzB9k4KE1WNuKJ": {
+    "name": "4. From Dust, Returning",
+    "categories": ["skeleton", "relife", "regeneration"]
+  },
+  "zaeTWt9DcQyx40jo": {
+    "name": "4. Irresistible",
+    "categories": ["fighter", "attack", "damage"]
+  },
+  "w8eyGzOF6sMoMTHt": {
+    "name": "4. Kaffetropist",
+    "categories": ["purplelander", "drug", "vision", "healing"]
+  },
+  "GqbpoztsyMRU2P7l": {
+    "name": "4. Legal Immunity",
+    "categories": ["bourgeois", "social", "protection"]
+  },
+  "8SbRAxM3rohFFYEf": {
+    "name": "4. Loyal",
+    "categories": ["bearer", "social", "protection"]
+  },
+  "FgVpKYNU49hnmDRi": {
+    "name": "4. Metropolitan",
+    "categories": ["greenlander", "travel", "mobility", "protection"]
+  },
+  "tPtjYDbvF2EdlFCr": {
+    "name": "4. Mind Palace",
+    "categories": ["wizard", "power", "mental"]
+  },
+  "iWtKjrGSZ57PisCN": {
+    "name": "4. Motivational",
+    "categories": ["manager", "social", "mental", "damage"]
+  },
+  "nYKnk83kNMTbyVOy": {
+    "name": "4. Perfect",
+    "categories": ["scion", "resistance", "appearance"]
+  },
+  "h99nx1GKYqWZdFX1": {
+    "name": "4. Phylake's Child",
+    "categories": ["holy_fool", "daemon", "communication"]
+  },
+  "KHIbyBz3uDQYUAoX": {
+    "name": "4. Pickpocket",
+    "categories": ["trickster", "stealth", "security"]
+  },
+  "9N80kHxShlzyXeW3": {
+    "name": "4. Pleasant",
+    "categories": ["traveler", "social", "communication"]
+  },
+  "HTPF2LM48atdY3VY": {
+    "name": "4. Power Scroller",
+    "categories": ["noömagus", "power", "magielectronics"]
+  },
+  "P9uYaTmMkMD0O4mb": {
+    "name": "4. Rationalised",
+    "categories": ["soldier", "resistance", "protection"]
+  },
+  "SwSEMrnRynbek0ql": {
+    "name": "4. Reanimator",
+    "categories": ["bluelander", "undead", "pet"]
+  },
+  "S6R6CDHCKHsQqQIA": {
+    "name": "4. Ruderalist",
+    "categories": ["yellowlander", "machine", "magielectronics", "weapon"]
+  },
+  "3Slx5IrhocLjB3hm": {
+    "name": "4. Shopstaff",
+    "categories": ["servant", "social", "communication"]
+  },
+  "1OEg6Z0UNcmfb6oT": {
+    "name": "4. Underestimated",
+    "categories": ["tourist", "stealth", "defense", "attack"]
+  },
+  "a2VDnr04jX4dX4IP": {
+    "name": "4. Undying Synthetic",
+    "categories": ["golem", "relife", "repair"]
+  },
+  "n86evPTJ5tKUzTFE": {
+    "name": "4. Vampire",
+    "categories": ["redlander", "vampire", "damage", "healing"]
+  },
+  "BUNKB4ITAxWYLWHj": {
+    "name": "5. Bystander",
+    "categories": ["trickster", "defense", "protection", "stealth"]
+  },
+  "xyHCVN5IOuvUCThr": {
+    "name": "5. Cold New Flesh",
+    "categories": ["skeleton", "defense", "vampire", "healing"]
+  },
+  "90FDcyNx5LgIaZa6": {
+    "name": "5. Fatespun",
+    "categories": ["weapon", "relife", "protection"]
+  },
+  "AYUeIfPc5tfHHwh0": {
+    "name": "5. Intestinal Fortitude",
+    "categories": ["tourist", "healing", "resistance", "poison", "mental"]
+  },
+  "kMLmDaGySJeKM04r": {
+    "name": "5. Lost Songs",
+    "categories": ["barbarian", "social", "mental", "ability"]
+  },
+  "Y4Dkmq9TDIPVqOy7": {
+    "name": "5. Mossblood",
+    "categories": ["greenlander", "communication", "food"]
+  },
+  "0G56O3KqI0TNPe2z": {
+    "name": "5. Noösphere Priest",
+    "categories": ["manager", "mental", "magielectronics"]
+  },
+  "khfWM4ulsuHs8888": {
+    "name": "5. Oblique Reality",
+    "categories": ["wizard", "defense", "protection"]
+  },
+  "QbNbjp8n0mCgQWhk": {
+    "name": "5. Old Money",
+    "categories": ["bourgeois", "social"]
+  },
+  "AYc7EJQOLBGISGLP": {
+    "name": "5. Orange Half-Ling",
+    "categories": ["orangelander", "mobility", "stealth"]
+  },
+  "g3hsF3GPqZWZfdt7": {
+    "name": "5. Pet Sidekick",
+    "categories": ["purplelander", "pet", "communication", "mental"]
+  },
+  "9Go2pgqvJIoKjSMx": {
+    "name": "5. Pocketmaster",
+    "categories": ["traveler", "stealth", "security"]
+  },
+  "iBrznNnplMCuQRQC": {
+    "name": "5. Revenant-in-Waiting",
+    "categories": ["bearer", "relife", "undead"]
+  },
+  "gP6iRjuX1Ywtpnra": {
+    "name": "5. Saffron Eater",
+    "categories": ["yellowlander", "resistance", "poison"]
+  },
+  "9LnP0eRXxiwGI9Ol": {
+    "name": "5. Sculpted Beauty",
+    "categories": ["noble", "appearance", "social"]
+  },
+  "iQYWt9LjguVBdNaC": {
+    "name": "5. Second Chance",
+    "categories": ["fighter", "relife", "resistance"]
+  },
+  "Bhb0MFHKjq09MQIM": {
+    "name": "5. Slayer",
+    "categories": ["soldier", "attack", "damage"]
+  },
+  "z7jCCGwpXrq4O54O": {
+    "name": "5. Soothsayer",
+    "categories": ["holy_fool", "communication", "vision"]
+  },
+  "l8YqayamFhGKgyhc": {
+    "name": "5. Soul Fuel",
+    "categories": ["noömagus", "power", "recharge"]
+  },
+  "AFGyTJRBg6HPfzRz": {
+    "name": "5. Spelunker",
+    "categories": ["bluelander", "mobility", "tracking", "attack", "defense"]
+  },
+  "TjobWH36z04QYDUH": {
+    "name": "5. Strong",
+    "categories": ["servant", "ability"]
+  },
+  "t1KtSN1UvPGJrFlc": {
+    "name": "5. Subconscious Decay",
+    "categories": ["scion", "regeneration", "relife"]
+  },
+  "sYjPxjnALUNfnfx0": {
+    "name": "5. Ur-War Program",
+    "categories": ["golem", "attack", "damage", "mobility"]
+  },
+  "79AysdOfMMfSH3Rg": {
+    "name": "5. Vintner",
+    "categories": ["redlander", "resistance", "poison", "drink", "healing"]
+  },
+  "TGvlHNtosFuDRVhz": {
+    "name": "6. Hashtag Blessed",
+    "categories": ["tourist", "travel", "ability"]
+  },
+  "djd5SqnPqysHGabl": {
+    "name": "6. I Am Legion",
+    "categories": ["weapon", "attack", "damage"]
+  },
+  "vYPcdjvXNQSgSdYL": {
+    "name": "6. Numbers Maximization Official",
+    "categories": ["manager", "ability"]
+  },
+  "RHp4kVf1j5hfULzn": {
+    "name": "6. Perfected Germline",
+    "categories": ["noble", "resistance"]
+  },
+  "Clk2Vs411qDLnwzA": {
+    "name": "6. Recast",
+    "categories": ["wizard", "power"]
+  },
+  "Rmp7yyT1Mt2mEU1k": {
+    "name": "6. Shackleminded",
+    "categories": ["bearer", "resistance", "protection", "mental"]
+  },
+  "ct2VeeDfp9vZ5WyZ": {
+    "name": "6. Silver-Tongued",
+    "categories": ["trickster", "social", "communication"]
+  },
+  "uk2jwNU1JnaY7iWk": {
+    "name": "6. Soiltwined",
+    "categories": ["greenlander", "ability"]
+  },
+  "u8SIxXE72KL3aiFu": {
+    "name": "6. Soul Thief",
+    "categories": ["skeleton", "undead", "healing", "damage"]
+  },
+  "E0nFIv39fHp39KBG": {
+    "name": "6. Sporemark",
+    "categories": ["bluelander", "communication", "healing"]
+  },
+  "i9M18EBcJgmAhl3U": {
+    "name": "6. Superuser",
+    "categories": ["scion", "machine", "magielectronics", "power"]
+  },
+  "277EsdejSdhWUsAV": {
+    "name": "6. Swift",
+    "categories": ["traveler", "mobility", "ability"]
+  },
+  "KhlAka74PWjziLXg": {
+    "name": "6. Telempath",
+    "categories": ["purplelander", "mental", "communication"]
+  },
+  "QI06MGUdA1jXwNKt": {
+    "name": "6. Terrifying",
+    "categories": ["fighter", "social", "mental"]
+  },
+  "TKJj7AEvDaZ4bJBa": {
+    "name": "6. Thorny",
+    "categories": ["yellowlander", "defense", "armor", "attack"]
+  },
+  "E6mQG8wGjw0XD7Qn": {
+    "name": "6. Tough",
+    "categories": ["servant", "protection", "resistance"]
+  },
+  "m49iAFXHkmkBllb5": {
+    "name": "6. Unfred",
+    "categories": ["orangelander", "resistance", "mental"]
+  },
+  "YSCcNR7DUnkQfCir": {
+    "name": "6. Urbane",
+    "categories": ["bourgeois", "travel", "mobility"]
+  },
+  "znjL0g6PdFhOxSst": {
+    "name": "6. Very Strong",
+    "categories": ["golem", "ability"]
+  },
+  "YoqYdiTKBJqY3896": {
+    "name": "6. Veteran of the Psychic Wars",
+    "categories": ["noömagus", "resistance", "mental"]
+  },
+  "AKgZqrOFBm30ZXGS": {
+    "name": "6. Wanderer",
+    "categories": ["holy_fool", "ability", "travel"]
+  },
+  "8buCZ1Fnv3fCyFdB": {
+    "name": "6. Werker",
+    "categories": ["redlander", "machine", "repair"]
+  },
+  "a5TlPGOCezlqEr0R": {
+    "name": "6. Wild Survivor",
+    "categories": ["barbarian", "weapon", "stealth", "attack"]
+  },
+  "wnBCYiPMsmqRFp8V": {
+    "name": "6. Wired",
+    "categories": ["soldier", "ability", "mobility"]
+  }
+}

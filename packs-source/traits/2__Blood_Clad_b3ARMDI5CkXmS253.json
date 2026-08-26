@@ -6,7 +6,11 @@
   "img": "icons/skills/wounds/blood-cells-vessel-red-orange.webp",
   "system": {
     "readied": false,
-    "categories": ["barbarian"],
+    "categories": [
+      "barbarian",
+      "damage",
+      "defense"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

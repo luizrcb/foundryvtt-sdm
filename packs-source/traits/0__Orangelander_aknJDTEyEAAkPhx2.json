@@ -6,7 +6,12 @@
   "img": "icons/skills/ranged/arrow-strike-apple-orange.webp",
   "system": {
     "readied": false,
-    "categories": ["orangelander"],
+    "categories": [
+      "orangelander",
+      "weapon",
+      "undead",
+      "social"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

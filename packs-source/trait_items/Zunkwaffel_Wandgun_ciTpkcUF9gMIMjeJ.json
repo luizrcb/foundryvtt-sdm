@@ -6,7 +6,9 @@
   "img": "icons/weapons/wands/wand-skull-horned.webp",
   "system": {
     "readied": false,
-    "categories": ["orangelander"],
+    "categories": [
+      "orangelander"
+    ],
     "status": "",
     "resources": "",
     "cost": 1200,
@@ -40,7 +42,7 @@
     "type": "weapon",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",

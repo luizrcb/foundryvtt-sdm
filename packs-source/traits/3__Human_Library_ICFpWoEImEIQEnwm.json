@@ -6,7 +6,10 @@
   "img": "icons/sundries/books/book-embossed-spiral-purple-white.webp",
   "system": {
     "readied": false,
-    "categories": ["purplelander"],
+    "categories": [
+      "purplelander",
+      "mental"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

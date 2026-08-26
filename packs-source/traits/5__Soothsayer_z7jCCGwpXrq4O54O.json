@@ -6,7 +6,11 @@
   "img": "icons/creatures/slimes/slime-giant-face-eyes.webp",
   "system": {
     "readied": false,
-    "categories": ["holy_fool"],
+    "categories": [
+      "holy_fool",
+      "communication",
+      "vision"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

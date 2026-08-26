@@ -6,7 +6,12 @@
   "img": "icons/commodities/tech/cog-brass.webp",
   "system": {
     "readied": false,
-    "categories": ["redlander"],
+    "categories": [
+      "redlander",
+      "weapon",
+      "stealth",
+      "survival"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

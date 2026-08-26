@@ -6,7 +6,14 @@
   "img": "icons/weapons/artillery/cannon-simple.webp",
   "system": {
     "readied": false,
-    "categories": ["redlander"],
+    "categories": [
+      "redlander",
+      "weapon",
+      "armor",
+      "defense",
+      "mental",
+      "protection"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

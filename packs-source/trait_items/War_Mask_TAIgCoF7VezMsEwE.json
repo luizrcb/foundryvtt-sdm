@@ -6,7 +6,10 @@
   "img": "icons/equipment/head/mask-horned-skull.webp",
   "system": {
     "readied": false,
-    "categories": ["soldier"],
+    "categories": [
+      "soldier",
+      "social"
+    ],
     "status": "",
     "resources": "",
     "cost": 10,
@@ -38,7 +41,7 @@
     "type": "ward",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",
@@ -87,12 +90,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.350",
+    "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.1",
+    "systemVersion": "0.20.0",
     "createdTime": 1760974709947,
-    "modifiedTime": 1760992721944,
-    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+    "modifiedTime": 1787672195549,
+    "lastModifiedBy": "S0Z93vgE3OnovNXB"
   },
   "_key": "!items!TAIgCoF7VezMsEwE"
 }

@@ -6,7 +6,10 @@
   "img": "icons/magic/nature/tree-roots-glow-yellow.webp",
   "system": {
     "readied": false,
-    "categories": ["purplelander"],
+    "categories": [
+      "purplelander",
+      "mobility"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

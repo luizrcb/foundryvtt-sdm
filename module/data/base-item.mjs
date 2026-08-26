@@ -1,4 +1,5 @@
 import { GearType } from '../helpers/constants.mjs';
+import { $l10n } from '../helpers/globalUtils.mjs';
 import { getSlotsTaken } from '../helpers/itemUtils.mjs';
 import HallmarkBaseDataModel from './hallmark-base-data.mjs';
 import ItemSizeDataModel from './item-size.mjs';
@@ -13,7 +14,7 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
     schema.readied = new fields.BooleanField({ initial: false });
 
     schema.categories = new fields.SetField(
-      new fields.StringField({ required: true, blank: false, nullable: false }),
+      new fields.StringField({ required: true, blank: false, nullable: false })
     );
 
     schema.status = new fields.StringField({
@@ -57,9 +58,9 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
         required: false,
         blank: true,
         nullable: true,
-        initial: '',
+        initial: ''
       })
-    })
+    });
 
     schema.flare = new fields.SchemaField({
       value: new fields.NumberField({
@@ -147,5 +148,92 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
 
   get slots_taken() {
     return getSlotsTaken(this);
+  }
+
+  static addCommonFilters(filters) {
+    filters.set('cost', {
+      label: 'SDM.FILTERS.Cost',
+      type: 'range',
+      config: {
+        keyPath: 'system.cost',
+        min: 0
+      }
+    });
+
+    filters.set('sizeValue', {
+      label: 'SDM.FILTERS.SizeValue',
+      type: 'range',
+      config: {
+        keyPath: 'system.size.value',
+        min: 0
+      }
+    });
+
+    filters.set('sizeUnit', {
+      label: 'SDM.FILTERS.SizeUnit',
+      type: 'set',
+      config: {
+        keyPath: 'system.size.unit',
+        sort: false,
+        choices: () =>
+          Object.fromEntries(Object.entries(CONFIG.SDM.sizeUnits).map(([k, v]) => [k, $l10n(v)]))
+      }
+    });
+
+    filters.set('startingKit', {
+      label: 'SDM.FILTERS.StartingKit',
+      type: 'boolean',
+      config: { keyPath: 'system.starting_kit' }
+    });
+
+    filters.set('supplyType', {
+      label: 'SDM.FILTERS.SupplyType',
+      type: 'set',
+      config: {
+        keyPath: 'system.supply_type',
+        sort: false,
+        choices: () =>
+          Object.fromEntries(Object.entries(CONFIG.SDM.SupplyType).map(([k, v]) => [k, $l10n(v)]))
+      }
+    });
+
+    filters.set('paths', {
+      label: 'SDM.FILTERS.Paths',
+      type: 'set',
+      config: {
+        keyPath: 'system.categories',
+        multiple: true,
+        sort: true,
+        choices: () =>
+          Object.fromEntries(CONFIG.SDM.paths.map(c => [c, $l10n(`SDM.Category.${c}`)]))
+      }
+    });
+
+    filters.set('features', {
+      label: 'SDM.FILTERS.Features',
+      type: 'set',
+      config: {
+        keyPath: 'system.features',
+        multiple: false,
+        sort: true,
+        choices: () => {
+          return Object.fromEntries(
+            CONFIG.SDM.features.map(f => [f, $l10n(`SDM.ItemFeature.${f}`)])
+          );
+        }
+      }
+    });
+
+    filters.set('categories', {
+      label: 'SDM.FILTERS.Categories',
+      type: 'set',
+      config: {
+        keyPath: 'system.categories',
+        multiple: true,
+        sort: true,
+        choices: () =>
+          Object.fromEntries(CONFIG.SDM.categories.map(c => [c, $l10n(`SDM.Category.${c}`)]))
+      }
+    });
   }
 }

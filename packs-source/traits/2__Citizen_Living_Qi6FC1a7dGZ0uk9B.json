@@ -6,7 +6,9 @@
   "img": "icons/containers/kitchenware/goblet-gold-red.webp",
   "system": {
     "readied": false,
-    "categories": ["orangelander"],
+    "categories": [
+      "orangelander"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

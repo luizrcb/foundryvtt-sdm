@@ -6,7 +6,11 @@
   "img": "icons/magic/death/undead-skeleton-worn-blue.webp",
   "system": {
     "readied": false,
-    "categories": ["bearer"],
+    "categories": [
+      "bearer",
+      "relife",
+      "undead"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

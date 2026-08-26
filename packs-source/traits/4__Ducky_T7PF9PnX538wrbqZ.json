@@ -6,7 +6,12 @@
   "img": "icons/equipment/head/hood-leather-orange-mask.webp",
   "system": {
     "readied": false,
-    "categories": ["orangelander"],
+    "categories": [
+      "orangelander",
+      "social",
+      "stealth",
+      "weapon"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

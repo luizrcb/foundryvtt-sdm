@@ -6,7 +6,12 @@
   "img": "icons/magic/control/debuff-chains-shackles-movement-blue.webp",
   "system": {
     "readied": false,
-    "categories": ["weapon"],
+    "categories": [
+      "weapon",
+      "mental",
+      "social",
+      "communication"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

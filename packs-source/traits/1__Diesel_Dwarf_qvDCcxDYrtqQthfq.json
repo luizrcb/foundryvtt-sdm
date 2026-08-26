@@ -6,7 +6,12 @@
   "img": "icons/magic/symbols/circle-ouroboros.webp",
   "system": {
     "readied": false,
-    "categories": ["yellowlander"],
+    "categories": [
+      "yellowlander",
+      "vehicle",
+      "machine",
+      "food"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

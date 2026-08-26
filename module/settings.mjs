@@ -1,3 +1,4 @@
+import CompendiumBrowser from './app/compendium-browser.mjs';
 import { DEFAULT_CASH_ICON, DiceType } from './helpers/constants.mjs';
 import { $fmt, $l10n } from './helpers/globalUtils.mjs';
 import { handleHeroDice } from './rolls/hero_dice/index.mjs';
@@ -23,6 +24,20 @@ export function registerSystemSettings() {
   /* -------------------------------------------- */
 
   /** qol settings */
+
+  game.keybindings.register('sdm', 'openCompendiumBrowser', {
+    name: 'SDM.CompendiumBrowser.Open',
+    hint: 'SDM.CompendiumBrowser.OpenHint',
+    editable: [
+      {
+        key: 'KeyB',
+        modifiers: ['Control', 'Shift']
+      }
+    ],
+    onDown: () => {
+      new CompendiumBrowser().render(true);
+    }
+  });
 
   game.settings.register('sdm', 'chromatype', {
     name: 'SDM.SettingsChromatype',

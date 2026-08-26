@@ -6,7 +6,12 @@
   "img": "icons/environment/people/infantry.webp",
   "system": {
     "readied": false,
-    "categories": ["soldier"],
+    "categories": [
+      "soldier",
+      "weapon",
+      "armor",
+      "defense"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

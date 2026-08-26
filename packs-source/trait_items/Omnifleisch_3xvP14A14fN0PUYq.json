@@ -6,7 +6,10 @@
   "img": "icons/commodities/biological/pustules-red.webp",
   "system": {
     "readied": false,
-    "categories": ["orangelander"],
+    "categories": [
+      "orangelander",
+      "undead"
+    ],
     "status": "",
     "resources": "",
     "cost": 20,
@@ -95,10 +98,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.10.0",
+    "systemVersion": "0.20.0",
     "createdTime": 1767011795483,
-    "modifiedTime": 1771464496354,
-    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+    "modifiedTime": 1787667403335,
+    "lastModifiedBy": "S0Z93vgE3OnovNXB"
   },
   "_key": "!items!3xvP14A14fN0PUYq"
 }

@@ -79,10 +79,13 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "replenish": {
       "value": 3
-    }
+    },
+    "categories": [
+      "ability"
+    ]
   },
   "effects": [],
   "sort": 1400000,
@@ -97,10 +100,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.10.0",
+    "systemVersion": "0.20.0",
     "createdTime": 1767011726802,
-    "modifiedTime": 1771502574332,
-    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+    "modifiedTime": 1787657952505,
+    "lastModifiedBy": "S0Z93vgE3OnovNXB"
   },
   "_key": "!items!xKrfbwAvjq3oQGeJ"
 }

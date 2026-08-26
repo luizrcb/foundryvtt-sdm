@@ -6,7 +6,9 @@
   "img": "icons/sundries/books/book-rounded-blue.webp",
   "system": {
     "readied": false,
-    "categories": ["tourist"],
+    "categories": [
+      "tourist"
+    ],
     "status": "",
     "resources": "",
     "cost": 3,
@@ -38,7 +40,7 @@
     "type": "weapon",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",

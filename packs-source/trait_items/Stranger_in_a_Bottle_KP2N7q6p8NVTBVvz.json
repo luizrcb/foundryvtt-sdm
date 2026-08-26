@@ -6,7 +6,9 @@
   "img": "icons/containers/kitchenware/jug-bottle-clay-brown-gold-blue.webp",
   "system": {
     "readied": false,
-    "categories": ["trickster"],
+    "categories": [
+      "trickster"
+    ],
     "status": "",
     "resources": "",
     "cost": 200,
@@ -38,7 +40,7 @@
     "type": "",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",

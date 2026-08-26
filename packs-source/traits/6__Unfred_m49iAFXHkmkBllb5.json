@@ -6,7 +6,11 @@
   "img": "icons/creatures/magical/humanoid-silhouette-aliens-green.webp",
   "system": {
     "readied": false,
-    "categories": ["orangelander"],
+    "categories": [
+      "orangelander",
+      "resistance",
+      "mental"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

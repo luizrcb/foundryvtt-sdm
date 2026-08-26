@@ -6,7 +6,12 @@
   "img": "icons/creatures/invertebrates/bug-sixlegged-gray.webp",
   "system": {
     "readied": false,
-    "categories": ["soldier"],
+    "categories": [
+      "soldier",
+      "drug",
+      "healing",
+      "burden"
+    ],
     "status": "",
     "resources": "",
     "cost": 75,
@@ -38,7 +43,7 @@
     "type": "",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",
@@ -89,10 +94,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.10.0",
+    "systemVersion": "0.20.0",
     "createdTime": 1760974721289,
-    "modifiedTime": 1771465071539,
-    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+    "modifiedTime": 1787672105098,
+    "lastModifiedBy": "S0Z93vgE3OnovNXB"
   },
   "_key": "!items!pcdYMFCu1dZlRtp6"
 }

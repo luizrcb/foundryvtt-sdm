@@ -6,7 +6,9 @@
   "img": "icons/equipment/neck/pendant-enamel.webp",
   "system": {
     "readied": false,
-    "categories": ["holy_fool"],
+    "categories": [
+      "holy_fool"
+    ],
     "status": "",
     "resources": "",
     "cost": 450,
@@ -38,7 +40,7 @@
     "type": "",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",

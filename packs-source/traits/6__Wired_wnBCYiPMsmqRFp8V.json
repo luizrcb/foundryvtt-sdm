@@ -6,7 +6,11 @@
   "img": "icons/commodities/tech/wire-red.webp",
   "system": {
     "readied": false,
-    "categories": ["soldier"],
+    "categories": [
+      "soldier",
+      "ability",
+      "mobility"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

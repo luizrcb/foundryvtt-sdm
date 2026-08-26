@@ -210,6 +210,10 @@ export default class SDMRoll {
 
     chatDataMessage.flags = { ...chatDataMessage.flags, ...this.extraFlags };
     await createChatMessage(chatDataMessage);
+
+    if (isDamage && this.item && this.item?.system?.features?.has('replenish')) {
+      await this.item.usageRoll(this.item.system.replenish?.value);
+    }
   }
 
   #buildDiceComponent() {

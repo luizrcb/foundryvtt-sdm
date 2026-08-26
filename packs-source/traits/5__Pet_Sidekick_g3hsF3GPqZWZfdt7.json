@@ -6,7 +6,12 @@
   "img": "icons/sundries/misc/pet-collar-blue.webp",
   "system": {
     "readied": false,
-    "categories": ["purplelander"],
+    "categories": [
+      "purplelander",
+      "pet",
+      "communication",
+      "mental"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

@@ -39,7 +39,7 @@
     "type": "",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",
@@ -78,7 +78,11 @@
     },
     "replenish": {
       "value": 1
-    }
+    },
+    "categories": [
+      "yellowlander",
+      "ability"
+    ]
   },
   "effects": [
     {
@@ -137,10 +141,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.10.0",
+    "systemVersion": "0.20.0",
     "createdTime": 1767011809701,
-    "modifiedTime": 1771465558062,
-    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+    "modifiedTime": 1787673225096,
+    "lastModifiedBy": "S0Z93vgE3OnovNXB"
   },
   "_key": "!items!InO4mfRjIMCmRItS"
 }

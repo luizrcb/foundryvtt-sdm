@@ -6,7 +6,10 @@
   "img": "icons/equipment/shoulder/pauldron-steel-worn.webp",
   "system": {
     "readied": false,
-    "categories": ["scion"],
+    "categories": [
+      "scion",
+      "defense"
+    ],
     "status": "",
     "resources": "",
     "cost": 9250,
@@ -38,7 +41,7 @@
     "type": "",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",
@@ -90,10 +93,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.20.0",
     "createdTime": 1767011799539,
-    "modifiedTime": 1767011799539,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1787667839424,
+    "lastModifiedBy": "S0Z93vgE3OnovNXB"
   },
   "_key": "!items!XNJ9WxEAYul0SLi3"
 }

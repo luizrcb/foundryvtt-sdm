@@ -6,7 +6,10 @@
   "img": "icons/commodities/leather/fur-white.webp",
   "system": {
     "readied": false,
-    "categories": ["purplelander"],
+    "categories": [
+      "purplelander",
+      "ability"
+    ],
     "status": "",
     "resources": "",
     "cost": 750,
@@ -38,7 +41,7 @@
     "type": "armor",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",
@@ -133,10 +136,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.20.0",
     "createdTime": 1767011796905,
-    "modifiedTime": 1767011796905,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1787667587687,
+    "lastModifiedBy": "S0Z93vgE3OnovNXB"
   },
   "_key": "!items!o5jLtYv0qF3ndUW5"
 }
