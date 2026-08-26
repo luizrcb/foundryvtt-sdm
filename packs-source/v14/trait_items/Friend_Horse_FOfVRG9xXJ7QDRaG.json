@@ -73,7 +73,11 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "soldier",
+      "vehicle"
+    ]
   },
   "effects": [],
   "sort": 0,

@@ -57,7 +57,14 @@
       "overcharge": "",
       "roll_formula": "",
       "overcharge_roll_formula": ""
-    }
+    },
+    "categories": [
+      "tourist",
+      "healing",
+      "resistance",
+      "poison",
+      "mental"
+    ]
   },
   "effects": [],
   "sort": 0,

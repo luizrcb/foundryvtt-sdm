@@ -57,7 +57,14 @@
       "overcharge": "",
       "roll_formula": "",
       "overcharge_roll_formula": ""
-    }
+    },
+    "categories": [
+      "weapon",
+      "bearer",
+      "communication",
+      "mental",
+      "social"
+    ]
   },
   "effects": [],
   "sort": 0,

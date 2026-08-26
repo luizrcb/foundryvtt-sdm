@@ -57,7 +57,10 @@
       "overcharge": "",
       "roll_formula": "",
       "overcharge_roll_formula": ""
-    }
+    },
+    "categories": [
+      "purplelander"
+    ]
   },
   "effects": [
     {

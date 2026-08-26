@@ -79,7 +79,10 @@
     "default_ability": "",
     "replenish": {
       "value": 4
-    }
+    },
+    "categories": [
+      "scion"
+    ]
   },
   "effects": [],
   "sort": 0,

@@ -73,7 +73,10 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "holy_fool"
+    ]
   },
   "effects": [],
   "sort": 0,

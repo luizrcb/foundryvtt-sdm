@@ -73,7 +73,12 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "bearer",
+      "ability",
+      "social"
+    ]
   },
   "effects": [
     {

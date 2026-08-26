@@ -75,7 +75,10 @@
       "range": "",
       "versatile": false
     },
-    "default_ability": ""
+    "default_ability": "",
+    "categories": [
+      "golem"
+    ]
   },
   "effects": [],
   "sort": 0,

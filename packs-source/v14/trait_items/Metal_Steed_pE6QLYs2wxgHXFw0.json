@@ -73,7 +73,11 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "barbarian",
+      "vehicle"
+    ]
   },
   "effects": [],
   "sort": 0,

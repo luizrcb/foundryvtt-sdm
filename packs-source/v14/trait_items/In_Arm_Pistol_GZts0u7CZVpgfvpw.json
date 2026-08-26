@@ -79,7 +79,10 @@
     "default_ability": "",
     "replenish": {
       "value": 4
-    }
+    },
+    "categories": [
+      "bourgeois"
+    ]
   },
   "effects": [],
   "sort": 0,

@@ -73,7 +73,10 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "manager"
+    ]
   },
   "effects": [],
   "sort": 0,

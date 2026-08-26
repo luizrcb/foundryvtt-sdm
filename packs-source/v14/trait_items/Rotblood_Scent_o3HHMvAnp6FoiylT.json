@@ -73,7 +73,11 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "redlander",
+      "social"
+    ]
   },
   "effects": [],
   "sort": 0,

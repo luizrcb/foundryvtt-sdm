@@ -79,7 +79,10 @@
     "default_ability": "",
     "replenish": {
       "value": 1
-    }
+    },
+    "categories": [
+      "noömagus"
+    ]
   },
   "effects": [],
   "sort": 0,

@@ -74,7 +74,10 @@
       "range": "short",
       "versatile": false
     },
-    "default_ability": ""
+    "default_ability": "",
+    "categories": [
+      "tourist"
+    ]
   },
   "effects": [],
   "sort": 500000,

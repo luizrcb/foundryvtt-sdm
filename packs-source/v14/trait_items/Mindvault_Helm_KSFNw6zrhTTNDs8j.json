@@ -73,7 +73,12 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "redlander",
+      "mental",
+      "damage"
+    ]
   },
   "effects": [
     {

@@ -78,7 +78,10 @@
     },
     "replenish": {
       "value": 3
-    }
+    },
+    "categories": [
+      "soldier"
+    ]
   },
   "effects": [],
   "sort": 0,

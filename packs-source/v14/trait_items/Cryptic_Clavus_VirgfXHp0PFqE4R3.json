@@ -73,7 +73,11 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "trickster",
+      "security"
+    ]
   },
   "effects": [],
   "sort": 0,

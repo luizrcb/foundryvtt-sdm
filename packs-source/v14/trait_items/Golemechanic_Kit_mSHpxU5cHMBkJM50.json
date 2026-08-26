@@ -78,7 +78,12 @@
     },
     "replenish": {
       "value": 2
-    }
+    },
+    "categories": [
+      "golem",
+      "repair",
+      "machine"
+    ]
   },
   "effects": [],
   "sort": 0,

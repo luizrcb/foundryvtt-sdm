@@ -73,7 +73,10 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": true,
-    "supply_type": "human"
+    "supply_type": "human",
+    "categories": [
+      "food"
+    ]
   },
   "effects": [],
   "sort": 0,

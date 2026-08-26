@@ -84,7 +84,11 @@
     "default_ability": "",
     "replenish": {
       "value": 2
-    }
+    },
+    "categories": [
+      "noömagus",
+      "recharge"
+    ]
   },
   "effects": [],
   "sort": 0,

@@ -57,7 +57,11 @@
     "learning": {
       "sources": 0,
       "required_successes": 0
-    }
+    },
+    "categories": [
+      "traveler",
+      "pet"
+    ]
   },
   "effects": [],
   "sort": 0,

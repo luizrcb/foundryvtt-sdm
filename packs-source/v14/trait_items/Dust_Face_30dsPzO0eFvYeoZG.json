@@ -73,7 +73,11 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "yellowlander",
+      "resistance"
+    ]
   },
   "effects": [],
   "sort": 0,

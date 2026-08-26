@@ -78,7 +78,11 @@
     },
     "replenish": {
       "value": 7
-    }
+    },
+    "categories": [
+      "purplelander",
+      "social"
+    ]
   },
   "effects": [
     {

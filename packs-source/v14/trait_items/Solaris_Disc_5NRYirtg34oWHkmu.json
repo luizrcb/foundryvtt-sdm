@@ -73,7 +73,12 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "noömagus",
+      "power",
+      "recharge"
+    ]
   },
   "effects": [],
   "sort": 0,

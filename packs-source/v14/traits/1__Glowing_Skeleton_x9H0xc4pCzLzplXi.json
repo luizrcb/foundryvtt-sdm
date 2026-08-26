@@ -57,7 +57,13 @@
       "overcharge": "",
       "roll_formula": "",
       "overcharge_roll_formula": ""
-    }
+    },
+    "categories": [
+      "skeleton",
+      "glowing",
+      "resistance",
+      "damage"
+    ]
   },
   "effects": [],
   "sort": 0,

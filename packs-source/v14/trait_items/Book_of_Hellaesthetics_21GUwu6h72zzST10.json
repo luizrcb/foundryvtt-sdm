@@ -78,7 +78,12 @@
     },
     "replenish": {
       "value": 5
-    }
+    },
+    "categories": [
+      "holy_fool",
+      "healing",
+      "damage"
+    ]
   },
   "effects": [
     {

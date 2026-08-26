@@ -79,7 +79,10 @@
     },
     "replenish": {
       "value": 5
-    }
+    },
+    "categories": [
+      "scion"
+    ]
   },
   "effects": [
     {

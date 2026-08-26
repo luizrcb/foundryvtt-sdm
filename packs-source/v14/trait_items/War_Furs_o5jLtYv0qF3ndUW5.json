@@ -73,7 +73,11 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "purplelander",
+      "ability"
+    ]
   },
   "effects": [
     {

@@ -83,7 +83,10 @@
     "supply_type": "human",
     "replenish": {
       "value": 2
-    }
+    },
+    "categories": [
+      "sleep"
+    ]
   },
   "effects": [],
   "sort": 900000,

@@ -74,7 +74,12 @@
       "range": "close",
       "versatile": false
     },
-    "default_ability": ""
+    "default_ability": "",
+    "categories": [
+      "holy_fool",
+      "ghost",
+      "daemon"
+    ]
   },
   "effects": [],
   "sort": 0,

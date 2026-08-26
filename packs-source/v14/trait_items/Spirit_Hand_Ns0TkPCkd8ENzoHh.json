@@ -58,7 +58,10 @@
       "roll_formula": "",
       "overcharge_roll_formula": "",
       "default_ability": ""
-    }
+    },
+    "categories": [
+      "scion"
+    ]
   },
   "effects": [],
   "sort": 0,

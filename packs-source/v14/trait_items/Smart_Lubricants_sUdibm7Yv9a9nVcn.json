@@ -78,7 +78,11 @@
     },
     "replenish": {
       "value": 4
-    }
+    },
+    "categories": [
+      "golem",
+      "burden"
+    ]
   },
   "effects": [],
   "sort": 0,

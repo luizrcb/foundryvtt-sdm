@@ -77,7 +77,11 @@
       "range": "short",
       "versatile": true
     },
-    "default_ability": ""
+    "default_ability": "",
+    "categories": [
+      "barbarian",
+      "attack"
+    ]
   },
   "effects": [
     {

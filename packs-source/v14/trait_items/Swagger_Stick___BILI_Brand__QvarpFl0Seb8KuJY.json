@@ -74,7 +74,11 @@
       "range": "close",
       "versatile": false
     },
-    "default_ability": ""
+    "default_ability": "",
+    "categories": [
+      "bourgeois",
+      "damage"
+    ]
   },
   "effects": [],
   "sort": 0,

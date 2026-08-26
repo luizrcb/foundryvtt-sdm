@@ -76,7 +76,10 @@
       "range": "close",
       "versatile": false
     },
-    "default_ability": ""
+    "default_ability": "",
+    "categories": [
+      "manager"
+    ]
   },
   "effects": [],
   "sort": 0,

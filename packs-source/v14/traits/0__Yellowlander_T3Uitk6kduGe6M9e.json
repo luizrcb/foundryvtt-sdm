@@ -57,7 +57,14 @@
       "overcharge": "",
       "roll_formula": "",
       "overcharge_roll_formula": ""
-    }
+    },
+    "categories": [
+      "yellowlander",
+      "weapon",
+      "repair",
+      "social",
+      "mobility"
+    ]
   },
   "effects": [],
   "sort": 0,

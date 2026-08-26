@@ -73,7 +73,13 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "soldier",
+      "ghost",
+      "damage",
+      "daemon"
+    ]
   },
   "effects": [],
   "sort": 0,

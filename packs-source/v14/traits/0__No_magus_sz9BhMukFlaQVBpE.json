@@ -57,7 +57,14 @@
       "overcharge": "",
       "roll_formula": "",
       "overcharge_roll_formula": ""
-    }
+    },
+    "categories": [
+      "noömagus",
+      "daemon",
+      "light",
+      "mental",
+      "magielectronics"
+    ]
   },
   "effects": [],
   "sort": 0,

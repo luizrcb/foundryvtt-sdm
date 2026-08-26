@@ -80,7 +80,10 @@
     "default_ability": "",
     "replenish": {
       "value": 4
-    }
+    },
+    "categories": [
+      "servant"
+    ]
   },
   "effects": [],
   "sort": 0,

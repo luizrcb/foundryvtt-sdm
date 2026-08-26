@@ -78,7 +78,10 @@
     },
     "replenish": {
       "value": 3
-    }
+    },
+    "categories": [
+      "servant"
+    ]
   },
   "effects": [],
   "sort": 0,

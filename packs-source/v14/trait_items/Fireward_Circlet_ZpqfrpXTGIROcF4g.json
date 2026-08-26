@@ -73,7 +73,13 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "manager",
+      "mental",
+      "disguise",
+      "daemon"
+    ]
   },
   "effects": [],
   "sort": 0,

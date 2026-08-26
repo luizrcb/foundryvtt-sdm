@@ -2820,7 +2820,7 @@ input[type=radio]::after {
     display: flex;
     flex-wrap: wrap;
     gap: 3px;
-    justify-content: center;
+    justify-content: flex-start;
     padding: 0;
     margin: 0;
     list-style: none;

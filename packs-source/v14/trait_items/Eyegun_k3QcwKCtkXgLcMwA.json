@@ -79,7 +79,10 @@
     "default_ability": "",
     "replenish": {
       "value": 5
-    }
+    },
+    "categories": [
+      "golem"
+    ]
   },
   "effects": [],
   "sort": 0,

@@ -73,7 +73,12 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "greenlander",
+      "disguise",
+      "resistance"
+    ]
   },
   "effects": [],
   "sort": 500000,

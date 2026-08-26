@@ -80,7 +80,10 @@
     "default_ability": "",
     "replenish": {
       "value": 2
-    }
+    },
+    "categories": [
+      "noble"
+    ]
   },
   "effects": [],
   "sort": 0,

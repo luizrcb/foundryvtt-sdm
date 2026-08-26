@@ -74,7 +74,11 @@
       "range": "close",
       "versatile": false
     },
-    "default_ability": ""
+    "default_ability": "",
+    "categories": [
+      "noömagus",
+      "healing"
+    ]
   },
   "effects": [],
   "sort": 0,

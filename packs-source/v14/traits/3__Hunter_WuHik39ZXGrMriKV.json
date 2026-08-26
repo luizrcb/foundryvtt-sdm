@@ -57,7 +57,13 @@
     "learning": {
       "sources": 0,
       "required_successes": 0
-    }
+    },
+    "categories": [
+      "traveler",
+      "tracking",
+      "stealth",
+      "attack"
+    ]
   },
   "effects": [
     {

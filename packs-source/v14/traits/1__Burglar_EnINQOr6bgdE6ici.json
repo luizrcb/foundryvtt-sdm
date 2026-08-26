@@ -57,7 +57,13 @@
       "overcharge": "",
       "roll_formula": "",
       "overcharge_roll_formula": ""
-    }
+    },
+    "categories": [
+      "bearer",
+      "security",
+      "stealth",
+      "surveillance"
+    ]
   },
   "effects": [],
   "sort": 0,

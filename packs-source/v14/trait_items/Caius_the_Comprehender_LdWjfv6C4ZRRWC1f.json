@@ -73,7 +73,12 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "tourist",
+      "communication",
+      "daemon"
+    ]
   },
   "effects": [],
   "sort": 400000,

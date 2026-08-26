@@ -78,7 +78,10 @@
     },
     "pocket": {
       "value": 7
-    }
+    },
+    "categories": [
+      "manager"
+    ]
   },
   "effects": [
     {

@@ -78,7 +78,10 @@
     },
     "replenish": {
       "value": 5
-    }
+    },
+    "categories": [
+      "greenlander"
+    ]
   },
   "effects": [],
   "sort": 400000,

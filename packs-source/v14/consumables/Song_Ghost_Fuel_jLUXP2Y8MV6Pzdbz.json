@@ -73,7 +73,11 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": true,
-    "supply_type": "machine"
+    "supply_type": "machine",
+    "categories": [
+      "machine",
+      "daemon"
+    ]
   },
   "effects": [],
   "sort": 0,

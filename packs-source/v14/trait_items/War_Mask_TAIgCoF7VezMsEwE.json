@@ -73,7 +73,11 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "soldier",
+      "social"
+    ]
   },
   "effects": [],
   "sort": 0,

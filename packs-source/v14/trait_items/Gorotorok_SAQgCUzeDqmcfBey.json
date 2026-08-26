@@ -77,7 +77,10 @@
       "range": "",
       "versatile": false
     },
-    "default_ability": ""
+    "default_ability": "",
+    "categories": [
+      "noble"
+    ]
   },
   "effects": [],
   "sort": 0,

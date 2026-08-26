@@ -57,7 +57,12 @@
       "overcharge": "",
       "roll_formula": "",
       "overcharge_roll_formula": ""
-    }
+    },
+    "categories": [
+      "manager",
+      "social",
+      "mental"
+    ]
   },
   "effects": [],
   "sort": 0,

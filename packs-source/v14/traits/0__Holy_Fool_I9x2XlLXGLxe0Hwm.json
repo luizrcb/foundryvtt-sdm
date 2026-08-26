@@ -57,7 +57,13 @@
       "overcharge": "",
       "roll_formula": "",
       "overcharge_roll_formula": ""
-    }
+    },
+    "categories": [
+      "holy_fool",
+      "mental",
+      "vision",
+      "ability"
+    ]
   },
   "effects": [],
   "sort": 0,

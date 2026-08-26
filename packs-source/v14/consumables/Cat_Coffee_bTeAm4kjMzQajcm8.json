@@ -73,7 +73,13 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": "human"
+    "supply_type": "human",
+    "categories": [
+      "ability",
+      "drink",
+      "sleep",
+      "drug"
+    ]
   },
   "effects": [],
   "sort": 0,

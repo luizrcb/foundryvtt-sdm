@@ -82,7 +82,10 @@
     "supply_type": "human",
     "replenish": {
       "value": 3
-    }
+    },
+    "categories": [
+      "confusion"
+    ]
   },
   "effects": [],
   "sort": 2900000,

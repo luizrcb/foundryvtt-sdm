@@ -78,7 +78,11 @@
     },
     "replenish": {
       "value": 2
-    }
+    },
+    "categories": [
+      "purplelander",
+      "burden"
+    ]
   },
   "effects": [
     {

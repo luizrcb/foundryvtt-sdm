@@ -57,7 +57,11 @@
     "learning": {
       "sources": 0,
       "required_successes": 0
-    }
+    },
+    "categories": [
+      "fighter",
+      "weapon"
+    ]
   },
   "effects": [
     {

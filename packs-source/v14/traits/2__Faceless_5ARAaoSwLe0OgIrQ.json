@@ -57,7 +57,12 @@
       "overcharge": "",
       "roll_formula": "",
       "overcharge_roll_formula": ""
-    }
+    },
+    "categories": [
+      "scion",
+      "disguise",
+      "appearance"
+    ]
   },
   "effects": [],
   "sort": 0,

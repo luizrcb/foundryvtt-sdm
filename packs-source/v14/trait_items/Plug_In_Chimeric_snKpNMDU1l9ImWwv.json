@@ -73,7 +73,11 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "yellowlander",
+      "vehicle"
+    ]
   },
   "effects": [],
   "sort": 0,

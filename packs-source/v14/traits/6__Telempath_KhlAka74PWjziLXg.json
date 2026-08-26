@@ -58,7 +58,12 @@
       "roll_formula": "",
       "overcharge_roll_formula": "",
       "default_ability": ""
-    }
+    },
+    "categories": [
+      "purplelander",
+      "mental",
+      "communication"
+    ]
   },
   "effects": [
     {

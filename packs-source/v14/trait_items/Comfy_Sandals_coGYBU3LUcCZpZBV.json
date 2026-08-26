@@ -73,7 +73,11 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "tourist",
+      "social"
+    ]
   },
   "effects": [],
   "sort": 600000,

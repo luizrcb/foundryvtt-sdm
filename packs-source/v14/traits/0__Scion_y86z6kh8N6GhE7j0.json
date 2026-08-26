@@ -57,7 +57,14 @@
       "overcharge": "",
       "roll_formula": "",
       "overcharge_roll_formula": ""
-    }
+    },
+    "categories": [
+      "scion",
+      "ability",
+      "mental",
+      "power",
+      "magielectronics"
+    ]
   },
   "effects": [
     {

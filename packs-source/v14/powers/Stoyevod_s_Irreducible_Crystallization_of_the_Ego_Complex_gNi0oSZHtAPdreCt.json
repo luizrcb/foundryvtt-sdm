@@ -3,7 +3,7 @@
   "img": "icons/svg/fire.svg",
   "type": "gear",
   "system": {
-    "description": "<p><em>Restoration of the Priceless One</em></p><p>This deeply immoral ritual tears a departed psyche from the All-Mind's cosmic consciousness. It steals the forgiven soul from the All-Fire of Creation-Preservation Destruction. It undoes the body's decay into the All Green of Life-Death-Rebirth. In a rapturous whirlwind, the hero is recreated from sacred fire and holy breath and perfect soil. They make their relife roll with advantage. All this ritual requires is the loving sacrifice of another human, and one more for each level of the hero.</p><p>Dangerous: The sacrificial specialist will probably be corrupted by this spell.</p>",
+    "description": "<p><em>Restoration of the Priceless One</em></p><p>This deeply immoral ritual tears a departed psyche from the All-Mind's cosmic consciousness. It steals the forgiven soul from the All-Fire of Creation-Preservation Destruction. It undoes the body's decay into the All Green of Life-Death-Rebirth. In a rapturous whirlwind, the hero is recreated from sacred fire and holy breath and perfect soil. They make their relife roll with advantage. All this ritual requires is the loving sacrifice of another human, and one more for each level of the hero.</p>",
     "type": "power",
     "power": {
       "level": 17,
@@ -16,7 +16,8 @@
       "img": "icons/svg/book.svg",
       "name": "",
       "description": "",
-      "default_ability": ""
+      "default_ability": "",
+      "is_dangerous": true
     },
     "readied": false,
     "cost": 0,
@@ -72,7 +73,11 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": "human"
+    "supply_type": "human",
+    "categories": [
+      "relife",
+      "corruption"
+    ]
   },
   "effects": [],
   "folder": null,

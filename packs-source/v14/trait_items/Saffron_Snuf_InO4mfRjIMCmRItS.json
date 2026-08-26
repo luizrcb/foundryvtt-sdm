@@ -78,7 +78,11 @@
     },
     "replenish": {
       "value": 1
-    }
+    },
+    "categories": [
+      "yellowlander",
+      "ability"
+    ]
   },
   "effects": [
     {

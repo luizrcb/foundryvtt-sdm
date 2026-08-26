@@ -73,7 +73,11 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": true,
-    "supply_type": "animal"
+    "supply_type": "animal",
+    "categories": [
+      "food",
+      "animal"
+    ]
   },
   "effects": [],
   "sort": 0,

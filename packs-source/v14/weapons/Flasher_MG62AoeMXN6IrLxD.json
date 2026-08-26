@@ -79,7 +79,10 @@
     "supply_type": "human",
     "area": {
       "value": "small"
-    }
+    },
+    "categories": [
+      "blinding"
+    ]
   },
   "effects": [],
   "sort": 96875,

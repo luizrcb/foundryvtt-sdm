@@ -79,7 +79,13 @@
     "default_ability": "",
     "replenish": {
       "value": 5
-    }
+    },
+    "categories": [
+      "trickster",
+      "stun",
+      "burn",
+      "desintegrate"
+    ]
   },
   "effects": [],
   "sort": 0,

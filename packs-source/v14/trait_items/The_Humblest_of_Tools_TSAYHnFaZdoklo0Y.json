@@ -74,7 +74,10 @@
       "range": "close",
       "versatile": false
     },
-    "default_ability": ""
+    "default_ability": "",
+    "categories": [
+      "weapon"
+    ]
   },
   "effects": [],
   "sort": 0,

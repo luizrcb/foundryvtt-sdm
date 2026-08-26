@@ -73,7 +73,11 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "servant",
+      "social"
+    ]
   },
   "effects": [],
   "sort": 0,

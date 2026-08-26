@@ -82,7 +82,10 @@
     "supply_type": "human",
     "replenish": {
       "value": 3
-    }
+    },
+    "categories": [
+      "ability"
+    ]
   },
   "effects": [],
   "sort": 1400000,

@@ -164,17 +164,17 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
       '.item-card[data-uuid]',
       [
         {
-          name: 'SDM.Item.View',
+          label: 'SDM.Item.View',
           icon: '<i class="fa-solid fa-eye"></i>',
-          callback: target => {
-            CompendiumBrowser.#onOpenLink(null, target);
+          onClick: target => {
+            CompendiumBrowser.#onOpenLink(null, target?.currentTarget);
           }
         },
         {
-          name: 'SDM.Item.Share',
+          label: 'SDM.Item.Share',
           icon: '<i class="fa-solid fa-share-from-square"></i>',
-          callback: async target => {
-            const el = target instanceof HTMLElement ? target : target[0];
+          onClick: async target => {
+            const el = target?.currentTarget;
             const uuid = el?.closest('[data-uuid]')?.dataset.uuid;
             if (!uuid) return;
 

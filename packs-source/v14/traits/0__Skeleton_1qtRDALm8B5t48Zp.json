@@ -57,7 +57,13 @@
       "overcharge": "",
       "roll_formula": "",
       "overcharge_roll_formula": ""
-    }
+    },
+    "categories": [
+      "skeleton",
+      "undead",
+      "weapon",
+      "resistance"
+    ]
   },
   "effects": [],
   "sort": 0,

@@ -74,7 +74,12 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "attack",
+      "light",
+      "imobilization"
+    ]
   },
   "effects": [],
   "sort": 0,

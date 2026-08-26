@@ -81,7 +81,10 @@
     "supply_type": "human",
     "replenish": {
       "value": 5
-    }
+    },
+    "categories": [
+      "burden"
+    ]
   },
   "effects": [],
   "sort": 400000,

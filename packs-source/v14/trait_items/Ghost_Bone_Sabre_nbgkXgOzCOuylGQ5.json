@@ -74,7 +74,12 @@
       "range": "close",
       "versatile": false
     },
-    "default_ability": ""
+    "default_ability": "",
+    "categories": [
+      "skeleton",
+      "damage",
+      "ghost"
+    ]
   },
   "effects": [],
   "sort": 0,

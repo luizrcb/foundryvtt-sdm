@@ -79,7 +79,10 @@
     "default_ability": "",
     "replenish": {
       "value": 3
-    }
+    },
+    "categories": [
+      "orangelander"
+    ]
   },
   "effects": [],
   "sort": 0,

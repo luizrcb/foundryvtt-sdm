@@ -73,7 +73,10 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "trickster"
+    ]
   },
   "effects": [],
   "sort": 0,

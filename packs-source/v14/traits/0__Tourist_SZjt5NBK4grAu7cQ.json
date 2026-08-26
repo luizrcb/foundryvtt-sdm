@@ -57,7 +57,12 @@
       "overcharge": "",
       "roll_formula": "",
       "overcharge_roll_formula": ""
-    }
+    },
+    "categories": [
+      "tourist",
+      "travel",
+      "security"
+    ]
   },
   "effects": [],
   "sort": 0,

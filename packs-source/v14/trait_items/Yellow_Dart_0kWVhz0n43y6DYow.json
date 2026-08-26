@@ -77,7 +77,10 @@
       "range": "short",
       "versatile": false
     },
-    "default_ability": ""
+    "default_ability": "",
+    "categories": [
+      "yellowlander"
+    ]
   },
   "effects": [],
   "sort": 0,

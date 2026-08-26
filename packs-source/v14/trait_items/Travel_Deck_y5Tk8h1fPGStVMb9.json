@@ -73,7 +73,11 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "noble",
+      "travel"
+    ]
   },
   "effects": [],
   "sort": 0,

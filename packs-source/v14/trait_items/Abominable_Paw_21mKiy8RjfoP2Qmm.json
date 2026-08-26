@@ -73,7 +73,10 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "bluelander"
+    ]
   },
   "effects": [],
   "sort": 0,

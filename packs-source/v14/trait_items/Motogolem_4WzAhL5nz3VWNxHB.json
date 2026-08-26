@@ -73,7 +73,11 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "servant",
+      "vehicle"
+    ]
   },
   "effects": [],
   "sort": 0,

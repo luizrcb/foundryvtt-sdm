@@ -73,7 +73,11 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "scion",
+      "vehicle"
+    ]
   },
   "effects": [],
   "sort": 0,

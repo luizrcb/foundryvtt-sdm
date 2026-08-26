@@ -73,7 +73,11 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "orangelander",
+      "vision"
+    ]
   },
   "effects": [],
   "sort": 0,

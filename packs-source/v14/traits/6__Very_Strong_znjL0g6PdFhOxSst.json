@@ -57,7 +57,11 @@
       "overcharge": "",
       "roll_formula": "",
       "overcharge_roll_formula": ""
-    }
+    },
+    "categories": [
+      "golem",
+      "ability"
+    ]
   },
   "effects": [
     {

@@ -79,7 +79,11 @@
     "default_ability": "",
     "replenish": {
       "value": 3
-    }
+    },
+    "categories": [
+      "greenlander",
+      "damage"
+    ]
   },
   "effects": [],
   "sort": 700000,

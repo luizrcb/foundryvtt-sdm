@@ -78,7 +78,11 @@
     },
     "replenish": {
       "value": 3
-    }
+    },
+    "categories": [
+      "holy_fool",
+      "healing"
+    ]
   },
   "effects": [],
   "sort": 0,

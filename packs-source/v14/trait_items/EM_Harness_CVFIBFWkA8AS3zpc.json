@@ -73,7 +73,11 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "golem",
+      "resistance"
+    ]
   },
   "effects": [
     {

@@ -73,7 +73,10 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "greenlander"
+    ]
   },
   "effects": [],
   "sort": 200000,

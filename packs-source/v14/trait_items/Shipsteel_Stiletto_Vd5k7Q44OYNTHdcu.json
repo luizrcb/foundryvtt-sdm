@@ -74,7 +74,10 @@
       "range": "",
       "versatile": false
     },
-    "default_ability": ""
+    "default_ability": "",
+    "categories": [
+      "trickster"
+    ]
   },
   "effects": [],
   "sort": 0,

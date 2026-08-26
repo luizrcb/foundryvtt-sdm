@@ -78,7 +78,11 @@
     "supply_type": "human",
     "area": {
       "value": "medium"
-    }
+    },
+    "categories": [
+      "communication",
+      "magielectronics"
+    ]
   },
   "effects": [],
   "sort": 0,

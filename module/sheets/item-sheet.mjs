@@ -136,10 +136,14 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
           options.parts.push('features');
         }
 
-        options.parts.push('effects', 'categories');
+        options.parts.push('effects'
+          //, 'categories'
+        );
         break;
       default:
-        options.parts.push('description', 'effects', 'categories');
+        options.parts.push('description', 'effects'
+          //, 'categories'
+        );
 
         break;
     }

@@ -73,7 +73,11 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "skeleton",
+      "damage"
+    ]
   },
   "effects": [],
   "sort": 0,

@@ -57,7 +57,15 @@
       "overcharge": "",
       "roll_formula": "",
       "overcharge_roll_formula": ""
-    }
+    },
+    "categories": [
+      "redlander",
+      "weapon",
+      "armor",
+      "defense",
+      "mental",
+      "protection"
+    ]
   },
   "effects": [],
   "sort": 0,

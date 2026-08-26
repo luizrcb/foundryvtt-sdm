@@ -57,7 +57,14 @@
       "overcharge": "",
       "roll_formula": "",
       "overcharge_roll_formula": ""
-    }
+    },
+    "categories": [
+      "purplelander",
+      "mental",
+      "machine",
+      "magielectronics",
+      "resistance"
+    ]
   },
   "effects": [],
   "sort": 0,

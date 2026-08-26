@@ -73,7 +73,11 @@
       },
       "range": "",
       "versatile": false
-    }
+    },
+    "categories": [
+      "orangelander",
+      "recharge"
+    ]
   },
   "effects": [],
   "sort": 0,

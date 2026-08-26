@@ -79,7 +79,10 @@
     "default_ability": "",
     "replenish": {
       "value": 20
-    }
+    },
+    "categories": [
+      "yellowlander"
+    ]
   },
   "effects": [],
   "sort": 0,
