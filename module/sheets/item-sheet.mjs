@@ -68,7 +68,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       toggleIsHallmark: this._toggleIsHallmark,
       radioToggle: this._radioToggle,
       spawnNPC: this._onSpawnNPC,
-      sendToChat: this._onSendToChat,
+      sendToChat: this._onSendToChat
     },
     form: {
       submitOnChange: true
@@ -136,10 +136,17 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
           options.parts.push('features');
         }
 
-        options.parts.push('effects', 'categories');
+        options.parts.push(
+          'effects'
+          //, 'categories'
+        );
         break;
       default:
-        options.parts.push('description', 'effects', 'categories');
+        options.parts.push(
+          'description',
+          'effects'
+          //, 'categories'
+        );
 
         break;
     }

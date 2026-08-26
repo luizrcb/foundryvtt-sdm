@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## v0.21.0
+
+- Added the Compendium Browser
+- Added icons to open the Compendium Browser from Actor sheets
+- Added a "Display in Chat" button on Item sheets
+- Automates Usage Rolls for items with the replenish feature when you roll the item's damage
+- Added more information to item chat cards when you Display an Item in Chat
+- Ends the development of new features for FoundryVTT v13
+
 ## v0.20.0
 
 - Added support to Group Checks
