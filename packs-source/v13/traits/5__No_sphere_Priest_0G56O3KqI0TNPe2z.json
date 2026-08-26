@@ -6,6 +6,11 @@
   "img": "icons/environment/people/cleric-grey.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "manager",
+      "mental",
+      "magielectronics"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

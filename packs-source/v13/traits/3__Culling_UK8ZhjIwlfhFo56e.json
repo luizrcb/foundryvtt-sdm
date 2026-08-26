@@ -6,6 +6,10 @@
   "img": "icons/magic/unholy/silhouette-evil-horned-giant.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "barbarian",
+      "attack"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

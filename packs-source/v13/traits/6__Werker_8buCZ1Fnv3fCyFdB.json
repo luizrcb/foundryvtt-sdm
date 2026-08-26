@@ -6,6 +6,11 @@
   "img": "icons/commodities/tech/console-steel.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "redlander",
+      "machine",
+      "repair"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

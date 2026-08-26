@@ -6,6 +6,12 @@
   "img": "icons/creatures/magical/fae-fairy-winged-glowing-green.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "tourist",
+      "stealth",
+      "defense",
+      "attack"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

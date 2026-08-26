@@ -6,6 +6,10 @@
   "img": "icons/magic/nature/leaf-glow-triple-teal.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "purplelander",
+      "social"
+    ],
     "status": "",
     "resources": "",
     "cost": 350,
@@ -39,7 +43,7 @@
     "type": "",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",
@@ -137,10 +141,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.10.0",
+    "systemVersion": "0.20.0",
     "createdTime": 1767011796905,
-    "modifiedTime": 1771464573655,
-    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+    "modifiedTime": 1787667543037,
+    "lastModifiedBy": "S0Z93vgE3OnovNXB"
   },
   "_key": "!items!ZTb13BW9GEjH2Uz6"
 }

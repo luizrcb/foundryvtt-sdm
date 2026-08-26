@@ -6,6 +6,10 @@
   "img": "icons/sundries/misc/key-steel-purple.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "purplelander",
+      "travel"
+    ],
     "status": "",
     "resources": "",
     "cost": 895,
@@ -37,7 +41,7 @@
     "type": "ward",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",
@@ -89,10 +93,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.20.0",
     "createdTime": 1767011796905,
-    "modifiedTime": 1767011796905,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1787667521187,
+    "lastModifiedBy": "S0Z93vgE3OnovNXB"
   },
   "_key": "!items!6rvBm9wfgmi09dYa"
 }

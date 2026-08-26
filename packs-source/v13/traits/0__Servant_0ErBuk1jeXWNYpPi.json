@@ -6,6 +6,11 @@
   "img": "icons/environment/creatures/golem-stone-purple.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "servant",
+      "social",
+      "stealth"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

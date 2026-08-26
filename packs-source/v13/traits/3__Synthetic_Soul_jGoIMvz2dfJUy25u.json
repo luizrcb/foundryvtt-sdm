@@ -6,6 +6,11 @@
   "img": "icons/magic/symbols/squares-3d-green.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "golem",
+      "mental",
+      "relife"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

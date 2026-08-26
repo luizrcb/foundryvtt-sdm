@@ -6,6 +6,11 @@
   "img": "icons/creatures/unholy/demon-winged-horned-orange.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "orangelander",
+      "mobility",
+      "stealth"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

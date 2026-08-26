@@ -6,6 +6,12 @@
   "img": "icons/magic/symbols/rune-sigil-red-orange.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "redlander",
+      "social",
+      "communication",
+      "machine"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

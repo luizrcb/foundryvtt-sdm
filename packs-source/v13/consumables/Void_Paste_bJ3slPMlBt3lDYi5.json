@@ -73,7 +73,10 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": true,
-    "supply_type": "human"
+    "supply_type": "human",
+    "categories": [
+      "food"
+    ]
   },
   "effects": [],
   "sort": 0,
@@ -88,10 +91,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.20.0",
     "createdTime": 1767014127286,
-    "modifiedTime": 1767014127286,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1787675588744,
+    "lastModifiedBy": "S0Z93vgE3OnovNXB"
   },
   "_key": "!items!bJ3slPMlBt3lDYi5"
 }

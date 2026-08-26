@@ -6,6 +6,10 @@
   "img": "icons/magic/unholy/silhouette-robe-evil-glow.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "servant",
+      "stealth"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

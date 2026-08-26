@@ -6,6 +6,13 @@
   "img": "icons/magic/light/explosion-beam-impact-silhouette.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "scion",
+      "ability",
+      "mental",
+      "power",
+      "magielectronics"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

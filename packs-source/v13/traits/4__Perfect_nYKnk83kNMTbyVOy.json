@@ -6,6 +6,11 @@
   "img": "icons/magic/holy/angel-winged-humanoid-blue.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "scion",
+      "resistance",
+      "appearance"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

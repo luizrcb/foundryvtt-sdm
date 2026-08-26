@@ -6,6 +6,11 @@
   "img": "icons/magic/control/control-influence-rally-purple.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "noömagus",
+      "resistance",
+      "mental"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

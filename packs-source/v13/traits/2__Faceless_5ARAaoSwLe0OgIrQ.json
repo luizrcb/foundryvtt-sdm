@@ -6,6 +6,11 @@
   "img": "icons/magic/perception/silhouette-stealth-shadow.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "scion",
+      "disguise",
+      "appearance"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

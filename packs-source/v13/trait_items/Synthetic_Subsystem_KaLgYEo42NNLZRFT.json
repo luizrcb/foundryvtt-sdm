@@ -6,6 +6,9 @@
   "img": "icons/commodities/biological/organ-liver-red.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "orangelander"
+    ],
     "status": "",
     "resources": "",
     "cost": 2000,
@@ -39,7 +42,7 @@
     "type": "",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",

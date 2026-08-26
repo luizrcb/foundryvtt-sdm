@@ -6,6 +6,12 @@
   "img": "icons/magic/death/skull-humanoid-crown-white-blue.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "orangelander",
+      "undead",
+      "repair",
+      "communication"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

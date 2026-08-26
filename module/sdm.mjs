@@ -64,6 +64,7 @@ import { SdmActorSheet } from './sheets/actor-sheet.mjs';
 import { SdmCaravanSheet } from './sheets/caravan-sheet.mjs';
 import { SdmItemSheet } from './sheets/item-sheet.mjs';
 
+import CompendiumBrowser from './app/compendium-browser.mjs';
 import {
   DEFAULT_ARMOR_ICON,
   DEFAULT_CASH_ICON,
@@ -82,7 +83,6 @@ import { $l10n } from './helpers/globalUtils.mjs';
 const { ActiveEffectConfig } = foundry.applications.sheets;
 const { Actors, Items } = foundry.documents.collections;
 const { DocumentSheetConfig } = foundry.applications.apps;
-
 /* -------------------------------------------- */
 /*  Init Hook                                   */
 /* -------------------------------------------- */
@@ -112,6 +112,9 @@ globalThis.sdm = {
     gm: gmMacros,
     makePowerItem,
     player: playerMacros
+  },
+  apps: {
+    CompendiumBrowser
   }
 };
 
@@ -220,6 +223,8 @@ Hooks.on('renderCombatTracker', (app, html) => {
     game.sdm.api.gm.groupInitiative();
   });
 });
+
+Hooks.on('renderCompendiumDirectory', (app, html) => CompendiumBrowser.injectSidebarButton(html));
 
 Hooks.on('updateCombat', async (combat, update) => {
   if (!game.user.isGM) return;

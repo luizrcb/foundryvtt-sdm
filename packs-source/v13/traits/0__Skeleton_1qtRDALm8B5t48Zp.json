@@ -6,6 +6,12 @@
   "img": "icons/magic/death/undead-skeleton-rags-fire-green.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "skeleton",
+      "undead",
+      "weapon",
+      "resistance"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

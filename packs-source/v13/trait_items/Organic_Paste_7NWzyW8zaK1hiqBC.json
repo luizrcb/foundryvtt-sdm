@@ -6,6 +6,10 @@
   "img": "icons/commodities/materials/slime-red.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "bluelander",
+      "power"
+    ],
     "status": "",
     "resources": "",
     "cost": 100,
@@ -37,7 +41,7 @@
     "type": "",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",
@@ -89,10 +93,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.10.0",
+    "systemVersion": "0.20.0",
     "createdTime": 1767011782775,
-    "modifiedTime": 1771463479891,
-    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+    "modifiedTime": 1787658776387,
+    "lastModifiedBy": "S0Z93vgE3OnovNXB"
   },
   "_key": "!items!7NWzyW8zaK1hiqBC"
 }

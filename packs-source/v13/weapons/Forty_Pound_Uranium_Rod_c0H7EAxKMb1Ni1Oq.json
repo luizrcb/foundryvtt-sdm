@@ -77,7 +77,10 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": "human"
+    "supply_type": "",
+    "categories": [
+      "stun"
+    ]
   },
   "effects": [],
   "sort": 600000,
@@ -92,10 +95,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.10.0",
+    "systemVersion": "0.20.0",
     "createdTime": 1767011720662,
-    "modifiedTime": 1771501667352,
-    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+    "modifiedTime": 1787081045706,
+    "lastModifiedBy": "FQCDGcZMFgalVRic"
   },
   "_key": "!items!c0H7EAxKMb1Ni1Oq"
 }

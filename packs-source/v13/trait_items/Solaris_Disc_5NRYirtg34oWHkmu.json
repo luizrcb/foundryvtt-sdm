@@ -6,6 +6,11 @@
   "img": "icons/magic/fire/barrier-wall-flame-ring-yellow.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "noömagus",
+      "power",
+      "recharge"
+    ],
     "status": "",
     "resources": "",
     "cost": 2500,
@@ -37,7 +42,7 @@
     "type": "ward",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",
@@ -89,10 +94,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.20.0",
     "createdTime": 1767011794132,
-    "modifiedTime": 1767011794132,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1787667284249,
+    "lastModifiedBy": "S0Z93vgE3OnovNXB"
   },
   "_key": "!items!5NRYirtg34oWHkmu"
 }

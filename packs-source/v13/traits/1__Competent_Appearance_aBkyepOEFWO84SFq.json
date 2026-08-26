@@ -6,6 +6,10 @@
   "img": "icons/skills/social/thumbsup-approval-like.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "manager",
+      "social"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

@@ -17,6 +17,7 @@
       "unit": "stones"
     },
     "features": [
+      "glowing",
       "reach",
       "two_handed"
     ],
@@ -40,7 +41,7 @@
     "type": "weapon",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",
@@ -77,7 +78,10 @@
       "range": "close",
       "versatile": false
     },
-    "default_ability": ""
+    "default_ability": "",
+    "categories": [
+      "yellowlander"
+    ]
   },
   "effects": [],
   "sort": 0,
@@ -93,10 +97,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.10.0",
+    "systemVersion": "0.20.0",
     "createdTime": 1767011809701,
-    "modifiedTime": 1771465579972,
-    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+    "modifiedTime": 1787673299027,
+    "lastModifiedBy": "S0Z93vgE3OnovNXB"
   },
   "_key": "!items!0kWVhz0n43y6DYow"
 }

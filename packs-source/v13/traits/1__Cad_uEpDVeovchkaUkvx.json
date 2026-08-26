@@ -6,6 +6,11 @@
   "img": "icons/creatures/mammals/humanoid-fox-cat-archer.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "orangelander",
+      "resistance",
+      "mod"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

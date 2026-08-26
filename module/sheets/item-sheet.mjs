@@ -3,7 +3,7 @@ import { SdmItem } from '../documents/item.mjs';
 import { createNPCByLevel, getActorOptions } from '../helpers/actorUtils.mjs';
 import { GearType, ItemType } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
-import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
+import { $fmt, $l10n, constructHTMLButton } from '../helpers/globalUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 
 const { api, sheets } = foundry.applications;
@@ -67,7 +67,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       toggleItemStatus: { handler: this._toggleItemStatus, buttons: [0, 2] },
       toggleIsHallmark: this._toggleIsHallmark,
       radioToggle: this._radioToggle,
-      spawnNPC: this._onSpawnNPC
+      spawnNPC: this._onSpawnNPC,
+      sendToChat: this._onSendToChat,
     },
     form: {
       submitOnChange: true
@@ -105,6 +106,9 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     features: {
       template: templatePath('item/features'),
       scrollable: ['']
+    },
+    categories: {
+      template: templatePath('item/categories')
     }
   };
 
@@ -122,16 +126,21 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
           options.parts.push('powerAlbum');
         }
 
-        options.parts.push('description')
+        options.parts.push('description');
 
-        if (![GearType.CORRUPTION, GearType.AFFLICTION, GearType.PET].includes(this.document.system.type) ) {
-          options.parts.push('features')
+        if (
+          ![GearType.CORRUPTION, GearType.AFFLICTION, GearType.PET].includes(
+            this.document.system.type
+          )
+        ) {
+          options.parts.push('features');
         }
 
-        options.parts.push('effects');
-      break;
+        options.parts.push('effects', 'categories');
+        break;
       default:
-        options.parts.push('description', 'effects');
+        options.parts.push('description', 'effects', 'categories');
+
         break;
     }
   }
@@ -183,7 +192,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     } else if (this.item.type === ItemType.GEAR && this.item.system.type === GearType.WEAPON) {
       context.itemFeatures = [...CONFIG.SDM.baseFeatures, ...CONFIG.SDM.weaponFeatures];
     } else {
-      context.itemFeatures = [...CONFIG.SDM.baseFeatures] ;
+      context.itemFeatures = [...CONFIG.SDM.baseFeatures];
     }
 
     if (this.item.type === ItemType.GEAR && this.item.system.type === GearType.POWER_ALBUM) {
@@ -206,6 +215,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       case 'attributesMount':
       case 'powerAlbum':
       case 'features':
+      case 'categories':
         // Necessary for preserving active tab on re-render
         context.tab = context.tabs[partId];
         break;
@@ -287,6 +297,11 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
           tab.label += 'Features';
           tab.icon = 'fa fa-gears';
           break;
+        case 'categories':
+          tab.id = 'categories';
+          tab.label += 'Categories';
+          tab.icon = 'fa fa-tag';
+          break;
       }
       if (this.tabGroups[tabGroup] === tab.id) tab.cssClass = 'active';
       tabs[partId] = tab;
@@ -323,6 +338,25 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
         }
       }
     });
+  }
+
+  /** @inheritdoc */
+  async _renderFrame(options) {
+    const frame = await super._renderFrame(options);
+
+    const buttons = [];
+
+    buttons.push(
+      constructHTMLButton({
+        label: '',
+        classes: ['header-control', 'icon', 'fa-solid', 'fa-share-from-square'],
+        dataset: { action: 'sendToChat', tooltip: 'SDM.Item.Share' }
+      })
+    );
+
+    this.window.controls.after(...buttons);
+
+    return frame;
   }
 
   // async _onSubmitForm(formConfig, event) {
@@ -523,7 +557,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       roll_formula,
       default_ability,
       description,
-      is_dangerous,
+      is_dangerous
     } = data;
 
     return {
@@ -702,6 +736,11 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
 
   static async _toggleItemStatus(event) {
     await this.item.toggleItemStatus(event);
+  }
+
+  static async _onSendToChat(event, target) {
+    const actor = this.item.parent ? this.item.parent : null;
+    await this.item.sendToChat({ actor, collapsed: false });
   }
 
   static async _onSpawnNPC(event, target) {
@@ -899,14 +938,14 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     const { name: petName, img: petImg, system: petData } = droppedActor;
     const { biography: petDescription } = petData;
 
-    let description = `<p>@UUID[${droppedActor.uuid}]{${petName}}</p>`
+    let description = `<p>@UUID[${droppedActor.uuid}]{${petName}}</p>`;
     description += petDescription;
 
     await this.item.update({
-      'name': petName,
-      'img': petImg,
+      name: petName,
+      img: petImg,
       'system.pet': droppedActor.uuid,
-      'system.description': description,
+      'system.description': description
     });
   }
 

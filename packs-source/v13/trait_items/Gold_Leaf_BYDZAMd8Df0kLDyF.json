@@ -6,6 +6,9 @@
   "img": "icons/consumables/plants/dried-herb-bundle-brown.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "golem"
+    ],
     "status": "",
     "resources": "",
     "cost": 100,
@@ -37,7 +40,7 @@
     "type": "",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 3,
     "power": {
       "img": "icons/svg/book.svg",

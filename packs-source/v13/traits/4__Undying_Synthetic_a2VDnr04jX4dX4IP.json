@@ -6,6 +6,11 @@
   "img": "icons/magic/death/skull-fire-white-yellow.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "golem",
+      "relife",
+      "repair"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

@@ -6,6 +6,12 @@
   "img": "icons/skills/trades/academics-merchant-scribe.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "bourgeois",
+      "weapon",
+      "social",
+      "communication"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

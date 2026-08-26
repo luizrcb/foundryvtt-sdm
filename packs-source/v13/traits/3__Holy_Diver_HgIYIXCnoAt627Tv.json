@@ -6,6 +6,11 @@
   "img": "icons/magic/light/explosion-star-glow-yellow.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "holy_fool",
+      "travel",
+      "vision"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

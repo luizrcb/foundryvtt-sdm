@@ -6,6 +6,13 @@
   "img": "icons/skills/toxins/cup-glass-poisoned-held.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "redlander",
+      "resistance",
+      "poison",
+      "drink",
+      "healing"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

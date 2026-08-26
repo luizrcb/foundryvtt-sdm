@@ -6,6 +6,10 @@
   "img": "icons/commodities/biological/ear-grey-brown.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "bearer",
+      "communication"
+    ],
     "status": "",
     "resources": "",
     "cost": 65,
@@ -37,7 +41,7 @@
     "type": "",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",
@@ -89,10 +93,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.20.0",
     "createdTime": 1767011808302,
-    "modifiedTime": 1767011808302,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1787672986435,
+    "lastModifiedBy": "S0Z93vgE3OnovNXB"
   },
   "_key": "!items!WaM5g8RpDQYXhuRs"
 }

@@ -6,6 +6,9 @@
   "img": "icons/commodities/gems/gem-faceted-radiant-red.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "servant"
+    ],
     "status": "",
     "resources": "",
     "cost": 3000,
@@ -37,7 +40,7 @@
     "type": "",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",

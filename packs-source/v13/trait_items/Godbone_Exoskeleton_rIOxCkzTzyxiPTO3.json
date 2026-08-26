@@ -6,6 +6,9 @@
   "img": "icons/commodities/bones/bones-broken-rib-tan.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "scion"
+    ],
     "status": "",
     "resources": "",
     "cost": 16000,
@@ -40,7 +43,7 @@
     "type": "armor",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",

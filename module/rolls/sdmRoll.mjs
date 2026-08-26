@@ -22,7 +22,7 @@ export default class SDMRoll {
     item = null,
     isCtrl = false,
     overcharged = false,
-    extraFlags = {},
+    extraFlags = {}
   }) {
     this.actor = actor;
     this.type = type;
@@ -210,6 +210,10 @@ export default class SDMRoll {
 
     chatDataMessage.flags = { ...chatDataMessage.flags, ...this.extraFlags };
     await createChatMessage(chatDataMessage);
+
+    if (isDamage && this.item && this.item?.system?.features?.has('replenish')) {
+      await this.item.usageRoll(this.item.system.replenish?.value);
+    }
   }
 
   #buildDiceComponent() {
@@ -236,9 +240,10 @@ export default class SDMRoll {
 
   #calculateModifiers(type) {
     if (type === 'save') {
-      const abilityData = this.actor.type === ActorType.NPC
-        ? { current: this.actor.system.bonus || 0 }
-        : this.actor.system.abilities?.[this.ability] || { current: 0 };
+      const abilityData =
+        this.actor.type === ActorType.NPC
+          ? { current: this.actor.system.bonus || 0 }
+          : this.actor.system.abilities?.[this.ability] || { current: 0 };
       const finalAbility = abilityData.current || 0;
       const ward = this.actor.system?.ward || 0;
       const burdenPenalty = this.actor.system?.burden_penalty || 0;
@@ -254,7 +259,8 @@ export default class SDMRoll {
 
       // Adiciona o modifier extra (que pode conter dados)
       const modifierComponents = this.#parseModifierString(this.modifier);
-      const { fixedModifiers: fixedExtra, diceModifiers: diceExtra } = this.#separateFixedAndDice(modifierComponents);
+      const { fixedModifiers: fixedExtra, diceModifiers: diceExtra } =
+        this.#separateFixedAndDice(modifierComponents);
 
       const fixed = (fixedExtra || 0) + total;
       return { fixedModifiers: fixed, diceModifiers: diceExtra || '' };
@@ -304,7 +310,6 @@ export default class SDMRoll {
       if (ward) {
         text += ` (${$l10n('TYPES.Item.ward').toLowerCase()} +${ward})`;
       }
-
       return text;
     }
 

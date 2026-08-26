@@ -6,6 +6,12 @@
   "img": "icons/environment/settlement/palast.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "greenlander",
+      "travel",
+      "mobility",
+      "protection"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

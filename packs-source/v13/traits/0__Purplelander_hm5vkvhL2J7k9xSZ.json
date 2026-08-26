@@ -6,6 +6,13 @@
   "img": "icons/creatures/magical/humanoid-silhouette-glowing-pink.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "purplelander",
+      "mental",
+      "machine",
+      "magielectronics",
+      "resistance"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

@@ -6,6 +6,12 @@
   "img": "icons/equipment/finger/ring-horseshoe-gold-red.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "manager",
+      "mental",
+      "disguise",
+      "daemon"
+    ],
     "status": "",
     "resources": "",
     "cost": 1100,
@@ -37,7 +43,7 @@
     "type": "ward",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",
@@ -89,10 +95,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "0.20.0",
     "createdTime": 1767011791312,
-    "modifiedTime": 1767011791312,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1787674731075,
+    "lastModifiedBy": "S0Z93vgE3OnovNXB"
   },
   "_key": "!items!ZpqfrpXTGIROcF4g"
 }

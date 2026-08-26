@@ -6,6 +6,11 @@
   "img": "icons/magic/control/energy-stream-link-orange.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "noömagus",
+      "power",
+      "recharge"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

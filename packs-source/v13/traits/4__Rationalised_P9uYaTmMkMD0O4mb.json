@@ -6,6 +6,11 @@
   "img": "icons/magic/holy/meditation-chi-focus-blue.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "soldier",
+      "resistance",
+      "protection"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

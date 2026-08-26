@@ -6,6 +6,12 @@
   "img": "icons/skills/melee/strike-dagger-poison-dripping-green.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "trickster",
+      "weapon",
+      "attack",
+      "stealth"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

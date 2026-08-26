@@ -6,6 +6,9 @@
   "img": "icons/commodities/materials/plant-sprout-brown-green.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "golem"
+    ],
     "status": "",
     "resources": "",
     "cost": 1,
@@ -39,7 +42,7 @@
     "type": "",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",

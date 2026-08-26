@@ -6,6 +6,11 @@
   "img": "icons/sundries/scrolls/scroll-bound-sealed-red-green.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "noömagus",
+      "power",
+      "magielectronics"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

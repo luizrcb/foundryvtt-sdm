@@ -6,6 +6,10 @@
   "img": "icons/weapons/swords/sword-flanged-lightning.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "soldier",
+      "level"
+    ],
     "status": "",
     "resources": "",
     "cost": 13500,
@@ -37,7 +41,7 @@
     "type": "weapon",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",
@@ -87,12 +91,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.350",
+    "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.1",
+    "systemVersion": "0.20.0",
     "createdTime": 1760974814183,
-    "modifiedTime": 1760998440766,
-    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+    "modifiedTime": 1787672159529,
+    "lastModifiedBy": "S0Z93vgE3OnovNXB"
   },
   "_key": "!items!3UU9F5vzJrAmtP7n"
 }

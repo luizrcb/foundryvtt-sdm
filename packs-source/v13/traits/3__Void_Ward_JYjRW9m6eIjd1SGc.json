@@ -6,6 +6,10 @@
   "img": "icons/magic/death/skull-energy-light-white.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "skeleton",
+      "defense"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

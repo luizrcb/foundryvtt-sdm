@@ -6,6 +6,9 @@
   "img": "icons/equipment/leg/pants-mud-leather-pants.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "tourist"
+    ],
     "status": "",
     "resources": "",
     "cost": 4500,
@@ -37,7 +40,7 @@
     "type": "armor",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",

@@ -6,6 +6,12 @@
   "img": "icons/consumables/fruit/nanking-cherry-leaf-red.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "purplelander",
+      "drug",
+      "vision",
+      "healing"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

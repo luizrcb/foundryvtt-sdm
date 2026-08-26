@@ -293,3 +293,16 @@ export function constructHTMLButton({
 
   return button;
 }
+
+export function getI18nKey(keyValue) {
+  if (CONFIG.SDM.paths.has(keyValue)) {
+    return `SDM.Category.${keyValue}`;
+  }
+  if (CONFIG.SDM.features.has(keyValue)) {
+    return `SDM.ItemFeature.${keyValue}`;
+  }
+  if (CONFIG.SDM.categories.has(keyValue)) {
+    return `SDM.Category.${keyValue}`;
+  }
+  return keyValue;
+}

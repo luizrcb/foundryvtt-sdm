@@ -6,6 +6,9 @@
   "img": "icons/weapons/daggers/dagger-curved-guard.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "bluelander"
+    ],
     "status": "",
     "resources": "",
     "cost": 350,
@@ -37,7 +40,7 @@
     "type": "weapon",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",

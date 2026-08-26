@@ -6,6 +6,13 @@
   "img": "icons/weapons/staves/staff-skull-brown.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "weapon",
+      "bearer",
+      "communication",
+      "mental",
+      "social"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

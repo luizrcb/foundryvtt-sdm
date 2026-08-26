@@ -6,6 +6,10 @@
   "img": "icons/sundries/survival/bedroll-worn-tan.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "soldier",
+      "rest"
+    ],
     "status": "",
     "resources": "",
     "cost": 1,
@@ -37,7 +41,7 @@
     "type": "",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",
@@ -86,12 +90,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.350",
+    "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.1",
+    "systemVersion": "0.20.0",
     "createdTime": 1760974682026,
-    "modifiedTime": 1760992432290,
-    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+    "modifiedTime": 1787672184396,
+    "lastModifiedBy": "S0Z93vgE3OnovNXB"
   },
   "_key": "!items!cTn8xTsCch3tJ8yg"
 }

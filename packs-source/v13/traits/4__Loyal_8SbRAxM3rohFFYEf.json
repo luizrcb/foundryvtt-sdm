@@ -6,6 +6,11 @@
   "img": "icons/magic/control/control-influence-puppet.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "bearer",
+      "social",
+      "protection"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

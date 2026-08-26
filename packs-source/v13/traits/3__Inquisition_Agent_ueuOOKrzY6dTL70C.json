@@ -6,6 +6,11 @@
   "img": "icons/magic/control/silhouette-aura-energy.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "manager",
+      "social",
+      "mental"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

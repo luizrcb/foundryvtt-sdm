@@ -6,6 +6,10 @@
   "img": "icons/magic/death/bones-crossed-orange.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "skeleton",
+      "power"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

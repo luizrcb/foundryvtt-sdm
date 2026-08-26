@@ -6,6 +6,11 @@
   "img": "icons/creatures/unholy/demon-horned-winged-laughing.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "holy_fool",
+      "daemon",
+      "communication"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

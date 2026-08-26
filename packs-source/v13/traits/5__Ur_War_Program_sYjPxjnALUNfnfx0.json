@@ -6,6 +6,12 @@
   "img": "icons/commodities/tech/dial-meter-gauge-blue.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "golem",
+      "attack",
+      "damage",
+      "mobility"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

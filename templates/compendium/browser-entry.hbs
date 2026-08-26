@@ -1,0 +1,56 @@
+<div class="item-card" data-uuid="{{uuid}}" draggable="true" data-tooltip="{{tooltip}}" data-tooltip-direction="UP"
+  data-action="openLink">
+  <header class="summary">
+    <img class="gold-icon" src="{{img}}" alt="{{name}}">
+    <div class="name-stacked">
+      <div class="title flex flex-between">
+        <span>{{name}}</span>
+        <span class="item-cost">{{costSubtitle}}</span>
+      </div>
+      <div class="subtitle flex flex-between">
+        <span>
+          {{#if isPower}}
+            {{localize 'SDM.PowerLevel'}}: {{powerLevel}}
+          {{else}}
+            {{typeLabel}}
+          {{/if}}
+          {{#if isWeapon}}
+            <i class="fas fa-sword" data-tooltip="SDM.Damage"></i>
+            <span data-tooltip="SDM.Damage">{{weaponDisplay}}</span>
+          {{/if}}
+          {{#if isArmor}}
+            <i class="fas fa-shield-alt" data-tooltip="SDM.FieldArmor"></i>
+            <span data-tooltip="SDM.FieldArmor">{{armorValue}}</span>
+          {{/if}}
+          {{#if isWard}}
+            <i class="fas fa-eye" data-tooltip="TYPES.Item.ward"></i>
+            <span data-tooltip="TYPES.Item.ward">{{wardValue}}</span>
+          {{/if}}
+        </span>
+        <span class="item-weight">
+          {{#if (and weightSubtitle (not isPower) (ne document.type 'trait'))}}
+            {{weightSubtitle}} <i class="fa fa-weight-hanging"></i>
+          {{/if}}
+        </span>
+      </div>
+    </div>
+  </header>
+  <footer class="card-footer">
+  {{#if features.length}}
+    <ul class="pills unlist">
+      {{#each features}}
+        <li class="pill transparent {{className}}" data-tooltip="{{tooltip}}">
+          {{label}}
+        </li>
+      {{/each}}
+    </ul>
+  {{/if}}
+  <div class="flex align-center source-label mt-5">
+    <span>{{source}}</span>
+  </div>
+  </footer>
+
+  {{#if ../displaySelection}}
+    <input type="checkbox" name="selected" value="{{uuid}}" {{#if selected}}checked{{/if}}>
+  {{/if}}
+</div>

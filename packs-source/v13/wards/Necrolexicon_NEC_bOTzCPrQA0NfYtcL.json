@@ -15,6 +15,7 @@
       "unit": "stones"
     },
     "features": [
+      "album",
       "corpsefed"
     ],
     "attributes": {
@@ -75,7 +76,10 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": "human"
+    "supply_type": "",
+    "categories": [
+      "power"
+    ]
   },
   "effects": [
     {
@@ -133,10 +137,10 @@
     "exportSource": null,
     "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.10.0",
+    "systemVersion": "0.20.0",
     "createdTime": 1767011700561,
-    "modifiedTime": 1771457367506,
-    "lastModifiedBy": "6nG6apxhfcD63CwQ"
+    "modifiedTime": 1787657165108,
+    "lastModifiedBy": "S0Z93vgE3OnovNXB"
   },
   "_key": "!items!bOTzCPrQA0NfYtcL"
 }

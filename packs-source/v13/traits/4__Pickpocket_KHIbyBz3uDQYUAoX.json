@@ -6,6 +6,11 @@
   "img": "icons/skills/social/theft-pickpocket-bribery-brown.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "trickster",
+      "stealth",
+      "security"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

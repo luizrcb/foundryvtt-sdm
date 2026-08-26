@@ -6,6 +6,12 @@
   "img": "icons/magic/symbols/runes-carved-stone-green.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "bearer",
+      "resistance",
+      "protection",
+      "mental"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

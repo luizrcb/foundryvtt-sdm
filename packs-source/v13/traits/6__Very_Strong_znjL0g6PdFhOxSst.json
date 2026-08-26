@@ -6,6 +6,10 @@
   "img": "icons/magic/control/buff-strength-muscle-damage-red.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "golem",
+      "ability"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

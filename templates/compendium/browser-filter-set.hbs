@@ -1,0 +1,35 @@
+<div class="filter-item" data-filter-id="{{key}}">
+  <div class="filter-label">{{localize label}}</div>
+  <div class="filter-controls">
+    {{#if (eq type "boolean")}}
+      <label>
+        <input type="checkbox" name="additional.{{key}}" data-action="setFilter" {{#if value}}checked{{/if}}>
+        {{localize 'SDM.ButtonYes'}}
+      </label>
+    {{else if (eq type "range")}}
+     <div class="range-inputs">
+      <input type="text"
+         name="additional.{{key}}.min"
+         data-dtype="Number"
+         value="{{value.min}}"
+         placeholder="Min">
+      <span>–</span>
+      <input type="text"
+        name="additional.{{key}}.max"
+        data-dtype="Number"
+        value="{{value.max}}"
+        placeholder="Max">
+    </div>
+
+    {{else if (eq type "set")}}
+      <div class="checkbox-group">
+        {{#each config.choices}}
+          <label>
+            <input type="checkbox" data-action="setFilter" name="additional.{{../key}}.{{@key}}" value="1" {{#if (lookup ../value @key)}}checked{{/if}}>
+            {{this}}
+          </label>
+        {{/each}}
+      </div>
+    {{/if}}
+  </div>
+</div>

@@ -62,4 +62,37 @@ export default class SdmBurden extends SdmItemBase {
       source.features = [...source.features].filter(f => f && f.trim() !== '').sort();
     }
   }
+
+  static get compendiumBrowserFilters() {
+    const filters = new Map();
+    SdmItemBase.addCommonFilters(filters);
+    filters.set("subtype", {
+      label: "SDM.FILTERS.Subtype",
+      type: "set",
+      config: {
+        keyPath: "system.type",
+        choices: CONFIG.SDM.burdenType,
+        blank: true
+      }
+    });
+
+    filters.set("powerLevel", {
+      label: "SDM.FILTERS.PowerLevel",
+      type: "range",
+      config: {
+        keyPath: "system.power.level",
+        min: 0
+      }
+    });
+
+    filters.set("powerDangerous", {
+      label: "SDM.FILTERS.PowerDangerous",
+      type: "boolean",
+      config: {
+        keyPath: "system.power.is_dangerous"
+      }
+    });
+
+    return filters;
+  }
 }

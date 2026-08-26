@@ -6,6 +6,11 @@
   "img": "icons/magic/earth/strike-stone-stalactite-blood-red.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "soldier",
+      "attack",
+      "defeat"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

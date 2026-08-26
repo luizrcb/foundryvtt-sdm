@@ -97,4 +97,28 @@ export default class SdmTrait extends SdmItemBase {
       source.features = [...source.features].filter(f => f && f.trim() !== '').sort();
     }
   }
+
+  static get compendiumBrowserFilters() {
+    const filters = new Map();
+    SdmItemBase.addCommonFilters(filters);
+
+    filters.set('subtype', {
+      label: 'SDM.FILTERS.Subtype',
+      type: 'set',
+      config: {
+        keyPath: 'system.type',
+        blank: true,
+        sort: false,
+        choices: Object.entries({
+          ...CONFIG.SDM.traitType,
+          '': 'TYPE.Trait'
+        }).reduce((acc, [key, value]) => {
+          acc[key] = game.i18n.localize(value);
+          return acc;
+        }, {})
+      }
+    });
+
+    return filters;
+  }
 }

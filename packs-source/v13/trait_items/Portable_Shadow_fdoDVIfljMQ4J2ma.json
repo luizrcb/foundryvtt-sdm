@@ -6,6 +6,12 @@
   "img": "icons/magic/unholy/orb-swirling-teal.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "soldier",
+      "ghost",
+      "damage",
+      "daemon"
+    ],
     "status": "",
     "resources": "",
     "cost": 850,
@@ -37,7 +43,7 @@
     "type": "ward",
     "starting_kit": false,
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "packed_remaining_items": 10,
     "power": {
       "img": "icons/svg/book.svg",
@@ -86,12 +92,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.350",
+    "coreVersion": "13.351",
     "systemId": "sdm",
-    "systemVersion": "0.5.1",
+    "systemVersion": "0.20.0",
     "createdTime": 1760974736871,
-    "modifiedTime": 1760993382733,
-    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+    "modifiedTime": 1787674820363,
+    "lastModifiedBy": "S0Z93vgE3OnovNXB"
   },
   "_key": "!items!fdoDVIfljMQ4J2ma"
 }

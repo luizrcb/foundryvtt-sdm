@@ -6,6 +6,11 @@
   "img": "icons/magic/death/hand-dirt-undead-zombie.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "skeleton",
+      "relife",
+      "regeneration"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

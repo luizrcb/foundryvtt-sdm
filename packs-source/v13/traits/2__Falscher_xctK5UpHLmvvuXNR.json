@@ -6,6 +6,10 @@
   "img": "icons/magic/control/silhouette-hold-change-green.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "redlander",
+      "resistance"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

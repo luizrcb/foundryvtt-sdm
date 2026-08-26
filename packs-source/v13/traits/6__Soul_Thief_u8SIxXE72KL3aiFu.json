@@ -6,6 +6,12 @@
   "img": "icons/magic/death/weapon-scythe-rune-green.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "skeleton",
+      "undead",
+      "healing",
+      "damage"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

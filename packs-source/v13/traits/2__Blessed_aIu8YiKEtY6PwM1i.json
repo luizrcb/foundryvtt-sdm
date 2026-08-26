@@ -6,6 +6,10 @@
   "img": "icons/magic/holy/chalice-glowing-gold-water.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "holy_fool",
+      "save"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

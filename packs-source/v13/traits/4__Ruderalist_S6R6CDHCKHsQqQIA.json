@@ -6,6 +6,12 @@
   "img": "icons/environment/wilderness/wall-ruins.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "yellowlander",
+      "machine",
+      "magielectronics",
+      "weapon"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

@@ -16,6 +16,11 @@ const templatesToLoad = [
   $$('item/power_album'),
   $$('item/power'),
   $$('item/trait/header'),
+  $$('compendium/browser-filters'),
+  $$('compendium/browser-results'),
+  $$('compendium/browser-filter-set'),
+  $$('compendium/browser-entry'),
+  $$('compendium/browser-footer'),
 ];
 
 export const preloadHandlebarsTemplates = async function () {

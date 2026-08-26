@@ -6,6 +6,13 @@
   "img": "icons/environment/wilderness/mine-interior-dungeon-door.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "bluelander",
+      "mobility",
+      "tracking",
+      "attack",
+      "defense"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,

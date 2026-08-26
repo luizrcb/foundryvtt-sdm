@@ -6,6 +6,11 @@
   "img": "icons/creatures/slimes/slime-face-melting-green.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "scion",
+      "regeneration",
+      "relife"
+    ],
     "status": "",
     "resources": "",
     "cost": 0,
