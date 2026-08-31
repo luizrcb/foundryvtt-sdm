@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v0.22.0
+
+- Fixed compendium browser wrongly displaying versatile damage for non-versatile weapons
+- Added size and unit fields to pet item sheets
+- Added a configuration to display and deduct crew weight from caravan inventory slots
+- Allowed decimal values for capacity on NPC sheets
+- Added size and unit to track weight on all Actors (editable with active effects and defaulted to 1 sack)
+
 ## v0.21.0
 
 - Added the Compendium Browser

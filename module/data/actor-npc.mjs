@@ -96,7 +96,6 @@ export default class SdmNPC extends SdmActorBase {
     data.defense = this.defense;
     data.level = this.level;
     data.life = this.life;
-
     return data;
   }
 }

@@ -45,17 +45,17 @@ export class SDMClientSettingsConfig extends GroupBase {
   ];
 }
 
-export class SDMCalendarSettingsConfig extends GroupBase {
+export class SDMCaravanSettingsConfig extends GroupBase {
   static DEFAULT_OPTIONS = {
     ...super.DEFAULT_OPTIONS,
     window: {
       ...super.DEFAULT_OPTIONS.window,
-      title: 'SDM.Menu.Calendar.Label',
-      icon: 'fa-solid fa-calendar'
+      title: 'SDM.Menu.Caravan.Label',
+      icon: 'fa-solid fa-truck-monster'
     }
   };
-  static LEGEND = 'SDM.Menu.Calendar.Name';
-  static KEYS = ['seasonsStarsIntegration'];
+  static LEGEND = 'SDM.Menu.Caravan.Name';
+  static KEYS = ['countCrewWeight', 'seasonsStarsIntegration'];
 }
 
 export class SDMPlayerPermissionsSettingsConfig extends GroupBase {

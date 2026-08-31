@@ -10,6 +10,7 @@ import {
 import TokenPlacement from '../canvas/token-placement.mjs';
 import {
   convertToCash,
+  convertSizeUnit,
   getSlotsTaken,
   ITEMS_ALLOWED_IN_CONTAINERS,
   ITEMS_NOT_ALLOWED_IN_CARAVANS,
@@ -241,9 +242,13 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       caravanDateShort
     };
 
+    const countCrewWeight = game.settings.get('sdm', 'countCrewWeight');
+
     const crew = context.system?.crew;
     const players = [];
     const npcs = [];
+
+    let totalCrewWeight = 0;
     if (crew) {
       for (const [key, member] of Object.entries(crew)) {
         const memberId = member.id;
@@ -254,6 +259,41 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
         member.key = key;
         member.totalCash = crewMember.getTotalCash();
 
+        member.totalWeight = crewMember.getTotalWeight();
+        member.type = crewMember.type;
+
+        if (crewMember.items) {
+          // Get all pet items
+          const petItems = crewMember.items.filter(
+            item => item.type === ItemType.GEAR && item.system?.type === GearType.PET
+          );
+          for (const petItem of petItems) {
+            const petUuid = petItem.system?.pet;
+            if (petUuid) {
+              // Check if this pet actor is in the crew
+              const isPetInCrew = Object.values(crew).some(m => m.id === petUuid);
+              if (isPetInCrew) {
+                // Subtract the weight of this pet item from member.totalWeight
+                const petWeight = convertToCash(
+                  petItem.system.size.value * petItem.system.quantity,
+                  petItem.system.size.unit
+                );
+                member.totalWeight -= petWeight;
+              }
+            }
+          }
+        }
+
+        member.totalWeightInStones = convertSizeUnit(
+          member.totalWeight,
+          SizeUnit.CASH,
+          SizeUnit.STONES
+        );
+
+        if (countCrewWeight) {
+          totalCrewWeight += member.totalWeight;
+        }
+
         if (crewMember.type === ActorType.CHARACTER) {
           players.push(member);
         } else {
@@ -263,6 +303,11 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     }
     context.crew_players = players;
     context.crew_npcs = npcs;
+    context.totalCrewWeight = totalCrewWeight;
+    context.totalCrewSlots =
+      totalCrewWeight === 0
+        ? totalCrewWeight
+        : Math.ceil(convertSizeUnit(totalCrewWeight, SizeUnit.CASH, SizeUnit.STONES));
     context.isCompactMode = this.actor.getFlag('sdm', 'compactMode') ?? false;
 
     // Offloading context prep to a helper function
@@ -400,39 +445,42 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
    * @param {object} context The context object to mutate
    */
   async _prepareItems(context) {
-    // Initialize containers.
-    // You can just use `this.document.itemTypes` instead
-    // if you don't need to subdivide a given type like
-    // this sheet does with spells
+    const totalCrewSlots = context.totalCrewSlots || 0;
+    const totalSacks = this.actor.totalSacks;
+    const crewFullSacks = Math.floor(totalCrewSlots / SLOTS_PER_SACK);
+    const remainder = totalCrewSlots % SLOTS_PER_SACK;
+    const freeSacks = Math.max(totalSacks - crewFullSacks, 0);
 
-    const capacity = Number(this.actor.system.capacity ?? 0);
-    const inventory = this.actor.system.inventory ?? {};
+    const inventory = this.actor.system.inventory || {};
 
+    // Ensure inventory entries exist for freeSacks
     const updates = {};
-    for (let i = 0; i < capacity; i += 1) {
-      const key = String(i);
-      if (!(key in inventory)) {
-        updates[`system.inventory.${key}`] = { name: '' };
-      }
+    for (let i = 0; i < freeSacks; i++) {
+      if (!inventory[i]) updates[`system.inventory.${i}`] = { name: '' };
     }
+    if (Object.keys(updates).length) await this.actor.update(updates);
 
-    if (Object.keys(updates).length) {
-      await this.actor.update(updates);
+    // Build sacks array
+    const sacks = [];
+    let firstSackMaxSlots = SLOTS_PER_SACK;
+    if (remainder > 0 && freeSacks > 0) {
+      firstSackMaxSlots = SLOTS_PER_SACK - remainder;
     }
-
-    const inventoryNames = this.actor.system.inventory || {};
-
-    const sacks = Array.from({ length: capacity }, (_, i) => ({
-      index: i,
-      name: inventoryNames[i].name || `${game.i18n.format('SDM.InventorySackLabel', { number: 1 + 1})}`,
-      items: [],
-      usedSlots: 0,
-      maxSlots: SLOTS_PER_SACK
-    }));
+    for (let i = 0; i < freeSacks; i++) {
+      const maxSlots = i === 0 && remainder > 0 ? firstSackMaxSlots : SLOTS_PER_SACK;
+      sacks.push({
+        index: i,
+        name:
+          inventory[i]?.name || `${game.i18n.format('SDM.InventorySackLabel', { number: i + 1 })}`,
+        items: [],
+        usedSlots: 0,
+        maxSlots: maxSlots
+      });
+    }
 
     const overflow = {
-      index: capacity,
-      name: `${game.i18n.localize('SDM.UnitSack')} ${capacity + 1}`,
+      index: freeSacks,
+      name: `${game.i18n.localize('SDM.UnitSack')} ${freeSacks + 1}`,
       items: [],
       usedSlots: 0,
       maxSlots: Infinity
@@ -454,12 +502,10 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
         if (weightRules === 'single_stone') need = 1;
       }
 
-      if (item.system?.container) {
-        need = 0;
-      }
+      if (item.system?.container) need = 0;
 
       const flaggedIdx = Number(item.getFlag(FLAG_SCOPE, FLAG_SACK));
-      const hasValidFlag = Number.isFinite(flaggedIdx) && flaggedIdx >= 0 && flaggedIdx < capacity;
+      const hasValidFlag = Number.isFinite(flaggedIdx) && flaggedIdx >= 0 && flaggedIdx < freeSacks;
 
       if (hasValidFlag && sacks[flaggedIdx].usedSlots + need <= sacks[flaggedIdx].maxSlots) {
         sacks[flaggedIdx].items.push(item);
@@ -479,12 +525,31 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
 
     sacks.forEach(s => s.items.sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0)));
 
+    // Build crew sack
+    const crewMembers = [...context.crew_players, ...context.crew_npcs];
+    const crewSack = {
+      type: 'crew',
+      name: game.i18n.localize('SDM.Crew'),
+      members: crewMembers.map(m => ({
+        name: m.name,
+        weight: m.totalWeightInStones || 0,
+        type: m.type,
+        key: m.key
+      })),
+      usedSlots: totalCrewSlots,
+      maxSlots: totalCrewSlots // always full, but we show it as used/max
+    };
+
     context.cargo = sacks;
+    context.crewSack = crewSack;
     if (overflow.items.length) context.overflow = overflow;
     context.canRenameSacks = this.actor.isOwner;
 
-    context.totalUsedSlots = sacks.reduce((a, s) => a + s.usedSlots, 0) + overflow.usedSlots;
-    context.totalMaxSlots = sacks.reduce((a, s) => a + s.maxSlots, 0);
+    // Totals
+    context.totalUsedSlots =
+      sacks.reduce((a, s) => a + s.usedSlots, 0) + overflow.usedSlots + totalCrewSlots;
+    context.totalMaxSlots = this.actor.maxSlots;
+    context.overloaded = context.totalUsedSlots > context.totalMaxSlots;
   }
 
   _getDropSackIndex(event) {
@@ -692,7 +757,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     }
 
     const newWeight = convertToCash(newSizeValue * newQuantity, newSizeUnit);
-    const currentCarriedWeight = this.actor.getCarriedGear() - originalWeight + newWeight;
+    const currentCarriedWeight = this.actor.getCarriedGearWeight() - originalWeight + newWeight;
     const totalCapacityInSacks = this.actor.system.capacity + this.actor.system.capacity_bonus;
     const maxCarryWeight = convertToCash(totalCapacityInSacks, SizeUnit.SACKS);
 
@@ -1050,7 +1115,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     await this.actor.update({
       'system.transport': {
         [`${newKey}`]: {
-          name: `${$fmt('SDM.DOCUMENT.New', { type: $l10n('SDM.Transport') })} (${transportLength})`,
+          name: `${$l10n('SDM.Transport')} (${transportLength})`,
           level: 0,
           capacity: 1,
           cargo: '',
@@ -1365,8 +1430,8 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
    * @protected
    */
   async _onDrop(event) {
-    event.preventDefault();      // prevent default browser behaviour
-    event.stopPropagation();     // stop event from bubbling to other listeners
+    event.preventDefault(); // prevent default browser behaviour
+    event.stopPropagation(); // stop event from bubbling to other listeners
 
     const data = TextEditor.getDragEventData(event);
     const actor = this.actor;
@@ -1579,7 +1644,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     if (ITEMS_NOT_ALLOWED_IN_CARAVANS.includes(item.type)) return false;
     if (SUBTYPES_NOT_ALLOWED_IN_CARAVANS.includes(item.system.type)) return false;
 
-    const capacity = Number(this.actor.system.capacity ?? 0);
+    const capacity = Number(this.actor.totalSacks ?? 0);
     const targetIdx = this._getDropSackIndexFromEvent(event);
     const aimedIdx = Number.isFinite(targetIdx) ? targetIdx : 0;
 
@@ -2006,9 +2071,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       return sum + convertToCash(sizeValue * quantity, sizeUnit);
     }, 0);
 
-    const currentCarriedWeight = this.actor.getCarriedGear();
-    const totalCapacityInSacks = this.actor.system.capacity + this.actor.system.capacity_bonus;
-    const maxCarryWeight = convertToCash(totalCapacityInSacks, SizeUnit.SACKS);
+    const currentCarriedWeight = this.actor.getCarriedGearWeight();
 
     if (currentCarriedWeight + totalNewWeight > maxCarryWeight) {
       // ui.notifications.error('Adding this item will exceed your carry weight limit.');

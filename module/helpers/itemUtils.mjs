@@ -29,6 +29,23 @@ export function convertToSacks(size = 0, unit) {
   return preciseRound(size / convertionFactor, 6);
 }
 
+export function convertSizeUnit(value = 0, fromUnit, toUnit) {
+  const toCash = {
+    [SizeUnit.SOAPS]: 25, // 1 soap = 25 cash
+    [SizeUnit.STONES]: 250, // 1 stone = 250 cash
+    [SizeUnit.SACKS]: 2500, // 1 sack = 2500 cash
+    [SizeUnit.CASH]: 1 // 1 cash = 1 cash
+  };
+
+  if (!toCash.hasOwnProperty(fromUnit) || !toCash.hasOwnProperty(toUnit)) {
+    throw new Error(`Invalid unit: ${fromUnit} or ${toUnit}`);
+  }
+
+  // Convert: value [fromUnit] -> cash -> [toUnit]
+  const result = value * (toCash[fromUnit] / toCash[toUnit]);
+  return preciseRound(result);
+}
+
 export function convertToCash(size = 0, unit) {
   let convertionFactor = 1;
 

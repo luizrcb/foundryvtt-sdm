@@ -832,14 +832,14 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
         docForEntry.type === 'gear' &&
         (system.type === 'ward' || (Array.isArray(features) && features.includes('ward')));
       const isPower = docForEntry.type === 'gear' && system.type === 'power';
-
+      const isVersatile =  Array.isArray(features) && features.includes('versatile');
       let powerLevel = '';
       if (isPower && system.power?.level) powerLevel = system.power.level;
 
       let weaponDisplay = '';
       if (isWeapon && system.weapon?.damage) {
         const base = system.weapon.damage.base;
-        const versatile = system.weapon.damage.versatile
+        const versatile = (system.weapon.versatile || isVersatile)
           ? `/${system.weapon.damage.versatile}`
           : '';
         const rangeKey = system.weapon.range;

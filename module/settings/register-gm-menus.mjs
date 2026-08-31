@@ -1,7 +1,7 @@
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 import {
   SDMClientSettingsConfig,
-  SDMCalendarSettingsConfig,
+  SDMCaravanSettingsConfig,
   SDMCombatSettingsConfig,
   SDMCoreRulesSettingsConfig,
   SDMSkillsSettingsConfig,
@@ -31,12 +31,12 @@ export function registerSDMGMSettingMenus() {
     restricted: true
   });
 
-  game.settings.registerMenu('sdm', '02-calendar', {
-    name: 'SDM.Menu.Calendar.Name',
-    hint: 'SDM.Menu.Calendar.Hint',
-    label: 'SDM.Menu.Calendar.Label',
-    icon: 'fa-solid fa-calendar',
-    type: SDMCalendarSettingsConfig,
+  game.settings.registerMenu('sdm', '02-caravan', {
+    name: 'SDM.Menu.Caravan.Name',
+    hint: 'SDM.Menu.Caravan.Hint',
+    label: 'SDM.Menu.Caravan.Label',
+    icon: 'fa-solid fa-truck-monster',
+    type: SDMCaravanSettingsConfig,
     restricted: true
   });
 

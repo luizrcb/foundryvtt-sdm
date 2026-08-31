@@ -22,6 +22,7 @@ import {
   BURDEN_ITEM_TYPES,
   checkIfItemIsAlsoAnArmor,
   convertToCash,
+  convertSizeUnit,
   GEAR_ITEM_TYPES,
   getSlotsTaken,
   onItemCreateActiveEffects,
@@ -281,25 +282,18 @@ export class SdmActor extends Actor {
     const estimatedWealth = this.getEstimatedWealth();
     const totalCash = this.getTotalCash();
 
-    const currentCarriedWeight = this.getCarriedGear();
-    const totalCapacityInSacks = this.system.capacity + this.system.capacity_bonus;
-
-    const maxCarryWeight = convertToCash(totalCapacityInSacks, SizeUnit.SACKS);
-    const overloaded = currentCarriedWeight > maxCarryWeight;
-
     this.system.inventory_value = estimatedWealth;
     this.system.total_cash = totalCash;
     this.system.wealth = totalCash + estimatedWealth;
-    this.system.overloaded = overloaded;
   }
 
   _prepareNpcData() {
-    const { burdenPenalty } = this.checkInventorySlots();
+    const { burdenPenalty, items } = this.checkInventorySlots();
 
     if (!this.id || this.inCompendium) {
       return;
     }
-
+    this.system.item_slots_taken = items.slotsTaken;
     this.system.burden_penalty = burdenPenalty;
   }
 
@@ -311,6 +305,14 @@ export class SdmActor extends Actor {
     for (const item of documents) {
       await onItemCreateActiveEffects(item);
     }
+  }
+
+  get totalSacks() {
+    return (this.system.capacity || 0) + (this.system.capacity_bonus || 0);
+  }
+
+  get maxSlots() {
+    return convertSizeUnit(this.totalSacks, SizeUnit.SACKS, SizeUnit.STONES);
   }
 
   _checkCarriedWeight(item, updateData) {
@@ -480,11 +482,10 @@ export class SdmActor extends Actor {
   getTotalWeight() {
     switch (this.type) {
       case ActorType.CHARACTER:
-        return this.getCarriedGear() + CHARACTER_DEFAULT_WEIGHT_IN_CASH;
-      case ActorType.CARAVAN:
-        return this.getCarriedGear() + this.getMountRidersWeight();
       case ActorType.NPC:
-        return CHARACTER_DEFAULT_WEIGHT_IN_CASH;
+        return this.getCarriedGearWeight() + this.getBodyWeight();
+      case ActorType.CARAVAN:
+        return this.getCarriedGearWeight();
       default:
         return 0;
     }
@@ -678,7 +679,17 @@ export class SdmActor extends Actor {
     };
   }
 
-  getCarriedGear() {
+  getBodyWeight() {
+    const size = this.system.size || { value: 1, unit: SizeUnit.SACKS };
+    return convertToCash(size.value, size.unit);
+  }
+
+  getCarriedGearWeight() {
+    if (this.type === ActorType.CHARACTER || this.type === ActorType.NPC) {
+      const slotsTakenWeight = convertToCash(this.system.item_slots_taken, SizeUnit.STONES);
+      return slotsTakenWeight;
+    }
+
     const itemsArray = this.items.contents;
     const filteredItems = itemsArray.filter(item => GEAR_ITEM_TYPES.includes(item.type));
 
