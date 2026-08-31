@@ -86,13 +86,13 @@
           </select>
         </div>
 
-        <div class="grid-span-1" data-tooltip="{{#if system.overloaded}}{{localize 'SDM.StatusOverloaded'}}{{/if}}">
-          <label for="system.capacity" class='resource-label {{#if system.overloaded}}fumble{{/if}}'>
-            {{localize 'SDM.FieldCapacity'}} {{#if system.overloaded}} <i class="fa fa-weight-hanging fumble"></i>{{/if}}
+        <div class="grid-span-1" data-tooltip="{{#if overloaded}}{{localize 'SDM.StatusOverloaded'}}{{/if}}">
+          <label for="system.capacity" class='resource-label {{#if overloaded}}fumble{{/if}}'>
+            {{localize 'SDM.FieldCapacity'}} {{#if overloaded}} <i class="fa fa-weight-hanging fumble"></i>{{/if}}
           </label>
           <input
             name='system.capacity'
-            class="{{#if system.overloaded}}fumble{{/if}}"
+            class="{{#if overloaded}}fumble{{/if}}"
             type='text'
             value='{{system.capacity}}'
             data-dtype="Number"
@@ -260,13 +260,13 @@
           </select>
         </div>
 
-        <div class="grid-span-1" data-tooltip="{{#if system.overloaded}}{{localize 'SDM.StatusOverloaded'}}{{/if}}">
-          <label for="system.capacity" class='resource-label {{#if system.overloaded}}fumble{{/if}}'>
-            {{localize 'SDM.FieldCapacity'}} {{#if system.overloaded}} <i class="fa fa-weight-hanging fumble"></i>{{/if}}
+        <div class="grid-span-1" data-tooltip="{{#if overloaded}}{{localize 'SDM.StatusOverloaded'}}{{/if}}">
+          <label for="system.capacity" class='resource-label {{#if overloaded}}fumble{{/if}}'>
+            {{localize 'SDM.FieldCapacity'}} {{#if overloaded}} <i class="fa fa-weight-hanging fumble"></i>{{/if}}
           </label>
           <input
             name='system.capacity'
-            class="{{#if system.overloaded}}fumble{{/if}}"
+            class="{{#if overloaded}}fumble{{/if}}"
             type='text'
             value='{{system.capacity}}'
             data-dtype="Number"

@@ -529,14 +529,24 @@ export default class SdmCharacter extends SdmActorBase {
       this.abilities[key].label = game.i18n.localize(CONFIG.SDM.abilities[key]) ?? key;
     }
 
-    const baseItemSlots = game.settings.get('sdm', 'baseItemSlots') || 7;
-    const baseTraitSlots = game.settings.get('sdm', 'baseTraitSlots') || 7;
-    const baseBurdenSlots = game.settings.get('sdm', 'baseBurdenSlots') || 20;
 
-    this.item_slots = baseItemSlots + this.abilities['str'].current + this.item_slots_bonus;
-    this.trait_slots = baseTraitSlots + this.abilities['tho'].current + this.trait_slots_bonus;
-    this.burden_slots = baseBurdenSlots + this.burden_slots_bonus;
     this.save_target = this.save_target || game.settings.get('sdm', 'defaultSaveValue') || 13;
+  }
+
+
+  get item_slots() {
+    const baseItemSlots = game.settings.get('sdm', 'baseItemSlots') || 7;
+    return  baseItemSlots + this.abilities['str'].current + this.item_slots_bonus;
+  }
+
+  get trait_slots() {
+    const baseTraitSlots = game.settings.get('sdm', 'baseTraitSlots') || 7;
+    return baseTraitSlots + this.abilities['tho'].current + this.trait_slots_bonus;
+  }
+
+  get burden_slots() {
+    const baseBurdenSlots = game.settings.get('sdm', 'baseBurdenSlots') || 20;
+    return baseBurdenSlots + this.burden_slots_bonus;
   }
 
   getRollData() {
@@ -549,7 +559,7 @@ export default class SdmCharacter extends SdmActorBase {
     }
 
     data.life = this.life;
-    data.lvl = this.level;
+    data.level = this.level;
     data.hero_dice = this.hero_dice;
     data.initiative_bonus = this.initiative_bonus;
     data.burden_penalty = this.burden_penalty || 0;
@@ -561,6 +571,7 @@ export default class SdmCharacter extends SdmActorBase {
     data.trait_slots = this.trait_slots;
     data.trait_slots_taken = this.trait_slots_taken;
     data.burden_slots = this.burden_slots;
+    data.system = this;
     return data;
   }
 }

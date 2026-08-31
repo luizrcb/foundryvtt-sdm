@@ -69,119 +69,134 @@
       </div>
       {{/if}}
 
-      {{#unless (or
-        (eq system.type 'corruption')
-        (eq system.type 'affliction')
-        (eq system.type 'augment')
-        (eq system.type 'pet')
-      )}}
-      <div class='grid grid-{{ifThen item.system.is_hallmark 3 2}}col'>
-        <div class='resource'>
-          <label class='resource-label'>{{localize 'SDM.ItemQuantity'}}
-            <input type='text' name='system.quantity' value='{{system.quantity}}' data-dtype='Number'  {{#if (eq system.type 'container')}}disabled{{/if}}/>
-          </label>
-        </div>
-        <div class='resource'>
-          {{#unless (eq system.size.unit 'cash')}}
-            <label class='resource-label'>{{localize 'SDM.ItemCost'}}</label>
-            <input type='text' name='system.cost' value='{{system.cost}}' data-dtype='Number' />
-          {{/unless}}
-        </div>
-
-        {{#if item.system.is_hallmark}}
-        <div class='resource'>
-          <label class='resource-label'>{{localize 'SDM.FieldLevel'}}
-            <input type='text' name='system.hallmark.level' value='{{system.hallmark.level}}' data-dtype='Number' />
-          </label>
-        </div>
-        {{/if}}
-
-        <div class='resource'>
-          <label class='resource-label'>{{localize 'SDM.ItemSizeValue'}}</label>
-          <input type='text' name='system.size.value' value='{{system.size.value}}' data-dtype='Number' />
-        </div>
-        <div class='resource'>
-          <label class='resource-label'>{{localize 'SDM.ItemSizeUnit'}}</label>
-          <select name='system.size.unit'>
-            <option value=''></option>
-            {{selectOptions sizeUnits localize=true selected=system.size.unit}}
-          </select>
-        </div>
-
-        {{#if item.system.is_hallmark}}
-        <div class='resource'>
-          <label class='resource-label' for='system.hallmark.experience'>{{localize 'SDM.FieldExperience'}}</label>
-          <input type='text' name='system.hallmark.experience' value='{{system.hallmark.experience}}' />
-        </div>
-        {{/if}}
-
-        {{#unless (or (eq system.size.unit 'cash') (eq system.type 'corruption') (eq system.type 'affliction') (not (has system.features 'charges')))}}
-        <div class='resource'>
-          <label class='resource-label' for="system.charges.max">{{localize 'SDM.ItemCharges'}}</label>
-          <div class='resource-content flexrow flex-center flex-between flex-group-center'>
-            <input type='text' name="system.charges.value" value="{{system.charges.value}}" data-dtype='Number' data-tooltip="{{localize 'SDM.ItemCharges'}}"/>
-            <span> / </span>
-            <input type='text' name="system.charges.max" value="{{system.charges.max}}" data-dtype='Number' data-tooltip="{{localize 'SDM.ItemMaxCharges'}}"/>
+      {{#if (eq system.type 'pet')}}
+        <div class='grid grid-2col'>
+          <div class='resource'>
+            <label class='resource-label'>{{localize 'SDM.ItemSizeValue'}}</label>
+            <input type='text' name='system.size.value' value='{{system.size.value}}' data-dtype='Number' />
           </div>
+          <div class='resource'>
+            <label class='resource-label'>{{localize 'SDM.ItemSizeUnit'}}</label>
+            <select name='system.size.unit'>
+              <option value=''></option>
+              {{selectOptions sizeUnits localize=true selected=system.size.unit}}
+            </select>
+          </div>
+        </div>
+      {{else}}
+        {{#unless (or
+          (eq system.type 'corruption')
+          (eq system.type 'affliction')
+          (eq system.type 'augment')
+        )}}
+        <div class='grid grid-{{ifThen item.system.is_hallmark 3 2}}col'>
+          <div class='resource'>
+            <label class='resource-label'>{{localize 'SDM.ItemQuantity'}}
+              <input type='text' name='system.quantity' value='{{system.quantity}}' data-dtype='Number'  {{#if (eq system.type 'container')}}disabled{{/if}}/>
+            </label>
+          </div>
+          <div class='resource'>
+            {{#unless (eq system.size.unit 'cash')}}
+              <label class='resource-label'>{{localize 'SDM.ItemCost'}}</label>
+              <input type='text' name='system.cost' value='{{system.cost}}' data-dtype='Number' />
+            {{/unless}}
+          </div>
+
+          {{#if item.system.is_hallmark}}
+          <div class='resource'>
+            <label class='resource-label'>{{localize 'SDM.FieldLevel'}}
+              <input type='text' name='system.hallmark.level' value='{{system.hallmark.level}}' data-dtype='Number' />
+            </label>
+          </div>
+          {{/if}}
+
+          <div class='resource'>
+            <label class='resource-label'>{{localize 'SDM.ItemSizeValue'}}</label>
+            <input type='text' name='system.size.value' value='{{system.size.value}}' data-dtype='Number' />
+          </div>
+          <div class='resource'>
+            <label class='resource-label'>{{localize 'SDM.ItemSizeUnit'}}</label>
+            <select name='system.size.unit'>
+              <option value=''></option>
+              {{selectOptions sizeUnits localize=true selected=system.size.unit}}
+            </select>
+          </div>
+
+          {{#if item.system.is_hallmark}}
+          <div class='resource'>
+            <label class='resource-label' for='system.hallmark.experience'>{{localize 'SDM.FieldExperience'}}</label>
+            <input type='text' name='system.hallmark.experience' value='{{system.hallmark.experience}}' />
+          </div>
+          {{/if}}
+
+          {{#unless (or (eq system.size.unit 'cash') (eq system.type 'corruption') (eq system.type 'affliction') (not (has system.features 'charges')))}}
+          <div class='resource'>
+            <label class='resource-label' for="system.charges.max">{{localize 'SDM.ItemCharges'}}</label>
+            <div class='resource-content flexrow flex-center flex-between flex-group-center'>
+              <input type='text' name="system.charges.value" value="{{system.charges.value}}" data-dtype='Number' data-tooltip="{{localize 'SDM.ItemCharges'}}"/>
+              <span> / </span>
+              <input type='text' name="system.charges.max" value="{{system.charges.max}}" data-dtype='Number' data-tooltip="{{localize 'SDM.ItemMaxCharges'}}"/>
+            </div>
+          </div>
+          {{/unless}}
+
+          {{#if (has system.features 'area')}}
+          <div class='resource'>
+            <label class='resource-label' for="system.area.value">{{localize 'SDM.ItemFeature.area'}}</label>
+            <select name='system.area.value' data-tooltip="{{localize 'SDM.ItemFeature.areaDescription'}}">
+              {{selectOptions areaValues localize=true selected=system.area.value blank=''}}
+            </select>
+          </div>
+          {{/if}}
+
+          {{#if (has system.features 'flare')}}
+          <div class='resource'>
+            <label class='resource-label' for="system.flare.value">{{localize 'SDM.ItemFeature.flare'}}</label>
+            <div class='resource-content'>
+              <input type='text' name="system.flare.value" value="{{system.flare.value}}" data-dtype='Number' data-tooltip="{{localize 'SDM.ItemFeature.flareDescription'}}"/>
+            </div>
+          </div>
+          {{/if}}
+
+          {{#if (has system.features 'pocket')}}
+          <div class='resource'>
+            <label class='resource-label' for="system.pocket.value">{{localize 'SDM.ItemFeature.pocket'}}</label>
+            <div class='resource-content'>
+              <input type='text' name="system.pocket.value" value="{{system.pocket.value}}" data-dtype='Number' data-tooltip="{{localize 'SDM.ItemFeature.pocketDescription'}}"/>
+            </div>
+          </div>
+          {{/if}}
+
+          {{#if (has system.features 'replenish')}}
+          <div class='resource'>
+            <label class='resource-label' for="system.replenish.value">{{localize 'SDM.ItemFeature.replenish'}}</label>
+            <div class='resource-content'>
+              <input type='text' name="system.replenish.value" value="{{system.replenish.value}}" data-dtype='Number' data-tooltip="{{localize 'SDM.ItemFeature.replenishDescription'}}"/>
+            </div>
+          </div>
+          {{/if}}
+
+          {{#if (has system.features 'resistant')}}
+          <div class='resource'>
+            <label class='resource-label' for="system.replenish.value">{{localize 'SDM.ItemFeature.resistant'}}</label>
+            <div class='resource-content'>
+              <input type='text' name="system.resistant.value" value="{{system.resistant.value}}" data-tooltip="{{localize 'SDM.ItemFeature.resistantDescription'}}"/>
+            </div>
+          </div>
+          {{/if}}
+
+          {{#if (eq system.type 'container')}}
+          <div class='resource'>
+            <label class='resource-label' for="system.capacity.max">{{localize 'SDM.GearContainer.Capacity'}}</label>
+            <div class='resource-content'>
+              <input type='text' name="system.capacity.max" value="{{system.capacity.max}}" data-dtype='Number' data-tooltip="{{localize 'SDM.UnitStones'}}"/>
+            </div>
+          </div>
+          {{/if}}
+
         </div>
         {{/unless}}
-
-        {{#if (has system.features 'area')}}
-        <div class='resource'>
-          <label class='resource-label' for="system.area.value">{{localize 'SDM.ItemFeature.area'}}</label>
-          <select name='system.area.value' data-tooltip="{{localize 'SDM.ItemFeature.areaDescription'}}">
-            {{selectOptions areaValues localize=true selected=system.area.value blank=''}}
-          </select>
-        </div>
-        {{/if}}
-
-        {{#if (has system.features 'flare')}}
-        <div class='resource'>
-          <label class='resource-label' for="system.flare.value">{{localize 'SDM.ItemFeature.flare'}}</label>
-          <div class='resource-content'>
-            <input type='text' name="system.flare.value" value="{{system.flare.value}}" data-dtype='Number' data-tooltip="{{localize 'SDM.ItemFeature.flareDescription'}}"/>
-          </div>
-        </div>
-        {{/if}}
-
-        {{#if (has system.features 'pocket')}}
-        <div class='resource'>
-          <label class='resource-label' for="system.pocket.value">{{localize 'SDM.ItemFeature.pocket'}}</label>
-          <div class='resource-content'>
-            <input type='text' name="system.pocket.value" value="{{system.pocket.value}}" data-dtype='Number' data-tooltip="{{localize 'SDM.ItemFeature.pocketDescription'}}"/>
-          </div>
-        </div>
-        {{/if}}
-
-        {{#if (has system.features 'replenish')}}
-        <div class='resource'>
-          <label class='resource-label' for="system.replenish.value">{{localize 'SDM.ItemFeature.replenish'}}</label>
-          <div class='resource-content'>
-            <input type='text' name="system.replenish.value" value="{{system.replenish.value}}" data-dtype='Number' data-tooltip="{{localize 'SDM.ItemFeature.replenishDescription'}}"/>
-          </div>
-        </div>
-        {{/if}}
-
-         {{#if (has system.features 'resistant')}}
-        <div class='resource'>
-          <label class='resource-label' for="system.replenish.value">{{localize 'SDM.ItemFeature.resistant'}}</label>
-          <div class='resource-content'>
-            <input type='text' name="system.resistant.value" value="{{system.resistant.value}}" data-tooltip="{{localize 'SDM.ItemFeature.resistantDescription'}}"/>
-          </div>
-        </div>
-        {{/if}}
-
-        {{#if (eq system.type 'container')}}
-        <div class='resource'>
-          <label class='resource-label' for="system.capacity.max">{{localize 'SDM.GearContainer.Capacity'}}</label>
-          <div class='resource-content'>
-            <input type='text' name="system.capacity.max" value="{{system.capacity.max}}" data-dtype='Number' data-tooltip="{{localize 'SDM.UnitStones'}}"/>
-          </div>
-        </div>
-        {{/if}}
-
-      </div>
-      {{/unless}}
+      {{/if}}
   </header>
   <header>
     <div class='grid grid-3col'>

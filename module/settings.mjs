@@ -491,7 +491,7 @@ export function registerSystemSettings() {
     default: BASE_DEFEAT_FORMULA
   });
 
- game.settings.register('sdm', 'baseRelifeFormula', {
+  game.settings.register('sdm', 'baseRelifeFormula', {
     name: 'SDM.SettingsBaseRelifeFormula',
     hint: 'SDM.SettingsBaseRelifeFormulaHint',
     scope: 'world', // "world" = GM only, "client" = per user
@@ -572,6 +572,16 @@ export function registerSystemSettings() {
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
     type: Boolean, // Data type: String, Number, Boolean, etc
+    default: false
+  });
+
+  game.settings.register('sdm', 'countCrewWeight', {
+    name: 'SDM.SettingCountCrewWeight',
+    hint: 'SDM.SettingCountCrewWeightHint',
+    scope: 'world',
+    restricted: true,
+    requiresReload: true,
+    type: Boolean,
     default: false
   });
 

@@ -15,7 +15,8 @@
       "unit": "stones"
     },
     "features": [
-      "concealed"
+      "concealed",
+      "versatile"
     ],
     "attributes": {
       "initiative": "",

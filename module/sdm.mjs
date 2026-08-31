@@ -586,17 +586,7 @@ Hooks.once('init', function () {
     label: 'SDM.SheetLabels.Item'
   });
 
-  DocumentSheetConfig.unregisterSheet(ActiveEffect, 'core', ActiveEffectConfig);
-
-  let activeEffectConfigClass;
-
-  if (game.release.generation === 13) {
-    activeEffectConfigClass = SdmActiveEffectConfig;
-  } else {
-    activeEffectConfigClass = SdmActiveEffectConfig14;
-  }
-
-  DocumentSheetConfig.registerSheet(ActiveEffect, 'sdm', activeEffectConfigClass, {
+  DocumentSheetConfig.registerSheet(ActiveEffect, 'sdm', SdmActiveEffectConfig14, {
     makeDefault: true
   });
 

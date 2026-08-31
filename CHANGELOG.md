@@ -1,5 +1,16 @@
 # CHANGELOG
 
+## v1.5.0
+
+- Fixed active effect property field not displaying options
+- Fixed compendium browser wrongly displaying versatile damage for non-versatile weapons
+- Added size and unit fields to pet item sheets
+- Added a configuration to display and deduct crew weight from caravan inventory slots
+- Allowed decimal values for capacity on NPC sheets
+- Added size and unit to track weight on all Actors (editable with active effects and defaulted to 1 sack)
+- Added the system object into available roll-data for Characters and NPCs
+- Fixed inventory sacks' labels always displaying "sack 2 label"
+
 ## v1.4.0
 
 - Added the Compendium Browser

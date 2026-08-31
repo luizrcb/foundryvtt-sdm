@@ -8,7 +8,7 @@ import {
   GearType,
   ItemType,
   RollMode,
-  RollType
+  RollType,
 } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import {
@@ -604,7 +604,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     }
 
     context.isCompactMode = this.actor.getFlag('sdm', 'compactMode') ?? false;
-
     // Offloading context prep to a helper function
     this._prepareItems(context);
 

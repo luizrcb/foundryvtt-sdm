@@ -12,7 +12,7 @@
                 <span class="">{{localize 'SDM.CaravanItemSlots'}}</span>
                 <span>[{{totalUsedSlots}}/{{totalMaxSlots}}]</span>
               </div>
-              {{#if system.overloaded}}
+              {{#if overloaded}}
                 <div class="fumble ml-5">
                   {{localize 'SDM.StatusOverloaded'}}
                   <i class="fa fa-weight-hanging fumble"></i>
@@ -43,7 +43,36 @@
          </ol>
        </section>
     </div>
-
+     {{!-- Crew Sack --}}
+     {{#if (gt crewSack.maxSlots 0)}}
+      <div class="main grid-span-1 list-border crew-sack" data-drop="false">
+        <div class="flex-group-center header flexrow mt-5">
+          <div>
+            <span>{{localize 'SDM.Passengers'}}</span>
+          </div>
+          <div>
+            <span>[{{crewSack.usedSlots}}/{{crewSack.maxSlots}}]</span>
+          </div>
+        </div>
+        <section>
+          <ol class='items-list collapsible-items list-border crew-list'>
+            {{#each crewSack.members as |member|}}
+              <li class="item flexrow" data-action="viewCrewMember" data-key="{{member.key}}">
+                <span class="item-name">
+                  {{#if (eq member.type 'character')}}
+                    <i class="fa-regular fa-user" data-tooltip="TYPES.Actor.character"></i>
+                  {{else}}
+                    <i class="fa-solid fa-user" data-tooltip="TYPES.Actor.npc"></i>
+                  {{/if}}
+                  {{member.name}}
+                </span>
+                <span class="item-weight">{{member.weight}} {{localize 'SDM.UnitStonesAbbr'}} <i class="fa fa-weight-hanging"></i></span>
+              </li>
+            {{/each}}
+          </ol>
+        </section>
+      </div>
+    {{/if}}
     {{#each cargo as |sack|}}
     <div class="main grid-span-1 list-border sack-drop" data-sack-index="{{@index}}" data-drop="true">
       <div class="flex-group-center flexrow mt-5">
@@ -74,6 +103,7 @@
        </section>
     </div>
     {{/each}}
+
     {{#if overflow}}
       <div class="main grid-span-1 list-border sack-drop sack-overflow"
           data-sack-index="{{system.capacity}}" data-drop="true">
@@ -93,6 +123,7 @@
     {{/if}}
   </div>
   {{else}}
+  {{!-- NORMAL INVENTORY (5‑column grid) --}}
   <div class="grid grid-5col">
     <div class="main grid-span-5">
       <section>
@@ -134,7 +165,36 @@
          </ol>
        </section>
     </div>
-
+    {{!-- Crew Sack --}}
+    {{#if (gt crewSack.maxSlots 0)}}
+      <div class="main grid-span-1 list-border crew-sack" data-drop="false">
+        <div class="flex-group-center header flexrow mt-5">
+          <div>
+            <span>{{localize 'SDM.Passengers'}}</span>
+          </div>
+          <div>
+            <span>[{{crewSack.usedSlots}}/{{crewSack.maxSlots}}]</span>
+          </div>
+        </div>
+        <section>
+          <ol class='items-list collapsible-items list-border crew-list'>
+            {{#each crewSack.members as |member|}}
+              <li class="item flexrow" data-action="viewCrewMember" data-key="{{member.key}}">
+                <span class="item-name">
+                  {{#if (eq member.type 'character')}}
+                    <i class="fa-regular fa-user" data-tooltip="TYPES.Actor.character"></i>
+                  {{else}}
+                    <i class="fa-solid fa-user" data-tooltip="TYPES.Actor.npc"></i>
+                  {{/if}}
+                  {{member.name}}
+                </span>
+                <span class="item-weight">{{member.weight}} {{localize 'SDM.UnitStonesAbbr'}} <i class="fa fa-weight-hanging"></i> </span>
+              </li>
+            {{/each}}
+          </ol>
+        </section>
+      </div>
+    {{/if}}
     {{#each cargo as |sack|}}
     <div class="main grid-span-1 list-border sack-drop" data-sack-index="{{@index}}" data-drop="true">
       <div class="flex-group-center flexrow mt-5">
@@ -165,6 +225,7 @@
        </section>
     </div>
     {{/each}}
+
     {{#if overflow}}
       <div class="main grid-span-1 list-border sack-drop sack-overflow"
           data-sack-index="{{system.capacity}}" data-drop="true">

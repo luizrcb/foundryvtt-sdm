@@ -339,7 +339,9 @@ SDM.characterPropertiesToActiveEffects = [
   'system.defeat.roll_bonus',
   'system.defeat.roll_mode',
   'system.capacity',
-  'system.speed'
+  'system.speed',
+  'system.size.unit',
+  'system.size.value'
 ];
 
 SDM.itemType = {
