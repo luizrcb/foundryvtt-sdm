@@ -1,5 +1,6 @@
-import { npcBaseFields } from './npc-base-data.mjs';
+import { SLOTS_PER_SACK } from '../helpers/constants.mjs';
 import SdmActorBase from './base-actor.mjs';
+import { npcBaseFields } from './npc-base-data.mjs';
 
 const fields = foundry.data.fields;
 
@@ -79,7 +80,7 @@ export default class SdmNPC extends SdmActorBase {
   }
 
   get item_slots() {
-    return this.capacity * 10;
+    return Math.trunc(this.capacity * SLOTS_PER_SACK);
   }
 
   get trait_slots() {

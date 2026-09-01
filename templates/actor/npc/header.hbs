@@ -2,6 +2,7 @@
 <div>
   <header class='sheet-header'>
     <div class="flexcol flex-between flex-center">
+       {{#if isToken}}<div class="token-tag">{{localize 'DOCUMENT.Token'}}</div>{{/if}}
       <img class='profile-img' src='{{actor.img}}' data-edit='img' data-action='onEditImage' data-tooltip='{{actor.name}}'
         height='100' width='100' />
     </div>

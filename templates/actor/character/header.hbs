@@ -3,6 +3,7 @@
   {{#if isCompactMode}}
  <header class='sheet-header'>
     <div class="flexcol flex-between flex-center" style="padding-bottom: 10px;">
+      {{#if isToken}}<div class="token-tag">{{localize 'DOCUMENT.Token'}}</div>{{/if}}
       <div class='profile-img'>
         <img src='{{actor.img}}' data-edit='img' data-action='onEditImage' data-tooltip='{{actor.name}}'
           height='100' width='100' />
@@ -188,7 +189,7 @@
                 {{/if}}
               </div>
             </div>
-            <div class="grid-span-1 resource">
+            <div class="grid-span-1 resource" data-tooltip="{{xpToNextLevel}} {{localize 'SDM.XPToLevelUP'}}">
               <label for="system.experience" class='resource-label'>
                 {{localize 'SDM.FieldCharXP'}}
               </label>
@@ -537,6 +538,7 @@
   {{else}}
   <header class='sheet-header'>
     <div class="flexcol flex-between flex-center">
+       {{#if isToken}}<div class="token-tag">{{localize 'DOCUMENT.Token'}}</div>{{/if}}
       <div class="profile-img">
         <img src='{{actor.img}}' data-edit='img' data-action='onEditImage' data-tooltip='{{actor.name}}'
           height='100' width='100' />
@@ -719,7 +721,7 @@
                 {{/if}}
               </div>
             </div>
-            <div class="grid-span-1 resource">
+            <div class="grid-span-1 resource" data-tooltip="{{xpToNextLevel}} {{localize 'SDM.XPToLevelUP'}}">
               <label for="system.experience" class='resource-label'>
                 {{localize 'SDM.FieldCharXP'}}
               </label>

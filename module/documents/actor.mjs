@@ -1,6 +1,5 @@
 import {
   BASE_DEFENSE_VALUE,
-  CHARACTER_DEFAULT_WEIGHT_IN_CASH,
   getLevel,
   getMaxLife,
   MAX_ATTRIBUTE_VALUE,
@@ -15,14 +14,15 @@ import {
   GearType,
   ItemType,
   SizeUnit,
+  SLOTS_PER_SACK,
   TraitType
 } from '../helpers/constants.mjs';
 import { $fmt, $l10n, capitalizeFirstLetter, safeEvaluate } from '../helpers/globalUtils.mjs';
 import {
   BURDEN_ITEM_TYPES,
   checkIfItemIsAlsoAnArmor,
-  convertToCash,
   convertSizeUnit,
+  convertToCash,
   GEAR_ITEM_TYPES,
   getSlotsTaken,
   onItemCreateActiveEffects,
@@ -312,7 +312,7 @@ export class SdmActor extends Actor {
   }
 
   get maxSlots() {
-    return convertSizeUnit(this.totalSacks, SizeUnit.SACKS, SizeUnit.STONES);
+    return Math.trunc(convertSizeUnit(this.totalSacks, SizeUnit.SACKS, SizeUnit.STONES));
   }
 
   _checkCarriedWeight(item, updateData) {
@@ -563,7 +563,9 @@ export class SdmActor extends Actor {
       0
     );
 
-    let itemSlotsLimit = isNPC ? this.system.capacity * 10 : this.system.item_slots;
+    let itemSlotsLimit = isNPC
+      ? Math.trunc(this.system.capacity * SLOTS_PER_SACK)
+      : this.system.item_slots;
     let traitSlotsLimit = isNPC ? 7 : this.system.trait_slots;
 
     let burdenPenaltyBonus = this.system.burden_penalty_bonus || 0;
@@ -1717,8 +1719,7 @@ export class SdmActor extends Actor {
           closestReturn: { dataset: { documentClass: 'Item', itemId: actionKey } }
         },
         groupChase: {
-          handler: '_onGroupChaseRoll',
-
+          handler: '_onGroupChaseRoll'
         },
         relife: {
           handler: '_onRelifeRoll',

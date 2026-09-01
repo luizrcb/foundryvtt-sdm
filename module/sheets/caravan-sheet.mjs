@@ -1,4 +1,5 @@
-import { ActorType, GearType, ItemType, SizeUnit } from '../helpers/constants.mjs';
+import TokenPlacement from '../canvas/token-placement.mjs';
+import { ActorType, GearType, ItemType, SizeUnit, SLOTS_PER_SACK } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import {
   $fmt,
@@ -7,10 +8,9 @@ import {
   foundryVersionIsAtLeast,
   getSeasonAndWeek
 } from '../helpers/globalUtils.mjs';
-import TokenPlacement from '../canvas/token-placement.mjs';
 import {
-  convertToCash,
   convertSizeUnit,
+  convertToCash,
   getSlotsTaken,
   ITEMS_ALLOWED_IN_CONTAINERS,
   ITEMS_NOT_ALLOWED_IN_CARAVANS,
@@ -28,7 +28,7 @@ const { performIntegerSort } = foundry.utils;
 
 const FLAG_SCOPE = 'sdm';
 const FLAG_SACK = 'sackIndex';
-const SLOTS_PER_SACK = 10;
+
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -160,6 +160,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     let caravanDate;
     let caravanDateShort;
     let seasonsStarsIntegration = false;
+
     if (globalThis.CALENDARIA) {
       const currentDate = globalThis.CALENDARIA.api.getCurrentDateTime();
       const weekday = globalThis.CALENDARIA.api.getCurrentWeekday();
@@ -242,6 +243,8 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       caravanDateShort
     };
 
+    context.isToken = this.document.isToken;
+
     const countCrewWeight = game.settings.get('sdm', 'countCrewWeight');
 
     const crew = context.system?.crew;
@@ -249,6 +252,8 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     const npcs = [];
 
     let totalCrewWeight = 0;
+    let totalCrewCash = 0;
+
     if (crew) {
       for (const [key, member] of Object.entries(crew)) {
         const memberId = member.id;
@@ -258,7 +263,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
         member.system = crewMember.system;
         member.key = key;
         member.totalCash = crewMember.getTotalCash();
-
+        totalCrewCash += member.totalCash;
         member.totalWeight = crewMember.getTotalWeight();
         member.type = crewMember.type;
 
@@ -284,11 +289,11 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
           }
         }
 
-        member.totalWeightInStones = convertSizeUnit(
+        member.totalWeightInStones = Math.ceil(convertSizeUnit(
           member.totalWeight,
           SizeUnit.CASH,
           SizeUnit.STONES
-        );
+        ));
 
         if (countCrewWeight) {
           totalCrewWeight += member.totalWeight;
@@ -303,6 +308,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     }
     context.crew_players = players;
     context.crew_npcs = npcs;
+    context.totalCrewCash = totalCrewCash;
     context.totalCrewWeight = totalCrewWeight;
     context.totalCrewSlots =
       totalCrewWeight === 0
