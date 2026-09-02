@@ -1,4 +1,5 @@
-import { ActorType, GearType, ItemType, SizeUnit } from '../helpers/constants.mjs';
+import TokenPlacement from '../canvas/token-placement.mjs';
+import { ActorType, GearType, ItemType, SizeUnit, SLOTS_PER_SACK } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import {
   $fmt,
@@ -7,10 +8,9 @@ import {
   foundryVersionIsAtLeast,
   getSeasonAndWeek
 } from '../helpers/globalUtils.mjs';
-import TokenPlacement from '../canvas/token-placement.mjs';
 import {
-  convertToCash,
   convertSizeUnit,
+  convertToCash,
   getSlotsTaken,
   ITEMS_ALLOWED_IN_CONTAINERS,
   ITEMS_NOT_ALLOWED_IN_CARAVANS,
