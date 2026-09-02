@@ -34,10 +34,10 @@
           <div class="grid grid-4col">
 
             <div class="grid-span-1 resource" data-tooltip="
-                  <span><b>{{toPascalCase (localize 'SDM.UnitCash')}}:</b> {{localize 'SDM.CashSymbol'}}{{system.total_cash}}</span><br/>
-                  <span><b>{{localize 'SDM.TabCaravanInventory'}}:</b> {{localize 'SDM.CashSymbol'}}{{system.inventory_value}}</span><hr>
-                  <span><b>{{toPascalCase (localize 'SDM.Total')}}:</b> {{localize 'SDM.CashSymbol'}}{{system.wealth}}</span>
-                ">
+              <span><b>{{localize 'SDM.CaravanCash'}}:</b> {{localize 'SDM.CashSymbol'}}{{system.total_cash}}</span><br/>
+              <span><b>{{localize 'SDM.TabCaravanInventory'}}:</b> {{localize 'SDM.CashSymbol'}}{{system.inventory_value}}</span><br/>
+              <span><b>{{localize 'SDM.CrewMembersCash'}}:</b> {{localize 'SDM.CashSymbol'}}{{totalCrewCash}}</span>
+            ">
               <label for="system.total_cash" class='resource-label'>
                 {{localize 'SDM.FieldWealth'}}
               </label>
@@ -211,10 +211,10 @@
         </div>
 
          <div class="grid-span-1 resource" data-tooltip="
-              <span><b>{{toPascalCase (localize 'SDM.UnitCash')}}:</b> {{localize 'SDM.CashSymbol'}}{{system.total_cash}}</span><br/>
-              <span><b>{{localize 'SDM.TabCaravanInventory'}}:</b> {{localize 'SDM.CashSymbol'}}{{system.inventory_value}}</span><hr>
-              <span><b>{{toPascalCase (localize 'SDM.Total')}}:</b> {{localize 'SDM.CashSymbol'}}{{system.wealth}}</span>
-            ">
+            <span><b>{{localize 'SDM.CaravanCash'}}:</b> {{localize 'SDM.CashSymbol'}}{{system.total_cash}}</span><br/>
+            <span><b>{{localize 'SDM.TabCaravanInventory'}}:</b> {{localize 'SDM.CashSymbol'}}{{system.inventory_value}}</span><br/>
+            <span><b>{{localize 'SDM.CrewMembersCash'}}:</b> {{localize 'SDM.CashSymbol'}}{{totalCrewCash}}</span>
+          ">
           <label for="system.total_cash" class='resource-label'>
             {{localize 'SDM.FieldWealth'}}
           </label>

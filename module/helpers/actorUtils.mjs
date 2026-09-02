@@ -13,19 +13,31 @@ export const ATTACKS = ['melee', 'ranged', 'oldtech', 'fantascience'];
 
 const MIN_LEVEL = 0;
 const MAX_CREATURE_LEVEL = 17;
-
+const LIFE_PER_LEVEL = 4;
+export const XP_THRESHOLDS = [300, 750, 1500, 3000, 6000, 12500, 25000, 50000, 99999];
 export const UNENCUMBERED_THRESHOLD_CASH = 2500;
 export const MAX_CARRY_WEIGHT_CASH = 5000;
 
 export function getLevel(xp = 0) {
   const experience = parseInt(xp, 10);
-  const thresholds = [300, 750, 1500, 3000, 6000, 12500, 25000, 50000, 99999];
-  const level = thresholds.findIndex(threshold => experience < threshold);
+  const level = XP_THRESHOLDS.findIndex(threshold => experience < threshold);
   return level === -1 ? 9 : level;
 }
 
+
+export function getXpToNextLevel(xp) {
+  const experience = parseInt(xp, 10);
+  const level = getLevel(experience);
+
+  // Maximum level is 9 (index 9, i.e., level >= XP_THRESHOLDS.length)
+  if (level >= XP_THRESHOLDS.length) return 0;
+
+  // XP needed to cross the threshold for the current level
+  return XP_THRESHOLDS[level] - experience;
+}
+
 export function getMaxLife(level = MIN_LEVEL) {
-  const maxLife = (level + 1) * 4;
+  const maxLife = (level + 1) * LIFE_PER_LEVEL;
   return maxLife;
 }
 

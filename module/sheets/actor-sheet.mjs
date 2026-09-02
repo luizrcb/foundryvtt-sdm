@@ -1,7 +1,7 @@
 import CompendiumBrowser from '../app/compendium-browser.mjs';
 import { SdmItem } from '../documents/item.mjs';
 
-import { getNPCDataByLevel, MAX_MODIFIER } from '../helpers/actorUtils.mjs';
+import { getNPCDataByLevel, getXpToNextLevel, MAX_MODIFIER } from '../helpers/actorUtils.mjs';
 import {
   ActorType,
   AttackTarget,
@@ -594,6 +594,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     // const language = game.i18n.lang;
     // context.system.abilities = CONFIG.SDM.getOrderedAbilities(language);
+    context.xpToNextLevel = getXpToNextLevel(this.actor.system.experience);
+    context.isToken = this.document.isToken;
 
     if (this.actor.type === 'character') {
       const heroDiceType =

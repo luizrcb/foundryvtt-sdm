@@ -447,7 +447,6 @@ SDM.baseFeatures = [
 ];
 
 SDM.wardFeatures = [
-  { value: 'album', label: 'SDM.ItemFeature.album' },
   { value: 'antimagic', label: 'SDM.ItemFeature.antimagic' },
   { value: 'armor', label: 'SDM.ItemFeature.armor' },
   { value: 'auto', label: 'SDM.ItemFeature.auto' },
@@ -495,7 +494,6 @@ SDM.armorFeatures = [
 ];
 
 SDM.weaponFeatures = [
-  { value: 'area', label: 'SDM.ItemFeature.area' },
   { value: 'armor_piercing', label: 'SDM.ItemFeature.armor_piercing' },
   { value: 'atrophy', label: 'SDM.ItemFeature.atrophy' },
   { value: 'attune', label: 'SDM.ItemFeature.attune' },
@@ -529,7 +527,6 @@ SDM.weaponFeatures = [
   { value: 'slow', label: 'SDM.ItemFeature.slow' },
   { value: 'slumber', label: 'SDM.ItemFeature.slumber' },
   { value: 'subdual', label: 'SDM.ItemFeature.subdual' },
-  { value: 'throwing', label: 'SDM.ItemFeature.throwing' },
   { value: 'two_handed', label: 'SDM.ItemFeature.two_handed' },
   { value: 'versatile', label: 'SDM.ItemFeature.versatile' },
   { value: 'vital', label: 'SDM.ItemFeature.vital' },
@@ -543,9 +540,13 @@ const allFeatures = [
   ...SDM.weaponFeatures
 ];
 
-const uniqueFeatureValues = new Set(allFeatures.map(f => f.value));
+const addedFeatures = new Set();
 
-SDM.features = [...uniqueFeatureValues].sort();
+const uniqueFeatureValues = allFeatures.filter(f => {
+  return addedFeatures.has(f.value) ? false : addedFeatures.add(f.value);
+});
+
+SDM.features = uniqueFeatureValues.sort((a, b) => a.value - b.value);
 
 SDM.paths = [
   'wizard',

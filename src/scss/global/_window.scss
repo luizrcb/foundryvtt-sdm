@@ -1592,4 +1592,19 @@ input[type='radio']::after {
     margin-left: 1rem;
     white-space: nowrap;
   }
+
+  .token-tag {
+    display: flex;
+    align-self: center;
+    position: absolute;
+    border: 1px solid var(--sdm-c-border);
+    background: var(--sdm-c-border);
+    color: var(--sdm-c-white);
+    border-radius: 6px;
+    font-family: var(--sdm-font-secondary);
+    padding: 0.25rem 0.5rem;
+    font-weight: 600;
+    margin-top: -15px;
+    margin-right: 12px;
+  }
 }

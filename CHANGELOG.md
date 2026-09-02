@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v1.5.1
+
+- Fixed duplicate features in item sheets.
+- Added Token tag to Actor sheets for unlinked actors (prototype token that is not linked to Actor data).
+- Added tooltip informing how much XP a character needs in order to level up.
+- Added crew members' cash in the caravan wealth tooltip.
+- Added a function to automate incrementing a caravan's extra days tallied value.
+
 ## v1.5.0
 
 - Fixed active effect property field not displaying options
@@ -59,6 +67,22 @@
 ## v1.0.0
 
 - V14 support
+
+## v0.22.1
+
+- Fixed duplicate features in item sheets.
+- Added Token tag to Actor sheets for unlinked actors (prototype token that is not linked to Actor data).
+- Added tooltip informing how much XP a character needs in order to level up.
+- Added crew members' cash in the caravan wealth tooltip.
+- Added a function to automate incrementing a caravan's extra days tallied value.
+
+## v0.22.0
+
+- Fixed compendium browser wrongly displaying versatile damage for non-versatile weapons
+- Added size and unit fields to pet item sheets
+- Added a configuration to display and deduct crew weight from caravan inventory slots
+- Allowed decimal values for capacity on NPC sheets
+- Added size and unit to track weight on all Actors (editable with active effects and defaulted to 1 sack)
 
 ## v0.21.0
 
