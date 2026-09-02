@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## v0.22.1
+
+- Fixed duplicate features in item sheets.
+- Added Token tag to Actor sheets for unlinked actors (prototype token that is not linked to Actor data).
+- Added tooltip informing how much XP a character needs in order to level up.
+- Added crew members' cash in the caravan wealth tooltip.
+- Added a function to automate incrementing a caravan's extra days tallied value.
+
 ## v0.22.0
 
 - Fixed compendium browser wrongly displaying versatile damage for non-versatile weapons

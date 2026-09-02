@@ -1604,6 +1604,16 @@ export class SdmActor extends Actor {
     // but keep this for clarity.
   }
 
+  async increaseExtraDaysTallied(factor = 1) {
+    if (this.type !== ActorType.CARAVAN) return;
+    const extraDays = this.system.extraDays;
+    const nextExtraDays = extraDays + factor > 7 ? 0 : extraDays + factor;
+
+    await this.update({ 'system.extraDays': nextExtraDays });
+    let signal = factor > 0 ? '+' : '';
+    ui.notifications.info($fmt('SDM.ExtraDaysTalliedChanged', { value: `${nextExtraDays}` }));
+  }
+
   async performHudAction(action, identifier = '', args = {}, isShift = false, isCtrl = false) {
     // Resolve composite strings like "ability|str"
     let actionType = action || '';
