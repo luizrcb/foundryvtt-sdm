@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.5.4
+
+- Fixed issue causing the compendium browser not to open
+
 ## v1.5.3
 
 - Fixed issue on compendium browser features filters
