@@ -6,7 +6,7 @@ const ContextMenu = foundry.applications.ux.ContextMenu.implementation;
 
 export default class CompendiumBrowser extends HandlebarsApplicationMixin(ApplicationV2) {
   static DEFAULT_OPTIONS = {
-    id: 'compendium-browser-{id}',
+    id: 'compendium-browser',
     classes: ['compendium-browser', 'dialog-lg'],
     tag: 'form',
     window: {
@@ -147,10 +147,60 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
   static #allItems = [];
   static #cacheReady = false;
   static #loadingNotification = null;
+  static #isOpening = false;
+  static #loadingPromise = null;
+  static #successNotified = false;
+
+  /**
+   * Abre o navegador (singleton). Aguarda o cache se necessário.
+   */
+  static async open() {
+    // 1. Verifica se já existe uma janela com o ID fixo
+    const existingWindow = ui.windows['compendium-browser'];
+    if (existingWindow) {
+      existingWindow.render(true);
+      if (existingWindow.bringToFront) existingWindow.bringToFront();
+      return;
+    }
+
+    // 2. Evita múltiplas chamadas concorrentes
+    if (this.#isOpening) {
+      await this.#isOpening;
+      const newWindow = ui.windows['compendium-browser'];
+      if (newWindow) {
+        newWindow.render(true);
+        if (newWindow.bringToFront) newWindow.bringToFront();
+      }
+      return;
+    }
+
+    // 3. Inicia o processo de abertura
+    this.#isOpening = (async () => {
+      try {
+        // Se o cache não estiver pronto, aguarda
+        if (!this.#cacheReady) {
+          if (!this.#loadingPromise) {
+            this.#showLoadingNotification();
+            this.#loadingPromise = this.preloadCache().finally(() => {
+              this.#loadingPromise = null;
+            });
+          }
+          await this.#loadingPromise;
+        }
+
+        // Cria a instância e renderiza
+        const instance = new CompendiumBrowser();
+        await instance.render({ force: true });
+      } finally {
+        this.#isOpening = false;
+      }
+    })();
+
+    await this.#isOpening;
+  }
 
   /**
    * Preload all compendium and world items into memory.
-   * Uses getIndex() to detect entries, then fetches full documents individually.
    */
   static async preloadCache(force = false) {
     if (this.#cacheReady && !force) {
@@ -158,7 +208,6 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
       return;
     }
 
-    // Mostrar notificação de carregamento
     this.#showLoadingNotification();
 
     const start = performance.now();
@@ -182,7 +231,7 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
         console.warn('CompendiumBrowser: game.items not available or not iterable.');
       }
 
-      // 2) Compendium packs – using getIndex + getDocument to ensure full data
+      // 2) Compendium packs
       for (const pack of packs) {
         try {
           const packId = pack.metadata?.id || pack.id || pack.collection;
@@ -228,12 +277,16 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
         `CompendiumBrowser: Cache built in ${elapsed.toFixed(2)}ms with ${items.length} total items.`
       );
 
-      // Remover notificação de carregamento e mostrar sucesso
       this.#clearLoadingNotification();
-      ui.notifications.info(
-        game.i18n.format('SDM.CompendiumBrowser.Loaded', { count: items.length }),
-        { timeout: 3000 }
-      );
+
+      // Exibe a mensagem de sucesso apenas uma vez
+      if (!this.#successNotified) {
+        this.#successNotified = true;
+        ui.notifications.info(
+          game.i18n.format('SDM.CompendiumBrowser.Loaded', { count: items.length }),
+          { timeout: 3000 }
+        );
+      }
     } catch (err) {
       console.error('CompendiumBrowser: Fatal error during cache preload:', err);
       this.#cacheReady = true;
@@ -246,18 +299,15 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
   static #showLoadingNotification() {
     if (this.#loadingNotification) return;
     const msg = game.i18n.localize('SDM.CompendiumBrowser.Loading');
-    // Usar uma classe customizada para identificar a notificação
     this.#loadingNotification = ui.notifications.info(msg, { classes: ['compendium-loading'] });
   }
 
   static #clearLoadingNotification() {
     if (this.#loadingNotification) {
-      // Remover do DOM
       const el = this.#loadingNotification;
       if (el && el.parentNode) el.parentNode.removeChild(el);
       this.#loadingNotification = null;
     }
-    // Fallback: remover qualquer notificação com a classe
     document.querySelectorAll('.notification.info.compendium-loading').forEach(el => el.remove());
   }
 
@@ -317,7 +367,7 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
       this._applyTabFilters(this.options.tab, { keepFilters: true });
     }
 
-    // Se o cache não estiver pronto, iniciar carregamento
+    // Fallback: se o cache não estiver pronto, inicia o carregamento (raro)
     if (!CompendiumBrowser.#cacheReady) {
       CompendiumBrowser.preloadCache().catch(e => console.warn('Cache preload failed', e));
     }
@@ -351,6 +401,12 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
       ],
       { jQuery: false }
     );
+  }
+
+  /** @override */
+  _onClose() {
+    // A janela será removida do ui.windows automaticamente
+    super._onClose();
   }
 
   get currentFilters() {
@@ -465,7 +521,6 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
       });
     }
 
-    // features can be an array or a Set
     const featureIterable = Array.isArray(features) || features instanceof Set ? features : [];
     for (const feat of featureIterable) {
       let label = $l10n(`SDM.ItemFeature.${feat}Abbr`) || feat;
@@ -574,7 +629,7 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
   }
 
   // ============================================================
-  //  FILTERS & MATCH – CORRIGIDO para Sets, Arrays e valores únicos
+  //  FILTERS & MATCH
   // ============================================================
   #matchesFilters(
     doc,
@@ -623,7 +678,6 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
 
           const docValue = this.#getValueByPath(doc, def.config.keyPath);
 
-          // 🔥 CORREÇÃO: verifica Array, Set ou valor único
           const hasAnySelected = value => {
             if (Array.isArray(value)) {
               return value.some(v => selectedKeys.includes(v));
@@ -631,7 +685,6 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
             if (value instanceof Set) {
               return [...value].some(v => selectedKeys.includes(v));
             }
-            // valor único (string, number, etc.)
             return selectedKeys.includes(value);
           };
 
@@ -883,7 +936,6 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
       candidates.sort((a, b) => a.name.localeCompare(b.name, game.i18n.lang));
     }
 
-    // Helper para verificar se uma feature existe (funciona com Array e Set)
     const hasFeature = (features, key) => {
       if (!features) return false;
       if (Array.isArray(features)) return features.includes(key);
@@ -1154,7 +1206,7 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
       <i class="fa-solid fa-book-open-reader"></i>
       ${$l10n('SDM.CompendiumBrowser.Open')}
     `;
-    button.addEventListener('click', () => new CompendiumBrowser().render({ force: true }));
+    button.addEventListener('click', () => CompendiumBrowser.open());
 
     let headerActions = html.querySelector('.header-actions');
     if (!headerActions) {

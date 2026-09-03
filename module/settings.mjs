@@ -35,7 +35,7 @@ export function registerSystemSettings() {
       }
     ],
     onDown: () => {
-      new CompendiumBrowser().render(true);
+      CompendiumBrowser.open();
     }
   });
 

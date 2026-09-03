@@ -749,7 +749,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     event.stopPropagation();
     if (event.detail > 1) return; // Ignore repeated clicks
 
-    return new CompendiumBrowser().render(true);
+    return CompendiumBrowser.open();
   }
 
   // Add this method to handle item updates
