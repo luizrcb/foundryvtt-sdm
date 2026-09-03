@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v0.22.3
+
+- Improved Compendium Browser performance by loading an index when game world is loaded
+- Added a button on Caravan Sheets to open the Compendium Browser
+
 ## v0.22.2
 
 - Fixed issue on compendium browser features filters
