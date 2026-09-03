@@ -1152,7 +1152,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     event.stopPropagation();
     if (event.detail > 1) return; // Ignore repeated clicks
 
-    return new CompendiumBrowser().render(true);
+    return CompendiumBrowser.open();
   }
 
   static async _onRerollCharacter(event, target) {
