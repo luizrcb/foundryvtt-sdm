@@ -78,7 +78,7 @@
       "value": "small"
     },
     "is_supply": false,
-    "supply_type": "human",
+    "supply_type": "",
     "categories": [
       "invisibility",
       "magielectronics"
