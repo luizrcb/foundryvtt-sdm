@@ -610,7 +610,6 @@ Hooks.once('init', function () {
   setupSettingsSocket();
   setupGroupCheckSocket();
   setupEscalatorDiePositionBroadcast();
-
   //Preload Handlebars templates.
   return preloadHandlebarsTemplates();
 });
@@ -622,13 +621,14 @@ Hooks.once('init', function () {
 registerHandlebarsHelpers();
 registerTextEditorEnrichers();
 
+
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
 
 Hooks.once('ready', function () {
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
-
+   CompendiumBrowser.preloadCache();
   // client custom color system settings
   configurePlayerChromatype();
 

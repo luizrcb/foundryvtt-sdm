@@ -114,6 +114,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
 
   /** @override */
   _configureRenderOptions(options) {
+    const displayItemCategoriesTab = game.settings.get('sdm', 'displayItemCategoriesTab');
     super._configureRenderOptions(options);
     // Not all parts always render
     options.parts = ['header', 'tabs'];
@@ -136,14 +137,16 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
           options.parts.push('features');
         }
 
-        options.parts.push('effects'
-          //, 'categories'
-        );
+        options.parts.push('effects');
+        if (displayItemCategoriesTab && game.user.isGM) {
+          options.parts.push('categories');
+        }
         break;
       default:
-        options.parts.push('description', 'effects'
-          //, 'categories'
-        );
+        options.parts.push('description', 'effects');
+        if (displayItemCategoriesTab && game.user.isGM) {
+          options.parts.push('categories');
+        }
 
         break;
     }

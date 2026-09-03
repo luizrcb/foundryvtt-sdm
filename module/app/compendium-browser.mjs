@@ -127,7 +127,11 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
       label: 'SDM.CompendiumBrowser.Filters.Armor',
       keys: ['armorValue', 'armorType']
     },
-    { key: 'ward', label: 'SDM.CompendiumBrowser.Filters.Ward', keys: ['wardValue', 'wardType'] },
+    {
+      key: 'ward',
+      label: 'SDM.CompendiumBrowser.Filters.Ward',
+      keys: ['wardValue', 'wardType']
+    },
     {
       key: 'power',
       label: 'SDM.CompendiumBrowser.Filters.Power',
@@ -137,6 +141,165 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
 
   static BATCHING = { MARGIN: 50, SIZE: 50 };
   static SEARCH_DELAY = 2000;
+
+  // ======================== CACHE =========================
+  static #cache = new Map();
+  static #allItems = [];
+  static #cacheReady = false;
+  static #loadingNotification = null;
+
+  /**
+   * Preload all compendium and world items into memory.
+   * Uses getIndex() to detect entries, then fetches full documents individually.
+   */
+  static async preloadCache(force = false) {
+    if (this.#cacheReady && !force) {
+      console.debug('CompendiumBrowser: Cache already ready, skipping preload.');
+      return;
+    }
+
+    // Mostrar notificação de carregamento
+    this.#showLoadingNotification();
+
+    const start = performance.now();
+    console.debug('CompendiumBrowser: Starting cache preload...');
+
+    try {
+      const items = [];
+      const documentClass = 'Item';
+      const packs = game.packs.filter(p => p.documentName === documentClass && p.visible);
+      console.debug(`CompendiumBrowser: Found ${packs.length} visible Item compendia.`);
+
+      // 1) World items
+      if (game.items && typeof game.items.forEach === 'function') {
+        let worldCount = 0;
+        for (const item of game.items) {
+          items.push(this.#buildItemData(item, true));
+          worldCount++;
+        }
+        console.debug(`CompendiumBrowser: Loaded ${worldCount} world items.`);
+      } else {
+        console.warn('CompendiumBrowser: game.items not available or not iterable.');
+      }
+
+      // 2) Compendium packs – using getIndex + getDocument to ensure full data
+      for (const pack of packs) {
+        try {
+          const packId = pack.metadata?.id || pack.id || pack.collection;
+          console.debug(`CompendiumBrowser: Checking pack "${packId}"...`);
+
+          const index = await pack.getIndex({ fields: ['_id'] });
+          const count = index.size;
+          console.debug(`CompendiumBrowser: Pack "${packId}" has ${count} entries in index.`);
+
+          if (count === 0) {
+            console.debug(`CompendiumBrowser: Pack "${packId}" is empty, skipping.`);
+            continue;
+          }
+
+          const docs = [];
+          for (const entry of index) {
+            try {
+              const doc = await pack.getDocument(entry._id);
+              if (doc) docs.push(doc);
+            } catch (err) {
+              console.error(
+                `CompendiumBrowser: Failed to fetch document ${entry._id} from ${packId}:`,
+                err
+              );
+            }
+          }
+
+          const packItems = docs.map(doc => this.#buildItemData(doc, false, packId));
+          this.#cache.set(packId, packItems);
+          items.push(...packItems);
+          console.debug(
+            `CompendiumBrowser: Loaded ${packItems.length} items from pack "${packId}".`
+          );
+        } catch (err) {
+          console.error(`CompendiumBrowser: Failed to process pack "${pack.id}":`, err);
+        }
+      }
+
+      this.#allItems = items;
+      this.#cacheReady = true;
+      const elapsed = performance.now() - start;
+      console.debug(
+        `CompendiumBrowser: Cache built in ${elapsed.toFixed(2)}ms with ${items.length} total items.`
+      );
+
+      // Remover notificação de carregamento e mostrar sucesso
+      this.#clearLoadingNotification();
+      ui.notifications.info(
+        game.i18n.format('SDM.CompendiumBrowser.Loaded', { count: items.length }),
+        { timeout: 3000 }
+      );
+    } catch (err) {
+      console.error('CompendiumBrowser: Fatal error during cache preload:', err);
+      this.#cacheReady = true;
+      this.#allItems = [];
+      this.#clearLoadingNotification();
+      ui.notifications.error(game.i18n.localize('SDM.CompendiumBrowser.LoadError'));
+    }
+  }
+
+  static #showLoadingNotification() {
+    if (this.#loadingNotification) return;
+    const msg = game.i18n.localize('SDM.CompendiumBrowser.Loading');
+    // Usar uma classe customizada para identificar a notificação
+    this.#loadingNotification = ui.notifications.info(msg, { classes: ['compendium-loading'] });
+  }
+
+  static #clearLoadingNotification() {
+    if (this.#loadingNotification) {
+      // Remover do DOM
+      const el = this.#loadingNotification;
+      if (el && el.parentNode) el.parentNode.removeChild(el);
+      this.#loadingNotification = null;
+    }
+    // Fallback: remover qualquer notificação com a classe
+    document.querySelectorAll('.notification.info.compendium-loading').forEach(el => el.remove());
+  }
+
+  static #buildItemData(doc, isWorld, packId = null) {
+    const system = doc.system || {};
+    const uuid = isWorld ? `Item.${doc.id}` : `Compendium.${packId}.${doc.id}`;
+    const searchableText = this.#buildSearchableText(doc);
+
+    return {
+      _id: doc.id,
+      name: doc.name,
+      type: doc.type,
+      system: system,
+      img: doc.img || 'icons/svg/item-bag.svg',
+      uuid: uuid,
+      isWorldItem: isWorld,
+      packId: packId,
+      searchableText: searchableText,
+      _source: doc._source || null
+    };
+  }
+
+  static #buildSearchableText(doc) {
+    const parts = [doc.name || ''];
+    const sys = doc.system || {};
+    if (sys.description) parts.push(sys.description);
+    if (sys.features) {
+      if (Array.isArray(sys.features)) parts.push(sys.features.join(' '));
+      else if (typeof sys.features === 'object') parts.push(Object.values(sys.features).join(' '));
+    }
+    if (sys.categories) {
+      if (Array.isArray(sys.categories)) parts.push(sys.categories.join(' '));
+      else if (typeof sys.categories === 'object')
+        parts.push(Object.values(sys.categories).join(' '));
+    }
+    if (sys.paths) {
+      if (Array.isArray(sys.paths)) parts.push(sys.paths.join(' '));
+      else if (typeof sys.paths === 'object') parts.push(Object.values(sys.paths).join(' '));
+    }
+    return parts.join(' ').toLowerCase();
+  }
+  // ========================================================
 
   #filters;
   #selected = new Set();
@@ -152,6 +315,11 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
       const tab = this.constructor.TABS.find(t => t.tab === this.options.tab);
       if (!tab) this.options.tab = 'all-gear';
       this._applyTabFilters(this.options.tab, { keepFilters: true });
+    }
+
+    // Se o cache não estiver pronto, iniciar carregamento
+    if (!CompendiumBrowser.#cacheReady) {
+      CompendiumBrowser.preloadCache().catch(e => console.warn('Cache preload failed', e));
     }
   }
 
@@ -177,14 +345,11 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
             const el = target?.currentTarget;
             const uuid = el?.closest('[data-uuid]')?.dataset.uuid;
             if (!uuid) return;
-
             await this.#onSendToChat(uuid);
           }
         }
       ],
-      {
-        jQuery: false
-      }
+      { jQuery: false }
     );
   }
 
@@ -300,11 +465,12 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
       });
     }
 
-    for (const feat of features) {
+    // features can be an array or a Set
+    const featureIterable = Array.isArray(features) || features instanceof Set ? features : [];
+    for (const feat of featureIterable) {
       let label = $l10n(`SDM.ItemFeature.${feat}Abbr`) || feat;
       if (['area', 'replenish', 'flare', 'pocket', 'resistant'].includes(feat)) {
         const value = system[feat]?.value ?? '';
-
         if (feat === 'area') {
           const capitalized = value.charAt(0).toUpperCase() + value.slice(1);
           const replacement = $l10n(`SDM.Area${capitalized}Abbr`);
@@ -408,7 +574,7 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
   }
 
   // ============================================================
-  //  FILTROS E MATCH
+  //  FILTERS & MATCH – CORRIGIDO para Sets, Arrays e valores únicos
   // ============================================================
   #matchesFilters(
     doc,
@@ -418,7 +584,6 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
   ) {
     if (!skipTextSearch && filters.name) {
       const search = filters.name.toLowerCase();
-
       let textToSearch = searchableText;
       if (!textToSearch) {
         const fieldsToCheck = [
@@ -439,7 +604,6 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
           .join(' ')
           .toLowerCase();
       }
-
       if (!textToSearch.includes(search)) return false;
     }
 
@@ -456,12 +620,22 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
             continue;
           const selectedKeys = Object.keys(filterValue).filter(k => filterValue[k]);
           if (selectedKeys.length === 0) continue;
+
           const docValue = this.#getValueByPath(doc, def.config.keyPath);
-          if (Array.isArray(docValue)) {
-            if (!docValue.some(v => selectedKeys.includes(v))) return false;
-          } else {
-            if (!selectedKeys.includes(docValue)) return false;
-          }
+
+          // 🔥 CORREÇÃO: verifica Array, Set ou valor único
+          const hasAnySelected = value => {
+            if (Array.isArray(value)) {
+              return value.some(v => selectedKeys.includes(v));
+            }
+            if (value instanceof Set) {
+              return [...value].some(v => selectedKeys.includes(v));
+            }
+            // valor único (string, number, etc.)
+            return selectedKeys.includes(value);
+          };
+
+          if (!hasAnySelected(docValue)) return false;
           break;
         }
         case 'boolean': {
@@ -487,41 +661,6 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
     return true;
   }
 
-  #buildSearchableText(doc, filterDefinitions) {
-    const parts = [];
-    parts.push(doc.name || '');
-    if (doc.system?.description) parts.push(doc.system.description);
-
-    const categoryDef = filterDefinitions.get('categories');
-    if (categoryDef && doc.system?.categories) {
-      const choices = categoryDef.config.choices;
-      const labels = Array.from(doc.system.categories)
-        .map(key => $l10n(choices?.[key] || key))
-        .join(' ');
-      parts.push(labels);
-    }
-
-    const featureDef = filterDefinitions.get('features');
-    if (featureDef && doc.system?.features) {
-      const choices = featureDef.config.choices;
-      const labels = Array.from(doc.system.features)
-        .map(key => $l10n(choices?.[key] || key))
-        .join(' ');
-      parts.push(labels);
-    }
-
-    const pathDef = filterDefinitions.get('paths');
-    if (pathDef && doc.system?.categories) {
-      const choices = pathDef.config.choices;
-      const labels = Array.from(doc.system.categories)
-        .map(key => $l10n(choices?.[key] || key))
-        .join(' ');
-      parts.push(labels);
-    }
-
-    return parts.join(' ').toLowerCase();
-  }
-
   async _prepareContext(options) {
     const context = await super._prepareContext(options);
     context.filters = this.currentFilters;
@@ -540,7 +679,10 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
         ) ?? new Map();
 
     const activeTab = this.tabGroups.primary;
-    context.tabs = this.constructor.TABS.map(t => ({ ...t, active: t.tab === activeTab }));
+    context.tabs = this.constructor.TABS.map(t => ({
+      ...t,
+      active: t.tab === activeTab
+    }));
 
     context.searchValue = this.#filters.name || '';
     context.filterGroups = this.#prepareFilterGroups(context);
@@ -705,143 +847,67 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
     return groups;
   }
 
+  // ======================== CACHED RESULTS =========================
   async #prepareResults(context, options) {
     const filters = context.filters;
-    const documentClass = filters.documentClass || 'Item';
     const types = filters.types || new Set();
     const filterDefinitions = context.filterDefinitions;
 
-    const candidates = [];
-
-    if (this.options.world?.includeWorldItems) {
-      for (const item of game.items) {
-        if (types.size && !types.has(item.type)) continue;
-        const docData = {
-          _id: item.id,
-          name: item.name,
-          type: item.type,
-          system: item.system,
-          img: item.img,
-          uuid: item.uuid
-        };
-        if (!this.#matchesFilters(docData, filters, filterDefinitions, { skipTextSearch: true }))
-          continue;
-        candidates.push({
-          packId: 'world',
-          docId: item.id,
-          doc: docData,
-          isWorldItem: true
-        });
-      }
+    if (!CompendiumBrowser.#cacheReady) {
+      await CompendiumBrowser.preloadCache();
     }
 
-    const packs = game.packs.filter(p => p.documentName === documentClass && p.visible);
-    for (const pack of packs) {
-      const index = await pack.getIndex({ fields: ['name', 'type', 'system', 'img', 'folder'] });
-      for (const doc of index) {
-        if (types.size && !types.has(doc.type)) continue;
-        if (!this.#matchesFilters(doc, filters, filterDefinitions, { skipTextSearch: true }))
-          continue;
-        const packId = pack.metadata?.id || pack.id || pack.collection;
-        candidates.push({
-          packId,
-          docId: doc._id,
-          doc,
-          isWorldItem: false
-        });
-      }
+    let candidates = CompendiumBrowser.#allItems;
+
+    if (types.size) {
+      candidates = candidates.filter(item => types.has(item.type));
     }
 
-    if (candidates.length === 0) {
-      return {
-        results: [],
-        displaySelection: this.displaySelection,
-        emptyMessage: 'SDM.CompendiumBrowser.NoResults'
-      };
+    candidates = candidates.filter(item =>
+      this.#matchesFilters(item, filters, filterDefinitions, {
+        skipTextSearch: true
+      })
+    );
+
+    if (filters.name) {
+      const search = filters.name.toLowerCase();
+      candidates = candidates.filter(item => item.searchableText.includes(search));
     }
 
-    const needFullDocs = !!filters.name;
-    const fullDocsMap = new Map();
-
-    if (needFullDocs) {
-      const grouped = candidates.reduce((acc, c) => {
-        if (c.isWorldItem) {
-          fullDocsMap.set(`world.${c.docId}`, c.doc);
-        } else {
-          if (!acc[c.packId]) acc[c.packId] = [];
-          acc[c.packId].push(c.docId);
-        }
-        return acc;
-      }, {});
-
-      for (const [packId, ids] of Object.entries(grouped)) {
-        const pack = game.packs.get(packId) ?? game.packs.find(p => p.collection === packId);
-        if (!pack) continue;
-        for (const id of ids) {
-          try {
-            const doc = await pack.getDocument(id);
-            if (doc) fullDocsMap.set(`${packId}.${id}`, doc);
-          } catch (_) {}
-        }
-      }
+    const hasCostFilter = !!(
+      filters.additional?.cost?.min !== undefined || filters.additional?.cost?.max !== undefined
+    );
+    if (hasCostFilter) {
+      candidates.sort((a, b) => (a.system?.cost ?? Infinity) - (b.system?.cost ?? Infinity));
+    } else {
+      candidates.sort((a, b) => a.name.localeCompare(b.name, game.i18n.lang));
     }
 
-    const entries = [];
-    for (const c of candidates) {
-      const key = c.isWorldItem ? `world.${c.docId}` : `${c.packId}.${c.docId}`;
-      let docForEntry;
-      let searchableText = null;
+    // Helper para verificar se uma feature existe (funciona com Array e Set)
+    const hasFeature = (features, key) => {
+      if (!features) return false;
+      if (Array.isArray(features)) return features.includes(key);
+      if (features instanceof Set) return features.has(key);
+      return false;
+    };
 
-      if (needFullDocs) {
-        const fullDoc = fullDocsMap.get(key);
-        if (!fullDoc) continue;
-
-        searchableText = this.#buildSearchableText(fullDoc, filterDefinitions);
-        if (
-          !this.#matchesFilters(fullDoc, filters, filterDefinitions, {
-            skipTextSearch: false,
-            searchableText
-          })
-        )
-          continue;
-
-        docForEntry = fullDoc;
-      } else {
-        docForEntry = c.doc;
-      }
-
-      const pack = game.packs.get(c.packId);
-      let sourceLabel = c.isWorldItem ? 'World' : pack?.metadata?.label || c.packId;
-      if (c.packId === 'sdm.trait_items' || !c.packId.includes('sdm.')) {
-        const folder = docForEntry._source?.folder ?? docForEntry.folder;
-        if (folder && pack?.folders) {
-          const folderName = pack.folders.get(folder)?.name;
-          if (folderName) sourceLabel += ` (${folderName})`;
-        }
-      }
-
-      const system = docForEntry.system || {};
+    const results = candidates.map(item => {
+      const system = item.system || {};
+      const type = item.type;
       const features = system.features || [];
+
       const isWeapon =
-        docForEntry.type === 'gear' &&
-        (system.type === 'weapon' || (Array.isArray(features) && features.includes('weapon')));
-      const isArmor =
-        docForEntry.type === 'gear' &&
-        (system.type === 'armor' || (Array.isArray(features) && features.includes('armor')));
-      const isWard =
-        docForEntry.type === 'gear' &&
-        (system.type === 'ward' || (Array.isArray(features) && features.includes('ward')));
-      const isPower = docForEntry.type === 'gear' && system.type === 'power';
-      const isVersatile = Array.isArray(features) && features.includes('versatile')
-      let powerLevel = '';
-      if (isPower && system.power?.level) powerLevel = system.power.level;
+        type === 'gear' && (system.type === 'weapon' || hasFeature(features, 'weapon'));
+      const isArmor = type === 'gear' && (system.type === 'armor' || hasFeature(features, 'armor'));
+      const isWard = type === 'gear' && (system.type === 'ward' || hasFeature(features, 'ward'));
+      const isPower = type === 'gear' && system.type === 'power';
+      const isVersatile = hasFeature(features, 'versatile');
 
       let weaponDisplay = '';
       if (isWeapon && system.weapon?.damage) {
         const base = system.weapon.damage.base;
-        const versatile = (system.weapon.versatile || isVersatile)
-          ? `/${system.weapon.damage.versatile}`
-          : '';
+        const versatile =
+          system.weapon.versatile || isVersatile ? `/${system.weapon.damage.versatile}` : '';
         const rangeKey = system.weapon.range;
         const rangeLabel = rangeKey ? $l10n(CONFIG.SDM.rangeType?.[rangeKey] || rangeKey) : '';
         const range = rangeLabel ? ` (${rangeLabel})` : '';
@@ -850,60 +916,53 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
 
       let armorValue = '';
       if (isArmor && system.armor?.value !== undefined) armorValue = system.armor.value;
-
       let wardValue = '';
       if (isWard && system.ward?.value !== undefined) wardValue = system.ward.value;
 
-      let extraInfo = '';
-      if (docForEntry.type === 'gear') {
-        const subtype = system.type || system.subtype;
-        if (subtype === 'weapon') extraInfo = this.#getWeaponDamage(docForEntry);
-        else if (subtype === 'armor') extraInfo = this.#getArmorValue(docForEntry);
-        else if (subtype === 'ward') extraInfo = this.#getWardValue(docForEntry);
+      let sourceLabel = item.isWorldItem ? $l10n('SDM.WorldItem') : '';
+      if (!item.isWorldItem && item.packId) {
+        const pack =
+          game.packs.get(item.packId) ?? game.packs.find(p => p.collection === item.packId);
+        if (pack) sourceLabel = pack.metadata?.label || item.packId;
+      }
+      if (!item.isWorldItem && item._source?.folder) {
+        const pack =
+          game.packs.get(item.packId) ?? game.packs.find(p => p.collection === item.packId);
+        if (pack?.folders) {
+          const folderName = pack.folders.get(item._source.folder)?.name;
+          if (folderName) sourceLabel += ` (${folderName})`;
+        }
       }
 
-      entries.push({
-        uuid: docForEntry.uuid || `${c.isWorldItem ? 'world' : c.packId}.${c.docId}`,
-        name: docForEntry.name,
-        img: docForEntry.img || 'icons/svg/item-bag.svg',
-        subtitle: this.#getSubtitle(docForEntry),
+      return {
+        uuid: item.uuid,
+        name: item.name,
+        img: item.img,
+        subtitle: this.#getSubtitle(item),
         source: sourceLabel,
-        document: docForEntry,
-        isWorldItem: c.isWorldItem,
-        extraInfo,
+        document: item,
+        isWorldItem: item.isWorldItem,
+        extraInfo: '',
         isWeapon,
         isArmor,
         isWard,
         isPower,
-        powerLevel,
+        powerLevel: isPower ? system.power?.level || '' : '',
         weaponDisplay,
         armorValue,
         wardValue,
-        costSubtitle: this.#getCostSubtitle(docForEntry),
-        weightSubtitle: this.#getWeightSubtitle(docForEntry),
-        typeLabel: this.#getTypeLabel(docForEntry),
-        features: this.#getFeatures(docForEntry),
-        tooltip: docForEntry?.system?.description
-      });
-    }
-
-    const hasCostFilter = !!(
-      filters.additional?.cost?.min !== undefined || filters.additional?.cost?.max !== undefined
-    );
-    if (hasCostFilter) {
-      entries.sort((a, b) => {
-        const costA = a.document?.system?.cost ?? Infinity;
-        const costB = b.document?.system?.cost ?? Infinity;
-        return costA - costB;
-      });
-    } else {
-      entries.sort((a, b) => a.name.localeCompare(b.name, game.i18n.lang));
-    }
+        costSubtitle: this.#getCostSubtitle(item),
+        weightSubtitle: this.#getWeightSubtitle(item),
+        typeLabel: this.#getTypeLabel(item),
+        features: this.#getFeatures(item),
+        tooltip: system.description || ''
+      };
+    });
 
     return {
-      results: entries,
+      results,
       displaySelection: this.displaySelection,
-      emptyMessage: null
+      emptyMessage: results.length === 0 ? 'SDM.CompendiumBrowser.NoResults' : null
     };
   }
 
@@ -923,7 +982,6 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
     const invalidTooltip = invalid ? $l10n('SDM.CompendiumBrowser.SelectionInvalid') : '';
     return { summary, invalid, invalidTooltip };
   }
-
 
   static intersectFilters(first, second, currentFilters) {
     const final = new Map();
@@ -1064,7 +1122,7 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
       if (icon) icon.className = 'fas fa-chevron-right';
       this.expandedSections.set(`group-${groupKey}`, false);
     } else {
-      const container = group.closest('.filter-container') || document; // Replace .filter-container with your parent wrapper class
+      const container = group.closest('.filter-container') || document;
       const allGroups = container.querySelectorAll('.filter-group');
 
       allGroups.forEach(otherGroup => {
@@ -1203,3 +1261,6 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
     }
   }
 }
+
+// Expor globalmente para facilitar testes no console
+globalThis.CompendiumBrowser = CompendiumBrowser;

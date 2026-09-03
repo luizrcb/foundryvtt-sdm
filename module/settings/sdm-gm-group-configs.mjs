@@ -189,3 +189,17 @@ export class SDMAudioGMSettingsConfig extends GroupBase {
   static LEGEND = 'SDM.Menu.AudioGM.Name';
   static KEYS = ['levelUpSoundFx'];
 }
+
+/* 8) System DEV Setting */
+export class SDMSystemDevSettingsConfig extends GroupBase {
+  static DEFAULT_OPTIONS = {
+    ...super.DEFAULT_OPTIONS,
+    window: {
+      ...super.DEFAULT_OPTIONS.window,
+      title: 'SDM.Menu.SystemDev.Label',
+      icon: 'fa-solid fa-lock'
+    }
+  };
+  static LEGEND = 'SDM.Menu.SystemDev.Name';
+  static KEYS = ['displayItemCategoriesTab'];
+}

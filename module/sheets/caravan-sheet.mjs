@@ -1,3 +1,4 @@
+import CompendiumBrowser from '../app/compendium-browser.mjs';
 import TokenPlacement from '../canvas/token-placement.mjs';
 import { ActorType, GearType, ItemType, SizeUnit, SLOTS_PER_SACK } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
@@ -68,7 +69,8 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       viewCrewMember: this._viewCrewMember,
       openPetSheet: this._onOpenPetSheet,
       toggleCompact: this._onToggleCompact,
-      placeCrewMembers: this._onPlaceCrewMembers
+      placeCrewMembers: this._onPlaceCrewMembers,
+      openCompendiumBrowser: this._onOpenCompendiumBrowser
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: '[data-drop], [data-item-id]' }],
@@ -146,6 +148,14 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
         dataset: { action: 'toggleCompact', tooltip: 'SDM.CompactMode' }
       })
     ];
+
+    buttons.push(
+      constructHTMLButton({
+        label: '',
+        classes: ['header-control', 'icon', 'fa-solid', 'fa-book-open-reader'],
+        dataset: { action: 'openCompendiumBrowser', tooltip: 'SDM.CompendiumBrowser.Title' }
+      })
+    );
 
     this.window.controls.after(...buttons);
 
@@ -285,11 +295,9 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
           }
         }
 
-        member.totalWeightInStones = Math.ceil(convertSizeUnit(
-          member.totalWeight,
-          SizeUnit.CASH,
-          SizeUnit.STONES
-        ));
+        member.totalWeightInStones = Math.ceil(
+          convertSizeUnit(member.totalWeight, SizeUnit.CASH, SizeUnit.STONES)
+        );
 
         if (countCrewWeight) {
           totalCrewWeight += member.totalWeight;
@@ -537,7 +545,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
         name: m.name,
         weight: m.totalWeightInStones || 0,
         type: m.type,
-        key: m.key,
+        key: m.key
       })),
       usedSlots: totalCrewSlots,
       maxSlots: totalCrewSlots // always full, but we show it as used/max
@@ -735,6 +743,14 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
   //     })
   //   };
   // }
+
+  static async _onOpenCompendiumBrowser(event, target) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (event.detail > 1) return; // Ignore repeated clicks
+
+    return new CompendiumBrowser().render(true);
+  }
 
   // Add this method to handle item updates
   _onItemUpdate(item, updateData) {

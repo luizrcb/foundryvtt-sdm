@@ -520,6 +520,10 @@
   color: var(--sdm-c-blood);
 }
 
+.ultraviolet {
+  color: var(--sdm-c-highlight);
+}
+
 .icon-border {
   letter-spacing: 1px;
   text-shadow: -0.7px -0.7px 0 var(--sdm-c-border), 0 -0.7px 0 var(--sdm-c-border), 0.7px -0.7px 0 var(--sdm-c-border), 0.7px 0 0 var(--sdm-c-border), 0.7px 0.7px 0 var(--sdm-c-border), 0 0.7px 0 var(--sdm-c-border), -0.7px 0.7px 0 var(--sdm-c-border), -0.7px 0 0 var(--sdm-c-border);

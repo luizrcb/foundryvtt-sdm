@@ -585,6 +585,16 @@ export function registerSystemSettings() {
     default: false
   });
 
+  game.settings.register('sdm', 'displayItemCategoriesTab', {
+    name: 'SDM.SettingDisplayItemCategoriesTab',
+    hint: 'SDM.SettingDisplayItemCategoriesTabHint',
+    scope: 'world',
+    restricted: true,
+    requiresReload: true,
+    type: Boolean,
+    default: false
+  });
+
   game.settings.register('sdm', 'seasonsStarsIntegration', {
     name: 'SDM.SettingsCalendarIntegration',
     hint: 'SDM.SettingsCalendarIntegrationHint',

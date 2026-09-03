@@ -1,4 +1,3 @@
-import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 import {
   SDMClientSettingsConfig,
   SDMCaravanSettingsConfig,
@@ -9,7 +8,8 @@ import {
   SDMNPCBehaviorSettingsConfig,
   SDMEconomySettingsConfig,
   SDMAudioGMSettingsConfig,
-  SDMPlayerPermissionsSettingsConfig
+  SDMPlayerPermissionsSettingsConfig,
+  SDMSystemDevSettingsConfig
 } from './sdm-gm-group-configs.mjs';
 
 export function registerSDMGMSettingMenus() {
@@ -17,7 +17,7 @@ export function registerSDMGMSettingMenus() {
     name: 'SDM.Menu.Client.Name',
     hint: 'SDM.Menu.Client.Hint',
     label: 'SDM.Menu.Client.Label',
-    icon: 'fa-solid fa-user',
+    icon: 'fa-solid fa-user rust',
     type: SDMClientSettingsConfig,
     restricted: false
   });
@@ -26,7 +26,7 @@ export function registerSDMGMSettingMenus() {
     name: 'SDM.Menu.PlayerPermissions.Name',
     hint: 'SDM.Menu.PlayerPermissions.Hint',
     label: 'SDM.Menu.PlayerPermissions.Label',
-    icon: 'fa-solid fa-user-lock',
+    icon: 'fa-solid fa-user-lock pumpkin',
     type: SDMPlayerPermissionsSettingsConfig,
     restricted: true
   });
@@ -35,7 +35,7 @@ export function registerSDMGMSettingMenus() {
     name: 'SDM.Menu.Caravan.Name',
     hint: 'SDM.Menu.Caravan.Hint',
     label: 'SDM.Menu.Caravan.Label',
-    icon: 'fa-solid fa-truck-monster',
+    icon: 'fa-solid fa-truck-monster amber',
     type: SDMCaravanSettingsConfig,
     restricted: true
   });
@@ -44,7 +44,7 @@ export function registerSDMGMSettingMenus() {
     name: 'SDM.Menu.Combat.Name',
     hint: 'SDM.Menu.Combat.Hint',
     label: 'SDM.Menu.Combat.Label',
-    icon: 'fa-solid fa-hand-fist',
+    icon: 'fa-solid fa-hand-fist lime',
     type: SDMCombatSettingsConfig,
     restricted: true
   });
@@ -53,7 +53,7 @@ export function registerSDMGMSettingMenus() {
     name: 'SDM.Menu.CoreRules.Name',
     hint: 'SDM.Menu.CoreRules.Hint',
     label: 'SDM.Menu.CoreRules.Label',
-    icon: 'fa-solid fa-book',
+    icon: 'fa-solid fa-book pine',
     type: SDMCoreRulesSettingsConfig,
     restricted: true
   });
@@ -62,7 +62,7 @@ export function registerSDMGMSettingMenus() {
     name: 'SDM.Menu.Skills.Name',
     hint: 'SDM.Menu.Skills.Hint',
     label: 'SDM.Menu.Skills.Label',
-    icon: 'fa-solid fa-layer-group',
+    icon: 'fa-solid fa-layer-group sky',
     type: SDMSkillsSettingsConfig,
     restricted: true
   });
@@ -71,7 +71,7 @@ export function registerSDMGMSettingMenus() {
     name: 'SDM.Menu.Baselines.Name',
     hint: 'SDM.Menu.Baselines.Hint',
     label: 'SDM.Menu.Baselines.Label',
-    icon: 'fa-solid fa-sliders',
+    icon: 'fa-solid fa-sliders azure',
     type: SDMBaselinesSettingsConfig,
     restricted: true
   });
@@ -80,7 +80,7 @@ export function registerSDMGMSettingMenus() {
     name: 'SDM.Menu.NPC.Name',
     hint: 'SDM.Menu.NPC.Hint',
     label: 'SDM.Menu.NPC.Label',
-    icon: 'fa-solid fa-masks-theater',
+    icon: 'fa-solid fa-masks-theater royal',
     type: SDMNPCBehaviorSettingsConfig,
     restricted: true
   });
@@ -89,7 +89,7 @@ export function registerSDMGMSettingMenus() {
     name: 'SDM.Menu.Economy.Name',
     hint: 'SDM.Menu.Economy.Hint',
     label: 'SDM.Menu.Economy.Label',
-    icon: 'fa-solid fa-coins',
+    icon: 'fa-solid fa-coins heart',
     type: SDMEconomySettingsConfig,
     restricted: true
   });
@@ -98,8 +98,17 @@ export function registerSDMGMSettingMenus() {
     name: 'SDM.Menu.AudioGM.Name',
     hint: 'SDM.Menu.AudioGM.Hint',
     label: 'SDM.Menu.AudioGM.Label',
-    icon: 'fa-solid fa-music',
+    icon: 'fa-solid fa-music plum',
     type: SDMAudioGMSettingsConfig,
     restricted: true
   });
+
+  game.settings.registerMenu('sdm', '10-systemDev', {
+    name: 'SDM.Menu.SystemDev.Name',
+    hint: 'SDM.Menu.SystemDev.Hint',
+    label: 'SDM.Menu.SystemDev.Label',
+    icon: 'fa-solid fa-lock violet',
+    type: SDMSystemDevSettingsConfig,
+    restricted: true
+  })
 }
