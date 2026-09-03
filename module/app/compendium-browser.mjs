@@ -912,6 +912,15 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
 
     let candidates = CompendiumBrowser.#allItems;
 
+    if (!game.user.isGM) {
+      candidates = candidates.filter(item => {
+        if (!item.isWorldItem) return true;
+        const worldItem = game.items.get(item._id);
+        if (!worldItem) return false;
+        return worldItem.testUserPermission(game.user, CONST.DOCUMENT_OWNERSHIP_LEVELS.LIMITED);
+      });
+    }
+
     if (types.size) {
       candidates = candidates.filter(item => types.has(item.type));
     }
