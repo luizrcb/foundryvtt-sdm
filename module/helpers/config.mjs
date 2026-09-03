@@ -540,13 +540,7 @@ const allFeatures = [
   ...SDM.weaponFeatures
 ];
 
-const addedFeatures = new Set();
-
-const uniqueFeatureValues = allFeatures.filter(f => {
-  return addedFeatures.has(f.value) ? false : addedFeatures.add(f.value);
-});
-
-SDM.features = uniqueFeatureValues.sort((a, b) => a.value - b.value);
+SDM.features = new Set(allFeatures.map(f => f.value));
 
 SDM.paths = [
   'wizard',

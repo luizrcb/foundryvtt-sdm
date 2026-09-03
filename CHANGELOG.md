@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.5.3
+
+- Fixed issue on compendium browser features filters
+
 ## v1.5.2
 
 - Fixed issue on caravan sheet

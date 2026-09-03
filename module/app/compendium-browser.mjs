@@ -812,7 +812,7 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
 
       const pack = game.packs.get(c.packId);
       let sourceLabel = c.isWorldItem ? 'World' : pack?.metadata?.label || c.packId;
-      if (c.packId === 'sdm.trait_items') {
+      if (c.packId === 'sdm.trait_items' || !c.packId.contains('sdm.')) {
         const folder = docForEntry._source?.folder ?? docForEntry.folder;
         if (folder && pack?.folders) {
           const folderName = pack.folders.get(folder)?.name;
