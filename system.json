@@ -5,7 +5,7 @@
   "version": "0.22.2",
   "url": "https://github.com/luizrcb/foundryvtt-sdm",
   "bugs": "https://github.com/luizrcb/foundryvtt-sdm/issues",
-  "manifest": "https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/main/system.json",
+  "manifest": "https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/v13/system.json",
   "download": "https://github.com/luizrcb/foundryvtt-sdm/releases/download/v0.22.2/sdm-0.22.2.zip",
   "compatibility": {
     "minimum": "13",

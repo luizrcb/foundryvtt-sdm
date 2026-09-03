@@ -1,4 +1,4 @@
-![](https://github.com/luizrcb/foundryvtt-sdm/blob/main/assets/wtf-compatible.png?raw=true)
+![](https://github.com/luizrcb/foundryvtt-sdm/blob/v13/assets/wtf-compatible.png?raw=true)
 
 ![WTF System](https://img.shields.io/badge/dynamic/json.svg?url=https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/v14/system.json&label=WTF%20System&query=$.version&colorB=blue&logo=gnometerminal&logoColor=white) ![FoundryVTT Verified](https://img.shields.io/badge/dynamic/json.svg?url=https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/v14/system.json&label=FoundryVTT%20Verified&query=$.compatibility.verified&colorB=green&logo=roll20) ![FoundryVTT Supported](https://img.shields.io/badge/FoundryVTT_Supported-13.351--14.364-green?style=flat&logo=foundryvirtualtabletop&logoColor=white)
 
@@ -10,7 +10,7 @@
 
 An unoffical, community-supported system for playing Ultraviolet Grasslands (UVG) and Our Golden Age (OGA) using the When Time Fades (formerly Synthetic Dream Machine) RPG rules on [Foundry VTT](http://foundryvtt.com/).
 
-*foundryvtt-wtf* is an independent production by community contributors, and is not affiliated with [Luka Rejec](https://patreon.com/wizardthieffighter) or [WTF Studio](https://wizardthieffighter.com/). It is published under the [When Time Fades Third Party License](https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/main/WTF-3RD-PARTY-LICENSE.txt).
+*foundryvtt-wtf* is an independent production by community contributors, and is not affiliated with [Luka Rejec](https://patreon.com/wizardthieffighter) or [WTF Studio](https://wizardthieffighter.com/). It is published under the [When Time Fades Third Party License](https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/v13/WTF-3RD-PARTY-LICENSE.txt).
 
 ## Credits
 
@@ -42,7 +42,7 @@ You can also use one of the following alternative installation methods:
 
 ## Licenses
 
-- **Content:** [When Time Fades Third Party License](https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/main/WTF-3RD-PARTY-LICENSE.txt)
+- **Content:** [When Time Fades Third Party License](https://raw.githubusercontent.com/luizrcb/foundryvtt-sdm/refs/heads/v13/WTF-3RD-PARTY-LICENSE.txt)
 - **Source Code:** All source code files (javascript, hbs, scss, css) are licensed under the [MIT License](https://en.wikipedia.org/wiki/MIT_License).
 - **Foundry VTT:** The project is created following the Foundry VTT [Limited License Agreement for module development](https://foundryvtt.com/article/license/).
 - **Icons:** Icons in the `/assets/icons/` folder are courtesy of [Game-icons.net](https://game-icons.net/) and licensed under [CC BY 3.0](https://creativecommons.org/licenses/by/3.0/).
