@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.22.2
+
+- Fixed issue on compendium browser features filters
+
 ## v0.22.1
 
 - Fixed duplicate features in item sheets.
