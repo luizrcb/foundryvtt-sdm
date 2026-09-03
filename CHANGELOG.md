@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.5.6
+
+- Fix many compendium items wrongly marked as human supply.
+
 ## v1.5.5
 
 - Improved Compendium Browser performance by loading an index when game world is loaded
