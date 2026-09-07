@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v0.23.0
+
+- Added new Oracle type: 2d12 Order & Chaos
+
 ## v0.22.3
 
 - Improved Compendium Browser performance by loading an index when game world is loaded
