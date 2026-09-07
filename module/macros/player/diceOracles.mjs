@@ -246,6 +246,128 @@ export async function diceOracles() {
         }
       }
     },
+    'order-chaos-2d12': {
+      label: 'SDM.OracleLabel.order-chaos-2d12',
+      formula: `1d12[sdm-yellow]-1d12[sdm-teal]`,
+      showGrade: true,
+      table: {
+        '-11': {
+          outcome: 'SDM.Oracle.order-chaos-2d12.-11.outcome',
+          description: 'SDM.Oracle.order-chaos-2d12.-11.description',
+          grade: 'SDM.Oracle.order-chaos-2d12.-11.grade'
+        },
+        '-10': {
+          outcome: 'SDM.Oracle.order-chaos-2d12.-10.outcome',
+          description: 'SDM.Oracle.order-chaos-2d12.-10.description',
+          grade: 'SDM.Oracle.order-chaos-2d12.-10.grade'
+        },
+        '-9': {
+          outcome: 'SDM.Oracle.order-chaos-2d12.-9.outcome',
+          description: 'SDM.Oracle.order-chaos-2d12.-9.description',
+          grade: 'SDM.Oracle.order-chaos-2d12.-9.grade'
+        },
+        '-8': {
+          outcome: 'SDM.Oracle.order-chaos-2d12.-8.outcome',
+          description: 'SDM.Oracle.order-chaos-2d12.-8.description',
+          grade: 'SDM.Oracle.order-chaos-2d12.-8.grade'
+        },
+        '-7': {
+          outcome: 'SDM.Oracle.order-chaos-2d12.-7.outcome',
+          description: 'SDM.Oracle.order-chaos-2d12.-7.description',
+          grade: 'SDM.Oracle.order-chaos-2d12.-7.grade'
+        },
+        '-6': {
+          outcome: 'SDM.Oracle.order-chaos-2d12.-6.outcome',
+          description: 'SDM.Oracle.order-chaos-2d12.-6.description',
+          grade: 'SDM.Oracle.order-chaos-2d12.-6.grade'
+        },
+        '-5': {
+          outcome: 'SDM.Oracle.order-chaos-2d12.-5.outcome',
+          description: 'SDM.Oracle.order-chaos-2d12.-5.description',
+          grade: 'SDM.Oracle.order-chaos-2d12.-5.grade'
+        },
+        '-4': {
+          outcome: 'SDM.Oracle.order-chaos-2d12.-4.outcome',
+          description: 'SDM.Oracle.order-chaos-2d12.-4.description',
+          grade: 'SDM.Oracle.order-chaos-2d12.-4.grade'
+        },
+        '-3': {
+          outcome: 'SDM.Oracle.order-chaos-2d12.-3.outcome',
+          description: 'SDM.Oracle.order-chaos-2d12.-3.description',
+          grade: 'SDM.Oracle.order-chaos-2d12.-3.grade'
+        },
+        '-2': {
+          outcome: 'SDM.Oracle.order-chaos-2d12.-2.outcome',
+          description: 'SDM.Oracle.order-chaos-2d12.-2.description',
+          grade: 'SDM.Oracle.order-chaos-2d12.-2.grade'
+        },
+        '-1': {
+          outcome: 'SDM.Oracle.order-chaos-2d12.-1.outcome',
+          description: 'SDM.Oracle.order-chaos-2d12.-1.description',
+          grade: 'SDM.Oracle.order-chaos-2d12.-1.grade'
+        },
+        0: {
+          outcome: 'SDM.Oracle.order-chaos-2d12.0.outcome',
+          description: 'SDM.Oracle.order-chaos-2d12.0.description',
+          grade: 'SDM.Oracle.order-chaos-2d12.0.grade'
+        },
+        1: {
+          outcome: 'SDM.Oracle.order-chaos-2d12.1.outcome',
+          description: 'SDM.Oracle.order-chaos-2d12.1.description',
+          grade: 'SDM.Oracle.order-chaos-2d12.1.grade'
+        },
+        2: {
+          outcome: 'SDM.Oracle.order-chaos-2d12.2.outcome',
+          description: 'SDM.Oracle.order-chaos-2d12.2.description',
+          grade: 'SDM.Oracle.order-chaos-2d12.2.grade'
+        },
+        3: {
+          outcome: 'SDM.Oracle.order-chaos-2d12.3.outcome',
+          description: 'SDM.Oracle.order-chaos-2d12.3.description',
+          grade: 'SDM.Oracle.order-chaos-2d12.3.grade'
+        },
+        4: {
+          outcome: 'SDM.Oracle.order-chaos-2d12.4.outcome',
+          description: 'SDM.Oracle.order-chaos-2d12.4.description',
+          grade: 'SDM.Oracle.order-chaos-2d12.4.grade'
+        },
+        5: {
+          outcome: 'SDM.Oracle.order-chaos-2d12.5.outcome',
+          description: 'SDM.Oracle.order-chaos-2d12.5.description',
+          grade: 'SDM.Oracle.order-chaos-2d12.5.grade'
+        },
+        6: {
+          outcome: 'SDM.Oracle.order-chaos-2d12.6.outcome',
+          description: 'SDM.Oracle.order-chaos-2d12.6.description',
+          grade: 'SDM.Oracle.order-chaos-2d12.6.grade'
+        },
+        7: {
+          outcome: 'SDM.Oracle.order-chaos-2d12.7.outcome',
+          description: 'SDM.Oracle.order-chaos-2d12.7.description',
+          grade: 'SDM.Oracle.order-chaos-2d12.7.grade'
+        },
+        8: {
+          outcome: 'SDM.Oracle.order-chaos-2d12.8.outcome',
+          description: 'SDM.Oracle.order-chaos-2d12.8.description',
+          grade: 'SDM.Oracle.order-chaos-2d12.8.grade'
+        },
+        9: {
+          outcome: 'SDM.Oracle.order-chaos-2d12.9.outcome',
+          description: 'SDM.Oracle.order-chaos-2d12.9.description',
+          grade: 'SDM.Oracle.order-chaos-2d12.9.grade'
+        },
+        10: {
+          outcome: 'SDM.Oracle.order-chaos-2d12.10.outcome',
+          description: 'SDM.Oracle.order-chaos-2d12.10.description',
+          grade: 'SDM.Oracle.order-chaos-2d12.10.grade'
+        },
+        11: {
+          outcome: 'SDM.Oracle.order-chaos-2d12.11.outcome',
+          description: 'SDM.Oracle.order-chaos-2d12.11.grade',
+          grade: 'SDM.Oracle.order-chaos-2d12.11.grade'
+        }
+      }
+    },
     'skilled-d20': {
       label: 'SDM.OracleLabel.skilled-d20',
       formula: `1d20[${oracleDiceStyle}]`,
@@ -408,7 +530,7 @@ export async function diceOracles() {
 
       const questionArea = html.querySelector('textarea[name="question"]');
       if (questionArea) {
-        questionArea.placeholder = $l10n('SDM.DiceOraclesQuestionPlaceholder')
+        questionArea.placeholder = $l10n('SDM.DiceOraclesQuestionPlaceholder');
       }
 
       const inputs = html.querySelectorAll('input, select, textarea');

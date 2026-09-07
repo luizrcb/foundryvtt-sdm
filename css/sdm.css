@@ -2484,7 +2484,7 @@ input[type=radio]::after {
   .oracle-header h5 {
     color: #e0aaff;
     margin: 0;
-    font-size: 18px;
+    font-size: 16px;
     font-family: var(--sdm-font-dice);
   }
   .oracle-question {

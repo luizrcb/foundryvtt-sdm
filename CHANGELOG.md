@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.6.0
+
+- Added new Oracle type: 2d12 Order & Chaos
+
 ## v1.5.6
 
 - Fix many compendium items wrongly marked as human supply.
@@ -88,6 +92,10 @@
 ## v1.0.0
 
 - V14 support
+
+## v0.23.0
+
+- Added new Oracle type: 2d12 Order & Chaos
 
 ## v0.22.3
 
