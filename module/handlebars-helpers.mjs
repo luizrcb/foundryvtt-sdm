@@ -207,12 +207,16 @@ export function registerHandlebarsHelpers() {
 
   $$('featureDisplay', function (featureKey, parentSystem) {
     let str = $l10n(`SDM.ItemFeature.${featureKey}Abbr`);
-    const numberedFeatures = ['area', 'replenish', 'flare', 'pocket', 'resistant'];
+    const numberedFeatures = ['area', 'range', 'replenish', 'flare', 'pocket', 'resistant'];
     if (numberedFeatures.includes(featureKey)) {
       const value = parentSystem[featureKey]?.value;
       if (featureKey === 'area') {
         const capitalized = value.charAt(0).toUpperCase() + value.slice(1);
         const replacement = $l10n(`SDM.Area${capitalized}Abbr`);
+        str = str.replace('#', replacement);
+      } else if (featureKey === 'range') {
+        const capitalized = value.charAt(0).toUpperCase() + value.slice(1);
+        const replacement = $l10n(`SDM.Range${capitalized}`);
         str = str.replace('#', replacement);
       } else {
         str = str.replace('#', value);

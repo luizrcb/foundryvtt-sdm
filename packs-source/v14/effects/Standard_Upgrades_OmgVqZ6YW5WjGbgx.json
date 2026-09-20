@@ -1,0 +1,23 @@
+{
+  "type": "ActiveEffect",
+  "folder": "3d2liJEFqq3yAhpA",
+  "name": "Standard Upgrades",
+  "color": null,
+  "sorting": "a",
+  "_id": "OmgVqZ6YW5WjGbgx",
+  "description": "",
+  "sort": 100000,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.6.0",
+    "createdTime": 1789494498760,
+    "modifiedTime": 1789576035134,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "_key": "!folders!OmgVqZ6YW5WjGbgx"
+}

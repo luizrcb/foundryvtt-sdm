@@ -1,0 +1,55 @@
+{
+  "folder": "mSfjjxPHpWNVuR1U",
+  "name": "(9) - Living",
+  "_id": "aHREeOZKfRpxyvRK",
+  "img": "icons/magic/nature/root-vine-leaves-green.webp",
+  "type": "base",
+  "system": {
+    "changes": [
+      {
+        "key": "system.description",
+        "type": "add",
+        "value": "<p>It's alive. Reduce its armor bonus by 1 to regain 1d4 life. Fed and allowed to rest, it  regains 1 armor per week. Use this active effect changes to reduce the armor value.</p>",
+        "priority": null,
+        "phase": "initial"
+      },
+      {
+        "key": "system.armor.value",
+        "type": "subtract",
+        "value": 0,
+        "priority": null,
+        "phase": "initial"
+      }
+    ],
+    "isItemMod": true,
+    "modType": "armor_ward"
+  },
+  "disabled": false,
+  "start": null,
+  "duration": {
+    "value": null,
+    "units": "seconds",
+    "expiry": null,
+    "expired": false
+  },
+  "description": "<p>It's alive. Reduce its armor bonus by 1 to regain 1d4 life. Fed and allowed to rest, it regains 1 armor per week. Use this active effect changes to reduce the armor value.</p>\n<p><strong>Mod Cost</strong>: $900</p>",
+  "origin": null,
+  "tint": "#ffffff",
+  "transfer": false,
+  "statuses": [],
+  "showIcon": 1,
+  "sort": 500000,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.368",
+    "systemId": "sdm",
+    "systemVersion": "1.6.0",
+    "createdTime": 1789523321718,
+    "modifiedTime": 1789724472281,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "_key": "!effects!aHREeOZKfRpxyvRK"
+}

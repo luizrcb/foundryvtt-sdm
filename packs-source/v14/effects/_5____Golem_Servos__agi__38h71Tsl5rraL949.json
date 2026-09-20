@@ -1,0 +1,48 @@
+{
+  "folder": "mSfjjxPHpWNVuR1U",
+  "name": "(5) - Golem Servos (agi)",
+  "_id": "38h71Tsl5rraL949",
+  "img": "icons/skills/movement/feet-winged-boots-brown.webp",
+  "type": "base",
+  "system": {
+    "changes": [
+      {
+        "key": "system.abilities.agi.bonus",
+        "type": "add",
+        "value": 1,
+        "priority": null,
+        "phase": "initial"
+      }
+    ],
+    "isItemMod": true,
+    "modType": "armor_ward"
+  },
+  "disabled": false,
+  "start": null,
+  "duration": {
+    "value": null,
+    "units": "seconds",
+    "expiry": null,
+    "expired": false
+  },
+  "description": "<p>Boosts wearer agility by 1.</p>\n<p><strong>Mod Cost</strong>: $400, <strong>Repeatable</strong></p>",
+  "origin": null,
+  "tint": "#ffffff",
+  "transfer": true,
+  "statuses": [],
+  "showIcon": 1,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.368",
+    "systemId": "sdm",
+    "systemVersion": "1.6.0",
+    "createdTime": 1789493409773,
+    "modifiedTime": 1789724183980,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "sort": 800000,
+  "_key": "!effects!38h71Tsl5rraL949"
+}

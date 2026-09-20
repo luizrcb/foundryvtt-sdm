@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 100,
     "cost_frequency": "",
-    "description": "<p>Six for encrypted team communications. Charging jar. Poor mic. Long range.</p>",
+    "description": "<p>Six for encrypted team communications. Charging jar. Poor mic. </p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "range"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -76,7 +78,10 @@
     "supply_type": "",
     "categories": [
       "communication"
-    ]
+    ],
+    "range": {
+      "value": "long"
+    }
   },
   "effects": [],
   "sort": 0,
@@ -89,12 +94,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "14.367",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.6.0",
     "createdTime": 1767014140961,
-    "modifiedTime": 1767014140961,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1789559579576,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw"
   },
   "_key": "!items!ksGMLhtu4sa8MZrM"
 }

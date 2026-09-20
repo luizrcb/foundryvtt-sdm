@@ -1,0 +1,23 @@
+{
+  "type": "ActiveEffect",
+  "folder": null,
+  "name": "Armor and Ward Mods",
+  "color": null,
+  "sorting": "m",
+  "_id": "UnkzjwfQ2UBlMaBJ",
+  "description": "",
+  "sort": 200000,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.368",
+    "systemId": "sdm",
+    "systemVersion": "1.6.0",
+    "createdTime": 1788984803682,
+    "modifiedTime": 1789660975766,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "_key": "!folders!UnkzjwfQ2UBlMaBJ"
+}

@@ -21,6 +21,22 @@
       </div>
       {{/if}}
 
+      {{#if (eq system.type 'pet')}}
+        {{#if petActor}}
+            <div class='resource' style='grid-column: 1 / -1;'>
+              <label class='resource-label'>{{localize 'SDM.LinkedPet'}}</label>
+              <div class='resource-content flexrow pet-link-row'>
+                <i class='fa-solid fa-paw roll-icon rollable'
+                  data-action='openPetActor'
+                  data-tooltip='{{petActor.name}}'></i>
+                <button type='button' class='pet-unlink-btn icon fa-solid fa-link-slash'
+                        data-action='unlinkActor'
+                        data-tooltip='{{localize "SDM.Item.UnlinkPet"}}'></button>
+              </div>
+            </div>
+          {{/if}}
+      {{/if}}
+
       {{#if (eq system.type 'affliction')}}
         <div class='resource mr-10'>
           <label class='resource-label'>{{localize 'SDM.Burden.StepsToCure'}}

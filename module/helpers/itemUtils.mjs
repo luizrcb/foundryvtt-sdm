@@ -154,6 +154,10 @@ async function toggleEffectTransfer(effect, shouldBeActive) {
 }
 
 export function getSlotsTaken(itemSystem) {
+  if (itemSystem?.slots_override !== undefined && itemSystem?.slots_override >= 0) {
+    return itemSystem?.slots_override;
+  }
+
   let slotsTaken = Math.ceil(
     convertToCash(itemSystem.quantity * itemSystem.size?.value, itemSystem.size?.unit) / 250
   );
@@ -240,4 +244,104 @@ export function checkIfItemIsAlsoAnArmor(item) {
   });
 
   return !!isArmor;
+}
+
+export function registerActiveEffectLimit() {
+  // ---- Creation ---------------------------------------------------------
+  Hooks.on('preCreateActiveEffect', (effect, data, options, userId) => {
+    const parent = effect.parent;
+    if (parent?.documentName !== 'Item') return;
+
+    const isItemMod = data.system?.isItemMod ?? effect.system?.isItemMod ?? false;
+    const modType = data.system?.modType ?? effect.system?.modType ?? '';
+
+    if (!isItemMod) return;
+
+    if (parent.type !== ItemType.GEAR) {
+      // warn and return false
+      warnInvalidItemMod(parent);
+      return false;
+    }
+
+    const itemType = parent.system.type;
+
+    if (!modType) {
+      warnInvalidItemMod(parent);
+      return false;
+    }
+
+    if (modType !== 'gear' && !modType.includes(itemType)) {
+      if (
+        (modType === 'weapon' && parent.system.features.has('weapon')) ||
+        (modType === 'armor_ward' &&
+          (parent.system.features.has('armor') || parent.system.features.has('ward')))
+      ) {
+        return true;
+      }
+      warnInvalidItemMod(parent);
+      return false;
+    }
+
+    if (isAtItemModCap(parent)) {
+      warnItemModCap(parent);
+      return false;
+    }
+  });
+
+  // ---- Update -----------------------------------------------------------
+  Hooks.on('preUpdateActiveEffect', (effect, changes, options, userId) => {
+    const parent = effect.parent;
+    if (parent?.documentName !== 'Item') return;
+
+    // Only care about turning the flag ON.
+    const becomingItemMod = changes.system?.isItemMod === true;
+    const alreadyItemMod = effect.system?.isItemMod === true;
+
+    const changingModType = changes.system?.modType !== undefined;
+
+    if (!becomingItemMod || (alreadyItemMod && !changingModType)) return;
+
+    // Exclude this effect from the count so we don't count it twice.
+    if (isAtItemModCap(parent, effect.id)) {
+      warnItemModCap(parent);
+      return false; // cancels the update
+    }
+
+    if (changingModType) {
+      const newModType = changes.system?.modType;
+      const invalid =
+        !newModType || (newModType !== 'gear' && !newModType.includes(parent.system.type));
+
+      if (
+        (newModType === 'weapon' && parent.system.features.has('weapon')) ||
+        (newModType === 'armor_ward' &&
+          (parent.system.features.has('armor') || parent.system.features.has('ward')))
+      ) {
+        return;
+      }
+
+      if (invalid) {
+        warnInvalidItemMod(parent);
+        changes.disabled = true;
+      }
+    }
+  });
+}
+
+// ---------------------------------------------------------------------------
+function isAtItemModCap(item, excludeId = null) {
+  const max = (item.system?.hallmark?.level ?? 0) + 1;
+  const current = item.effects.filter(
+    e => e.id !== excludeId && e.system?.isItemMod === true
+  ).length;
+  return current >= max;
+}
+
+function warnItemModCap(item) {
+  const max = (item.system?.hallmark?.level ?? 0) + 1;
+  ui.notifications.warn(game.i18n.format('SDM.Warn.ItemModLimit', { max }));
+}
+
+function warnInvalidItemMod(item) {
+  ui.notifications.warn(game.i18n.localize('SDM.InvalidItemMod'));
 }

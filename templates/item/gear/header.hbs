@@ -82,8 +82,22 @@
               {{selectOptions sizeUnits localize=true selected=system.size.unit}}
             </select>
           </div>
-        </div>
-      {{else}}
+
+         {{#if petActor}}
+            <div class='resource' style='grid-column: 1 / -1;'>
+              <label class='resource-label'>{{localize 'SDM.LinkedPet'}}</label>
+              <div class='resource-content flexrow pet-link-row'>
+                <i class='fa-solid fa-paw roll-icon rollable'
+                  data-action='openPetActor'
+                  data-tooltip='{{petActor.name}}'></i>
+                <button type='button' class='pet-unlink-btn icon fa-solid fa-link-slash'
+                        data-action='unlinkActor'
+                        data-tooltip='{{localize "SDM.Item.UnlinkPet"}}'></button>
+              </div>
+            </div>
+          {{/if}}
+          </div>
+        {{else}}
         {{#unless (or
           (eq system.type 'corruption')
           (eq system.type 'affliction')
@@ -145,6 +159,15 @@
             <label class='resource-label' for="system.area.value">{{localize 'SDM.ItemFeature.area'}}</label>
             <select name='system.area.value' data-tooltip="{{localize 'SDM.ItemFeature.areaDescription'}}">
               {{selectOptions areaValues localize=true selected=system.area.value blank=''}}
+            </select>
+          </div>
+          {{/if}}
+
+          {{#if (has system.features 'range')}}
+          <div class='resource'>
+            <label class='resource-label' for="system.range.value">{{localize 'SDM.ItemFeature.range'}}</label>
+            <select name='system.range.value' data-tooltip="{{localize 'SDM.ItemFeature.rangeDescription'}}">
+              {{selectOptions rangeValues localize=true selected=system.range.value blank=''}}
             </select>
           </div>
           {{/if}}
@@ -230,7 +253,18 @@
         </div>
         {{/if}}
 
-        <div class="resource"></div>
+        <div class="resource align-center">
+          <label class="resource-label">{{localize 'SDM.InstalledMods'}}</label>
+          <div class="resource-content sources flex-group-center mt-5">
+            {{#multiboxes item.installedMods}}
+              <input type="radio" id="installed-mods-{{item.id}}-0" name="system.installed_mods" value="0" checked="checked" data-dtype='Radio' style="cursor:pointer;" disabled>
+              {{#times_from 1 (addOne system.hallmark.level)}}
+                <input type="radio" id="installed-mods-{{../item.id}}-{{this}}" name="system.installed_mods" value="{{this}}" data-dtype='Radio' style="cursor:pointer;" disabled/>
+                <label class="radio-toggle" for="installed-mods-{{../item.id}}-{{this}}" style="cursor:pointer;" data-tooltip="{{this}}" disabled></label>
+              {{/times_from}}
+            {{/multiboxes}}
+          </div>
+        </div>
 
         <div class="resource align-center">
           <label class='resource-label'>{{localize 'SDM.IsSupply'}}</label>
@@ -274,8 +308,23 @@
           <input type='checkbox' name='system.weapon.versatile' {{checked system.weapon.versatile}} />
         </div>
       </div> --}}
+      {{#if (has system.features 'weapon')}}
       <div class="resource">
       </div>
+      {{else}}
+      <div class="resource align-center">
+        <label class="resource-label">{{localize 'SDM.InstalledMods'}}</label>
+        <div class="resource-content sources flex-group-center mt-5">
+          {{#multiboxes item.installedMods}}
+            <input type="radio" id="installed-mods-{{item.id}}-0" name="system.installed_mods" value="0" checked="checked" data-dtype='Radio' style="cursor:pointer;" disabled>
+            {{#times_from 1 (addOne system.hallmark.level)}}
+              <input type="radio" id="installed-mods-{{../item.id}}-{{this}}" name="system.installed_mods" value="{{this}}" data-dtype='Radio' style="cursor:pointer;" disabled/>
+              <label class="radio-toggle" for="installed-mods-{{../item.id}}-{{this}}" style="cursor:pointer;" data-tooltip="{{this}}" disabled></label>
+            {{/times_from}}
+          {{/multiboxes}}
+        </div>
+      </div>
+      {{/if}}
 
       <div class='resource'>
         {{#if (or system.weapon.versatile (has system.features 'versatile'))}}
@@ -324,7 +373,7 @@
       </div>
       {{/if}}
 
-      {{#if (eq item.system.type 'ward')}}
+      {{#if (or (eq item.system.type 'ward') (has item.system.features 'ward'))}}
       <div class='resource'>
         <label class='resource-label'>
           {{localize 'SDM.WardValue'}}
@@ -342,6 +391,21 @@
         </select>
       </div>
       {{/if}}
+
+      {{#unless (or (eq item.system.type '') (eq item.system.type 'weapon'))}}
+      <div class="resource align-center">
+        <label class="resource-label">{{localize 'SDM.InstalledMods'}}</label>
+        <div class="resource-content sources flex-group-center mt-5">
+          {{#multiboxes item.installedMods}}
+            <input type="radio" id="installed-mods-{{item.id}}-0" name="system.installed_mods" value="0" checked="checked" data-dtype='Radio' style="cursor:pointer;" disabled>
+            {{#times_from 1 (addOne system.hallmark.level)}}
+              <input type="radio" id="installed-mods-{{../item.id}}-{{this}}" name="system.installed_mods" value="{{this}}" data-dtype='Radio' style="cursor:pointer;" disabled/>
+              <label class="radio-toggle" for="installed-mods-{{../item.id}}-{{this}}" style="cursor:pointer;" data-tooltip="{{this}}" disabled></label>
+            {{/times_from}}
+          {{/multiboxes}}
+        </div>
+      </div>
+      {{/unless}}
 
       {{#if (eq item.system.type 'power')}}
       {{!-- Start fragment --}}

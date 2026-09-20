@@ -34,7 +34,7 @@
       "level": 0,
       "experience": "0"
     },
-    "type": "",
+    "type": "pet",
     "starting_kit": false,
     "is_supply": false,
     "supply_type": "",
@@ -91,12 +91,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "14.367",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.6.0",
     "createdTime": 1767011799539,
-    "modifiedTime": 1767011799539,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1789562659523,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw"
   },
   "_key": "!items!UxXvrC2cYouFiLlu"
 }

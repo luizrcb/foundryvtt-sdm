@@ -8,7 +8,7 @@
     "resources": "",
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p><em>(This item won't take item slots if it's readied)</em></p><p>If you have no suitable item for a type of attack, you can [almost] always make an unarmed attack.</p><p>Example unarmed attacks: <strong>Melee</strong> - a punch, a kick, a head butt. <strong>Ranged</strong> - a thrown clod, rock, or bar of soap. <strong>Oldtech</strong> or other thought attack - a convenient trick, a subterfuge, a mechanical surprise. <strong>Fantascience</strong> or other charisma attack - a terrifying boast, a harsh curse, an evil eye, a false incantation.</p>",
+    "description": "<p><em>(This item doesn't take item slots)</em> If you have no suitable item for a type of attack, you can [almost] always make an unarmed attack.</p><p>Example unarmed attacks: <strong>Melee</strong> - a punch, a kick, a head butt. <strong>Ranged</strong> - a thrown clod, rock, or bar of soap. <strong>Oldtech</strong> or other thought attack - a convenient trick, a subterfuge, a mechanical surprise. <strong>Fantascience</strong> or other charisma attack - a terrifying boast, a harsh curse, an evil eye, a false incantation.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -72,55 +72,10 @@
       "range": "",
       "versatile": false
     },
-    "default_ability": ""
+    "default_ability": "",
+    "slots_override": 0
   },
-  "effects": [
-    {
-      "name": "Weapon Slot Bonus",
-      "origin": "Compendium.sdm.equipment.Item.uKcbcZUs1jQZskQ4",
-      "img": "icons/skills/melee/unarmed-punch-fist.webp",
-      "_id": "1jNFDI65PsoP44tY",
-      "type": "base",
-      "system": {
-        "changes": [
-          {
-            "key": "system.weapon_item_slots_bonus",
-            "type": "add",
-            "value": 1,
-            "priority": 20,
-            "phase": "initial"
-          }
-        ]
-      },
-      "disabled": false,
-      "duration": {
-        "value": null,
-        "units": "seconds",
-        "expiry": null,
-        "expired": false
-      },
-      "description": "",
-      "tint": "#ffffff",
-      "transfer": true,
-      "statuses": [],
-      "sort": 0,
-      "flags": {},
-      "_stats": {
-        "compendiumSource": null,
-        "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "14.353",
-        "systemId": "sdm",
-        "systemVersion": "0.6.2",
-        "lastModifiedBy": "6KLfb35TARh0OlRZ",
-        "modifiedTime": 1769002909745
-      },
-      "showIcon": 1,
-      "folder": null,
-      "start": null,
-      "_key": "!items.effects!uKcbcZUs1jQZskQ4.1jNFDI65PsoP44tY"
-    }
-  ],
+  "effects": [],
   "folder": "XVd3R3nqCoSdQ6vR",
   "ownership": {
     "default": 0,
@@ -132,12 +87,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "14.353",
+    "coreVersion": "14.367",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.6.0",
     "createdTime": 1767011716886,
-    "modifiedTime": 1767011716886,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1789041558913,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw"
   },
   "_id": "uKcbcZUs1jQZskQ4",
   "sort": 0,

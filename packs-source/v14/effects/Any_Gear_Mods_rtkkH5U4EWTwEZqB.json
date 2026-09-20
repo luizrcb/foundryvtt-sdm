@@ -1,0 +1,23 @@
+{
+  "type": "ActiveEffect",
+  "folder": null,
+  "name": "Any Gear Mods",
+  "color": null,
+  "sorting": "a",
+  "_id": "rtkkH5U4EWTwEZqB",
+  "description": "",
+  "sort": 100000,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.6.0",
+    "createdTime": 1789486670477,
+    "modifiedTime": 1789559820720,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "_key": "!folders!rtkkH5U4EWTwEZqB"
+}

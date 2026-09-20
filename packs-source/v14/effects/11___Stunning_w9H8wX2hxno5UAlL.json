@@ -1,0 +1,48 @@
+{
+  "folder": "x737UpOjJ6bgtc81",
+  "name": "11 - Stunning",
+  "_id": "w9H8wX2hxno5UAlL",
+  "img": "icons/magic/sonic/explosion-impact-shock-wave.webp",
+  "type": "base",
+  "system": {
+    "changes": [
+      {
+        "key": "system.description",
+        "type": "add",
+        "value": "<p>Strikes with a flash or shocking roar. Target loses 1 action (save). This is not automated.</p>",
+        "priority": null,
+        "phase": "initial"
+      }
+    ],
+    "isItemMod": true,
+    "modType": "weapon"
+  },
+  "disabled": false,
+  "start": null,
+  "duration": {
+    "value": null,
+    "units": "seconds",
+    "expiry": null,
+    "expired": false
+  },
+  "description": "<p>Strikes with a flash or shocking roar. Target loses 1 action (save). This is not automated.</p><p><strong>Mod Cost</strong>: $850</p>",
+  "origin": null,
+  "tint": "#ffffff",
+  "transfer": false,
+  "statuses": [],
+  "showIcon": 1,
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.6.0",
+    "createdTime": 1789506410857,
+    "modifiedTime": 1789576018941,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "_key": "!effects!w9H8wX2hxno5UAlL"
+}

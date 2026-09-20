@@ -23,7 +23,7 @@ export default class SdmActiveEffectConfig extends ActiveEffectConfig {
 
     const characterProperties = CONFIG.SDM.characterPropertiesToActiveEffects.map(item => ({
       value: item,
-      label: game.i18n.localize(`SDM.EffectsLabel.${item}`)
+      label: game.i18n.localize(`SDM.ActorEffectsLabel.${item}`)
     }));
 
     context.selectableKeys = [...characterProperties];

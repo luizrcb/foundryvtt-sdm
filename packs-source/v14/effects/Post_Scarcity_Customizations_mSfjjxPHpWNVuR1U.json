@@ -1,0 +1,23 @@
+{
+  "type": "ActiveEffect",
+  "folder": "UnkzjwfQ2UBlMaBJ",
+  "name": "Post Scarcity Customizations",
+  "color": null,
+  "sorting": "a",
+  "_id": "mSfjjxPHpWNVuR1U",
+  "description": "",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.6.0",
+    "createdTime": 1789493209946,
+    "modifiedTime": 1789493209946,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "_key": "!folders!mSfjjxPHpWNVuR1U"
+}

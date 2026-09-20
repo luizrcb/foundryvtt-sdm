@@ -9,7 +9,6 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
   static defineSchema() {
     const fields = foundry.data.fields;
     const schema = {};
-
     // also known as equipped
     schema.readied = new fields.BooleanField({ initial: false });
 
@@ -62,6 +61,15 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       })
     });
 
+    schema.range = new fields.SchemaField({
+      value: new fields.StringField({
+        required: false,
+        blank: true,
+        nullable: true,
+        initial: ''
+      })
+    });
+
     schema.flare = new fields.SchemaField({
       value: new fields.NumberField({
         required: true,
@@ -73,6 +81,16 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
     });
 
     schema.pocket = new fields.SchemaField({
+      value: new fields.NumberField({
+        required: true,
+        nullable: false,
+        integer: true,
+        initial: 0,
+        min: 0
+      })
+    });
+
+    schema.draining = new fields.SchemaField({
       value: new fields.NumberField({
         required: true,
         nullable: false,
@@ -112,6 +130,11 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       integer: true,
       initial: 1,
       min: 0
+    });
+
+    schema.slots_override = new fields.NumberField({
+      required: false,
+      initial: undefined
     });
 
     schema.size = new fields.EmbeddedDataField(ItemSizeDataModel);

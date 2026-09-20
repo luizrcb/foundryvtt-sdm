@@ -24,8 +24,10 @@ export function validateDocumentId(id) {
   return validateActorId(id) || validateItemId(id);
 }
 
-export function capitalizeFirstLetter(string) {
-  return string[0].toUpperCase() + string.slice(1);
+export function capitalizeFirstLetter(str = '') {
+  if (!str.length) return str;
+
+  return str[0].toUpperCase() + str.slice(1);
 }
 
 export function toPascalCase(str) {

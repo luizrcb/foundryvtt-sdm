@@ -15,6 +15,7 @@ const packs = [
   { name: 'consumables', output: `packs-source/${foundryVersion}/consumables` },
   { name: 'corruption', output: `packs-source/${foundryVersion}/corruption` },
   { name: 'creatures', output: `packs-source/${foundryVersion}/creatures` },
+  { name: 'effects', output: `packs-source/${foundryVersion}/effects` },
   { name: 'gadgets', output: `packs-source/${foundryVersion}/gadgets` },
   { name: 'handouts', output: `packs-source/${foundryVersion}/handouts` },
   { name: 'macros', output: `packs-source/${foundryVersion}/macros` },

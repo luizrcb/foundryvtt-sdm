@@ -131,7 +131,7 @@ jobs:
               "LICENSE",
               "README.md",
               "system.json",
-              "SDM-3RD-PARTY-LICENSE-2.0.txt"
+              "WTF-3RD-PARTY-LICENSE.txt"
             ]
           };
 

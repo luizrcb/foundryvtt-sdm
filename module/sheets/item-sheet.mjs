@@ -1,7 +1,7 @@
 import PowerDataModel from '../data/power-data.mjs';
 import { SdmItem } from '../documents/item.mjs';
 import { createNPCByLevel, getActorOptions } from '../helpers/actorUtils.mjs';
-import { GearType, ItemType } from '../helpers/constants.mjs';
+import { DEFAULT_PET_ICON, GearType, ItemType } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { $fmt, $l10n, constructHTMLButton } from '../helpers/globalUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
@@ -69,6 +69,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       radioToggle: this._radioToggle,
       spawnNPC: this._onSpawnNPC,
       sendToChat: this._onSendToChat,
+      openPetActor: this._onOpenPetActor,
+      unlinkActor: this._onUnlinkActor
     },
     form: {
       submitOnChange: true
@@ -186,6 +188,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       possibleRiders: getActorOptions('character'),
       sizeUnits: CONFIG.SDM.sizeUnits,
       areaValues: CONFIG.SDM.areaValues,
+      rangeValues: CONFIG.SDM.rangeType,
       skillMod: allSKillMods,
       skillModifierStep: defaultModifierStep,
       abilities: CONFIG.SDM.getOrderedAbilities(language),
@@ -200,6 +203,13 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       context.itemFeatures = [...CONFIG.SDM.baseFeatures, ...CONFIG.SDM.weaponFeatures];
     } else {
       context.itemFeatures = [...CONFIG.SDM.baseFeatures];
+    }
+
+    const isPet = this.item.system.type === GearType.PET;
+
+    if (isPet && this.item.system.pet) {
+      context.petActor = await fromUuid(this.item.system.pet).catch(() => null);
+      context.defaultPetIcon = DEFAULT_PET_ICON;
     }
 
     if (this.item.type === ItemType.GEAR && this.item.system.type === GearType.POWER_ALBUM) {
@@ -345,6 +355,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
         }
       }
     });
+
+    this.#disableOverrides();
   }
 
   /** @inheritdoc */
@@ -924,6 +936,26 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     return this.item.updateEmbeddedDocuments('ActiveEffect', updateData);
   }
 
+  /**
+   * Opens the Actor sheet of the Actor linked to this Pet item.
+   *
+   * @this SdmItemSheet
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   * @protected
+   */
+  static async _onOpenPetActor(event, target) {
+    const petUuid = this.item.system.pet;
+    if (!petUuid) return;
+
+    const actor = await fromUuid(petUuid);
+    if (!actor) {
+      ui.notifications.warn($l10n('SDM.WarningPetActorMissing'));
+      return;
+    }
+    actor.sheet.render(true);
+  }
+
   /* -------------------------------------------- */
 
   /**
@@ -938,22 +970,71 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     if (!this.item.isOwner) return false;
     if (this.item.system.type !== GearType.PET) return false;
 
-    const droppedActor = await fromUuid(data.uuid);
+    if (this.item.system.pet) {
+      ui.notifications.warn($fmt('SDM.WarningPetAlreadyLinked', { pet: this.item.name }));
+      return false;
+    }
 
-    if (this.item.parent.id === droppedActor.id) return false;
+    const droppedActor = await fromUuid(data.uuid);
+    if (data.uuid.includes('Compendium')) {
+      ui.notifications.warn($l10n('SDM.WarningImportDroppedActor'));
+      return false;
+    }
+
+    if (!this.item?.parent || this.item?.parent?.id === droppedActor.id) return false;
 
     const { name: petName, img: petImg, system: petData } = droppedActor;
-    const { biography: petDescription } = petData;
+    const { biography: petBiography } = petData;
+    const originalDescription = this.item.system.description ?? '';
 
-    let description = `<p>@UUID[${droppedActor.uuid}]{${petName}}</p>`;
-    description += petDescription;
+    const description = `${originalDescription}${petBiography ?? ''}`;
 
     await this.item.update({
       name: petName,
       img: petImg,
       'system.pet': droppedActor.uuid,
-      'system.description': description
+      'system.description': description,
+      'flags.sdm.originalDescription': originalDescription
     });
+  }
+
+  /**
+   * Unlinks the Actor currently linked to a Pet item, restoring the item
+   * to a plain, unnamed Gear with the default pet artwork and reverting
+   * the description to its pre-drop state.
+   *
+   * @this SdmItemSheet
+   * @param {PointerEvent} event
+   * @param {HTMLElement} target
+   * @protected
+   */
+  static async _onUnlinkActor(event, target) {
+    const petUuid = this.item.system.pet;
+    if (!petUuid) return;
+
+    const proceed = await DialogV2.confirm({
+      content: `<b>${$fmt('SDM.UnlinkPetConfirmation', { pet: this.item.name })}</b>`,
+      modal: true,
+      rejectClose: false,
+      yes: { label: $l10n('SDM.ButtonYes') },
+      no: { label: $l10n('SDM.ButtonNo') }
+    });
+    if (!proceed) return;
+
+    const originalDescription = this.item.getFlag('sdm', 'originalDescription');
+    const originalItem = this.item.type;
+    await this.item.update({
+      name: $l10n(`TYPES.Item.${originalItem}`),
+      img: DEFAULT_PET_ICON,
+      'system.pet': '',
+      // Only touch the description if we actually stashed an original
+      ...(originalDescription !== undefined && {
+        'system.description': originalDescription
+      }),
+      'flags.sdm.-=originalDescription': null
+    });
+
+    this.render();
   }
 
   /* -------------------------------------------- */
@@ -1053,5 +1134,34 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       };
       return new DragDrop(d);
     });
+  }
+
+  /**
+   * Submit a document update based on the processed form data.
+   * @param {SubmitEvent} event                   The originating form submission event
+   * @param {HTMLFormElement} form                The form element that was submitted
+   * @param {object} submitData                   Processed and validated form data to be used
+   *                                              for a document update
+   * @returns {Promise<void>}
+   * @protected
+   * @override
+   */
+  async _processSubmitData(event, form, submitData) {
+    const overrides = foundry.utils.flattenObject(this.item.overrides);
+    for (let k of Object.keys(overrides)) delete submitData[k];
+    await this.document.update(submitData);
+  }
+
+  /**
+   * Disables inputs subject to active effects
+   */
+  #disableOverrides() {
+    const flatOverrides = foundry.utils.flattenObject(this.item.overrides);
+    for (const override of Object.keys(flatOverrides)) {
+      const input = this.element.querySelector(`[name="${override}"]`);
+      if (input) {
+        input.disabled = true;
+      }
+    }
   }
 }

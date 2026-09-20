@@ -1,0 +1,23 @@
+{
+  "type": "ActiveEffect",
+  "folder": "UnkzjwfQ2UBlMaBJ",
+  "name": "Common Upgrades",
+  "color": null,
+  "sorting": "a",
+  "_id": "a5yNKXkMe7THJpGJ",
+  "description": "",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.6.0",
+    "createdTime": 1789493133833,
+    "modifiedTime": 1789493133833,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "_key": "!folders!a5yNKXkMe7THJpGJ"
+}

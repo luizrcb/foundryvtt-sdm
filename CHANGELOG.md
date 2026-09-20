@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## v1.7.0
+
+- Reduced bundle download size
+- Added "Mods & Effects" compendium pack
+- Added support for @item and @actor references in active effect values
+- Active Effect changes show different available keys depending on whether the effect will be transferred to the Actor that owns an item containing the effect. For transfer: true effects, show Actor property keys; for transfer: false, show Item property keys.
+- Items will count and limit the number of installed mods
+- Item Mods are active effects flagged as an item mod
+- Pet items that have a linked actor will display an icon to open that Actor sheet in the Item sheet, and a button to unlink the Actor
+- When applying damage to an Actor that has items with the Flare feature, a pop-up will be displayed to ask if the damage should be limited to the Flare amount
+- When you roll damage from items with the Draining item mod, you gain temporary life.
+- Added the "# range" and "ward" options to item features
+- Targeted attacks will display the target resistances in the chat card
+
 ## v1.6.0
 
 - Added new Oracle type: 2d12 Order & Chaos

@@ -10,13 +10,15 @@
     "resources": "",
     "cost": 265,
     "cost_frequency": "",
-    "description": "<p>With three removable eyes. Roll 'em, pose 'em, stick 'em on a wall.</p><p>long range</p>",
+    "description": "<p>With three removable eyes. Roll 'em, pose 'em, stick 'em on a wall.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "range"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -77,7 +79,10 @@
     "categories": [
       "orangelander",
       "vision"
-    ]
+    ],
+    "range": {
+      "value": "long"
+    }
   },
   "effects": [],
   "sort": 0,
@@ -91,12 +96,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "14.367",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.6.0",
     "createdTime": 1767011795483,
-    "modifiedTime": 1767011795483,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1789559490532,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw"
   },
   "_key": "!items!GhkaGjc7wLMayvpL"
 }

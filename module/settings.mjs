@@ -39,6 +39,18 @@ export function registerSystemSettings() {
     }
   });
 
+  const localizedOptions = Object.keys(CONFIG.SDM.accentColorOptions).map(key => ({
+    key: key,
+    label: game.i18n.localize(CONFIG.SDM.accentColorOptions[key])
+  }));
+
+  localizedOptions.sort((a, b) => a.label.localeCompare(b.label, game.i18n.lang));
+
+  const sortedChoices = localizedOptions.reduce((acc, curr) => {
+    acc[curr.key] = curr.label;
+    return acc;
+  }, {});
+
   game.settings.register('sdm', 'chromatype', {
     name: 'SDM.SettingsChromatype',
     hint: 'SDM.SettingsChromatypeHint',
@@ -69,7 +81,7 @@ export function registerSystemSettings() {
     requiresReload: true,
     choices: {
       same: 'SDM.DSNChromatypeSame',
-      ...CONFIG.SDM.accentColorOptions
+     ...CONFIG.SDM.accentColorOptions
     },
     type: String,
     default: 'same'

@@ -8,14 +8,15 @@
     "readied": false,
     "cost": 50,
     "cost_frequency": "",
-    "description": "<p>Set up to block EM and psychic communications. Medium range and area.</p>",
+    "description": "<p>Set up to block EM and psychic communications.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
     "features": [
-      "area"
+      "area",
+      "range"
     ],
     "attributes": {
       "initiative": "",
@@ -82,7 +83,10 @@
     "categories": [
       "communication",
       "magielectronics"
-    ]
+    ],
+    "range": {
+      "value": "medium"
+    }
   },
   "effects": [],
   "sort": 0,
@@ -95,12 +99,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "14.367",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.6.0",
     "createdTime": 1767014140961,
-    "modifiedTime": 1767014140961,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1789559404447,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw"
   },
   "_key": "!items!jTSLt4GBUFM0ZYrt"
 }

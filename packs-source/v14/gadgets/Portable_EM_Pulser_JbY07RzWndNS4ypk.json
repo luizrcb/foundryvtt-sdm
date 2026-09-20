@@ -8,13 +8,16 @@
     "readied": false,
     "cost": 50,
     "cost_frequency": "",
-    "description": "<p>Temporarily disable golems and synthetics (save). Short range, re 4 [[/r 1d20]].</p>",
+    "description": "<p>Temporarily disable golems and synthetics (save).</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "range",
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -76,7 +79,13 @@
     "supply_type": "",
     "categories": [
       "magielectronics"
-    ]
+    ],
+    "replenish": {
+      "value": 4
+    },
+    "range": {
+      "value": "short"
+    }
   },
   "effects": [],
   "sort": 0,
@@ -89,12 +98,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "13.351",
+    "coreVersion": "14.367",
     "systemId": "sdm",
-    "systemVersion": "0.5.4",
+    "systemVersion": "1.6.0",
     "createdTime": 1767014140961,
-    "modifiedTime": 1767014140961,
-    "lastModifiedBy": "9g1Dzw4zdMZGGuY3"
+    "modifiedTime": 1789559452014,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw"
   },
   "_key": "!items!JbY07RzWndNS4ypk"
 }

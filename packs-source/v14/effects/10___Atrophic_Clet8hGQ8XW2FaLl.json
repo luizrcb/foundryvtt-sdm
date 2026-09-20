@@ -1,0 +1,48 @@
+{
+  "folder": "x737UpOjJ6bgtc81",
+  "name": "10 - Atrophic",
+  "_id": "Clet8hGQ8XW2FaLl",
+  "img": "icons/magic/unholy/hand-fire-skeleton-pink.webp",
+  "type": "base",
+  "system": {
+    "changes": [
+      {
+        "key": "system.description",
+        "type": "add",
+        "value": "<p>Deals 1 ability damage per hit. Choose target ability (strength, agility, etc.). This is not automated.</p>",
+        "priority": null,
+        "phase": "initial"
+      }
+    ],
+    "isItemMod": true,
+    "modType": "weapon"
+  },
+  "disabled": false,
+  "start": null,
+  "duration": {
+    "value": null,
+    "units": "seconds",
+    "expiry": null,
+    "expired": false
+  },
+  "description": "<p>Deals 1 ability damage per hit. Choose target ability (strength, agility, etc.). This is not automated.</p><p><strong>Mod Cost</strong>: $600, <strong>Repeatable</strong></p>",
+  "origin": null,
+  "tint": "#ffffff",
+  "transfer": false,
+  "statuses": [],
+  "showIcon": 1,
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.6.0",
+    "createdTime": 1789506128051,
+    "modifiedTime": 1789576014508,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "_key": "!effects!Clet8hGQ8XW2FaLl"
+}

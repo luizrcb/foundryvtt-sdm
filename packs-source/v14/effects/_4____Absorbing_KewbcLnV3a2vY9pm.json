@@ -1,0 +1,55 @@
+{
+  "folder": "mSfjjxPHpWNVuR1U",
+  "name": "(4) - Absorbing",
+  "_id": "KewbcLnV3a2vY9pm",
+  "img": "icons/magic/lightning/barrier-shield-crackling-orb-pink.webp",
+  "type": "base",
+  "system": {
+    "changes": [
+      {
+        "key": "system.description",
+        "type": "add",
+        "value": "<p>Reduce its armor bonus by 1 to negate the damage from one attack. Unless it is  living armor, spend €50 to repair each armor point.</p>",
+        "priority": null,
+        "phase": "initial"
+      },
+      {
+        "key": "system.armor.value",
+        "type": "subtract",
+        "value": 0,
+        "priority": null,
+        "phase": "initial"
+      }
+    ],
+    "isItemMod": true,
+    "modType": "armor_ward"
+  },
+  "disabled": false,
+  "start": null,
+  "duration": {
+    "value": null,
+    "units": "seconds",
+    "expiry": null,
+    "expired": false
+  },
+  "description": "<p>Reduce its armor bonus by 1 to negate the damage from one attack (reduce the armor using this active effect changes). Unless it is living armor, spend €50 to repair each armor point.</p>\n<p><strong>Mod Cost</strong>: $200</p>",
+  "origin": null,
+  "tint": "#ffffff",
+  "transfer": false,
+  "statuses": [],
+  "showIcon": 1,
+  "sort": 200000,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.368",
+    "systemId": "sdm",
+    "systemVersion": "1.6.0",
+    "createdTime": 1789512127747,
+    "modifiedTime": 1789724184936,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "_key": "!effects!KewbcLnV3a2vY9pm"
+}

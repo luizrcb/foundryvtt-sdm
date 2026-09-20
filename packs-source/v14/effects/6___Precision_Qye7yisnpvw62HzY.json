@@ -1,0 +1,48 @@
+{
+  "folder": "OmgVqZ6YW5WjGbgx",
+  "name": "6 - Precision",
+  "_id": "Qye7yisnpvw62HzY",
+  "img": "icons/skills/targeting/crosshair-bars-yellow.webp",
+  "type": "base",
+  "system": {
+    "changes": [
+      {
+        "key": "system.attack_bonus",
+        "type": "add",
+        "value": 1,
+        "priority": null,
+        "phase": "initial"
+      }
+    ],
+    "isItemMod": true,
+    "modType": "weapon"
+  },
+  "disabled": false,
+  "start": null,
+  "duration": {
+    "value": null,
+    "units": "seconds",
+    "expiry": null,
+    "expired": false
+  },
+  "description": "<p>Precognitive daemons guide the weapon, granting a +1 bonus to attacks.</p><p><strong>Mod Cost</strong>: $100, <strong>Repeatable</strong></p>",
+  "origin": null,
+  "tint": "#ffffff",
+  "transfer": true,
+  "statuses": [],
+  "showIcon": 1,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.6.0",
+    "createdTime": 1789419454853,
+    "modifiedTime": 1789567844374,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "sort": 100000,
+  "_key": "!effects!Qye7yisnpvw62HzY"
+}

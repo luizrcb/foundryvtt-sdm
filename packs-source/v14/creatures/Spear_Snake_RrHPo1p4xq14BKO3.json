@@ -19,31 +19,29 @@
     "isWarrior": false,
     "isHelper": false,
     "isPorter": false,
-    "speed": 0
+    "speed": 0,
+    "capacity": 0.5
   },
   "prototypeToken": {
     "name": "Spear Snake",
     "displayName": 40,
-    "actorLink": false,
+    "actorLink": true,
     "width": 1,
     "height": 1,
     "texture": {
       "src": "icons/creatures/reptiles/serpent-horned-green.webp",
       "anchorX": 0.5,
       "anchorY": 0.5,
-      "offsetX": 0,
-      "offsetY": 0,
       "fit": "contain",
       "scaleX": 1,
       "scaleY": 1,
-      "rotation": 0,
       "tint": "#ffffff",
       "alphaThreshold": 0.75
     },
     "lockRotation": true,
     "rotation": 0,
     "alpha": 1,
-    "disposition": 0,
+    "disposition": 1,
     "displayBars": 40,
     "bar1": {
       "attribute": "life"
@@ -97,7 +95,7 @@
         "ring": null,
         "background": null
       },
-      "effects": 1,
+      "effects": 0,
       "subject": {
         "scale": 1,
         "texture": null
@@ -112,12 +110,75 @@
     "movementAction": null,
     "flags": {},
     "randomImg": false,
-    "appendNumber": true,
+    "appendNumber": false,
     "prependAdjective": false,
     "depth": 1
   },
   "items": [],
-  "effects": [],
+  "effects": [
+    {
+      "name": "Medium Actor",
+      "_id": "USD6tUswrGzMTq1C",
+      "img": "icons/creatures/unholy/demon-fanged-horned-yellow.webp",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.size.unit",
+            "type": "override",
+            "value": "stones",
+            "priority": null,
+            "phase": "initial"
+          },
+          {
+            "key": "system.size.value",
+            "type": "override",
+            "value": 5,
+            "priority": null,
+            "phase": "initial"
+          }
+        ],
+        "isItemMod": false,
+        "modType": ""
+      },
+      "disabled": false,
+      "start": {
+        "time": 0,
+        "combat": null,
+        "combatant": null,
+        "initiative": null,
+        "round": null,
+        "turn": null
+      },
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "<p>Active Effect for actors who weigh half (5 stones) of a standard human (1 sack or 10 stones)</p>",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": false,
+      "statuses": [],
+      "showIcon": 1,
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.6.0",
+        "createdTime": 1789564076333,
+        "modifiedTime": 1789564076333,
+        "lastModifiedBy": "wOwBmZzhkRHns1aw",
+        "compendiumSource": "Compendium.sdm.effects.ActiveEffect.WOPC0CUcyG8NKVel",
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "_key": "!actors.effects!RrHPo1p4xq14BKO3.USD6tUswrGzMTq1C"
+    }
+  ],
   "folder": null,
   "ownership": {
     "default": 0,
@@ -128,12 +189,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "14.353",
+    "coreVersion": "14.368",
     "systemId": "sdm",
-    "systemVersion": "0.1.36",
+    "systemVersion": "1.6.0",
     "createdTime": 1756515647945,
-    "modifiedTime": 1760893957302,
-    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+    "modifiedTime": 1789583048969,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw"
   },
   "_id": "RrHPo1p4xq14BKO3",
   "sort": 300000,

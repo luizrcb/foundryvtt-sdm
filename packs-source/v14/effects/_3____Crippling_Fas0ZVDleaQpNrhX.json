@@ -1,0 +1,48 @@
+{
+  "folder": "x737UpOjJ6bgtc81",
+  "name": "(3) - Crippling",
+  "_id": "Fas0ZVDleaQpNrhX",
+  "img": "icons/magic/nature/root-vine-entangle-foot-green.webp",
+  "type": "base",
+  "system": {
+    "changes": [
+      {
+        "key": "system.description",
+        "type": "add",
+        "value": "<p>Target is slowed (save). Second strike immobilizes for 1d6 rounds (save). This is not automated.</p>",
+        "priority": null,
+        "phase": "initial"
+      }
+    ],
+    "isItemMod": true,
+    "modType": "weapon"
+  },
+  "disabled": false,
+  "start": null,
+  "duration": {
+    "value": null,
+    "units": "seconds",
+    "expiry": null,
+    "expired": false
+  },
+  "description": "<p>Target is slowed (save). Second strike immobilizes for 1d6 rounds (save). This is not automated.</p>\n<p><strong>Mod Cost</strong>: $200</p>",
+  "origin": null,
+  "tint": "#ffffff",
+  "transfer": false,
+  "statuses": [],
+  "showIcon": 1,
+  "sort": 300000,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.368",
+    "systemId": "sdm",
+    "systemVersion": "1.6.0",
+    "createdTime": 1789504913594,
+    "modifiedTime": 1789678283831,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "_key": "!effects!Fas0ZVDleaQpNrhX"
+}

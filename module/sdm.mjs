@@ -1,10 +1,11 @@
-import SdmActiveEffectConfig from './app/active-effect-config.mjs';
 import SdmActiveEffectConfig14 from './app/active-effect-config14.mjs';
 import {
   GroupCheckDialog,
   registerGroupCheckSettings,
   setupGroupCheckSocket
 } from './app/group-check/index.mjs';
+
+import { SDMActiveEffectData } from './app/active-effect-data.mjs';
 
 import * as models from './data/_module.mjs';
 import { SdmActor } from './documents/actor.mjs';
@@ -42,7 +43,11 @@ import {
   TRAIT_ICONS,
   TraitType
 } from './helpers/constants.mjs';
-import { makePowerItem, UnarmedDamageItem } from './helpers/itemUtils.mjs';
+import {
+  makePowerItem,
+  registerActiveEffectLimit,
+  UnarmedDamageItem
+} from './helpers/itemUtils.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { setupPetDropSocket } from './items/petItem.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
@@ -291,6 +296,8 @@ Hooks.on('createActor', async (actor, _options, _id) => {
   });
 });
 
+registerActiveEffectLimit();
+
 Hooks.on('updateItem', async item => {
   const defaultCurrencyImage = game.settings.get('sdm', 'currencyImage') || DEFAULT_CASH_ICON;
   const defaultCurrencyName = game.settings.get('sdm', 'currencyName') || 'cash';
@@ -458,21 +465,21 @@ Hooks.on('getChatMessageContextOptions', (html, options) => {
 
   options.push(
     {
-      name: '',
-      condition: canApply,
+      label: '',
+      visible: canApply,
       group: 'separator'
     },
     {
-      name: game.i18n.localize('SDM.ChatContextNoTokensSelected'),
-      condition: noTokenSelected,
+      label: game.i18n.localize('SDM.ChatContextNoTokensSelected'),
+      visible: noTokenSelected,
       icon: '<i class="fa-solid fa-user-slash"></i>',
       group: 'damage'
     },
     {
-      name: game.i18n.localize('SDM.ChatContextHalfDamage') || 'Apply Half Damage',
+      label: game.i18n.localize('SDM.ChatContextHalfDamage') || 'Apply Half Damage',
       icon: '<i class="fa-solid fa-user-minus"></i>',
-      condition: canApply,
-      callback: async li => {
+      visible: canApply,
+      onClick: async (event, li) => {
         const message = game.messages.get(li.dataset.messageId);
         if (!message?.rolls?.length) return;
         const orig = message.rolls[0].total;
@@ -484,10 +491,10 @@ Hooks.on('getChatMessageContextOptions', (html, options) => {
       group: 'damage'
     },
     {
-      name: game.i18n.localize('SDM.ChatContextDamage'),
+      label: game.i18n.localize('SDM.ChatContextDamage'),
       icon: '<i class="fa-solid fa-user-minus"></i>',
-      condition: canApply,
-      callback: async li => {
+      visible: canApply,
+      onClick: async (event, li) => {
         const message = game.messages.get(li.dataset.messageId);
         if (!message.rolls || !message.rolls.length) return;
 
@@ -503,10 +510,10 @@ Hooks.on('getChatMessageContextOptions', (html, options) => {
     },
 
     {
-      name: game.i18n.localize('SDM.ChatContextDoubleDamage') || 'Apply Double Damage',
+      label: game.i18n.localize('SDM.ChatContextDoubleDamage') || 'Apply Double Damage',
       icon: '<i class="fa-solid fa-user-minus"></i>',
-      condition: canApply,
-      callback: async li => {
+      visible: canApply,
+      onClick: async (event, li) => {
         const message = game.messages.get(li.dataset.messageId);
         if (!message?.rolls?.length) return;
         const orig = message.rolls[0].total;
@@ -518,10 +525,10 @@ Hooks.on('getChatMessageContextOptions', (html, options) => {
     },
 
     {
-      name: game.i18n.localize('SDM.ChatContextHealing'),
+      label: game.i18n.localize('SDM.ChatContextHealing'),
       icon: '<i class="fa-solid fa-user-plus"></i>',
-      condition: canApply,
-      callback: async li => {
+      visible: canApply,
+      onClick: async (event, li) => {
         const message = game.messages.get(li.dataset.messageId);
         if (!message.rolls || !message.rolls.length) return;
         const damageAmount = message.rolls[0].total;
@@ -585,7 +592,7 @@ Hooks.once('init', function () {
     makeDefault: true,
     label: 'SDM.SheetLabels.Item'
   });
-
+  CONFIG.ActiveEffect.dataModels.base = SDMActiveEffectData;
   DocumentSheetConfig.registerSheet(ActiveEffect, 'sdm', SdmActiveEffectConfig14, {
     makeDefault: true
   });
@@ -621,14 +628,13 @@ Hooks.once('init', function () {
 registerHandlebarsHelpers();
 registerTextEditorEnrichers();
 
-
 /* -------------------------------------------- */
 /*  Ready Hook                                  */
 /* -------------------------------------------- */
 
 Hooks.once('ready', function () {
   // Wait to register hotbar drop hook on ready so that modules could register earlier if they want to
-   CompendiumBrowser.preloadCache();
+  CompendiumBrowser.preloadCache();
   // client custom color system settings
   configurePlayerChromatype();
 
@@ -650,7 +656,7 @@ Hooks.once('ready', function () {
     if (!item) return;
 
     // Check if it's a pet item (you can reuse the same condition)
-    if (item.type !== ItemType.GEAR || item.system?.type !== GearType.PET) return;
+    if (item.system?.type !== GearType.PET) return;
     if (!item.system.pet) return;
 
     // If the user is GM, create the token directly (bypass socket)

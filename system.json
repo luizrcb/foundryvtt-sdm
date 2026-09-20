@@ -9,7 +9,7 @@
   "download": "https://github.com/luizrcb/foundryvtt-sdm/releases/download/v1.6.0/sdm-1.6.0.zip",
   "compatibility": {
     "minimum": "14",
-    "verified": "14.367"
+    "verified": "14.368"
   },
   "authors": [
     {
@@ -59,8 +59,8 @@
   "media": [
     {
       "type": "setup",
-      "url": "systems/sdm/assets/wtf-compatible.png",
-      "thumbnail": "systems/sdm/assets/wtf-compatible.png"
+      "url": "systems/sdm/assets/wtf-compatible.webp",
+      "thumbnail": "systems/sdm/assets/wtf-compatible.webp"
     }
   ],
   "esmodules": ["module/sdm.mjs"],
@@ -231,6 +231,13 @@
       "path": "./packs/names_tables",
       "type": "RollTable",
       "system": "sdm"
+    },
+    {
+      "name": "effects",
+      "label": "Effects",
+      "path": "./packs/effects",
+      "type": "ActiveEffect",
+      "system": "sdm"
     }
   ],
   "packFolders": [
@@ -287,6 +294,12 @@
           "packs": ["powers"]
         },
         {
+          "name": "Mods & Effects",
+          "sorting": "a",
+          "color": "#d16d8f",
+          "packs": ["effects"]
+        },
+        {
           "name": "Referee Tools",
           "sorting": "a",
           "color": "#785DAA",
@@ -302,7 +315,7 @@
     }
   ],
   "socket": true,
-  "background": "systems/sdm/assets/wtf-compatible.png",
+  "background": "systems/sdm/assets/wtf-compatible.webp",
   "grid": {
     "type": 1,
     "distance": 5,

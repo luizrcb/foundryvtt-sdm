@@ -1,0 +1,55 @@
+{
+  "name": "1 - Damage Boost",
+  "origin": null,
+  "img": "icons/skills/melee/blade-tip-energy-green.webp",
+  "_id": "k5rktuagE6JRYO3s",
+  "type": "base",
+  "system": {
+    "changes": [
+      {
+        "key": "system.weapon.damage.base",
+        "type": "custom",
+        "value": "boost",
+        "priority": null,
+        "phase": "initial"
+      },
+      {
+        "key": "system.weapon.damage.versatile",
+        "type": "custom",
+        "value": "boost",
+        "priority": null,
+        "phase": "initial"
+      }
+    ],
+    "isItemMod": true,
+    "modType": "weapon"
+  },
+  "disabled": false,
+  "start": null,
+  "duration": {
+    "value": null,
+    "units": "seconds",
+    "expiry": null,
+    "expired": false
+  },
+  "description": "<p>The most basic of weapon mods. +1 bonus per damage die (2d4 → 2d4+2)</p>\n<p><strong>Mod Cost</strong>: $5, <strong>Repeatable</strong></p>",
+  "tint": "#ffffff",
+  "transfer": false,
+  "statuses": [],
+  "showIcon": 1,
+  "folder": "OmgVqZ6YW5WjGbgx",
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.368",
+    "systemId": "sdm",
+    "systemVersion": "1.6.0",
+    "createdTime": 1788984979935,
+    "modifiedTime": 1789663390615,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "sort": 100000,
+  "_key": "!effects!k5rktuagE6JRYO3s"
+}

@@ -1,0 +1,23 @@
+{
+  "type": "ActiveEffect",
+  "folder": "3d2liJEFqq3yAhpA",
+  "name": "Postreality Customizations",
+  "color": null,
+  "sorting": "a",
+  "_id": "x737UpOjJ6bgtc81",
+  "description": "",
+  "sort": 200000,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.6.0",
+    "createdTime": 1789494583833,
+    "modifiedTime": 1789576035135,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "_key": "!folders!x737UpOjJ6bgtc81"
+}

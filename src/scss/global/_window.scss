@@ -568,8 +568,8 @@ input[type='radio']::after {
   }
 
   .sdm-icon {
-    width: 120px;
-    height: 120px;
+    width: 110px;
+    height: 110px;
 
     -webkit-mask-image: url('../assets/wtf-pause.png');
     -webkit-mask-repeat: no-repeat;
@@ -1606,5 +1606,32 @@ input[type='radio']::after {
     font-weight: 600;
     margin-top: -15px;
     margin-right: 12px;
+  }
+
+  .pet-link-row {
+    gap: 8px;
+    align-items: center;
+    justify-content: flex-start;
+  }
+
+  .pet-link-row .roll-icon {
+    flex: 0 0 40px;
+    font-size: 40px !important; /* icon glyph size */
+    cursor: pointer;
+  }
+
+  .pet-link-name {
+    font-weight: bold;
+    cursor: pointer;
+  }
+
+  .pet-unlink-btn {
+    flex: 0 0 auto;
+    width: 28px;
+    height: 28px;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }

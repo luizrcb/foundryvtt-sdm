@@ -530,6 +530,10 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
           const capitalized = value.charAt(0).toUpperCase() + value.slice(1);
           const replacement = $l10n(`SDM.Area${capitalized}Abbr`);
           label = label.replace('#', replacement);
+        } else if (feat === 'range') {
+          const capitalized = value.charAt(0).toUpperCase() + value.slice(1);
+          const replacement = $l10n(`SDM.Range${capitalized}`);
+          label = label.replace('#', replacement);
         } else {
           label = label.replace('#', value);
         }

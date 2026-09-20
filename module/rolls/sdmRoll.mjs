@@ -122,6 +122,7 @@ export default class SDMRoll {
       let { icon, property } = attackMapping[target];
 
       const targetDefense = this.targetActor?.system[property] || 0;
+      const targetResistances = this.targetActor?.resistances || [];
 
       const attackResult = this.roll.total;
       const { isNat1, isNat20, is13, is7 } = detectNat1OrNat20(this.roll);
@@ -172,6 +173,11 @@ export default class SDMRoll {
         )}:</b> ${this.targetActor.name}</span></div><div class="flex-group-center"><b>${$l10n(
           'SDM.FieldDefense'
         )}:</b> ${icon} ${targetDefense}</span></div></div><br>
+        ${
+          targetResistances.length > 0
+            ? `<div class="flex-group-center"><b>${$l10n('SDM.Resistances')}:</b> ${targetResistances.join(', ')}</div>`
+            : ''
+        }<br>
         <div class="flex-group-center"><span class="${textClass}"}> ${resultMessage}</span><div>
         ${
           is13
@@ -210,6 +216,13 @@ export default class SDMRoll {
 
     chatDataMessage.flags = { ...chatDataMessage.flags, ...this.extraFlags };
     await createChatMessage(chatDataMessage);
+
+    if (isDamage && this.item && this.item?.system?.features?.has('draining')) {
+      const drainingAmount = this.item?.system?.draining?.value ?? 0;
+      if (drainingAmount) {
+        await this.actor.applyDamage(drainingAmount, -1, true, true);
+      }
+    }
 
     if (isDamage && this.item && this.item?.system?.features?.has('replenish')) {
       await this.item.usageRoll(this.item.system.replenish?.value);

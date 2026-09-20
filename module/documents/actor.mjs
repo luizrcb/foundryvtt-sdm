@@ -323,6 +323,69 @@ export class SdmActor extends Actor {
     // documents or derived data.
   }
 
+  prepareEmbeddedDocuments() {
+    this._embeddedPreparation = true;
+    super.prepareEmbeddedDocuments();
+    delete this._embeddedPreparation;
+  }
+
+  applyActiveEffects() {
+    const overrides = {};
+    const changes = [];
+    const rollData = this.getRollData();
+    for (const effect of this.allApplicableEffects()) {
+      if (!effect.active) continue;
+      changes.push(
+        ...effect.system.changes.map(change => {
+          const c = foundry.utils.deepClone(change);
+          c.effect = effect;
+          c.priority = c.priority ?? c.mode * 10;
+          return c;
+        })
+      );
+      for (const statusId of effect.statuses) this.statuses.add(statusId);
+    }
+    changes.sort((a, b) => a.priority - b.priority);
+
+    for (const change of changes) {
+      if (!change.key) continue;
+
+      let currentVal = overrides[change.key];
+      if (currentVal === undefined) {
+        currentVal = foundry.utils.getProperty(this, change.key);
+      }
+
+      if (typeof change.value === 'string') {
+        const itemParent = change.effect?.parent;
+        const isItem = itemParent?.documentName === 'Item';
+
+        const resolve = (scope, key) => {
+          const target = scope === 'actor' ? this : scope === 'item' && isItem ? itemParent : null;
+          return target ? foundry.utils.getProperty(target, key) : undefined;
+        };
+
+        const single = change.value.match(/^@(actor|item)\.([\w.\[\]'"]+)$/);
+        if (single) {
+          const v = resolve(single[1], single[2]);
+          if (v !== undefined) change.value = v;
+        } else {
+          change.value = change.value.replace(
+            /@(actor|item)\.([\w.\[\]'"]+)/g,
+            (full, scope, key) => {
+              const v = resolve(scope, key);
+              return v === undefined ? full : String(v);
+            }
+          );
+        }
+      }
+
+      const applied = ActiveEffect.applyChange(this, change, { replacementData: rollData });
+      Object.assign(overrides, applied);
+    }
+
+    foundry.utils.mergeObject(this.overrides, foundry.utils.expandObject(overrides));
+  }
+
   _prepareCharacterData() {
     const data = this.system;
 
@@ -421,6 +484,46 @@ export class SdmActor extends Actor {
 
   get maxSlots() {
     return Math.trunc(convertSizeUnit(this.totalSacks, SizeUnit.SACKS, SizeUnit.STONES));
+  }
+
+  getHighestFeatureValue(feature) {
+    if (!feature) return 0;
+
+    const itemsArray = this.items.contents;
+    const equippedGearWithFeature = itemsArray.filter(
+      item =>
+        item.type === ItemType.GEAR &&
+        item.system?.readied === true &&
+        item.system?.features?.has(feature)
+    );
+    const maxFeature = Math.max(...equippedGearWithFeature.map(i => i.system[feature]?.value));
+    return maxFeature;
+  }
+
+  getfeaturePropertyValues(feature) {
+    if (!feature) return [];
+
+    const itemsArray = this.items.contents;
+    const equippedGearWithFeature = itemsArray.filter(
+      item =>
+        item.type === ItemType.GEAR &&
+        item.system.readied === true &&
+        item.system?.features?.has(feature)
+    );
+    const results = equippedGearWithFeature.reduce((acc, i) => {
+      acc.push(i.system[feature].value);
+      return acc;
+    }, []);
+
+    return results;
+  }
+
+  get resistances() {
+    return this.getfeaturePropertyValues('resistant');
+  }
+
+  get flare() {
+    return this.getHighestFeatureValue('flare');
   }
 
   _checkCarriedWeight(item, updateData) {
@@ -641,7 +744,9 @@ export class SdmActor extends Actor {
   getAllEffects() {
     let effects = Array.from(this.effects);
 
-    const items = Array.from(this.items.filter(it => ['gear', 'trait'].includes(it.type)));
+    const items = Array.from(
+      this.items.filter(it => ['gear', 'trait', 'burden'].includes(it.type))
+    );
     items.forEach(item => {
       const _eff = Array.from(item.effects);
       if (_eff.length > 0) {
@@ -649,6 +754,8 @@ export class SdmActor extends Actor {
         effects = mergedEffects;
       }
     });
+
+    effects = effects.filter(eff => eff.transfer || eff.parent === this);
 
     return effects;
   }
@@ -851,7 +958,10 @@ export class SdmActor extends Actor {
     const itemsArray = this.items.contents;
     const equippedArmor = itemsArray.filter(
       item =>
-        item.type === ItemType.GEAR && item.system.type === GearType.ARMOR && item.system.readied
+        (item.type === ItemType.GEAR &&
+          item.system.type === GearType.ARMOR &&
+          item.system.readied) ||
+        (item.system.features.has('armor') && item.system.readied)
     );
     const equippedWard = itemsArray.filter(
       item =>
@@ -862,10 +972,11 @@ export class SdmActor extends Actor {
       (sum, item) => sum + (item.system.armor.value || 0),
       0
     );
-    const equippedWardArmorBonus = equippedWard.reduce(
-      (sum, item) => sum + (item.system.ward.armor || 0),
-      0
-    );
+
+    // const equippedWardArmorBonus = equippedWard.reduce(
+    //   (sum, item) => sum + (item.system.armor.value || 0),
+    //   0
+    // );
 
     const crampingItems = itemsArray.filter(item => {
       return (
@@ -889,14 +1000,17 @@ export class SdmActor extends Actor {
 
     const armorBonus = this.system.armor_bonus || 0;
 
-    return equippedArmorValue + equippedWardArmorBonus + armorBonus + crampingPenalty;
+    return equippedArmorValue + armorBonus + crampingPenalty;
   }
 
   getWard() {
     const itemsArray = this.items.contents;
     const equippedWard = itemsArray.filter(
       item =>
-        item.type === ItemType.GEAR && item.system.type === GearType.WARD && item.system.readied
+        (item.type === ItemType.GEAR &&
+          item.system.type === GearType.WARD &&
+          item.system.readied) ||
+        (item.type === ItemType.GEAR && item.system.type === GearType.ARMOR && item.system.readied)
     );
     const equippedWardValue = equippedWard.reduce(
       (sum, item) => sum + (item.system.ward.value || 0),
@@ -1628,15 +1742,36 @@ export class SdmActor extends Actor {
     });
   }
 
-  async applyDamage(damageValue = 0, multiplier = 1) {
+  async applyDamage(damageValue = 0, multiplier = 1, temporaryOnly = false, skipFlare = false) {
     const life = this.system.life;
     const tempLife = this.system.temporary_life;
     const bloodClad = !!this.system.blood_dice?.enabled;
 
+    const flare = Number(this.flare) || 0;
+
     if (!damageValue || !Number.isNumeric(damageValue)) return;
 
     // Net amount: positive = damage, negative = healing
-    const netAmount = damageValue * multiplier;
+    let netAmount = damageValue * multiplier;
+
+    // --- FLARE PROMPT ---
+    // If we have flare and are taking damage, ask whether to cap damage at the flare value.
+    if (!skipFlare && flare > 0 && netAmount > flare) {
+      const DialogV2 = foundry.applications.api.DialogV2;
+      const useFlare = await DialogV2.confirm({
+        window: { title: $l10n('SDM.UseFlareTitle') },
+        content: `<p>${$fmt('SDM.UseFlarePrompt', { actor: this.name, flare })}</p>`,
+        yes: { label: $l10n('SDM.ButtonYes') },
+        no: { label: $l10n('SDM.ButtonNo') },
+        modal: true,
+        rejectClose: false
+      });
+
+      if (useFlare) {
+        netAmount = flare;
+        damageValue = flare;
+      }
+    }
 
     // Call the hook/logging you already had
     await postLifeChange(this, damageValue, multiplier);
@@ -1657,8 +1792,8 @@ export class SdmActor extends Actor {
         remainingDamage -= takenFromTemp;
       }
 
-      // Any remaining damage reduces real life
-      if (remainingDamage > 0) {
+      // Any remaining damage reduces real life (skipped when temporaryOnly — overflow discarded)
+      if (!temporaryOnly && remainingDamage > 0) {
         newLifeValue = clamp(newLifeValue - remainingDamage, 0, life.max);
       }
 
@@ -1683,19 +1818,28 @@ export class SdmActor extends Actor {
       let newLifeValue = life.value;
       let newTempValue = tempLife?.value ?? 0;
 
-      // First heal real life up to its max
-      if (newLifeValue < life.max) {
-        const healToLife = Math.min(remainingHeal, life.max - newLifeValue);
-        newLifeValue = clamp(newLifeValue + healToLife, 0, life.max);
-        remainingHeal -= healToLife;
-      }
+      if (temporaryOnly) {
+        // Only heal temporary life, capped at its max — overflow discarded
+        if (tempLife?.enabled) {
+          const tempMax = tempLife.max ?? newTempValue;
+          const healToTemp = Math.min(remainingHeal, tempMax - newTempValue);
+          newTempValue = clamp(newTempValue + healToTemp, 0, tempMax);
+        }
+      } else {
+        // First heal real life up to its max
+        if (newLifeValue < life.max) {
+          const healToLife = Math.min(remainingHeal, life.max - newLifeValue);
+          newLifeValue = clamp(newLifeValue + healToLife, 0, life.max);
+          remainingHeal -= healToLife;
+        }
 
-      // Any overflow can go to temporary life (if enabled)
-      if (remainingHeal > 0 && tempLife?.enabled) {
-        const tempMax = tempLife.max ?? newTempValue;
-        const healToTemp = Math.min(remainingHeal, tempMax - newTempValue);
-        newTempValue = clamp(newTempValue + healToTemp, 0, tempMax);
-        remainingHeal -= healToTemp;
+        // Any overflow can go to temporary life (if enabled)
+        if (remainingHeal > 0 && tempLife?.enabled) {
+          const tempMax = tempLife.max ?? newTempValue;
+          const healToTemp = Math.min(remainingHeal, tempMax - newTempValue);
+          newTempValue = clamp(newTempValue + healToTemp, 0, tempMax);
+          remainingHeal -= healToTemp;
+        }
       }
 
       // Update the document (include temp only if the system has it)
@@ -1707,9 +1851,6 @@ export class SdmActor extends Actor {
       await this.update(updateData);
       return;
     }
-
-    // If netAmount === 0 we already returned earlier due to the initial guard,
-    // but keep this for clarity.
   }
 
   async increaseExtraDaysTallied(factor = 1) {

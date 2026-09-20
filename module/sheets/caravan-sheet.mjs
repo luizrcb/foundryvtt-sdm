@@ -264,14 +264,15 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       for (const [key, member] of Object.entries(crew)) {
         const memberId = member.id;
         const crewMember = await fromUuid(memberId);
-        member.name = crewMember.name;
-        member.img = crewMember.img;
-        member.system = crewMember.system;
+        if (!crewMember) continue;
+        member.name = crewMember?.name;
+        member.img = crewMember?.img;
+        member.system = crewMember?.system;
         member.key = key;
-        member.totalCash = crewMember.getTotalCash();
-        totalCrewCash += member.totalCash;
-        member.totalWeight = crewMember.getTotalWeight();
-        member.type = crewMember.type;
+        member.totalCash = crewMember?.getTotalCash();
+        totalCrewCash += member?.totalCash;
+        member.totalWeight = crewMember?.getTotalWeight();
+        member.type = crewMember?.type;
 
         if (crewMember.items) {
           // Get all pet items

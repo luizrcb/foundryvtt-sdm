@@ -1,0 +1,55 @@
+{
+  "folder": "OmgVqZ6YW5WjGbgx",
+  "name": "7 - Area Boost",
+  "_id": "DonI2u8Zci4zLcjD",
+  "img": "icons/skills/ranged/arrows-flying-salvo-blue.webp",
+  "type": "base",
+  "system": {
+    "changes": [
+      {
+        "key": "system.features",
+        "type": "add",
+        "value": "area",
+        "priority": null,
+        "phase": "initial"
+      },
+      {
+        "key": "system.area.value",
+        "type": "upgrade",
+        "value": "",
+        "priority": null,
+        "phase": "initial"
+      }
+    ],
+    "isItemMod": true,
+    "modType": "weapon"
+  },
+  "disabled": false,
+  "start": null,
+  "duration": {
+    "value": null,
+    "units": "seconds",
+    "expiry": null,
+    "expired": false
+  },
+  "description": "<p>Magitechnically tweaked to roughly double its area of effect.</p><p><strong>Mod Cost</strong>: $150, <strong>Repeatable</strong></p>",
+  "origin": null,
+  "tint": "#ffffff",
+  "transfer": false,
+  "statuses": [],
+  "showIcon": 1,
+  "sort": 100000,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.6.0",
+    "createdTime": 1789419667607,
+    "modifiedTime": 1789567867308,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "_key": "!effects!DonI2u8Zci4zLcjD"
+}

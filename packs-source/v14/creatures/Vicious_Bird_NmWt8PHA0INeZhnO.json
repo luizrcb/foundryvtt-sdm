@@ -23,7 +23,8 @@
     "isPorter": false,
     "isPet": false,
     "experience": "300",
-    "speed": 0
+    "speed": 0,
+    "capacity": 0.2
   },
   "prototypeToken": {
     "name": "Vicious Bird",
@@ -35,12 +36,9 @@
       "src": "icons/creatures/birds/corvid-call-sound-glowing.webp",
       "anchorX": 0.5,
       "anchorY": 0.5,
-      "offsetX": 0,
-      "offsetY": 0,
       "fit": "contain",
       "scaleX": 1,
       "scaleY": 1,
-      "rotation": 0,
       "tint": "#ffffff",
       "alphaThreshold": 0.75
     },
@@ -121,7 +119,68 @@
     "depth": 1
   },
   "items": [],
-  "effects": [],
+  "effects": [
+    {
+      "name": "Small Actor",
+      "_id": "jCQew0wfoyZMTvFJ",
+      "img": "icons/creatures/unholy/demon-horned-black-yellow.webp",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.size.unit",
+            "type": "override",
+            "value": "stones",
+            "priority": null,
+            "phase": "initial"
+          },
+          {
+            "key": "system.size.value",
+            "type": "override",
+            "value": 1,
+            "priority": null,
+            "phase": "initial"
+          }
+        ]
+      },
+      "disabled": false,
+      "start": {
+        "time": 0,
+        "combat": null,
+        "combatant": null,
+        "initiative": null,
+        "round": null,
+        "turn": null
+      },
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "<p>Active Effect for actors who weigh 1/10th (1 stone) of a standard human (1 sack or 10 stones)</p>",
+      "origin": null,
+      "tint": "#ffffff",
+      "transfer": false,
+      "statuses": [],
+      "showIcon": 1,
+      "folder": null,
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.6.0",
+        "createdTime": 1788886613952,
+        "modifiedTime": 1788886613952,
+        "lastModifiedBy": "wOwBmZzhkRHns1aw",
+        "compendiumSource": "Compendium.sdm.effects.ActiveEffect.jponmqi0LOEjhrZh",
+        "duplicateSource": null,
+        "exportSource": null
+      },
+      "_key": "!actors.effects!NmWt8PHA0INeZhnO.jCQew0wfoyZMTvFJ"
+    }
+  ],
   "folder": null,
   "sort": 100000,
   "ownership": {
@@ -133,12 +192,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "14.353",
+    "coreVersion": "14.367",
     "systemId": "sdm",
-    "systemVersion": "0.5.1",
+    "systemVersion": "1.6.0",
     "createdTime": 1760643027564,
-    "modifiedTime": 1760893957302,
-    "lastModifiedBy": "XnQAppzUXfkn5LcX"
+    "modifiedTime": 1789563855622,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw"
   },
   "_key": "!actors!NmWt8PHA0INeZhnO"
 }

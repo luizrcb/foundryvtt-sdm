@@ -248,9 +248,8 @@ export class SdmItem extends Item {
    * Enable Active Effects on Item
    */
   prepareEmbeddedDocuments() {
-    // console.log("SR6E | SR6Item.prepareEmbeddedDocuments() DEBUG", this.uuid, this.name);
     super.prepareEmbeddedDocuments();
-    if (this.actor) this.applyActiveEffects();
+    this.applyActiveEffects();
   }
 
   /**
@@ -264,9 +263,9 @@ export class SdmItem extends Item {
    */
   applyActiveEffects() {
     const overrides = {};
-
-    // Organize non-disabled effects by their application priority
     const changes = [];
+    const rollData = this.getRollData();
+
     for (const effect of this.allApplicableEffects()) {
       if (!effect.active) continue;
       changes.push(
@@ -281,24 +280,172 @@ export class SdmItem extends Item {
     }
     changes.sort((a, b) => a.priority - b.priority);
 
-    // Apply all changes
-    for (let change of changes) {
+    for (const change of changes) {
       if (!change.key) continue;
-      if (typeof change.value === 'string' && change.value?.startsWith('@actor') && this.actor) {
-        const key = change.value.substring(7);
-        change.value = foundry.utils.getProperty(this.actor, key);
-      }
-      if (typeof change.value === 'string' && change.value?.startsWith('@item')) {
-        const key = change.value.substring(6);
-        change.value = foundry.utils.getProperty(this, key);
+
+      let currentVal = overrides[change.key];
+      if (currentVal === undefined) {
+        currentVal = foundry.utils.getProperty(this, change.key);
       }
 
-      const changes = change.effect.apply(this, change);
-      Object.assign(overrides, changes);
+      const isDamageKey =
+        change.key === 'system.weapon.damage.base' ||
+        change.key === 'system.weapon.damage.versatile';
+
+      const isAreaKey = change.key === 'system.area.value';
+      const isWeaponRangeKey = change.key === 'system.weapon.range';
+      const isRangeKey = change.key === 'system.range.value';
+      const isSizeValueKey = change.key === 'system.size.value';
+      const isSizeUnitKey = change.key === 'system.size.unit';
+
+      if (isDamageKey && (change.type === 'upgrade' || change.type === 'downgrade')) {
+        const direction = change.type === 'upgrade' ? 1 : -1;
+        let steps = 1;
+        const isUnarmedItem =
+          this._stats.compendiumSource === UnarmedDamageItem ||
+          this.getFlag?.('sdm', 'fromCompendium') === UnarmedDamageItem;
+
+        if (isUnarmedItem && currentVal === '1d3') {
+          steps = 2;
+        }
+
+        change.value = this._adjustDamageStep(currentVal, direction, steps);
+        change.type = 'override';
+      } else if (isDamageKey && change.type === 'custom' && change.value === 'boost') {
+        change.value = this._addDieBonus(currentVal);
+        change.type = 'override';
+      } else if (isAreaKey && change.type === 'upgrade') {
+        change.value = this._upgradeArea(currentVal);
+        change.type = 'override';
+      } else if ((isRangeKey || isWeaponRangeKey) && change.type === 'upgrade') {
+        change.value = this._upgradeRange(currentVal);
+        change.type = 'override';
+      } else if (isSizeValueKey && change.type === 'downgrade') {
+        if (this.system.size.unit === SizeUnit.STONES) {
+          change.value = Math.max(currentVal - 1, 1);
+          change.type = 'override';
+        }
+      } else if (isSizeUnitKey && change.type === 'downgrade') {
+        change.value = this._downgradeSizeUnit(currentVal);
+        change.type = 'override';
+      }
+
+      if (typeof change.value === 'string') {
+        const resolve = (scope, key) => {
+          const target = scope === 'actor' ? this.actor : this;
+          return target ? foundry.utils.getProperty(target, key) : undefined;
+        };
+
+        const single = change.value.match(/^@(actor|item)\.([\w.\[\]'"]+)$/);
+        if (single) {
+          const v = resolve(single[1], single[2]);
+          if (v !== undefined) change.value = v;
+        } else {
+          change.value = change.value.replace(
+            /@(actor|item)\.([\w.\[\]'"]+)/g,
+            (full, scope, key) => {
+              const v = resolve(scope, key);
+              return v === undefined ? full : String(v);
+            }
+          );
+        }
+      }
+
+      const applied = ActiveEffect.applyChange(this, change, { replacementData: rollData });
+      Object.assign(overrides, applied);
     }
 
-    // Expand the set of final overrides
     this.overrides = foundry.utils.expandObject(overrides);
+  }
+
+  /**
+   * Adjust die size by one or more steps in a damage expression.
+   * @param {string} expr - Original expression (e.g., "2d6+3")
+   * @param {number} dir  - +1 for upgrade, -1 for downgrade
+   * @param {number} steps - Number of steps to move (default 1)
+   * @returns {string} Modified expression
+   */
+  _adjustDamageStep(expr, dir, steps = 1) {
+    const dieSteps = ['d3', 'd4', 'd6', 'd8', 'd10', 'd12', 'd20']; // extend as needed
+    const stepMap = {};
+    dieSteps.forEach((die, idx) => (stepMap[die] = idx));
+
+    const stepCount = Number.isFinite(Number(steps)) ? Math.trunc(Number(steps)) : 1;
+
+    const delta = dir * stepCount;
+
+    return expr.replace(/(\d+)d(\d+)/g, (match, count, die) => {
+      const currentDie = `d${die}`;
+      const idx = stepMap[currentDie];
+      if (idx === undefined) return match; // unknown die
+
+      const newIdx = Math.min(Math.max(idx + delta, 0), dieSteps.length - 1);
+
+      return `${count}${dieSteps[newIdx]}`;
+    });
+  }
+
+  _upgradeArea(areaValue) {
+    if (!areaValue) areaValue = 'single';
+    const keys = Object.keys(CONFIG.SDM.areaValues);
+    const index = keys.indexOf(areaValue);
+
+    // If key not found, or already at the last one, return current
+    if (index === -1 || index === keys.length - 1) {
+      return areaValue;
+    }
+
+    return keys[index + 1];
+  }
+
+  _upgradeRange(rangeValue) {
+    if (!rangeValue) rangeValue = 'close'
+    const keys = Object.keys(CONFIG.SDM.rangeType);
+    const index = keys.indexOf(rangeValue);
+
+    if (index === -1 || index === keys.length - 1) {
+      return rangeValue;
+    }
+
+    return keys[index + 1];
+  }
+
+  _downgradeSizeUnit = (unit) => {
+    const  DOWNGRADE = { [SizeUnit.SACKS]: SizeUnit.STONES, [SizeUnit.STONES]: SizeUnit.SOAPS };
+    return DOWNGRADE[unit] ?? unit
+  };
+
+  /**
+   * Add a flat bonus equal to the total number of dice in the expression.
+   * @param {string} expr - Dice expression (e.g., "2d6+3" or "1d4+1d6")
+   * @returns {string}     Modified expression with the bonus applied
+   */
+  _addDieBonus(expr) {
+    // 1. Count all dice (sum of counts before each 'd')
+    let totalDice = 0;
+    const diceRegex = /(\d+)d/g;
+    let match;
+    while ((match = diceRegex.exec(expr)) !== null) {
+      totalDice += parseInt(match[1], 10);
+    }
+
+    // No dice → nothing to add
+    if (totalDice === 0) return expr;
+
+    // 2. Look for a trailing modifier (e.g., "+3" or "-5")
+    const modifierMatch = expr.match(/([+-]\d+)$/);
+    if (modifierMatch) {
+      // Combine the bonus with the existing modifier
+      return expr.replace(/([+-]\d+)$/, match => {
+        const oldVal = parseInt(match, 10);
+        const newVal = oldVal + totalDice;
+        // Ensure the sign is present
+        return (newVal >= 0 ? '+' : '') + newVal;
+      });
+    } else {
+      // No trailing modifier → append the bonus
+      return expr + '+' + totalDice;
+    }
   }
 
   /**
@@ -359,6 +506,18 @@ export class SdmItem extends Item {
     return `${statusTitle} ${this.name}`;
   }
 
+  get itemModEffects() {
+    return this.effects.filter(e => e.system.isItemMod);
+  }
+
+  get installedMods() {
+    return this.itemModEffects.length;
+  }
+
+  get maxItemMods() {
+    return (this.system?.hallmark?.level ?? 0) + 1;
+  }
+
   getArmorTitle() {
     const armorData = this.system?.armor;
     const armorValueLabel = `${$l10n('SDM.ArmorValue')}: ${armorData?.value}`;
@@ -379,7 +538,7 @@ export class SdmItem extends Item {
     if (!this.system.pet) return title;
 
     const petDocument = fromUuidSync(this.system.pet);
-    if (!petDocument) return;
+    if (!petDocument || !petDocument.system) return;
 
     if (petDocument.type === ActorType.NPC) {
       const { level, defense, morale, bonus, life, damage, capacity } = petDocument.system;
@@ -545,7 +704,15 @@ export class SdmItem extends Item {
       let str = $l10n('SDM.ItemFeature.' + feature + 'Abbr');
       if (['area', 'replenish', 'flare', 'pocket', 'resistant'].includes(feature)) {
         if (feature === 'area') {
-          str = str.replace('#', $l10n('SDM.Area'+ capitalizeFirstLetter(system[feature].value)+ 'Abbr'));
+          str = str.replace(
+            '#',
+            $l10n('SDM.Area' + capitalizeFirstLetter(system[feature].value) + 'Abbr')
+          );
+        } else if (feature === 'range') {
+          str = str.replace(
+            '#',
+            $l10n('SDM.Range' + capitalizeFirstLetter(system[feature].value))
+          );
         } else {
           str = str.replace('#', system[feature].value);
         }
@@ -635,7 +802,7 @@ export class SdmItem extends Item {
       weightSubtitle: displayWeight ? weightSubtitle : '',
       isDangerous,
       collapsed,
-      finalPowerCost,
+      finalPowerCost
     };
 
     return await renderTemplate(templatePath('chat/item-card'), context);
