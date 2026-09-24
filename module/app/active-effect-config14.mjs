@@ -1,3 +1,4 @@
+import { SdmActor } from '../documents/actor.mjs';
 import { $l10n } from '../helpers/globalUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 
@@ -69,8 +70,9 @@ export default class SdmActiveEffectConfig14 extends ActiveEffectConfig {
     }));
 
     const isTransfer = this.document.transfer === true;
+    const isActorEffect = !!(this.document?.parent && this.document?.parent instanceof SdmActor);
 
-    const selectableKeys = isTransfer ? characterProperties : itemProperties;
+    const selectableKeys = isTransfer || isActorEffect ? characterProperties : itemProperties;
     context.selectableKeys = selectableKeys;
 
     return (

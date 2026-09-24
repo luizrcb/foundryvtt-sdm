@@ -329,31 +329,36 @@ export class SdmActor extends Actor {
     delete this._embeddedPreparation;
   }
 
-  applyActiveEffects() {
+  applyActiveEffects(phase) {
     const overrides = {};
     const changes = [];
     const rollData = this.getRollData();
-    for (const effect of this.allApplicableEffects()) {
+    const allEffects = this.allApplicableEffects();
+
+    for (const effect of allEffects) {
       if (!effect.active) continue;
+
       changes.push(
-        ...effect.system.changes.map(change => {
-          const c = foundry.utils.deepClone(change);
-          c.effect = effect;
-          c.priority = c.priority ?? c.mode * 10;
-          return c;
-        })
+        ...effect.system.changes
+          .filter(c => (c.phase ?? 'initial') === phase)
+          .map(change => {
+            const c = foundry.utils.deepClone(change);
+            c.effect = effect;
+            c.priority = c.priority ?? c.mode * 10;
+            return c;
+          })
       );
-      for (const statusId of effect.statuses) this.statuses.add(statusId);
+
+      // Statuses only need to be collected once per prepare cycle.
+      if (phase === 'initial') {
+        for (const statusId of effect.statuses) this.statuses.add(statusId);
+      }
     }
+
     changes.sort((a, b) => a.priority - b.priority);
 
     for (const change of changes) {
       if (!change.key) continue;
-
-      let currentVal = overrides[change.key];
-      if (currentVal === undefined) {
-        currentVal = foundry.utils.getProperty(this, change.key);
-      }
 
       if (typeof change.value === 'string') {
         const itemParent = change.effect?.parent;

@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v1.7.1
+
+- Fixed GitHub issue #3: "Caravan capacity active effect gets double counted"
+- Fixed incorrect Item fields being suggested for Actor-related active effect changes
+
 ## v1.7.0
 
 - Reduced bundle download size
