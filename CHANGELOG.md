@@ -1,5 +1,9 @@
 # CHANGELOG
 
+## v1.8.0
+
+- Added a button to the Caravan tokens HUD to gather/deploy crew tokens in the active scene
+
 ## v1.7.1
 
 - Fixed GitHub issue #3: "Caravan capacity active effect gets double counted"

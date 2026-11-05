@@ -48,6 +48,7 @@ import {
   registerActiveEffectLimit,
   UnarmedDamageItem
 } from './helpers/itemUtils.mjs';
+import { setupCaravanTokenControls } from './canvas/caravan-tokens.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { setupPetDropSocket } from './items/petItem.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
@@ -616,6 +617,7 @@ Hooks.once('init', function () {
   setupPetDropSocket();
   setupSettingsSocket();
   setupGroupCheckSocket();
+  setupCaravanTokenControls();
   setupEscalatorDiePositionBroadcast();
   //Preload Handlebars templates.
   return preloadHandlebarsTemplates();

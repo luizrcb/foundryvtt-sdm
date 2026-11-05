@@ -1325,7 +1325,9 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       for (const [key, member] of Object.entries(crew)) {
         const memberId = member.id;
         const crewMember = await fromUuid(memberId);
-        members.push(crewMember);
+        if (crewMember) {
+          members.push(crewMember);
+        }
       }
     }
 
