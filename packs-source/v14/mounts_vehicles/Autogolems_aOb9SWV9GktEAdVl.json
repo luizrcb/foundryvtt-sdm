@@ -1,0 +1,23 @@
+{
+  "type": "Item",
+  "folder": null,
+  "name": "Autogolems",
+  "color": null,
+  "sorting": "m",
+  "_id": "aOb9SWV9GktEAdVl",
+  "description": "",
+  "sort": 400000,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.370",
+    "systemId": "sdm",
+    "systemVersion": "1.8.0",
+    "createdTime": 1793999461237,
+    "modifiedTime": 1794002675014,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "_key": "!folders!aOb9SWV9GktEAdVl"
+}

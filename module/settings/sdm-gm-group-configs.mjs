@@ -55,7 +55,7 @@ export class SDMCaravanSettingsConfig extends GroupBase {
     }
   };
   static LEGEND = 'SDM.Menu.Caravan.Name';
-  static KEYS = ['countCrewWeight', 'seasonsStarsIntegration'];
+  static KEYS = ['countCrewWeight', 'seasonsStarsIntegration', 'automateCaravanTransport'];
 }
 
 export class SDMPlayerPermissionsSettingsConfig extends GroupBase {

@@ -28,9 +28,22 @@
               {{#if (or (eq item.system.type 'ward') (has item.system.features 'ward'))}}
                 <i class="fas fa-eye" data-tooltip="TYPES.Item.ward"></i><span data-tooltip="TYPES.Item.ward">{{item.system.ward.value}}</span>
               {{/if}}
+              {{#if isTransport}}
+                <i class="fas fa-boxes-stacked" data-tooltip="SDM.FieldCapacity"></i>
+                <span data-tooltip="SDM.FieldCapacity">{{item.system.capacity}}</span>
+                <i class="fas fa-gauge-high" data-tooltip="SDM.FieldSpeed"></i>
+                <span data-tooltip="SDM.FieldSpeed">{{sdmSpeed item.system.speed}}</span>
+                {{#if item.system.automatic}}
+                <i class="fas fa-gears" data-tooltip="{{localize 'SDM.ItemVehicleAutomaticHint'}}"></i>
+                {{/if}}
+              {{/if}}
             </span>
             <span class="item-weight">
-              {{#if (ne weightSubtitle '')}}
+              {{#if isTransport}}
+                {{#if item.system.supply}}
+                <span data-tooltip="SDM.FieldSupplyPerWeek">{{item.system.supply}} <i class="fas fa-wheat-awn subtitle"></i></span>
+                {{/if}}
+              {{else if (ne weightSubtitle '')}}
                 {{weightSubtitle}} <i class="fa fa-weight-hanging subtitle"></i>
               {{/if}}
             </span>

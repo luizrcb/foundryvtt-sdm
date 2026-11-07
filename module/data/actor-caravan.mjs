@@ -97,8 +97,8 @@ export default class SdmCarvan extends SdmActorBase {
 
     schema.speed = new fields.NumberField({
       ...requiredInteger,
-      initial: 0,
-      choices: CONFIG.SDM.reverseSpeedValues
+      initial: 0
+      // uncapped: values outside -3..2 are allowed (see CONFIG.SDM.formatSpeed)
     });
 
     schema.initiative = new fields.StringField({
@@ -123,9 +123,11 @@ export default class SdmCarvan extends SdmActorBase {
     schema.crew = new fields.TypedObjectField(
       new fields.SchemaField(
         {
-          id: new fields.DocumentUUIDField({ required: true }),
-        }, { initial: {} }),
-        { nullable: true }
+          id: new fields.DocumentUUIDField({ required: true })
+        },
+        { initial: {} }
+      ),
+      { nullable: true }
     );
 
     schema.routes = new fields.TypedObjectField(
@@ -172,6 +174,13 @@ export default class SdmCarvan extends SdmActorBase {
     });
 
     schema.overloaded = new fields.BooleanField({ initial: false });
+
+    // derived (prepare-time only) transport automation results
+    schema.transport_breakdown = new fields.ObjectField({ required: false, initial: {} });
+    schema.transport_under_hauled = new fields.ArrayField(new fields.StringField(), {
+      required: false,
+      initial: []
+    });
 
     return schema;
   }

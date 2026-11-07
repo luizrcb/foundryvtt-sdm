@@ -18,6 +18,7 @@ import {
   SUBTYPES_NOT_ALLOWED_IN_CARAVANS
 } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
+import { pullMultiplier, vehiclePullMode } from '../helpers/transportUtils.mjs';
 import { openItemTransferDialog } from '../items/transfer.mjs';
 
 const { api, sheets } = foundry.applications;
@@ -29,6 +30,10 @@ const { performIntegerSort } = foundry.utils;
 
 const FLAG_SCOPE = 'sdm';
 const FLAG_SACK = 'sackIndex';
+
+// Item types that are allowed on caravans but never placed into (or consume) sacks
+const SACK_EXCLUDED_TYPES = [...ITEMS_NOT_ALLOWED_IN_CARAVANS, ItemType.MOUNT, ItemType.VEHICLE];
+const TRANSPORT_ITEM_TYPES = [ItemType.MOUNT, ItemType.VEHICLE];
 
 /**
  * Extend the basic ActorSheet with some very simple modifications
@@ -70,7 +75,9 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       openPetSheet: this._onOpenPetSheet,
       toggleCompact: this._onToggleCompact,
       placeCrewMembers: this._onPlaceCrewMembers,
-      openCompendiumBrowser: this._onOpenCompendiumBrowser
+      openCompendiumBrowser: this._onOpenCompendiumBrowser,
+      assignMountVehicle: this._onAssignMountVehicle,
+      setMountPullMode: this._onSetMountPullMode
     },
     // Custom property that's merged into `this.options`
     dragDrop: [{ dragSelector: '[data-drag]', dropSelector: '[data-drop], [data-item-id]' }],
@@ -322,6 +329,8 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
         : Math.ceil(convertSizeUnit(totalCrewWeight, SizeUnit.CASH, SizeUnit.STONES));
     context.isCompactMode = this.actor.getFlag('sdm', 'compactMode') ?? false;
 
+    this._prepareTransport(context);
+
     // Offloading context prep to a helper function
     await this._prepareItems(context);
 
@@ -452,6 +461,141 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
   }
 
   /**
+   * Prepare mount/vehicle data for the transport tab.
+   *
+   * @param {object} context The context object to mutate
+   */
+  _prepareTransport(context) {
+    const system = this.actor.system;
+    context.autoTransport = game.settings.get('sdm', 'automateCaravanTransport');
+    context.transportBreakdown = system.transport_breakdown;
+    context.transportUnderHauled = system.transport_under_hauled;
+
+    if (!context.autoTransport) return;
+
+    const sortFn = (a, b) => (a.sort ?? 0) - (b.sort ?? 0);
+    const featureTags = doc =>
+      [...(doc.system.features ?? [])].sort().map(f => ({
+        label: $l10n(`SDM.ItemFeature.${f}Abbr`),
+        tooltip: $l10n(`SDM.ItemFeature.${f}Description`)
+      }));
+    const vehicleDocs = this.actor.items.filter(i => i.type === ItemType.VEHICLE).sort(sortFn);
+    const mountDocs = this.actor.items.filter(i => i.type === ItemType.MOUNT).sort(sortFn);
+    const breakdown = system.transport_breakdown ?? {};
+    const vehicleInfo = new Map((breakdown.vehicles ?? []).map(v => [v.id, v]));
+    const underHauled = new Set(system.transport_under_hauled ?? []);
+
+    context.vehicleOptions = vehicleDocs.reduce((acc, v) => {
+      acc[v.id] = v.name;
+      return acc;
+    }, {});
+
+    context.transportVehicles = vehicleDocs.map(v => {
+      const info = vehicleInfo.get(v.id) ?? {};
+      return {
+        id: v.id,
+        name: v.name,
+        img: v.img,
+        system: v.system,
+        need: info.need ?? v.system.capacity,
+        pullPower: info.pullPower ?? 0,
+        underHauled: underHauled.has(v.id),
+        mountCount: mountDocs.filter(m => m.system.pull_vehicle_id === v.id).length,
+        features: featureTags(v)
+      };
+    });
+
+    const vehicleIds = new Set(vehicleDocs.map(v => v.id));
+    context.transportMounts = mountDocs.map(m => {
+      const vehicle = vehicleDocs.find(v => v.id === m.system.pull_vehicle_id) ?? null;
+      const assigned = !!vehicle;
+      // a vehicle with Cart/Sled forces the mode; otherwise the mount's own mode is used
+      const forcedMode = assigned && !vehicle.system.automatic ? vehiclePullMode(vehicle) : null;
+      const pullMode = forcedMode ?? m.system.pull_mode;
+      return {
+        id: m.id,
+        name: m.name,
+        img: m.img,
+        system: m.system,
+        assigned,
+        selectedVehicleId: assigned ? vehicle.id : '',
+        pullMode,
+        pullModeLocked: !!forcedMode,
+        pullModeLockedTooltip: forcedMode
+          ? $fmt('SDM.TransportPullModeFromVehicle', {
+              vehicle: vehicle.name,
+              feature: $l10n(`SDM.ItemFeature.${forcedMode === 'carting' ? 'cart' : 'sled'}`)
+            })
+          : '',
+        needsPullMode: assigned && !pullMode,
+        pullPower: (m.system.capacity || 0) * pullMultiplier(pullMode),
+        features: featureTags(m)
+      };
+    });
+
+    context.underHauledNames = context.transportVehicles
+      .filter(v => v.underHauled)
+      .map(v => v.name)
+      .join(', ');
+
+    const signed = n => `${n > 0 ? '+' : ''}${n}`;
+    const toTooltip = (title, lines) =>
+      `<strong>${foundry.utils.escapeHTML(title)}</strong><br>${lines
+        .map(l => foundry.utils.escapeHTML(l))
+        .join('<br>')}`;
+
+    // Capacity breakdown
+    const capacityLines = [];
+    for (const v of context.transportVehicles) {
+      if (v.system.automatic) {
+        capacityLines.push(`${v.name}: ${v.need} (${$l10n('SDM.ItemVehicleAutomatic')})`);
+      } else {
+        const status = v.underHauled ? $l10n('SDM.TransportUnderHauled') : '✓';
+        capacityLines.push(
+          `${v.name}: ${v.need} — ${$l10n('SDM.PullPower')} ${v.pullPower} ${status}`
+        );
+      }
+    }
+    for (const m of breakdown.unassignedMounts ?? []) {
+      capacityLines.push(`${m.name}: +${m.capacity} (${$l10n('SDM.TransportUnassigned')})`);
+    }
+    if (system.capacity_bonus) {
+      capacityLines.push(
+        `${$l10n('SDM.TransportCapacityBonus')}: ${signed(system.capacity_bonus)}`
+      );
+    }
+    context.transportCapacityTooltip = toTooltip(
+      `${$l10n('SDM.FieldCapacity')}: ${system.capacity}`,
+      capacityLines
+    );
+
+    // Speed breakdown
+    const speedLines = [];
+    const speedGroups = [
+      ['vehicle', 'SDM.TransportSpeedVehicles', breakdown.speedVehicles],
+      ['mount', 'SDM.TransportSpeedMounts', breakdown.speedMounts]
+    ];
+    for (const [group, labelKey, pace] of speedGroups) {
+      if (pace === null || pace === undefined) continue;
+      speedLines.push(`${$l10n(labelKey)}: ${signed(pace)}`);
+      for (const p of (breakdown.speedParts ?? []).filter(x => x.group === group)) {
+        const parts =
+          p.vehicleSpeed !== null && p.mountSpeed !== null
+            ? `${signed(p.vehicleSpeed)} ${signed(p.mountSpeed)} = ${signed(p.value)}`
+            : signed(p.value);
+        speedLines.push(`  · ${p.name}: ${parts}`);
+      }
+    }
+    if (system.speed_bonus) {
+      speedLines.push(`${$l10n('SDM.TransportSpeedBonus')}: ${signed(system.speed_bonus)}`);
+    }
+    context.transportSpeedTooltip = toTooltip(
+      `${$l10n('SDM.FieldSpeed')}: ${CONFIG.SDM.formatSpeed(system.speed)}`,
+      speedLines
+    );
+  }
+
+  /**
    * Organize and classify Items for Actor sheets.
    *
    * @param {object} context The context object to mutate
@@ -499,7 +643,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     };
 
     const items = [...this.document.items]
-      .filter(it => !ITEMS_NOT_ALLOWED_IN_CARAVANS.includes(it.type))
+      .filter(it => !SACK_EXCLUDED_TYPES.includes(it.type))
       .sort((a, b) => (a.sort ?? 0) - (b.sort ?? 0));
 
     const firstFitIndex = need => sacks.findIndex(s => s.usedSlots + need <= s.maxSlots);
@@ -677,6 +821,35 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
 
     // Add item change listeners
     this._handleContainers();
+
+    // Transport selects: AppV2 actions fire on click, so also dispatch on change
+    this.element
+      .querySelectorAll(
+        'select[data-action="assignMountVehicle"], select[data-action="setMountPullMode"]'
+      )
+      .forEach(select => {
+        select.addEventListener('change', event => {
+          event.stopPropagation();
+          const handler =
+            select.dataset.action === 'assignMountVehicle'
+              ? SdmCaravanSheet._onAssignMountVehicle
+              : SdmCaravanSheet._onSetMountPullMode;
+          handler.call(this, event, select);
+        });
+      });
+
+    // Inline edits of mount/vehicle fields in the transport tab (speed, supply)
+    this.element.querySelectorAll('[data-item-field]').forEach(input => {
+      input.addEventListener('change', async event => {
+        event.stopPropagation(); // don't submit the actor form
+        const item = this.actor.items.get(input.closest('[data-item-id]')?.dataset.itemId);
+        if (!item || !TRANSPORT_ITEM_TYPES.includes(item.type)) return;
+        const field = input.dataset.itemField;
+        const value = input.dataset.dtype === 'Number' ? Number(input.value) : input.value;
+        if (foundry.utils.getProperty(item, field) === value) return;
+        await item.update({ [field]: value });
+      });
+    });
   }
 
   /**
@@ -1025,6 +1198,37 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     docData.sort = maxSort + 100; // or any increment
 
     return await docCls.create(docData, { parent: this.actor });
+  }
+
+  /**
+   * Assign a mount to a vehicle (or clear the assignment when data-vehicle-id / value is empty).
+   *
+   * @this SdmCaravanSheet
+   * @param {Event} event
+   * @param {HTMLElement} target
+   */
+  static async _onAssignMountVehicle(event, target) {
+    const mount = this.actor.items.get(target.dataset.mountId);
+    if (!mount || mount.type !== ItemType.MOUNT) return;
+    const vehicleId = target.tagName === 'SELECT' ? target.value : (target.dataset.vehicleId ?? '');
+    if ((mount.system.pull_vehicle_id || '') === vehicleId) return;
+    await mount.update({ 'system.pull_vehicle_id': vehicleId });
+  }
+
+  /**
+   * Change a mount's pull mode.
+   *
+   * @this SdmCaravanSheet
+   * @param {Event} event
+   * @param {HTMLElement} target
+   */
+  static async _onSetMountPullMode(event, target) {
+    const mount = this.actor.items.get(target.dataset.mountId);
+    if (!mount || mount.type !== ItemType.MOUNT) return;
+    const pullMode = target.value ?? '';
+    if (pullMode && !(pullMode in CONFIG.SDM.pullModes)) return;
+    if ((mount.system.pull_mode || '') === pullMode) return;
+    await mount.update({ 'system.pull_mode': pullMode });
   }
 
   /**
@@ -1414,10 +1618,13 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
    */
   _onDragStart(event) {
     const section = event.target.closest('.tab.inventory.scrollable.active');
-    if (!section) return;
+    const transportSection = event.target.closest('.tab.transport.active');
+    if (!section && !transportSection) return;
 
-    const sacks = Array.from(section.querySelectorAll('.sack-drop'));
-    sacks.forEach(s => s.classList.add('drop-area'));
+    if (section) {
+      const sacks = Array.from(section.querySelectorAll('.sack-drop'));
+      sacks.forEach(s => s.classList.add('drop-area'));
+    }
 
     const docRow = event.currentTarget.closest('li');
     if ('link' in event.target.dataset) return;
@@ -1621,7 +1828,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     }
 
     for (const it of actor.items) {
-      if (ITEMS_NOT_ALLOWED_IN_CARAVANS.includes(it.type)) continue;
+      if (SACK_EXCLUDED_TYPES.includes(it.type)) continue;
       if (excludeIds.includes(it.id)) continue; // ← changed
 
       let s = Number(it.system?.slots_taken ?? 1) || 1;
@@ -1662,6 +1869,9 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     if (!this.actor.isOwner) return false;
 
     let item = await Item.implementation.fromDropData(data);
+    if (!item) return false;
+
+    if (TRANSPORT_ITEM_TYPES.includes(item.type)) return this._onDropTransportItem(event, item);
 
     if (ITEMS_NOT_ALLOWED_IN_CARAVANS.includes(item.type)) return false;
     if (SUBTYPES_NOT_ALLOWED_IN_CARAVANS.includes(item.system.type)) return false;
@@ -1766,6 +1976,79 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       this.actor.createEmbeddedDocuments('Item', [createData]);
       return this._reapplyStripes();
     }
+  }
+
+  /**
+   * Handle dropping a mount or vehicle onto the caravan sheet.
+   * Mounts/vehicles never go into sacks. Foreign items are embedded first.
+   * Dropped on a row of the same type (mount on mount, vehicle on vehicle) → reorder.
+   * Mount dropped on a vehicle row → assign it to that vehicle.
+   *
+   * @param {DragEvent} event
+   * @param {Item} item
+   * @returns {Promise<Item|boolean>}
+   * @protected
+   */
+  async _onDropTransportItem(event, item) {
+    const vehicleEl = event.target?.closest?.('[data-vehicle-drop]');
+
+    let embedded = item.parent?.uuid === this.actor.uuid ? item : null;
+    if (!embedded) {
+      const createData = item.toObject();
+      delete createData._id;
+      if (createData.flags?.[FLAG_SCOPE]) delete createData.flags[FLAG_SCOPE][FLAG_SACK];
+      if (item.type === ItemType.MOUNT) {
+        // ids from another actor never point at a vehicle here
+        foundry.utils.setProperty(createData, 'system.pull_vehicle_id', '');
+      }
+      const maxSort = this.actor.items.reduce((max, i) => Math.max(max, i.sort || 0), 0);
+      createData.sort = maxSort + 100;
+      [embedded] = await this.actor.createEmbeddedDocuments('Item', [createData]);
+      if (!embedded) return false;
+    }
+
+    // Reorder: dropped onto another row of the same type
+    const rowEl = event.target?.closest?.('li[data-item-id]');
+    const rowItem = rowEl ? this.actor.items.get(rowEl.dataset.itemId) : null;
+    if (rowItem && rowItem.type === embedded.type) {
+      if (rowItem.id !== embedded.id)
+        await this._sortTransportItem(event, embedded, rowItem, rowEl);
+      return embedded;
+    }
+
+    if (embedded.type !== ItemType.MOUNT) return embedded;
+
+    if (vehicleEl) {
+      const vehicleId = vehicleEl.dataset.itemId;
+      const vehicle = this.actor.items.get(vehicleId);
+      if (vehicle?.type === ItemType.VEHICLE && embedded.system.pull_vehicle_id !== vehicleId) {
+        await embedded.update({ 'system.pull_vehicle_id': vehicleId });
+      }
+    }
+
+    return embedded;
+  }
+
+  /**
+   * Reorder a mount among mounts (or a vehicle among vehicles). Dropping on the top half of a
+   * row places the item before it, on the bottom half after it.
+   *
+   * @param {DragEvent} event
+   * @param {Item} item       The dragged item
+   * @param {Item} target     The item whose row received the drop
+   * @param {HTMLElement} targetEl
+   * @protected
+   */
+  async _sortTransportItem(event, item, target, targetEl) {
+    const siblings = this.actor.items.filter(i => i.type === item.type && i.id !== item.id);
+    const rect = targetEl.getBoundingClientRect();
+    const sortBefore = event.clientY < rect.top + rect.height / 2;
+
+    const updates = performIntegerSort(item, { target, siblings, sortBefore }).map(u => ({
+      _id: u.target.id,
+      ...u.update
+    }));
+    if (updates.length) await this.actor.updateEmbeddedDocuments('Item', updates);
   }
 
   async _rebuildAllSacks() {

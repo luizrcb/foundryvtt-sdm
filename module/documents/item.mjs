@@ -3,7 +3,9 @@ import {
   ActorType,
   DEFAULT_BURDEN_ICON,
   DEFAULT_GEAR_ICON,
+  DEFAULT_MOUNT_ICON,
   DEFAULT_TRAIT_ICON,
+  DEFAULT_VEHICLE_ICON,
   GearType,
   ItemStatusType,
   ItemType,
@@ -32,6 +34,14 @@ export class SdmItem extends Item {
 
     if (itemData.type === ItemType.BURDEN) {
       icon = DEFAULT_BURDEN_ICON;
+    }
+
+    if (itemData.type === ItemType.MOUNT) {
+      icon = DEFAULT_MOUNT_ICON;
+    }
+
+    if (itemData.type === ItemType.VEHICLE) {
+      icon = DEFAULT_VEHICLE_ICON;
     }
 
     return { img: icon };
@@ -776,6 +786,13 @@ export class SdmItem extends Item {
       costSubtitle = '';
     }
 
+    // mounts/vehicles: no weight (supply is shown in its place); hide a zero cost
+    const isTransport = [ItemType.MOUNT, ItemType.VEHICLE].includes(this.type);
+    if (isTransport) {
+      weightSubtitle = '';
+      if (!this.system.cost) costSubtitle = '';
+    }
+
     let isDangerous = false;
     let finalPowerCost = 0;
     if (actor && this.system.type === GearType.POWER) {
@@ -802,7 +819,8 @@ export class SdmItem extends Item {
       weightSubtitle: displayWeight ? weightSubtitle : '',
       isDangerous,
       collapsed,
-      finalPowerCost
+      finalPowerCost,
+      isTransport
     };
 
     return await renderTemplate(templatePath('chat/item-card'), context);

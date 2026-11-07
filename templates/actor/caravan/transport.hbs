@@ -1,5 +1,164 @@
 {{! Transport Tab }}
 <section class='tab transport scrollable {{tab.cssClass}}' data-group='primary' data-tab='transport'>
+  {{#if @root.autoTransport}}
+  <div class="grid grid-7col transport-auto">
+    <div class="main grid-span-7">
+      {{! Summary }}
+      <section class="transport-summary flexrow mb-10">
+        <div class="flexrow flex-center" style="flex: 0 0 auto; margin: 0 auto; gap: 4px; align-items: baseline; cursor: pointer;" data-tooltip="{{@root.transportCapacityTooltip}}" data-tooltip-direction="DOWN">
+          <span class="resource-label" style="flex: 0 0 auto;">{{localize 'SDM.FieldCapacity'}}:</span>
+          <span style="flex: 0 0 auto;">{{system.capacity}}</span>
+          {{#if system.capacity_bonus}}<span class="muted" style="flex: 0 0 auto;">({{#if (gt system.capacity_bonus 0)}}+{{/if}}{{system.capacity_bonus}})</span>{{/if}}
+          {{#if @root.transportUnderHauled.length}}
+          <i class="fa-solid fa-triangle-exclamation fumble" style="flex: 0 0 auto;"
+             data-tooltip="{{localize 'SDM.TransportUnderHauled'}}: {{@root.underHauledNames}}"></i>
+          {{/if}}
+        </div>
+        <div class="flexrow flex-center" style="flex: 0 0 auto; margin: 0 auto; gap: 4px; align-items: baseline; cursor: pointer;" data-tooltip="{{@root.transportSpeedTooltip}}" data-tooltip-direction="DOWN">
+          <span class="resource-label" style="flex: 0 0 auto;">{{localize 'SDM.FieldSpeed'}}:</span>
+          <span style="flex: 0 0 auto;">{{sdmSpeed system.speed}}</span>
+        </div>
+      </section>
+
+      {{! Vehicles }}
+      <section>
+        <ol class='items-list full-list'>
+          <li class='item flexrow items-header caravan-item-header'>
+            <div class='item-name flexlarge'>{{localize 'TYPES.Item.vehicle'}}</div>
+            <div class='flex-group-center'>{{localize 'SDM.ItemVehicleCapacity'}}</div>
+            <div class='flex-group-center'>{{localize 'SDM.ItemVehicleSpeed'}}</div>
+            <div class='flex-group-center'>{{localize 'SDM.PullPower'}}</div>
+            <div class='flex-group-center' data-tooltip="SDM.FieldSupplyPerWeek">{{localize 'SDM.FieldSupply'}}</div>
+            <div class='item-controls flex align-right mr-6'>
+              {{#if @root.editable}}
+              <a class='item-control item-create'
+                 data-action='createDoc' data-document-class='Item' data-type='vehicle'
+                 data-tooltip="{{localize 'SDM.DOCUMENT.Create' type=(localize 'TYPES.Item.vehicle')}}">
+                <i class='fa-solid fa-plus'></i>
+                {{localize 'SDM.DOCUMENT.New' type=(localize 'TYPES.Item.vehicle')}}
+              </a>
+              {{/if}}
+            </div>
+          </li>
+          {{#each @root.transportVehicles as |vehicle|}}
+          <li class='item flexrow {{#if vehicle.underHauled}}under-hauled{{/if}}'
+              data-item-id='{{vehicle.id}}' data-document-class='Item'
+              data-vehicle-drop data-drop data-drag>
+            <div class='item-name flexlarge flexrow'>
+              <img class='item-image' src='{{vehicle.img}}' width='24' height='24' />
+              <a data-action='viewDoc'>{{vehicle.name}}</a>
+              {{#if vehicle.system.automatic}}
+              <span class='tag ml-5' data-tooltip="{{localize 'SDM.ItemVehicleAutomaticHint'}}"><i class='fa-solid fa-gears'></i></span>
+              {{/if}}
+              {{#if vehicle.underHauled}}
+              <i class='fa-solid fa-triangle-exclamation fumble ml-5' data-tooltip="{{localize 'SDM.TransportUnderHauled'}}"></i>
+              {{/if}}
+              {{#if vehicle.features.length}}
+              <ul class='pills unlist ml-5'>
+                {{#each vehicle.features}}
+                <li class='pill transparent' data-tooltip="{{tooltip}}">{{label}}</li>
+                {{/each}}
+              </ul>
+              {{/if}}
+            </div>
+            <div class='flex-group-center'>{{vehicle.system.capacity}}</div>
+            <div class='flex-group-center'>
+              <select data-item-field='system.speed' data-dtype='Number' {{#unless @root.editable}}disabled{{/unless}}>
+                {{selectOptions (sdmSpeedChoices vehicle.system.speed) selected=vehicle.system.speed}}
+              </select>
+            </div>
+            <div class='flex-group-center {{#if vehicle.underHauled}}fumble{{/if}}'>
+              {{#if vehicle.system.automatic}}—{{else}}{{vehicle.pullPower}} / {{vehicle.need}}{{/if}}
+            </div>
+            <div class='flex-group-center'><input type='text' data-item-field='system.supply' value='{{vehicle.system.supply}}' {{#unless @root.editable}}disabled{{/unless}} /></div>
+            <div class='item-controls flex align-right mr-6'>
+              {{#if @root.editable}}
+              <a class='item-control item-delete' data-action='deleteDoc'
+                 data-tooltip="{{localize 'DOCUMENT.Delete' type=(localize 'TYPES.Item.vehicle')}}">
+                <i class='fa-solid fa-trash'></i>
+              </a>
+              {{/if}}
+            </div>
+          </li>
+          {{/each}}
+        </ol>
+      </section>
+
+      {{! Mounts }}
+      <section class='mt-10'>
+        <ol class='items-list full-list'>
+          <li class='item flexrow items-header caravan-item-header'>
+            <div class='item-name flexlarge'>{{localize 'TYPES.Item.mount'}}</div>
+            <div class='flex-group-center'>{{localize 'SDM.ItemMountCapacity'}}</div>
+            <div class='flex-group-center'>{{localize 'SDM.FieldSpeed'}}</div>
+            <div class='flex-group-center flexlarge'>{{localize 'SDM.ItemMountPulledVehicle'}}</div>
+            <div class='flex-group-center'>{{localize 'SDM.ItemMountPullMode'}}</div>
+            <div class='flex-group-center' data-tooltip="SDM.FieldSupplyPerWeek">{{localize 'SDM.FieldSupply'}}</div>
+            <div class='item-controls flex align-right mr-6'>
+              {{#if @root.editable}}
+              <a class='item-control item-create'
+                 data-action='createDoc' data-document-class='Item' data-type='mount'
+                 data-tooltip="{{localize 'SDM.DOCUMENT.Create' type=(localize 'TYPES.Item.mount')}}">
+                <i class='fa-solid fa-plus'></i>
+                {{localize 'SDM.DOCUMENT.New' type=(localize 'TYPES.Item.mount')}}
+              </a>
+              {{/if}}
+            </div>
+          </li>
+          {{#each @root.transportMounts as |mount|}}
+          <li class='item flexrow' data-item-id='{{mount.id}}' data-document-class='Item' data-drag>
+            <div class='item-name flexlarge flexrow'>
+              <img class='item-image' src='{{mount.img}}' width='24' height='24' />
+              <a data-action='viewDoc'>{{mount.name}}</a>
+              {{#if mount.features.length}}
+              <ul class='pills unlist ml-5'>
+                {{#each mount.features}}
+                <li class='pill transparent' data-tooltip="{{tooltip}}">{{label}}</li>
+                {{/each}}
+              </ul>
+              {{/if}}
+            </div>
+            <div class='flex-group-center'
+                 {{#if mount.assigned}}data-tooltip="{{localize 'SDM.PullPower'}}: {{mount.pullPower}}"{{/if}}>
+              {{mount.system.capacity}}{{#if mount.assigned}} <span class='muted'>(×{{mount.pullPower}})</span>{{/if}}
+            </div>
+            <div class='flex-group-center'>
+              <select data-item-field='system.speed' data-dtype='Number' {{#unless @root.editable}}disabled{{/unless}}>
+                {{selectOptions (sdmSpeedChoices mount.system.speed) selected=mount.system.speed}}
+              </select>
+            </div>
+            <div class='flex-group-center flexlarge'>
+              <select data-action='assignMountVehicle' data-mount-id='{{mount.id}}' {{#unless @root.editable}}disabled{{/unless}}>
+                {{selectOptions @root.vehicleOptions selected=mount.selectedVehicleId blank=''}}
+              </select>
+            </div>
+            <div class='flex-group-center'>
+              <select data-action='setMountPullMode' data-mount-id='{{mount.id}}'
+                      class='{{#if mount.needsPullMode}}fumble{{/if}}'
+                      {{#if mount.needsPullMode}}data-tooltip="{{localize 'SDM.TransportPullModeRequired'}}"{{/if}}
+                      {{#if mount.pullModeLocked}}disabled data-tooltip="{{mount.pullModeLockedTooltip}}"{{/if}}
+                      {{#unless mount.assigned}}disabled data-tooltip="{{localize 'SDM.TransportPullModeUnassigned'}}"{{/unless}}
+                      {{#unless @root.editable}}disabled{{/unless}}>
+                {{selectOptions @root.config.pullModes localize=true selected=mount.pullMode blank='—'}}
+              </select>
+            </div>
+            <div class='flex-group-center'><input type='text' data-item-field='system.supply' value='{{mount.system.supply}}' {{#unless @root.editable}}disabled{{/unless}} /></div>
+            <div class='item-controls flex align-right mr-6'>
+              {{#if @root.editable}}
+              <a class='item-control item-delete' data-action='deleteDoc'
+                 data-tooltip="{{localize 'DOCUMENT.Delete' type=(localize 'TYPES.Item.mount')}}">
+                <i class='fa-solid fa-trash'></i>
+              </a>
+              {{/if}}
+            </div>
+          </li>
+          {{/each}}
+        </ol>
+      </section>
+
+    </div>
+  </div>
+  {{else}}
     <div class="grid grid-7col">
     <div class="main grid-span-7">
       <section>
@@ -87,4 +246,5 @@
       </section>
     </div>
   </div>
+  {{/if}}
 </section>

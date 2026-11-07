@@ -20,6 +20,7 @@ const packs = [
   { name: 'handouts', output: `packs-source/${foundryVersion}/handouts` },
   { name: 'macros', output: `packs-source/${foundryVersion}/macros` },
   { name: 'motive_table', output: `packs-source/${foundryVersion}/motive_table` },
+  { name: 'mounts_vehicles', output: `packs-source/${foundryVersion}/mounts_vehicles` },
   { name: 'names_tables', output: `packs-source/${foundryVersion}/names_tables` },
   { name: 'npc_generator', output: `packs-source/${foundryVersion}/npc_generator` },
   { name: 'player_macros', output: `packs-source/${foundryVersion}/player_macros` },

@@ -1,0 +1,92 @@
+{
+  "folder": "LxlQAIExiNdZoqKB",
+  "name": "Cheval DOS (bone horse)",
+  "type": "mount",
+  "_id": "ePzP3qYhiN87I9aA",
+  "img": "icons/tools/smithing/horsehoe-worn-steel-grey.webp",
+  "system": {
+    "readied": false,
+    "categories": [],
+    "status": "",
+    "resources": "",
+    "charges": {
+      "value": 0,
+      "max": 0
+    },
+    "replenish": {
+      "value": 0
+    },
+    "area": {
+      "value": ""
+    },
+    "range": {
+      "value": ""
+    },
+    "flare": {
+      "value": 0
+    },
+    "pocket": {
+      "value": 0
+    },
+    "draining": {
+      "value": 0
+    },
+    "resistant": {
+      "value": ""
+    },
+    "cost": 400,
+    "cost_frequency": "",
+    "description": "<p>Could be any beast of burden with an internal skeleton. Horse, mule, camel, ox. Hard to tell since the head isn't always kept.</p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": [
+      "undead"
+    ],
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4",
+      "capacity": 1
+    },
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "level": 2,
+    "supply": "necro",
+    "capacity": 2,
+    "speed": 0,
+    "pull_vehicle_id": "",
+    "pull_mode": ""
+  },
+  "effects": [],
+  "sort": 550000,
+  "ownership": {
+    "default": 0,
+    "wOwBmZzhkRHns1aw": 3
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.370",
+    "systemId": "sdm",
+    "systemVersion": "1.8.0",
+    "createdTime": 1793982269063,
+    "modifiedTime": 1793998274876,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "_key": "!items!ePzP3qYhiN87I9aA"
+}

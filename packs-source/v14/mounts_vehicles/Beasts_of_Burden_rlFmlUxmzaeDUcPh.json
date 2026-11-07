@@ -1,0 +1,23 @@
+{
+  "type": "Item",
+  "folder": null,
+  "name": "Beasts of Burden",
+  "color": null,
+  "sorting": "m",
+  "_id": "rlFmlUxmzaeDUcPh",
+  "description": "",
+  "sort": 300000,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.370",
+    "systemId": "sdm",
+    "systemVersion": "1.8.0",
+    "createdTime": 1793998906498,
+    "modifiedTime": 1794002675014,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "_key": "!folders!rlFmlUxmzaeDUcPh"
+}

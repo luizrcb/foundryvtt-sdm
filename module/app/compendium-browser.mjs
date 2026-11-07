@@ -55,11 +55,13 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
 
   static TABS = [
     {
-      tab: 'all-gear',
-      label: 'SDM.CompendiumBrowser.Tabs.AllGear',
+      tab: 'all-gear', // id kept for callers that open the browser on this tab
+      label: 'SDM.CompendiumBrowser.Tabs.AllItems',
       icon: 'fas fa-toolbox',
       documentClass: 'Item',
-      types: ['gear']
+      types: ['gear', 'mount', 'vehicle'],
+      // filter definitions come from these types (keeps the gear filters this tab always had)
+      filterTypes: ['gear']
     },
     {
       tab: 'weapons',
@@ -99,6 +101,13 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
       icon: 'fas fa-dna',
       documentClass: 'Item',
       types: ['trait']
+    },
+    {
+      tab: 'transport',
+      label: 'SDM.CompendiumBrowser.Tabs.Transport',
+      icon: 'fas fa-horse',
+      documentClass: 'Item',
+      types: ['mount', 'vehicle']
     }
   ];
 
@@ -136,6 +145,17 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
       key: 'power',
       label: 'SDM.CompendiumBrowser.Filters.Power',
       keys: ['powerLevel', 'powerDangerous']
+    },
+    {
+      key: 'transport',
+      label: 'SDM.CompendiumBrowser.Filters.Transport',
+      keys: [
+        'transportType',
+        'transportLevel',
+        'transportCapacity',
+        'transportSpeed',
+        'transportAutomatic'
+      ]
     }
   ];
 
@@ -330,6 +350,20 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
     };
   }
 
+  /**
+   * Description HTML for a card tooltip, or '' when there is no visible text
+   * (null, '', or empty markup like '<p></p>'), so the card gets no tooltip at all.
+   */
+  static #getDescriptionTooltip(description) {
+    if (!description || typeof description !== 'string') return '';
+    const text = description
+      .replace(/<[^>]*>/g, '')
+      .replace(/&nbsp;/g, ' ')
+      .trim();
+    const hasMedia = /<(img|video|iframe|table)\b/i.test(description);
+    return text || hasMedia ? description : '';
+  }
+
   static #buildSearchableText(doc) {
     const parts = [doc.name || ''];
     const sys = doc.system || {};
@@ -434,9 +468,11 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
   _applyTabFilters(tabId, { keepFilters = false } = {}) {
     const tab = this.constructor.TABS.find(t => t.tab === tabId);
     if (!tab) return;
-    const { documentClass, types } = tab;
+    const { documentClass, types, filterTypes } = tab;
     this.#filters.documentClass = documentClass;
     this.#filters.types = new Set(types);
+    if (filterTypes) this.#filters.filterTypes = new Set(filterTypes);
+    else delete this.#filters.filterTypes;
 
     if (!keepFilters) {
       delete this.#filters.additional;
@@ -475,7 +511,7 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
   async changeTab(tab, group, options = {}) {
     if (group !== 'primary') return;
     this.tabGroups.primary = tab;
-    const resetTabs = ['all-gear', 'traits'];
+    const resetTabs = ['all-gear', 'traits', 'transport'];
     const keepFilters = !resetTabs.includes(tab);
     this._applyTabFilters(tab, { keepFilters });
     this.render(true);
@@ -571,6 +607,11 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
         const label = $l10n(`SDM.BurdenType.${subtype}`) || subtype;
         parts.push(label);
       }
+    } else if (type === 'mount' || type === 'vehicle') {
+      parts.push(`${$l10n('SDM.FieldCapacity')} ${system.capacity ?? 0}`);
+      parts.push(CONFIG.SDM.formatSpeed(system.speed ?? 0));
+      if (type === 'vehicle' && system.automatic) parts.push($l10n('SDM.ItemVehicleAutomatic'));
+      if (system.cost) parts.push(`(${$l10n('SDM.CashSymbol')}${system.cost})`);
     }
     return parts.join(' • ');
   }
@@ -724,8 +765,11 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
 
     const dataModels = CONFIG[context.filters.documentClass].dataModels;
     let entries = Object.entries(dataModels);
-    if (context.filters.types?.size) {
-      entries = entries.filter(([type]) => context.filters.types.has(type));
+    const filterTypes = context.filters.filterTypes?.size
+      ? context.filters.filterTypes
+      : context.filters.types;
+    if (filterTypes?.size) {
+      entries = entries.filter(([type]) => filterTypes.has(type));
     }
     context.filterDefinitions =
       entries
@@ -966,6 +1010,7 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
       const isArmor = type === 'gear' && (system.type === 'armor' || hasFeature(features, 'armor'));
       const isWard = type === 'gear' && (system.type === 'ward' || hasFeature(features, 'ward'));
       const isPower = type === 'gear' && system.type === 'power';
+      const isTransport = type === 'mount' || type === 'vehicle';
       const isVersatile = hasFeature(features, 'versatile');
 
       let weaponDisplay = '';
@@ -1012,6 +1057,7 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
         isArmor,
         isWard,
         isPower,
+        isTransport,
         powerLevel: isPower ? system.power?.level || '' : '',
         weaponDisplay,
         armorValue,
@@ -1020,7 +1066,7 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
         weightSubtitle: this.#getWeightSubtitle(item),
         typeLabel: this.#getTypeLabel(item),
         features: this.#getFeatures(item),
-        tooltip: system.description || ''
+        tooltip: CompendiumBrowser.#getDescriptionTooltip(system.description)
       };
     });
 

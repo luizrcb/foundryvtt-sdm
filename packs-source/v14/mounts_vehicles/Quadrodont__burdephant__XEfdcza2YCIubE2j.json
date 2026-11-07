@@ -1,0 +1,92 @@
+{
+  "folder": "rlFmlUxmzaeDUcPh",
+  "name": "Quadrodont (burdephant)",
+  "type": "mount",
+  "_id": "XEfdcza2YCIubE2j",
+  "img": "icons/tools/smithing/horsehoe-worn-steel-grey.webp",
+  "system": {
+    "readied": false,
+    "categories": [],
+    "status": "",
+    "resources": "",
+    "charges": {
+      "value": 0,
+      "max": 0
+    },
+    "replenish": {
+      "value": 0
+    },
+    "area": {
+      "value": ""
+    },
+    "range": {
+      "value": ""
+    },
+    "flare": {
+      "value": 0
+    },
+    "pocket": {
+      "value": 0
+    },
+    "draining": {
+      "value": 0
+    },
+    "resistant": {
+      "value": ""
+    },
+    "cost": 4800,
+    "cost_frequency": "",
+    "description": "<p>The Yellow Desert four-tusk is a recent import, popular with Safranian merchants. Temperamental grazer.</p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": [
+      "grazer"
+    ],
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4",
+      "capacity": 1
+    },
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "level": 7,
+    "supply": "3",
+    "capacity": 8,
+    "speed": 0,
+    "pull_vehicle_id": "",
+    "pull_mode": ""
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "wOwBmZzhkRHns1aw": 3
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.370",
+    "systemId": "sdm",
+    "systemVersion": "1.8.0",
+    "createdTime": 1793999364110,
+    "modifiedTime": 1793999406342,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "_key": "!items!XEfdcza2YCIubE2j"
+}

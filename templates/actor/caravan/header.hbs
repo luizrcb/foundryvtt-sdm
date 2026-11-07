@@ -81,8 +81,8 @@
           <label for="system.speed" class='resource-label'>
             {{localize 'SDM.FieldSpeed'}}
           </label>
-          <select name="system.speed" class="resource-content" data-dtype="Number">
-            {{selectOptions @root.config.speedOptions localize=true selected=system.speed inverted=true}}
+          <select name="system.speed" class="resource-content" data-dtype="Number"{{#if @root.autoTransport}} disabled data-tooltip="SDM.TransportAutoTooltip"{{/if}}>
+            {{selectOptions (sdmSpeedChoices system.speed) selected=system.speed}}
           </select>
         </div>
 
@@ -96,6 +96,7 @@
             type='text'
             value='{{system.capacity}}'
             data-dtype="Number"
+            {{#if @root.autoTransport}}disabled data-tooltip="SDM.TransportAutoTooltip"{{/if}}
           />
         </div>
 
@@ -255,8 +256,8 @@
           <label for="system.speed" class='resource-label'>
             {{localize 'SDM.FieldSpeed'}}
           </label>
-          <select name="system.speed" class="resource-content" data-dtype="Number">
-            {{selectOptions @root.config.speedOptions localize=true selected=system.speed inverted=true}}
+          <select name="system.speed" class="resource-content" data-dtype="Number"{{#if @root.autoTransport}} disabled data-tooltip="SDM.TransportAutoTooltip"{{/if}}>
+            {{selectOptions (sdmSpeedChoices system.speed) selected=system.speed}}
           </select>
         </div>
 
@@ -270,6 +271,7 @@
             type='text'
             value='{{system.capacity}}'
             data-dtype="Number"
+            {{#if @root.autoTransport}}disabled data-tooltip="SDM.TransportAutoTooltip"{{/if}}
           />
         </div>
 

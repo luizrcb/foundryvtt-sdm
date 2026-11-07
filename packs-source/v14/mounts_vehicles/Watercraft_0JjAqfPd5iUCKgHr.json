@@ -1,0 +1,23 @@
+{
+  "type": "Item",
+  "folder": null,
+  "name": "Watercraft",
+  "color": null,
+  "sorting": "m",
+  "_id": "0JjAqfPd5iUCKgHr",
+  "description": "",
+  "sort": 600000,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.370",
+    "systemId": "sdm",
+    "systemVersion": "1.8.0",
+    "createdTime": 1794000022587,
+    "modifiedTime": 1794002675014,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "_key": "!folders!0JjAqfPd5iUCKgHr"
+}

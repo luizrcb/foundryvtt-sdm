@@ -1,0 +1,91 @@
+{
+  "folder": "0JjAqfPd5iUCKgHr",
+  "name": "Bateau",
+  "type": "vehicle",
+  "_id": "9knR5iODnDhPCNyF",
+  "img": "icons/commodities/tech/pipe-tech-exhaust-steel.webp",
+  "system": {
+    "readied": false,
+    "categories": [],
+    "status": "",
+    "resources": "",
+    "charges": {
+      "value": 0,
+      "max": 0
+    },
+    "replenish": {
+      "value": 0
+    },
+    "area": {
+      "value": ""
+    },
+    "range": {
+      "value": ""
+    },
+    "flare": {
+      "value": 0
+    },
+    "pocket": {
+      "value": 0
+    },
+    "draining": {
+      "value": 0
+    },
+    "resistant": {
+      "value": ""
+    },
+    "cost": 50,
+    "cost_frequency": "",
+    "description": "<p>A variety of simple rowboats and paddle boats, their woody hulls grown to size on modified kigelia sausage trees. The Bateau is rowed by its crew.</p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": [
+      "water"
+    ],
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4",
+      "capacity": 1
+    },
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "level": 1,
+    "supply": "",
+    "capacity": 3,
+    "speed": -1,
+    "automatic": true
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "wOwBmZzhkRHns1aw": 3
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.370",
+    "systemId": "sdm",
+    "systemVersion": "1.8.0",
+    "createdTime": 1794001880218,
+    "modifiedTime": 1794002041772,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "_key": "!items!9knR5iODnDhPCNyF"
+}

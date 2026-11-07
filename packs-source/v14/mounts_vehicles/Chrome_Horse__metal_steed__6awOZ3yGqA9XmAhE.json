@@ -1,0 +1,94 @@
+{
+  "folder": "aOb9SWV9GktEAdVl",
+  "name": "Chrome Horse (metal steed)",
+  "type": "mount",
+  "_id": "6awOZ3yGqA9XmAhE",
+  "img": "icons/tools/smithing/horsehoe-worn-steel-grey.webp",
+  "system": {
+    "readied": false,
+    "categories": [],
+    "status": "",
+    "resources": "",
+    "charges": {
+      "value": 0,
+      "max": 0
+    },
+    "replenish": {
+      "value": 0
+    },
+    "area": {
+      "value": ""
+    },
+    "range": {
+      "value": ""
+    },
+    "flare": {
+      "value": 0
+    },
+    "pocket": {
+      "value": 0
+    },
+    "draining": {
+      "value": 0
+    },
+    "resistant": {
+      "value": ""
+    },
+    "cost": 1200,
+    "cost_frequency": "",
+    "description": "<p>Roars like thunder and flies like lightning. Wheels are optional. 1-in-6 briefly go even faster if painted red and fed blood (1 life).</p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": [
+      "golem",
+      "sentient",
+      "ride_vital"
+    ],
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4",
+      "capacity": 1
+    },
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "level": 2,
+    "supply": "0.5",
+    "capacity": 2,
+    "speed": 1,
+    "pull_vehicle_id": "",
+    "pull_mode": ""
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "wOwBmZzhkRHns1aw": 3
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.370",
+    "systemId": "sdm",
+    "systemVersion": "1.8.0",
+    "createdTime": 1793999686593,
+    "modifiedTime": 1793999736048,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "_key": "!items!6awOZ3yGqA9XmAhE"
+}

@@ -55,7 +55,9 @@ export const AttackTarget = Object.freeze({
 export const ItemType = Object.freeze({
   GEAR: 'gear',
   TRAIT: 'trait',
-  BURDEN: 'burden'
+  BURDEN: 'burden',
+  MOUNT: 'mount',
+  VEHICLE: 'vehicle'
 });
 
 export const GearType = Object.freeze({
@@ -107,8 +109,9 @@ export const WardType = Object.freeze({
 
 export const PullMode = Object.freeze({
   CARTING: 'carting',
-  DRAGGING: 'dragging',
-  FLYING: 'flying'
+  DRAGGING: 'dragging'
+  // TODO: re-enable when a multiplier is specced
+  // FLYING: 'flying'
 });
 
 export const SpeedType = Object.freeze({
@@ -176,6 +179,8 @@ export const DEFAULT_PET_ICON = 'icons/svg/pawprint.svg';
 export const DEFAULT_AFFLICTION_ICON = 'icons/svg/stoned.svg';
 export const DEFAULT_AUGMENT_ICON = 'icons/svg/upgrade.svg';
 export const DEFAULT_CONTAINER_ICON = 'icons/svg/chest.svg';
+export const DEFAULT_MOUNT_ICON = 'icons/tools/smithing/horsehoe-worn-steel-grey.webp';
+export const DEFAULT_VEHICLE_ICON = 'icons/commodities/tech/pipe-tech-exhaust-steel.webp';
 
 export const GEAR_ICONS = [
   DEFAULT_GEAR_ICON,

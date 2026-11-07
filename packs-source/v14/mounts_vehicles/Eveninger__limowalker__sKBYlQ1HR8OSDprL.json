@@ -1,0 +1,93 @@
+{
+  "folder": "aOb9SWV9GktEAdVl",
+  "name": "Eveninger (limowalker)",
+  "type": "vehicle",
+  "_id": "sKBYlQ1HR8OSDprL",
+  "img": "icons/commodities/tech/pipe-tech-exhaust-steel.webp",
+  "system": {
+    "readied": false,
+    "categories": [],
+    "status": "",
+    "resources": "",
+    "charges": {
+      "value": 0,
+      "max": 0
+    },
+    "replenish": {
+      "value": 0
+    },
+    "area": {
+      "value": ""
+    },
+    "range": {
+      "value": ""
+    },
+    "flare": {
+      "value": 0
+    },
+    "pocket": {
+      "value": 0
+    },
+    "draining": {
+      "value": 0
+    },
+    "resistant": {
+      "value": ""
+    },
+    "cost": 6000,
+    "cost_frequency": "",
+    "description": "<p>Grand biomechanical walker golem. Among the most stylish travel systems money can buy. Tuxedo option available.</p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": [
+      "golem",
+      "sentient",
+      "all_terrain"
+    ],
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4",
+      "capacity": 1
+    },
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "level": 9,
+    "supply": "1",
+    "capacity": 12,
+    "speed": -1,
+    "automatic": true
+  },
+  "effects": [],
+  "sort": 0,
+  "ownership": {
+    "default": 0,
+    "wOwBmZzhkRHns1aw": 3
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.370",
+    "systemId": "sdm",
+    "systemVersion": "1.8.0",
+    "createdTime": 1793999591822,
+    "modifiedTime": 1793999651667,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "_key": "!items!sKBYlQ1HR8OSDprL"
+}

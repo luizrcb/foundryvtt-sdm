@@ -144,6 +144,10 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
           options.parts.push('categories');
         }
         break;
+      case 'mount':
+      case 'vehicle':
+        options.parts.push('description', 'features', 'effects');
+        break;
       default:
         options.parts.push('description', 'effects');
         if (displayItemCategoriesTab && game.user.isGM) {
@@ -201,6 +205,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       context.itemFeatures = [...CONFIG.SDM.baseFeatures, ...CONFIG.SDM.armorFeatures];
     } else if (this.item.type === ItemType.GEAR && this.item.system.type === GearType.WEAPON) {
       context.itemFeatures = [...CONFIG.SDM.baseFeatures, ...CONFIG.SDM.weaponFeatures];
+    } else if ([ItemType.MOUNT, ItemType.VEHICLE].includes(this.item.type)) {
+      context.itemFeatures = [...CONFIG.SDM.transportFeatures];
     } else {
       context.itemFeatures = [...CONFIG.SDM.baseFeatures];
     }

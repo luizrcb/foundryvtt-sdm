@@ -173,6 +173,53 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
     return getSlotsTaken(this);
   }
 
+  /**
+   * Compendium browser filters shared by mounts and vehicles.
+   * @param {Map} filters
+   * @param {object} [options]
+   * @param {boolean} [options.automatic=false] add the vehicle-only "automatic" filter
+   */
+  static addTransportFilters(filters, { automatic = false } = {}) {
+    filters.set('transportType', {
+      label: 'SDM.FILTERS.TransportType',
+      type: 'set',
+      config: {
+        keyPath: 'type',
+        sort: false,
+        choices: () => ({
+          mount: $l10n('TYPES.Item.mount'),
+          vehicle: $l10n('TYPES.Item.vehicle')
+        })
+      }
+    });
+
+    filters.set('transportLevel', {
+      label: 'SDM.FILTERS.TransportLevel',
+      type: 'range',
+      config: { keyPath: 'system.level', min: 0 }
+    });
+
+    filters.set('transportCapacity', {
+      label: 'SDM.FILTERS.TransportCapacity',
+      type: 'range',
+      config: { keyPath: 'system.capacity', min: 0 }
+    });
+
+    filters.set('transportSpeed', {
+      label: 'SDM.FILTERS.TransportSpeed',
+      type: 'range',
+      config: { keyPath: 'system.speed' }
+    });
+
+    if (automatic) {
+      filters.set('transportAutomatic', {
+        label: 'SDM.FILTERS.TransportAutomatic',
+        type: 'boolean',
+        config: { keyPath: 'system.automatic' }
+      });
+    }
+  }
+
   static addCommonFilters(filters) {
     filters.set('cost', {
       label: 'SDM.FILTERS.Cost',
@@ -241,7 +288,7 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
         sort: true,
         choices: () => {
           return Object.fromEntries(
-            CONFIG.SDM.features.map(f => [f, $l10n(`SDM.ItemFeature.${f}`)])
+            [...CONFIG.SDM.features].map(f => [f, $l10n(`SDM.ItemFeature.${f}`)])
           );
         }
       }

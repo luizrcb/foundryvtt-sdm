@@ -30,6 +30,7 @@ import {
 } from '../helpers/itemUtils.mjs';
 import { mergeSimilarItems, splitStackIntoTwo } from '../helpers/stackUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
+import { computeCaravanTransport } from '../helpers/transportUtils.mjs';
 import { promptSplitStackFirstQty } from '../items/splitDialog.mjs';
 import { addCashToActor, removeCashFromActor } from '../macros/gm/giveCash.mjs';
 import { postDiceSummary } from '../macros/gm/giveHeroDice.mjs';
@@ -460,6 +461,22 @@ export class SdmActor extends Actor {
     this.system.total_cash = totalCash;
     this.system.wealth = totalCash + estimatedWealth;
     // this.system.overloaded = overloaded;
+
+    if (game.settings.get('sdm', 'automateCaravanTransport')) {
+      const mounts = this.items.filter(i => i.type === ItemType.MOUNT);
+      const vehicles = this.items.filter(i => i.type === ItemType.VEHICLE);
+
+      const result = computeCaravanTransport({ mounts, vehicles });
+
+      this.system.capacity = result.capacity;
+
+      // uncapped. Keep any active-effect change made to system.speed (applied before this step).
+      const effectSpeedDelta = (this.system.speed || 0) - (this._source.system.speed || 0);
+      this.system.speed = result.speedRaw + (this.system.speed_bonus || 0) + effectSpeedDelta;
+
+      this.system.transport_breakdown = result.breakdown;
+      this.system.transport_under_hauled = result.underHauled;
+    }
   }
 
   _prepareNpcData() {
@@ -923,39 +940,6 @@ export class SdmActor extends Actor {
     }, 0);
 
     return carriedWeight;
-  }
-
-  getMountRidersWeight() {
-    const itemsArray = this.items.contents;
-    const filteredMounts = itemsArray.filter(item => item.type === ItemType.MOUNT);
-    let totalWeight = 0;
-
-    for (let mount of filteredMounts) {
-      for (let rider of mount.riders) {
-        const riderActor = fromUuidSync(rider);
-        if (!riderActor) continue;
-
-        totalWeight += riderActor.getTotalWeight();
-      }
-    }
-
-    return totalWeight;
-  }
-
-  getVehiclePassengersWeight() {
-    const itemsArray = this.items.contents;
-    const filteredVehicle = itemsArray.filter(item => item.type === ItemType.VEHICLE);
-    let totalWeight = 0;
-
-    for (let vehicle of filteredVehicle) {
-      for (let passenger of vehicle.passengers) {
-        const passengerActor = fromUuidSync(passenger);
-        if (!passengerActor) continue;
-
-        totalWeight += passengerActor.getTotalWeight();
-      }
-    }
-    return totalWeight;
   }
 
   getArmor() {

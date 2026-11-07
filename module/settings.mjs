@@ -594,7 +594,24 @@ export function registerSystemSettings() {
     restricted: true,
     requiresReload: true,
     type: Boolean,
-    default: false
+    default: true
+  });
+
+  game.settings.register('sdm', 'automateCaravanTransport', {
+    name: 'SDM.SettingsAutomateCaravanTransport',
+    hint: 'SDM.SettingsAutomateCaravanTransportHint',
+    scope: 'world',
+    restricted: true,
+    type: Boolean,
+    default: false,
+    onChange: () => {
+      // derived capacity/speed live in prepareDerivedData; re-prepare open caravans
+      for (const actor of game.actors ?? []) {
+        if (actor.type !== 'caravan') continue;
+        actor.reset();
+        if (actor.sheet?.rendered) actor.sheet.render(false);
+      }
+    }
   });
 
   game.settings.register('sdm', 'displayItemCategoriesTab', {

@@ -9,6 +9,14 @@ export function registerHandlebarsHelpers() {
     return 'systems/sdm/templates/' + path + '.hbs';
   });
 
+  $$('sdmSpeed', function (value) {
+    return CONFIG.SDM.formatSpeed(value);
+  });
+
+  $$('sdmSpeedChoices', function (value) {
+    return CONFIG.SDM.getSpeedChoices(value);
+  });
+
   $$('toLowerCase', function (str) {
     return str.toLowerCase();
   });

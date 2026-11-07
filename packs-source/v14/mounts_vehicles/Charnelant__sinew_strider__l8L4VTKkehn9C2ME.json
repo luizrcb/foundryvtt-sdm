@@ -1,0 +1,93 @@
+{
+  "folder": "LxlQAIExiNdZoqKB",
+  "name": "Charnelant (sinew strider)",
+  "type": "mount",
+  "_id": "l8L4VTKkehn9C2ME",
+  "img": "icons/tools/smithing/horsehoe-worn-steel-grey.webp",
+  "system": {
+    "readied": false,
+    "categories": [],
+    "status": "",
+    "resources": "",
+    "charges": {
+      "value": 0,
+      "max": 0
+    },
+    "replenish": {
+      "value": 0
+    },
+    "area": {
+      "value": ""
+    },
+    "range": {
+      "value": ""
+    },
+    "flare": {
+      "value": 0
+    },
+    "pocket": {
+      "value": 0
+    },
+    "draining": {
+      "value": 0
+    },
+    "resistant": {
+      "value": ""
+    },
+    "cost": 600,
+    "cost_frequency": "",
+    "description": "<p>Dead flesh rewoven into a six-legged camel-sized endoskeletal ant-thing. Please ignore the human skull.</p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": [
+      "undead",
+      "all_terrain"
+    ],
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4",
+      "capacity": 1
+    },
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "level": 2,
+    "supply": "necro",
+    "capacity": 3,
+    "speed": -1,
+    "pull_vehicle_id": "",
+    "pull_mode": ""
+  },
+  "effects": [],
+  "sort": 400000,
+  "ownership": {
+    "default": 0,
+    "wOwBmZzhkRHns1aw": 3
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.370",
+    "systemId": "sdm",
+    "systemVersion": "1.8.0",
+    "createdTime": 1793982351078,
+    "modifiedTime": 1793988902885,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "_key": "!items!l8L4VTKkehn9C2ME"
+}

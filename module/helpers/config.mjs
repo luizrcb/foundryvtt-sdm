@@ -260,6 +260,33 @@ function getSpeedFromValue(speedValue = 0) {
   return SDM.reverseSpeedValues[`${constrained}`];
 }
 
+/**
+ * Speed is not capped: values beyond -3..2 keep their real number and borrow the
+ * nearest description, e.g. 4 → "Very Fast (+4)", -5 → "Very Very Slow (-5)".
+ */
+function formatSpeed(speedValue = 0) {
+  const value = Number(speedValue) || 0;
+  // some locales embed the number in the label ("Fast (+1)"); strip it and append the real one
+  const name = game.i18n.localize(getSpeedFromValue(value)).replace(/\s*\([^)]*\)\s*$/, '');
+  return `${name} (${value > 0 ? '+' : ''}${value})`;
+}
+
+/**
+ * Choices for a speed <select>: the standard -3..2 steps plus the current value when it is
+ * outside that range, so out-of-range values (active effects, bonuses) still display correctly.
+ * @returns {Array<{value: number, label: string}>}
+ */
+function getSpeedChoices(currentValue) {
+  const values = [-3, -2, -1, 0, 1, 2];
+  const current = Number(currentValue);
+  if (Number.isInteger(current) && !values.includes(current)) values.push(current);
+  return values.sort((a, b) => a - b).map(value => ({ value, label: formatSpeed(value) }));
+}
+
+SDM.getSpeedFromValue = getSpeedFromValue;
+SDM.formatSpeed = formatSpeed;
+SDM.getSpeedChoices = getSpeedChoices;
+
 SDM.characterPropertiesToActiveEffects = [
   'system.abilities.agi.bonus',
   'system.abilities.agi.roll_bonus',
@@ -596,11 +623,36 @@ SDM.weaponFeatures = [
   { value: 'vorpal', label: 'SDM.ItemFeature.vorpal' }
 ];
 
+// Mount & vehicle features. `ride_` keys avoid clashing with gear features of the same name.
+SDM.transportFeatures = [
+  { value: 'all_terrain', label: 'SDM.ItemFeature.all_terrain' },
+  { value: 'atom', label: 'SDM.ItemFeature.atom' },
+  { value: 'cart', label: 'SDM.ItemFeature.cart' },
+  { value: 'coalem', label: 'SDM.ItemFeature.coalem' },
+  { value: 'combat', label: 'SDM.ItemFeature.combat' },
+  { value: 'dark', label: 'SDM.ItemFeature.dark' },
+  { value: 'sled', label: 'SDM.ItemFeature.sled' },
+  { value: 'flying', label: 'SDM.ItemFeature.flying' },
+  { value: 'fuel', label: 'SDM.ItemFeature.fuel' },
+  { value: 'golem', label: 'SDM.ItemFeature.golem' },
+  { value: 'grazer', label: 'SDM.ItemFeature.grazer' },
+  { value: 'pneumavore', label: 'SDM.ItemFeature.pneumavore' },
+  { value: 'ride_semi_sentient', label: 'SDM.ItemFeature.ride_semi_sentient' },
+  { value: 'sentient', label: 'SDM.ItemFeature.sentient' },
+  { value: 'solar', label: 'SDM.ItemFeature.solar' },
+  { value: 'ride_vital', label: 'SDM.ItemFeature.ride_vital' },
+  { value: 'undead', label: 'SDM.ItemFeature.undead' },
+  { value: 'underwater', label: 'SDM.ItemFeature.underwater' },
+  { value: 'void', label: 'SDM.ItemFeature.void' },
+  { value: 'water', label: 'SDM.ItemFeature.water' }
+];
+
 const allFeatures = [
   ...SDM.baseFeatures,
   ...SDM.wardFeatures,
   ...SDM.armorFeatures,
-  ...SDM.weaponFeatures
+  ...SDM.weaponFeatures,
+  ...SDM.transportFeatures
 ];
 
 SDM.features = new Set(allFeatures.map(f => f.value));

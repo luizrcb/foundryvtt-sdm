@@ -1,0 +1,92 @@
+{
+  "folder": "LxlQAIExiNdZoqKB",
+  "name": "Reanijelly (carcass blimp)",
+  "type": "vehicle",
+  "_id": "eZ2YEwJAtQoXtKAL",
+  "img": "icons/commodities/tech/pipe-tech-exhaust-steel.webp",
+  "system": {
+    "readied": false,
+    "categories": [],
+    "status": "",
+    "resources": "",
+    "charges": {
+      "value": 0,
+      "max": 0
+    },
+    "replenish": {
+      "value": 0
+    },
+    "area": {
+      "value": ""
+    },
+    "range": {
+      "value": ""
+    },
+    "flare": {
+      "value": 0
+    },
+    "pocket": {
+      "value": 0
+    },
+    "draining": {
+      "value": 0
+    },
+    "resistant": {
+      "value": ""
+    },
+    "cost": 100,
+    "cost_frequency": "",
+    "description": "<p>Take a giant airjelly. Reanimate and fill with biogas. Hey, presto, a towed levitating cart! A single human can tow six reanijellies.</p>",
+    "quantity": 1,
+    "size": {
+      "value": 1,
+      "unit": "stones"
+    },
+    "features": [
+      "cart",
+      "undead"
+    ],
+    "attributes": {
+      "initiative": "",
+      "level": 0,
+      "life": {
+        "value": 1,
+        "max": 1
+      },
+      "morale": 2,
+      "defense": 7,
+      "bonus": 1,
+      "damage": "1d4",
+      "capacity": 1
+    },
+    "is_hallmark": false,
+    "hallmark": {
+      "level": 0,
+      "experience": "0"
+    },
+    "level": 1,
+    "supply": "necro",
+    "capacity": 1,
+    "speed": 0,
+    "automatic": false
+  },
+  "effects": [],
+  "sort": 150000,
+  "ownership": {
+    "default": 0,
+    "wOwBmZzhkRHns1aw": 3
+  },
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.370",
+    "systemId": "sdm",
+    "systemVersion": "1.8.0",
+    "createdTime": 1793981996191,
+    "modifiedTime": 1793998387198,
+    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "_key": "!items!eZ2YEwJAtQoXtKAL"
+}

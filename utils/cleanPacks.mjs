@@ -14,6 +14,7 @@ const foldersToDelete = [
   'packs/handouts',
   'packs/macros',
   'packs/motive_table',
+  'packs/mounts_vehicles',
   'packs/names_tables',
   'packs/npc_generator',
   'packs/player_macros',

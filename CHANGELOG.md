@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## v1.9.0
+
+- Added Mount and Vehicle item types, with level, capacity, speed, cost, supply, and features
+- Added the "Mounts & Vehicles" compendium pack
+- Added the "Automate Caravan Transport" world setting (Caravan settings menu, off by default). When enabled, caravan capacity and speed are derived from its mounts and vehicles, and the header inputs become read-only
+  - Capacity: unassigned mounts carry their own capacity; a vehicle counts only if its assigned mounts pull enough (carting ×3, dragging ×2); automatic (self-propelled) vehicles always count
+  - Speed: slowest vehicle (a pulled vehicle's speed plus its slowest mount's) plus slowest unassigned mount, plus the speed bonus. Speed is no longer capped and shows its real value with the nearest description (e.g. "Very Fast (+4)")
+- Redesigned the caravan "Mounts & Vehicles" tab when automation is on: vehicle and mount lists with inline speed and supply edits, pull mode and vehicle assignment dropdowns, drag a mount onto a vehicle to assign it, drag-and-drop sorting, feature tags, and capacity/speed breakdown tooltips
+- Added mount and vehicle features (all-terrain, cart, sled, flying, golem, undead, water, and more). A vehicle's Cart or Sled feature sets the pull mode of the mounts pulling it
+- Compendium Browser: added a "Transport" tab for mounts and vehicles with transport filters; the "All Gear" tab is now "All Items"; cards without a description no longer show "null" on hover
+- Mount and vehicle chat cards and compendium cards display cost, capacity, speed, and supply
+- "Count Crew Weight" is now enabled by default for new worlds
+
 ## v1.8.0
 
 - Added a button to the Caravan tokens HUD to gather/deploy crew tokens in the active scene

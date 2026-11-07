@@ -573,7 +573,9 @@ Hooks.once('init', function () {
   CONFIG.Item.dataModels = {
     gear: models.SdmGear,
     trait: models.SdmTrait,
-    burden: models.SdmBurden
+    burden: models.SdmBurden,
+    mount: models.SdmMount,
+    vehicle: models.SdmVehicle
   };
 
   _configureFonts();
