@@ -10,7 +10,7 @@
     "resources": "",
     "cost": 5000,
     "cost_frequency": "",
-    "description": "<p>Wear it to look like someone nice and established and not at all like you. The crab needs an hour and 1d4 life to replace its face. Obviously, it also needs a fresh human face. Very illegal.</p>",
+    "description": "<p>Wear it to look like someone nice and established and not at all like you. The crab needs an hour and [[/r 1d4]] life to replace its face. Obviously, it also needs a fresh human face. Very illegal.</p>",
     "quantity": 1,
     "size": {
       "value": 1,

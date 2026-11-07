@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 10000,
     "cost_frequency": "",
-    "description": "<p>Looks like a helmet. If you would die, it saves your head and skitters off like a creepy spider.</p><p>autonomous, spell eater (spend [[/r 1d4+1]] life to capture a spell)</p>",
+    "description": "<p>Looks like a helmet. If you would die, it saves your head and skitters off like a creepy spider.</p>",
     "quantity": 1,
     "size": {
       "value": 2,

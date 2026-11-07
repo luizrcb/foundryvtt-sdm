@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 3000,
     "cost_frequency": "",
-    "description": "<p>Monstrous mouth-shaped box. Fits your head?!</p><p><strong>antimagic</strong> (Spend [[/r 1d6+1]] life to nullify an effect (save))</p><p></p>",
+    "description": "<p>Monstrous mouth-shaped box. Fits your head?!</p>",
     "quantity": 1,
     "size": {
       "value": 2,

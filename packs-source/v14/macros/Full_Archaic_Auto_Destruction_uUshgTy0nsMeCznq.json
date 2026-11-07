@@ -1,5 +1,5 @@
 {
-  "name": "Full Archaid Auto Destruction",
+  "name": "Full Archaic Auto Destruction",
   "type": "script",
   "command": "game.sdm.api.createFullAutoDestructionMode('Auto Destr Full Archaic', 8, 'icons/creatures/magical/humanoid-horned-rider.webp');\nui.notifications.info('Auto Destruction Full Archaic created');",
   "img": "icons/creatures/magical/humanoid-horned-rider.webp",

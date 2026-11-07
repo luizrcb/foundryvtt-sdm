@@ -7,8 +7,9 @@
   - Restored replenish scores on gadgets and trait items that only had them in the description text
   - Restored the Kingshead Flask's 12 charges
   - Restored missing features on the Alarwurm Box, Invisibilly Bomb, and Tome of Metal B
-- Fixed item names with extra spaces (Porcelain Walker, Monochrome Mirror, Cordwood™ Jumpsuit & Headset)
-- pt-BR: spelling fix ("heroico")
+- Fixed item names with extra spaces (Porcelain Walker, Monochrome Mirror, Cordwood™ Jumpsuit & Headset) and the "Full Archaic Auto Destruction" macro name
+- Removed feature rules repeated in item descriptions (Antimagic Mouth, Empty Glasses, Savehead Jar)
+- pt-BR: fixed the "no Blood Dice" and "Use Hero/Blood Dice" messages, plus spelling fixes ("heroico", "Bônus", "húbris")
 
 ## v1.9.0
 
