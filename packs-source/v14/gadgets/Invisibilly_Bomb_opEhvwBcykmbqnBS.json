@@ -15,7 +15,8 @@
       "unit": "stones"
     },
     "features": [
-      "area"
+      "area",
+      "throwing"
     ],
     "attributes": {
       "initiative": "",

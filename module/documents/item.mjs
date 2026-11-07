@@ -24,6 +24,24 @@ const { renderTemplate } = foundry.applications.handlebars;
  * Extend the basic Item with some very simple modifications.
  * @extends {Item}
  */
+/** "vessel: can carry up to a dozen drinkable doses" — doses are tracked as charges. */
+const VESSEL_DOSES = 12;
+
+/**
+ * When an item has the vessel feature, make sure it also has the charges feature and a
+ * dose capacity. Returns the system patch to apply, or null when nothing changes.
+ * @param {Iterable<string>} features  Resulting features of the item
+ * @param {number} chargesMax          Resulting charges.max of the item
+ */
+function vesselChargesPatch(features, chargesMax) {
+  const set = new Set(features ?? []);
+  if (!set.has('vessel')) return null;
+  const patch = {};
+  if (!set.has('charges')) patch.features = [...set, 'charges'].sort();
+  if (!(Number(chargesMax) > 0)) patch['charges.max'] = VESSEL_DOSES;
+  return Object.keys(patch).length ? patch : null;
+}
+
 export class SdmItem extends Item {
   static getDefaultArtwork(itemData) {
     let icon = DEFAULT_GEAR_ICON;
@@ -51,6 +69,13 @@ export class SdmItem extends Item {
     // if (userId !== game.user.id) return;
     const result = await super._preCreate(data, options, userId);
     if (result === false) return false;
+
+    const vesselPatch = vesselChargesPatch(this.system.features, this.system.charges?.max);
+    if (vesselPatch) {
+      this.updateSource(
+        Object.fromEntries(Object.entries(vesselPatch).map(([k, v]) => [`system.${k}`, v]))
+      );
+    }
 
     const actor = this.parent;
     if (!actor) return result;
@@ -109,6 +134,17 @@ export class SdmItem extends Item {
   async _preUpdate(changes, options, user) {
     const result = await super._preUpdate(changes, options, user);
     if (result === false) return false;
+
+    // Adding the vessel feature turns on charges with a dozen doses
+    const newFeatures = changes.system?.features;
+    if (newFeatures !== undefined && !this.system.features.has('vessel')) {
+      const chargesMax = changes.system?.charges?.max ?? this.system.charges?.max;
+      const vesselPatch = vesselChargesPatch(newFeatures, chargesMax);
+      if (vesselPatch?.features) changes.system.features = vesselPatch.features;
+      if (vesselPatch?.['charges.max'] !== undefined) {
+        foundry.utils.setProperty(changes, 'system.charges.max', vesselPatch['charges.max']);
+      }
+    }
 
     const actor = this.parent;
     if (!actor) return result;

@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 200,
     "cost_frequency": "",
-    "description": "<p>Sympathetic generative ID. The ever-believable forgery option. re 3 [[/r 1d20]].</p>",
+    "description": "<p>Sympathetic generative ID. The ever-believable forgery option.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -77,7 +79,10 @@
     "categories": [
       "communication",
       "social"
-    ]
+    ],
+    "replenish": {
+      "value": 3
+    }
   },
   "effects": [],
   "sort": 0,

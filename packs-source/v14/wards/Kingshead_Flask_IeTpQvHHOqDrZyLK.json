@@ -15,6 +15,7 @@
       "unit": "stones"
     },
     "features": [
+      "charges",
       "scary",
       "vessel"
     ],
@@ -76,7 +77,11 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": ""
+    "supply_type": "",
+    "charges": {
+      "value": 0,
+      "max": 12
+    }
   },
   "effects": [],
   "sort": 0,

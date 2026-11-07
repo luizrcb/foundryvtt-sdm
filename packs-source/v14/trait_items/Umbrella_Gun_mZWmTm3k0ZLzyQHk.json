@@ -10,13 +10,15 @@
     "resources": "",
     "cost": 15,
     "cost_frequency": "",
-    "description": "<p>Protects from rain and has a single surprising shot.</p><p><strong>Features:</strong> reload 20.</p>",
+    "description": "<p>Protects from rain and has a single surprising shot.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -77,7 +79,10 @@
     "default_ability": "",
     "categories": [
       "tourist"
-    ]
+    ],
+    "replenish": {
+      "value": 20
+    }
   },
   "effects": [],
   "sort": 500000,

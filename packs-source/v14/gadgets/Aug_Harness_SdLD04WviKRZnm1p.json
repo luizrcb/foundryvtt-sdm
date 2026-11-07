@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 200,
     "cost_frequency": "",
-    "description": "<p>Golem strength physical augmentation. Sets your strength to 6. re 5 [[/r 1d20]]</p>",
+    "description": "<p>Golem strength physical augmentation. Sets your strength to 6.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -77,7 +79,10 @@
     "categories": [
       "ability",
       "magielectronics"
-    ]
+    ],
+    "replenish": {
+      "value": 5
+    }
   },
   "effects": [
     {

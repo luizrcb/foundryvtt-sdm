@@ -1,5 +1,15 @@
 # CHANGELOG
 
+## v1.9.1
+
+- Items with the Vessel feature now get the Charges feature and a capacity of 12 doses automatically
+- Fixed compendium items that lost data in the v14 migration:
+  - Restored replenish scores on gadgets and trait items that only had them in the description text
+  - Restored the Kingshead Flask's 12 charges
+  - Restored missing features on the Alarwurm Box, Invisibilly Bomb, and Tome of Metal B
+- Fixed item names with extra spaces (Porcelain Walker, Monochrome Mirror, Cordwood™ Jumpsuit & Headset)
+- pt-BR: spelling fix ("heroico")
+
 ## v1.9.0
 
 - Added Mount and Vehicle item types, with level, capacity, speed, cost, supply, and features

@@ -14,7 +14,9 @@
       "value": 5,
       "unit": "soaps"
     },
-    "features": [],
+    "features": [
+      "loud"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,

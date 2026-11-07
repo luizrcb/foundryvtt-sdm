@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 200,
     "cost_frequency": "",
-    "description": "<p>Human remote control (hard save). Does not work on wizards. re 19 [[/r 1d20]].</p>",
+    "description": "<p>Human remote control (hard save). Does not work on wizards.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -76,7 +78,10 @@
     "supply_type": "",
     "categories": [
       "communication"
-    ]
+    ],
+    "replenish": {
+      "value": 19
+    }
   },
   "effects": [],
   "sort": 0,

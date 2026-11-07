@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 50,
     "cost_frequency": "",
-    "description": "<p>75 mechanical tools in one. Disable traps, assemble furniture. Replenish 2.</p>",
+    "description": "<p>75 mechanical tools in one. Disable traps, assemble furniture.</p>",
     "quantity": 1,
     "size": {
       "value": 2,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -76,7 +78,10 @@
     "supply_type": "",
     "categories": [
       "security"
-    ]
+    ],
+    "replenish": {
+      "value": 2
+    }
   },
   "effects": [],
   "sort": 0,

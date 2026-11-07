@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 250,
     "cost_frequency": "",
-    "description": "<p>9D experience vidy crystal projector. Fools non-wizards. Recharge 4.</p>",
+    "description": "<p>9D experience vidy crystal projector. Fools non-wizards.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -76,7 +78,10 @@
     "supply_type": "",
     "categories": [
       "rest"
-    ]
+    ],
+    "replenish": {
+      "value": 4
+    }
   },
   "effects": [],
   "sort": 0,

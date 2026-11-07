@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 30,
     "cost_frequency": "",
-    "description": "<p>Seal doors or immobilize enemies (save). re 4 [[/r 1d20]].</p>",
+    "description": "<p>Seal doors or immobilize enemies (save).</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "replenish"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -77,7 +79,10 @@
     "categories": [
       "protection",
       "imobilization"
-    ]
+    ],
+    "replenish": {
+      "value": 4
+    }
   },
   "effects": [],
   "sort": 0,
