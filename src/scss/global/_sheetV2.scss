@@ -1031,8 +1031,18 @@ $v2-wide: 1100px;
         border: 2px solid var(--v2-line);
         color: var(--v2-ink);
 
+        position: relative;
+        line-height: 0;
+
+        // Center the icon regardless of the hidden label text
         i {
+          position: absolute;
+          inset: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
           font-size: 12px;
+          line-height: 1;
           margin: 0;
         }
         &:hover {
@@ -1043,8 +1053,11 @@ $v2-wide: 1100px;
     }
 
     // Empty sections show only their header card
-    .effects-header:has(+ .effect-list:not(:has(> li))) {
+    .effects-header {
       border-radius: 14px;
+    }
+    .effects-header:has(+ .effect-list li) {
+      border-radius: 14px 14px 0 0;
     }
     .effect-list:not(:has(> li)) {
       display: none;

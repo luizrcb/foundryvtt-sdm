@@ -4003,10 +4003,18 @@ input[type=radio]::after {
   border-radius: 50%;
   border: 2px solid var(--v2-line);
   color: var(--v2-ink);
+  position: relative;
+  line-height: 0;
 }
 
 .application.sheet.sdm.actor.sheet-v2 .tab.effects .effects-header .effect-control i {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-size: 12px;
+  line-height: 1;
   margin: 0;
 }
 
@@ -4015,8 +4023,12 @@ input[type=radio]::after {
   border-color: var(--v2-accent);
 }
 
-.application.sheet.sdm.actor.sheet-v2 .tab.effects .effects-header:has(+ .effect-list:not(:has(> li))) {
+.application.sheet.sdm.actor.sheet-v2 .tab.effects .effects-header {
   border-radius: 14px;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .tab.effects .effects-header:has(+ .effect-list li) {
+  border-radius: 14px 14px 0 0;
 }
 
 .application.sheet.sdm.actor.sheet-v2 .tab.effects .effect-list:not(:has(> li)) {
