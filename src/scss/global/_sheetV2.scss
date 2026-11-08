@@ -1034,16 +1034,28 @@ $v2-wide: 1100px;
         position: relative;
         line-height: 0;
 
-        // Center the icon regardless of the hidden label text
+        // The plus is drawn with CSS so it is always centered in the circle,
+        // whatever the hidden label text or icon font metrics do
         i {
+          display: none;
+        }
+        &::before,
+        &::after {
+          content: '';
           position: absolute;
-          inset: 0;
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          font-size: 12px;
-          line-height: 1;
-          margin: 0;
+          left: 50%;
+          top: 50%;
+          background: currentColor;
+          border-radius: 1px;
+          transform: translate(-50%, -50%);
+        }
+        &::before {
+          width: 12px;
+          height: 2px;
+        }
+        &::after {
+          width: 2px;
+          height: 12px;
         }
         &:hover {
           background: var(--v2-accent-soft);

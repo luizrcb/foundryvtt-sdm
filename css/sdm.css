@@ -4008,14 +4008,27 @@ input[type=radio]::after {
 }
 
 .application.sheet.sdm.actor.sheet-v2 .tab.effects .effects-header .effect-control i {
+  display: none;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .tab.effects .effects-header .effect-control::before, .application.sheet.sdm.actor.sheet-v2 .tab.effects .effects-header .effect-control::after {
+  content: "";
   position: absolute;
-  inset: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-size: 12px;
-  line-height: 1;
-  margin: 0;
+  left: 50%;
+  top: 50%;
+  background: currentColor;
+  border-radius: 1px;
+  transform: translate(-50%, -50%);
+}
+
+.application.sheet.sdm.actor.sheet-v2 .tab.effects .effects-header .effect-control::before {
+  width: 12px;
+  height: 2px;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .tab.effects .effects-header .effect-control::after {
+  width: 2px;
+  height: 12px;
 }
 
 .application.sheet.sdm.actor.sheet-v2 .tab.effects .effects-header .effect-control:hover {
