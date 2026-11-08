@@ -4,14 +4,14 @@
   <p class="v2-hint">{{localize 'SDM.PetLink'}}</p>
   {{/if}}
   {{#if (or system.features.size (and (eq system.type 'power') (eq system.power.is_dangerous true)))}}
-  <ul class="v2-pills">
+  <ul class="pills unlist v2-pills">
     {{#if (and (eq system.type 'power') (eq system.power.is_dangerous true))}}
-    <li class="v2-pill" data-tooltip="{{localize 'SDM.ItemFeature.dangerous'}}: {{localize 'SDM.ItemFeature.dangerousDescription'}}">
+    <li class="pill transparent" data-tooltip="{{localize 'SDM.ItemFeature.dangerous'}}: {{localize 'SDM.ItemFeature.dangerousDescription'}}">
       {{localize 'SDM.ItemFeature.dangerousAbbr'}}
     </li>
     {{/if}}
     {{#each system.features}}
-    <li class="v2-pill" data-tooltip="{{localize (concat 'SDM.ItemFeature.' this 'Description')}}">
+    <li class="pill transparent" data-tooltip="{{localize (concat 'SDM.ItemFeature.' this 'Description')}}">
       {{featureDisplay this ../system}}
     </li>
     {{/each}}

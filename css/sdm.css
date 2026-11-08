@@ -4821,18 +4821,6 @@ input[type=radio]::after {
   gap: 6px;
 }
 
-.application.sheet.sdm.sheet-v2 .v2-pill {
-  font-size: 10px;
-  padding: 0 4px;
-  line-height: 1.4;
-  border-radius: 10px;
-  background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border);
-  color: var(--color-text-secondary);
-  text-transform: uppercase;
-  letter-spacing: 0.3px;
-}
-
 .application.sheet.sdm.sheet-v2.item section.tab.features, .application.sheet.sdm.sheet-v2.item section.tab.categories {
   background: var(--v2-panel);
   border: 2px solid var(--v2-line);
