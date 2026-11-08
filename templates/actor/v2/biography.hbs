@@ -4,19 +4,19 @@
   <div class="v2-profile">
     <label class="v2-profile-field">
       <span class="v2-label">{{localize 'SDM.FieldLooks'}}</span>
-      <input type="text" name="system.looks" value="{{system.looks}}" {{#unless editable}}disabled{{/unless}} />
+      <input type="text" name="system.looks" value="{{system.looks}}" {{#unless (and editable isEditMode)}}disabled{{/unless}} />
     </label>
     <label class="v2-profile-field">
       <span class="v2-label">{{localize 'SDM.FieldLikes'}}</span>
-      <input type="text" name="system.likes" value="{{system.likes}}" {{#unless editable}}disabled{{/unless}} />
+      <input type="text" name="system.likes" value="{{system.likes}}" {{#unless (and editable isEditMode)}}disabled{{/unless}} />
     </label>
     <label class="v2-profile-field">
       <span class="v2-label">{{localize 'SDM.FieldFriends'}}</span>
-      <input type="text" name="system.friends" value="{{system.friends}}" {{#unless editable}}disabled{{/unless}} />
+      <input type="text" name="system.friends" value="{{system.friends}}" {{#unless (and editable isEditMode)}}disabled{{/unless}} />
     </label>
     <label class="v2-profile-field">
       <span class="v2-label">{{localize 'SDM.FieldFoes'}}</span>
-      <input type="text" name="system.foes" value="{{system.foes}}" {{#unless editable}}disabled{{/unless}} />
+      <input type="text" name="system.foes" value="{{system.foes}}" {{#unless (and editable isEditMode)}}disabled{{/unless}} />
     </label>
   </div>
   {{/if}}

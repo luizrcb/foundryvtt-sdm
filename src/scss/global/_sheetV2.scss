@@ -188,6 +188,12 @@ $v2-wide: 1100px;
     flex-direction: column;
     gap: 2px;
 
+    // Name and species keep the input line even when read-only
+    input[type='text'].v2-title[disabled],
+    input[type='text'].v2-species[disabled] {
+      border-bottom-color: var(--v2-accent-soft);
+    }
+
     .v2-title {
       font-family: var(--sdm-font-primary);
       font-size: 28px;
@@ -1153,9 +1159,13 @@ $v2-wide: 1100px;
         background: var(--v2-accent-soft);
         outline: none;
       }
+      // Read-only in play mode, but keep the input line
       &[disabled] {
-        border-bottom-color: transparent;
+        border-bottom-color: var(--v2-accent-soft);
+        background: transparent;
+        color: var(--v2-ink);
         opacity: 1;
+        cursor: default;
       }
     }
   }

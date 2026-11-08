@@ -3154,6 +3154,11 @@ input[type=radio]::after {
   gap: 2px;
 }
 
+.application.sheet.sdm.actor.sheet-v2 .v2-name input[type=text].v2-title[disabled],
+.application.sheet.sdm.actor.sheet-v2 .v2-name input[type=text].v2-species[disabled] {
+  border-bottom-color: var(--v2-accent-soft);
+}
+
 .application.sheet.sdm.actor.sheet-v2 .v2-name .v2-title {
   font-family: var(--sdm-font-primary);
   font-size: 28px;
@@ -4134,8 +4139,11 @@ input[type=radio]::after {
 }
 
 .application.sheet.sdm.actor.sheet-v2 .v2-profile-field input[type=text][disabled] {
-  border-bottom-color: transparent;
+  border-bottom-color: var(--v2-accent-soft);
+  background: transparent;
+  color: var(--v2-ink);
   opacity: 1;
+  cursor: default;
 }
 
 .application.sheet.sdm.actor.sheet-v2 .tab.biography,
