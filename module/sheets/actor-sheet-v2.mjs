@@ -30,7 +30,8 @@ export class SdmActorSheetV2 extends SdmActorSheet {
     },
     inventory: {
       template: templatePath('actor/v2/inventory'),
-      scrollable: ['']
+      // Each column scrolls on its own; keep their positions across re-renders
+      scrollable: ['.v2-col-items .items-list', '.v2-col-traits .items-list', '.v2-col-burdens .items-list']
     }
   };
 
@@ -46,7 +47,19 @@ export class SdmActorSheetV2 extends SdmActorSheet {
       return Math.max(0, Math.min(100, Math.round((v / m) * 100)));
     };
 
+    const meter = (taken, max) => {
+      const used = Math.ceil(Number(taken) || 0);
+      const size = Math.max(Number(max) || 0, 0);
+      return {
+        segments: Array.from({ length: size }, (_, i) => ({ on: i < used })),
+        over: used > size,
+        label: `${Number(taken) || 0}/${size}`
+      };
+    };
+
     context.v2 = {
+      itemsMeter: meter(context.itemSlotsTaken, system.item_slots),
+      traitsMeter: meter(context.traitSlotsTaken, system.trait_slots),
       lifePct: pct(system.life?.value, context.isEditMode ? system.life?.base : system.life?.max),
       heroDiceSpent: (Number(system.hero_dice?.value) || 0) <= 0,
       hasBurdens: (context.burdens?.length ?? 0) > 0

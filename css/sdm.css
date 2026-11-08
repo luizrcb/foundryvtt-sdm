@@ -3663,43 +3663,76 @@ input[type=radio]::after {
   overflow-y: auto;
 }
 
+.application.sheet.sdm.actor.sheet-v2 section.tab.v2-inventory.active {
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+}
+
 .application.sheet.sdm.actor.sheet-v2 .v2-resources {
   display: grid;
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 64px;
+  grid-template-rows: minmax(0, 1fr);
   gap: 12px;
   align-items: start;
+  flex: 1 1 auto;
+  min-height: 0;
+  padding-bottom: 4px;
 }
 
 .application.sheet.sdm.actor.sheet-v2 .v2-col {
+  --v2-head-h: 46px;
   min-width: 0;
+  min-height: 0;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.application.sheet.sdm.actor.sheet-v2 .v2-col > section.tab {
-  display: block;
-  overflow: visible;
+.application.sheet.sdm.actor.sheet-v2 .v2-col > section.tab,
+.application.sheet.sdm.actor.sheet-v2 .v2-col > .v2-list {
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  overflow: hidden;
+  border-radius: 14px;
+  box-shadow: var(--v2-shadow);
 }
 
 .application.sheet.sdm.actor.sheet-v2 .v2-col .items-list {
-  background: var(--v2-panel);
+  flex: 0 1 auto;
+  min-height: 0;
+  max-height: none;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-width: thin;
+  scrollbar-color: var(--v2-accent) transparent;
   border: 2px solid var(--v2-line);
   border-radius: 14px;
-  padding: 6px 10px 10px;
+  padding: 0 10px 10px;
   margin: 0;
-  box-shadow: var(--v2-shadow);
-  max-height: none;
-  overflow: visible;
+  background-color: var(--v2-panel);
+  background-image: linear-gradient(var(--v2-panel) 30%, transparent), linear-gradient(transparent, var(--v2-panel) 70%), radial-gradient(farthest-side at 50% 0, rgba(0, 0, 0, 0.18), transparent), radial-gradient(farthest-side at 50% 100%, rgba(0, 0, 0, 0.18), transparent);
+  background-position: center top, center bottom, center top, center bottom;
+  background-repeat: no-repeat;
+  background-size: 100% 40px, 100% 40px, 100% 12px, 100% 12px;
+  background-attachment: local, local, scroll, scroll;
 }
 
 .application.sheet.sdm.actor.sheet-v2 .v2-col .items-header {
-  background: none;
+  position: sticky;
+  top: 0;
+  z-index: 2;
+  box-sizing: border-box;
+  background: var(--v2-panel);
   border: 0;
   border-bottom: 2px solid var(--v2-line);
-  padding: 4px 0 8px;
-  margin-bottom: 4px;
+  padding: 8px 0 8px;
+  margin: 0 0 4px;
   font-family: var(--sdm-font-primary);
   font-size: 14px;
-  height: auto;
-  min-height: 36px;
+  height: var(--v2-head-h);
+  min-height: 0;
   align-items: center;
 }
 
@@ -3790,16 +3823,51 @@ input[type=radio]::after {
   opacity: 1;
 }
 
+.application.sheet.sdm.actor.sheet-v2 .v2-meter-row {
+  position: sticky;
+  top: var(--v2-head-h);
+  z-index: 2;
+  list-style: none;
+  background: var(--v2-panel);
+  padding: 2px 0 6px;
+  margin-top: -4px;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-meter {
+  display: flex;
+  gap: 3px;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-meter .v2-seg {
+  flex: 1;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--v2-rule);
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-meter .v2-seg.is-on {
+  background: var(--v2-ink);
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-meter.is-over .v2-seg.is-on {
+  background: var(--v2-danger);
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-col-burdens > section.tab {
+  box-shadow: none;
+}
+
 .application.sheet.sdm.actor.sheet-v2 .v2-col-burdens .items-list {
   border-style: dashed;
   border-color: var(--v2-muted);
-  padding: 6px 4px;
+  padding: 0 4px 6px;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .application.sheet.sdm.actor.sheet-v2 .v2-col-burdens .items-header {
+  height: auto;
   flex-direction: column;
   align-items: center;
   gap: 6px;
