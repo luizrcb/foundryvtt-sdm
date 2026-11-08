@@ -657,7 +657,8 @@ $v2-wide: 1100px;
       background: none;
       border-radius: 12px 12px 0 0;
       border: 2px solid transparent;
-      margin-bottom: -2px;
+      border-bottom: 0;
+      margin-bottom: 0;
       text-shadow: none;
 
       &:hover {
@@ -668,7 +669,6 @@ $v2-wide: 1100px;
         color: var(--v2-ink);
         background: var(--v2-paper);
         border-color: var(--v2-line);
-        border-bottom-color: var(--v2-paper);
         box-shadow: inset 0 4px 0 var(--v2-accent);
         text-shadow: none;
       }
