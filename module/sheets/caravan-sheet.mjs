@@ -20,6 +20,7 @@ import {
 import { templatePath } from '../helpers/templates.mjs';
 import { pullMultiplier, vehiclePullMode } from '../helpers/transportUtils.mjs';
 import { openItemTransferDialog } from '../items/transfer.mjs';
+import { bindNumberInputs, unformatNumberInputs, reformatNumberInputs } from '../helpers/numberFormat.mjs';
 
 const { api, sheets } = foundry.applications;
 const { DialogV2 } = foundry.applications.api;
@@ -805,7 +806,23 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
    * @protected
    * @override
    */
+
+  /**
+   * Numeric inputs show thousands separators; switch them back to plain
+   * numbers while the form is read and submitted.
+   * @override
+   */
+  async _onSubmitForm(formConfig, event) {
+    unformatNumberInputs(this.element);
+    try {
+      return await super._onSubmitForm(formConfig, event);
+    } finally {
+      reformatNumberInputs(this.element);
+    }
+  }
+
   _onRender(context, options) {
+    bindNumberInputs(this.element, this.document);
     // Listen for date changes during advancement
 
     this.#dragDrop.forEach(d => d.bind(this.element));

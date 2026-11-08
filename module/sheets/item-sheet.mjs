@@ -5,6 +5,7 @@ import { DEFAULT_PET_ICON, GearType, ItemType } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { $fmt, $l10n, constructHTMLButton } from '../helpers/globalUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
+import { bindNumberInputs, unformatNumberInputs, reformatNumberInputs } from '../helpers/numberFormat.mjs';
 
 const { api, sheets } = foundry.applications;
 const { DialogV2 } = foundry.applications.api;
@@ -339,7 +340,23 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
    * @param {RenderOptions} options                 Provided render options
    * @protected
    */
+
+  /**
+   * Numeric inputs show thousands separators; switch them back to plain
+   * numbers while the form is read and submitted.
+   * @override
+   */
+  async _onSubmitForm(formConfig, event) {
+    unformatNumberInputs(this.element);
+    try {
+      return await super._onSubmitForm(formConfig, event);
+    } finally {
+      reformatNumberInputs(this.element);
+    }
+  }
+
   _onRender(context, options) {
+    bindNumberInputs(this.element, this.document);
     this.#dragDrop.forEach(d => d.bind(this.element));
     // You may want to add other special handling here
     // Foundry comes with a large number of utility classes, e.g. SearchFilter

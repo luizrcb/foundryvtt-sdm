@@ -39,6 +39,7 @@ import {
   renderSaveResult
 } from '../rolls/ui/renderResults.mjs';
 import { DEFAULT_SAVE_VALUE, SAVING_THROW_BASE_FORMULA } from '../settings.mjs';
+import { bindNumberInputs, unformatNumberInputs, reformatNumberInputs } from '../helpers/numberFormat.mjs';
 
 const { api, sheets } = foundry.applications;
 const { DialogV2 } = foundry.applications.api;
@@ -851,7 +852,23 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
    * @protected
    * @override
    */
+
+  /**
+   * Numeric inputs show thousands separators; switch them back to plain
+   * numbers while the form is read and submitted.
+   * @override
+   */
+  async _onSubmitForm(formConfig, event) {
+    unformatNumberInputs(this.element);
+    try {
+      return await super._onSubmitForm(formConfig, event);
+    } finally {
+      reformatNumberInputs(this.element);
+    }
+  }
+
   _onRender(context, options) {
+    bindNumberInputs(this.element, this.document);
     this.#dragDrop.forEach(d => d.bind(this.element));
     this.#disableOverrides();
     // You may want to add other special handling here
