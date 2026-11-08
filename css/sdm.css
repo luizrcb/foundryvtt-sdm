@@ -2984,12 +2984,12 @@ input[type=radio]::after {
   --v2-danger: #9b2c22;
   --v2-fate-icon: var(--v2-hero);
   --v2-svg-filter: brightness(0) invert(0.3);
-  --v2-str: #cdb2a2;
-  --v2-end: #c7b0b6;
+  --v2-str: #cfa9a6;
+  --v2-end: #d3b59c;
   --v2-agi: #d9cfa3;
   --v2-cha: #b5c1ab;
-  --v2-aur: #bbb8d6;
-  --v2-tho: #a8b5d3;
+  --v2-aur: #a8b5d3;
+  --v2-tho: #bbb8d6;
   container: sdmv2/inline-size;
 }
 
@@ -3283,7 +3283,7 @@ input[type=radio]::after {
 
 .application.sheet.sdm.sheet-v2 .v2-bar-fill {
   height: 100%;
-  background: var(--v2-end);
+  background: var(--v2-str);
 }
 
 .application.sheet.sdm.sheet-v2 .v2-subvital {

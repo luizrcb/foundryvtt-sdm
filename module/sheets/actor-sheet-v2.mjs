@@ -65,7 +65,25 @@ export class SdmActorSheetV2 extends SdmActorSheet {
       };
     };
 
+    // Attack icons take the color of the ability configured for each attack
+    const abilityIconColor = {
+      str: 'rust',
+      end: 'pumpkin',
+      agi: 'amber',
+      cha: 'lime',
+      aur: 'azure',
+      tho: 'heart'
+    };
+    const attackColor = (attack, fallback) =>
+      abilityIconColor[system[attack]?.default_ability || fallback] ?? abilityIconColor[fallback];
+
     context.v2 = {
+      attackColors: {
+        melee: attackColor('melee', 'str'),
+        ranged: attackColor('ranged', 'agi'),
+        fantascience: attackColor('fantascience', 'cha'),
+        oldtech: attackColor('oldtech', 'tho')
+      },
       itemsMeter: meter(context.itemSlotsTaken, system.item_slots),
       traitsMeter: meter(context.traitSlotsTaken, system.trait_slots),
       lifePct: pct(system.life?.value, context.isEditMode ? system.life?.base : system.life?.max),
