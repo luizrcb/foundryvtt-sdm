@@ -557,7 +557,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       }
     }
     for (const m of breakdown.unassignedMounts ?? []) {
-      capacityLines.push(`${m.name}: +${m.capacity} (${$l10n('SDM.TransportUnassigned')})`);
+      capacityLines.push(`${m.name}: +${m.capacity}`);
     }
     if (system.capacity_bonus) {
       capacityLines.push(
@@ -821,6 +821,28 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
 
     // Add item change listeners
     this._handleContainers();
+
+    // The whole transport tab accepts drops; highlight it while something is dragged over it
+    const transportTab = this.element.querySelector('.tab.transport');
+    if (transportTab && !transportTab.dataset.dropHighlight) {
+      transportTab.dataset.dropHighlight = 'true';
+      let depth = 0;
+      const clear = () => {
+        depth = 0;
+        transportTab.classList.remove('drop-area');
+      };
+      transportTab.addEventListener('dragenter', () => {
+        depth += 1;
+        transportTab.classList.add('drop-area');
+      });
+      transportTab.addEventListener('dragleave', () => {
+        depth = Math.max(0, depth - 1);
+        if (!depth) transportTab.classList.remove('drop-area');
+      });
+      // capture: inner rows stop propagation of the drop event
+      transportTab.addEventListener('drop', clear, true);
+      transportTab.addEventListener('dragend', clear);
+    }
 
     // Transport selects: AppV2 actions fire on click, so also dispatch on change
     this.element

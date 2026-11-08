@@ -3111,6 +3111,21 @@ input[type=radio]::after {
 .sdm .tab.transport {
   flex: 1;
 }
+.sdm .tab.transport .items-list .item-controls {
+  flex: 0 0 120px;
+}
+.sdm .tab.transport .items-list .item-controls .item-create {
+  white-space: nowrap;
+}
+.sdm .tab.transport .mount-speed,
+.sdm .tab.transport .mount-pulled {
+  flex: 1.5;
+}
+.sdm .tab.transport.drop-area {
+  outline: 2px dashed var(--sdm-c-accent);
+  outline-offset: -4px;
+  border-radius: 8px;
+}
 .sdm .tab.notes {
   flex: 1;
 }

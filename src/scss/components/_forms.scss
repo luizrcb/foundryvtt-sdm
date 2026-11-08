@@ -73,6 +73,28 @@
 
 .tab.transport {
   flex: 1;
+
+  // wider controls column so "New Mount"/"Nova Montaria" fits on one line (rows stay aligned)
+  .items-list .item-controls {
+    flex: 0 0 120px;
+
+    .item-create {
+      white-space: nowrap;
+    }
+  }
+
+  // mounts table: a bit more room for speed, a bit less for the pulled vehicle
+  .mount-speed,
+  .mount-pulled {
+    flex: 1.5;
+  }
+
+  // highlight the whole tab while a mount or vehicle is dragged over it
+  &.drop-area {
+    outline: 2px dashed var(--sdm-c-accent);
+    outline-offset: -4px;
+    border-radius: 8px;
+  }
 }
 
 .tab.notes {

@@ -1,5 +1,5 @@
 {{! Transport Tab }}
-<section class='tab transport scrollable {{tab.cssClass}}' data-group='primary' data-tab='transport'>
+<section class='tab transport scrollable {{tab.cssClass}}' data-group='primary' data-tab='transport' data-drop="true">
   {{#if @root.autoTransport}}
   <div class="grid grid-7col transport-auto">
     <div class="main grid-span-7">
@@ -90,8 +90,8 @@
           <li class='item flexrow items-header caravan-item-header'>
             <div class='item-name flexlarge'>{{localize 'TYPES.Item.mount'}}</div>
             <div class='flex-group-center'>{{localize 'SDM.ItemMountCapacity'}}</div>
-            <div class='flex-group-center'>{{localize 'SDM.FieldSpeed'}}</div>
-            <div class='flex-group-center flexlarge'>{{localize 'SDM.ItemMountPulledVehicle'}}</div>
+            <div class='flex-group-center mount-speed'>{{localize 'SDM.FieldSpeed'}}</div>
+            <div class='flex-group-center mount-pulled'>{{localize 'SDM.ItemMountPulledVehicle'}}</div>
             <div class='flex-group-center'>{{localize 'SDM.ItemMountPullMode'}}</div>
             <div class='flex-group-center' data-tooltip="SDM.FieldSupplyPerWeek">{{localize 'SDM.FieldSupply'}}</div>
             <div class='item-controls flex align-right mr-6'>
@@ -100,7 +100,7 @@
                  data-action='createDoc' data-document-class='Item' data-type='mount'
                  data-tooltip="{{localize 'SDM.DOCUMENT.Create' type=(localize 'TYPES.Item.mount')}}">
                 <i class='fa-solid fa-plus'></i>
-                {{localize 'SDM.DOCUMENT.New' type=(localize 'TYPES.Item.mount')}}
+                {{localize 'SDM.DOCUMENT.NewF' type=(localize 'TYPES.Item.mount')}}
               </a>
               {{/if}}
             </div>
@@ -122,12 +122,12 @@
                  {{#if mount.assigned}}data-tooltip="{{localize 'SDM.PullPower'}}: {{mount.pullPower}}"{{/if}}>
               {{mount.system.capacity}}{{#if mount.assigned}} <span class='muted'>(×{{mount.pullPower}})</span>{{/if}}
             </div>
-            <div class='flex-group-center'>
+            <div class='flex-group-center mount-speed'>
               <select data-item-field='system.speed' data-dtype='Number' {{#unless @root.editable}}disabled{{/unless}}>
                 {{selectOptions (sdmSpeedChoices mount.system.speed) selected=mount.system.speed}}
               </select>
             </div>
-            <div class='flex-group-center flexlarge'>
+            <div class='flex-group-center mount-pulled'>
               <select data-action='assignMountVehicle' data-mount-id='{{mount.id}}' {{#unless @root.editable}}disabled{{/unless}}>
                 {{selectOptions @root.vehicleOptions selected=mount.selectedVehicleId blank=''}}
               </select>

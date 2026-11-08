@@ -1,5 +1,12 @@
 # CHANGELOG
 
+## v1.9.2
+
+- Fixed mounts and vehicles not being droppable on the caravan "Mounts & Vehicles" tab: they can now be dropped anywhere in the tab (from compendiums, sidebar or other actors), and the tab is highlighted while dragging
+- Fixed "null" tooltip when hovering the caravan capacity in the header
+- Fixed an untranslated key in the caravan capacity breakdown
+- Mounts list: wider speed column and "New Mount" button that no longer wraps; pt-BR "Nova Montaria"
+
 ## v1.9.1
 
 - Items with the Vessel feature now get the Charges feature and a capacity of 12 doses automatically

@@ -86,7 +86,7 @@
           </select>
         </div>
 
-        <div class="grid-span-1" data-tooltip="{{#if overloaded}}{{localize 'SDM.StatusOverloaded'}}{{/if}}">
+        <div class="grid-span-1"{{#if overloaded}} data-tooltip="{{localize 'SDM.StatusOverloaded'}}"{{/if}}>
           <label for="system.capacity" class='resource-label {{#if overloaded}}fumble{{/if}}'>
             {{localize 'SDM.FieldCapacity'}} {{#if overloaded}} <i class="fa fa-weight-hanging fumble"></i>{{/if}}
           </label>
@@ -261,7 +261,7 @@
           </select>
         </div>
 
-        <div class="grid-span-1" data-tooltip="{{#if overloaded}}{{localize 'SDM.StatusOverloaded'}}{{/if}}">
+        <div class="grid-span-1"{{#if overloaded}} data-tooltip="{{localize 'SDM.StatusOverloaded'}}"{{/if}}>
           <label for="system.capacity" class='resource-label {{#if overloaded}}fumble{{/if}}'>
             {{localize 'SDM.FieldCapacity'}} {{#if overloaded}} <i class="fa fa-weight-hanging fumble"></i>{{/if}}
           </label>
