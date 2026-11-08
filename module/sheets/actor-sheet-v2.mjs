@@ -96,3 +96,25 @@ export class SdmActorSheetV2 extends SdmActorSheet {
     this.element.classList.remove('compact');
   }
 }
+
+/**
+ * NPC variant of the new sheet: same styles and inventory, its own header,
+ * and a single layout (no compact/expanded switch).
+ */
+export class SdmNpcSheetV2 extends SdmActorSheetV2 {
+  /** @override */
+  static DEFAULT_OPTIONS = {
+    position: {
+      width: 780,
+      height: 820
+    }
+  };
+
+  /** @override */
+  static PARTS = {
+    ...SdmActorSheetV2.PARTS,
+    header: {
+      template: templatePath('actor/v2/npc-header')
+    }
+  };
+}

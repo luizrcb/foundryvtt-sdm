@@ -67,7 +67,7 @@ import {
 import { registerSDMGMSettingMenus } from './settings/register-gm-menus.mjs';
 import { setupSettingsSocket } from './settingsSocket.mjs';
 import { SdmActorSheet } from './sheets/actor-sheet.mjs';
-import { SdmActorSheetV2 } from './sheets/actor-sheet-v2.mjs';
+import { SdmActorSheetV2, SdmNpcSheetV2 } from './sheets/actor-sheet-v2.mjs';
 import { SdmCaravanSheet } from './sheets/caravan-sheet.mjs';
 import { SdmItemSheet } from './sheets/item-sheet.mjs';
 
@@ -591,6 +591,11 @@ Hooks.once('init', function () {
     types: ['character'],
     makeDefault: false,
     label: 'SDM.SheetLabels.ActorV2'
+  });
+  Actors.registerSheet('sdm', SdmNpcSheetV2, {
+    types: ['npc'],
+    makeDefault: false,
+    label: 'SDM.SheetLabels.NpcV2'
   });
   Actors.registerSheet('sdm', SdmCaravanSheet, {
     types: ['caravan'],

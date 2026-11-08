@@ -40,6 +40,15 @@ $v2-wide: 1100px;
     max-width: none;
   }
 
+  // NPC variant: one fixed layout, so the wide container query never applies
+  &.npc {
+    container-type: normal;
+    min-width: 640px;
+    max-width: 1100px;
+    min-height: 600px;
+    max-height: none;
+  }
+
   &.theme-dark,
   .theme-dark & {
     --v2-paper: #262b47;
@@ -981,6 +990,94 @@ $v2-wide: 1100px;
   .v2-resources.has-burdens .v2-col-burdens .items-list {
     border-style: solid;
     border-color: var(--sdm-c-blood, #880808);
+  }
+
+  // ---------- NPC header ----------
+  .v2-portrait.is-square img {
+    border-radius: 14px;
+  }
+
+  .v2-npc {
+    .v2-chips {
+      flex: 0 0 330px;
+    }
+    .v2-chip {
+      flex: 1 1 0;
+      min-width: 0;
+
+      .v2-label {
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      input[type='text'] {
+        width: 100%;
+      }
+    }
+  }
+
+  .v2-npc-stats {
+    display: grid;
+    grid-template-columns: minmax(0, 1.8fr) repeat(4, minmax(0, 1fr));
+    gap: 10px;
+
+    .v2-life {
+      gap: 6px;
+    }
+    // In a column card the bar must not take flex: 1 (it would collapse)
+    .v2-bar {
+      flex: 0 0 14px;
+    }
+    .v2-life-row {
+      .v2-max-input {
+        width: 44px;
+        font-size: 16px;
+        color: var(--v2-muted);
+      }
+    }
+  }
+
+  .v2-stat {
+    align-items: flex-start;
+    min-width: 0;
+    cursor: text;
+
+    .v2-stat-row {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      width: 100%;
+
+      i {
+        font-size: 15px;
+        color: var(--v2-muted);
+      }
+    }
+    .v2-big {
+      flex: 1;
+      min-width: 0;
+      width: 100%;
+      font-family: var(--sdm-font-primary);
+      font-size: 28px;
+      line-height: 1;
+    }
+    .v2-formula {
+      font-size: 22px;
+    }
+  }
+
+  .v2-npc-logistics {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+
+  .v2-npc-rolls {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+
+    .v2-roll {
+      flex-direction: row;
+      gap: 8px;
+      font-size: 13px;
+    }
   }
 
   // ---------- Effects tab ----------

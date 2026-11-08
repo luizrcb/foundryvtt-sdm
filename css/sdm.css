@@ -3003,6 +3003,14 @@ input[type=radio]::after {
   max-width: none;
 }
 
+.application.sheet.sdm.actor.sheet-v2.npc {
+  container-type: normal;
+  min-width: 640px;
+  max-width: 1100px;
+  min-height: 600px;
+  max-height: none;
+}
+
 .application.sheet.sdm.actor.sheet-v2.theme-dark, .theme-dark .application.sheet.sdm.actor.sheet-v2 {
   --v2-paper: #262b47;
   --v2-panel: #323959;
@@ -3951,6 +3959,94 @@ input[type=radio]::after {
 .application.sheet.sdm.actor.sheet-v2 .v2-resources.has-burdens .v2-col-burdens .items-list {
   border-style: solid;
   border-color: var(--sdm-c-blood, #880808);
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-portrait.is-square img {
+  border-radius: 14px;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-npc .v2-chips {
+  flex: 0 0 330px;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-npc .v2-chip {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-npc .v2-chip .v2-label {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-npc .v2-chip input[type=text] {
+  width: 100%;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-npc-stats {
+  display: grid;
+  grid-template-columns: minmax(0, 1.8fr) repeat(4, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-npc-stats .v2-life {
+  gap: 6px;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-npc-stats .v2-bar {
+  flex: 0 0 14px;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-npc-stats .v2-life-row .v2-max-input {
+  width: 44px;
+  font-size: 16px;
+  color: var(--v2-muted);
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-stat {
+  align-items: flex-start;
+  min-width: 0;
+  cursor: text;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-stat .v2-stat-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  width: 100%;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-stat .v2-stat-row i {
+  font-size: 15px;
+  color: var(--v2-muted);
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-stat .v2-big {
+  flex: 1;
+  min-width: 0;
+  width: 100%;
+  font-family: var(--sdm-font-primary);
+  font-size: 28px;
+  line-height: 1;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-stat .v2-formula {
+  font-size: 22px;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-npc-logistics {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-npc-rolls {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-npc-rolls .v2-roll {
+  flex-direction: row;
+  gap: 8px;
+  font-size: 13px;
 }
 
 .application.sheet.sdm.actor.sheet-v2 .tab.effects .effects-list {
