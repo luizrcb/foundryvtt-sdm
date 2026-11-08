@@ -3627,6 +3627,7 @@ input[type=radio]::after {
 
 .application.sheet.sdm.actor.sheet-v2 nav.tabs {
   flex: 0 0 auto;
+  border-top: 0;
   border-bottom: 2px solid var(--v2-line);
   gap: 6px;
 }
