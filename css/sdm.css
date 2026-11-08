@@ -4528,7 +4528,7 @@ input[type=radio]::after {
   color: var(--v2-danger);
 }
 
-.application.sheet.sdm.sheet-v2 .v2-item-description {
+.application.sheet.sdm.sheet-v2 .v2-item-description.active {
   display: flex;
   flex-direction: column;
   gap: 10px;

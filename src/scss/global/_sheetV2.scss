@@ -1542,7 +1542,8 @@ $v2-wide: 1100px;
     }
   }
 
-  .v2-item-description {
+  // Only when active: a display value here would override the hidden state of inactive tabs
+  .v2-item-description.active {
     display: flex;
     flex-direction: column;
     gap: 10px;
