@@ -2752,6 +2752,10 @@ input[type=radio]::after {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    max-height: 350px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: var(--sdm-scrollbar-thumb, var(--color-border)) transparent;
   }
   .compendium-browser .filter-group .group-content.collapsed {
     display: none;
