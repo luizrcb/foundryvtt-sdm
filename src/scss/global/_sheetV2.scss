@@ -1170,6 +1170,12 @@ $v2-wide: 1100px;
     }
   }
 
+  // Edit mode: same accent highlight as the header inputs
+  .v2-biography.is-edit .v2-profile-field input[type='text']:not([disabled]) {
+    background: var(--v2-accent-soft);
+    border-bottom-color: var(--v2-accent);
+  }
+
   .tab.biography,
   .tab.notes {
     color: var(--v2-ink);

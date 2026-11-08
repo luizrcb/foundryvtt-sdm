@@ -4146,6 +4146,11 @@ input[type=radio]::after {
   cursor: default;
 }
 
+.application.sheet.sdm.actor.sheet-v2 .v2-biography.is-edit .v2-profile-field input[type=text]:not([disabled]) {
+  background: var(--v2-accent-soft);
+  border-bottom-color: var(--v2-accent);
+}
+
 .application.sheet.sdm.actor.sheet-v2 .tab.biography,
 .application.sheet.sdm.actor.sheet-v2 .tab.notes {
   color: var(--v2-ink);

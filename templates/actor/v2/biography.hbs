@@ -1,5 +1,5 @@
 {{! Sheet v2 biography tab: profile fields are always shown here (the v2 header does not have them) }}
-<section class="tab biography v2-biography {{tab.cssClass}}" data-group="primary" data-tab="biography">
+<section class="tab biography v2-biography {{#if isEditMode}}is-edit{{/if}} {{tab.cssClass}}" data-group="primary" data-tab="biography">
   {{#if (eq actor.type 'character')}}
   <div class="v2-profile">
     <label class="v2-profile-field">
