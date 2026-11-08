@@ -4687,6 +4687,11 @@ input[type=radio]::after {
   border-color: var(--v2-danger);
 }
 
+.application.sheet.sdm.sheet-v2.caravan .sack-drop.list-border.drop-area {
+  border: 2px dashed var(--v2-accent);
+  background: var(--v2-accent-soft);
+}
+
 .application.sheet.sdm.sheet-v2.caravan .sack-name {
   background: transparent;
   border: 0;

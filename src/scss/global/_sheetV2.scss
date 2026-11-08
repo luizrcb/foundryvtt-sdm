@@ -1709,6 +1709,12 @@ $v2-wide: 1100px;
       border-color: var(--v2-danger);
     }
 
+    // Drop highlight while dragging (same as the classic sheet, on top of the card style)
+    .sack-drop.list-border.drop-area {
+      border: 2px dashed var(--v2-accent);
+      background: var(--v2-accent-soft);
+    }
+
     .sack-name {
       background: transparent;
       border: 0;
