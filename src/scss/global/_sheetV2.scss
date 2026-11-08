@@ -1012,9 +1012,17 @@ $v2-wide: 1100px;
         font-size: 14px;
         color: var(--v2-ink);
       }
+      .effect-controls {
+        flex: 0 0 auto;
+        justify-content: flex-end;
+      }
       .effect-control {
+        flex: 0 0 26px;
         width: 26px;
         height: 26px;
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
         font-size: 0;
         display: inline-flex;
         align-items: center;
@@ -1032,6 +1040,14 @@ $v2-wide: 1100px;
           border-color: var(--v2-accent);
         }
       }
+    }
+
+    // Empty sections show only their header card
+    .effects-header:has(+ .effect-list:not(:has(> li))) {
+      border-radius: 14px;
+    }
+    .effect-list:not(:has(> li)) {
+      display: none;
     }
 
     .effect-list {
@@ -1124,25 +1140,20 @@ $v2-wide: 1100px;
     color: var(--v2-ink);
   }
 
-  .v2-prose,
-  .tab.notes > prose-mirror {
-    display: block;
+  // Card around the editor; the prose-mirror element itself keeps Foundry's own layout
+  .v2-prose {
+    display: flex;
+    flex-direction: column;
     background: var(--v2-panel);
     border: 2px solid var(--v2-line);
     border-radius: 14px;
     box-shadow: var(--v2-shadow);
     padding: 10px 14px;
-    min-height: 240px;
-  }
+    min-height: 320px;
 
-  .v2-prose prose-mirror,
-  .tab.notes > prose-mirror {
-    --color-text-primary: var(--v2-ink);
-
-    .editor-menu,
-    menu {
-      background: var(--v2-paper);
-      border-radius: 10px;
+    > prose-mirror {
+      flex: 1 1 auto;
+      min-height: 280px;
     }
   }
 

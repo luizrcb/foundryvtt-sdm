@@ -28,6 +28,10 @@ export class SdmActorSheetV2 extends SdmActorSheet {
     header: {
       template: templatePath('actor/v2/header')
     },
+    notes: {
+      template: templatePath('actor/v2/notes'),
+      scrollable: ['']
+    },
     biography: {
       template: templatePath('actor/v2/biography'),
       scrollable: ['']

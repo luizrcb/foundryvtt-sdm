@@ -3984,9 +3984,18 @@ input[type=radio]::after {
   color: var(--v2-ink);
 }
 
+.application.sheet.sdm.actor.sheet-v2 .tab.effects .effects-header .effect-controls {
+  flex: 0 0 auto;
+  justify-content: flex-end;
+}
+
 .application.sheet.sdm.actor.sheet-v2 .tab.effects .effects-header .effect-control {
+  flex: 0 0 26px;
   width: 26px;
   height: 26px;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
   font-size: 0;
   display: inline-flex;
   align-items: center;
@@ -4004,6 +4013,14 @@ input[type=radio]::after {
 .application.sheet.sdm.actor.sheet-v2 .tab.effects .effects-header .effect-control:hover {
   background: var(--v2-accent-soft);
   border-color: var(--v2-accent);
+}
+
+.application.sheet.sdm.actor.sheet-v2 .tab.effects .effects-header:has(+ .effect-list:not(:has(> li))) {
+  border-radius: 14px;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .tab.effects .effect-list:not(:has(> li)) {
+  display: none;
 }
 
 .application.sheet.sdm.actor.sheet-v2 .tab.effects .effect-list {
@@ -4101,28 +4118,20 @@ input[type=radio]::after {
   color: var(--v2-ink);
 }
 
-.application.sheet.sdm.actor.sheet-v2 .v2-prose,
-.application.sheet.sdm.actor.sheet-v2 .tab.notes > prose-mirror {
-  display: block;
+.application.sheet.sdm.actor.sheet-v2 .v2-prose {
+  display: flex;
+  flex-direction: column;
   background: var(--v2-panel);
   border: 2px solid var(--v2-line);
   border-radius: 14px;
   box-shadow: var(--v2-shadow);
   padding: 10px 14px;
-  min-height: 240px;
+  min-height: 320px;
 }
 
-.application.sheet.sdm.actor.sheet-v2 .v2-prose prose-mirror,
-.application.sheet.sdm.actor.sheet-v2 .tab.notes > prose-mirror {
-  --color-text-primary: var(--v2-ink);
-}
-
-.application.sheet.sdm.actor.sheet-v2 .v2-prose prose-mirror .editor-menu,
-.application.sheet.sdm.actor.sheet-v2 .v2-prose prose-mirror menu,
-.application.sheet.sdm.actor.sheet-v2 .tab.notes > prose-mirror .editor-menu,
-.application.sheet.sdm.actor.sheet-v2 .tab.notes > prose-mirror menu {
-  background: var(--v2-paper);
-  border-radius: 10px;
+.application.sheet.sdm.actor.sheet-v2 .v2-prose > prose-mirror {
+  flex: 1 1 auto;
+  min-height: 280px;
 }
 
 @container sdmv2 (min-width: 1100px) {
