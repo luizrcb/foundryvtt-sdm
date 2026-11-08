@@ -1,4 +1,4 @@
-import { $l10n } from '../helpers/globalUtils.mjs';
+import { $l10n, capitalizeFirstLetter, formatNumber } from '../helpers/globalUtils.mjs';
 
 const ApplicationV2 = foundry.applications?.api?.ApplicationV2;
 const HandlebarsApplicationMixin = foundry.applications?.api?.HandlebarsApplicationMixin;
@@ -524,7 +524,7 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
     const freq = system.cost_frequency
       ? `/${$l10n(`SDM.Frequency${capitalizeFirstLetter(system.cost_frequency)}`)}`
       : '';
-    return `${$l10n('SDM.CashSymbol')}${cost}${freq}`;
+    return `${$l10n('SDM.CashSymbol')}${formatNumber(cost)}${freq}`;
   }
 
   #getWeightSubtitle(item) {
@@ -594,7 +594,7 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
         const label = $l10n(`SDM.GearType.${subtype}`) || subtype;
         parts.push(label);
       }
-      if (system.cost) parts.push(`(${$l10n('SDM.CashSymbol')}${system.cost})`);
+      if (system.cost) parts.push(`(${$l10n('SDM.CashSymbol')}${formatNumber(system.cost)})`);
     } else if (type === 'trait') {
       const subtype = system.type || system.subtype;
       if (subtype) {
@@ -611,7 +611,7 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
       parts.push(`${$l10n('SDM.FieldCapacity')} ${system.capacity ?? 0}`);
       parts.push(CONFIG.SDM.formatSpeed(system.speed ?? 0));
       if (type === 'vehicle' && system.automatic) parts.push($l10n('SDM.ItemVehicleAutomatic'));
-      if (system.cost) parts.push(`(${$l10n('SDM.CashSymbol')}${system.cost})`);
+      if (system.cost) parts.push(`(${$l10n('SDM.CashSymbol')}${formatNumber(system.cost)})`);
     }
     return parts.join(' • ');
   }

@@ -1,5 +1,5 @@
 import { SizeUnit } from './helpers/constants.mjs';
-import { $l10n, toPascalCase } from './helpers/globalUtils.mjs';
+import { $l10n, formatNumber, toPascalCase } from './helpers/globalUtils.mjs';
 import { convertToSacks, getWealthFromItems } from './helpers/itemUtils.mjs';
 
 export function registerHandlebarsHelpers() {
@@ -11,9 +11,7 @@ export function registerHandlebarsHelpers() {
 
   // Display-only number with the locale's thousands separators (1.500 / 1,500)
   $$('localeNumber', function (value) {
-    const n = Number(value);
-    if (value === null || value === undefined || value === '' || !Number.isFinite(n)) return value ?? '';
-    return new Intl.NumberFormat(game.i18n.lang, { maximumFractionDigits: 20 }).format(n);
+    return formatNumber(value);
   });
 
   $$('sdmSpeed', function (value) {

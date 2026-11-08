@@ -12,7 +12,7 @@ import {
   SizeUnit,
   TraitType
 } from '../helpers/constants.mjs';
-import { $fmt, $l10n, capitalizeFirstLetter, safeEvaluate } from '../helpers/globalUtils.mjs';
+import { $fmt, $l10n, capitalizeFirstLetter, safeEvaluate, formatNumber } from '../helpers/globalUtils.mjs';
 import { getSlotsTaken, UnarmedDamageItem } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { renderUsageResult } from '../rolls/ui/renderResults.mjs';
@@ -528,7 +528,7 @@ export class SdmItem extends Item {
       const frequencyLabel = costFrequency
         ? `/${$l10n(`SDM.Frequency${capitalizeFirstLetter(costFrequency)}`)}`
         : '';
-      const costTitle = `${$l10n('SDM.CashSymbol')}${costValue}${frequencyLabel}`;
+      const costTitle = `${$l10n('SDM.CashSymbol')}${formatNumber(costValue)}${frequencyLabel}`;
       if (!addParentheses) return ` ${costTitle}`;
       return ` (${costTitle})`;
     }
@@ -634,7 +634,7 @@ export class SdmItem extends Item {
         if (this.system?.size?.unit === SizeUnit.CASH) {
           title = `${capitalizeFirstLetter($l10n('SDM.UnitCash'))}: ${$l10n(
             'SDM.CashSymbol'
-          )}${this.system.quantity * (this.system.size.value || 1)}`;
+          )}${formatNumber(this.system.quantity * (this.system.size.value || 1))}`;
         } else {
           let remainingItems = '';
           if (!this.system.type && this.system.starting_kit) {
@@ -807,13 +807,13 @@ export class SdmItem extends Item {
   }) {
     let type = this.system.type ? this.system.type : this.type;
 
-    let costSubtitle = `${$l10n('SDM.CashSymbol')}${this.system.cost}`;
+    let costSubtitle = `${$l10n('SDM.CashSymbol')}${formatNumber(this.system.cost)}`;
 
     let weightSubtitle = `${this.system.size.value} ${$l10n(`SDM.Unit.${this.system.size.unit}.abbr`)}`;
 
     if (this.system.size.unit === SizeUnit.CASH) {
       type = SizeUnit.CASH;
-      costSubtitle = `${$l10n('SDM.CashSymbol')}${this.system.quantity * (this.system.size.value || 1)}`;
+      costSubtitle = `${$l10n('SDM.CashSymbol')}${formatNumber(this.system.quantity * (this.system.size.value || 1))}`;
       weightSubtitle = '';
     }
 

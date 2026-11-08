@@ -1,6 +1,6 @@
 import { createChatMessage } from './helpers/chatUtils.mjs';
 import { ActorType } from './helpers/constants.mjs';
-import { $fmt, $l10n } from './helpers/globalUtils.mjs';
+import { $fmt, $l10n, formatNumber } from './helpers/globalUtils.mjs';
 import { giveCash } from './macros/gm/giveCash.mjs';
 import { giveExperience } from './macros/gm/giveExperience.mjs';
 import { giveHeroDice } from './macros/gm/giveHeroDice.mjs';
@@ -332,7 +332,7 @@ export default function registerTextEditorEnrichers() {
 
       let linkHtml;
       const actionText = action === 'give' ? $l10n('SDM.Give') : $l10n('SDM.Take');
-      const defaultText = `${actionText} ${$l10n('SDM.CashSymbol')}${parsedAmount}`;
+      const defaultText = `${actionText} ${$l10n('SDM.CashSymbol')}${formatNumber(parsedAmount)}`;
       if (innerText && innerText.trim()) {
         linkHtml = `<i class="fa-solid fa-coins ${action === 'give' ? 'pine' : 'blood'}"></i>${innerText.trim()}`;
       } else {
@@ -507,7 +507,7 @@ export default function registerTextEditorEnrichers() {
       let linkHtml;
       const parts = [];
       if (xpAmount) parts.push(`${xpAmount} ${$l10n('SDM.NpcXp')}`);
-      if (cashAmount) parts.push(`${$l10n('SDM.CashSymbol')}${cashAmount}`);
+      if (cashAmount) parts.push(`${$l10n('SDM.CashSymbol')}${formatNumber(cashAmount)}`);
       const defaultText = `Award ${parts.join(' + ')}`;
       if (innerText && innerText.trim()) {
         linkHtml = `<i class="fa-solid fa-gift royal"></i>${innerText.trim()}`;

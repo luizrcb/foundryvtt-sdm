@@ -100,7 +100,7 @@
         <span class="mr-3" data-tooltip="{{toSacks item.system.slots_taken false}} {{ifThen (gt (toSacks item.system.slots_taken false) 1) (localize 'SDM.UnitSacks') (localize 'SDM.UnitSack')}}">[{{toSacks item.system.slots_taken}}]</span>
       {{/if}}
 
-      {{#if (eq item.system.size.unit 'cash')}}{{item.system.quantity}}{{/if}}
+      {{#if (eq item.system.size.unit 'cash')}}{{localeNumber item.system.quantity}}{{/if}}
       {{#if item.system.is_hallmark}}<i class="fa-regular fa-star hallmark" data-tooltip="{{localize 'SDM.HallmarkItem'}}"></i>{{/if}}
 
       {{#if (and (gt item.system.charges.max 0) (has item.system.features 'charges'))}}
@@ -118,7 +118,7 @@
       {{/if}}
 
       {{#if (and (ne item.system.size.unit 'cash') (gt item.system.quantity 1))}}
-        x{{item.system.quantity}}
+        x{{localeNumber item.system.quantity}}
       {{/if}}
     </div>
   </div>

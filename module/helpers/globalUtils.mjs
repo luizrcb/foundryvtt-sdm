@@ -24,6 +24,16 @@ export function validateDocumentId(id) {
   return validateActorId(id) || validateItemId(id);
 }
 
+/**
+ * Display-only number with the current language's thousands separators
+ * (1.500 in pt-BR, 1,500 in English). Non-numeric values are returned as is.
+ */
+export function formatNumber(value) {
+  const n = Number(value);
+  if (value === null || value === undefined || value === '' || !Number.isFinite(n)) return value ?? '';
+  return new Intl.NumberFormat(game.i18n?.lang || 'en', { maximumFractionDigits: 20 }).format(n);
+}
+
 export function capitalizeFirstLetter(str = '') {
   if (!str.length) return str;
 
