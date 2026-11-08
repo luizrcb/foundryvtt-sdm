@@ -41,7 +41,9 @@
     color: var(--color-text-secondary);
     font-size: 0.9rem;
     cursor: pointer;
-    transition: background 0.15s, color 0.15s;
+    transition:
+      background 0.15s,
+      color 0.15s;
     display: flex;
     align-items: center;
     gap: 6px;
@@ -239,8 +241,6 @@
     display: flex;
     flex-direction: column;
     gap: 4px;
-    max-height: 350px;
-    overflow-y: auto;
   }
 
   .compendium-browser .filter-group .group-content.collapsed {
@@ -330,7 +330,10 @@
     border-radius: 6px;
     background: var(--color-bg-secondary);
     cursor: pointer;
-    transition: box-shadow 0.2s, transform 0.1s, border-color 0.2s;
+    transition:
+      box-shadow 0.2s,
+      transform 0.1s,
+      border-color 0.2s;
 
     &:hover {
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
@@ -491,5 +494,208 @@
   .compendium-browser .footer .summary .warning {
     color: var(--color-warning);
     margin-left: 6px;
+  }
+
+  // ---------------------------------------------------------------------------
+  // New look (same tokens as the v2 sheets). Pills keep their classic style.
+  // ---------------------------------------------------------------------------
+  .compendium-browser {
+    --v2-paper: #e6e3da;
+    --v2-panel: #efede4;
+    --v2-ink: #2a2b3a;
+    --v2-muted: #5d5a4b;
+    --v2-line: #2a2b3a;
+    --v2-rule: rgba(42, 43, 58, 0.18);
+    --v2-shadow: 0 2px 6px rgba(42, 43, 58, 0.12);
+    --v2-accent: var(--sdm-c-accent, #00817f);
+    --v2-accent-soft: color-mix(in srgb, var(--v2-accent) 18%, transparent);
+    --v2-svg-filter: brightness(0) invert(0.3);
+  }
+
+  .theme-dark .compendium-browser,
+  .compendium-browser.theme-dark {
+    --v2-paper: #262b47;
+    --v2-panel: #323959;
+    --v2-ink: #e6e3da;
+    --v2-muted: #b3c0b5;
+    --v2-line: #e6e3da;
+    --v2-rule: rgba(230, 227, 218, 0.22);
+    --v2-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+    --v2-svg-filter: none;
+  }
+
+  .compendium-browser .window-content,
+  .compendium-browser .results-panel,
+  .compendium-browser #compendium-browser-sidebar {
+    background: var(--v2-paper);
+    color: var(--v2-ink);
+  }
+
+  .compendium-browser #compendium-browser-sidebar {
+    border-right: 1px solid var(--v2-rule);
+  }
+
+  // Tabs: "open folder", the baseline is drawn inside the nav
+  .compendium-browser .tabs-horizontal {
+    position: relative;
+    border-bottom: 0;
+    padding: 10px 12px 0;
+    gap: 6px;
+    background: var(--v2-paper);
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 2px;
+      background: var(--v2-line);
+      pointer-events: none;
+    }
+
+    a {
+      position: relative;
+      z-index: 1;
+      padding: 4px 14px;
+      border: 2px solid transparent;
+      border-bottom: 0;
+      border-radius: 12px 12px 0 0;
+      font-family: var(--sdm-font-primary);
+      color: var(--v2-muted);
+      background: none;
+      box-shadow: none;
+
+      &:hover {
+        color: var(--v2-ink);
+        background: none;
+      }
+      &.active {
+        color: var(--v2-ink);
+        background: var(--v2-paper);
+        border-color: var(--v2-line);
+        box-shadow: inset 0 4px 0 var(--v2-accent);
+        font-weight: normal;
+      }
+    }
+  }
+
+  // Search
+  .compendium-browser .search-bar search input {
+    background: var(--v2-panel);
+    border: 2px solid var(--v2-line);
+    border-radius: 12px;
+    color: var(--v2-ink);
+    padding: 7px 70px 7px 12px;
+
+    &:focus {
+      border-color: var(--v2-accent);
+      box-shadow: 0 0 0 3px var(--v2-accent-soft);
+    }
+  }
+  .compendium-browser .search-bar search .search-button {
+    background: var(--v2-accent);
+    border-radius: 8px;
+  }
+
+  // Filter groups as cards
+  .compendium-browser .filter-group {
+    border: 2px solid var(--v2-line);
+    border-radius: 12px;
+    background: var(--v2-panel);
+    box-shadow: var(--v2-shadow);
+
+    .group-header {
+      background: none;
+      font-family: var(--sdm-font-primary);
+      color: var(--v2-ink);
+
+      &:hover {
+        background: var(--v2-accent-soft);
+      }
+      i {
+        color: var(--v2-muted);
+      }
+      .badge {
+        background: var(--v2-accent);
+      }
+    }
+  }
+
+  .compendium-browser .filter-item .filter-label {
+    color: var(--v2-muted);
+  }
+
+  .compendium-browser .filter-item .filter-controls .range-inputs input {
+    background: var(--v2-paper);
+    border: 1px solid var(--v2-rule);
+    border-bottom: 2px solid var(--v2-accent-soft);
+    color: var(--v2-ink);
+  }
+
+  // Result cards
+  .compendium-browser .item-grid {
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 10px;
+  }
+
+  .compendium-browser .item-card {
+    position: relative;
+    padding: 8px 10px;
+    border: 2px solid var(--v2-line);
+    border-radius: 14px;
+    background: var(--v2-panel);
+    box-shadow: var(--v2-shadow);
+    color: var(--v2-ink);
+
+    &:hover {
+      border-color: var(--v2-accent);
+      background: color-mix(in srgb, var(--v2-accent) 10%, var(--v2-panel));
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.14);
+    }
+
+    header.summary {
+      img.gold-icon {
+        flex: 0 0 36px;
+        width: 36px;
+        height: 36px;
+        border-radius: 8px;
+        border: 1px solid var(--v2-rule);
+      }
+      img.gold-icon[src$='.svg'] {
+        filter: var(--v2-svg-filter);
+      }
+
+      .name-stacked {
+        .title {
+          font-size: 0.9rem;
+
+          .item-cost {
+            color: var(--v2-muted);
+          }
+        }
+        .subtitle,
+        .subtitle span:first-child i {
+          color: var(--v2-muted);
+        }
+      }
+    }
+
+    // Source stays visible, small and quiet, aligned with the content
+    footer .source-label {
+      justify-content: flex-start;
+      text-align: left;
+      margin-top: 4px;
+      padding-top: 4px;
+      border-top: 1px dashed var(--v2-rule);
+      font-size: 0.68rem;
+      color: var(--v2-muted);
+      line-height: 1.25;
+    }
+  }
+
+  .compendium-browser .footer {
+    background: var(--v2-paper);
+    border-top: 1px solid var(--v2-rule);
   }
 }
