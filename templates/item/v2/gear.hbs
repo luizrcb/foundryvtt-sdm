@@ -1,0 +1,241 @@
+{{! Item sheet v2: gear fields grouped in cards. Same field names and conditions as item/gear/header. }}
+{{#if (ne system.size.unit 'cash')}}
+<section class="v2-card v2-item-card">
+  <span class="v2-card-title">{{localize 'SDM.ItemGearType'}}</span>
+  <div class="v2-fields">
+    <label class="v2-field" aria-label="{{localize 'SDM.ItemGearType'}}">
+      <select id="gearType" name="system.type">
+        {{selectOptions config.gearType localize=true selected=system.type sort=true blank='TYPE.Gear'}}
+      </select>
+    </label>
+    {{#if (eq system.type '')}}
+    <label class="v2-field v2-check">
+      <input type="checkbox" name="system.starting_kit" {{checked system.starting_kit}} />
+      <span class="v2-label">{{localize 'SDM.GearStartingKit'}}</span>
+    </label>
+    {{#if system.starting_kit}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.GearStartingKitRemainingItems'}}</span>
+      <input type="text" name="system.packed_remaining_items" value="{{system.packed_remaining_items}}" data-dtype="Number" />
+    </label>
+    {{/if}}
+    <label class="v2-field v2-check">
+      <input type="checkbox" name="system.is_supply" {{checked system.is_supply}} />
+      <span class="v2-label">{{localize 'SDM.IsSupply'}}</span>
+    </label>
+    {{#if system.is_supply}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.SupplyType'}}</span>
+      <select name="system.supply_type">
+        {{selectOptions config.SupplyType localize=true selected=system.supply_type sort=true blank=""}}
+      </select>
+    </label>
+    {{/if}}
+    {{/if}}
+    {{#if (eq system.type 'power_album')}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.GearMaxPowers'}}</span>
+      <input type="text" name="system.max_powers" value="{{system.max_powers}}" data-dtype="Number" />
+    </label>
+    {{/if}}
+    {{#if v2.showMods}}{{> ($$ "item/v2/installed-mods")}}{{/if}}
+  </div>
+</section>
+
+{{#if v2.isWeapon}}
+<section class="v2-card v2-item-card">
+  <span class="v2-card-title">{{localize 'TYPES.Item.weapon'}}</span>
+  <div class="v2-fields">
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.WeaponDamage'}}</span>
+      <input type="text" name="system.weapon.damage.base" value="{{system.weapon.damage.base}}" />
+    </label>
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.WeaponRange'}}</span>
+      <select name="system.weapon.range">
+        {{selectOptions config.rangeType localize=true selected=system.weapon.range blank=''}}
+      </select>
+    </label>
+    {{#if (or system.weapon.versatile (has system.features 'versatile'))}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.WeaponVersatileDamage'}}</span>
+      <input type="text" name="system.weapon.damage.versatile" value="{{system.weapon.damage.versatile}}" />
+    </label>
+    {{/if}}
+    {{#if (ne item.parent.type 'npc')}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.AbilityModifier'}}</span>
+      <select name="system.default_ability">
+        <option value=""></option>
+        {{selectOptions @root.abilities localize=true selected=system.default_ability}}
+      </select>
+    </label>
+    {{/if}}
+  </div>
+</section>
+{{/if}}
+
+{{#if v2.isArmor}}
+<section class="v2-card v2-item-card">
+  <span class="v2-card-title">{{localize 'TYPES.Item.armor'}}</span>
+  <div class="v2-fields">
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.ArmorValue'}}</span>
+      <input type="text" name="system.armor.value" value="{{system.armor.value}}" data-dtype="Number" />
+    </label>
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.ArmorType'}}</span>
+      <select name="system.armor.type">
+        <option value=""></option>
+        {{selectOptions config.armorType localize=true selected=system.armor.type}}
+      </select>
+    </label>
+  </div>
+</section>
+{{/if}}
+
+{{#if v2.isWard}}
+<section class="v2-card v2-item-card">
+  <span class="v2-card-title">{{localize 'TYPES.Item.ward'}}</span>
+  <div class="v2-fields">
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.WardValue'}}</span>
+      <input type="text" name="system.ward.value" value="{{system.ward.value}}" data-dtype="Number" />
+    </label>
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.WardType'}}</span>
+      <select name="system.ward.type">
+        <option value=""></option>
+        {{selectOptions config.wardType localize=true selected=system.ward.type}}
+      </select>
+    </label>
+  </div>
+</section>
+{{/if}}
+
+{{#if (eq system.type 'power')}}{{> ($$ "item/v2/power")}}{{/if}}
+{{/if}}
+
+{{#if (eq system.type 'affliction')}}
+<section class="v2-card v2-item-card">
+  <span class="v2-card-title">{{localize 'TYPES.Item.affliction'}}</span>
+  <div class="v2-fields">{{> ($$ "item/v2/cure-steps")}}</div>
+</section>
+{{/if}}
+
+{{#if (eq system.type 'pet')}}
+<section class="v2-card v2-item-card">
+  <span class="v2-card-title">{{localize 'TYPES.Item.pet'}}</span>
+  <div class="v2-fields">
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.ItemSizeValue'}}</span>
+      <input type="text" name="system.size.value" value="{{system.size.value}}" data-dtype="Number" />
+    </label>
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.ItemSizeUnit'}}</span>
+      <select name="system.size.unit">
+        <option value=""></option>
+        {{selectOptions sizeUnits localize=true selected=system.size.unit}}
+      </select>
+    </label>
+    {{> ($$ "item/v2/pet-link")}}
+  </div>
+</section>
+{{else}}
+{{#unless (or (eq system.type 'corruption') (eq system.type 'affliction') (eq system.type 'augment'))}}
+<section class="v2-card v2-item-card">
+  <span class="v2-card-title">{{localize 'SDM.TabInventory'}}</span>
+  <div class="v2-fields">
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.ItemQuantity'}}</span>
+      <input type="text" name="system.quantity" value="{{system.quantity}}" data-dtype="Number"
+        {{#if (eq system.type 'container')}}disabled{{/if}} />
+    </label>
+    {{#unless (eq system.size.unit 'cash')}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.ItemCost'}}</span>
+      <input type="text" name="system.cost" value="{{system.cost}}" data-dtype="Number" />
+    </label>
+    {{/unless}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.ItemSizeValue'}}</span>
+      <input type="text" name="system.size.value" value="{{system.size.value}}" data-dtype="Number" />
+    </label>
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.ItemSizeUnit'}}</span>
+      <select name="system.size.unit">
+        <option value=""></option>
+        {{selectOptions sizeUnits localize=true selected=system.size.unit}}
+      </select>
+    </label>
+    {{#if (eq system.type 'container')}}
+    <label class="v2-field" data-tooltip="{{localize 'SDM.UnitStones'}}">
+      <span class="v2-label">{{localize 'SDM.GearContainer.Capacity'}}</span>
+      <input type="text" name="system.capacity.max" value="{{system.capacity.max}}" data-dtype="Number" />
+    </label>
+    {{/if}}
+  </div>
+</section>
+{{/unless}}
+{{/if}}
+
+{{#if v2.hasFeatureFields}}
+<section class="v2-card v2-item-card">
+  <span class="v2-card-title">{{localize 'SDM.ItemTabFeatures'}}</span>
+  <div class="v2-fields">
+    {{#unless (or (eq system.size.unit 'cash') (eq system.type 'corruption') (eq system.type 'affliction') (not (has system.features 'charges')))}}
+    <div class="v2-field">
+      <span class="v2-label">{{localize 'SDM.ItemCharges'}}</span>
+      <div class="v2-pair">
+        <input type="text" name="system.charges.value" value="{{system.charges.value}}" data-dtype="Number" data-tooltip="{{localize 'SDM.ItemCharges'}}" />
+        <span>/</span>
+        <input type="text" name="system.charges.max" value="{{system.charges.max}}" data-dtype="Number" data-tooltip="{{localize 'SDM.ItemMaxCharges'}}" />
+      </div>
+    </div>
+    {{/unless}}
+    {{#if (has system.features 'area')}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.ItemFeature.area'}}</span>
+      <select name="system.area.value" data-tooltip="{{localize 'SDM.ItemFeature.areaDescription'}}">
+        {{selectOptions areaValues localize=true selected=system.area.value blank=''}}
+      </select>
+    </label>
+    {{/if}}
+    {{#if (has system.features 'range')}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.ItemFeature.range'}}</span>
+      <select name="system.range.value" data-tooltip="{{localize 'SDM.ItemFeature.rangeDescription'}}">
+        {{selectOptions rangeValues localize=true selected=system.range.value blank=''}}
+      </select>
+    </label>
+    {{/if}}
+    {{#if (has system.features 'flare')}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.ItemFeature.flare'}}</span>
+      <input type="text" name="system.flare.value" value="{{system.flare.value}}" data-dtype="Number" data-tooltip="{{localize 'SDM.ItemFeature.flareDescription'}}" />
+    </label>
+    {{/if}}
+    {{#if (has system.features 'pocket')}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.ItemFeature.pocket'}}</span>
+      <input type="text" name="system.pocket.value" value="{{system.pocket.value}}" data-dtype="Number" data-tooltip="{{localize 'SDM.ItemFeature.pocketDescription'}}" />
+    </label>
+    {{/if}}
+    {{#if (has system.features 'replenish')}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.ItemFeature.replenish'}}</span>
+      <input type="text" name="system.replenish.value" value="{{system.replenish.value}}" data-dtype="Number" data-tooltip="{{localize 'SDM.ItemFeature.replenishDescription'}}" />
+    </label>
+    {{/if}}
+    {{#if (has system.features 'resistant')}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.ItemFeature.resistant'}}</span>
+      <input type="text" name="system.resistant.value" value="{{system.resistant.value}}" data-tooltip="{{localize 'SDM.ItemFeature.resistantDescription'}}" />
+    </label>
+    {{/if}}
+  </div>
+</section>
+{{/if}}
+
+{{> ($$ "item/v2/hallmark")}}
+

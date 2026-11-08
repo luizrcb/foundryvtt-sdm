@@ -1,0 +1,16 @@
+{{! Item sheet v2: hallmark level and experience }}
+{{#if system.is_hallmark}}
+<section class="v2-card v2-item-card is-hallmark">
+  <span class="v2-card-title"><i class="fa-solid fa-star"></i> {{localize 'SDM.HallmarkItem'}}</span>
+  <div class="v2-fields">
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.FieldLevel'}}</span>
+      <input type="text" name="system.hallmark.level" value="{{system.hallmark.level}}" data-dtype="Number" />
+    </label>
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.FieldExperience'}}</span>
+      <input type="text" name="system.hallmark.experience" value="{{system.hallmark.experience}}" />
+    </label>
+  </div>
+</section>
+{{/if}}

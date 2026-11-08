@@ -1,0 +1,35 @@
+{{! Item sheet v2 header: identity row plus the type-specific cards }}
+<header class="v2-item-header">
+  <div class="v2-identity">
+    <div class="v2-portrait">
+      <img src="{{item.img}}" data-edit="img" data-action="onEditImage" data-tooltip="{{item.name}}" />
+    </div>
+    <div class="v2-name">
+      <span class="v2-label">{{localize (concat 'TYPES.Item.' item.type)}}</span>
+      <input class="v2-title" name="name" type="text" value="{{item.name}}" placeholder="{{localize 'SDM.FieldName'}}" />
+    </div>
+    <div class="v2-item-toggles">
+      {{#if v2.showReadied}}
+      <button type="button" class="v2-toggle {{#if system.readied}}is-on{{/if}}" data-action="toggleReadied"
+        data-tooltip="{{#if system.readied}}{{localize 'SDM.ItemReadied'}}{{else}}{{localize 'SDM.ItemNotReadied'}}{{/if}}">
+        <i class="{{#if system.readied}}fa-solid{{else}}fa-regular{{/if}} fa-shield"></i>
+        <span>{{#if system.readied}}{{localize 'SDM.ItemReadied'}}{{else}}{{localize 'SDM.ItemNotReadied'}}{{/if}}</span>
+      </button>
+      {{/if}}
+      {{#if v2.showHallmarkToggle}}
+      <button type="button" class="v2-toggle {{#if system.is_hallmark}}is-on is-hallmark{{/if}}" data-action="toggleIsHallmark"
+        data-tooltip="{{localize 'SDM.HallmarkItem'}}">
+        <i class="{{#if system.is_hallmark}}fa-solid{{else}}fa-regular{{/if}} fa-star"></i>
+        <span>{{localize 'SDM.HallmarkItem'}}</span>
+      </button>
+      {{/if}}
+    </div>
+  </div>
+
+  <div class="v2-item-cards">
+    {{#if (eq item.type 'gear')}}{{> ($$ "item/v2/gear")}}{{/if}}
+    {{#if (eq item.type 'trait')}}{{> ($$ "item/v2/trait")}}{{/if}}
+    {{#if (eq item.type 'burden')}}{{> ($$ "item/v2/burden")}}{{/if}}
+    {{#if (or (eq item.type 'mount') (eq item.type 'vehicle'))}}{{> ($$ "item/v2/transport")}}{{/if}}
+  </div>
+</header>

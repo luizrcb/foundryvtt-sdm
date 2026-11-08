@@ -1,0 +1,14 @@
+{{! Item sheet v2: burden fields. Same field names as item/burden/header. }}
+<section class="v2-card v2-item-card">
+  <span class="v2-card-title">{{localize 'SDM.ItemBurdenType'}}</span>
+  <div class="v2-fields">
+    <label class="v2-field" aria-label="{{localize 'SDM.ItemBurdenType'}}">
+      <select name="system.type">
+        {{selectOptions @root.config.burdenType blank='TYPE.Burden' localize=true selected=system.type sort=true}}
+      </select>
+    </label>
+    {{> ($$ "item/v2/cure-steps")}}
+  </div>
+</section>
+
+{{#if (eq system.type 'power')}}{{> ($$ "item/v2/power")}}{{/if}}

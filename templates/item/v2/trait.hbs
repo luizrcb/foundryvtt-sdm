@@ -1,0 +1,76 @@
+{{! Item sheet v2: trait fields. Same field names and conditions as item/trait/header. }}
+<section class="v2-card v2-item-card">
+  <span class="v2-card-title">{{localize 'SDM.ItemTraitType'}}</span>
+  <div class="v2-fields">
+    <label class="v2-field" aria-label="{{localize 'SDM.ItemTraitType'}}">
+      <select name="system.type">
+        {{selectOptions @root.config.traitType blank='TYPE.Trait' localize=true selected=system.type sort=true}}
+      </select>
+    </label>
+    {{#if (eq system.type 'skill')}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.SkillMod'}}</span>
+      <select name="system.skill.rank">
+        <option value=""></option>
+        {{#each @root.skillMod as |skill key|}}
+        <option value="{{key}}" {{#if (eq (toInt key) ../item.system.skill.rank)}}selected{{/if}}>{{localize skill}}
+          (+{{multiply key (ifThen ../item.system.skill.custom_modifiers ../item.system.skill.modifier_step @root.skillModifierStep)}})</option>
+        {{/each}}
+      </select>
+    </label>
+    <label class="v2-field v2-check">
+      <input type="checkbox" name="system.skill.custom_modifiers" {{checked system.skill.custom_modifiers}} />
+      <span class="v2-label">{{localize 'SDM.SkillCustomModifier'}}</span>
+    </label>
+    {{#if system.skill.custom_modifiers}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.SkillModifierStep'}}</span>
+      <input type="text" name="system.skill.modifier_step" value="{{system.skill.modifier_step}}" data-dtype="Number" />
+    </label>
+    {{/if}}
+    {{/if}}
+  </div>
+</section>
+
+{{#if (and (ne system.type 'corruption') (ne system.type 'affliction') (ne system.type 'augment') (ne system.type 'pet'))}}
+<section class="v2-card v2-item-card">
+  <span class="v2-card-title">{{localize 'SDM.SourcesToLearn'}}</span>
+  <div class="v2-fields">
+    <label class="v2-field" aria-label="{{localize 'SDM.SourcesToLearn'}}">
+      <input type="text" name="system.learning.required_successes" value="{{system.learning.required_successes}}" data-dtype="Number" />
+    </label>
+    {{#if (and (gt system.learning.required_successes 0) (or (eq system.type '') (eq system.type 'skill') (eq system.type 'power')))}}
+    <div class="v2-field v2-boxes-field">
+      <span class="v2-label">{{localize 'SDM.Sources'}}</span>
+      <div class="resource-content sources v2-boxes">
+        {{#multiboxes system.learning.sources}}
+        <input type="radio" id="sources-{{item.id}}-0" name="system.learning.sources" value="0" checked="checked" data-dtype='Radio' style="cursor:pointer;">
+        {{#times_from 1 system.learning.required_successes}}
+        <input type="radio" id="sources-{{../item.id}}-{{this}}" name="system.learning.sources" value="{{this}}" data-dtype='Radio' style="cursor:pointer;">
+        <label class="radio-toggle" data-action="radioToggle" for="sources-{{../item.id}}-{{this}}" style="cursor:pointer;" data-tooltip="{{this}}"></label>
+        {{/times_from}}
+        {{/multiboxes}}
+      </div>
+    </div>
+    {{/if}}
+  </div>
+</section>
+{{/if}}
+
+{{#if (eq system.type 'affliction')}}
+<section class="v2-card v2-item-card">
+  <span class="v2-card-title">{{localize 'TYPES.Item.affliction'}}</span>
+  <div class="v2-fields">{{> ($$ "item/v2/cure-steps")}}</div>
+</section>
+{{/if}}
+
+{{#if (and (eq system.type 'pet') petActor)}}
+<section class="v2-card v2-item-card">
+  <span class="v2-card-title">{{localize 'TYPES.Item.pet'}}</span>
+  <div class="v2-fields">{{> ($$ "item/v2/pet-link")}}</div>
+</section>
+{{/if}}
+
+{{> ($$ "item/v2/hallmark")}}
+
+{{#if (eq system.type 'power')}}{{> ($$ "item/v2/power")}}{{/if}}

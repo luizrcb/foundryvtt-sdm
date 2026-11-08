@@ -1,0 +1,13 @@
+{{! Item sheet v2: installed mods track (read-only, driven by hallmark level) }}
+<div class="v2-field v2-boxes-field">
+  <span class="v2-label">{{localize 'SDM.InstalledMods'}}</span>
+  <div class="resource-content sources v2-boxes">
+    {{#multiboxes item.installedMods}}
+    <input type="radio" id="installed-mods-{{item.id}}-0" name="system.installed_mods" value="0" checked="checked" data-dtype='Radio' style="cursor:pointer;" disabled>
+    {{#times_from 1 (addOne system.hallmark.level)}}
+    <input type="radio" id="installed-mods-{{../item.id}}-{{this}}" name="system.installed_mods" value="{{this}}" data-dtype='Radio' style="cursor:pointer;" disabled/>
+    <label class="radio-toggle" for="installed-mods-{{../item.id}}-{{this}}" style="cursor:pointer;" data-tooltip="{{this}}" disabled></label>
+    {{/times_from}}
+    {{/multiboxes}}
+  </div>
+</div>

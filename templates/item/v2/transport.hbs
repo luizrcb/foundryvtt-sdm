@@ -1,0 +1,34 @@
+{{! Item sheet v2: mount and vehicle fields. Same field names as item/mount/header and item/vehicle/header. }}
+<section class="v2-card v2-item-card">
+  <span class="v2-card-title">{{localize 'SDM.Transport'}}</span>
+  <div class="v2-fields">
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.FieldLevel'}}</span>
+      <input type="number" name="system.level" value="{{system.level}}" min="0" step="1" data-dtype="Number" />
+    </label>
+    <label class="v2-field">
+      <span class="v2-label">{{#if (eq item.type 'vehicle')}}{{localize 'SDM.ItemVehicleCapacity'}}{{else}}{{localize 'SDM.ItemMountCapacity'}}{{/if}}</span>
+      <input type="number" name="system.capacity" value="{{system.capacity}}" min="0" step="1" data-dtype="Number" />
+    </label>
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.FieldCost'}}</span>
+      <input type="text" name="system.cost" value="{{system.cost}}" data-dtype="Number" />
+    </label>
+    <label class="v2-field">
+      <span class="v2-label">{{#if (eq item.type 'vehicle')}}{{localize 'SDM.ItemVehicleSpeed'}}{{else}}{{localize 'SDM.FieldSpeed'}}{{/if}}</span>
+      <select name="system.speed" data-dtype="Number">
+        {{selectOptions (sdmSpeedChoices system.speed) selected=system.speed}}
+      </select>
+    </label>
+    <label class="v2-field" data-tooltip="SDM.FieldSupplyPerWeek">
+      <span class="v2-label">{{localize 'SDM.FieldSupply'}}</span>
+      <input type="text" name="system.supply" value="{{system.supply}}" />
+    </label>
+    {{#if (eq item.type 'vehicle')}}
+    <label class="v2-field v2-check" data-tooltip="{{localize 'SDM.ItemVehicleAutomaticHint'}}">
+      <input type="checkbox" name="system.automatic" {{checked system.automatic}} data-dtype="Boolean" />
+      <span class="v2-label">{{localize 'SDM.ItemVehicleAutomatic'}} <i class="fa-solid fa-circle-question"></i></span>
+    </label>
+    {{/if}}
+  </div>
+</section>

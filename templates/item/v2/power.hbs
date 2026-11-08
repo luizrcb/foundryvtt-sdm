@@ -1,0 +1,47 @@
+{{! Item sheet v2: power fields (same names as item/power) }}
+<section class="v2-card v2-item-card is-wide">
+  <span class="v2-card-title">{{localize 'TYPES.Item.power'}}</span>
+  <div class="v2-fields">
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.PowerLevel'}}</span>
+      <input type="text" name="system.power.level" value="{{system.power.level}}" data-dtype="Number" />
+    </label>
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.PowerRange'}}</span>
+      <input type="text" name="system.power.range" value="{{system.power.range}}" />
+    </label>
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.PowerTarget'}}</span>
+      <input type="text" name="system.power.target" value="{{system.power.target}}" />
+    </label>
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.PowerDuration'}}</span>
+      <input type="text" name="system.power.duration" value="{{system.power.duration}}" />
+    </label>
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.PowerRollFormula'}}</span>
+      <input type="text" name="system.power.roll_formula" value="{{system.power.roll_formula}}" />
+    </label>
+    {{#if (ne item.parent.type 'npc')}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.AbilityModifier'}}</span>
+      <select name="system.power.default_ability">
+        <option value=""></option>
+        {{selectOptions @root.abilities localize=true selected=system.power.default_ability}}
+      </select>
+    </label>
+    {{/if}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.PowerOverchargeRollFormula'}}</span>
+      <input type="text" name="system.power.overcharge_roll_formula" value="{{system.power.overcharge_roll_formula}}" />
+    </label>
+    <label class="v2-field v2-check">
+      <input type="checkbox" name="system.power.is_dangerous" {{checked system.power.is_dangerous}} />
+      <span class="v2-label">{{localize 'SDM.PowerIsDangerous'}}</span>
+    </label>
+    <label class="v2-field v2-span-all">
+      <span class="v2-label">{{localize 'SDM.PowerOvercharge'}}</span>
+      <textarea name="system.power.overcharge" rows="2">{{{system.power.overcharge}}}</textarea>
+    </label>
+  </div>
+</section>

@@ -68,6 +68,7 @@ import { registerSDMGMSettingMenus } from './settings/register-gm-menus.mjs';
 import { setupSettingsSocket } from './settingsSocket.mjs';
 import { SdmActorSheet } from './sheets/actor-sheet.mjs';
 import { SdmActorSheetV2, SdmNpcSheetV2 } from './sheets/actor-sheet-v2.mjs';
+import { SdmItemSheetV2 } from './sheets/item-sheet-v2.mjs';
 import { SdmCaravanSheet } from './sheets/caravan-sheet.mjs';
 import { SdmItemSheet } from './sheets/item-sheet.mjs';
 
@@ -605,6 +606,10 @@ Hooks.once('init', function () {
   Items.registerSheet('sdm', SdmItemSheet, {
     makeDefault: true,
     label: 'SDM.SheetLabels.Item'
+  });
+  Items.registerSheet('sdm', SdmItemSheetV2, {
+    makeDefault: false,
+    label: 'SDM.SheetLabels.ItemV2'
   });
   CONFIG.ActiveEffect.dataModels.base = SDMActiveEffectData;
   DocumentSheetConfig.registerSheet(ActiveEffect, 'sdm', SdmActiveEffectConfig14, {

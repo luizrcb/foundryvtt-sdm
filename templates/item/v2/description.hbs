@@ -1,0 +1,35 @@
+{{! Item sheet v2 description tab: feature pills plus the editor inside a card }}
+<section class="tab v2-item-description {{tab.cssClass}}" data-group="primary" data-tab="description">
+  {{#if (and item.parent (eq system.type 'pet') (not system.pet))}}
+  <p class="v2-hint">{{localize 'SDM.PetLink'}}</p>
+  {{/if}}
+  {{#if (or system.features.size (and (eq system.type 'power') (eq system.power.is_dangerous true)))}}
+  <ul class="v2-pills">
+    {{#if (and (eq system.type 'power') (eq system.power.is_dangerous true))}}
+    <li class="v2-pill" data-tooltip="{{localize 'SDM.ItemFeature.dangerous'}}: {{localize 'SDM.ItemFeature.dangerousDescription'}}">
+      {{localize 'SDM.ItemFeature.dangerousAbbr'}}
+    </li>
+    {{/if}}
+    {{#each system.features}}
+    <li class="v2-pill" data-tooltip="{{localize (concat 'SDM.ItemFeature.' this 'Description')}}">
+      {{featureDisplay this ../system}}
+    </li>
+    {{/each}}
+  </ul>
+  {{/if}}
+  <div class="v2-prose">
+    {{#if editable}}
+    <prose-mirror
+      name="system.description"
+      data-document-uuid="{{item.uuid}}"
+      value="{{system.description}}"
+      collaborate="true"
+      toggled="true"
+    >
+      {{{enrichedDescription}}}
+    </prose-mirror>
+    {{else}}
+    {{{enrichedDescription}}}
+    {{/if}}
+  </div>
+</section>

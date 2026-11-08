@@ -1,0 +1,14 @@
+{{! Item sheet v2: linked pet actor }}
+{{#if petActor}}
+<div class="v2-field v2-span-all">
+  <span class="v2-label">{{localize 'SDM.LinkedPet'}}</span>
+  <div class="v2-pet-link">
+    <button type="button" class="v2-chip-btn" data-action="openPetActor" data-tooltip="{{petActor.name}}">
+      <i class="fa-solid fa-paw"></i><span>{{petActor.name}}</span>
+    </button>
+    <button type="button" class="v2-icon-circle" data-action="unlinkActor" data-tooltip="{{localize 'SDM.Item.UnlinkPet'}}">
+      <i class="fa-solid fa-link-slash"></i>
+    </button>
+  </div>
+</div>
+{{/if}}

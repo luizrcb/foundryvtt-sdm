@@ -1,9 +1,10 @@
-// Character sheet v2 ("new" sheet). Everything is scoped to .sheet-v2 so the classic
-// sheet is not affected. Layout adapts to the window width through a container query.
+// New sheets (character, NPC and item). Everything is scoped to .sheet-v2 so the classic
+// sheets are not affected. The character layout adapts to the window width through a
+// container query; NPC and item sheets use a single layout.
 
 $v2-wide: 1100px;
 
-.application.sheet.sdm.actor.sheet-v2 {
+.application.sheet.sdm.sheet-v2 {
   // Tokens (light)
   --v2-paper: #e6e3da;
   --v2-panel: #efede4;
@@ -29,24 +30,33 @@ $v2-wide: 1100px;
   --v2-tho: #a8b5d3;
 
   container: sdmv2 / inline-size;
-  min-width: 640px;
-  max-width: 1600px;
-  min-height: 700px;
-  max-height: none;
 
-  &.minimized {
-    min-width: 0;
-    min-height: 0;
-    max-width: none;
+  &.actor {
+    min-width: 640px;
+    max-width: 1600px;
+    min-height: 700px;
+    max-height: none;
   }
 
-  // NPC variant: one fixed layout, so the wide container query never applies
-  &.npc {
+  // NPC and item variants: one fixed layout, so the wide container query never applies
+  &.actor.npc {
     container-type: normal;
     min-width: 640px;
     max-width: 1100px;
     min-height: 600px;
     max-height: none;
+  }
+
+  &.item {
+    container-type: normal;
+    min-width: 520px;
+    min-height: 500px;
+  }
+
+  &.minimized {
+    min-width: 0;
+    min-height: 0;
+    max-width: none;
   }
 
   &.theme-dark,
@@ -1297,6 +1307,285 @@ $v2-wide: 1100px;
       flex: 1 1 auto;
       min-height: 280px;
     }
+  }
+
+  // ---------- Item sheet ----------
+  // The whole window scrolls: the header cards come first, then the tab content
+  &.item {
+    .window-content {
+      overflow-y: auto;
+    }
+    section.tab.active {
+      flex: 0 0 auto;
+      overflow: visible;
+    }
+  }
+
+  .v2-item-header {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    flex: 0 0 auto;
+
+    input[type='text'],
+    input[type='number'],
+    select,
+    textarea {
+      background: transparent;
+      border: 0;
+      border-bottom: 2px solid var(--v2-accent-soft);
+      border-radius: 4px 4px 0 0;
+      color: var(--v2-ink);
+      box-shadow: none;
+      padding: 2px 4px;
+      min-width: 0;
+      width: 100%;
+      height: auto;
+      font-size: 14px;
+
+      &:hover:not([disabled]) {
+        background: var(--v2-accent-soft);
+      }
+      &:focus {
+        border-bottom-color: var(--v2-accent);
+        background: var(--v2-accent-soft);
+        outline: none;
+      }
+      &[disabled] {
+        opacity: 0.6;
+      }
+    }
+    select option {
+      color: initial;
+    }
+    textarea {
+      resize: vertical;
+      min-height: 48px;
+    }
+
+    button {
+      font: inherit;
+      color: inherit;
+      background: none;
+      border: 0;
+      padding: 0;
+      margin: 0;
+      width: auto;
+      height: auto;
+      line-height: inherit;
+      box-shadow: none;
+      cursor: pointer;
+
+      &:focus-visible {
+        outline: 2px solid var(--v2-accent);
+        outline-offset: 2px;
+      }
+    }
+
+    .v2-name .v2-title {
+      font-family: var(--sdm-font-primary);
+      font-size: 26px;
+      line-height: 1.1;
+    }
+  }
+
+  .v2-item-toggles {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    flex: 0 0 auto;
+  }
+
+  .v2-item-header .v2-toggle {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 12px;
+    border: 2px solid var(--v2-line);
+    border-radius: 999px;
+    background: var(--v2-panel);
+    font-family: var(--sdm-font-primary);
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--v2-muted);
+    white-space: nowrap;
+
+    span {
+      line-height: 1;
+      text-box: trim-both cap alphabetic;
+    }
+    &:hover {
+      border-color: var(--v2-accent);
+    }
+    &.is-on {
+      color: var(--v2-ink);
+      background: var(--v2-accent-soft);
+      border-color: var(--v2-accent);
+    }
+    &.is-hallmark i {
+      color: #c9a227;
+    }
+  }
+
+  .v2-item-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 10px;
+    align-items: start;
+  }
+
+  .v2-item-card {
+    padding: 10px 14px 12px;
+    gap: 8px;
+
+    &.is-wide {
+      grid-column: 1 / -1;
+    }
+    &.is-hallmark .v2-card-title i {
+      color: #c9a227;
+    }
+  }
+
+  .v2-fields {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
+    gap: 10px 12px;
+    align-items: end;
+  }
+
+  .v2-field {
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+    min-width: 0;
+
+    .v2-label {
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    &.v2-check {
+      flex-direction: row;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+
+      input[type='checkbox'] {
+        width: 18px;
+        height: 18px;
+        margin: 0;
+        flex: 0 0 18px;
+        accent-color: var(--v2-accent);
+      }
+      .v2-label {
+        white-space: normal;
+      }
+    }
+  }
+
+  .v2-span-all {
+    grid-column: 1 / -1;
+  }
+
+  .v2-pair {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    input[type='text'] {
+      flex: 1;
+      text-align: center;
+    }
+  }
+
+  .v2-boxes-field .v2-boxes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    padding-top: 4px;
+  }
+
+  .v2-pet-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .v2-item-header .v2-chip-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border: 2px solid var(--v2-line);
+    border-radius: 999px;
+    background: var(--v2-panel);
+
+    &:hover {
+      border-color: var(--v2-accent);
+    }
+  }
+
+  .v2-item-header .v2-icon-circle {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 2px solid var(--v2-line);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    &:hover {
+      border-color: var(--v2-danger);
+      color: var(--v2-danger);
+    }
+  }
+
+  .v2-item-description {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: var(--v2-ink);
+  }
+
+  .v2-hint {
+    margin: 0;
+    color: var(--v2-muted);
+    font-style: italic;
+  }
+
+  .v2-pills {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .v2-pill {
+    padding: 3px 10px;
+    border: 1.5px solid var(--v2-line);
+    border-radius: 999px;
+    background: var(--v2-panel);
+    font-size: 12px;
+    font-weight: 600;
+  }
+
+  // Features and categories tabs: the tab itself is the card
+  &.item section.tab.features,
+  &.item section.tab.categories {
+    background: var(--v2-panel);
+    border: 2px solid var(--v2-line);
+    border-radius: 14px;
+    box-shadow: var(--v2-shadow);
+    padding: 10px 14px;
+    color: var(--v2-ink);
+  }
+
+  .tab.features input[type='checkbox'] {
+    accent-color: var(--v2-accent);
   }
 
   // ---------- Wide layout ----------
