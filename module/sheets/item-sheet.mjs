@@ -112,6 +112,10 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     },
     categories: {
       template: templatePath('item/categories')
+    },
+    gmNotes: {
+      template: templatePath('item/gm-notes'),
+      scrollable: ['']
     }
   };
 
@@ -157,6 +161,9 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
 
         break;
     }
+
+    // GM-only notes tab, for every item type
+    if (game.user.isGM) options.parts.push('gmNotes');
   }
 
   /* -------------------------------------------- */
@@ -256,6 +263,14 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
           relativeTo: this.item
         });
         break;
+      case 'gmNotes':
+        context.tab = context.tabs[partId];
+        context.enrichedGmNotes = await TextEditor.enrichHTML(this.item.system.gm_notes ?? '', {
+          secrets: true,
+          rollData: this.item.getRollData(),
+          relativeTo: this.item
+        });
+        break;
       case 'effects':
         context.tab = context.tabs[partId];
         // Prepare active effects for easier access
@@ -325,6 +340,11 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
           tab.id = 'categories';
           tab.label += 'Categories';
           tab.icon = 'fa fa-tag';
+          break;
+        case 'gmNotes':
+          tab.id = 'gmNotes';
+          tab.label += 'GMNotes';
+          tab.icon = 'fa fa-user-secret';
           break;
       }
       if (this.tabGroups[tabGroup] === tab.id) tab.cssClass = 'active';

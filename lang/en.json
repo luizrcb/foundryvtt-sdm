@@ -1381,6 +1381,7 @@
   "SDM.ItemTabDescription": "Description",
   "SDM.ItemTabEffects": "Effects",
   "SDM.ItemTabFeatures": "Features",
+  "SDM.ItemTabGMNotes": "GM Notes",
   "SDM.ItemToggleReadied": "Toggle Readied Status",
   "SDM.ItemTraitType": "Trait Type",
   "SDM.ItemVehicleAutomatic": "Automatic",

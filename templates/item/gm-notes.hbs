@@ -1,0 +1,16 @@
+{{! GM Notes Tab (only rendered for GMs) }}
+<section class='tab gm-notes scrollable {{tab.cssClass}}' data-group='primary' data-tab='gmNotes'>
+  {{#if editable}}
+  <prose-mirror
+    name='system.gm_notes'
+    data-document-uuid='{{item.uuid}}'
+    value='{{system.gm_notes}}'
+    collaborate='true'
+    toggled='true'
+  >
+    {{{enrichedGmNotes}}}
+  </prose-mirror>
+  {{else}}
+  {{{enrichedGmNotes}}}
+  {{/if}}
+</section>

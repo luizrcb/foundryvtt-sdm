@@ -37,6 +37,8 @@ const templatesToLoad = [
   $$('item/v2/installed-mods'),
   $$('item/v2/pet-link'),
   $$('item/v2/description'),
+  $$('item/v2/gm-notes'),
+  $$('item/gm-notes'),
   $$('compendium/browser-filters'),
   $$('compendium/browser-results'),
   $$('compendium/browser-filter-set'),

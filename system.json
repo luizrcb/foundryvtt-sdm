@@ -33,22 +33,22 @@
     },
     "Item": {
       "gear": {
-        "htmlFields": ["description", "powers.element.description"],
+        "htmlFields": ["description", "gm_notes", "powers.element.description"],
         "filePathFields": {
           "powers.value.img": ["IMAGE"]
         }
       },
       "trait": {
-        "htmlFields": ["description"]
+        "htmlFields": ["description", "gm_notes"]
       },
       "burden": {
-        "htmlFields": ["description"]
+        "htmlFields": ["description", "gm_notes"]
       },
       "mount": {
-        "htmlFields": ["description"]
+        "htmlFields": ["description", "gm_notes"]
       },
       "vehicle": {
-        "htmlFields": ["description"]
+        "htmlFields": ["description", "gm_notes"]
       }
     }
   },

@@ -125,6 +125,9 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
 
     schema.description = new fields.HTMLField();
 
+    // Notes only shown to GMs on the item sheet
+    schema.gm_notes = new fields.HTMLField();
+
     schema.quantity = new fields.NumberField({
       required: true,
       integer: true,
