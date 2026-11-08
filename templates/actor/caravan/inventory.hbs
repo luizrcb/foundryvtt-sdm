@@ -83,7 +83,7 @@
           <span>[{{sack.usedSlots}}/{{sack.maxSlots}}]</span>
         </div>
         <div>
-          <span>({{localize 'SDM.CashSymbol'}}{{getEstimatedValue sack}})</span>
+          <span>({{localize 'SDM.CashSymbol'}}{{localeNumber (getEstimatedValue sack)}})</span>
         </div>
       </div>
       <div class="flex-group-center flexrow">
@@ -110,7 +110,7 @@
         <div class="flex-group-center flexrow mt-5">
           <div><span>{{toPascalCase (localize 'SDM.UnitSack')}} {{localize 'SDM.SackOverflow'}}</span></div>
           <div><span>[{{overflow.usedSlots}}]</span></div>
-          <div><span>({{localize 'SDM.CashSymbol'}}{{getEstimatedValue overflow}})</span></div>
+          <div><span>({{localize 'SDM.CashSymbol'}}{{localeNumber (getEstimatedValue overflow)}})</span></div>
         </div>
         <section>
           <ol class='items-list collapsible-items list-border'>
@@ -205,7 +205,7 @@
           <span>[{{sack.usedSlots}}/{{sack.maxSlots}}]</span>
         </div>
         <div>
-          <span>({{localize 'SDM.CashSymbol'}}{{getEstimatedValue sack}})</span>
+          <span>({{localize 'SDM.CashSymbol'}}{{localeNumber (getEstimatedValue sack)}})</span>
         </div>
       </div>
       <div class="flex-group-center flexrow">
@@ -232,7 +232,7 @@
         <div class="flex-group-center flexrow mt-5">
           <div><span>{{toPascalCase (localize 'SDM.UnitSack')}} {{localize 'SDM.SackOverflow'}}</span></div>
           <div><span>[{{overflow.usedSlots}}]</span></div>
-          <div><span>({{localize 'SDM.CashSymbol'}}{{getEstimatedValue overflow}})</span></div>
+          <div><span>({{localize 'SDM.CashSymbol'}}{{localeNumber (getEstimatedValue overflow)}})</span></div>
         </div>
         <section>
           <ol class='items-list collapsible-items list-border'>
