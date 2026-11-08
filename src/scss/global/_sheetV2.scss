@@ -408,18 +408,38 @@ $v2-wide: 1100px;
 
   .v2-minidice {
     display: grid;
-    grid-template-columns: auto 1fr auto;
+    grid-template-columns: auto minmax(0, 1fr);
+    grid-template-areas:
+      'icon count'
+      'label label';
     align-items: center;
-    gap: 6px;
+    column-gap: 6px;
+    row-gap: 2px;
     padding: 6px 10px;
     border: 2px solid var(--v2-line);
     border-radius: 10px;
     background: var(--v2-panel);
     cursor: pointer;
+    min-width: 0;
 
+    > i {
+      grid-area: icon;
+      font-size: 18px;
+    }
     .v2-mini-count {
+      grid-area: count;
+      text-align: right;
       font-family: var(--sdm-font-primary);
-      font-size: 16px;
+      font-size: 18px;
+      white-space: nowrap;
+    }
+    .v2-label {
+      grid-area: label;
+      min-width: 0;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      letter-spacing: 0.06em;
     }
   }
 
