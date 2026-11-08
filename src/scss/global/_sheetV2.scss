@@ -658,7 +658,7 @@ $v2-wide: 1100px;
     padding: 4px 0 0;
     margin: 0;
     height: auto;
-    min-height: 34px;
+    min-height: 30px;
 
     &::after {
       content: '';
@@ -684,8 +684,8 @@ $v2-wide: 1100px;
       text-shadow: none;
       position: relative;
       z-index: 1;
-      padding: 4px 18px;
-      min-height: 30px;
+      padding: 2px 18px;
+      min-height: 26px;
       box-sizing: border-box;
       flex: 0 1 auto;
       white-space: nowrap;
