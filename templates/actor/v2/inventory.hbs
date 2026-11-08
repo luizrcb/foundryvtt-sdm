@@ -1,0 +1,8 @@
+{{! Character sheet v2 inventory tab. Reuses the item/trait/burden row partials. }}
+<section class="tab features v2-inventory {{tab.cssClass}}" data-group="primary" data-tab="inventory">
+  <div class="v2-resources {{#if v2.hasBurdens}}has-burdens{{/if}}">
+    <div class="v2-col v2-col-items">{{> ($$ "actor/items")}}</div>
+    <div class="v2-col v2-col-traits">{{> ($$ "actor/traits")}}</div>
+    <div class="v2-col v2-col-burdens">{{> ($$ "actor/burdens")}}</div>
+  </div>
+</section>

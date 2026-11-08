@@ -11,6 +11,8 @@ const templatesToLoad = [
   $$('actor/npc/header'),
   $$('actor/trait'),
   $$('actor/traits'),
+  $$('actor/v2/header'),
+  $$('actor/v2/inventory'),
   $$('item/burden/header'),
   $$('item/gear/header'),
   $$('item/mount/header'),

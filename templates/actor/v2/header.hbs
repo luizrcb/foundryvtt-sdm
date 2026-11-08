@@ -1,0 +1,259 @@
+{{! Character sheet v2 header. Keeps the same names and data-actions as actor/character/header. }}
+<header class="v2-header {{#if isEditMode}}is-edit{{/if}}">
+  <div class="v2-rail">
+
+    {{! Identity }}
+    <div class="v2-identity">
+      <div class="v2-portrait">
+        {{#if isToken}}<div class="token-tag">{{localize 'DOCUMENT.Token'}}</div>{{/if}}
+        <img src="{{actor.img}}" data-edit="img" data-action="onEditImage" data-tooltip="{{actor.name}}" />
+        {{#if (isDefeated @root.statuses)}}<i class="fa fa-skull overlay-icon defeated-icon"></i>{{/if}}
+      </div>
+      <div class="v2-name">
+        <label class="v2-label" for="v2-name-{{actor.id}}">
+          {{localize 'SDM.FieldName'}}{{#if (isDefeated @root.statuses)}} ({{localize 'SDM.DefeatOutcome2to6'}}){{/if}}
+        </label>
+        <input id="v2-name-{{actor.id}}" class="v2-title" name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'SDM.FieldName'}}" />
+        <input class="v2-species" name="system.species" type="text" value="{{system.species}}"
+          placeholder="{{localize 'SDM.FieldSpecies'}}" data-tooltip="{{localize 'SDM.FieldSpecies'}}" />
+      </div>
+      <div class="v2-chips">
+        <div class="v2-chip">
+          <span class="v2-label">{{localize 'SDM.FieldPlayerXP'}}</span>
+          <input type="text" name="system.player_experience" value="{{system.player_experience}}" data-dtype="Number"
+            {{#unless (or isEditMode (not @root.editable))}}disabled{{/unless}} />
+        </div>
+        <div class="v2-chip" data-tooltip="{{xpToNextLevel}} {{localize 'SDM.XPToLevelUP'}}">
+          <span class="v2-label">{{localize 'SDM.FieldCharXP'}}</span>
+          <input type="text" name="system.experience" value="{{system.experience}}" data-dtype="Number"
+            {{#unless (or isEditMode (not @root.editable))}}disabled{{/unless}} />
+        </div>
+        <div class="v2-chip">
+          <span class="v2-label">{{localize 'SDM.FieldLevel'}}</span>
+          <input type="text" name="system.level" value="{{system.level}}" data-dtype="Number" disabled />
+        </div>
+      </div>
+    </div>
+
+    {{! Vitals }}
+    <div class="v2-vitals">
+      <div class="v2-stack">
+        {{#if (not (isDefeated @root.statuses))}}
+        <div class="v2-card v2-life">
+          <div class="v2-card-head">
+            <span class="v2-card-title">{{localize 'SDM.FieldLifeMax'}}</span>
+          </div>
+          <div class="v2-life-row">
+            <input class="v2-big" type="text" name="system.life.value" value="{{system.life.value}}" data-dtype="Number" />
+            <span class="v2-max">/
+              {{#if (or isEditMode (not @root.editable))}}{{system.life.base}}{{else}}{{system.life.max}}{{/if}}
+            </span>
+            <div class="v2-bar"><div class="v2-bar-fill" style="width: {{v2.lifePct}}%"></div></div>
+          </div>
+          {{#if system.borrowed_life.enabled}}
+          <div class="v2-subvital" data-tooltip="SDM.BorrowedLife">
+            <span class="v2-label">{{localize 'SDM.Borrowed'}}</span>
+            <input type="text" name="system.borrowed_life.value" value="{{system.borrowed_life.value}}" data-dtype="Number" />
+            <span class="v2-max">/ {{system.borrowed_life.max}}</span>
+          </div>
+          {{/if}}
+          {{#if system.temporary_life.enabled}}
+          <div class="v2-subvital" data-tooltip="SDM.TemporaryLife">
+            <span class="v2-label">{{localize 'SDM.Temporary'}}</span>
+            <input type="text" name="system.temporary_life.value" value="{{system.temporary_life.value}}" data-dtype="Number" />
+            <span class="v2-max">/ {{system.temporary_life.max}}</span>
+          </div>
+          {{/if}}
+        </div>
+        {{else}}
+        <button type="button" class="v2-card v2-relife rollable" data-action="relifeRoll" data-context="rollable"
+          data-tooltip="{{localize 'SDM.RollType' type=(localize 'SDM.Relife')}}">
+          <span class="v2-card-title">{{localize 'SDM.Relife'}}</span>
+          <i class="fa-solid fa-kit-medical blood"></i>
+        </button>
+        {{/if}}
+
+        <div class="v2-card v2-defense">
+          <span class="v2-card-title">{{localize 'SDM.FieldDefense'}}</span>
+          <div class="v2-defense-row">
+            <div class="v2-def" data-tooltip="{{localize 'SDM.FieldPhysicalDefense'}}">
+              <i class="fa-solid fa-shield-halved"></i><span>{{system.defense}}</span>
+            </div>
+            <div class="v2-def" data-tooltip="{{localize 'SDM.FieldMentalDefense'}}">
+              <i class="fa-solid fa-brain"></i><span>{{system.mental_defense}}</span>
+            </div>
+            <div class="v2-def" data-tooltip="{{localize 'SDM.FieldSocialDefense'}}">
+              <i class="fa-solid fa-crown"></i><span>{{system.social_defense}}</span>
+            </div>
+            <label class="v2-def v2-save" data-tooltip="{{localize 'SDM.FieldSaveTarget'}}">
+              <input type="text" name="system.save_target" value="{{system.save_target}}" data-dtype="Number"
+                {{#unless @root.isEditMode}}disabled{{/unless}} />
+              <span class="v2-label">{{localize 'SDM.FieldSaveTarget'}}</span>
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <div class="v2-dice">
+        {{#if (or isEditMode (not @root.editable))}}
+        <div class="v2-hero" >
+        {{else}}
+        <div class="v2-hero rollable" data-action="heroicHealing" data-context="rollable"
+          data-tooltip="{{localize 'SDM.HeroDiceHealingTip'}}">
+        {{/if}}
+          <span class="v2-card-title">{{localize 'SDM.FieldHeroDice'}}</span>
+          <i class="fa-solid fa-dice-{{@root.heroDiceType}} v2-hero-icon" data-tooltip="{{@root.heroDiceType}}"></i>
+          <span class="v2-hero-count {{#if v2.heroDiceSpent}}is-spent{{/if}}">
+            {{system.hero_dice.value}}<small>/ {{system.hero_dice.max}}</small>
+          </span>
+        </div>
+
+        {{#if system.blood_dice.enabled}}
+        <div class="v2-minidice rollable" data-action="bloodDiceRoll" data-context="rollable">
+          <i class="blood fa-solid fa-dice-{{system.blood_dice.dice_type}}" data-tooltip="{{system.blood_dice.dice_type}}"></i>
+          <span class="v2-label">{{localize 'SDM.FieldBloodDice'}}</span>
+          <span class="v2-mini-count">{{system.blood_dice.value}}/{{system.blood_dice.max}}</span>
+        </div>
+        {{/if}}
+        {{#if system.tourist_dice.enabled}}
+        <div class="v2-minidice rollable" data-action="touristDiceRoll" data-context="rollable">
+          <i class="pine fa-solid fa-dice-{{system.tourist_dice.dice_type}}" data-tooltip="{{system.tourist_dice.dice_type}}"></i>
+          <span class="v2-label">{{localize 'SDM.FieldTouristDice'}}</span>
+          <span class="v2-mini-count">{{system.tourist_dice.value}}/{{system.tourist_dice.max}}</span>
+        </div>
+        {{/if}}
+      </div>
+    </div>
+
+    {{! Money }}
+    <div class="v2-money">
+      <label class="v2-money-cell">
+        <span class="v2-label">{{localize 'SDM.FieldRevenue'}}</span>
+        <input type="text" name="system.revenue" value="{{system.revenue}}" data-dtype="Number" />
+      </label>
+      <label class="v2-money-cell">
+        <span class="v2-label">{{localize 'SDM.FieldExpense'}}</span>
+        <input type="text" name="system.expense" value="{{system.expense}}" data-dtype="Number" />
+      </label>
+      <div class="v2-money-cell" data-tooltip="
+        <span><b>{{toPascalCase (localize 'SDM.UnitCash')}}:</b> {{localize 'SDM.CashSymbol'}}{{system.total_cash}}</span><br/>
+        <span><b>{{localize 'SDM.TabInventory'}}:</b> {{localize 'SDM.CashSymbol'}}{{system.inventory_value}}</span><hr>
+        <span><b>{{toPascalCase (localize 'SDM.Total')}}:</b> {{localize 'SDM.CashSymbol'}}{{system.wealth}}</span>">
+        <span class="v2-label">{{localize 'SDM.FieldWealth'}}</span>
+        <input type="text" name="system.total_cash" value="{{localize 'SDM.CashSymbol'}}{{system.total_cash}}" disabled />
+      </div>
+      <label class="v2-money-cell">
+        <span class="v2-label">{{localize 'SDM.FieldDebt'}}</span>
+        <input type="text" name="system.debt" value="{{system.debt}}" data-dtype="Number" />
+      </label>
+    </div>
+  </div>
+
+  {{! Abilities }}
+  <div class="v2-abilities">
+    {{#each system.abilities as |ability key|}}
+    <div class="v2-ability ab-{{key}} {{lookup @root.config.abilityColors @index}}">
+      <div class="v2-ability-head">
+        {{#if (or @root.isEditMode (not @root.editable))}}
+        <span class="v2-ability-code" data-tooltip="{{localize (lookup @root.config.abilities key)}}">
+          {{toUpperCase (localize (lookup @root.config.abilityAbbreviations key))}}
+        </span>
+        {{else}}
+        <button type="button" class="v2-ability-code rollable" data-action="roll" data-context="rollable"
+          data-ability="{{key}}" data-type="ability"
+          data-label="{{localize (lookup @root.config.abilities key)}}"
+          data-tooltip="{{localize (lookup @root.config.abilities key)}}">
+          {{toUpperCase (localize (lookup @root.config.abilityAbbreviations key))}}
+        </button>
+        {{/if}}
+        <div class="v2-ability-icons">
+          {{#unless (or @root.isEditMode (not @root.editable))}}
+          {{#if (eq key 'cha')}}
+          <button type="button" class="v2-icon-btn rollable" data-action="reactionRoll" data-context="rollable"
+            data-tooltip="{{localize 'SDM.RollType' type=(localize 'SDM.Reaction')}}">
+            <i class="fa-solid fa-masks-theater"></i>
+          </button>
+          {{/if}}
+          {{#if (eq key 'end')}}
+          <button type="button" class="v2-icon-btn rollable" data-action="groupChaseRoll" data-context="rollable"
+            data-tooltip="{{localize 'SDM.GroupChaseRoll'}}">
+            <i class="fa-solid fa-gauge-high"></i>
+          </button>
+          {{/if}}
+          <button type="button" class="v2-icon-btn rollable" data-ability="{{key}}" data-action="rollSavingThrow"
+            data-tooltip="{{localize 'SDM.SavingThrowRoll' ability=(localize (lookup @root.config.abilities key))}}">
+            <i class="{{lookup @root.config.abilitySaveIcons key}}"></i>
+          </button>
+          {{else}}
+          <span class="v2-icon-btn is-static"><i class="{{lookup @root.config.abilitySaveIcons key}}"></i></span>
+          {{/unless}}
+        </div>
+      </div>
+      <div class="v2-ability-values">
+        <input type="text" class="v2-ability-current" name="system.abilities.{{key}}.current" value="{{ability.current}}"
+          data-dtype="Number"
+          data-tooltip="{{localize 'SDM.AbilityCurrent' ability=(localize (lookup @root.config.abilities key))}}" />
+        <span class="v2-ability-sep">/</span>
+        {{#if (or @root.isEditMode (not @root.editable))}}
+        <input type="text" class="v2-ability-max is-editable" name="system.abilities.{{key}}.base" value="{{ability.base}}"
+          data-dtype="Number"
+          data-tooltip="{{localize 'SDM.AbilityBaseValue' ability=(localize (lookup @root.config.abilities key))}}" />
+        {{else}}
+        <input type="text" class="v2-ability-max" name="system.abilities.{{key}}.full" value="{{ability.full}}"
+          data-dtype="Number" disabled
+          data-tooltip="{{localize 'SDM.AbilityFull' ability=(localize (lookup @root.config.abilities key))}}<br/>{{localize 'SDM.AbilityBase'}}: {{ability.base}}<br/>{{localize 'SDM.AbilityBonus'}}: {{ability.bonus}}" />
+        {{/if}}
+      </div>
+    </div>
+    {{/each}}
+  </div>
+
+  {{! Attacks and fates }}
+  <div class="v2-rolls">
+    {{#if (or @root.isEditMode (not @root.editable))}}
+    <button type="button" class="v2-roll is-config" data-action="updateAttack" data-attack="melee"
+      data-tooltip="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackMelee')}}" {{#unless @root.editable}}disabled{{/unless}}>
+      <i class="fa-solid fa-gear"></i><span>{{localize 'SDM.AttackMelee'}}</span>
+    </button>
+    <button type="button" class="v2-roll is-config" data-action="updateAttack" data-attack="ranged"
+      data-tooltip="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackRanged')}}" {{#unless @root.editable}}disabled{{/unless}}>
+      <i class="fa-solid fa-gear"></i><span>{{localize 'SDM.AttackRanged'}}</span>
+    </button>
+    <button type="button" class="v2-roll is-config" data-action="updateAttack" data-attack="fantascience"
+      data-tooltip="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackFantascience')}}" {{#unless @root.editable}}disabled{{/unless}}>
+      <i class="fa-solid fa-gear"></i><span>{{localize 'SDM.AttackFantascience'}}</span>
+    </button>
+    <button type="button" class="v2-roll is-config" data-action="updateAttack" data-attack="oldtech"
+      data-tooltip="{{localize 'DOCUMENT.Update' type=(localize 'SDM.AttackOldtech')}}" {{#unless @root.editable}}disabled{{/unless}}>
+      <i class="fa-solid fa-gear"></i><span>{{localize 'SDM.AttackOldtech'}}</span>
+    </button>
+    <label class="v2-roll is-field" data-tooltip="{{localize 'SDM.PowerCostHint'}}">
+      <span>{{localize 'SDM.PowerCost'}}</span>
+      <input type="text" name="system.power_cost" value="{{system.power_cost}}" data-dtype="Number" />
+    </label>
+    {{else}}
+    <button type="button" class="v2-roll rollable" data-type="attack" data-action="roll" data-attack="melee"
+      data-label="{{localize 'SDM.AttackMelee'}}">
+      <i class="melee-attack {{@root.config.attackColors.melee}}"></i><span>{{localize 'SDM.AttackMelee'}}</span>
+    </button>
+    <button type="button" class="v2-roll rollable" data-type="attack" data-action="roll" data-attack="ranged"
+      data-label="{{localize 'SDM.AttackRanged'}}">
+      <i class="fa-solid fa-gun {{@root.config.attackColors.ranged}}"></i><span>{{localize 'SDM.AttackRanged'}}</span>
+    </button>
+    <button type="button" class="v2-roll rollable" data-type="attack" data-action="roll" data-attack="fantascience"
+      data-label="{{localize 'SDM.AttackFantascience'}}">
+      <i class="fa-solid fa-hat-wizard {{@root.config.attackColors.fantascience}}"></i><span>{{localize 'SDM.AttackFantascience'}}</span>
+    </button>
+    <button type="button" class="v2-roll rollable" data-type="attack" data-action="roll" data-attack="oldtech"
+      data-label="{{localize 'SDM.AttackOldtech'}}">
+      <i class="fa-solid fa-gamepad {{@root.config.attackColors.oldtech}}"></i><span>{{localize 'SDM.AttackOldtech'}}</span>
+    </button>
+    <button type="button" class="v2-roll is-fate rollable" data-action="defeatRoll" data-context="rollable">
+      <i class="fa-solid fa-skull"></i><span>{{localize 'SDM.Defeat'}}</span>
+    </button>
+    <button type="button" class="v2-roll is-fate rollable" data-action="corruptionRoll" data-context="rollable">
+      <i class="fa-solid fa-biohazard"></i><span>{{localize 'SDM.Corruption'}}</span>
+    </button>
+    {{/if}}
+  </div>
+</header>
