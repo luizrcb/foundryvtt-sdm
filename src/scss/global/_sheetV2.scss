@@ -653,6 +653,8 @@ $v2-wide: 1100px;
     border-top: 0;
     border-bottom: 0;
     gap: 6px;
+    justify-content: space-around;
+    padding-top: 4px;
 
     &::after {
       content: '';
@@ -678,6 +680,9 @@ $v2-wide: 1100px;
       text-shadow: none;
       position: relative;
       z-index: 1;
+      padding: 8px 18px 6px;
+      flex: 0 1 auto;
+      white-space: nowrap;
 
       &:hover {
         color: var(--v2-ink);

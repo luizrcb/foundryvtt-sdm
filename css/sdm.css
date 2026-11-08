@@ -3631,6 +3631,8 @@ input[type=radio]::after {
   border-top: 0;
   border-bottom: 0;
   gap: 6px;
+  justify-content: space-around;
+  padding-top: 4px;
 }
 
 .application.sheet.sdm.actor.sheet-v2 nav.tabs::after {
@@ -3657,6 +3659,9 @@ input[type=radio]::after {
   text-shadow: none;
   position: relative;
   z-index: 1;
+  padding: 8px 18px 6px;
+  flex: 0 1 auto;
+  white-space: nowrap;
 }
 
 .application.sheet.sdm.actor.sheet-v2 nav.tabs > a:hover,
