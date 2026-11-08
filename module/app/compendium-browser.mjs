@@ -1,4 +1,6 @@
 import { $l10n, capitalizeFirstLetter, formatNumber } from '../helpers/globalUtils.mjs';
+import { convertSizeUnit } from '../helpers/itemUtils.mjs';
+import { SizeUnit } from '../helpers/constants.mjs';
 
 const ApplicationV2 = foundry.applications?.api?.ApplicationV2;
 const HandlebarsApplicationMixin = foundry.applications?.api?.HandlebarsApplicationMixin;
@@ -18,6 +20,8 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
       clearName: CompendiumBrowser.#onClearName,
       openLink: CompendiumBrowser.#onOpenLink,
       setFilter: CompendiumBrowser.#onSetFilter,
+      removeFilter: CompendiumBrowser.#onRemoveFilter,
+      clearFilters: CompendiumBrowser.#onClearFilters,
       submitSearch: CompendiumBrowser.#onSubmitSearch,
       toggleGroup: CompendiumBrowser.#onToggleGroup
     },
@@ -160,7 +164,7 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
   ];
 
   static BATCHING = { MARGIN: 50, SIZE: 50 };
-  static SEARCH_DELAY = 2000;
+  static SEARCH_DELAY = 400;
 
   // ======================== CACHE =========================
   static #cache = new Map();
@@ -387,6 +391,16 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
 
   #filters;
   #selected = new Set();
+  /** Result ordering chosen in the results bar ('auto' keeps the original behavior) */
+  #sortBy = 'auto';
+
+  static SORT_OPTIONS = {
+    auto: 'SDM.CompendiumBrowser.Sort.Auto',
+    name: 'SDM.CompendiumBrowser.Sort.Name',
+    cost: 'SDM.CompendiumBrowser.Sort.Cost',
+    size: 'SDM.CompendiumBrowser.Sort.Size',
+    source: 'SDM.CompendiumBrowser.Sort.Source'
+  };
 
   constructor(...args) {
     super(...args);
@@ -787,9 +801,17 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
 
     context.searchValue = this.#filters.name || '';
     context.filterGroups = this.#prepareFilterGroups(context);
+    context.activeFilters = this.#prepareActiveFilters(context);
+    context.sortBy = this.#sortBy;
+    context.sortOptions = Object.fromEntries(
+      Object.entries(this.constructor.SORT_OPTIONS).map(([k, v]) => [k, $l10n(v)])
+    );
 
     const resultsData = await this.#prepareResults(context, options);
     context.results = resultsData.results;
+    context.resultsCount = game.i18n.format('SDM.CompendiumBrowser.ResultsCount', {
+      count: formatNumber(context.results.length)
+    });
     context.displaySelection = resultsData.displaySelection;
     context.emptyMessage = resultsData.emptyMessage;
 
@@ -940,7 +962,7 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
         groupKey,
         groupLabel: groupDef.label,
         expanded,
-        count: filtersInGroup.length,
+        count: filtersInGroup.reduce((sum, f) => sum + CompendiumBrowser.#countActive(f), 0),
         filters: filtersInGroup
       });
     }
@@ -1070,11 +1092,114 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
       };
     });
 
+    this.#sortResults(results);
+
     return {
       results,
       displaySelection: this.displaySelection,
       emptyMessage: results.length === 0 ? 'SDM.CompendiumBrowser.NoResults' : null
     };
+  }
+
+  /** Number of active values in a prepared filter (used by the group badges). */
+  static #countActive(filter) {
+    const value = filter.value;
+    if (filter.type === 'range') {
+      return (value?.min !== '' && value?.min !== undefined) ||
+        (value?.max !== '' && value?.max !== undefined)
+        ? 1
+        : 0;
+    }
+    if (filter.type === 'boolean') return value ? 1 : 0;
+    if (filter.type === 'set') {
+      if (!value || typeof value !== 'object') return 0;
+      return Object.keys(filter.config?.choices ?? {}).filter(k => value[k]).length;
+    }
+    return 0;
+  }
+
+  /** Chips for the results bar: the text search and every active filter value. */
+  #prepareActiveFilters(context) {
+    const chips = [];
+    const label = text =>
+      typeof text === 'string' && text.startsWith('SDM.') ? $l10n(text) : text;
+
+    if (context.filters.name) {
+      chips.push({ key: 'name', label: `“${context.filters.name}”` });
+    }
+
+    const additional = context.filters.additional ?? {};
+    // Filters a tab sets by itself (e.g. the weapons tab) are not shown as removable chips
+    const tab = this.constructor.TABS.find(t => t.tab === this.tabGroups.primary);
+    const tabKeys = new Set(Object.keys(tab?.initialFilters ?? {}));
+
+    for (const [key, value] of Object.entries(additional)) {
+      if (tabKeys.has(key)) continue;
+      const def = context.filterDefinitions?.get(key);
+      if (!def) continue;
+      const name = label(def.label);
+
+      if (def.type === 'range') {
+        const min = value?.min;
+        const max = value?.max;
+        if (min === undefined && max === undefined) continue;
+        const from = min === undefined ? '…' : formatNumber(min);
+        const to = max === undefined ? '…' : formatNumber(max);
+        chips.push({ key, label: `${name}: ${from}–${to}` });
+      } else if (def.type === 'boolean') {
+        if (value) chips.push({ key, label: name });
+      } else if (def.type === 'set' && value && typeof value === 'object') {
+        const choices =
+          typeof def.config?.choices === 'function'
+            ? def.config.choices(context.filters)
+            : (def.config?.choices ?? {});
+        for (const [choice, on] of Object.entries(value)) {
+          if (!on) continue;
+          const c = choices[choice];
+          const choiceLabel = label(typeof c === 'string' ? c : (c?.label ?? choice));
+          chips.push({ key, choice, label: `${name}: ${choiceLabel}` });
+        }
+      }
+    }
+    return chips;
+  }
+
+  #sortResults(results) {
+    const lang = game.i18n.lang;
+    const byName = (a, b) => a.name.localeCompare(b.name, lang);
+    const cost = r => {
+      const c = Number(r.document?.system?.cost);
+      return Number.isFinite(c) && c > 0 ? c : Infinity;
+    };
+    const size = r => {
+      const s = r.document?.system?.size;
+      if (!s || s.value === undefined || s.value === null) return Infinity;
+      try {
+        return convertSizeUnit(Number(s.value) || 0, s.unit || SizeUnit.STONES, SizeUnit.STONES);
+      } catch {
+        return Number(s.value) || 0;
+      }
+    };
+
+    switch (this.#sortBy) {
+      case 'name':
+        results.sort(byName);
+        break;
+      case 'cost':
+        results.sort((a, b) => cost(a) - cost(b) || byName(a, b));
+        break;
+      case 'size':
+        results.sort((a, b) => size(a) - size(b) || byName(a, b));
+        break;
+      case 'source':
+        results.sort(
+          (a, b) => (a.source || '').localeCompare(b.source || '', lang) || byName(a, b)
+        );
+        break;
+      default:
+        // 'auto': keep the order computed above (by cost when filtering by cost, else by name)
+        break;
+    }
   }
 
   #prepareFooter(context) {
@@ -1208,6 +1333,36 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
   }
 
   /** @this {CompendiumBrowser} */
+  static #onRemoveFilter(event, target) {
+    const { key, choice } = target.dataset;
+    if (key === 'name') {
+      this.#filters.name = '';
+    } else if (this.#filters.additional?.[key] !== undefined) {
+      if (choice && typeof this.#filters.additional[key] === 'object') {
+        delete this.#filters.additional[key][choice];
+        if (!Object.values(this.#filters.additional[key]).some(Boolean)) {
+          delete this.#filters.additional[key];
+        }
+      } else {
+        delete this.#filters.additional[key];
+      }
+    }
+    this.render(true);
+  }
+
+  /** @this {CompendiumBrowser} */
+  static #onClearFilters() {
+    this.#filters.name = '';
+    // Keep the filters the current tab sets by itself
+    const tab = this.constructor.TABS.find(t => t.tab === this.tabGroups.primary);
+    delete this.#filters.additional;
+    if (tab?.initialFilters) {
+      this.#filters.additional = foundry.utils.deepClone(tab.initialFilters);
+    }
+    this.render(true);
+  }
+
+  /** @this {CompendiumBrowser} */
   static #onSubmitSearch(event, target) {
     const input = this.element.querySelector('search input[type="text"]');
     if (input) {
@@ -1281,6 +1436,11 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
 
     this.element.addEventListener('change', event => {
       const target = event.target;
+      if (target.matches('select[name="cbSortBy"]')) {
+        this.#sortBy = target.value || 'auto';
+        this.render(true);
+        return;
+      }
       if (!target.matches('input[name^="additional."]')) return;
 
       const match = target.name.match(/additional\.(\w+)\.(min|max)/);

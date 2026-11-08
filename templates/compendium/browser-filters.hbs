@@ -15,7 +15,7 @@
       <div class="group-header" data-action="toggleGroup">
         <i class="fas fa-chevron-{{#if expanded}}down{{else}}right{{/if}}"></i>
         <span>{{localize groupLabel}}</span>
-        <span class="badge">{{count}}</span>
+        {{#if count}}<span class="badge">{{count}}</span>{{/if}}
       </div>
       <div class="group-content {{#unless expanded}}collapsed{{/unless}}">
         {{#each filters}}

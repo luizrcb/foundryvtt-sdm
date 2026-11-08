@@ -1,3 +1,27 @@
+<div class="cb-results-bar">
+  <span class="cb-count">{{resultsCount}}</span>
+  {{#if activeFilters.length}}
+  <ul class="cb-chips">
+    {{#each activeFilters}}
+    <li>
+      <button type="button" class="cb-chip" data-action="removeFilter" data-key="{{key}}" {{#if choice}}data-choice="{{choice}}"{{/if}}
+        data-tooltip="{{localize 'SDM.CompendiumBrowser.RemoveFilter'}}">
+        <span>{{label}}</span><i class="fas fa-times"></i>
+      </button>
+    </li>
+    {{/each}}
+    <li>
+      <button type="button" class="cb-clear" data-action="clearFilters">{{localize 'SDM.CompendiumBrowser.ClearFilters'}}</button>
+    </li>
+  </ul>
+  {{/if}}
+  <label class="cb-sort">
+    <span>{{localize 'SDM.CompendiumBrowser.Sort.Label'}}</span>
+    <select name="cbSortBy">
+      {{selectOptions sortOptions selected=sortBy}}
+    </select>
+  </label>
+</div>
 {{#if results.length}}
   <div class="item-grid">
     {{#each results}}
