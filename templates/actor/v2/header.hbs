@@ -138,11 +138,11 @@
         <input type="text" name="system.expense" value="{{system.expense}}" data-dtype="Number" />
       </label>
       <div class="v2-money-cell" data-tooltip="
-        <span><b>{{toPascalCase (localize 'SDM.UnitCash')}}:</b> {{localize 'SDM.CashSymbol'}}{{system.total_cash}}</span><br/>
-        <span><b>{{localize 'SDM.TabInventory'}}:</b> {{localize 'SDM.CashSymbol'}}{{system.inventory_value}}</span><hr>
-        <span><b>{{toPascalCase (localize 'SDM.Total')}}:</b> {{localize 'SDM.CashSymbol'}}{{system.wealth}}</span>">
+        <span><b>{{toPascalCase (localize 'SDM.UnitCash')}}:</b> {{localize 'SDM.CashSymbol'}}{{localeNumber system.total_cash}}</span><br/>
+        <span><b>{{localize 'SDM.TabInventory'}}:</b> {{localize 'SDM.CashSymbol'}}{{localeNumber system.inventory_value}}</span><hr>
+        <span><b>{{toPascalCase (localize 'SDM.Total')}}:</b> {{localize 'SDM.CashSymbol'}}{{localeNumber system.wealth}}</span>">
         <span class="v2-label">{{localize 'SDM.FieldWealth'}}</span>
-        <input type="text" name="system.total_cash" value="{{localize 'SDM.CashSymbol'}}{{system.total_cash}}" disabled />
+        <input type="text" name="system.total_cash" value="{{localize 'SDM.CashSymbol'}}{{localeNumber system.total_cash}}" disabled />
       </div>
       <label class="v2-money-cell">
         <span class="v2-label">{{localize 'SDM.FieldDebt'}}</span>

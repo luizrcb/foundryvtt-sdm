@@ -9,6 +9,13 @@ export function registerHandlebarsHelpers() {
     return 'systems/sdm/templates/' + path + '.hbs';
   });
 
+  // Display-only number with the locale's thousands separators (1.500 / 1,500)
+  $$('localeNumber', function (value) {
+    const n = Number(value);
+    if (value === null || value === undefined || value === '' || !Number.isFinite(n)) return value ?? '';
+    return new Intl.NumberFormat(game.i18n.lang, { maximumFractionDigits: 20 }).format(n);
+  });
+
   $$('sdmSpeed', function (value) {
     return CONFIG.SDM.formatSpeed(value);
   });
