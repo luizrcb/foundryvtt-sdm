@@ -3652,6 +3652,8 @@ input[type=radio]::after {
   padding: 6px 10px 10px;
   margin: 0;
   box-shadow: var(--v2-shadow);
+  max-height: none;
+  overflow: visible;
 }
 
 .application.sheet.sdm.actor.sheet-v2 .v2-col .items-header {
@@ -3662,10 +3664,26 @@ input[type=radio]::after {
   margin-bottom: 4px;
   font-family: var(--sdm-font-primary);
   font-size: 14px;
+  height: auto;
+  min-height: 36px;
+  align-items: center;
 }
 
 .application.sheet.sdm.actor.sheet-v2 .v2-col .items-header .item-name {
   display: none;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-col .items-header .item-formula {
+  flex: 1 1 auto;
+  text-align: left;
+  font-family: var(--sdm-font-primary);
+  font-size: 14px;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-col .items-header .item-controls {
+  flex: 0 0 auto;
+  display: flex;
+  justify-content: flex-end;
 }
 
 .application.sheet.sdm.actor.sheet-v2 .v2-col .items-header .item-create {
@@ -3725,9 +3743,22 @@ input[type=radio]::after {
 }
 
 .application.sheet.sdm.actor.sheet-v2 .v2-col-burdens .items-header .item-formula {
+  flex: 0 0 auto;
+  width: 100%;
   font-size: 11px;
   text-align: center;
   line-height: 1.1;
+  white-space: normal;
+  overflow-wrap: anywhere;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-col-burdens .items-header .item-controls {
+  width: 100%;
+  justify-content: center;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-col-burdens .items-header .item-create {
+  margin: 0;
 }
 
 .application.sheet.sdm.actor.sheet-v2 .v2-col-burdens li.item:not(.items-header) {
@@ -3828,8 +3859,14 @@ input[type=radio]::after {
     flex-direction: row;
   }
   .application.sheet.sdm.actor.sheet-v2 .v2-col-burdens .items-header .item-formula {
-    font-size: inherit;
+    flex: 1 1 auto;
+    width: auto;
+    font-size: 14px;
     text-align: left;
+  }
+  .application.sheet.sdm.actor.sheet-v2 .v2-col-burdens .items-header .item-controls {
+    width: auto;
+    justify-content: flex-end;
   }
   .application.sheet.sdm.actor.sheet-v2 .v2-col-burdens li.item:not(.items-header) {
     justify-content: flex-start;
