@@ -2983,6 +2983,7 @@ input[type=radio]::after {
   --v2-accent-soft: color-mix(in srgb, var(--v2-accent) 18%, transparent);
   --v2-danger: #9b2c22;
   --v2-fate-icon: var(--v2-hero);
+  --v2-corruption: #b84eff;
   --v2-svg-filter: brightness(0) invert(0.3);
   --v2-str: #cfa9a6;
   --v2-end: #d3b59c;
@@ -3037,6 +3038,7 @@ input[type=radio]::after {
   --v2-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
   --v2-danger: #ff8a7a;
   --v2-fate-icon: #5a4a1c;
+  --v2-corruption: #7a1fc9;
   --v2-svg-filter: none;
 }
 
@@ -3633,6 +3635,10 @@ input[type=radio]::after {
 
 .application.sheet.sdm.sheet-v2 .v2-header .v2-roll.is-fate i {
   color: var(--v2-fate-icon);
+}
+
+.application.sheet.sdm.sheet-v2 .v2-header .v2-roll.is-fate i.v2-corruption-icon {
+  color: var(--v2-corruption);
 }
 
 .application.sheet.sdm.sheet-v2 .v2-header .v2-roll.is-config {
