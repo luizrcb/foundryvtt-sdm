@@ -3961,10 +3961,6 @@ input[type=radio]::after {
   border-color: var(--sdm-c-blood, #880808);
 }
 
-.application.sheet.sdm.actor.sheet-v2 .v2-portrait.is-square img {
-  border-radius: 14px;
-}
-
 .application.sheet.sdm.actor.sheet-v2 .v2-npc .v2-chips {
   flex: 0 0 330px;
 }

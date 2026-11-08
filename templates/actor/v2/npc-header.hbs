@@ -3,7 +3,7 @@
   <div class="v2-rail">
     {{! Identity }}
     <div class="v2-identity">
-      <div class="v2-portrait is-square">
+      <div class="v2-portrait">
         {{#if isToken}}<div class="token-tag">{{localize 'DOCUMENT.Token'}}</div>{{/if}}
         <img src="{{actor.img}}" data-edit="img" data-action="onEditImage" data-tooltip="{{actor.name}}" />
         {{#if (isDefeated @root.statuses)}}<i class="fa fa-skull overlay-icon defeated-icon"></i>{{/if}}
@@ -23,7 +23,7 @@
           <input type="text" name="system.experience" value="{{system.experience}}" />
         </div>
         <div class="v2-chip" data-tooltip="{{localize 'SDM.CustomInitiative'}}">
-          <span class="v2-label">{{localize 'SDM.CustomInitiative'}}</span>
+          <span class="v2-label">{{localize 'SDM.Initiative'}}</span>
           <input type="text" name="system.initiative" value="{{system.initiative}}" />
         </div>
       </div>
