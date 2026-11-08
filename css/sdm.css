@@ -3627,9 +3627,22 @@ input[type=radio]::after {
 
 .application.sheet.sdm.actor.sheet-v2 nav.tabs {
   flex: 0 0 auto;
+  position: relative;
   border-top: 0;
-  border-bottom: 2px solid var(--v2-line);
+  border-bottom: 0;
   gap: 6px;
+}
+
+.application.sheet.sdm.actor.sheet-v2 nav.tabs::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 2px;
+  background: var(--v2-line);
+  z-index: 0;
+  pointer-events: none;
 }
 
 .application.sheet.sdm.actor.sheet-v2 nav.tabs > a,
@@ -3642,6 +3655,8 @@ input[type=radio]::after {
   border-bottom: 0;
   margin-bottom: 0;
   text-shadow: none;
+  position: relative;
+  z-index: 1;
 }
 
 .application.sheet.sdm.actor.sheet-v2 nav.tabs > a:hover,

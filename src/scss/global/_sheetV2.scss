@@ -645,11 +645,26 @@ $v2-wide: 1100px;
   }
 
   // ---------- Tabs ----------
+  // "Open folder" tabs: the baseline is drawn inside the nav, so the active
+  // tab can cover it without reaching into the section below.
   nav.tabs {
     flex: 0 0 auto;
+    position: relative;
     border-top: 0;
-    border-bottom: 2px solid var(--v2-line);
+    border-bottom: 0;
     gap: 6px;
+
+    &::after {
+      content: '';
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 2px;
+      background: var(--v2-line);
+      z-index: 0;
+      pointer-events: none;
+    }
 
     > a,
     > button {
@@ -661,6 +676,8 @@ $v2-wide: 1100px;
       border-bottom: 0;
       margin-bottom: 0;
       text-shadow: none;
+      position: relative;
+      z-index: 1;
 
       &:hover {
         color: var(--v2-ink);
