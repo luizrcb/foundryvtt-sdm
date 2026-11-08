@@ -17,6 +17,7 @@ $v2-wide: 1100px;
   --v2-accent: var(--sdm-c-accent, #00817f);
   --v2-accent-soft: color-mix(in srgb, var(--v2-accent) 18%, transparent);
   --v2-danger: #9b2c22;
+  --v2-fate-icon: var(--v2-hero);
   // Core svg icons are white; darken them on light paper
   --v2-svg-filter: brightness(0) invert(0.3);
 
@@ -49,6 +50,7 @@ $v2-wide: 1100px;
     --v2-rule: rgba(230, 227, 218, 0.22);
     --v2-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
     --v2-danger: #ff8a7a;
+    --v2-fate-icon: #5a4a1c;
     --v2-svg-filter: none;
   }
 
@@ -622,7 +624,7 @@ $v2-wide: 1100px;
       background: var(--v2-ink);
       color: var(--v2-paper);
       i {
-        color: var(--v2-hero);
+        color: var(--v2-fate-icon);
       }
     }
     &.is-config {
