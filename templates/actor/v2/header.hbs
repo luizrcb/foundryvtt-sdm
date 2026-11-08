@@ -13,9 +13,11 @@
         <label class="v2-label" for="v2-name-{{actor.id}}">
           {{localize 'SDM.FieldName'}}{{#if (isDefeated @root.statuses)}} ({{localize 'SDM.DefeatOutcome2to6'}}){{/if}}
         </label>
-        <input id="v2-name-{{actor.id}}" class="v2-title" name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'SDM.FieldName'}}" />
+        <input id="v2-name-{{actor.id}}" class="v2-title" name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'SDM.FieldName'}}"
+          {{#unless isEditMode}}disabled{{/unless}} />
         <input class="v2-species" name="system.species" type="text" value="{{system.species}}"
-          placeholder="{{localize 'SDM.FieldSpecies'}}" data-tooltip="{{localize 'SDM.FieldSpecies'}}" />
+          placeholder="{{localize 'SDM.FieldSpecies'}}" data-tooltip="{{localize 'SDM.FieldSpecies'}}"
+          {{#unless isEditMode}}disabled{{/unless}} />
       </div>
       <div class="v2-chips">
         <div class="v2-chip">

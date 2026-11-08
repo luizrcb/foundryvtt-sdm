@@ -28,6 +28,10 @@ export class SdmActorSheetV2 extends SdmActorSheet {
     header: {
       template: templatePath('actor/v2/header')
     },
+    biography: {
+      template: templatePath('actor/v2/biography'),
+      scrollable: ['']
+    },
     inventory: {
       template: templatePath('actor/v2/inventory'),
       // Each column scrolls on its own; keep their positions across re-renders

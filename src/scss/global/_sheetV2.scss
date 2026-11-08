@@ -977,6 +977,175 @@ $v2-wide: 1100px;
     border-color: var(--sdm-c-blood, #880808);
   }
 
+  // ---------- Effects tab ----------
+  .tab.effects {
+    .effects-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      color: var(--v2-ink);
+    }
+
+    // Each section is a card: the header is its top, the list its body
+    .effects-header {
+      height: auto;
+      min-height: 40px;
+      margin: 12px 0 0;
+      padding: 6px 12px;
+      background: var(--v2-panel);
+      border: 2px solid var(--v2-line);
+      border-bottom: 2px solid var(--v2-line);
+      border-radius: 14px 14px 0 0;
+      box-shadow: var(--v2-shadow);
+
+      &:first-child {
+        margin-top: 0;
+      }
+      > * {
+        font-family: var(--sdm-font-primary);
+        font-size: 13px;
+        letter-spacing: 0.04em;
+        text-transform: uppercase;
+        color: var(--v2-muted);
+      }
+      .effect-name {
+        font-size: 14px;
+        color: var(--v2-ink);
+      }
+      .effect-control {
+        width: 26px;
+        height: 26px;
+        font-size: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        border: 2px solid var(--v2-line);
+        color: var(--v2-ink);
+
+        i {
+          font-size: 12px;
+          margin: 0;
+        }
+        &:hover {
+          background: var(--v2-accent-soft);
+          border-color: var(--v2-accent);
+        }
+      }
+    }
+
+    .effect-list {
+      background: var(--v2-panel);
+      border: 2px solid var(--v2-line);
+      border-top: 0;
+      border-radius: 0 0 14px 14px;
+      padding: 2px 12px 6px;
+      min-height: 12px;
+      box-shadow: var(--v2-shadow);
+    }
+
+    .effect {
+      min-height: 42px;
+      border-bottom: 1px dashed var(--v2-rule);
+      color: var(--v2-ink);
+
+      &:hover {
+        background: var(--v2-accent-soft);
+      }
+      .effect-name {
+        color: var(--v2-ink);
+        font-size: 14px;
+        gap: 8px;
+      }
+      .effect-image {
+        border-radius: 8px;
+      }
+      .effect-image[src$='.svg'] {
+        filter: var(--v2-svg-filter);
+      }
+      .effect-source,
+      .effect-duration {
+        color: var(--v2-muted);
+        font-size: 13px;
+      }
+      .effect-control {
+        color: var(--v2-muted);
+        &:hover {
+          color: var(--v2-accent);
+        }
+      }
+    }
+  }
+
+  // ---------- Biography / notes tabs ----------
+  .v2-profile {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 10px;
+    margin-bottom: 12px;
+  }
+
+  .v2-profile-field {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding: 8px 12px;
+    background: var(--v2-panel);
+    border: 2px solid var(--v2-line);
+    border-radius: 12px;
+    box-shadow: var(--v2-shadow);
+    min-width: 0;
+
+    input[type='text'] {
+      background: transparent;
+      border: 0;
+      border-bottom: 2px solid var(--v2-accent-soft);
+      border-radius: 4px 4px 0 0;
+      color: var(--v2-ink);
+      box-shadow: none;
+      padding: 2px 4px;
+      height: auto;
+      font-size: 14px;
+
+      &:focus {
+        border-bottom-color: var(--v2-accent);
+        background: var(--v2-accent-soft);
+        outline: none;
+      }
+      &[disabled] {
+        border-bottom-color: transparent;
+        opacity: 1;
+      }
+    }
+  }
+
+  .tab.biography,
+  .tab.notes {
+    color: var(--v2-ink);
+  }
+
+  .v2-prose,
+  .tab.notes > prose-mirror {
+    display: block;
+    background: var(--v2-panel);
+    border: 2px solid var(--v2-line);
+    border-radius: 14px;
+    box-shadow: var(--v2-shadow);
+    padding: 10px 14px;
+    min-height: 240px;
+  }
+
+  .v2-prose prose-mirror,
+  .tab.notes > prose-mirror {
+    --color-text-primary: var(--v2-ink);
+
+    .editor-menu,
+    menu {
+      background: var(--v2-paper);
+      border-radius: 10px;
+    }
+  }
+
   // ---------- Wide layout ----------
   @container sdmv2 (min-width: #{$v2-wide}) {
     .window-content {

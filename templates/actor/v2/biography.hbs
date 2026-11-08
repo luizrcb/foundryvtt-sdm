@@ -1,0 +1,39 @@
+{{! Sheet v2 biography tab: profile fields are always shown here (the v2 header does not have them) }}
+<section class="tab biography v2-biography {{tab.cssClass}}" data-group="primary" data-tab="biography">
+  {{#if (eq actor.type 'character')}}
+  <div class="v2-profile">
+    <label class="v2-profile-field">
+      <span class="v2-label">{{localize 'SDM.FieldLooks'}}</span>
+      <input type="text" name="system.looks" value="{{system.looks}}" {{#unless editable}}disabled{{/unless}} />
+    </label>
+    <label class="v2-profile-field">
+      <span class="v2-label">{{localize 'SDM.FieldLikes'}}</span>
+      <input type="text" name="system.likes" value="{{system.likes}}" {{#unless editable}}disabled{{/unless}} />
+    </label>
+    <label class="v2-profile-field">
+      <span class="v2-label">{{localize 'SDM.FieldFriends'}}</span>
+      <input type="text" name="system.friends" value="{{system.friends}}" {{#unless editable}}disabled{{/unless}} />
+    </label>
+    <label class="v2-profile-field">
+      <span class="v2-label">{{localize 'SDM.FieldFoes'}}</span>
+      <input type="text" name="system.foes" value="{{system.foes}}" {{#unless editable}}disabled{{/unless}} />
+    </label>
+  </div>
+  {{/if}}
+  <div class="v2-prose">
+    {{! Editors must receive enriched text data to properly handle rolls, UUID links, etc. }}
+    {{#if editable}}
+    <prose-mirror
+      name="system.biography"
+      data-document-uuid="{{actor.uuid}}"
+      value="{{system.biography}}"
+      collaborate="true"
+      toggled="true"
+    >
+      {{{enrichedBiography}}}
+    </prose-mirror>
+    {{else}}
+    {{{enrichedBiography}}}
+    {{/if}}
+  </div>
+</section>

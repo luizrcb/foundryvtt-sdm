@@ -3948,6 +3948,183 @@ input[type=radio]::after {
   border-color: var(--sdm-c-blood, #880808);
 }
 
+.application.sheet.sdm.actor.sheet-v2 .tab.effects .effects-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  color: var(--v2-ink);
+}
+
+.application.sheet.sdm.actor.sheet-v2 .tab.effects .effects-header {
+  height: auto;
+  min-height: 40px;
+  margin: 12px 0 0;
+  padding: 6px 12px;
+  background: var(--v2-panel);
+  border: 2px solid var(--v2-line);
+  border-bottom: 2px solid var(--v2-line);
+  border-radius: 14px 14px 0 0;
+  box-shadow: var(--v2-shadow);
+}
+
+.application.sheet.sdm.actor.sheet-v2 .tab.effects .effects-header:first-child {
+  margin-top: 0;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .tab.effects .effects-header > * {
+  font-family: var(--sdm-font-primary);
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--v2-muted);
+}
+
+.application.sheet.sdm.actor.sheet-v2 .tab.effects .effects-header .effect-name {
+  font-size: 14px;
+  color: var(--v2-ink);
+}
+
+.application.sheet.sdm.actor.sheet-v2 .tab.effects .effects-header .effect-control {
+  width: 26px;
+  height: 26px;
+  font-size: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 2px solid var(--v2-line);
+  color: var(--v2-ink);
+}
+
+.application.sheet.sdm.actor.sheet-v2 .tab.effects .effects-header .effect-control i {
+  font-size: 12px;
+  margin: 0;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .tab.effects .effects-header .effect-control:hover {
+  background: var(--v2-accent-soft);
+  border-color: var(--v2-accent);
+}
+
+.application.sheet.sdm.actor.sheet-v2 .tab.effects .effect-list {
+  background: var(--v2-panel);
+  border: 2px solid var(--v2-line);
+  border-top: 0;
+  border-radius: 0 0 14px 14px;
+  padding: 2px 12px 6px;
+  min-height: 12px;
+  box-shadow: var(--v2-shadow);
+}
+
+.application.sheet.sdm.actor.sheet-v2 .tab.effects .effect {
+  min-height: 42px;
+  border-bottom: 1px dashed var(--v2-rule);
+  color: var(--v2-ink);
+}
+
+.application.sheet.sdm.actor.sheet-v2 .tab.effects .effect:hover {
+  background: var(--v2-accent-soft);
+}
+
+.application.sheet.sdm.actor.sheet-v2 .tab.effects .effect .effect-name {
+  color: var(--v2-ink);
+  font-size: 14px;
+  gap: 8px;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .tab.effects .effect .effect-image {
+  border-radius: 8px;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .tab.effects .effect .effect-image[src$=".svg"] {
+  filter: var(--v2-svg-filter);
+}
+
+.application.sheet.sdm.actor.sheet-v2 .tab.effects .effect .effect-source,
+.application.sheet.sdm.actor.sheet-v2 .tab.effects .effect .effect-duration {
+  color: var(--v2-muted);
+  font-size: 13px;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .tab.effects .effect .effect-control {
+  color: var(--v2-muted);
+}
+
+.application.sheet.sdm.actor.sheet-v2 .tab.effects .effect .effect-control:hover {
+  color: var(--v2-accent);
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-profile {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-profile-field {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 8px 12px;
+  background: var(--v2-panel);
+  border: 2px solid var(--v2-line);
+  border-radius: 12px;
+  box-shadow: var(--v2-shadow);
+  min-width: 0;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-profile-field input[type=text] {
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid var(--v2-accent-soft);
+  border-radius: 4px 4px 0 0;
+  color: var(--v2-ink);
+  box-shadow: none;
+  padding: 2px 4px;
+  height: auto;
+  font-size: 14px;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-profile-field input[type=text]:focus {
+  border-bottom-color: var(--v2-accent);
+  background: var(--v2-accent-soft);
+  outline: none;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-profile-field input[type=text][disabled] {
+  border-bottom-color: transparent;
+  opacity: 1;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .tab.biography,
+.application.sheet.sdm.actor.sheet-v2 .tab.notes {
+  color: var(--v2-ink);
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-prose,
+.application.sheet.sdm.actor.sheet-v2 .tab.notes > prose-mirror {
+  display: block;
+  background: var(--v2-panel);
+  border: 2px solid var(--v2-line);
+  border-radius: 14px;
+  box-shadow: var(--v2-shadow);
+  padding: 10px 14px;
+  min-height: 240px;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-prose prose-mirror,
+.application.sheet.sdm.actor.sheet-v2 .tab.notes > prose-mirror {
+  --color-text-primary: var(--v2-ink);
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-prose prose-mirror .editor-menu,
+.application.sheet.sdm.actor.sheet-v2 .v2-prose prose-mirror menu,
+.application.sheet.sdm.actor.sheet-v2 .tab.notes > prose-mirror .editor-menu,
+.application.sheet.sdm.actor.sheet-v2 .tab.notes > prose-mirror menu {
+  background: var(--v2-paper);
+  border-radius: 10px;
+}
+
 @container sdmv2 (min-width: 1100px) {
   .application.sheet.sdm.actor.sheet-v2 .window-content {
     display: grid;
