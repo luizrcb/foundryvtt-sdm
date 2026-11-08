@@ -4041,8 +4041,15 @@ input[type=radio]::after {
 
 .application.sheet.sdm.actor.sheet-v2 .v2-npc-rolls .v2-roll {
   flex-direction: row;
+  align-items: center;
   gap: 8px;
   font-size: 13px;
+  line-height: 1;
+}
+
+.application.sheet.sdm.actor.sheet-v2 .v2-header .v2-roll span {
+  line-height: 1;
+  text-box: trim-both cap alphabetic;
 }
 
 .application.sheet.sdm.actor.sheet-v2 .tab.effects .effects-list {
