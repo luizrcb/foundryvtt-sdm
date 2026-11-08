@@ -3481,7 +3481,9 @@ input[type=radio]::after {
 
 .application.sheet.sdm.actor.sheet-v2 .v2-ability-code {
   font-family: var(--sdm-font-primary);
-  font-size: 16px;
+  font-size: 17px;
+  font-weight: bold;
+  color: var(--v2-tile-ink);
   letter-spacing: 0.04em;
 }
 
