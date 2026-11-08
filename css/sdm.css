@@ -3014,6 +3014,13 @@ input[type=radio]::after {
   min-height: 500px;
 }
 
+.application.sheet.sdm.sheet-v2.actor.caravan {
+  container-type: normal;
+  min-width: 725px;
+  max-width: 1800px;
+  min-height: 700px;
+}
+
 .application.sheet.sdm.sheet-v2.minimized {
   min-width: 0;
   min-height: 0;
@@ -4570,6 +4577,195 @@ input[type=radio]::after {
 
 .application.sheet.sdm.sheet-v2 .tab.features input[type=checkbox] {
   accent-color: var(--v2-accent);
+}
+
+.application.sheet.sdm.sheet-v2 .v2-caravan .v2-identity {
+  align-items: flex-start;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-caravan .v2-caravan-sub {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-caravan .v2-money input[type=text] {
+  font-size: 16px;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-caravan-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 10px;
+  align-items: stretch;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-field.is-danger .v2-label,
+.application.sheet.sdm.sheet-v2 .v2-field.is-danger input {
+  color: var(--v2-danger);
+}
+
+.application.sheet.sdm.sheet-v2.caravan .v2-header select {
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid var(--v2-accent-soft);
+  color: var(--v2-ink);
+  width: 100%;
+}
+
+.application.sheet.sdm.sheet-v2.caravan .v2-header select[disabled] {
+  opacity: 1;
+  border-bottom-color: transparent;
+}
+
+.application.sheet.sdm.sheet-v2.caravan .v2-header .v2-field input[type=text] {
+  width: 100%;
+}
+
+.application.sheet.sdm.sheet-v2.caravan .items-list .item.items-header.caravan-item-header {
+  height: auto;
+  min-height: 40px;
+  padding: 6px 12px;
+  background: var(--v2-panel);
+  border: 2px solid var(--v2-line);
+  border-radius: 14px;
+  box-shadow: var(--v2-shadow);
+  color: var(--v2-ink);
+  font-family: var(--sdm-font-primary);
+  letter-spacing: 0.03em;
+}
+
+.application.sheet.sdm.sheet-v2.caravan .items-list .item.items-header.caravan-item-header > * {
+  font-family: var(--sdm-font-primary);
+}
+
+.application.sheet.sdm.sheet-v2.caravan .items-list .item.items-header.caravan-item-header .item-create {
+  font-size: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid var(--v2-line);
+  margin: 0;
+}
+
+.application.sheet.sdm.sheet-v2.caravan .items-list .item.items-header.caravan-item-header .item-create i {
+  font-size: 12px;
+  margin: 0;
+}
+
+.application.sheet.sdm.sheet-v2.caravan .items-list .item.items-header.caravan-item-header .item-create:hover {
+  background: var(--v2-accent-soft);
+  border-color: var(--v2-accent);
+}
+
+.application.sheet.sdm.sheet-v2.caravan .list-border {
+  background: var(--v2-panel);
+  border: 2px solid var(--v2-line);
+  border-radius: 14px;
+  box-shadow: var(--v2-shadow);
+  color: var(--v2-ink);
+  overflow: hidden;
+}
+
+.application.sheet.sdm.sheet-v2.caravan .list-border .items-list.list-border {
+  border: 0;
+  border-radius: 0;
+  box-shadow: none;
+  background: transparent;
+}
+
+.application.sheet.sdm.sheet-v2.caravan .list-border .header,
+.application.sheet.sdm.sheet-v2.caravan .list-border > .flex-group-center {
+  font-family: var(--sdm-font-primary);
+}
+
+.application.sheet.sdm.sheet-v2.caravan .sack-overflow {
+  border-color: var(--v2-danger);
+}
+
+.application.sheet.sdm.sheet-v2.caravan .sack-name {
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid var(--v2-accent-soft);
+  color: var(--v2-muted);
+  text-align: center;
+}
+
+.application.sheet.sdm.sheet-v2.caravan .items-list li.item:not(.items-header) {
+  border-bottom: 1px dashed var(--v2-rule);
+  background: transparent;
+  color: var(--v2-ink);
+}
+
+.application.sheet.sdm.sheet-v2.caravan .items-list li.item:not(.items-header):hover {
+  background: var(--v2-accent-soft);
+}
+
+.application.sheet.sdm.sheet-v2.caravan .items-list li.item:not(.items-header) .item-image img[src$=".svg"],
+.application.sheet.sdm.sheet-v2.caravan .items-list li.item:not(.items-header) img[src$=".svg"] {
+  filter: var(--v2-svg-filter);
+}
+
+.application.sheet.sdm.sheet-v2.caravan .crew-card {
+  background: var(--v2-panel);
+  border: 2px solid var(--v2-line);
+  border-left-width: 6px;
+  border-radius: 14px;
+  box-shadow: var(--v2-shadow);
+  color: var(--v2-ink);
+}
+
+.application.sheet.sdm.sheet-v2.caravan .crew-hero {
+  border-left-color: var(--v2-tho);
+}
+
+.application.sheet.sdm.sheet-v2.caravan .crew-npc {
+  border-left-color: var(--v2-str);
+}
+
+.application.sheet.sdm.sheet-v2.caravan .stat-icon {
+  background: var(--v2-paper);
+  border: 1px solid var(--v2-rule);
+  color: var(--v2-ink);
+}
+
+.application.sheet.sdm.sheet-v2.caravan .transport-summary {
+  padding: 8px 12px;
+  background: var(--v2-panel);
+  border: 2px solid var(--v2-line);
+  border-radius: 14px;
+  box-shadow: var(--v2-shadow);
+}
+
+.application.sheet.sdm.sheet-v2.caravan .route-item {
+  background: var(--v2-panel);
+  border: 2px solid var(--v2-line);
+  border-radius: 14px;
+  box-shadow: var(--v2-shadow);
+  margin-top: 10px;
+}
+
+.application.sheet.sdm.sheet-v2.caravan .tab.transport .items-list,
+.application.sheet.sdm.sheet-v2.caravan .tab.routes .items-list {
+  background: transparent;
+}
+
+.application.sheet.sdm.sheet-v2.caravan .tab.transport select,
+.application.sheet.sdm.sheet-v2.caravan .tab.transport input[type=text],
+.application.sheet.sdm.sheet-v2.caravan .route-item input[type=text] {
+  background: transparent;
+  border: 0;
+  border-bottom: 2px solid var(--v2-accent-soft);
+  color: var(--v2-ink);
+}
+
+.application.sheet.sdm.sheet-v2.caravan .pill {
+  border-color: var(--v2-line);
+  color: var(--v2-ink);
 }
 
 @container sdmv2 (min-width: 1100px) {

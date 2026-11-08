@@ -53,6 +53,14 @@ $v2-wide: 1100px;
     min-height: 500px;
   }
 
+  // Caravan keeps the classic compact toggle; no width-based layout switch
+  &.actor.caravan {
+    container-type: normal;
+    min-width: 725px;
+    max-width: 1800px;
+    min-height: 700px;
+  }
+
   &.minimized {
     min-width: 0;
     min-height: 0;
@@ -1587,6 +1595,194 @@ $v2-wide: 1100px;
 
   .tab.features input[type='checkbox'] {
     accent-color: var(--v2-accent);
+  }
+
+  // ---------- Caravan sheet ----------
+  .v2-caravan {
+    .v2-identity {
+      align-items: flex-start;
+    }
+    .v2-caravan-sub {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 10px;
+      margin-top: 4px;
+    }
+    .v2-money input[type='text'] {
+      font-size: 16px;
+    }
+  }
+
+  .v2-caravan-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 10px;
+    align-items: stretch;
+  }
+
+  .v2-field.is-danger {
+    .v2-label,
+    input {
+      color: var(--v2-danger);
+    }
+  }
+
+  &.caravan .v2-header select {
+    background: transparent;
+    border: 0;
+    border-bottom: 2px solid var(--v2-accent-soft);
+    color: var(--v2-ink);
+    width: 100%;
+
+    &[disabled] {
+      opacity: 1;
+      border-bottom-color: transparent;
+    }
+  }
+
+  &.caravan .v2-header .v2-field input[type='text'] {
+    width: 100%;
+  }
+
+  // Tab contents keep the classic templates; restyle the shared building blocks
+  &.caravan {
+    // List headers (cargo, transport and routes bars)
+    .items-list .item.items-header.caravan-item-header {
+      height: auto;
+      min-height: 40px;
+      padding: 6px 12px;
+      background: var(--v2-panel);
+      border: 2px solid var(--v2-line);
+      border-radius: 14px;
+      box-shadow: var(--v2-shadow);
+      color: var(--v2-ink);
+      font-family: var(--sdm-font-primary);
+      letter-spacing: 0.03em;
+
+      > * {
+        font-family: var(--sdm-font-primary);
+      }
+      .item-create {
+        font-size: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 26px;
+        height: 26px;
+        border-radius: 50%;
+        border: 2px solid var(--v2-line);
+        margin: 0;
+
+        i {
+          font-size: 12px;
+          margin: 0;
+        }
+        &:hover {
+          background: var(--v2-accent-soft);
+          border-color: var(--v2-accent);
+        }
+      }
+    }
+
+    // Sacks, passengers and other bordered boxes become cards
+    .list-border {
+      background: var(--v2-panel);
+      border: 2px solid var(--v2-line);
+      border-radius: 14px;
+      box-shadow: var(--v2-shadow);
+      color: var(--v2-ink);
+      overflow: hidden;
+
+      .items-list.list-border {
+        border: 0;
+        border-radius: 0;
+        box-shadow: none;
+        background: transparent;
+      }
+      .header,
+      > .flex-group-center {
+        font-family: var(--sdm-font-primary);
+      }
+    }
+
+    .sack-overflow {
+      border-color: var(--v2-danger);
+    }
+
+    .sack-name {
+      background: transparent;
+      border: 0;
+      border-bottom: 2px solid var(--v2-accent-soft);
+      color: var(--v2-muted);
+      text-align: center;
+    }
+
+    .items-list li.item:not(.items-header) {
+      border-bottom: 1px dashed var(--v2-rule);
+      background: transparent;
+      color: var(--v2-ink);
+
+      &:hover {
+        background: var(--v2-accent-soft);
+      }
+      .item-image img[src$='.svg'],
+      img[src$='.svg'] {
+        filter: var(--v2-svg-filter);
+      }
+    }
+
+    // Crew cards
+    .crew-card {
+      background: var(--v2-panel);
+      border: 2px solid var(--v2-line);
+      border-left-width: 6px;
+      border-radius: 14px;
+      box-shadow: var(--v2-shadow);
+      color: var(--v2-ink);
+    }
+    .crew-hero {
+      border-left-color: var(--v2-tho);
+    }
+    .crew-npc {
+      border-left-color: var(--v2-str);
+    }
+    .stat-icon {
+      background: var(--v2-paper);
+      border: 1px solid var(--v2-rule);
+      color: var(--v2-ink);
+    }
+
+    // Transport summary and route cards
+    .transport-summary {
+      padding: 8px 12px;
+      background: var(--v2-panel);
+      border: 2px solid var(--v2-line);
+      border-radius: 14px;
+      box-shadow: var(--v2-shadow);
+    }
+    .route-item {
+      background: var(--v2-panel);
+      border: 2px solid var(--v2-line);
+      border-radius: 14px;
+      box-shadow: var(--v2-shadow);
+      margin-top: 10px;
+    }
+    .tab.transport .items-list,
+    .tab.routes .items-list {
+      background: transparent;
+    }
+    .tab.transport select,
+    .tab.transport input[type='text'],
+    .route-item input[type='text'] {
+      background: transparent;
+      border: 0;
+      border-bottom: 2px solid var(--v2-accent-soft);
+      color: var(--v2-ink);
+    }
+    .pill {
+      border-color: var(--v2-line);
+      color: var(--v2-ink);
+    }
   }
 
   // ---------- Wide layout ----------

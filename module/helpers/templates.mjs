@@ -16,6 +16,7 @@ const templatesToLoad = [
   $$('actor/v2/biography'),
   $$('actor/v2/notes'),
   $$('actor/v2/npc-header'),
+  $$('actor/v2/caravan-header'),
   $$('actor/v2/items'),
   $$('actor/v2/traits'),
   $$('item/burden/header'),

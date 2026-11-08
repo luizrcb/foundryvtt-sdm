@@ -69,6 +69,7 @@ import { setupSettingsSocket } from './settingsSocket.mjs';
 import { SdmActorSheet } from './sheets/actor-sheet.mjs';
 import { SdmActorSheetV2, SdmNpcSheetV2 } from './sheets/actor-sheet-v2.mjs';
 import { SdmItemSheetV2 } from './sheets/item-sheet-v2.mjs';
+import { SdmCaravanSheetV2 } from './sheets/caravan-sheet-v2.mjs';
 import { SdmCaravanSheet } from './sheets/caravan-sheet.mjs';
 import { SdmItemSheet } from './sheets/item-sheet.mjs';
 
@@ -597,6 +598,11 @@ Hooks.once('init', function () {
     types: ['npc'],
     makeDefault: false,
     label: 'SDM.SheetLabels.NpcV2'
+  });
+  Actors.registerSheet('sdm', SdmCaravanSheetV2, {
+    types: ['caravan'],
+    makeDefault: false,
+    label: 'SDM.SheetLabels.CaravanV2'
   });
   Actors.registerSheet('sdm', SdmCaravanSheet, {
     types: ['caravan'],

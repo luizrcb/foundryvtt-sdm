@@ -1,0 +1,140 @@
+{{! Caravan sheet v2 header. Same names, data-actions and integrations as actor/caravan/header. }}
+<header class="v2-header v2-caravan">
+  {{! Identity }}
+  <div class="v2-identity">
+    <div class="v2-portrait">
+      {{#if isToken}}<div class="token-tag">{{localize 'DOCUMENT.Token'}}</div>{{/if}}
+      <img src="{{actor.img}}" data-edit="img" data-action="onEditImage" data-tooltip="{{actor.name}}" />
+    </div>
+    <div class="v2-name">
+      <label class="v2-label" for="v2-name-{{actor.id}}">{{localize 'SDM.FieldCompany'}}</label>
+      <input id="v2-name-{{actor.id}}" class="v2-title" name="name" type="text" value="{{actor.name}}" />
+      <div class="v2-caravan-sub">
+        <label class="v2-field">
+          <span class="v2-label">{{localize 'SDM.FieldMotto'}}</span>
+          <input type="text" name="system.motto" value="{{system.motto}}" />
+        </label>
+        <label class="v2-field">
+          <span class="v2-label">{{localize 'SDM.FieldFinancier'}}</span>
+          <input type="text" name="system.financier" value="{{system.financier}}" />
+        </label>
+      </div>
+    </div>
+  </div>
+
+  {{! Finances }}
+  <div class="v2-money">
+    <div class="v2-money-cell" data-tooltip="
+      <span><b>{{localize 'SDM.CaravanCash'}}:</b> {{localize 'SDM.CashSymbol'}}{{localeNumber system.total_cash}}</span><br/>
+      <span><b>{{localize 'SDM.TabCaravanInventory'}}:</b> {{localize 'SDM.CashSymbol'}}{{localeNumber system.inventory_value}}</span><br/>
+      <span><b>{{localize 'SDM.CrewMembersCash'}}:</b> {{localize 'SDM.CashSymbol'}}{{localeNumber totalCrewCash}}</span>">
+      <span class="v2-label">{{localize 'SDM.FieldWealth'}}</span>
+      <input type="text" name="system.total_cash" value="{{localize 'SDM.CashSymbol'}}{{localeNumber system.total_cash}}" disabled />
+    </div>
+    <label class="v2-money-cell">
+      <span class="v2-label">{{localize 'SDM.FieldDebt'}}</span>
+      <input type="text" name="system.debt" value="{{system.debt}}" />
+    </label>
+    <label class="v2-money-cell" data-tooltip="SDM.FieldWeeklyCost">
+      <span class="v2-label">{{localize 'SDM.FieldCost'}}</span>
+      <input type="text" name="system.cost" value="{{system.cost}}" />
+    </label>
+    <label class="v2-money-cell" data-tooltip="SDM.FieldWeeklySupply">
+      <span class="v2-label">{{localize 'SDM.FieldSupply'}}</span>
+      <input type="text" name="system.supply" value="{{system.supply}}" />
+    </label>
+  </div>
+
+  <div class="v2-caravan-cards">
+    {{! Journey }}
+    <section class="v2-card v2-item-card">
+      <span class="v2-card-title">{{localize 'SDM.Category.travel'}}</span>
+      <div class="v2-fields">
+        <label class="v2-field">
+          <span class="v2-label">{{localize 'SDM.FieldDate'}}</span>
+          {{#if @root.seasonsStarsIntegration}}
+          <input type="text" name="system.date" value="{{@root.caravanDateShort}}" disabled data-tooltip="{{@root.caravanDate}}" />
+          {{else}}
+          <input type="text" name="system.date" value="{{system.date}}" />
+          {{/if}}
+        </label>
+        <label class="v2-field">
+          <span class="v2-label">{{localize 'SDM.FieldSpeed'}}</span>
+          <select name="system.speed" data-dtype="Number" {{#if @root.autoTransport}}disabled data-tooltip="SDM.TransportAutoTooltip"{{/if}}>
+            {{selectOptions (sdmSpeedChoices system.speed) selected=system.speed}}
+          </select>
+        </label>
+        <label class="v2-field {{#if overloaded}}is-danger{{/if}}" {{#if overloaded}}data-tooltip="{{localize 'SDM.StatusOverloaded'}}"{{/if}}>
+          <span class="v2-label">{{localize 'SDM.FieldCapacity'}}{{#if overloaded}} <i class="fa fa-weight-hanging"></i>{{/if}}</span>
+          <input type="text" name="system.capacity" value="{{system.capacity}}" data-dtype="Number"
+            {{#if @root.autoTransport}}disabled data-tooltip="SDM.TransportAutoTooltip"{{/if}} />
+        </label>
+        <label class="v2-field">
+          <span class="v2-label">{{localize 'SDM.FieldCurrentLocation'}}</span>
+          <input type="text" name="system.current_location" value="{{system.current_location}}" />
+        </label>
+        <label class="v2-field">
+          <span class="v2-label">{{localize 'SDM.FieldETAAbbr'}}</span>
+          <input type="text" name="system.eta" value="{{system.eta}}" />
+        </label>
+        <label class="v2-field">
+          <span class="v2-label">{{localize 'SDM.FieldCurrentDestination'}}</span>
+          <input type="text" name="system.current_destination" value="{{system.current_destination}}" />
+        </label>
+      </div>
+    </section>
+
+    {{! Time }}
+    <section class="v2-card v2-item-card">
+      <span class="v2-card-title">{{localize 'SDM.Weeks'}}</span>
+      <div class="v2-fields v2-time-fields">
+        <div class="v2-field v2-boxes-field">
+          <span class="v2-label">{{localize 'SDM.ExtraDaysTallied'}}</span>
+          <div class="resource-content sources v2-boxes">
+            {{#multiboxes system.extraDays}}
+            <input type="radio" id="extraDays-{{actor.id}}-0" name="system.extraDays" value="0" checked="checked" data-dtype='Radio' style="cursor:pointer;">
+            {{#times_from 1 7}}
+            <input type="radio" id="extraDays-{{../actor.id}}-{{this}}" name="system.extraDays" value="{{this}}" data-dtype='Radio' style="cursor:pointer;" />
+            <label class="radio-toggle" data-action="radioToggle" for="extraDays-{{../actor.id}}-{{this}}" style="cursor:pointer;" data-tooltip="{{this}}"></label>
+            {{/times_from}}
+            {{/multiboxes}}
+          </div>
+        </div>
+        <div class="v2-field v2-boxes-field">
+          <span class="v2-label">{{localize 'SDM.Weeks'}}</span>
+          <div class="resource-content sources v2-boxes">
+            {{#if @root.seasonsStarsIntegration}}
+            {{#multiboxes @root.caravanWeek}}
+            <input type="radio" id="weeks-{{actor.id}}-0" name="system.weeks" value="0" checked="checked" data-dtype='Radio' style="cursor:pointer;" disabled>
+            {{#times_from 1 13}}
+            <input type="radio" id="weeks-{{../actor.id}}-{{this}}" name="system.weeks" value="{{this}}" data-dtype='Radio' style="cursor:pointer;" disabled/>
+            <label class="radio-toggle" for="weeks-{{../actor.id}}-{{this}}" style="cursor:pointer;" data-tooltip="{{this}}" disabled></label>
+            {{/times_from}}
+            {{/multiboxes}}
+            {{else}}
+            {{#multiboxes system.weeks}}
+            <input type="radio" id="weeks-{{actor.id}}-0" name="system.weeks" value="0" checked="checked" data-dtype='Radio' style="cursor:pointer;">
+            {{#times_from 1 13}}
+            <input type="radio" id="weeks-{{../actor.id}}-{{this}}" name="system.weeks" value="{{this}}" data-dtype='Radio' style="cursor:pointer;" />
+            <label class="radio-toggle" data-action="radioToggle" for="weeks-{{../actor.id}}-{{this}}" style="cursor:pointer;" data-tooltip="{{this}}"></label>
+            {{/times_from}}
+            {{/multiboxes}}
+            {{/if}}
+          </div>
+        </div>
+        <label class="v2-field">
+          <span class="v2-label">{{localize 'SDM.MonthTruckingLabel'}}</span>
+          {{#if @root.seasonsStarsIntegration}}
+          <select name="system.month" data-dtype="Number" disabled data-tooltip="{{localize (lookup @root.config.months @root.caravanMonth)}}">
+            {{selectOptions @root.config.months localize=true selected=@root.caravanMonth blank=""}}
+          </select>
+          {{else}}
+          <select name="system.month" data-dtype="Number" data-tooltip="{{localize (lookup @root.config.months system.month)}}">
+            {{selectOptions @root.config.months localize=true selected=system.month blank=""}}
+          </select>
+          {{/if}}
+        </label>
+      </div>
+    </section>
+  </div>
+</header>
