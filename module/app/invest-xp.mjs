@@ -142,6 +142,7 @@ export async function openInvestXpDialog(actor) {
 
   const data = await DialogV2.prompt({
     window: { title: $l10n('SDM.InvestXP.Title'), icon: 'fa-solid fa-circle-up' },
+    position: { width: 520 },
     content,
     modal: true,
     rejectClose: false,
