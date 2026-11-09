@@ -3,7 +3,7 @@
 ## v1.10.1
 
 - Starting kits show how many items are left to unpack, in parentheses, in the inventory of character, NPC and caravan sheets
-- Character generator no longer gives the same trait or skill twice. The first repeat instead improves what the character has, once per character: a skill goes up one rank, a trait becomes a skill
+- Character generator no longer gives the same trait or skill twice. The first repeat instead improves what the character has, once per character: a skill goes up one rank, a trait becomes an Expert skill
 - Players can invest their Player XP with the new button next to Player XP on the character sheet: in the character, in one of its hallmark items, in one of their pets, or donate it to another player's Player XP. Every investment is recorded in the chat
 - Hallmark items get their level from their XP automatically
 - Only the Referee can edit XP fields directly (Player XP, character XP, NPC XP and hallmark XP); players spend XP through "Invest XP". Hallmark and NPC levels are no longer edited by hand (mount and vehicle levels are unchanged)

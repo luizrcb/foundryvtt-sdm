@@ -33,7 +33,7 @@ const MAX_GENERATED_SKILL_RANK = 3; // master
 
 /**
  * A repeated draw improves what the character already has, once per character:
- * a skill goes up one rank, a plain trait becomes a skill (skilled).
+ * a skill goes up one rank, a plain trait (worth a skilled skill) becomes an expert skill.
  * @returns {Promise<boolean>} true when the repeat was used as an upgrade
  */
 async function upgradeRepeatedTrait(actor, name) {
@@ -48,7 +48,8 @@ async function upgradeRepeatedTrait(actor, name) {
     if (rank >= MAX_GENERATED_SKILL_RANK) return false;
     update = { 'system.skill.rank': rank + 1 };
   } else if (type === '') {
-    update = { 'system.type': 'skill', 'system.skill.rank': Math.max(rank, 0) + 1 };
+    // A trait already counts as a skilled skill, so ranking it up makes it expert
+    update = { 'system.type': 'skill', 'system.skill.rank': 2 };
   } else {
     return false;
   }
