@@ -8,10 +8,10 @@
       <i class="fa-regular fa-circle-check"></i><span>{{localize 'SDM.ItemCondition.Intact'}}</span>
     </button>
     <button type="button" class="sdm-seg-btn {{#if (eq system.status 'notched')}}is-active is-warn{{/if}}" data-action="setItemStatus" data-value="notched">
-      <i class="fa fa-hammer"></i><span>{{localize 'SDM.ItemCondition.Notched'}}</span>
+      <i class="fa fa-hammer"></i><span>{{toLowerCase (localize 'SDM.ItemStatusNotched')}}</span>
     </button>
     <button type="button" class="sdm-seg-btn {{#if (eq system.status 'broken')}}is-active is-danger{{/if}}" data-action="setItemStatus" data-value="broken">
-      <i class="fa fa-ban"></i><span>{{localize 'SDM.ItemCondition.Broken'}}</span>
+      <i class="fa fa-ban"></i><span>{{toLowerCase (localize 'SDM.ItemStatusBroken')}}</span>
     </button>
   </div>
   {{/if}}
@@ -21,10 +21,10 @@
       <i class="fa-solid fa-battery-full"></i><span>{{localize 'SDM.ItemCondition.Full'}}</span>
     </button>
     <button type="button" class="sdm-seg-btn {{#if (eq system.resources 'running_low')}}is-active is-warn{{/if}}" data-action="setItemResources" data-value="running_low">
-      <i class="fa-solid fa-battery-quarter"></i><span>{{localize 'SDM.ItemCondition.RunningLow'}}</span>
+      <i class="fa-solid fa-battery-quarter"></i><span>{{toLowerCase (localize 'SDM.ItemStatusRunningLow')}}</span>
     </button>
     <button type="button" class="sdm-seg-btn {{#if (eq system.resources 'run_out')}}is-active is-danger{{/if}}" data-action="setItemResources" data-value="run_out">
-      <i class="fa-solid fa-battery-empty"></i><span>{{localize 'SDM.ItemCondition.RunOut'}}</span>
+      <i class="fa-solid fa-battery-empty"></i><span>{{toLowerCase (localize 'SDM.ItemStatusRunOut')}}</span>
     </button>
   </div>
   {{/if}}

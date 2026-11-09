@@ -1,11 +1,11 @@
 {{! Item portrait condition cue: overlay icons for integrity and resources (shown only when not intact / not full) }}
 {{#if (eq system.status 'notched')}}
-<i class="fa fa-hammer sdm-portrait-overlay is-integrity is-notched" data-tooltip="{{localize 'SDM.ItemCondition.Notched'}}"></i>
+<i class="fa fa-hammer sdm-portrait-overlay is-integrity is-notched" data-tooltip="{{toLowerCase (localize 'SDM.ItemStatusNotched')}}"></i>
 {{else if (eq system.status 'broken')}}
-<i class="fa fa-ban sdm-portrait-overlay is-integrity is-broken" data-tooltip="{{localize 'SDM.ItemCondition.Broken'}}"></i>
+<i class="fa fa-ban sdm-portrait-overlay is-integrity is-broken" data-tooltip="{{toLowerCase (localize 'SDM.ItemStatusBroken')}}"></i>
 {{/if}}
 {{#if (eq system.resources 'running_low')}}
-<i class="fa-solid fa-battery-quarter sdm-portrait-overlay is-resources is-running-low" data-tooltip="{{localize 'SDM.ItemCondition.RunningLow'}}"></i>
+<i class="fa-solid fa-battery-quarter sdm-portrait-overlay is-resources is-running-low" data-tooltip="{{toLowerCase (localize 'SDM.ItemStatusRunningLow')}}"></i>
 {{else if (eq system.resources 'run_out')}}
-<i class="fa-solid fa-battery-empty sdm-portrait-overlay is-resources is-run-out" data-tooltip="{{localize 'SDM.ItemCondition.RunOut'}}"></i>
+<i class="fa-solid fa-battery-empty sdm-portrait-overlay is-resources is-run-out" data-tooltip="{{toLowerCase (localize 'SDM.ItemStatusRunOut')}}"></i>
 {{/if}}
