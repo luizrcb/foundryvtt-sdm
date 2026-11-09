@@ -973,11 +973,19 @@ $v2-wide: 1100px;
       flex-direction: column;
       align-items: center;
       overflow-x: hidden;
-      // The column is too narrow for a scroll bar; it still scrolls with the wheel
-      scrollbar-width: none;
+      // A full scroll bar does not fit this narrow column: use a 4px bar instead
+      // (scrollbar-width must stay 'auto' for the ::-webkit-scrollbar size to apply)
+      scrollbar-width: auto;
+      scrollbar-color: auto;
 
       &::-webkit-scrollbar {
-        display: none;
+        width: 4px;
+        height: 0;
+        background: transparent;
+      }
+      &::-webkit-scrollbar-thumb {
+        background: var(--v2-accent);
+        border-radius: 2px;
       }
       // In a flex column the rows would shrink (and overlap) instead of scrolling
       > li {
@@ -1897,10 +1905,7 @@ $v2-wide: 1100px;
         display: block;
         padding: 0 10px 10px;
         scrollbar-width: thin;
-
-        &::-webkit-scrollbar {
-          display: initial;
-        }
+        scrollbar-color: var(--v2-accent) transparent;
       }
       .items-header {
         flex-direction: row;

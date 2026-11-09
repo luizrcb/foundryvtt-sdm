@@ -4193,11 +4193,19 @@ input[type=radio]::after {
   flex-direction: column;
   align-items: center;
   overflow-x: hidden;
-  scrollbar-width: none;
+  scrollbar-width: auto;
+  scrollbar-color: auto;
 }
 
 .application.sheet.sdm.sheet-v2 .v2-col-burdens .items-list::-webkit-scrollbar {
-  display: none;
+  width: 4px;
+  height: 0;
+  background: transparent;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-col-burdens .items-list::-webkit-scrollbar-thumb {
+  background: var(--v2-accent);
+  border-radius: 2px;
 }
 
 .application.sheet.sdm.sheet-v2 .v2-col-burdens .items-list > li {
@@ -5122,9 +5130,7 @@ input[type=radio]::after {
     display: block;
     padding: 0 10px 10px;
     scrollbar-width: thin;
-  }
-  .application.sheet.sdm.sheet-v2 .v2-col-burdens .items-list::-webkit-scrollbar {
-    display: initial;
+    scrollbar-color: var(--v2-accent) transparent;
   }
   .application.sheet.sdm.sheet-v2 .v2-col-burdens .items-header {
     flex-direction: row;
