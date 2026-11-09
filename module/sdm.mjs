@@ -580,35 +580,35 @@ Hooks.once('init', function () {
   // Register sheet application classes
   Actors.registerSheet('sdm', SdmActorSheet, {
     types: ['npc', 'character'],
-    makeDefault: true,
+    makeDefault: false,
     label: 'SDM.SheetLabels.Actor'
   });
   Actors.registerSheet('sdm', SdmActorSheetV2, {
     types: ['character'],
-    makeDefault: false,
+    makeDefault: true,
     label: 'SDM.SheetLabels.ActorV2'
   });
   Actors.registerSheet('sdm', SdmNpcSheetV2, {
     types: ['npc'],
-    makeDefault: false,
+    makeDefault: true,
     label: 'SDM.SheetLabels.NpcV2'
   });
   Actors.registerSheet('sdm', SdmCaravanSheetV2, {
     types: ['caravan'],
-    makeDefault: false,
+    makeDefault: true,
     label: 'SDM.SheetLabels.CaravanV2'
   });
   Actors.registerSheet('sdm', SdmCaravanSheet, {
     types: ['caravan'],
-    makeDefault: true,
+    makeDefault: false,
     label: 'SDM.SheetLabels.Actor'
   });
   Items.registerSheet('sdm', SdmItemSheet, {
-    makeDefault: true,
+    makeDefault: false,
     label: 'SDM.SheetLabels.Item'
   });
   Items.registerSheet('sdm', SdmItemSheetV2, {
-    makeDefault: false,
+    makeDefault: true,
     label: 'SDM.SheetLabels.ItemV2'
   });
   CONFIG.ActiveEffect.dataModels.base = SDMActiveEffectData;
