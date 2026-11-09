@@ -1145,7 +1145,7 @@
   "SDM.ItemFeature.darkDescription": "sombrio: este transporte não consta em registro algum. Sua joia é turva. É invisível a deuses e daemons locais.",
   "SDM.ItemFeature.deathlike": "cadavérico",
   "SDM.ItemFeature.deathlikeAbbr": "cadavérido",
-  "SDM.ItemFeature.deathlikeDescription": "cadavérico: faz você parecer um morto-vivo",
+  "SDM.ItemFeature.deathlikeDescription": "cadavérico: faz você parecer um desmorto",
   "SDM.ItemFeature.deathly": "letal",
   "SDM.ItemFeature.deathlyAbbr": "letal",
   "SDM.ItemFeature.deathlyDescription": "letal: tem um efeito de salvaguarda ou morra ou similar terminal",
