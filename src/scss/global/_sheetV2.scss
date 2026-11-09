@@ -2049,7 +2049,36 @@ $v2-wide: 1100px;
       }
     }
 
-    // Crew
+    // Crew: characters and NPCs in their own sections
+    .v2-crew-section {
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      margin: 4px 0 8px;
+      padding: 0 0 4px;
+      border: 0;
+      border-bottom: 2px solid var(--v2-line);
+      font-family: var(--sdm-font-primary);
+      font-size: 15px;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--v2-ink);
+
+      i {
+        font-size: 13px;
+        color: var(--v2-muted);
+      }
+      .v2-crew-count {
+        color: var(--v2-muted);
+      }
+    }
+    .v2-crew-grid + .v2-crew-section {
+      margin-top: 16px;
+    }
+    .v2-crew-type {
+      flex: 0 0 auto;
+      color: var(--v2-muted);
+    }
     .v2-crew-grid {
       display: grid;
       grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));

@@ -363,6 +363,8 @@
   "SDM.BonusHeroDicePool": "Bonus Hero Dice pool",
   "SDM.Borrowed": "Borrowed",
   "SDM.BorrowedLife": "Borrowed Life",
+  "SDM.CrewCharacters": "Characters",
+  "SDM.CrewNpcs": "NPCs",
   "SDM.Item.RemoveFromContainer": "Remove from Container",
   "SDM.ItemCondition.Full": "full",
   "SDM.ItemCondition.Intact": "intact",

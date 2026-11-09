@@ -3,10 +3,13 @@
   {{#if (and (eq crew_players.length 0) (eq crew_npcs.length 0))}}
   <p class="v2-hint">{{localize 'SDM.CaravanDropNPCs'}}</p>
   {{else}}
+  {{#if crew_players.length}}
+  <h3 class="v2-crew-section"><i class="fa-regular fa-user"></i> {{localize 'SDM.CrewCharacters'}} <span class="v2-crew-count">({{crew_players.length}})</span></h3>
   <div class="v2-crew-grid">
     {{#each crew_players as |crewMember key|}}
     <div class="crew-card crew-hero">
       <div class="v2-crew-head">
+        <i class="fa-regular fa-user v2-crew-type" data-tooltip="TYPES.Actor.character"></i>
         <a class="v2-crew-name" data-action="viewCrewMember" data-key="{{crewMember.key}}" data-tooltip="{{localize 'SDM.CaravanCrewOpenSheet' name=crewMember.name}}">{{crewMember.name}}</a>
         <a class="v2-crew-delete" data-action="deleteCrew" data-key="{{crewMember.key}}" data-tooltip="{{localize 'DOCUMENT.Delete' type=(localize 'SDM.Crew')}}"><i class="fa fa-trash"></i></a>
       </div>
@@ -25,9 +28,15 @@
       </div>
     </div>
     {{/each}}
+  </div>
+  {{/if}}
+  {{#if crew_npcs.length}}
+  <h3 class="v2-crew-section"><i class="fa-solid fa-user"></i> {{localize 'SDM.CrewNpcs'}} <span class="v2-crew-count">({{crew_npcs.length}})</span></h3>
+  <div class="v2-crew-grid">
     {{#each crew_npcs as |crewMember key|}}
     <div class="crew-card crew-npc">
       <div class="v2-crew-head">
+        <i class="fa-solid fa-user v2-crew-type" data-tooltip="TYPES.Actor.npc"></i>
         <a class="v2-crew-name" data-action="viewCrewMember" data-key="{{crewMember.key}}" data-tooltip="{{localize 'SDM.CaravanCrewOpenSheet' name=crewMember.name}}">{{crewMember.name}}</a>
         <a class="v2-crew-delete" data-action="deleteCrew" data-key="{{crewMember.key}}" data-tooltip="{{localize 'DOCUMENT.Delete' type=(localize 'SDM.Crew')}}"><i class="fa fa-trash"></i></a>
       </div>
@@ -46,5 +55,6 @@
     </div>
     {{/each}}
   </div>
+  {{/if}}
   {{/if}}
 </section>
