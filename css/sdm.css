@@ -5268,13 +5268,20 @@ input[type=radio]::after {
   gap: 2px;
 }
 
-.application.sheet.sdm.item .sdm-seg-btn {
-  all: unset;
+.application.sheet.sdm.item .sdm-seg button.sdm-seg-btn {
+  font: inherit;
+  background: none;
+  border: 0;
+  margin: 0;
+  width: auto;
+  height: auto;
+  min-height: 0;
+  box-shadow: none;
   cursor: pointer;
   padding: 2px 9px;
   border-radius: 999px;
   line-height: 18px;
-  font-size: 11px;
+  font-size: 12px;
   color: inherit;
   opacity: 0.7;
   display: inline-flex;
@@ -5282,26 +5289,26 @@ input[type=radio]::after {
   gap: 4px;
 }
 
-.application.sheet.sdm.item .sdm-seg-btn:hover {
+.application.sheet.sdm.item .sdm-seg button.sdm-seg-btn:hover {
   opacity: 1;
 }
 
-.application.sheet.sdm.item .sdm-seg-btn:focus-visible {
+.application.sheet.sdm.item .sdm-seg button.sdm-seg-btn:focus-visible {
   outline: 2px solid var(--v2-accent, var(--sdm-cond-warn));
   outline-offset: -2px;
 }
 
-.application.sheet.sdm.item .sdm-seg-btn.is-active {
+.application.sheet.sdm.item .sdm-seg button.sdm-seg-btn.is-active {
   opacity: 1;
   font-weight: 700;
   color: #fff;
 }
 
-.application.sheet.sdm.item .sdm-seg-btn.is-active.is-warn {
+.application.sheet.sdm.item .sdm-seg button.sdm-seg-btn.is-active.is-warn {
   background: var(--sdm-cond-warn);
 }
 
-.application.sheet.sdm.item .sdm-seg-btn.is-active.is-danger {
+.application.sheet.sdm.item .sdm-seg button.sdm-seg-btn.is-active.is-danger {
   background: var(--sdm-cond-danger);
 }
 
