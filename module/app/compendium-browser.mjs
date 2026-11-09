@@ -447,7 +447,8 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
           }
         }
       ],
-      { jQuery: false }
+      // fixed: render the menu on the document body so result cards never cover it
+      { jQuery: false, fixed: true }
     );
   }
 
