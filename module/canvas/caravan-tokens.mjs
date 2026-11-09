@@ -285,29 +285,44 @@ async function runCaravanTokenAction({ caravan, scene, caravanToken, selectedTok
 }
 
 async function performCaravanTokenAction({ caravan, scene, caravanToken, selectedTokenIds }) {
-  const snapshot = readSnapshot(caravan);
-
-  if (snapshot) {
-    return deployFromSnapshot({ caravan, scene, caravanToken, snapshot });
-  }
-
   const crewActors = await getCrewActors(caravan);
   const crewActorIds = new Set(crewActors.map(actor => actor.id));
   const sceneCrewTokens = scene.tokens.filter(
     token => token.id !== caravanToken.id && crewActorIds.has(token.actorId)
   );
+  const deployedActorIds = new Set(sceneCrewTokens.map(token => token.actorId));
+  const allDeployed =
+    crewActors.length > 0 && crewActors.every(actor => deployedActorIds.has(actor.id));
 
-  if (sceneCrewTokens.length) {
-    return gatherCrew({
-      caravan,
-      scene,
-      caravanToken,
-      selectedTokenIds,
-      sceneCrewTokens
-    });
+  // Crew tokens selected on the canvas: always gather those
+  const selected = new Set(Array.isArray(selectedTokenIds) ? selectedTokenIds : []);
+  const hasCrewSelection = sceneCrewTokens.some(token => selected.has(token.id));
+
+  // Everyone is already on the scene (e.g. placed from the sheet buttons): gather instead
+  if (allDeployed || hasCrewSelection) {
+    if (readSnapshot(caravan)) await clearSnapshot(caravan); // stale: they are all here
+    return gatherCrew({ caravan, scene, caravanToken, selectedTokenIds, sceneCrewTokens });
   }
 
-  return deployFromPrototypes({ caravan, scene, caravanToken, crewActors });
+  // Otherwise deploy whoever is missing: first the gathered crew, then anyone else
+  const snapshot = readSnapshot(caravan);
+  let result = null;
+  if (snapshot) {
+    result = await deployFromSnapshot({ caravan, scene, caravanToken, snapshot });
+  }
+
+  const stillMissing = crewActors.filter(
+    actor => !scene.tokens.some(token => token.id !== caravanToken.id && token.actorId === actor.id)
+  );
+  if (stillMissing.length) {
+    const rest = await deployFromPrototypes({ caravan, scene, caravanToken, crewActors: stillMissing });
+    result = result ? { ...result, deployed: result.deployed + rest.deployed } : rest;
+  }
+
+  if (!result) throw new CaravanTokenError('nothing-to-do');
+  // Members that were already on the scene before this click
+  result.skippedMemberIds = [...deployedActorIds];
+  return result;
 }
 
 /* -------------------------------------------- */
