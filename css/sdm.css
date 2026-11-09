@@ -400,6 +400,22 @@
   max-height: 0px;
 }
 
+.application.sheet.sdm.item prose-mirror[name="system.description"],
+.application.sheet.sdm.item prose-mirror[name="system.gm_notes"] {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  height: auto;
+  min-height: 140px;
+}
+
+.application.sheet.sdm.item prose-mirror[name="system.description"] .editor-content,
+.application.sheet.sdm.item prose-mirror[name="system.gm_notes"] .editor-content {
+  flex: 1 0 auto;
+  height: auto;
+  overflow: visible;
+}
+
 .unlist {
   list-style: none;
   padding: 0;
@@ -4565,11 +4581,24 @@ input[type=radio]::after {
   border-radius: 14px;
   box-shadow: var(--v2-shadow);
   padding: 10px 14px;
-  min-height: 320px;
 }
 
 .application.sheet.sdm.sheet-v2 .v2-prose > prose-mirror {
   flex: 1 1 auto;
+}
+
+.application.sheet.sdm.sheet-v2.actor section.tab.notes.active,
+.application.sheet.sdm.sheet-v2.actor section.tab.biography.active {
+  display: flex;
+  flex-direction: column;
+}
+
+.application.sheet.sdm.sheet-v2.actor .v2-prose {
+  flex: 1 1 auto;
+  min-height: 320px;
+}
+
+.application.sheet.sdm.sheet-v2.actor .v2-prose > prose-mirror {
   min-height: 280px;
 }
 

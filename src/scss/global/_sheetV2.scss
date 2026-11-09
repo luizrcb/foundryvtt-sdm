@@ -1337,11 +1337,26 @@ $v2-wide: 1100px;
     border-radius: 14px;
     box-shadow: var(--v2-shadow);
     padding: 10px 14px;
-    min-height: 320px;
 
     > prose-mirror {
       flex: 1 1 auto;
-      min-height: 280px;
+    }
+  }
+
+  // Actor notes and biography: the editor card fills the tab (nothing else competes for space)
+  &.actor {
+    section.tab.notes.active,
+    section.tab.biography.active {
+      display: flex;
+      flex-direction: column;
+    }
+    .v2-prose {
+      flex: 1 1 auto;
+      min-height: 320px;
+
+      > prose-mirror {
+        min-height: 280px;
+      }
     }
   }
 
