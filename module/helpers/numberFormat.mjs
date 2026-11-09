@@ -1,5 +1,5 @@
 /**
- * Locale-aware thousands separators for numeric inputs on sheets.
+ * Locale-aware thousands separators for money inputs on sheets.
  *
  * Inputs show grouped numbers (1.000 in pt-BR, 1,000 in English) while they
  * are not focused. On focus they switch to the plain number, so editing works
@@ -41,19 +41,23 @@ function parseLocaleNumber(text) {
   return NUMERIC.test(s) ? s : null;
 }
 
-function isNumberField(input, doc) {
+/** Inputs that hold money. Only these get thousands separators (not XP, levels, slots…). */
+const MONEY_FIELDS = new Set([
+  'system.revenue',
+  'system.expense',
+  'system.debt',
+  'system.cost',
+  'system.wealth',
+  'system.total_cash'
+]);
+
+function isMoneyField(input, doc) {
   if (input.type !== 'text') return false;
-  if (input.dataset.dtype === 'Number') return true;
+  if (input.dataset.money === 'true') return true;
   const name = input.name;
-  if (!name || !doc) return false;
-  try {
-    const field = name.startsWith('system.')
-      ? doc.system?.schema?.getField(name.slice(7))
-      : doc.schema?.getField(name);
-    return field instanceof foundry.data.fields.NumberField;
-  } catch {
-    return false;
-  }
+  if (MONEY_FIELDS.has(name)) return true;
+  // The quantity of a cash item is an amount of money
+  return name === 'system.quantity' && doc?.system?.size?.unit === 'cash';
 }
 
 function showGrouped(input) {
@@ -77,7 +81,7 @@ export function bindNumberInputs(root, doc) {
   if (!root) return;
   setupLocale();
   for (const input of root.querySelectorAll('input[type="text"][name]')) {
-    if (!isNumberField(input, doc)) continue;
+    if (!isMoneyField(input, doc)) continue;
     const raw = String(input.value ?? '').trim();
     if (!NUMERIC.test(raw)) continue;
 
