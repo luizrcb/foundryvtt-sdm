@@ -1,11 +1,15 @@
 <header class='sheet-header'>
-  <img class='profile-img' src='{{item.img}}' data-edit='img' data-action='onEditImage' data-tooltip='{{item.name}}' />
+  <div class="sdm-item-portrait{{#if (eq system.status 'broken')}} is-broken{{/if}}{{#if (eq system.resources 'run_out')}} is-run-out{{/if}}">
+    <img class='profile-img' src='{{item.img}}' data-edit='img' data-action='onEditImage' data-tooltip='{{item.name}}' />
+    {{> "systems/sdm/templates/item/condition-overlay.hbs"}}
+  </div>
   <div class='header-fields mt-10'>
     <div class='document-name'>
       <div class="flexrow flex-between">
         <input name='name' class="resource-label flexultra" type='text' value='{{item.name}}' placeholder='Name' />
       </div>
     </div>
+      {{> "systems/sdm/templates/item/condition.hbs"}}
     <div class="grid grid-2col">
       <div class='resource mr-10'>
         <label class='resource-label'>{{localize 'SDM.Burden.StepsToCure'}}

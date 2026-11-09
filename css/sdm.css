@@ -5187,6 +5187,126 @@ input[type=radio]::after {
     justify-content: flex-start;
   }
 }
+.application.sheet.sdm.item {
+  --sdm-cond-warn: #b07a1e;
+  --sdm-cond-danger: #9b2c22;
+}
+
+.application.sheet.sdm.item .sdm-item-portrait {
+  position: relative;
+  display: inline-block;
+  flex: 0 0 auto;
+}
+
+.application.sheet.sdm.item .sdm-item-portrait.is-broken img,
+.application.sheet.sdm.item .v2-portrait.is-broken img {
+  filter: grayscale(1) contrast(0.9);
+}
+
+.application.sheet.sdm.item .sdm-item-portrait.is-run-out img,
+.application.sheet.sdm.item .v2-portrait.is-run-out img {
+  opacity: 0.55;
+}
+
+.application.sheet.sdm.item .sdm-portrait-overlay {
+  position: absolute;
+  bottom: 2px;
+  z-index: 2;
+  width: 22px;
+  height: 22px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  font-size: 11px;
+  color: #fff;
+  background: var(--sdm-cond-warn);
+  box-shadow: 0 0 0 2px var(--v2-paper, var(--color-cool-5, #fff));
+  pointer-events: auto;
+}
+
+.application.sheet.sdm.item .sdm-portrait-overlay.is-integrity {
+  right: 2px;
+}
+
+.application.sheet.sdm.item .sdm-portrait-overlay.is-resources {
+  left: 2px;
+}
+
+.application.sheet.sdm.item .sdm-portrait-overlay.is-broken, .application.sheet.sdm.item .sdm-portrait-overlay.is-run-out {
+  background: var(--sdm-cond-danger);
+}
+
+.application.sheet.sdm.item .sdm-item-condition {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 14px;
+  margin: 4px 0;
+  font-size: var(--font-size-12, 12px);
+}
+
+.application.sheet.sdm.item .sdm-cond-group {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.application.sheet.sdm.item .sdm-cond-label {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  font-size: 10px;
+  font-weight: 700;
+  opacity: 0.7;
+}
+
+.application.sheet.sdm.item .sdm-seg {
+  display: inline-flex;
+  border: 1px solid var(--v2-line, currentColor);
+  border-radius: 999px;
+  overflow: hidden;
+}
+
+.application.sheet.sdm.item .sdm-seg-btn {
+  all: unset;
+  cursor: pointer;
+  padding: 1px 9px;
+  line-height: 18px;
+  font-size: 11px;
+  color: inherit;
+  opacity: 0.7;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.application.sheet.sdm.item .sdm-seg-btn + .sdm-seg-btn {
+  border-left: 1px solid var(--v2-line, currentColor);
+}
+
+.application.sheet.sdm.item .sdm-seg-btn:hover {
+  opacity: 1;
+}
+
+.application.sheet.sdm.item .sdm-seg-btn:focus-visible {
+  outline: 2px solid var(--v2-accent, var(--sdm-cond-warn));
+  outline-offset: -2px;
+}
+
+.application.sheet.sdm.item .sdm-seg-btn.is-active {
+  opacity: 1;
+  font-weight: 700;
+  color: #fff;
+}
+
+.application.sheet.sdm.item .sdm-seg-btn.is-active.is-warn {
+  background: var(--sdm-cond-warn);
+}
+
+.application.sheet.sdm.item .sdm-seg-btn.is-active.is-danger {
+  background: var(--sdm-cond-danger);
+}
+
 .sdm :root {
   --sdm-font-primary: 'Baron Neue';
   --sdm-font-secondary: 'Alegreya', sans-serif;

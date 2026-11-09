@@ -15,6 +15,7 @@
 @include meta.load-css('global/oracle');
 @include meta.load-css('global/compendiumBrowser');
 @include meta.load-css('global/sheetV2');
+@include meta.load-css('global/itemCondition');
 
 // Estilos específicos para sheets .sdm
 .sdm {

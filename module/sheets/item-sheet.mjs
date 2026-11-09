@@ -1,7 +1,7 @@
 import PowerDataModel from '../data/power-data.mjs';
 import { SdmItem } from '../documents/item.mjs';
 import { createNPCByLevel, getActorOptions } from '../helpers/actorUtils.mjs';
-import { DEFAULT_PET_ICON, GearType, ItemType } from '../helpers/constants.mjs';
+import { DEFAULT_PET_ICON, GearType, ItemStatusType, ItemType } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { $fmt, $l10n, constructHTMLButton } from '../helpers/globalUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
@@ -67,6 +67,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       toggleReadied: this._toggleReadied,
       toggleItemStatus: { handler: this._toggleItemStatus, buttons: [0, 2] },
       toggleIsHallmark: this._toggleIsHallmark,
+      setItemStatus: this._setItemStatus,
+      setItemResources: this._setItemResources,
       radioToggle: this._radioToggle,
       spawnNPC: this._onSpawnNPC,
       sendToChat: this._onSendToChat,
@@ -790,6 +792,19 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
 
   static async _toggleReadied() {
     await this.item.toggleReadied();
+  }
+
+  /** Set the integrity directly (''/notched/broken). Broken items are unequipped. */
+  static async _setItemStatus(event, target) {
+    const value = target.dataset.value ?? '';
+    const update = { 'system.status': value };
+    if (value === ItemStatusType.BROKEN) update['system.readied'] = false;
+    await this.item.update(update);
+  }
+
+  /** Set the resources directly (''/running_low/run_out). */
+  static async _setItemResources(event, target) {
+    await this.item.toggleItemResources(target.dataset.value ?? '');
   }
 
   static async _toggleIsHallmark() {

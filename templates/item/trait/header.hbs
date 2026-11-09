@@ -1,5 +1,8 @@
 <header class='sheet-header'>
-  <img class='profile-img' src='{{item.img}}' data-edit='img' data-action='onEditImage' data-tooltip='{{item.name}}' />
+  <div class="sdm-item-portrait{{#if (eq system.status 'broken')}} is-broken{{/if}}{{#if (eq system.resources 'run_out')}} is-run-out{{/if}}">
+    <img class='profile-img' src='{{item.img}}' data-edit='img' data-action='onEditImage' data-tooltip='{{item.name}}' />
+    {{> "systems/sdm/templates/item/condition-overlay.hbs"}}
+  </div>
   <div class='header-fields mt-10'>
     <div class='document-name'>
       <div class="flexrow flex-between">
@@ -12,6 +15,7 @@
         {{/if}}
       </div>
     </div>
+      {{> "systems/sdm/templates/item/condition.hbs"}}
     <div class='grid grid-2col'>
       {{#if (and (ne system.type 'corruption') (ne system.type 'affliction') (ne system.type 'augment') (ne system.type 'pet'))}}
       <div class='resource mr-10'>

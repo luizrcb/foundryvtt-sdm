@@ -40,6 +40,8 @@ const templatesToLoad = [
   $$('item/v2/description'),
   $$('item/v2/gm-notes'),
   $$('item/gm-notes'),
+  $$('item/condition'),
+  $$('item/condition-overlay'),
   $$('compendium/browser-filters'),
   $$('compendium/browser-results'),
   $$('compendium/browser-filter-set'),

@@ -1,8 +1,9 @@
 {{! Item sheet v2 header: identity row plus the type-specific cards }}
 <header class="v2-item-header">
   <div class="v2-identity">
-    <div class="v2-portrait">
+    <div class="v2-portrait {{#if (eq system.status 'broken')}} is-broken{{/if}}{{#if (eq system.resources 'run_out')}} is-run-out{{/if}}">
       <img src="{{item.img}}" data-edit="img" data-action="onEditImage" data-tooltip="{{item.name}}" />
+      {{> "systems/sdm/templates/item/condition-overlay.hbs"}}
     </div>
     <div class="v2-name">
       <span class="v2-label">{{localize (concat 'TYPES.Item.' item.type)}}</span>
@@ -25,6 +26,8 @@
       {{/if}}
     </div>
   </div>
+
+  {{> "systems/sdm/templates/item/condition.hbs"}}
 
   <div class="v2-item-cards">
     {{#if (eq item.type 'gear')}}{{> ($$ "item/v2/gear")}}{{/if}}
