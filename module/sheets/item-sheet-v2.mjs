@@ -73,4 +73,45 @@ export class SdmItemSheetV2 extends SdmItemSheet {
 
     return context;
   }
+
+  _onRender(context, options) {
+    super._onRender(context, options);
+    const grid = this.element.querySelector('.v2-item-cards');
+    if (!grid) return;
+    this._fillCardRows(grid);
+    // Column count changes with the window width
+    this._cardsObserver?.disconnect();
+    this._cardsObserver = new ResizeObserver(() => this._fillCardRows(grid));
+    this._cardsObserver.observe(grid);
+  }
+
+  _onClose(options) {
+    this._cardsObserver?.disconnect();
+    this._cardsObserver = null;
+    return super._onClose(options);
+  }
+
+  /**
+   * Avoid holes in the card grid: the last card of an incomplete row
+   * stretches over the empty columns. Cards in the same row share its height.
+   */
+  _fillCardRows(grid) {
+    const columns = getComputedStyle(grid).gridTemplateColumns.split(' ').filter(Boolean).length;
+    const cards = [...grid.children].filter(el => el.classList.contains('v2-item-card'));
+    let col = 0;
+    cards.forEach((card, index) => {
+      if (card.classList.contains('is-wide')) {
+        col = 0;
+        return;
+      }
+      card.style.gridColumn = '';
+      col += 1;
+      const next = cards[index + 1];
+      const rowEnds = !next || next.classList.contains('is-wide') || col === columns;
+      if (rowEnds) {
+        if (col < columns) card.style.gridColumn = `span ${columns - col + 1}`;
+        col = 0;
+      }
+    });
+  }
 }

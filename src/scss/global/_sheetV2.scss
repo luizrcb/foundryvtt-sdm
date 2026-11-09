@@ -1494,7 +1494,8 @@ $v2-wide: 1100px;
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     gap: 10px;
-    align-items: start;
+    // Cards in a row share its height; the sheet fills incomplete rows (see _fillCardRows)
+    align-items: stretch;
   }
 
   .v2-item-card {
