@@ -55,12 +55,16 @@ $v2-wide: 1100px;
     min-height: 500px;
   }
 
-  // Caravan keeps the classic compact toggle; no width-based layout switch
+  // Caravan: narrow/wide layout follows the window width (is-narrow class set by the sheet)
   &.actor.caravan {
     container-type: normal;
     min-width: 725px;
     max-width: 1800px;
     min-height: 700px;
+
+    &.is-narrow nav.tabs > * > span {
+      display: none;
+    }
   }
 
   &.minimized {
@@ -1651,15 +1655,57 @@ $v2-wide: 1100px;
   }
 
   // ---------- Caravan sheet ----------
+  // Lean header: identity row, money row, then the journey and weeks cards.
   .v2-caravan {
+    gap: 10px;
+
     .v2-identity {
-      align-items: flex-start;
+      align-items: center;
+      gap: 12px;
+    }
+    .v2-portrait {
+      flex: 0 0 64px;
+      width: 64px;
+      height: 64px;
+    }
+
+    // Company, motto and financier on one row (wide) or company above the other two (narrow)
+    .v2-caravan-identity {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 2fr);
+      align-items: end;
+      gap: 6px 14px;
     }
     .v2-caravan-sub {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
-      gap: 10px;
-      margin-top: 4px;
+      gap: 14px;
+      margin: 0;
+    }
+    .v2-title {
+      font-size: 24px;
+    }
+
+    // Same height for every text input and select, so labels and lines align
+    .v2-field input[type='text'],
+    .v2-field select {
+      height: 28px;
+      min-height: 28px;
+      line-height: 26px;
+      padding: 0 2px;
+    }
+    .v2-field input[type='text'].v2-title {
+      height: 34px;
+      line-height: 32px;
+    }
+    // Read-only values (computed capacity, synced date) keep a dashed line
+    .v2-field input[type='text'][disabled],
+    .v2-field select[disabled] {
+      border-bottom: 2px dashed var(--v2-accent-soft);
+    }
+
+    .v2-money-cell {
+      padding: 4px 10px 6px;
     }
     .v2-money input[type='text'] {
       font-size: 16px;
@@ -1668,9 +1714,52 @@ $v2-wide: 1100px;
 
   .v2-caravan-cards {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
     gap: 10px;
     align-items: stretch;
+
+    .v2-caravan-card {
+      padding: 8px 14px 10px;
+      gap: 6px;
+    }
+    .v2-fields {
+      align-items: start;
+      gap: 6px 12px;
+    }
+  }
+
+  .v2-journey-fields {
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+  }
+
+  .v2-weeks .v2-time-fields {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px 16px;
+
+    .v2-boxes-field {
+      flex: 0 0 auto;
+    }
+    .v2-boxes {
+      flex-wrap: nowrap;
+    }
+    .v2-month-field {
+      flex: 1 1 220px;
+      min-width: 220px;
+    }
+  }
+
+  // Narrow caravan: company above motto/financier; the two cards stacked
+  &.caravan.is-narrow {
+    .v2-caravan-identity {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .v2-caravan-cards {
+      grid-template-columns: minmax(0, 1fr);
+    }
+    .v2-journey-fields {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
   }
 
   .v2-field.is-danger {

@@ -6,9 +6,11 @@
       {{#if isToken}}<div class="token-tag">{{localize 'DOCUMENT.Token'}}</div>{{/if}}
       <img src="{{actor.img}}" data-edit="img" data-action="onEditImage" data-tooltip="{{actor.name}}" />
     </div>
-    <div class="v2-name">
-      <label class="v2-label" for="v2-name-{{actor.id}}">{{localize 'SDM.FieldCompany'}}</label>
-      <input id="v2-name-{{actor.id}}" class="v2-title" name="name" type="text" value="{{actor.name}}" />
+    <div class="v2-name v2-caravan-identity">
+      <div class="v2-field v2-company">
+        <label class="v2-label" for="v2-name-{{actor.id}}">{{localize 'SDM.FieldCompany'}}</label>
+        <input id="v2-name-{{actor.id}}" class="v2-title" name="name" type="text" value="{{actor.name}}" />
+      </div>
       <div class="v2-caravan-sub">
         <label class="v2-field">
           <span class="v2-label">{{localize 'SDM.FieldMotto'}}</span>
@@ -33,11 +35,11 @@
     </div>
     <label class="v2-money-cell">
       <span class="v2-label">{{localize 'SDM.FieldDebt'}}</span>
-      <span class="sdm-money"><span class="sdm-money-sign">{{localize 'SDM.CashSymbol'}}</span><input type="text" name="system.debt" value="{{system.debt}}" /></span>
+      <span class="sdm-money"><span class="sdm-money-sign">{{localize 'SDM.CashSymbol'}}</span><input type="text" name="system.debt" value="{{system.debt}}" placeholder="0" /></span>
     </label>
     <label class="v2-money-cell" data-tooltip="SDM.FieldWeeklyCost">
       <span class="v2-label">{{localize 'SDM.Cost'}}</span>
-      <span class="sdm-money"><span class="sdm-money-sign">{{localize 'SDM.CashSymbol'}}</span><input type="text" name="system.cost" value="{{system.cost}}" /></span>
+      <span class="sdm-money"><span class="sdm-money-sign">{{localize 'SDM.CashSymbol'}}</span><input type="text" name="system.cost" value="{{system.cost}}" placeholder="0" /></span>
     </label>
     <label class="v2-money-cell" data-tooltip="SDM.FieldWeeklySupply">
       <span class="v2-label">{{localize 'SDM.FieldSupply'}}</span>
@@ -47,9 +49,9 @@
 
   <div class="v2-caravan-cards">
     {{! Journey }}
-    <section class="v2-card v2-item-card">
+    <section class="v2-card v2-caravan-card v2-journey">
       <span class="v2-card-title">{{localize 'SDM.Category.travel'}}</span>
-      <div class="v2-fields">
+      <div class="v2-fields v2-journey-fields">
         <label class="v2-field">
           <span class="v2-label">{{localize 'SDM.FieldDate'}}</span>
           {{#if @root.seasonsStarsIntegration}}
@@ -85,7 +87,7 @@
     </section>
 
     {{! Time }}
-    <section class="v2-card v2-item-card">
+    <section class="v2-card v2-caravan-card v2-weeks">
       <span class="v2-card-title">{{localize 'SDM.Weeks'}}</span>
       <div class="v2-fields v2-time-fields">
         <div class="v2-field v2-boxes-field">
@@ -122,7 +124,7 @@
             {{/if}}
           </div>
         </div>
-        <label class="v2-field">
+        <label class="v2-field v2-month-field">
           <span class="v2-label">{{localize 'SDM.MonthTruckingLabel'}}</span>
           {{#if @root.seasonsStarsIntegration}}
           <select name="system.month" data-dtype="Number" disabled data-tooltip="{{localize (lookup @root.config.months @root.caravanMonth)}}">

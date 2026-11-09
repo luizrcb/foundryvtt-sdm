@@ -3326,6 +3326,10 @@ input[type=radio]::after {
   min-height: 700px;
 }
 
+.application.sheet.sdm.sheet-v2.actor.caravan.is-narrow nav.tabs > * > span {
+  display: none;
+}
+
 .application.sheet.sdm.sheet-v2.minimized {
   min-width: 0;
   min-height: 0;
@@ -4932,15 +4936,59 @@ input[type=radio]::after {
   accent-color: var(--v2-accent);
 }
 
+.application.sheet.sdm.sheet-v2 .v2-caravan {
+  gap: 10px;
+}
+
 .application.sheet.sdm.sheet-v2 .v2-caravan .v2-identity {
-  align-items: flex-start;
+  align-items: center;
+  gap: 12px;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-caravan .v2-portrait {
+  flex: 0 0 64px;
+  width: 64px;
+  height: 64px;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-caravan .v2-caravan-identity {
+  display: grid;
+  grid-template-columns: minmax(0, 1.4fr) minmax(0, 2fr);
+  align-items: end;
+  gap: 6px 14px;
 }
 
 .application.sheet.sdm.sheet-v2 .v2-caravan .v2-caravan-sub {
   display: grid;
   grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  margin-top: 4px;
+  gap: 14px;
+  margin: 0;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-caravan .v2-title {
+  font-size: 24px;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-caravan .v2-field input[type=text],
+.application.sheet.sdm.sheet-v2 .v2-caravan .v2-field select {
+  height: 28px;
+  min-height: 28px;
+  line-height: 26px;
+  padding: 0 2px;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-caravan .v2-field input[type=text].v2-title {
+  height: 34px;
+  line-height: 32px;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-caravan .v2-field input[type=text][disabled],
+.application.sheet.sdm.sheet-v2 .v2-caravan .v2-field select[disabled] {
+  border-bottom: 2px dashed var(--v2-accent-soft);
+}
+
+.application.sheet.sdm.sheet-v2 .v2-caravan .v2-money-cell {
+  padding: 4px 10px 6px;
 }
 
 .application.sheet.sdm.sheet-v2 .v2-caravan .v2-money input[type=text] {
@@ -4949,9 +4997,54 @@ input[type=radio]::after {
 
 .application.sheet.sdm.sheet-v2 .v2-caravan-cards {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
   gap: 10px;
   align-items: stretch;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-caravan-cards .v2-caravan-card {
+  padding: 8px 14px 10px;
+  gap: 6px;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-caravan-cards .v2-fields {
+  align-items: start;
+  gap: 6px 12px;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-journey-fields {
+  grid-template-columns: repeat(6, minmax(0, 1fr));
+}
+
+.application.sheet.sdm.sheet-v2 .v2-weeks .v2-time-fields {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 16px;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-weeks .v2-time-fields .v2-boxes-field {
+  flex: 0 0 auto;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-weeks .v2-time-fields .v2-boxes {
+  flex-wrap: nowrap;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-weeks .v2-time-fields .v2-month-field {
+  flex: 1 1 220px;
+  min-width: 220px;
+}
+
+.application.sheet.sdm.sheet-v2.caravan.is-narrow .v2-caravan-identity {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.application.sheet.sdm.sheet-v2.caravan.is-narrow .v2-caravan-cards {
+  grid-template-columns: minmax(0, 1fr);
+}
+
+.application.sheet.sdm.sheet-v2.caravan.is-narrow .v2-journey-fields {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .application.sheet.sdm.sheet-v2 .v2-field.is-danger .v2-label,
