@@ -2,19 +2,6 @@
     change those from the inventory right-click menu. }}
 {{#if (or system.status system.resources)}}
 <div class="sdm-item-condition">
-  {{#if system.status}}
-  <div class="sdm-seg" role="group" aria-label="{{localize 'SDM.ItemCondition.Integrity'}}">
-    <button type="button" class="sdm-seg-btn" data-action="setItemStatus" data-value="">
-      <i class="fa-regular fa-circle-check"></i><span>{{localize 'SDM.ItemCondition.Intact'}}</span>
-    </button>
-    <button type="button" class="sdm-seg-btn {{#if (eq system.status 'notched')}}is-active is-warn{{/if}}" data-action="setItemStatus" data-value="notched">
-      <i class="fa fa-hammer"></i><span>{{toLowerCase (localize 'SDM.ItemStatusNotched')}}</span>
-    </button>
-    <button type="button" class="sdm-seg-btn {{#if (eq system.status 'broken')}}is-active is-danger{{/if}}" data-action="setItemStatus" data-value="broken">
-      <i class="fa fa-ban"></i><span>{{toLowerCase (localize 'SDM.ItemStatusBroken')}}</span>
-    </button>
-  </div>
-  {{/if}}
   {{#if system.resources}}
   <div class="sdm-seg" role="group" aria-label="{{localize 'SDM.ItemCondition.Resources'}}">
     <button type="button" class="sdm-seg-btn" data-action="setItemResources" data-value="">
@@ -25,6 +12,19 @@
     </button>
     <button type="button" class="sdm-seg-btn {{#if (eq system.resources 'run_out')}}is-active is-danger{{/if}}" data-action="setItemResources" data-value="run_out">
       <i class="fa-solid fa-battery-empty"></i><span>{{toLowerCase (localize 'SDM.ItemStatusRunOut')}}</span>
+    </button>
+  </div>
+  {{/if}}
+  {{#if system.status}}
+  <div class="sdm-seg" role="group" aria-label="{{localize 'SDM.ItemCondition.Integrity'}}">
+    <button type="button" class="sdm-seg-btn" data-action="setItemStatus" data-value="">
+      <i class="fa-regular fa-circle-check"></i><span>{{localize 'SDM.ItemCondition.Intact'}}</span>
+    </button>
+    <button type="button" class="sdm-seg-btn {{#if (eq system.status 'notched')}}is-active is-warn{{/if}}" data-action="setItemStatus" data-value="notched">
+      <i class="fa fa-hammer"></i><span>{{toLowerCase (localize 'SDM.ItemStatusNotched')}}</span>
+    </button>
+    <button type="button" class="sdm-seg-btn {{#if (eq system.status 'broken')}}is-active is-danger{{/if}}" data-action="setItemStatus" data-value="broken">
+      <i class="fa fa-ban"></i><span>{{toLowerCase (localize 'SDM.ItemStatusBroken')}}</span>
     </button>
   </div>
   {{/if}}
