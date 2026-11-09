@@ -290,21 +290,13 @@ async function performCaravanTokenAction({ caravan, scene, caravanToken, selecte
   const sceneCrewTokens = scene.tokens.filter(
     token => token.id !== caravanToken.id && crewActorIds.has(token.actorId)
   );
-  const deployedActorIds = new Set(sceneCrewTokens.map(token => token.actorId));
-  const allDeployed =
-    crewActors.length > 0 && crewActors.every(actor => deployedActorIds.has(actor.id));
-
-  // Crew tokens selected on the canvas: always gather those
-  const selected = new Set(Array.isArray(selectedTokenIds) ? selectedTokenIds : []);
-  const hasCrewSelection = sceneCrewTokens.some(token => selected.has(token.id));
-
-  // Everyone is already on the scene (e.g. placed from the sheet buttons): gather instead
-  if (allDeployed || hasCrewSelection) {
-    if (readSnapshot(caravan)) await clearSnapshot(caravan); // stale: they are all here
+  // Any crew on the scene (deployed earlier or placed from the sheet buttons): gather them.
+  // Selected crew tokens limit the gather to those (handled in gatherCrew).
+  if (sceneCrewTokens.length) {
     return gatherCrew({ caravan, scene, caravanToken, selectedTokenIds, sceneCrewTokens });
   }
 
-  // Otherwise deploy whoever is missing: first the gathered crew, then anyone else
+  // Nobody on the scene: deploy the gathered crew, then anyone who was never gathered
   const snapshot = readSnapshot(caravan);
   let result = null;
   if (snapshot) {
@@ -320,8 +312,6 @@ async function performCaravanTokenAction({ caravan, scene, caravanToken, selecte
   }
 
   if (!result) throw new CaravanTokenError('nothing-to-do');
-  // Members that were already on the scene before this click
-  result.skippedMemberIds = [...deployedActorIds];
   return result;
 }
 
