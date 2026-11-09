@@ -3,8 +3,8 @@ import {
   getLevel,
   getMaxLife,
   getNPCDataByLevel,
+  getXpForLevel,
   MAX_ATTRIBUTE_VALUE,
-  XP_THRESHOLDS,
   postConsumeSupplies,
   postLifeChange
 } from '../helpers/actorUtils.mjs';
@@ -74,6 +74,15 @@ export class SdmActor extends Actor {
       sight: {}
     };
     tokenData.sight.enabled = true;
+
+    // NPCs created at a level (generators, spawned from items, by hand) start with that level's XP
+    if (data.type === ActorType.NPC) {
+      const level = parseInt(data.system?.level, 10) || 0;
+      const xp = parseInt(data.system?.experience, 10) || 0;
+      if (level > 0 && xp < getXpForLevel(level)) {
+        this.updateSource({ 'system.experience': `${getXpForLevel(level)}` });
+      }
+    }
 
     if ([ActorType.CHARACTER, ActorType.CARAVAN].includes(data.type)) {
       tokenData.disposition = CONST.TOKEN_DISPOSITIONS.FRIENDLY;
@@ -1335,7 +1344,7 @@ export class SdmActor extends Actor {
     };
 
     if (syncExperience) {
-      const minXp = targetLevel > 0 ? (XP_THRESHOLDS[targetLevel - 1] ?? 0) : 0;
+      const minXp = getXpForLevel(targetLevel);
       const currentXp = parseInt(npcData.experience, 10) || 0;
       if (currentXp < minXp) update['system.experience'] = `${minXp}`;
     }

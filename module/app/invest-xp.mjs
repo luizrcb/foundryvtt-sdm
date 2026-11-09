@@ -1,4 +1,4 @@
-import { getXpToNextLevel } from '../helpers/actorUtils.mjs';
+import { getXpForLevel, getXpToNextLevel } from '../helpers/actorUtils.mjs';
 import { ActorType } from '../helpers/constants.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 
@@ -20,6 +20,9 @@ const { DialogV2 } = foundry.applications.api;
 const pendingRequests = new Map();
 
 const toInt = value => parseInt(value, 10) || 0;
+
+/** NPC XP, never below the minimum for its level (older NPCs were created with 0 XP). */
+const npcXp = npc => Math.max(toInt(npc.system.experience), getXpForLevel(npc.system.level));
 
 export function setupInvestXp() {
   game.socket.on(CHANNEL, onSocketMessage);
@@ -116,7 +119,7 @@ export async function openInvestXpDialog(actor) {
     groups.push(
       `<optgroup label="${esc($l10n('SDM.InvestXP.GroupPets'))}">${targets.pets
         .map(npc =>
-          option(`pet:${npc.uuid}`, `${npc.name} (${status(npc.system.level, npc.system.experience)})`)
+          option(`pet:${npc.uuid}`, `${npc.name} (${status(npc.system.level, npcXp(npc))})`)
         )
         .join('')}</optgroup>`
     );
@@ -225,10 +228,8 @@ async function applyInvestment(source, kind, targetDoc, amount, user) {
   await source.update({ 'system.player_experience': `${pool - amount}` }, { sdmInvestXp: true });
 
   if (kind === 'self' || kind === 'pet') {
-    await targetDoc.update(
-      { 'system.experience': `${toInt(targetDoc.system.experience) + amount}` },
-      { sdmInvestXp: true }
-    );
+    const current = kind === 'pet' ? npcXp(targetDoc) : toInt(targetDoc.system.experience);
+    await targetDoc.update({ 'system.experience': `${current + amount}` }, { sdmInvestXp: true });
   } else if (kind === 'hallmark') {
     await targetDoc.update(
       { 'system.hallmark.experience': `${toInt(targetDoc.system.hallmark?.experience) + amount}` },

@@ -25,6 +25,13 @@ export function getLevel(xp = 0) {
 }
 
 
+/** Minimum XP for a level (levels above 9 use the level 9 value; only the Level Up button goes past 9). */
+export function getXpForLevel(level = 0) {
+  const lvl = parseInt(level, 10) || 0;
+  if (lvl <= 0) return 0;
+  return XP_THRESHOLDS[Math.min(lvl, XP_THRESHOLDS.length) - 1];
+}
+
 export function getXpToNextLevel(xp) {
   const experience = parseInt(xp, 10);
   const level = getLevel(experience);
