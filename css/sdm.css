@@ -5264,13 +5264,15 @@ input[type=radio]::after {
   display: inline-flex;
   border: 1px solid var(--v2-line, currentColor);
   border-radius: 999px;
-  overflow: hidden;
+  padding: 2px;
+  gap: 2px;
 }
 
 .application.sheet.sdm.item .sdm-seg-btn {
   all: unset;
   cursor: pointer;
-  padding: 1px 9px;
+  padding: 2px 9px;
+  border-radius: 999px;
   line-height: 18px;
   font-size: 11px;
   color: inherit;
@@ -5278,10 +5280,6 @@ input[type=radio]::after {
   display: inline-flex;
   align-items: center;
   gap: 4px;
-}
-
-.application.sheet.sdm.item .sdm-seg-btn + .sdm-seg-btn {
-  border-left: 1px solid var(--v2-line, currentColor);
 }
 
 .application.sheet.sdm.item .sdm-seg-btn:hover {
