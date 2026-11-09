@@ -2,7 +2,9 @@ import {
   BASE_DEFENSE_VALUE,
   getLevel,
   getMaxLife,
+  getNPCDataByLevel,
   MAX_ATTRIBUTE_VALUE,
+  XP_THRESHOLDS,
   postConsumeSupplies,
   postLifeChange
 } from '../helpers/actorUtils.mjs';
@@ -17,7 +19,7 @@ import {
   SLOTS_PER_SACK,
   TraitType
 } from '../helpers/constants.mjs';
-import { $fmt, $l10n, capitalizeFirstLetter, safeEvaluate } from '../helpers/globalUtils.mjs';
+import { $fmt, $l10n, capitalizeFirstLetter, isNewFormulaBetter, safeEvaluate } from '../helpers/globalUtils.mjs';
 import {
   BURDEN_ITEM_TYPES,
   checkIfItemIsAlsoAnArmor,
@@ -108,7 +110,18 @@ export class SdmActor extends Actor {
       await this.update({ 'prototypeToken.name': changed.name });
     }
 
-    if (changed.system?.experience !== undefined) {
+    // NPC: gaining XP gains levels (stats from its source table, or the generic one)
+    if (
+      this.type === ActorType.NPC &&
+      changed.system?.experience !== undefined &&
+      userId === game.user.id
+    ) {
+      const xp = parseInt(safeEvaluate(`${changed.system.experience}`.trim()), 10) || 0;
+      const xpLevel = getLevel(xp);
+      if (xpLevel > (this.system.level ?? 0)) await this.levelUpNpcTo(xpLevel);
+    }
+
+    if (changed.system?.experience !== undefined && this.type !== ActorType.NPC) {
       let resultingExperience = safeEvaluate(changed.system?.experience);
       resultingExperience = parseInt(resultingExperience, 10);
       const newLevel = getLevel(resultingExperience);
@@ -1279,6 +1292,40 @@ export class SdmActor extends Actor {
     } else {
       await this.deleteEmbeddedDocuments('Item', [item.id]);
     }
+  }
+
+  /**
+   * Raise an NPC to a level: stats come from the table the NPC was created from
+   * (the generic table when there is none) and never go down.
+   * @param {number} targetLevel
+   * @param {object} [options]
+   * @param {boolean} [options.syncExperience]  Also raise XP to the minimum for that level
+   */
+  async levelUpNpcTo(targetLevel, { syncExperience = false } = {}) {
+    if (this.type !== ActorType.NPC) return;
+    const npcData = this.system;
+    const entry = getNPCDataByLevel(npcData.createdFromTable || '', targetLevel);
+    if (!entry) return;
+
+    const life = Math.max(npcData.life.max, entry.Life ?? 0);
+    const update = {
+      'system.level': targetLevel,
+      'system.life.value': life,
+      'system.life.max': life,
+      'system.morale': Math.max(npcData.morale, entry.Mor ?? 0),
+      'system.defense': Math.max(npcData.defense, entry.Def ?? 0),
+      'system.bonus': Math.max(npcData.bonus, entry.Bon ?? 0),
+      'system.damage': isNewFormulaBetter(npcData.damage, entry.Dmg) ? entry.Dmg : npcData.damage
+    };
+
+    if (syncExperience) {
+      const minXp = targetLevel > 0 ? (XP_THRESHOLDS[targetLevel - 1] ?? 0) : 0;
+      const currentXp = parseInt(npcData.experience, 10) || 0;
+      if (currentXp < minXp) update['system.experience'] = `${minXp}`;
+    }
+
+    await this.update(update);
+    ui.notifications.info($fmt('SDM.NPCLevelUp', { name: this.name, level: targetLevel }));
   }
 
   /**

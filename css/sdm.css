@@ -1668,6 +1668,19 @@ input[type=radio]::after {
   min-width: 0;
 }
 
+.application.sdm .sdm-invest-xp {
+  margin-left: 4px;
+  font-size: 0.95em;
+  opacity: 0.75;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.application.sdm .sdm-invest-xp:hover {
+  opacity: 1;
+  color: var(--v2-accent, var(--color-text-hyperlink));
+}
+
 .grid,
 .grid-2col {
   display: grid;

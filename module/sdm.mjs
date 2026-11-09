@@ -50,6 +50,7 @@ import {
   UnarmedDamageItem
 } from './helpers/itemUtils.mjs';
 import { setupCaravanTokenControls } from './canvas/caravan-tokens.mjs';
+import { setupInvestXp } from './app/invest-xp.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { setupPetDropSocket } from './items/petItem.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
@@ -639,6 +640,7 @@ Hooks.once('init', function () {
   setupSettingsSocket();
   setupGroupCheckSocket();
   setupCaravanTokenControls();
+  setupInvestXp();
   setupEscalatorDiePositionBroadcast();
   //Preload Handlebars templates.
   return preloadHandlebarsTemplates();

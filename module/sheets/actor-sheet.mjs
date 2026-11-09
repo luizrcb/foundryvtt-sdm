@@ -24,6 +24,7 @@ import {
   ITEMS_ALLOWED_IN_CONTAINERS,
   ITEMS_NOT_ALLOWED_IN_CHARACTERS
 } from '../helpers/itemUtils.mjs';
+import { openInvestXpDialog } from '../app/invest-xp.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { openItemTransferDialog } from '../items/transfer.mjs';
 import { directResourceDiceRoll, healingHeroDice } from '../rolls/hero_dice/index.mjs';
@@ -140,6 +141,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       viewDoc: this._viewDoc,
       rerollCharacter: this._onRerollCharacter,
       levelUpNPC: this._onLevelUpNPC,
+      investXp: this._onInvestXp,
       openDoc: { handler: this._openDoc, buttons: [0] },
       toggleItemStatus: { handler: this._toggleItemStatus, buttons: [0, 2] },
       openPetSheet: this._onOpenPetSheet,
@@ -2196,6 +2198,13 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     await item.toggleItemStatus(event);
   }
 
+  /** Open the dialog to invest Player XP. */
+  static async _onInvestXp(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    return openInvestXpDialog(this.actor);
+  }
+
   static async _onLevelUpNPC(event, target) {
     event.preventDefault(); // Don't open context menu
     event.stopPropagation(); // Don't trigger other events
@@ -2214,24 +2223,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       return;
     }
 
-    const level = nextLevel;
-    const life = npcData.life.max < newData.Life ? newData.Life : npcData.life.max;
-    const morale = npcData.morale < newData.Mor ? newData.Mor : npcData.morale;
-    const defense = npcData.defense < newData.Def ? newData.Def : npcData.defense;
-    const bonus = npcData.bonus < newData.Bon ? newData.Bon : npcData.bonus;
-    const damage = isNewFormulaBetter(npcData.damage, newData.Dmg) ? newData.Dmg : npcData.damage;
-
-    await this.actor.update({
-      'system.level': level,
-      'system.life.value': life,
-      'system.life.max': life,
-      'system.morale': morale,
-      'system.defense': defense,
-      'system.bonus': bonus,
-      'system.damage': damage
-    });
-
-    ui.notifications.info($fmt('SDM.NPCLevelUp', { name: this.actor.name, level: level }));
+    // Same stat rules as levelling by XP; XP is raised to the minimum for the new level
+    await this.actor.levelUpNpcTo(nextLevel, { syncExperience: true });
   }
 
   static async _onOpenPetSheet(event, target) {

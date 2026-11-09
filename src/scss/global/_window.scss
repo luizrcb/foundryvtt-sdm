@@ -1685,3 +1685,17 @@ input[type='radio']::after {
     min-width: 0;
   }
 }
+
+// Invest Player XP button next to the Player XP label
+.application.sdm .sdm-invest-xp {
+  margin-left: 4px;
+  font-size: 0.95em;
+  opacity: 0.75;
+  cursor: pointer;
+  text-decoration: none;
+
+  &:hover {
+    opacity: 1;
+    color: var(--v2-accent, var(--color-text-hyperlink));
+  }
+}

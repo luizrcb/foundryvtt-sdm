@@ -1,3 +1,4 @@
+import { getLevel } from '../helpers/actorUtils.mjs';
 import { createChatMessage } from '../helpers/chatUtils.mjs';
 import {
   ActorType,
@@ -194,12 +195,17 @@ export class SdmItem extends Item {
   async _onUpdate(changed, options, userId) {
     await super._onUpdate(changed, options, userId);
 
-    if (changed?.system?.hallmark?.experience !== undefined) {
+    // Hallmark XP: normalize the value and recalculate the hallmark level (no level-up sound)
+    if (changed?.system?.hallmark?.experience !== undefined && userId === game.user.id) {
       let value = safeEvaluate(`${changed.system.hallmark.experience}`.trim());
       value = parseInt(value, 10) || 0;
-      await this.update({
-        'system.hallmark.experience': `${value}`
-      });
+      const update = {};
+      if (`${value}` !== `${changed.system.hallmark.experience}`) {
+        update['system.hallmark.experience'] = `${value}`;
+      }
+      const level = getLevel(value);
+      if (level !== this.system.hallmark.level) update['system.hallmark.level'] = level;
+      if (Object.keys(update).length) await this.update(update);
     }
 
     if (changed?.system?.max_powers !== undefined) {
