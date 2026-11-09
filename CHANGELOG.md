@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## v1.10.1
+
+- Starting kits show how many items are left to unpack, in parentheses, in the inventory of character, NPC and caravan sheets
+- Character generator no longer gives the same trait or skill twice
+
 ## v1.10.0
 
 - Active effect expiry now uses Foundry V14's built-in effect registry instead of the system's own round/turn check
@@ -33,8 +38,6 @@
 - Skill traits: the "Skill Modifier" label is now "Modifier"
 - pt-BR: "desmorto" instead of "morto-vivo"
 - Removed unused image files
-- Starting kits show how many items are left to unpack, in parentheses, in the inventory of character, NPC and caravan sheets
-- Character generator no longer gives the same trait or skill twice
 - Fixed the "vorpal" weapon feature appearing twice in the feature list
 
 ## v1.9.2
