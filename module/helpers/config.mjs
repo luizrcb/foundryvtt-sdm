@@ -619,8 +619,7 @@ SDM.weaponFeatures = [
   { value: 'subdual', label: 'SDM.ItemFeature.subdual' },
   { value: 'two_handed', label: 'SDM.ItemFeature.two_handed' },
   { value: 'versatile', label: 'SDM.ItemFeature.versatile' },
-  { value: 'vital', label: 'SDM.ItemFeature.vital' },
-  { value: 'vorpal', label: 'SDM.ItemFeature.vorpal' }
+  { value: 'vital', label: 'SDM.ItemFeature.vital' }
 ];
 
 // Mount & vehicle features. `ride_` keys avoid clashing with gear features of the same name.
