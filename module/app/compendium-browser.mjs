@@ -421,6 +421,19 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
     }
   }
 
+  /**
+   * The card a context menu entry refers to. With `fixed: true` the menu lives on the
+   * document body, so the card comes from the `target` argument, not from the click event.
+   */
+  static #contextCard(event, target) {
+    const candidates = [target, event?.currentTarget, event?.target, event];
+    for (const el of candidates) {
+      const card = el instanceof HTMLElement ? el.closest('[data-uuid]') : null;
+      if (card) return card;
+    }
+    return null;
+  }
+
   /** @override */
   _onFirstRender(context, options) {
     super._onFirstRender(context, options);
@@ -432,16 +445,16 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
         {
           label: 'SDM.Item.View',
           icon: '<i class="fa-solid fa-eye"></i>',
-          onClick: target => {
-            CompendiumBrowser.#onOpenLink(null, target?.currentTarget);
+          onClick: (event, target) => {
+            const card = CompendiumBrowser.#contextCard(event, target);
+            if (card) CompendiumBrowser.#onOpenLink(null, card);
           }
         },
         {
           label: 'SDM.Item.Share',
           icon: '<i class="fa-solid fa-share-from-square"></i>',
-          onClick: async target => {
-            const el = target?.currentTarget;
-            const uuid = el?.closest('[data-uuid]')?.dataset.uuid;
+          onClick: async (event, target) => {
+            const uuid = CompendiumBrowser.#contextCard(event, target)?.dataset.uuid;
             if (!uuid) return;
             await this.#onSendToChat(uuid);
           }
