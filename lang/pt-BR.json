@@ -906,7 +906,7 @@
   "SDM.FormattedDate": "{weekday}, {day}/{month}/{year} ({season})",
   "SDM.FrequencyDay": "Dia",
   "SDM.FrequencyWeek": "Semana",
-  "SDM.GearContainer.Capacity": "Capacidade do Contêiner",
+  "SDM.GearContainer.Capacity": "Capacidade (mo)",
   "SDM.GearMaxPowers": "Máx. de Poderes",
   "SDM.GearStartingKit": "Kit Inicial",
   "SDM.GearStartingKitRemainingItems": "Itens Restantes",
