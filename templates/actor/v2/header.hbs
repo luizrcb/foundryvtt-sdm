@@ -22,12 +22,12 @@
       <div class="v2-chips">
         <div class="v2-chip">
           <span class="v2-label">{{localize 'SDM.FieldPlayerXP'}}</span>
-          <input type="text" name="system.player_experience" value="{{system.player_experience}}" data-dtype="Number"
+          <input type="text" name="system.player_experience" value="{{system.player_experience}}"
             {{#unless (or isEditMode (not @root.editable))}}disabled{{/unless}} />
         </div>
         <div class="v2-chip" data-tooltip="{{xpToNextLevel}} {{localize 'SDM.XPToLevelUP'}}">
           <span class="v2-label">{{localize 'SDM.FieldCharXP'}}</span>
-          <input type="text" name="system.experience" value="{{system.experience}}" data-dtype="Number"
+          <input type="text" name="system.experience" value="{{system.experience}}"
             {{#unless (or isEditMode (not @root.editable))}}disabled{{/unless}} />
         </div>
         <div class="v2-chip">
