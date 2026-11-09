@@ -1281,6 +1281,24 @@ export class SdmActor extends Actor {
     }
   }
 
+  /**
+   * Move an item out of its container to the loose items, like dropping it on
+   * empty inventory space. On a caravan it stays in the same sack.
+   * @param {Item} item
+   */
+  async removeItemFromContainer(item) {
+    if (!item?.system.container) return;
+    const sackOf = i => Number(i.getFlag('sdm', 'sackIndex') ?? 0);
+    const peers = this.items.filter(
+      i => i.id !== item.id && (this.type !== ActorType.CARAVAN || sackOf(i) === sackOf(item))
+    );
+    const maxSort = peers.reduce((max, i) => Math.max(max, i.sort || 0), 0);
+    const update = { 'system.container': '', sort: maxSort + 100 };
+    if (this.type !== ActorType.CARAVAN) update['system.readied'] = false;
+    await item.update(update);
+    if (typeof this.sheet?._rebuildInventorySort === 'function') await this.sheet._rebuildInventorySort();
+  }
+
   _getItemListContextOptions() {
     return [
       {
@@ -1524,6 +1542,18 @@ export class SdmActor extends Actor {
         onClick: async (event, target) => {
           const item = this.sheet._getEmbeddedDocument(target);
           await item.toggleItemStatus();
+        }
+      },
+      {
+        label: 'SDM.Item.RemoveFromContainer',
+        icon: '<i class="fa-solid fa-box-open"></i>',
+        visible: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          return this.isOwner && !!item?.system.container?.trim();
+        },
+        onClick: async (event, target) => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          await this.removeItemFromContainer(item);
         }
       },
       {

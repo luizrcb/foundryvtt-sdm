@@ -363,6 +363,7 @@
   "SDM.BonusHeroDicePool": "Parada Bônus de Dados Heroicos",
   "SDM.Borrowed": "Emprestada",
   "SDM.BorrowedLife": "Vida Emprestada",
+  "SDM.Item.RemoveFromContainer": "Tirar do Contêiner",
   "SDM.ItemCondition.Full": "cheio",
   "SDM.ItemCondition.Intact": "intacto",
   "SDM.ItemCondition.Integrity": "Integridade",
