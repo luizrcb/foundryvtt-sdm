@@ -1577,7 +1577,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     }
 
     // Characters always come first
-    const filtered = (onlyType ? members.filter(actor => actor.type === onlyType) : members).sort(
+    const filtered = (onlyType ? members.filter(actor => actor.type === onlyType) : [...members]).sort(
       (a, b) => Number(a.type !== ActorType.CHARACTER) - Number(b.type !== ActorType.CHARACTER)
     );
     members.length = 0;

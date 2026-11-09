@@ -90,7 +90,9 @@ export class SdmCaravanSheetV2 extends SdmCaravanSheet {
   /** Re-render when a resize crosses the narrow/wide breakpoint. @override */
   _onPosition(position) {
     super._onPosition?.(position);
-    if (!this.rendered || this.#narrow === null) return;
+    // Minimizing shrinks the window: never switch layouts (or re-render) for that
+    if (!this.rendered || this.#narrow === null || this.minimized) return;
+    if (this.element?.classList.contains('minimized')) return;
     if (this.isNarrow !== this.#narrow) {
       this.#narrow = this.isNarrow;
       this.element.classList.toggle('is-narrow', this.#narrow);
