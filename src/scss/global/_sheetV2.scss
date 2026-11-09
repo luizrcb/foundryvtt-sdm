@@ -67,7 +67,12 @@ $v2-wide: 1100px;
     }
   }
 
-  &.minimized {
+  // Minimized windows drop the size limits above (as specific as the actor/npc/caravan rules)
+  &.minimized,
+  &.actor.minimized,
+  &.actor.npc.minimized,
+  &.actor.caravan.minimized,
+  &.item.minimized {
     min-width: 0;
     min-height: 0;
     max-width: none;
