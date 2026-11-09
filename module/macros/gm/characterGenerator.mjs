@@ -18,6 +18,46 @@ function normalizeTraitName(name = '') {
     .toLocaleLowerCase();
 }
 
+/** The trait (or skill) the actor already has with this name, if any. */
+function findActorTrait(actor, name) {
+  const target = normalizeTraitName(name);
+  if (!target) return null;
+  return (
+    actor.items.find(item => item.type === 'trait' && normalizeTraitName(item.name) === target) ??
+    null
+  );
+}
+
+const REPEAT_UPGRADE_FLAG = 'generatorRepeatUpgrade';
+const MAX_GENERATED_SKILL_RANK = 3; // master
+
+/**
+ * A repeated draw improves what the character already has, once per character:
+ * a skill goes up one rank, a plain trait becomes a skill (skilled).
+ * @returns {Promise<boolean>} true when the repeat was used as an upgrade
+ */
+async function upgradeRepeatedTrait(actor, name) {
+  if (actor.getFlag('sdm', REPEAT_UPGRADE_FLAG)) return false;
+  const existing = findActorTrait(actor, name);
+  if (!existing) return false;
+
+  const type = existing.system.type ?? '';
+  const rank = Number(existing.system.skill?.rank) || 0;
+  let update;
+  if (type === 'skill') {
+    if (rank >= MAX_GENERATED_SKILL_RANK) return false;
+    update = { 'system.skill.rank': rank + 1 };
+  } else if (type === '') {
+    update = { 'system.type': 'skill', 'system.skill.rank': Math.max(rank, 0) + 1 };
+  } else {
+    return false;
+  }
+
+  await existing.update(update);
+  await actor.setFlag('sdm', REPEAT_UPGRADE_FLAG, true);
+  return true;
+}
+
 /** True when the actor already has a trait (or skill) with this name. */
 function actorHasTrait(actor, name) {
   const target = normalizeTraitName(name);
@@ -489,6 +529,11 @@ async function createPathTrait(actor, pathNumber = null, useFirstEntry = true, _
 
     // Already has this trait: draw another one from the same path table
     // (the fixed first entry could be repeated); a random path may also switch paths.
+    // The first repeat improves the trait or skill the character has
+    if (actorHasTrait(actor, item.name) && (await upgradeRepeatedTrait(actor, item.name))) {
+      return { item: findActorTrait(actor, item.name), pathNumber: selectedPathIndex, uuid: traitUUID };
+    }
+
     if (actorHasTrait(actor, item.name)) {
       const pathTableUuid = selectedPath.innerTableUuid ?? selectedPath.tableUuid;
       let replacement = null;
@@ -539,7 +584,11 @@ async function drawAndAddFromTable(tableUUID, actor) {
 
     const response = await fromUuid(drawnItemUUID);
     if (!response) return;
-    if (response.type === 'trait' && actorHasTrait(actor, response.name)) continue;
+    if (response.type === 'trait' && actorHasTrait(actor, response.name)) {
+      // The first repeat improves the trait or skill the character has; later repeats redraw
+      if (await upgradeRepeatedTrait(actor, response.name)) return response;
+      continue;
+    }
 
     await addItemToCharacter(drawnItemUUID, actor);
     return response;
@@ -914,17 +963,16 @@ async function generateCharacterWithOptions(options = {}, existingActor) {
     }
 
     if (existingActor) {
-      existingActor.items.contents.filter(i => i.system?.container).forEach(async item => {
-        await item.delete();
-      });
-
-      existingActor.items.contents.filter(i => !i.system?.container).forEach(async item => {
-        await item.delete();
-      });
-
-      existingActor.effects.contents.forEach(async effect => {
-        await effect.delete();
-      });
+      // Wait for the old items and effects to be gone, so repeated-trait checks only see new ones
+      await existingActor.deleteEmbeddedDocuments(
+        'Item',
+        existingActor.items.contents.map(item => item.id)
+      );
+      await existingActor.deleteEmbeddedDocuments(
+        'ActiveEffect',
+        existingActor.effects.contents.map(effect => effect.id)
+      );
+      await existingActor.unsetFlag('sdm', REPEAT_UPGRADE_FLAG);
     }
 
     const newActor = new SdmActor({
