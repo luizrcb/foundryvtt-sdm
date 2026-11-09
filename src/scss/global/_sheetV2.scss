@@ -769,7 +769,7 @@ $v2-wide: 1100px;
   // ---------- Resources ----------
   .v2-resources {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 64px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 72px;
     grid-template-rows: minmax(0, 1fr);
     gap: 12px;
     align-items: start;
@@ -972,6 +972,17 @@ $v2-wide: 1100px;
       display: flex;
       flex-direction: column;
       align-items: center;
+      overflow-x: hidden;
+      // The column is too narrow for a scroll bar; it still scrolls with the wheel
+      scrollbar-width: none;
+
+      &::-webkit-scrollbar {
+        display: none;
+      }
+      // In a flex column the rows would shrink (and overlap) instead of scrolling
+      > li {
+        flex-shrink: 0;
+      }
     }
     .items-header {
       height: auto;
@@ -983,11 +994,24 @@ $v2-wide: 1100px;
       .item-formula {
         flex: 0 0 auto;
         width: 100%;
-        font-size: 11px;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 2px;
         text-align: center;
         line-height: 1.1;
-        white-space: normal;
-        overflow-wrap: anywhere;
+        white-space: nowrap;
+      }
+      .v2-burden-label {
+        max-width: 100%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 9px;
+        letter-spacing: 0.04em;
+        color: var(--v2-muted);
+      }
+      .v2-burden-count {
+        font-size: 15px;
       }
       .item-controls {
         width: 100%;
@@ -1871,15 +1895,32 @@ $v2-wide: 1100px;
     .v2-col-burdens {
       .items-list {
         display: block;
-        padding: 6px 10px 10px;
+        padding: 0 10px 10px;
+        scrollbar-width: thin;
+
+        &::-webkit-scrollbar {
+          display: initial;
+        }
       }
       .items-header {
         flex-direction: row;
         .item-formula {
           flex: 1 1 auto;
           width: auto;
+          flex-direction: row;
+          align-items: baseline;
+          gap: 6px;
           font-size: 14px;
           text-align: left;
+        }
+        .v2-burden-label {
+          font-size: inherit;
+          letter-spacing: 0.03em;
+          color: inherit;
+        }
+        .v2-burden-count {
+          font-size: inherit;
+          color: var(--v2-muted);
         }
         .item-controls {
           width: auto;

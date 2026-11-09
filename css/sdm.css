@@ -3999,7 +3999,7 @@ input[type=radio]::after {
 
 .application.sheet.sdm.sheet-v2 .v2-resources {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 64px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 72px;
   grid-template-rows: minmax(0, 1fr);
   gap: 12px;
   align-items: start;
@@ -4192,6 +4192,16 @@ input[type=radio]::after {
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-x: hidden;
+  scrollbar-width: none;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-col-burdens .items-list::-webkit-scrollbar {
+  display: none;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-col-burdens .items-list > li {
+  flex-shrink: 0;
 }
 
 .application.sheet.sdm.sheet-v2 .v2-col-burdens .items-header {
@@ -4205,11 +4215,26 @@ input[type=radio]::after {
 .application.sheet.sdm.sheet-v2 .v2-col-burdens .items-header .item-formula {
   flex: 0 0 auto;
   width: 100%;
-  font-size: 11px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
   text-align: center;
   line-height: 1.1;
-  white-space: normal;
-  overflow-wrap: anywhere;
+  white-space: nowrap;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-col-burdens .items-header .v2-burden-label {
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 9px;
+  letter-spacing: 0.04em;
+  color: var(--v2-muted);
+}
+
+.application.sheet.sdm.sheet-v2 .v2-col-burdens .items-header .v2-burden-count {
+  font-size: 15px;
 }
 
 .application.sheet.sdm.sheet-v2 .v2-col-burdens .items-header .item-controls {
@@ -5095,7 +5120,11 @@ input[type=radio]::after {
   }
   .application.sheet.sdm.sheet-v2 .v2-col-burdens .items-list {
     display: block;
-    padding: 6px 10px 10px;
+    padding: 0 10px 10px;
+    scrollbar-width: thin;
+  }
+  .application.sheet.sdm.sheet-v2 .v2-col-burdens .items-list::-webkit-scrollbar {
+    display: initial;
   }
   .application.sheet.sdm.sheet-v2 .v2-col-burdens .items-header {
     flex-direction: row;
@@ -5103,8 +5132,20 @@ input[type=radio]::after {
   .application.sheet.sdm.sheet-v2 .v2-col-burdens .items-header .item-formula {
     flex: 1 1 auto;
     width: auto;
+    flex-direction: row;
+    align-items: baseline;
+    gap: 6px;
     font-size: 14px;
     text-align: left;
+  }
+  .application.sheet.sdm.sheet-v2 .v2-col-burdens .items-header .v2-burden-label {
+    font-size: inherit;
+    letter-spacing: 0.03em;
+    color: inherit;
+  }
+  .application.sheet.sdm.sheet-v2 .v2-col-burdens .items-header .v2-burden-count {
+    font-size: inherit;
+    color: var(--v2-muted);
   }
   .application.sheet.sdm.sheet-v2 .v2-col-burdens .items-header .item-controls {
     width: auto;

@@ -19,6 +19,7 @@ const templatesToLoad = [
   $$('actor/v2/caravan-header'),
   $$('actor/v2/items'),
   $$('actor/v2/traits'),
+  $$('actor/v2/burdens'),
   $$('item/burden/header'),
   $$('item/gear/header'),
   $$('item/mount/header'),

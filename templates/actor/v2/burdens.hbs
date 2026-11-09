@@ -1,0 +1,57 @@
+{{! Sheet v2 burdens list: classic rows, header split in label + count so it fits the narrow column }}
+<div class='v2-list'>
+  <ol class='items-list'>
+    <li class='item flexrow items-header'>
+      <div class='item-name'></div>
+      <div class='item-formula' data-tooltip="{{localize 'SDM.BurdensPenalty'}}">
+        <span class="v2-burden-label">{{localize 'SDM.InventoryBurdens'}}</span>
+        <span class="v2-burden-count">{{@root.burdenSlotsTaken}}{{#if (ne @root.actor.type 'npc')}}/{{@root.system.burden_slots}}{{/if}}</span>
+      </div>
+      <div class='item-controls'>
+        {{#if @root.editable}}
+        <a class='item-control item-create' data-tooltip="{{localize 'SDM.DOCUMENT.Create' type=(localize 'TYPE.Burden')}}"
+          data-action='createDoc' data-document-class='Item' data-type='burden'>
+          <i class='fa-solid fa-plus'></i>
+          {{localize 'SDM.DOCUMENT.New' type=(localize 'TYPE.Burden' )}}
+        </a>
+        {{/if}}
+      </div>
+    </li>
+    {{#each burdens as |burden id|}}
+      {{#if (eq burden.type 'gear')}}
+         {{> ($$ "actor/item") item=burden }}
+      {{/if}}
+      {{#if (eq burden.type 'trait')}}
+         {{> ($$ "actor/trait") trait=burden }}
+      {{/if}}
+      {{#if (eq burden.type 'burden')}}
+        <li class='item flexrow' data-item-id='{{burden._id}}' data-drag='true' data-document-class='Item' data-tooltip="{{getItemTitle burden}}">
+          <div class='item-name' style="cursor:pointer;" data-action='openDoc'>
+            {{#if (and
+              (eq burden.system.type 'power')
+              (ne burden.system.status 'broken')
+            )}}
+              <div
+                class="item-image rollable-image"
+                data-action="roll"
+                data-type="power"
+                data-label="{{burden.name}}"
+                data-tooltip="{{localize 'SDM.RollType' type=(localize 'SDM.Power')}}"
+              >
+                <img class="normal-img" src="{{burden.img}}" width="24" height="24" />
+                <i class="fa-solid fa-dice-d20 hover-d20"></i>
+              </div>
+            {{else}}
+              <div class='item-image'>
+                <img src='{{burden.img}}' width='24' height='24' />
+              </div>
+            {{/if}}
+            <div class='flexrow'>
+              {{burden.name}}
+            </div>
+          </div>
+        </li>
+      {{/if}}
+    {{/each}}
+  </ol>
+</div>
