@@ -4816,9 +4816,9 @@ input[type=radio]::after {
 }
 
 .application.sheet.sdm.sheet-v2 .v2-field .v2-label {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  hyphens: auto;
 }
 
 .application.sheet.sdm.sheet-v2 .v2-field.v2-check {

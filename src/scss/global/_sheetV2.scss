@@ -1528,10 +1528,11 @@ $v2-wide: 1100px;
     gap: 3px;
     min-width: 0;
 
+    // Long labels wrap; .v2-fields aligns fields at the bottom, so inputs stay in line
     .v2-label {
-      white-space: nowrap;
-      overflow: hidden;
-      text-overflow: ellipsis;
+      white-space: normal;
+      overflow-wrap: anywhere;
+      hyphens: auto;
     }
 
     &.v2-check {
