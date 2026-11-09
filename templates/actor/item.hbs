@@ -107,6 +107,10 @@
         <span data-tooltip="{{localize 'SDM.ItemCharges'}}" class="mr-3">({{item.system.charges.value}}/{{item.system.charges.max}})</span>
       {{/if}}
 
+      {{#if (and item.system.starting_kit (gt item.system.packed_remaining_items 0))}}
+        <span data-tooltip="{{localize 'SDM.GearStartingKitRemainingItems'}}" class="mr-3">({{item.system.packed_remaining_items}})</span>
+      {{/if}}
+
       {{#if (and (has item.system.features 'replenish')(ne item.system.resources 'run_out'))}}
         <div class="pills flex" style="flex-basis:auto;flex-wrap:nowrap;"><span class="pill pill-s mr-3" style="flex-basis:auto;flex-wrap:nowrap;" data-tooltip="{{replace (localize 'SDM.ItemFeature.replenish') ' #' ''}}">{{replace (localize 'SDM.ItemFeature.replenishAbbr') '#' item.system.replenish.value}}</span></div>
       {{/if}}

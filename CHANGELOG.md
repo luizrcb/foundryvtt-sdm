@@ -33,6 +33,7 @@
 - Skill traits: the "Skill Modifier" label is now "Modifier"
 - pt-BR: "desmorto" instead of "morto-vivo"
 - Removed unused image files
+- Starting kits show how many items are left to unpack, in parentheses, in the inventory of character, NPC and caravan sheets
 - Character generator no longer gives the same trait or skill twice
 - Fixed the "vorpal" weapon feature appearing twice in the feature list
 
