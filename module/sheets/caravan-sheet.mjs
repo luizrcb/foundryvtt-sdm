@@ -1559,8 +1559,10 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     return this.actor.consumeSupplies();
   }
 
-  static async _onPlaceCrewMembers() {
+  static async _onPlaceCrewMembers(event, target) {
     if (!game.user.isGM || !canvas.scene) return;
+    // Optional filter from the crew tab buttons: 'character' or 'npc'
+    const onlyType = target?.dataset?.crewType;
     const crew = this.actor.system.crew;
     const members = [];
 
@@ -1573,6 +1575,13 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
         }
       }
     }
+
+    // Characters always come first
+    const filtered = (onlyType ? members.filter(actor => actor.type === onlyType) : members).sort(
+      (a, b) => Number(a.type !== ActorType.CHARACTER) - Number(b.type !== ActorType.CHARACTER)
+    );
+    members.length = 0;
+    members.push(...filtered);
 
     if (!members.length) return;
     const minimized = !this.minimized;

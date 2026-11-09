@@ -5362,6 +5362,29 @@ input[type=radio]::after {
   color: var(--v2-muted);
 }
 
+.application.sheet.sdm.sheet-v2.caravan .v2-crew-section .v2-crew-place {
+  margin-left: auto;
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid var(--v2-line);
+  color: var(--v2-ink);
+}
+
+.application.sheet.sdm.sheet-v2.caravan .v2-crew-section .v2-crew-place i {
+  font-size: 12px;
+  color: inherit;
+}
+
+.application.sheet.sdm.sheet-v2.caravan .v2-crew-section .v2-crew-place:hover {
+  background: var(--v2-accent-soft);
+  border-color: var(--v2-accent);
+}
+
 .application.sheet.sdm.sheet-v2.caravan .v2-crew-grid + .v2-crew-section {
   margin-top: 16px;
 }

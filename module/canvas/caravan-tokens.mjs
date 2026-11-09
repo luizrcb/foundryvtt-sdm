@@ -512,6 +512,11 @@ async function deployFromSnapshot({ caravan, scene, caravanToken, snapshot }) {
     membersToDeploy.push(member);
   }
 
+  // Characters always come first
+  membersToDeploy.sort((a, b) =>
+    byCharactersFirst(game.actors.get(a.actorId), game.actors.get(b.actorId))
+  );
+
   const tokenData = buildDeploymentData({
     members: membersToDeploy.map(member => member.tokenData),
     scene,
@@ -687,7 +692,12 @@ async function getCrewActors(caravan) {
     actors.push(actor);
   }
 
-  return actors;
+  return actors.sort(byCharactersFirst);
+}
+
+/** Sort comparator: characters before any other actor type (stable otherwise). */
+function byCharactersFirst(a, b) {
+  return Number(a?.type !== ActorType.CHARACTER) - Number(b?.type !== ActorType.CHARACTER);
 }
 
 function readSnapshot(caravan) {

@@ -370,6 +370,7 @@
   "SDM.ItemCondition.Intact": "intact",
   "SDM.ItemCondition.Integrity": "Integrity",
   "SDM.ItemCondition.Resources": "Resources",
+  "SDM.PlaceCrewMembersOf": "Place {type}",
   "SDM.brick-bastions": "Brick Bastions",
   "SDM.BrokenItemAction": "<b>right-click</b>: repair item back to notched",
   "SDM.Burden.CompletedSteps": "Completed Steps",

@@ -370,6 +370,7 @@
   "SDM.ItemCondition.Intact": "intacto",
   "SDM.ItemCondition.Integrity": "Integridade",
   "SDM.ItemCondition.Resources": "Recursos",
+  "SDM.PlaceCrewMembersOf": "Posicionar {type}",
   "SDM.brick-bastions": "Bastiões de Tijolo",
   "SDM.BrokenItemAction": "<b>clique-direito</b>: reparar item para o estado danificado",
   "SDM.Burden.CompletedSteps": "Etapas Completas",
