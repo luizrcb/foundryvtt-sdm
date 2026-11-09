@@ -7,6 +7,26 @@ import { addCashToActor } from './giveCash.mjs';
 
 const { DialogV2 } = foundry.applications.api;
 
+/** How many times a table is redrawn when it keeps returning a trait the actor already has. */
+const MAX_DUPLICATE_REDRAWS = 20;
+
+/** Trait names compared without the table numbering ("3. ") and case. */
+function normalizeTraitName(name = '') {
+  return String(name)
+    .replace(/^\d+\.\s*/, '')
+    .trim()
+    .toLocaleLowerCase();
+}
+
+/** True when the actor already has a trait (or skill) with this name. */
+function actorHasTrait(actor, name) {
+  const target = normalizeTraitName(name);
+  if (!target) return false;
+  return actor.items.some(
+    item => item.type === 'trait' && normalizeTraitName(item.name) === target
+  );
+}
+
 export async function generateNameFromTable() {
   const originalTableUuid = 'Compendium.sdm.names_tables.RollTable.ToAbPgDAtrhU8EWA';
 
@@ -232,7 +252,12 @@ async function createRandomBackgroundWithOptions(actor, method = 'single') {
 
     drawnResult = await table.draw({ displayChat: false, recursive: true });
 
-    if (isValidResult(drawnResult, method)) {
+    const repeated =
+      method === 'single' &&
+      drawnResult.results?.length === 1 &&
+      actorHasTrait(actor, drawnResult.results[0].name);
+
+    if (isValidResult(drawnResult, method) && !repeated) {
       success = true;
     } else {
       console.warn(
@@ -276,6 +301,9 @@ async function createRandomBackgroundWithOptions(actor, method = 'single') {
     return;
   }
 
+  // The caller retries when the assembled background is one the actor already has
+  if (actorHasTrait(actor, title)) return;
+
   await game.sdm.api.createBackgroundTrait(actor, {
     title,
     task,
@@ -286,8 +314,15 @@ async function createRandomBackgroundWithOptions(actor, method = 'single') {
 }
 
 async function addCorruptionFromTable(actor, tableUuid) {
-  const result = await drawFromTextTable(tableUuid);
-  const corruption = result.name || result.description;
+  let corruption;
+  for (let attempt = 0; attempt < MAX_DUPLICATE_REDRAWS; attempt++) {
+    const result = await drawFromTextTable(tableUuid);
+    const drawn = result?.name || result?.description;
+    if (!drawn) return;
+    if (actorHasTrait(actor, drawn)) continue;
+    corruption = drawn;
+    break;
+  }
 
   if (!corruption) return;
 
@@ -308,7 +343,7 @@ async function addItemToCharacter(itemUuid, actor) {
   const item = await fromUuid(itemUuid);
   const itemObject = item.toObject();
   // console.debug('itemObject', itemObject);
-  itemObject.name = itemObject.name.replace(/^\d\.\s/, '');
+  itemObject.name = itemObject.name.replace(/^\d+\.\s/, '');
 
   await actor.createEmbeddedDocuments('Item', [itemObject]);
 }
@@ -381,7 +416,7 @@ async function getPathOptionsList() {
   return options;
 }
 
-async function createPathTrait(actor, pathNumber = null, useFirstEntry = true) {
+async function createPathTrait(actor, pathNumber = null, useFirstEntry = true, _pathRetries = 0) {
   const pathOptions = await getPathOptionsList();
   const totalOptions = pathOptions.length;
 
@@ -447,13 +482,36 @@ async function createPathTrait(actor, pathNumber = null, useFirstEntry = true) {
   }
 
   try {
-    const item = await fromUuid(traitUUID);
+    let item = await fromUuid(traitUUID);
     if (!item) {
       return;
     }
 
+    // Already has this trait: draw another one from the same path table
+    // (the fixed first entry could be repeated); a random path may also switch paths.
+    if (actorHasTrait(actor, item.name)) {
+      const pathTableUuid = selectedPath.innerTableUuid ?? selectedPath.tableUuid;
+      let replacement = null;
+      for (let attempt = 0; attempt < MAX_DUPLICATE_REDRAWS && !replacement; attempt++) {
+        const uuid = await drawFromDocumentTable(pathTableUuid);
+        const candidate = uuid ? await fromUuid(uuid) : null;
+        if (candidate && candidate.type === 'trait' && !actorHasTrait(actor, candidate.name)) {
+          replacement = candidate;
+          traitUUID = uuid;
+        }
+      }
+      if (!replacement && pathNumber === null && _pathRetries < MAX_DUPLICATE_REDRAWS) {
+        return createPathTrait(actor, null, useFirstEntry, _pathRetries + 1);
+      }
+      if (!replacement) {
+        console.warn('SDM | Character generator: no new path trait available');
+        return;
+      }
+      item = replacement;
+    }
+
     const itemObject = item.toObject();
-    itemObject.name = itemObject.name.replace(/^\d\.\s/, '');
+    itemObject.name = itemObject.name.replace(/^\d+\.\s/, '');
     const createdItems = await actor.createEmbeddedDocuments('Item', [itemObject]);
 
     return {
@@ -474,14 +532,20 @@ async function addInitialCash(actor) {
 }
 
 async function drawAndAddFromTable(tableUUID, actor) {
-  const drawnItemUUID = await drawFromDocumentTable(tableUUID);
-  // console.log('drawnItemUUID', drawnItemUUID);
-  if (drawnItemUUID) {
+  // Redraw while the result is a trait the actor already has
+  for (let attempt = 0; attempt < MAX_DUPLICATE_REDRAWS; attempt++) {
+    const drawnItemUUID = await drawFromDocumentTable(tableUUID);
+    if (!drawnItemUUID) return;
+
     const response = await fromUuid(drawnItemUUID);
+    if (!response) return;
+    if (response.type === 'trait' && actorHasTrait(actor, response.name)) continue;
+
     await addItemToCharacter(drawnItemUUID, actor);
     return response;
   }
 
+  console.warn(`SDM | Character generator: only repeated traits drawn from ${tableUUID}`);
   return;
 }
 
@@ -924,8 +988,11 @@ async function generateCharacterWithOptions(options = {}, existingActor) {
       // console.debug('pathTrait', pathTrait);
     }
 
-    // Add free trait
-    const freeTrait = await createFreeTrait(actor);
+    // Add free trait (another kind is tried when a table only gives repeated traits)
+    let freeTrait = await createFreeTrait(actor);
+    for (let attempt = 0; !freeTrait && attempt < 5; attempt++) {
+      freeTrait = await createFreeTrait(actor);
+    }
     // console.debug('freeTrait', freeTrait);
 
     // Add strange item if selected
