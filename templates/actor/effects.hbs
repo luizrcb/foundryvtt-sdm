@@ -29,7 +29,7 @@
             {{#if (eq section.type "inactive")}}
               data-disabled="true"
             {{else if (eq section.type "temporary")}}
-              data-duration.rounds="1"
+              data-duration.value="1" data-duration.units="rounds" data-duration.expiry="turnStart"
             {{/if}}
             data-tooltip='{{localize "SDM.DOCUMENT.Create" type=(localize 'TYPE.Effect')}}'
           >
@@ -54,7 +54,7 @@
               <div>{{effect.name}}</div>
             </div>
             <div class='effect-source'>{{effect.sourceName}}</div>
-            <div class='effect-duration'>{{effect.duration.label}}</div>
+            <div class='effect-duration{{#if effect.duration.expired}} expired{{/if}}'>{{#if effect.duration.expired}}{{localize 'SDM.Effect.Expired'}}{{else}}{{effect.duration.label}}{{/if}}</div>
             <div class='effect-controls flexrow'>
                 {{#if @root.editable}}
                 <a

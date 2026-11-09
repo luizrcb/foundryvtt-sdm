@@ -137,3 +137,9 @@
     border: none;
   }
 }
+
+// Effects whose duration ran out (core V14 expiry marks them instead of disabling)
+.effect-duration.expired {
+  font-style: italic;
+  opacity: 0.7;
+}

@@ -1,0 +1,15 @@
+<ol class="sdm-effects-panel-list">
+  {{#each effects as |effect|}}
+  <li
+    class="sdm-effects-panel-entry{{#if effect.expired}} expired{{/if}}"
+    data-uuid="{{effect.uuid}}"
+    {{#if effect.canDelete}}data-can-delete{{/if}}
+    data-action="openEffect"
+    data-tooltip="{{effect.tooltip}}"
+    data-tooltip-direction="LEFT"
+  >
+    {{#if effect.remaining}}<span class="sdm-effects-panel-duration">{{effect.remaining}}</span>{{/if}}
+    <img src="{{effect.img}}" alt="{{effect.name}}" />
+  </li>
+  {{/each}}
+</ol>

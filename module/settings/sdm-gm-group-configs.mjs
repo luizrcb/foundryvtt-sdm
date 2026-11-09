@@ -35,6 +35,7 @@ export class SDMClientSettingsConfig extends GroupBase {
   static LEGEND = 'SDM.Menu.Client.Name';
   static KEYS = [
     'reverseShiftKey',
+    'showEffectsPanel',
     'chromatype',
     'diceSoNiceChromatype',
     'hero_dice_style',
@@ -86,6 +87,7 @@ export class SDMCombatSettingsConfig extends GroupBase {
     'initiativeTieBreak',
     'groupPlayersToFriendlyTokens',
     'rerollInitiativeEveryRound',
+    'effectExpiryAction',
     'initiativeFormula',
     'npcInitiativeFormula'
   ];

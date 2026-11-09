@@ -154,6 +154,29 @@ export function registerSystemSettings() {
     default: true
   });
 
+  game.settings.register('sdm', 'effectExpiryAction', {
+    name: 'SDM.SettingsEffectExpiryAction',
+    hint: 'SDM.SettingsEffectExpiryActionHint',
+    scope: 'world',
+    restricted: true,
+    type: String,
+    choices: {
+      update: 'SDM.SettingsEffectExpiryActionUpdate',
+      delete: 'SDM.SettingsEffectExpiryActionDelete'
+    },
+    default: 'update',
+    onChange: value => (CONFIG.ActiveEffect.expiryAction = value)
+  });
+
+  game.settings.register('sdm', 'showEffectsPanel', {
+    name: 'SDM.SettingsShowEffectsPanel',
+    hint: 'SDM.SettingsShowEffectsPanelHint',
+    scope: 'client',
+    type: Boolean,
+    default: true,
+    onChange: () => game.sdm.effectsPanel?.render({ force: true })
+  });
+
   game.settings.register('sdm', 'reverseShiftKey', {
     name: 'SDM.SettingsReverseShiftKey',
     hint: 'SDM.SettingsReverseShiftKeyHint',

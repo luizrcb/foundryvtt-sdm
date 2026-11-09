@@ -1,5 +1,31 @@
 # CHANGELOG
 
+## v1.10.0
+
+- Active effect expiry now uses Foundry V14's built-in effect registry instead of the system's own round/turn check
+  - Effects expire by rounds, turns, or world time (seconds, minutes, hours, days...). World time only moves when the Referee advances it (e.g. through Calendaria or Seasons & Stars); combat rounds do not advance it
+  - Added the "Expired Effects" world setting (Combat settings menu): keep expired effects on the actor marked as expired (default), or delete them
+  - New effects with a duration in rounds or turns and no expiry event now expire at the start of their owner's turn
+  - Expired effects show "Expired" in the duration column of actor and item sheets
+- Added the Effects Panel: shows the temporary effects and conditions of the selected token (or your assigned character) next to the sidebar, with their remaining duration. Click an effect to open it; right-click to remove it. Can be turned off in the client settings ("Show Effects Panel")
+- Fixed expired effects being disabled by every connected client instead of only the Referee
+- Fixed the "New Effect" button in the Temporary section creating effects with the old V13 duration format
+- Added new sheets for characters, NPCs, items and caravans
+  - Compact layout with soft colors, light and dark themes, and the player's configured color as accent
+  - Character: ability cards and attack icons use the colors of the configured ability; sword icon for melee attacks; ultraviolet corruption icon; item and trait slot meters; inventory columns scroll on their own; compact burden column; effects, biography and notes tabs; name, species and profile fields are edited only in edit mode
+  - NPC: round portrait and compact initiative
+  - Item: fields grouped in cards (item type first, then inventory) with no gaps between them
+  - Caravan: cargo area highlighted while dragging items
+- Added a "GM Notes" tab to all items, visible only to the Referee
+- Item sheets now show the item's integrity (notched/broken) and resources (running low/run out): an icon on the item image (broken items are greyed out, run out items faded) and buttons to change the state, shown only when the item is not intact or not full
+- Item chat cards show small integrity and resources icons, with the state on hover
+- Added "Remove from Container" to the right-click menu of items inside a container, on character and caravan sheets (before, only drag and drop did this)
+- Money values are shown with thousands separators (display only): cash, cost and wealth fields, item rows, tooltips, chat cards and the Compendium Browser. XP and other numbers are unchanged
+- Item description and GM notes editors now grow with their content, on classic and new sheets
+- Compendium Browser: new look, results bar with sorting, active filter badges and a drag hint; the filter list no longer scrolls inside the sidebar; the "All Items" tab is now "Items"; fixed the right-click menu being covered by the result cards
+- Container capacity label is now "Capacity (st)" (pt-BR "Capacidade (mo)"); pt-BR "Máx. de Poderes"
+- Fixed the "vorpal" weapon feature appearing twice in the feature list
+
 ## v1.9.2
 
 - Fixed mounts and vehicles not being droppable on the caravan "Mounts & Vehicles" tab: they can now be dropped anywhere in the tab (from compendiums, sidebar or other actors), and the tab is highlighted while dragging

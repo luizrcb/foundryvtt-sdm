@@ -1,3 +1,4 @@
+import SdmEffectsPanel from './app/effects-panel.mjs';
 import SdmActiveEffectConfig14 from './app/active-effect-config14.mjs';
 import {
   GroupCheckDialog,
@@ -411,21 +412,14 @@ Hooks.on('updateItem', async item => {
   await item.update(updateData);
 });
 
-Hooks.on('updateCombat', async (combat, update) => {
-  if (!('round' in update || 'turn' in update)) return;
-
-  for (const combatant of combat.combatants) {
-    const actor = combatant.actor;
-    if (!actor) continue;
-
-    const expiredEffects = actor.effects.filter(
-      effect => effect.isTemporary && !effect.duration.remaining
-    );
-
-    for (const expired of expiredEffects) {
-      await expired.update({ disabled: true });
-    }
-  }
+// Effect expiry is handled by the core ActiveEffectRegistry (V14). Combat-based durations
+// without an expiry event only expire when world time advances on older V14 builds, so new
+// effects with a rounds/turns duration default to expiring at the start of the owner's turn.
+Hooks.on('preCreateActiveEffect', (effect, data) => {
+  const { value, units, expiry } = effect._source.duration ?? {};
+  if (expiry || !Number.isFinite(value) || value <= 0) return;
+  if (!['rounds', 'turns'].includes(units)) return;
+  effect.updateSource({ 'duration.expiry': 'turnStart' });
 });
 
 Hooks.on('renderSettings', (app, html) => renderSettings(html));
@@ -626,6 +620,9 @@ Hooks.once('init', function () {
   registerSDMGMSettingMenus();
   registerGroupCheckSettings();
 
+  // What the core ActiveEffectRegistry does with expired effects ("update" marks them expired)
+  CONFIG.ActiveEffect.expiryAction = game.settings.get('sdm', 'effectExpiryAction');
+
   /**
    * Set an initiative formula for the system
    * @type {String}
@@ -673,6 +670,7 @@ Hooks.once('ready', function () {
   setupBonusHeroDiceBroadcast();
   updateBonusHeroDiceDisplay();
   sendInitialMessage();
+  SdmEffectsPanel.initialize();
 
   Hooks.on('dropCanvasData', async (canvas, data) => {
     const { uuid, type, x, y } = data;

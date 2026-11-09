@@ -16,6 +16,7 @@
 @include meta.load-css('global/compendiumBrowser');
 @include meta.load-css('global/sheetV2');
 @include meta.load-css('global/itemCondition');
+@include meta.load-css('global/effectsPanel');
 
 // Estilos específicos para sheets .sdm
 .sdm {

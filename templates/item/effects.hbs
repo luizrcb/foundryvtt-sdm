@@ -13,7 +13,7 @@
       <div class='effect-controls effect-controls flexrow'>
         <a class='effect-control' data-action='createDoc' data-document-class='ActiveEffect'
           data-origin="{{@root.item.uuid}}" data-img="icons/svg/aura.svg" {{#if (eq section.type "inactive" )}}
-          data-disabled="true" {{else if (eq section.type "temporary" )}} data-duration.rounds="1" {{/if}}
+          data-disabled="true" {{else if (eq section.type "temporary" )}} data-duration.value="1" data-duration.units="rounds" data-duration.expiry="turnStart" {{/if}}
           data-tooltip='{{localize "SDM.DOCUMENT.Create" type=(localize 'TYPE.Effect')}}'>
           <i class='fa-solid fa-plus'></i>
           {{localize 'SDM.DOCUMENT.New' type=(localize 'TYPE.Effect')}}
@@ -29,7 +29,7 @@
           <div>{{effect.name}}</div>
         </div>
         <div class='effect-source'>{{effect.sourceName}}</div>
-        <div class='effect-duration'>{{effect.duration.label}}</div>
+        <div class='effect-duration{{#if effect.duration.expired}} expired{{/if}}'>{{#if effect.duration.expired}}{{localize 'SDM.Effect.Expired'}}{{else}}{{effect.duration.label}}{{/if}}</div>
         <div class='effect-controls effect-controls flexrow'>
           {{#if @root.editable}}
           <a class='effect-control' data-action='toggleEffect' data-tooltip='{{localize "SDM.Effect.Toggle"}}'>
