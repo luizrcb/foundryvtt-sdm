@@ -81,12 +81,12 @@
       {{#if item.system.is_hallmark}}
       <div class='resource'>
         <label class='resource-label'>{{localize 'SDM.FieldLevel'}}
-          <input type='text' name='system.hallmark.level' value='{{system.hallmark.level}}' data-dtype='Number' />
+          <input type='text' name='system.hallmark.level' value='{{system.hallmark.level}}' data-dtype='Number' disabled />
         </label>
       </div>
       <div class='resource'>
         <label class='resource-label'>{{localize 'SDM.FieldExperience'}}</label>
-        <input type='text' name='system.hallmark.experience' value='{{system.hallmark.experience}}' />
+        <input type='text' name='system.hallmark.experience' value='{{system.hallmark.experience}}'{{#unless @root.isGM}} disabled{{/unless}} />
       </div>
       {{/if}}
     </div>

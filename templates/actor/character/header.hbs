@@ -183,7 +183,7 @@
               </label>
               <div class='resource-content flexrow flex-center flex-between'>
                 {{#if (or isEditMode (not @root.editable))}}
-                <input type='text' name='system.player_experience' value='{{system.player_experience}}' />
+                <input type='text' name='system.player_experience' value='{{system.player_experience}}'{{#unless @root.isGM}} disabled{{/unless}} />
                 {{else}}
                 <input type='text' name='system.player_experience' value='{{system.player_experience}}' disabled />
                 {{/if}}
@@ -195,7 +195,7 @@
               </label>
               <div class='resource-content flexrow flex-center flex-between'>
                 {{#if (or isEditMode (not @root.editable))}}
-                <input type='text' name='system.experience' value='{{system.experience}}' />
+                <input type='text' name='system.experience' value='{{system.experience}}'{{#unless @root.isGM}} disabled{{/unless}} />
                 {{else}}
                 <input type='text' name='system.experience' value='{{system.experience}}' disabled />
                 {{/if}}
@@ -715,7 +715,7 @@
               </label>
               <div class='resource-content flexrow flex-center flex-between'>
                 {{#if (or isEditMode (not @root.editable))}}
-                <input type='text' name='system.player_experience' value='{{system.player_experience}}' />
+                <input type='text' name='system.player_experience' value='{{system.player_experience}}'{{#unless @root.isGM}} disabled{{/unless}} />
                 {{else}}
                 <input type='text' name='system.player_experience' value='{{system.player_experience}}' disabled />
                 {{/if}}
@@ -727,7 +727,7 @@
               </label>
               <div class='resource-content flexrow flex-center flex-between'>
                 {{#if (or isEditMode (not @root.editable))}}
-                <input type='text' name='system.experience' value='{{system.experience}}' />
+                <input type='text' name='system.experience' value='{{system.experience}}'{{#unless @root.isGM}} disabled{{/unless}} />
                 {{else}}
                 <input type='text' name='system.experience' value='{{system.experience}}' disabled />
                 {{/if}}

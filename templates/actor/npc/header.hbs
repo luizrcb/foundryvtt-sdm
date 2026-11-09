@@ -20,7 +20,7 @@
               {{localize 'SDM.FieldLevel'}}
             </label>
             <div class='resource-content flexrow flex-center flex-between'>
-              <input type='text' name='system.level' value='{{system.level}}' data-dtype="Number" />
+              <input type='text' name='system.level' value='{{system.level}}' data-dtype="Number" disabled />
             </div>
           </div>
 
@@ -58,7 +58,7 @@
               {{localize 'SDM.FieldExperience'}}
             </label>
             <div class='resource-content flexrow flex-center flex-between'>
-              <input type='text' name='system.experience' value='{{system.experience}}' />
+              <input type='text' name='system.experience' value='{{system.experience}}'{{#unless @root.isGM}} disabled{{/unless}} />
             </div>
           </div>
 

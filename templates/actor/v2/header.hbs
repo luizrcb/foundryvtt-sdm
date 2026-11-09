@@ -23,12 +23,12 @@
         <div class="v2-chip">
           <span class="v2-label">{{localize 'SDM.FieldPlayerXP'}} {{#if @root.editable}}<a class="sdm-invest-xp" data-action="investXp" data-tooltip="SDM.InvestXP.Title"><i class="fa-solid fa-circle-up"></i></a>{{/if}}</span>
           <input type="text" name="system.player_experience" value="{{system.player_experience}}"
-            {{#unless (or isEditMode (not @root.editable))}}disabled{{/unless}} />
+            {{#unless (or (and @root.isGM isEditMode) (not @root.editable))}}disabled{{/unless}} />
         </div>
         <div class="v2-chip" data-tooltip="{{xpToNextLevel}} {{localize 'SDM.XPToLevelUP'}}">
           <span class="v2-label">{{localize 'SDM.FieldCharXP'}}</span>
           <input type="text" name="system.experience" value="{{system.experience}}"
-            {{#unless (or isEditMode (not @root.editable))}}disabled{{/unless}} />
+            {{#unless (or (and @root.isGM isEditMode) (not @root.editable))}}disabled{{/unless}} />
         </div>
         <div class="v2-chip">
           <span class="v2-label">{{localize 'SDM.FieldLevel'}}</span>

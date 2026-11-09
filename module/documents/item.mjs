@@ -136,6 +136,11 @@ export class SdmItem extends Item {
     const result = await super._preUpdate(changes, options, user);
     if (result === false) return false;
 
+    // Only the Referee edits hallmark XP directly; players invest it (sdmInvestXp option)
+    if (!user.isGM && !options.sdmInvestXp && changes.system?.hallmark?.experience !== undefined) {
+      delete changes.system.hallmark.experience;
+    }
+
     // Adding the vessel feature turns on charges with a dozen doses
     const newFeatures = changes.system?.features;
     if (newFeatures !== undefined && !this.system.features.has('vessel')) {

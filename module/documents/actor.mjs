@@ -85,6 +85,22 @@ export class SdmActor extends Actor {
     this.updateSource(updates);
   }
 
+  /** @override */
+  async _preUpdate(changes, options, user) {
+    const result = await super._preUpdate(changes, options, user);
+    if (result === false) return false;
+
+    // Only the Referee edits XP directly; players invest it (sdmInvestXp option)
+    if (!user.isGM && !options.sdmInvestXp && changes.system) {
+      for (const key of ['experience', 'player_experience']) {
+        if (changes.system[key] !== undefined && `${changes.system[key]}` !== `${this.system[key]}`) {
+          delete changes.system[key];
+        }
+      }
+    }
+    return result;
+  }
+
   // Override the _onUpdate method to handle level changes
   /** @override */
   async _onUpdate(changed, options, userId) {

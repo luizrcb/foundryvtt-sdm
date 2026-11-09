@@ -6,6 +6,7 @@
 - Character generator no longer gives the same trait or skill twice
 - Players can invest their Player XP with the new button next to Player XP on the character sheet: in the character, in one of its hallmark items, in one of their pets, or donate it to another player's Player XP. Every investment is recorded in the chat
 - Hallmark items get their level from their XP automatically
+- Only the Referee can edit XP fields directly (Player XP, character XP, NPC XP and hallmark XP); players spend XP through "Invest XP". Hallmark and NPC levels are no longer edited by hand (mount and vehicle levels are unchanged)
 - NPCs gain levels when their XP reaches the next level (stats from the table they were created from, or the generic table); the Level Up button also raises their XP to the new level
 
 ## v1.10.0

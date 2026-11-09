@@ -222,18 +222,23 @@ function validate(user, source, kind, targetDoc, amount) {
 
 async function applyInvestment(source, kind, targetDoc, amount, user) {
   const pool = toInt(source.system.player_experience);
-  await source.update({ 'system.player_experience': `${pool - amount}` });
+  await source.update({ 'system.player_experience': `${pool - amount}` }, { sdmInvestXp: true });
 
   if (kind === 'self' || kind === 'pet') {
-    await targetDoc.update({ 'system.experience': `${toInt(targetDoc.system.experience) + amount}` });
+    await targetDoc.update(
+      { 'system.experience': `${toInt(targetDoc.system.experience) + amount}` },
+      { sdmInvestXp: true }
+    );
   } else if (kind === 'hallmark') {
-    await targetDoc.update({
-      'system.hallmark.experience': `${toInt(targetDoc.system.hallmark?.experience) + amount}`
-    });
+    await targetDoc.update(
+      { 'system.hallmark.experience': `${toInt(targetDoc.system.hallmark?.experience) + amount}` },
+      { sdmInvestXp: true }
+    );
   } else if (kind === 'donate') {
-    await targetDoc.update({
-      'system.player_experience': `${toInt(targetDoc.system.player_experience) + amount}`
-    });
+    await targetDoc.update(
+      { 'system.player_experience': `${toInt(targetDoc.system.player_experience) + amount}` },
+      { sdmInvestXp: true }
+    );
   }
 
   const key = kind === 'donate' ? 'SDM.InvestXP.ChatDonate' : 'SDM.InvestXP.ChatInvest';
