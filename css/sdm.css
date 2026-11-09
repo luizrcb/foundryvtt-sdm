@@ -3999,7 +3999,7 @@ input[type=radio]::after {
 
 .application.sheet.sdm.sheet-v2 .v2-resources {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 72px;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 88px;
   grid-template-rows: minmax(0, 1fr);
   gap: 12px;
   align-items: start;
@@ -4193,19 +4193,8 @@ input[type=radio]::after {
   flex-direction: column;
   align-items: center;
   overflow-x: hidden;
-  scrollbar-width: auto;
-  scrollbar-color: auto;
-}
-
-.application.sheet.sdm.sheet-v2 .v2-col-burdens .items-list::-webkit-scrollbar {
-  width: 4px;
-  height: 0;
-  background: transparent;
-}
-
-.application.sheet.sdm.sheet-v2 .v2-col-burdens .items-list::-webkit-scrollbar-thumb {
-  background: var(--v2-accent);
-  border-radius: 2px;
+  scrollbar-width: thin;
+  scrollbar-color: var(--v2-accent) transparent;
 }
 
 .application.sheet.sdm.sheet-v2 .v2-col-burdens .items-list > li {

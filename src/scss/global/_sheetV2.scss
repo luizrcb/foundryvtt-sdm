@@ -769,7 +769,7 @@ $v2-wide: 1100px;
   // ---------- Resources ----------
   .v2-resources {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 72px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) 88px;
     grid-template-rows: minmax(0, 1fr);
     gap: 12px;
     align-items: start;
@@ -973,20 +973,9 @@ $v2-wide: 1100px;
       flex-direction: column;
       align-items: center;
       overflow-x: hidden;
-      // A full scroll bar does not fit this narrow column: use a 4px bar instead
-      // (scrollbar-width must stay 'auto' for the ::-webkit-scrollbar size to apply)
-      scrollbar-width: auto;
-      scrollbar-color: auto;
-
-      &::-webkit-scrollbar {
-        width: 4px;
-        height: 0;
-        background: transparent;
-      }
-      &::-webkit-scrollbar-thumb {
-        background: var(--v2-accent);
-        border-radius: 2px;
-      }
+      // Same thin scroll bar as the items and traits columns (the column is wide enough for it)
+      scrollbar-width: thin;
+      scrollbar-color: var(--v2-accent) transparent;
       // In a flex column the rows would shrink (and overlap) instead of scrolling
       > li {
         flex-shrink: 0;
