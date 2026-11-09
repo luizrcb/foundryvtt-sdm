@@ -5331,6 +5331,27 @@ input[type=radio]::after {
   background: var(--sdm-cond-danger);
 }
 
+.chat-card.item-card .sdm-chat-condition {
+  font-size: 0.75em;
+  margin-left: 3px;
+  vertical-align: 0.1em;
+  opacity: 0.55;
+  cursor: help;
+  transition: opacity 0.15s ease;
+}
+
+.chat-card.item-card .sdm-chat-condition:hover {
+  opacity: 1;
+}
+
+.chat-card.item-card .sdm-chat-condition.is-warn {
+  color: #b07a1e;
+}
+
+.chat-card.item-card .sdm-chat-condition.is-danger {
+  color: #9b2c22;
+}
+
 .sdm :root {
   --sdm-font-primary: 'Baron Neue';
   --sdm-font-secondary: 'Alegreya', sans-serif;

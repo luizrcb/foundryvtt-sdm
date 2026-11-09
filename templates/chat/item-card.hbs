@@ -9,7 +9,12 @@
       <img class="gold-icon" src="{{ item.img }}" alt="{{ item.name }}">
       <div class="name-stacked border">
           <div class="title flex flex-between">
-            <span>{{ item.name }}</span>
+            <span>{{ item.name }}
+              {{#if (eq item.system.resources 'running_low')}}<i class="fa-solid fa-battery-quarter sdm-chat-condition is-warn" data-tooltip="{{localize 'SDM.ItemStatusRunningLow'}}"></i>{{/if}}
+              {{#if (eq item.system.resources 'run_out')}}<i class="fa-solid fa-battery-empty sdm-chat-condition is-danger" data-tooltip="{{localize 'SDM.ItemStatusRunOut'}}"></i>{{/if}}
+              {{#if (eq item.system.status 'notched')}}<i class="fa fa-hammer sdm-chat-condition is-warn" data-tooltip="{{localize 'SDM.ItemStatusNotched'}}"></i>{{/if}}
+              {{#if (eq item.system.status 'broken')}}<i class="fa fa-ban sdm-chat-condition is-danger" data-tooltip="{{localize 'SDM.ItemStatusBroken'}}"></i>{{/if}}
+            </span>
             <span class="item-cost">{{costSubtitle}} </span>
           </div>
           <div class="subtitle flex flex-center flex-between">

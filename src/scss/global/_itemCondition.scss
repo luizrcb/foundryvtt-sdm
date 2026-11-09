@@ -107,3 +107,17 @@
     &.is-active.is-danger { background: var(--sdm-cond-danger); }
   }
 }
+
+// Chat item card: small, muted condition icons after the item name (tooltip on hover)
+.chat-card.item-card .sdm-chat-condition {
+  font-size: 0.75em;
+  margin-left: 3px;
+  vertical-align: 0.1em;
+  opacity: 0.55;
+  cursor: help;
+  transition: opacity 0.15s ease;
+
+  &:hover { opacity: 1; }
+  &.is-warn { color: #b07a1e; }
+  &.is-danger { color: #9b2c22; }
+}
