@@ -1728,8 +1728,11 @@ $v2-wide: 1100px;
     }
   }
 
-  .v2-journey-fields {
-    grid-template-columns: repeat(6, minmax(0, 1fr));
+  // Two rows of three: no wrapped labels, and the card matches the Weeks card height
+  .v2-caravan-cards .v2-journey-fields {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    align-items: end;
+    row-gap: 10px;
   }
 
   .v2-weeks .v2-time-fields {
@@ -1756,9 +1759,6 @@ $v2-wide: 1100px;
     }
     .v2-caravan-cards {
       grid-template-columns: minmax(0, 1fr);
-    }
-    .v2-journey-fields {
-      grid-template-columns: repeat(3, minmax(0, 1fr));
     }
   }
 

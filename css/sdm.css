@@ -5006,8 +5006,10 @@ input[type=radio]::after {
   gap: 6px 12px;
 }
 
-.application.sheet.sdm.sheet-v2 .v2-journey-fields {
-  grid-template-columns: repeat(6, minmax(0, 1fr));
+.application.sheet.sdm.sheet-v2 .v2-caravan-cards .v2-journey-fields {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  align-items: end;
+  row-gap: 10px;
 }
 
 .application.sheet.sdm.sheet-v2 .v2-weeks .v2-time-fields {
@@ -5035,10 +5037,6 @@ input[type=radio]::after {
 
 .application.sheet.sdm.sheet-v2.caravan.is-narrow .v2-caravan-cards {
   grid-template-columns: minmax(0, 1fr);
-}
-
-.application.sheet.sdm.sheet-v2.caravan.is-narrow .v2-journey-fields {
-  grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
 .application.sheet.sdm.sheet-v2 .v2-field.is-danger .v2-label,
