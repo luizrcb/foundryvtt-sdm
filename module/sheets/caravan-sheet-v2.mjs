@@ -38,6 +38,14 @@ export class SdmCaravanSheetV2 extends SdmCaravanSheet {
     biography: {
       template: templatePath('actor/v2/biography'),
       scrollable: ['']
+    },
+    crew: {
+      template: templatePath('actor/v2/caravan-crew'),
+      scrollable: ['']
+    },
+    routes: {
+      template: templatePath('actor/v2/caravan-routes'),
+      scrollable: ['']
     }
   };
 

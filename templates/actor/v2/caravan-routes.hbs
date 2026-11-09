@@ -1,0 +1,56 @@
+{{! Caravan sheet V2 routes tab. Same field names and data-actions as actor/caravan/routes. }}
+<section class='tab routes v2-routes scrollable {{tab.cssClass}}' data-group='primary' data-tab='routes'>
+  <div class="items-list">
+    <div class="item items-header caravan-item-header v2-bar">
+      <span class="v2-bar-title">{{localize 'SDM.TabRoutes'}}</span>
+      {{#if @root.editable}}
+      <a class="item-control item-create" data-action="addRoute"
+        data-tooltip="{{localize 'SDM.DOCUMENT.Create' type=(localize 'SDM.Route')}}"><i class="fa-solid fa-plus"></i></a>
+      {{/if}}
+    </div>
+  </div>
+  {{#each system.routes as |route key|}}
+  <section class="v2-card v2-route-card">
+    <div class="v2-route-top">
+      <label class="v2-field v2-route-name">
+        <span class="v2-label">{{localize 'SDM.FieldRunName'}}</span>
+        <input type="text" name="system.route.{{key}}.name" value="{{route.name}}" />
+      </label>
+      <label class="v2-field">
+        <span class="v2-label">{{localize 'SDM.FieldAgent'}}</span>
+        <input type="text" name="system.route.{{key}}.agent" value="{{route.agent}}" />
+      </label>
+      <label class="v2-field">
+        <span class="v2-label">{{localize 'SDM.FieldQuirk'}}</span>
+        <input type="text" name="system.route.{{key}}.quirk" value="{{route.quirk}}" />
+      </label>
+      {{#if @root.editable}}
+      <a class="v2-route-delete" data-action="deleteRoute" data-key="{{key}}"
+        data-tooltip="{{localize 'DOCUMENT.Delete' type=(localize 'SDM.Route')}}"><i class="fa-solid fa-trash"></i></a>
+      {{/if}}
+    </div>
+    <div class="v2-route-legs">
+      <label class="v2-field v2-route-place">
+        <span class="v2-label">{{localize 'SDM.FieldLocation' letter=(alphaFromIndex @index 'A')}}</span>
+        <input type="text" name="system.route.{{key}}.locationA" value="{{route.locationA}}" />
+      </label>
+      <label class="v2-field">
+        <span class="v2-label" data-tooltip="SDM.FieldETA">{{localize 'SDM.FieldETAAbbr'}}</span>
+        <input type="text" name="system.route.{{key}}.eta" value="{{route.eta}}" />
+      </label>
+      <label class="v2-field v2-route-place">
+        <span class="v2-label">{{localize 'SDM.FieldLocation' letter=(alphaFromIndex @index 'B')}}</span>
+        <input type="text" name="system.route.{{key}}.locationB" value="{{route.locationB}}" />
+      </label>
+      <label class="v2-field">
+        <span class="v2-label">{{localize 'SDM.FieldInvestment'}}</span>
+        <input type="text" name="system.route.{{key}}.investment" value="{{route.investment}}" />
+      </label>
+      <label class="v2-field">
+        <span class="v2-label">{{localize 'SDM.FieldRisk'}}</span>
+        <input type="text" name="system.route.{{key}}.risk" value="{{route.risk}}" />
+      </label>
+    </div>
+  </section>
+  {{/each}}
+</section>

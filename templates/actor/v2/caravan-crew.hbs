@@ -1,0 +1,50 @@
+{{! Caravan sheet V2 crew tab. Same data-actions as actor/caravan/crew. }}
+<section class='tab crew v2-crew scrollable {{tab.cssClass}}' data-group='primary' data-tab='crew' data-drop="true" id="crew-tab">
+  {{#if (and (eq crew_players.length 0) (eq crew_npcs.length 0))}}
+  <p class="v2-hint">{{localize 'SDM.CaravanDropNPCs'}}</p>
+  {{else}}
+  <div class="v2-crew-grid">
+    {{#each crew_players as |crewMember key|}}
+    <div class="crew-card crew-hero">
+      <div class="v2-crew-head">
+        <a class="v2-crew-name" data-action="viewCrewMember" data-key="{{crewMember.key}}" data-tooltip="{{localize 'SDM.CaravanCrewOpenSheet' name=crewMember.name}}">{{crewMember.name}}</a>
+        <a class="v2-crew-delete" data-action="deleteCrew" data-key="{{crewMember.key}}" data-tooltip="{{localize 'DOCUMENT.Delete' type=(localize 'SDM.Crew')}}"><i class="fa fa-trash"></i></a>
+      </div>
+      <div class="v2-crew-stats">
+        <div class="stat-icon" data-tooltip="SDM.FieldLevel"><i class="fa-solid fa-award"></i><span>{{crewMember.system.level}}</span></div>
+        <div class="stat-icon" data-tooltip="TYPES.Item.cash"><i class="fa-solid fa-coins"></i><span>{{localize 'SDM.CashSymbol'}}{{localeNumber crewMember.totalCash}}</span></div>
+        <div class="stat-icon" data-tooltip="SDM.FieldHeroDice"><i class="fa-solid fa-dice-d6"></i><span>{{crewMember.system.hero_dice.value}}/{{crewMember.system.hero_dice.max}}</span></div>
+        <div class="stat-icon" data-tooltip="SDM.FieldLifeMax"><i class="fa-solid fa-heart lime"></i><span>{{crewMember.system.life.value}}/{{crewMember.system.life.max}}</span></div>
+        <div class="stat-icon" data-tooltip="SDM.FieldDefense"><i class="fa-solid fa-shield"></i><span>{{crewMember.system.defense}}</span></div>
+        <div class="stat-icon" data-tooltip="SDM.AbilityStr"><i class="fa-solid fa-hand-fist rust"></i><span>{{crewMember.system.abilities.str.current}}</span></div>
+        <div class="stat-icon" data-tooltip="SDM.AbilityEnd"><i class="fa-solid fa-heartbeat pumpkin"></i><span>{{crewMember.system.abilities.end.current}}</span></div>
+        <div class="stat-icon" data-tooltip="SDM.AbilityAgi"><i class="fa-solid fa-person-running amber"></i><span>{{crewMember.system.abilities.agi.current}}</span></div>
+        <div class="stat-icon" data-tooltip="SDM.AbilityCha"><i class="fa-solid fa-clover sky"></i><span>{{crewMember.system.abilities.cha.current}}</span></div>
+        <div class="stat-icon" data-tooltip="SDM.AbilityAur"><i class="fa-solid fa-splotch azure"></i><span>{{crewMember.system.abilities.aur.current}}</span></div>
+        <div class="stat-icon" data-tooltip="SDM.AbilityTho"><i class="fa-solid fa-cloud royal"></i><span>{{crewMember.system.abilities.tho.current}}</span></div>
+      </div>
+    </div>
+    {{/each}}
+    {{#each crew_npcs as |crewMember key|}}
+    <div class="crew-card crew-npc">
+      <div class="v2-crew-head">
+        <a class="v2-crew-name" data-action="viewCrewMember" data-key="{{crewMember.key}}" data-tooltip="{{localize 'SDM.CaravanCrewOpenSheet' name=crewMember.name}}">{{crewMember.name}}</a>
+        <a class="v2-crew-delete" data-action="deleteCrew" data-key="{{crewMember.key}}" data-tooltip="{{localize 'DOCUMENT.Delete' type=(localize 'SDM.Crew')}}"><i class="fa fa-trash"></i></a>
+      </div>
+      <div class="v2-crew-stats">
+        <div class="stat-icon" data-tooltip="SDM.FieldLevel"><i class="fa-solid fa-award"></i><span>{{crewMember.system.level}}</span></div>
+        <div class="stat-icon" data-tooltip="TYPES.Item.cash"><i class="fa-solid fa-coins"></i><span>{{localize 'SDM.CashSymbol'}}{{localeNumber crewMember.totalCash}}</span></div>
+        <div class="stat-icon" data-tooltip="SDM.FieldCapacity"><i class="fa-solid fa-weight-hanging"></i><span>{{crewMember.system.capacity}}</span></div>
+        <div class="stat-icon" data-tooltip="SDM.FieldLifeMax"><i class="fa-solid fa-heart lime"></i><span>{{crewMember.system.life.value}}/{{crewMember.system.life.max}}</span></div>
+        <div class="stat-icon" data-tooltip="SDM.FieldDefense"><i class="fa-solid fa-shield plum"></i><span>{{crewMember.system.defense}}</span></div>
+        <div class="stat-icon" data-tooltip="SDM.Morale"><i class="fa-solid fa-person-running rust"></i><span>{{crewMember.system.morale}}</span></div>
+        <div class="stat-icon" data-tooltip="SDM.FieldBonus"><i class="fa-solid fa-square-plus"></i><span>{{crewMember.system.bonus}}</span></div>
+        <div class="stat-icon" data-tooltip="SDM.Damage"><i class="fa-solid fa-explosion sky"></i><span>{{crewMember.system.damage}}</span></div>
+        <div class="stat-icon" data-tooltip="SDM.FieldCostPerWeek"><i class="fa-solid fa-file-invoice-dollar"></i><span>{{#if crewMember.system.cost}}{{localize 'SDM.CashSymbol'}}{{crewMember.system.cost}}{{else}}—{{/if}}</span></div>
+        <div class="stat-icon" data-tooltip="SDM.FieldSupplyPerWeek"><i class="fa-solid fa-cart-arrow-down"></i><span>{{#if crewMember.system.supply}}{{crewMember.system.supply}}{{else}}—{{/if}}</span></div>
+      </div>
+    </div>
+    {{/each}}
+  </div>
+  {{/if}}
+</section>
