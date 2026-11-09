@@ -224,10 +224,10 @@
 
             <div class='resource grid-span-1'>
               <label class='resource-label' data-tooltip="SDM.FieldCostPerWeek">
-                {{localize 'SDM.FieldCost'}}
+                {{localize 'SDM.Cost'}}
               </label>
               <div class='resource-content'>
-                <input type='text' name='system.transport.{{key}}.cost' value='{{transport.cost}}' />
+                <span class="sdm-money"><span class="sdm-money-sign">{{localize 'SDM.CashSymbol'}}</span><input type='text' name='system.transport.{{key}}.cost' value='{{transport.cost}}' /></span>
               </div>
             </div>
 

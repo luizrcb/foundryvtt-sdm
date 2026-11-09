@@ -29,15 +29,15 @@
       <span><b>{{localize 'SDM.TabCaravanInventory'}}:</b> {{localize 'SDM.CashSymbol'}}{{localeNumber system.inventory_value}}</span><br/>
       <span><b>{{localize 'SDM.CrewMembersCash'}}:</b> {{localize 'SDM.CashSymbol'}}{{localeNumber totalCrewCash}}</span>">
       <span class="v2-label">{{localize 'SDM.FieldWealth'}}</span>
-      <input type="text" name="system.total_cash" value="{{localize 'SDM.CashSymbol'}}{{localeNumber system.total_cash}}" disabled />
+      <span class="sdm-money"><span class="sdm-money-sign">{{localize 'SDM.CashSymbol'}}</span><input type="text" name="system.total_cash" value="{{localeNumber system.total_cash}}" disabled /></span>
     </div>
     <label class="v2-money-cell">
       <span class="v2-label">{{localize 'SDM.FieldDebt'}}</span>
-      <input type="text" name="system.debt" value="{{system.debt}}" />
+      <span class="sdm-money"><span class="sdm-money-sign">{{localize 'SDM.CashSymbol'}}</span><input type="text" name="system.debt" value="{{system.debt}}" /></span>
     </label>
     <label class="v2-money-cell" data-tooltip="SDM.FieldWeeklyCost">
-      <span class="v2-label">{{localize 'SDM.FieldCost'}}</span>
-      <input type="text" name="system.cost" value="{{system.cost}}" />
+      <span class="v2-label">{{localize 'SDM.Cost'}}</span>
+      <span class="sdm-money"><span class="sdm-money-sign">{{localize 'SDM.CashSymbol'}}</span><input type="text" name="system.cost" value="{{system.cost}}" /></span>
     </label>
     <label class="v2-money-cell" data-tooltip="SDM.FieldWeeklySupply">
       <span class="v2-label">{{localize 'SDM.FieldSupply'}}</span>

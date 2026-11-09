@@ -131,22 +131,22 @@
     <div class="v2-money">
       <label class="v2-money-cell">
         <span class="v2-label">{{localize 'SDM.FieldRevenue'}}</span>
-        <input type="text" name="system.revenue" value="{{system.revenue}}" data-dtype="Number" />
+        <span class="sdm-money"><span class="sdm-money-sign">{{localize 'SDM.CashSymbol'}}</span><input type="text" name="system.revenue" value="{{system.revenue}}" data-dtype="Number" /></span>
       </label>
       <label class="v2-money-cell">
         <span class="v2-label">{{localize 'SDM.FieldExpense'}}</span>
-        <input type="text" name="system.expense" value="{{system.expense}}" data-dtype="Number" />
+        <span class="sdm-money"><span class="sdm-money-sign">{{localize 'SDM.CashSymbol'}}</span><input type="text" name="system.expense" value="{{system.expense}}" data-dtype="Number" /></span>
       </label>
       <div class="v2-money-cell" data-tooltip="
         <span><b>{{toPascalCase (localize 'SDM.UnitCash')}}:</b> {{localize 'SDM.CashSymbol'}}{{localeNumber system.total_cash}}</span><br/>
         <span><b>{{localize 'SDM.TabInventory'}}:</b> {{localize 'SDM.CashSymbol'}}{{localeNumber system.inventory_value}}</span><hr>
         <span><b>{{toPascalCase (localize 'SDM.Total')}}:</b> {{localize 'SDM.CashSymbol'}}{{localeNumber system.wealth}}</span>">
         <span class="v2-label">{{localize 'SDM.FieldWealth'}}</span>
-        <input type="text" name="system.total_cash" value="{{localize 'SDM.CashSymbol'}}{{localeNumber system.total_cash}}" disabled />
+        <span class="sdm-money"><span class="sdm-money-sign">{{localize 'SDM.CashSymbol'}}</span><input type="text" name="system.total_cash" value="{{localeNumber system.total_cash}}" disabled /></span>
       </div>
       <label class="v2-money-cell">
         <span class="v2-label">{{localize 'SDM.FieldDebt'}}</span>
-        <input type="text" name="system.debt" value="{{system.debt}}" data-dtype="Number" />
+        <span class="sdm-money"><span class="sdm-money-sign">{{localize 'SDM.CashSymbol'}}</span><input type="text" name="system.debt" value="{{system.debt}}" data-dtype="Number" /></span>
       </label>
     </div>
   </div>

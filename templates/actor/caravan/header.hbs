@@ -41,21 +41,21 @@
               <label for="system.total_cash" class='resource-label'>
                 {{localize 'SDM.FieldWealth'}}
               </label>
-              <input name='system.total_cash' type='text' value=' {{localize 'SDM.CashSymbol'}}{{localeNumber system.total_cash}}' disabled/>
+              <span class="sdm-money"><span class="sdm-money-sign">{{localize 'SDM.CashSymbol'}}</span><input name='system.total_cash' type='text' value='{{localeNumber system.total_cash}}' disabled/></span>
             </div>
 
             <div class="grid-span-1">
               <label for="system.debt" class='resource-label'>
                 {{localize 'SDM.FieldDebt'}}
               </label>
-              <input name='system.debt' type='text' value='{{system.debt}}' />
+              <span class="sdm-money"><span class="sdm-money-sign">{{localize 'SDM.CashSymbol'}}</span><input name='system.debt' type='text' value='{{system.debt}}' /></span>
             </div>
 
             <div class="grid-span-1">
               <label for="system.cost" class='resource-label' data-tooltip="SDM.FieldWeeklyCost">
-                {{localize 'SDM.FieldCost'}}
+                {{localize 'SDM.Cost'}}
               </label>
-              <input name='system.cost' type='text' value='{{system.cost}}' />
+              <span class="sdm-money"><span class="sdm-money-sign">{{localize 'SDM.CashSymbol'}}</span><input name='system.cost' type='text' value='{{system.cost}}' /></span>
             </div>
 
             <div class="grid-span-1">
@@ -219,21 +219,21 @@
           <label for="system.total_cash" class='resource-label'>
             {{localize 'SDM.FieldWealth'}}
           </label>
-          <input name='system.total_cash' type='text' value=' {{localize 'SDM.CashSymbol'}}{{localeNumber system.total_cash}}' disabled/>
+          <span class="sdm-money"><span class="sdm-money-sign">{{localize 'SDM.CashSymbol'}}</span><input name='system.total_cash' type='text' value='{{localeNumber system.total_cash}}' disabled/></span>
         </div>
 
         <div class="grid-span-1">
           <label for="system.debt" class='resource-label'>
             {{localize 'SDM.FieldDebt'}}
           </label>
-          <input name='system.debt' type='text' value='{{system.debt}}' />
+          <span class="sdm-money"><span class="sdm-money-sign">{{localize 'SDM.CashSymbol'}}</span><input name='system.debt' type='text' value='{{system.debt}}' /></span>
         </div>
 
         <div class="grid-span-1">
           <label for="system.cost" class='resource-label'>
             {{localize 'SDM.FieldWeeklyCost'}}
           </label>
-          <input name='system.cost' type='text' value='{{system.cost}}' />
+          <span class="sdm-money"><span class="sdm-money-sign">{{localize 'SDM.CashSymbol'}}</span><input name='system.cost' type='text' value='{{system.cost}}' /></span>
         </div>
 
         <div class="grid-span-1">

@@ -508,6 +508,11 @@ $v2-wide: 1100px;
       font-family: var(--sdm-font-primary);
       font-size: 16px;
       padding: 0;
+    }    .sdm-money-sign {
+      font-family: var(--sdm-font-primary);
+      font-size: 16px;
+      color: var(--v2-muted);
+      opacity: 1;
     }
   }
 

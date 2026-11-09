@@ -1664,3 +1664,24 @@ input[type='radio']::after {
     justify-content: center;
   }
 }
+
+// Money inputs: the cash symbol sits outside the input, in front of it
+.application.sdm .sdm-money {
+  display: flex;
+  align-items: center;
+  gap: 3px;
+  flex: 1 1 auto;
+  width: 100%;
+  min-width: 0;
+
+  .sdm-money-sign {
+    flex: 0 0 auto;
+    opacity: 0.7;
+    pointer-events: none;
+  }
+  input {
+    flex: 1 1 auto;
+    width: auto;
+    min-width: 0;
+  }
+}
