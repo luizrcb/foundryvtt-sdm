@@ -1343,6 +1343,17 @@ $v2-wide: 1100px;
     }
   }
 
+  // Item card grows with its editor instead of scrolling inside
+  &.item .v2-prose {
+    flex: 0 0 auto;
+    height: auto;
+    overflow: visible;
+
+    > prose-mirror {
+      flex: 0 0 auto;
+    }
+  }
+
   // Actor notes and biography: the editor card fills the tab (nothing else competes for space)
   &.actor {
     section.tab.notes.active,

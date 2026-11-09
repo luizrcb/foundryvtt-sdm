@@ -406,13 +406,22 @@
   flex-direction: column;
   flex: 0 0 auto;
   height: auto;
+  max-height: none;
   min-height: 140px;
+  overflow: visible;
 }
 
+.application.sheet.sdm.item prose-mirror[name="system.description"] .editor-container,
 .application.sheet.sdm.item prose-mirror[name="system.description"] .editor-content,
-.application.sheet.sdm.item prose-mirror[name="system.gm_notes"] .editor-content {
+.application.sheet.sdm.item prose-mirror[name="system.description"] .ProseMirror,
+.application.sheet.sdm.item prose-mirror[name="system.gm_notes"] .editor-container,
+.application.sheet.sdm.item prose-mirror[name="system.gm_notes"] .editor-content,
+.application.sheet.sdm.item prose-mirror[name="system.gm_notes"] .ProseMirror {
+  position: static;
+  inset: auto;
   flex: 1 0 auto;
   height: auto;
+  max-height: none;
   overflow: visible;
 }
 
@@ -4585,6 +4594,16 @@ input[type=radio]::after {
 
 .application.sheet.sdm.sheet-v2 .v2-prose > prose-mirror {
   flex: 1 1 auto;
+}
+
+.application.sheet.sdm.sheet-v2.item .v2-prose {
+  flex: 0 0 auto;
+  height: auto;
+  overflow: visible;
+}
+
+.application.sheet.sdm.sheet-v2.item .v2-prose > prose-mirror {
+  flex: 0 0 auto;
 }
 
 .application.sheet.sdm.sheet-v2.actor section.tab.notes.active,

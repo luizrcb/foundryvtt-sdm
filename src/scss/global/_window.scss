@@ -219,11 +219,21 @@
     flex-direction: column;
     flex: 0 0 auto;
     height: auto;
+    max-height: none;
     min-height: 140px;
+    overflow: visible;
 
-    .editor-content {
+    // Foundry lays the editor out as a fixed box whose inner content scrolls
+    // (absolutely positioned content inside a container). Put every layer back
+    // in normal flow so the box takes the height of its content.
+    .editor-container,
+    .editor-content,
+    .ProseMirror {
+      position: static;
+      inset: auto;
       flex: 1 0 auto;
       height: auto;
+      max-height: none;
       overflow: visible;
     }
   }
