@@ -1,3 +1,4 @@
+import { getXpToNextLevel } from '../helpers/actorUtils.mjs';
 import { ActorType } from '../helpers/constants.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 
@@ -83,14 +84,19 @@ export async function openInvestXpDialog(actor) {
 
   const targets = buildTargets(actor);
   const esc = foundry.utils.escapeHTML ?? (s => s);
-  const lvl = level => `${$l10n('SDM.FieldLevel')} ${level ?? 0}`;
+  // "Level 2, 450 XP to level up" (just the level once the maximum is reached)
+  const status = (level, xp) => {
+    const toNext = getXpToNextLevel(toInt(xp));
+    const levelText = `${$l10n('SDM.FieldLevel')} ${level ?? 0}`;
+    return toNext > 0 ? `${levelText}, ${toNext} ${$l10n('SDM.XPToLevelUP')}` : levelText;
+  };
   const option = (value, label, selected = false) =>
     `<option value="${value}"${selected ? ' selected' : ''}>${esc(label)}</option>`;
 
   const groups = [
     `<optgroup label="${esc($l10n('SDM.InvestXP.GroupCharacter'))}">${option(
       `self:${actor.uuid}`,
-      `${actor.name} (${lvl(actor.system.level)}, ${toInt(actor.system.experience)} XP)`,
+      `${actor.name} (${status(actor.system.level, actor.system.experience)})`,
       true
     )}</optgroup>`
   ];
@@ -100,7 +106,7 @@ export async function openInvestXpDialog(actor) {
         .map(item =>
           option(
             `hallmark:${item.uuid}`,
-            `${item.name} (${lvl(item.system.hallmark?.level)}, ${toInt(item.system.hallmark?.experience)} XP)`
+            `${item.name} (${status(item.system.hallmark?.level, item.system.hallmark?.experience)})`
           )
         )
         .join('')}</optgroup>`
@@ -110,7 +116,7 @@ export async function openInvestXpDialog(actor) {
     groups.push(
       `<optgroup label="${esc($l10n('SDM.InvestXP.GroupPets'))}">${targets.pets
         .map(npc =>
-          option(`pet:${npc.uuid}`, `${npc.name} (${lvl(npc.system.level)}, ${toInt(npc.system.experience)} XP)`)
+          option(`pet:${npc.uuid}`, `${npc.name} (${status(npc.system.level, npc.system.experience)})`)
         )
         .join('')}</optgroup>`
     );
