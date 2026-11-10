@@ -1667,6 +1667,22 @@ $v2-wide: 1100px;
       display: flex;
       justify-content: flex-end;
     }
+    // Table and mode names are long: they get the room, the level stays narrow
+    .v2-anim-fields {
+      grid-template-columns: minmax(0, 1.5fr) minmax(0, 2fr) minmax(0, 0.6fr) minmax(0, 1.4fr);
+      align-items: end;
+
+      .content-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        max-width: 100%;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        align-self: flex-start;
+      }
+    }
     input[type='text'],
     select {
       background: transparent;

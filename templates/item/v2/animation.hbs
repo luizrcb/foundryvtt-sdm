@@ -6,7 +6,7 @@
       <span class="v2-card-title"><i class="fa-solid fa-ghost"></i> {{localize 'SDM.ItemTabAnimation'}}</span>
       <span class="v2-anim-status {{#if active}}is-active{{/if}}">{{#if active}}{{localize 'SDM.Animation.StatusActive'}}{{else}}{{localize 'SDM.Animation.StatusDormant'}}{{/if}}</span>
     </div>
-    <div class="v2-fields">
+    <div class="v2-fields v2-anim-fields">
       <label class="v2-field">
         <span class="v2-label">{{localize 'SDM.Animation.Table'}}</span>
         <select name="system.animation.table" {{#unless canManage}}disabled{{/unless}}>
