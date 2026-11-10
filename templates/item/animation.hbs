@@ -1,0 +1,77 @@
+{{! Animation tab (items with the "animated" feature). Only the Referee edits or animates. }}
+<section class='tab animation scrollable {{tab.cssClass}}' data-group='primary' data-tab='animation'>
+  {{#with animation}}
+  <div class="grid grid-4col mt-6">
+    <div class='resource'>
+      <label class='resource-label'>{{localize 'SDM.Animation.Table'}}</label>
+      <select name='system.animation.table' {{#unless canManage}}disabled{{/unless}}>
+        {{selectOptions tables selected=table localize=true}}
+      </select>
+    </div>
+    <div class='resource'>
+      <label class='resource-label'>{{localize 'SDM.Animation.Mode'}}</label>
+      <select name='system.animation.mode' {{#unless canManage}}disabled{{/unless}}>
+        {{selectOptions modes selected=@root.system.animation.mode localize=true}}
+      </select>
+    </div>
+    <div class='resource' data-tooltip="{{#if isHallmark}}{{localize 'SDM.Animation.LevelHallmarkHint'}}{{else}}{{localize 'SDM.Animation.LevelHint'}}{{/if}}">
+      <label class='resource-label'>{{localize 'SDM.FieldLevel'}}{{#if isHallmark}} ({{level}}){{/if}}</label>
+      <input type='text' name='system.attributes.level' value='{{@root.system.attributes.level}}' data-dtype='Number' {{#unless canManage}}disabled{{/unless}} />
+    </div>
+    <div class='resource'>
+      <label class='resource-label'>{{localize 'TYPES.Actor.npc'}}</label>
+      {{#if npc}}
+      <a class="content-link" draggable="true" data-link data-uuid="{{npc.uuid}}" data-type="Actor"><i class="fa-solid fa-user"></i> {{npc.name}}</a>
+      {{else}}
+      <span>{{localize 'SDM.Animation.NoNpc'}}</span>
+      {{/if}}
+    </div>
+  </div>
+
+  <h3 class="mt-10 flexrow">
+    <span>{{localize 'SDM.Animation.Creature'}} — {{#if active}}{{localize 'SDM.Animation.StatusActive'}}{{else}}{{localize 'SDM.Animation.StatusDormant'}}{{/if}}</span>
+    {{#if canManage}}
+    <a class="flex0" data-action="fillAnimationFromTable" data-tooltip="{{localize 'SDM.Animation.FillHint'}}"><i class="fa-solid fa-table-list"></i> {{localize 'SDM.Animation.Fill'}}</a>
+    {{/if}}
+  </h3>
+  <div class="grid grid-6col">
+    <div class='resource'>
+      <label class='resource-label'>{{localize 'SDM.FieldLifeMax'}}</label>
+      <div class="flexrow">
+        <input type='text' name='system.attributes.life.value' value='{{@root.system.attributes.life.value}}' data-dtype='Number' {{#unless canManage}}disabled{{/unless}} />
+        <input type='text' name='system.attributes.life.max' value='{{@root.system.attributes.life.max}}' data-dtype='Number' {{#unless canManage}}disabled{{/unless}} />
+      </div>
+    </div>
+    <div class='resource'>
+      <label class='resource-label'>{{localize 'SDM.FieldDefense'}}</label>
+      <input type='text' name='system.attributes.defense' value='{{@root.system.attributes.defense}}' data-dtype='Number' {{#unless canManage}}disabled{{/unless}} />
+    </div>
+    <div class='resource'>
+      <label class='resource-label'>{{localize 'SDM.Morale'}}</label>
+      <input type='text' name='system.attributes.morale' value='{{@root.system.attributes.morale}}' data-dtype='Number' {{#unless canManage}}disabled{{/unless}} />
+    </div>
+    <div class='resource'>
+      <label class='resource-label'>{{localize 'SDM.FieldBonus'}}</label>
+      <input type='text' name='system.attributes.bonus' value='{{@root.system.attributes.bonus}}' data-dtype='Number' {{#unless canManage}}disabled{{/unless}} />
+    </div>
+    <div class='resource'>
+      <label class='resource-label'>{{localize 'SDM.Damage'}}</label>
+      <input type='text' name='system.attributes.damage' value='{{@root.system.attributes.damage}}' {{#unless canManage}}disabled{{/unless}} />
+    </div>
+    <div class='resource'>
+      <label class='resource-label'>{{localize 'SDM.Initiative'}}</label>
+      <input type='text' name='system.attributes.initiative' value='{{@root.system.attributes.initiative}}' {{#unless canManage}}disabled{{/unless}} />
+    </div>
+  </div>
+
+  {{#if canManage}}
+  <div class="flexrow mt-10">
+    {{#if active}}
+    <button type="button" data-action="deanimateItem"><i class="fa-solid fa-box"></i> {{localize 'SDM.Animation.Deanimate'}}</button>
+    {{else}}
+    <button type="button" data-action="animateItem"><i class="fa-solid fa-ghost"></i> {{localize 'SDM.Animation.Animate'}}</button>
+    {{/if}}
+  </div>
+  {{/if}}
+  {{/with}}
+</section>

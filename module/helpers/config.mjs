@@ -541,6 +541,7 @@ SDM.baseFeatures = [
   { value: 'silent', label: 'SDM.ItemFeature.silent' },
   { value: 'vorpal', label: 'SDM.ItemFeature.vorpal' },
   { value: 'range', label: 'SDM.ItemFeature.range' },
+  { value: 'animated', label: 'SDM.ItemFeature.animated' },
 ];
 
 SDM.wardFeatures = [

@@ -151,6 +151,20 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
 
     schema.attributes = new fields.EmbeddedDataField(NPCBaseDataModel);
 
+    // Animated items (feature "animated"): the NPC that represents the item when it comes to life
+    schema.animation = new fields.SchemaField({
+      table: new fields.StringField({ required: true, blank: true, initial: '' }),
+      mode: new fields.StringField({
+        required: true,
+        initial: 'energy',
+        choices: { energy: 'SDM.Animation.ModeEnergy', walks: 'SDM.Animation.ModeWalks' }
+      }),
+      actor: new fields.StringField({ required: true, blank: true, initial: '' }),
+      active: new fields.BooleanField({ required: true, initial: false }),
+      // false until the attributes are filled from the table or edited by the Referee
+      filled: new fields.BooleanField({ required: true, initial: false })
+    });
+
     schema.is_hallmark = new fields.BooleanField({
       required: true,
       initial: false

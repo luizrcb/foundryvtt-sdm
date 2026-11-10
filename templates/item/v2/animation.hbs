@@ -1,0 +1,88 @@
+{{! Item sheet v2: animation tab (items with the "animated" feature). Only the Referee edits or animates. }}
+<section class="tab v2-item-animation {{tab.cssClass}}" data-group="primary" data-tab="animation">
+  {{#with animation}}
+  <section class="v2-card v2-item-card">
+    <div class="v2-card-head">
+      <span class="v2-card-title"><i class="fa-solid fa-ghost"></i> {{localize 'SDM.ItemTabAnimation'}}</span>
+      <span class="v2-anim-status {{#if active}}is-active{{/if}}">{{#if active}}{{localize 'SDM.Animation.StatusActive'}}{{else}}{{localize 'SDM.Animation.StatusDormant'}}{{/if}}</span>
+    </div>
+    <div class="v2-fields">
+      <label class="v2-field">
+        <span class="v2-label">{{localize 'SDM.Animation.Table'}}</span>
+        <select name="system.animation.table" {{#unless canManage}}disabled{{/unless}}>
+          {{selectOptions tables selected=table localize=true}}
+        </select>
+      </label>
+      <label class="v2-field">
+        <span class="v2-label">{{localize 'SDM.Animation.Mode'}}</span>
+        <select name="system.animation.mode" {{#unless canManage}}disabled{{/unless}}>
+          {{selectOptions modes selected=@root.system.animation.mode localize=true}}
+        </select>
+      </label>
+      <label class="v2-field" data-tooltip="{{#if isHallmark}}{{localize 'SDM.Animation.LevelHallmarkHint'}}{{else}}{{localize 'SDM.Animation.LevelHint'}}{{/if}}">
+        <span class="v2-label">{{localize 'SDM.FieldLevel'}}{{#if isHallmark}} ({{level}}){{/if}}</span>
+        <input type="text" name="system.attributes.level" value="{{@root.system.attributes.level}}" data-dtype="Number" {{#unless canManage}}disabled{{/unless}} />
+      </label>
+      <div class="v2-field">
+        <span class="v2-label">{{localize 'TYPES.Actor.npc'}}</span>
+        {{#if npc}}
+        <a class="content-link" draggable="true" data-link data-uuid="{{npc.uuid}}" data-type="Actor"><i class="fa-solid fa-user"></i> {{npc.name}}</a>
+        {{else}}
+        <span class="v2-hint">{{localize 'SDM.Animation.NoNpc'}}</span>
+        {{/if}}
+      </div>
+    </div>
+  </section>
+
+  <section class="v2-card v2-item-card">
+    <div class="v2-card-head">
+      <span class="v2-card-title">{{localize 'SDM.Animation.Creature'}}</span>
+      {{#if canManage}}
+      <button type="button" class="v2-chip-btn" data-action="fillAnimationFromTable" data-tooltip="{{localize 'SDM.Animation.FillHint'}}">
+        <i class="fa-solid fa-table-list"></i> {{localize 'SDM.Animation.Fill'}}
+      </button>
+      {{/if}}
+    </div>
+    <div class="v2-fields">
+      <label class="v2-field">
+        <span class="v2-label">{{localize 'SDM.FieldLifeMax'}}</span>
+        <span class="v2-pair">
+          <input type="text" name="system.attributes.life.value" value="{{@root.system.attributes.life.value}}" data-dtype="Number" {{#unless canManage}}disabled{{/unless}} />
+          <span>/</span>
+          <input type="text" name="system.attributes.life.max" value="{{@root.system.attributes.life.max}}" data-dtype="Number" {{#unless canManage}}disabled{{/unless}} />
+        </span>
+      </label>
+      <label class="v2-field">
+        <span class="v2-label">{{localize 'SDM.FieldDefense'}}</span>
+        <input type="text" name="system.attributes.defense" value="{{@root.system.attributes.defense}}" data-dtype="Number" {{#unless canManage}}disabled{{/unless}} />
+      </label>
+      <label class="v2-field">
+        <span class="v2-label">{{localize 'SDM.Morale'}}</span>
+        <input type="text" name="system.attributes.morale" value="{{@root.system.attributes.morale}}" data-dtype="Number" {{#unless canManage}}disabled{{/unless}} />
+      </label>
+      <label class="v2-field">
+        <span class="v2-label">{{localize 'SDM.FieldBonus'}}</span>
+        <input type="text" name="system.attributes.bonus" value="{{@root.system.attributes.bonus}}" data-dtype="Number" {{#unless canManage}}disabled{{/unless}} />
+      </label>
+      <label class="v2-field">
+        <span class="v2-label">{{localize 'SDM.Damage'}}</span>
+        <input type="text" name="system.attributes.damage" value="{{@root.system.attributes.damage}}" {{#unless canManage}}disabled{{/unless}} />
+      </label>
+      <label class="v2-field">
+        <span class="v2-label">{{localize 'SDM.Initiative'}}</span>
+        <input type="text" name="system.attributes.initiative" value="{{@root.system.attributes.initiative}}" {{#unless canManage}}disabled{{/unless}} />
+      </label>
+    </div>
+  </section>
+
+  {{#if canManage}}
+  <div class="v2-anim-actions">
+    {{#if active}}
+    <button type="button" class="v2-chip-btn" data-action="deanimateItem"><i class="fa-solid fa-box"></i> {{localize 'SDM.Animation.Deanimate'}}</button>
+    {{else}}
+    <button type="button" class="v2-chip-btn" data-action="animateItem"><i class="fa-solid fa-ghost"></i> {{localize 'SDM.Animation.Animate'}}</button>
+    {{/if}}
+  </div>
+  {{/if}}
+  {{/with}}
+</section>

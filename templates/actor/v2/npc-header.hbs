@@ -20,7 +20,7 @@
         </div>
         <div class="v2-chip"{{#if @root.xpToNextLevel}} data-tooltip="{{@root.xpToNextLevel}} {{localize 'SDM.XPToLevelUP'}}"{{/if}}>
           <span class="v2-label">{{localize 'SDM.FieldExperience'}}</span>
-          <input type="text" name="system.experience" value="{{system.experience}}"{{#unless @root.isGM}} disabled{{/unless}} />
+          <input type="text" name="system.experience" value="{{system.experience}}"{{#unless (and @root.isGM (not @root.animatedFrom))}} disabled{{/unless}} />
         </div>
         <div class="v2-chip" data-tooltip="{{localize 'SDM.CustomInitiative'}}">
           <span class="v2-label">{{localize 'SDM.Initiative'}}</span>

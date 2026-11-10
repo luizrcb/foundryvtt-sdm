@@ -25,6 +25,7 @@ import {
   ITEMS_NOT_ALLOWED_IN_CHARACTERS
 } from '../helpers/itemUtils.mjs';
 import { openInvestXpDialog } from '../app/invest-xp.mjs';
+import { getAnimatedSourceItem, isAnimatedNpc } from '../helpers/animatedItems.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { openItemTransferDialog } from '../items/transfer.mjs';
 import { directResourceDiceRoll, healingHeroDice } from '../rolls/hero_dice/index.mjs';
@@ -65,7 +66,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     if (this.actor?.type === ActorType.NPC) {
       classes.push(ActorType.NPC);
-      if (game.user.isGM) {
+      // Animated items level with their item, never on their own
+      if (game.user.isGM && !isAnimatedNpc(this.actor)) {
         controls.push({
           action: 'levelUpNPC',
           icon: 'fa-solid fa-angles-up',
@@ -592,7 +594,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       fields: this.document.schema.fields,
       systemFields: this.document.system.schema.fields,
       // Add isGM to the context
-      isGM: game.user.isGM
+      isGM: game.user.isGM,
+      // Animated item NPC: its level and XP follow the item
+      animatedFrom: getAnimatedSourceItem(this.actor)
     };
 
     // const language = game.i18n.lang;

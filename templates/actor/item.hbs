@@ -107,6 +107,10 @@
         <span data-tooltip="{{localize 'SDM.ItemCharges'}}" class="mr-3">({{item.system.charges.value}}/{{item.system.charges.max}})</span>
       {{/if}}
 
+      {{#if item.system.animation.active}}
+        <i class="fa-solid fa-ghost mr-3 sdm-animated-icon" data-tooltip="{{#if (eq item.system.animation.mode 'walks')}}{{localize 'SDM.Animation.Walked'}}{{else}}{{localize 'SDM.Animation.EnergyActive'}}{{/if}}"></i>
+      {{/if}}
+
       {{#if (and item.system.starting_kit (gt item.system.packed_remaining_items 0))}}
         <span data-tooltip="{{localize 'SDM.GearStartingKitRemainingItems'}}" class="mr-3">({{item.system.packed_remaining_items}})</span>
       {{/if}}

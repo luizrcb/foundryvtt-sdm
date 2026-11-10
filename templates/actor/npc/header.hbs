@@ -58,7 +58,7 @@
               {{localize 'SDM.FieldExperience'}}
             </label>
             <div class='resource-content flexrow flex-center flex-between'>
-              <input type='text' name='system.experience' value='{{system.experience}}'{{#unless @root.isGM}} disabled{{/unless}} />
+              <input type='text' name='system.experience' value='{{system.experience}}'{{#unless (and @root.isGM (not @root.animatedFrom))}} disabled{{/unless}} />
             </div>
           </div>
 

@@ -1,6 +1,16 @@
 import PowerDataModel from '../data/power-data.mjs';
 import { SdmItem } from '../documents/item.mjs';
 import { createNPCByLevel, getActorOptions, getXpToNextLevel } from '../helpers/actorUtils.mjs';
+import {
+  animateItem,
+  deanimateItem,
+  fillAttributesFromTable,
+  getAnimationLevel,
+  getAnimationTable,
+  getAnimationTableChoices,
+  getLinkedNpc,
+  isAnimatable
+} from '../helpers/animatedItems.mjs';
 import { DEFAULT_PET_ICON, GearType, ItemStatusType, ItemType } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { $fmt, $l10n, constructHTMLButton } from '../helpers/globalUtils.mjs';
@@ -71,6 +81,9 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       setItemResources: this._setItemResources,
       radioToggle: this._radioToggle,
       spawnNPC: this._onSpawnNPC,
+      animateItem: this._onAnimateItem,
+      deanimateItem: this._onDeanimateItem,
+      fillAnimationFromTable: this._onFillAnimationFromTable,
       sendToChat: this._onSendToChat,
       openPetActor: this._onOpenPetActor,
       unlinkActor: this._onUnlinkActor
@@ -114,6 +127,10 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     },
     categories: {
       template: templatePath('item/categories')
+    },
+    animation: {
+      template: templatePath('item/animation'),
+      scrollable: ['']
     },
     gmNotes: {
       template: templatePath('item/gm-notes'),
@@ -163,6 +180,9 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
 
         break;
     }
+
+    // Items with the "animated" feature get the Animation tab
+    if (isAnimatable(this.document)) options.parts.push('animation');
 
     // GM-only notes tab, for every item type
     if (game.user.isGM) options.parts.push('gmNotes');
@@ -274,6 +294,21 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
           relativeTo: this.item
         });
         break;
+      case 'animation': {
+        context.tab = context.tabs[partId];
+        const npc = getLinkedNpc(this.item);
+        context.animation = {
+          level: getAnimationLevel(this.item),
+          isHallmark: !!this.item.system.is_hallmark,
+          table: getAnimationTable(this.item),
+          tables: getAnimationTableChoices(),
+          modes: { energy: 'SDM.Animation.ModeEnergy', walks: 'SDM.Animation.ModeWalks' },
+          npc,
+          active: !!this.item.system.animation?.active,
+          canManage: game.user.isGM
+        };
+        break;
+      }
       case 'effects':
         context.tab = context.tabs[partId];
         // Prepare active effects for easier access
@@ -348,6 +383,11 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
           tab.id = 'gmNotes';
           tab.label += 'GMNotes';
           tab.icon = 'fa fa-user-secret';
+          break;
+        case 'animation':
+          tab.id = 'animation';
+          tab.label += 'Animation';
+          tab.icon = 'fa fa-ghost';
           break;
       }
       if (this.tabGroups[tabGroup] === tab.id) tab.cssClass = 'active';
@@ -819,6 +859,19 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
   static async _onSendToChat(event, target) {
     const actor = this.item.parent ? this.item.parent : null;
     await this.item.sendToChat({ actor, collapsed: false });
+  }
+
+  static async _onAnimateItem() {
+    await animateItem(this.item, { app: this });
+  }
+
+  static async _onDeanimateItem() {
+    await deanimateItem(this.item);
+  }
+
+  static async _onFillAnimationFromTable() {
+    if (!game.user.isGM) return;
+    await fillAttributesFromTable(this.item);
   }
 
   static async _onSpawnNPC(event, target) {

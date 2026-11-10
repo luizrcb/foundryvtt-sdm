@@ -34,6 +34,12 @@ import { mergeSimilarItems, splitStackIntoTwo } from '../helpers/stackUtils.mjs'
 import { templatePath } from '../helpers/templates.mjs';
 import { computeCaravanTransport } from '../helpers/transportUtils.mjs';
 import { promptSplitStackFirstQty } from '../items/splitDialog.mjs';
+import {
+  animateItem,
+  deanimateItem,
+  isAnimatable,
+  isAnimatedNpc
+} from '../helpers/animatedItems.mjs';
 import { addCashToActor, removeCashFromActor } from '../macros/gm/giveCash.mjs';
 import { postDiceSummary } from '../macros/gm/giveHeroDice.mjs';
 
@@ -139,7 +145,8 @@ export class SdmActor extends Actor {
     if (
       this.type === ActorType.NPC &&
       changed.system?.experience !== undefined &&
-      userId === game.user.id
+      userId === game.user.id &&
+      !isAnimatedNpc(this)
     ) {
       const xp = parseInt(safeEvaluate(`${changed.system.experience}`.trim()), 10) || 0;
       const xpLevel = getLevel(xp);
@@ -1614,6 +1621,28 @@ export class SdmActor extends Actor {
         onClick: async (event, target) => {
           const item = this.sheet._getEmbeddedDocument(target);
           await item.toggleItemStatus();
+        }
+      },
+      {
+        label: 'SDM.Animation.Animate',
+        icon: '<i class="fa-solid fa-ghost"></i>',
+        visible: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          return game.user.isGM && isAnimatable(item) && !item.system.animation?.active;
+        },
+        onClick: async (event, target) => {
+          await animateItem(this.sheet._getEmbeddedDocument(target), { app: this.sheet });
+        }
+      },
+      {
+        label: 'SDM.Animation.Deanimate',
+        icon: '<i class="fa-solid fa-box"></i>',
+        visible: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          return game.user.isGM && isAnimatable(item) && !!item.system.animation?.active;
+        },
+        onClick: async (event, target) => {
+          await deanimateItem(this.sheet._getEmbeddedDocument(target));
         }
       },
       {

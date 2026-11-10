@@ -1620,6 +1620,63 @@ $v2-wide: 1100px;
     }
   }
 
+  // Animation tab (animated items)
+  .v2-item-animation.active {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    color: var(--v2-ink);
+
+    .v2-card-head {
+      align-items: center;
+    }
+    .v2-anim-status {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      padding: 1px 8px;
+      border-radius: 999px;
+      border: 1px solid var(--v2-line);
+      color: var(--v2-muted);
+
+      &.is-active {
+        color: var(--v2-ink);
+        background: var(--v2-accent-soft);
+        border-color: var(--v2-accent);
+      }
+    }
+    .v2-chip-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      width: auto;
+      padding: 4px 12px;
+      border: 2px solid var(--v2-line);
+      border-radius: 999px;
+      background: var(--v2-panel);
+      color: var(--v2-ink);
+      font: inherit;
+      cursor: pointer;
+
+      &:hover {
+        border-color: var(--v2-accent);
+        background: var(--v2-accent-soft);
+      }
+    }
+    .v2-anim-actions {
+      display: flex;
+      justify-content: flex-end;
+    }
+    input[type='text'],
+    select {
+      background: transparent;
+      border: 0;
+      border-bottom: 2px solid var(--v2-accent-soft);
+      color: var(--v2-ink);
+      width: 100%;
+    }
+  }
+
   // Only when active: a display value here would override the hidden state of inactive tabs
   .v2-item-description.active {
     display: flex;

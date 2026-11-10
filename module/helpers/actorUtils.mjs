@@ -113,6 +113,9 @@ const PET_TABLE = [
   { level: 9, defense: 15, life: 40, bonus: 11, morale: 9, damage: '1d20+11' }
 ];
 
+/** Keys of the NPC generator tables (labels are `SDM.<key>`). */
+export const NPC_TABLE_KEYS = () => Object.keys(NPCTables);
+
 const NPCTables = {
   'generic-synthesized-creature': {
     table: [

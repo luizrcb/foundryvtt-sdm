@@ -29,6 +29,10 @@ export class SdmItemSheetV2 extends SdmItemSheet {
       template: templatePath('item/v2/description'),
       scrollable: ['']
     },
+    animation: {
+      template: templatePath('item/v2/animation'),
+      scrollable: ['']
+    },
     gmNotes: {
       template: templatePath('item/v2/gm-notes'),
       scrollable: ['']

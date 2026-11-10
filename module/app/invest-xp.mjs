@@ -53,7 +53,8 @@ function getPets(actor) {
       if (owners.some(user => npc.testUserPermission(user, 'OWNER'))) pets.set(npc.uuid, npc);
     }
   }
-  return [...pets.values()];
+  // Animated items level with their item (invest in the hallmark instead)
+  return [...pets.values()].filter(npc => !npc.getFlag('sdm', 'animatedItem'));
 }
 
 /** Other players' characters that can receive a donation. */

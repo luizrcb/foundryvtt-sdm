@@ -1,4 +1,5 @@
 import { getLevel } from '../helpers/actorUtils.mjs';
+import { SYNC_OPTION, syncAnimationLevel } from '../helpers/animatedItems.mjs';
 import { createChatMessage } from '../helpers/chatUtils.mjs';
 import {
   ActorType,
@@ -136,6 +137,11 @@ export class SdmItem extends Item {
     const result = await super._preUpdate(changes, options, user);
     if (result === false) return false;
 
+    // Attributes edited by hand are kept: the table no longer fills them on the first animation
+    if (changes.system?.attributes !== undefined && !options[SYNC_OPTION]) {
+      foundry.utils.setProperty(changes, 'system.animation.filled', true);
+    }
+
     // Only the Referee edits hallmark XP directly; players invest it (sdmInvestXp option)
     if (!user.isGM && !options.sdmInvestXp && changes.system?.hallmark?.experience !== undefined) {
       delete changes.system.hallmark.experience;
@@ -211,6 +217,15 @@ export class SdmItem extends Item {
       const level = getLevel(value);
       if (level !== this.system.hallmark.level) update['system.hallmark.level'] = level;
       if (Object.keys(update).length) await this.update(update);
+    }
+
+    // Animated items: the creature follows the item's level
+    if (
+      userId === game.user.id &&
+      !options?.[SYNC_OPTION] &&
+      (changed?.system?.hallmark?.level !== undefined || changed?.system?.attributes?.level !== undefined)
+    ) {
+      await syncAnimationLevel(this);
     }
 
     if (changed?.system?.max_powers !== undefined) {
