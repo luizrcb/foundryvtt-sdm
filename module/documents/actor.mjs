@@ -130,6 +130,10 @@ export class SdmActor extends Actor {
       if (newLevel > granted) {
         changes.system.pending_upgrades = (this.system.pending_upgrades ?? 0) + (newLevel - granted);
         changes.system.upgrades_level = newLevel;
+      } else if (newLevel < granted && this.system.upgrades_level !== null) {
+        // XP taken back (undo): the upgrades of the lost levels that were not chosen go away
+        changes.system.pending_upgrades = Math.max((this.system.pending_upgrades ?? 0) - (granted - newLevel), 0);
+        changes.system.upgrades_level = newLevel;
       }
     }
     return result;

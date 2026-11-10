@@ -159,6 +159,10 @@ export class SdmItem extends Item {
       if (newLevel > granted && (user.isGM || options.sdmInvestXp)) {
         changes.system.hallmark.pending_upgrades = (hallmark.pending_upgrades ?? 0) + (newLevel - granted);
         changes.system.hallmark.upgrades_level = newLevel;
+      } else if (newLevel < granted && hallmark.upgrades_level !== null && (user.isGM || options.sdmInvestXp)) {
+        // XP taken back (undo): the upgrades of the lost levels that were not chosen go away
+        changes.system.hallmark.pending_upgrades = Math.max((hallmark.pending_upgrades ?? 0) - (granted - newLevel), 0);
+        changes.system.hallmark.upgrades_level = newLevel;
       }
     }
 

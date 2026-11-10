@@ -1,4 +1,5 @@
 import { getXpForLevel, getXpToNextLevel } from '../helpers/actorUtils.mjs';
+import { logProgress } from './progress-log.mjs';
 import { ActorType } from '../helpers/constants.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 
@@ -244,14 +245,12 @@ async function applyInvestment(source, kind, targetDoc, amount, user) {
   }
 
   const key = kind === 'donate' ? 'SDM.InvestXP.ChatDonate' : 'SDM.InvestXP.ChatInvest';
+  const text = $fmt(key, { actor: source.name, xp: amount, target: targetDoc.name });
+  await logProgress(source, { type: 'invest', kind, targetUuid: targetDoc.uuid, amount, text });
   await ChatMessage.create({
     author: user.id,
     speaker: ChatMessage.getSpeaker({ actor: source }),
-    content: `<p><i class="fa-solid fa-circle-up"></i> ${$fmt(key, {
-      actor: source.name,
-      xp: amount,
-      target: targetDoc.name
-    })}</p>`
+    content: `<p><i class="fa-solid fa-circle-up"></i> ${text}</p>`
   });
   return true;
 }

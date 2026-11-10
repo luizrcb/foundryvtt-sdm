@@ -31,6 +31,7 @@ import {
   ITEMS_NOT_ALLOWED_IN_CHARACTERS
 } from '../helpers/itemUtils.mjs';
 import { openInvestXpDialog } from '../app/invest-xp.mjs';
+import { openProgressLog } from '../app/progress-log.mjs';
 import { openCharacterUpgradeDialog, openHallmarkUpgradeDialog } from '../app/level-upgrades.mjs';
 import { getAnimatedSourceItem, isAnimatedNpc } from '../helpers/animatedItems.mjs';
 import { templatePath } from '../helpers/templates.mjs';
@@ -152,6 +153,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       levelUpNPC: this._onLevelUpNPC,
       configureNpcTable: this._onConfigureNpcTable,
       investXp: this._onInvestXp,
+      showProgressLog: this._onShowProgressLog,
       chooseUpgrade: this._onChooseUpgrade,
       chooseHallmarkUpgrade: this._onChooseHallmarkUpgrade,
       openDoc: { handler: this._openDoc, buttons: [0] },
@@ -2236,6 +2238,13 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     event.stopPropagation();
     const item = this._getEmbeddedDocument(target);
     if (item) return openHallmarkUpgradeDialog(item);
+  }
+
+  /** History of investments and upgrades (the Referee can undo the latest). */
+  static async _onShowProgressLog(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    return openProgressLog(this.actor);
   }
 
   /** Open the dialog to invest Player XP. */

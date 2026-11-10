@@ -3,6 +3,7 @@ import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 import { addRandomTrait } from '../macros/gm/characterGenerator.mjs';
 import { removeCashFromActor } from '../macros/gm/giveCash.mjs';
 import { syncAnimationLevel } from '../helpers/animatedItems.mjs';
+import { logProgress } from './progress-log.mjs';
 
 /**
  * Level-up upgrades. Every level gained leaves one pending upgrade on the character or the
@@ -108,10 +109,52 @@ export async function openCharacterUpgradeDialog(actor) {
   });
   if (!data) return;
 
+  const before = new Set(actor.items.map(i => i.id));
+  const undo = { choice: data.choice };
+  if (data.choice === 'improve') {
+    const item = actor.items.get(data.improveId);
+    undo.itemId = data.improveId;
+    undo.prevType = item?.system.type ?? '';
+    undo.prevRank = Number(item?.system.skill?.rank) || 0;
+  } else if (data.choice === 'ability') {
+    undo.ability = data.ability;
+  }
+
   const result = await applyCharacterUpgrade(actor, data);
   if (!result) return;
+  if (data.choice === 'newTrait') undo.createdIds = actor.items.filter(i => !before.has(i.id)).map(i => i.id);
+
   await actor.update({ 'system.pending_upgrades': Math.max((actor.system.pending_upgrades ?? 1) - 1, 0) });
-  await chat(actor, $fmt('SDM.Upgrade.ChatCharacter', { actor: actor.name, upgrade: result }));
+  const text = $fmt('SDM.Upgrade.ChatCharacter', { actor: actor.name, upgrade: result });
+  await logProgress(actor, { type: 'upgrade', text, ...undo });
+  await chat(actor, text);
+}
+
+/** Accept an item mod (an effect from "Mods & Effects" or another item) dragged into the dialog. */
+function bindModDrop(root) {
+  const zone = root?.querySelector('[data-upgrade-drop-mod]');
+  const input = root?.querySelector('input[name="modUuid"]');
+  if (!zone || !input) return;
+  zone.addEventListener('dragover', event => {
+    event.preventDefault();
+    zone.classList.add('is-over');
+  });
+  zone.addEventListener('dragleave', () => zone.classList.remove('is-over'));
+  zone.addEventListener('drop', async event => {
+    event.preventDefault();
+    zone.classList.remove('is-over');
+    const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event);
+    const effect = data?.uuid ? await fromUuid(data.uuid) : null;
+    if (!effect || effect.documentName !== 'ActiveEffect' || !effect.system?.isItemMod) {
+      ui.notifications.warn($l10n('SDM.Upgrade.OnlyMods'));
+      return;
+    }
+    input.value = effect.uuid;
+    zone.textContent = effect.name;
+    zone.classList.add('has-item');
+    const radio = root.querySelector('input[name="choice"][value="mod"]');
+    if (radio) radio.checked = true;
+  });
 }
 
 /** Accept a trait dragged from a compendium, the sidebar or another sheet. */
@@ -222,6 +265,11 @@ export async function openHallmarkUpgradeDialog(item) {
       <label class="sdm-upgrade-choice"><input type="radio" name="choice" value="defense" ${canDefense ? (kinds.weapon ? '' : 'checked') : 'disabled'} /> ${$l10n('SDM.Upgrade.Defense')} (${cost(defenseCost)})</label>
       <label class="sdm-upgrade-choice"><input type="radio" name="choice" value="text" ${kinds.weapon || canDefense ? '' : 'checked'} /> ${$l10n('SDM.Upgrade.Text')}</label>
       <div class="sdm-upgrade-detail"><input type="text" name="text" placeholder="${esc($l10n('SDM.Upgrade.TextPlaceholder'))}" /></div>
+      <label class="sdm-upgrade-choice"><input type="radio" name="choice" value="mod" /> ${$l10n('SDM.Upgrade.Mod')}</label>
+      <div class="sdm-upgrade-detail">
+        <div class="sdm-upgrade-drop" data-upgrade-drop-mod>${$l10n('SDM.Upgrade.DropMod')}</div>
+        <input type="hidden" name="modUuid" />
+      </div>
       ${game.user.isGM && !free ? `<label><input type="checkbox" name="waive" /> ${$l10n('SDM.Upgrade.WaiveCost')}</label>` : ''}
     </div>`;
 
@@ -230,24 +278,47 @@ export async function openHallmarkUpgradeDialog(item) {
     position: { width: 480 },
     content,
     rejectClose: false,
+    render: (event, dialog) => bindModDrop(dialog.element),
     ok: {
       label: $l10n('SDM.Upgrade.Confirm'),
       icon: 'fa-solid fa-check',
       callback: (event, button) => {
         const f = button.form.elements;
-        return { choice: f.choice.value, text: f.text?.value?.trim(), waive: !!f.waive?.checked };
+        return {
+          choice: f.choice.value,
+          text: f.text?.value?.trim(),
+          modUuid: f.modUuid?.value,
+          waive: !!f.waive?.checked
+        };
       }
     }
   });
   if (!data) return;
 
   const owner = item.parent;
-  const noCost = free || data.waive || data.choice === 'text';
+  const noCost = free || data.waive || data.choice === 'text' || data.choice === 'mod';
   const price = data.choice === 'damage' ? damageCost : data.choice === 'defense' ? defenseCost : 0;
 
   if (data.choice === 'text' && !data.text) {
     ui.notifications.warn($l10n('SDM.Upgrade.DescribeUpgrade'));
     return;
+  }
+  // Install the mod first: the item checks its type and mod slots, and nothing is spent if it refuses
+  let modEffectId = null;
+  let modName = '';
+  if (data.choice === 'mod') {
+    const mod = data.modUuid ? await fromUuid(data.modUuid) : null;
+    if (!mod) {
+      ui.notifications.warn($l10n('SDM.Upgrade.ChooseMod'));
+      return;
+    }
+    const modData = mod.toObject();
+    delete modData._id;
+    modData.system = { ...(modData.system ?? {}), isItemMod: true };
+    const [created] = await item.createEmbeddedDocuments('ActiveEffect', [modData]);
+    if (!created) return;
+    modEffectId = created.id;
+    modName = created.name;
   }
   if (!noCost && price > 0) {
     const paid = owner ? await removeCashFromActor(owner, price) : false;
@@ -272,6 +343,9 @@ export async function openHallmarkUpgradeDialog(item) {
     upgrade = $l10n('SDM.Upgrade.Defense');
     // An animated armor's creature gets the higher defense
     await syncAnimationLevel(item);
+  } else if (data.choice === 'mod') {
+    upgrade = $fmt('SDM.Upgrade.ChatMod', { mod: modName });
+    await syncAnimationLevel(item);
   } else {
     await item.update({ 'system.hallmark.upgrade_notes': [...(hallmark.upgrade_notes ?? []), data.text] });
     upgrade = data.text;
@@ -282,7 +356,18 @@ export async function openHallmarkUpgradeDialog(item) {
     'system.hallmark.free_upgrade': false
   });
   const costText = !noCost && price > 0 ? ` (${$l10n('SDM.CashSymbol')}${price})` : '';
-  await chat(owner ?? null, $fmt('SDM.Upgrade.ChatHallmark', { item: item.name, upgrade: `${upgrade}${costText}` }));
+  const text = $fmt('SDM.Upgrade.ChatHallmark', { item: item.name, upgrade: `${upgrade}${costText}` });
+  await logProgress(owner, {
+    type: 'hallmark',
+    text,
+    itemId: item.id,
+    choice: data.choice,
+    changes: data.choice === 'damage' ? 2 : data.choice === 'defense' ? 1 : 0,
+    note: data.choice === 'text' ? data.text : null,
+    effectId: modEffectId,
+    cost: !noCost && price > 0 ? price : 0
+  });
+  await chat(owner ?? null, text);
 }
 
 /** All hallmark upgrades live in one effect on the item (not a mod: it does not use a mod slot). */
