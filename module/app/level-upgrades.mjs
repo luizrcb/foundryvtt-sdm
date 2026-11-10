@@ -155,7 +155,24 @@ function showDropped(zone, input, name) {
 }
 
 /** Accept an item mod (an effect from "Mods & Effects" or another item) dragged into the dialog. */
-function bindModDrop(root) {
+/** Customization cost of gaining this mod on the item: mod cost × number of mods, or the item cost if higher. */
+function modUpgradeCost(item, mod) {
+  const mods = item.effects.filter(e => e.system?.isItemMod).length + 1;
+  const modCost = Number(mod.system?.modCost) || 0;
+  const itemCost = Number(item.system.cost) || 0;
+  return { mods, modCost, itemCost, total: Math.max(modCost * mods, itemCost) };
+}
+
+function describeModCost(item, mod, free) {
+  if (free) return $l10n('SDM.Upgrade.NoCost');
+  const { mods, modCost, itemCost, total } = modUpgradeCost(item, mod);
+  const symbol = $l10n('SDM.CashSymbol');
+  return modCost * mods >= itemCost
+    ? $fmt('SDM.Upgrade.ModCostByMods', { symbol, modCost, mods, total })
+    : $fmt('SDM.Upgrade.ModCostByItem', { symbol, total });
+}
+
+function bindModDrop(root, item, free) {
   const zone = root?.querySelector('[data-upgrade-drop-mod]');
   const input = root?.querySelector('input[name="modUuid"]');
   if (!zone || !input) return;
@@ -174,7 +191,7 @@ function bindModDrop(root) {
       return;
     }
     input.value = effect.uuid;
-    showDropped(zone, input, effect.name);
+    showDropped(zone, input, `${effect.name} (${describeModCost(item, effect, free)})`);
     const radio = root.querySelector('input[name="choice"][value="mod"]');
     if (radio) radio.checked = true;
   });
@@ -316,7 +333,7 @@ export async function openHallmarkUpgradeDialog(item) {
     position: { width: 480 },
     content,
     rejectClose: false,
-    render: (event, dialog) => bindModDrop(dialog.element),
+    render: (event, dialog) => bindModDrop(dialog.element, item, free),
     ok: {
       label: $l10n('SDM.Upgrade.Confirm'),
       icon: 'fa-solid fa-check',
@@ -362,6 +379,7 @@ export async function openHallmarkUpgradeDialog(item) {
     const installed = item.effects.filter(e => e.system?.isItemMod).length;
     const modCost = Number(created.system?.modCost) || 0;
     price = Math.max(modCost * installed, Number(item.system.cost) || 0);
+    // (same as shown when the mod was dropped: the new mod is now counted among the installed ones)
     if (!noCost && price > 0) {
       const paid = owner ? await removeCashFromActor(owner, price) : false;
       if (paid === false) {
