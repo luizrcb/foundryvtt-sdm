@@ -6,6 +6,13 @@ import ItemSizeDataModel from './item-size.mjs';
 import NPCBaseDataModel from './npc-base-data.mjs';
 
 export default class SdmItemBase extends foundry.abstract.TypeDataModel {
+  /** @inheritDoc */
+  static migrateData(source) {
+    // Animation damage source: the automatic option used to be stored as a blank string
+    if (source?.animation && !source.animation.damageSource) source.animation.damageSource = 'auto';
+    return super.migrateData(source);
+  }
+
   static defineSchema() {
     const fields = foundry.data.fields;
     const schema = {};
@@ -166,9 +173,10 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       // Weapons: where the creature's damage comes from ('' = automatic)
       damageSource: new fields.StringField({
         required: true,
-        initial: '',
+        blank: false,
+        initial: 'auto',
         choices: {
-          '': 'SDM.Animation.DamageAuto',
+          auto: 'SDM.Animation.DamageAuto',
           weapon: 'SDM.Animation.DamageWeapon',
           creature: 'SDM.Animation.DamageCreature'
         }

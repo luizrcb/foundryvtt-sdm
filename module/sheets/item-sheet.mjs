@@ -315,7 +315,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
           blocked: isAnimationBlocked(this.item),
           isWeapon: isWeaponItem(this.item),
           damageSources: {
-            '': game.i18n.format('SDM.Animation.DamageAutoResolved', {
+            auto: game.i18n.format('SDM.Animation.DamageAutoResolved', {
               source: game.i18n.localize(
                 getDamageSource(this.item) === 'weapon' ? 'SDM.Animation.DamageWeapon' : 'SDM.Animation.DamageCreature'
               )
