@@ -324,6 +324,19 @@ function npcSystemFromItem(item) {
   };
 }
 
+/**
+ * The creature takes its owner's side: the disposition of the owner's token in the current scene,
+ * or of the owner's prototype token. A character's item is friendly; an item with no owner, neutral.
+ */
+function dispositionFromItem(item, scene = canvas?.scene) {
+  const owner = item.parent;
+  if (!owner) return CONST.TOKEN_DISPOSITIONS.NEUTRAL;
+  const token = scene?.tokens.find(t => t.actorId === owner.id);
+  if (token) return token.disposition;
+  if (owner.type === ActorType.CHARACTER) return CONST.TOKEN_DISPOSITIONS.FRIENDLY;
+  return owner.prototypeToken?.disposition ?? CONST.TOKEN_DISPOSITIONS.NEUTRAL;
+}
+
 /** Players who own the item's character own the creature too. */
 function ownershipFromItem(item) {
   const owner = item.parent ?? item;
@@ -375,7 +388,7 @@ export async function linkNpcToItem(item, actor) {
     [`flags.sdm.${FLAG}`]: item.uuid,
     [`flags.sdm.${DEFENSE_BONUS_FLAG}`]: 0,
     [`flags.sdm.${KEEP_IDENTITY_FLAG}`]: true,
-    'prototypeToken.disposition': CONST.TOKEN_DISPOSITIONS.FRIENDLY,
+    'prototypeToken.disposition': dispositionFromItem(item),
     'prototypeToken.actorLink': true
   });
   await item.update(
@@ -456,18 +469,18 @@ export async function animateItem(item, { app } = {}) {
     // The actor's own creation hook resets the prototype token; set it afterwards
     await npc.update({
       'prototypeToken.actorLink': true,
-      'prototypeToken.disposition': CONST.TOKEN_DISPOSITIONS.FRIENDLY,
+      'prototypeToken.disposition': dispositionFromItem(item),
       'prototypeToken.texture.src': item.img
     });
   }
 
   // Glowing items shed light
   const light = lightFromItem(item, canvas.scene);
-  // Every animated creature is a friendly, linked token (also NPCs dropped on the tab)
+  // Every animated creature is a linked token on its owner's side (also NPCs dropped on the tab)
   await npc.update({
     'prototypeToken.light.bright': light.bright,
     'prototypeToken.light.dim': light.dim,
-    'prototypeToken.disposition': CONST.TOKEN_DISPOSITIONS.FRIENDLY,
+    'prototypeToken.disposition': dispositionFromItem(item),
     'prototypeToken.actorLink': true
   });
   await syncFeatureTraits(item, npc);
