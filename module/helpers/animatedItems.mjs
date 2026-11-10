@@ -126,7 +126,8 @@ async function syncWeaponDamage(item, npc) {
     name: $l10n('SDM.Animation.VersatileDamage'),
     img: item.img,
     'system.type': GearType.WEAPON,
-    'system.weapon.damage.base': damage.versatile
+    'system.weapon.damage.base': damage.versatile,
+    'system.readied': true
   };
   if (existing.length) {
     await existing[0].update(data);
@@ -137,7 +138,7 @@ async function syncWeaponDamage(item, npc) {
         name: data.name,
         img: data.img,
         type: ItemType.GEAR,
-        system: { type: GearType.WEAPON, weapon: { damage: { base: damage.versatile } } },
+        system: { type: GearType.WEAPON, readied: true, weapon: { damage: { base: damage.versatile } } },
         flags: { sdm: { [VERSATILE_FLAG]: true } }
       }
     ]);
