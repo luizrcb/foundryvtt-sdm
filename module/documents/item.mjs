@@ -250,7 +250,9 @@ export class SdmItem extends Item {
         changed?.system?.animation?.damageSource !== undefined ||
         changed?.system?.animation?.table !== undefined)
     ) {
-      await syncAnimationLevel(this);
+      await syncAnimationLevel(this, {
+        damageSourceChanged: changed?.system?.animation?.damageSource !== undefined
+      });
     }
 
     if (changed?.system?.max_powers !== undefined) {

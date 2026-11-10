@@ -125,10 +125,11 @@ function weaponDamage(item) {
  * Keep the creature's damage in line with the weapon: its damage is the weapon's base damage,
  * and a versatile weapon gives it a "versatile damage" weapon with the versatile damage.
  */
-async function syncWeaponDamage(item, npc) {
+async function syncWeaponDamage(item, npc, { useCreatureDamage = false } = {}) {
   const damage = weaponDamage(item);
-  // Weapon damage, or the creature damage from the Animation tab
-  const npcDamage = damage?.base || item.system.attributes?.damage;
+  // Weapon damage; the creature damage from the Animation tab only when switching to it
+  // (otherwise the creature keeps the damage its table gave it when levelling up)
+  const npcDamage = damage?.base || (useCreatureDamage ? item.system.attributes?.damage : null);
   if (npcDamage && npc.system.damage !== npcDamage) {
     await npc.update({ 'system.damage': npcDamage });
   }
@@ -349,13 +350,13 @@ export async function deanimateFallenCreature(npc) {
  * The item's level changed (hallmark XP or the Referee): raise the creature.
  * Animated: the NPC levels up; otherwise the item's attributes are raised from the table.
  */
-export async function syncAnimationLevel(item) {
+export async function syncAnimationLevel(item, { damageSourceChanged = false } = {}) {
   if (!isAnimatable(item)) return;
   const level = getAnimationLevel(item);
   const npc = getLinkedNpc(item);
   if (item.system.animation.active && npc) {
     if (level > (npc.system.level ?? 0)) await npc.levelUpNpcTo(level);
-    await syncWeaponDamage(item, npc);
+    await syncWeaponDamage(item, npc, { useCreatureDamage: damageSourceChanged });
   } else if (item.system.animation.filled) {
     await fillAttributesFromTable(item, { raiseOnly: true });
   }
