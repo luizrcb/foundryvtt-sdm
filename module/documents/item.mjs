@@ -245,7 +245,10 @@ export class SdmItem extends Item {
     if (
       userId === game.user.id &&
       !options?.[SYNC_OPTION] &&
-      (changed?.system?.hallmark?.level !== undefined || changed?.system?.attributes?.level !== undefined)
+      (changed?.system?.hallmark?.level !== undefined ||
+        changed?.system?.attributes?.level !== undefined ||
+        changed?.system?.animation?.damageSource !== undefined ||
+        changed?.system?.animation?.table !== undefined)
     ) {
       await syncAnimationLevel(this);
     }

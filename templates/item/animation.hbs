@@ -1,7 +1,7 @@
 {{! Animation tab (items with the "animated" feature). Only the Referee edits or animates. }}
 <section class='tab animation scrollable {{tab.cssClass}}' data-group='primary' data-tab='animation'>
   {{#with animation}}
-  <div class="grid grid-4col mt-6">
+  <div class="grid grid-{{#if isWeapon}}5{{else}}4{{/if}}col mt-6">
     <div class='resource'>
       <label class='resource-label'>{{localize 'SDM.Animation.Table'}}</label>
       <select name='system.animation.table' {{#unless canManage}}disabled{{/unless}}>
@@ -23,6 +23,14 @@
     <div class='resource' data-tooltip="{{localize 'SDM.Animation.LevelHint'}}">
       <label class='resource-label'>{{localize 'SDM.FieldLevel'}}</label>
       <input type='text' name='system.attributes.level' value='{{@root.system.attributes.level}}' data-dtype='Number' {{#unless canManage}}disabled{{/unless}} />
+    </div>
+    {{/if}}
+    {{#if isWeapon}}
+    <div class='resource' data-tooltip="{{localize 'SDM.Animation.DamageSourceHint'}}">
+      <label class='resource-label'>{{localize 'SDM.Animation.DamageSource'}}</label>
+      <select name='system.animation.damageSource' {{#unless canManage}}disabled{{/unless}}>
+        {{selectOptions damageSources selected=@root.system.animation.damageSource localize=true}}
+      </select>
     </div>
     {{/if}}
     <div class='resource'>

@@ -98,10 +98,24 @@ function hasFeature(item, key) {
   return typeof features?.has === 'function' && features.has(key);
 }
 
+export function isWeaponItem(item) {
+  return item.system.type === GearType.WEAPON || hasFeature(item, 'weapon');
+}
+
+/**
+ * Where a weapon creature's damage comes from: the weapon, or the creature attributes in the
+ * Animation tab. Automatic: the weapon, except with the custom table (the Referee's values).
+ */
+export function getDamageSource(item) {
+  if (!isWeaponItem(item)) return 'creature';
+  const source = item.system.animation?.damageSource;
+  if (source === 'weapon' || source === 'creature') return source;
+  return getAnimationTable(item) === NPC_CUSTOM_TABLE ? 'creature' : 'weapon';
+}
+
 /** Weapon items (weapon type or the weapon feature) fight with their own damage. */
 function weaponDamage(item) {
-  const isWeapon = item.system.type === GearType.WEAPON || hasFeature(item, 'weapon');
-  if (!isWeapon) return null;
+  if (getDamageSource(item) !== 'weapon') return null;
   const weapon = item.system.weapon ?? {};
   const versatile = (weapon.versatile || hasFeature(item, 'versatile')) && weapon.damage?.versatile;
   return { base: weapon.damage?.base || null, versatile: versatile || null };
@@ -113,8 +127,10 @@ function weaponDamage(item) {
  */
 async function syncWeaponDamage(item, npc) {
   const damage = weaponDamage(item);
-  if (damage?.base && npc.system.damage !== damage.base) {
-    await npc.update({ 'system.damage': damage.base });
+  // Weapon damage, or the creature damage from the Animation tab
+  const npcDamage = damage?.base || item.system.attributes?.damage;
+  if (npcDamage && npc.system.damage !== npcDamage) {
+    await npc.update({ 'system.damage': npcDamage });
   }
 
   const existing = npc.items.filter(i => i.getFlag('sdm', VERSATILE_FLAG));

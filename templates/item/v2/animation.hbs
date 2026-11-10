@@ -6,7 +6,7 @@
       <span class="v2-card-title"><i class="fa-solid fa-ghost"></i> {{localize 'SDM.ItemTabAnimation'}}</span>
       <span class="v2-anim-status {{#if active}}is-active{{/if}}">{{#if active}}{{localize 'SDM.Animation.StatusActive'}}{{else}}{{localize 'SDM.Animation.StatusDormant'}}{{/if}}</span>
     </div>
-    <div class="v2-fields v2-anim-fields">
+    <div class="v2-fields v2-anim-fields {{#if isWeapon}}has-damage-source{{/if}}">
       <label class="v2-field">
         <span class="v2-label">{{localize 'SDM.Animation.Table'}}</span>
         <select name="system.animation.table" {{#unless canManage}}disabled{{/unless}}>
@@ -28,6 +28,14 @@
       <label class="v2-field" data-tooltip="{{localize 'SDM.Animation.LevelHint'}}">
         <span class="v2-label">{{localize 'SDM.FieldLevel'}}</span>
         <input type="text" name="system.attributes.level" value="{{@root.system.attributes.level}}" data-dtype="Number" {{#unless canManage}}disabled{{/unless}} />
+      </label>
+      {{/if}}
+      {{#if isWeapon}}
+      <label class="v2-field" data-tooltip="{{localize 'SDM.Animation.DamageSourceHint'}}">
+        <span class="v2-label">{{localize 'SDM.Animation.DamageSource'}}</span>
+        <select name="system.animation.damageSource" {{#unless canManage}}disabled{{/unless}}>
+          {{selectOptions damageSources selected=@root.system.animation.damageSource localize=true}}
+        </select>
       </label>
       {{/if}}
       <div class="v2-field">

@@ -161,6 +161,16 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       }),
       actor: new fields.StringField({ required: true, blank: true, initial: '' }),
       active: new fields.BooleanField({ required: true, initial: false }),
+      // Weapons: where the creature's damage comes from ('' = automatic)
+      damageSource: new fields.StringField({
+        required: true,
+        initial: '',
+        choices: {
+          '': 'SDM.Animation.DamageAuto',
+          weapon: 'SDM.Animation.DamageWeapon',
+          creature: 'SDM.Animation.DamageCreature'
+        }
+      }),
       // false until the attributes are filled from the table or edited by the Referee
       filled: new fields.BooleanField({ required: true, initial: false })
     });
