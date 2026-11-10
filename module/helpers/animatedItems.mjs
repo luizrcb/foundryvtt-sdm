@@ -162,6 +162,34 @@ async function syncWeaponDamage(item, npc, { useCreatureDamage = false } = {}) {
   }
 }
 
+const POWER_COPY_FLAG = 'animatedPowerCopy';
+
+/** Powers and power albums: the creature carries a copy, so it can use its own powers. */
+export function isPowerItem(item) {
+  return [GearType.POWER, GearType.POWER_ALBUM].includes(item.system.type);
+}
+
+/** Replace the creature's copy of the power (or album) with the item as it is now. */
+async function syncPowerCopy(item, npc) {
+  const existing = npc.items.filter(i => i.getFlag('sdm', POWER_COPY_FLAG));
+  if (existing.length) await npc.deleteEmbeddedDocuments('Item', existing.map(i => i.id));
+  if (!isPowerItem(item)) return;
+
+  const data = item.toObject();
+  delete data._id;
+  // The copy is not animated itself and is ready to use
+  const features = (data.system.features ?? []).filter(f => f !== ANIMATED_FEATURE);
+  data.system.features = features;
+  data.system.readied = true;
+  data.system.container = '';
+  if (data.system.animation) {
+    data.system.animation.active = false;
+    data.system.animation.actor = '';
+  }
+  data.flags = foundry.utils.mergeObject(data.flags ?? {}, { sdm: { [POWER_COPY_FLAG]: item.uuid } });
+  await npc.createEmbeddedDocuments('Item', [data]);
+}
+
 const DEFENSE_BONUS_FLAG = 'animatedDefenseBonus';
 
 /** Armor and ward items add their bonus to the creature's defense. */
@@ -282,6 +310,7 @@ export async function animateItem(item, { app } = {}) {
   }
 
   await syncWeaponDamage(item, npc);
+  await syncPowerCopy(item, npc);
   // The NPC now has the base defense from the item: reset the bonus and add the current one
   await npc.update({ [`flags.sdm.${DEFENSE_BONUS_FLAG}`]: 0 });
   await applyDefenseBonus(item, npc);
