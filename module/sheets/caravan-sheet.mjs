@@ -1,5 +1,6 @@
 import CompendiumBrowser from '../app/compendium-browser.mjs';
 import TokenPlacement from '../canvas/token-placement.mjs';
+import { makeNpcFriendly } from '../items/petItem.mjs';
 import { ActorType, GearType, ItemType, SizeUnit, SLOTS_PER_SACK } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import {
@@ -1848,6 +1849,8 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
 
     // Apply all changes in a single update
     await this.actor.update(updateData);
+    // Crew NPCs are on the caravan's side
+    await makeNpcFriendly(droppedActor);
   }
 
   /* -------------------------------------------- */

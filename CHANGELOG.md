@@ -29,6 +29,7 @@
   - The creature's life wears the item: at half life a creature that walked away notches the item and an energy creature leaves it running low; at 0 life the item is broken or has run out and the creature turns back into the item. A broken or run-out item cannot be animated until it is repaired or recharged. Repairing or recharging the item heals its creature back to full life
 - Character generator no longer gives the same trait or skill twice. The first repeat instead improves what the character has, once per character: a skill goes up one rank, a trait becomes an Expert skill. Rerolling an existing character now waits for its old items to be removed
 - Starting kits show how many items are left to unpack, in parentheses, in the inventory of character, NPC and caravan sheets
+- An NPC added to a caravan's crew, or linked as the pet of a character's item, becomes friendly (its prototype token disposition)
 - Fixed the danger roll of a dangerous power used by an NPC (for example an animated item): NPCs roll with their bonus
 
 ## v1.10.0

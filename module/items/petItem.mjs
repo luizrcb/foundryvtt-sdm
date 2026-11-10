@@ -1,11 +1,34 @@
 import { $l10n } from '../helpers/globalUtils.mjs';
-import { GearType } from '../helpers/constants.mjs';
+import { ActorType, GearType } from '../helpers/constants.mjs';
 
 const CHANNEL = 'system.sdm'; // reuse the same channel
+
+/**
+ * An NPC that joins the party (caravan crew, or the pet of a character's item) is friendly:
+ * its prototype token disposition becomes friendly. Done by the active Referee when the user
+ * cannot change the NPC.
+ */
+export async function makeNpcFriendly(actor) {
+  if (actor?.type !== ActorType.NPC) return;
+  if (actor.prototypeToken?.disposition === CONST.TOKEN_DISPOSITIONS.FRIENDLY) return;
+  if (actor.isOwner) {
+    await actor.update({ 'prototypeToken.disposition': CONST.TOKEN_DISPOSITIONS.FRIENDLY });
+    return;
+  }
+  if (game.users.activeGM) game.socket.emit(CHANNEL, { action: 'makeNpcFriendly', payload: { uuid: actor.uuid } });
+}
 
 export function setupPetDropSocket() {
   game.socket.on(CHANNEL, async msg => {
     const { action, userId, payload } = msg ?? {};
+    if (action === 'makeNpcFriendly') {
+      if (game.users.activeGM?.id !== game.user.id) return;
+      const actor = await fromUuid(payload?.uuid);
+      if (actor?.type === ActorType.NPC) {
+        await actor.update({ 'prototypeToken.disposition': CONST.TOKEN_DISPOSITIONS.FRIENDLY });
+      }
+      return;
+    }
     if (action !== 'createPetToken') return;
 
     // Only the GM processes token creation

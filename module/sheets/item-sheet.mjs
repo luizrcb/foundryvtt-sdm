@@ -2,6 +2,7 @@ import PowerDataModel from '../data/power-data.mjs';
 import { SdmItem } from '../documents/item.mjs';
 import { createNPCByLevel, getActorOptions, getXpToNextLevel } from '../helpers/actorUtils.mjs';
 import { openHallmarkUpgradeDialog } from '../app/level-upgrades.mjs';
+import { makeNpcFriendly } from '../items/petItem.mjs';
 import {
   animateItem,
   deanimateItem,
@@ -1148,6 +1149,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       'system.description': description,
       'flags.sdm.originalDescription': originalDescription
     });
+    // A character's pet is on its side
+    if (this.item.parent?.type === ActorType.CHARACTER) await makeNpcFriendly(droppedActor);
   }
 
   /**
