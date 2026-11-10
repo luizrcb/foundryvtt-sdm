@@ -276,7 +276,9 @@ export async function openHallmarkUpgradeDialog(item) {
   const pending = hallmark.pending_upgrades ?? 0;
   if (pending <= 0) return;
 
-  const level = Math.max(Number(hallmark.level) || 0, 1);
+  // The level this upgrade comes from: the oldest pending one when several levels were gained at once
+  const reached = Number(hallmark.upgrades_level ?? hallmark.level) || 0;
+  const level = Math.max(reached - pending + 1, 1);
   const kinds = hallmarkKinds(item);
   const free = !!hallmark.free_upgrade;
   const damageCost = 5 * level;
