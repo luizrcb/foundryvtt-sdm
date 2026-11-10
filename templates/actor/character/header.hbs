@@ -179,7 +179,7 @@
           <div class="grid-span-1 flexrow flex-between">
             <div class="grid-span-1 resource">
               <label for="system.player_experience" class='resource-label'>
-                {{localize 'SDM.FieldPlayerXP'}} {{#if @root.editable}}<a class="sdm-invest-xp" data-action="investXp" data-tooltip="SDM.InvestXP.Title"><i class="fa-solid fa-circle-up"></i></a>{{/if}}<a class="sdm-invest-xp" data-action="showProgressLog" data-tooltip="SDM.ProgressLog.Open"><i class="fa-solid fa-clock-rotate-left"></i></a>
+                {{localize 'SDM.FieldPlayerXP'}} {{#if @root.editable}}<a class="sdm-invest-xp" data-action="investXp" data-tooltip="SDM.InvestXP.Title"><i class="fa-solid fa-circle-up"></i></a>{{/if}}
               </label>
               <div class='resource-content flexrow flex-center flex-between'>
                 {{#if (or isEditMode (not @root.editable))}}
@@ -255,7 +255,7 @@
             </div>
             <div class="grid-span-1 resource">
               <label for="system.level" class='resource-label'>
-                {{localize 'SDM.FieldLevel'}} {{> "systems/sdm/templates/actor/pending-upgrades.hbs"}}
+                {{localize 'SDM.FieldLevel'}} {{> "systems/sdm/templates/actor/pending-upgrades.hbs"}} <a class="sdm-invest-xp" data-action="showProgressLog" data-tooltip="SDM.ProgressLog.Open"><i class="fa-solid fa-clock-rotate-left"></i></a>
               </label>
               <div class='resource-content flexrow flex-center flex-between'>
                 <input type='text' name='system.level' value='{{system.level}}' data-dtype='Number' disabled />
@@ -711,7 +711,7 @@
           <div class="grid-span-1 flexrow flex-between">
             <div class="grid-span-1 resource">
               <label for="system.player_experience" class='resource-label'>
-                {{localize 'SDM.FieldPlayerXP'}} {{#if @root.editable}}<a class="sdm-invest-xp" data-action="investXp" data-tooltip="SDM.InvestXP.Title"><i class="fa-solid fa-circle-up"></i></a>{{/if}}<a class="sdm-invest-xp" data-action="showProgressLog" data-tooltip="SDM.ProgressLog.Open"><i class="fa-solid fa-clock-rotate-left"></i></a>
+                {{localize 'SDM.FieldPlayerXP'}} {{#if @root.editable}}<a class="sdm-invest-xp" data-action="investXp" data-tooltip="SDM.InvestXP.Title"><i class="fa-solid fa-circle-up"></i></a>{{/if}}
               </label>
               <div class='resource-content flexrow flex-center flex-between'>
                 {{#if (or isEditMode (not @root.editable))}}
@@ -787,7 +787,7 @@
             </div>
             <div class="grid-span-1 resource">
               <label for="system.level" class='resource-label'>
-                {{localize 'SDM.FieldLevel'}} {{> "systems/sdm/templates/actor/pending-upgrades.hbs"}}
+                {{localize 'SDM.FieldLevel'}} {{> "systems/sdm/templates/actor/pending-upgrades.hbs"}} <a class="sdm-invest-xp" data-action="showProgressLog" data-tooltip="SDM.ProgressLog.Open"><i class="fa-solid fa-clock-rotate-left"></i></a>
               </label>
               <div class='resource-content flexrow flex-center flex-between'>
                 <input type='text' name='system.level' value='{{system.level}}' data-dtype='Number' disabled />
