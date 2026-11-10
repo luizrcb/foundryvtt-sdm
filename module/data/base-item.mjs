@@ -161,6 +161,8 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       }),
       actor: new fields.StringField({ required: true, blank: true, initial: '' }),
       active: new fields.BooleanField({ required: true, initial: false }),
+      // Turn back into the item when the combat it fights in ends
+      endWithCombat: new fields.BooleanField({ required: true, initial: false }),
       // Weapons: where the creature's damage comes from ('' = automatic)
       damageSource: new fields.StringField({
         required: true,

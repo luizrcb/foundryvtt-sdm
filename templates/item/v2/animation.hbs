@@ -91,6 +91,23 @@
   </section>
 
   {{#if canManage}}
+  <label class="v2-field v2-check">
+    <input type="checkbox" name="system.animation.endWithCombat" {{checked @root.system.animation.endWithCombat}} />
+    <span class="v2-label">{{localize 'SDM.Animation.EndWithCombat'}}</span>
+  </label>
+  {{/if}}
+
+  {{#if canRequest}}
+  <div class="v2-anim-actions">
+    {{#if blocked}}
+    <span class="v2-hint">{{localize 'SDM.Animation.BlockedHint'}}</span>
+    {{else}}
+    <button type="button" class="v2-chip-btn" data-action="requestAnimation"><i class="fa-solid fa-hand"></i> {{localize 'SDM.Animation.Request'}}</button>
+    {{/if}}
+  </div>
+  {{/if}}
+
+  {{#if canManage}}
   <div class="v2-anim-actions">
     {{#if active}}
     <button type="button" class="v2-chip-btn" data-action="deanimateItem"><i class="fa-solid fa-box"></i> {{localize 'SDM.Animation.Deanimate'}}</button>

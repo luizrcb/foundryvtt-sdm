@@ -41,7 +41,8 @@ import {
   deanimateItem,
   isAnimatable,
   isAnimatedNpc,
-  isAnimationBlocked
+  isAnimationBlocked,
+  requestAnimation
 } from '../helpers/animatedItems.mjs';
 import { addCashToActor, removeCashFromActor } from '../macros/gm/giveCash.mjs';
 import { postDiceSummary } from '../macros/gm/giveHeroDice.mjs';
@@ -1671,6 +1672,21 @@ export class SdmActor extends Actor {
         onClick: async (event, target) => {
           await animateItem(this.sheet._getEmbeddedDocument(target), { app: this.sheet });
         }
+      },
+      {
+        label: 'SDM.Animation.Request',
+        icon: '<i class="fa-solid fa-hand"></i>',
+        visible: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          return (
+            !game.user.isGM &&
+            item?.isOwner &&
+            isAnimatable(item) &&
+            !item.system.animation?.active &&
+            !isAnimationBlocked(item)
+          );
+        },
+        onClick: async (event, target) => requestAnimation(this.sheet._getEmbeddedDocument(target))
       },
       {
         label: 'SDM.Animation.Deanimate',

@@ -80,6 +80,23 @@
   </div>
 
   {{#if canManage}}
+  <label class="flexrow mt-6">
+    <input class="flex0" type="checkbox" name="system.animation.endWithCombat" {{checked @root.system.animation.endWithCombat}} />
+    <span>{{localize 'SDM.Animation.EndWithCombat'}}</span>
+  </label>
+  {{/if}}
+
+  {{#if canRequest}}
+  <div class="flexrow mt-10">
+    {{#if blocked}}
+    <span>{{localize 'SDM.Animation.BlockedHint'}}</span>
+    {{else}}
+    <button type="button" data-action="requestAnimation"><i class="fa-solid fa-hand"></i> {{localize 'SDM.Animation.Request'}}</button>
+    {{/if}}
+  </div>
+  {{/if}}
+
+  {{#if canManage}}
   <div class="flexrow mt-10">
     {{#if active}}
     <button type="button" data-action="deanimateItem"><i class="fa-solid fa-box"></i> {{localize 'SDM.Animation.Deanimate'}}</button>

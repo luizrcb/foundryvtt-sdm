@@ -13,7 +13,8 @@ import {
   getDamageSource,
   isAnimatable,
   isAnimationBlocked,
-  isWeaponItem
+  isWeaponItem,
+  requestAnimation
 } from '../helpers/animatedItems.mjs';
 import { DEFAULT_PET_ICON, GearType, ItemStatusType, ItemType } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
@@ -87,6 +88,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       spawnNPC: this._onSpawnNPC,
       animateItem: this._onAnimateItem,
       chooseHallmarkUpgrade: this._onChooseHallmarkUpgrade,
+      requestAnimation: this._onRequestAnimation,
       deanimateItem: this._onDeanimateItem,
       fillAnimationFromTable: this._onFillAnimationFromTable,
       sendToChat: this._onSendToChat,
@@ -321,7 +323,10 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
             weapon: 'SDM.Animation.DamageWeapon',
             creature: 'SDM.Animation.DamageCreature'
           },
-          canManage: game.user.isGM
+          canManage: game.user.isGM,
+          // Players who own the item ask the Referee to animate it
+          canRequest:
+            !game.user.isGM && this.item.isOwner && !this.item.system.animation?.active && !!this.item.parent
         };
         break;
       }
@@ -875,6 +880,10 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
   static async _onSendToChat(event, target) {
     const actor = this.item.parent ? this.item.parent : null;
     await this.item.sendToChat({ actor, collapsed: false });
+  }
+
+  static async _onRequestAnimation() {
+    requestAnimation(this.item);
   }
 
   static async _onChooseHallmarkUpgrade() {

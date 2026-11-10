@@ -190,6 +190,63 @@ async function syncPowerCopy(item, npc) {
   await npc.createEmbeddedDocuments('Item', [data]);
 }
 
+const FEATURE_TRAIT_FLAG = 'animatedFeature';
+const EFFECT_COPY_FLAG = 'animatedEffect';
+
+/** The item's features become traits of the creature (name and rules text), so they show on its sheet. */
+async function syncFeatureTraits(item, npc) {
+  const existing = npc.items.filter(i => i.getFlag('sdm', FEATURE_TRAIT_FLAG));
+  if (existing.length) await npc.deleteEmbeddedDocuments('Item', existing.map(i => i.id));
+  const features = [...(item.system.features ?? [])].filter(f => f !== ANIMATED_FEATURE);
+  if (!features.length) return;
+  const label = key => {
+    const text = game.i18n.localize(`SDM.ItemFeature.${key}`);
+    return text.startsWith('SDM.') ? key : text;
+  };
+  const description = key => {
+    const text = game.i18n.localize(`SDM.ItemFeature.${key}Description`);
+    return text.startsWith('SDM.') ? '' : `<p>${text}</p>`;
+  };
+  await npc.createEmbeddedDocuments(
+    'Item',
+    features.map(key => ({
+      name: label(key),
+      type: ItemType.TRAIT,
+      img: item.img,
+      system: { description: description(key) },
+      flags: { sdm: { [FEATURE_TRAIT_FLAG]: key } }
+    }))
+  );
+}
+
+/** A glowing item lights up like a torch (bright 20 ft, dim 40 ft, in the scene's grid units). */
+function lightFromItem(item, scene) {
+  if (!hasFeature(item, 'glowing')) return { bright: 0, dim: 0 };
+  const perGrid = Number(scene?.grid?.distance) || 5;
+  return { bright: 4 * perGrid, dim: 8 * perGrid };
+}
+
+/**
+ * Effects the item gives its bearer (transfer effects) also work on the creature.
+ * Item mods and the hallmark upgrades change the item itself, so they are not copied.
+ */
+async function syncEffectCopies(item, npc) {
+  const existing = npc.effects.filter(e => e.getFlag('sdm', EFFECT_COPY_FLAG));
+  if (existing.length) await npc.deleteEmbeddedDocuments('ActiveEffect', existing.map(e => e.id));
+  const copies = item.effects
+    .filter(e => e.transfer && !e.system?.isItemMod && !e.getFlag('sdm', HALLMARK_UPGRADES_FLAG))
+    .map(e => {
+      const data = e.toObject();
+      delete data._id;
+      data.transfer = false;
+      data.origin = item.uuid;
+      data.flags = foundry.utils.mergeObject(data.flags ?? {}, { sdm: { [EFFECT_COPY_FLAG]: item.uuid } });
+      return data;
+    });
+  if (copies.length) await npc.createEmbeddedDocuments('ActiveEffect', copies);
+}
+
+const HALLMARK_UPGRADES_FLAG = 'hallmarkUpgrades';
 const DEFENSE_BONUS_FLAG = 'animatedDefenseBonus';
 
 /** Armor and ward items add their bonus to the creature's defense. */
@@ -288,6 +345,10 @@ export async function animateItem(item, { app } = {}) {
 
   let npc = getLinkedNpc(item);
   const system = npcSystemFromItem(item);
+  // A notched or running-low item comes to life already worn: at most half its life
+  const worn =
+    item.system.status === ItemStatusType.NOTCHED || item.system.resources === 'running_low';
+  if (worn) system.life.value = Math.min(system.life.value, Math.ceil(system.life.max / 2));
   if (npc) {
     await npc.update({ name: item.name, system, ownership: ownershipFromItem(item) });
   } else {
@@ -308,6 +369,12 @@ export async function animateItem(item, { app } = {}) {
       'prototypeToken.texture.src': item.img
     });
   }
+
+  // Glowing items shed light
+  const light = lightFromItem(item, canvas.scene);
+  await npc.update({ 'prototypeToken.light.bright': light.bright, 'prototypeToken.light.dim': light.dim });
+  await syncFeatureTraits(item, npc);
+  await syncEffectCopies(item, npc);
 
   await syncWeaponDamage(item, npc);
   await syncPowerCopy(item, npc);
@@ -464,6 +531,75 @@ export async function applyAnimatedWear(npc) {
 
 export function setupAnimatedItems() {
   Hooks.on('renderTokenHUD', onRenderTokenHUD);
+  Hooks.on('deleteCombat', onCombatEnded);
+  game.socket.on(CHANNEL, onSocketMessage);
+}
+
+/** Creatures set to "end with combat" turn back into their items when the combat ends. */
+async function onCombatEnded(combat) {
+  if (game.users.activeGM?.id !== game.user.id) return;
+  for (const combatant of combat.combatants) {
+    const item = getAnimatedSourceItem(combatant.actor);
+    if (item?.system.animation?.active && item.system.animation.endWithCombat) {
+      await deanimateItem(item, { reason: 'SDM.Animation.CombatEnded' });
+    }
+  }
+}
+
+/* -------------------------------------------- */
+/*  Player requests                             */
+/* -------------------------------------------- */
+
+const CHANNEL = 'system.sdm';
+const REQUEST_ACTION = 'animateItemRequest';
+const RESULT_ACTION = 'animateItemResult';
+
+/** A player asks the Referee to animate one of their items. */
+export function requestAnimation(item) {
+  if (!item?.isOwner || !isAnimatable(item)) return;
+  if (isAnimationBlocked(item)) {
+    ui.notifications.warn($fmt('SDM.Animation.Blocked', { name: item.name }));
+    return;
+  }
+  if (!game.users.activeGM) {
+    ui.notifications.warn($l10n('SDM.ErrorNoActiveGM'));
+    return;
+  }
+  game.socket.emit(CHANNEL, { action: REQUEST_ACTION, userId: game.user.id, itemUuid: item.uuid });
+  ui.notifications.info($fmt('SDM.Animation.RequestSent', { name: item.name }));
+}
+
+async function onSocketMessage(message) {
+  if (message?.action === RESULT_ACTION && message.userId === game.user.id) {
+    const key = message.approved ? 'SDM.Animation.RequestApproved' : 'SDM.Animation.RequestDenied';
+    ui.notifications.info($fmt(key, { name: message.itemName ?? '' }));
+    return;
+  }
+  if (message?.action !== REQUEST_ACTION) return;
+  if (game.users.activeGM?.id !== game.user.id) return;
+
+  const user = game.users.get(message.userId);
+  const item = fromUuidSync(message.itemUuid);
+  const respond = approved =>
+    game.socket.emit(CHANNEL, {
+      action: RESULT_ACTION,
+      userId: message.userId,
+      approved,
+      itemName: item?.name
+    });
+  if (!user || !item || !item.testUserPermission(user, 'OWNER')) return respond(false);
+
+  const approved = await foundry.applications.api.DialogV2.confirm({
+    window: { title: $l10n('SDM.Animation.RequestTitle'), icon: 'fa-solid fa-ghost' },
+    content: `<p>${$fmt('SDM.Animation.RequestPrompt', {
+      user: user.name,
+      name: item.name,
+      actor: item.parent?.name ?? ''
+    })}</p>`,
+    rejectClose: false
+  });
+  if (approved) await animateItem(item);
+  respond(!!approved);
 }
 
 function onRenderTokenHUD(hud, html) {
