@@ -374,7 +374,9 @@ export async function linkNpcToItem(item, actor) {
   await npc.update({
     [`flags.sdm.${FLAG}`]: item.uuid,
     [`flags.sdm.${DEFENSE_BONUS_FLAG}`]: 0,
-    [`flags.sdm.${KEEP_IDENTITY_FLAG}`]: true
+    [`flags.sdm.${KEEP_IDENTITY_FLAG}`]: true,
+    'prototypeToken.disposition': CONST.TOKEN_DISPOSITIONS.FRIENDLY,
+    'prototypeToken.actorLink': true
   });
   await item.update(
     {
@@ -461,7 +463,13 @@ export async function animateItem(item, { app } = {}) {
 
   // Glowing items shed light
   const light = lightFromItem(item, canvas.scene);
-  await npc.update({ 'prototypeToken.light.bright': light.bright, 'prototypeToken.light.dim': light.dim });
+  // Every animated creature is a friendly, linked token (also NPCs dropped on the tab)
+  await npc.update({
+    'prototypeToken.light.bright': light.bright,
+    'prototypeToken.light.dim': light.dim,
+    'prototypeToken.disposition': CONST.TOKEN_DISPOSITIONS.FRIENDLY,
+    'prototypeToken.actorLink': true
+  });
   await syncFeatureTraits(item, npc);
   await syncEffectCopies(item, npc);
 
