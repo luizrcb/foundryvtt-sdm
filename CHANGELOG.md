@@ -11,7 +11,7 @@
   - Hovering NPC and hallmark XP shows the XP needed to level up, as for characters
 - **Level-up upgrades**: every level a character or hallmark gains leaves an upgrade to choose (a pulsing badge next to the level, and on the hallmark in the inventory). The player chooses it when they want and it is consumed
   - Character: a new trait (dragged in, random, or a brand new one created by name), improve a trait (skilled → expert → master, up to builder with the extended skill ranks setting; a plain trait becomes expert), or +1 to an ability score. Life and hero dice still come with the level
-  - Hallmark: +1 to every damage die (€5 × item level), +1 defense (€10 × item level), a new trait, power or complication written as text, or a mod installed from the Mods & Effects compendium (it uses the item's mod slots). The material cost is paid from the character's cash; the Referee can waive it in the dialog or mark the next upgrade as free
+  - Hallmark: +1 to every damage die (€5 × item level), +1 defense (€10 × item level), a new trait, power or complication written as text, or a mod installed from the Mods & Effects compendium (it uses one of the item's mod slots and costs mod cost × number of mods on the item, or the item's cost if higher). The material cost is paid from the character's cash; the Referee can waive it in the dialog or mark the next upgrade as free
 - **Progress history**: the clock button next to the level lists every XP investment and level-up upgrade of the character and its hallmarks. The Referee can undo the latest one: its XP, money or pending upgrade comes back
 - **Animated items**: the new "animated" item feature adds an Animation tab where the Referee picks the NPC table (generic by default), whether the item walks away (stops counting weight and is greyed out in the inventory) or stays as energy, and the creature's attributes (or fills them from the table)
   - Drop an NPC (sidebar or compendium) on the Animation tab to make it the item's creature: its table and stats (life, defense, morale, bonus, damage, initiative, capacity, size, speed) fill the tab
@@ -30,6 +30,7 @@
 - Character generator no longer gives the same trait or skill twice. The first repeat instead improves what the character has, once per character: a skill goes up one rank, a trait becomes an Expert skill. Rerolling an existing character now waits for its old items to be removed
 - Starting kits show how many items are left to unpack, in parentheses, in the inventory of character, NPC and caravan sheets
 - An NPC added to a caravan's crew, or linked as the pet of a character's item, becomes friendly (its prototype token disposition)
+- Item mods have a **Mod Cost** field (effect configuration, when *Is Item Mod* is ticked)
 - Fixed the danger roll of a dangerous power used by an NPC (for example an animated item): NPCs roll with their bonus
 
 ## v1.10.0

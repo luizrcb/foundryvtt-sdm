@@ -6,6 +6,7 @@
 
     {{#if source.system.isItemMod}}
     {{formGroup fields.modType value=source.system.modType options=itemModTypes sort=true localize=true rootId=rootId}}
+    {{formGroup fields.modCost value=source.system.modCost rootId=rootId}}
     {{/if}}
 
     {{#if isActorEffect}}

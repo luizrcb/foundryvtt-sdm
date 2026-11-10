@@ -292,7 +292,7 @@ export async function openHallmarkUpgradeDialog(item) {
       ${canDefense ? `<label class="sdm-upgrade-choice"><input type="radio" name="choice" value="defense" ${kinds.weapon ? '' : 'checked'} /> ${$l10n('SDM.Upgrade.Defense')} (${cost(defenseCost)})</label>` : ''}
       <label class="sdm-upgrade-choice"><input type="radio" name="choice" value="text" ${kinds.weapon || canDefense ? '' : 'checked'} /> ${$l10n('SDM.Upgrade.Text')}</label>
       <div class="sdm-upgrade-detail"><input type="text" name="text" placeholder="${esc($l10n('SDM.Upgrade.TextPlaceholder'))}" /></div>
-      <label class="sdm-upgrade-choice"><input type="radio" name="choice" value="mod" /> ${$l10n('SDM.Upgrade.Mod')}</label>
+      <label class="sdm-upgrade-choice"><input type="radio" name="choice" value="mod" /> ${$l10n('SDM.Upgrade.Mod')} (${free ? $l10n('SDM.Upgrade.NoCost') : $l10n('SDM.Upgrade.ModCost')})</label>
       <div class="sdm-upgrade-detail">
         <div class="sdm-upgrade-drop" data-upgrade-drop-mod>${$l10n('SDM.Upgrade.DropMod')}</div>
         <input type="hidden" name="modUuid" />
@@ -323,8 +323,8 @@ export async function openHallmarkUpgradeDialog(item) {
   if (!data) return;
 
   const owner = item.parent;
-  const noCost = free || data.waive || data.choice === 'text' || data.choice === 'mod';
-  const price = data.choice === 'damage' ? damageCost : data.choice === 'defense' ? defenseCost : 0;
+  const noCost = free || data.waive || data.choice === 'text';
+  let price = data.choice === 'damage' ? damageCost : data.choice === 'defense' ? defenseCost : 0;
 
   if (data.choice === 'text' && !data.text) {
     ui.notifications.warn($l10n('SDM.Upgrade.DescribeUpgrade'));
@@ -346,8 +346,21 @@ export async function openHallmarkUpgradeDialog(item) {
     if (!created) return;
     modEffectId = created.id;
     modName = created.name;
+    // Customization cost = mod cost × total number of upgrades (mods), or the item's cost if higher
+    const installed = item.effects.filter(e => e.system?.isItemMod).length;
+    const modCost = Number(created.system?.modCost) || 0;
+    price = Math.max(modCost * installed, Number(item.system.cost) || 0);
+    if (!noCost && price > 0) {
+      const paid = owner ? await removeCashFromActor(owner, price) : false;
+      if (paid === false) {
+        // Not enough money: take the mod out again, nothing is spent
+        await item.deleteEmbeddedDocuments('ActiveEffect', [created.id]);
+        ui.notifications.warn($fmt('SDM.Upgrade.NotEnoughCash', { cost: price }));
+        return;
+      }
+    }
   }
-  if (!noCost && price > 0) {
+  if (!noCost && price > 0 && data.choice !== 'mod') {
     const paid = owner ? await removeCashFromActor(owner, price) : false;
     if (paid === false) {
       ui.notifications.warn($fmt('SDM.Upgrade.NotEnoughCash', { cost: price }));
