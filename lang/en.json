@@ -593,6 +593,8 @@
   "SDM.CaravanCash": "Caravan Cash",
   "SDM.CaravanCrewOpenSheet": "Double click to open {name}'s sheet",
   "SDM.CaravanDropNPCs": "Drop Characters an NPCs to add them to the caravan crew",
+  "SDM.CaravanFreeSpace": "Free",
+  "SDM.CaravanFreeSpaceHint": "Free space: whole empty sacks + stones left",
   "SDM.CaravanItemSlots": "Caravan Items",
   "SDM.CaravanTokenAlreadyDeployed": "All crew members are already deployed on this scene.",
   "SDM.CaravanTokenDeployed": "Deployed {count} crew member(s) from the caravan.",

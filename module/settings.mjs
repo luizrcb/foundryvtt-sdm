@@ -1741,5 +1741,8 @@ export function setupInitialSettings() {
   game.settings.set('core', 'chatBubblesPan', false);
   game.settings.set('core', 'tokenAutoRotate', false);
 
+  // New worlds start with caravan transport automation on (existing worlds keep their choice)
+  game.settings.set('sdm', 'automateCaravanTransport', true);
+
   game.settings.set('sdm', 'initialSettingsConfigured', true);
 }

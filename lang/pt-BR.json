@@ -593,6 +593,8 @@
   "SDM.CaravanCash": "Dinhero na Caravana",
   "SDM.CaravanCrewOpenSheet": "Dois cliques para abrir a ficha de {name}",
   "SDM.CaravanDropNPCs": "Arraste e solte Personagens e NPCs para adicioná-los à equipe da caravana",
+  "SDM.CaravanFreeSpace": "Livre",
+  "SDM.CaravanFreeSpaceHint": "Espaço livre: sacos inteiros vazios + pedras restantes",
   "SDM.CaravanItemSlots": "Itens da Caravana",
   "SDM.CaravanTokenAlreadyDeployed": "Todos os membros da equipe já estão posicionados nesta cena.",
   "SDM.CaravanTokenDeployed": "{count} membro(s) da equipe posicionado(s) a partir da caravana.",

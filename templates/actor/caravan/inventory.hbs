@@ -18,6 +18,11 @@
                   <i class="fa fa-weight-hanging fumble"></i>
                 </div>
               {{/if}}
+              {{#unless overloaded}}
+              <div class="sdm-caravan-free ml-10" data-tooltip="{{localize 'SDM.CaravanFreeSpaceHint'}}">
+                {{localize 'SDM.CaravanFreeSpace'}}: {{freeSacks}} {{localize 'SDM.UnitSacksAbbr'}} + {{freeStones}} {{localize 'SDM.UnitStonesAbbr'}}
+              </div>
+              {{/unless}}
               <div class="rollable ml-10" style="align-self: flex-end;" data-action="consumeSupplies">
                 <i class="fa-solid fa-sack-xmark" data-action="consumeSupplies"></i>
                 <span>{{localize 'SDM.ConsumeSupply'}}</span>
@@ -140,6 +145,11 @@
                   <i class="fa fa-weight-hanging fumble"></i>
                 </div>
               {{/if}}
+              {{#unless overloaded}}
+              <div class="sdm-caravan-free ml-10" data-tooltip="{{localize 'SDM.CaravanFreeSpaceHint'}}">
+                {{localize 'SDM.CaravanFreeSpace'}}: {{freeSacks}} {{localize 'SDM.UnitSacksAbbr'}} + {{freeStones}} {{localize 'SDM.UnitStonesAbbr'}}
+              </div>
+              {{/unless}}
               <div class="rollable ml-10" style="align-self: flex-end;" data-action="consumeSupplies">
                 <i class="fa-solid fa-sack-xmark" data-action="consumeSupplies"></i>
                 <span>{{localize 'SDM.ConsumeSupply'}}</span>

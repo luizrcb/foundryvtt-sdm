@@ -32,7 +32,8 @@
 - An NPC added to a caravan's crew, or linked as the pet of a character's item, becomes friendly (its prototype token disposition)
 - Item mods have a **Mod Cost** field (effect configuration, when *Is Item Mod* is ticked)
 - Fixed the danger roll of a dangerous power used by an NPC (for example an animated item): NPCs roll with their bonus
-
+- **Caravan free space**: next to Consume Supplies, the inventory shows the free space as whole sacks + stones (e.g. "Free: 3 sk + 4 st")
+- New worlds start with **caravan transport automation** turned on (existing worlds keep their setting)
 ## v1.10.0
 
 - Active effect expiry now uses Foundry V14's built-in effect registry instead of the system's own round/turn check

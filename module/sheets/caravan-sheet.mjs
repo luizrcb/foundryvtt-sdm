@@ -708,6 +708,10 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       sacks.reduce((a, s) => a + s.usedSlots, 0) + overflow.usedSlots + totalCrewSlots;
     context.totalMaxSlots = this.actor.maxSlots;
     context.overloaded = context.totalUsedSlots > context.totalMaxSlots;
+    // Free space as whole sacks + stones ("3 sacks + 4 stones")
+    const free = Math.max(context.totalMaxSlots - context.totalUsedSlots, 0);
+    context.freeSacks = Math.floor(free / SLOTS_PER_SACK);
+    context.freeStones = free % SLOTS_PER_SACK;
   }
 
   _getDropSackIndex(event) {
