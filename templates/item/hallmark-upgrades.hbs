@@ -12,8 +12,9 @@
     {{localize 'SDM.Upgrade.FreeUpgrade'}}
   </label>
   {{/if}}
-  {{#if system.hallmark.upgrade_notes.length}}
+  {{#if (or system.hallmark.upgrade_notes.length @root.hallmarkUpgradeMods.length)}}
   <ul class="sdm-upgrade-notes">
+    {{#each @root.hallmarkUpgradeMods}}<li data-tooltip="{{localize 'SDM.Upgrade.ModUpgradeTooltip'}}"><i class="fa-solid fa-star"></i> {{this}}</li>{{/each}}
     {{#each system.hallmark.upgrade_notes}}<li><i class="fa-solid fa-star"></i> {{this}}</li>{{/each}}
   </ul>
   {{/if}}

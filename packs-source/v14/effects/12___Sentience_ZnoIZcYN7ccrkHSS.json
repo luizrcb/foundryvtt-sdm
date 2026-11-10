@@ -15,7 +15,8 @@
       }
     ],
     "isItemMod": true,
-    "modType": "weapon"
+    "modType": "weapon",
+    "modCost": 1000
   },
   "disabled": false,
   "start": null,
@@ -34,12 +35,12 @@
   "sort": 0,
   "flags": {},
   "_stats": {
-    "coreVersion": "14.368",
+    "coreVersion": "14.370",
     "systemId": "sdm",
-    "systemVersion": "1.6.0",
+    "systemVersion": "1.10.0",
     "createdTime": 1789558727604,
-    "modifiedTime": 1789689159187,
-    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "modifiedTime": 1794334102791,
+    "lastModifiedBy": "ovcnXJxoRSPATQdI",
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null

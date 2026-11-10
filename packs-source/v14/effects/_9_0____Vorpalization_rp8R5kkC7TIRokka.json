@@ -15,7 +15,8 @@
       }
     ],
     "isItemMod": true,
-    "modType": "weapon"
+    "modType": "weapon",
+    "modCost": 500
   },
   "disabled": false,
   "start": null,
@@ -25,7 +26,7 @@
     "expiry": null,
     "expired": false
   },
-  "description": "<p>Severs or destroys an extremity on a critical hit, or deals double critical damage.</p>\n<p><strong>Mod Cost</strong>: $500</p>",
+  "description": "<p>Severs or destroys an extremity on a critical hit, or deals double critical damage.</p><p><strong>Mod Cost</strong>: $500</p>",
   "origin": null,
   "tint": "#ffffff",
   "transfer": false,
@@ -34,12 +35,12 @@
   "sort": 800000,
   "flags": {},
   "_stats": {
-    "coreVersion": "14.368",
+    "coreVersion": "14.370",
     "systemId": "sdm",
-    "systemVersion": "1.6.0",
+    "systemVersion": "1.10.0",
     "createdTime": 1789063428919,
-    "modifiedTime": 1789683984469,
-    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "modifiedTime": 1794334074624,
+    "lastModifiedBy": "ovcnXJxoRSPATQdI",
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null

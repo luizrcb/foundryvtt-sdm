@@ -293,6 +293,7 @@ export async function openHallmarkUpgradeDialog(item) {
       <label class="sdm-upgrade-choice"><input type="radio" name="choice" value="text" ${kinds.weapon || canDefense ? '' : 'checked'} /> ${$l10n('SDM.Upgrade.Text')}</label>
       <div class="sdm-upgrade-detail"><input type="text" name="text" placeholder="${esc($l10n('SDM.Upgrade.TextPlaceholder'))}" /></div>
       <label class="sdm-upgrade-choice"><input type="radio" name="choice" value="mod" /> ${$l10n('SDM.Upgrade.Mod')} (${free ? $l10n('SDM.Upgrade.NoCost') : $l10n('SDM.Upgrade.ModCost')})</label>
+      <p class="hint sdm-upgrade-hint">${$l10n('SDM.Upgrade.ModHint')}</p>
       <div class="sdm-upgrade-detail">
         <div class="sdm-upgrade-drop" data-upgrade-drop-mod>${$l10n('SDM.Upgrade.DropMod')}</div>
         <input type="hidden" name="modUuid" />
@@ -342,6 +343,8 @@ export async function openHallmarkUpgradeDialog(item) {
     const modData = mod.toObject();
     delete modData._id;
     modData.system = { ...(modData.system ?? {}), isItemMod: true };
+    // Gained as the level's upgrade: it does not use one of the item's mod slots
+    modData.flags = foundry.utils.mergeObject(modData.flags ?? {}, { sdm: { hallmarkUpgradeMod: true } });
     const [created] = await item.createEmbeddedDocuments('ActiveEffect', [modData]);
     if (!created) return;
     modEffectId = created.id;

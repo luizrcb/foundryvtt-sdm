@@ -22,7 +22,8 @@
       }
     ],
     "isItemMod": true,
-    "modType": "gear"
+    "modType": "gear",
+    "modCost": 200
   },
   "disabled": false,
   "start": null,
@@ -40,12 +41,12 @@
   "showIcon": 1,
   "flags": {},
   "_stats": {
-    "coreVersion": "14.367",
+    "coreVersion": "14.370",
     "systemId": "sdm",
-    "systemVersion": "1.6.0",
+    "systemVersion": "1.10.0",
     "createdTime": 1789488234395,
-    "modifiedTime": 1789569032170,
-    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "modifiedTime": 1794333811436,
+    "lastModifiedBy": "ovcnXJxoRSPATQdI",
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null

@@ -237,7 +237,9 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       skillModifierStep: defaultModifierStep,
       abilities: CONFIG.SDM.getOrderedAbilities(language),
       isGM: game.user.isGM,
-      hallmarkXpToNextLevel: getXpToNextLevel(this.item.system.hallmark?.experience ?? 0)
+      hallmarkXpToNextLevel: getXpToNextLevel(this.item.system.hallmark?.experience ?? 0),
+      // Mods gained as hallmark upgrades (outside the mod slots)
+      hallmarkUpgradeMods: this.item.effects.filter(e => e.getFlag('sdm', 'hallmarkUpgradeMod')).map(e => e.name)
     };
 
     if (this.item.type === ItemType.GEAR && this.item.system.type === GearType.WARD) {

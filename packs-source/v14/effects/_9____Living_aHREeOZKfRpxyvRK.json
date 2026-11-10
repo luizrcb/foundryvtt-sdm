@@ -22,7 +22,8 @@
       }
     ],
     "isItemMod": true,
-    "modType": "armor_ward"
+    "modType": "armor_ward",
+    "modCost": 900
   },
   "disabled": false,
   "start": null,
@@ -32,7 +33,7 @@
     "expiry": null,
     "expired": false
   },
-  "description": "<p>It's alive. Reduce its armor bonus by 1 to regain 1d4 life. Fed and allowed to rest, it regains 1 armor per week. Use this active effect changes to reduce the armor value.</p>\n<p><strong>Mod Cost</strong>: $900</p>",
+  "description": "<p>It's alive. Reduce its armor bonus by 1 to regain 1d4 life. Fed and allowed to rest, it regains 1 armor per week. Use this active effect changes to reduce the armor value.</p><p><strong>Mod Cost</strong>: $900</p>",
   "origin": null,
   "tint": "#ffffff",
   "transfer": false,
@@ -41,12 +42,12 @@
   "sort": 500000,
   "flags": {},
   "_stats": {
-    "coreVersion": "14.368",
+    "coreVersion": "14.370",
     "systemId": "sdm",
-    "systemVersion": "1.6.0",
+    "systemVersion": "1.10.0",
     "createdTime": 1789523321718,
-    "modifiedTime": 1789724472281,
-    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "modifiedTime": 1794333932998,
+    "lastModifiedBy": "ovcnXJxoRSPATQdI",
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null

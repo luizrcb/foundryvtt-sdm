@@ -15,7 +15,8 @@
       }
     ],
     "isItemMod": true,
-    "modType": "armor_ward"
+    "modType": "armor_ward",
+    "modCost": 50
   },
   "disabled": false,
   "start": null,
@@ -33,12 +34,12 @@
   "folder": "a5yNKXkMe7THJpGJ",
   "flags": {},
   "_stats": {
-    "coreVersion": "14.367",
+    "coreVersion": "14.370",
     "systemId": "sdm",
-    "systemVersion": "1.6.0",
+    "systemVersion": "1.10.0",
     "createdTime": 1789059966003,
-    "modifiedTime": 1789576169139,
-    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "modifiedTime": 1794333848350,
+    "lastModifiedBy": "ovcnXJxoRSPATQdI",
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null

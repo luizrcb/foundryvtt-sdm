@@ -611,8 +611,9 @@ export class SdmItem extends Item {
     return `${statusTitle} ${this.name}`;
   }
 
+  /** Mods that use the item's mod slots (a mod gained as a hallmark upgrade does not). */
   get itemModEffects() {
-    return this.effects.filter(e => e.system.isItemMod);
+    return this.effects.filter(e => e.system.isItemMod && !e.getFlag('sdm', 'hallmarkUpgradeMod'));
   }
 
   get installedMods() {

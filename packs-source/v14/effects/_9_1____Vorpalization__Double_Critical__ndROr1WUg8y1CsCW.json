@@ -25,7 +25,7 @@
     "expiry": null,
     "expired": false
   },
-  "description": "<p>On a critical hit deals double critical damage.</p>\n<p><em><br>(Add this effect to the same item that has the vorpalization item mod)</em></p>",
+  "description": "<p>On a critical hit deals double critical damage.</p><p><em><br>(Add this effect to the same item that has the vorpalization item mod)</em></p>",
   "origin": null,
   "tint": "#ffffff",
   "transfer": true,
@@ -33,12 +33,12 @@
   "showIcon": 1,
   "flags": {},
   "_stats": {
-    "coreVersion": "14.368",
+    "coreVersion": "14.370",
     "systemId": "sdm",
     "systemVersion": "1.6.0",
     "createdTime": 1789418409563,
-    "modifiedTime": 1789683983392,
-    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "modifiedTime": 1794334114860,
+    "lastModifiedBy": "ovcnXJxoRSPATQdI",
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null

@@ -285,6 +285,9 @@ export function registerActiveEffectLimit() {
       return false;
     }
 
+    // A mod gained as a hallmark upgrade does not use a mod slot
+    if (data.flags?.sdm?.hallmarkUpgradeMod) return;
+
     if (isAtItemModCap(parent)) {
       warnItemModCap(parent);
       return false;
@@ -335,7 +338,7 @@ export function registerActiveEffectLimit() {
 function isAtItemModCap(item, excludeId = null) {
   const max = (item.system?.hallmark?.level ?? 0) + 1;
   const current = item.effects.filter(
-    e => e.id !== excludeId && e.system?.isItemMod === true
+    e => e.id !== excludeId && e.system?.isItemMod === true && !e.getFlag('sdm', 'hallmarkUpgradeMod')
   ).length;
   return current >= max;
 }

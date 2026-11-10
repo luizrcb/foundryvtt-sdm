@@ -15,7 +15,8 @@
       }
     ],
     "isItemMod": true,
-    "modType": "armor_ward"
+    "modType": "armor_ward",
+    "modCost": 800
   },
   "disabled": false,
   "start": null,
@@ -25,7 +26,7 @@
     "expiry": null,
     "expired": false
   },
-  "description": "<p>Also grants its defense against noöspheric attacks, ghosts, and ultras.</p>\n<p><strong>Mod Cost</strong>: $800</p>",
+  "description": "<p>Also grants its defense against noöspheric attacks, ghosts, and ultras.</p><p><strong>Mod Cost</strong>: $800</p>",
   "origin": null,
   "tint": "#ffffff",
   "transfer": false,
@@ -34,12 +35,12 @@
   "sort": 300000,
   "flags": {},
   "_stats": {
-    "coreVersion": "14.368",
+    "coreVersion": "14.370",
     "systemId": "sdm",
-    "systemVersion": "1.6.0",
+    "systemVersion": "1.10.0",
     "createdTime": 1789519390744,
-    "modifiedTime": 1789724473065,
-    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "modifiedTime": 1794333929465,
+    "lastModifiedBy": "ovcnXJxoRSPATQdI",
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null

@@ -15,7 +15,8 @@
       }
     ],
     "isItemMod": true,
-    "modType": "weapon"
+    "modType": "weapon",
+    "modCost": 450
   },
   "disabled": false,
   "start": null,
@@ -25,7 +26,7 @@
     "expiry": null,
     "expired": false
   },
-  "description": "<p>It uses a different ability for its combat bonuses (e.g. aura for melee attacks). This is not automated.</p>\n<p><strong>Mod Cost</strong>: $450</p>",
+  "description": "<p>It uses a different ability for its combat bonuses (e.g. aura for melee attacks). This is not automated.</p><p><strong>Mod Cost</strong>: $450</p>",
   "origin": null,
   "tint": "#ffffff",
   "transfer": false,
@@ -34,12 +35,12 @@
   "sort": 0,
   "flags": {},
   "_stats": {
-    "coreVersion": "14.368",
+    "coreVersion": "14.370",
     "systemId": "sdm",
-    "systemVersion": "1.6.0",
+    "systemVersion": "1.10.0",
     "createdTime": 1789505951750,
-    "modifiedTime": 1789683985661,
-    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "modifiedTime": 1794334066692,
+    "lastModifiedBy": "ovcnXJxoRSPATQdI",
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null

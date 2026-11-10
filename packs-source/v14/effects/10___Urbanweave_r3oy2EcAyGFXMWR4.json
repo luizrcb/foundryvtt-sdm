@@ -15,7 +15,8 @@
       }
     ],
     "isItemMod": true,
-    "modType": "armor_ward"
+    "modType": "armor_ward",
+    "modCost": 1000
   },
   "disabled": false,
   "start": null,
@@ -25,7 +26,7 @@
     "expiry": null,
     "expired": false
   },
-  "description": "<p>Miniaturized (-1 st, minimum 1 st) and styled to look more like civilian clothes.</p>\n<p><strong>Mod Cost</strong>: $1000</p>",
+  "description": "<p>Miniaturized (-1 st, minimum 1 st) and styled to look more like civilian clothes.</p><p><strong>Mod Cost</strong>: $1000</p>",
   "origin": null,
   "tint": "#ffffff",
   "transfer": false,
@@ -34,12 +35,12 @@
   "sort": 700000,
   "flags": {},
   "_stats": {
-    "coreVersion": "14.368",
+    "coreVersion": "14.370",
     "systemId": "sdm",
-    "systemVersion": "1.6.0",
+    "systemVersion": "1.10.0",
     "createdTime": 1789493660489,
-    "modifiedTime": 1789724471270,
-    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "modifiedTime": 1794333937248,
+    "lastModifiedBy": "ovcnXJxoRSPATQdI",
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null

@@ -15,7 +15,8 @@
       }
     ],
     "isItemMod": true,
-    "modType": "weapon"
+    "modType": "weapon",
+    "modCost": 300
   },
   "disabled": false,
   "start": null,
@@ -25,7 +26,7 @@
     "expiry": null,
     "expired": false
   },
-  "description": "<p>Ghoulish wiring increases unarmed damage dice (1d3 → 1d6 → 1d8 → 1d10).</p>\n<p><strong>Mod Cost</strong>: $300, <strong>Repeatable</strong></p>",
+  "description": "<p>Ghoulish wiring increases unarmed damage dice (1d3 → 1d6 → 1d8 → 1d10).</p><p><strong>Mod Cost</strong>: $300, <strong>Repeatable</strong></p>",
   "tint": "#ffffff",
   "transfer": false,
   "statuses": [],
@@ -33,12 +34,12 @@
   "folder": "x737UpOjJ6bgtc81",
   "flags": {},
   "_stats": {
-    "coreVersion": "14.368",
+    "coreVersion": "14.370",
     "systemId": "sdm",
-    "systemVersion": "1.6.0",
+    "systemVersion": "1.10.0",
     "createdTime": 1789051375415,
-    "modifiedTime": 1789678401480,
-    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "modifiedTime": 1794334056559,
+    "lastModifiedBy": "ovcnXJxoRSPATQdI",
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null

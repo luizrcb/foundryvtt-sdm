@@ -22,7 +22,8 @@
       }
     ],
     "isItemMod": true,
-    "modType": "weapon"
+    "modType": "weapon",
+    "modCost": 5
   },
   "disabled": false,
   "start": null,
@@ -32,7 +33,7 @@
     "expiry": null,
     "expired": false
   },
-  "description": "<p>The most basic of weapon mods. +1 bonus per damage die (2d4 → 2d4+2)</p>\n<p><strong>Mod Cost</strong>: $5, <strong>Repeatable</strong></p>",
+  "description": "<p>The most basic of weapon mods. +1 bonus per damage die (2d4 → 2d4+2)</p><p><strong>Mod Cost</strong>: $5, <strong>Repeatable</strong></p>",
   "tint": "#ffffff",
   "transfer": false,
   "statuses": [],
@@ -40,12 +41,12 @@
   "folder": "OmgVqZ6YW5WjGbgx",
   "flags": {},
   "_stats": {
-    "coreVersion": "14.368",
+    "coreVersion": "14.370",
     "systemId": "sdm",
-    "systemVersion": "1.6.0",
+    "systemVersion": "1.10.0",
     "createdTime": 1788984979935,
-    "modifiedTime": 1789663390615,
-    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "modifiedTime": 1794333970930,
+    "lastModifiedBy": "ovcnXJxoRSPATQdI",
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null

@@ -15,7 +15,8 @@
       }
     ],
     "isItemMod": true,
-    "modType": "weapon"
+    "modType": "weapon",
+    "modCost": 50
   },
   "disabled": false,
   "start": null,
@@ -25,7 +26,7 @@
     "expiry": null,
     "expired": false
   },
-  "description": "<p>Exotic coating (ultraviolet, gold) deals double damage to one type of target.</p>\n<p><strong>Mod Cost</strong>: $50</p>",
+  "description": "<p>Exotic coating (ultraviolet, gold) deals double damage to one type of target.</p><p><strong>Mod Cost</strong>: $50</p>",
   "origin": null,
   "tint": "#ffffff",
   "transfer": false,
@@ -34,12 +35,12 @@
   "sort": 100000,
   "flags": {},
   "_stats": {
-    "coreVersion": "14.368",
+    "coreVersion": "14.370",
     "systemId": "sdm",
-    "systemVersion": "1.6.0",
+    "systemVersion": "1.10.0",
     "createdTime": 1789418914838,
-    "modifiedTime": 1789663486661,
-    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "modifiedTime": 1794333987561,
+    "lastModifiedBy": "ovcnXJxoRSPATQdI",
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null

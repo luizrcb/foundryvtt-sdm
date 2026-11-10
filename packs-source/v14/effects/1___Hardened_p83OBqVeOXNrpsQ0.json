@@ -22,7 +22,8 @@
       }
     ],
     "isItemMod": true,
-    "modType": "armor_ward"
+    "modType": "armor_ward",
+    "modCost": 10
   },
   "disabled": false,
   "start": null,
@@ -32,7 +33,7 @@
     "expiry": null,
     "expired": false
   },
-  "description": "<p>Improved plates, reactive tissues and absorbers increase armor defense by +1.</p>\n<p><strong>Mod Cost</strong>: $10, <strong>Repeatable</strong></p>",
+  "description": "<p>Improved plates, reactive tissues and absorbers increase armor defense by +1.</p><p><strong>Mod Cost</strong>: $10, <strong>Repeatable</strong></p>",
   "tint": "#ffffff",
   "transfer": false,
   "statuses": [],
@@ -40,12 +41,12 @@
   "folder": "a5yNKXkMe7THJpGJ",
   "flags": {},
   "_stats": {
-    "coreVersion": "14.368",
+    "coreVersion": "14.370",
     "systemId": "sdm",
-    "systemVersion": "1.6.0",
+    "systemVersion": "1.10.0",
     "createdTime": 1789059826383,
-    "modifiedTime": 1789661668737,
-    "lastModifiedBy": "wOwBmZzhkRHns1aw",
+    "modifiedTime": 1794333821408,
+    "lastModifiedBy": "ovcnXJxoRSPATQdI",
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null
