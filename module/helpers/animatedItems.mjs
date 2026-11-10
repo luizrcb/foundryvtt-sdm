@@ -1,6 +1,6 @@
 import TokenPlacement from '../canvas/token-placement.mjs';
 import { getNPCDataByLevel, getNpcTableChoices, NPC_CUSTOM_TABLE, NPC_TABLE_KEYS } from './actorUtils.mjs';
-import { ActorType, ItemStatusType } from './constants.mjs';
+import { ActorType, GearType, ItemStatusType, ItemType } from './constants.mjs';
 import { $fmt, $l10n } from './globalUtils.mjs';
 
 /**
@@ -91,6 +91,59 @@ export async function fillAttributesFromTable(item, { raiseOnly = false } = {}) 
   );
 }
 
+const VERSATILE_FLAG = 'animatedVersatile';
+
+function hasFeature(item, key) {
+  const features = item.system.features;
+  return typeof features?.has === 'function' && features.has(key);
+}
+
+/** Weapon items (weapon type or the weapon feature) fight with their own damage. */
+function weaponDamage(item) {
+  const isWeapon = item.system.type === GearType.WEAPON || hasFeature(item, 'weapon');
+  if (!isWeapon) return null;
+  const weapon = item.system.weapon ?? {};
+  const versatile = (weapon.versatile || hasFeature(item, 'versatile')) && weapon.damage?.versatile;
+  return { base: weapon.damage?.base || null, versatile: versatile || null };
+}
+
+/**
+ * Keep the creature's damage in line with the weapon: its damage is the weapon's base damage,
+ * and a versatile weapon gives it a "versatile damage" weapon with the versatile damage.
+ */
+async function syncWeaponDamage(item, npc) {
+  const damage = weaponDamage(item);
+  if (damage?.base && npc.system.damage !== damage.base) {
+    await npc.update({ 'system.damage': damage.base });
+  }
+
+  const existing = npc.items.filter(i => i.getFlag('sdm', VERSATILE_FLAG));
+  if (!damage?.versatile) {
+    if (existing.length) await npc.deleteEmbeddedDocuments('Item', existing.map(i => i.id));
+    return;
+  }
+  const data = {
+    name: $l10n('SDM.Animation.VersatileDamage'),
+    img: item.img,
+    'system.type': GearType.WEAPON,
+    'system.weapon.damage.base': damage.versatile
+  };
+  if (existing.length) {
+    await existing[0].update(data);
+    if (existing.length > 1) await npc.deleteEmbeddedDocuments('Item', existing.slice(1).map(i => i.id));
+  } else {
+    await npc.createEmbeddedDocuments('Item', [
+      {
+        name: data.name,
+        img: data.img,
+        type: ItemType.GEAR,
+        system: { type: GearType.WEAPON, weapon: { damage: { base: damage.versatile } } },
+        flags: { sdm: { [VERSATILE_FLAG]: true } }
+      }
+    ]);
+  }
+}
+
 function npcSystemFromItem(item) {
   const a = item.system.attributes;
   return {
@@ -99,7 +152,7 @@ function npcSystemFromItem(item) {
     morale: a.morale,
     defense: a.defense,
     bonus: a.bonus,
-    damage: a.damage,
+    damage: weaponDamage(item)?.base || a.damage,
     initiative: a.initiative,
     capacity: a.capacity,
     createdFromTable: getAnimationTable(item)
@@ -175,6 +228,8 @@ export async function animateItem(item, { app } = {}) {
       'prototypeToken.texture.src': item.img
     });
   }
+
+  await syncWeaponDamage(item, npc);
 
   const update = { 'system.animation.actor': npc.uuid, 'system.animation.active': true };
   if (item.system.animation.mode === 'walks') update['system.readied'] = false;
@@ -283,6 +338,7 @@ export async function syncAnimationLevel(item) {
   const npc = getLinkedNpc(item);
   if (item.system.animation.active && npc) {
     if (level > (npc.system.level ?? 0)) await npc.levelUpNpcTo(level);
+    await syncWeaponDamage(item, npc);
   } else if (item.system.animation.filled) {
     await fillAttributesFromTable(item, { raiseOnly: true });
   }

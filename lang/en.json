@@ -135,6 +135,7 @@
   "SDM.Animation.StatusActive": "Animated",
   "SDM.Animation.StatusDormant": "Dormant",
   "SDM.Animation.Table": "NPC Table",
+  "SDM.Animation.VersatileDamage": "Versatile damage",
   "SDM.Animation.Walked": "Animated: walked away (does not count weight)",
   "SDM.AreaLarge": "Large",
   "SDM.AreaLargeAbbr": "L",
