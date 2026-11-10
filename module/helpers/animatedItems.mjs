@@ -497,7 +497,12 @@ export async function animateItem(item, { app } = {}) {
   await npc.update({ [`flags.sdm.${DEFENSE_BONUS_FLAG}`]: 0 });
   await applyDefenseBonus(item, npc);
 
-  const update = { 'system.animation.actor': npc.uuid, 'system.animation.active': true };
+  const update = {
+    'system.animation.actor': npc.uuid,
+    'system.animation.active': true,
+    // Remember whether it was equipped, to equip it again when it turns back into the item
+    'flags.sdm.animationWasReadied': !!item.system.readied
+  };
   // Animating spends the configured charges (souls, energy…)
   const chargeCost = getAnimationChargeCost(item);
   if (chargeCost > 0) update['system.charges.value'] = (Number(item.system.charges?.value) || 0) - chargeCost;
@@ -557,6 +562,13 @@ export async function deanimateItem(item, { reason } = {}) {
     );
   } else {
     await item.update({ 'system.animation.active': false }, { [SYNC_OPTION]: true });
+  }
+
+  // Back in its owner's hands: equipped again if it was equipped before, unless it broke
+  if (item.getFlag('sdm', 'animationWasReadied')) {
+    const update = { 'flags.sdm.animationWasReadied': false };
+    if (item.parent && item.system.status !== ItemStatusType.BROKEN) update['system.readied'] = true;
+    await item.update(update, { [SYNC_OPTION]: true });
   }
 
   ui.notifications.info($fmt(reason ?? 'SDM.Animation.Deanimated', { name: item.name }));
