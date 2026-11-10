@@ -1,6 +1,6 @@
 import PowerDataModel from '../data/power-data.mjs';
 import { SdmItem } from '../documents/item.mjs';
-import { createNPCByLevel, getActorOptions } from '../helpers/actorUtils.mjs';
+import { createNPCByLevel, getActorOptions, getXpToNextLevel } from '../helpers/actorUtils.mjs';
 import { DEFAULT_PET_ICON, GearType, ItemStatusType, ItemType } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { $fmt, $l10n, constructHTMLButton } from '../helpers/globalUtils.mjs';
@@ -206,7 +206,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       skillMod: allSKillMods,
       skillModifierStep: defaultModifierStep,
       abilities: CONFIG.SDM.getOrderedAbilities(language),
-      isGM: game.user.isGM
+      isGM: game.user.isGM,
+      hallmarkXpToNextLevel: getXpToNextLevel(this.item.system.hallmark?.experience ?? 0)
     };
 
     if (this.item.type === ItemType.GEAR && this.item.system.type === GearType.WARD) {

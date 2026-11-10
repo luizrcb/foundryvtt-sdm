@@ -53,7 +53,7 @@
             </div>
           </div>
 
-          <div class='resource'>
+          <div class='resource'{{#if @root.xpToNextLevel}} data-tooltip="{{@root.xpToNextLevel}} {{localize 'SDM.XPToLevelUP'}}"{{/if}}>
             <label class='resource-label'>
               {{localize 'SDM.FieldExperience'}}
             </label>

@@ -1,7 +1,7 @@
 import CompendiumBrowser from '../app/compendium-browser.mjs';
 import { SdmItem } from '../documents/item.mjs';
 
-import { getNPCDataByLevel, getXpToNextLevel, MAX_MODIFIER } from '../helpers/actorUtils.mjs';
+import { getNPCDataByLevel, getXpForLevel, getXpToNextLevel, MAX_MODIFIER } from '../helpers/actorUtils.mjs';
 import {
   ActorType,
   AttackTarget,
@@ -597,7 +597,12 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     // const language = game.i18n.lang;
     // context.system.abilities = CONFIG.SDM.getOrderedAbilities(language);
-    context.xpToNextLevel = getXpToNextLevel(this.actor.system.experience);
+    // NPCs count at least the minimum XP for their level (older NPCs were created with 0 XP)
+    const xpBase =
+      this.actor.type === ActorType.NPC
+        ? Math.max(parseInt(this.actor.system.experience, 10) || 0, getXpForLevel(this.actor.system.level))
+        : this.actor.system.experience;
+    context.xpToNextLevel = getXpToNextLevel(xpBase);
     context.isToken = this.document.isToken;
 
     if (this.actor.type === 'character') {
