@@ -4,6 +4,7 @@ import { templatePath } from './templates.mjs';
 const { renderTemplate } = foundry.applications.handlebars;
 
 export const BASE_DEFENSE_VALUE = 7;
+// TODO: rename to MAX_DEFENSE_VALUE: it caps the defenses (defense, mental and social), not ability scores
 export const MAX_ATTRIBUTE_VALUE = 19;
 export const MAX_MODIFIER = 13;
 export const PHYSICAL_KEYS = ['str', 'end', 'agi'];
