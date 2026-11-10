@@ -213,7 +213,7 @@ async function syncFeatureTraits(item, npc) {
       name: label(key),
       type: ItemType.TRAIT,
       img: item.img,
-      system: { description: description(key) },
+      system: { description: description(key), readied: true },
       flags: { sdm: { [FEATURE_TRAIT_FLAG]: key } }
     }))
   );
