@@ -1,6 +1,6 @@
 import TokenPlacement from '../canvas/token-placement.mjs';
 import { getNPCDataByLevel, NPC_TABLE_KEYS } from './actorUtils.mjs';
-import { ActorType } from './constants.mjs';
+import { ActorType, ItemStatusType } from './constants.mjs';
 import { $fmt, $l10n } from './globalUtils.mjs';
 
 /**
@@ -223,6 +223,30 @@ export async function syncAnimationLevel(item) {
   } else if (item.system.animation.filled) {
     await fillAttributesFromTable(item, { raiseOnly: true });
   }
+}
+
+/**
+ * A creature that walked away carries the item's wear: at half life or less the item is
+ * notched, at 0 life it is broken. It never gets better on its own (repair as usual).
+ * Energy creatures do not affect the item.
+ */
+export async function applyAnimatedWear(npc) {
+  const item = getAnimatedSourceItem(npc);
+  if (!item || item.system.animation?.mode !== 'walks') return;
+
+  const value = Number(npc.system.life?.value) || 0;
+  const max = Number(npc.system.life?.max) || 0;
+  let status = '';
+  if (value <= 0) status = ItemStatusType.BROKEN;
+  else if (max > 0 && value <= max / 2) status = ItemStatusType.NOTCHED;
+  if (!status) return;
+
+  const severity = { '': 0, [ItemStatusType.NOTCHED]: 1, [ItemStatusType.BROKEN]: 2 };
+  if ((severity[status] ?? 0) <= (severity[item.system.status ?? ''] ?? 0)) return;
+
+  const update = { 'system.status': status };
+  if (status === ItemStatusType.BROKEN) update['system.readied'] = false;
+  await item.update(update, { [SYNC_OPTION]: true });
 }
 
 /* -------------------------------------------- */

@@ -36,6 +36,7 @@ import { computeCaravanTransport } from '../helpers/transportUtils.mjs';
 import { promptSplitStackFirstQty } from '../items/splitDialog.mjs';
 import {
   animateItem,
+  applyAnimatedWear,
   deanimateItem,
   isAnimatable,
   isAnimatedNpc
@@ -139,6 +140,16 @@ export class SdmActor extends Actor {
 
     if (changed.name !== undefined) {
       await this.update({ 'prototypeToken.name': changed.name });
+    }
+
+    // Animated item that walked away: losing life notches or breaks the item
+    if (
+      this.type === ActorType.NPC &&
+      changed.system?.life?.value !== undefined &&
+      userId === game.user.id &&
+      isAnimatedNpc(this)
+    ) {
+      await applyAnimatedWear(this);
     }
 
     // NPC: gaining XP gains levels (stats from its source table, or the generic one)

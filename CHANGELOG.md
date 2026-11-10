@@ -5,6 +5,7 @@
 - Animated items: the new "animated" item feature adds an Animation tab where the Referee picks the NPC table (generic by default), whether the item walks away (leaves the inventory and stops counting weight) or stays as energy, and the creature's attributes (or fills them from the table)
   - Animate / Deanimate from the tab, the inventory right-click menu, or (deanimate) the creature token's HUD. The creature is an NPC owned by the character's players, kept in the "Animated Items" folder and reused every time; deanimating brings its state back to the item
   - The creature's level follows the item (the higher of the hallmark level and the Referee's level) and never levels up on its own
+  - A creature that walked away wears the item: at half life the item becomes notched, at 0 life broken. Energy creatures do not affect the item
 - Starting kits show how many items are left to unpack, in parentheses, in the inventory of character, NPC and caravan sheets
 - Character generator no longer gives the same trait or skill twice. The first repeat instead improves what the character has, once per character: a skill goes up one rank, a trait becomes an Expert skill
 - Players can invest their Player XP with the new button next to Player XP on the character sheet: in the character, in one of its hallmark items, in one of their pets, or donate it to another player's Player XP. Every investment is recorded in the chat
