@@ -226,26 +226,28 @@ export async function syncAnimationLevel(item) {
 }
 
 /**
- * A creature that walked away carries the item's wear: at half life or less the item is
- * notched, at 0 life it is broken. It never gets better on its own (repair as usual).
- * Energy creatures do not affect the item.
+ * The creature's life wears the item down. It never gets better on its own (repair or
+ * recharge as usual).
+ * - Walks away: at half life or less the item is notched, at 0 life it is broken.
+ * - Energy: at half life or less the item is running low, at 0 life it has run out.
  */
 export async function applyAnimatedWear(npc) {
   const item = getAnimatedSourceItem(npc);
-  if (!item || item.system.animation?.mode !== 'walks') return;
+  if (!item) return;
 
   const value = Number(npc.system.life?.value) || 0;
   const max = Number(npc.system.life?.max) || 0;
-  let status = '';
-  if (value <= 0) status = ItemStatusType.BROKEN;
-  else if (max > 0 && value <= max / 2) status = ItemStatusType.NOTCHED;
-  if (!status) return;
+  const stage = value <= 0 ? 2 : max > 0 && value <= max / 2 ? 1 : 0;
+  if (!stage) return;
 
-  const severity = { '': 0, [ItemStatusType.NOTCHED]: 1, [ItemStatusType.BROKEN]: 2 };
-  if ((severity[status] ?? 0) <= (severity[item.system.status ?? ''] ?? 0)) return;
+  const walks = item.system.animation?.mode === 'walks';
+  const field = walks ? 'status' : 'resources';
+  const steps = walks ? ['', ItemStatusType.NOTCHED, ItemStatusType.BROKEN] : ['', 'running_low', 'run_out'];
+  const current = Math.max(steps.indexOf(item.system[field] ?? ''), 0);
+  if (stage <= current) return;
 
-  const update = { 'system.status': status };
-  if (status === ItemStatusType.BROKEN) update['system.readied'] = false;
+  const update = { [`system.${field}`]: steps[stage] };
+  if (walks && stage === 2) update['system.readied'] = false;
   await item.update(update, { [SYNC_OPTION]: true });
 }
 
