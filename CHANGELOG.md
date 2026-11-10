@@ -1,20 +1,22 @@
 # CHANGELOG
 
-## v1.10.1
+## v1.11.0
 
-- Level-up upgrades: every level a character or hallmark gains leaves an upgrade to choose (a pulsing badge next to the level, and on the hallmark in the inventory). The player chooses it when they want and it is consumed
-  - Character: a new trait (dragged in or random), improve a trait (skilled → expert → master; a plain trait becomes expert), or +1 to an ability score. Life and hero dice still come with the level
+- **Investing XP**: a new button next to Player XP on the character sheet lets players invest their Player XP in the character, in one of its hallmark items or in one of their pets, or donate it to another player's Player XP. The dialog shows how much XP each one needs to level up, and every investment is recorded in the chat
+  - Only the Referee can edit XP fields directly (Player XP, character XP, NPC XP and hallmark XP)
+  - Hallmark items get their level from their XP; hallmark and NPC levels are no longer edited by hand (mount and vehicle levels are unchanged)
+  - NPCs gain levels when their XP reaches the next level (stats from the table they were created from, or the generic table); the Level Up button also raises their XP to the new level
+  - NPCs created at a level (generators, spawned from items) start with that level's XP
+  - Hovering NPC and hallmark XP shows the XP needed to level up, as for characters
+- **Level-up upgrades**: every level a character or hallmark gains leaves an upgrade to choose (a pulsing badge next to the level, and on the hallmark in the inventory). The player chooses it when they want and it is consumed
+  - Character: a new trait (dragged in or random), improve a trait (skilled → expert → master, up to builder with the extended skill ranks setting; a plain trait becomes expert), or +1 to an ability score. Life and hero dice still come with the level
   - Hallmark: +1 to every damage die (€5 × item level), +1 defense (€10 × item level), or a new trait, power or complication written as text. The material cost is paid from the character's cash; the Referee can waive it in the dialog or mark the next upgrade as free
-- Animated items: the new "animated" item feature adds an Animation tab where the Referee picks the NPC table (generic by default), whether the item walks away (leaves the inventory and stops counting weight) or stays as energy, and the creature's attributes (or fills them from the table)
+- **Animated items**: the new "animated" item feature adds an Animation tab where the Referee picks the NPC table (generic by default), whether the item walks away (leaves the inventory and stops counting weight) or stays as energy, and the creature's attributes (or fills them from the table)
   - Animate / Deanimate from the tab, the inventory right-click menu, or (deanimate) the creature token's HUD. The creature is an NPC owned by the character's players, kept in the "Animated Items" folder and reused every time; deanimating brings its state back to the item
   - The creature's level follows the item (the higher of the hallmark level and the Referee's level) and never levels up on its own
   - The creature's life wears the item: at half life a creature that walked away notches the item and an energy creature leaves it running low; at 0 life the item is broken or has run out
+- Character generator no longer gives the same trait or skill twice. The first repeat instead improves what the character has, once per character: a skill goes up one rank, a trait becomes an Expert skill. Rerolling an existing character now waits for its old items to be removed
 - Starting kits show how many items are left to unpack, in parentheses, in the inventory of character, NPC and caravan sheets
-- Character generator no longer gives the same trait or skill twice. The first repeat instead improves what the character has, once per character: a skill goes up one rank, a trait becomes an Expert skill
-- Players can invest their Player XP with the new button next to Player XP on the character sheet: in the character, in one of its hallmark items, in one of their pets, or donate it to another player's Player XP. Every investment is recorded in the chat
-- Hallmark items get their level from their XP automatically
-- Only the Referee can edit XP fields directly (Player XP, character XP, NPC XP and hallmark XP); players spend XP through "Invest XP". Hallmark and NPC levels are no longer edited by hand (mount and vehicle levels are unchanged)
-- NPCs gain levels when their XP reaches the next level (stats from the table they were created from, or the generic table); the Level Up button also raises their XP to the new level
 
 ## v1.10.0
 
