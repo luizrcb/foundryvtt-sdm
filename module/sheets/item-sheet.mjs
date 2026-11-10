@@ -1,6 +1,7 @@
 import PowerDataModel from '../data/power-data.mjs';
 import { SdmItem } from '../documents/item.mjs';
 import { createNPCByLevel, getActorOptions, getXpToNextLevel } from '../helpers/actorUtils.mjs';
+import { openProgressLog } from '../app/progress-log.mjs';
 import { openHallmarkUpgradeDialog } from '../app/level-upgrades.mjs';
 import { makeNpcFriendly } from '../items/petItem.mjs';
 import {
@@ -91,6 +92,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       spawnNPC: this._onSpawnNPC,
       animateItem: this._onAnimateItem,
       chooseHallmarkUpgrade: this._onChooseHallmarkUpgrade,
+      showProgressLog: this._onShowProgressLog,
       requestAnimation: this._onRequestAnimation,
       deanimateItem: this._onDeanimateItem,
       fillAnimationFromTable: this._onFillAnimationFromTable,
@@ -893,6 +895,13 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
 
   static async _onRequestAnimation() {
     requestAnimation(this.item);
+  }
+
+  /** The owner's progress history, only this hallmark's entries. */
+  static async _onShowProgressLog(event) {
+    event.preventDefault();
+    if (!this.item.parent) return;
+    await openProgressLog(this.item.parent, { subject: `hallmark:${this.item.id}` });
   }
 
   static async _onChooseHallmarkUpgrade() {

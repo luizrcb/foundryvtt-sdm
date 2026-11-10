@@ -1,5 +1,5 @@
 import { getXpForLevel, getXpToNextLevel } from '../helpers/actorUtils.mjs';
-import { logProgress } from './progress-log.mjs';
+import { getProgressLog, logProgress, npcSnapshot, removeProgressEntries } from './progress-log.mjs';
 import { ActorType } from '../helpers/constants.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 
@@ -190,21 +190,80 @@ export async function investXp({ sourceUuid, target, amount }) {
     return;
   }
 
+  const outcome = await requestGM({ sourceUuid, kind, targetUuid, amount });
+  if (!outcome?.success) ui.notifications.error($l10n('SDM.InvestXP.Failed'));
+}
+
+/** Send a request to the active Referee and wait for the answer. */
+function requestGM(payload) {
   const requestId = foundry.utils.randomID();
-  const outcome = await new Promise(resolve => {
+  return new Promise(resolve => {
     const timeout = setTimeout(() => {
       pendingRequests.delete(requestId);
       resolve({ success: false });
     }, REQUEST_TIMEOUT);
     pendingRequests.set(requestId, { resolve, timeout });
-    game.socket.emit(CHANNEL, {
-      action: REQUEST_ACTION,
-      requestId,
-      userId: game.user.id,
-      payload: { sourceUuid, kind, targetUuid, amount }
-    });
+    game.socket.emit(CHANNEL, { action: REQUEST_ACTION, requestId, userId: game.user.id, payload });
   });
+}
+
+/* -------------------------------------------- */
+/*  Give a donation back                        */
+/* -------------------------------------------- */
+
+/**
+ * The receiver (or the Referee) gives a donation back: the XP leaves the receiver's pool and
+ * returns to the donor's. Only while the receiver still has that XP in the pool.
+ * @param {Actor} recipient
+ * @param {string} entryId  The 'received' entry in the recipient's progress history.
+ */
+export async function returnDonation(recipient, entryId) {
+  const error = validateReturn(game.user, recipient, entryId);
+  if (error) {
+    ui.notifications.warn($fmt(error.key, error.data));
+    return;
+  }
+  const entry = getProgressLog(recipient).find(e => e.id === entryId);
+  const donor = fromUuidSync(entry.donorUuid);
+  if (donor.isOwner) return applyReturn(recipient, entry, game.user);
+
+  if (!game.users.activeGM) {
+    ui.notifications.warn($l10n('SDM.ErrorNoActiveGM'));
+    return;
+  }
+  const outcome = await requestGM({ op: 'return', recipientUuid: recipient.uuid, entryId });
   if (!outcome?.success) ui.notifications.error($l10n('SDM.InvestXP.Failed'));
+}
+
+function validateReturn(user, recipient, entryId) {
+  if (!recipient?.testUserPermission(user, 'OWNER')) return { key: 'SDM.InvestXP.Failed' };
+  const entry = getProgressLog(recipient).find(e => e.id === entryId && e.type === 'received');
+  if (!entry || !fromUuidSync(entry.donorUuid)) return { key: 'SDM.ProgressLog.DonorGone' };
+  const pool = toInt(recipient.system.player_experience);
+  if (pool < toInt(entry.amount)) {
+    return { key: 'SDM.ProgressLog.ReturnNotEnough', data: { xp: entry.amount, pool } };
+  }
+  return null;
+}
+
+async function applyReturn(recipient, entry, user) {
+  const donor = fromUuidSync(entry.donorUuid);
+  const amount = toInt(entry.amount);
+  const opts = { sdmInvestXp: true };
+  await recipient.update({ 'system.player_experience': `${toInt(recipient.system.player_experience) - amount}` }, opts);
+  await donor.update({ 'system.player_experience': `${toInt(donor.system.player_experience) + amount}` }, opts);
+  await removeProgressEntries(recipient, e => e.id === entry.id);
+  await removeProgressEntries(donor, e => entry.donationId && e.donationId === entry.donationId);
+  await ChatMessage.create({
+    author: user.id,
+    speaker: ChatMessage.getSpeaker({ actor: recipient }),
+    content: `<p><i class="fa-solid fa-rotate-left"></i> ${$fmt('SDM.ProgressLog.Returned', {
+      actor: recipient.name,
+      xp: amount,
+      donor: donor.name
+    })}</p>`
+  });
+  return true;
 }
 
 function validate(user, source, kind, targetDoc, amount) {
@@ -226,6 +285,8 @@ function validate(user, source, kind, targetDoc, amount) {
 }
 
 async function applyInvestment(source, kind, targetDoc, amount, user) {
+  // A pet's stats before it levels up, to undo the investment
+  const snapshot = kind === 'pet' ? npcSnapshot(targetDoc) : undefined;
   const pool = toInt(source.system.player_experience);
   await source.update({ 'system.player_experience': `${pool - amount}` }, { sdmInvestXp: true });
 
@@ -246,7 +307,22 @@ async function applyInvestment(source, kind, targetDoc, amount, user) {
 
   const key = kind === 'donate' ? 'SDM.InvestXP.ChatDonate' : 'SDM.InvestXP.ChatInvest';
   const text = $fmt(key, { actor: source.name, xp: amount, target: targetDoc.name });
-  await logProgress(source, { type: 'invest', kind, targetUuid: targetDoc.uuid, amount, text });
+  const targetName = targetDoc.name;
+  if (kind === 'donate') {
+    // The receiver can give it back (see returnDonation)
+    const donationId = foundry.utils.randomID();
+    await logProgress(source, { type: 'invest', kind, targetUuid: targetDoc.uuid, targetName, amount, text, donationId });
+    await logProgress(targetDoc, {
+      type: 'received',
+      donorUuid: source.uuid,
+      donorName: source.name,
+      amount,
+      donationId,
+      text: $fmt('SDM.InvestXP.ChatReceived', { actor: targetDoc.name, xp: amount, donor: source.name })
+    });
+  } else {
+    await logProgress(source, { type: 'invest', kind, targetUuid: targetDoc.uuid, targetName, amount, text, snapshot });
+  }
   await ChatMessage.create({
     author: user.id,
     speaker: ChatMessage.getSpeaker({ actor: source }),
@@ -284,6 +360,17 @@ async function handleRequest({ requestId, userId, payload }) {
 
   try {
     const user = game.users.get(userId);
+    if (payload?.op === 'return') {
+      const recipient = fromUuidSync(payload.recipientUuid);
+      if (!user || validateReturn(user, recipient, payload.entryId)) {
+        respond({ success: false });
+        return;
+      }
+      const entry = getProgressLog(recipient).find(e => e.id === payload.entryId);
+      await applyReturn(recipient, entry, user);
+      respond({ success: true });
+      return;
+    }
     const { sourceUuid, kind, targetUuid, amount } = payload ?? {};
     const source = fromUuidSync(sourceUuid);
     const targetDoc = fromUuidSync(targetUuid);

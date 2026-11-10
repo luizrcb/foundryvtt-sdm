@@ -1,6 +1,9 @@
-{{! Hallmark level-up upgrades: pending choice, Referee's free upgrade, text upgrades }}
+{{! Hallmark level-up upgrades: its progress history, pending choice, Referee's free upgrade, text upgrades }}
 {{#if system.is_hallmark}}
 <div class="sdm-hallmark-upgrades">
+  {{#if @root.item.isEmbedded}}
+  <a class="sdm-invest-xp" data-action="showProgressLog" data-tooltip="SDM.ProgressLog.Open"><i class="fa-solid fa-clock-rotate-left"></i></a>
+  {{/if}}
   {{#if (gt system.hallmark.pending_upgrades 0)}}
   <a class="sdm-pending-upgrade" {{#if @root.editable}}data-action="chooseHallmarkUpgrade"{{/if}} data-tooltip="{{localize 'SDM.Upgrade.ChooseTooltip'}}">
     <i class="fa-solid fa-angles-up"></i> {{localize 'SDM.Upgrade.ChooseCount' count=system.hallmark.pending_upgrades}}

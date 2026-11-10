@@ -1830,6 +1830,31 @@ input[type='radio']::after {
 }
 
 // Progress history dialog
+.sdm-progress-group {
+  margin-bottom: 10px;
+
+  header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 2px 4px;
+    border-bottom: 1px solid var(--color-border, #999);
+  }
+  .sdm-progress-log {
+    max-height: 240px;
+  }
+}
+
+.sdm-log-undo {
+  flex: 0 0 auto;
+  width: auto;
+  min-height: 0;
+  padding: 1px 8px;
+  font-size: 12px;
+  line-height: 20px;
+}
+
 .sdm-progress-log {
   list-style: none;
   margin: 0;
@@ -1843,6 +1868,9 @@ input[type='radio']::after {
     gap: 2px;
     padding: 6px 4px;
     border-bottom: 1px dashed var(--color-border, #999);
+  }
+  li .sdm-log-undo {
+    align-self: flex-start;
   }
   li.is-latest .sdm-log-text {
     font-weight: 700;
