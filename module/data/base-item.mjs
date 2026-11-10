@@ -170,6 +170,14 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       active: new fields.BooleanField({ required: true, initial: false }),
       // Turn back into the item when the combat it fights in ends
       endWithCombat: new fields.BooleanField({ required: true, initial: false }),
+      // Charges spent each time the item is animated (0: animating is free)
+      chargeCost: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 0, min: 0 }),
+      // The creature's own size (weight) and speed
+      size: new fields.SchemaField({
+        value: new fields.NumberField({ required: true, initial: 1, min: 0 }),
+        unit: new fields.StringField({ required: true, initial: 'sacks' })
+      }),
+      speed: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 0 }),
       // Weapons: where the creature's damage comes from ('' = automatic)
       damageSource: new fields.StringField({
         required: true,

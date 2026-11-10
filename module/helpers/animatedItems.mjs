@@ -53,9 +53,33 @@ export function getAnimationTableChoices() {
   return getNpcTableChoices();
 }
 
-/** A broken or run-out item cannot come to life until it is repaired or recharged. */
+/** Charges spent to animate the item (0: free). Only items with the charges feature can pay it. */
+export function getAnimationChargeCost(item) {
+  return Math.max(Number(item.system.animation?.chargeCost) || 0, 0);
+}
+
+/**
+ * Why the item cannot come to life right now, as a localization key (null: it can):
+ * broken or run out (repair or recharge it), or not enough charges to pay the animation.
+ */
+export function getAnimationBlock(item) {
+  if (item.system.status === ItemStatusType.BROKEN || item.system.resources === 'run_out') {
+    return 'SDM.Animation.BlockedHint';
+  }
+  const cost = getAnimationChargeCost(item);
+  if (cost > 0 && (Number(item.system.charges?.value) || 0) < cost) return 'SDM.Animation.NoChargesHint';
+  return null;
+}
+
 export function isAnimationBlocked(item) {
-  return item.system.status === ItemStatusType.BROKEN || item.system.resources === 'run_out';
+  return !!getAnimationBlock(item);
+}
+
+/** Warn why the item cannot be animated. */
+function warnAnimationBlock(item) {
+  const block = getAnimationBlock(item);
+  const key = block === 'SDM.Animation.BlockedHint' ? 'SDM.Animation.Blocked' : 'SDM.Animation.NoCharges';
+  ui.notifications.warn($fmt(key, { name: item.name, cost: getAnimationChargeCost(item) }));
 }
 
 export function getLinkedNpc(item) {
@@ -293,6 +317,8 @@ function npcSystemFromItem(item) {
     damage: weaponDamage(item)?.base || a.damage,
     initiative: a.initiative,
     capacity: a.capacity,
+    size: { value: item.system.animation?.size?.value ?? 1, unit: item.system.animation?.size?.unit || 'sacks' },
+    speed: item.system.animation?.speed ?? 0,
     createdFromTable: getAnimationTable(item)
   };
 }
@@ -318,6 +344,57 @@ async function getAnimatedFolder() {
 }
 
 /* -------------------------------------------- */
+/*  Dropping an NPC                             */
+/* -------------------------------------------- */
+
+/**
+ * Referee: an NPC dropped on the Animation tab becomes the item's creature. Its table and stats
+ * fill the tab (compendium NPCs are imported into the "Animated Items" folder first).
+ */
+export async function linkNpcToItem(item, actor) {
+  if (!game.user.isGM || !isAnimatable(item) || actor?.type !== ActorType.NPC) return;
+  if (item.system.animation?.active) {
+    ui.notifications.warn($l10n('SDM.Animation.LinkWhileActive'));
+    return;
+  }
+
+  let npc = actor;
+  if (actor.pack) {
+    const folder = await getAnimatedFolder();
+    const data = actor.toObject();
+    delete data._id;
+    data.folder = folder?.id;
+    npc = await Actor.create(data);
+  }
+
+  const s = npc.system;
+  const table =
+    s.createdFromTable && NPC_TABLE_KEYS().includes(s.createdFromTable) ? s.createdFromTable : NPC_CUSTOM_TABLE;
+  await npc.update({ [`flags.sdm.${FLAG}`]: item.uuid, [`flags.sdm.${DEFENSE_BONUS_FLAG}`]: 0 });
+  await item.update(
+    {
+      'system.animation.actor': npc.uuid,
+      'system.animation.table': table,
+      'system.animation.filled': true,
+      'system.animation.size.value': s.size?.value ?? 1,
+      'system.animation.size.unit': s.size?.unit ?? 'sacks',
+      'system.animation.speed': s.speed ?? 0,
+      'system.attributes.level': s.level ?? 0,
+      'system.attributes.life.value': s.life?.value ?? 1,
+      'system.attributes.life.max': s.life?.max ?? 1,
+      'system.attributes.morale': s.morale ?? 0,
+      'system.attributes.defense': s.defense ?? 7,
+      'system.attributes.bonus': s.bonus ?? 0,
+      'system.attributes.damage': s.damage || '1d4',
+      'system.attributes.initiative': s.initiative ?? '',
+      'system.attributes.capacity': s.capacity ?? 1
+    },
+    { [SYNC_OPTION]: true }
+  );
+  ui.notifications.info($fmt('SDM.Animation.Linked', { npc: npc.name, name: item.name }));
+}
+
+/* -------------------------------------------- */
 /*  Animate / deanimate                         */
 /* -------------------------------------------- */
 
@@ -330,7 +407,7 @@ export async function animateItem(item, { app } = {}) {
   }
 
   if (isAnimationBlocked(item)) {
-    ui.notifications.warn($fmt('SDM.Animation.Blocked', { name: item.name }));
+    warnAnimationBlock(item);
     return;
   }
 
@@ -384,6 +461,9 @@ export async function animateItem(item, { app } = {}) {
   await applyDefenseBonus(item, npc);
 
   const update = { 'system.animation.actor': npc.uuid, 'system.animation.active': true };
+  // Animating spends the configured charges (souls, energy…)
+  const chargeCost = getAnimationChargeCost(item);
+  if (chargeCost > 0) update['system.charges.value'] = (Number(item.system.charges?.value) || 0) - chargeCost;
   if (item.system.animation.mode === 'walks') update['system.readied'] = false;
   await item.update(update, { [SYNC_OPTION]: true });
 
@@ -430,6 +510,10 @@ export async function deanimateItem(item, { reason } = {}) {
         'system.attributes.bonus': s.bonus,
         'system.attributes.damage': s.damage,
         'system.attributes.initiative': s.initiative ?? '',
+        'system.attributes.capacity': s.capacity ?? item.system.attributes.capacity,
+        'system.animation.size.value': s.size?.value ?? 1,
+        'system.animation.size.unit': s.size?.unit ?? 'sacks',
+        'system.animation.speed': s.speed ?? 0,
         'system.animation.active': false
       },
       { [SYNC_OPTION]: true }
@@ -559,7 +643,7 @@ const RESULT_ACTION = 'animateItemResult';
 export function requestAnimation(item) {
   if (!item?.isOwner || !isAnimatable(item)) return;
   if (isAnimationBlocked(item)) {
-    ui.notifications.warn($fmt('SDM.Animation.Blocked', { name: item.name }));
+    warnAnimationBlock(item);
     return;
   }
   if (!game.users.activeGM) {

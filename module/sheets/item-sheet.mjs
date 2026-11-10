@@ -12,11 +12,13 @@ import {
   getLinkedNpc,
   getDamageSource,
   isAnimatable,
+  getAnimationBlock,
   isAnimationBlocked,
   isWeaponItem,
+  linkNpcToItem,
   requestAnimation
 } from '../helpers/animatedItems.mjs';
-import { DEFAULT_PET_ICON, GearType, ItemStatusType, ItemType } from '../helpers/constants.mjs';
+import { ActorType, DEFAULT_PET_ICON, GearType, ItemStatusType, ItemType } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { $fmt, $l10n, constructHTMLButton } from '../helpers/globalUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
@@ -313,6 +315,10 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
           npc,
           active: !!this.item.system.animation?.active,
           blocked: isAnimationBlocked(this.item),
+          blockHint: getAnimationBlock(this.item),
+          hasCharges: this.item.system.features?.has?.('charges') ?? false,
+          charges: this.item.system.charges,
+          sizeUnits: CONFIG.SDM.sizeUnits,
           isWeapon: isWeaponItem(this.item),
           damageSources: {
             auto: game.i18n.format('SDM.Animation.DamageAutoResolved', {
@@ -1109,6 +1115,11 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
    */
   async _onDropActor(event, data) {
     if (!this.item.isOwner) return false;
+    // Animated items: the Referee drops the NPC the item turns into
+    if (isAnimatable(this.item) && game.user.isGM) {
+      const actor = await fromUuid(data.uuid);
+      if (actor?.type === ActorType.NPC) return linkNpcToItem(this.item, actor);
+    }
     if (this.item.system.type !== GearType.PET) return false;
 
     if (this.item.system.pet) {

@@ -30,6 +30,12 @@
         <input type="text" name="system.attributes.level" value="{{@root.system.attributes.level}}" data-dtype="Number" {{#unless canManage}}disabled{{/unless}} />
       </label>
       {{/if}}
+      {{#if hasCharges}}
+      <label class="v2-field" data-tooltip="{{localize 'SDM.Animation.ChargeCostHint'}}">
+        <span class="v2-label">{{localize 'SDM.Animation.ChargeCost'}} ({{charges.value}}/{{charges.max}})</span>
+        <input type="text" name="system.animation.chargeCost" value="{{@root.system.animation.chargeCost}}" data-dtype="Number" {{#unless canManage}}disabled{{/unless}} />
+      </label>
+      {{/if}}
       {{#if isWeapon}}
       <label class="v2-field" data-tooltip="{{localize 'SDM.Animation.DamageSourceHint'}}">
         <span class="v2-label">{{localize 'SDM.Animation.DamageSource'}}</span>
@@ -87,7 +93,27 @@
         <span class="v2-label">{{localize 'SDM.Initiative'}}</span>
         <input type="text" name="system.attributes.initiative" value="{{@root.system.attributes.initiative}}" {{#unless canManage}}disabled{{/unless}} />
       </label>
+      <label class="v2-field">
+        <span class="v2-label">{{localize 'SDM.FieldCapacity'}}</span>
+        <input type="text" name="system.attributes.capacity" value="{{@root.system.attributes.capacity}}" data-dtype="Number" {{#unless canManage}}disabled{{/unless}} />
+      </label>
+      <label class="v2-field">
+        <span class="v2-label">{{localize 'SDM.ItemSizeValue'}}</span>
+        <span class="v2-pair">
+          <input type="text" name="system.animation.size.value" value="{{@root.system.animation.size.value}}" data-dtype="Number" {{#unless canManage}}disabled{{/unless}} />
+          <select name="system.animation.size.unit" {{#unless canManage}}disabled{{/unless}}>
+            {{selectOptions @root.sizeUnits selected=@root.system.animation.size.unit localize=true}}
+          </select>
+        </span>
+      </label>
+      <label class="v2-field">
+        <span class="v2-label">{{localize 'SDM.FieldSpeed'}}</span>
+        <select name="system.animation.speed" data-dtype="Number" {{#unless canManage}}disabled{{/unless}}>
+          {{selectOptions (sdmSpeedChoices @root.system.animation.speed) selected=@root.system.animation.speed}}
+        </select>
+      </label>
     </div>
+    {{#if canManage}}<p class="v2-hint">{{localize 'SDM.Animation.DropNpcHint'}}</p>{{/if}}
   </section>
 
   {{#if canManage}}
@@ -100,7 +126,7 @@
   {{#if canRequest}}
   <div class="v2-anim-actions">
     {{#if blocked}}
-    <span class="v2-hint">{{localize 'SDM.Animation.BlockedHint'}}</span>
+    <span class="v2-hint">{{localize blockHint}}</span>
     {{else}}
     <button type="button" class="v2-chip-btn" data-action="requestAnimation"><i class="fa-solid fa-hand"></i> {{localize 'SDM.Animation.Request'}}</button>
     {{/if}}
@@ -112,7 +138,7 @@
     {{#if active}}
     <button type="button" class="v2-chip-btn" data-action="deanimateItem"><i class="fa-solid fa-box"></i> {{localize 'SDM.Animation.Deanimate'}}</button>
     {{else if blocked}}
-    <span class="v2-hint">{{localize 'SDM.Animation.BlockedHint'}}</span>
+    <span class="v2-hint">{{localize blockHint}}</span>
     <button type="button" class="v2-chip-btn" disabled><i class="fa-solid fa-ghost"></i> {{localize 'SDM.Animation.Animate'}}</button>
     {{else}}
     <button type="button" class="v2-chip-btn" data-action="animateItem"><i class="fa-solid fa-ghost"></i> {{localize 'SDM.Animation.Animate'}}</button>

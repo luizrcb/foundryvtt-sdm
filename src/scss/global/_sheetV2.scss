@@ -1669,13 +1669,15 @@ $v2-wide: 1100px;
     }
     // Table and mode names are long: they get the room, the level stays narrow
     .v2-anim-fields {
-      grid-template-columns: minmax(0, 1.5fr) minmax(0, 2fr) minmax(0, 0.6fr) minmax(0, 1.4fr);
+      // Table and mode get the room; the rest (level, charges, damage source, NPC) share it
+      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
       align-items: end;
 
-      &.has-damage-source {
-        grid-template-columns:
-          minmax(0, 1.4fr) minmax(0, 1.8fr) minmax(0, 0.5fr) minmax(0, 1.3fr)
-          minmax(0, 1.3fr);
+      > :nth-child(1) {
+        grid-column: span 2;
+      }
+      > :nth-child(2) {
+        grid-column: span 2;
       }
 
       .content-link {

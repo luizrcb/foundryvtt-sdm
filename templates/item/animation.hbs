@@ -77,7 +77,33 @@
       <label class='resource-label'>{{localize 'SDM.Initiative'}}</label>
       <input type='text' name='system.attributes.initiative' value='{{@root.system.attributes.initiative}}' {{#unless canManage}}disabled{{/unless}} />
     </div>
+    <div class='resource'>
+      <label class='resource-label'>{{localize 'SDM.FieldCapacity'}}</label>
+      <input type='text' name='system.attributes.capacity' value='{{@root.system.attributes.capacity}}' data-dtype='Number' {{#unless canManage}}disabled{{/unless}} />
+    </div>
+    <div class='resource'>
+      <label class='resource-label'>{{localize 'SDM.ItemSizeValue'}}</label>
+      <div class="flexrow">
+        <input type='text' name='system.animation.size.value' value='{{@root.system.animation.size.value}}' data-dtype='Number' {{#unless canManage}}disabled{{/unless}} />
+        <select name='system.animation.size.unit' {{#unless canManage}}disabled{{/unless}}>
+          {{selectOptions @root.sizeUnits selected=@root.system.animation.size.unit localize=true}}
+        </select>
+      </div>
+    </div>
+    <div class='resource'>
+      <label class='resource-label'>{{localize 'SDM.FieldSpeed'}}</label>
+      <select name='system.animation.speed' data-dtype='Number' {{#unless canManage}}disabled{{/unless}}>
+        {{selectOptions (sdmSpeedChoices @root.system.animation.speed) selected=@root.system.animation.speed}}
+      </select>
+    </div>
+    {{#if hasCharges}}
+    <div class='resource' data-tooltip="{{localize 'SDM.Animation.ChargeCostHint'}}">
+      <label class='resource-label'>{{localize 'SDM.Animation.ChargeCost'}} ({{charges.value}}/{{charges.max}})</label>
+      <input type='text' name='system.animation.chargeCost' value='{{@root.system.animation.chargeCost}}' data-dtype='Number' {{#unless canManage}}disabled{{/unless}} />
+    </div>
+    {{/if}}
   </div>
+  {{#if canManage}}<p>{{localize 'SDM.Animation.DropNpcHint'}}</p>{{/if}}
 
   {{#if canManage}}
   <label class="flexrow mt-6">
@@ -89,7 +115,7 @@
   {{#if canRequest}}
   <div class="flexrow mt-10">
     {{#if blocked}}
-    <span>{{localize 'SDM.Animation.BlockedHint'}}</span>
+    <span>{{localize blockHint}}</span>
     {{else}}
     <button type="button" data-action="requestAnimation"><i class="fa-solid fa-hand"></i> {{localize 'SDM.Animation.Request'}}</button>
     {{/if}}
@@ -101,7 +127,7 @@
     {{#if active}}
     <button type="button" data-action="deanimateItem"><i class="fa-solid fa-box"></i> {{localize 'SDM.Animation.Deanimate'}}</button>
     {{else if blocked}}
-    <span>{{localize 'SDM.Animation.BlockedHint'}}</span>
+    <span>{{localize blockHint}}</span>
     {{else}}
     <button type="button" data-action="animateItem"><i class="fa-solid fa-ghost"></i> {{localize 'SDM.Animation.Animate'}}</button>
     {{/if}}
