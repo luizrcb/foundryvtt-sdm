@@ -1,4 +1,3 @@
-import { MAX_ATTRIBUTE_VALUE } from '../helpers/actorUtils.mjs';
 import { ActorType, GearType, ItemType } from '../helpers/constants.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 import { addRandomTrait } from '../macros/gm/characterGenerator.mjs';
@@ -16,10 +15,11 @@ import { removeCashFromActor } from '../macros/gm/giveCash.mjs';
 
 const { DialogV2 } = foundry.applications.api;
 const HALLMARK_EFFECT_FLAG = 'hallmarkUpgrades';
-const MAX_SKILL_RANK = 3;
+/** Highest skill rank: master, or builder when the world uses the extended skill ranks. */
+const maxSkillRank = () => (game.settings.get('sdm', 'extendedSkillRanks') ? 5 : 3);
 const esc = text => foundry.utils.escapeHTML?.(String(text ?? '')) ?? String(text ?? '');
 const rankLabel = rank =>
-  $l10n({ 1: 'SDM.SkillSkilled', 2: 'SDM.SkillExpert', 3: 'SDM.SkillMaster' }[rank] ?? 'SDM.SkillSkilled');
+  $l10n({ ...CONFIG.SDM.skillMod, ...CONFIG.SDM.extraSkillMod }[rank] ?? 'SDM.SkillSkilled');
 
 async function chat(actor, text) {
   await ChatMessage.create({
@@ -39,7 +39,7 @@ function improvableTraits(actor) {
     .map(item => {
       const type = item.system.type ?? '';
       const rank = Number(item.system.skill?.rank) || 0;
-      if (type === 'skill' && rank < MAX_SKILL_RANK) return { item, from: rank || 1, to: (rank || 1) + 1 };
+      if (type === 'skill' && rank < maxSkillRank()) return { item, from: rank || 1, to: (rank || 1) + 1 };
       if (type === '') return { item, from: 1, to: 2 };
       return null;
     })
@@ -53,8 +53,8 @@ export async function openCharacterUpgradeDialog(actor) {
 
   const improvable = improvableTraits(actor);
   const abilities = CONFIG.SDM.getOrderedAbilities(game.i18n.lang);
+  // No ability cap for now (the Referee decides)
   const abilityOptions = Object.entries(abilities)
-    .filter(([key]) => (actor.system.abilities[key]?.base ?? 0) < MAX_ATTRIBUTE_VALUE)
     .map(([key, label]) => {
       const base = actor.system.abilities[key]?.base ?? 0;
       return `<option value="${key}">${esc($l10n(label))} (${base} → ${base + 1})</option>`;
@@ -171,7 +171,7 @@ async function applyCharacterUpgrade(actor, data) {
 
   if (data.choice === 'ability') {
     const ability = actor.system.abilities[data.ability];
-    if (!ability || ability.base >= MAX_ATTRIBUTE_VALUE) return null;
+    if (!ability) return null;
     await actor.update({
       [`system.abilities.${data.ability}.base`]: ability.base + 1,
       [`system.abilities.${data.ability}.current`]: ability.current + 1

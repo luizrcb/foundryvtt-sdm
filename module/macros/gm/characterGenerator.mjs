@@ -29,7 +29,8 @@ function findActorTrait(actor, name) {
 }
 
 const REPEAT_UPGRADE_FLAG = 'generatorRepeatUpgrade';
-const MAX_GENERATED_SKILL_RANK = 3; // master
+/** Highest skill rank: master, or builder when the world uses the extended skill ranks. */
+const maxGeneratedSkillRank = () => (game.settings.get('sdm', 'extendedSkillRanks') ? 5 : 3);
 
 /**
  * A repeated draw improves what the character already has, once per character:
@@ -45,7 +46,7 @@ async function upgradeRepeatedTrait(actor, name) {
   const rank = Number(existing.system.skill?.rank) || 0;
   let update;
   if (type === 'skill') {
-    if (rank >= MAX_GENERATED_SKILL_RANK) return false;
+    if (rank >= maxGeneratedSkillRank()) return false;
     update = { 'system.skill.rank': rank + 1 };
   } else if (type === '') {
     // A trait already counts as a skilled skill, so ranking it up makes it expert
