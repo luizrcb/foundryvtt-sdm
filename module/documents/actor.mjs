@@ -125,8 +125,9 @@ export class SdmActor extends Actor {
       changes.system?.upgrades_level === undefined
     ) {
       const xp = parseInt(safeEvaluate(`${changes.system.experience}`.trim()), 10) || 0;
-      const newLevel = getLevel(xp);
-      const granted = this.system.upgrades_level ?? this.system.level ?? 0;
+      // Level 1 is the starting level: only levels from 2 on give an upgrade
+      const newLevel = Math.max(getLevel(xp), 1);
+      const granted = Math.max(this.system.upgrades_level ?? this.system.level ?? 0, 1);
       if (newLevel > granted) {
         changes.system.pending_upgrades = (this.system.pending_upgrades ?? 0) + (newLevel - granted);
         changes.system.upgrades_level = newLevel;
