@@ -1194,7 +1194,7 @@ export class SdmActor extends Actor {
         {
           action: 'ok',
           label: game.i18n.localize('SDM.ConsumeSupply'),
-          icon: 'fa-solid fa-sack-xmark',
+          icon: 'fa-solid fa-drumstick-bite',
           onClick: (event, button) =>
             new foundry.applications.ux.FormDataExtended(button.form).object
         },
@@ -1454,7 +1454,7 @@ export class SdmActor extends Actor {
       },
       {
         label: 'SDM.Item.ConsumeSupply',
-        icon: '<i class="fa-solid fa-sack-xmark"></i>',
+        icon: '<i class="fa-solid fa-drumstick-bite"></i>',
         visible: target => {
           const item = this.sheet._getEmbeddedDocument(target);
           return (
