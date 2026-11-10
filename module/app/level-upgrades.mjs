@@ -77,6 +77,7 @@ export async function openCharacterUpgradeDialog(actor) {
         <div class="sdm-upgrade-drop" data-upgrade-drop>${$l10n('SDM.Upgrade.DropTrait')}</div>
         <input type="hidden" name="traitUuid" />
         <label><input type="checkbox" name="randomTrait" /> ${$l10n('SDM.Upgrade.RandomTrait')}</label>
+        <input type="text" name="newTraitName" placeholder="${esc($l10n('SDM.Upgrade.NewTraitName'))}" />
       </div>
       <label class="sdm-upgrade-choice"><input type="radio" name="choice" value="improve" ${improvable.length ? '' : 'disabled'} /> ${$l10n('SDM.Upgrade.ImproveTrait')}</label>
       <div class="sdm-upgrade-detail">
@@ -101,6 +102,7 @@ export async function openCharacterUpgradeDialog(actor) {
           choice: f.choice.value,
           traitUuid: f.traitUuid?.value,
           randomTrait: f.randomTrait?.checked,
+          newTraitName: f.newTraitName?.value?.trim(),
           improveId: f.improveId?.value,
           ability: f.ability?.value
         };
@@ -193,6 +195,11 @@ async function applyCharacterUpgrade(actor, data) {
         return null;
       }
       return $fmt('SDM.Upgrade.ChatNewTrait', { trait: trait.name ?? trait.title ?? '' });
+    }
+    // A brand new trait: created empty with that name, details filled in later
+    if (!data.traitUuid && data.newTraitName) {
+      await actor.createEmbeddedDocuments('Item', [{ name: data.newTraitName, type: ItemType.TRAIT }]);
+      return $fmt('SDM.Upgrade.ChatNewTrait', { trait: data.newTraitName });
     }
     const source = data.traitUuid ? await fromUuid(data.traitUuid) : null;
     if (!source) {
