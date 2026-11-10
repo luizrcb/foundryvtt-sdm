@@ -1883,12 +1883,16 @@ input[type='radio']::after {
 
 // Active effect config: the currency symbol stays next to the mod cost
 .form-fields.sdm-mod-cost {
+  flex-wrap: nowrap;
+  align-items: center;
   gap: 4px;
 
   .sdm-money-sign {
     flex: 0 0 auto;
   }
   input {
-    flex: 1 1 auto;
+    flex: 1 1 0;
+    width: auto;
+    min-width: 0;
   }
 }

@@ -1871,6 +1871,8 @@ input[type=radio]::after {
 }
 
 .form-fields.sdm-mod-cost {
+  flex-wrap: nowrap;
+  align-items: center;
   gap: 4px;
 }
 
@@ -1879,7 +1881,9 @@ input[type=radio]::after {
 }
 
 .form-fields.sdm-mod-cost input {
-  flex: 1 1 auto;
+  flex: 1 1 0;
+  width: auto;
+  min-width: 0;
 }
 
 .grid,
