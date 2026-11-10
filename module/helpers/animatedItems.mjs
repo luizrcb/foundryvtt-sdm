@@ -234,6 +234,36 @@ export async function deanimateItem(item, { reason } = {}) {
   ui.notifications.info($fmt(reason ?? 'SDM.Animation.Deanimated', { name: item.name }));
 }
 
+const WEAR_SEVERITY = {
+  status: { '': 0, [ItemStatusType.NOTCHED]: 1, [ItemStatusType.BROKEN]: 2 },
+  resources: { '': 0, running_low: 1, run_out: 2 }
+};
+
+/** True when an update repairs or recharges the item (its integrity or resources get better). */
+export function isWearImproved(item, changes) {
+  for (const field of ['status', 'resources']) {
+    const next = changes.system?.[field];
+    if (next === undefined) continue;
+    const before = WEAR_SEVERITY[field][item.system[field] ?? ''] ?? 0;
+    const after = WEAR_SEVERITY[field][next ?? ''] ?? 0;
+    if (after < before) return true;
+  }
+  return false;
+}
+
+/** The item was repaired or recharged: its creature is back to full life. */
+export async function healAnimatedCreature(item) {
+  if (!isAnimatable(item)) return;
+  const max = Number(item.system.attributes?.life?.max) || 0;
+  if ((Number(item.system.attributes?.life?.value) || 0) < max) {
+    await item.update({ 'system.attributes.life.value': max }, { [SYNC_OPTION]: true });
+  }
+  const npc = getLinkedNpc(item);
+  if (npc?.isOwner && (npc.system.life?.value ?? 0) < (npc.system.life?.max ?? 0)) {
+    await npc.update({ 'system.life.value': npc.system.life.max });
+  }
+}
+
 /** The creature fell (0 life): the active Referee turns it back into the item. */
 export async function deanimateFallenCreature(npc) {
   if (game.users.activeGM?.id !== game.user.id) return;

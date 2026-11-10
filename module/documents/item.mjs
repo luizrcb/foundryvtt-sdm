@@ -1,5 +1,10 @@
 import { getLevel } from '../helpers/actorUtils.mjs';
-import { SYNC_OPTION, syncAnimationLevel } from '../helpers/animatedItems.mjs';
+import {
+  healAnimatedCreature,
+  isWearImproved,
+  SYNC_OPTION,
+  syncAnimationLevel
+} from '../helpers/animatedItems.mjs';
 import { createChatMessage } from '../helpers/chatUtils.mjs';
 import {
   ActorType,
@@ -137,6 +142,9 @@ export class SdmItem extends Item {
     const result = await super._preUpdate(changes, options, user);
     if (result === false) return false;
 
+    // Repaired or recharged: the animated creature gets back to full life (after the update)
+    if (!options[SYNC_OPTION] && isWearImproved(this, changes)) options.sdmHealCreature = true;
+
     // Attributes edited by hand are kept: the table no longer fills them on the first animation
     if (changes.system?.attributes !== undefined && !options[SYNC_OPTION]) {
       foundry.utils.setProperty(changes, 'system.animation.filled', true);
@@ -230,6 +238,8 @@ export class SdmItem extends Item {
       if (level !== this.system.hallmark.level) update['system.hallmark.level'] = level;
       if (Object.keys(update).length) await this.update(update);
     }
+
+    if (options?.sdmHealCreature && userId === game.user.id) await healAnimatedCreature(this);
 
     // Animated items: the creature follows the item's level
     if (
