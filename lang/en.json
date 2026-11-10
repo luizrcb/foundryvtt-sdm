@@ -450,6 +450,7 @@
   "SDM.Upgrade.ChooseMod": "Drag a mod to install.",
   "SDM.Upgrade.ChooseTooltip": "Choose the level-up upgrade",
   "SDM.Upgrade.ChooseTrait": "Drag a trait, choose a random one or type the name of a new trait.",
+  "SDM.Upgrade.Clear": "Remove",
   "SDM.Upgrade.Confirm": "Choose",
   "SDM.Upgrade.Damage": "+1 to every damage die",
   "SDM.Upgrade.Defense": "+1 defense",

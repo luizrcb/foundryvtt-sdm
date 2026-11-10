@@ -1775,6 +1775,19 @@ input[type=radio]::after {
   border-style: solid;
   font-weight: 700;
   opacity: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.sdm-upgrade .sdm-upgrade-drop .sdm-upgrade-clear {
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.sdm-upgrade .sdm-upgrade-drop .sdm-upgrade-clear:hover {
+  opacity: 1;
 }
 
 .application.sdm .sdm-npc-table {

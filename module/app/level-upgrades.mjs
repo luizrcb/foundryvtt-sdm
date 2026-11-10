@@ -132,6 +132,28 @@ export async function openCharacterUpgradeDialog(actor) {
   await chat(actor, text);
 }
 
+/** Show the dropped document in the drop zone, with an × to clear it again. */
+function showDropped(zone, input, name) {
+  const placeholder = zone.dataset.placeholder ?? zone.textContent;
+  zone.dataset.placeholder = placeholder;
+  zone.innerHTML = '';
+  const label = document.createElement('span');
+  label.textContent = name;
+  const clear = document.createElement('a');
+  clear.className = 'sdm-upgrade-clear';
+  clear.dataset.tooltip = $l10n('SDM.Upgrade.Clear');
+  clear.innerHTML = '<i class="fa-solid fa-xmark"></i>';
+  clear.addEventListener('click', event => {
+    event.preventDefault();
+    event.stopPropagation();
+    input.value = '';
+    zone.textContent = placeholder;
+    zone.classList.remove('has-item');
+  });
+  zone.append(label, clear);
+  zone.classList.add('has-item');
+}
+
 /** Accept an item mod (an effect from "Mods & Effects" or another item) dragged into the dialog. */
 function bindModDrop(root) {
   const zone = root?.querySelector('[data-upgrade-drop-mod]');
@@ -152,8 +174,7 @@ function bindModDrop(root) {
       return;
     }
     input.value = effect.uuid;
-    zone.textContent = effect.name;
-    zone.classList.add('has-item');
+    showDropped(zone, input, effect.name);
     const radio = root.querySelector('input[name="choice"][value="mod"]');
     if (radio) radio.checked = true;
   });
@@ -179,8 +200,7 @@ function bindTraitDrop(root) {
       return;
     }
     input.value = item.uuid;
-    zone.textContent = item.name;
-    zone.classList.add('has-item');
+    showDropped(zone, input, item.name);
     const radio = root.querySelector('input[name="choice"][value="newTrait"]');
     if (radio) radio.checked = true;
   });
