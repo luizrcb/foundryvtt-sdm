@@ -158,7 +158,7 @@ async function syncWeaponDamage(item, npc, { useCreatureDamage = false } = {}) {
         system: { type: GearType.WEAPON, readied: true, weapon: { damage: { base: damage.versatile } } },
         flags: { sdm: { [VERSATILE_FLAG]: true } }
       }
-    ]);
+    ], { sdmKeepReadied: true });
   }
 }
 
@@ -187,7 +187,7 @@ async function syncPowerCopy(item, npc) {
     data.system.animation.actor = '';
   }
   data.flags = foundry.utils.mergeObject(data.flags ?? {}, { sdm: { [POWER_COPY_FLAG]: item.uuid } });
-  await npc.createEmbeddedDocuments('Item', [data]);
+  await npc.createEmbeddedDocuments('Item', [data], { sdmKeepReadied: true });
 }
 
 const FEATURE_TRAIT_FLAG = 'animatedFeature';
@@ -215,7 +215,8 @@ async function syncFeatureTraits(item, npc) {
       img: item.img,
       system: { description: description(key), readied: true },
       flags: { sdm: { [FEATURE_TRAIT_FLAG]: key } }
-    }))
+    })),
+    { sdmKeepReadied: true }
   );
 }
 

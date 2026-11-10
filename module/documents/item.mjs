@@ -300,6 +300,8 @@ export class SdmItem extends Item {
 
   async _onCreate(data, options, userId) {
     if (data.type !== ItemType.GEAR) return;
+    // Items created ready to use (e.g. what an animated item gives its creature) keep their state
+    if (options?.sdmKeepReadied) return;
 
     if (this.getFlag?.('sdm', 'fromCompendium') === UnarmedDamageItem) return;
     let readiedStatus = false;
