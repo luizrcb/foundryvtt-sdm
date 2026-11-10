@@ -1939,6 +1939,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     });
     const language = game.i18n.lang;
     const availableSkills = this.actor.getAvailableSkills();
+    const isNpc = this.actor.type === ActorType.NPC || !this.actor.system.abilities;
 
     const template = await renderTemplate(templatePath('custom-roll-dialog'), {
       rollTitlePrefix: '',
@@ -1951,7 +1952,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       rollModes: [RollMode.NORMAL],
       selectedRollMode: RollMode.NORMAL,
       type: RollType.DANGER,
-      isCharacterActor: true,
+      // NPCs (e.g. an animated item using its power) have no abilities: they roll with their bonus
+      isCharacterActor: !isNpc,
       attackTargetChoices: CONFIG.SDM.attackTarget,
       blindGMRoll: isCtrl
     });
@@ -2005,14 +2007,14 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       : baseRollFormula;
 
     const abilityData =
-      ability !== ActorType.NPC
-        ? this.actor.system.abilities[selectedAbility]
-        : { current: this.actor.system.bonus };
+      isNpc || ability === ActorType.NPC
+        ? { current: this.actor.system.bonus }
+        : this.actor.system.abilities[selectedAbility || ability];
 
-    const finalAbility = abilityData?.current;
+    const finalAbility = Number(abilityData?.current) || 0;
     const burdenPenalty = this.actor.system?.burden_penalty || 0;
 
-    const skillPart = selectedSkill ? availableSkills[selectedSkill]?.mod : 0;
+    const skillPart = (selectedSkill ? Number(availableSkills?.[selectedSkill]?.mod) : 0) || 0;
     const dangerSum = finalAbility + skillPart - burdenPenalty;
 
     const useHardLimitRule = game.settings.get('sdm', 'useHardLimitRule');
