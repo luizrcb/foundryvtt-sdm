@@ -298,18 +298,18 @@ export async function openHallmarkUpgradeDialog(item) {
   const level = Math.max(reached - pending + 1, 1);
   const kinds = hallmarkKinds(item);
   const free = !!hallmark.free_upgrade;
-  const damageCost = 5 * level;
-  const defenseCost = 10 * level;
-  // e.g. "€5 × level 3 = €15": the price per level times the level the upgrade comes from
-  const cost = perLevel =>
-    free
-      ? $l10n('SDM.Upgrade.NoCost')
-      : $fmt('SDM.Upgrade.CostPerLevel', {
-          symbol: $l10n('SDM.CashSymbol'),
-          perLevel,
-          level,
-          total: perLevel * level
-        });
+  // Fixed price × level, or the item's cost if higher
+  const itemCost = Number(item.system.cost) || 0;
+  const damageCost = Math.max(5 * level, itemCost);
+  const defenseCost = Math.max(10 * level, itemCost);
+  // e.g. "€5 × level 3 = €15", or "item cost: €40" when the item costs more
+  const cost = perLevel => {
+    if (free) return $l10n('SDM.Upgrade.NoCost');
+    const symbol = $l10n('SDM.CashSymbol');
+    return perLevel * level >= itemCost
+      ? $fmt('SDM.Upgrade.CostPerLevel', { symbol, perLevel, level, total: perLevel * level })
+      : $fmt('SDM.Upgrade.ModCostByItem', { symbol, total: itemCost });
+  };
   const canDefense = kinds.armor || kinds.ward;
 
   const content = `
