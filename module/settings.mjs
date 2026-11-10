@@ -626,7 +626,7 @@ export function registerSystemSettings() {
     scope: 'world',
     restricted: true,
     type: Boolean,
-    default: false,
+    default: true,
     onChange: () => {
       // derived capacity/speed live in prepareDerivedData; re-prepare open caravans
       for (const actor of game.actors ?? []) {
@@ -1740,9 +1740,6 @@ export function setupInitialSettings() {
   game.settings.set('core', 'leftClickRelease', true);
   game.settings.set('core', 'chatBubblesPan', false);
   game.settings.set('core', 'tokenAutoRotate', false);
-
-  // New worlds start with caravan transport automation on (existing worlds keep their choice)
-  game.settings.set('sdm', 'automateCaravanTransport', true);
 
   game.settings.set('sdm', 'initialSettingsConfigured', true);
 }
