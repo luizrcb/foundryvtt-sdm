@@ -59,7 +59,10 @@ export async function groupInitiative({ reroll = false } = {}) {
   };
 
   for (const token of tokens) {
-    if (token.hasPlayerOwner) {
+    // Only player characters form the players group. NPCs owned by players (pets, animated
+    // items, hirelings) act with the side their token's disposition says.
+    const isPlayerCharacter = token.actor?.type === ActorType.CHARACTER && token.actor?.hasPlayerOwner;
+    if (isPlayerCharacter) {
       if (groupPlayersToFriendly) {
         groups.friendly.push(token);
       } else {
