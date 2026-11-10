@@ -25,6 +25,7 @@ import {
   ITEMS_NOT_ALLOWED_IN_CHARACTERS
 } from '../helpers/itemUtils.mjs';
 import { openInvestXpDialog } from '../app/invest-xp.mjs';
+import { openCharacterUpgradeDialog, openHallmarkUpgradeDialog } from '../app/level-upgrades.mjs';
 import { getAnimatedSourceItem, isAnimatedNpc } from '../helpers/animatedItems.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { openItemTransferDialog } from '../items/transfer.mjs';
@@ -144,6 +145,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       rerollCharacter: this._onRerollCharacter,
       levelUpNPC: this._onLevelUpNPC,
       investXp: this._onInvestXp,
+      chooseUpgrade: this._onChooseUpgrade,
+      chooseHallmarkUpgrade: this._onChooseHallmarkUpgrade,
       openDoc: { handler: this._openDoc, buttons: [0] },
       toggleItemStatus: { handler: this._toggleItemStatus, buttons: [0, 2] },
       openPetSheet: this._onOpenPetSheet,
@@ -2205,6 +2208,21 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     const item = this._getEmbeddedDocument(target);
     await item.toggleItemStatus(event);
+  }
+
+  /** Choose a pending level-up upgrade for the character. */
+  static async _onChooseUpgrade(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    return openCharacterUpgradeDialog(this.actor);
+  }
+
+  /** Choose a pending upgrade for a hallmark item in the inventory. */
+  static async _onChooseHallmarkUpgrade(event, target) {
+    event.preventDefault();
+    event.stopPropagation();
+    const item = this._getEmbeddedDocument(target);
+    if (item) return openHallmarkUpgradeDialog(item);
   }
 
   /** Open the dialog to invest Player XP. */

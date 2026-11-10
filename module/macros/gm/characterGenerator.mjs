@@ -988,8 +988,11 @@ async function generateCharacterWithOptions(options = {}, existingActor) {
       system: newActor.system
     });
 
+    // A new character starts at level 1 with its traits already chosen: no pending upgrade
     await actor.update({
-      'system.experience': '300'
+      'system.experience': '300',
+      'system.upgrades_level': 1,
+      'system.pending_upgrades': 0
     });
 
     if (existingActor) {
@@ -1083,3 +1086,10 @@ export async function generateCharacter() {
 }
 
 export { characterGeneratorDialog };
+
+/** A random trait for a character (same tables as the generator's free trait, no repeats). */
+export async function addRandomTrait(actor) {
+  let trait = await createFreeTrait(actor);
+  for (let attempt = 0; !trait && attempt < 5; attempt++) trait = await createFreeTrait(actor);
+  return trait;
+}

@@ -236,6 +236,10 @@ export default class SdmCharacter extends SdmActorBase {
     // character experience
     schema.experience = new fields.StringField({ required: true, initial: '0' });
     schema.player_experience = new fields.StringField({ required: true, initial: '0' });
+    // Level-up upgrades waiting to be chosen (one per level gained)
+    schema.pending_upgrades = new fields.NumberField({ required: true, nullable: false, integer: true, initial: 0, min: 0 });
+    // Highest level that already granted its upgrade (null: not tracked yet, use the current level)
+    schema.upgrades_level = new fields.NumberField({ required: false, nullable: true, integer: true, initial: null });
 
     schema.life = new fields.SchemaField({
       value: new fields.NumberField({

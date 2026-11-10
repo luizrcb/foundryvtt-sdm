@@ -114,6 +114,21 @@ export class SdmActor extends Actor {
         }
       }
     }
+
+    // Character levels gained grant upgrades to choose (each level only once)
+    if (
+      this.type === ActorType.CHARACTER &&
+      changes.system?.experience !== undefined &&
+      changes.system?.upgrades_level === undefined
+    ) {
+      const xp = parseInt(safeEvaluate(`${changes.system.experience}`.trim()), 10) || 0;
+      const newLevel = getLevel(xp);
+      const granted = this.system.upgrades_level ?? this.system.level ?? 0;
+      if (newLevel > granted) {
+        changes.system.pending_upgrades = (this.system.pending_upgrades ?? 0) + (newLevel - granted);
+        changes.system.upgrades_level = newLevel;
+      }
+    }
     return result;
   }
 

@@ -31,7 +31,7 @@
             {{#unless (or (and @root.isGM isEditMode) (not @root.editable))}}disabled{{/unless}} />
         </div>
         <div class="v2-chip">
-          <span class="v2-label">{{localize 'SDM.FieldLevel'}}</span>
+          <span class="v2-label">{{localize 'SDM.FieldLevel'}} {{> "systems/sdm/templates/actor/pending-upgrades.hbs"}}</span>
           <input type="text" name="system.level" value="{{system.level}}" data-dtype="Number" disabled />
         </div>
       </div>

@@ -142,6 +142,18 @@ export class SdmItem extends Item {
       foundry.utils.setProperty(changes, 'system.animation.filled', true);
     }
 
+    // Hallmark levels gained grant upgrades to choose (each level only once)
+    if (changes.system?.hallmark?.experience !== undefined && this.system.hallmark) {
+      const xp = parseInt(safeEvaluate(`${changes.system.hallmark.experience}`.trim()), 10) || 0;
+      const newLevel = getLevel(xp);
+      const hallmark = this.system.hallmark;
+      const granted = hallmark.upgrades_level ?? hallmark.level ?? 0;
+      if (newLevel > granted && (user.isGM || options.sdmInvestXp)) {
+        changes.system.hallmark.pending_upgrades = (hallmark.pending_upgrades ?? 0) + (newLevel - granted);
+        changes.system.hallmark.upgrades_level = newLevel;
+      }
+    }
+
     // Only the Referee edits hallmark XP directly; players invest it (sdmInvestXp option)
     if (!user.isGM && !options.sdmInvestXp && changes.system?.hallmark?.experience !== undefined) {
       delete changes.system.hallmark.experience;

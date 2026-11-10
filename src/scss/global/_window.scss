@@ -1699,3 +1699,94 @@ input[type='radio']::after {
     color: var(--v2-accent, var(--color-text-hyperlink));
   }
 }
+
+// Level-up upgrades waiting to be chosen
+.application.sdm .sdm-pending-upgrade {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  margin-left: 4px;
+  padding: 0 6px;
+  border-radius: 999px;
+  font-size: 0.85em;
+  font-weight: 700;
+  color: #fff;
+  background: var(--v2-accent, #b07a1e);
+  cursor: pointer;
+  text-decoration: none;
+  animation: sdm-upgrade-pulse 2s ease-in-out infinite;
+
+  &:hover {
+    filter: brightness(1.1);
+  }
+}
+@keyframes sdm-upgrade-pulse {
+  50% {
+    box-shadow: 0 0 0 3px rgba(176, 122, 30, 0.25);
+  }
+}
+.application.sdm .sdm-hallmark-upgrades {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px 12px;
+  margin-top: 6px;
+  font-size: 12px;
+
+  .sdm-free-upgrade {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  .sdm-upgrade-notes {
+    flex-basis: 100%;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    i {
+      color: #c9a227;
+      margin-right: 4px;
+    }
+  }
+}
+
+// Level-up dialog
+.sdm-upgrade {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  .sdm-upgrade-pending {
+    margin: 0 0 4px;
+    font-weight: 700;
+  }
+  .sdm-upgrade-choice {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-weight: 600;
+  }
+  .sdm-upgrade-detail {
+    margin: 0 0 6px 24px;
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+  .sdm-upgrade-drop {
+    padding: 10px;
+    border: 2px dashed var(--color-border, #999);
+    border-radius: 8px;
+    text-align: center;
+    opacity: 0.8;
+
+    &.is-over {
+      border-color: var(--color-warm-2, #b07a1e);
+      opacity: 1;
+    }
+    &.has-item {
+      border-style: solid;
+      font-weight: 700;
+      opacity: 1;
+    }
+  }
+}

@@ -255,7 +255,7 @@
             </div>
             <div class="grid-span-1 resource">
               <label for="system.level" class='resource-label'>
-                {{localize 'SDM.FieldLevel'}}
+                {{localize 'SDM.FieldLevel'}} {{> "systems/sdm/templates/actor/pending-upgrades.hbs"}}
               </label>
               <div class='resource-content flexrow flex-center flex-between'>
                 <input type='text' name='system.level' value='{{system.level}}' data-dtype='Number' disabled />
@@ -787,7 +787,7 @@
             </div>
             <div class="grid-span-1 resource">
               <label for="system.level" class='resource-label'>
-                {{localize 'SDM.FieldLevel'}}
+                {{localize 'SDM.FieldLevel'}} {{> "systems/sdm/templates/actor/pending-upgrades.hbs"}}
               </label>
               <div class='resource-content flexrow flex-center flex-between'>
                 <input type='text' name='system.level' value='{{system.level}}' data-dtype='Number' disabled />

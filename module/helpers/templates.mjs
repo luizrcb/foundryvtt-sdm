@@ -41,6 +41,8 @@ const templatesToLoad = [
   $$('item/v2/gm-notes'),
   $$('item/gm-notes'),
   $$('item/condition'),
+  $$('item/hallmark-upgrades'),
+  $$('actor/pending-upgrades'),
   $$('item/condition-overlay'),
   $$('compendium/browser-filters'),
   $$('compendium/browser-results'),

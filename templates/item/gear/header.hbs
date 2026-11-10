@@ -144,6 +144,7 @@
           <div class='resource'{{#if @root.hallmarkXpToNextLevel}} data-tooltip="{{@root.hallmarkXpToNextLevel}} {{localize 'SDM.XPToLevelUP'}}"{{/if}}>
             <label class='resource-label' for='system.hallmark.experience'>{{localize 'SDM.FieldExperience'}}</label>
             <input type='text' name='system.hallmark.experience' value='{{system.hallmark.experience}}'{{#unless @root.isGM}} disabled{{/unless}} />
+            {{> "systems/sdm/templates/item/hallmark-upgrades.hbs"}}
           </div>
           {{/if}}
 

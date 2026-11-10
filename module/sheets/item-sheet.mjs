@@ -1,6 +1,7 @@
 import PowerDataModel from '../data/power-data.mjs';
 import { SdmItem } from '../documents/item.mjs';
 import { createNPCByLevel, getActorOptions, getXpToNextLevel } from '../helpers/actorUtils.mjs';
+import { openHallmarkUpgradeDialog } from '../app/level-upgrades.mjs';
 import {
   animateItem,
   deanimateItem,
@@ -82,6 +83,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       radioToggle: this._radioToggle,
       spawnNPC: this._onSpawnNPC,
       animateItem: this._onAnimateItem,
+      chooseHallmarkUpgrade: this._onChooseHallmarkUpgrade,
       deanimateItem: this._onDeanimateItem,
       fillAnimationFromTable: this._onFillAnimationFromTable,
       sendToChat: this._onSendToChat,
@@ -859,6 +861,10 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
   static async _onSendToChat(event, target) {
     const actor = this.item.parent ? this.item.parent : null;
     await this.item.sendToChat({ actor, collapsed: false });
+  }
+
+  static async _onChooseHallmarkUpgrade() {
+    await openHallmarkUpgradeDialog(this.item);
   }
 
   static async _onAnimateItem() {
