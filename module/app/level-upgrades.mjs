@@ -288,8 +288,8 @@ export async function openHallmarkUpgradeDialog(item) {
   const content = `
     <div class="sdm-upgrade">
       <p class="sdm-upgrade-pending">${$fmt('SDM.Upgrade.Pending', { count: pending })}</p>
-      <label class="sdm-upgrade-choice"><input type="radio" name="choice" value="damage" ${kinds.weapon ? 'checked' : 'disabled'} /> ${$l10n('SDM.Upgrade.Damage')} (${cost(damageCost)})</label>
-      <label class="sdm-upgrade-choice"><input type="radio" name="choice" value="defense" ${canDefense ? (kinds.weapon ? '' : 'checked') : 'disabled'} /> ${$l10n('SDM.Upgrade.Defense')} (${cost(defenseCost)})</label>
+      ${kinds.weapon ? `<label class="sdm-upgrade-choice"><input type="radio" name="choice" value="damage" checked /> ${$l10n('SDM.Upgrade.Damage')} (${cost(damageCost)})</label>` : ''}
+      ${canDefense ? `<label class="sdm-upgrade-choice"><input type="radio" name="choice" value="defense" ${kinds.weapon ? '' : 'checked'} /> ${$l10n('SDM.Upgrade.Defense')} (${cost(defenseCost)})</label>` : ''}
       <label class="sdm-upgrade-choice"><input type="radio" name="choice" value="text" ${kinds.weapon || canDefense ? '' : 'checked'} /> ${$l10n('SDM.Upgrade.Text')}</label>
       <div class="sdm-upgrade-detail"><input type="text" name="text" placeholder="${esc($l10n('SDM.Upgrade.TextPlaceholder'))}" /></div>
       <label class="sdm-upgrade-choice"><input type="radio" name="choice" value="mod" /> ${$l10n('SDM.Upgrade.Mod')}</label>

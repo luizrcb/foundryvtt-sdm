@@ -1751,6 +1751,11 @@ input[type=radio]::after {
   font-weight: 600;
 }
 
+.sdm-upgrade .sdm-upgrade-choice:has(input:disabled) {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
 .sdm-upgrade .sdm-upgrade-detail {
   margin: 0 0 6px 24px;
   display: flex;

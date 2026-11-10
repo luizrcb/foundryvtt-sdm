@@ -1765,6 +1765,12 @@ input[type='radio']::after {
     align-items: center;
     gap: 6px;
     font-weight: 600;
+
+    // An option that cannot be chosen right now (e.g. no trait to improve)
+    &:has(input:disabled) {
+      opacity: 0.45;
+      cursor: not-allowed;
+    }
   }
   .sdm-upgrade-detail {
     margin: 0 0 6px 24px;
