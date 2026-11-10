@@ -1414,7 +1414,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       };
     } else {
       deleteOperation = {
-        [`system.transport.-=${key}`]: null
+        [`system.transport.${key}`]: new foundry.data.operators.ForcedDeletion()
       };
     }
 
@@ -1467,7 +1467,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       };
     } else {
       deleteOperation = {
-        [`system.routes.-=${key}`]: null
+        [`system.routes.${key}`]: new foundry.data.operators.ForcedDeletion()
       };
     }
 
@@ -1499,7 +1499,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       };
     } else {
       deleteOperation = {
-        [`system.crew.-=${key}`]: null
+        [`system.crew.${key}`]: new foundry.data.operators.ForcedDeletion()
       };
     }
 

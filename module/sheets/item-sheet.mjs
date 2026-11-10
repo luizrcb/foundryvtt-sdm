@@ -1186,7 +1186,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       ...(originalDescription !== undefined && {
         'system.description': originalDescription
       }),
-      'flags.sdm.-=originalDescription': null
+      'flags.sdm.originalDescription': new foundry.data.operators.ForcedDeletion()
     });
 
     this.render();
