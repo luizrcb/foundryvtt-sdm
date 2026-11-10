@@ -1870,6 +1870,18 @@ input[type=radio]::after {
   opacity: 0.7;
 }
 
+.form-fields.sdm-mod-cost {
+  gap: 4px;
+}
+
+.form-fields.sdm-mod-cost .sdm-money-sign {
+  flex: 0 0 auto;
+}
+
+.form-fields.sdm-mod-cost input {
+  flex: 1 1 auto;
+}
+
 .grid,
 .grid-2col {
   display: grid;
