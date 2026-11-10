@@ -463,6 +463,7 @@
   "SDM.Upgrade.ChooseTrait": "Arraste um trait, sorteie um ou digite o nome de um trait novo.",
   "SDM.Upgrade.Clear": "Remover",
   "SDM.Upgrade.Confirm": "Escolher",
+  "SDM.Upgrade.CostPerLevel": "{symbol}{perLevel} × nível {level} = {symbol}{total}",
   "SDM.Upgrade.Damage": "+1 em cada dado de dano",
   "SDM.Upgrade.Defense": "+1 de defesa",
   "SDM.Upgrade.DescribeUpgrade": "Descreva a melhoria.",

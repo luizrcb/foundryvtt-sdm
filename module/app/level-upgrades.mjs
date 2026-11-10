@@ -283,15 +283,23 @@ export async function openHallmarkUpgradeDialog(item) {
   const free = !!hallmark.free_upgrade;
   const damageCost = 5 * level;
   const defenseCost = 10 * level;
-  const cost = value =>
-    free ? $l10n('SDM.Upgrade.NoCost') : `${$l10n('SDM.CashSymbol')}${value}`;
+  // e.g. "€5 × level 3 = €15": the price per level times the level the upgrade comes from
+  const cost = perLevel =>
+    free
+      ? $l10n('SDM.Upgrade.NoCost')
+      : $fmt('SDM.Upgrade.CostPerLevel', {
+          symbol: $l10n('SDM.CashSymbol'),
+          perLevel,
+          level,
+          total: perLevel * level
+        });
   const canDefense = kinds.armor || kinds.ward;
 
   const content = `
     <div class="sdm-upgrade">
       <p class="sdm-upgrade-pending">${$fmt('SDM.Upgrade.Pending', { count: pending })}</p>
-      ${kinds.weapon ? `<label class="sdm-upgrade-choice"><input type="radio" name="choice" value="damage" checked /> ${$l10n('SDM.Upgrade.Damage')} (${cost(damageCost)})</label>` : ''}
-      ${canDefense ? `<label class="sdm-upgrade-choice"><input type="radio" name="choice" value="defense" ${kinds.weapon ? '' : 'checked'} /> ${$l10n('SDM.Upgrade.Defense')} (${cost(defenseCost)})</label>` : ''}
+      ${kinds.weapon ? `<label class="sdm-upgrade-choice"><input type="radio" name="choice" value="damage" checked /> ${$l10n('SDM.Upgrade.Damage')} (${cost(5)})</label>` : ''}
+      ${canDefense ? `<label class="sdm-upgrade-choice"><input type="radio" name="choice" value="defense" ${kinds.weapon ? '' : 'checked'} /> ${$l10n('SDM.Upgrade.Defense')} (${cost(10)})</label>` : ''}
       <label class="sdm-upgrade-choice"><input type="radio" name="choice" value="text" ${kinds.weapon || canDefense ? '' : 'checked'} /> ${$l10n('SDM.Upgrade.Text')}</label>
       <div class="sdm-upgrade-detail"><input type="text" name="text" placeholder="${esc($l10n('SDM.Upgrade.TextPlaceholder'))}" /></div>
       <label class="sdm-upgrade-choice"><input type="radio" name="choice" value="mod" /> ${$l10n('SDM.Upgrade.Mod')} (${free ? $l10n('SDM.Upgrade.NoCost') : $l10n('SDM.Upgrade.ModCost')})</label>
