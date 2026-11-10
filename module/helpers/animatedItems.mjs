@@ -443,10 +443,15 @@ export async function animateItem(item, { app } = {}) {
 
   let npc = getLinkedNpc(item);
   const system = npcSystemFromItem(item);
-  // A notched or running-low item comes to life already worn: at most half its life
-  const worn =
-    item.system.status === ItemStatusType.NOTCHED || item.system.resources === 'running_low';
-  if (worn) system.life.value = Math.min(system.life.value, Math.ceil(system.life.max / 2));
+  if (getAnimationChargeCost(item) > 0) {
+    // Every charge spent brings the creature back with full life
+    system.life.value = system.life.max;
+  } else {
+    // A notched or running-low item comes to life already worn: at most half its life
+    const worn =
+      item.system.status === ItemStatusType.NOTCHED || item.system.resources === 'running_low';
+    if (worn) system.life.value = Math.min(system.life.value, Math.ceil(system.life.max / 2));
+  }
   if (npc) {
     // An NPC dropped on the tab keeps its own name and image; one made from the item follows it
     const keepIdentity = !!npc.getFlag('sdm', KEEP_IDENTITY_FLAG);
@@ -625,6 +630,8 @@ export async function syncAnimationLevel(item, { damageSourceChanged = false } =
 export async function applyAnimatedWear(npc) {
   const item = getAnimatedSourceItem(npc);
   if (!item) return;
+  // Paid with charges: the charge was the price, the item itself is not worn
+  if (getAnimationChargeCost(item) > 0) return;
 
   const value = Number(npc.system.life?.value) || 0;
   const max = Number(npc.system.life?.max) || 0;
