@@ -270,6 +270,8 @@ export async function openHallmarkUpgradeDialog(item) {
     const key = kinds.armor ? 'system.armor.value' : 'system.ward.value';
     await addHallmarkEffectChanges(item, [{ key, type: 'add', value: 1, priority: 60, phase: 'initial' }]);
     upgrade = $l10n('SDM.Upgrade.Defense');
+    // An animated armor's creature gets the higher defense
+    await syncAnimationLevel(item);
   } else {
     await item.update({ 'system.hallmark.upgrade_notes': [...(hallmark.upgrade_notes ?? []), data.text] });
     upgrade = data.text;

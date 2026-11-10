@@ -162,6 +162,40 @@ async function syncWeaponDamage(item, npc, { useCreatureDamage = false } = {}) {
   }
 }
 
+const DEFENSE_BONUS_FLAG = 'animatedDefenseBonus';
+
+/** Armor and ward items add their bonus to the creature's defense. */
+export function getDefenseBonus(item) {
+  let bonus = 0;
+  if (item.system.type === GearType.ARMOR || hasFeature(item, 'armor')) {
+    bonus += Number(item.system.armor?.value) || 0;
+  }
+  if (item.system.type === GearType.WARD || hasFeature(item, 'ward')) {
+    bonus += Number(item.system.ward?.value) || 0;
+  }
+  return bonus;
+}
+
+/** The creature's defense without the armor/ward bonus (the table or Animation tab value). */
+function baseDefense(npc) {
+  return (Number(npc.system.defense) || 0) - (Number(npc.getFlag('sdm', DEFENSE_BONUS_FLAG)) || 0);
+}
+
+/** Put the item's current armor/ward bonus on top of the creature's base defense. */
+async function applyDefenseBonus(item, npc) {
+  const bonus = getDefenseBonus(item);
+  await npc.update({
+    'system.defense': baseDefense(npc) + bonus,
+    [`flags.sdm.${DEFENSE_BONUS_FLAG}`]: bonus
+  });
+}
+
+/** Take the bonus off (before the table raises the base defense on a level-up). */
+async function removeDefenseBonus(npc) {
+  if (!npc.getFlag('sdm', DEFENSE_BONUS_FLAG)) return;
+  await npc.update({ 'system.defense': baseDefense(npc), [`flags.sdm.${DEFENSE_BONUS_FLAG}`]: 0 });
+}
+
 function npcSystemFromItem(item) {
   const a = item.system.attributes;
   return {
@@ -248,6 +282,9 @@ export async function animateItem(item, { app } = {}) {
   }
 
   await syncWeaponDamage(item, npc);
+  // The NPC now has the base defense from the item: reset the bonus and add the current one
+  await npc.update({ [`flags.sdm.${DEFENSE_BONUS_FLAG}`]: 0 });
+  await applyDefenseBonus(item, npc);
 
   const update = { 'system.animation.actor': npc.uuid, 'system.animation.active': true };
   if (item.system.animation.mode === 'walks') update['system.readied'] = false;
@@ -292,7 +329,7 @@ export async function deanimateItem(item, { reason } = {}) {
         'system.attributes.life.value': s.life.value,
         'system.attributes.life.max': s.life.max,
         'system.attributes.morale': s.morale,
-        'system.attributes.defense': s.defense,
+        'system.attributes.defense': baseDefense(npc),
         'system.attributes.bonus': s.bonus,
         'system.attributes.damage': s.damage,
         'system.attributes.initiative': s.initiative ?? '',
@@ -355,7 +392,11 @@ export async function syncAnimationLevel(item, { damageSourceChanged = false } =
   const level = getAnimationLevel(item);
   const npc = getLinkedNpc(item);
   if (item.system.animation.active && npc) {
-    if (level > (npc.system.level ?? 0)) await npc.levelUpNpcTo(level);
+    if (level > (npc.system.level ?? 0)) {
+      await removeDefenseBonus(npc);
+      await npc.levelUpNpcTo(level);
+    }
+    await applyDefenseBonus(item, npc);
     await syncWeaponDamage(item, npc, { useCreatureDamage: damageSourceChanged });
   } else if (item.system.animation.filled) {
     await fillAttributesFromTable(item, { raiseOnly: true });
