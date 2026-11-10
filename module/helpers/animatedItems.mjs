@@ -215,6 +215,7 @@ async function syncPowerCopy(item, npc) {
 }
 
 const FEATURE_TRAIT_FLAG = 'animatedFeature';
+const KEEP_IDENTITY_FLAG = 'animatedKeepIdentity';
 const EFFECT_COPY_FLAG = 'animatedEffect';
 
 /** The item's features become traits of the creature (name and rules text), so they show on its sheet. */
@@ -370,7 +371,11 @@ export async function linkNpcToItem(item, actor) {
   const s = npc.system;
   const table =
     s.createdFromTable && NPC_TABLE_KEYS().includes(s.createdFromTable) ? s.createdFromTable : NPC_CUSTOM_TABLE;
-  await npc.update({ [`flags.sdm.${FLAG}`]: item.uuid, [`flags.sdm.${DEFENSE_BONUS_FLAG}`]: 0 });
+  await npc.update({
+    [`flags.sdm.${FLAG}`]: item.uuid,
+    [`flags.sdm.${DEFENSE_BONUS_FLAG}`]: 0,
+    [`flags.sdm.${KEEP_IDENTITY_FLAG}`]: true
+  });
   await item.update(
     {
       'system.animation.actor': npc.uuid,
@@ -428,7 +433,13 @@ export async function animateItem(item, { app } = {}) {
     item.system.status === ItemStatusType.NOTCHED || item.system.resources === 'running_low';
   if (worn) system.life.value = Math.min(system.life.value, Math.ceil(system.life.max / 2));
   if (npc) {
-    await npc.update({ name: item.name, system, ownership: ownershipFromItem(item) });
+    // An NPC dropped on the tab keeps its own name and image; one made from the item follows it
+    const keepIdentity = !!npc.getFlag('sdm', KEEP_IDENTITY_FLAG);
+    await npc.update({
+      ...(keepIdentity ? {} : { name: item.name }),
+      system,
+      ownership: ownershipFromItem(item)
+    });
   } else {
     const folder = await getAnimatedFolder();
     npc = await Actor.create({
