@@ -424,6 +424,8 @@
   "SDM.InvestXP.NothingToInvest": "Não há XP do Jogador para investir.",
   "SDM.InvestXP.Target": "Investir em",
   "SDM.InvestXP.Title": "Investir XP do Jogador",
+  "SDM.IsHallmarkUpgrade": "Melhoria de Emblemático",
+  "SDM.IsHallmarkUpgradeHint": "Ganho como melhoria de nível do emblemático: não ocupa uma vaga de mod do item.",
   "SDM.Item.RemoveFromContainer": "Tirar do Contêiner",
   "SDM.ItemCondition.Full": "cheio",
   "SDM.ItemCondition.Intact": "intacto",

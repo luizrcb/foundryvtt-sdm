@@ -286,7 +286,7 @@ export function registerActiveEffectLimit() {
     }
 
     // A mod gained as a hallmark upgrade does not use a mod slot
-    if (data.flags?.sdm?.hallmarkUpgradeMod) return;
+    if (data.system?.isHallmarkUpgrade ?? effect.system?.isHallmarkUpgrade) return;
 
     if (isAtItemModCap(parent)) {
       warnItemModCap(parent);
@@ -298,6 +298,17 @@ export function registerActiveEffectLimit() {
   Hooks.on('preUpdateActiveEffect', (effect, changes, options, userId) => {
     const parent = effect.parent;
     if (parent?.documentName !== 'Item') return;
+
+    // A hallmark upgrade becoming a regular mod now needs a free mod slot
+    if (
+      changes.system?.isHallmarkUpgrade === false &&
+      effect.system?.isHallmarkUpgrade &&
+      (changes.system?.isItemMod ?? effect.system?.isItemMod) &&
+      isAtItemModCap(parent, effect.id)
+    ) {
+      warnItemModCap(parent);
+      return false;
+    }
 
     // Only care about turning the flag ON.
     const becomingItemMod = changes.system?.isItemMod === true;
@@ -338,7 +349,7 @@ export function registerActiveEffectLimit() {
 function isAtItemModCap(item, excludeId = null) {
   const max = (item.system?.hallmark?.level ?? 0) + 1;
   const current = item.effects.filter(
-    e => e.id !== excludeId && e.system?.isItemMod === true && !e.getFlag('sdm', 'hallmarkUpgradeMod')
+    e => e.id !== excludeId && e.system?.isItemMod === true && !e.system?.isHallmarkUpgrade
   ).length;
   return current >= max;
 }

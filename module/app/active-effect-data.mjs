@@ -7,6 +7,13 @@ export class SDMActiveEffectData extends foundry.data.ActiveEffectTypeDataModel 
       ...super.defineSchema(),
       isItemMod: new fields.BooleanField({ required: true, initial: false, label: $l10n('SDM.IsItemMod') }),
       modType: new fields.StringField({ blank: true, required: false, initial: '', choices: CONFIG.SDM.itemModType, label: $l10n('SDM.ItemModType') }),
+      // A mod gained as a hallmark level upgrade: it does not use one of the item's mod slots
+      isHallmarkUpgrade: new fields.BooleanField({
+        required: true,
+        initial: false,
+        label: $l10n('SDM.IsHallmarkUpgrade'),
+        hint: $l10n('SDM.IsHallmarkUpgradeHint')
+      }),
       // Cost of the mod (customization cost = mod cost × number of upgrades, or the item cost if higher)
       modCost: new fields.NumberField({
         required: true,

@@ -424,6 +424,8 @@
   "SDM.InvestXP.NothingToInvest": "There is no Player XP to invest.",
   "SDM.InvestXP.Target": "Invest in",
   "SDM.InvestXP.Title": "Invest Player XP",
+  "SDM.IsHallmarkUpgrade": "Hallmark Upgrade",
+  "SDM.IsHallmarkUpgradeHint": "Gained as a hallmark level upgrade: it does not use one of the item's mod slots.",
   "SDM.Item.RemoveFromContainer": "Remove from Container",
   "SDM.ItemCondition.Full": "full",
   "SDM.ItemCondition.Intact": "intact",

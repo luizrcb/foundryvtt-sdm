@@ -34,6 +34,7 @@ export default class SdmActiveEffectConfig14 extends ActiveEffectConfig {
       context.fields.isItemMod = this.document.system.schema.fields.isItemMod;
       context.fields.modType = this.document.system.schema.fields.modType;
       context.fields.modCost = this.document.system.schema.fields.modCost;
+      context.fields.isHallmarkUpgrade = this.document.system.schema.fields.isHallmarkUpgrade;
       context.itemModTypes = Object.entries(CONFIG.SDM.itemModType).map(([k, value]) => ({
         value: k,
         label: $l10n(value)

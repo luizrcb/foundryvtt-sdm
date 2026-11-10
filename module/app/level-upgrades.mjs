@@ -342,9 +342,8 @@ export async function openHallmarkUpgradeDialog(item) {
     }
     const modData = mod.toObject();
     delete modData._id;
-    modData.system = { ...(modData.system ?? {}), isItemMod: true };
     // Gained as the level's upgrade: it does not use one of the item's mod slots
-    modData.flags = foundry.utils.mergeObject(modData.flags ?? {}, { sdm: { hallmarkUpgradeMod: true } });
+    modData.system = { ...(modData.system ?? {}), isItemMod: true, isHallmarkUpgrade: true };
     const [created] = await item.createEmbeddedDocuments('ActiveEffect', [modData]);
     if (!created) return;
     modEffectId = created.id;
