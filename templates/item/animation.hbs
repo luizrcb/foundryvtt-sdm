@@ -14,10 +14,17 @@
         {{selectOptions modes selected=@root.system.animation.mode localize=true}}
       </select>
     </div>
-    <div class='resource' data-tooltip="{{#if isHallmark}}{{localize 'SDM.Animation.LevelHallmarkHint'}}{{else}}{{localize 'SDM.Animation.LevelHint'}}{{/if}}">
-      <label class='resource-label'>{{localize 'SDM.FieldLevel'}}{{#if isHallmark}} ({{level}}){{/if}}</label>
+    {{#if isHallmark}}
+    <div class='resource' data-tooltip="{{localize 'SDM.Animation.LevelHallmarkHint'}}">
+      <label class='resource-label'>{{localize 'SDM.FieldLevel'}} <i class="fa-solid fa-star"></i></label>
+      <input type='text' value='{{level}}' disabled />
+    </div>
+    {{else}}
+    <div class='resource' data-tooltip="{{localize 'SDM.Animation.LevelHint'}}">
+      <label class='resource-label'>{{localize 'SDM.FieldLevel'}}</label>
       <input type='text' name='system.attributes.level' value='{{@root.system.attributes.level}}' data-dtype='Number' {{#unless canManage}}disabled{{/unless}} />
     </div>
+    {{/if}}
     <div class='resource'>
       <label class='resource-label'>{{localize 'TYPES.Actor.npc'}}</label>
       {{#if npc}}
@@ -68,6 +75,8 @@
   <div class="flexrow mt-10">
     {{#if active}}
     <button type="button" data-action="deanimateItem"><i class="fa-solid fa-box"></i> {{localize 'SDM.Animation.Deanimate'}}</button>
+    {{else if blocked}}
+    <span>{{localize 'SDM.Animation.BlockedHint'}}</span>
     {{else}}
     <button type="button" data-action="animateItem"><i class="fa-solid fa-ghost"></i> {{localize 'SDM.Animation.Animate'}}</button>
     {{/if}}

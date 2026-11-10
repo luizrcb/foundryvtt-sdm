@@ -1,7 +1,13 @@
 import CompendiumBrowser from '../app/compendium-browser.mjs';
 import { SdmItem } from '../documents/item.mjs';
 
-import { getNPCDataByLevel, getXpForLevel, getXpToNextLevel, MAX_MODIFIER } from '../helpers/actorUtils.mjs';
+import {
+  getNPCDataByLevel,
+  getNpcTableChoices,
+  getXpForLevel,
+  getXpToNextLevel,
+  MAX_MODIFIER
+} from '../helpers/actorUtils.mjs';
 import {
   ActorType,
   AttackTarget,
@@ -144,6 +150,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       viewDoc: this._viewDoc,
       rerollCharacter: this._onRerollCharacter,
       levelUpNPC: this._onLevelUpNPC,
+      configureNpcTable: this._onConfigureNpcTable,
       investXp: this._onInvestXp,
       chooseUpgrade: this._onChooseUpgrade,
       chooseHallmarkUpgrade: this._onChooseHallmarkUpgrade,
@@ -599,7 +606,13 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       // Add isGM to the context
       isGM: game.user.isGM,
       // Animated item NPC: its level and XP follow the item
-      animatedFrom: getAnimatedSourceItem(this.actor)
+      animatedFrom: getAnimatedSourceItem(this.actor),
+      npcTableLabel:
+        this.actor.type === ActorType.NPC
+          ? game.i18n.localize(
+              getNpcTableChoices()[this.actor.system.createdFromTable] ?? 'SDM.generic-synthesized-creature'
+            )
+          : ''
     };
 
     // const language = game.i18n.lang;
@@ -2232,6 +2245,31 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     return openInvestXpDialog(this.actor);
   }
 
+  /** Referee: see and change the table the NPC levels up with. */
+  static async _onConfigureNpcTable(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (!game.user.isGM) return;
+    const current = this.actor.system.createdFromTable || 'generic-synthesized-creature';
+    const choices = getNpcTableChoices();
+    const options = Object.entries(choices)
+      .map(([key, label]) => `<option value="${key}" ${key === current ? 'selected' : ''}>${game.i18n.localize(label)}</option>`)
+      .join('');
+    const table = await foundry.applications.api.DialogV2.prompt({
+      window: { title: game.i18n.localize('SDM.NpcTable.Title'), icon: 'fa-solid fa-gear' },
+      content: `<div class="form-group"><label>${game.i18n.localize('SDM.NpcTable.Label')}</label>
+        <div class="form-fields"><select name="table">${options}</select></div></div>
+        <p class="hint">${game.i18n.localize('SDM.NpcTable.Hint')}</p>`,
+      rejectClose: false,
+      ok: { label: game.i18n.localize('SDM.NpcTable.Save'), callback: (e, button) => button.form.elements.table.value }
+    });
+    if (!table) return;
+    await this.actor.update({ 'system.createdFromTable': table });
+    // An animated item's creature: the item keeps the same table
+    const item = getAnimatedSourceItem(this.actor);
+    if (item) await item.update({ 'system.animation.table': table }, { sdmAnimationSync: true });
+  }
+
   static async _onLevelUpNPC(event, target) {
     event.preventDefault(); // Don't open context menu
     event.stopPropagation(); // Don't trigger other events
@@ -2243,7 +2281,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const nextLevel = currentLevel + 1;
     const newData = getNPCDataByLevel(npcTable, nextLevel);
 
-    if (newData.Lvl < nextLevel) {
+    // Custom table (no data): any level; otherwise the table's last level is the limit
+    if (newData && newData.Lvl < nextLevel) {
       ui.notifications.error(
         $fmt('SDM.NPCLevelUpLimit', { name: this.actor.name, level: currentLevel })
       );

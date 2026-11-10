@@ -1790,3 +1790,14 @@ input[type='radio']::after {
     }
   }
 }
+
+// NPC table (Referee): small cog next to the NPC level
+.application.sdm .sdm-npc-table {
+  margin-left: 4px;
+  font-size: 0.9em;
+  opacity: 0.6;
+  cursor: pointer;
+  &:hover {
+    opacity: 1;
+  }
+}

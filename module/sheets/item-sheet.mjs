@@ -10,7 +10,8 @@ import {
   getAnimationTable,
   getAnimationTableChoices,
   getLinkedNpc,
-  isAnimatable
+  isAnimatable,
+  isAnimationBlocked
 } from '../helpers/animatedItems.mjs';
 import { DEFAULT_PET_ICON, GearType, ItemStatusType, ItemType } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
@@ -307,6 +308,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
           modes: { energy: 'SDM.Animation.ModeEnergy', walks: 'SDM.Animation.ModeWalks' },
           npc,
           active: !!this.item.system.animation?.active,
+          blocked: isAnimationBlocked(this.item),
           canManage: game.user.isGM
         };
         break;

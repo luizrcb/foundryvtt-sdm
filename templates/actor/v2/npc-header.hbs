@@ -15,7 +15,7 @@
       </div>
       <div class="v2-chips">
         <div class="v2-chip">
-          <span class="v2-label">{{localize 'SDM.FieldLevel'}}</span>
+          <span class="v2-label">{{localize 'SDM.FieldLevel'}} {{#if @root.isGM}}<a class="sdm-npc-table" data-action="configureNpcTable" data-tooltip="{{localize 'SDM.NpcTable.Label'}}: {{@root.npcTableLabel}}"><i class="fa-solid fa-gear"></i></a>{{/if}}</span>
           <input type="text" name="system.level" value="{{system.level}}" data-dtype="Number" disabled />
         </div>
         <div class="v2-chip"{{#if @root.xpToNextLevel}} data-tooltip="{{@root.xpToNextLevel}} {{localize 'SDM.XPToLevelUP'}}"{{/if}}>

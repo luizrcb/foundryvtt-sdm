@@ -1777,6 +1777,17 @@ input[type=radio]::after {
   opacity: 1;
 }
 
+.application.sdm .sdm-npc-table {
+  margin-left: 4px;
+  font-size: 0.9em;
+  opacity: 0.6;
+  cursor: pointer;
+}
+
+.application.sdm .sdm-npc-table:hover {
+  opacity: 1;
+}
+
 .grid,
 .grid-2col {
   display: grid;

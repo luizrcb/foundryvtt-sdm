@@ -117,6 +117,14 @@ const PET_TABLE = [
 /** Keys of the NPC generator tables (labels are `SDM.<key>`). */
 export const NPC_TABLE_KEYS = () => Object.keys(NPCTables);
 
+/** NPC tables to level up with, plus "custom" (no table). */
+export function getNpcTableChoices() {
+  return {
+    ...Object.fromEntries(Object.keys(NPCTables).map(key => [key, `SDM.${key}`])),
+    custom: 'SDM.NpcTable.Custom'
+  };
+}
+
 const NPCTables = {
   'generic-synthesized-creature': {
     table: [
@@ -351,8 +359,13 @@ export async function createNPC(name = 'NPC', tableName, initiative = '', biogra
   return npcData;
 }
 
+/** "Custom": no table at all. Levelling up only changes the level; the Referee sets the stats. */
+export const NPC_CUSTOM_TABLE = 'custom';
+
 export function getNPCDataByLevel(tableName, level = 0, biography = '') {
-  const npcTable = tableName || 'generic-synthesized-creature';
+  if (tableName === NPC_CUSTOM_TABLE) return null;
+  // Unknown or missing table: the generic one
+  const npcTable = NPCTables[tableName] ? tableName : 'generic-synthesized-creature';
   const table = NPCTables[npcTable].table;
   const entry = [...table].reverse().find(e => e.Lvl <= level);
   return entry;

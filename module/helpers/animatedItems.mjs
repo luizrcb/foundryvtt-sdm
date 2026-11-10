@@ -1,5 +1,5 @@
 import TokenPlacement from '../canvas/token-placement.mjs';
-import { getNPCDataByLevel, NPC_TABLE_KEYS } from './actorUtils.mjs';
+import { getNPCDataByLevel, getNpcTableChoices, NPC_CUSTOM_TABLE, NPC_TABLE_KEYS } from './actorUtils.mjs';
 import { ActorType, ItemStatusType } from './constants.mjs';
 import { $fmt, $l10n } from './globalUtils.mjs';
 
@@ -33,19 +33,29 @@ export function isAnimatedNpc(actor) {
   return !!actor?.getFlag?.('sdm', FLAG);
 }
 
-/** Level of the creature: the higher of the hallmark level and the Referee's level. */
+/** Level of the creature: the hallmark level for hallmarks, otherwise the Referee's level. */
 export function getAnimationLevel(item) {
-  const hallmark = item.system.is_hallmark ? Number(item.system.hallmark?.level) || 0 : 0;
-  return Math.max(hallmark, Number(item.system.attributes?.level) || 0);
+  if (item.system.is_hallmark) return Number(item.system.hallmark?.level) || 0;
+  return Number(item.system.attributes?.level) || 0;
 }
 
-export function getAnimationTable(item) {
-  const table = item.system.animation?.table;
+/** Known table, "custom" (no table: levels only change the level number), or the generic one. */
+export function normalizeNpcTable(table) {
+  if (table === NPC_CUSTOM_TABLE) return NPC_CUSTOM_TABLE;
   return NPC_TABLE_KEYS().includes(table) ? table : 'generic-synthesized-creature';
 }
 
+export function getAnimationTable(item) {
+  return normalizeNpcTable(item.system.animation?.table);
+}
+
 export function getAnimationTableChoices() {
-  return Object.fromEntries(NPC_TABLE_KEYS().map(key => [key, `SDM.${key}`]));
+  return getNpcTableChoices();
+}
+
+/** A broken or run-out item cannot come to life until it is repaired or recharged. */
+export function isAnimationBlocked(item) {
+  return item.system.status === ItemStatusType.BROKEN || item.system.resources === 'run_out';
 }
 
 export function getLinkedNpc(item) {
@@ -60,6 +70,7 @@ export function getLinkedNpc(item) {
 
 /** Fill the item's creature attributes from its table at its level. */
 export async function fillAttributesFromTable(item, { raiseOnly = false } = {}) {
+  if (getAnimationTable(item) === NPC_CUSTOM_TABLE) return;
   const level = getAnimationLevel(item);
   const entry = getNPCDataByLevel(getAnimationTable(item), level);
   if (!entry) return;
@@ -127,7 +138,20 @@ export async function animateItem(item, { app } = {}) {
     return;
   }
 
+  if (isAnimationBlocked(item)) {
+    ui.notifications.warn($fmt('SDM.Animation.Blocked', { name: item.name }));
+    return;
+  }
+
   if (!item.system.animation.filled) await fillAttributesFromTable(item);
+
+  // Repaired or recharged after the creature fell: it comes back with full life
+  if ((Number(item.system.attributes.life.value) || 0) <= 0) {
+    await item.update(
+      { 'system.attributes.life.value': item.system.attributes.life.max },
+      { [SYNC_OPTION]: true }
+    );
+  }
 
   let npc = getLinkedNpc(item);
   const system = npcSystemFromItem(item);
@@ -180,7 +204,7 @@ export async function animateItem(item, { app } = {}) {
 }
 
 /** Remove the creature's tokens and bring its state back to the item. Referee only. */
-export async function deanimateItem(item) {
+export async function deanimateItem(item, { reason } = {}) {
   if (!game.user.isGM) return;
   const npc = getLinkedNpc(item);
 
@@ -207,7 +231,16 @@ export async function deanimateItem(item) {
     await item.update({ 'system.animation.active': false }, { [SYNC_OPTION]: true });
   }
 
-  ui.notifications.info($fmt('SDM.Animation.Deanimated', { name: item.name }));
+  ui.notifications.info($fmt(reason ?? 'SDM.Animation.Deanimated', { name: item.name }));
+}
+
+/** The creature fell (0 life): the active Referee turns it back into the item. */
+export async function deanimateFallenCreature(npc) {
+  if (game.users.activeGM?.id !== game.user.id) return;
+  const item = getAnimatedSourceItem(npc);
+  if (!item?.system.animation?.active) return;
+  if ((Number(npc.system.life?.value) || 0) > 0) return;
+  await deanimateItem(item, { reason: 'SDM.Animation.Fell' });
 }
 
 /**

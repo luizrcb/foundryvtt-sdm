@@ -17,7 +17,7 @@
 
           <div class='resource'>
             <label class='resource-label'>
-              {{localize 'SDM.FieldLevel'}}
+              {{localize 'SDM.FieldLevel'}} {{#if @root.isGM}}<a class="sdm-npc-table" data-action="configureNpcTable" data-tooltip="{{localize 'SDM.NpcTable.Label'}}: {{@root.npcTableLabel}}"><i class="fa-solid fa-gear"></i></a>{{/if}}
             </label>
             <div class='resource-content flexrow flex-center flex-between'>
               <input type='text' name='system.level' value='{{system.level}}' data-dtype="Number" disabled />

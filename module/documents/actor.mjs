@@ -37,9 +37,11 @@ import { promptSplitStackFirstQty } from '../items/splitDialog.mjs';
 import {
   animateItem,
   applyAnimatedWear,
+  deanimateFallenCreature,
   deanimateItem,
   isAnimatable,
-  isAnimatedNpc
+  isAnimatedNpc,
+  isAnimationBlocked
 } from '../helpers/animatedItems.mjs';
 import { addCashToActor, removeCashFromActor } from '../macros/gm/giveCash.mjs';
 import { postDiceSummary } from '../macros/gm/giveHeroDice.mjs';
@@ -165,6 +167,10 @@ export class SdmActor extends Actor {
       isAnimatedNpc(this)
     ) {
       await applyAnimatedWear(this);
+    }
+    // ...and at 0 life the creature turns back into the item (done by the active Referee)
+    if (this.type === ActorType.NPC && changed.system?.life?.value !== undefined && isAnimatedNpc(this)) {
+      await deanimateFallenCreature(this);
     }
 
     // NPC: gaining XP gains levels (stats from its source table, or the generic one)
@@ -1362,19 +1368,20 @@ export class SdmActor extends Actor {
   async levelUpNpcTo(targetLevel, { syncExperience = false } = {}) {
     if (this.type !== ActorType.NPC) return;
     const npcData = this.system;
+    // Custom table: only the level changes, the Referee updates the stats
     const entry = getNPCDataByLevel(npcData.createdFromTable || '', targetLevel);
-    if (!entry) return;
-
-    const life = Math.max(npcData.life.max, entry.Life ?? 0);
-    const update = {
-      'system.level': targetLevel,
-      'system.life.value': life,
-      'system.life.max': life,
-      'system.morale': Math.max(npcData.morale, entry.Mor ?? 0),
-      'system.defense': Math.max(npcData.defense, entry.Def ?? 0),
-      'system.bonus': Math.max(npcData.bonus, entry.Bon ?? 0),
-      'system.damage': isNewFormulaBetter(npcData.damage, entry.Dmg) ? entry.Dmg : npcData.damage
-    };
+    const update = { 'system.level': targetLevel };
+    if (entry) {
+      const life = Math.max(npcData.life.max, entry.Life ?? 0);
+      Object.assign(update, {
+        'system.life.value': life,
+        'system.life.max': life,
+        'system.morale': Math.max(npcData.morale, entry.Mor ?? 0),
+        'system.defense': Math.max(npcData.defense, entry.Def ?? 0),
+        'system.bonus': Math.max(npcData.bonus, entry.Bon ?? 0),
+        'system.damage': isNewFormulaBetter(npcData.damage, entry.Dmg) ? entry.Dmg : npcData.damage
+      });
+    }
 
     if (syncExperience) {
       const minXp = getXpForLevel(targetLevel);
@@ -1654,7 +1661,12 @@ export class SdmActor extends Actor {
         icon: '<i class="fa-solid fa-ghost"></i>',
         visible: target => {
           const item = this.sheet._getEmbeddedDocument(target);
-          return game.user.isGM && isAnimatable(item) && !item.system.animation?.active;
+          return (
+            game.user.isGM &&
+            isAnimatable(item) &&
+            !item.system.animation?.active &&
+            !isAnimationBlocked(item)
+          );
         },
         onClick: async (event, target) => {
           await animateItem(this.sheet._getEmbeddedDocument(target), { app: this.sheet });
