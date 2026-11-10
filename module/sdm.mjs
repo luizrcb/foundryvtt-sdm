@@ -298,9 +298,15 @@ Hooks.on('createActor', async (actor, _options, _id) => {
 
   await addCompendiumItemToActor(actor, UnarmedDamageItem);
 
-  await actor.update({
-    'system.experience': '300'
-  });
+  // A new character starts at level 1: that level gives no upgrade to choose
+  await actor.update(
+    {
+      'system.experience': '300',
+      'system.upgrades_level': 1,
+      'system.pending_upgrades': 0
+    },
+    { sdmInvestXp: true }
+  );
 });
 
 registerActiveEffectLimit();
