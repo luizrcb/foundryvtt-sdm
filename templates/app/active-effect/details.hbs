@@ -6,7 +6,14 @@
 
     {{#if source.system.isItemMod}}
     {{formGroup fields.modType value=source.system.modType options=itemModTypes sort=true localize=true rootId=rootId}}
-    {{formGroup fields.modCost value=source.system.modCost rootId=rootId}}
+    <div class="form-group">
+      <label for="{{rootId}}-system.modCost">{{localize fields.modCost.label}}</label>
+      <div class="form-fields">
+        <span class="sdm-money-sign">{{localize 'SDM.CashSymbol'}}</span>
+        {{formInput fields.modCost value=source.system.modCost id=(concat rootId "-system.modCost")}}
+      </div>
+      {{#if fields.modCost.hint}}<p class="hint">{{localize fields.modCost.hint}}</p>{{/if}}
+    </div>
     {{formGroup fields.isHallmarkUpgrade value=source.system.isHallmarkUpgrade rootId=rootId}}
     {{/if}}
 
