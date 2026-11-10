@@ -1,5 +1,5 @@
 <li
-  class='item flexrow {{item.system.status}} {{#if (ne item.system.container "")}}inContainer{{/if}}'
+  class='item flexrow {{item.system.status}} {{#if (ne item.system.container "")}}inContainer{{/if}} {{#if (and item.system.animation.active (eq item.system.animation.mode "walks"))}}is-walked-away{{/if}}'
   data-item-id='{{item._id}}'
   data-drag='true'
   data-document-class='Item'

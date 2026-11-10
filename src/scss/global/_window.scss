@@ -1801,3 +1801,13 @@ input[type='radio']::after {
     opacity: 1;
   }
 }
+
+// Animated item that walked away: still listed, but out of the inventory
+.application.sdm .items-list li.item.is-walked-away {
+  opacity: 0.45;
+  filter: grayscale(1);
+
+  &:hover {
+    opacity: 0.75;
+  }
+}

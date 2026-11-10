@@ -1788,6 +1788,15 @@ input[type=radio]::after {
   opacity: 1;
 }
 
+.application.sdm .items-list li.item.is-walked-away {
+  opacity: 0.45;
+  filter: grayscale(1);
+}
+
+.application.sdm .items-list li.item.is-walked-away:hover {
+  opacity: 0.75;
+}
+
 .grid,
 .grid-2col {
   display: grid;
