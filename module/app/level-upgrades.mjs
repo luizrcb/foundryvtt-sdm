@@ -2,6 +2,7 @@ import { ActorType, GearType, ItemType } from '../helpers/constants.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 import { addRandomTrait } from '../macros/gm/characterGenerator.mjs';
 import { removeCashFromActor } from '../macros/gm/giveCash.mjs';
+import { syncAnimationLevel } from '../helpers/animatedItems.mjs';
 
 /**
  * Level-up upgrades. Every level gained leaves one pending upgrade on the character or the
@@ -263,6 +264,8 @@ export async function openHallmarkUpgradeDialog(item) {
       { key: 'system.weapon.damage.versatile', type: 'custom', value: 'boost', priority: 60, phase: 'initial' }
     ]);
     upgrade = $l10n('SDM.Upgrade.Damage');
+    // An animated weapon's creature fights with the improved damage
+    await syncAnimationLevel(item);
   } else if (data.choice === 'defense') {
     const key = kinds.armor ? 'system.armor.value' : 'system.ward.value';
     await addHallmarkEffectChanges(item, [{ key, type: 'add', value: 1, priority: 60, phase: 'initial' }]);
