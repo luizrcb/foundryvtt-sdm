@@ -1989,3 +1989,18 @@ input[type='radio']::after {
     min-width: 0;
   }
 }
+
+// Item effects tab: how effects reference this item
+.sdm-item-reference {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 8px 4px 0;
+
+  code {
+    user-select: all;
+  }
+  a {
+    cursor: pointer;
+  }
+}

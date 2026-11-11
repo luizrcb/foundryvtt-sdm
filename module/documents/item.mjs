@@ -1,3 +1,4 @@
+import { resolveEffectReferences } from '../helpers/effectReferences.mjs';
 import { getLevel } from '../helpers/actorUtils.mjs';
 import {
   healAnimatedCreature,
@@ -435,26 +436,8 @@ export class SdmItem extends Item {
         change.type = 'override';
       }
 
-      if (typeof change.value === 'string') {
-        const resolve = (scope, key) => {
-          const target = scope === 'actor' ? this.actor : this;
-          return target ? foundry.utils.getProperty(target, key) : undefined;
-        };
-
-        const single = change.value.match(/^@(actor|item)\.([\w.\[\]'"]+)$/);
-        if (single) {
-          const v = resolve(single[1], single[2]);
-          if (v !== undefined) change.value = v;
-        } else {
-          change.value = change.value.replace(
-            /@(actor|item)\.([\w.\[\]'"]+)/g,
-            (full, scope, key) => {
-              const v = resolve(scope, key);
-              return v === undefined ? full : String(v);
-            }
-          );
-        }
-      }
+      // @actor / @item / @items.<identifier or id> references
+      change.value = resolveEffectReferences(change.value, { actor: this.actor, item: this, effect: change.effect });
 
       const applied = ActiveEffect.applyChange(this, change, { replacementData: rollData });
       Object.assign(overrides, applied);

@@ -1988,6 +1988,21 @@ input[type=radio]::after {
   min-width: 0;
 }
 
+.sdm-item-reference {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin: 8px 4px 0;
+}
+
+.sdm-item-reference code {
+  user-select: all;
+}
+
+.sdm-item-reference a {
+  cursor: pointer;
+}
+
 .grid,
 .grid-2col {
   display: grid;

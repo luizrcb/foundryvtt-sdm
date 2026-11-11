@@ -54,4 +54,11 @@
     </ol>
     {{/each}}
   </ol>
+  {{#if itemReference}}
+  <p class="sdm-item-reference hint">
+    {{localize 'SDM.Effect.ItemReference'}}
+    <code>{{itemReference}}</code>
+    <a data-action="copyItemReference" data-tooltip="{{localize 'SDM.Effect.CopyItemReference'}}"><i class="fa-solid fa-copy"></i></a>
+  </p>
+  {{/if}}
 </section>

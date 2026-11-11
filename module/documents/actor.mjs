@@ -1,3 +1,4 @@
+import { resolveEffectReferences } from '../helpers/effectReferences.mjs';
 import {
   BASE_DEFENSE_VALUE,
   getLevel,
@@ -444,29 +445,13 @@ export class SdmActor extends Actor {
     for (const change of changes) {
       if (!change.key) continue;
 
-      if (typeof change.value === 'string') {
-        const itemParent = change.effect?.parent;
-        const isItem = itemParent?.documentName === 'Item';
-
-        const resolve = (scope, key) => {
-          const target = scope === 'actor' ? this : scope === 'item' && isItem ? itemParent : null;
-          return target ? foundry.utils.getProperty(target, key) : undefined;
-        };
-
-        const single = change.value.match(/^@(actor|item)\.([\w.\[\]'"]+)$/);
-        if (single) {
-          const v = resolve(single[1], single[2]);
-          if (v !== undefined) change.value = v;
-        } else {
-          change.value = change.value.replace(
-            /@(actor|item)\.([\w.\[\]'"]+)/g,
-            (full, scope, key) => {
-              const v = resolve(scope, key);
-              return v === undefined ? full : String(v);
-            }
-          );
-        }
-      }
+      // @actor / @item / @items.<identifier or id> references
+      const itemParent = change.effect?.parent;
+      change.value = resolveEffectReferences(change.value, {
+        actor: this,
+        item: itemParent?.documentName === 'Item' ? itemParent : null,
+        effect: change.effect
+      });
 
       const applied = ActiveEffect.applyChange(this, change, { replacementData: rollData });
       Object.assign(overrides, applied);

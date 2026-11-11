@@ -34,6 +34,7 @@
 - Fixed the danger roll of a dangerous power used by an NPC (for example an animated item): NPCs roll with their bonus
 - **Caravan free space**: next to Consume Supplies, the inventory shows the free space as whole sacks + stones (e.g. "Free: 3 sk + 4 st")
 - **Automate Caravan Transport** is now on by default
+- **Active effect references**: effects on items and on actors can use `@actor.<path>`, `@item.<path>` (with or without `system.`) and `@items.<identifier>.<path>` (the highest value among the actor's items with that identifier, 0 if none) or `@items.<id>.<path>` (one exact item). An item's identifier is the slug of its name (its original English name when translated); its Effects tab shows it with a copy button
 ## v1.10.0
 
 - Active effect expiry now uses Foundry V14's built-in effect registry instead of the system's own round/turn check

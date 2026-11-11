@@ -2,6 +2,7 @@ import PowerDataModel from '../data/power-data.mjs';
 import { SdmItem } from '../documents/item.mjs';
 import { createNPCByLevel, getActorOptions, getXpToNextLevel } from '../helpers/actorUtils.mjs';
 import { openProgressLog } from '../app/progress-log.mjs';
+import { getItemIdentifier } from '../helpers/effectReferences.mjs';
 import { openHallmarkUpgradeDialog } from '../app/level-upgrades.mjs';
 import { makeNpcFriendly } from '../items/petItem.mjs';
 import {
@@ -93,6 +94,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       animateItem: this._onAnimateItem,
       chooseHallmarkUpgrade: this._onChooseHallmarkUpgrade,
       showProgressLog: this._onShowProgressLog,
+      copyItemReference: this._onCopyItemReference,
       requestAnimation: this._onRequestAnimation,
       deanimateItem: this._onDeanimateItem,
       fillAnimationFromTable: this._onFillAnimationFromTable,
@@ -241,6 +243,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       isGM: game.user.isGM,
       hallmarkXpToNextLevel: getXpToNextLevel(this.item.system.hallmark?.experience ?? 0),
       // Mods gained as hallmark upgrades (outside the mod slots)
+      // How effects reference this item: @items.<identifier>.<path>
+      itemReference: getItemIdentifier(this.item) ? `@items.${getItemIdentifier(this.item)}` : '',
       hallmarkUpgradeMods: this.item.effects.filter(e => e.system?.isItemMod && e.system?.isHallmarkUpgrade).map(e => e.name)
     };
 
@@ -895,6 +899,14 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
 
   static async _onRequestAnimation() {
     requestAnimation(this.item);
+  }
+
+  /** Copy "@items.<identifier>" for use in active effect values. */
+  static async _onCopyItemReference(event) {
+    event.preventDefault();
+    const reference = `@items.${getItemIdentifier(this.item)}`;
+    await game.clipboard.copyPlainText(reference);
+    ui.notifications.info($fmt('SDM.Effect.ItemReferenceCopied', { reference }));
   }
 
   /** The owner's progress history, only this hallmark's entries. */
