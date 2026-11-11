@@ -241,13 +241,27 @@
 
 // Album tab: a power's overcharge and description take only the height of their text
 .application.sheet.sdm.item .sdm-album prose-mirror {
+  position: relative;
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
   height: auto;
   max-height: none;
-  min-height: 0;
+  // Room for the edit button even when the text is empty
+  min-height: 2.2em;
+  padding-right: 2.2em;
   overflow: visible;
+
+  // The edit button is always visible (it only shows on hover otherwise, and an empty field has no area to hover)
+  > button.toggle,
+  > .toggle {
+    position: absolute;
+    top: 0;
+    right: 0;
+    display: flex;
+    opacity: 1;
+    visibility: visible;
+  }
 
   .editor-container,
   .editor-content,

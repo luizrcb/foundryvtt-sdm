@@ -426,13 +426,25 @@
 }
 
 .application.sheet.sdm.item .sdm-album prose-mirror {
+  position: relative;
   display: flex;
   flex-direction: column;
   flex: 0 0 auto;
   height: auto;
   max-height: none;
-  min-height: 0;
+  min-height: 2.2em;
+  padding-right: 2.2em;
   overflow: visible;
+}
+
+.application.sheet.sdm.item .sdm-album prose-mirror > button.toggle,
+.application.sheet.sdm.item .sdm-album prose-mirror > .toggle {
+  position: absolute;
+  top: 0;
+  right: 0;
+  display: flex;
+  opacity: 1;
+  visibility: visible;
 }
 
 .application.sheet.sdm.item .sdm-album prose-mirror .editor-container,
