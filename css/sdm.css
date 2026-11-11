@@ -1763,6 +1763,21 @@ input[type=radio]::after {
   gap: 4px;
 }
 
+.sdm-upgrade .sdm-upgrade-new-trait {
+  display: flex;
+  gap: 4px;
+}
+
+.sdm-upgrade .sdm-upgrade-new-trait input {
+  flex: 1 1 0;
+  min-width: 0;
+}
+
+.sdm-upgrade .sdm-upgrade-new-trait select {
+  flex: 0 0 auto;
+  width: auto;
+}
+
 .sdm-upgrade .sdm-upgrade-drop {
   padding: 10px;
   border: 2px dashed var(--color-border, #999);

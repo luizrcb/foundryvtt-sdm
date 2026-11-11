@@ -1778,6 +1778,19 @@ input[type='radio']::after {
     flex-direction: column;
     gap: 4px;
   }
+  .sdm-upgrade-new-trait {
+    display: flex;
+    gap: 4px;
+
+    input {
+      flex: 1 1 0;
+      min-width: 0;
+    }
+    select {
+      flex: 0 0 auto;
+      width: auto;
+    }
+  }
   .sdm-upgrade-drop {
     padding: 10px;
     border: 2px dashed var(--color-border, #999);

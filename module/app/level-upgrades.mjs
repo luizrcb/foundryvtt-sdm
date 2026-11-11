@@ -1,4 +1,4 @@
-import { ActorType, GearType, ItemType } from '../helpers/constants.mjs';
+import { ActorType, GearType, ItemType, TraitType } from '../helpers/constants.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 import { addRandomTrait } from '../macros/gm/characterGenerator.mjs';
 import { removeCashFromActor } from '../macros/gm/giveCash.mjs';
@@ -33,6 +33,12 @@ async function chat(actor, text) {
 /* -------------------------------------------- */
 /*  Character                                   */
 /* -------------------------------------------- */
+
+/** Trait subtypes a new trait can be created as: a plain trait, a power or a pet. */
+const NEW_TRAIT_TYPES = ['', TraitType.POWER, TraitType.PET];
+const traitTypeLabel = type => $l10n(type ? CONFIG.SDM.traitType[type] : 'TYPE.Trait');
+/** "Name" for a plain trait, "Name (Power)" for the other subtypes. */
+const traitText = (name, type) => (type ? `${name} (${traitTypeLabel(type)})` : name);
 
 /** Traits that can be improved: skills below master, and plain traits (worth a skilled skill). */
 function improvableTraits(actor) {
@@ -77,7 +83,12 @@ export async function openCharacterUpgradeDialog(actor) {
         <div class="sdm-upgrade-drop" data-upgrade-drop>${$l10n('SDM.Upgrade.DropTrait')}</div>
         <input type="hidden" name="traitUuid" />
         <label><input type="checkbox" name="randomTrait" /> ${$l10n('SDM.Upgrade.RandomTrait')}</label>
-        <input type="text" name="newTraitName" placeholder="${esc($l10n('SDM.Upgrade.NewTraitName'))}" />
+        <div class="sdm-upgrade-new-trait">
+          <input type="text" name="newTraitName" placeholder="${esc($l10n('SDM.Upgrade.NewTraitName'))}" />
+          <select name="newTraitType">${NEW_TRAIT_TYPES.map(
+            type => `<option value="${type}">${esc(traitTypeLabel(type))}</option>`
+          ).join('')}</select>
+        </div>
       </div>
       <label class="sdm-upgrade-choice"><input type="radio" name="choice" value="improve" ${improvable.length ? '' : 'disabled'} /> ${$l10n('SDM.Upgrade.ImproveTrait')}</label>
       <div class="sdm-upgrade-detail">
@@ -103,6 +114,7 @@ export async function openCharacterUpgradeDialog(actor) {
           traitUuid: f.traitUuid?.value,
           randomTrait: f.randomTrait?.checked,
           newTraitName: f.newTraitName?.value?.trim(),
+          newTraitType: f.newTraitType?.value ?? '',
           improveId: f.improveId?.value,
           ability: f.ability?.value
         };
@@ -197,7 +209,7 @@ function bindModDrop(root, item, free) {
   });
 }
 
-/** Accept a trait dragged from a compendium, the sidebar or another sheet. */
+/** Accept a trait (any subtype: skill, power, pet...) dragged from a compendium, the sidebar or another sheet. */
 function bindTraitDrop(root) {
   const zone = root?.querySelector('[data-upgrade-drop]');
   const input = root?.querySelector('input[name="traitUuid"]');
@@ -235,8 +247,11 @@ async function applyCharacterUpgrade(actor, data) {
     }
     // A brand new trait: created empty with that name, details filled in later
     if (!data.traitUuid && data.newTraitName) {
-      await actor.createEmbeddedDocuments('Item', [{ name: data.newTraitName, type: ItemType.TRAIT }]);
-      return $fmt('SDM.Upgrade.ChatNewTrait', { trait: data.newTraitName });
+      const type = NEW_TRAIT_TYPES.includes(data.newTraitType) ? data.newTraitType : '';
+      await actor.createEmbeddedDocuments('Item', [
+        { name: data.newTraitName, type: ItemType.TRAIT, system: { type } }
+      ]);
+      return $fmt('SDM.Upgrade.ChatNewTrait', { trait: traitText(data.newTraitName, type) });
     }
     const source = data.traitUuid ? await fromUuid(data.traitUuid) : null;
     if (!source) {
@@ -246,7 +261,7 @@ async function applyCharacterUpgrade(actor, data) {
     const itemData = source.toObject();
     itemData.name = itemData.name.replace(/^\d+\.\s*/, '');
     await actor.createEmbeddedDocuments('Item', [itemData]);
-    return $fmt('SDM.Upgrade.ChatNewTrait', { trait: itemData.name });
+    return $fmt('SDM.Upgrade.ChatNewTrait', { trait: traitText(itemData.name, itemData.system?.type ?? '') });
   }
 
   if (data.choice === 'improve') {
