@@ -109,7 +109,10 @@ export async function openCharacterUpgradeDialog(actor) {
     position: { width: 480 },
     content,
     rejectClose: false,
-    render: (event, dialog) => bindTraitDrop(dialog.element),
+    render: (event, dialog) => {
+      bindTraitDrop(dialog.element);
+      bindChoiceFocus(dialog.element);
+    },
     ok: {
       label: $l10n('SDM.Upgrade.Confirm'),
       icon: 'fa-solid fa-check',
@@ -213,6 +216,22 @@ function bindModDrop(root, item, free) {
     const radio = root.querySelector('input[name="choice"][value="mod"]');
     if (radio) radio.checked = true;
   });
+}
+
+/** Using a field of an option (focus, opening a dropdown, clicking) selects that option. */
+function bindChoiceFocus(root) {
+  for (const detail of root?.querySelectorAll('.sdm-upgrade-detail') ?? []) {
+    // The option's radio is in the closest choice label before its fields
+    let label = detail.previousElementSibling;
+    while (label && !label.classList.contains('sdm-upgrade-choice')) label = label.previousElementSibling;
+    const radio = label?.querySelector('input[type="radio"]');
+    if (!radio) continue;
+    const select = () => {
+      if (!radio.disabled) radio.checked = true;
+    };
+    detail.addEventListener('focusin', select);
+    detail.addEventListener('pointerdown', select);
+  }
 }
 
 /** Accept a trait (any subtype: skill, power, pet...) dragged from a compendium, the sidebar or another sheet. */
@@ -358,7 +377,10 @@ export async function openHallmarkUpgradeDialog(item) {
     position: { width: 480 },
     content,
     rejectClose: false,
-    render: (event, dialog) => bindModDrop(dialog.element, item, free),
+    render: (event, dialog) => {
+      bindModDrop(dialog.element, item, free);
+      bindChoiceFocus(dialog.element);
+    },
     ok: {
       label: $l10n('SDM.Upgrade.Confirm'),
       icon: 'fa-solid fa-check',
