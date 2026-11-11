@@ -15,7 +15,7 @@
         <a class="sdm-album-cast" data-action="castPower" data-index="{{@index}}"
           data-tooltip="{{localize 'SDM.RollType' type=(localize 'SDM.Power')}}"><i class="fa-solid fa-dice-d20"></i></a>
         {{/if}}
-        <span class="sdm-album-entry-level">{{power.level}}</span>
+        <span class="sdm-album-entry-level" data-tooltip="{{localize 'SDM.PowerLevel'}}">{{power.level}}</span>
       </li>
       {{/each}}
     </ol>
