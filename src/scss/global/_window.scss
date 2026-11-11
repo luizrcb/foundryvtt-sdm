@@ -1843,19 +1843,99 @@ input[type='radio']::after {
 }
 
 // Progress history dialog
-.sdm-progress-group {
-  margin-bottom: 10px;
+.sdm-progress-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-bottom: 6px;
 
-  header {
+  button {
+    flex: 0 0 auto;
+    width: auto;
+    min-height: 0;
+    padding: 1px 8px;
+    font-size: 12px;
+    line-height: 20px;
+  }
+}
+
+// All groups scroll inside the window, so the footer stays in view
+.sdm-progress-groups {
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.sdm-progress-group {
+  margin-bottom: 6px;
+  border: 1px solid var(--color-border, #999);
+  border-radius: 6px;
+  overflow: hidden;
+
+  > summary {
     display: flex;
     align-items: center;
-    justify-content: space-between;
     gap: 8px;
-    padding: 2px 4px;
-    border-bottom: 1px solid var(--color-border, #999);
+    padding: 6px 8px;
+    cursor: pointer;
+    list-style: none;
+    background: rgba(0, 0, 0, 0.05);
+
+    &::-webkit-details-marker {
+      display: none;
+    }
+    &:hover {
+      background: rgba(0, 0, 0, 0.1);
+    }
+  }
+  .sdm-progress-chevron {
+    flex: 0 0 auto;
+    width: 12px;
+    font-size: 11px;
+    opacity: 0.7;
+    transition: transform 0.15s ease;
+  }
+  &[open] .sdm-progress-chevron {
+    transform: rotate(90deg);
+  }
+  .sdm-progress-icon {
+    flex: 0 0 auto;
+    width: 16px;
+    text-align: center;
+    opacity: 0.8;
+  }
+  .sdm-progress-heading {
+    flex: 1 1 auto;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  .sdm-progress-name {
+    font-weight: 700;
+  }
+  .sdm-progress-count {
+    display: inline-block;
+    margin-left: 4px;
+    padding: 0 6px;
+    border-radius: 10px;
+    font-size: 11px;
+    font-weight: 400;
+    background: rgba(0, 0, 0, 0.12);
+  }
+  // The latest entry, shown in the title while the group is closed
+  .sdm-progress-latest {
+    font-size: 11px;
+    opacity: 0.75;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+  &[open] .sdm-progress-latest {
+    display: none;
   }
   .sdm-progress-log {
-    max-height: 240px;
+    max-height: 220px;
+    padding: 0 8px;
   }
 }
 

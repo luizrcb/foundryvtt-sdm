@@ -1830,21 +1830,108 @@ input[type=radio]::after {
   opacity: 0.75;
 }
 
-.sdm-progress-group {
-  margin-bottom: 10px;
+.sdm-progress-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  gap: 6px;
+  margin-bottom: 6px;
 }
 
-.sdm-progress-group header {
+.sdm-progress-toolbar button {
+  flex: 0 0 auto;
+  width: auto;
+  min-height: 0;
+  padding: 1px 8px;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.sdm-progress-groups {
+  max-height: 60vh;
+  overflow-y: auto;
+  padding-right: 2px;
+}
+
+.sdm-progress-group {
+  margin-bottom: 6px;
+  border: 1px solid var(--color-border, #999);
+  border-radius: 6px;
+  overflow: hidden;
+}
+
+.sdm-progress-group > summary {
   display: flex;
   align-items: center;
-  justify-content: space-between;
   gap: 8px;
-  padding: 2px 4px;
-  border-bottom: 1px solid var(--color-border, #999);
+  padding: 6px 8px;
+  cursor: pointer;
+  list-style: none;
+  background: rgba(0, 0, 0, 0.05);
+}
+
+.sdm-progress-group > summary::-webkit-details-marker {
+  display: none;
+}
+
+.sdm-progress-group > summary:hover {
+  background: rgba(0, 0, 0, 0.1);
+}
+
+.sdm-progress-group .sdm-progress-chevron {
+  flex: 0 0 auto;
+  width: 12px;
+  font-size: 11px;
+  opacity: 0.7;
+  transition: transform 0.15s ease;
+}
+
+.sdm-progress-group[open] .sdm-progress-chevron {
+  transform: rotate(90deg);
+}
+
+.sdm-progress-group .sdm-progress-icon {
+  flex: 0 0 auto;
+  width: 16px;
+  text-align: center;
+  opacity: 0.8;
+}
+
+.sdm-progress-group .sdm-progress-heading {
+  flex: 1 1 auto;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.sdm-progress-group .sdm-progress-name {
+  font-weight: 700;
+}
+
+.sdm-progress-group .sdm-progress-count {
+  display: inline-block;
+  margin-left: 4px;
+  padding: 0 6px;
+  border-radius: 10px;
+  font-size: 11px;
+  font-weight: 400;
+  background: rgba(0, 0, 0, 0.12);
+}
+
+.sdm-progress-group .sdm-progress-latest {
+  font-size: 11px;
+  opacity: 0.75;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sdm-progress-group[open] .sdm-progress-latest {
+  display: none;
 }
 
 .sdm-progress-group .sdm-progress-log {
-  max-height: 240px;
+  max-height: 220px;
+  padding: 0 8px;
 }
 
 .sdm-log-undo {

@@ -444,6 +444,8 @@
   "SDM.NpcTable.Save": "Salvar",
   "SDM.NpcTable.Title": "Tabela de NPC",
   "SDM.PlaceCrewMembersOf": "Posicionar {type}",
+  "SDM.ProgressLog.CollapseAll": "Recolher tudo",
+  "SDM.ProgressLog.ExpandAll": "Expandir tudo",
   "SDM.ProgressLog.Empty": "Nada ainda.",
   "SDM.ProgressLog.Returned": "{actor} devolveu {xp} XP do Jogador para {donor}.",
   "SDM.ProgressLog.DonorGone": "Esta doação não pode mais ser devolvida.",

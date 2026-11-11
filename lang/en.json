@@ -444,6 +444,8 @@
   "SDM.NpcTable.Save": "Save",
   "SDM.NpcTable.Title": "NPC Table",
   "SDM.PlaceCrewMembersOf": "Place {type}",
+  "SDM.ProgressLog.CollapseAll": "Collapse all",
+  "SDM.ProgressLog.ExpandAll": "Expand all",
   "SDM.ProgressLog.Empty": "Nothing yet.",
   "SDM.ProgressLog.Returned": "{actor} gave {xp} Player XP back to {donor}.",
   "SDM.ProgressLog.DonorGone": "This donation can no longer be given back.",

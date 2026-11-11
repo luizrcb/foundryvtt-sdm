@@ -61,6 +61,27 @@ export function subjectOf(entry) {
   return 'self';
 }
 
+/** Open groups of each history (by actor and filter), kept while the session lasts. */
+const OPEN_GROUPS = new Map();
+
+function getOpenState(actor, ordered, subject) {
+  const key = `${actor.uuid}|${subject ?? ''}`;
+  if (!OPEN_GROUPS.has(key)) {
+    // First time: everything open when there are few groups, otherwise the latest changed one
+    const latest = [...ordered].sort(([, a], [, b]) => b.at(-1).time - a.at(-1).time)[0]?.[0];
+    OPEN_GROUPS.set(key, new Set(ordered.length <= 2 ? ordered.map(([k]) => k) : [latest].filter(Boolean)));
+  }
+  return OPEN_GROUPS.get(key);
+}
+
+function subjectIcon(subject) {
+  if (subject === 'self') return 'fa-solid fa-user';
+  if (subject === DONATED) return 'fa-solid fa-hand-holding-heart';
+  if (subject === RECEIVED) return 'fa-solid fa-gift';
+  if (subject.startsWith('hallmark:')) return 'fa-solid fa-star';
+  return 'fa-solid fa-paw';
+}
+
 function subjectLabel(actor, subject, entries) {
   if (subject === 'self') return actor.name;
   if (subject === DONATED) return $l10n('SDM.ProgressLog.GroupDonated');
@@ -90,10 +111,14 @@ export async function openProgressLog(actor, { subject } = {}) {
   });
 
   const isGM = game.user.isGM;
+  const when = time => new Date(time).toLocaleString(game.i18n.lang, { dateStyle: 'short', timeStyle: 'short' });
   const row = (entry, latest, extra = '') => `<li class="${latest ? 'is-latest' : ''}">
-      <span class="sdm-log-time">${new Date(entry.time).toLocaleString(game.i18n.lang)}</span>
+      <span class="sdm-log-time">${when(entry.time)}</span>
       <span class="sdm-log-text">${esc(entry.text)}</span>${extra}
     </li>`;
+
+  // Open groups: remembered while the session lasts; at first only the latest changed group (or all if few)
+  const openState = getOpenState(actor, ordered, subject);
 
   const sections = ordered.map(([key, entries]) => {
     const latestFirst = [...entries].reverse();
@@ -116,34 +141,72 @@ export async function openProgressLog(actor, { subject } = {}) {
     } else {
       rows = latestFirst.map((entry, index) => row(entry, key !== DONATED && index === 0)).join('');
       if (isGM && key !== DONATED) {
-        undo = `<button type="button" class="sdm-log-undo" data-undo="${esc(key)}"><i class="fa-solid fa-rotate-left"></i> ${$l10n(
-          'SDM.ProgressLog.UndoLast'
-        )}</button>`;
+        undo = `<button type="button" class="sdm-log-undo" data-undo="${esc(key)}" data-tooltip="${esc(
+          latestFirst[0].text
+        )}"><i class="fa-solid fa-rotate-left"></i> ${$l10n('SDM.ProgressLog.UndoLast')}</button>`;
       }
     }
-    return `<section class="sdm-progress-group">
-        <header><strong>${esc(subjectLabel(actor, key, entries))}</strong>${undo}</header>
+    const latest = latestFirst[0];
+    return `<details class="sdm-progress-group" data-subject="${esc(key)}" ${openState.has(key) ? 'open' : ''}>
+        <summary>
+          <i class="sdm-progress-chevron fa-solid fa-chevron-right"></i>
+          <i class="sdm-progress-icon ${subjectIcon(key)}"></i>
+          <span class="sdm-progress-heading">
+            <span class="sdm-progress-name">${esc(subjectLabel(actor, key, entries))}
+              <span class="sdm-progress-count">${entries.length}</span></span>
+            <span class="sdm-progress-latest">${when(latest.time)} · ${esc(latest.text)}</span>
+          </span>
+          ${undo}
+        </summary>
         <ol class="sdm-progress-log">${rows}</ol>
-      </section>`;
+      </details>`;
   });
 
+  const toolbar =
+    sections.length > 1
+      ? `<div class="sdm-progress-toolbar">
+          <button type="button" data-expand="all"><i class="fa-solid fa-angles-down"></i> ${$l10n('SDM.ProgressLog.ExpandAll')}</button>
+          <button type="button" data-expand="none"><i class="fa-solid fa-angles-up"></i> ${$l10n('SDM.ProgressLog.CollapseAll')}</button>
+        </div>`
+      : '';
   const content = sections.length
-    ? `${sections.join('')}${isGM ? `<p class="hint">${$l10n('SDM.ProgressLog.UndoHint')}</p>` : ''}`
+    ? `${toolbar}<div class="sdm-progress-groups">${sections.join('')}</div>${
+        isGM ? `<p class="hint">${$l10n('SDM.ProgressLog.UndoHint')}</p>` : ''
+      }`
     : `<ol class="sdm-progress-log"><li class="hint">${$l10n('SDM.ProgressLog.Empty')}</li></ol>`;
 
   let picked = null;
   await DialogV2.wait({
     window: { title: $fmt('SDM.ProgressLog.Title', { name: actor.name }), icon: 'fa-solid fa-clock-rotate-left' },
-    position: { width: 560 },
+    position: { width: 600 },
+    classes: ['sdm-progress-dialog'],
     content,
     buttons: [{ action: 'close', label: $l10n('Close'), icon: 'fa-solid fa-xmark', default: true }],
     rejectClose: false,
     render: (event, dialog) => {
       const app = dialog ?? event?.target;
-      app?.element?.querySelectorAll('[data-undo], [data-return]').forEach(button =>
-        button.addEventListener('click', () => {
+      const root = app?.element;
+      if (!root) return;
+      root.querySelectorAll('[data-undo], [data-return]').forEach(button =>
+        button.addEventListener('click', clickEvent => {
+          // A button in a group's title must not open or close the group
+          clickEvent.preventDefault();
+          clickEvent.stopPropagation();
           picked = { undo: button.dataset.undo, return: button.dataset.return };
           app.close();
+        })
+      );
+      const groups = [...root.querySelectorAll('details.sdm-progress-group')];
+      groups.forEach(group =>
+        group.addEventListener('toggle', () => {
+          if (group.open) openState.add(group.dataset.subject);
+          else openState.delete(group.dataset.subject);
+        })
+      );
+      root.querySelectorAll('[data-expand]').forEach(button =>
+        button.addEventListener('click', () => {
+          const open = button.dataset.expand === 'all';
+          groups.forEach(group => (group.open = open));
         })
       );
     }
