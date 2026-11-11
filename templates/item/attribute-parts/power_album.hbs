@@ -1,5 +1,5 @@
 <section class='tab attributes {{tab.cssClass}}' data-group='primary' data-tab='album'>
-{{#if (eq item.system.type 'power_album')}}
+{{#if (sdmHasAlbum item)}}
 <div class="resource grid-span-3">
   <ol class='items-list power-album'>
     <li class='item flexrow items-header'>
