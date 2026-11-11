@@ -741,6 +741,42 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     block.querySelector('prose-mirror button.toggle, prose-mirror .toggle')?.click();
   }
 
+  /** @override */
+  async _onFirstRender(context, options) {
+    await super._onFirstRender(context, options);
+    // Right-click on a power of the album list
+    this._createContextMenu(this._getAlbumContextOptions, '.sdm-album-entry', {
+      hookName: 'getAlbumPowerContextOptions',
+      parentClassHooks: false,
+      fixed: true
+    });
+  }
+
+  /** Album list menu: duplicate and delete (owner), extract (Referee). */
+  _getAlbumContextOptions() {
+    const run = (handler, target) => handler.call(this, new Event('click'), target);
+    return [
+      {
+        label: 'SDM.DuplicatePower',
+        icon: '<i class="fa-solid fa-clone"></i>',
+        visible: () => this.isEditable,
+        onClick: (event, target) => run(SdmItemSheet._onDuplicatePower, target)
+      },
+      {
+        label: 'SDM.ExtractPower',
+        icon: '<i class="fa-solid fa-file-import"></i>',
+        visible: () => game.user.isGM,
+        onClick: (event, target) => run(SdmItemSheet._onExtractPower, target)
+      },
+      {
+        label: 'SDM.DeletePower',
+        icon: '<i class="fa-solid fa-trash"></i>',
+        visible: () => this.isEditable,
+        onClick: (event, target) => run(SdmItemSheet._onDeletePower, target)
+      }
+    ];
+  }
+
   /** Album tab: drop zone highlight and keyboard navigation (↑/↓ or W/S). */
   #bindAlbum() {
     const album = this.element.querySelector('.sdm-album');
