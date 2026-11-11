@@ -10,7 +10,7 @@
     "resources": "",
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p>You served in the not-wars at the edge of time. You know the weapons and armors of regulation; wandgun and shield, blade and combat suit. You gain +2 defense (+4 at expert, +6 at master). <em>Update de <strong>Defense Bonus</strong> active effect when this skill ranks up.</em></p><p>Also, when an ally stands next to you, they add your charisma to their defense score.</p><p><em>Your allies should use an active effect to boost their defense with your current charisma value. (Edit The <strong>Ally Defense Bonus</strong> active effect and leave it inactive in your sheet. Drag and drop the <strong>Ally Defense Bonu</strong>s active effect to your Ally character sheet).</em></p>",
+    "description": "<p>You served in the not-wars at the edge of time. You know the weapons and armors of regulation; wandgun and shield, blade and combat suit. You gain +2 defense (+4 at expert, +6 at master).</p><p>Also, when an ally stands next to you, they add your charisma to their defense score.</p><p><em>Your allies should use an active effect to boost their defense with your current charisma value. (Edit The <strong>Ally Defense Bonus</strong> active effect and leave it inactive in your sheet. Drag and drop the <strong>Ally Defense Bonu</strong>s active effect to your Ally character sheet).</em></p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -76,7 +76,7 @@
         "changes": [
           {
             "key": "system.defense_bonus",
-            "value": 2,
+            "value": "2*@item.skill.rank",
             "priority": null,
             "type": "add",
             "phase": "initial"

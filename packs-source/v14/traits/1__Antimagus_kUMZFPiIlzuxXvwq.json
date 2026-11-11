@@ -10,7 +10,7 @@
     "resources": "",
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p>Your very blood rebels against the false gods' trickery. Gain 2 life per level, but the price you pay for oldtech and fantascience spells is doubled.</p><p><em>Update the <strong>Bonus Life</strong> active effect every time your character levels up.</em></p>",
+    "description": "<p>Your very blood rebels against the false gods' trickery. Gain 2 life per level, but the price you pay for oldtech and fantascience spells is doubled.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -135,7 +135,7 @@
         "expiry": null,
         "expired": false
       },
-      "description": "<p>Update this effect change value every time your character level goes up!</p>",
+      "description": "",
       "tint": "#ffffff",
       "transfer": true,
       "statuses": [],

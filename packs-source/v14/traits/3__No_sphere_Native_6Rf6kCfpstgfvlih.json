@@ -10,7 +10,7 @@
     "resources": "",
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p>You were born in a generation hooked to the noösphere. You can access and use it, but you also add your skill bonus to all defenses in the noösphere... and against daemons in general.</p><p><em>Update the <strong>Noösphere Native</strong> active effect when this skill levels up. Activate the <strong>Noösphere Native</strong> active effect when in the noösphere.</em></p>",
+    "description": "<p>You were born in a generation hooked to the noösphere. You can access and use it, but you also add your skill bonus to all defenses in the noösphere... and against daemons in general.</p><p><em>Activate the <strong>Noösphere Native</strong> active effect when in the noösphere.</em></p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -75,21 +75,21 @@
         "changes": [
           {
             "key": "system.defense_bonus",
-            "value": 3,
+            "value": "3*@item.skill.rank",
             "priority": null,
             "type": "add",
             "phase": "initial"
           },
           {
             "key": "system.mental_defense_bonus",
-            "value": 3,
+            "value": "3*@item.skill.rank",
             "priority": null,
             "type": "add",
             "phase": "initial"
           },
           {
             "key": "system.social_defense_bonus",
-            "value": 3,
+            "value": "3*@item.skill.rank",
             "priority": null,
             "type": "add",
             "phase": "initial"

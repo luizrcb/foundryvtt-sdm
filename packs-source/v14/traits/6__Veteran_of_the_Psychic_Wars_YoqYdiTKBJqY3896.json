@@ -10,7 +10,7 @@
     "resources": "",
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p>You fought in the mind-stealer wars with lazgun and vibro machete. Add your skill bonus to saves against enchantments and mind control. Also, take half damage from ordinary mental blows, but double from mental critical hits.</p><p>Enable the <em>Veteran of the Psychic Wars</em> Active Effect to get the bonus to saves.  Edit the bonus value</p>",
+    "description": "<p>You fought in the mind-stealer wars with lazgun and vibro machete. Add your skill bonus to saves against enchantments and mind control. Also, take half damage from ordinary mental blows, but double from mental critical hits.</p><p>Enable the <em>Veteran of the Psychic Wars</em> Active Effect to get the bonus to saves.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -76,7 +76,7 @@
           {
             "key": "system.all_save_bonus",
             "type": "add",
-            "value": 3,
+            "value": "3*@item.skill.rank",
             "priority": null,
             "phase": "initial"
           }

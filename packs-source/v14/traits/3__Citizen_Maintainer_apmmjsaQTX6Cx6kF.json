@@ -76,7 +76,7 @@
         "changes": [
           {
             "key": "system.all_save_bonus",
-            "value": 3,
+            "value": "3*@item.skill.rank",
             "priority": null,
             "type": "add",
             "phase": "initial"

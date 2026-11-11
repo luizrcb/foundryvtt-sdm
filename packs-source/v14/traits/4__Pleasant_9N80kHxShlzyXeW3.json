@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p>Charming conversation and an easy demeanor. You get people to like you.</p><p>That’s +2 to reaction rolls. Expert: +4; master: +6.</p><p>(update reaction bonus value in the effects tab, when this skill rank increases)</p>",
+    "description": "<p>Charming conversation and an easy demeanor. You get people to like you.</p><p>That’s +2 to reaction rolls. Expert: +4; master: +6.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -75,7 +75,7 @@
         "changes": [
           {
             "key": "system.reaction_bonus",
-            "value": 2,
+            "value": "2*@item.skill.rank",
             "priority": null,
             "type": "add",
             "phase": "initial"

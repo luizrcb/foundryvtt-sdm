@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p>You’re skilled at physical defense and all kinds of defensive equipment. Also, even if unar mored, gain a +3 armor bonus. Expert: +6 armor; master: +9 armor.</p><p><br /><em>(update the armor bonus in the effects tab when this skill rank increases)</em></p>",
+    "description": "<p>You’re skilled at physical defense and all kinds of defensive equipment. Also, even if unar mored, gain a +3 armor bonus. Expert: +6 armor; master: +9 armor.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -74,7 +74,7 @@
         "changes": [
           {
             "key": "system.armor_bonus",
-            "value": 3,
+            "value": "3*@item.skill.rank",
             "priority": null,
             "type": "add",
             "phase": "initial"

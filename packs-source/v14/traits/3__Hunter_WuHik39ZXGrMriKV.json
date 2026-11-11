@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p>Track, trap, and shoot game with bow, rifle, and javelin. Hide in the wilds, move unseen. When you shoot from ambush, your critical hits deal triple instead of double damage. Expert: x4; master: x5.</p><p>(edit effects tab value to 4 or 5 when skill rank increases)</p>",
+    "description": "<p>Track, trap, and shoot game with bow, rifle, and javelin. Hide in the wilds, move unseen. When you shoot from ambush, your critical hits deal triple instead of double damage. Expert: x4; master: x5.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -76,7 +76,7 @@
         "changes": [
           {
             "key": "system.base_damage_multiplier",
-            "value": 3,
+            "value": "2+@item.skill.rank",
             "priority": null,
             "type": "override",
             "phase": "initial"

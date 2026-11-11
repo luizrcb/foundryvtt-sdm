@@ -10,7 +10,7 @@
     "resources": "",
     "cost": 1995,
     "cost_frequency": "",
-    "description": "<p>A backup heart. Stores stolen life equal to your level.</p><p><em>Use the active effect to set system.temporary_life.max to your character level, every time your character levels up.</em></p>",
+    "description": "<p>A backup heart. Stores stolen life equal to your level.</p>",
     "quantity": 1,
     "size": {
       "value": 2,
@@ -96,7 +96,7 @@
           },
           {
             "key": "system.temporary_life.max",
-            "value": 1,
+            "value": "@level",
             "priority": null,
             "type": "add",
             "phase": "initial"
@@ -110,7 +110,7 @@
         "expiry": null,
         "expired": false
       },
-      "description": "<p>Set <em>system.temporary_life.max</em> to your character level, every time your character levels up.</p>",
+      "description": "",
       "tint": "#ffffff",
       "transfer": true,
       "statuses": [],
