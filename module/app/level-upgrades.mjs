@@ -11,7 +11,8 @@ import { logProgress } from './progress-log.mjs';
  *  - Character: a new trait (chosen or random), improve a trait (skilled → expert → master;
  *    a plain trait counts as skilled), or +1 to an ability score.
  *  - Hallmark: +1 to every damage die (€5 × item level), +1 defense (€10 × item level),
- *    or a new trait, power or complication (text). The Referee can waive the material cost.
+ *    or a mod. XP pays for it; the material cost is only charged when "Charge material cost"
+ *    is ticked when choosing (the history records whether it was paid).
  * Life and hero dice already come with the character's level.
  */
 
@@ -184,8 +185,7 @@ function modUpgradeCost(item, mod) {
   return { mods, modCost, itemCost, total: Math.max(modCost * mods, itemCost) };
 }
 
-function describeModCost(item, mod, free) {
-  if (free) return $l10n('SDM.Upgrade.NoCost');
+function describeModCost(item, mod) {
   const { mods, modCost, itemCost, total } = modUpgradeCost(item, mod);
   const symbol = $l10n('SDM.CashSymbol');
   return modCost * mods >= itemCost
@@ -193,7 +193,7 @@ function describeModCost(item, mod, free) {
     : $fmt('SDM.Upgrade.ModCostByItem', { symbol, total });
 }
 
-function bindModDrop(root, item, free) {
+function bindModDrop(root, item) {
   const zone = root?.querySelector('[data-upgrade-drop-mod]');
   const input = root?.querySelector('input[name="modUuid"]');
   if (!zone || !input) return;
@@ -212,7 +212,7 @@ function bindModDrop(root, item, free) {
       return;
     }
     input.value = effect.uuid;
-    showDropped(zone, input, `${effect.name} (${describeModCost(item, effect, free)})`);
+    showDropped(zone, input, `${effect.name} (${describeModCost(item, effect)})`);
     const radio = root.querySelector('input[name="choice"][value="mod"]');
     if (radio) radio.checked = true;
   });
@@ -343,19 +343,12 @@ export async function openHallmarkUpgradeDialog(item) {
   const reached = Number(hallmark.upgrades_level ?? hallmark.level) || 0;
   const level = Math.max(reached - pending + 1, 1);
   const kinds = hallmarkKinds(item);
-  const free = !!hallmark.free_upgrade;
-  // Fixed price × level, or the item's cost if higher
-  const itemCost = Number(item.system.cost) || 0;
-  const damageCost = Math.max(5 * level, itemCost);
-  const defenseCost = Math.max(10 * level, itemCost);
-  // e.g. "€5 × level 3 = €15", or "item cost: €40" when the item costs more
-  const cost = perLevel => {
-    if (free) return $l10n('SDM.Upgrade.NoCost');
-    const symbol = $l10n('SDM.CashSymbol');
-    return perLevel * level >= itemCost
-      ? $fmt('SDM.Upgrade.CostPerLevel', { symbol, perLevel, level, total: perLevel * level })
-      : $fmt('SDM.Upgrade.ModCostByItem', { symbol, total: itemCost });
-  };
+  // Material cost (only charged when ticked): price × the level the upgrade comes from
+  const damageCost = 5 * level;
+  const defenseCost = 10 * level;
+  // e.g. "€5 × level 3 = €15"
+  const cost = perLevel =>
+    $fmt('SDM.Upgrade.CostPerLevel', { symbol: $l10n('SDM.CashSymbol'), perLevel, level, total: perLevel * level });
   const canDefense = kinds.armor || kinds.ward;
 
   const content = `
@@ -363,13 +356,13 @@ export async function openHallmarkUpgradeDialog(item) {
       <p class="sdm-upgrade-pending">${$fmt('SDM.Upgrade.Pending', { count: pending })}</p>
       ${kinds.weapon ? `<label class="sdm-upgrade-choice"><input type="radio" name="choice" value="damage" checked /> ${$l10n('SDM.Upgrade.Damage')} (${cost(5)})</label>` : ''}
       ${canDefense ? `<label class="sdm-upgrade-choice"><input type="radio" name="choice" value="defense" ${kinds.weapon ? '' : 'checked'} /> ${$l10n('SDM.Upgrade.Defense')} (${cost(10)})</label>` : ''}
-      <label class="sdm-upgrade-choice"><input type="radio" name="choice" value="mod" ${kinds.weapon || canDefense ? '' : 'checked'} /> ${$l10n('SDM.Upgrade.Mod')} (${free ? $l10n('SDM.Upgrade.NoCost') : $l10n('SDM.Upgrade.ModCost')})</label>
+      <label class="sdm-upgrade-choice"><input type="radio" name="choice" value="mod" ${kinds.weapon || canDefense ? '' : 'checked'} /> ${$l10n('SDM.Upgrade.Mod')} (${$l10n('SDM.Upgrade.ModCost')})</label>
       <p class="hint sdm-upgrade-hint">${$l10n('SDM.Upgrade.ModHint')}</p>
       <div class="sdm-upgrade-detail">
         <div class="sdm-upgrade-drop" data-upgrade-drop-mod>${$l10n('SDM.Upgrade.DropMod')}</div>
         <input type="hidden" name="modUuid" />
       </div>
-      ${game.user.isGM && !free ? `<label><input type="checkbox" name="waive" /> ${$l10n('SDM.Upgrade.WaiveCost')}</label>` : ''}
+      <label class="sdm-upgrade-charge" data-tooltip="${esc($l10n('SDM.Upgrade.ChargeHint'))}"><input type="checkbox" name="charge" /> ${$l10n('SDM.Upgrade.Charge')}</label>
     </div>`;
 
   const data = await DialogV2.prompt({
@@ -378,7 +371,7 @@ export async function openHallmarkUpgradeDialog(item) {
     content,
     rejectClose: false,
     render: (event, dialog) => {
-      bindModDrop(dialog.element, item, free);
+      bindModDrop(dialog.element, item);
       bindChoiceFocus(dialog.element);
     },
     ok: {
@@ -390,7 +383,7 @@ export async function openHallmarkUpgradeDialog(item) {
           choice: f.choice.value,
           text: f.text?.value?.trim(),
           modUuid: f.modUuid?.value,
-          waive: !!f.waive?.checked
+          charge: !!f.charge?.checked
         };
       }
     }
@@ -398,7 +391,8 @@ export async function openHallmarkUpgradeDialog(item) {
   if (!data) return;
 
   const owner = item.parent;
-  const noCost = free || data.waive || data.choice === 'text';
+  // XP pays for the upgrade; money only when the material cost is charged
+  const noCost = !data.charge || data.choice === 'text';
   let price = data.choice === 'damage' ? damageCost : data.choice === 'defense' ? defenseCost : 0;
 
   if (data.choice === 'text' && !data.text) {
@@ -468,11 +462,12 @@ export async function openHallmarkUpgradeDialog(item) {
     upgrade = data.text;
   }
 
-  await item.update({
-    'system.hallmark.pending_upgrades': Math.max(pending - 1, 0),
-    'system.hallmark.free_upgrade': false
-  });
-  const costText = !noCost && price > 0 ? ` (${$l10n('SDM.CashSymbol')}${price})` : '';
+  await item.update({ 'system.hallmark.pending_upgrades': Math.max(pending - 1, 0) });
+  // The history and chat say whether the material cost was paid (to undo and redo if it was wrong)
+  const paid = !noCost && price > 0;
+  const costText = paid
+    ? ` (${$fmt('SDM.Upgrade.Paid', { cost: `${$l10n('SDM.CashSymbol')}${price}` })})`
+    : ` (${$l10n('SDM.Upgrade.NotCharged')})`;
   const text = $fmt('SDM.Upgrade.ChatHallmark', { item: item.name, upgrade: `${upgrade}${costText}` });
   await logProgress(owner, {
     type: 'hallmark',
@@ -482,7 +477,8 @@ export async function openHallmarkUpgradeDialog(item) {
     changes: data.choice === 'damage' ? 2 : data.choice === 'defense' ? 1 : 0,
     note: data.choice === 'text' ? data.text : null,
     effectId: modEffectId,
-    cost: !noCost && price > 0 ? price : 0
+    cost: paid ? price : 0,
+    charged: paid
   });
   await chat(owner ?? null, text);
 }

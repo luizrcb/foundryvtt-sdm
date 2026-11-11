@@ -1715,12 +1715,6 @@ input[type=radio]::after {
   font-size: 12px;
 }
 
-.application.sdm .sdm-hallmark-upgrades .sdm-free-upgrade {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-}
-
 .application.sdm .sdm-hallmark-upgrades .sdm-upgrade-notes {
   flex-basis: 100%;
   list-style: none;
@@ -1754,6 +1748,15 @@ input[type=radio]::after {
 .sdm-upgrade .sdm-upgrade-choice:has(input:disabled) {
   opacity: 0.45;
   cursor: not-allowed;
+}
+
+.sdm-upgrade .sdm-upgrade-charge {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-top: 8px;
+  padding-top: 6px;
+  border-top: 1px solid var(--color-border, #999);
 }
 
 .sdm-upgrade .sdm-upgrade-detail {

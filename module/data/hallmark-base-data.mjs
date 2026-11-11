@@ -21,7 +21,6 @@ export function hallmarkBaseFields() {
     upgrade_notes: new fields.ArrayField(new fields.StringField({ required: true, blank: false })),
 
     // Set by the Referee: the next upgrade has no material cost
-    free_upgrade: new fields.BooleanField({ required: true, initial: false }),
 
   };
 }
