@@ -975,6 +975,8 @@ async function generateCharacterWithOptions(options = {}, existingActor) {
         existingActor.effects.contents.map(effect => effect.id)
       );
       await existingActor.unsetFlag('sdm', REPEAT_UPGRADE_FLAG);
+      // A rerolled character starts a new progress history
+      await existingActor.unsetFlag('sdm', 'progressLog');
     }
 
     const newActor = new SdmActor({
