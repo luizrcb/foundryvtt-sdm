@@ -1,42 +1,34 @@
+{{! Album tab: the list of powers on the left, the selected power on the right }}
 <section class='tab attributes {{tab.cssClass}}' data-group='primary' data-tab='album'>
 {{#if (sdmHasAlbum item)}}
-<div class="resource grid-span-3">
-  <ol class='items-list power-album'>
-    <li class='item flexrow items-header'>
-      <div class='item-name flex-between'>
-        <div class="rollable power-prev" data-action="prevPower" {{#unless hasPrevious}}disabled{{/unless}}>
-          <i class="fa-solid fa-chevron-left"></i>
-        </div>
-        <div class="rollable power-counter">
-          {{ifThen (gt powerCount 0) (addOne currentPowerIndex) powerCount}} / {{powerCount}}
-        </div>
-        <div class="rollable power-next"  data-action="nextPower" {{#unless hasNext}}disabled{{/unless}}>
-          <i class="fa-solid fa-chevron-right"></i>
-        </div>
-      </div>
-      <div class='item-formula flexrow'>
-      </div>
-      <div class='item-controls'>
-
-        {{#if @root.editable}}
-        <a
-          class='item-control item-create'
-          data-tooltip="{{localize 'SDM.DOCUMENT.Create' type=(localize 'TYPES.Item.power')}}"
-          data-action='addPower'
-          data-container='{{item.uuid}}'
-        >
-          <i class='fa-solid fa-plus'></i>
-          {{localize 'SDM.DOCUMENT.New' type=(localize 'TYPES.Item.power')}}
-        </a>
-        {{/if}}
-      </div>
-    </li>
-    {{> ($$ "item/power_album")
-      abilities=config.abilities
-      index=currentPowerIndex
-      enrichedPowers=@root.enrichedPowers
-      powers=@root.powers}}
-  </ol>
-  </div>
+<div class="sdm-album">
+  <nav class="sdm-album-list">
+    <ol>
+      {{#each powers as |power|}}
+      <li class="sdm-album-entry {{#if (eq @index ../currentPowerIndex)}}is-selected{{/if}}"
+        data-action="selectPower" data-index="{{@index}}" data-tooltip="{{power.name}}">
+        <img src="{{power.img}}" alt="" />
+        <span class="sdm-album-entry-name">{{power.name}}</span>
+        <span class="sdm-album-entry-level">{{power.level}}</span>
+      </li>
+      {{/each}}
+    </ol>
+    <div class="sdm-album-footer">
+      <span class="sdm-album-count">{{powerCount}} / {{system.max_powers}}</span>
+      {{#if @root.editable}}
+      <a class="sdm-album-add" data-action="addPower" data-container="{{item.uuid}}"
+        data-tooltip="{{localize 'SDM.DOCUMENT.Create' type=(localize 'TYPES.Item.power')}}">
+        <i class="fa-solid fa-plus"></i> {{localize 'SDM.DOCUMENT.New' type=(localize 'TYPES.Item.power')}}
+      </a>
+      <p class="hint">{{localize 'SDM.AlbumDropHint'}}</p>
+      {{/if}}
+    </div>
+  </nav>
+  {{> ($$ "item/power_album")
+    abilities=config.abilities
+    index=currentPowerIndex
+    enrichedPowers=@root.enrichedPowers
+    powers=@root.powers}}
+</div>
 {{/if}}
 </section>

@@ -82,6 +82,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       extractPower: this._onExtractPower,
       nextPower: this._onNextPower,
       prevPower: this._onPrevPower,
+      selectPower: this._onSelectPower,
       createDoc: this._createEffect,
       deleteDoc: this._deleteEffect,
       toggleEffect: this._toggleEffect,
@@ -671,6 +672,14 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       });
       this.render();
     }
+  }
+
+  /** Album list: show that power. */
+  static async _onSelectPower(event, target) {
+    const index = parseInt(target.dataset.index, 10);
+    if (!Number.isInteger(index) || index === (this.item.system.powers_current_index || 0)) return;
+    await this.item.update({ 'system.powers_current_index': index });
+    this.render();
   }
 
   static async _onNextPower(event, target) {

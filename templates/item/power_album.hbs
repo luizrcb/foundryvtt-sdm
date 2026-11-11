@@ -1,166 +1,83 @@
-<div class="power-album">
-  <!-- Power Navigation Controls -->
-  <!-- Current Power Display -->
+{{! Album tab: the selected power (the others are hidden so their fields keep their values) }}
+<div class="sdm-album-detail">
   {{#if (gt powerCount 0)}}
     {{#each powers as | power |}}
-    <div {{#if (ne @index ../currentPowerIndex)}}style="display: none;" {{/if}}
-    >
-      <div class="grid grid-3col">
-        <div class="resource">
-          <img
-            class='profile-img'
-            style="aspect-ratio: auto;"
-            width="150"
-            height="120"
-            src='{{power.img}}'
-            data-edit="{{concat 'system.powers.' @index '.img'}}"
-            data-index='{{@index}}'
-            data-action='onEditPowerImage'
-            data-tooltip='{{power.name}}'
-            name="{{concat 'system.powers.' @index '.img'}}"
-          />
+    <div class="sdm-album-power" {{#if (ne @index ../currentPowerIndex)}}hidden{{/if}}>
+      <header class="sdm-album-power-header">
+        <img
+          class="sdm-album-power-img"
+          src="{{power.img}}"
+          data-edit="{{concat 'system.powers.' @index '.img'}}"
+          data-index="{{@index}}"
+          data-action="onEditPowerImage"
+          data-tooltip="{{power.name}}"
+        />
+        <input class="sdm-album-power-name" type="text" name="{{concat 'system.powers.' @index '.name'}}" value="{{power.name}}"
+          placeholder="{{localize 'SDM.PowerName'}}" />
+        <label class="sdm-album-power-level" data-tooltip="{{localize 'SDM.PowerLevel'}}">
+          <span>{{localize 'SDM.FieldLevel'}}</span>
+          <input type="text" name="{{concat 'system.powers.' @index '.level'}}" value="{{power.level}}" data-dtype="Number" />
+        </label>
+        <div class="sdm-album-power-actions">
+          {{#if @root.isGM}}
+          <a data-action="extractPower" data-index="{{@index}}" data-tooltip="{{localize 'SDM.ExtractPowerTooltip'}}"><i class="fa-solid fa-file-import"></i></a>
+          {{/if}}
+          <a data-action="deletePower" data-index="{{@index}}" data-tooltip="{{localize 'SDM.DeletePower'}}"><i class="fa-solid fa-trash"></i></a>
         </div>
-        <div class="grid grid-2col">
-          <div class='resource'>
-            {{#if @root.isGM}}
-            <div class='rollable flex-group-center' style="cursor:pointer;" data-action="extractPower" data-index="{{@index}}"  data-tooltip="{{localize 'SDM.ExtractPowerTooltip'}}">
-              <label class='resource-label' style="cursor:pointer;">
-                {{localize 'SDM.ExtractPower'}}
-              </label>
-              <div class='resource-content'>
-                <i class="fa-solid fa-file-import"></i>
-              </div>
-            </div>
-            {{/if}}
-          </div>
+      </header>
 
-          <div class='resource rollable flex-group-center' data-action="deletePower" data-index="{{@index}}">
-            <label class='resource-label' style="cursor:pointer;">
-              {{localize 'SDM.DeletePower'}}
-            </label>
-            <div class='resource-content'>
-              <i class="fa-solid fa-trash"></i>
-            </div>
-          </div>
-
-           <div class='resource'>
-            <label class='resource-label'>
-              {{localize 'SDM.PowerName'}}
-            </label>
-            <div class='resource-content'>
-              <input type='text' name="{{concat 'system.powers.' @index '.name'}}" value='{{power.name}}' />
-            </div>
-          </div>
-
-          <div class='resource'>
-            <label class='resource-label'>
-              {{localize 'SDM.PowerLevel'}}
-            </label>
-            <div class='resource-content'>
-              <input type='text' name="{{concat 'system.powers.' @index '.level'}}" value='{{power.level}}' data-dtype='Number' />
-            </div>
-          </div>
-        </div>
+      <div class="sdm-album-fields sdm-album-fields-3">
+        <label><span>{{localize 'SDM.PowerRange'}}</span>
+          <input type="text" name="{{concat 'system.powers.' @index '.range'}}" value="{{power.range}}" /></label>
+        <label><span>{{localize 'SDM.PowerTarget'}}</span>
+          <input type="text" name="{{concat 'system.powers.' @index '.target'}}" value="{{power.target}}" /></label>
+        <label><span>{{localize 'SDM.PowerDuration'}}</span>
+          <input type="text" name="{{concat 'system.powers.' @index '.duration'}}" value="{{power.duration}}" /></label>
       </div>
 
-      <div class="grid grid-3col">
+      <div class="sdm-album-fields sdm-album-fields-4">
+        <label><span>{{localize 'SDM.PowerRollFormula'}}</span>
+          <input type="text" name="{{concat 'system.powers.' @index '.roll_formula'}}" value="{{power.roll_formula}}" /></label>
+        <label><span>{{localize 'SDM.PowerOverchargeRollFormula'}}</span>
+          <input type="text" name="{{concat 'system.powers.' @index '.overcharge_roll_formula'}}" value="{{power.overcharge_roll_formula}}" /></label>
+        <label><span>{{localize 'SDM.AbilityModifier'}}</span>
+          <select name="{{concat 'system.powers.' @index '.default_ability'}}">
+            {{selectOptions @root.config.abilities localize=true selected=power.default_ability blank=''}}
+          </select></label>
+        <label class="sdm-album-check"><input type="checkbox" name="{{concat 'system.powers.' @index '.is_dangerous'}}" {{checked power.is_dangerous}} />
+          <span>{{localize 'SDM.PowerIsDangerous'}}</span></label>
+      </div>
 
-        <div class='resource'>
-          <label class='resource-label'>
-            {{localize 'SDM.PowerRange'}}
-          </label>
-          <div class='resource-content'>
-            <input type='text' name="{{concat 'system.powers.' @index '.range'}}" value='{{power.range}}' />
-          </div>
-        </div>
+      <div class="sdm-album-text sdm-album-overcharge">
+        <span class="sdm-album-text-label">{{localize 'SDM.PowerOvercharge'}}</span>
+        {{#if @root.editable}}
+        <prose-mirror name="{{concat 'system.powers.' @index '.overcharge'}}" data-document-uuid="{{@root.item.uuid}}"
+          value="{{power.overcharge}}" compact toggled>
+          {{{power.overcharge}}}
+        </prose-mirror>
+        {{else}}
+        <div>{{{power.overcharge}}}</div>
+        {{/if}}
+      </div>
 
-        <div class='resource'>
-          <label class='resource-label'>
-            {{localize 'SDM.PowerTarget'}}
-          </label>
-          <div class='resource-content'>
-            <input type='text' name="{{concat 'system.powers.' @index '.target'}}" value='{{power.target}}' />
-          </div>
-        </div>
-
-        <div class='resource'>
-          <label class='resource-label'>
-            {{localize 'SDM.PowerDuration'}}
-          </label>
-          <div class='resource-content'>
-            <input type='text' name="{{concat 'system.powers.' @index '.duration'}}" value='{{power.duration}}' />
-          </div>
-        </div>
-
-        <div class='resource'>
-          <label class='resource-label'>
-            {{localize 'SDM.PowerRollFormula'}}
-          </label>
-          <div class='resource-content'>
-            <input type='text' name="{{concat 'system.powers.' @index '.roll_formula'}}" value='{{power.roll_formula}}' />
-          </div>
-        </div>
-
-        <div class='resource'>
-            <label class='resource-label' for="{{concat 'system.powers.' @index '.default_ability'}}">
-              {{localize 'SDM.AbilityModifier'}}
-            </label>
-            <div class='resource-content'>
-              <select name="{{concat 'system.powers.' @index '.default_ability'}}" id="{{concat 'system.powers.' @index '.default_ability'}}">
-                {{selectOptions @root.config.abilities localize=true selected=power.default_ability blank=''}}
-              </select>
-            </div>
-        </div>
-
-        <div class="resource align-center">
-          <label class='resource-label'>{{localize 'SDM.PowerIsDangerous'}}</label>
-          <div class='resource-content align-center'>
-            <input type='checkbox'name="{{concat 'system.powers.' @index '.is_dangerous'}}" {{checked power.is_dangerous}} />
-          </div>
-        </div>
-
-
-        <div class='resource'>
-          <label class='resource-label'>
-            {{localize 'SDM.PowerOverchargeRollFormula'}}
-          </label>
-          <div class='resource-content'>
-            <input type='text' name="{{concat 'system.powers.' @index '.overcharge_roll_formula'}}" value='{{power.overcharge_roll_formula}}' />
-          </div>
-        </div>
-
-        <div class='resource grid-span-2'>
-          <label class='resource-label'>
-            {{localize 'SDM.PowerOvercharge'}}
-          </label>
-          <div class='resource-content grid-span-1 flexcol'>
-            <textarea class='flexcol' name="{{concat 'system.powers.' @index '.overcharge'}}" rows='1'>{{{power.overcharge}}}</textarea>
-          </div>
-        </div>
-
-         <div class='resource grid-span-3'>
-          <label class='resource-label'>
-            {{localize 'SDM.PowerDescription'}}
-          </label>
-          <div class='resource-content'>
-            {{#if @root.editable}}
-            {{!-- <input type='text' name="{{concat 'system.powers.' @index '.description'}}" value='{{power.description}}' /> --}}
-            <prose-mirror name="{{concat 'system.powers.' @index '.description'}}" data-document-uuid="{{ @root.item.uuid }}"
-              value="{{ power.description }}" compact toggled>
-              {{{lookup @root.enrichedPowers @index}}}
-            </prose-mirror>
-            {{else}}
-             {{{lookup @root.enrichedPowers @index}}}
-            {{/if}}
-          </div>
-        </div>
-
+      <div class="sdm-album-text">
+        <span class="sdm-album-text-label">{{localize 'SDM.PowerDescription'}}</span>
+        {{#if @root.editable}}
+        <prose-mirror name="{{concat 'system.powers.' @index '.description'}}" data-document-uuid="{{@root.item.uuid}}"
+          value="{{power.description}}" compact toggled>
+          {{{lookup @root.enrichedPowers @index}}}
+        </prose-mirror>
+        {{else}}
+        {{{lookup @root.enrichedPowers @index}}}
+        {{/if}}
       </div>
     </div>
     {{/each}}
   {{else}}
-    <div class="no-powers">
-      <p>{{localize "SDM.NoPowers"}} <i class="fa-solid fa-spider"></i></p>
+    <div class="sdm-album-empty">
+      <i class="fa-solid fa-book-open"></i>
+      <p>{{localize 'SDM.NoPowers'}}</p>
+      <p class="hint">{{localize 'SDM.AlbumDropHint'}}</p>
     </div>
   {{/if}}
 </div>

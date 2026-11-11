@@ -336,3 +336,228 @@ li.item {
     background-color: var(--sdm-item-hover); // Your ultraviolet color with transparency
   }
 }
+
+// Album tab: list of powers + the selected power
+.sdm-album {
+  display: grid;
+  grid-template-columns: 170px minmax(0, 1fr);
+  gap: 12px;
+  align-items: start;
+
+  .sdm-album-list {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    border-right: 1px solid rgba(0, 0, 0, 0.15);
+    padding-right: 8px;
+
+    // A long album (up to 12 powers or more) scrolls inside the list
+    ol {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      max-height: 360px;
+      overflow-y: auto;
+    }
+  }
+  .sdm-album-entry {
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 6px;
+    border-radius: 4px;
+    cursor: pointer;
+
+    img {
+      width: 22px;
+      height: 22px;
+      border: none;
+      object-fit: contain;
+    }
+    &:hover {
+      background: rgba(0, 0, 0, 0.06);
+    }
+    &.is-selected {
+      background: rgba(0, 0, 0, 0.12);
+      font-weight: 700;
+    }
+  }
+  // Long names: two lines at most, the tooltip shows the whole name
+  .sdm-album-entry-name {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    line-height: 1.2;
+    word-break: break-word;
+  }
+  .sdm-album-entry-level {
+    font-size: 11px;
+    padding: 0 5px;
+    border-radius: 8px;
+    background: rgba(0, 0, 0, 0.1);
+  }
+  .sdm-album-footer {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    font-size: 12px;
+
+    .sdm-album-count {
+      opacity: 0.7;
+    }
+    .sdm-album-add {
+      cursor: pointer;
+      font-weight: 700;
+    }
+    .hint {
+      margin: 0;
+      font-size: 11px;
+    }
+  }
+
+  .sdm-album-power {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+  .sdm-album-power-header {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .sdm-album-power-img {
+      flex: 0 0 48px;
+      width: 48px;
+      height: 48px;
+      border: none;
+      object-fit: contain;
+      cursor: pointer;
+    }
+    .sdm-album-power-name {
+      flex: 1 1 auto;
+      min-width: 0;
+      font-size: 18px;
+      font-weight: 700;
+    }
+    .sdm-album-power-level {
+      flex: 0 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      font-size: 11px;
+      text-transform: uppercase;
+      opacity: 0.85;
+
+      input {
+        width: 2.5em;
+        text-align: center;
+      }
+    }
+    .sdm-album-power-actions {
+      flex: 0 0 auto;
+      display: flex;
+      gap: 10px;
+
+      a {
+        cursor: pointer;
+        opacity: 0.75;
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+  }
+
+  .sdm-album-fields {
+    display: grid;
+    gap: 6px 10px;
+    align-items: end;
+
+    &.sdm-album-fields-3 {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+    &.sdm-album-fields-4 {
+      grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+    }
+    label {
+      display: flex;
+      flex-direction: column;
+      gap: 2px;
+      min-width: 0;
+
+      > span {
+        font-size: 10px;
+        text-transform: uppercase;
+        letter-spacing: 0.04em;
+        opacity: 0.7;
+      }
+    }
+    .sdm-album-check {
+      flex-direction: row;
+      align-items: center;
+      gap: 4px;
+      padding-bottom: 4px;
+      white-space: nowrap;
+    }
+  }
+
+  .sdm-album-text {
+    .sdm-album-text-label {
+      display: block;
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      opacity: 0.7;
+      margin-bottom: 2px;
+    }
+    p {
+      margin: 0 0 4px;
+    }
+  }
+  .sdm-album-overcharge {
+    padding-left: 8px;
+    border-left: 3px solid rgba(0, 0, 0, 0.2);
+  }
+
+  .sdm-album-empty {
+    text-align: center;
+    padding: 24px 8px;
+    opacity: 0.8;
+
+    i {
+      font-size: 28px;
+    }
+  }
+}
+
+// Narrow sheets: the list becomes a row of chips above the power
+.tab[data-tab='album'] {
+  container-type: inline-size;
+}
+@container (max-width: 480px) {
+  .sdm-album {
+    grid-template-columns: minmax(0, 1fr);
+
+    .sdm-album-list {
+      border-right: none;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.15);
+      padding: 0 0 6px;
+
+      ol {
+        flex-direction: row;
+        flex-wrap: wrap;
+      }
+    }
+    .sdm-album-entry {
+      max-width: 160px;
+    }
+    .sdm-album-fields.sdm-album-fields-4 {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+}

@@ -4,6 +4,7 @@
   "DOCUMENT.Transfer": "Transferir {type}",
   "DOCUMENT.Update": "Editar {type}",
   "EFFECT.TabDuration": "Duração",
+  "SDM.AlbumDropHint": "Arraste poderes para cá (compêndio, barra lateral ou ficha).",
   "SDM.Ability": "Atributo",
   "SDM.AbilityAgi": "Rapidez",
   "SDM.AbilityAgiAbbr": "rap",
