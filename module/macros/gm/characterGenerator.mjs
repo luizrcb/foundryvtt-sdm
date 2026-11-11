@@ -381,18 +381,21 @@ async function addCorruptionFromTable(actor, tableUuid) {
   return createdItems;
 }
 
-async function addItemToCharacter(itemUuid, actor) {
+async function addItemToCharacter(itemUuid, actor, { readied = false } = {}) {
   const item = await fromUuid(itemUuid);
   const itemObject = item.toObject();
   // console.debug('itemObject', itemObject);
   itemObject.name = itemObject.name.replace(/^\d+\.\s/, '');
+  if (readied) itemObject.system.readied = true;
 
-  await actor.createEmbeddedDocuments('Item', [itemObject]);
+  // (new items start unreadied unless told to keep it)
+  await actor.createEmbeddedDocuments('Item', [itemObject], { sdmKeepReadied: readied });
 }
 
+/** The starting kit, readied so it is ready to unpack. */
 async function addUsefulKit(actor) {
   const kitUuid = 'Compendium.sdm.gadgets.Item.4Y6UXEQrWZFCHfmU';
-  await addItemToCharacter(kitUuid, actor);
+  await addItemToCharacter(kitUuid, actor, { readied: true });
 }
 
 const mainPathTables = {
