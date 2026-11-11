@@ -1,14 +1,21 @@
+import { ItemType } from './constants.mjs';
+
 /**
  * References in active effect change values, for item effects and actor effects alike:
  * - @actor.<path>   the actor (path from the document or from its system: `level` or `system.level`)
- * - @item.<path>    the effect's item (`skill.rank` or `system.skill.rank`)
- * - @items.<key>.<path>  the actor's items: <key> is an item ID (that exact item) or an item
- *   identifier (the highest value among the items with it, 0 when there is none)
+ * - @item.<path>    the effect's own item (`skill.rank` or `system.skill.rank`)
+ * - @items.[<type>:]<key>.<path>  the actor's items: <key> is an item ID (that exact item) or an
+ *   item identifier (the highest value among the items with it, 0 when there is none); the
+ *   optional <type> (gear, trait, burden, mount, vehicle) limits it to that item type.
+ * All the actor's items count (readied or not, in containers, broken or run out).
  * An item identifier is the slug of its original (untranslated) name, see getItemIdentifier.
  */
 
-const SINGLE = /^\s*@(actor|item)\.([\w.\[\]'"]+)\s*$|^\s*@items\.([\w-]+)\.([\w.\[\]'"]+)\s*$/;
-const ANY = /@items\.([\w-]+)\.([\w.\[\]'"]+)|@(actor|item)\.([\w.\[\]'"]+)/g;
+const KEY = "((?:[a-z]+:)?[\\w-]+)";
+const PATH = "([\\w.\\[\\]'\"]+)";
+const SINGLE = new RegExp(`^\\s*@(actor|item)\\.${PATH}\\s*$|^\\s*@items\\.${KEY}\\.${PATH}\\s*$`);
+const ANY = new RegExp(`@items\\.${KEY}\\.${PATH}|@(actor|item)\\.${PATH}`, 'g');
+const ITEM_TYPES = Object.values(ItemType);
 const ID_PATTERN = /^[a-zA-Z0-9]{16}$/;
 const warned = new Set();
 
@@ -37,12 +44,18 @@ function getPath(doc, path) {
   return foundry.utils.getProperty(doc.system ?? {}, clean);
 }
 
-/** @items.<key>.<path>: an exact item by ID, or the highest value among items with that identifier. */
-function getItemsValue(actor, key, path) {
+/** @items.[<type>:]<key>.<path>: an exact item by ID, or the highest value among items with that identifier. */
+function getItemsValue(actor, typedKey, path) {
   if (!actor?.items) return undefined;
-  if (ID_PATTERN.test(key) && actor.items.has(key)) return getPath(actor.items.get(key), path);
+  const [type, key] = typedKey.includes(':') ? typedKey.split(':') : [null, typedKey];
+  if (type && !ITEM_TYPES.includes(type)) return undefined;
+  const ofType = item => !type || item.type === type;
+  if (ID_PATTERN.test(key) && actor.items.has(key)) {
+    const item = actor.items.get(key);
+    return ofType(item) ? getPath(item, path) : 0;
+  }
   const values = actor.items
-    .filter(item => getItemIdentifier(item) === key)
+    .filter(item => ofType(item) && getItemIdentifier(item) === key)
     .map(item => getPath(item, path))
     .filter(value => value !== undefined && value !== null && value !== '');
   if (!values.length) return 0;
@@ -85,12 +98,34 @@ export function resolveEffectReferences(value, context) {
 }
 
 /** Explain once per effect and reference which reference failed and how to write it. */
-function warnUnresolved({ effect, item }, reference) {
+function warnUnresolved({ effect, item, actor }, reference) {
   const key = `${effect?.uuid}|${reference}`;
   if (warned.has(key)) return;
   warned.add(key);
-  let hint = '';
-  if (reference.startsWith('@item.') && !item) hint = ' The effect is not on an item: use @items.<identifier>.<path>.';
-  else hint = ' Check the path (e.g. @item.system.skill.rank or @items.dodge.skill.rank).';
+  let hint = ' Check the path (e.g. @item.system.skill.rank or @items.trait:dodge.skill.rank).';
+  if (reference.startsWith('@item.') && !item) hint = ' The effect is not on an item: use @items.<type>:<identifier>.<path>.';
+  else if (reference.startsWith('@items.') && !actor) {
+    hint = ' The item has no actor yet: @items resolves once it is on an actor.';
+  } else if (/^@items\.[a-z]+:/.test(reference) && !ITEM_TYPES.includes(reference.slice(7).split(':')[0])) {
+    hint = ` Unknown item type: use one of ${ITEM_TYPES.join(', ')}.`;
+  }
   console.warn(`SDM | Active Effect (${effect?.uuid ?? '?'}) could not resolve "${reference}".${hint}`);
+}
+
+/** The reference other effects use for this item, and an example with one of its fields. */
+export function getItemReference(item) {
+  const identifier = getItemIdentifier(item);
+  if (!identifier) return null;
+  const reference = `@items.${item.type}:${identifier}`;
+  const subtype = item.system?.type;
+  const candidates = [
+    subtype === 'armor' && 'armor.value',
+    subtype === 'ward' && 'ward.value',
+    subtype === 'weapon' && 'weapon.damage.base',
+    subtype === 'skill' && 'skill.rank',
+    'cost',
+    'level'
+  ].filter(Boolean);
+  const field = candidates.find(path => getPath(item, path) !== undefined) ?? candidates[0];
+  return { reference, example: `${reference}.${field}`, selfExample: `@item.${field}` };
 }

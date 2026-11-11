@@ -58,10 +58,11 @@
   <div class="sdm-item-reference hint">
     <p>
       {{localize 'SDM.Effect.ItemReference'}}
-      <code>{{itemReference}}</code>
+      <code>{{itemReference.reference}}</code>
       <a data-action="copyItemReference" data-tooltip="{{localize 'SDM.Effect.CopyItemReference'}}"><i class="fa-solid fa-copy"></i></a>
     </p>
-    <p>{{localize 'SDM.Effect.ItemReferenceHint' reference=itemReference}}</p>
+    <p>{{localize 'SDM.Effect.ItemReferenceHint' example=itemReference.example}}</p>
+    <p>{{localize 'SDM.Effect.ItemReferenceSelf' example=itemReference.selfExample}}</p>
   </div>
   {{/if}}
 </section>

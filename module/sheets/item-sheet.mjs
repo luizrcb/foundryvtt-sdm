@@ -2,7 +2,7 @@ import PowerDataModel from '../data/power-data.mjs';
 import { SdmItem } from '../documents/item.mjs';
 import { createNPCByLevel, getActorOptions, getXpToNextLevel } from '../helpers/actorUtils.mjs';
 import { openProgressLog } from '../app/progress-log.mjs';
-import { getItemIdentifier } from '../helpers/effectReferences.mjs';
+import { getItemReference } from '../helpers/effectReferences.mjs';
 import { openHallmarkUpgradeDialog } from '../app/level-upgrades.mjs';
 import { makeNpcFriendly } from '../items/petItem.mjs';
 import {
@@ -243,8 +243,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       isGM: game.user.isGM,
       hallmarkXpToNextLevel: getXpToNextLevel(this.item.system.hallmark?.experience ?? 0),
       // Mods gained as hallmark upgrades (outside the mod slots)
-      // How effects read this item's values once an actor has it: @items.<identifier>.<path>
-      itemReference: getItemIdentifier(this.item) ? `@items.${getItemIdentifier(this.item)}` : '',
+      // How other effects read this item's values once an actor has it: @items.<type>:<identifier>.<path>
+      itemReference: getItemReference(this.item),
       hallmarkUpgradeMods: this.item.effects.filter(e => e.system?.isItemMod && e.system?.isHallmarkUpgrade).map(e => e.name)
     };
 
@@ -904,7 +904,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
   /** Copy "@items.<identifier>" for use in active effect values. */
   static async _onCopyItemReference(event) {
     event.preventDefault();
-    const reference = `@items.${getItemIdentifier(this.item)}`;
+    const reference = getItemReference(this.item)?.reference;
+    if (!reference) return;
     await game.clipboard.copyPlainText(reference);
     ui.notifications.info($fmt('SDM.Effect.ItemReferenceCopied', { reference }));
   }
