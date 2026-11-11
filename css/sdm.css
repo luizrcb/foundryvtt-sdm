@@ -6915,6 +6915,25 @@ input[type=radio]::after {
 .sdm .sdm-album .sdm-album-entry:hover {
   background: rgba(0, 0, 0, 0.06);
 }
+.sdm .sdm-album .sdm-album-entry {
+  position: relative;
+}
+.sdm .sdm-album .sdm-album-entry .sdm-album-grip {
+  position: absolute;
+  left: -8px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 10px;
+  opacity: 0;
+  cursor: grab;
+  transition: opacity 0.1s;
+}
+.sdm .sdm-album .sdm-album-entry[data-drag]:hover .sdm-album-grip {
+  opacity: 0.5;
+}
+.sdm .sdm-album .sdm-album-entry[data-drag]:active {
+  cursor: grabbing;
+}
 .sdm .sdm-album .sdm-album-entry .sdm-album-cast {
   opacity: 0;
   cursor: pointer;

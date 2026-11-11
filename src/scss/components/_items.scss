@@ -391,6 +391,24 @@ li.item {
     &:hover {
       background: rgba(0, 0, 0, 0.06);
     }
+    // Drag handle on hover: the power can be dragged (to reorder or out of the album)
+    position: relative;
+    .sdm-album-grip {
+      position: absolute;
+      left: -8px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 10px;
+      opacity: 0;
+      cursor: grab;
+      transition: opacity 0.1s;
+    }
+    &[data-drag]:hover .sdm-album-grip {
+      opacity: 0.5;
+    }
+    &[data-drag]:active {
+      cursor: grabbing;
+    }
     // The cast button shows on hover (and on the selected power)
     .sdm-album-cast {
       opacity: 0;

@@ -8,6 +8,7 @@
       <li class="sdm-album-entry {{#if (eq @index ../currentPowerIndex)}}is-selected{{/if}}"
         data-action="selectPower" data-index="{{@index}}" data-power-index="{{@index}}" {{#if @root.editable}}data-drag="true"{{/if}}
         data-tooltip="{{power.name}}">
+        {{#if @root.editable}}<i class="sdm-album-grip fa-solid fa-grip-vertical"></i>{{/if}}
         <img src="{{power.img}}" alt="" />
         <span class="sdm-album-entry-name">{{power.name}}</span>
         {{#if @root.canCastPowers}}
