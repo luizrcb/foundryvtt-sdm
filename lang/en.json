@@ -4,7 +4,7 @@
   "DOCUMENT.Transfer": "Transfer {type}",
   "DOCUMENT.Update": "Update {type}",
   "EFFECT.TabDuration": "Duration",
-  "SDM.AlbumDropHint": "Drag powers here (compendium, sidebar or sheet).",
+  "SDM.AlbumDropHint": "Drag powers here.",
   "SDM.Ability": "Ability",
   "SDM.AbilityAgi": "Agility",
   "SDM.AbilityAgiAbbr": "agi",
