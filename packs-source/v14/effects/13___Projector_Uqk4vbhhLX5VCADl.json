@@ -7,6 +7,20 @@
   "system": {
     "changes": [
       {
+        "key": "system.features",
+        "type": "add",
+        "value": "album",
+        "priority": null,
+        "phase": "initial"
+      },
+      {
+        "key": "system.max_powers",
+        "type": "add",
+        "value": "1",
+        "priority": null,
+        "phase": "initial"
+      },
+      {
         "key": "system.description",
         "type": "add",
         "value": "<p>Gains the ability to use one power (or spell). Uses its own level and abilities.</p>",

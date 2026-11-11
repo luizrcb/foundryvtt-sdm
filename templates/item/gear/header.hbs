@@ -419,7 +419,7 @@
       {{/if}}
 
 
-      {{#if (eq item.system.type 'power_album')}}
+      {{#if (sdmHasAlbum item)}}
       <div class="resource">
         <label class='resource-label'>
           {{localize 'SDM.GearMaxPowers'}}

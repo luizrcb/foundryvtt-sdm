@@ -111,6 +111,15 @@ export default class SdmGear extends SdmItemBase {
     return schema;
   }
 
+  /**
+   * Gear without an album holds no powers: its power limit only counts with the album feature
+   * (so a mod adding the feature and +1 power, like Projector, gives exactly that).
+   */
+  prepareBaseData() {
+    super.prepareBaseData?.();
+    if (this.type !== 'power_album' && !this.features?.has?.('album')) this.max_powers = 0;
+  }
+
   static migrateData(source) {
     this._migrateData(source);
     return super.migrateData(source);

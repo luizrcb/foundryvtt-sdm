@@ -33,7 +33,7 @@
     </label>
     {{/if}}
     {{/if}}
-    {{#if (eq system.type 'power_album')}}
+    {{#if (sdmHasAlbum item)}}
     <label class="v2-field">
       <span class="v2-label">{{localize 'SDM.GearMaxPowers'}}</span>
       <input type="text" name="system.max_powers" value="{{system.max_powers}}" data-dtype="Number" />

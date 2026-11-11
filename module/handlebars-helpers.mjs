@@ -1,6 +1,6 @@
 import { SizeUnit } from './helpers/constants.mjs';
 import { $l10n, formatNumber, toPascalCase } from './helpers/globalUtils.mjs';
-import { convertToSacks, getWealthFromItems } from './helpers/itemUtils.mjs';
+import { convertToSacks, getWealthFromItems, hasPowerAlbum } from './helpers/itemUtils.mjs';
 import { getHallmarkUpgradeSummary } from './app/level-upgrades.mjs';
 
 export function registerHandlebarsHelpers() {
@@ -9,6 +9,42 @@ export function registerHandlebarsHelpers() {
   $$('$$', function (path) {
     return 'systems/sdm/templates/' + path + '.hbs';
   });
+
+  // Gear holding a list of powers (power album or album feature)
+  $$('sdmHasAlbum', function (item) {
+    return hasPowerAlbum(item);
+  });
+
+  /**
+   * Rolls of an inventory row: the item's subtype owns the image (weapon damage, power, power
+   * album); features add small icons (weapon feature: damage, album feature: its powers). Gear with
+   * no subtype roll uses its first feature roll as the image.
+   * Returns { image: 'damage'|'power'|'power_album'|null, icons: [...] } (nothing when it can't roll).
+   */
+  const rowRolls = (item, actorType, editable) => {
+    const none = { image: null, icons: [] };
+    const system = item?.system;
+    if (!system || !editable || actorType === 'caravan') return none;
+    if (system.status === 'broken' || system.resources === 'run_out' || system.size?.unit === 'cash') return none;
+    if (!system.readied) return none;
+    const has = feature => !!system.features?.has?.(feature);
+    const canDamage = (system.type === 'weapon' || has('weapon')) && !!system.weapon?.damage?.base;
+    const canAlbum = hasPowerAlbum(item) && (system.powers?.length ?? 0) > 0;
+
+    let image = null;
+    if (system.type === 'weapon') image = canDamage ? 'damage' : null;
+    else if (system.type === 'power') image = 'power';
+    else if (system.type === 'power_album') image = canAlbum ? 'power_album' : null;
+    else if (canDamage) image = 'damage';
+    else if (canAlbum) image = 'power_album';
+
+    const icons = [];
+    if (canDamage && image !== 'damage') icons.push('damage');
+    if (canAlbum && image !== 'power_album') icons.push('power_album');
+    return { image, icons };
+  };
+  $$('sdmRowImage', (item, actorType, editable) => rowRolls(item, actorType, editable).image);
+  $$('sdmRowIcons', (item, actorType, editable) => rowRolls(item, actorType, editable).icons);
 
   // Inventory tooltip of a hallmark: "Hallmark: +2 damage per die, Glowing, Lich-bane"
   $$('sdmHallmarkTooltip', function (item) {

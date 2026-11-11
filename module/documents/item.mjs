@@ -21,7 +21,7 @@ import {
   TraitType
 } from '../helpers/constants.mjs';
 import { $fmt, $l10n, capitalizeFirstLetter, safeEvaluate, formatNumber } from '../helpers/globalUtils.mjs';
-import { getSlotsTaken, UnarmedDamageItem } from '../helpers/itemUtils.mjs';
+import { ALBUM_FEATURE_MAX_POWERS, getSlotsTaken, hasPowerAlbum, UnarmedDamageItem } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { renderUsageResult } from '../rolls/ui/renderResults.mjs';
 import { DEFAULT_MAX_POWERS } from '../settings.mjs';
@@ -145,6 +145,20 @@ export class SdmItem extends Item {
 
     // Repaired or recharged: the animated creature gets back to full life (after the update)
     if (!options[SYNC_OPTION] && isWearImproved(this, changes)) options.sdmHealCreature = true;
+
+    // Gear gaining the album feature starts with a few power slots (a power album keeps its own)
+    const rawFeatures = changes.system?.features;
+    const albumFeatures = rawFeatures instanceof Set ? [...rawFeatures] : rawFeatures;
+    if (
+      this.type === ItemType.GEAR &&
+      Array.isArray(albumFeatures) &&
+      albumFeatures.includes('album') &&
+      !this._source.system.features?.includes?.('album') &&
+      (changes.system.type ?? this.system.type) !== GearType.POWER_ALBUM &&
+      changes.system.max_powers === undefined
+    ) {
+      changes.system.max_powers = ALBUM_FEATURE_MAX_POWERS;
+    }
 
     // Attributes edited by hand are kept: the table no longer fills them on the first animation
     if (changes.system?.attributes !== undefined && !options[SYNC_OPTION]) {
@@ -836,6 +850,13 @@ export class SdmItem extends Item {
 
     const titleFunction = getInventoryItemTitle[data.type];
     title = titleFunction(this.system, this.actor.system);
+    // Gear with the album feature also lists its powers
+    if (data.type !== GearType.POWER_ALBUM && hasPowerAlbum(this) && data.powers?.length) {
+      title += '<br/><br/>';
+      data.powers.forEach((power, index) => {
+        title += `${index + 1}) ${this.getPowerTitle(power, this.actor.system.power_cost, this.actor.system.power_cost_bonus)}<br/><br/>`;
+      });
+    }
     title += this.footerTitleFunction(this.system);
     return title;
   }

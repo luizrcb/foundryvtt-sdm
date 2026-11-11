@@ -1,5 +1,14 @@
 export const UnarmedDamageItem = 'Compendium.sdm.weapons.Item.uKcbcZUs1jQZskQ4';
 import { ActorType, DEFAULT_POWER_ICON, GearType, ItemType, SizeUnit } from './constants.mjs';
+
+/** Gear that holds a list of powers: a power album, or gear with the album feature (e.g. the Projector mod). */
+export function hasPowerAlbum(item) {
+  if (item?.type !== ItemType.GEAR) return false;
+  return item.system?.type === GearType.POWER_ALBUM || !!item.system?.features?.has?.('album');
+}
+
+/** Power slots of gear that gains the album feature (a power album keeps its own limit). */
+export const ALBUM_FEATURE_MAX_POWERS = 3;
 /**
  * Convert any size unit to sacks.
  * @param {number} size - The size value.

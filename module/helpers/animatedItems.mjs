@@ -2,6 +2,7 @@ import TokenPlacement from '../canvas/token-placement.mjs';
 import { getNPCDataByLevel, getNpcTableChoices, NPC_CUSTOM_TABLE, NPC_TABLE_KEYS } from './actorUtils.mjs';
 import { ActorType, GearType, ItemStatusType, ItemType } from './constants.mjs';
 import { $fmt, $l10n } from './globalUtils.mjs';
+import { hasPowerAlbum } from './itemUtils.mjs';
 
 /**
  * Animated items: an item with the "animated" feature can come to life as an NPC.
@@ -188,9 +189,9 @@ async function syncWeaponDamage(item, npc, { useCreatureDamage = false } = {}) {
 
 const POWER_COPY_FLAG = 'animatedPowerCopy';
 
-/** Powers and power albums: the creature carries a copy, so it can use its own powers. */
+/** Powers, power albums and gear with the album feature: the creature carries a copy, so it can use its own powers. */
 export function isPowerItem(item) {
-  return [GearType.POWER, GearType.POWER_ALBUM].includes(item.system.type);
+  return item.system.type === GearType.POWER || hasPowerAlbum(item);
 }
 
 /** Replace the creature's copy of the power (or album) with the item as it is now. */

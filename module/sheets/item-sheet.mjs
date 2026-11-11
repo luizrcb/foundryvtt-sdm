@@ -5,6 +5,7 @@ import { openProgressLog } from '../app/progress-log.mjs';
 import { getItemReference } from '../helpers/effectReferences.mjs';
 import { getHallmarkUpgradeSummary, openHallmarkUpgradeDialog } from '../app/level-upgrades.mjs';
 import { makeNpcFriendly } from '../items/petItem.mjs';
+import { hasPowerAlbum } from '../helpers/itemUtils.mjs';
 import {
   animateItem,
   deanimateItem,
@@ -163,7 +164,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     // Control which parts show based on document subtype
     switch (this.document.type) {
       case 'gear':
-        if (this.document.system.type === GearType.POWER_ALBUM) {
+        // Power albums and gear with the album feature hold a list of powers
+        if (hasPowerAlbum(this.document)) {
           options.parts.push('powerAlbum');
         }
 
@@ -267,7 +269,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       context.defaultPetIcon = DEFAULT_PET_ICON;
     }
 
-    if (this.item.type === ItemType.GEAR && this.item.system.type === GearType.POWER_ALBUM) {
+    if (hasPowerAlbum(this.item)) {
       // Calculate navigation states
       context.powers = context.system?.powers;
       context.enrichedPowers = await this._getPowersDescriptions(context.powers);
@@ -364,7 +366,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     // If you have sub-tabs this is necessary to change
     const tabGroup = 'primary';
 
-    const defaultTab = parts.includes('powerAlbum')
+    // Only a power album opens on its album; other gear with the album feature keeps its usual tab
+    const defaultTab = this.document.system?.type === GearType.POWER_ALBUM && parts.includes('powerAlbum')
       ? 'album'
       : parts.includes('attributes')
         ? 'attributes'
@@ -1230,10 +1233,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     if (!this.item.isOwner) return false;
     const droppedItem = await Item.implementation.fromDropData(data);
 
-    if (
-      this.item.system.type !== GearType.POWER_ALBUM ||
-      droppedItem.system.type !== GearType.POWER
-    ) {
+    // A power dropped on gear with an album (power album or album feature) joins its powers
+    if (!hasPowerAlbum(this.item) || droppedItem?.system?.type !== GearType.POWER) {
       return false;
     }
 

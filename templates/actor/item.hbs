@@ -6,20 +6,8 @@
   data-tooltip="{{getItemTitle item}}"
 >
   <div class='item-name' style="cursor:pointer;" data-action='openDoc'>
-    {{#if (and
-      (ne actorType 'caravan')
-      (ne item.system.status 'broken')
-      (ne item.system.resources 'run_out')
-      (ne item.system.size.unit 'cash')
-      (or
-        (and (or (eq item.system.type 'weapon') (has system.features 'weapon')) item.system.readied item.system.weapon.damage.base)
-        (and (eq item.system.type 'power') item.system.readied)
-        (and (eq item.system.type 'power_album') item.system.readied (gt item.system.powers.length 0))
-      )
-      @root.editable
-    )}}
-      {{#if (or (eq item.system.type 'weapon') (has item.system.features 'weapon'))}}
-
+    {{#if (sdmRowImage item actorType @root.editable)}}
+      {{#if (eq (sdmRowImage item actorType @root.editable) 'damage')}}
         <div
           class="item-image rollable-image"
           data-action="roll"
@@ -32,7 +20,7 @@
           {{#if (eq item.system.status 'notched')}}<i class="fa fa-hammer overlay-icon notched-icon"></i>{{/if}}
           {{#if (eq item.system.status 'broken')}}<i class="fa fa-ban overlay-icon broken-icon"></i>{{/if}}
         </div>
-      {{else if (eq item.system.type 'power')}}
+      {{else if (eq (sdmRowImage item actorType @root.editable) 'power')}}
         <div
           class="item-image rollable-image"
           data-action="roll"
@@ -45,7 +33,7 @@
           {{#if (eq item.system.status 'notched')}}<i class="fa fa-hammer overlay-icon notched-icon"></i>{{/if}}
           {{#if (eq item.system.status 'broken')}}<i class="fa fa-ban overlay-icon broken-icon"></i>{{/if}}
         </div>
-      {{else if (eq item.system.type 'power_album')}}
+      {{else}}
         <div
           class="item-image rollable-image"
           data-action="roll"
@@ -67,7 +55,20 @@
       </div>
     {{/if}}
 
+
     <div class="flexrow">
+      {{!-- Rolls the item's features add (the image is its subtype's roll) --}}
+      {{#each (sdmRowIcons item actorType @root.editable) as |rollType|}}
+        {{#if (eq rollType 'damage')}}
+        <div class="rollable flexrow sdm-row-roll" data-action="roll" data-type="damage" data-label="{{../item.name}}" data-tooltip="{{localize 'SDM.RollType' type=(localize 'SDM.Damage')}}">
+          <i class="fa-solid fa-sword roll-icon mr-3"></i>
+        </div>
+        {{else}}
+        <div class="rollable flexrow sdm-row-roll" data-action="roll" data-type="power_album" data-label="{{../item.name}}" data-tooltip="{{localize 'SDM.RollType' type=(localize 'SDM.PowerAlbum')}}">
+          <i class="fa-solid fa-book roll-icon mr-3"></i>
+        </div>
+        {{/if}}
+      {{/each}}
       {{#if (eq item.system.resources 'running_low')}}
         <div data-tooltip="{{localize 'SDM.ItemStatusRunningLow'}}">
           <i class="fa-solid fa-battery-quarter mr-3"></i>
