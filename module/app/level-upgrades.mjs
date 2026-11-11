@@ -353,8 +353,10 @@ export async function openHallmarkUpgradeDialog(item) {
   const cost = perLevel =>
     $fmt('SDM.Upgrade.CostPerLevel', { symbol: $l10n('SDM.CashSymbol'), perLevel, level, total: perLevel * level });
   const canDefense = kinds.armor || kinds.ward;
-  // Features the item does not have yet
-  const featureOptions = [...CONFIG.SDM.features]
+  // Features of this kind of item (as on its Features tab) that it does not have yet
+  const featureOptions = itemFeatureChoices(item)
+    .map(choice => choice.value)
+    .filter((feature, index, all) => all.indexOf(feature) === index)
     .filter(feature => !item.system.features?.has?.(feature))
     .map(feature => ({ feature, label: $l10n(`SDM.ItemFeature.${feature}`) }))
     .sort((a, b) => a.label.localeCompare(b.label, game.i18n.lang))
@@ -539,6 +541,18 @@ export async function openHallmarkUpgradeDialog(item) {
     charged: paid
   });
   await chat(owner ?? null, text);
+}
+
+/** The features an item can have: base + its subtype's (weapon, armor, ward); mounts and vehicles their own list. */
+function itemFeatureChoices(item) {
+  const SDM = CONFIG.SDM;
+  if ([ItemType.MOUNT, ItemType.VEHICLE].includes(item.type)) return [...(SDM.transportFeatures ?? [])];
+  const base = [...(SDM.baseFeatures ?? [])];
+  if (item.type !== ItemType.GEAR) return base;
+  if (item.system.type === GearType.WARD) return [...base, ...(SDM.wardFeatures ?? [])];
+  if (item.system.type === GearType.ARMOR) return [...base, ...(SDM.armorFeatures ?? [])];
+  if (item.system.type === GearType.WEAPON) return [...base, ...(SDM.weaponFeatures ?? [])];
+  return base;
 }
 
 /** All hallmark upgrades live in one effect on the item (not a mod: it does not use a mod slot). */
