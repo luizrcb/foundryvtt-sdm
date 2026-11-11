@@ -1992,10 +1992,15 @@ input[type='radio']::after {
 
 // Item effects tab: how effects reference this item
 .sdm-item-reference {
-  display: flex;
-  align-items: center;
-  gap: 6px;
   margin: 8px 4px 0;
+
+  p {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin: 0 0 4px;
+  }
 
   code {
     user-select: all;

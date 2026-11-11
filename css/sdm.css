@@ -1989,10 +1989,15 @@ input[type=radio]::after {
 }
 
 .sdm-item-reference {
+  margin: 8px 4px 0;
+}
+
+.sdm-item-reference p {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   gap: 6px;
-  margin: 8px 4px 0;
+  margin: 0 0 4px;
 }
 
 .sdm-item-reference code {

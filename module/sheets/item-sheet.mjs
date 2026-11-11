@@ -243,8 +243,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       isGM: game.user.isGM,
       hallmarkXpToNextLevel: getXpToNextLevel(this.item.system.hallmark?.experience ?? 0),
       // Mods gained as hallmark upgrades (outside the mod slots)
-      // How effects reference this item: @items.<identifier>.<path> (only for an actor's items)
-      itemReference: this.item.parent && getItemIdentifier(this.item) ? `@items.${getItemIdentifier(this.item)}` : '',
+      // How effects read this item's values once an actor has it: @items.<identifier>.<path>
+      itemReference: getItemIdentifier(this.item) ? `@items.${getItemIdentifier(this.item)}` : '',
       hallmarkUpgradeMods: this.item.effects.filter(e => e.system?.isItemMod && e.system?.isHallmarkUpgrade).map(e => e.name)
     };
 
