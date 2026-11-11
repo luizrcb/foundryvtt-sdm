@@ -40,6 +40,12 @@ const traitTypeLabel = type => $l10n(type ? CONFIG.SDM.traitType[type] : 'TYPE.T
 /** "Name" for a plain trait, "Name (Power)" for the other subtypes. */
 const traitText = (name, type) => (type ? `${name} (${traitTypeLabel(type)})` : name);
 
+/** A trait, or a power or pet of another item type (it is gained as a trait, like dropping it on the sheet as a trait). */
+function isTraitUpgradeSource(item) {
+  if (item.type === ItemType.TRAIT) return true;
+  return [TraitType.POWER, TraitType.PET].includes(item.system?.type);
+}
+
 /** Traits that can be improved: skills below master, and plain traits (worth a skilled skill). */
 function improvableTraits(actor) {
   return actor.items
@@ -224,7 +230,7 @@ function bindTraitDrop(root) {
     zone.classList.remove('is-over');
     const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event);
     const item = data?.uuid ? await fromUuid(data.uuid) : null;
-    if (!item || item.documentName !== 'Item' || item.type !== ItemType.TRAIT) {
+    if (!item || item.documentName !== 'Item' || !isTraitUpgradeSource(item)) {
       ui.notifications.warn($l10n('SDM.Upgrade.OnlyTraits'));
       return;
     }
@@ -258,8 +264,14 @@ async function applyCharacterUpgrade(actor, data) {
       ui.notifications.warn($l10n('SDM.Upgrade.ChooseTrait'));
       return null;
     }
+    if (!isTraitUpgradeSource(source)) {
+      ui.notifications.warn($l10n('SDM.Upgrade.OnlyTraits'));
+      return null;
+    }
     const itemData = source.toObject();
     itemData.name = itemData.name.replace(/^\d+\.\s*/, '');
+    // A power or pet gear/burden becomes a trait with the same subtype
+    itemData.type = ItemType.TRAIT;
     await actor.createEmbeddedDocuments('Item', [itemData]);
     return $fmt('SDM.Upgrade.ChatNewTrait', { trait: traitText(itemData.name, itemData.system?.type ?? '') });
   }
