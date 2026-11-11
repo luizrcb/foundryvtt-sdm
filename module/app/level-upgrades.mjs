@@ -18,6 +18,9 @@ import { logProgress } from './progress-log.mjs';
 
 const { DialogV2 } = foundry.applications.api;
 const HALLMARK_EFFECT_FLAG = 'hallmarkUpgrades';
+/** Item flag: features gained as hallmark upgrades. Effect flag: traits gained as hallmark upgrades. */
+export const HALLMARK_FEATURES_FLAG = 'hallmarkFeatures';
+export const HALLMARK_TRAIT_FLAG = 'hallmarkTrait';
 /** Highest skill rank: master, or builder when the world uses the extended skill ranks. */
 const maxSkillRank = () => (game.settings.get('sdm', 'extendedSkillRanks') ? 5 : 3);
 const esc = text => foundry.utils.escapeHTML?.(String(text ?? '')) ?? String(text ?? '');
@@ -350,6 +353,13 @@ export async function openHallmarkUpgradeDialog(item) {
   const cost = perLevel =>
     $fmt('SDM.Upgrade.CostPerLevel', { symbol: $l10n('SDM.CashSymbol'), perLevel, level, total: perLevel * level });
   const canDefense = kinds.armor || kinds.ward;
+  // Features the item does not have yet
+  const featureOptions = [...CONFIG.SDM.features]
+    .filter(feature => !item.system.features?.has?.(feature))
+    .map(feature => ({ feature, label: $l10n(`SDM.ItemFeature.${feature}`) }))
+    .sort((a, b) => a.label.localeCompare(b.label, game.i18n.lang))
+    .map(({ feature, label }) => `<option value="${feature}">${esc(label)}</option>`)
+    .join('');
 
   const content = `
     <div class="sdm-upgrade">
@@ -361,6 +371,15 @@ export async function openHallmarkUpgradeDialog(item) {
       <div class="sdm-upgrade-detail">
         <div class="sdm-upgrade-drop" data-upgrade-drop-mod>${$l10n('SDM.Upgrade.DropMod')}</div>
         <input type="hidden" name="modUuid" />
+      </div>
+      <label class="sdm-upgrade-choice"><input type="radio" name="choice" value="feature" ${featureOptions ? '' : 'disabled'} /> ${$l10n('SDM.Upgrade.Feature')}</label>
+      <div class="sdm-upgrade-detail">
+        ${featureOptions ? `<select name="feature">${featureOptions}</select>` : `<span class="hint">${$l10n('SDM.Upgrade.NoFeatureLeft')}</span>`}
+      </div>
+      <label class="sdm-upgrade-choice"><input type="radio" name="choice" value="trait" /> ${$l10n('SDM.Upgrade.Trait')}</label>
+      <div class="sdm-upgrade-detail">
+        <input type="text" name="traitName" placeholder="${esc($l10n('SDM.Upgrade.TraitName'))}" />
+        <textarea name="traitDescription" rows="3" placeholder="${esc($l10n('SDM.Upgrade.TraitDescription'))}"></textarea>
       </div>
       <label class="sdm-upgrade-charge" data-tooltip="${esc($l10n('SDM.Upgrade.ChargeHint'))}"><input type="checkbox" name="charge" /> ${$l10n('SDM.Upgrade.Charge')}</label>
     </div>`;
@@ -383,7 +402,10 @@ export async function openHallmarkUpgradeDialog(item) {
           choice: f.choice.value,
           text: f.text?.value?.trim(),
           modUuid: f.modUuid?.value,
-          charge: !!f.charge?.checked
+          charge: !!f.charge?.checked,
+          feature: f.feature?.value,
+          traitName: f.traitName?.value?.trim(),
+          traitDescription: f.traitDescription?.value?.trim()
         };
       }
     }
@@ -392,11 +414,17 @@ export async function openHallmarkUpgradeDialog(item) {
 
   const owner = item.parent;
   // XP pays for the upgrade; money only when the material cost is charged
-  const noCost = !data.charge || data.choice === 'text';
+  // (a feature or a trait has no material cost in the rules)
+  const noCost = !data.charge || ['text', 'feature', 'trait'].includes(data.choice);
   let price = data.choice === 'damage' ? damageCost : data.choice === 'defense' ? defenseCost : 0;
 
   if (data.choice === 'text' && !data.text) {
     ui.notifications.warn($l10n('SDM.Upgrade.DescribeUpgrade'));
+    return;
+  }
+  if (data.choice === 'feature' && !data.feature) return;
+  if (data.choice === 'trait' && !data.traitName) {
+    ui.notifications.warn($l10n('SDM.Upgrade.TraitNameNeeded'));
     return;
   }
   // Install the mod first: the item checks its type and mod slots, and nothing is spent if it refuses
@@ -457,6 +485,35 @@ export async function openHallmarkUpgradeDialog(item) {
   } else if (data.choice === 'mod') {
     upgrade = $fmt('SDM.Upgrade.ChatMod', { mod: modName });
     await syncAnimationLevel(item);
+  } else if (data.choice === 'feature') {
+    // Recorded on the item so undo removes only this feature, and the item lists it as an upgrade
+    const gained = [...(item.getFlag('sdm', HALLMARK_FEATURES_FLAG) ?? []), data.feature];
+    await item.update({
+      'system.features': [...(item.system.features ?? []), data.feature],
+      [`flags.sdm.${HALLMARK_FEATURES_FLAG}`]: gained
+    });
+    upgrade = $fmt('SDM.Upgrade.ChatFeature', { feature: $l10n(`SDM.ItemFeature.${data.feature}`) });
+    await syncAnimationLevel(item);
+  } else if (data.choice === 'trait') {
+    // A named trait with its description: an effect on the item (changes can be added to it later)
+    const description = data.traitDescription
+      ? `<p>${esc(data.traitDescription).replace(/\n/g, '<br>')}</p>`
+      : '';
+    const [created] = await item.createEmbeddedDocuments('ActiveEffect', [
+      {
+        name: data.traitName,
+        img: 'icons/svg/aura.svg',
+        description,
+        // Stays on the item (tick "apply to actor" in the effect if it should affect the bearer)
+        transfer: false,
+        flags: { sdm: { [HALLMARK_TRAIT_FLAG]: true } }
+      }
+    ]);
+    if (!created) return;
+    modEffectId = created.id;
+    upgrade = data.traitDescription
+      ? $fmt('SDM.Upgrade.ChatTraitDescribed', { trait: data.traitName, description: data.traitDescription })
+      : $fmt('SDM.Upgrade.ChatTrait', { trait: data.traitName });
   } else {
     await item.update({ 'system.hallmark.upgrade_notes': [...(hallmark.upgrade_notes ?? []), data.text] });
     upgrade = data.text;
@@ -476,6 +533,7 @@ export async function openHallmarkUpgradeDialog(item) {
     choice: data.choice,
     changes: data.choice === 'damage' ? 2 : data.choice === 'defense' ? 1 : 0,
     note: data.choice === 'text' ? data.text : null,
+    feature: data.choice === 'feature' ? data.feature : null,
     effectId: modEffectId,
     cost: paid ? price : 0,
     charged: paid
@@ -499,4 +557,32 @@ async function addHallmarkEffectChanges(item, changes) {
       flags: { sdm: { [HALLMARK_EFFECT_FLAG]: true } }
     }
   ]);
+}
+
+/**
+ * What a hallmark gained from its level-ups, for its sheet and the inventory tooltip:
+ * [{ icon, label, description }] (description: HTML, only for traits).
+ */
+export function getHallmarkUpgradeSummary(item) {
+  if (!item?.system?.is_hallmark) return [];
+  const list = [];
+  const changes = item.effects.find(e => e.getFlag('sdm', HALLMARK_EFFECT_FLAG))?.system?.changes ?? [];
+  const damage = changes.filter(c => c.key === 'system.weapon.damage.base').length;
+  const defense = changes.filter(c => ['system.armor.value', 'system.ward.value'].includes(c.key)).length;
+  if (damage) list.push({ icon: 'fa-solid fa-burst', label: $fmt('SDM.Upgrade.SummaryDamage', { count: damage }) });
+  if (defense) list.push({ icon: 'fa-solid fa-shield', label: $fmt('SDM.Upgrade.SummaryDefense', { count: defense }) });
+  for (const feature of item.getFlag('sdm', HALLMARK_FEATURES_FLAG) ?? []) {
+    if (item.system.features?.has?.(feature)) {
+      list.push({ icon: 'fa-solid fa-tag', label: $l10n(`SDM.ItemFeature.${feature}`) });
+    }
+  }
+  for (const effect of item.effects) {
+    if (effect.system?.isItemMod && effect.system?.isHallmarkUpgrade) {
+      list.push({ icon: 'fa-solid fa-gear', label: effect.name, tooltip: $l10n('SDM.Upgrade.ModUpgradeTooltip') });
+    } else if (effect.getFlag('sdm', HALLMARK_TRAIT_FLAG)) {
+      list.push({ icon: 'fa-solid fa-star', label: effect.name, description: effect.description || '' });
+    }
+  }
+  for (const note of item.system.hallmark?.upgrade_notes ?? []) list.push({ icon: 'fa-solid fa-star', label: note });
+  return list;
 }

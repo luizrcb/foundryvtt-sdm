@@ -303,6 +303,16 @@ async function undoEntry(actor, entry) {
       if (index >= 0) notes.splice(index, 1);
       await item.update({ 'system.hallmark.upgrade_notes': notes });
     }
+    if (entry.feature) {
+      // Only the feature this upgrade added
+      const gained = [...(item.getFlag('sdm', 'hallmarkFeatures') ?? [])];
+      const index = gained.lastIndexOf(entry.feature);
+      if (index >= 0) gained.splice(index, 1);
+      await item.update({
+        'system.features': [...(item.system.features ?? [])].filter(f => f !== entry.feature),
+        'flags.sdm.hallmarkFeatures': gained
+      });
+    }
     if (entry.effectId && item.effects.has(entry.effectId)) {
       await item.deleteEmbeddedDocuments('ActiveEffect', [entry.effectId]);
     }

@@ -1727,6 +1727,34 @@ input[type=radio]::after {
   margin-right: 4px;
 }
 
+.application.sdm .sdm-hallmark-upgrades .sdm-upgrade-notes details > summary {
+  cursor: pointer;
+  list-style: none;
+}
+
+.application.sdm .sdm-hallmark-upgrades .sdm-upgrade-notes details > summary::-webkit-details-marker {
+  display: none;
+}
+
+.application.sdm .sdm-hallmark-upgrades .sdm-upgrade-notes details > summary::after {
+  content: " ▸";
+  opacity: 0.6;
+}
+
+.application.sdm .sdm-hallmark-upgrades .sdm-upgrade-notes details[open] > summary::after {
+  content: " ▾";
+}
+
+.application.sdm .sdm-hallmark-upgrades .sdm-upgrade-notes .sdm-upgrade-description {
+  margin: 2px 0 4px 20px;
+  font-size: 12px;
+  opacity: 0.85;
+}
+
+.application.sdm .sdm-hallmark-upgrades .sdm-upgrade-notes .sdm-upgrade-description p {
+  margin: 0 0 2px;
+}
+
 .sdm-upgrade {
   display: flex;
   flex-direction: column;
@@ -1762,6 +1790,14 @@ input[type=radio]::after {
 .sdm-upgrade .sdm-upgrade-detail {
   margin: 0 0 6px 24px;
   display: flex;
+}
+
+.sdm-upgrade .sdm-upgrade-detail textarea {
+  resize: vertical;
+  min-height: 3em;
+}
+
+.sdm-upgrade .sdm-upgrade-detail {
   flex-direction: column;
   gap: 4px;
 }

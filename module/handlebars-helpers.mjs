@@ -1,12 +1,20 @@
 import { SizeUnit } from './helpers/constants.mjs';
 import { $l10n, formatNumber, toPascalCase } from './helpers/globalUtils.mjs';
 import { convertToSacks, getWealthFromItems } from './helpers/itemUtils.mjs';
+import { getHallmarkUpgradeSummary } from './app/level-upgrades.mjs';
 
 export function registerHandlebarsHelpers() {
   const $$ = (name, fn) => Handlebars.registerHelper(name, fn);
 
   $$('$$', function (path) {
     return 'systems/sdm/templates/' + path + '.hbs';
+  });
+
+  // Inventory tooltip of a hallmark: "Hallmark: +2 damage per die, Glowing, Lich-bane"
+  $$('sdmHallmarkTooltip', function (item) {
+    const upgrades = getHallmarkUpgradeSummary(item).map(upgrade => upgrade.label);
+    const label = $l10n('SDM.HallmarkItem');
+    return upgrades.length ? `${label}: ${upgrades.join(', ')}` : label;
   });
 
   // Display-only number with the locale's thousands separators (1.500 / 1,500)

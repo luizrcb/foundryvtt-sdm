@@ -1742,6 +1742,30 @@ input[type='radio']::after {
       color: #c9a227;
       margin-right: 4px;
     }
+    details > summary {
+      cursor: pointer;
+      list-style: none;
+
+      &::-webkit-details-marker {
+        display: none;
+      }
+      &::after {
+        content: ' \25B8';
+        opacity: 0.6;
+      }
+    }
+    details[open] > summary::after {
+      content: ' \25BE';
+    }
+    .sdm-upgrade-description {
+      margin: 2px 0 4px 20px;
+      font-size: 12px;
+      opacity: 0.85;
+
+      p {
+        margin: 0 0 2px;
+      }
+    }
   }
 }
 
@@ -1778,6 +1802,10 @@ input[type='radio']::after {
   .sdm-upgrade-detail {
     margin: 0 0 6px 24px;
     display: flex;
+    textarea {
+      resize: vertical;
+      min-height: 3em;
+    }
     flex-direction: column;
     gap: 4px;
   }

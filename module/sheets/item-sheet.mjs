@@ -3,7 +3,7 @@ import { SdmItem } from '../documents/item.mjs';
 import { createNPCByLevel, getActorOptions, getXpToNextLevel } from '../helpers/actorUtils.mjs';
 import { openProgressLog } from '../app/progress-log.mjs';
 import { getItemReference } from '../helpers/effectReferences.mjs';
-import { openHallmarkUpgradeDialog } from '../app/level-upgrades.mjs';
+import { getHallmarkUpgradeSummary, openHallmarkUpgradeDialog } from '../app/level-upgrades.mjs';
 import { makeNpcFriendly } from '../items/petItem.mjs';
 import {
   animateItem,
@@ -245,7 +245,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       // Mods gained as hallmark upgrades (outside the mod slots)
       // How other effects read this item's values once an actor has it: @items.<type>:<identifier>.<path>
       itemReference: getItemReference(this.item),
-      hallmarkUpgradeMods: this.item.effects.filter(e => e.system?.isItemMod && e.system?.isHallmarkUpgrade).map(e => e.name)
+      hallmarkUpgrades: getHallmarkUpgradeSummary(this.item)
     };
 
     if (this.item.type === ItemType.GEAR && this.item.system.type === GearType.WARD) {
