@@ -96,7 +96,6 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       selectPower: this._onSelectPower,
       castPower: this._onCastPower,
       duplicatePower: this._onDuplicatePower,
-      stepPowerLevel: this._onStepPowerLevel,
       showOvercharge: this._onShowOvercharge,
       createDoc: this._createEffect,
       deleteDoc: this._deleteEffect,
@@ -731,16 +730,6 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     }
     powers.splice(index + 1, 0, foundry.utils.duplicate(powers[index]));
     await this.item.update({ 'system.powers': powers, 'system.powers_current_index': index + 1 });
-  }
-
-  /** Level − / + (0 and up). */
-  static async _onStepPowerLevel(event, target) {
-    const index = parseInt(target.dataset.index, 10);
-    const step = parseInt(target.dataset.step, 10) || 0;
-    const power = this.item.system.powers?.[index];
-    if (!power) return;
-    const level = Math.max((Number(power.level) || 0) + step, 0);
-    await this.item.update({ [`system.powers.${index}.level`]: level });
   }
 
   /** An empty overcharge is collapsed: show it and start editing. */

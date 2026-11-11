@@ -482,14 +482,6 @@ li.item {
       text-transform: uppercase;
       opacity: 0.85;
 
-      a {
-        cursor: pointer;
-        opacity: 0.7;
-        font-size: 12px;
-        &:hover {
-          opacity: 1;
-        }
-      }
       // The level is one of the most important values: as big and bold as the name
       input {
         -moz-appearance: textfield;

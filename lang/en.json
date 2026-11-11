@@ -5,7 +5,6 @@
   "DOCUMENT.Update": "Update {type}",
   "EFFECT.TabDuration": "Duration",
   "SDM.AlbumFull": "Album full",
-  "SDM.AlbumKeysHint": "↑/↓ or W/S: previous / next power. Drag powers to reorder them, or out of the album.",
   "SDM.DuplicatePower": "Duplicate power",
   "SDM.AlbumDropHint": "Drag powers here.",
   "SDM.Ability": "Ability",

@@ -16,9 +16,7 @@
           placeholder="{{localize 'SDM.PowerName'}}" />
         <div class="sdm-album-power-level" data-tooltip="{{localize 'SDM.PowerLevel'}}">
           <span>{{localize 'SDM.FieldLevel'}}</span>
-          {{#if @root.editable}}<a data-action="stepPowerLevel" data-index="{{@index}}" data-step="-1"><i class="fa-solid fa-minus"></i></a>{{/if}}
           <input type="number" min="0" step="1" name="{{concat 'system.powers.' @index '.level'}}" value="{{power.level}}" data-dtype="Number" />
-          {{#if @root.editable}}<a data-action="stepPowerLevel" data-index="{{@index}}" data-step="1"><i class="fa-solid fa-plus"></i></a>{{/if}}
         </div>
         <div class="sdm-album-power-actions">
           {{#if @root.editable}}
