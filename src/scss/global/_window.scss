@@ -239,6 +239,33 @@
   }
 }
 
+// Album tab: a power's overcharge and description take only the height of their text
+.application.sheet.sdm.item .sdm-album prose-mirror {
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 auto;
+  height: auto;
+  max-height: none;
+  min-height: 0;
+  overflow: visible;
+
+  .editor-container,
+  .editor-content,
+  .ProseMirror {
+    position: static;
+    inset: auto;
+    flex: 0 0 auto;
+    height: auto;
+    min-height: 0;
+    max-height: none;
+    overflow: visible;
+  }
+  // While editing, leave a little room to type
+  &.active .ProseMirror {
+    min-height: 4em;
+  }
+}
+
 .unlist {
   list-style: none;
   padding: 0;
