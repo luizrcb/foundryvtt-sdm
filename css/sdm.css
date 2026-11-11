@@ -6884,9 +6884,7 @@ input[type=radio]::after {
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 2px;
-  max-height: 360px;
-  overflow-y: auto;
+  gap: 1px;
 }
 .sdm .sdm-album.is-dragover .sdm-album-list {
   outline: 2px dashed rgba(0, 0, 0, 0.35);
@@ -6899,16 +6897,17 @@ input[type=radio]::after {
 }
 .sdm .sdm-album .sdm-album-entry {
   display: grid;
-  grid-template-columns: 22px minmax(0, 1fr) auto auto;
+  grid-template-columns: 20px minmax(0, 1fr) auto auto;
   align-items: center;
   gap: 6px;
-  padding: 4px 6px;
+  padding: 3px 6px;
+  font-size: 13px;
   border-radius: 4px;
   cursor: pointer;
 }
 .sdm .sdm-album .sdm-album-entry img {
-  width: 22px;
-  height: 22px;
+  width: 20px;
+  height: 20px;
   border: none;
   object-fit: contain;
 }
@@ -6987,6 +6986,10 @@ input[type=radio]::after {
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+.sdm .sdm-album .sdm-album-detail {
+  position: sticky;
+  top: 0;
 }
 .sdm .sdm-album [hidden] {
   display: none !important;

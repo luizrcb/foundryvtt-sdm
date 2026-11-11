@@ -351,16 +351,14 @@ li.item {
     border-right: 1px solid rgba(0, 0, 0, 0.15);
     padding-right: 8px;
 
-    // A long album (up to 12 powers or more) scrolls inside the list
+    // The list grows with the album: the sheet is the only scroll (the power stays in view, see below)
     ol {
       list-style: none;
       margin: 0;
       padding: 0;
       display: flex;
       flex-direction: column;
-      gap: 2px;
-      max-height: 360px;
-      overflow-y: auto;
+      gap: 1px;
     }
   }
   // Drop zone feedback while something is dragged over the album
@@ -375,16 +373,17 @@ li.item {
   }
   .sdm-album-entry {
     display: grid;
-    grid-template-columns: 22px minmax(0, 1fr) auto auto;
+    grid-template-columns: 20px minmax(0, 1fr) auto auto;
     align-items: center;
     gap: 6px;
-    padding: 4px 6px;
+    padding: 3px 6px;
+    font-size: 13px;
     border-radius: 4px;
     cursor: pointer;
 
     img {
-      width: 22px;
-      height: 22px;
+      width: 20px;
+      height: 20px;
       border: none;
       object-fit: contain;
     }
@@ -468,6 +467,11 @@ li.item {
     display: flex;
     flex-direction: column;
     gap: 8px;
+  }
+  // The selected power stays in view while the sheet scrolls down a long list
+  .sdm-album-detail {
+    position: sticky;
+    top: 0;
   }
   [hidden] {
     display: none !important;
