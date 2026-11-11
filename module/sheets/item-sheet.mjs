@@ -38,6 +38,17 @@ const { performIntegerSort } = foundry.utils;
  * Extend the basic ItemSheet with some very simple modifications
  * @extends {ItemSheetV2}
  */
+/** A power of an album as power item data (extracting it, or dragging it out of the album). */
+function powerToItemData(power) {
+  const { name, img, description, ...data } = foundry.utils.duplicate(power);
+  return {
+    type: ItemType.GEAR,
+    name,
+    img,
+    system: { type: GearType.POWER, description, power: { ...data } }
+  };
+}
+
 export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemSheetV2) {
   constructor(options = {}) {
     super(options);
@@ -83,6 +94,10 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       nextPower: this._onNextPower,
       prevPower: this._onPrevPower,
       selectPower: this._onSelectPower,
+      castPower: this._onCastPower,
+      duplicatePower: this._onDuplicatePower,
+      stepPowerLevel: this._onStepPowerLevel,
+      showOvercharge: this._onShowOvercharge,
       createDoc: this._createEffect,
       deleteDoc: this._deleteEffect,
       toggleEffect: this._toggleEffect,
@@ -278,6 +293,15 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       context.powerCount = context.powers.length;
       context.hasPrevious = context.currentPowerIndex > 0;
       context.hasNext = context.currentPowerIndex < context.powers.length - 1;
+      context.albumFull = context.powers.length >= (this.item.system.max_powers ?? 0);
+      // Powers can be used from the album list when the item is ready on an actor
+      const system = this.item.system;
+      context.canCastPowers =
+        !!this.item.actor &&
+        this.item.isOwner &&
+        !!system.readied &&
+        system.status !== 'broken' &&
+        system.resources !== 'run_out';
     }
 
     return context;
@@ -461,6 +485,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
   _onRender(context, options) {
     bindNumberInputs(this.element, this.document);
     this.#dragDrop.forEach(d => d.bind(this.element));
+    this.#bindAlbum();
     // You may want to add other special handling here
     // Foundry comes with a large number of utility classes, e.g. SearchFilter
     // That you may want to  implement yourself.
@@ -674,6 +699,99 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     }
   }
 
+  /** Album list: use that power (the actor's roll, with that power preselected). */
+  static async _onCastPower(event, target) {
+    event.stopPropagation();
+    const actor = this.item.actor;
+    const index = parseInt(target.dataset.index, 10);
+    if (!actor?.sheet || !Number.isInteger(index)) return;
+    if (index !== (this.item.system.powers_current_index || 0)) {
+      await this.item.update({ 'system.powers_current_index': index });
+    }
+    // The actor sheet's roll reads the item from its inventory row
+    const row = document.createElement('li');
+    row.dataset.documentClass = 'Item';
+    row.dataset.itemId = this.item.id;
+    const button = document.createElement('div');
+    button.dataset.type = 'power_album';
+    button.dataset.label = this.item.name;
+    row.append(button);
+    const roll = actor.sheet.constructor._onRoll ?? actor.sheet.options?.actions?.roll;
+    if (typeof roll === 'function') await roll.call(actor.sheet, event, button);
+  }
+
+  /** Copy a power right after it (album limit permitting). */
+  static async _onDuplicatePower(event, target) {
+    const powers = foundry.utils.duplicate(this.item.system.powers ?? []);
+    const index = parseInt(target.dataset.index, 10);
+    if (!powers[index]) return;
+    if (powers.length >= this.item.system.max_powers) {
+      ui.notifications.warn($fmt('SDM.ErrorMaxPowers', { item: this.item.name }));
+      return;
+    }
+    powers.splice(index + 1, 0, foundry.utils.duplicate(powers[index]));
+    await this.item.update({ 'system.powers': powers, 'system.powers_current_index': index + 1 });
+  }
+
+  /** Level − / + (0 and up). */
+  static async _onStepPowerLevel(event, target) {
+    const index = parseInt(target.dataset.index, 10);
+    const step = parseInt(target.dataset.step, 10) || 0;
+    const power = this.item.system.powers?.[index];
+    if (!power) return;
+    const level = Math.max((Number(power.level) || 0) + step, 0);
+    await this.item.update({ [`system.powers.${index}.level`]: level });
+  }
+
+  /** An empty overcharge is collapsed: show it and start editing. */
+  static _onShowOvercharge(event, target) {
+    const block = target.closest('.sdm-album-power')?.querySelector('.sdm-album-overcharge');
+    if (!block) return;
+    block.hidden = false;
+    target.hidden = true;
+    block.querySelector('prose-mirror button.toggle, prose-mirror .toggle')?.click();
+  }
+
+  /** Album tab: drop zone highlight and keyboard navigation (↑/↓ or W/S). */
+  #bindAlbum() {
+    const album = this.element.querySelector('.sdm-album');
+    if (!album) return;
+    album.addEventListener('dragover', () => album.classList.add('is-dragover'));
+    album.addEventListener('dragleave', event => {
+      if (!album.contains(event.relatedTarget)) album.classList.remove('is-dragover');
+    });
+    const list = album.querySelector('.sdm-album-list');
+    list?.addEventListener('keydown', async event => {
+      const key = event.key.toLowerCase();
+      const step = ['arrowup', 'w'].includes(key) ? -1 : ['arrowdown', 's'].includes(key) ? 1 : 0;
+      if (!step) return;
+      // Not for Foundry's own keys (W/S would also move the canvas)
+      event.preventDefault();
+      event.stopPropagation();
+      const powers = this.item.system.powers ?? [];
+      const next = (this.item.system.powers_current_index || 0) + step;
+      if (next < 0 || next >= powers.length) return;
+      this._focusAlbumList = true;
+      await this.item.update({ 'system.powers_current_index': next });
+    });
+    // Keep the focus on the list after the re-render, to keep moving with the keys
+    if (this._focusAlbumList) {
+      this._focusAlbumList = false;
+      list?.focus();
+    }
+  }
+
+  /** Move a power to another place in the album, keeping the shown power. */
+  async _movePower(from, to) {
+    const powers = foundry.utils.duplicate(this.item.system.powers ?? []);
+    if (from === to || !powers[from] || to < 0 || to >= powers.length) return;
+    const [moved] = powers.splice(from, 1);
+    powers.splice(to, 0, moved);
+    const current = this.item.system.powers_current_index || 0;
+    const shown = current === from ? to : current;
+    await this.item.update({ 'system.powers': powers, 'system.powers_current_index': shown });
+  }
+
   /** Album list: show that power. */
   static async _onSelectPower(event, target) {
     const index = parseInt(target.dataset.index, 10);
@@ -795,21 +913,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     if (powerIndex < 0 || !powerAlbum.length || powerIndex >= powerAlbum.length) {
       return;
     }
-    const powerToExtract = powerAlbum[powerIndex];
-    const { name, img, description, ...data } = powerToExtract;
-
-    const newPowerData = {
-      type: ItemType.GEAR,
-      name,
-      img,
-      system: {
-        type: GearType.POWER,
-        description,
-        power: {
-          ...data
-        }
-      }
-    };
+    const newPowerData = powerToItemData(powerAlbum[powerIndex]);
+    const { name } = newPowerData;
 
     await SdmItem.create(newPowerData);
     ui.notifications.info(
@@ -1021,6 +1126,19 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
 
     let dragData = null;
 
+    // A power of the album: dragged out (it becomes a power item) or to another place in the list
+    if (li.dataset.powerIndex !== undefined) {
+      const index = parseInt(li.dataset.powerIndex, 10);
+      const power = this.item.system.powers?.[index];
+      if (power) {
+        dragData = {
+          type: 'Item',
+          data: powerToItemData(power),
+          sdmAlbum: { uuid: this.item.uuid, index }
+        };
+      }
+    }
+
     // Active Effect
     if (li.dataset.effectId) {
       const effect = this.item.effects.get(li.dataset.effectId);
@@ -1048,6 +1166,14 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
   async _onDrop(event) {
     const data = TextEditor.getDragEventData(event);
     const item = this.item;
+    this.element?.querySelector('.sdm-album')?.classList.remove('is-dragover');
+
+    // A power of this album dropped on its own list: reorder (anywhere else on the sheet: nothing)
+    if (data?.sdmAlbum?.uuid === item.uuid) {
+      const entry = event.target.closest?.('[data-power-index]');
+      if (entry) await this._movePower(data.sdmAlbum.index, parseInt(entry.dataset.powerIndex, 10));
+      return;
+    }
     const allowed = Hooks.call('dropItemSheetData', item, this, data);
     if (allowed === false) return;
 

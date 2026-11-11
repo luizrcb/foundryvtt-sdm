@@ -2,13 +2,18 @@
 <section class='tab attributes {{tab.cssClass}}' data-group='primary' data-tab='album'>
 {{#if (sdmHasAlbum item)}}
 <div class="sdm-album">
-  <nav class="sdm-album-list">
+  <nav class="sdm-album-list" tabindex="0">
     <ol>
       {{#each powers as |power|}}
       <li class="sdm-album-entry {{#if (eq @index ../currentPowerIndex)}}is-selected{{/if}}"
-        data-action="selectPower" data-index="{{@index}}" data-tooltip="{{power.name}}">
+        data-action="selectPower" data-index="{{@index}}" data-power-index="{{@index}}" {{#if @root.editable}}data-drag="true"{{/if}}
+        data-tooltip="{{power.name}}">
         <img src="{{power.img}}" alt="" />
         <span class="sdm-album-entry-name">{{power.name}}</span>
+        {{#if @root.canCastPowers}}
+        <a class="sdm-album-cast" data-action="castPower" data-index="{{@index}}"
+          data-tooltip="{{localize 'SDM.RollType' type=(localize 'SDM.Power')}}"><i class="fa-solid fa-dice-d20"></i></a>
+        {{/if}}
         <span class="sdm-album-entry-level">{{power.level}}</span>
       </li>
       {{/each}}
@@ -16,12 +21,17 @@
     <div class="sdm-album-footer">
       <span class="sdm-album-count">{{powerCount}} / {{system.max_powers}}</span>
       {{#if @root.editable}}
+      {{#if albumFull}}
+      <span class="sdm-album-full"><i class="fa-solid fa-book"></i> {{localize 'SDM.AlbumFull'}}</span>
+      {{else}}
       <a class="sdm-album-add" data-action="addPower" data-container="{{item.uuid}}"
         data-tooltip="{{localize 'SDM.DOCUMENT.Create' type=(localize 'TYPES.Item.power')}}">
         <i class="fa-solid fa-plus"></i> {{localize 'SDM.DOCUMENT.New' type=(localize 'TYPES.Item.power')}}
       </a>
       <p class="hint">{{localize 'SDM.AlbumDropHint'}}</p>
       {{/if}}
+      {{/if}}
+      {{#if (gt powerCount 1)}}<p class="hint">{{localize 'SDM.AlbumKeysHint'}}</p>{{/if}}
     </div>
   </nav>
   {{> ($$ "item/power_album")

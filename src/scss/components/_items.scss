@@ -363,9 +363,19 @@ li.item {
       overflow-y: auto;
     }
   }
+  // Drop zone feedback while something is dragged over the album
+  &.is-dragover .sdm-album-list {
+    outline: 2px dashed rgba(0, 0, 0, 0.35);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  .sdm-album-list:focus-visible {
+    outline: 2px solid rgba(0, 0, 0, 0.4);
+    border-radius: 4px;
+  }
   .sdm-album-entry {
     display: grid;
-    grid-template-columns: 22px minmax(0, 1fr) auto;
+    grid-template-columns: 22px minmax(0, 1fr) auto auto;
     align-items: center;
     gap: 6px;
     padding: 4px 6px;
@@ -380,6 +390,18 @@ li.item {
     }
     &:hover {
       background: rgba(0, 0, 0, 0.06);
+    }
+    // The cast button shows on hover (and on the selected power)
+    .sdm-album-cast {
+      opacity: 0;
+      cursor: pointer;
+    }
+    &:hover .sdm-album-cast,
+    &.is-selected .sdm-album-cast {
+      opacity: 0.8;
+    }
+    .sdm-album-cast:hover {
+      opacity: 1;
     }
     &.is-selected {
       background: rgba(0, 0, 0, 0.12);
@@ -414,6 +436,10 @@ li.item {
       cursor: pointer;
       font-weight: 700;
     }
+    .sdm-album-full {
+      font-weight: 700;
+      opacity: 0.7;
+    }
     .hint {
       margin: 0;
       font-size: 11px;
@@ -424,6 +450,9 @@ li.item {
     display: flex;
     flex-direction: column;
     gap: 8px;
+  }
+  [hidden] {
+    display: none !important;
   }
   .sdm-album-power-header {
     display: flex;
@@ -453,8 +482,22 @@ li.item {
       text-transform: uppercase;
       opacity: 0.85;
 
+      a {
+        cursor: pointer;
+        opacity: 0.7;
+        font-size: 12px;
+        &:hover {
+          opacity: 1;
+        }
+      }
       // The level is one of the most important values: as big and bold as the name
       input {
+        -moz-appearance: textfield;
+        &::-webkit-outer-spin-button,
+        &::-webkit-inner-spin-button {
+          -webkit-appearance: none;
+          margin: 0;
+        }
         width: 2.2em;
         text-align: center;
         font-size: 18px;
@@ -521,6 +564,15 @@ li.item {
     }
     p {
       margin: 0 0 4px;
+    }
+  }
+  .sdm-album-add-overcharge {
+    align-self: flex-start;
+    cursor: pointer;
+    font-size: 12px;
+    opacity: 0.75;
+    &:hover {
+      opacity: 1;
     }
   }
   .sdm-album-overcharge {

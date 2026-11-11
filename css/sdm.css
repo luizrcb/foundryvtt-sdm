@@ -6888,9 +6888,18 @@ input[type=radio]::after {
   max-height: 360px;
   overflow-y: auto;
 }
+.sdm .sdm-album.is-dragover .sdm-album-list {
+  outline: 2px dashed rgba(0, 0, 0, 0.35);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+.sdm .sdm-album .sdm-album-list:focus-visible {
+  outline: 2px solid rgba(0, 0, 0, 0.4);
+  border-radius: 4px;
+}
 .sdm .sdm-album .sdm-album-entry {
   display: grid;
-  grid-template-columns: 22px minmax(0, 1fr) auto;
+  grid-template-columns: 22px minmax(0, 1fr) auto auto;
   align-items: center;
   gap: 6px;
   padding: 4px 6px;
@@ -6905,6 +6914,16 @@ input[type=radio]::after {
 }
 .sdm .sdm-album .sdm-album-entry:hover {
   background: rgba(0, 0, 0, 0.06);
+}
+.sdm .sdm-album .sdm-album-entry .sdm-album-cast {
+  opacity: 0;
+  cursor: pointer;
+}
+.sdm .sdm-album .sdm-album-entry:hover .sdm-album-cast, .sdm .sdm-album .sdm-album-entry.is-selected .sdm-album-cast {
+  opacity: 0.8;
+}
+.sdm .sdm-album .sdm-album-entry .sdm-album-cast:hover {
+  opacity: 1;
 }
 .sdm .sdm-album .sdm-album-entry.is-selected {
   background: rgba(0, 0, 0, 0.12);
@@ -6937,6 +6956,10 @@ input[type=radio]::after {
   cursor: pointer;
   font-weight: 700;
 }
+.sdm .sdm-album .sdm-album-footer .sdm-album-full {
+  font-weight: 700;
+  opacity: 0.7;
+}
 .sdm .sdm-album .sdm-album-footer .hint {
   margin: 0;
   font-size: 11px;
@@ -6945,6 +6968,9 @@ input[type=radio]::after {
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+.sdm .sdm-album [hidden] {
+  display: none !important;
 }
 .sdm .sdm-album .sdm-album-power-header {
   display: flex;
@@ -6973,6 +6999,21 @@ input[type=radio]::after {
   font-size: 11px;
   text-transform: uppercase;
   opacity: 0.85;
+}
+.sdm .sdm-album .sdm-album-power-header .sdm-album-power-level a {
+  cursor: pointer;
+  opacity: 0.7;
+  font-size: 12px;
+}
+.sdm .sdm-album .sdm-album-power-header .sdm-album-power-level a:hover {
+  opacity: 1;
+}
+.sdm .sdm-album .sdm-album-power-header .sdm-album-power-level input {
+  -moz-appearance: textfield;
+}
+.sdm .sdm-album .sdm-album-power-header .sdm-album-power-level input::-webkit-outer-spin-button, .sdm .sdm-album .sdm-album-power-header .sdm-album-power-level input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
 }
 .sdm .sdm-album .sdm-album-power-header .sdm-album-power-level input {
   width: 2.2em;
@@ -7033,6 +7074,15 @@ input[type=radio]::after {
 }
 .sdm .sdm-album .sdm-album-text p {
   margin: 0 0 4px;
+}
+.sdm .sdm-album .sdm-album-add-overcharge {
+  align-self: flex-start;
+  cursor: pointer;
+  font-size: 12px;
+  opacity: 0.75;
+}
+.sdm .sdm-album .sdm-album-add-overcharge:hover {
+  opacity: 1;
 }
 .sdm .sdm-album .sdm-album-overcharge {
   padding-left: 8px;

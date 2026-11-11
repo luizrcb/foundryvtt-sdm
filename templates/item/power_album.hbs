@@ -14,11 +14,16 @@
         />
         <input class="sdm-album-power-name" type="text" name="{{concat 'system.powers.' @index '.name'}}" value="{{power.name}}"
           placeholder="{{localize 'SDM.PowerName'}}" />
-        <label class="sdm-album-power-level" data-tooltip="{{localize 'SDM.PowerLevel'}}">
+        <div class="sdm-album-power-level" data-tooltip="{{localize 'SDM.PowerLevel'}}">
           <span>{{localize 'SDM.FieldLevel'}}</span>
-          <input type="text" name="{{concat 'system.powers.' @index '.level'}}" value="{{power.level}}" data-dtype="Number" />
-        </label>
+          {{#if @root.editable}}<a data-action="stepPowerLevel" data-index="{{@index}}" data-step="-1"><i class="fa-solid fa-minus"></i></a>{{/if}}
+          <input type="number" min="0" step="1" name="{{concat 'system.powers.' @index '.level'}}" value="{{power.level}}" data-dtype="Number" />
+          {{#if @root.editable}}<a data-action="stepPowerLevel" data-index="{{@index}}" data-step="1"><i class="fa-solid fa-plus"></i></a>{{/if}}
+        </div>
         <div class="sdm-album-power-actions">
+          {{#if @root.editable}}
+          <a data-action="duplicatePower" data-index="{{@index}}" data-tooltip="{{localize 'SDM.DuplicatePower'}}"><i class="fa-solid fa-clone"></i></a>
+          {{/if}}
           {{#if @root.isGM}}
           <a data-action="extractPower" data-index="{{@index}}" data-tooltip="{{localize 'SDM.ExtractPowerTooltip'}}"><i class="fa-solid fa-file-import"></i></a>
           {{/if}}
@@ -48,7 +53,10 @@
           <span>{{localize 'SDM.PowerIsDangerous'}}</span></label>
       </div>
 
-      <div class="sdm-album-text sdm-album-overcharge">
+      {{#if (and @root.editable (not power.overcharge))}}
+      <a class="sdm-album-add-overcharge" data-action="showOvercharge"><i class="fa-solid fa-plus"></i> {{localize 'SDM.PowerOvercharge'}}</a>
+      {{/if}}
+      <div class="sdm-album-text sdm-album-overcharge" {{#unless power.overcharge}}hidden{{/unless}}>
         <span class="sdm-album-text-label">{{localize 'SDM.PowerOvercharge'}}</span>
         {{#if @root.editable}}
         <prose-mirror name="{{concat 'system.powers.' @index '.overcharge'}}" data-document-uuid="{{@root.item.uuid}}"
