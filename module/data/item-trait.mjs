@@ -1,3 +1,4 @@
+import { defineTriggersField } from './triggers-field.mjs';
 import { getDefaultAbility } from '../helpers/globalUtils.mjs';
 import SdmItemBase from './base-item.mjs';
 import PowerDataModel from './power-data.mjs';
@@ -66,6 +67,8 @@ export default class SdmTrait extends SdmItemBase {
 
     schema.pet = new fields.DocumentUUIDField({ required: true, blank: true, initial: '' });
 
+    // Roll triggers (traits and burdens are always active)
+    schema.triggers = defineTriggersField();
     return schema;
   }
 

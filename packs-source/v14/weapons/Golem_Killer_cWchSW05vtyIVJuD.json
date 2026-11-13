@@ -87,7 +87,13 @@
         "roll": "damage",
         "condition": "total",
         "value": 13,
-        "text": "Target mech shuts down for an hour"
+        "text": "Target mech shuts down for an hour",
+        "attack": "",
+        "table": "",
+        "effect": "",
+        "wear": "",
+        "counter": "",
+        "counter_step": 1
       }
     ]
   },

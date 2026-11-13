@@ -1,5 +1,7 @@
+import { actorTriggers, renderTriggers, runTriggerActions } from '../rolls/triggers.mjs';
+import { bindCollapsibleSections } from '../helpers/collapsibleSections.mjs';
 import { restActor } from '../app/rest.mjs';
-import { getPowerCost, paysPowerCost, payPowerCost } from '../helpers/powerCost.mjs';
+import { getPowerCost, getPowerDangerHtml, paysPowerCost, payPowerCost } from '../helpers/powerCost.mjs';
 import { lightFromPower, powerCreatesLight, putOutLight } from '../helpers/lights.mjs';
 import { consumeSingleUsePower } from '../helpers/singleUsePowers.mjs';
 import { combineMultiplier, describeBoost, describeBoostPaid, getBoost, payBoost } from '../rolls/boost.mjs';
@@ -165,7 +167,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       chooseHallmarkUpgrade: this._onChooseHallmarkUpgrade,
       openDoc: { handler: this._openDoc, buttons: [0] },
       toggleItemStatus: { handler: this._toggleItemStatus, buttons: [0, 2] },
-      stepItemCounter: { handler: this._onStepItemCounter, buttons: [0, 2] },
+      // Left click +1; right-click −1 is handled in _onRender (so the row's context menu stays closed)
+      stepItemCounter: { handler: this._onStepItemCounter, buttons: [0] },
       ...ACTOR_COUNTER_ACTIONS,
       useItem: this._onUseItem,
       putOutLight: this._onPutOutLight,
@@ -296,6 +299,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       boost,
       boostLabel: boost ? describeBoost(boost) : '',
       powerCost,
+      powerDanger: powerOptions?.[powerIndex]?.dangerHtml ?? '',
+      isPowerRoll: isPower || isPowerAlbum,
       rollTitlePrefix,
       title: dialogTitle,
       abilities: CONFIG.SDM.getOrderedAbilities(language),
@@ -469,7 +474,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       versatile: !!rollOptions.versatile,
       skill: availableSkills[selectedSkill],
       targetActor,
-      attackTarget
+      attackTarget,
+      attack: isAttack ? attack : ''
     };
 
     if (formula) {
@@ -514,6 +520,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
           }
         });
         rollData.item = newPowerItem;
+        rollData.triggerItem = item;
+        rollData.powerName = powerItem.name;
       }
     }
 
@@ -984,7 +992,18 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
   _onRender(context, options) {
     bindNumberInputs(this.element, this.document);
     this.#dragDrop.forEach(d => d.bind(this.element));
+    // Counter chips: right-click is −1 here, and never opens the row's context menu
+    this.element.querySelectorAll('.sdm-counter-chip').forEach(chip =>
+      chip.addEventListener('contextmenu', async event => {
+        event.preventDefault();
+        event.stopPropagation();
+        if (!this.isEditable || !chip.dataset.action) return;
+        const doc = chip.dataset.action === 'stepActorCounter' ? this.actor : this._getEmbeddedDocument(chip);
+        if (doc) await stepCounter(doc, chip.dataset.key, -1);
+      })
+    );
     this.#disableOverrides();
+    bindCollapsibleSections(this);
     // You may want to add other special handling here
     // Foundry comes with a large number of utility classes, e.g. SearchFilter
     // That you may want to implement yourself.
@@ -1374,6 +1393,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
             overchargeFormula: powerData.overcharge_roll_formula,
             canOvercharge: !!powerData.overcharge,
             cost: getPowerCost(this.actor.system, powerData),
+            dangerHtml: getPowerDangerHtml(this.actor.system, powerData, { canOvercharge: !!powerData.overcharge }),
             default_ability: powerData.default_ability,
             description: powerItem.system.description,
             overchargeDescription: powerData.overcharge
@@ -1408,6 +1428,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
             overchargeFormula: power.overcharge_roll_formula,
             canOvercharge: !!power.overcharge,
             cost: getPowerCost(this.actor.system, power),
+            dangerHtml: getPowerDangerHtml(this.actor.system, power, { canOvercharge: !!power.overcharge }),
             default_ability: power.default_ability,
             description: power.description,
             overchargeDescription: power.overcharge
@@ -2006,7 +2027,13 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       });
     }
 
-    await renderDefeatResult({ roll, selectedAbility }, { fromHeroDice: false, speaker, isCtrl });
+    // Defeat triggers (above 6 the character is not defeated)
+    const fired = actorTriggers(this.actor, 'defeat', roll, { success: roll.total > 6 });
+    await renderDefeatResult(
+      { roll, selectedAbility },
+      { fromHeroDice: false, speaker, isCtrl, extraHtml: renderTriggers(fired) }
+    );
+    if (fired.length) await runTriggerActions(fired, { actor: this.actor });
   }
 
   static async _onRollDanger(event, target) {
@@ -2254,7 +2281,16 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
 
-    await renderSaveResult({ roll, label, targetNumber }, { fromHeroDice: false, speaker, isCtrl });
+    // Save triggers of the actor's readied gear, traits and burdens (a save at or above the target succeeds)
+    const fired = actorTriggers(this.actor, 'save', roll, {
+      ability: ability === ActorType.NPC ? '' : ability,
+      success: roll.total >= targetNumber
+    });
+    await renderSaveResult(
+      { roll, label, targetNumber },
+      { fromHeroDice: false, speaker, isCtrl, extraHtml: renderTriggers(fired) }
+    );
+    if (fired.length) await runTriggerActions(fired, { actor: this.actor });
   }
 
   static async _onUpdateAttack(event, target) {

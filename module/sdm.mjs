@@ -58,6 +58,7 @@ import { blockedReason, isUsable, setupUseItem, useItem } from './app/use-item.m
 import { setupAnimatedItems } from './helpers/animatedItems.mjs';
 import { getLightItems, getLitEffect, isLightSource, isLit, lightItem, putOutLight, setupLights, toggleLight } from './helpers/lights.mjs';
 import { restActor, setupRest } from './app/rest.mjs';
+import { setupTriggers } from './rolls/triggers.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { setupPetDropSocket } from './items/petItem.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
@@ -318,6 +319,11 @@ Hooks.on('renderDialogV2', (dialog, html) => {
     const selectedIndex = parseInt(event.target.value, 10);
     const selectedPower = powerOptions.find(p => p.index === selectedIndex);
     if (costValue && selectedPower) costValue.textContent = selectedPower.cost ?? 0;
+    const danger = html.querySelector('.sdm-power-danger');
+    if (danger && selectedPower) {
+      danger.innerHTML = selectedPower.dangerHtml ?? '';
+      danger.hidden = !selectedPower.dangerHtml;
+    }
     const defaultAbility = selectedPower?.default_ability || '';
     const canOvercharge = selectedPower?.canOvercharge;
 
@@ -696,6 +702,7 @@ Hooks.once('init', function () {
   setupAnimatedItems();
   setupLights();
   setupRest();
+  setupTriggers();
   setupEscalatorDiePositionBroadcast();
   //Preload Handlebars templates.
   return preloadHandlebarsTemplates();

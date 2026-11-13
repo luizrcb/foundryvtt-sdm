@@ -1,3 +1,4 @@
+import { defineTriggersField } from './triggers-field.mjs';
 import SdmItemBase from './base-item.mjs';
 import PowerDataModel from './power-data.mjs';
 
@@ -40,6 +41,8 @@ export default class SdmBurden extends SdmItemBase {
       { nullable: false }
     );
 
+    // Roll triggers (traits and burdens are always active)
+    schema.triggers = defineTriggersField();
     return schema;
   }
 

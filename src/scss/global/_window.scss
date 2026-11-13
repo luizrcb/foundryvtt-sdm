@@ -2351,3 +2351,55 @@ input[type='radio']::after {
     opacity: 0.45;
   }
 }
+
+// Cast dialog: danger warning (dangerous power, or cost above the caster's level)
+.sdm-power-danger {
+  margin-top: 6px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #8a1c13;
+  background: rgba(170, 2, 0, 0.08);
+
+  p {
+    margin: 0;
+  }
+}
+
+// Item sheet: roll triggers with their actions
+.sdm-triggers {
+  .sdm-trigger + .sdm-trigger {
+    margin-top: 6px;
+    padding-top: 6px;
+    border-top: 1px dashed var(--color-border-light-tertiary, rgba(0, 0, 0, 0.2));
+  }
+
+  .sdm-trigger-actions {
+    margin: 2px 0 0 4px;
+    font-size: 12px;
+
+    summary {
+      cursor: pointer;
+      opacity: 0.75;
+    }
+
+    .sdm-counter-row {
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    input.sdm-trigger-table {
+      width: 12em;
+    }
+
+    input[type='number'] {
+      width: 3.5em;
+    }
+  }
+}

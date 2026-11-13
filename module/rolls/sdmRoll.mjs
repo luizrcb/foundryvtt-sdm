@@ -1,5 +1,5 @@
 import { powerCardData } from '../helpers/singleUsePowers.mjs';
-import { attackTriggers, damageTriggers, renderTriggers } from './triggers.mjs';
+import { actorTriggers, attackTriggers, damageTriggers, itemRollTriggers, renderTriggers, runTriggerActions } from './triggers.mjs';
 import { createChatMessage } from '../helpers/chatUtils.mjs';
 import { ActorType, AttackTarget, RollMode, RollType } from '../helpers/constants.mjs';
 import { $l10n, capitalizeFirstLetter, toPascalCase } from '../helpers/globalUtils.mjs';
@@ -24,9 +24,17 @@ export default class SDMRoll {
     item = null,
     isCtrl = false,
     overcharged = false,
-    extraFlags = {}
+    extraFlags = {},
+    attack = '',
+    triggerItem = null,
+    powerName = ''
   }) {
     this.actor = actor;
+    // Which attack (melee, ranged, fantascience, oldtech): attack triggers can be limited to one
+    this.attack = attack || '';
+    // Album powers: the album holds the triggers (filtered by the power's name)
+    this.triggerItem = triggerItem;
+    this.powerName = powerName || '';
     this.type = type;
     this.from = from;
     this.mode = mode;
@@ -119,6 +127,7 @@ export default class SDMRoll {
     await this.roll.evaluate();
 
     let content = await this.roll.render();
+    let attackSuccess = null; // known when attacking a target
 
     if (this.type === RollType.ATTACK && this.targetActor && this.targetActor !== this.actor) {
       checkCritical = false;
@@ -133,6 +142,7 @@ export default class SDMRoll {
       const attackResult = this.roll.total;
       const { isNat1, isNat20, is13, is7 } = detectNat1OrNat20(this.roll);
       const isSuccess = !isNat1 && (isNat20 || attackResult > targetDefense);
+      attackSuccess = isSuccess;
       const forceOrFail = attackResult === targetDefense;
 
       let resultMessage = (isSuccess ? $l10n('SDM.Success') : $l10n('SDM.Failure')).toUpperCase();
@@ -209,10 +219,16 @@ export default class SDMRoll {
 
     // Roll triggers: natural results on attacks (readied gear), damage results of the item
     const firedTriggers = isAttack
-      ? attackTriggers(this.actor, this.roll)
-      : isDamage && this.item
-        ? damageTriggers(this.item, this.roll)
-        : [];
+      ? attackTriggers(this.actor, this.roll, this.attack, attackSuccess)
+      : isAbility
+        ? actorTriggers(this.actor, 'ability', this.roll, { ability: this.ability })
+        : isDamage && this.item
+          ? damageTriggers(this.item, this.roll)
+          : isPower && this.item?.id
+            ? itemRollTriggers(this.item, 'power', this.roll)
+            : isPowerAlbum && this.triggerItem
+              ? itemRollTriggers(this.triggerItem, 'power', this.roll, { power: this.powerName })
+              : [];
     content += renderTriggers(firedTriggers);
 
     const chatDataMessage = {
@@ -230,6 +246,7 @@ export default class SDMRoll {
 
     chatDataMessage.flags = { ...chatDataMessage.flags, ...this.extraFlags };
     await createChatMessage(chatDataMessage);
+    if (firedTriggers.length) await runTriggerActions(firedTriggers, { actor: this.actor });
 
     if (isDamage && this.item && this.item?.system?.features?.has('draining')) {
       const drainingAmount = this.item?.system?.draining?.value ?? 0;

@@ -1,7 +1,7 @@
 {{! Effects Tab }}
 <section class='tab effects scrollable {{tab.cssClass}}' data-group='primary' data-tab='effects'>
   {{!-- Damage boost paid with a resource (weapons) --}}
-  {{#if (and (eq item.type 'gear') (or (eq system.type 'weapon') (has system.features 'weapon')))}}
+  {{#if (and (sdmFeature 'boost') (eq item.type 'gear') (or (eq system.type 'weapon') (has system.features 'weapon')))}}
   <div class="sdm-counters sdm-boost">
     <header>
       <label><input type="checkbox" name="system.boost.enabled" {{checked system.boost.enabled}} /> <strong>{{localize 'SDM.Boost.Enabled'}}</strong></label>
@@ -9,7 +9,7 @@
     {{#if system.boost.enabled}}
     <div class="sdm-counter-row">
       <label>{{localize 'SDM.Boost.Cost'}}
-        <input type="text" name="system.boost.cost" value="{{system.boost.cost}}" placeholder="1d6" /></label>
+        <input type="text" name="system.boost.cost" value="{{system.boost.cost}}" placeholder="1" /></label>
       <label>{{localize 'SDM.Boost.Resource'}}
         <select name="system.boost.resource">{{selectOptions boostResources selected=system.boost.resource localize=true}}</select></label>
       <label data-tooltip="{{localize 'SDM.Boost.MultiplierHint'}}">{{localize 'SDM.Boost.Multiplier'}}
@@ -22,20 +22,66 @@
     {{/if}}
   </div>
   {{/if}}
-  {{!-- Roll triggers shown on chat cards --}}
-  {{#if (eq item.type 'gear')}}
-  <div class="sdm-counters sdm-triggers">
+  {{!-- Roll triggers shown on chat cards (gear, traits and burdens) --}}
+  {{#if (and (sdmFeature 'triggers') (or (eq item.type 'gear') (eq item.type 'trait') (eq item.type 'burden')))}}
+  <div class="sdm-counters sdm-triggers" data-collapse-key="triggers">
     <header>
-      <strong>{{localize 'SDM.Trigger.Title'}}</strong>
+      <strong><a class="sdm-collapse-toggle" data-tooltip="{{localize 'SDM.Collapse'}}"><i class="fa-solid fa-chevron-down" inert></i></a> {{localize 'SDM.Trigger.Title'}} <span class="sdm-section-count">({{system.triggers.length}})</span></strong>
       {{#if @root.editable}}<a data-action="addTrigger"><i class="fa-solid fa-plus"></i> {{localize 'SDM.Trigger.New'}}</a>{{/if}}
     </header>
     {{#each system.triggers as |trigger index|}}
+    <div class="sdm-trigger">
     <div class="sdm-counter-row">
       <select name="system.triggers.{{index}}.roll">{{selectOptions @root.triggerRolls selected=trigger.roll localize=true}}</select>
+      {{#if (eq trigger.roll 'attack')}}
+      <select name="system.triggers.{{index}}.attack" data-tooltip="{{localize 'SDM.Trigger.AttackHint'}}">{{selectOptions @root.triggerAttacks selected=trigger.attack localize=true}}</select>
+      {{else}}
+      <input type="hidden" name="system.triggers.{{index}}.attack" value="{{trigger.attack}}" />
+      {{/if}}
+      {{#if (or (eq trigger.roll 'save') (eq trigger.roll 'ability'))}}
+      <select name="system.triggers.{{index}}.ability" data-tooltip="{{localize 'SDM.Trigger.AbilityHint'}}">{{selectOptions @root.triggerAbilities selected=trigger.ability localize=true}}</select>
+      {{else}}
+      <input type="hidden" name="system.triggers.{{index}}.ability" value="{{trigger.ability}}" />
+      {{/if}}
+      {{#if (eq trigger.roll 'counter')}}
+      <select name="system.triggers.{{index}}.watch" data-tooltip="{{localize 'SDM.Trigger.WatchHint'}}">{{selectOptions @root.triggerCounters selected=trigger.watch}}</select>
+      {{else}}
+      <input type="hidden" name="system.triggers.{{index}}.watch" value="{{trigger.watch}}" />
+      {{/if}}
+      {{#if (and (eq trigger.roll 'power') (sdmHasAlbum @root.item))}}
+      <input type="text" name="system.triggers.{{index}}.power" value="{{trigger.power}}" placeholder="{{localize 'SDM.Trigger.PowerPlaceholder'}}" data-tooltip="{{localize 'SDM.Trigger.PowerHint'}}" />
+      {{else}}
+      <input type="hidden" name="system.triggers.{{index}}.power" value="{{trigger.power}}" />
+      {{/if}}
       <select name="system.triggers.{{index}}.condition">{{selectOptions @root.triggerConditions selected=trigger.condition localize=true}}</select>
+      {{#if (or (eq trigger.condition 'max') (eq trigger.condition 'min') (eq trigger.condition 'matching') (eq trigger.condition 'runningLow') (eq trigger.condition 'runOut') (eq trigger.condition 'success') (eq trigger.condition 'failure') (eq trigger.condition 'counterMax'))}}
+      <input type="hidden" name="system.triggers.{{index}}.value" value="{{trigger.value}}" data-dtype="Number" />
+      {{else}}
       <input type="number" name="system.triggers.{{index}}.value" value="{{trigger.value}}" data-dtype="Number" />
+      {{/if}}
       <input class="sdm-counter-label" type="text" name="system.triggers.{{index}}.text" value="{{trigger.text}}" placeholder="{{localize 'SDM.Trigger.TextPlaceholder'}}" />
       {{#if @root.editable}}<a data-action="removeTrigger" data-index="{{index}}" data-tooltip="{{localize 'SDM.Trigger.Remove'}}"><i class="fa-solid fa-trash"></i></a>{{/if}}
+    </div>
+    <details class="sdm-trigger-actions" {{#if (or trigger.table trigger.effect trigger.wear trigger.counter)}}open{{/if}}>
+      <summary>{{localize 'SDM.Trigger.Actions'}}</summary>
+      <div class="sdm-counter-row">
+        <label data-tooltip="{{localize 'SDM.Trigger.TableHint'}}">{{localize 'SDM.Trigger.Table'}}
+          <input class="sdm-trigger-table" type="text" name="system.triggers.{{index}}.table" value="{{trigger.table}}" placeholder="{{localize 'SDM.Trigger.TablePlaceholder'}}" /></label>
+        <label data-tooltip="{{localize 'SDM.Trigger.EffectHint'}}">{{localize 'SDM.Trigger.Effect'}}
+          <select name="system.triggers.{{index}}.effect">{{selectOptions @root.triggerEffects selected=trigger.effect}}</select>
+          <select name="system.triggers.{{index}}.effect_target">{{selectOptions @root.triggerEffectTargets selected=trigger.effect_target localize=true}}</select></label>
+        <label>{{localize 'SDM.Trigger.WearLabel'}}
+          <select name="system.triggers.{{index}}.wear">{{selectOptions @root.triggerWear selected=trigger.wear localize=true}}</select></label>
+        <label>{{localize 'SDM.Trigger.Counter'}}
+          <select name="system.triggers.{{index}}.counter">{{selectOptions @root.triggerCounters selected=trigger.counter}}</select>
+          <select name="system.triggers.{{index}}.counter_mode">{{selectOptions @root.triggerCounterModes selected=trigger.counter_mode localize=true}}</select>
+          {{#if (eq trigger.counter_mode 'reset')}}
+          <input type="hidden" name="system.triggers.{{index}}.counter_step" value="{{trigger.counter_step}}" data-dtype="Number" />
+          {{else}}
+          <input type="number" name="system.triggers.{{index}}.counter_step" value="{{trigger.counter_step}}" data-dtype="Number" data-tooltip="{{localize 'SDM.Trigger.CounterStepHint'}}" />
+          {{/if}}</label>
+      </div>
+    </details>
     </div>
     {{else}}
     <p class="hint">{{localize 'SDM.Trigger.None'}}</p>

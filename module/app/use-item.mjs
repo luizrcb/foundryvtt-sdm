@@ -147,6 +147,36 @@ export async function restoreAll(actor, kind) {
   if (!foundry.utils.isEmpty(update)) await actor.update(update);
 }
 
+/**
+ * A roll trigger's effect: one of the item's effects (keep it disabled or not applied to the bearer
+ * on the item) copied to the user's targeted tokens as a temporary effect, like Use.
+ */
+export async function applyItemEffectToTargets(item, effectId, actor, { self = false } = {}) {
+  const effects = effectsToCopy(item).filter((data, index) => item.effects.contents[index]?.id === effectId);
+  if (!effects.length) return;
+  // "self": the one who rolled; otherwise the user's targeted tokens
+  const targets = self
+    ? [actor ?? item.actor].filter(Boolean)
+    : [...new Set([...(game.user.targets ?? [])].map(token => token.actor).filter(Boolean))];
+  if (!targets.length) {
+    ui.notifications.info($fmt('SDM.Trigger.NoTarget', { effect: effects[0].name }));
+    return;
+  }
+  for (const target of targets) {
+    const payload = { actorUuid: target.uuid, restores: [], effects };
+    if (target.isOwner) await applyToActor(payload);
+    else if (game.users.activeGM) game.socket.emit(CHANNEL, { action: APPLY_ACTION, payload });
+    else ui.notifications.warn($l10n('SDM.ErrorNoActiveGM'));
+  }
+  await ChatMessage.create({
+    speaker: ChatMessage.getSpeaker({ actor }),
+    content: `<p><i class="fa-solid fa-bolt"></i> ${$fmt('SDM.Trigger.EffectApplied', {
+      effect: esc(effects[0].name),
+      targets: targets.map(t => esc(t.name)).join(', ')
+    })}</p>`
+  });
+}
+
 /** The item's effects, as temporary effects of the target (removed by hand). */
 function effectsToCopy(item) {
   return item.effects.map(effect => {

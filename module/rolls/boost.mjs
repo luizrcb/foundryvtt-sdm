@@ -1,3 +1,4 @@
+import { featureEnabled } from '../helpers/features.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 
 /**
@@ -8,6 +9,7 @@ import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
  */
 
 export function getBoost(item) {
+  if (!featureEnabled('boost')) return null;
   const boost = item?.system?.boost;
   return boost?.enabled ? boost : null;
 }

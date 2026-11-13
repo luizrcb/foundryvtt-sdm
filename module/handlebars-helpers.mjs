@@ -3,6 +3,7 @@ import { $l10n, formatNumber, toPascalCase } from './helpers/globalUtils.mjs';
 import { convertToSacks, getRowRolls, getWealthFromItems, hasPowerAlbum } from './helpers/itemUtils.mjs';
 import { getHallmarkUpgradeSummary } from './app/level-upgrades.mjs';
 import { isLightSource, isLit } from './helpers/lights.mjs';
+import { featureEnabled } from './helpers/features.mjs';
 
 export function registerHandlebarsHelpers() {
   const $$ = (name, fn) => Handlebars.registerHelper(name, fn);
@@ -18,6 +19,8 @@ export function registerHandlebarsHelpers() {
 
   // Gear that lights its bearer's token (light category or glowing feature)
   $$('sdmIsLight', item => isLightSource(item));
+  // Optional systems the GM can turn off: {{#if (sdmFeature 'counters')}}
+  $$('sdmFeature', name => featureEnabled(name));
   // Counters: reset each round / turn of a combat
   $$('sdmCounterResetChoices', () => ({
     '': 'SDM.Counter.ResetEachNone',

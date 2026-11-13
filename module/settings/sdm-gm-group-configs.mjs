@@ -112,7 +112,10 @@ export class SDMCoreRulesSettingsConfig extends GroupBase {
     'defaultHardLimitValue',
     'defaultHeroDiceType',
     'healingHouseRule',
-    'automatePowerCost'
+    'automatePowerCost',
+    'enableTriggers',
+    'enableCounters',
+    'enableDamageBoost'
   ];
 }
 

@@ -46,6 +46,9 @@
       </select>
     </div>
     {{/if}}
+    {{#if (and isPowerRoll (not powerCost))}}
+    <div class="mt-10 sdm-power-danger"{{#unless powerDanger}} hidden{{/unless}}>{{{powerDanger}}}</div>
+    {{/if}}
     {{#if powerCost}}
     <fieldset class="mt-10 sdm-power-cost">
       <legend>
@@ -58,6 +61,7 @@
         <span class="sdm-power-cost-label">{{localize 'SDM.PowerCostPay.Pay'}}</span>
         <span class="sdm-power-cost-life">{{localize 'SDM.PowerCostPay.LifeNow' life=powerCost.life}}</span>
       </div>
+      <div class="sdm-power-danger"{{#unless powerDanger}} hidden{{/unless}}>{{{powerDanger}}}</div>
       <div class="sdm-power-cost-ability" data-tooltip="{{localize 'SDM.PowerCostPay.FromAbilityHint'}}">
         <span class="sdm-power-cost-label">{{localize 'SDM.PowerCostPay.FromAbility'}}</span>
         <div class="sdm-power-cost-abilities">

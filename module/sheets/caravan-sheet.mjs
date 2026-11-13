@@ -1,4 +1,5 @@
-import { ACTOR_COUNTER_ACTIONS, getCounters } from '../helpers/counters.mjs';
+import { bindCollapsibleSections } from '../helpers/collapsibleSections.mjs';
+import { ACTOR_COUNTER_ACTIONS, getCounters, stepCounter } from '../helpers/counters.mjs';
 import CompendiumBrowser from '../app/compendium-browser.mjs';
 import TokenPlacement from '../canvas/token-placement.mjs';
 import { makeNpcFriendly } from '../items/petItem.mjs';
@@ -833,6 +834,17 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
 
   _onRender(context, options) {
     bindNumberInputs(this.element, this.document);
+    bindCollapsibleSections(this);
+    // Counter chips: right-click is −1 here, and never opens the row's context menu
+    this.element.querySelectorAll('.sdm-counter-chip').forEach(chip =>
+      chip.addEventListener('contextmenu', async event => {
+        event.preventDefault();
+        event.stopPropagation();
+        if (!this.isEditable || !chip.dataset.action) return;
+        const doc = chip.dataset.action === 'stepActorCounter' ? this.actor : this._getEmbeddedDocument(chip);
+        if (doc) await stepCounter(doc, chip.dataset.key, -1);
+      })
+    );
     // Listen for date changes during advancement
 
     this.#dragDrop.forEach(d => d.bind(this.element));

@@ -1,3 +1,4 @@
+import { featureEnabled } from '../helpers/features.mjs';
 import { isLightSource, isLit, lightBlockedReason, lightItem, putOutLight } from '../helpers/lights.mjs';
 import { blockedReason, isDormantEffect, isUsable, useItem } from '../app/use-item.mjs';
 import { resetCounters } from '../helpers/counters.mjs';
@@ -1578,7 +1579,7 @@ export class SdmActor extends Actor {
         icon: '<i class="fa-solid fa-rotate-left"></i>',
         visible: target => {
           const item = this.sheet._getEmbeddedDocument(target);
-          return this.isOwner && Object.keys(item?.system?.counters ?? {}).length > 0;
+          return this.isOwner && featureEnabled('counters') && Object.keys(item?.system?.counters ?? {}).length > 0;
         },
         onClick: async (event, target) => {
           await resetCounters(this.sheet._getEmbeddedDocument(target));

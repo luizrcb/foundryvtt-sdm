@@ -1,7 +1,8 @@
+{{#if (sdmFeature 'counters')}}
   {{!-- Counters of an item or actor (effects use them as @item/@actor.counters.<key>.value) --}}
-  <div class="sdm-counters">
+  <div class="sdm-counters" data-collapse-key="counters">
     <header>
-      <strong>{{localize 'SDM.Counter.Title'}}</strong>
+      <strong><a class="sdm-collapse-toggle" data-tooltip="{{localize 'SDM.Collapse'}}"><i class="fa-solid fa-chevron-down" inert></i></a> {{localize 'SDM.Counter.Title'}} <span class="sdm-section-count">({{counters.length}})</span></strong>
       {{#if @root.editable}}
       <a data-action="addCounter"><i class="fa-solid fa-plus"></i> {{localize 'SDM.Counter.New'}}</a>
       {{/if}}
@@ -37,3 +38,4 @@
     <p class="hint">{{localize 'SDM.Counter.None'}}</p>
     {{/each}}
   </div>
+{{/if}}

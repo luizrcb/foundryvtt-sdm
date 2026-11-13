@@ -64,7 +64,7 @@
 </section>
 {{/if}}
 
-{{#if (and (eq system.type 'pet') petActor)}}
+{{#if (and (eq system.type 'pet') (or petActor petMissing))}}
 <section class="v2-card v2-item-card">
   <span class="v2-card-title">{{localize 'TYPES.Item.pet'}}</span>
   <div class="v2-fields">{{> ($$ "item/v2/pet-link")}}</div>

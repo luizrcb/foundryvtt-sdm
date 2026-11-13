@@ -77,6 +77,20 @@
     "default_ability": "",
     "categories": [
       "weapon"
+    ],
+    "triggers": [
+      {
+        "attack": "",
+        "table": "",
+        "effect": "",
+        "wear": "",
+        "counter": "",
+        "counter_step": 1,
+        "roll": "attack",
+        "condition": "natural",
+        "value": 13,
+        "text": "Critical hit (if it would miss, it strikes the nearest reasonable target)"
+      }
     ]
   },
   "effects": [],

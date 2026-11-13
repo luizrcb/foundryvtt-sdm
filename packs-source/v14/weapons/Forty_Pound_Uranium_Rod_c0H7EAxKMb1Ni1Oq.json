@@ -86,11 +86,56 @@
         "roll": "damage",
         "condition": "matching",
         "value": 0,
-        "text": "Stuns for 1 round"
+        "text": "Stuns for 1 round",
+        "attack": "",
+        "table": "",
+        "effect": "9XE2FldJyKlRfJO3",
+        "wear": "",
+        "counter": "",
+        "counter_step": 1
       }
     ]
   },
-  "effects": [],
+  "effects": [
+    {
+      "name": "Stunned (1 round)",
+      "origin": null,
+      "img": "icons/svg/daze.svg",
+      "_id": "9XE2FldJyKlRfJO3",
+      "type": "base",
+      "system": {
+        "changes": []
+      },
+      "disabled": true,
+      "duration": {
+        "value": 1,
+        "units": "rounds",
+        "expiry": "turnEnd",
+        "expired": false
+      },
+      "description": "<p>Put on the target by this item's roll trigger (disabled here so the bearer doesn't get it).</p>",
+      "tint": "#ffffff",
+      "transfer": false,
+      "statuses": [
+        "stun"
+      ],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!c0H7EAxKMb1Ni1Oq.9XE2FldJyKlRfJO3"
+    }
+  ],
   "sort": 600000,
   "ownership": {
     "default": 0,

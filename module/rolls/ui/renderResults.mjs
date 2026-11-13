@@ -158,7 +158,7 @@ export async function renderReactionResult(
 
 export async function renderDefeatResult(
   { roll, selectedAbility },
-  { fromHeroDice = false, speaker, isCtrl = false }
+  { fromHeroDice = false, speaker, isCtrl = false, extraHtml = '' }
 ) {
   const rollTotal = roll.total;
 
@@ -254,7 +254,7 @@ export async function renderDefeatResult(
   }
 
   const chatMessageData = {
-    content: await renderTemplate(templatePath('chat/reaction-roll-result'), templateData),
+    content: (await renderTemplate(templatePath('chat/reaction-roll-result'), templateData)) + (extraHtml || ''),
     flavor,
     rolls: [roll],
     flags,
@@ -353,7 +353,7 @@ export async function renderCorruptionResult(
 
 export async function renderSaveResult(
   { roll, label, targetNumber },
-  { fromHeroDice = false, speaker, isCtrl = false }
+  { fromHeroDice = false, speaker, isCtrl = false, extraHtml = '' }
 ) {
   const sacrificeOutcome = $l10n('SDM.SavingThrowSacrifice');
   const saveOutcome = $l10n('SDM.SavingThrowSave');
@@ -404,7 +404,7 @@ export async function renderSaveResult(
   }
 
   const chatMessageData = {
-    content: await renderTemplate(templatePath('chat/saving-throw-result'), templateData),
+    content: (await renderTemplate(templatePath('chat/saving-throw-result'), templateData)) + (extraHtml || ''),
     flavor: label,
     rolls: [roll],
     checkCritical: true,
@@ -421,7 +421,7 @@ export async function renderSaveResult(
 
 export async function renderUsageResult(
   { roll, label, target },
-  { fromHeroDice = false, speaker }
+  { fromHeroDice = false, speaker, extraHtml = '' }
 ) {
   // Determine outcome and message
   let outcome, message;
@@ -471,7 +471,7 @@ export async function renderUsageResult(
   }
 
   const chatMessageData = {
-    content: await renderTemplate(templatePath('chat/saving-throw-result'), templateData),
+    content: (await renderTemplate(templatePath('chat/saving-throw-result'), templateData)) + (extraHtml || ''),
     flavor: label,
     rolls: [roll],
     checkCritical: false,

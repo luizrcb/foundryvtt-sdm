@@ -1,4 +1,5 @@
 import { slugifyName } from './effectReferences.mjs';
+import { featureEnabled } from './features.mjs';
 import { $fmt, $l10n } from './globalUtils.mjs';
 
 /**
@@ -15,6 +16,62 @@ export function getCounters(item) {
   return Object.entries(item?.system?.counters ?? {}).map(([key, counter]) => ({ key, ...counter }));
 }
 
+/** The key of a counter named `label` (underscores: it goes into effect formulas), unique among `existing`. */
+export function counterKeyFor(label, existing = {}, ignore = null) {
+  const base = (slugifyName(label) || 'counter').replace(/-/g, '_');
+  let key = base;
+  for (let n = 2; existing[key] && key !== ignore; n++) key = `${base}_${n}`;
+  return key;
+}
+
+/**
+ * Renaming a counter renames its key, so its reference follows the name
+ * (@item.counters.kills.value → @item.counters.foes.value). Runs before the update: moves the counter
+ * to its new key and remembers the renames for onCountersRenamed.
+ */
+function onPreUpdateCounters(doc, changes, options) {
+  const changed = foundry.utils.getProperty(changes, 'system.counters');
+  const current = doc.system?.counters;
+  if (!changed || !current || typeof changed !== 'object') return;
+  const renames = {};
+  const taken = { ...current };
+  for (const [oldKey, change] of Object.entries(changed)) {
+    if (!current[oldKey] || typeof change?.label !== 'string') continue;
+    const label = change.label.trim();
+    if (!label || label === current[oldKey].label) continue;
+    const newKey = counterKeyFor(label, taken, oldKey);
+    if (newKey === oldKey) continue;
+    changed[newKey] = { ...current[oldKey], ...change, label };
+    changed[oldKey] = new foundry.data.operators.ForcedDeletion();
+    taken[newKey] = changed[newKey];
+    delete taken[oldKey];
+    renames[oldKey] = newKey;
+  }
+  if (Object.keys(renames).length) options.sdmCounterRenames = renames;
+}
+
+/**
+ * After a rename, effects are left as they are: warn when some still use the old reference
+ * (the item's own effects, or the actor's and its items'), so they can be updated by hand.
+ */
+function onCountersRenamed(doc, changes, options, userId) {
+  const renames = options?.sdmCounterRenames;
+  if (!renames || userId !== game.user.id) return;
+  const scope = doc.documentName === 'Actor' ? 'actor' : 'item';
+  const owners = scope === 'actor' ? [doc, ...doc.items] : [doc];
+  for (const [oldKey, newKey] of Object.entries(renames)) {
+    const pattern = new RegExp(`@${scope}\\.counters\\.${oldKey}(?![A-Za-z0-9_])`);
+    const uses = owners.some(owner =>
+      (owner.effects ?? []).some(effect => (effect.system?.changes ?? []).some(change => pattern.test(`${change.value ?? ''}`)))
+    );
+    if (uses) {
+      ui.notifications.warn(
+        $fmt('SDM.Counter.RenamedInEffects', { old: `@${scope}.counters.${oldKey}`, new: `@${scope}.counters.${newKey}` })
+      );
+    }
+  }
+}
+
 /** Ask for a name and add a counter (its key is the slug of the name). */
 export async function promptNewCounter(item) {
   const label = await DialogV2.prompt({
@@ -25,11 +82,7 @@ export async function promptNewCounter(item) {
     rejectClose: false
   });
   if (!label) return;
-  const existing = item.system.counters ?? {};
-  // Underscores: the key goes into effect formulas (@item.counters.<key>.value)
-  const base = (slugifyName(label) || 'counter').replace(/-/g, '_');
-  let key = base;
-  for (let n = 2; existing[key]; n++) key = `${base}_${n}`;
+  const key = counterKeyFor(label, item.system.counters ?? {});
   await item.update({ [`system.counters.${key}`]: { label, value: 0, max: null, reset_value: 0, reset_on_combat_end: false } });
 }
 
@@ -69,7 +122,7 @@ export async function removeCounter(item, key) {
 
 /** At the end of a combat, the active Referee resets the counters marked for it on everyone who fought. */
 async function onCombatEnded(combat) {
-  if (game.users.activeGM?.id !== game.user.id) return;
+  if (game.users.activeGM?.id !== game.user.id || !featureEnabled('counters')) return;
   const actors = new Set(combat.combatants.map(combatant => combatant.actor).filter(Boolean));
   for (const actor of actors) {
     if (Object.keys(actor.system?.counters ?? {}).length) await resetCounters(actor, { combatOnly: true });
@@ -89,7 +142,7 @@ async function resetActorCounters(actor, each) {
 
 /** New round: everyone's "each round" counters; new turn: the acting combatant's "each turn" counters. */
 async function onCombatAdvanced(combat, changed) {
-  if (game.users.activeGM?.id !== game.user.id) return;
+  if (game.users.activeGM?.id !== game.user.id || !featureEnabled('counters')) return;
   if (!('round' in changed) && !('turn' in changed)) return;
   if ('round' in changed) {
     const actors = new Set(combat.combatants.map(combatant => combatant.actor).filter(Boolean));
@@ -101,6 +154,10 @@ async function onCombatAdvanced(combat, changed) {
 export function setupCounters() {
   Hooks.on('deleteCombat', onCombatEnded);
   Hooks.on('updateCombat', onCombatAdvanced);
+  Hooks.on('preUpdateItem', onPreUpdateCounters);
+  Hooks.on('preUpdateActor', onPreUpdateCounters);
+  Hooks.on('updateItem', onCountersRenamed);
+  Hooks.on('updateActor', onCountersRenamed);
 }
 
 /** Sheet actions for an actor's own counters (Effects tab and header chips). */
@@ -117,13 +174,13 @@ export const ACTOR_COUNTER_ACTIONS = {
   removeCounter: async function (event, target) {
     await removeCounter(this.actor, target.dataset.key);
   },
-  // Header chips: click +1, right-click −1
+  // Header chips: click +1 (right-click −1 is handled by the sheets' _onRender)
   stepActorCounter: {
     handler: async function (event, target) {
       event.preventDefault();
       event.stopPropagation();
       await stepCounter(this.actor, target.dataset.key, event.button === 2 ? -1 : 1);
     },
-    buttons: [0, 2]
+    buttons: [0]
   }
 };

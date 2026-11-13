@@ -2344,6 +2344,54 @@ input[type=radio]::after {
   opacity: 0.45;
 }
 
+.sdm-power-danger {
+  margin-top: 6px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  font-size: 12px;
+  color: #8a1c13;
+  background: rgba(170, 2, 0, 0.08);
+}
+
+.sdm-power-danger p {
+  margin: 0;
+}
+
+.sdm-triggers .sdm-trigger + .sdm-trigger {
+  margin-top: 6px;
+  padding-top: 6px;
+  border-top: 1px dashed var(--color-border-light-tertiary, rgba(0, 0, 0, 0.2));
+}
+
+.sdm-triggers .sdm-trigger-actions {
+  margin: 2px 0 0 4px;
+  font-size: 12px;
+}
+
+.sdm-triggers .sdm-trigger-actions summary {
+  cursor: pointer;
+  opacity: 0.75;
+}
+
+.sdm-triggers .sdm-trigger-actions .sdm-counter-row {
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.sdm-triggers .sdm-trigger-actions label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sdm-triggers .sdm-trigger-actions input.sdm-trigger-table {
+  width: 12em;
+}
+
+.sdm-triggers .sdm-trigger-actions input[type=number] {
+  width: 3.5em;
+}
+
 .grid,
 .grid-2col {
   display: grid;
@@ -7482,6 +7530,49 @@ input[type=radio]::after {
 }
 .sdm .sdm-counters .sdm-counter-row select {
   width: auto;
+}
+.sdm .sdm-counters .sdm-collapse-toggle {
+  display: inline-block;
+  margin-right: 4px;
+  font-size: 0.8em;
+  cursor: pointer;
+  opacity: 0.7;
+  transition: transform 0.15s;
+}
+.sdm .sdm-counters .sdm-collapse-toggle:hover {
+  opacity: 1;
+}
+.sdm .sdm-counters .sdm-section-count {
+  font-weight: normal;
+  font-size: 0.85em;
+  opacity: 0.6;
+}
+.sdm .sdm-counters.collapsed > header {
+  margin-bottom: 0;
+}
+.sdm .sdm-counters.collapsed > header .sdm-collapse-toggle {
+  transform: rotate(-90deg);
+}
+.sdm .sdm-counters.collapsed > :not(header) {
+  display: none;
+}
+.sdm .sdm-counters > .sdm-counter-row,
+.sdm .sdm-counters > .sdm-trigger {
+  border-radius: 4px;
+  transition: background-color 0.1s;
+}
+.sdm .sdm-counters > .sdm-counter-row:hover, .sdm .sdm-counters > .sdm-counter-row:focus-within,
+.sdm .sdm-counters > .sdm-trigger:hover,
+.sdm .sdm-counters > .sdm-trigger:focus-within {
+  background: rgba(var(--sdm-highlight-rgb, 34, 120, 140), 0.12);
+}
+.sdm .sdm-counters > .sdm-counter-row:focus-within,
+.sdm .sdm-counters > .sdm-trigger:focus-within {
+  box-shadow: inset 3px 0 0 rgba(var(--sdm-highlight-rgb, 34, 120, 140), 0.6);
+}
+.sdm .sdm-counters input::placeholder {
+  font-style: italic;
+  opacity: 0.45;
 }
 .sdm .sources {
   display: flex;

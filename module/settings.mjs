@@ -613,6 +613,28 @@ export function registerSystemSettings() {
     }
   });
 
+  // Optional systems (on by default): roll triggers, counters, damage boost
+  for (const [key, label] of [
+    ['enableTriggers', 'SDM.SettingsEnableTriggers'],
+    ['enableCounters', 'SDM.SettingsEnableCounters'],
+    ['enableDamageBoost', 'SDM.SettingsEnableDamageBoost']
+  ]) {
+    game.settings.register('sdm', key, {
+      name: label,
+      hint: `${label}Hint`,
+      scope: 'world',
+      restricted: true,
+      type: Boolean,
+      default: true,
+      // Redraw open sheets so their sections show or hide
+      onChange: () => {
+        for (const app of foundry.applications.instances.values()) {
+          if (app.document && app.rendered) app.render();
+        }
+      }
+    });
+  }
+
   game.settings.register('sdm', 'automatePowerCost', {
     name: 'SDM.SettingsAutomatePowerCost',
     hint: 'SDM.SettingsAutomatePowerCostHint',

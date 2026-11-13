@@ -1,3 +1,4 @@
+import { bindCollapsibleSections } from '../helpers/collapsibleSections.mjs';
 import PowerDataModel from '../data/power-data.mjs';
 import { SdmItem } from '../documents/item.mjs';
 import { createNPCByLevel, getActorOptions, getXpToNextLevel } from '../helpers/actorUtils.mjs';
@@ -279,15 +280,62 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
         '': 'SDM.Light.NoAnimation',
         ...Object.fromEntries(Object.entries(CONFIG.Canvas.lightAnimations ?? {}).map(([key, cfg]) => [key, cfg.label]))
       },
-      triggerRolls: { attack: 'SDM.Trigger.Roll.attack', damage: 'SDM.Trigger.Roll.damage' },
+      triggerRolls: {
+        attack: 'SDM.Trigger.Roll.attack',
+        damage: 'SDM.Trigger.Roll.damage',
+        power: 'SDM.Trigger.Roll.power',
+        usage: 'SDM.Trigger.Roll.usage',
+        save: 'SDM.Trigger.Roll.save',
+        ability: 'SDM.Trigger.Roll.ability',
+        defeat: 'SDM.Trigger.Roll.defeat',
+        counter: 'SDM.Trigger.Roll.counter'
+      },
+      triggerCounterModes: {
+        add: 'SDM.Trigger.CounterMode.add',
+        set: 'SDM.Trigger.CounterMode.set',
+        reset: 'SDM.Trigger.CounterMode.reset'
+      },
+      triggerAbilities: { '': 'SDM.Trigger.AbilityAny', ...CONFIG.SDM.abilities },
+      triggerEffectTargets: { targets: 'SDM.Trigger.EffectTargets', self: 'SDM.Trigger.EffectSelf' },
+      triggerAttacks: {
+        '': 'SDM.Trigger.AttackAny',
+        melee: 'SDM.AttackMelee',
+        ranged: 'SDM.AttackRanged',
+        fantascience: 'SDM.AttackFantascience',
+        oldtech: 'SDM.AttackOldtech'
+      },
       triggerConditions: {
         natural: 'SDM.Trigger.Option.natural',
+        naturalAtLeast: 'SDM.Trigger.Option.naturalAtLeast',
+        naturalAtMost: 'SDM.Trigger.Option.naturalAtMost',
         total: 'SDM.Trigger.Option.total',
+        totalAtLeast: 'SDM.Trigger.Option.totalAtLeast',
+        totalAtMost: 'SDM.Trigger.Option.totalAtMost',
         die: 'SDM.Trigger.Option.die',
         max: 'SDM.Trigger.Option.max',
         min: 'SDM.Trigger.Option.min',
-        matching: 'SDM.Trigger.Option.matching'
+        matching: 'SDM.Trigger.Option.matching',
+        success: 'SDM.Trigger.Option.success',
+        failure: 'SDM.Trigger.Option.failure',
+        counterMax: 'SDM.Trigger.Option.counterMax',
+        runningLow: 'SDM.Trigger.Option.runningLow',
+        runOut: 'SDM.Trigger.Option.runOut'
       },
+      triggerWear: {
+        '': 'SDM.Trigger.WearNone',
+        notch: 'SDM.Trigger.Wear.notch',
+        break: 'SDM.Trigger.Wear.break',
+        running_low: 'SDM.Trigger.Wear.running_low',
+        run_out: 'SDM.Trigger.Wear.run_out',
+        repair: 'SDM.Trigger.Wear.repair',
+        repair_full: 'SDM.Trigger.Wear.repair_full',
+        recharge: 'SDM.Trigger.Wear.recharge'
+      },
+      triggerEffects: Object.fromEntries([['', ''], ...this.item.effects.map(effect => [effect.id, effect.name])]),
+      triggerCounters: Object.fromEntries([
+        ['', ''],
+        ...Object.entries(this.item.system.counters ?? {}).map(([key, counter]) => [key, counter.label])
+      ]),
       boostResources: {
         life: 'SDM.Boost.Life',
         ...CONFIG.SDM.abilities,
@@ -311,6 +359,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
 
     if (isPet && this.item.system.pet) {
       context.petActor = await fromUuid(this.item.system.pet).catch(() => null);
+      // Linked to a pet that no longer exists: show it, so it can be unlinked or relinked
+      context.petMissing = !context.petActor;
       context.defaultPetIcon = DEFAULT_PET_ICON;
     }
 
@@ -515,6 +565,19 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     bindNumberInputs(this.element, this.document);
     this.#dragDrop.forEach(d => d.bind(this.element));
     this.#bindAlbum();
+    bindCollapsibleSections(this);
+    // Roll triggers: drop a roll table on the table field
+    this.element.querySelectorAll('input.sdm-trigger-table').forEach(input => {
+      input.addEventListener('dragover', event => event.preventDefault());
+      input.addEventListener('drop', async event => {
+        event.preventDefault();
+        event.stopPropagation();
+        const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event);
+        if (data?.type !== 'RollTable' || !data.uuid) return;
+        input.value = data.uuid;
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+    });
     // You may want to add other special handling here
     // Foundry comes with a large number of utility classes, e.g. SearchFilter
     // That you may want to  implement yourself.
@@ -731,7 +794,9 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
   /** Roll triggers: the whole list is saved (never one element by path). */
   static async _onAddTrigger() {
     const triggers = foundry.utils.duplicate(this.item.system.triggers ?? []);
-    triggers.push({ roll: 'attack', condition: 'natural', value: 13, text: '' });
+    // Traits and burdens mostly react to saves; gear to attacks
+    const roll = this.item.type === ItemType.GEAR ? 'attack' : 'save';
+    triggers.push({ roll, attack: '', ability: '', power: '', condition: 'natural', value: 13, text: '' });
     await this.item.update({ 'system.triggers': triggers });
   }
 

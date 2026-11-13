@@ -733,3 +733,60 @@ li.item {
 .sdm-counters .sdm-counter-row select {
   width: auto;
 }
+
+// Counters / triggers / boost: collapsible sections, highlighted rows, placeholders that read as hints
+.sdm-counters {
+  .sdm-collapse-toggle {
+    display: inline-block;
+    margin-right: 4px;
+    font-size: 0.8em;
+    cursor: pointer;
+    opacity: 0.7;
+    transition: transform 0.15s;
+
+    &:hover {
+      opacity: 1;
+    }
+  }
+
+  .sdm-section-count {
+    font-weight: normal;
+    font-size: 0.85em;
+    opacity: 0.6;
+  }
+
+  &.collapsed {
+    > header {
+      margin-bottom: 0;
+    }
+
+    > header .sdm-collapse-toggle {
+      transform: rotate(-90deg);
+    }
+
+    > :not(header) {
+      display: none;
+    }
+  }
+
+  // The counter or trigger being edited (or pointed at) stands out
+  > .sdm-counter-row,
+  > .sdm-trigger {
+    border-radius: 4px;
+    transition: background-color 0.1s;
+
+    &:hover,
+    &:focus-within {
+      background: rgba(var(--sdm-highlight-rgb, 34, 120, 140), 0.12);
+    }
+
+    &:focus-within {
+      box-shadow: inset 3px 0 0 rgba(var(--sdm-highlight-rgb, 34, 120, 140), 0.6);
+    }
+  }
+
+  input::placeholder {
+    font-style: italic;
+    opacity: 0.45;
+  }
+}

@@ -88,7 +88,13 @@
         "roll": "damage",
         "condition": "max",
         "value": 0,
-        "text": "Give the target's soul one direct command (save vs extreme commands)"
+        "text": "Give the target's soul one direct command (save vs extreme commands)",
+        "attack": "",
+        "table": "",
+        "effect": "",
+        "wear": "",
+        "counter": "",
+        "counter_step": 1
       }
     ]
   },

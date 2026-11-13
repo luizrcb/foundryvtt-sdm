@@ -86,3 +86,18 @@ export async function payPowerCost(actor, cost, { fromAbilities = {} } = {}) {
   const defeated = lifePart > 0 && (Number(actor.system.life?.value) || 0) <= 0;
   return { life: lifePart, abilities: spend, defeated };
 }
+
+/**
+ * Danger warning for the cast dialog: a dangerous power, or a cost above the caster's level
+ * (normal use and/or overcharge). Returns HTML, or '' when casting is safe.
+ */
+export function getPowerDangerHtml(actorSystem = {}, powerData = {}, { canOvercharge = false } = {}) {
+  const level = Number(actorSystem?.level) || 0;
+  const cost = getPowerCost(actorSystem, powerData);
+  const overCost = getPowerCost(actorSystem, powerData, true);
+  const line = text => `<p><i class="fa-solid fa-triangle-exclamation"></i> ${text}</p>`;
+  if (powerData?.is_dangerous) return line($l10n('SDM.PowerDanger.Dangerous'));
+  if (cost > level) return line($fmt('SDM.PowerDanger.Cost', { cost, level }));
+  if (canOvercharge && overCost > level) return line($fmt('SDM.PowerDanger.Overcharge', { cost: overCost, level }));
+  return '';
+}

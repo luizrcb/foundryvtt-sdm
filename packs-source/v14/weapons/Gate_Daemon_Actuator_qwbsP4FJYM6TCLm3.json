@@ -88,7 +88,13 @@
         "roll": "attack",
         "condition": "natural",
         "value": 13,
-        "text": "Bisects the target"
+        "text": "Bisects the target",
+        "attack": "oldtech",
+        "table": "",
+        "effect": "",
+        "wear": "",
+        "counter": "",
+        "counter_step": 1
       }
     ]
   },

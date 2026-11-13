@@ -45,7 +45,7 @@ export function setupPetDropSocket() {
       if (!item) throw new Error($l10n('SDM.ErrorItemNotFound'));
 
       // Validate it's a pet item
-      if (item.type !== 'gear' || item.system?.type !== GearType.PET) {
+      if (!['gear', 'trait'].includes(item.type) || item.system?.type !== GearType.PET) {
         throw new Error('Dropped item is not a pet.');
       }
       if (!item.system.pet) throw new Error('Pet item has no linked pet actor UUID.');

@@ -85,7 +85,13 @@
         "roll": "damage",
         "condition": "max",
         "value": 0,
-        "text": "Corrupted"
+        "text": "Corrupted",
+        "attack": "",
+        "table": "",
+        "effect": "",
+        "wear": "",
+        "counter": "",
+        "counter_step": 1
       }
     ]
   },

@@ -66,10 +66,12 @@
         (+{{trait.system.skill.modifier_final}})
       {{/if}}
       {{!-- Counters: click +1, right-click −1 --}}
+      {{#if (sdmFeature 'counters')}}
       {{#each trait.system.counters as |counter key|}}
         <a class="sdm-counter-chip ml-3" {{#if @root.editable}}data-action="stepItemCounter"{{/if}} data-key="{{key}}"
           data-tooltip="{{localize 'SDM.Counter.RowHint' label=counter.label}}">{{counter.label}} {{counter.value}}</a>
       {{/each}}
+      {{/if}}
     </div>
   </div>
 </li>

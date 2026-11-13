@@ -4,6 +4,7 @@ import ArmorDataModel from './armor-data.mjs';
 import SdmItemBase from './base-item.mjs';
 import PowerDataModel from './power-data.mjs';
 import { defineLightField } from './light-field.mjs';
+import { defineTriggersField } from './triggers-field.mjs';
 import WardDataModel from './ward_data.mjs';
 import WeaponDataModel from './weapon-data.mjs';
 
@@ -51,20 +52,8 @@ export default class SdmGear extends SdmItemBase {
 
     schema.is_supply = new fields.BooleanField({ required: true, initial: false });
 
-    // Roll triggers shown on chat cards ("Stuns on natural 13", "Max damage: corrupted")
-    schema.triggers = new fields.ArrayField(
-      new fields.SchemaField({
-        roll: new fields.StringField({ required: true, blank: false, initial: 'attack', choices: ['attack', 'damage'] }),
-        condition: new fields.StringField({
-          required: true,
-          blank: false,
-          initial: 'natural',
-          choices: ['natural', 'total', 'die', 'max', 'min', 'matching']
-        }),
-        value: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 13 }),
-        text: new fields.StringField({ required: true, blank: true, initial: '' })
-      })
-    );
+    // Roll triggers shown on chat cards ("Stuns on natural 13"), with optional actions
+    schema.triggers = defineTriggersField();
 
     // Pay to boost the damage (Piezo Mace: spend 1d6 life for x2). Mandatory: paid on every damage roll.
     schema.boost = new fields.SchemaField({
@@ -75,8 +64,9 @@ export default class SdmGear extends SdmItemBase {
         initial: 'life',
         choices: ['life', 'str', 'end', 'agi', 'cha', 'aur', 'tho', 'hero_die']
       }),
-      cost: new fields.StringField({ required: true, blank: true, initial: '1' }),
-      multiplier: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 2, min: 0 }),
+      cost: new fields.StringField({ required: true, blank: true, initial: '' }),
+      // 1 (or 0) = no multiplier: neutral until the GM sets one
+      multiplier: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 1, min: 0 }),
       extra: new fields.StringField({ required: true, blank: true, initial: '' }),
       mandatory: new fields.BooleanField({ initial: false })
     });

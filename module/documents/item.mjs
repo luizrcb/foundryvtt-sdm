@@ -1,3 +1,4 @@
+import { itemRollTriggers, renderTriggers, runTriggerActions } from '../rolls/triggers.mjs';
 import { getPowerCost } from '../helpers/powerCost.mjs';
 import { powerCardData } from '../helpers/singleUsePowers.mjs';
 import { resolveEffectReferences } from '../helpers/effectReferences.mjs';
@@ -643,14 +644,15 @@ export class SdmItem extends Item {
     if (!this.system.pet) return title;
 
     const petDocument = fromUuidSync(this.system.pet);
-    if (!petDocument || !petDocument.system) return;
+    // Not loaded (deleted, or in a compendium): keep the title, say the pet isn't found
+    if (!petDocument || !petDocument.system) return `${title}<br><br><em>${$l10n('SDM.Item.PetNotFound')}</em>`;
 
     if (petDocument.type === ActorType.NPC) {
-      const { level, defense, morale, bonus, life, damage, capacity } = petDocument.system;
+      const { level, defense, morale, bonus, life = {}, damage, capacity } = petDocument.system;
       title += `<br><br><b>${$l10n('SDM.FieldLevel')}:</b> ${level} <b>${$l10n('SDM.FieldCapacity')}:</b> ${capacity} <b>${$l10n('SDM.FieldLifeMax')}:</b> ${life.value}/${life.max} <b>${$l10n('SDM.Morale')}:</b> ${morale}<br>`;
       title += `<b>${$l10n('SDM.FieldDefense')}:</b> ${defense} <b>${$l10n('SDM.FieldBonus')}:</b> ${bonus} <b>${$l10n('SDM.Damage')}:</b> ${damage}`;
     } else {
-      const { level, defense, life } = petDocument.system;
+      const { level, defense, life = {} } = petDocument.system;
       title += `<br><br><b>${$l10n('SDM.FieldLevel')}:</b> ${level} <b>${$l10n('SDM.FieldLifeMax')}:</b> ${life.value}/${life.max} <b>${$l10n('SDM.FieldDefense')}:</b> ${defense} `;
     }
 
@@ -999,7 +1001,10 @@ export class SdmItem extends Item {
     roll = await roll.evaluate();
     const label = `[${$l10n('SDM.Item.UsageRoll')}] ${this.name}`;
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
-    await renderUsageResult({ roll, label, target }, { fromHeroDice: false, speaker });
+    // Usage roll triggers of this item ("backfires on a natural 1", "on run out…")
+    const fired = itemRollTriggers(this, 'usage', roll, { usageTarget: Number(target) || 0 });
+    await renderUsageResult({ roll, label, target }, { fromHeroDice: false, speaker, extraHtml: renderTriggers(fired) });
+    if (fired.length) await runTriggerActions(fired, { actor: this.actor });
     return roll;
   }
 

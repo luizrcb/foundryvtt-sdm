@@ -112,12 +112,12 @@
       {{#if (and item.system.is_hallmark (gt item.system.hallmark.pending_upgrades 0))}}<a class="sdm-pending-upgrade ml-3" {{#if @root.editable}}data-action="chooseHallmarkUpgrade"{{/if}} data-tooltip="{{localize 'SDM.Upgrade.ChooseTooltip'}}"><i class="fa-solid fa-angles-up"></i> {{item.system.hallmark.pending_upgrades}}</a>{{/if}}
 
       {{!-- Counters: click +1, right-click −1 --}}
-      {{#unless (eq actorType 'caravan')}}
+      {{#if (and (ne actorType 'caravan') (sdmFeature 'counters'))}}
       {{#each item.system.counters as |counter key|}}
         <a class="sdm-counter-chip mr-3" {{#if @root.editable}}data-action="stepItemCounter"{{/if}} data-key="{{key}}"
           data-tooltip="{{localize 'SDM.Counter.RowHint' label=counter.label}}">{{counter.label}} {{counter.value}}</a>
       {{/each}}
-      {{/unless}}
+      {{/if}}
       {{#if (and (gt item.system.charges.max 0) (has item.system.features 'charges'))}}
         <span data-tooltip="{{localize 'SDM.ItemCharges'}}" class="mr-3">({{item.system.charges.value}}/{{item.system.charges.max}})</span>
       {{/if}}
