@@ -62,7 +62,17 @@
       "soldier",
       "attack",
       "defeat"
-    ]
+    ],
+    "counters": {
+      "used": {
+        "label": "Used this round",
+        "value": 0,
+        "max": 1,
+        "reset_value": 0,
+        "reset_on_combat_end": true,
+        "reset_each": "round"
+      }
+    }
   },
   "effects": [],
   "sort": 0,

@@ -1,3 +1,5 @@
+import { getPowerCost } from '../helpers/powerCost.mjs';
+import { powerCardData } from '../helpers/singleUsePowers.mjs';
 import { resolveEffectReferences } from '../helpers/effectReferences.mjs';
 import { getLevel } from '../helpers/actorUtils.mjs';
 import {
@@ -21,7 +23,7 @@ import {
   TraitType
 } from '../helpers/constants.mjs';
 import { $fmt, $l10n, capitalizeFirstLetter, safeEvaluate, formatNumber } from '../helpers/globalUtils.mjs';
-import { ALBUM_FEATURE_MAX_POWERS, getSlotsTaken, hasPowerAlbum, UnarmedDamageItem } from '../helpers/itemUtils.mjs';
+import { ALBUM_FEATURE_MAX_POWERS, getDescriptionExcerpt, lastChargeUpdate, getSlotsTaken, hasPowerAlbum, UnarmedDamageItem } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { renderUsageResult } from '../rolls/ui/renderResults.mjs';
 import { DEFAULT_MAX_POWERS } from '../settings.mjs';
@@ -715,17 +717,14 @@ export class SdmItem extends Item {
     const powerName = powerData.name || this.name;
     const powerLevel = powerData?.level;
 
-    let powerCost = Math.ceil(actorPowerCost * powerLevel);
-    if (overcharge) powerCost *= 2;
-    if (powerCostBonus > 0) powerCost = Math.max(powerCost - 2, 1);
+    const powerCost = getPowerCost({ power_cost: actorPowerCost, power_cost_bonus: powerCostBonus }, powerData, overcharge);
     let title = `${powerName} (${$l10n('SDM.Cost').toLowerCase()}: ${powerCost})`;
     return title;
   }
 
   getPowerTitle(powerData, actorPowerCost = 2, powerCostBonus = 0) {
     const powerLevel = powerData?.level;
-    const powerCostBase = Math.ceil(actorPowerCost * powerLevel);
-    const powerCost = Math.max(powerCostBase - powerCostBonus, powerLevel === 0 ? 0 : 1);
+    const powerCost = getPowerCost({ power_cost: actorPowerCost, power_cost_bonus: powerCostBonus }, powerData);
     const powerName = powerData.name || this.getNameTitle();
 
     let title = `<b>${powerName}</b>${!powerData?.name ? this.getCostTitle() : ''} (${$l10n('SDM.Cost').toLowerCase()}: ${powerCost})${powerData.is_dangerous ? ` (<b>${$l10n('SDM.ItemFeature.dangerousAbbr')}</b>)` : ''}<br/>`;
@@ -857,6 +856,11 @@ export class SdmItem extends Item {
         title += `${index + 1}) ${this.getPowerTitle(power, this.actor.system.power_cost, this.actor.system.power_cost_bonus)}<br/><br/>`;
       });
     }
+    // A short excerpt of the description (powers and power albums already show their own text)
+    if (![TraitType.POWER, GearType.POWER_ALBUM].includes(data.type)) {
+      const excerpt = getDescriptionExcerpt(data.description);
+      if (excerpt) title += `${title ? '<br><br>' : ''}<em>${excerpt}</em>`;
+    }
     title += this.footerTitleFunction(this.system);
     return title;
   }
@@ -899,12 +903,7 @@ export class SdmItem extends Item {
       const powerData = this.system.power;
       const powerLevel = powerData.level ?? 0;
 
-      const actorPowerCost = actor.system.power_cost ?? 2;
-      const powerCostBonus = actor.system.power_cost_bonus ?? 0;
-
-      let cost = Math.ceil(actorPowerCost * powerLevel);
-      if (overcharged) cost *= 2;
-      if (powerCostBonus > 0) cost = Math.max(cost - 2, 1);
+      const cost = getPowerCost(actor.system, powerData, overcharged);
 
       const actorLevel = actor.system?.level ?? 0;
       finalPowerCost = cost;
@@ -941,6 +940,9 @@ export class SdmItem extends Item {
       content,
       flavor: flavor || game.user.name
     };
+    // A power's card carries the power, to catch it by dragging the card into an album
+    const power = powerCardData(this);
+    if (power) chatMessageData.flags = { sdm: { power } };
 
     if (blindGMRoll) {
       chatMessageData.rollMode = CONST.DICE_ROLL_MODES.BLIND;
@@ -998,6 +1000,34 @@ export class SdmItem extends Item {
     const label = `[${$l10n('SDM.Item.UsageRoll')}] ${this.name}`;
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
     await renderUsageResult({ roll, label, target }, { fromHeroDice: false, speaker });
+    return roll;
+  }
+
+  /** Mark the item from a usage roll: natural 13 → running low (always); at or under the score → run out. */
+  async applyUsageResult(total, target = Number(this.system.replenish?.value) || 0, options = {}) {
+    if (total === 13) {
+      if (this.system.resources === '') await this.update({ 'system.resources': 'running_low' }, options);
+    } else if (total <= target) {
+      await this.update({ 'system.resources': 'run_out' }, options);
+    }
+  }
+
+  /**
+   * Using a replenish item: running low means one use left, so that use runs it out (no roll);
+   * otherwise the usage roll decides (13 → running low, at or under the score → run out).
+   */
+  async spendUsage(options = {}) {
+    const target = Number(this.system.replenish?.value) || 0;
+    if (this.system.resources === 'running_low') {
+      await this.update({ 'system.resources': 'run_out' }, options);
+      await ChatMessage.create({
+        speaker: ChatMessage.getSpeaker({ actor: this.actor }),
+        content: `<p><i class="fa-solid fa-battery-empty"></i> ${$fmt('SDM.Item.LastUse', { name: this.name })}</p>`
+      });
+      return;
+    }
+    const roll = await this.usageRoll(target);
+    await this.applyUsageResult(roll?.total, target, options);
   }
 
   async toggleItemStatus(action = '') {
@@ -1036,8 +1066,32 @@ export class SdmItem extends Item {
       this.system.charges.max
     );
 
+    // A consumable spent down to 0 charges has run out (replenish items leave charges alone;
+    // on other items charges may count something else)
+    const features = this.system.features;
+    const runOut =
+      difference < 0 &&
+      newCurrentCharges === 0 &&
+      features?.has?.('consumable') &&
+      !features.has('replenish');
+
+    // Adding a charge back to a run-out item (not replenish, whose run out comes from the usage
+    // roll): running low, or nothing if that charge fills it up
+    let resources = lastChargeUpdate(this, newCurrentCharges)['system.resources'];
+    if (runOut) resources = 'run_out';
+    else if (
+      difference > 0 &&
+      newCurrentCharges > 0 &&
+      this.system.resources !== '' &&
+      !features?.has?.('replenish')
+    ) {
+      // Running low is only the last charge (of several): 1 left → running low; more, or full → normal
+      resources = newCurrentCharges === 1 && this.system.charges.max > 1 ? 'running_low' : '';
+    }
+
     await this.update({
-      'system.charges.value': newCurrentCharges
+      'system.charges.value': newCurrentCharges,
+      ...(resources !== undefined ? { 'system.resources': resources } : {})
     });
   }
 

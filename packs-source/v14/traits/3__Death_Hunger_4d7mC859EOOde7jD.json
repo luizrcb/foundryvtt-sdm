@@ -10,7 +10,7 @@
     "resources": "",
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p>You know everything about disassembling mortals. Also, track the enemies you kill in a battle. Every enemy killed gives you a cumulative +1 to attack rolls until the end of the battle. After the first kill, you growl and roar until the killing stops. Expert: the bonus is +2 per kill. Master: +3.</p><p><em>Enable the <strong>Death Hunger</strong> active effect during battle, and update it's value after enemy killed. When this skill rankes up, modify the active effect by the skill modifier for each enemy killed.</em></p>",
+    "description": "<p>You know everything about disassembling mortals. Also, track the enemies you kill in a battle. Every enemy killed gives you a cumulative +1 to attack rolls until the end of the battle. After the first kill, you growl and roar until the killing stops. Expert: the bonus is +2 per kill. Master: +3.</p><p><em>Add each kill to the <strong>Kills</strong> counter (click it in your inventory). It resets when the combat ends.</em></p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -61,7 +61,16 @@
     "categories": [
       "weapon",
       "attack"
-    ]
+    ],
+    "counters": {
+      "kills": {
+        "label": "Kills",
+        "value": 0,
+        "max": null,
+        "reset_value": 0,
+        "reset_on_combat_end": true
+      }
+    }
   },
   "effects": [
     {
@@ -74,14 +83,14 @@
         "changes": [
           {
             "key": "system.attack_bonus",
-            "value": 0,
+            "value": "@item.skill.rank * @item.counters.kills.value",
             "priority": null,
             "type": "add",
             "phase": "initial"
           }
         ]
       },
-      "disabled": true,
+      "disabled": false,
       "duration": {
         "value": null,
         "units": "seconds",

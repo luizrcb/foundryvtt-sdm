@@ -371,3 +371,77 @@ function warnItemModCap(item) {
 function warnInvalidItemMod(item) {
   ui.notifications.warn(game.i18n.localize('SDM.InvalidItemMod'));
 }
+
+const DESCRIPTION_EXCERPT_LENGTH = 220;
+
+/**
+ * A short plain-text excerpt of an item description for tooltips: GM secrets removed,
+ * enricher links reduced to their labels, inline rolls to their formula, first paragraph only,
+ * cut at about 220 characters. Returned HTML-escaped (tooltips are rendered as HTML).
+ */
+export function getDescriptionExcerpt(html = '', maxLength = DESCRIPTION_EXCERPT_LENGTH) {
+  if (!html || typeof html !== 'string') return '';
+  const cleaned = html
+    .replace(/@\w+\[[^\]]*\]\{([^}]*)\}/g, '$1') // @UUID[...]{Label} → Label
+    .replace(/@\w+\[[^\]]*\]/g, '') // @UUID[...] without a label
+    .replace(/\[\[\/\w+\s+([^\]]*?)(?:#[^\]]*)?\]\](?:\{([^}]*)\})?/g, (m, formula, label) => label || formula) // [[/r 1d6]]{Label}
+    .replace(/\[\[([^\]]*)\]\]/g, '$1'); // [[1d6]]
+  const div = document.createElement('div');
+  div.innerHTML = cleaned;
+  div.querySelectorAll('section.secret, .secret').forEach(el => el.remove());
+  const blocks = [...div.querySelectorAll('p, li, h1, h2, h3, h4, h5, h6, blockquote, td')];
+  const first = blocks.map(el => el.textContent.trim()).find(text => text);
+  let text = (first ?? div.textContent).replace(/\s+/g, ' ').trim();
+  if (!text) return '';
+  if (text.length > maxLength) {
+    const cut = text.slice(0, maxLength);
+    const space = cut.lastIndexOf(' ');
+    text = `${(space > maxLength * 0.6 ? cut.slice(0, space) : cut).replace(/[\s,;:.]+$/, '')}…`;
+  }
+  return text.replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]);
+}
+
+/**
+ * Spending charges down to the last one of an item with more than one: running low
+ * (not on replenish items, whose resources come from the usage roll; never over run out).
+ * Returns an update fragment ({} when nothing changes).
+ */
+export function lastChargeUpdate(item, newValue) {
+  const system = item.system;
+  if (system.features?.has?.('replenish')) return {};
+  const max = Number(system.charges?.max) || 0;
+  const current = Number(system.charges?.value) || 0;
+  if (max > 1 && newValue === 1 && current > 1 && system.resources === '') {
+    return { 'system.resources': 'running_low' };
+  }
+  return {};
+}
+
+/**
+ * Rolls of an inventory row: the item's subtype owns the image (weapon damage, power, power
+ * album); features add small icons (weapon feature: damage, album feature: its powers). Gear with
+ * no subtype roll uses its first feature roll as the image.
+ * Returns { image: 'damage'|'power'|'power_album'|null, icons: [...] } (nothing when it can't roll).
+ */
+export function getRowRolls(item, actorType, editable = true) {
+  const none = { image: null, icons: [] };
+  const system = item?.system;
+  if (!system || !editable || actorType === 'caravan') return none;
+  if (system.status === 'broken' || system.resources === 'run_out' || system.size?.unit === 'cash') return none;
+  if (!system.readied) return none;
+  const has = feature => !!system.features?.has?.(feature);
+  const canDamage = (system.type === 'weapon' || has('weapon')) && !!system.weapon?.damage?.base;
+  const canAlbum = hasPowerAlbum(item) && (system.powers?.length ?? 0) > 0;
+
+  let image = null;
+  if (system.type === 'weapon') image = canDamage ? 'damage' : null;
+  else if (system.type === 'power') image = 'power';
+  else if (system.type === 'power_album') image = canAlbum ? 'power_album' : null;
+  else if (canDamage) image = 'damage';
+  else if (canAlbum) image = 'power_album';
+
+  const icons = [];
+  if (canDamage && image !== 'damage') icons.push('damage');
+  if (canAlbum && image !== 'power_album') icons.push('power_album');
+  return { image, icons };
+}

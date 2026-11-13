@@ -85,6 +85,20 @@
     },
     "categories": [
       "ability"
+    ],
+    "triggers": [
+      {
+        "roll": "attack",
+        "condition": "natural",
+        "value": 20,
+        "text": "Their mind breaks"
+      },
+      {
+        "roll": "attack",
+        "condition": "natural",
+        "value": 7,
+        "text": "They permanently gain 1 aura"
+      }
     ]
   },
   "effects": [],

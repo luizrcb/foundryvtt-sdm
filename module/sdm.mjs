@@ -1,3 +1,4 @@
+import { addCatchHandle } from './helpers/singleUsePowers.mjs';
 import SdmEffectsPanel from './app/effects-panel.mjs';
 import SdmActiveEffectConfig14 from './app/active-effect-config14.mjs';
 import {
@@ -45,13 +46,18 @@ import {
   TraitType
 } from './helpers/constants.mjs';
 import {
+  getRowRolls,
   makePowerItem,
   registerActiveEffectLimit,
   UnarmedDamageItem
 } from './helpers/itemUtils.mjs';
 import { setupCaravanTokenControls } from './canvas/caravan-tokens.mjs';
 import { setupInvestXp } from './app/invest-xp.mjs';
+import { getCounters, promptNewCounter, removeCounter, resetCounters, setupCounters, stepCounter } from './helpers/counters.mjs';
+import { blockedReason, isUsable, setupUseItem, useItem } from './app/use-item.mjs';
 import { setupAnimatedItems } from './helpers/animatedItems.mjs';
+import { getLightItems, getLitEffect, isLightSource, isLit, lightItem, putOutLight, setupLights, toggleLight } from './helpers/lights.mjs';
+import { restActor, setupRest } from './app/rest.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { setupPetDropSocket } from './items/petItem.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
@@ -123,7 +129,34 @@ globalThis.sdm = {
     createNPCByLevel,
     gm: gmMacros,
     makePowerItem,
-    player: playerMacros
+    player: playerMacros,
+    // Rest one week: game.sdm.api.rest(actorOrUuid, { choice: 'life' | 'ability' | 'burden', ability, burdenId })
+    rest: restActor,
+    // Items: Use (consumables) and the rolls an inventory row offers ({ image, icons })
+    items: {
+      use: useItem,
+      isUsable,
+      useBlockedReason: blockedReason,
+      rolls: getRowRolls
+    },
+    // Token light from items (light category / glowing) and powers
+    lights: {
+      items: getLightItems,
+      isLightSource,
+      isLit,
+      litEffect: getLitEffect,
+      light: lightItem,
+      putOut: putOutLight,
+      toggle: toggleLight
+    },
+    // Counters on items and actors (system.counters)
+    counters: {
+      get: getCounters,
+      step: stepCounter,
+      reset: resetCounters,
+      add: promptNewCounter,
+      remove: removeCounter
+    }
   },
   apps: {
     CompendiumBrowser
@@ -251,6 +284,7 @@ Hooks.on('updateCombat', async (combat, update) => {
 
 Hooks.on('renderChatMessageHTML', (message, html, data) => {
   configureUseHeroDiceButton(message, html, data);
+  addCatchHandle(message, html);
   configureChatListeners(html);
   const dangerousElement = html.querySelector('[data-action="rollDangerous"]');
   if (dangerousElement) {
@@ -272,9 +306,18 @@ Hooks.on('renderDialogV2', (dialog, html) => {
   const overChargeButton = html.querySelector('button.overcharge');
   const powerOptions = dialog.options?.powerOptions;
 
+  const costValue = html.querySelector('.sdm-power-cost-value');
+  const payCost = html.querySelector('input[name="payPowerCost"]');
+  const costAbilityRow = html.querySelector('.sdm-power-cost-ability');
+  payCost?.addEventListener('change', () => {
+    costAbilityRow?.classList.toggle('disabled', !payCost.checked);
+    costAbilityRow?.querySelectorAll('input, select').forEach(el => (el.disabled = !payCost.checked));
+  });
+
   powerSelect?.addEventListener('change', event => {
     const selectedIndex = parseInt(event.target.value, 10);
     const selectedPower = powerOptions.find(p => p.index === selectedIndex);
+    if (costValue && selectedPower) costValue.textContent = selectedPower.cost ?? 0;
     const defaultAbility = selectedPower?.default_ability || '';
     const canOvercharge = selectedPower?.canOvercharge;
 
@@ -648,7 +691,11 @@ Hooks.once('init', function () {
   setupGroupCheckSocket();
   setupCaravanTokenControls();
   setupInvestXp();
+  setupCounters();
+  setupUseItem();
   setupAnimatedItems();
+  setupLights();
+  setupRest();
   setupEscalatorDiePositionBroadcast();
   //Preload Handlebars templates.
   return preloadHandlebarsTemplates();

@@ -46,6 +46,37 @@
       </select>
     </div>
     {{/if}}
+    {{#if powerCost}}
+    <fieldset class="mt-10 sdm-power-cost">
+      <legend>
+        <i class="fa-solid fa-wand-magic-sparkles"></i> {{localize 'SDM.PowerCostPay.Legend'}}:
+        <strong class="sdm-power-cost-value">{{powerCost.cost}}</strong> {{localize 'SDM.Boost.Life'}}
+        <span class="sdm-power-cost-note">{{localize 'SDM.PowerCostPay.OverchargeNote'}}</span>
+      </legend>
+      <div class="sdm-power-cost-row">
+        <input id="payPowerCost" type="checkbox" name="payPowerCost" checked data-tooltip="{{localize 'SDM.PowerCostPay.PayHint'}}" />
+        <span class="sdm-power-cost-label">{{localize 'SDM.PowerCostPay.Pay'}}</span>
+        <span class="sdm-power-cost-life">{{localize 'SDM.PowerCostPay.LifeNow' life=powerCost.life}}</span>
+      </div>
+      <div class="sdm-power-cost-ability" data-tooltip="{{localize 'SDM.PowerCostPay.FromAbilityHint'}}">
+        <span class="sdm-power-cost-label">{{localize 'SDM.PowerCostPay.FromAbility'}}</span>
+        <div class="sdm-power-cost-abilities">
+          {{#each powerCost.abilities as |ab|}}
+          <label class="sdm-power-cost-ab">
+            <span>{{ab.abbr}}</span>
+            <input type="number" name="costFrom.{{ab.key}}" value="0" min="0" max="{{ab.current}}" step="1" data-tooltip="{{localize 'SDM.PowerCostPay.AbilityNow' ability=ab.label current=ab.current}}" />
+          </label>
+          {{/each}}
+        </div>
+      </div>
+    </fieldset>
+    {{/if}}
+    {{#if boost}}
+    <div class="form-group mt-10 sdm-boost">
+      <label for="useBoost">{{boostLabel}}</label>
+      <input id="useBoost" type="checkbox" name="useBoost" {{#if boost.mandatory}}checked disabled data-tooltip="{{localize 'SDM.Boost.Mandatory'}}"{{/if}} />
+    </div>
+    {{/if}}
     {{#if (ne type 'danger')}}
     <div class="form-group mt-10">
       <label for="rollMode">{{localize 'SDM.RollMode'}}</label>
@@ -63,5 +94,4 @@
     </div>
     {{/if}}
   </form>
-  <br /><br />
 </div>

@@ -1,3 +1,4 @@
+import { LIGHT_PRESETS } from './helpers/lights.mjs';
 import CompendiumBrowser from './app/compendium-browser.mjs';
 import { DEFAULT_CASH_ICON, DiceType } from './helpers/constants.mjs';
 import { $fmt, $l10n } from './helpers/globalUtils.mjs';
@@ -476,6 +477,17 @@ export function registerSystemSettings() {
     default: 20
   });
 
+  // Token light presets (torch, lantern, candle, glow) for light items and powers; edited in the Baselines menu
+  game.settings.register('sdm', 'lightPresets', {
+    name: 'SDM.SettingsLightPresets',
+    hint: 'SDM.SettingsLightPresetsHint',
+    scope: 'world',
+    restricted: true,
+    config: false,
+    type: Object,
+    default: foundry.utils.deepClone(LIGHT_PRESETS)
+  });
+
   game.settings.register('sdm', 'baseMoraleFormula', {
     name: 'SDM.SettingsBaseMoraleFormula',
     hint: 'SDM.SettingsBaseMoraleFormulaHint',
@@ -599,6 +611,15 @@ export function registerSystemSettings() {
         game.settings.set('sdm', 'npcInitiativeFormula', NPC_DEFAULT_INITIATIVE);
       }
     }
+  });
+
+  game.settings.register('sdm', 'automatePowerCost', {
+    name: 'SDM.SettingsAutomatePowerCost',
+    hint: 'SDM.SettingsAutomatePowerCostHint',
+    scope: 'world',
+    restricted: true,
+    type: Boolean,
+    default: true
   });
 
   game.settings.register('sdm', 'healingHouseRule', {

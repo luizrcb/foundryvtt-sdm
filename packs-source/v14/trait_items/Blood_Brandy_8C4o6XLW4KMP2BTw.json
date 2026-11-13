@@ -16,7 +16,9 @@
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "consumable"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -78,7 +80,11 @@
       "redlander",
       "healing",
       "ability"
-    ]
+    ],
+    "use": {
+      "life": "1d6+1",
+      "ability": "1d6+1"
+    }
   },
   "effects": [],
   "sort": 0,

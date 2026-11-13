@@ -18,6 +18,7 @@
         <input class="v2-species" name="system.species" type="text" value="{{system.species}}"
           placeholder="{{localize 'SDM.FieldSpecies'}}" data-tooltip="{{localize 'SDM.FieldSpecies'}}"
           {{#unless isEditMode}}disabled{{/unless}} />
+        {{> ($$ "actor/counter-chips")}}
       </div>
       <div class="v2-chips">
         <div class="v2-chip">
@@ -43,7 +44,7 @@
         {{#if (not (isDefeated @root.statuses))}}
         <div class="v2-card v2-life">
           <div class="v2-card-head">
-            <span class="v2-card-title">{{localize 'SDM.FieldLifeMax'}}</span>
+            <span class="v2-card-title">{{localize 'SDM.FieldLifeMax'}} {{#if @root.editable}}<a class="sdm-rest-button" data-action="restActor" data-tooltip="{{localize 'SDM.Rest.Tooltip'}}"><i class="fa-solid fa-bed"></i></a>{{/if}}</span>
           </div>
           <div class="v2-life-row">
             <input class="v2-big" type="text" name="system.life.value" value="{{system.life.value}}" data-dtype="Number" />

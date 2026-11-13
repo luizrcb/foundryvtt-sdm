@@ -63,7 +63,17 @@
       "social",
       "stealth",
       "weapon"
-    ]
+    ],
+    "counters": {
+      "used": {
+        "label": "Used today",
+        "value": 0,
+        "max": 1,
+        "reset_value": 0,
+        "reset_on_combat_end": false,
+        "reset_each": ""
+      }
+    }
   },
   "effects": [],
   "sort": 0,

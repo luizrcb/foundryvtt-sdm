@@ -82,7 +82,15 @@
     "supply_type": "",
     "replenish": {
       "value": 13
-    }
+    },
+    "triggers": [
+      {
+        "roll": "attack",
+        "condition": "natural",
+        "value": 13,
+        "text": "Bisects the target"
+      }
+    ]
   },
   "effects": [],
   "sort": 2400000,

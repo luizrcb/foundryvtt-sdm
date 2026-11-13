@@ -10,7 +10,7 @@
     "resources": "",
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p>You spoke to the keeper of thoughts, who gave you a magic chisel to engrave your bones. Gain five bone inventory slots for powers on your arms, legs, and skull. Engraving a power takes a day. Replacing an engraved power permanently reduces your endurance by 1 unless you also ritually replace your bones (ouch).</p><p></p>",
+    "description": "<p>You spoke to the keeper of thoughts, who gave you a magic chisel to engrave your bones. Gain five bone inventory slots for powers on your arms, legs, and skull. Engraving a power takes a day. Replacing an engraved power permanently reduces your endurance by 1 unless you also ritually replace your bones (ouch).</p><p><em>(the endurance loss is not automated)</em></p>",
     "quantity": 1,
     "size": {
       "value": 1,

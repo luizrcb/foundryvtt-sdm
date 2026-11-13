@@ -78,7 +78,15 @@
     "categories": [
       "golem",
       "damage"
-    ]
+    ],
+    "boost": {
+      "enabled": true,
+      "resource": "life",
+      "cost": "1d6",
+      "multiplier": 2,
+      "extra": "",
+      "mandatory": false
+    }
   },
   "effects": [],
   "sort": 0,

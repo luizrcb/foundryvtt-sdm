@@ -85,6 +85,14 @@
     },
     "categories": [
       "confusion"
+    ],
+    "triggers": [
+      {
+        "roll": "damage",
+        "condition": "min",
+        "value": 0,
+        "text": "Target falls into a bubble maze dimension for a week"
+      }
     ]
   },
   "effects": [],

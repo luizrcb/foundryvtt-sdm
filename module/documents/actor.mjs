@@ -1,3 +1,6 @@
+import { isLightSource, isLit, lightBlockedReason, lightItem, putOutLight } from '../helpers/lights.mjs';
+import { blockedReason, isDormantEffect, isUsable, useItem } from '../app/use-item.mjs';
+import { resetCounters } from '../helpers/counters.mjs';
 import { resolveEffectReferences } from '../helpers/effectReferences.mjs';
 import {
   BASE_DEFENSE_VALUE,
@@ -27,6 +30,7 @@ import {
   convertSizeUnit,
   convertToCash,
   GEAR_ITEM_TYPES,
+  UnarmedDamageItem,
   getSlotsTaken,
   onItemCreateActiveEffects,
   onItemUpdate
@@ -414,7 +418,27 @@ export class SdmActor extends Actor {
     delete this._embeddedPreparation;
   }
 
+  /** Effects of usable items (consumables) only apply when the item is used, not while carried. */
+  *allApplicableEffects() {
+    for (const effect of super.allApplicableEffects()) {
+      if (isDormantEffect(effect)) continue;
+      // While core collects token changes (see applyActiveEffects): only token-only effects
+      if (this._sdmTokenEffectsOnly && !isTokenOnlyEffect(effect)) continue;
+      yield effect;
+    }
+  }
+
   applyActiveEffects(phase) {
+    // Token changes (token.light.* from item lights): core v14 routes them to the actor's tokens.
+    // Let core handle the effects made only of token changes; the rest goes through our pipeline,
+    // which skips token keys.
+    this._sdmTokenEffectsOnly = true;
+    try {
+      super.applyActiveEffects(phase);
+    } finally {
+      this._sdmTokenEffectsOnly = false;
+    }
+
     const overrides = {};
     const changes = [];
     const rollData = this.getRollData();
@@ -443,7 +467,7 @@ export class SdmActor extends Actor {
     changes.sort((a, b) => a.priority - b.priority);
 
     for (const change of changes) {
-      if (!change.key) continue;
+      if (!change.key || change.key.startsWith('token.')) continue;
 
       // @actor / @item / @items.<identifier or id> references
       const itemParent = change.effect?.parent;
@@ -460,8 +484,45 @@ export class SdmActor extends Actor {
     foundry.utils.mergeObject(this.overrides, foundry.utils.expandObject(overrides));
   }
 
+  /**
+   * Defense from the size of readied armor (Armorborn, Redlander): per stone of each readied
+   * armor (armor subtype or armor feature, not broken), sizes added up and rounded up per item
+   * (0.5 → 1, 1.1 → 2; 1 sack = 10 stones).
+   */
+  getArmorStoneDefense() {
+    const perStone = Number(this.system.armor_stone_defense) || 0;
+    if (!perStone) return 0;
+    const stones = this.items
+      .filter(
+        item =>
+          item.type === ItemType.GEAR &&
+          item.system.readied &&
+          item.system.status !== 'broken' &&
+          (item.system.type === GearType.ARMOR || item.system.features?.has?.('armor'))
+      )
+      .reduce((sum, item) => {
+        const { value = 0, unit = SizeUnit.STONES } = item.system.size ?? {};
+        if (!value || unit === SizeUnit.CASH) return sum;
+        return sum + Math.ceil(convertSizeUnit(Number(value), unit, SizeUnit.STONES) - 1e-9);
+      }, 0);
+    return perStone * stones;
+  }
+
+  /** The character's unarmed damage dice go up by its unarmed damage steps (Ur-War Program: 1d3 → 1d4). */
+  _applyUnarmedDamageSteps() {
+    const steps = Math.trunc(Number(this.system.unarmed_damage_steps) || 0);
+    if (steps <= 0) return;
+    for (const item of this.items) {
+      const isUnarmed =
+        item._stats?.compendiumSource === UnarmedDamageItem || item.getFlag?.('sdm', 'fromCompendium') === UnarmedDamageItem;
+      if (!isUnarmed || !item.system.weapon?.damage) continue;
+      item.system.weapon.damage.base = item._adjustDamageStep(item.system.weapon.damage.base, 1, steps);
+    }
+  }
+
   _prepareCharacterData() {
     const data = this.system;
+    this._applyUnarmedDamageSteps();
 
     data.armor = this.getArmor();
     data.ward = this.getWard();
@@ -470,7 +531,7 @@ export class SdmActor extends Actor {
     const baseMentalDefense = game.settings.get('sdm', 'baseMentalDefense') || BASE_DEFENSE_VALUE;
     const baseSocialDefense = game.settings.get('sdm', 'baseSocialDefense') || BASE_DEFENSE_VALUE;
 
-    const bonusDefense = data.defense_bonus || 0;
+    const bonusDefense = (data.defense_bonus || 0) + this.getArmorStoneDefense();
     const mentalDefenseBonus = data.mental_defense_bonus || 0;
     const socialDefenseBonus = data.social_defense_bonus || 0;
     // 1. Calcular valores derivados
@@ -534,7 +595,12 @@ export class SdmActor extends Actor {
       const mounts = this.items.filter(i => i.type === ItemType.MOUNT);
       const vehicles = this.items.filter(i => i.type === ItemType.VEHICLE);
 
-      const result = computeCaravanTransport({ mounts, vehicles });
+      // Boatmaster: the crew's extra sacks on boats, added up
+      const boatBonus = Object.values(this.system.crew ?? {}).reduce((sum, member) => {
+        const actor = member?.id ? fromUuidSync(member.id) : null;
+        return sum + (Number(actor?.system?.boat_capacity_bonus) || 0);
+      }, 0);
+      const result = computeCaravanTransport({ mounts, vehicles, boatBonus });
 
       this.system.capacity = result.capacity;
 
@@ -1474,6 +1540,51 @@ export class SdmActor extends Actor {
         }
       },
       {
+        label: 'SDM.Use.Action',
+        icon: '<i class="fa-solid fa-hand-holding-medical"></i>',
+        visible: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          return this.type !== ActorType.CARAVAN && !!item?.isOwner && isUsable(item) && !blockedReason(item);
+        },
+        onClick: async (event, target) => {
+          await useItem(this.sheet._getEmbeddedDocument(target));
+        }
+      },
+      {
+        label: 'SDM.Light.Light',
+        icon: '<i class="fa-solid fa-fire-flame-curved"></i>',
+        visible: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          return this.type !== ActorType.CARAVAN && !!item?.isOwner && isLightSource(item) && !isLit(item) && !lightBlockedReason(item);
+        },
+        onClick: async (event, target) => {
+          await lightItem(this.sheet._getEmbeddedDocument(target));
+        }
+      },
+      {
+        label: 'SDM.Light.PutOut',
+        icon: '<i class="fa-solid fa-fire-extinguisher"></i>',
+        visible: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          return !!item?.isOwner && isLit(item);
+        },
+        onClick: async (event, target) => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          await putOutLight(this, { itemId: item.id });
+        }
+      },
+      {
+        label: 'SDM.Counter.ResetAll',
+        icon: '<i class="fa-solid fa-rotate-left"></i>',
+        visible: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          return this.isOwner && Object.keys(item?.system?.counters ?? {}).length > 0;
+        },
+        onClick: async (event, target) => {
+          await resetCounters(this.sheet._getEmbeddedDocument(target));
+        }
+      },
+      {
         label: 'SDM.Item.UsageRoll',
         icon: '<i class="fa-solid fa-arrow-rotate-right"></i>',
         visible: target => {
@@ -1483,7 +1594,8 @@ export class SdmActor extends Actor {
         },
         onClick: async (event, target) => {
           const item = this.sheet._getEmbeddedDocument(target);
-          await item.usageRoll(item.system.replenish.value);
+          const roll = await item.usageRoll(item.system.replenish.value);
+          await item.applyUsageResult(roll?.total);
         }
       },
       {
@@ -1532,11 +1644,16 @@ export class SdmActor extends Actor {
             item.system.type === GearType.CONTAINER
           )
             return false;
-          return this.isOwner && item.system.resources !== '';
+          return this.isOwner && (item.system.resources !== '' || refillsCharges(item));
         },
         onClick: async (event, target) => {
           const item = this.sheet._getEmbeddedDocument(target);
-          await item.toggleItemResources('');
+          // Charges (not replenish, which leaves charges alone) are filled back up
+          const charges = item.system.features.has('charges') && !item.system.features.has('replenish');
+          await item.update({
+            'system.resources': '',
+            ...(charges ? { 'system.charges.value': item.system.charges.max } : {})
+          });
         }
       },
       {
@@ -2185,4 +2302,18 @@ export class SdmActor extends Actor {
       return null;
     }
   }
+}
+
+/** Recharge also fills charges: true when a charged item (not replenish) is below its maximum. */
+function refillsCharges(item) {
+  const { features, charges } = item.system;
+  if (!features.has('charges') || features.has('replenish')) return false;
+  const max = Number(charges?.max) || 0;
+  return max > 0 && (Number(charges?.value) || 0) < max;
+}
+
+/** An effect whose changes all target the token (token.*), like the light from an item or power. */
+function isTokenOnlyEffect(effect) {
+  const changes = effect.system?.changes ?? [];
+  return changes.length > 0 && changes.every(change => change.key?.startsWith('token.'));
 }

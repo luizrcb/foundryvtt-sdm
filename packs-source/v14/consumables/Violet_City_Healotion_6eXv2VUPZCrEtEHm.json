@@ -14,7 +14,9 @@
       "value": 1,
       "unit": "soaps"
     },
-    "features": [],
+    "features": [
+      "consumable"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -77,7 +79,11 @@
     "categories": [
       "healing",
       "ability"
-    ]
+    ],
+    "use": {
+      "life": "2d6",
+      "ability": "1"
+    }
   },
   "effects": [],
   "sort": 50000,

@@ -7,9 +7,16 @@
   "system": {
     "changes": [
       {
+        "key": "system.default_ability",
+        "type": "override",
+        "value": "aur",
+        "priority": null,
+        "phase": "initial"
+      },
+      {
         "key": "system.description",
         "type": "add",
-        "value": "<p>It uses a different ability for its combat bonuses (e.g. aura for melee attacks). This is not automated.</p>",
+        "value": "<p>It uses a different ability for its combat bonuses (e.g. aura for melee attacks).</p>",
         "priority": null,
         "phase": "initial"
       }
@@ -26,7 +33,7 @@
     "expiry": null,
     "expired": false
   },
-  "description": "<p>It uses a different ability for its combat bonuses (e.g. aura for melee attacks). This is not automated.</p><p><strong>Mod Cost</strong>: $450</p>",
+  "description": "<p>It uses a different ability for its combat bonuses (e.g. aura for melee attacks). Edit the ability in the changes tab (e.g. <em>aur</em>, <em>str</em>).</p><p><strong>Mod Cost</strong>: $450</p>",
   "origin": null,
   "tint": "#ffffff",
   "transfer": false,

@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 15,
     "cost_frequency": "",
-    "description": "<p>Expand the mind, increase perception (thought +1), cause a weak levitation effect and reduced coordination. Somewhat addictive—withdrawal causes strong tremors.</p><p><em>(use active effect to increase thought)</em></p>",
+    "description": "<p>Expand the mind, increase perception (thought +1), cause a weak levitation effect and reduced coordination. Somewhat addictive—withdrawal causes strong tremors.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "consumable"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -78,7 +80,11 @@
       "ability",
       "drug",
       "levitation"
-    ]
+    ],
+    "use": {
+      "life": "",
+      "ability": ""
+    }
   },
   "effects": [
     {

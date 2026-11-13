@@ -1,4 +1,5 @@
 import { SizeUnit } from '../helpers/constants.mjs';
+import { defineCountersField } from './counters-field.mjs';
 
 export default class SdmActorBase extends foundry.abstract.TypeDataModel {
   static LOCALIZATION_PREFIXES = ['SDM.Actor.base'];
@@ -9,6 +10,9 @@ export default class SdmActorBase extends foundry.abstract.TypeDataModel {
 
     schema.biography = new fields.HTMLField();
     schema.notes = new fields.HTMLField();
+
+    // Counters the actor keeps; effects read them as @actor.counters.<key>.value
+    schema.counters = defineCountersField();
 
     schema.size = new fields.SchemaField({
       value: new foundry.data.fields.NumberField({ required: true, initial: 1, min: 0 }),

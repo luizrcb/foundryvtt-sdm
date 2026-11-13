@@ -202,6 +202,14 @@
               <input type='text' name="system.replenish.value" value="{{system.replenish.value}}" data-dtype='Number' data-tooltip="{{localize 'SDM.ItemFeature.replenishDescription'}}"/>
             </div>
           </div>
+          {{#if (or (eq system.type 'weapon') (has system.features 'weapon'))}}
+          <div class='resource align-center' data-tooltip="{{localize 'SDM.Replenish.OnAttackHint'}}">
+            <label class='resource-label'>{{localize 'SDM.Replenish.OnAttack'}}</label>
+            <div class='resource-content align-center'>
+              <input type='checkbox' name="system.replenish.on_attack" {{checked system.replenish.on_attack}} />
+            </div>
+          </div>
+          {{/if}}
           {{/if}}
 
           {{#if (has system.features 'resistant')}}
@@ -211,6 +219,60 @@
               <input type='text' name="system.resistant.value" value="{{system.resistant.value}}" data-tooltip="{{localize 'SDM.ItemFeature.resistantDescription'}}"/>
             </div>
           </div>
+          {{/if}}
+
+          {{#if (has system.features 'consumable')}}
+          <div class='resource'>
+            <label class='resource-label' for="system.use.life">{{localize 'SDM.Use.Life'}}</label>
+            <div class='resource-content'>
+              <input type='text' name="system.use.life" value="{{system.use.life}}" data-tooltip="{{localize 'SDM.Use.LifeHint'}}"/>
+            </div>
+          </div>
+          <div class='resource'>
+            <label class='resource-label' for="system.use.ability">{{localize 'SDM.Use.Ability'}}</label>
+            <div class='resource-content'>
+              <input type='text' name="system.use.ability" value="{{system.use.ability}}" data-tooltip="{{localize 'SDM.Use.AbilityHint'}}"/>
+            </div>
+          </div>
+          {{/if}}
+
+          {{#if (sdmIsLight item)}}
+          <div class='resource'>
+            <label class='resource-label' for="system.light.preset">{{localize 'SDM.Light.Label'}}</label>
+            <div class='resource-content'>
+              <select name="system.light.preset" data-tooltip="{{localize 'SDM.Light.PresetHint'}}">
+                {{selectOptions @root.lightPresets selected=system.light.preset localize=true}}
+              </select>
+            </div>
+          </div>
+          {{#if (eq system.light.preset 'custom')}}
+          <div class='resource'>
+            <label class='resource-label' for="system.light.bright">{{localize 'SDM.Light.Bright'}}</label>
+            <div class='resource-content'>
+              <input type='number' name="system.light.bright" value="{{system.light.bright}}" min="0" step="any" data-tooltip="{{localize 'SDM.Light.RadiusHint'}}"/>
+            </div>
+          </div>
+          <div class='resource'>
+            <label class='resource-label' for="system.light.dim">{{localize 'SDM.Light.Dim'}}</label>
+            <div class='resource-content'>
+              <input type='number' name="system.light.dim" value="{{system.light.dim}}" min="0" step="any" data-tooltip="{{localize 'SDM.Light.RadiusHint'}}"/>
+            </div>
+          </div>
+          <div class='resource'>
+            <label class='resource-label' for="system.light.color">{{localize 'SDM.Light.Color'}}</label>
+            <div class='resource-content'>
+              <color-picker name="system.light.color" value="{{system.light.color}}"></color-picker>
+            </div>
+          </div>
+          <div class='resource'>
+            <label class='resource-label' for="system.light.animation">{{localize 'SDM.Light.Animation'}}</label>
+            <div class='resource-content'>
+              <select name="system.light.animation">
+                {{selectOptions @root.lightAnimations selected=system.light.animation localize=true}}
+              </select>
+            </div>
+          </div>
+          {{/if}}
           {{/if}}
 
           {{#if (eq system.type 'container')}}

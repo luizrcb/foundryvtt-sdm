@@ -16,7 +16,9 @@
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "album"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -34,7 +36,7 @@
       "level": 0,
       "experience": "0"
     },
-    "type": "power_album",
+    "type": "ward",
     "starting_kit": false,
     "is_supply": false,
     "supply_type": "",
@@ -61,8 +63,8 @@
       "powered": null
     },
     "ward": {
-      "value": 0,
-      "type": "",
+      "value": 2,
+      "type": "trinket",
       "armor": 0
     },
     "weapon": {
@@ -79,54 +81,7 @@
       "power"
     ]
   },
-  "effects": [
-    {
-      "name": "+2 Ward",
-      "origin": "Compendium.sdm.equipment.Item.vKyygy98LVqrXM6k",
-      "img": "icons/commodities/bones/skull-hollow-brown.webp",
-      "_id": "UjWYNdWXF9GdS30p",
-      "type": "base",
-      "system": {
-        "changes": [
-          {
-            "key": "system.ward_bonus",
-            "value": 2,
-            "priority": null,
-            "type": "add",
-            "phase": "initial"
-          }
-        ]
-      },
-      "disabled": false,
-      "duration": {
-        "value": null,
-        "units": "seconds",
-        "expiry": null,
-        "expired": false
-      },
-      "description": "",
-      "tint": "#ffffff",
-      "transfer": true,
-      "statuses": [],
-      "sort": 0,
-      "flags": {},
-      "_stats": {
-        "compendiumSource": null,
-        "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "14.353",
-        "systemId": "sdm",
-        "systemVersion": "0.5.4",
-        "lastModifiedBy": null,
-        "createdTime": null,
-        "modifiedTime": null
-      },
-      "showIcon": 1,
-      "folder": null,
-      "start": null,
-      "_key": "!items.effects!vKyygy98LVqrXM6k.UjWYNdWXF9GdS30p"
-    }
-  ],
+  "effects": [],
   "sort": 0,
   "ownership": {
     "default": 0,

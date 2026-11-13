@@ -10,13 +10,15 @@
     "resources": "",
     "cost": 150,
     "cost_frequency": "",
-    "description": "<p>A bonus to catching and storing powers and spells cast at you.</p>",
+    "description": "<p>A bonus to catching and storing powers and spells cast at you.</p><p><em>(drag the chat card of a power cast at you onto it to catch the power; caught powers are single use)</em></p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "album"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -52,7 +54,7 @@
       "overcharge_roll_formula": ""
     },
     "powers_current_index": 0,
-    "max_powers": 3,
+    "max_powers": 1,
     "powers": [],
     "armor": {
       "value": 0,

@@ -82,6 +82,14 @@
     "supply_type": "",
     "area": {
       "value": "small"
+    },
+    "boost": {
+      "enabled": true,
+      "resource": "life",
+      "cost": "1",
+      "multiplier": 0,
+      "extra": "",
+      "mandatory": true
     }
   },
   "effects": [],

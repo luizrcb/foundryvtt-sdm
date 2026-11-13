@@ -1,0 +1,2 @@
+{{! The actor's counters: click +1, right-click −1 (managed in the Effects tab) }}
+<div class="sdm-actor-counters">{{#each actor.system.counters as |counter key|}}<a class="sdm-counter-chip" {{#if @root.editable}}data-action="stepActorCounter"{{/if}} data-key="{{key}}" data-tooltip="{{localize 'SDM.Counter.RowHint' label=counter.label}}">{{counter.label}} {{counter.value}}</a>{{/each}}</div>

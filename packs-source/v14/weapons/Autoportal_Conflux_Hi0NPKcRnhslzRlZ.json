@@ -87,7 +87,15 @@
     },
     "replenish": {
       "value": 7
-    }
+    },
+    "triggers": [
+      {
+        "roll": "attack",
+        "condition": "natural",
+        "value": 13,
+        "text": "Re-materialization delay: roll on the Re-materialization delay table"
+      }
+    ]
   },
   "effects": [],
   "sort": 2600000,

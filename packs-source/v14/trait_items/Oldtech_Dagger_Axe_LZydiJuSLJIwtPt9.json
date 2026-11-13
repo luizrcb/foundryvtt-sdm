@@ -81,7 +81,15 @@
       "noble",
       "ability",
       "damage"
-    ]
+    ],
+    "boost": {
+      "enabled": true,
+      "resource": "life",
+      "cost": "1",
+      "multiplier": 2,
+      "extra": "",
+      "mandatory": false
+    }
   },
   "effects": [
     {

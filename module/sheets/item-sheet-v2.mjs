@@ -1,8 +1,9 @@
+import { isLightSource } from '../helpers/lights.mjs';
 import { SdmItemSheet } from './item-sheet.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { GearType, ItemType } from '../helpers/constants.mjs';
 
-const FEATURE_VALUE_FIELDS = ['area', 'range', 'flare', 'pocket', 'replenish', 'resistant'];
+const FEATURE_VALUE_FIELDS = ['area', 'range', 'flare', 'pocket', 'replenish', 'resistant', 'consumable'];
 
 /**
  * Alternative item sheet (same look as the new actor sheets).
@@ -72,7 +73,7 @@ export class SdmItemSheetV2 extends SdmItemSheet {
       isWard: isGear && (type === GearType.WARD || has('ward')),
       // Installed mods are hidden only for a weapon that also has the weapon feature (classic behavior)
       showMods: isGear && !(type === GearType.WEAPON && has('weapon')),
-      hasFeatureFields: isGear && (showCharges || FEATURE_VALUE_FIELDS.some(has))
+      hasFeatureFields: isGear && (showCharges || FEATURE_VALUE_FIELDS.some(has) || isLightSource(item))
     };
 
     return context;

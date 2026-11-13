@@ -83,7 +83,15 @@
     "supply_type": "",
     "replenish": {
       "value": 4
-    }
+    },
+    "triggers": [
+      {
+        "roll": "attack",
+        "condition": "natural",
+        "value": 13,
+        "text": "Stops a heart"
+      }
+    ]
   },
   "effects": [],
   "sort": 2100000,

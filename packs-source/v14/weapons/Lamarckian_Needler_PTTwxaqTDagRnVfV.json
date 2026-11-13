@@ -79,7 +79,15 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": ""
+    "supply_type": "",
+    "triggers": [
+      {
+        "roll": "damage",
+        "condition": "max",
+        "value": 0,
+        "text": "Corrupted"
+      }
+    ]
   },
   "effects": [],
   "sort": 1800000,

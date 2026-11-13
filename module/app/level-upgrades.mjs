@@ -4,6 +4,7 @@ import { addRandomTrait } from '../macros/gm/characterGenerator.mjs';
 import { removeCashFromActor } from '../macros/gm/giveCash.mjs';
 import { syncAnimationLevel } from '../helpers/animatedItems.mjs';
 import { logProgress } from './progress-log.mjs';
+import PowerDataModel from '../data/power-data.mjs';
 
 /**
  * Level-up upgrades. Every level gained leaves one pending upgrade on the character or the
@@ -21,6 +22,8 @@ const HALLMARK_EFFECT_FLAG = 'hallmarkUpgrades';
 /** Item flag: features gained as hallmark upgrades. Effect flag: traits gained as hallmark upgrades. */
 export const HALLMARK_FEATURES_FLAG = 'hallmarkFeatures';
 export const HALLMARK_TRAIT_FLAG = 'hallmarkTrait';
+/** Item flag: names of the powers gained as hallmark upgrades. */
+export const HALLMARK_POWERS_FLAG = 'hallmarkPowers';
 /** Highest skill rank: master, or builder when the world uses the extended skill ranks. */
 const maxSkillRank = () => (game.settings.get('sdm', 'extendedSkillRanks') ? 5 : 3);
 const esc = text => foundry.utils.escapeHTML?.(String(text ?? '')) ?? String(text ?? '');
@@ -221,6 +224,32 @@ function bindModDrop(root, item) {
   });
 }
 
+/** Accept a power (gear, trait or burden power) dragged into the hallmark dialog. */
+function bindPowerDrop(root) {
+  const zone = root?.querySelector('[data-upgrade-drop-power]');
+  const input = root?.querySelector('input[name="powerUuid"]');
+  if (!zone || !input) return;
+  zone.addEventListener('dragover', event => {
+    event.preventDefault();
+    zone.classList.add('is-over');
+  });
+  zone.addEventListener('dragleave', () => zone.classList.remove('is-over'));
+  zone.addEventListener('drop', async event => {
+    event.preventDefault();
+    zone.classList.remove('is-over');
+    const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event);
+    const power = data?.uuid ? await fromUuid(data.uuid) : null;
+    if (!power || power.documentName !== 'Item' || power.system?.type !== 'power') {
+      ui.notifications.warn($l10n('SDM.Upgrade.OnlyPowers'));
+      return;
+    }
+    input.value = power.uuid;
+    showDropped(zone, input, power.name);
+    const radio = root.querySelector('input[name="choice"][value="power"]');
+    if (radio) radio.checked = true;
+  });
+}
+
 /** Using a field of an option (focus, opening a dropdown, clicking) selects that option. */
 function bindChoiceFocus(root) {
   for (const detail of root?.querySelectorAll('.sdm-upgrade-detail') ?? []) {
@@ -383,6 +412,11 @@ export async function openHallmarkUpgradeDialog(item) {
         <input type="text" name="traitName" placeholder="${esc($l10n('SDM.Upgrade.TraitName'))}" />
         <textarea name="traitDescription" rows="3" placeholder="${esc($l10n('SDM.Upgrade.TraitDescription'))}"></textarea>
       </div>
+      <label class="sdm-upgrade-choice"><input type="radio" name="choice" value="power" /> ${$l10n('SDM.Upgrade.Power')}</label>
+      <div class="sdm-upgrade-detail">
+        <div class="sdm-upgrade-drop" data-upgrade-drop-power>${$l10n('SDM.Upgrade.DropPower')}</div>
+        <input type="hidden" name="powerUuid" />
+      </div>
       <label class="sdm-upgrade-charge" data-tooltip="${esc($l10n('SDM.Upgrade.ChargeHint'))}"><input type="checkbox" name="charge" /> ${$l10n('SDM.Upgrade.Charge')}</label>
     </div>`;
 
@@ -393,6 +427,7 @@ export async function openHallmarkUpgradeDialog(item) {
     rejectClose: false,
     render: (event, dialog) => {
       bindModDrop(dialog.element, item);
+      bindPowerDrop(dialog.element);
       bindChoiceFocus(dialog.element);
     },
     ok: {
@@ -407,7 +442,8 @@ export async function openHallmarkUpgradeDialog(item) {
           charge: !!f.charge?.checked,
           feature: f.feature?.value,
           traitName: f.traitName?.value?.trim(),
-          traitDescription: f.traitDescription?.value?.trim()
+          traitDescription: f.traitDescription?.value?.trim(),
+          powerUuid: f.powerUuid?.value
         };
       }
     }
@@ -417,7 +453,7 @@ export async function openHallmarkUpgradeDialog(item) {
   const owner = item.parent;
   // XP pays for the upgrade; money only when the material cost is charged
   // (a feature or a trait has no material cost in the rules)
-  const noCost = !data.charge || ['text', 'feature', 'trait'].includes(data.choice);
+  const noCost = !data.charge || ['text', 'feature', 'trait', 'power'].includes(data.choice);
   let price = data.choice === 'damage' ? damageCost : data.choice === 'defense' ? defenseCost : 0;
 
   if (data.choice === 'text' && !data.text) {
@@ -425,6 +461,12 @@ export async function openHallmarkUpgradeDialog(item) {
     return;
   }
   if (data.choice === 'feature' && !data.feature) return;
+  const powerSource = data.choice === 'power' && data.powerUuid ? await fromUuid(data.powerUuid) : null;
+  if (data.choice === 'power' && powerSource?.system?.type !== 'power') {
+    ui.notifications.warn($l10n('SDM.Upgrade.ChoosePower'));
+    return;
+  }
+  let powerUndo = null;
   if (data.choice === 'trait' && !data.traitName) {
     ui.notifications.warn($l10n('SDM.Upgrade.TraitNameNeeded'));
     return;
@@ -496,6 +538,27 @@ export async function openHallmarkUpgradeDialog(item) {
     });
     upgrade = $fmt('SDM.Upgrade.ChatFeature', { feature: $l10n(`SDM.ItemFeature.${data.feature}`) });
     await syncAnimationLevel(item);
+  } else if (data.choice === 'power') {
+    // The power goes into the item's album: one more slot, or a new album with one slot
+    const source = item._source.system;
+    const hadAlbum = source.type === GearType.POWER_ALBUM || (source.features ?? []).includes('album');
+    const power = {
+      ...new PowerDataModel().toObject(),
+      ...foundry.utils.duplicate(powerSource.system.power ?? {}),
+      name: powerSource.name,
+      img: powerSource.img,
+      description: powerSource.system.description ?? ''
+    };
+    const update = {
+      'system.powers': [...foundry.utils.duplicate(source.powers ?? []), power],
+      'system.max_powers': hadAlbum ? (Number(source.max_powers) || 0) + 1 : 1,
+      [`flags.sdm.${HALLMARK_POWERS_FLAG}`]: [...(item.getFlag('sdm', HALLMARK_POWERS_FLAG) ?? []), power.name]
+    };
+    if (!hadAlbum) update['system.features'] = [...(source.features ?? []), 'album'];
+    powerUndo = { name: power.name, addedAlbum: !hadAlbum, prevMaxPowers: Number(source.max_powers) || 0 };
+    await item.update(update);
+    upgrade = $fmt('SDM.Upgrade.ChatPower', { power: power.name });
+    await syncAnimationLevel(item);
   } else if (data.choice === 'trait') {
     // A named trait with its description: an effect on the item (changes can be added to it later)
     const description = data.traitDescription
@@ -536,6 +599,7 @@ export async function openHallmarkUpgradeDialog(item) {
     changes: data.choice === 'damage' ? 2 : data.choice === 'defense' ? 1 : 0,
     note: data.choice === 'text' ? data.text : null,
     feature: data.choice === 'feature' ? data.feature : null,
+    power: powerUndo,
     effectId: modEffectId,
     cost: paid ? price : 0,
     charged: paid
@@ -589,6 +653,9 @@ export function getHallmarkUpgradeSummary(item) {
     if (item.system.features?.has?.(feature)) {
       list.push({ icon: 'fa-solid fa-tag', label: $l10n(`SDM.ItemFeature.${feature}`) });
     }
+  }
+  for (const name of item.getFlag('sdm', HALLMARK_POWERS_FLAG) ?? []) {
+    list.push({ icon: 'fa-solid fa-wand-magic-sparkles', label: name });
   }
   for (const effect of item.effects) {
     if (effect.system?.isItemMod && effect.system?.isHallmarkUpgrade) {

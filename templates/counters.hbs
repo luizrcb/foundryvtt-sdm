@@ -1,0 +1,39 @@
+  {{!-- Counters of an item or actor (effects use them as @item/@actor.counters.<key>.value) --}}
+  <div class="sdm-counters">
+    <header>
+      <strong>{{localize 'SDM.Counter.Title'}}</strong>
+      {{#if @root.editable}}
+      <a data-action="addCounter"><i class="fa-solid fa-plus"></i> {{localize 'SDM.Counter.New'}}</a>
+      {{/if}}
+    </header>
+    {{#each counters as |counter|}}
+    <div class="sdm-counter-row">
+      <input class="sdm-counter-label" type="text" name="system.counters.{{counter.key}}.label" value="{{counter.label}}" />
+      <div class="sdm-counter-value">
+        {{#if @root.editable}}<a data-action="stepCounter" data-key="{{counter.key}}" data-step="-1"><i class="fa-solid fa-minus"></i></a>{{/if}}
+        <input type="number" min="0" name="system.counters.{{counter.key}}.value" value="{{counter.value}}" data-dtype="Number" />
+        {{#if @root.editable}}<a data-action="stepCounter" data-key="{{counter.key}}" data-step="1"><i class="fa-solid fa-plus"></i></a>{{/if}}
+      </div>
+      <label data-tooltip="{{localize 'SDM.Counter.MaxHint'}}">{{localize 'SDM.Counter.Max'}}
+        <input type="number" min="0" name="system.counters.{{counter.key}}.max" value="{{counter.max}}" data-dtype="Number" /></label>
+      <label data-tooltip="{{localize 'SDM.Counter.ResetValueHint'}}">{{localize 'SDM.Counter.ResetValue'}}
+        <input type="number" min="0" name="system.counters.{{counter.key}}.reset_value" value="{{counter.reset_value}}" data-dtype="Number" /></label>
+      <label class="sdm-counter-combat" data-tooltip="{{localize 'SDM.Counter.ResetOnCombatEndHint'}}">
+        <input type="checkbox" name="system.counters.{{counter.key}}.reset_on_combat_end" {{checked counter.reset_on_combat_end}} />
+        {{localize 'SDM.Counter.ResetOnCombatEnd'}}</label>
+      <label data-tooltip="{{localize 'SDM.Counter.ResetEachHint'}}">{{localize 'SDM.Counter.ResetEach'}}
+        <select name="system.counters.{{counter.key}}.reset_each">
+          {{selectOptions (sdmCounterResetChoices) selected=counter.reset_each localize=true}}
+        </select></label>
+      <code class="sdm-counter-ref" data-tooltip="{{localize 'SDM.Counter.ReferenceHint' ref=(concat @root.counterScope '.counters.' counter.key '.value')}}">{{@root.counterScope}}.counters.{{counter.key}}.value</code>
+      {{#if @root.editable}}
+      <div class="sdm-counter-actions">
+        <a data-action="resetCounter" data-key="{{counter.key}}" data-tooltip="{{localize 'SDM.Counter.Reset'}}"><i class="fa-solid fa-rotate-left"></i></a>
+        <a data-action="removeCounter" data-key="{{counter.key}}" data-tooltip="{{localize 'SDM.Counter.Remove'}}"><i class="fa-solid fa-trash"></i></a>
+      </div>
+      {{/if}}
+    </div>
+    {{else}}
+    <p class="hint">{{localize 'SDM.Counter.None'}}</p>
+    {{/each}}
+  </div>

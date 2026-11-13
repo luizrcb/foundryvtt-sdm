@@ -2081,3 +2081,273 @@ input[type='radio']::after {
     cursor: pointer;
   }
 }
+
+// Roll triggers fired, on chat cards
+.sdm-roll-triggers {
+  margin-top: 6px;
+  padding: 4px 6px;
+  border-left: 3px solid #b07a1e;
+  background: rgba(176, 122, 30, 0.12);
+  border-radius: 4px;
+
+  ul {
+    list-style: none;
+    margin: 2px 0 0;
+    padding: 0;
+  }
+}
+
+// Cast power chat cards: drag the handle into an album to catch the power
+.flavor-text.sdm-has-catch {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sdm-catch-row {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 4px;
+}
+
+.sdm-catch-power {
+  flex: 0 0 auto;
+  margin-left: auto;
+  white-space: nowrap;
+  font-size: 11px;
+  padding: 0 6px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.1);
+  cursor: grab;
+}
+
+// Token HUD: light from items (flame button + palette when several items can light)
+.sdm-light-hud {
+  position: relative;
+
+  .sdm-light-toggle.active i {
+    color: #ff9329;
+  }
+
+  .sdm-light-palette {
+    display: none;
+    position: absolute;
+    top: 0;
+    right: calc(100% + 8px);
+    flex-direction: column;
+    gap: 2px;
+    min-width: 180px;
+    padding: 4px;
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.75);
+    border: 1px solid var(--color-border-dark, #000);
+    // The HUD ignores pointer events outside its controls
+    pointer-events: all;
+    z-index: 10;
+
+    &.open {
+      display: flex;
+    }
+  }
+
+  .sdm-light-entry {
+    pointer-events: all;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    background: transparent;
+    border: 1px solid transparent;
+    text-align: left;
+    line-height: normal;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 2px 4px;
+    border-radius: 4px;
+    color: #f0f0e0;
+    font-size: 13px;
+    white-space: nowrap;
+    cursor: pointer;
+
+    img {
+      border: none;
+      flex: 0 0 24px;
+    }
+
+    &:hover {
+      background: rgba(255, 255, 255, 0.12);
+    }
+
+    &.lit {
+      color: #ff9329;
+    }
+  }
+}
+
+.sdm-lit-icon i {
+  color: #e8731c;
+}
+
+// Baselines settings: light presets table
+.sdm-light-presets {
+  table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  th,
+  td {
+    padding: 2px 4px;
+    text-align: left;
+    white-space: nowrap;
+  }
+  input[type='number'] {
+    width: 4.5em;
+  }
+  select {
+    width: 100%;
+  }
+}
+
+// System settings menus: one scroll for all sections, the Save / Reset / Cancel buttons stay visible;
+// sections collapse by clicking their title
+.application.sdm-settings-menu {
+  max-height: 90vh;
+
+  .window-content {
+    overflow-y: auto;
+  }
+
+  .window-content > .form-footer {
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+    padding-top: 8px;
+    background: inherit;
+    background-color: var(--sdm-settings-footer-bg, rgba(225, 222, 212, 0.97));
+  }
+
+  fieldset.sdm-config > legend {
+    cursor: pointer;
+    user-select: none;
+
+    .sdm-collapse-icon {
+      font-size: 0.8em;
+      margin-right: 6px;
+      transition: transform 0.15s;
+    }
+  }
+
+  fieldset.sdm-config.collapsed {
+    > legend .sdm-collapse-icon {
+      transform: rotate(-90deg);
+    }
+    > :not(legend) {
+      display: none;
+    }
+  }
+}
+
+// Cast dialog: power cost box
+.sdm-power-cost {
+  border: 1px solid var(--color-border-light-tertiary, rgba(0, 0, 0, 0.25));
+  border-radius: 6px;
+  padding: 4px 10px 8px;
+
+  legend {
+    padding: 0 4px;
+    font-size: 13px;
+
+    .sdm-power-cost-value {
+      font-size: 15px;
+    }
+
+    .sdm-power-cost-note {
+      font-size: 11px;
+      opacity: 0.7;
+    }
+  }
+
+  .sdm-power-cost-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-top: 6px;
+
+    input[type='checkbox'] {
+      flex: 0 0 auto;
+      margin: 0;
+    }
+
+    .sdm-power-cost-label {
+      flex: 1 1 auto;
+    }
+
+    .sdm-power-cost-life {
+      flex: 0 0 auto;
+      font-size: 12px;
+      opacity: 0.75;
+    }
+
+    input[type='number'] {
+      flex: 0 0 4em;
+      width: 4em;
+      text-align: center;
+    }
+
+    select {
+      flex: 0 0 auto;
+      width: auto;
+    }
+
+    &.disabled {
+      opacity: 0.45;
+    }
+  }
+
+  .sdm-power-cost-ability {
+    margin-top: 8px;
+
+    &.disabled {
+      opacity: 0.45;
+    }
+  }
+
+  .sdm-power-cost-abilities {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 4px;
+    margin-top: 4px;
+  }
+
+  .sdm-power-cost-ab {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 2px;
+    font-size: 11px;
+    font-weight: bold;
+
+    input {
+      width: 100%;
+      text-align: center;
+    }
+  }
+}
+
+// Rest (one week): bed icon next to the life label
+.sdm-rest-button {
+  margin-left: 4px;
+  font-size: 0.85em;
+  opacity: 0.6;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.sdm-rest {
+  .sdm-upgrade-choice.disabled {
+    opacity: 0.45;
+  }
+}

@@ -3,9 +3,11 @@ import { SdmItem } from '../documents/item.mjs';
 import { createNPCByLevel, getActorOptions, getXpToNextLevel } from '../helpers/actorUtils.mjs';
 import { openProgressLog } from '../app/progress-log.mjs';
 import { getItemReference } from '../helpers/effectReferences.mjs';
+import { getCounters, promptNewCounter, removeCounter, resetCounters, stepCounter } from '../helpers/counters.mjs';
 import { getHallmarkUpgradeSummary, openHallmarkUpgradeDialog } from '../app/level-upgrades.mjs';
 import { makeNpcFriendly } from '../items/petItem.mjs';
 import { hasPowerAlbum } from '../helpers/itemUtils.mjs';
+import { LIGHT_PRESET_CHOICES, POWER_LIGHT_PRESET_CHOICES } from '../helpers/lights.mjs';
 import {
   animateItem,
   deanimateItem,
@@ -94,6 +96,12 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       nextPower: this._onNextPower,
       prevPower: this._onPrevPower,
       selectPower: this._onSelectPower,
+      addCounter: this._onAddCounter,
+      addTrigger: this._onAddTrigger,
+      removeTrigger: this._onRemoveTrigger,
+      stepCounter: this._onStepCounter,
+      resetCounter: this._onResetCounter,
+      removeCounter: this._onRemoveCounter,
       castPower: this._onCastPower,
       duplicatePower: this._onDuplicatePower,
       showOvercharge: this._onShowOvercharge,
@@ -262,7 +270,29 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       // Mods gained as hallmark upgrades (outside the mod slots)
       // How other effects read this item's values once an actor has it: @items.<type>:<identifier>.<path>
       itemReference: getItemReference(this.item),
-      hallmarkUpgrades: getHallmarkUpgradeSummary(this.item)
+      hallmarkUpgrades: getHallmarkUpgradeSummary(this.item),
+      counters: getCounters(this.item),
+      counterScope: '@item',
+      lightPresets: LIGHT_PRESET_CHOICES,
+      powerLightPresets: POWER_LIGHT_PRESET_CHOICES,
+      lightAnimations: {
+        '': 'SDM.Light.NoAnimation',
+        ...Object.fromEntries(Object.entries(CONFIG.Canvas.lightAnimations ?? {}).map(([key, cfg]) => [key, cfg.label]))
+      },
+      triggerRolls: { attack: 'SDM.Trigger.Roll.attack', damage: 'SDM.Trigger.Roll.damage' },
+      triggerConditions: {
+        natural: 'SDM.Trigger.Option.natural',
+        total: 'SDM.Trigger.Option.total',
+        die: 'SDM.Trigger.Option.die',
+        max: 'SDM.Trigger.Option.max',
+        min: 'SDM.Trigger.Option.min',
+        matching: 'SDM.Trigger.Option.matching'
+      },
+      boostResources: {
+        life: 'SDM.Boost.Life',
+        ...CONFIG.SDM.abilities,
+        hero_die: 'SDM.Boost.HeroDie'
+      }
     };
 
     if (this.item.type === ItemType.GEAR && this.item.system.type === GearType.WARD) {
@@ -698,6 +728,35 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     }
   }
 
+  /** Roll triggers: the whole list is saved (never one element by path). */
+  static async _onAddTrigger() {
+    const triggers = foundry.utils.duplicate(this.item.system.triggers ?? []);
+    triggers.push({ roll: 'attack', condition: 'natural', value: 13, text: '' });
+    await this.item.update({ 'system.triggers': triggers });
+  }
+
+  static async _onRemoveTrigger(event, target) {
+    const triggers = foundry.utils.duplicate(this.item.system.triggers ?? []);
+    triggers.splice(parseInt(target.dataset.index, 10), 1);
+    await this.item.update({ 'system.triggers': triggers });
+  }
+
+  static async _onAddCounter() {
+    await promptNewCounter(this.item);
+  }
+
+  static async _onStepCounter(event, target) {
+    await stepCounter(this.item, target.dataset.key, parseInt(target.dataset.step, 10) || 0);
+  }
+
+  static async _onResetCounter(event, target) {
+    await resetCounters(this.item, { key: target.dataset.key });
+  }
+
+  static async _onRemoveCounter(event, target) {
+    await removeCounter(this.item, target.dataset.key);
+  }
+
   /** Album list: use that power (the actor's roll, with that power preselected). */
   static async _onCastPower(event, target) {
     event.stopPropagation();
@@ -853,7 +912,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       roll_formula,
       default_ability,
       description,
-      is_dangerous
+      is_dangerous,
+      single_use
     } = data;
 
     return {
@@ -869,6 +929,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       overcharge_roll_formula,
       roll_formula,
       is_dangerous,
+      single_use: !!single_use,
       default_ability
     };
   }
@@ -1391,7 +1452,9 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
    */
   async _onDropItem(event, data) {
     if (!this.item.isOwner) return false;
-    const droppedItem = await Item.implementation.fromDropData(data);
+    // Dragged power data without a document (a caught power, a power dragged out of an album)
+    const droppedItem =
+      !data?.uuid && data?.data ? new Item.implementation(data.data) : await Item.implementation.fromDropData(data);
 
     // A power dropped on gear with an album (power album or album feature) joins its powers
     if (!hasPowerAlbum(this.item) || droppedItem?.system?.type !== GearType.POWER) {
@@ -1407,6 +1470,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       overcharge_roll_formula,
       roll_formula,
       is_dangerous,
+      single_use,
       default_ability
     } = droppedItem.system.power;
     const { description } = droppedItem.system;
@@ -1424,6 +1488,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       img,
       name,
       is_dangerous,
+      // A power caught from the chat is single use
+      single_use: !!single_use || !!data.sdmCaught,
       description
     });
   }

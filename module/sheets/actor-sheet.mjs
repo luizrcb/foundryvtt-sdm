@@ -1,3 +1,10 @@
+import { restActor } from '../app/rest.mjs';
+import { getPowerCost, paysPowerCost, payPowerCost } from '../helpers/powerCost.mjs';
+import { lightFromPower, powerCreatesLight, putOutLight } from '../helpers/lights.mjs';
+import { consumeSingleUsePower } from '../helpers/singleUsePowers.mjs';
+import { combineMultiplier, describeBoost, describeBoostPaid, getBoost, payBoost } from '../rolls/boost.mjs';
+import { useItem } from '../app/use-item.mjs';
+import { ACTOR_COUNTER_ACTIONS, getCounters, resetCounters, stepCounter } from '../helpers/counters.mjs';
 import CompendiumBrowser from '../app/compendium-browser.mjs';
 import { SdmItem } from '../documents/item.mjs';
 
@@ -158,6 +165,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       chooseHallmarkUpgrade: this._onChooseHallmarkUpgrade,
       openDoc: { handler: this._openDoc, buttons: [0] },
       toggleItemStatus: { handler: this._toggleItemStatus, buttons: [0, 2] },
+      stepItemCounter: { handler: this._onStepItemCounter, buttons: [0, 2] },
+      ...ACTOR_COUNTER_ACTIONS,
+      useItem: this._onUseItem,
+      putOutLight: this._onPutOutLight,
+      restActor: this._onRestActor,
       openPetSheet: this._onOpenPetSheet,
       toggleCompact: this._onToggleCompact
     },
@@ -260,9 +272,32 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const actorData = this.actor?.system;
     const damageMultiplier = CONFIG.SDM.getDamageMultiplier(actorData.base_damage_multiplier || 2);
 
+    // Damage boost paid with a resource (from the item)
+    const boost = isDamage ? getBoost(item) : null;
+
+    // Power cost: paid with life and/or ability points when casting
+    const powerCost =
+      (isPower || isPowerAlbum) && paysPowerCost(this.actor)
+        ? {
+            cost: powerOptions?.[powerIndex]?.cost ?? 0,
+            life: Number(this.actor.system.life?.value) || 0,
+            abilities: Object.keys(CONFIG.SDM.getOrderedAbilities(game.i18n.lang)).map(key => ({
+              key,
+              abbr: $l10n(CONFIG.SDM.abilityAbbreviations[key] ?? key),
+              label: $l10n(CONFIG.SDM.abilities[key] ?? key),
+              current: Number(this.actor.system.abilities?.[key]?.current) || 0
+            }))
+          }
+        : null;
+    // The cost box shows the cost: the title keeps only the power's name
+    const dialogTitle = powerCost ? `${title}`.replace(/\s*\([^()]*:\s*\d+\)\s*$/, '') : title;
+
     const template = await renderTemplate(templatePath('custom-roll-dialog'), {
+      boost,
+      boostLabel: boost ? describeBoost(boost) : '',
+      powerCost,
       rollTitlePrefix,
-      title,
+      title: dialogTitle,
       abilities: CONFIG.SDM.getOrderedAbilities(language),
       ability: isAttack ? actorAttack?.default_ability : ability,
       attack,
@@ -399,7 +434,28 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       formula = powerOptions[powerIndex].formula;
     }
 
-    const modPart = foundry.dice.Roll.validate(modifier) ? `+${modifier}` : '';
+    let modPart = foundry.dice.Roll.validate(modifier) ? `+${modifier}` : '';
+
+    // Boost: mandatory ones always (also without the dialog), optional ones when ticked
+    let finalMultiplier = multiplier;
+    if (boost && (boost.mandatory || rollOptions.useBoost)) {
+      const paid = await payBoost(this.actor, boost);
+      if (paid === null) return;
+      finalMultiplier = combineMultiplier(multiplier, boost);
+      if (boost.extra && foundry.dice.Roll.validate(boost.extra)) modPart += `+${boost.extra}`;
+      title = `${title} (${describeBoostPaid(boost, paid)})`;
+    }
+
+    // Pay the power's cost (life, and ability points by choice or when life isn't enough)
+    let costPaid = null;
+    if (powerCost && item && (isShift || rollOptions.payPowerCost)) {
+      const castData = isPowerAlbum ? item.system.powers?.[powerIndex] : item.system.power;
+      const cost = getPowerCost(this.actor.system, castData, !!rollOptions.overcharge);
+      // The form gives flat keys ("costFrom.agi"): expand them
+      const fromAbilities = foundry.utils.expandObject(rollOptions ?? {}).costFrom ?? {};
+      costPaid = await payPowerCost(this.actor, cost, { fromAbilities });
+      if (!costPaid) return;
+    }
 
     const rollData = {
       type,
@@ -408,7 +464,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       ability: selectedAbility,
       mode: rollMode,
       modifier: dmgOrAttackBonus ? `${modPart}+${dmgOrAttackBonus}` : modPart,
-      multiplier,
+      multiplier: finalMultiplier,
       explodingDice: shouldExplode,
       versatile: !!rollOptions.versatile,
       skill: availableSkills[selectedSkill],
@@ -464,6 +520,32 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     rollData.isCtrl = isCtrl;
     const sdmRoll = new SDMRoll(rollData);
     await sdmRoll.evaluate();
+
+    // Powers that create light light the caster's token
+    if ((isPower || isPowerAlbum) && item) {
+      const cast = isPowerAlbum ? item.system.powers?.[powerIndex] : item.system.power;
+      if (cast && powerCreatesLight(cast)) {
+        await lightFromPower(this.actor, {
+          name: isPowerAlbum ? cast.name : item.name,
+          img: isPowerAlbum ? cast.img : item.img,
+          light: cast.light
+        });
+      }
+    }
+
+    // Life paid down to 0: defeat roll
+    if (costPaid?.defeated) {
+      const noop = () => {};
+      await this.constructor._onDefeatRoll.call(
+        this,
+        { preventDefault: noop, stopPropagation: noop, detail: 1, shiftKey: false, ctrlKey: false },
+        null
+      );
+    }
+
+    // Single-use powers leave the album (or the power item goes away) once confirmed
+    if (isPowerAlbum && item) await consumeSingleUsePower(item, powerIndex);
+    else if (isPower && item) await consumeSingleUsePower(item);
   }
 
   async _openUpdateAttackModal(attack) {
@@ -679,6 +761,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         break;
       case 'effects':
         context.tab = context.tabs[partId];
+        // The actor's own counters (managed at the top of the Effects tab)
+        context.counters = getCounters(this.actor);
+        context.counterScope = '@actor';
         // Prepare active effects
         context.effects = prepareActiveEffectCategories(
           // A generator that returns all effects stored on the actor
@@ -1288,6 +1373,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
             formula: powerData.roll_formula,
             overchargeFormula: powerData.overcharge_roll_formula,
             canOvercharge: !!powerData.overcharge,
+            cost: getPowerCost(this.actor.system, powerData),
             default_ability: powerData.default_ability,
             description: powerItem.system.description,
             overchargeDescription: powerData.overcharge
@@ -1321,6 +1407,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
             formula: power.roll_formula,
             overchargeFormula: power.overcharge_roll_formula,
             canOvercharge: !!power.overcharge,
+            cost: getPowerCost(this.actor.system, power),
             default_ability: power.default_ability,
             description: power.description,
             overchargeDescription: power.overcharge
@@ -2217,6 +2304,36 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       if (detail <= 1 || detail > 2) return;
       return SdmActorSheet._viewDoc.call(this, event, target);
     }
+  }
+
+  /** Use a consumable (or other usable gear) on the selected tokens. */
+  static async _onUseItem(event, target) {
+    event.preventDefault();
+    event.stopPropagation();
+    await useItem(this._getEmbeddedDocument(target));
+  }
+
+  /** Rest one week (button next to the life label). */
+  static async _onRestActor(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    await restActor(this.actor);
+  }
+
+  /** Inventory row flame: put the item's light out. */
+  static async _onPutOutLight(event, target) {
+    event.preventDefault();
+    event.stopPropagation();
+    const item = this._getEmbeddedDocument(target);
+    if (item) await putOutLight(this.actor, { itemId: item.id });
+  }
+
+  /** Inventory counter: click +1, right-click −1. */
+  static async _onStepItemCounter(event, target) {
+    event.preventDefault();
+    event.stopPropagation();
+    const item = this._getEmbeddedDocument(target);
+    await stepCounter(item, target.dataset.key, event.button === 2 ? -1 : 1);
   }
 
   static async _toggleItemStatus(event, target) {

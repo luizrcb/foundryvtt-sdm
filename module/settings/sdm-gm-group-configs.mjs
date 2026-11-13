@@ -1,5 +1,6 @@
 // Each class defines a single-section AppV2 using your BaseSettingsConfig.
 import BaseSettingsConfig from './base-settings.mjs';
+import { getLightPreset, LIGHT_PRESET_KEYS } from '../helpers/lights.mjs';
 
 class GroupBase extends BaseSettingsConfig {
   static PARTS = {
@@ -110,7 +111,8 @@ export class SDMCoreRulesSettingsConfig extends GroupBase {
     'useHardLimitRule',
     'defaultHardLimitValue',
     'defaultHeroDiceType',
-    'healingHouseRule'
+    'healingHouseRule',
+    'automatePowerCost'
   ];
 }
 
@@ -139,6 +141,31 @@ export class SDMBaselinesSettingsConfig extends GroupBase {
     }
   };
   static LEGEND = 'SDM.Menu.Baselines.Name';
+  static PARTS = {
+    config: { template: 'systems/sdm/templates/settings/base-config.hbs' },
+    lights: { template: 'systems/sdm/templates/settings/light-presets.hbs' },
+    footer: { template: 'templates/generic/form-footer.hbs' }
+  };
+  // Saved with the rest of the form (as an object); reset with "Reset" too
+  static get ALL_KEYS() {
+    return [...this.KEYS, 'lightPresets'];
+  }
+
+  async _preparePartContext(partId, context, options) {
+    context = await super._preparePartContext(partId, context, options);
+    if (partId !== 'lights') return context;
+    context.presets = LIGHT_PRESET_KEYS.map(key => ({
+      key,
+      label: game.i18n.localize(`SDM.Light.Preset.${key}`),
+      ...getLightPreset(key)
+    }));
+    context.animations = {
+      '': 'SDM.Light.NoAnimation',
+      ...Object.fromEntries(Object.entries(CONFIG.Canvas.lightAnimations ?? {}).map(([key, cfg]) => [key, cfg.label]))
+    };
+    return context;
+  }
+
   static KEYS = [
     'defaultSaveValue',
     'baseDefense',

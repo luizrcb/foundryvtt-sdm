@@ -80,6 +80,14 @@
     "supply_type": "",
     "categories": [
       "stun"
+    ],
+    "triggers": [
+      {
+        "roll": "attack",
+        "condition": "natural",
+        "value": 13,
+        "text": "Stuns"
+      }
     ]
   },
   "effects": [],

@@ -62,7 +62,17 @@
       "traveler",
       "mobility",
       "ability"
-    ]
+    ],
+    "counters": {
+      "used": {
+        "label": "Used this turn",
+        "value": 0,
+        "max": 1,
+        "reset_value": 0,
+        "reset_on_combat_end": true,
+        "reset_each": "turn"
+      }
+    }
   },
   "effects": [],
   "sort": 0,

@@ -3,6 +3,8 @@ const $$ = path => `systems/sdm/templates/${path}.hbs`;
 export const templatePath = $$;
 
 const templatesToLoad = [
+  $$('counters'),
+  $$('actor/counter-chips'),
   $$('actor/burdens'),
   $$('actor/caravan/header'),
   $$('actor/character/header'),

@@ -64,7 +64,54 @@
       "travel"
     ]
   },
-  "effects": [],
+  "effects": [
+    {
+      "name": "Boatmaster",
+      "origin": "Compendium.sdm.traits.Item.c7rYd9L2c9Rsam0v",
+      "img": "icons/skills/trades/profession-sailing-ship.webp",
+      "_id": "vbmgH48xo7CLClSs",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.boat_capacity_bonus",
+            "value": "@level",
+            "priority": null,
+            "type": "add",
+            "phase": "initial"
+          }
+        ]
+      },
+      "disabled": false,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.353",
+        "systemId": "sdm",
+        "systemVersion": "0.4.5",
+        "createdTime": 1760377001848,
+        "modifiedTime": 1760377030362,
+        "lastModifiedBy": "XnQAppzUXfkn5LcX"
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!c7rYd9L2c9Rsam0v.vbmgH48xo7CLClSs"
+    }
+  ],
   "sort": 0,
   "ownership": {
     "default": 0,

@@ -82,7 +82,15 @@
     "supply_type": "",
     "replenish": {
       "value": 4
-    }
+    },
+    "triggers": [
+      {
+        "roll": "damage",
+        "condition": "die",
+        "value": 6,
+        "text": "Breaks open doors"
+      }
+    ]
   },
   "effects": [],
   "sort": 1700000,

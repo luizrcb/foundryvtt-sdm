@@ -64,7 +64,10 @@ export const effectivePullMode = (mount, vehicle) =>
  *   }
  * }}
  */
-export function computeCaravanTransport({ mounts = [], vehicles = [] } = {}) {
+export function computeCaravanTransport({ mounts = [], vehicles = [], boatBonus = 0 } = {}) {
+  // Boats (water vehicles) carrying the caravan get extra sacks from its crew (Boatmaster),
+  // at most their own capacity (never more than double)
+  const boatExtra = v => (v.system?.features?.has?.('water') ? Math.min(toInt(boatBonus), toInt(v.system?.capacity)) : 0);
   let capacity = 0;
   const underHauled = [];
   const vehicleBreakdown = [];
@@ -76,11 +79,12 @@ export function computeCaravanTransport({ mounts = [], vehicles = [] } = {}) {
 
     // Step A — automatic (self-propelled) vehicles always contribute their full capacity
     if (v.system?.automatic) {
-      capacity += need;
+      capacity += need + boatExtra(v);
       vehicleBreakdown.push({
         id: v.id,
         name: v.name,
         need,
+        boatExtra: boatExtra(v),
         pullPower: 0,
         hauled: true,
         automatic: true
@@ -98,7 +102,7 @@ export function computeCaravanTransport({ mounts = [], vehicles = [] } = {}) {
 
     const hauled = pullPower >= need;
     if (hauled) {
-      capacity += need;
+      capacity += need + boatExtra(v);
     } else {
       underHauled.push(v.id);
     }
@@ -109,6 +113,7 @@ export function computeCaravanTransport({ mounts = [], vehicles = [] } = {}) {
       need,
       pullPower,
       hauled,
+      boatExtra: hauled ? boatExtra(v) : 0,
       automatic: false,
       pullMode: vehiclePullMode(v)
     });

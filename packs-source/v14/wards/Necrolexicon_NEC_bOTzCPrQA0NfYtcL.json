@@ -8,13 +8,14 @@
     "readied": false,
     "cost": 5000,
     "cost_frequency": "",
-    "description": "<p>Unliving tome of illegal death magicks.</p><p><span style=\"text-decoration:underline\"><em><span style=\"text-decoration:underline\">This ward is an album of power with ward active effect bonus</span></em></span></p>",
+    "description": "<p>Unliving tome of illegal death magicks.</p>",
     "quantity": 1,
     "size": {
       "value": 3,
       "unit": "stones"
     },
     "features": [
+      "album",
       "corpsefed"
     ],
     "attributes": {
@@ -29,7 +30,7 @@
       "bonus": 1,
       "damage": "1d4"
     },
-    "type": "power_album",
+    "type": "ward",
     "power": {
       "img": "icons/svg/book.svg",
       "name": "",
@@ -52,8 +53,8 @@
       "powered": null
     },
     "ward": {
-      "value": 0,
-      "type": "",
+      "value": 5,
+      "type": "portable",
       "armor": 0
     },
     "weapon": {
@@ -80,54 +81,7 @@
       "power"
     ]
   },
-  "effects": [
-    {
-      "name": "ward +5",
-      "origin": "Compendium.sdm.equipment.Item.bOTzCPrQA0NfYtcL",
-      "img": "icons/magic/death/skull-humanoid-white-blue.webp",
-      "_id": "EEzrsWjI0z7W4rCA",
-      "type": "base",
-      "system": {
-        "changes": [
-          {
-            "key": "system.ward_bonus",
-            "value": 5,
-            "priority": null,
-            "type": "add",
-            "phase": "initial"
-          }
-        ]
-      },
-      "disabled": false,
-      "duration": {
-        "value": null,
-        "units": "seconds",
-        "expiry": null,
-        "expired": false
-      },
-      "description": "",
-      "tint": "#ffffff",
-      "transfer": true,
-      "statuses": [],
-      "sort": 0,
-      "flags": {},
-      "_stats": {
-        "compendiumSource": null,
-        "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "14.353",
-        "systemId": "sdm",
-        "systemVersion": "0.5.4",
-        "lastModifiedBy": null,
-        "createdTime": null,
-        "modifiedTime": null
-      },
-      "showIcon": 1,
-      "folder": null,
-      "start": null,
-      "_key": "!items.effects!bOTzCPrQA0NfYtcL.EEzrsWjI0z7W4rCA"
-    }
-  ],
+  "effects": [],
   "sort": 0,
   "ownership": {
     "default": 0,

@@ -10,7 +10,7 @@
     "resources": "",
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p>You are deeply encoded in your physical form and can use your <span style=\"text-decoration:underline\">strength ability for oldtech</span> magics and <span style=\"text-decoration:underline\">endurance for fantascience</span>.</p><p><em>You can edit your <strong>Oldtech</strong> and <strong>Fantascience</strong> attacks in the character sheet edit mode to change their Default Ability.</em> </p>",
+    "description": "<p>You are deeply encoded in your physical form and can use your <span style=\"text-decoration:underline\">strength ability for oldtech</span> magics and <span style=\"text-decoration:underline\">endurance for fantascience</span>.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -63,7 +63,61 @@
       "power"
     ]
   },
-  "effects": [],
+  "effects": [
+    {
+      "name": "Deeply Embodied",
+      "origin": "Compendium.sdm.traits.Item.FOZHyq5l3OaVF09U",
+      "img": "icons/magic/control/debuff-energy-hold-levitate-green.webp",
+      "_id": "N9xIceEWU5GM8M08",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.oldtech.default_ability",
+            "value": "str",
+            "priority": null,
+            "type": "override",
+            "phase": "initial"
+          },
+          {
+            "key": "system.fantascience.default_ability",
+            "value": "end",
+            "priority": null,
+            "type": "override",
+            "phase": "initial"
+          }
+        ]
+      },
+      "disabled": false,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.353",
+        "systemId": "sdm",
+        "systemVersion": "0.4.5",
+        "createdTime": 1760377001848,
+        "modifiedTime": 1760377030362,
+        "lastModifiedBy": "XnQAppzUXfkn5LcX"
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!FOZHyq5l3OaVF09U.N9xIceEWU5GM8M08"
+    }
+  ],
   "sort": 0,
   "ownership": {
     "default": 0,

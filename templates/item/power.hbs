@@ -62,6 +62,40 @@
   </div>
 </div>
 
+<div class="resource align-center" data-tooltip="{{localize 'SDM.SingleUse.Hint'}}">
+  <label class='resource-label'><i class="fa-solid fa-triangle-exclamation"></i> {{localize 'SDM.SingleUse.Label'}}</label>
+  <div class='resource-content align-center'>
+    <input type='checkbox' name='system.power.single_use' {{checked system.power.single_use}} />
+  </div>
+</div>
+
+<div class='resource' data-tooltip="{{localize 'SDM.Light.PowerHint'}}">
+  <label class='resource-label'><i class="fa-solid fa-fire-flame-curved"></i> {{localize 'SDM.Light.Label'}}</label>
+  <div class='resource-content'>
+    <select name="system.power.light.preset">
+      {{selectOptions @root.powerLightPresets selected=system.power.light.preset localize=true}}
+    </select>
+  </div>
+</div>
+{{#if (eq system.power.light.preset 'custom')}}
+<div class='resource'>
+  <label class='resource-label'>{{localize 'SDM.Light.Bright'}}</label>
+  <div class='resource-content'><input type='number' name="system.power.light.bright" value="{{system.power.light.bright}}" min="0" step="any" data-tooltip="{{localize 'SDM.Light.RadiusHint'}}"/></div>
+</div>
+<div class='resource'>
+  <label class='resource-label'>{{localize 'SDM.Light.Dim'}}</label>
+  <div class='resource-content'><input type='number' name="system.power.light.dim" value="{{system.power.light.dim}}" min="0" step="any" data-tooltip="{{localize 'SDM.Light.RadiusHint'}}"/></div>
+</div>
+<div class='resource'>
+  <label class='resource-label'>{{localize 'SDM.Light.Color'}}</label>
+  <div class='resource-content'><color-picker name="system.power.light.color" value="{{system.power.light.color}}"></color-picker></div>
+</div>
+<div class='resource'>
+  <label class='resource-label'>{{localize 'SDM.Light.Animation'}}</label>
+  <div class='resource-content'><select name="system.power.light.animation">{{selectOptions @root.lightAnimations selected=system.power.light.animation localize=true}}</select></div>
+</div>
+{{/if}}
+
 <div class='resource'>
   <label class='resource-label'>
     {{localize 'SDM.PowerOverchargeRollFormula'}}

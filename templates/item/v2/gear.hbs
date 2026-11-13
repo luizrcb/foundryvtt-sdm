@@ -229,11 +229,55 @@
       <span class="v2-label">{{localize 'SDM.ItemFeature.replenish'}}</span>
       <input type="text" name="system.replenish.value" value="{{system.replenish.value}}" data-dtype="Number" data-tooltip="{{localize 'SDM.ItemFeature.replenishDescription'}}" />
     </label>
+    {{#if (or (eq system.type 'weapon') (has system.features 'weapon'))}}
+    <label class="v2-field v2-check" data-tooltip="{{localize 'SDM.Replenish.OnAttackHint'}}">
+      <input type="checkbox" name="system.replenish.on_attack" {{checked system.replenish.on_attack}} />
+      <span class="v2-label">{{localize 'SDM.Replenish.OnAttack'}}</span>
+    </label>
+    {{/if}}
     {{/if}}
     {{#if (has system.features 'resistant')}}
     <label class="v2-field">
       <span class="v2-label">{{localize 'SDM.ItemFeature.resistant'}}</span>
       <input type="text" name="system.resistant.value" value="{{system.resistant.value}}" data-tooltip="{{localize 'SDM.ItemFeature.resistantDescription'}}" />
+    </label>
+    {{/if}}
+    {{#if (sdmIsLight item)}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.Light.Label'}}</span>
+      <select name="system.light.preset" data-tooltip="{{localize 'SDM.Light.PresetHint'}}">
+        {{selectOptions @root.lightPresets selected=system.light.preset localize=true}}
+      </select>
+    </label>
+    {{#if (eq system.light.preset 'custom')}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.Light.Bright'}}</span>
+      <input type="number" name="system.light.bright" value="{{system.light.bright}}" min="0" step="any" data-tooltip="{{localize 'SDM.Light.RadiusHint'}}" />
+    </label>
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.Light.Dim'}}</span>
+      <input type="number" name="system.light.dim" value="{{system.light.dim}}" min="0" step="any" data-tooltip="{{localize 'SDM.Light.RadiusHint'}}" />
+    </label>
+    <div class="v2-field">
+      <span class="v2-label">{{localize 'SDM.Light.Color'}}</span>
+      <color-picker name="system.light.color" value="{{system.light.color}}"></color-picker>
+    </div>
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.Light.Animation'}}</span>
+      <select name="system.light.animation">
+        {{selectOptions @root.lightAnimations selected=system.light.animation localize=true}}
+      </select>
+    </label>
+    {{/if}}
+    {{/if}}
+    {{#if (has system.features 'consumable')}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.Use.Life'}}</span>
+      <input type="text" name="system.use.life" value="{{system.use.life}}" data-tooltip="{{localize 'SDM.Use.LifeHint'}}" />
+    </label>
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.Use.Ability'}}</span>
+      <input type="text" name="system.use.ability" value="{{system.use.ability}}" data-tooltip="{{localize 'SDM.Use.AbilityHint'}}" />
     </label>
     {{/if}}
   </div>

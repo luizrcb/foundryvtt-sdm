@@ -1,4 +1,5 @@
 import { GearType } from '../helpers/constants.mjs';
+import { defineCountersField } from './counters-field.mjs';
 import { $l10n } from '../helpers/globalUtils.mjs';
 import { getSlotsTaken } from '../helpers/itemUtils.mjs';
 import HallmarkBaseDataModel from './hallmark-base-data.mjs';
@@ -39,6 +40,10 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       choices: CONFIG.SDM.itemResources
     });
 
+    // Counters the item keeps (kills, skulls, hits…), keyed by a slug of their name; effects read
+    // them as @item.counters.<key>.value. Separate from charges (ammunition, battery, uses).
+    schema.counters = defineCountersField();
+
     schema.charges = new fields.SchemaField({
       value: new fields.NumberField({
         required: true,
@@ -56,7 +61,9 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
         integer: true,
         initial: 0,
         min: 0
-      })
+      }),
+      // Attacks with the item make the usage roll (off: replenish is spent only by Use, lighting…)
+      on_attack: new fields.BooleanField({ required: true, initial: true })
     });
 
     schema.area = new fields.SchemaField({

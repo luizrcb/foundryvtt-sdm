@@ -543,7 +543,7 @@ li.item {
       grid-template-columns: repeat(3, minmax(0, 1fr));
     }
     &.sdm-album-fields-4 {
-      grid-template-columns: repeat(3, minmax(0, 1fr)) auto;
+      grid-template-columns: repeat(3, minmax(0, 1fr)) auto auto;
     }
     label {
       display: flex;
@@ -630,4 +630,106 @@ li.item {
       grid-template-columns: repeat(2, minmax(0, 1fr));
     }
   }
+}
+
+// Item counters (Effects tab) and their chips on inventory rows
+.sdm-counters {
+  margin: 0 0 10px;
+  padding: 6px 8px;
+  border: 1px solid rgba(0, 0, 0, 0.15);
+  border-radius: 6px;
+
+  > header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 4px;
+
+    a {
+      cursor: pointer;
+      font-size: 12px;
+    }
+  }
+  .hint {
+    margin: 0;
+  }
+  .sdm-counter-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 10px;
+    padding: 4px 0;
+    border-top: 1px dashed rgba(0, 0, 0, 0.12);
+    font-size: 12px;
+
+    input[type='number'] {
+      width: 3.5em;
+      text-align: center;
+    }
+    label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+      white-space: nowrap;
+    }
+    a {
+      cursor: pointer;
+    }
+  }
+  .sdm-counter-label {
+    flex: 1 1 8em;
+    min-width: 6em;
+    font-weight: 700;
+  }
+  .sdm-counter-value {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+
+    input {
+      font-size: 16px;
+      font-weight: 700;
+    }
+  }
+  .sdm-counter-ref {
+    font-size: 11px;
+    opacity: 0.75;
+    user-select: all;
+  }
+  .sdm-counter-actions {
+    display: flex;
+    gap: 8px;
+    margin-left: auto;
+  }
+}
+
+.sdm-counter-chip {
+  flex: 0 0 auto;
+  padding: 0 6px;
+  border-radius: 8px;
+  font-size: 11px;
+  line-height: 18px;
+  white-space: nowrap;
+  background: rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  user-select: none;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.18);
+  }
+}
+
+.sdm-actor-counters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin-top: 2px;
+
+  &:empty {
+    display: none;
+  }
+}
+
+.sdm-counters .sdm-counter-row select {
+  width: auto;
 }

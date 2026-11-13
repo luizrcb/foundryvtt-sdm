@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 5,
     "cost_frequency": "",
-    "description": "<p>Glows in the dark, adored by cats. Eating it lets you ignore mental afflictions for a week. Smoking induces deep sleep and restores [[/r 1d6]] life. Applied to skin, it releases mind-altering pheromones, boosting your charisma by +1 for a day. Addictive—withdrawal causes cramps and hunger.</p><p><em>(use active effect to boost charisma)</em></p>",
+    "description": "<p>Glows in the dark, adored by cats. Eating it lets you ignore mental afflictions for a week. Smoking induces deep sleep and restores [[/r 1d6]] life. Applied to skin, it releases mind-altering pheromones, boosting your charisma by +1 for a day. Addictive—withdrawal causes cramps and hunger.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "soaps"
     },
-    "features": [],
+    "features": [
+      "consumable"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -81,7 +83,11 @@
       "drug",
       "sleep",
       "affliction"
-    ]
+    ],
+    "use": {
+      "life": "1d6",
+      "ability": ""
+    }
   },
   "effects": [
     {

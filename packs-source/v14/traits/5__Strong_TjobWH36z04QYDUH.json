@@ -10,7 +10,7 @@
     "resources": "",
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p>A life of labor and the good diet provided by the establishment has given you a powerful physique. Gain +2 strength or endurance.</p><p><em>(Use the Strong active effect and add 2 to either str or end lines.)</em></p>",
+    "description": "<p>A life of labor and the good diet provided by the establishment has given you a powerful physique. Gain +2 strength or endurance.</p><p><em>(enable the <strong>Strong</strong> active effect of your choice)</em></p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -65,23 +65,16 @@
   },
   "effects": [
     {
-      "name": "Strong",
+      "name": "Strong (strength)",
       "origin": "Compendium.sdm.traits.Item.TjobWH36z04QYDUH",
       "img": "icons/magic/control/buff-strength-muscle-damage-orange.webp",
-      "_id": "jNPmr67GLdB8WBHI",
+      "_id": "dAHufMj8Ybbx5eNB",
       "type": "base",
       "system": {
         "changes": [
           {
             "key": "system.abilities.str.bonus",
-            "value": 0,
-            "priority": null,
-            "type": "add",
-            "phase": "initial"
-          },
-          {
-            "key": "system.abilities.end.bonus",
-            "value": 0,
+            "value": 2,
             "priority": null,
             "type": "add",
             "phase": "initial"
@@ -108,14 +101,60 @@
         "coreVersion": "14.353",
         "systemId": "sdm",
         "systemVersion": "0.4.5",
-        "createdTime": 1760365029376,
-        "modifiedTime": 1760365055501,
+        "createdTime": 1760377001848,
+        "modifiedTime": 1760377030362,
         "lastModifiedBy": "XnQAppzUXfkn5LcX"
       },
       "showIcon": 1,
       "folder": null,
       "start": null,
-      "_key": "!items.effects!TjobWH36z04QYDUH.jNPmr67GLdB8WBHI"
+      "_key": "!items.effects!TjobWH36z04QYDUH.dAHufMj8Ybbx5eNB"
+    },
+    {
+      "name": "Strong (endurance)",
+      "origin": "Compendium.sdm.traits.Item.TjobWH36z04QYDUH",
+      "img": "icons/magic/control/buff-strength-muscle-damage-orange.webp",
+      "_id": "V0t1aHhEBs3PcDGi",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.abilities.end.bonus",
+            "value": 2,
+            "priority": null,
+            "type": "add",
+            "phase": "initial"
+          }
+        ]
+      },
+      "disabled": true,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.353",
+        "systemId": "sdm",
+        "systemVersion": "0.4.5",
+        "createdTime": 1760377001848,
+        "modifiedTime": 1760377030362,
+        "lastModifiedBy": "XnQAppzUXfkn5LcX"
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!TjobWH36z04QYDUH.V0t1aHhEBs3PcDGi"
     }
   ],
   "sort": 0,

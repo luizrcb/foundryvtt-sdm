@@ -1,5 +1,48 @@
 {{! Effects Tab }}
 <section class='tab effects scrollable {{tab.cssClass}}' data-group='primary' data-tab='effects'>
+  {{!-- Damage boost paid with a resource (weapons) --}}
+  {{#if (and (eq item.type 'gear') (or (eq system.type 'weapon') (has system.features 'weapon')))}}
+  <div class="sdm-counters sdm-boost">
+    <header>
+      <label><input type="checkbox" name="system.boost.enabled" {{checked system.boost.enabled}} /> <strong>{{localize 'SDM.Boost.Enabled'}}</strong></label>
+    </header>
+    {{#if system.boost.enabled}}
+    <div class="sdm-counter-row">
+      <label>{{localize 'SDM.Boost.Cost'}}
+        <input type="text" name="system.boost.cost" value="{{system.boost.cost}}" placeholder="1d6" /></label>
+      <label>{{localize 'SDM.Boost.Resource'}}
+        <select name="system.boost.resource">{{selectOptions boostResources selected=system.boost.resource localize=true}}</select></label>
+      <label data-tooltip="{{localize 'SDM.Boost.MultiplierHint'}}">{{localize 'SDM.Boost.Multiplier'}}
+        <input type="number" min="0" name="system.boost.multiplier" value="{{system.boost.multiplier}}" data-dtype="Number" /></label>
+      <label data-tooltip="{{localize 'SDM.Boost.ExtraHint'}}">{{localize 'SDM.Boost.Extra'}}
+        <input type="text" name="system.boost.extra" value="{{system.boost.extra}}" placeholder="1d6" /></label>
+      <label data-tooltip="{{localize 'SDM.Boost.MandatoryHint'}}">
+        <input type="checkbox" name="system.boost.mandatory" {{checked system.boost.mandatory}} /> {{localize 'SDM.Boost.MandatoryLabel'}}</label>
+    </div>
+    {{/if}}
+  </div>
+  {{/if}}
+  {{!-- Roll triggers shown on chat cards --}}
+  {{#if (eq item.type 'gear')}}
+  <div class="sdm-counters sdm-triggers">
+    <header>
+      <strong>{{localize 'SDM.Trigger.Title'}}</strong>
+      {{#if @root.editable}}<a data-action="addTrigger"><i class="fa-solid fa-plus"></i> {{localize 'SDM.Trigger.New'}}</a>{{/if}}
+    </header>
+    {{#each system.triggers as |trigger index|}}
+    <div class="sdm-counter-row">
+      <select name="system.triggers.{{index}}.roll">{{selectOptions @root.triggerRolls selected=trigger.roll localize=true}}</select>
+      <select name="system.triggers.{{index}}.condition">{{selectOptions @root.triggerConditions selected=trigger.condition localize=true}}</select>
+      <input type="number" name="system.triggers.{{index}}.value" value="{{trigger.value}}" data-dtype="Number" />
+      <input class="sdm-counter-label" type="text" name="system.triggers.{{index}}.text" value="{{trigger.text}}" placeholder="{{localize 'SDM.Trigger.TextPlaceholder'}}" />
+      {{#if @root.editable}}<a data-action="removeTrigger" data-index="{{index}}" data-tooltip="{{localize 'SDM.Trigger.Remove'}}"><i class="fa-solid fa-trash"></i></a>{{/if}}
+    </div>
+    {{else}}
+    <p class="hint">{{localize 'SDM.Trigger.None'}}</p>
+    {{/each}}
+  </div>
+  {{/if}}
+  {{> ($$ "counters")}}
   <ol class='effects-list'>
     {{#each effects as |section sid|}}
     <li class='effects-header flexrow' data-effect-type='{{section.type}}'>
@@ -61,8 +104,6 @@
       <code>{{itemReference.reference}}</code>
       <a data-action="copyItemReference" data-tooltip="{{localize 'SDM.Effect.CopyItemReference'}}"><i class="fa-solid fa-copy"></i></a>
     </p>
-    <p>{{localize 'SDM.Effect.ItemReferenceHint' example=itemReference.example}}</p>
-    <p>{{localize 'SDM.Effect.ItemReferenceSelf' example=itemReference.selfExample}}</p>
   </div>
   {{/if}}
 </section>

@@ -65,6 +65,11 @@
       {{#if (and (eq trait.system.type 'skill') (gt trait.system.skill.modifier_final 0))}}
         (+{{trait.system.skill.modifier_final}})
       {{/if}}
+      {{!-- Counters: click +1, right-click −1 --}}
+      {{#each trait.system.counters as |counter key|}}
+        <a class="sdm-counter-chip ml-3" {{#if @root.editable}}data-action="stepItemCounter"{{/if}} data-key="{{key}}"
+          data-tooltip="{{localize 'SDM.Counter.RowHint' label=counter.label}}">{{counter.label}} {{counter.value}}</a>
+      {{/each}}
     </div>
   </div>
 </li>

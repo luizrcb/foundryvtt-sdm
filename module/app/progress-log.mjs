@@ -303,6 +303,25 @@ async function undoEntry(actor, entry) {
       if (index >= 0) notes.splice(index, 1);
       await item.update({ 'system.hallmark.upgrade_notes': notes });
     }
+    if (entry.power) {
+      // The power it added (the last one with that name), and the slot or the album it added
+      const powers = foundry.utils.duplicate(item._source.system.powers ?? []);
+      const index = powers.map(p => p.name).lastIndexOf(entry.power.name);
+      if (index >= 0) powers.splice(index, 1);
+      const names = [...(item.getFlag('sdm', 'hallmarkPowers') ?? [])];
+      const nameIndex = names.lastIndexOf(entry.power.name);
+      if (nameIndex >= 0) names.splice(nameIndex, 1);
+      const update = {
+        'system.powers': powers,
+        'system.max_powers': entry.power.prevMaxPowers,
+        'system.powers_current_index': 0,
+        'flags.sdm.hallmarkPowers': names
+      };
+      if (entry.power.addedAlbum) {
+        update['system.features'] = [...(item._source.system.features ?? [])].filter(f => f !== 'album');
+      }
+      await item.update(update);
+    }
     if (entry.feature) {
       // Only the feature this upgrade added
       const gained = [...(item.getFlag('sdm', 'hallmarkFeatures') ?? [])];

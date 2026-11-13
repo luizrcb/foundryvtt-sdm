@@ -1,13 +1,42 @@
 {
   "folder": "tLvgPuOavb2UJGYr",
   "name": "Plug-In Chimeric",
-  "type": "gear",
+  "type": "mount",
   "_id": "snKpNMDU1l9ImWwv",
   "img": "icons/magic/lightning/projectile-orb-blue.webp",
   "system": {
     "readied": false,
+    "categories": [
+      "yellowlander",
+      "vehicle"
+    ],
     "status": "",
     "resources": "",
+    "charges": {
+      "value": 0,
+      "max": 0
+    },
+    "replenish": {
+      "value": 0
+    },
+    "area": {
+      "value": ""
+    },
+    "range": {
+      "value": ""
+    },
+    "flare": {
+      "value": 0
+    },
+    "pocket": {
+      "value": 0
+    },
+    "draining": {
+      "value": 0
+    },
+    "resistant": {
+      "value": ""
+    },
     "cost": 550,
     "cost_frequency": "",
     "description": "<p>Hybrid burdenbeast with a dome head and electric discharge.</p><p>L5, capacity 3</p>",
@@ -16,7 +45,9 @@
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "grazer"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -27,57 +58,20 @@
       "morale": 2,
       "defense": 7,
       "bonus": 1,
-      "damage": "1d4"
+      "damage": "1d4",
+      "capacity": 1
     },
     "is_hallmark": false,
     "hallmark": {
       "level": 0,
       "experience": "0"
     },
-    "type": "",
-    "starting_kit": false,
-    "is_supply": false,
-    "supply_type": "",
-    "packed_remaining_items": 10,
-    "power": {
-      "img": "icons/svg/book.svg",
-      "name": "",
-      "description": "",
-      "level": 1,
-      "range": "",
-      "target": "",
-      "duration": "",
-      "overcharge": "",
-      "roll_formula": "",
-      "overcharge_roll_formula": ""
-    },
-    "powers_current_index": 0,
-    "max_powers": 3,
-    "powers": [],
-    "armor": {
-      "value": 0,
-      "type": "",
-      "cumbersome": false,
-      "powered": null
-    },
-    "ward": {
-      "value": 0,
-      "type": "",
-      "armor": 0
-    },
-    "weapon": {
-      "damage": {
-        "base": "1d4",
-        "versatile": "1d4",
-        "bonus": ""
-      },
-      "range": "",
-      "versatile": false
-    },
-    "categories": [
-      "yellowlander",
-      "vehicle"
-    ]
+    "level": 5,
+    "supply": "2",
+    "capacity": 3,
+    "speed": 0,
+    "pull_vehicle_id": "",
+    "pull_mode": ""
   },
   "effects": [],
   "sort": 0,

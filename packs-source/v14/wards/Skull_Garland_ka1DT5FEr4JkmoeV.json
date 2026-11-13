@@ -8,7 +8,7 @@
     "readied": false,
     "cost": 50,
     "cost_frequency": "",
-    "description": "<p>Add a friend's skull to boost bonuses by +1!</p>",
+    "description": "<p>Add a friend's skull to boost bonuses by +1!</p><p><em>(count the skulls in the <strong>Skulls</strong> counter: +1 ward each)</em></p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -75,9 +75,65 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": ""
+    "supply_type": "",
+    "counters": {
+      "skulls": {
+        "label": "Skulls",
+        "value": 0,
+        "max": null,
+        "reset_value": 0,
+        "reset_on_combat_end": false
+      }
+    }
   },
-  "effects": [],
+  "effects": [
+    {
+      "name": "Skull Garland",
+      "origin": "Compendium.sdm.wards.Item.ka1DT5FEr4JkmoeV",
+      "img": "icons/commodities/bones/skull-hollow-grey.webp",
+      "_id": "XLiTGI6C0vyzFT0b",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.ward.value",
+            "value": "@item.counters.skulls.value",
+            "priority": null,
+            "type": "add",
+            "phase": "initial"
+          }
+        ]
+      },
+      "disabled": false,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": false,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.353",
+        "systemId": "sdm",
+        "systemVersion": "0.4.5",
+        "createdTime": 1760377001848,
+        "modifiedTime": 1760377030362,
+        "lastModifiedBy": "XnQAppzUXfkn5LcX"
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!ka1DT5FEr4JkmoeV.XLiTGI6C0vyzFT0b"
+    }
+  ],
   "sort": 0,
   "ownership": {
     "default": 0,

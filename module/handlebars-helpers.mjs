@@ -1,7 +1,8 @@
 import { SizeUnit } from './helpers/constants.mjs';
 import { $l10n, formatNumber, toPascalCase } from './helpers/globalUtils.mjs';
-import { convertToSacks, getWealthFromItems, hasPowerAlbum } from './helpers/itemUtils.mjs';
+import { convertToSacks, getRowRolls, getWealthFromItems, hasPowerAlbum } from './helpers/itemUtils.mjs';
 import { getHallmarkUpgradeSummary } from './app/level-upgrades.mjs';
+import { isLightSource, isLit } from './helpers/lights.mjs';
 
 export function registerHandlebarsHelpers() {
   const $$ = (name, fn) => Handlebars.registerHelper(name, fn);
@@ -15,34 +16,17 @@ export function registerHandlebarsHelpers() {
     return hasPowerAlbum(item);
   });
 
-  /**
-   * Rolls of an inventory row: the item's subtype owns the image (weapon damage, power, power
-   * album); features add small icons (weapon feature: damage, album feature: its powers). Gear with
-   * no subtype roll uses its first feature roll as the image.
-   * Returns { image: 'damage'|'power'|'power_album'|null, icons: [...] } (nothing when it can't roll).
-   */
-  const rowRolls = (item, actorType, editable) => {
-    const none = { image: null, icons: [] };
-    const system = item?.system;
-    if (!system || !editable || actorType === 'caravan') return none;
-    if (system.status === 'broken' || system.resources === 'run_out' || system.size?.unit === 'cash') return none;
-    if (!system.readied) return none;
-    const has = feature => !!system.features?.has?.(feature);
-    const canDamage = (system.type === 'weapon' || has('weapon')) && !!system.weapon?.damage?.base;
-    const canAlbum = hasPowerAlbum(item) && (system.powers?.length ?? 0) > 0;
+  // Gear that lights its bearer's token (light category or glowing feature)
+  $$('sdmIsLight', item => isLightSource(item));
+  // Counters: reset each round / turn of a combat
+  $$('sdmCounterResetChoices', () => ({
+    '': 'SDM.Counter.ResetEachNone',
+    round: 'SDM.Counter.ResetEachRound',
+    turn: 'SDM.Counter.ResetEachTurn'
+  }));
+  $$('sdmIsLit', item => isLit(item));
 
-    let image = null;
-    if (system.type === 'weapon') image = canDamage ? 'damage' : null;
-    else if (system.type === 'power') image = 'power';
-    else if (system.type === 'power_album') image = canAlbum ? 'power_album' : null;
-    else if (canDamage) image = 'damage';
-    else if (canAlbum) image = 'power_album';
-
-    const icons = [];
-    if (canDamage && image !== 'damage') icons.push('damage');
-    if (canAlbum && image !== 'power_album') icons.push('power_album');
-    return { image, icons };
-  };
+  const rowRolls = (item, actorType, editable) => getRowRolls(item, actorType, editable);
   $$('sdmRowImage', (item, actorType, editable) => rowRolls(item, actorType, editable).image);
   $$('sdmRowIcons', (item, actorType, editable) => rowRolls(item, actorType, editable).icons);
 

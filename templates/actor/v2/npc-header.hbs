@@ -12,6 +12,7 @@
         <label class="v2-label" for="v2-name-{{actor.id}}">{{localize 'SDM.FieldName'}}</label>
         <input id="v2-name-{{actor.id}}" class="v2-title" name="name" type="text" value="{{actor.name}}"
           placeholder="{{localize 'SDM.FieldName'}}" />
+        {{> ($$ "actor/counter-chips")}}
       </div>
       <div class="v2-chips">
         <div class="v2-chip">
@@ -32,7 +33,7 @@
     {{! Combat stats }}
     <div class="v2-npc-stats">
       <div class="v2-card v2-life">
-        <span class="v2-card-title">{{localize 'SDM.FieldLifeMax'}}</span>
+        <span class="v2-card-title">{{localize 'SDM.FieldLifeMax'}} {{#if @root.editable}}<a class="sdm-rest-button" data-action="restActor" data-tooltip="{{localize 'SDM.Rest.Tooltip'}}"><i class="fa-solid fa-bed"></i></a>{{/if}}</span>
         <div class="v2-life-row">
           <input class="v2-big" type="text" name="system.life.value" value="{{system.life.value}}" data-dtype="Number"
             data-tooltip="{{localize 'SDM.FieldLife'}}" />

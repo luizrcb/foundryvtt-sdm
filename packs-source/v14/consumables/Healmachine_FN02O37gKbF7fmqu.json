@@ -14,7 +14,9 @@
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "consumable"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -77,7 +79,11 @@
     "categories": [
       "healing",
       "machine"
-    ]
+    ],
+    "use": {
+      "life": "2d8",
+      "ability": ""
+    }
   },
   "effects": [],
   "sort": 200000,

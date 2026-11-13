@@ -1,3 +1,4 @@
+import { ACTOR_COUNTER_ACTIONS, getCounters } from '../helpers/counters.mjs';
 import CompendiumBrowser from '../app/compendium-browser.mjs';
 import TokenPlacement from '../canvas/token-placement.mjs';
 import { makeNpcFriendly } from '../items/petItem.mjs';
@@ -58,6 +59,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       resizable: true
     },
     actions: {
+      ...ACTOR_COUNTER_ACTIONS,
       createDoc: this._createAndViewDoc,
       deleteDoc: this._deleteDoc,
       onEditImage: this._onEditImage,
@@ -376,6 +378,9 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
         break;
       case 'effects':
         context.tab = context.tabs[partId];
+        // The actor's own counters (managed at the top of the Effects tab)
+        context.counters = getCounters(this.actor);
+        context.counterScope = '@actor';
         // Prepare active effects
         context.effects = prepareActiveEffectCategories(
           // A generator that returns all effects stored on the actor

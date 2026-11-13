@@ -64,7 +64,25 @@
       "resistance",
       "poison",
       "mental"
-    ]
+    ],
+    "counters": {
+      "restore": {
+        "label": "Restore used (session)",
+        "value": 0,
+        "max": 1,
+        "reset_value": 0,
+        "reset_on_combat_end": false,
+        "reset_each": ""
+      },
+      "poison": {
+        "label": "Poison/fear used (session)",
+        "value": 0,
+        "max": 1,
+        "reset_value": 0,
+        "reset_on_combat_end": false,
+        "reset_each": ""
+      }
+    }
   },
   "effects": [],
   "sort": 0,

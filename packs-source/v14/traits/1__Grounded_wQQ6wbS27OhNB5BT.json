@@ -10,7 +10,7 @@
     "resources": "",
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p>A solid life has left you able to shrug off the slings and arrows of outrageous misfortune. Gain +1 aura or thought. </p><p>Also, remove 1 additional mental burden when you rest.</p>",
+    "description": "<p>A solid life has left you able to shrug off the slings and arrows of outrageous misfortune. Gain +1 aura or thought. </p><p><em>(enable the <strong>Grounded</strong> active effect of your choice)</em></p><p>Also, remove 1 additional mental burden when you rest.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -67,25 +67,18 @@
   },
   "effects": [
     {
-      "name": "Grounded",
+      "name": "Grounded (aura)",
       "origin": "Compendium.sdm.traits.Item.wQQ6wbS27OhNB5BT",
       "img": "icons/magic/holy/yin-yang-balance-symbol.webp",
-      "_id": "Pu8imfjUIhEowuQO",
+      "_id": "iwdfxsNloYsE3JXa",
       "type": "base",
       "system": {
         "changes": [
           {
             "key": "system.abilities.aur.bonus",
-            "type": "add",
             "value": 1,
-            "priority": 20,
-            "phase": "initial"
-          },
-          {
-            "key": "system.abilities.tho.bonus",
+            "priority": null,
             "type": "add",
-            "value": 1,
-            "priority": 20,
             "phase": "initial"
           }
         ]
@@ -109,15 +102,61 @@
         "exportSource": null,
         "coreVersion": "14.353",
         "systemId": "sdm",
-        "systemVersion": "0.6.2",
-        "createdTime": 1760364429999,
-        "modifiedTime": 1769004708747,
-        "lastModifiedBy": "6KLfb35TARh0OlRZ"
+        "systemVersion": "0.4.5",
+        "createdTime": 1760377001848,
+        "modifiedTime": 1760377030362,
+        "lastModifiedBy": "XnQAppzUXfkn5LcX"
       },
       "showIcon": 1,
       "folder": null,
       "start": null,
-      "_key": "!items.effects!wQQ6wbS27OhNB5BT.Pu8imfjUIhEowuQO"
+      "_key": "!items.effects!wQQ6wbS27OhNB5BT.iwdfxsNloYsE3JXa"
+    },
+    {
+      "name": "Grounded (thought)",
+      "origin": "Compendium.sdm.traits.Item.wQQ6wbS27OhNB5BT",
+      "img": "icons/magic/holy/yin-yang-balance-symbol.webp",
+      "_id": "QYZWAActCTvJS92N",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.abilities.tho.bonus",
+            "value": 1,
+            "priority": null,
+            "type": "add",
+            "phase": "initial"
+          }
+        ]
+      },
+      "disabled": true,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.353",
+        "systemId": "sdm",
+        "systemVersion": "0.4.5",
+        "createdTime": 1760377001848,
+        "modifiedTime": 1760377030362,
+        "lastModifiedBy": "XnQAppzUXfkn5LcX"
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!wQQ6wbS27OhNB5BT.QYZWAActCTvJS92N"
     }
   ],
   "sort": 0,

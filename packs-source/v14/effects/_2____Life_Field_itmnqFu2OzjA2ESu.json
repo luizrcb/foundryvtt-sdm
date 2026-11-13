@@ -7,7 +7,14 @@
   "system": {
     "changes": [
       {
-        "key": "system.life.bonus",
+        "key": "system.temporary_life.enabled",
+        "type": "override",
+        "value": true,
+        "priority": null,
+        "phase": "initial"
+      },
+      {
+        "key": "system.temporary_life.max",
         "type": "add",
         "value": "max(5, @item.system.hallmark.level)",
         "priority": null,

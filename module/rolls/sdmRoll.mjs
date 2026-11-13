@@ -1,3 +1,5 @@
+import { powerCardData } from '../helpers/singleUsePowers.mjs';
+import { attackTriggers, damageTriggers, renderTriggers } from './triggers.mjs';
 import { createChatMessage } from '../helpers/chatUtils.mjs';
 import { ActorType, AttackTarget, RollMode, RollType } from '../helpers/constants.mjs';
 import { $l10n, capitalizeFirstLetter, toPascalCase } from '../helpers/globalUtils.mjs';
@@ -93,6 +95,10 @@ export default class SDMRoll {
     } else {
       flags['sdm.isTraitRoll'] = true;
     }
+
+    // A cast power's card carries the power, to catch it by dragging the card into an album
+    const castPower = (isPower || isPowerAlbum) && this.item ? powerCardData(this.item) : null;
+    if (castPower) flags.sdm = { ...(flags.sdm ?? {}), power: castPower };
 
     const attackMapping = {
       [AttackTarget.PHYSICAL]: {
@@ -201,6 +207,14 @@ export default class SDMRoll {
       content += powerCard;
     }
 
+    // Roll triggers: natural results on attacks (readied gear), damage results of the item
+    const firedTriggers = isAttack
+      ? attackTriggers(this.actor, this.roll)
+      : isDamage && this.item
+        ? damageTriggers(this.item, this.roll)
+        : [];
+    content += renderTriggers(firedTriggers);
+
     const chatDataMessage = {
       actor: this.actor,
       rolls: [this.roll],
@@ -224,8 +238,13 @@ export default class SDMRoll {
       }
     }
 
-    if (isDamage && this.item && this.item?.system?.features?.has('replenish')) {
-      await this.item.usageRoll(this.item.system.replenish?.value);
+    if (
+      isDamage &&
+      this.item &&
+      this.item?.system?.features?.has('replenish') &&
+      this.item.system.replenish?.on_attack !== false
+    ) {
+      await this.item.spendUsage();
     }
   }
 
@@ -346,7 +365,7 @@ export default class SDMRoll {
     if (diceModifiers) parts.push(`(${diceModifiers})`);
     if (fixedModifiers) parts.push(`(${fixedModifiers >= 0 ? '+' : ''}${fixedModifiers})`);
     if (rollMode) parts.push(`(${rollMode})`);
-    if (this.multiplier) parts.push(`(${damageMultiplier[this.multiplier]})`);
+    if (this.multiplier) parts.push(`(${damageMultiplier[this.multiplier] ?? `${this.multiplier}`.replace('*', 'x')})`);
     if (this.type === RollType.DAMAGE && this.explodingDice) parts.push(`(d*)`);
 
     const flavor = parts.join(' ');

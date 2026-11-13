@@ -81,7 +81,15 @@
     "categories": [
       "mental",
       "damage"
-    ]
+    ],
+    "boost": {
+      "enabled": true,
+      "resource": "aur",
+      "cost": "1",
+      "multiplier": 3,
+      "extra": "",
+      "mandatory": false
+    }
   },
   "effects": [],
   "sort": 800000,

@@ -2,7 +2,7 @@ import TokenPlacement from '../canvas/token-placement.mjs';
 import { getNPCDataByLevel, getNpcTableChoices, NPC_CUSTOM_TABLE, NPC_TABLE_KEYS } from './actorUtils.mjs';
 import { ActorType, GearType, ItemStatusType, ItemType } from './constants.mjs';
 import { $fmt, $l10n } from './globalUtils.mjs';
-import { hasPowerAlbum } from './itemUtils.mjs';
+import { hasPowerAlbum, lastChargeUpdate } from './itemUtils.mjs';
 
 /**
  * Animated items: an item with the "animated" feature can come to life as an NPC.
@@ -506,7 +506,11 @@ export async function animateItem(item, { app } = {}) {
   };
   // Animating spends the configured charges (souls, energy…)
   const chargeCost = getAnimationChargeCost(item);
-  if (chargeCost > 0) update['system.charges.value'] = (Number(item.system.charges?.value) || 0) - chargeCost;
+  if (chargeCost > 0) {
+    const charges = (Number(item.system.charges?.value) || 0) - chargeCost;
+    update['system.charges.value'] = charges;
+    Object.assign(update, lastChargeUpdate(item, charges));
+  }
   if (item.system.animation.mode === 'walks') update['system.readied'] = false;
   await item.update(update, { [SYNC_OPTION]: true });
 
@@ -669,7 +673,38 @@ export async function applyAnimatedWear(npc) {
 export function setupAnimatedItems() {
   Hooks.on('renderTokenHUD', onRenderTokenHUD);
   Hooks.on('deleteCombat', onCombatEnded);
+  Hooks.on('deleteItem', onAnimatedItemDeleted);
   game.socket.on(CHANNEL, onSocketMessage);
+}
+
+/** Any item (world, actors, unlinked tokens) still pointing at this creature. */
+function isNpcStillLinked(npcUuid, deletedId) {
+  const points = item => item.id !== deletedId && item.system?.animation?.actor === npcUuid;
+  if (game.items.some(points)) return true;
+  if (game.actors.some(actor => actor.items.some(points))) return true;
+  return game.scenes.some(scene =>
+    scene.tokens.some(token => !token.actorLink && token.actor?.items?.some(points))
+  );
+}
+
+/**
+ * The item of an animated creature was deleted: its creature goes too (its tokens on every scene
+ * and its actor). Skipped when another item still uses the creature (e.g. the item was moved to
+ * another actor, which copies it first).
+ */
+async function onAnimatedItemDeleted(item) {
+  if (game.users.activeGM?.id !== game.user.id) return;
+  const npcUuid = item.system?.animation?.actor;
+  if (!npcUuid) return;
+  const npc = fromUuidSync(npcUuid);
+  if (npc?.documentName !== 'Actor' || npc.getFlag('sdm', FLAG) !== item.uuid) return;
+  if (isNpcStillLinked(npcUuid, item.id)) return;
+  for (const scene of game.scenes) {
+    const ids = scene.tokens.filter(token => token.actorId === npc.id).map(token => token.id);
+    if (ids.length) await scene.deleteEmbeddedDocuments('Token', ids);
+  }
+  await npc.delete();
+  ui.notifications.info($fmt('SDM.Animation.CreatureRemoved', { name: npc.name, item: item.name }));
 }
 
 /** Creatures set to "end with combat" turn back into their items when the combat ends. */

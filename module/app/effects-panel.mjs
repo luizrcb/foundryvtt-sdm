@@ -34,7 +34,12 @@ export default class SdmEffectsPanel extends HandlebarsApplicationMixin(Applicat
   /** Whether an effect belongs in the panel. */
   static isDisplayed(effect) {
     if (effect.disabled) return false;
-    return effect.isTemporary || effect.statuses?.size > 0 || !!effect.duration?.expired;
+    return (
+      effect.isTemporary ||
+      !!effect.getFlag?.('sdm', 'temporary') ||
+      effect.statuses?.size > 0 ||
+      !!effect.duration?.expired
+    );
   }
 
   async _prepareContext(options) {

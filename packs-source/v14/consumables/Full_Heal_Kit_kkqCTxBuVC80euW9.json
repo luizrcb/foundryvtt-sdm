@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 300,
     "cost_frequency": "",
-    "description": "<p>The wide-spectrum regenerators rebuild a lost limb in mere minutes. OTA upgrades available for rebuilding additional organs.</p>",
+    "description": "<p>The wide-spectrum regenerators rebuild a lost limb in mere minutes. OTA upgrades available for rebuilding additional organs.</p><p><em>Use: restores all missing life. Rebuilding a lost limb (or an organ, with upgrades) removes that burden: the Referee removes it by hand.</em></p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "consumable"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -79,7 +81,11 @@
       "healing",
       "burden",
       "affliction"
-    ]
+    ],
+    "use": {
+      "life": "full",
+      "ability": ""
+    }
   },
   "effects": [],
   "sort": 400000,

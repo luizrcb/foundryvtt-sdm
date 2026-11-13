@@ -81,7 +81,15 @@
     "supply_type": "",
     "replenish": {
       "value": 4
-    }
+    },
+    "triggers": [
+      {
+        "roll": "damage",
+        "condition": "total",
+        "value": 13,
+        "text": "Target mech shuts down for an hour"
+      }
+    ]
   },
   "effects": [],
   "sort": 1500000,

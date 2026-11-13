@@ -82,7 +82,15 @@
     "supply_type": "",
     "replenish": {
       "value": 5
-    }
+    },
+    "triggers": [
+      {
+        "roll": "damage",
+        "condition": "max",
+        "value": 0,
+        "text": "Give the target's soul one direct command (save vs extreme commands)"
+      }
+    ]
   },
   "effects": [],
   "sort": 0,

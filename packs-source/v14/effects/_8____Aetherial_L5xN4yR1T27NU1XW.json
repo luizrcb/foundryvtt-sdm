@@ -7,9 +7,9 @@
   "system": {
     "changes": [
       {
-        "key": "system.description",
+        "key": "system.mental_defense_bonus",
         "type": "add",
-        "value": "<p>Also grants its defense against noöspheric attacks, ghosts, and ultras.</p>",
+        "value": "@item.system.armor.value",
         "priority": null,
         "phase": "initial"
       }
@@ -29,7 +29,7 @@
   "description": "<p>Also grants its defense against noöspheric attacks, ghosts, and ultras.</p><p><strong>Mod Cost</strong>: $800</p>",
   "origin": null,
   "tint": "#ffffff",
-  "transfer": false,
+  "transfer": true,
   "statuses": [],
   "showIcon": 1,
   "sort": 300000,

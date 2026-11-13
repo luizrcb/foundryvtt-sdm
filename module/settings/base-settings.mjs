@@ -14,6 +14,7 @@ export default class BaseSettingsConfig extends HandlebarsApplicationMixin(Appli
 
   static DEFAULT_OPTIONS = {
     tag: 'form',
+    classes: ['sdm-settings-menu'],
     window: { contentClasses: ['standard-form'], resizable: true },
     position: { width: 960 },
     form: { closeOnSubmit: true, submitOnChange: false },
@@ -40,6 +41,25 @@ export default class BaseSettingsConfig extends HandlebarsApplicationMixin(Appli
 
   static get ALL_KEYS() {
     return this.KEYS;
+  }
+
+  /** Sections collapse by clicking their title (kept while the menu is open). */
+  _onRender(context, options) {
+    super._onRender?.(context, options);
+    this._collapsedSections ??= new Set();
+    this.element.querySelectorAll('fieldset.sdm-config > legend').forEach((legend, index) => {
+      const fieldset = legend.parentElement;
+      const key = legend.textContent.trim() || String(index);
+      fieldset.classList.toggle('collapsed', this._collapsedSections.has(key));
+      if (legend.dataset.sdmCollapsible) return;
+      legend.dataset.sdmCollapsible = '1';
+      legend.insertAdjacentHTML('afterbegin', '<i class="fa-solid fa-chevron-down sdm-collapse-icon" inert></i>');
+      legend.addEventListener('click', () => {
+        const collapsed = fieldset.classList.toggle('collapsed');
+        if (collapsed) this._collapsedSections.add(key);
+        else this._collapsedSections.delete(key);
+      });
+    });
   }
 
   async _preparePartContext(partId, context, options) {

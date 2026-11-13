@@ -3,6 +3,7 @@ import { $l10n, capitalizeFirstLetter, getDefaultAbility } from '../helpers/glob
 import ArmorDataModel from './armor-data.mjs';
 import SdmItemBase from './base-item.mjs';
 import PowerDataModel from './power-data.mjs';
+import { defineLightField } from './light-field.mjs';
 import WardDataModel from './ward_data.mjs';
 import WeaponDataModel from './weapon-data.mjs';
 
@@ -49,6 +50,45 @@ export default class SdmGear extends SdmItemBase {
     schema.starting_kit = new fields.BooleanField({ required: true, initial: false });
 
     schema.is_supply = new fields.BooleanField({ required: true, initial: false });
+
+    // Roll triggers shown on chat cards ("Stuns on natural 13", "Max damage: corrupted")
+    schema.triggers = new fields.ArrayField(
+      new fields.SchemaField({
+        roll: new fields.StringField({ required: true, blank: false, initial: 'attack', choices: ['attack', 'damage'] }),
+        condition: new fields.StringField({
+          required: true,
+          blank: false,
+          initial: 'natural',
+          choices: ['natural', 'total', 'die', 'max', 'min', 'matching']
+        }),
+        value: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 13 }),
+        text: new fields.StringField({ required: true, blank: true, initial: '' })
+      })
+    );
+
+    // Pay to boost the damage (Piezo Mace: spend 1d6 life for x2). Mandatory: paid on every damage roll.
+    schema.boost = new fields.SchemaField({
+      enabled: new fields.BooleanField({ initial: false }),
+      resource: new fields.StringField({
+        required: true,
+        blank: false,
+        initial: 'life',
+        choices: ['life', 'str', 'end', 'agi', 'cha', 'aur', 'tho', 'hero_die']
+      }),
+      cost: new fields.StringField({ required: true, blank: true, initial: '1' }),
+      multiplier: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 2, min: 0 }),
+      extra: new fields.StringField({ required: true, blank: true, initial: '' }),
+      mandatory: new fields.BooleanField({ initial: false })
+    });
+
+    // Consumables (feature "consumable"): what "Use" restores (formulas) on its targets;
+    // its effects are copied onto them (and do not apply while it is only carried)
+    schema.use = new fields.SchemaField({
+      life: new fields.StringField({ required: true, blank: true, initial: '' }),
+      ability: new fields.StringField({ required: true, blank: true, initial: '' })
+    });
+    // Token light (light category or glowing feature): a preset, or custom radii in grid squares
+    schema.light = defineLightField();
     schema.supply_type = new fields.StringField({
       required: true,
       blank: true,
@@ -128,7 +168,18 @@ export default class SdmGear extends SdmItemBase {
   /** @inheritDoc */
   static _migrateData(source) {
     SdmGear.#migrateRange(source);
+    SdmGear.#migrateConsumable(source);
     SdmGear.#migrateFeatures(source);
+  }
+
+  /** "Usable" used to be a checkbox: it is the consumable feature now. */
+  static #migrateConsumable(source) {
+    if (!source.use || source.use.enabled === undefined) return;
+    if (source.use.enabled) {
+      const features = Array.isArray(source.features) ? source.features : [];
+      if (!features.includes('consumable')) source.features = [...features, 'consumable'];
+    }
+    delete source.use.enabled;
   }
 
   /**

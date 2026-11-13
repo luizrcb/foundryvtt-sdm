@@ -80,7 +80,15 @@
     "supply_type": "",
     "replenish": {
       "value": 5
-    }
+    },
+    "triggers": [
+      {
+        "roll": "attack",
+        "condition": "natural",
+        "value": 7,
+        "text": "Paroxysms for 1 round"
+      }
+    ]
   },
   "effects": [],
   "sort": 900000,

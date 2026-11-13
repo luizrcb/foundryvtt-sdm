@@ -10,6 +10,7 @@
       <div class="v2-field v2-company">
         <label class="v2-label" for="v2-name-{{actor.id}}">{{localize 'SDM.FieldCompany'}}</label>
         <input id="v2-name-{{actor.id}}" class="v2-title" name="name" type="text" value="{{actor.name}}" />
+        {{> ($$ "actor/counter-chips")}}
       </div>
       <div class="v2-caravan-sub">
         <label class="v2-field">

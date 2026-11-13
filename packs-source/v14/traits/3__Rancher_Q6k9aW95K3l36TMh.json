@@ -10,7 +10,7 @@
     "resources": "",
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p>You know how to keep herds well-oiled and charged, manage shepherds and dogs, ride solar steeds, spot water holes, and rustle burden beasts. Gain 1 strength or charisma.</p><p><em>(use the <strong>Rancher</strong> active effect to add the strenght or charisma bonus)</em></p>",
+    "description": "<p>You know how to keep herds well-oiled and charged, manage shepherds and dogs, ride solar steeds, spot water holes, and rustle burden beasts. Gain 1 strength or charisma.</p><p><em>(enable the <strong>Rancher</strong> active effect of your choice)</em></p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -67,23 +67,16 @@
   },
   "effects": [
     {
-      "name": "Rancher",
+      "name": "Rancher (strength)",
       "origin": "Compendium.sdm.traits.Item.Q6k9aW95K3l36TMh",
       "img": "icons/environment/settlement/house-farmland.webp",
-      "_id": "U3KAyGU2ZUMsfPzA",
+      "_id": "63vQdD9ovknfHs4x",
       "type": "base",
       "system": {
         "changes": [
           {
             "key": "system.abilities.str.bonus",
-            "value": 0,
-            "priority": null,
-            "type": "add",
-            "phase": "initial"
-          },
-          {
-            "key": "system.abilities.cha.bonus",
-            "value": 0,
+            "value": 1,
             "priority": null,
             "type": "add",
             "phase": "initial"
@@ -117,7 +110,53 @@
       "showIcon": 1,
       "folder": null,
       "start": null,
-      "_key": "!items.effects!Q6k9aW95K3l36TMh.U3KAyGU2ZUMsfPzA"
+      "_key": "!items.effects!Q6k9aW95K3l36TMh.63vQdD9ovknfHs4x"
+    },
+    {
+      "name": "Rancher (charisma)",
+      "origin": "Compendium.sdm.traits.Item.Q6k9aW95K3l36TMh",
+      "img": "icons/environment/settlement/house-farmland.webp",
+      "_id": "tdw2AqoP9c2ZM7ch",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.abilities.cha.bonus",
+            "value": 1,
+            "priority": null,
+            "type": "add",
+            "phase": "initial"
+          }
+        ]
+      },
+      "disabled": true,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.353",
+        "systemId": "sdm",
+        "systemVersion": "0.4.5",
+        "createdTime": 1760377001848,
+        "modifiedTime": 1760377030362,
+        "lastModifiedBy": "XnQAppzUXfkn5LcX"
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!Q6k9aW95K3l36TMh.tdw2AqoP9c2ZM7ch"
     }
   ],
   "sort": 0,

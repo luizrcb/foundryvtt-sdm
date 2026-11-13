@@ -84,7 +84,15 @@
     },
     "area": {
       "value": "small"
-    }
+    },
+    "triggers": [
+      {
+        "roll": "attack",
+        "condition": "natural",
+        "value": 2,
+        "text": "One target's skull folds in on itself instead"
+      }
+    ]
   },
   "effects": [],
   "sort": 1100000,

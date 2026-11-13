@@ -8,13 +8,15 @@
     "readied": false,
     "cost": 1,
     "cost_frequency": "",
-    "description": "<p>A popular energy drink. Grants +[[/r 1d4]] life, but makes you a little annoying.</p><p>Weakly addictive—withdrawal causes pissy, grouchy, and unfocused behavior.</p><p><em>(edit and use the active effect to grant bonus life)</em></p>",
+    "description": "<p>A popular energy drink. Grants +[[/r 1d4]] life, but makes you a little annoying.</p><p>Weakly addictive—withdrawal causes pissy, grouchy, and unfocused behavior.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "soaps"
     },
-    "features": [],
+    "features": [
+      "consumable"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -77,54 +79,13 @@
     "categories": [
       "healing",
       "drug"
-    ]
-  },
-  "effects": [
-    {
-      "name": "+ life",
-      "origin": "Compendium.sdm.equipment.Item.ggUAeAA9W7BYMU2e",
-      "img": "icons/magic/life/heart-cross-purple-orange.webp",
-      "_id": "3lgy5VuySxyQVWcV",
-      "type": "base",
-      "system": {
-        "changes": [
-          {
-            "key": "system.life.bonus",
-            "value": 0,
-            "priority": null,
-            "type": "add",
-            "phase": "initial"
-          }
-        ]
-      },
-      "disabled": false,
-      "duration": {
-        "value": null,
-        "units": "seconds",
-        "expiry": null,
-        "expired": false
-      },
-      "description": "",
-      "tint": "#ffffff",
-      "transfer": true,
-      "statuses": [],
-      "sort": 0,
-      "flags": {},
-      "_stats": {
-        "compendiumSource": null,
-        "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "14.353",
-        "systemId": "sdm",
-        "systemVersion": "0.5.4",
-        "lastModifiedBy": null
-      },
-      "showIcon": 1,
-      "folder": null,
-      "start": null,
-      "_key": "!items.effects!ggUAeAA9W7BYMU2e.3lgy5VuySxyQVWcV"
+    ],
+    "use": {
+      "life": "1d4",
+      "ability": ""
     }
-  ],
+  },
+  "effects": [],
   "sort": 0,
   "ownership": {
     "default": 0,

@@ -425,22 +425,25 @@ export async function renderUsageResult(
 ) {
   // Determine outcome and message
   let outcome, message;
-  if (roll._total === 13) {
-    outcome = $l10n('SDM.ItemStatusRunningLow');
-    message = $l10n('SDM.DepletedResources');
-  } else if (roll._total > target) {
-    outcome = $l10n('SDM.ItemStatusHaveEnough');
-    message = $l10n('SDM.ResourcesKeepUsing');
-  } else {
+  // A natural 13 always means one use left, even when the replenish score is 13 or higher
+  const runningLow = roll._total === 13;
+  const failed = !runningLow && roll._total <= target;
+  if (failed) {
     outcome = $l10n('SDM.ItemStatusRunOut');
     message = $l10n('SDM.AllResourcesDepleted');
+  } else if (runningLow) {
+    outcome = $l10n('SDM.ItemStatusRunningLow');
+    message = $l10n('SDM.DepletedResources');
+  } else {
+    outcome = $l10n('SDM.ItemStatusHaveEnough');
+    message = $l10n('SDM.ResourcesKeepUsing');
   }
 
   let borderColor = '#aa0200';
 
-  if (roll._total === 13) {
+  if (runningLow) {
     borderColor = '#d4af37';
-  } else if (roll._total > target) {
+  } else if (!failed) {
     borderColor = '#18520B';
   }
 

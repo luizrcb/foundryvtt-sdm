@@ -72,6 +72,24 @@ export default class SdmCharacter extends SdmActorBase {
       initial: false
     });
 
+    // Extra sacks this character fits on a caravan's boats (Boatmaster: its level)
+    schema.boat_capacity_bonus = new fields.NumberField({
+      ...requiredInteger,
+      initial: 0
+    });
+
+    // Steps the Unarmed Damage item's dice go up (Ur-War Program: one step, 1d3 → 1d4)
+    schema.unarmed_damage_steps = new fields.NumberField({
+      ...requiredInteger,
+      initial: 0
+    });
+
+    // Defense per stone of readied armor (Armorborn, Redlander: +1 each, they stack)
+    schema.armor_stone_defense = new fields.NumberField({
+      ...requiredInteger,
+      initial: 0
+    });
+
     schema.defense = new fields.NumberField({
       ...requiredInteger,
       initial: 0

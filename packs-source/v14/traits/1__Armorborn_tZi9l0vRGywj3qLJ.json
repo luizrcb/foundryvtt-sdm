@@ -10,7 +10,7 @@
     "resources": "",
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p>Any armor you wear occupies no inventory space. Armor gives you a defense bonus equal to its size in stones.</p><p><em>(create an active effect on your armor items to add a defense_bonus iqual to it's size in stones)</em></p>",
+    "description": "<p>Any armor you wear occupies no inventory space. Armor gives you a defense bonus equal to its size in stones.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -78,6 +78,13 @@
             "value": true,
             "priority": null,
             "type": "override",
+            "phase": "initial"
+          },
+          {
+            "key": "system.armor_stone_defense",
+            "value": 1,
+            "priority": null,
+            "type": "add",
             "phase": "initial"
           }
         ]

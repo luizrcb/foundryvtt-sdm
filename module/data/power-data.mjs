@@ -1,3 +1,4 @@
+import { defineLightField } from './light-field.mjs';
 import { getDefaultAbility } from '../helpers/globalUtils.mjs';
 import { DEFAULT_POWER_ICON } from '../helpers/constants.mjs';
 
@@ -15,6 +16,10 @@ export default class PowerDataModel extends foundry.abstract.DataModel {
       name: new fields.StringField({ required: false, blank: true, initial: '' }),
       description: new fields.HTMLField(),
       is_dangerous: new fields.BooleanField({ required: true, initial: false }),
+      // Removed after it is used (with confirmation): e.g. a power caught from someone else
+      single_use: new fields.BooleanField({ required: true, initial: false }),
+      // Casting it lights the caster's token ('none': no light)
+      light: defineLightField({ preset: 'none' }),
       level: new fields.NumberField({ required: true, initial: 1, min: 0 }),
       range: new fields.StringField({ required: true, blank: true, initial: '' }),
       target: new fields.StringField({ required: true, blank: true, initial: '' }),

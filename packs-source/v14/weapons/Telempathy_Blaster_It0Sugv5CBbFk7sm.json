@@ -82,7 +82,15 @@
     "supply_type": "",
     "replenish": {
       "value": 6
-    }
+    },
+    "triggers": [
+      {
+        "roll": "damage",
+        "condition": "min",
+        "value": 0,
+        "text": "The target stops fighting for one round and tries to parley"
+      }
+    ]
   },
   "effects": [],
   "sort": 600000,

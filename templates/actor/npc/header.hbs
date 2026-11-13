@@ -13,6 +13,7 @@
             {{localize 'SDM.FieldName'}}
           </label>
           <input name='name' type='text' value='{{actor.name}}' placeholder='Name' />
+{{> ($$ "actor/counter-chips")}}
         </div>
 
           <div class='resource'>
@@ -44,7 +45,7 @@
 
           <div class='resource'>
             <label for='system.life.max' class='resource-label flex-start'>
-              {{localize 'SDM.FieldLifeMax'}}
+              {{localize 'SDM.FieldLifeMax'}} {{#if @root.editable}}<a class="sdm-rest-button" data-action="restActor" data-tooltip="{{localize 'SDM.Rest.Tooltip'}}"><i class="fa-solid fa-bed"></i></a>{{/if}}
             </label>
             <div class='resource-content flexrow flex-center flex-between flex-group-center'>
               <input type='text' name='system.life.value' value='{{system.life.value}}' data-dtype="Number"  data-tooltip='{{localize "SDM.FieldLife"}}' />

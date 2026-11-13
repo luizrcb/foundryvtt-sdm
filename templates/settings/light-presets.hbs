@@ -1,0 +1,32 @@
+<fieldset class="sdm-config sdm-light-presets">
+  <legend>{{localize 'SDM.SettingsLightPresets'}}</legend>
+  <p class="hint">{{localize 'SDM.SettingsLightPresetsHint'}}</p>
+  <table>
+    <thead>
+      <tr>
+        <th></th>
+        <th>{{localize 'SDM.Light.Bright'}}</th>
+        <th>{{localize 'SDM.Light.Dim'}}</th>
+        <th>{{localize 'SDM.Light.Color'}}</th>
+        <th>{{localize 'SDM.Light.Alpha'}}</th>
+        <th>{{localize 'SDM.Light.Animation'}}</th>
+        <th>{{localize 'SDM.Light.Speed'}}</th>
+        <th>{{localize 'SDM.Light.Intensity'}}</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each presets as |preset|}}
+      <tr>
+        <th>{{preset.label}}</th>
+        <td><input type="number" name="lightPresets.{{preset.key}}.bright" value="{{preset.bright}}" min="0" step="any" /></td>
+        <td><input type="number" name="lightPresets.{{preset.key}}.dim" value="{{preset.dim}}" min="0" step="any" /></td>
+        <td><color-picker name="lightPresets.{{preset.key}}.color" value="{{preset.color}}"></color-picker></td>
+        <td><input type="number" name="lightPresets.{{preset.key}}.alpha" value="{{preset.alpha}}" min="0" max="1" step="0.05" /></td>
+        <td><select name="lightPresets.{{preset.key}}.animation">{{selectOptions @root.animations selected=preset.animation localize=true}}</select></td>
+        <td><input type="number" name="lightPresets.{{preset.key}}.speed" value="{{preset.speed}}" min="0" max="10" step="1" /></td>
+        <td><input type="number" name="lightPresets.{{preset.key}}.intensity" value="{{preset.intensity}}" min="0" max="10" step="1" /></td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+</fieldset>

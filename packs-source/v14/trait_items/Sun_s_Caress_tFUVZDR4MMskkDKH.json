@@ -17,6 +17,7 @@
       "unit": "stones"
     },
     "features": [
+      "consumable",
       "replenish"
     ],
     "attributes": {
@@ -82,7 +83,11 @@
     "categories": [
       "holy_fool",
       "healing"
-    ]
+    ],
+    "use": {
+      "life": "1d6",
+      "ability": ""
+    }
   },
   "effects": [],
   "sort": 0,

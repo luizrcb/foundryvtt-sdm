@@ -81,7 +81,15 @@
     "supply_type": "",
     "replenish": {
       "value": 2
-    }
+    },
+    "triggers": [
+      {
+        "roll": "attack",
+        "condition": "natural",
+        "value": 1,
+        "text": "Backfires"
+      }
+    ]
   },
   "effects": [],
   "sort": 500000,
