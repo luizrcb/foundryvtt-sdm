@@ -7542,6 +7542,10 @@ input[type=radio]::after {
 .sdm .sdm-counters .sdm-counter-row select {
   width: auto;
 }
+.sdm .sdm-counters .sdm-collapse-title {
+  cursor: pointer;
+  user-select: none;
+}
 .sdm .sdm-counters .sdm-collapse-toggle {
   display: inline-block;
   margin-right: 4px;

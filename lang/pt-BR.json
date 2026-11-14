@@ -185,7 +185,7 @@
   "SDM.Trigger.Table": "Tabela",
   "SDM.Trigger.TableHint": "Solte uma tabela aqui: ela é rolada quando o gatilho dispara.",
   "SDM.Trigger.TablePlaceholder": "solte uma tabela",
-  "SDM.Trigger.Effect": "Efeito nos alvos",
+  "SDM.Trigger.Effect": "Efeito",
   "SDM.Trigger.EffectHint": "Um dos efeitos deste item, copiado como efeito temporário para os tokens alvo. Deixe-o desativado (ou sem aplicar ao ator) no item para quem o carrega não recebê-lo.",
   "SDM.Trigger.WearLabel": "Item",
   "SDM.Trigger.WearNone": "—",

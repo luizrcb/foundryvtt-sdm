@@ -79,13 +79,22 @@
           <input class="sdm-trigger-table" type="text" name="system.triggers.{{index}}.table" value="{{trigger.table}}" placeholder="{{localize 'SDM.Trigger.TablePlaceholder'}}" /></label>
         <label data-tooltip="{{localize 'SDM.Trigger.EffectHint'}}">{{localize 'SDM.Trigger.Effect'}}
           <select name="system.triggers.{{index}}.effect">{{selectOptions @root.triggerEffects selected=trigger.effect}}</select>
-          <select name="system.triggers.{{index}}.effect_target">{{selectOptions @root.triggerEffectTargets selected=trigger.effect_target localize=true}}</select></label>
+          {{!-- Details of an action only show once the action is picked --}}
+          {{#if trigger.effect}}
+          <select name="system.triggers.{{index}}.effect_target">{{selectOptions @root.triggerEffectTargets selected=trigger.effect_target localize=true}}</select>
+          {{else}}
+          <input type="hidden" name="system.triggers.{{index}}.effect_target" value="{{trigger.effect_target}}" />
+          {{/if}}</label>
         <label>{{localize 'SDM.Trigger.WearLabel'}}
           <select name="system.triggers.{{index}}.wear">{{selectOptions @root.triggerWear selected=trigger.wear localize=true}}</select></label>
         <label>{{localize 'SDM.Trigger.Counter'}}
           <select name="system.triggers.{{index}}.counter">{{selectOptions @root.triggerCounters selected=trigger.counter}}</select>
+          {{#if trigger.counter}}
           <select name="system.triggers.{{index}}.counter_mode">{{selectOptions @root.triggerCounterModes selected=trigger.counter_mode localize=true}}</select>
-          {{#if (eq trigger.counter_mode 'reset')}}
+          {{else}}
+          <input type="hidden" name="system.triggers.{{index}}.counter_mode" value="{{trigger.counter_mode}}" />
+          {{/if}}
+          {{#if (or (not trigger.counter) (eq trigger.counter_mode 'reset'))}}
           <input type="hidden" name="system.triggers.{{index}}.counter_step" value="{{trigger.counter_step}}" data-dtype="Number" />
           {{else}}
           <input type="number" name="system.triggers.{{index}}.counter_step" value="{{trigger.counter_step}}" data-dtype="Number" data-tooltip="{{localize 'SDM.Trigger.CounterStepHint'}}" />

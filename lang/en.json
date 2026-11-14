@@ -185,7 +185,7 @@
   "SDM.Trigger.Table": "Roll table",
   "SDM.Trigger.TableHint": "Drop a roll table here: it is drawn when the trigger fires.",
   "SDM.Trigger.TablePlaceholder": "drop a roll table",
-  "SDM.Trigger.Effect": "Effect on targets",
+  "SDM.Trigger.Effect": "Effect",
   "SDM.Trigger.EffectHint": "One of this item's effects, copied as a temporary effect to the targeted tokens. Keep it disabled (or not applied to the actor) on the item so the bearer doesn't get it.",
   "SDM.Trigger.WearLabel": "Item",
   "SDM.Trigger.WearNone": "—",

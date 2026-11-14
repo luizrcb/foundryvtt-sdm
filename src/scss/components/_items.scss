@@ -736,6 +736,11 @@ li.item {
 
 // Counters / triggers / boost: collapsible sections, highlighted rows, placeholders that read as hints
 .sdm-counters {
+  .sdm-collapse-title {
+    cursor: pointer;
+    user-select: none;
+  }
+
   .sdm-collapse-toggle {
     display: inline-block;
     margin-right: 4px;
