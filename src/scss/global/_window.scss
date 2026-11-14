@@ -2401,5 +2401,16 @@ input[type='radio']::after {
     input[type='number'] {
       width: 3.5em;
     }
+
+    input[type='text'][name$='.cast_power'] {
+      width: 9em;
+    }
+
+    .sdm-trigger-check {
+      display: inline-flex;
+      align-items: center;
+      gap: 2px;
+      white-space: nowrap;
+    }
   }
 }

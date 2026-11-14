@@ -24,6 +24,7 @@ import { templatePath } from '../helpers/templates.mjs';
 import { pullMultiplier, vehiclePullMode } from '../helpers/transportUtils.mjs';
 import { openItemTransferDialog } from '../items/transfer.mjs';
 import { bindNumberInputs, unformatNumberInputs, reformatNumberInputs } from '../helpers/numberFormat.mjs';
+import { getCompactMode, setCompactMode } from '../helpers/sheetPrefs.mjs';
 
 const { api, sheets } = foundry.applications;
 const { DialogV2 } = foundry.applications.api;
@@ -332,7 +333,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       totalCrewWeight === 0
         ? totalCrewWeight
         : Math.ceil(convertSizeUnit(totalCrewWeight, SizeUnit.CASH, SizeUnit.STONES));
-    context.isCompactMode = this.actor.getFlag('sdm', 'compactMode') ?? false;
+    context.isCompactMode = getCompactMode(this.actor, true);
 
     this._prepareTransport(context);
 
@@ -457,7 +458,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
           break;
       }
 
-      if (this.actor.getFlag('sdm', 'compactMode')) {
+      if (getCompactMode(this.actor, true)) {
         tab.tooltip = tab.label;
         tab.label = '';
       }
@@ -853,10 +854,9 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     // Foundry comes with a large number of utility classes, e.g. SearchFilter
     // That you may want to implement yourself.
 
-    const isCompact = this.actor.getFlag('sdm', 'compactMode');
-    if (isCompact !== undefined) {
-      this.element.classList.toggle('compact', isCompact);
-    }
+    // Compact is the starting state (until the user switches it)
+    const isCompact = getCompactMode(this.actor, true);
+    this.element.classList.toggle('compact', isCompact);
 
     // Add item change listeners
     this._handleContainers();
@@ -1567,12 +1567,9 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
     event.stopPropagation();
     if (event.detail > 1) return; // Ignore repeated clicks
 
-    if (!this.actor.isOwner) return;
-
-    const currentMode = this.actor.getFlag('sdm', 'compactMode') ?? false;
-    const newMode = !currentMode;
-
-    await this.actor.setFlag('sdm', 'compactMode', newMode);
+    // A view preference of this client: anyone who can see the sheet can switch it
+    const newMode = !getCompactMode(this.actor, true);
+    setCompactMode(this.actor, newMode);
     this.element.classList.toggle('compact', newMode);
     return this.render();
   }

@@ -1,4 +1,4 @@
-import { LIGHT_PRESETS } from './helpers/lights.mjs';
+import { LIGHT_PRESETS, putOutAllLights } from './helpers/lights.mjs';
 import CompendiumBrowser from './app/compendium-browser.mjs';
 import { DEFAULT_CASH_ICON, DiceType } from './helpers/constants.mjs';
 import { $fmt, $l10n } from './helpers/globalUtils.mjs';
@@ -613,11 +613,12 @@ export function registerSystemSettings() {
     }
   });
 
-  // Optional systems (on by default): roll triggers, counters, damage boost
+  // Optional systems (on by default): roll triggers, counters, damage boost, token light from items
   for (const [key, label] of [
     ['enableTriggers', 'SDM.SettingsEnableTriggers'],
     ['enableCounters', 'SDM.SettingsEnableCounters'],
-    ['enableDamageBoost', 'SDM.SettingsEnableDamageBoost']
+    ['enableDamageBoost', 'SDM.SettingsEnableDamageBoost'],
+    ['enableItemLights', 'SDM.SettingsEnableItemLights']
   ]) {
     game.settings.register('sdm', key, {
       name: label,
@@ -627,10 +628,12 @@ export function registerSystemSettings() {
       type: Boolean,
       default: true,
       // Redraw open sheets so their sections show or hide
-      onChange: () => {
+      onChange: value => {
         for (const app of foundry.applications.instances.values()) {
           if (app.document && app.rendered) app.render();
         }
+        // Item lights off: the lights that are on go out
+        if (key === 'enableItemLights' && !value) putOutAllLights();
       }
     });
   }

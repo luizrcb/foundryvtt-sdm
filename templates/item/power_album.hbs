@@ -51,12 +51,16 @@
           <span>{{localize 'SDM.PowerIsDangerous'}}</span></label>
         <label class="sdm-album-check" data-tooltip="{{localize 'SDM.SingleUse.Hint'}}"><input type="checkbox" name="{{concat 'system.powers.' @index '.single_use'}}" {{checked power.single_use}} />
           <span><i class="fa-solid fa-triangle-exclamation"></i> {{localize 'SDM.SingleUse.Label'}}</span></label>
+        {{#if (sdmFeature 'lights')}}
         <label data-tooltip="{{localize 'SDM.Light.PowerHint'}}"><span><i class="fa-solid fa-fire-flame-curved"></i> {{localize 'SDM.Light.Label'}}</span>
           <select name="{{concat 'system.powers.' @index '.light.preset'}}">
             {{selectOptions @root.powerLightPresets selected=power.light.preset localize=true}}
           </select></label>
+        {{else}}
+        <input type="hidden" name="{{concat 'system.powers.' @index '.light.preset'}}" value="{{power.light.preset}}" />
+        {{/if}}
       </div>
-      {{#if (eq power.light.preset 'custom')}}
+      {{#if (and (sdmFeature 'lights') (eq power.light.preset 'custom'))}}
       <div class="sdm-album-fields sdm-album-fields-4">
         <label><span>{{localize 'SDM.Light.Bright'}}</span>
           <input type="number" name="{{concat 'system.powers.' @index '.light.bright'}}" value="{{power.light.bright}}" min="0" step="any" data-tooltip="{{localize 'SDM.Light.RadiusHint'}}" /></label>

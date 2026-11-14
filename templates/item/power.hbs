@@ -69,6 +69,7 @@
   </div>
 </div>
 
+{{#if (sdmFeature 'lights')}}
 <div class='resource' data-tooltip="{{localize 'SDM.Light.PowerHint'}}">
   <label class='resource-label'><i class="fa-solid fa-fire-flame-curved"></i> {{localize 'SDM.Light.Label'}}</label>
   <div class='resource-content'>
@@ -94,6 +95,7 @@
   <label class='resource-label'>{{localize 'SDM.Light.Animation'}}</label>
   <div class='resource-content'><select name="system.power.light.animation">{{selectOptions @root.lightAnimations selected=system.power.light.animation localize=true}}</select></div>
 </div>
+{{/if}}
 {{/if}}
 
 <div class='resource'>

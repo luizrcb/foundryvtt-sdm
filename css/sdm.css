@@ -2392,6 +2392,17 @@ input[type=radio]::after {
   width: 3.5em;
 }
 
+.sdm-triggers .sdm-trigger-actions input[type=text][name$=".cast_power"] {
+  width: 9em;
+}
+
+.sdm-triggers .sdm-trigger-actions .sdm-trigger-check {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  white-space: nowrap;
+}
+
 .grid,
 .grid-2col {
   display: grid;

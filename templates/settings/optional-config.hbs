@@ -1,0 +1,12 @@
+<fieldset class="sdm-config sdm-optional-automations">
+  <legend>{{optionalLegend}}</legend>
+  {{#each optionalFields}}
+    <div class="form-group">
+      <h6><strong>{{this.label}}</strong></h6>
+      <div class="form-fields">
+        {{{this.inputHTML}}}
+      </div>
+      {{#if this.hint}}<p class="hint">{{{this.hint}}}</p>{{/if}}
+    </div>
+  {{/each}}
+</fieldset>

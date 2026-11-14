@@ -1,9 +1,11 @@
 import { ActorType, GearType, ItemStatusType, ItemType } from './constants.mjs';
 import { $fmt, $l10n } from './globalUtils.mjs';
+import { featureEnabled } from './features.mjs';
 import { lastChargeUpdate } from './itemUtils.mjs';
 
 /**
  * Token light from items (light category or glowing feature).
+ * Optional (Core Rules setting "Item lights"): off, nothing lights and no light UI is shown.
  *
  * The light is an active effect on the actor whose changes override `token.light.*` (core v14
  * applies them to the actor's tokens), so the token's own light comes back when it is removed
@@ -73,12 +75,13 @@ export const POWER_LIGHT_PRESET_CHOICES = {
   custom: 'SDM.Light.Preset.custom'
 };
 
-/** Gear that can light up: light category or glowing feature (not powers). */
+/** Gear that can light up: light category, or glowing (feature or category) (not powers). */
 export function isLightSource(item) {
-  if (item?.type !== ItemType.GEAR) return false;
+  if (item?.type !== ItemType.GEAR || !featureEnabled('lights')) return false;
   const system = item.system;
   if (system.type === GearType.POWER || system.size?.unit === 'cash') return false;
-  return !!(system.categories?.has?.('light') || system.features?.has?.('glowing'));
+  const categories = system.categories;
+  return !!(categories?.has?.('light') || categories?.has?.('glowing') || system.features?.has?.('glowing'));
 }
 
 /** The light settings in effect: auto = torch for the light category, glow for glowing gear. */
@@ -106,10 +109,12 @@ function lightSettingsFrom(light = {}, fallback = 'torch') {
 
 /** The light effect currently on the actor (only one). */
 export function getLitEffect(actor) {
+  if (!featureEnabled('lights')) return null;
   return actor?.effects?.find(effect => effect.getFlag('sdm', LIGHT_FLAG)) ?? null;
 }
 
 export function isLit(item) {
+  if (!featureEnabled('lights')) return false;
   const effect = getLitEffect(item?.actor);
   return !!effect && effect.getFlag('sdm', LIGHT_FLAG)?.itemId === item.id;
 }
@@ -156,6 +161,7 @@ function buildChanges(settings, distance) {
 
 /** Does casting this power create light? */
 export function powerCreatesLight(power) {
+  if (!featureEnabled('lights')) return false;
   const preset = power?.light?.preset;
   return !!preset && preset !== 'none';
 }
@@ -262,6 +268,7 @@ function onDeleteItem(item, options, userId) {
 
 /** Token HUD: a flame button; one light item toggles it, several open a small palette. */
 function onRenderTokenHUD(hud, html) {
+  if (!featureEnabled('lights')) return;
   const token = hud?.document ?? hud?.object?.document;
   const actor = token?.actor;
   if (!actor?.isOwner) return;
@@ -323,6 +330,19 @@ function onRenderTokenHUD(hud, html) {
 
   wrapper.append(button, palette);
   (root.querySelector('.col.left') ?? root).append(wrapper);
+}
+
+/** The GM turned item lights off: put out every light (world actors and unlinked tokens). Active GM only. */
+export async function putOutAllLights() {
+  if (!game.users.activeGM?.isSelf) return;
+  const actors = new Set(game.actors);
+  for (const scene of game.scenes) {
+    for (const token of scene.tokens) if (!token.actorLink && token.actor) actors.add(token.actor);
+  }
+  for (const actor of actors) {
+    const ids = actor.effects.filter(effect => effect.getFlag('sdm', LIGHT_FLAG)).map(effect => effect.id);
+    if (ids.length) await actor.deleteEmbeddedDocuments('ActiveEffect', ids);
+  }
 }
 
 export function setupLights() {

@@ -1,3 +1,5 @@
+<div class="sdm-light-presets-part">
+{{#if (sdmFeature 'lights')}}
 <fieldset class="sdm-config sdm-light-presets">
   <legend>{{localize 'SDM.SettingsLightPresets'}}</legend>
   <p class="hint">{{localize 'SDM.SettingsLightPresetsHint'}}</p>
@@ -30,3 +32,5 @@
     </tbody>
   </table>
 </fieldset>
+{{/if}}
+</div>

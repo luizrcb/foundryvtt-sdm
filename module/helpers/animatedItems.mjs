@@ -2,6 +2,7 @@ import TokenPlacement from '../canvas/token-placement.mjs';
 import { getNPCDataByLevel, getNpcTableChoices, NPC_CUSTOM_TABLE, NPC_TABLE_KEYS } from './actorUtils.mjs';
 import { ActorType, GearType, ItemStatusType, ItemType } from './constants.mjs';
 import { $fmt, $l10n } from './globalUtils.mjs';
+import { featureEnabled } from './features.mjs';
 import { hasPowerAlbum, lastChargeUpdate } from './itemUtils.mjs';
 
 /**
@@ -248,7 +249,7 @@ async function syncFeatureTraits(item, npc) {
 
 /** A glowing item lights up like a torch (bright 20 ft, dim 40 ft, in the scene's grid units). */
 function lightFromItem(item, scene) {
-  if (!hasFeature(item, 'glowing')) return { bright: 0, dim: 0 };
+  if (!featureEnabled('lights') || !hasFeature(item, 'glowing')) return { bright: 0, dim: 0 };
   const perGrid = Number(scene?.grid?.distance) || 5;
   return { bright: 4 * perGrid, dim: 8 * perGrid };
 }

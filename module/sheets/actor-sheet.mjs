@@ -3,6 +3,7 @@ import { bindCollapsibleSections } from '../helpers/collapsibleSections.mjs';
 import { restActor } from '../app/rest.mjs';
 import { getPowerCost, getPowerDangerHtml, paysPowerCost, payPowerCost } from '../helpers/powerCost.mjs';
 import { lightFromPower, powerCreatesLight, putOutLight } from '../helpers/lights.mjs';
+import { getCompactMode, setCompactMode } from '../helpers/sheetPrefs.mjs';
 import { consumeSingleUsePower } from '../helpers/singleUsePowers.mjs';
 import { combineMultiplier, describeBoost, describeBoostPaid, getBoost, payBoost } from '../rolls/boost.mjs';
 import { useItem } from '../app/use-item.mjs';
@@ -226,7 +227,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       bonusDamage = '',
       powerOptions = [],
       powerIndex = 0,
-      item = null
+      item = null,
+      freeCast = false
     },
     isShift = false,
     isCtrl = false
@@ -453,7 +455,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     // Pay the power's cost (life, and ability points by choice or when life isn't enough)
     let costPaid = null;
-    if (powerCost && item && (isShift || rollOptions.payPowerCost)) {
+    if (powerCost && item && !freeCast && (isShift || rollOptions.payPowerCost)) {
       const castData = isPowerAlbum ? item.system.powers?.[powerIndex] : item.system.power;
       const cost = getPowerCost(this.actor.system, castData, !!rollOptions.overcharge);
       // The form gives flat keys ("costFrom.agi"): expand them
@@ -660,17 +662,20 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     return frame;
   }
 
+  /** Characters start in compact mode until switched (per client); NPC sheets have no compact mode. */
+  get _isCompactMode() {
+    if (this.actor.type !== ActorType.CHARACTER) return this.actor.getFlag('sdm', 'compactMode') ?? false;
+    return getCompactMode(this.actor, true);
+  }
+
   static async _onToggleCompact(event, target) {
     event.preventDefault();
     event.stopPropagation();
     if (event.detail > 1) return; // Ignore repeated clicks
 
-    if (!this.actor.isOwner) return;
-
-    const currentMode = this.actor.getFlag('sdm', 'compactMode') ?? false;
-    const newMode = !currentMode;
-
-    await this.actor.setFlag('sdm', 'compactMode', newMode);
+    // A view preference of this client: anyone who can see the sheet can switch it
+    const newMode = !this._isCompactMode;
+    setCompactMode(this.actor, newMode);
     this.element.classList.toggle('compact', newMode);
     return this.render();
   }
@@ -725,7 +730,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       context.isEditMode = this.actor.getFlag('sdm', 'editMode') ?? false;
     }
 
-    context.isCompactMode = this.actor.getFlag('sdm', 'compactMode') ?? false;
+    context.isCompactMode = this._isCompactMode;
     // Offloading context prep to a helper function
     this._prepareItems(context);
 
@@ -1008,10 +1013,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     // Foundry comes with a large number of utility classes, e.g. SearchFilter
     // That you may want to implement yourself.
 
-    const isCompact = this.actor.getFlag('sdm', 'compactMode');
-    if (isCompact !== undefined) {
-      this.element.classList.toggle('compact', isCompact);
-    }
+    const isCompact = this._isCompactMode;
+    this.element.classList.toggle('compact', isCompact);
 
     this._handleContainers();
   }
@@ -1405,9 +1408,20 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
       case 'power_album':
         const powerAlbum = this._getEmbeddedDocument(target);
-        const { powers, powers_current_index } = powerAlbum.system;
+        const { powers = [], powers_current_index } = powerAlbum.system;
+        // An empty album has nothing to cast
+        if (!powers.length) {
+          ui.notifications.warn($l10n('SDM.NoPowers'));
+          return;
+        }
         rollItem = powerAlbum;
-        powerIndex = powers_current_index;
+        powerIndex = powers[powers_current_index] ? powers_current_index : 0;
+        // A trigger can name the power to cast (blank: the selected one)
+        if (dataset.powerName) {
+          const wanted = `${dataset.powerName}`.trim().toLowerCase();
+          const found = powers.findIndex(power => `${power.name ?? ''}`.trim().toLowerCase() === wanted);
+          if (found >= 0) powerIndex = found;
+        }
         const selectedPower = powers[powerIndex];
 
         powerOptions = powers.map((power, index) => {
@@ -1455,10 +1469,12 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       bonusDamage,
       powerOptions,
       powerIndex,
-      item: rollItem
+      item: rollItem,
+      // Free cast (a trigger's "free"): no dialog and no cost
+      freeCast: dataset.freeCast === 'true'
     };
 
-    this._openCustomRollModal(rollAttributes, isShift, isCtrl);
+    this._openCustomRollModal(rollAttributes, isShift || rollAttributes.freeCast, isCtrl);
   }
 
   static async _onRollNPCDamage(event, target) {

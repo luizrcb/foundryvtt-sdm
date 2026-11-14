@@ -1,12 +1,13 @@
 /**
  * Optional systems the GM can turn off (Core Rules settings, all on by default):
- * roll triggers, counters and damage boost. Off hides their sections and skips their automation;
+ * roll triggers, counters, damage boost and token light from items. Off hides their sections and skips their automation;
  * the data stays on items and actors and comes back when turned on again.
  */
 export const FEATURE_SETTINGS = {
   triggers: 'enableTriggers',
   counters: 'enableCounters',
-  boost: 'enableDamageBoost'
+  boost: 'enableDamageBoost',
+  lights: 'enableItemLights'
 };
 
 export function featureEnabled(name) {

@@ -3,12 +3,14 @@ import PowerDataModel from '../data/power-data.mjs';
 import { SdmItem } from '../documents/item.mjs';
 import { createNPCByLevel, getActorOptions, getXpToNextLevel } from '../helpers/actorUtils.mjs';
 import { openProgressLog } from '../app/progress-log.mjs';
-import { getItemReference } from '../helpers/effectReferences.mjs';
+import { getItemIdentifier, getItemReference } from '../helpers/effectReferences.mjs';
 import { getCounters, promptNewCounter, removeCounter, resetCounters, stepCounter } from '../helpers/counters.mjs';
 import { getHallmarkUpgradeSummary, openHallmarkUpgradeDialog } from '../app/level-upgrades.mjs';
 import { makeNpcFriendly } from '../items/petItem.mjs';
 import { hasPowerAlbum } from '../helpers/itemUtils.mjs';
-import { LIGHT_PRESET_CHOICES, POWER_LIGHT_PRESET_CHOICES } from '../helpers/lights.mjs';
+import { isLightSource, LIGHT_PRESET_CHOICES, POWER_LIGHT_PRESET_CHOICES } from '../helpers/lights.mjs';
+import { isUsable } from '../app/use-item.mjs';
+import { isCastable } from '../rolls/triggers.mjs';
 import {
   animateItem,
   deanimateItem,
@@ -231,6 +233,39 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
   /* -------------------------------------------- */
 
   /** @override */
+  /**
+   * Item pickers of the triggers: this item and the owner's items (by identifier), for "From" and the
+   * use-a-power / use-a-consumable / light actions. Values not found (item on no actor, or removed)
+   * stay listed by their identifier so nothing is lost on save.
+   */
+  _triggerItemChoices() {
+    const item = this.item;
+    const actorItems = (item.actor?.items ?? []).filter(other => other.id !== item.id);
+    const self = $l10n('SDM.Trigger.ThisItem');
+    const pick = (accept, { none = true, withSelf = true } = {}) => {
+      const choices = {};
+      if (none) choices[''] = '—';
+      if (withSelf && accept(item)) choices['@self'] = self;
+      for (const other of actorItems) {
+        if (!accept(other)) continue;
+        const id = getItemIdentifier(other);
+        if (id && !(id in choices)) choices[id] = other.name;
+      }
+      return choices;
+    };
+    const keep = (choices, values) => {
+      for (const value of values) if (value && !(value in choices)) choices[value] = value === '@self' ? self : value;
+      return choices;
+    };
+    const triggers = item.system.triggers ?? [];
+    return {
+      triggerSourceItems: keep(pick(other => other.type === ItemType.GEAR, { withSelf: false }), triggers.map(t => t.from_item)),
+      triggerCastItems: keep(pick(isCastable), triggers.map(t => t.cast)),
+      triggerUseItems: keep(pick(isUsable), triggers.map(t => t.use)),
+      triggerLightItems: keep(pick(isLightSource, { none: false }), triggers.map(t => t.light_item))
+    };
+  }
+
   async _prepareContext(options) {
     const extendedSkillRanks = game.settings.get('sdm', 'extendedSkillRanks') || false;
     const defaultModifierStep = game.settings.get('sdm', 'skillModifierStep') || 3;
@@ -336,6 +371,14 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
         ['', ''],
         ...Object.entries(this.item.system.counters ?? {}).map(([key, counter]) => [key, counter.label])
       ]),
+      triggerFrom: { '': 'SDM.Trigger.From.self', any: 'SDM.Trigger.From.any', item: 'SDM.Trigger.From.item' },
+      triggerLightModes: {
+        '': 'SDM.Trigger.WearNone',
+        light: 'SDM.Trigger.LightMode.light',
+        put_out: 'SDM.Trigger.LightMode.put_out',
+        toggle: 'SDM.Trigger.LightMode.toggle'
+      },
+      ...this._triggerItemChoices(),
       boostResources: {
         life: 'SDM.Boost.Life',
         ...CONFIG.SDM.abilities,

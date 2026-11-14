@@ -43,6 +43,7 @@
       <input type="checkbox" name="system.power.single_use" {{checked system.power.single_use}} />
       <span class="v2-label"><i class="fa-solid fa-triangle-exclamation"></i> {{localize 'SDM.SingleUse.Label'}}</span>
     </label>
+    {{#if (sdmFeature 'lights')}}
     <label class="v2-field" data-tooltip="{{localize 'SDM.Light.PowerHint'}}">
       <span class="v2-label"><i class="fa-solid fa-fire-flame-curved"></i> {{localize 'SDM.Light.Label'}}</span>
       <select name="system.power.light.preset">
@@ -66,6 +67,7 @@
       <span class="v2-label">{{localize 'SDM.Light.Animation'}}</span>
       <select name="system.power.light.animation">{{selectOptions @root.lightAnimations selected=system.power.light.animation localize=true}}</select>
     </label>
+    {{/if}}
     {{/if}}
     <label class="v2-field v2-span-all">
       <span class="v2-label">{{localize 'SDM.PowerOvercharge'}}</span>

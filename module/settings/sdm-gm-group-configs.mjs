@@ -111,12 +111,26 @@ export class SDMCoreRulesSettingsConfig extends GroupBase {
     'useHardLimitRule',
     'defaultHardLimitValue',
     'defaultHeroDiceType',
-    'healingHouseRule',
-    'automatePowerCost',
-    'enableTriggers',
-    'enableCounters',
-    'enableDamageBoost'
+    'healingHouseRule'
   ];
+  // Second section: automations the GM can turn off
+  static OPTIONAL_KEYS = ['automatePowerCost', 'enableTriggers', 'enableCounters', 'enableDamageBoost', 'enableItemLights'];
+  static PARTS = {
+    config: { template: 'systems/sdm/templates/settings/base-config.hbs' },
+    optional: { template: 'systems/sdm/templates/settings/optional-config.hbs' },
+    footer: { template: 'templates/generic/form-footer.hbs' }
+  };
+  static get ALL_KEYS() {
+    return [...this.KEYS, ...this.OPTIONAL_KEYS];
+  }
+
+  async _preparePartContext(partId, context, options) {
+    context = await super._preparePartContext(partId, context, options);
+    if (partId !== 'optional') return context;
+    context.optionalFields = this.constructor.OPTIONAL_KEYS.map(k => this.createSettingField(k));
+    context.optionalLegend = game.i18n.localize('SDM.Menu.CoreRules.Optional');
+    return context;
+  }
 }
 
 /* 3) Skills & Advancement */

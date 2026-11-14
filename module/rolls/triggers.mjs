@@ -1,8 +1,11 @@
-import { applyItemEffectToTargets } from '../app/use-item.mjs';
-import { ItemStatusType, ItemType } from '../helpers/constants.mjs';
+import { applyItemEffectToTargets, isUsable, useItem } from '../app/use-item.mjs';
+import { GearType, ItemStatusType, ItemType } from '../helpers/constants.mjs';
 import { resetCounters, stepCounter } from '../helpers/counters.mjs';
+import { getItemIdentifier } from '../helpers/effectReferences.mjs';
 import { featureEnabled } from '../helpers/features.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
+import { hasPowerAlbum } from '../helpers/itemUtils.mjs';
+import { isLightSource, isLit, lightItem, putOutLight, toggleLight } from '../helpers/lights.mjs';
 
 /**
  * Roll triggers of gear, highlighted on chat cards:
@@ -95,20 +98,32 @@ export function attackTriggers(actor, roll, attack = '', success = null) {
   return actorTriggers(actor, 'attack', roll, { attack, success });
 }
 
+/** Does this trigger (held by `holder`) watch the rolls of `item`? ("From": this item, any item, one item) */
+function watchesItem(trigger, holder, item) {
+  const from = trigger.from || '';
+  if (from === 'any') return true;
+  if (from === 'item') return !!trigger.from_item && trigger.from_item === getItemIdentifier(item);
+  return holder.id === item.id;
+}
+
 /**
  * Triggers of one item's roll: damage, power (an album's power: `power` is its name) or usage
- * (`usageTarget` is the replenish score).
+ * (`usageTarget` is the replenish score). The item's own triggers, and those of the actor's readied
+ * gear, traits and burdens that watch this item (or any item).
  */
 export function itemRollTriggers(item, rollKind, roll, { power = '', ...options } = {}) {
-  if (!featureEnabled('triggers')) return [];
+  if (!featureEnabled('triggers') || !item) return [];
   const name = `${power ?? ''}`.trim().toLowerCase();
-  return (item?.system?.triggers ?? [])
-    .filter(trigger => {
-      if (trigger.roll !== rollKind) return false;
-      if (rollKind === 'power' && trigger.power && name && trigger.power.trim().toLowerCase() !== name) return false;
-      return matches(trigger, roll, options);
-    })
-    .map(trigger => ({ item, trigger }));
+  const holders = [item, ...watchingItems(item.actor).filter(other => other.id !== item.id)];
+  const fired = [];
+  for (const holder of holders) {
+    for (const trigger of holder.system?.triggers ?? []) {
+      if (trigger.roll !== rollKind || !watchesItem(trigger, holder, item)) continue;
+      if (rollKind === 'power' && trigger.power && name && trigger.power.trim().toLowerCase() !== name) continue;
+      if (matches(trigger, roll, options)) fired.push({ item: holder, trigger });
+    }
+  }
+  return fired;
 }
 
 /** Triggers of an item's damage roll. */
@@ -124,6 +139,8 @@ let chainDepth = 0;
 const MAX_CHAIN = 3;
 
 export async function runTriggerActions(fired, { actor } = {}) {
+  // Actions can roll again (a power, a usage roll…): stop long chains and loops
+  if (chainDepth >= MAX_CHAIN) return;
   chainDepth++;
   try {
     await runActions(fired, { actor });
@@ -151,10 +168,70 @@ async function runActions(fired, { actor } = {}) {
         else if (mode === 'set') await setCounter(item, trigger.counter, Number(trigger.counter_step) || 0);
         else await stepCounter(item, trigger.counter, Number(trigger.counter_step) || 1);
       }
+      const roller = actor ?? item.actor;
+      if (trigger.light && featureEnabled('lights')) await lightAction(item, roller, trigger);
+      if (trigger.use) await useAction(item, roller, trigger);
+      if (trigger.cast) await castAction(item, roller, trigger);
     } catch (error) {
       console.error('SDM | Trigger action failed', error);
     }
   }
+}
+
+/** An item picked in a trigger: '@self' (the item holding the trigger) or an identifier on the actor. */
+export function resolveTriggerItem(holder, actor, value, accept = () => true) {
+  if (!value) return null;
+  if (value === '@self') return accept(holder) ? holder : null;
+  const candidates = (actor?.items ?? []).filter(item => getItemIdentifier(item) === value && accept(item));
+  // Readied ones first (several items can share a name)
+  return candidates.find(item => item.system?.readied) ?? candidates[0] ?? null;
+}
+
+function missingItem(holder, value) {
+  ui.notifications.warn($fmt('SDM.Trigger.MissingItem', { item: holder.name, target: value === '@self' ? holder.name : value }));
+}
+
+export function isCastable(item) {
+  return !!item && (item.system?.type === GearType.POWER || hasPowerAlbum(item));
+}
+
+/** Light, put out or toggle an item's light (the light rules apply: readied, charges, usage roll). */
+async function lightAction(holder, actor, trigger) {
+  const target = resolveTriggerItem(holder, actor, trigger.light_item || '@self', isLightSource);
+  if (!target) return missingItem(holder, trigger.light_item || '@self');
+  if (trigger.light === 'put_out') return putOutLight(target.actor, { itemId: target.id });
+  if (trigger.light === 'light') return isLit(target) ? null : lightItem(target);
+  return toggleLight(target);
+}
+
+/** Use a consumable (its Use action: asks what to apply when it has several options). */
+async function useAction(holder, actor, trigger) {
+  const target = resolveTriggerItem(holder, actor, trigger.use, isUsable);
+  if (!target) return missingItem(holder, trigger.use);
+  return useItem(target);
+}
+
+/**
+ * Use a power: a power item, or one power of an album (by name; blank: its selected power).
+ * Normal: the cast dialog opens (cost and danger warning). Free: cast at once, no cost.
+ */
+async function castAction(holder, actor, trigger) {
+  const target = resolveTriggerItem(holder, actor, trigger.cast, isCastable);
+  if (!target) return missingItem(holder, trigger.cast);
+  const sheet = target.actor?.sheet;
+  if (!sheet || !target.actor.isOwner) return;
+  const isAlbum = target.system.type !== GearType.POWER;
+  if (isAlbum && !(target.system.powers?.length > 0)) return missingItem(holder, trigger.cast);
+  const dataset = {
+    type: isAlbum ? 'power_album' : 'power',
+    powerName: trigger.cast_power ?? '',
+    freeCast: trigger.cast_free ? 'true' : ''
+  };
+  const row = { dataset: { documentClass: 'Item', itemId: target.id } };
+  const fakeTarget = { dataset, closest: () => row };
+  const noop = () => {};
+  const event = { preventDefault: noop, stopPropagation: noop, detail: 1, shiftKey: false, ctrlKey: false, currentTarget: fakeTarget, target: fakeTarget };
+  return sheet.constructor._onRoll.call(sheet, event, fakeTarget);
 }
 
 async function wearItem(item, wear) {
