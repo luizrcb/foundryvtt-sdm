@@ -61,6 +61,26 @@
     "categories": [
       "tourist",
       "save"
+    ],
+    "triggers": [
+      {
+        "roll": "attack",
+        "condition": "natural",
+        "value": 1,
+        "text": "Fortunate One: roll again, or accept it and save a reroll"
+      },
+      {
+        "roll": "save",
+        "condition": "natural",
+        "value": 1,
+        "text": "Fortunate One: roll again, or accept it and save a reroll"
+      },
+      {
+        "roll": "ability",
+        "condition": "natural",
+        "value": 1,
+        "text": "Fortunate One: roll again, or accept it and save a reroll"
+      }
     ]
   },
   "effects": [],

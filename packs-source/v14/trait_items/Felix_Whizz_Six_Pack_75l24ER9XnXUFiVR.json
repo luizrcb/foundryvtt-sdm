@@ -10,13 +10,16 @@
     "resources": "",
     "cost": 49,
     "cost_frequency": "",
-    "description": "<p>The energy drink grants [[/r 1d4]] temporary life. Mildly addictive.</p><p><em>Use the active effect to grant the temporary life.</em></p>",
+    "description": "<p>The energy drink grants [[/r 1d4]] temporary life. Mildly addictive.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "charges",
+      "consumable"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -76,61 +79,25 @@
     },
     "categories": [
       "bourgeois"
-    ]
-  },
-  "effects": [
-    {
-      "name": "Temporary Life",
-      "origin": "Compendium.sdm.equipment.Item.75l24ER9XnXUFiVR",
-      "img": "icons/consumables/drinks/alcohol-jug-spirits-brown.webp",
-      "_id": "k4uCE8FiZ4Ac29mL",
-      "type": "base",
-      "system": {
-        "changes": [
-          {
-            "key": "system.temporary_life.enabled",
-            "value": true,
-            "priority": null,
-            "type": "add",
-            "phase": "initial"
-          },
-          {
-            "key": "system.temporary_life.max",
-            "value": 1,
-            "priority": null,
-            "type": "add",
-            "phase": "initial"
-          }
-        ]
-      },
-      "disabled": true,
+    ],
+    "charges": {
+      "value": 6,
+      "max": 6
+    },
+    "use": {
+      "life": "",
+      "ability": "",
+      "ability_group": "",
+      "temp_life": "1d4",
+      "harm": "",
+      "table": "",
       "duration": {
         "value": null,
-        "units": "seconds",
-        "expiry": null,
-        "expired": false
-      },
-      "description": "",
-      "tint": "#ffffff",
-      "transfer": true,
-      "statuses": [],
-      "sort": 0,
-      "flags": {},
-      "_stats": {
-        "compendiumSource": null,
-        "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "14.353",
-        "systemId": "sdm",
-        "systemVersion": "0.5.4",
-        "lastModifiedBy": null
-      },
-      "showIcon": 1,
-      "folder": null,
-      "start": null,
-      "_key": "!items.effects!75l24ER9XnXUFiVR.k4uCE8FiZ4Ac29mL"
+        "units": ""
+      }
     }
-  ],
+  },
+  "effects": [],
   "sort": 0,
   "ownership": {
     "default": 0,

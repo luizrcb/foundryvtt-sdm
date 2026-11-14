@@ -76,7 +76,17 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": ""
+    "supply_type": "",
+    "categories": [
+      "light"
+    ],
+    "light": {
+      "preset": "torch",
+      "bright": 4,
+      "dim": 8,
+      "color": "#ff9329",
+      "animation": "torch"
+    }
   },
   "effects": [],
   "sort": 93750,

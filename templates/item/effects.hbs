@@ -9,13 +9,17 @@
     {{#if system.boost.enabled}}
     <div class="sdm-counter-row">
       <label>{{localize 'SDM.Boost.Cost'}}
-        <input type="text" name="system.boost.cost" value="{{system.boost.cost}}" placeholder="1" /></label>
+        <input type="text" name="system.boost.cost" value="{{system.boost.cost}}" placeholder="1" data-tooltip="{{localize 'SDM.Boost.CostHint'}}" /></label>
       <label>{{localize 'SDM.Boost.Resource'}}
         <select name="system.boost.resource">{{selectOptions boostResources selected=system.boost.resource localize=true}}</select></label>
       <label data-tooltip="{{localize 'SDM.Boost.MultiplierHint'}}">{{localize 'SDM.Boost.Multiplier'}}
         <input type="number" min="0" name="system.boost.multiplier" value="{{system.boost.multiplier}}" data-dtype="Number" /></label>
       <label data-tooltip="{{localize 'SDM.Boost.ExtraHint'}}">{{localize 'SDM.Boost.Extra'}}
         <input type="text" name="system.boost.extra" value="{{system.boost.extra}}" placeholder="1d6" /></label>
+      <label data-tooltip="{{localize 'SDM.Boost.DamageHint'}}">{{localize 'SDM.Boost.Damage'}}
+        <input type="text" name="system.boost.damage" value="{{system.boost.damage}}" placeholder="1d12" /></label>
+      <label data-tooltip="{{localize 'SDM.Boost.NoteHint'}}">{{localize 'SDM.Boost.Note'}}
+        <input class="sdm-counter-label" type="text" name="system.boost.note" value="{{system.boost.note}}" placeholder="{{localize 'SDM.Boost.NotePlaceholder'}}" /></label>
       <label data-tooltip="{{localize 'SDM.Boost.MandatoryHint'}}">
         <input type="checkbox" name="system.boost.mandatory" {{checked system.boost.mandatory}} /> {{localize 'SDM.Boost.MandatoryLabel'}}</label>
     </div>

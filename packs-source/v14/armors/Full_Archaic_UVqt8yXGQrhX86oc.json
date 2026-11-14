@@ -15,6 +15,7 @@
       "unit": "stones"
     },
     "features": [
+      "animated",
       "burn",
       "replenish",
       "semi_sentient"
@@ -80,6 +81,9 @@
     "supply_type": "",
     "replenish": {
       "value": 2
+    },
+    "animation": {
+      "mode": "walks"
     }
   },
   "effects": [

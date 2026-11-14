@@ -80,7 +80,17 @@
     "categories": [
       "undead",
       "armor"
-    ]
+    ],
+    "boost": {
+      "enabled": true,
+      "resource": "life",
+      "cost": "0",
+      "multiplier": 2,
+      "extra": "",
+      "damage": "",
+      "note": "vs heavily armored enemies",
+      "mandatory": false
+    }
   },
   "effects": [],
   "sort": 1200000,

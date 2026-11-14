@@ -76,8 +76,16 @@
     },
     "categories": [
       "bluelander",
-      "communication"
-    ]
+      "communication",
+      "glowing"
+    ],
+    "light": {
+      "preset": "custom",
+      "bright": 0,
+      "dim": 2,
+      "color": "#4f8bff",
+      "animation": "pulse"
+    }
   },
   "effects": [],
   "sort": 0,

@@ -79,7 +79,17 @@
       "redlander",
       "vampire",
       "armor"
-    ]
+    ],
+    "boost": {
+      "enabled": true,
+      "resource": "life",
+      "cost": "0",
+      "multiplier": 2,
+      "extra": "",
+      "damage": "",
+      "note": "vs vampires",
+      "mandatory": false
+    }
   },
   "effects": [],
   "sort": 0,

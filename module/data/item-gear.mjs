@@ -68,6 +68,10 @@ export default class SdmGear extends SdmItemBase {
       // 1 (or 0) = no multiplier: neutral until the GM sets one
       multiplier: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 1, min: 0 }),
       extra: new fields.StringField({ required: true, blank: true, initial: '' }),
+      // The damage becomes this formula instead of the weapon's (Swagger Stick: 1d4 → 1d12)
+      damage: new fields.StringField({ required: true, blank: true, initial: '' }),
+      // When it applies, shown with the option ("vs vampires")
+      note: new fields.StringField({ required: true, blank: true, initial: '' }),
       mandatory: new fields.BooleanField({ initial: false })
     });
 

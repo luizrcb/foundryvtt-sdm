@@ -12,6 +12,34 @@
         "value": "<p>Exotic coating (ultraviolet, gold) deals double damage to one type of target.</p>",
         "priority": null,
         "phase": "initial"
+      },
+      {
+        "key": "system.boost.enabled",
+        "type": "override",
+        "value": true,
+        "priority": null,
+        "phase": "initial"
+      },
+      {
+        "key": "system.boost.cost",
+        "type": "override",
+        "value": "0",
+        "priority": null,
+        "phase": "initial"
+      },
+      {
+        "key": "system.boost.multiplier",
+        "type": "override",
+        "value": 2,
+        "priority": null,
+        "phase": "initial"
+      },
+      {
+        "key": "system.boost.note",
+        "type": "override",
+        "value": "vs its bane (edit)",
+        "priority": null,
+        "phase": "initial"
       }
     ],
     "isItemMod": true,

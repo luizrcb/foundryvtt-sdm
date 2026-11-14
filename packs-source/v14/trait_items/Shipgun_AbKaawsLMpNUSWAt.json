@@ -83,7 +83,17 @@
     "categories": [
       "greenlander",
       "damage"
-    ]
+    ],
+    "boost": {
+      "enabled": true,
+      "resource": "life",
+      "cost": "0",
+      "multiplier": 3,
+      "extra": "",
+      "damage": "",
+      "note": "vs unarmored targets",
+      "mandatory": false
+    }
   },
   "effects": [],
   "sort": 700000,

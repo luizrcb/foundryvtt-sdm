@@ -78,7 +78,17 @@
     "categories": [
       "bourgeois",
       "damage"
-    ]
+    ],
+    "boost": {
+      "enabled": true,
+      "resource": "life",
+      "cost": "1",
+      "multiplier": 1,
+      "extra": "",
+      "damage": "1d12",
+      "note": "",
+      "mandatory": false
+    }
   },
   "effects": [],
   "sort": 0,

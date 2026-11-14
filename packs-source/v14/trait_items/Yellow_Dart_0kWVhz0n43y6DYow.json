@@ -79,8 +79,16 @@
     },
     "default_ability": "",
     "categories": [
+      "glowing",
       "yellowlander"
-    ]
+    ],
+    "light": {
+      "preset": "glow",
+      "bright": 4,
+      "dim": 8,
+      "color": "#ff9329",
+      "animation": "torch"
+    }
   },
   "effects": [],
   "sort": 0,

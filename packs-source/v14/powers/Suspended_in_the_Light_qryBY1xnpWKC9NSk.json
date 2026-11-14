@@ -50,7 +50,14 @@
       "overcharge": "they suffer [[/r 1d8]] damage instead.",
       "roll_formula": "1d4",
       "overcharge_roll_formula": "1d8",
-      "default_ability": ""
+      "default_ability": "",
+      "light": {
+        "preset": "glow",
+        "bright": 4,
+        "dim": 8,
+        "color": "#ff9329",
+        "animation": "torch"
+      }
     },
     "powers_current_index": 0,
     "max_powers": 3,

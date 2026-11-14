@@ -450,6 +450,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       if (paid === null) return;
       finalMultiplier = combineMultiplier(multiplier, boost);
       if (boost.extra && foundry.dice.Roll.validate(boost.extra)) modPart += `+${boost.extra}`;
+      // The damage becomes the boost's formula (both hands)
+      if (boost.damage && foundry.dice.Roll.validate(boost.damage)) {
+        formula = boost.damage;
+        if (versatileFormula) versatileFormula = boost.damage;
+      }
       title = `${title} (${describeBoostPaid(boost, paid)})`;
     }
 
