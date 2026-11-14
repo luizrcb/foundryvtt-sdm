@@ -3,7 +3,8 @@ import { SdmItemSheet } from './item-sheet.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { GearType, ItemType } from '../helpers/constants.mjs';
 
-const FEATURE_VALUE_FIELDS = ['area', 'range', 'flare', 'pocket', 'replenish', 'resistant', 'consumable'];
+// Consumables have their own card (what Use does)
+const FEATURE_VALUE_FIELDS = ['area', 'range', 'flare', 'pocket', 'replenish', 'resistant'];
 
 /**
  * Alternative item sheet (same look as the new actor sheets).

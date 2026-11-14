@@ -33,6 +33,50 @@ export function setupUseItem() {
     if (game.users.activeGM?.id !== game.user.id) return;
     applyToActor(message.payload).catch(error => console.error('SDM | Use item failed', error));
   });
+  // A temporary life effect ended (expired, deleted or disabled): the temporary life left is capped
+  Hooks.on('deleteActiveEffect', (effect, options, userId) => onTempLifeEffectGone(effect, userId));
+  Hooks.on('updateActiveEffect', (effect, changes, options, userId) => {
+    if (changes.disabled === true) onTempLifeEffectGone(effect, userId);
+  });
+}
+
+const TEMP_LIFE_FLAG = 'tempLife';
+
+async function onTempLifeEffectGone(effect, userId) {
+  if (userId !== game.user.id || !effect.getFlag('sdm', TEMP_LIFE_FLAG)) return;
+  const actor = effect.parent;
+  const temp = actor?.documentName === 'Actor' ? actor.system.temporary_life : null;
+  if (!temp) return;
+  // No other source: nothing left; otherwise at most the new maximum
+  const cap = temp.enabled ? Math.max(Number(temp.max) || 0, 0) : 0;
+  if ((Number(temp.value) || 0) > cap) await actor.update({ 'system.temporary_life.value': cap });
+}
+
+/**
+ * Temporary life from a consumable: an effect (named after the item, lasting as long as its effects)
+ * turns temporary life on and raises its maximum by the amount; the current temporary life rises by
+ * the same amount. When the effect ends the maximum drops back and the rest is capped. Doses stack.
+ */
+async function grantTemporaryLife(actor, { amount, name, img, origin, duration }) {
+  if (!actor.system.temporary_life || !('enabled' in actor.system.temporary_life)) return;
+  const data = {
+    name: $fmt('SDM.Use.TempLifeEffect', { item: name ?? '' }),
+    img: img || 'icons/svg/regen.svg',
+    origin,
+    transfer: false,
+    system: {
+      changes: [
+        { key: 'system.temporary_life.enabled', type: 'override', value: true, phase: 'initial', priority: null },
+        { key: 'system.temporary_life.max', type: 'add', value: amount, phase: 'initial', priority: null }
+      ]
+    },
+    flags: { sdm: { temporary: true, [TEMP_LIFE_FLAG]: amount } }
+  };
+  if (duration) data.duration = duration;
+  await actor.createEmbeddedDocuments('ActiveEffect', [data]);
+  const temp = actor.system.temporary_life;
+  const value = Math.min((Number(temp.value) || 0) + amount, Math.max(Number(temp.max) || 0, 0));
+  await actor.update({ 'system.temporary_life.value': value });
 }
 
 function getTargets(actor) {
@@ -162,17 +206,9 @@ async function applyToActor({ actorUuid, restores = [], restore, effects }) {
       await actor.applyDamage(restore.amount, 1, false, true);
       continue;
     }
-    // Temporary life: on top of what it has (actors without temporary life get none)
+    // Temporary life: an effect for as long as the item's effects last (actors without temporary life get none)
     if (restore?.kind === 'temp_life' && restore.amount > 0) {
-      const temp = actor.system.temporary_life;
-      if (temp && 'enabled' in temp) {
-        const value = (Number(temp.value) || 0) + restore.amount;
-        await actor.update({
-          'system.temporary_life.enabled': true,
-          'system.temporary_life.value': value,
-          'system.temporary_life.max': Math.max(Number(temp.max) || 0, value)
-        });
-      }
+      await grantTemporaryLife(actor, restore);
       continue;
     }
     if (restore?.kind === 'life' && restore.amount > 0) {
@@ -248,7 +284,7 @@ function effectsToCopy(item) {
 }
 
 /**
- * Tooltip of the Use icon: what using it does (restores, effects), what it spends and on whom.
+ * Tooltip of the Use icon: a short list of what using it does (restores, effects, harm, table).
  * Returns HTML (the tooltip renders it).
  */
 export function describeUse(item) {
@@ -279,29 +315,9 @@ export function describeUse(item) {
   }
   if (!lines.length && !always.length) lines.push($l10n('SDM.Use.Tip.Nothing'));
 
-  // What it spends
-  let cost;
-  const uses = getUsesCounter(item);
-  if (system.features?.has?.('replenish')) {
-    cost = system.resources === 'running_low'
-      ? $l10n('SDM.Use.Tip.LastUse')
-      : $fmt('SDM.Use.Tip.UsageRoll', { value: Number(system.replenish?.value) || 0 });
-  } else if (uses) {
-    cost = $fmt('SDM.Use.Tip.Uses', { counter: esc(uses.counter.label), left: usesLeft(item) === Infinity ? '∞' : usesLeft(item) });
-  } else if (system.features?.has?.('charges')) {
-    cost = $fmt('SDM.Use.Tip.Charge', { value: Number(system.charges?.value) || 0, max: Number(system.charges?.max) || 0 });
-  } else {
-    cost = $fmt('SDM.Use.Tip.Quantity', { quantity: Number(system.quantity) || 1 });
-  }
-
-  const several = lines.length > 1 && !lines.includes($l10n('SDM.Use.Tip.Nothing'));
-  return [
-    `<strong>${esc($l10n('SDM.Use.Action'))}</strong>`,
-    `<ul style="margin:2px 0 2px 1em;padding:0">${[...lines, ...always].map(line => `<li>${line}</li>`).join('')}</ul>`,
-    several ? `<em>${$l10n('SDM.Use.Tip.Choose')}</em><br>` : '',
-    `${$l10n('SDM.Use.Tip.Spends')} ${cost}<br>`,
-    `${$l10n('SDM.Use.Tip.Targets')}`
-  ].join('');
+  // The title and the bullets: what it does (the dialog says the rest)
+  const bullet = line => `<li>${`${line}`.replace(/:\s*$/, '')}</li>`;
+  return `<strong>${esc($l10n('SDM.Use.Action'))}</strong><ul style="margin:2px 0 0 1em;padding:0">${[...lines, ...always].map(bullet).join('')}</ul>`;
 }
 
 /** Can it be used now? Returns a warning key, or null. */
@@ -348,7 +364,16 @@ export async function useItem(item) {
     }
     restores.push({ kind, ability: kind === 'ability' ? choice.abilityKey : null, amount: await rollFormula(use[kind]) });
   }
-  if (choice.tempLife && use.temp_life?.trim()) restores.push({ kind: 'temp_life', amount: await rollFormula(use.temp_life) });
+  if (choice.tempLife && use.temp_life?.trim()) {
+    restores.push({
+      kind: 'temp_life',
+      amount: await rollFormula(use.temp_life),
+      name: item.name,
+      img: item.img,
+      origin: item.uuid,
+      duration: useDuration(use)
+    });
+  }
   // Harm always happens (not an option)
   if (use.harm?.trim()) restores.push({ kind: 'harm', amount: await rollFormula(use.harm) });
 

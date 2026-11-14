@@ -24,7 +24,8 @@
     "isPet": false,
     "experience": "300",
     "speed": 0,
-    "capacity": 0.2
+    "capacity": 0.2,
+    "createdFromTable": "custom"
   },
   "prototypeToken": {
     "name": "Vicious Bird",
@@ -192,12 +193,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "14.367",
+    "coreVersion": "14.370",
     "systemId": "sdm",
-    "systemVersion": "1.6.0",
+    "systemVersion": "1.10.0",
     "createdTime": 1760643027564,
-    "modifiedTime": 1789563855622,
-    "lastModifiedBy": "wOwBmZzhkRHns1aw"
+    "modifiedTime": 1794676679818,
+    "lastModifiedBy": "ovcnXJxoRSPATQdI"
   },
   "_key": "!actors!NmWt8PHA0INeZhnO"
 }

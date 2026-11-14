@@ -23,7 +23,8 @@
     "isPet": false,
     "experience": "0",
     "speed": 0,
-    "capacity": 0.1
+    "capacity": 0.1,
+    "createdFromTable": "custom"
   },
   "prototypeToken": {
     "name": "Pet Bird",
@@ -190,12 +191,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "14.368",
+    "coreVersion": "14.370",
     "systemId": "sdm",
-    "systemVersion": "1.6.0",
+    "systemVersion": "1.10.0",
     "createdTime": 1760893957291,
-    "modifiedTime": 1789583059304,
-    "lastModifiedBy": "wOwBmZzhkRHns1aw"
+    "modifiedTime": 1794676673967,
+    "lastModifiedBy": "ovcnXJxoRSPATQdI"
   },
   "_id": "xZz01Pwo5OsPcUXe",
   "sort": 200000,

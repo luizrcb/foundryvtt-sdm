@@ -97,10 +97,43 @@ function warnAnimationBlock(item) {
   ui.notifications.warn($fmt(key, { name: item.name, cost: getAnimationChargeCost(item) }));
 }
 
+/** The item's creature in the world (a compendium NPC is not one until it is imported). */
 export function getLinkedNpc(item) {
   const uuid = item.system.animation?.actor;
-  const actor = uuid ? fromUuidSync(uuid) : null;
-  return actor?.documentName === 'Actor' ? actor : null;
+  if (!uuid || uuid.startsWith('Compendium.')) return null;
+  const actor = fromUuidSync(uuid);
+  return actor?.documentName === 'Actor' && !actor.pack ? actor : null;
+}
+
+/**
+ * An item from the compendium can come linked to a compendium NPC (Soul Siphon Spear → Spear Snake).
+ * Compendium documents can't be changed, so the first animation imports a copy into the
+ * "Animated Items" folder and links the item to it. Only the link changes: the item keeps its own
+ * attributes. Each item gets its own creature. Referee only.
+ */
+async function importCompendiumCreature(item) {
+  const uuid = item.system.animation?.actor;
+  if (!game.user.isGM || !uuid?.startsWith('Compendium.')) return;
+  const source = await fromUuid(uuid);
+  if (source?.documentName !== 'Actor') {
+    // The compendium NPC is gone: animate with a creature made from the item
+    await item.update({ 'system.animation.actor': '' }, { [SYNC_OPTION]: true });
+    return;
+  }
+  const folder = await getAnimatedFolder();
+  const data = source.toObject();
+  delete data._id;
+  data.folder = folder?.id;
+  const npc = await Actor.create(data);
+  if (!npc) return;
+  await npc.update({
+    [`flags.sdm.${FLAG}`]: item.uuid,
+    [`flags.sdm.${DEFENSE_BONUS_FLAG}`]: 0,
+    [`flags.sdm.${KEEP_IDENTITY_FLAG}`]: true,
+    'prototypeToken.disposition': dispositionFromItem(item),
+    'prototypeToken.actorLink': true
+  });
+  await item.update({ 'system.animation.actor': npc.uuid }, { [SYNC_OPTION]: true });
 }
 
 /* -------------------------------------------- */
@@ -445,6 +478,9 @@ export async function animateItem(item, { app } = {}) {
     warnAnimationBlock(item);
     return;
   }
+
+  // Linked to a compendium NPC: import a copy for this item first
+  await importCompendiumCreature(item);
 
   if (!item.system.animation.filled) await fillAttributesFromTable(item);
 

@@ -1531,6 +1531,50 @@ $v2-wide: 1100px;
     align-items: end;
   }
 
+  // Consumable card: two rows of four (options to tick, then what always happens)
+  .v2-use-card {
+    // Hints read as hints, not as filled-in values
+    input::placeholder {
+      font-style: italic;
+      opacity: 0.45;
+    }
+    .v2-use-group {
+      display: block;
+      margin: 4px 0 6px;
+      font-size: 0.75em;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      opacity: 0.6;
+    }
+    .v2-use-fields {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      margin-bottom: 8px;
+    }
+    .v2-span-2 {
+      grid-column: span 2;
+    }
+    // Number and unit side by side, same height and bottom line
+    .v2-pair {
+      display: flex;
+      gap: 6px;
+      align-items: stretch;
+      input,
+      select {
+        margin: 0;
+        height: auto;
+        align-self: stretch;
+      }
+      input {
+        width: 4em;
+        flex: 0 0 4em;
+      }
+      select {
+        flex: 1 1 auto;
+        min-width: 0;
+      }
+    }
+  }
+
   .v2-field {
     display: flex;
     flex-direction: column;

@@ -20,7 +20,8 @@
     "isHelper": false,
     "isPorter": false,
     "speed": 0,
-    "capacity": 0.5
+    "capacity": 0.5,
+    "createdFromTable": "custom"
   },
   "prototypeToken": {
     "name": "Spear Snake",
@@ -189,12 +190,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "14.368",
+    "coreVersion": "14.370",
     "systemId": "sdm",
-    "systemVersion": "1.6.0",
+    "systemVersion": "1.10.0",
     "createdTime": 1756515647945,
-    "modifiedTime": 1789583048969,
-    "lastModifiedBy": "wOwBmZzhkRHns1aw"
+    "modifiedTime": 1794676660983,
+    "lastModifiedBy": "ovcnXJxoRSPATQdI"
   },
   "_id": "RrHPo1p4xq14BKO3",
   "sort": 300000,

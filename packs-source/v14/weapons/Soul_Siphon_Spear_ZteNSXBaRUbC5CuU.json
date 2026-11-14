@@ -15,22 +15,25 @@
       "unit": "stones"
     },
     "features": [
+      "animated",
       "attune",
       "charges",
+      "consumable",
       "fantascience",
       "two_handed"
     ],
     "attributes": {
       "initiative": "",
-      "level": 0,
+      "level": 3,
       "life": {
-        "value": 1,
-        "max": 1
+        "value": 12,
+        "max": 12
       },
-      "morale": 2,
-      "defense": 7,
-      "bonus": 1,
-      "damage": "1d4"
+      "morale": 6,
+      "defense": 12,
+      "bonus": 5,
+      "damage": "2d6",
+      "capacity": 0.5
     },
     "type": "weapon",
     "power": {
@@ -86,7 +89,23 @@
     "supply_type": "",
     "categories": [
       "healing"
-    ]
+    ],
+    "works_when_run_out": true,
+    "animation": {
+      "table": "custom",
+      "filled": true,
+      "actor": "Actor.00jVJrJFhxuJTRRe",
+      "size": {
+        "value": 5,
+        "unit": "stones"
+      },
+      "mode": "walks",
+      "chargeCost": 1,
+      "endWithCombat": true
+    },
+    "use": {
+      "life": "1d6x"
+    }
   },
   "effects": [],
   "sort": 1100000,
@@ -99,12 +118,12 @@
     "compendiumSource": null,
     "duplicateSource": null,
     "exportSource": null,
-    "coreVersion": "14.364",
+    "coreVersion": "14.370",
     "systemId": "sdm",
-    "systemVersion": "1.1.0",
+    "systemVersion": "1.10.0",
     "createdTime": 1767011720662,
-    "modifiedTime": 1783182007952,
-    "lastModifiedBy": "T0Lzg8pp1DaC8jrB"
+    "modifiedTime": 1794676748883,
+    "lastModifiedBy": "ovcnXJxoRSPATQdI"
   },
   "_key": "!items!ZteNSXBaRUbC5CuU"
 }

@@ -383,9 +383,10 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       ]),
       triggerFrom: { '': 'SDM.Trigger.From.self', any: 'SDM.Trigger.From.any', item: 'SDM.Trigger.From.item' },
       // Consumables (Use)
-      useAbilityGroups: { '': 'SDM.Use.Group.any', physical: 'SDM.Use.Group.physical', mental: 'SDM.Use.Group.mental' },
+      // Nothing picked shows empty (any ability / until removed), not a default choice
+      useAbilityGroups: { '': '', physical: 'SDM.Use.Group.physical', mental: 'SDM.Use.Group.mental' },
       useDurationUnits: {
-        '': 'SDM.Use.DurationUnit.none',
+        '': '',
         rounds: 'SDM.Use.DurationUnit.rounds',
         minutes: 'SDM.Use.DurationUnit.minutes',
         hours: 'SDM.Use.DurationUnit.hours',
@@ -483,7 +484,11 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
         break;
       case 'animation': {
         context.tab = context.tabs[partId];
-        const npc = getLinkedNpc(this.item);
+        // The world creature, or the compendium NPC it will be imported from on first animation
+        const compendiumUuid = this.item.system.animation?.actor?.startsWith?.('Compendium.') ? this.item.system.animation.actor : null;
+        const compendiumNpc = compendiumUuid ? fromUuidSync(compendiumUuid) : null;
+        const npc =
+          getLinkedNpc(this.item) ?? (compendiumNpc ? { uuid: compendiumUuid, name: compendiumNpc.name ?? compendiumUuid } : null);
         context.animation = {
           level: getAnimationLevel(this.item),
           isHallmark: !!this.item.system.is_hallmark,

@@ -5547,6 +5547,52 @@ input[type=radio]::after {
   align-items: end;
 }
 
+.application.sheet.sdm.sheet-v2 .v2-use-card input::placeholder {
+  font-style: italic;
+  opacity: 0.45;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-use-card .v2-use-group {
+  display: block;
+  margin: 4px 0 6px;
+  font-size: 0.75em;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.6;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-use-card .v2-use-fields {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-bottom: 8px;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-use-card .v2-span-2 {
+  grid-column: span 2;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-use-card .v2-pair {
+  display: flex;
+  gap: 6px;
+  align-items: stretch;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-use-card .v2-pair input,
+.application.sheet.sdm.sheet-v2 .v2-use-card .v2-pair select {
+  margin: 0;
+  height: auto;
+  align-self: stretch;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-use-card .v2-pair input {
+  width: 4em;
+  flex: 0 0 4em;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-use-card .v2-pair select {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
 .application.sheet.sdm.sheet-v2 .v2-field {
   display: flex;
   flex-direction: column;
