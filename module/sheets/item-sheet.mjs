@@ -10,6 +10,7 @@ import { makeNpcFriendly } from '../items/petItem.mjs';
 import { hasPowerAlbum } from '../helpers/itemUtils.mjs';
 import { isLightSource, LIGHT_PRESET_CHOICES, POWER_LIGHT_PRESET_CHOICES } from '../helpers/lights.mjs';
 import { isUsable } from '../app/use-item.mjs';
+import { getUsesCounter, USES_MODES } from '../helpers/itemUses.mjs';
 import { isCastable } from '../rolls/triggers.mjs';
 import {
   animateItem,
@@ -309,6 +310,15 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       hallmarkUpgrades: getHallmarkUpgradeSummary(this.item),
       counters: getCounters(this.item),
       counterScope: '@item',
+      // Gear can keep its uses in one of its counters (instead of charges)
+      usesCounterChoices: Object.fromEntries([
+        ['', '—'],
+        ...Object.entries(this.item.system.counters ?? {}).map(([key, counter]) => [key, counter.label]),
+        ...(this.item.system.uses?.counter && !this.item.system.counters?.[this.item.system.uses.counter]
+          ? [[this.item.system.uses.counter, this.item.system.uses.counter]]
+          : [])
+      ]),
+      usesModes: USES_MODES,
       lightPresets: LIGHT_PRESET_CHOICES,
       powerLightPresets: POWER_LIGHT_PRESET_CHOICES,
       lightAnimations: {
@@ -475,7 +485,12 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
           blocked: isAnimationBlocked(this.item),
           blockHint: getAnimationBlock(this.item),
           hasCharges: this.item.system.features?.has?.('charges') ?? false,
-          charges: this.item.system.charges,
+          hasReplenish: this.item.system.features?.has?.('replenish') ?? false,
+          hasUsesCounter: !!getUsesCounter(this.item),
+          // Shown next to the cost: the uses counter when the item keeps its uses there, else charges
+          charges: getUsesCounter(this.item)
+            ? { value: getUsesCounter(this.item).counter.value, max: getUsesCounter(this.item).counter.max ?? '—' }
+            : this.item.system.charges,
           sizeUnits: CONFIG.SDM.sizeUnits,
           isWeapon: isWeaponItem(this.item),
           damageSources: {

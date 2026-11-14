@@ -26,6 +26,7 @@ import {
 import { $fmt, $l10n, capitalizeFirstLetter, safeEvaluate, formatNumber } from '../helpers/globalUtils.mjs';
 import { ALBUM_FEATURE_MAX_POWERS, getDescriptionExcerpt, lastChargeUpdate, getSlotsTaken, hasPowerAlbum, UnarmedDamageItem } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
+import { applyUsesResources } from '../helpers/itemUses.mjs';
 import { renderUsageResult } from '../rolls/ui/renderResults.mjs';
 import { DEFAULT_MAX_POWERS } from '../settings.mjs';
 
@@ -145,6 +146,9 @@ export class SdmItem extends Item {
   async _preUpdate(changes, options, user) {
     const result = await super._preUpdate(changes, options, user);
     if (result === false) return false;
+
+    // Uses kept in a counter: running low / run out follow its value
+    applyUsesResources(this, changes);
 
     // Repaired or recharged: the animated creature gets back to full life (after the update)
     if (!options[SYNC_OPTION] && isWearImproved(this, changes)) options.sdmHealCreature = true;

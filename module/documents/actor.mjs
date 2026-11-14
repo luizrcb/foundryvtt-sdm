@@ -2,6 +2,7 @@ import { featureEnabled } from '../helpers/features.mjs';
 import { isLightSource, isLit, lightBlockedReason, lightItem, putOutLight } from '../helpers/lights.mjs';
 import { blockedReason, isDormantEffect, isUsable, useItem } from '../app/use-item.mjs';
 import { resetCounters } from '../helpers/counters.mjs';
+import { canRefillUses, refillUsesUpdate } from '../helpers/itemUses.mjs';
 import { resolveEffectReferences } from '../helpers/effectReferences.mjs';
 import {
   BASE_DEFENSE_VALUE,
@@ -1645,7 +1646,7 @@ export class SdmActor extends Actor {
             item.system.type === GearType.CONTAINER
           )
             return false;
-          return this.isOwner && (item.system.resources !== '' || refillsCharges(item));
+          return this.isOwner && (item.system.resources !== '' || refillsCharges(item) || canRefillUses(item));
         },
         onClick: async (event, target) => {
           const item = this.sheet._getEmbeddedDocument(target);
@@ -1653,7 +1654,9 @@ export class SdmActor extends Actor {
           const charges = item.system.features.has('charges') && !item.system.features.has('replenish');
           await item.update({
             'system.resources': '',
-            ...(charges ? { 'system.charges.value': item.system.charges.max } : {})
+            ...(charges ? { 'system.charges.value': item.system.charges.max } : {}),
+            // Uses kept in a counter come back too
+            ...refillUsesUpdate(item)
           });
         }
       },

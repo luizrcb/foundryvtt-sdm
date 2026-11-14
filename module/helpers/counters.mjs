@@ -47,7 +47,12 @@ function onPreUpdateCounters(doc, changes, options) {
     delete taken[oldKey];
     renames[oldKey] = newKey;
   }
-  if (Object.keys(renames).length) options.sdmCounterRenames = renames;
+  if (Object.keys(renames).length) {
+    options.sdmCounterRenames = renames;
+    // The item's uses counter follows its new key
+    const usesKey = foundry.utils.getProperty(changes, 'system.uses.counter') ?? doc.system?.uses?.counter;
+    if (usesKey && renames[usesKey]) foundry.utils.setProperty(changes, 'system.uses.counter', renames[usesKey]);
+  }
 }
 
 /**

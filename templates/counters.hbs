@@ -37,5 +37,16 @@
     {{else}}
     <p class="hint">{{localize 'SDM.Counter.None'}}</p>
     {{/each}}
+    {{#if (and (eq @root.counterScope '@item') (eq @root.item.type 'gear'))}}
+    <div class="sdm-counter-row sdm-uses-row">
+      <label data-tooltip="{{localize 'SDM.Uses.Hint'}}">{{localize 'SDM.Uses.Label'}}
+        <select name="system.uses.counter">{{selectOptions @root.usesCounterChoices selected=@root.system.uses.counter}}</select></label>
+      {{#if @root.system.uses.counter}}
+      <select name="system.uses.mode" data-tooltip="{{localize 'SDM.Uses.ModeHint'}}">{{selectOptions @root.usesModes selected=@root.system.uses.mode localize=true}}</select>
+      {{else}}
+      <input type="hidden" name="system.uses.mode" value="{{@root.system.uses.mode}}" />
+      {{/if}}
+    </div>
+    {{/if}}
   </div>
 {{/if}}

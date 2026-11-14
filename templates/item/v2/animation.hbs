@@ -30,10 +30,16 @@
         <input type="text" name="system.attributes.level" value="{{@root.system.attributes.level}}" data-dtype="Number" {{#unless canManage}}disabled{{/unless}} />
       </label>
       {{/if}}
-      {{#if hasCharges}}
+      {{#if (or hasCharges hasUsesCounter)}}
       <label class="v2-field" data-tooltip="{{localize 'SDM.Animation.ChargeCostHint'}}">
         <span class="v2-label">{{localize 'SDM.Animation.ChargeCost'}} ({{charges.value}}/{{charges.max}})</span>
         <input type="text" name="system.animation.chargeCost" value="{{@root.system.animation.chargeCost}}" data-dtype="Number" {{#unless canManage}}disabled{{/unless}} />
+      </label>
+      {{/if}}
+      {{#if hasReplenish}}
+      <label class="v2-field v2-check" data-tooltip="{{localize 'SDM.Animation.UsageRollHint'}}">
+        <input type="checkbox" name="system.animation.usageRoll" {{checked @root.system.animation.usageRoll}} {{#unless canManage}}disabled{{/unless}} />
+        <span class="v2-label">{{localize 'SDM.Animation.UsageRoll'}}</span>
       </label>
       {{/if}}
       {{#if isWeapon}}

@@ -44,6 +44,12 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
     // them as @item.counters.<key>.value. Separate from charges (ammunition, battery, uses).
     schema.counters = defineCountersField();
 
+    // Uses kept in one of the counters instead of charges (uses left, or uses spent up to its max)
+    schema.uses = new fields.SchemaField({
+      counter: new fields.StringField({ required: true, blank: true, initial: '' }),
+      mode: new fields.StringField({ required: true, blank: false, initial: 'left', choices: ['left', 'spent'] })
+    });
+
     schema.charges = new fields.SchemaField({
       value: new fields.NumberField({
         required: true,
@@ -179,6 +185,8 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       endWithCombat: new fields.BooleanField({ required: true, initial: false }),
       // Charges spent each time the item is animated (0: animating is free)
       chargeCost: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 0, min: 0 }),
+      // Items with replenish: each animation is a use (usage roll; running low: last use)
+      usageRoll: new fields.BooleanField({ required: true, initial: false }),
       // The creature's own size (weight) and speed
       size: new fields.SchemaField({
         value: new fields.NumberField({ required: true, initial: 1, min: 0 }),

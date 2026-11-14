@@ -1,5 +1,6 @@
 import { ItemType } from '../helpers/constants.mjs';
 import { lastChargeUpdate } from '../helpers/itemUtils.mjs';
+import { getUsesCounter, spendUsesUpdate, usesLeft } from '../helpers/itemUses.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 
 /**
@@ -197,6 +198,7 @@ export function blockedReason(item) {
   if (system.status === 'broken') return 'SDM.Use.Broken';
   if (system.resources === 'run_out') return 'SDM.Use.RunOut';
   const replenish = system.features?.has?.('replenish');
+  if (!replenish && getUsesCounter(item)) return usesLeft(item) > 0 ? null : 'SDM.Use.NoUses';
   if (!replenish && system.features?.has?.('charges') && (Number(system.charges?.value) || 0) <= 0) return 'SDM.Use.NoCharges';
   return null;
 }
@@ -264,11 +266,16 @@ export async function useItem(item) {
   await spend(item);
 }
 
-/** Replenish: usage roll (charges untouched). Charges: one charge. Otherwise: one of its quantity. */
+/** Replenish: usage roll (charges untouched). Uses counter: one use. Charges: one charge. Otherwise: one of its quantity. */
 async function spend(item) {
   const system = item.system;
   if (system.features?.has?.('replenish')) {
     await item.spendUsage();
+    return;
+  }
+  if (getUsesCounter(item)) {
+    const update = spendUsesUpdate(item);
+    if (update) await item.update(update);
     return;
   }
   if (system.features?.has?.('charges')) {

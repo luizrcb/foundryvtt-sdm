@@ -4,6 +4,7 @@ import { ActorType, GearType, ItemStatusType, ItemType } from './constants.mjs';
 import { $fmt, $l10n } from './globalUtils.mjs';
 import { featureEnabled } from './features.mjs';
 import { hasPowerAlbum, lastChargeUpdate } from './itemUtils.mjs';
+import { getUsesCounter, spendUsesUpdate, usesLeft } from './itemUses.mjs';
 
 /**
  * Animated items: an item with the "animated" feature can come to life as an NPC.
@@ -60,6 +61,16 @@ export function getAnimationChargeCost(item) {
   return Math.max(Number(item.system.animation?.chargeCost) || 0, 0);
 }
 
+/** Items with replenish can make each animation a use: a usage roll (running low: the last use). */
+export function animationSpendsUsage(item) {
+  return !!item.system.animation?.usageRoll && !!item.system.features?.has?.('replenish');
+}
+
+/** Paid to come to life (charges or a use): the payment is the price, the item itself is not worn. */
+export function isAnimationPaid(item) {
+  return getAnimationChargeCost(item) > 0 || animationSpendsUsage(item);
+}
+
 /**
  * Why the item cannot come to life right now, as a localization key (null: it can):
  * broken or run out (repair or recharge it), or not enough charges to pay the animation.
@@ -69,7 +80,9 @@ export function getAnimationBlock(item) {
     return 'SDM.Animation.BlockedHint';
   }
   const cost = getAnimationChargeCost(item);
-  if (cost > 0 && (Number(item.system.charges?.value) || 0) < cost) return 'SDM.Animation.NoChargesHint';
+  // The item's uses counter pays it when it has one, else its charges
+  const available = getUsesCounter(item) ? usesLeft(item) : Number(item.system.charges?.value) || 0;
+  if (cost > 0 && available < cost) return 'SDM.Animation.NoChargesHint';
   return null;
 }
 
@@ -445,8 +458,8 @@ export async function animateItem(item, { app } = {}) {
 
   let npc = getLinkedNpc(item);
   const system = npcSystemFromItem(item);
-  if (getAnimationChargeCost(item) > 0) {
-    // Every charge spent brings the creature back with full life
+  if (isAnimationPaid(item)) {
+    // Every charge (or use) spent brings the creature back with full life
     system.life.value = system.life.max;
   } else {
     // A notched or running-low item comes to life already worn: at most half its life
@@ -507,13 +520,17 @@ export async function animateItem(item, { app } = {}) {
   };
   // Animating spends the configured charges (souls, energy…)
   const chargeCost = getAnimationChargeCost(item);
-  if (chargeCost > 0) {
+  if (chargeCost > 0 && getUsesCounter(item)) {
+    Object.assign(update, spendUsesUpdate(item, chargeCost) ?? {});
+  } else if (chargeCost > 0) {
     const charges = (Number(item.system.charges?.value) || 0) - chargeCost;
     update['system.charges.value'] = charges;
     Object.assign(update, lastChargeUpdate(item, charges));
   }
   if (item.system.animation.mode === 'walks') update['system.readied'] = false;
   await item.update(update, { [SYNC_OPTION]: true });
+  // A use of an item with replenish: usage roll, or its last use when running low
+  if (animationSpendsUsage(item)) await item.spendUsage({ [SYNC_OPTION]: true });
 
   // Place the token, unless the creature is already in this scene
   if (canvas.scene.tokens.some(token => token.actorId === npc.id)) return npc;
@@ -648,8 +665,8 @@ export async function syncAnimationLevel(item, { damageSourceChanged = false } =
 export async function applyAnimatedWear(npc) {
   const item = getAnimatedSourceItem(npc);
   if (!item) return;
-  // Paid with charges: the charge was the price, the item itself is not worn
-  if (getAnimationChargeCost(item) > 0) return;
+  // Paid with charges or a use: that was the price, the item itself is not worn
+  if (isAnimationPaid(item)) return;
 
   const value = Number(npc.system.life?.value) || 0;
   const max = Number(npc.system.life?.max) || 0;

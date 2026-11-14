@@ -263,6 +263,12 @@ export default class SDMRoll {
     ) {
       await this.item.spendUsage();
     }
+
+    // Casting a power from an item with replenish uses it too (running low: last use, no roll)
+    const castFrom = isPowerAlbum ? this.triggerItem : isPower && this.item?.id ? this.item : null;
+    if (castFrom?.actor && castFrom.system?.features?.has?.('replenish')) {
+      await castFrom.spendUsage();
+    }
   }
 
   #buildDiceComponent() {

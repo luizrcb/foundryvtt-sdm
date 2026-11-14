@@ -2,6 +2,7 @@ import { applyItemEffectToTargets, isUsable, useItem } from '../app/use-item.mjs
 import { GearType, ItemStatusType, ItemType } from '../helpers/constants.mjs';
 import { resetCounters, stepCounter } from '../helpers/counters.mjs';
 import { getItemIdentifier } from '../helpers/effectReferences.mjs';
+import { refillUsesUpdate } from '../helpers/itemUses.mjs';
 import { featureEnabled } from '../helpers/features.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 import { hasPowerAlbum } from '../helpers/itemUtils.mjs';
@@ -216,7 +217,13 @@ async function useAction(holder, actor, trigger) {
  * Normal: the cast dialog opens (cost and danger warning). Free: cast at once, no cost.
  */
 async function castAction(holder, actor, trigger) {
-  const target = resolveTriggerItem(holder, actor, trigger.cast, isCastable);
+  // A broken or run-out item can't be cast from (as on the sheet)
+  const target = resolveTriggerItem(
+    holder,
+    actor,
+    trigger.cast,
+    item => isCastable(item) && item.system.status !== ItemStatusType.BROKEN && item.system.resources !== 'run_out'
+  );
   if (!target) return missingItem(holder, trigger.cast);
   const sheet = target.actor?.sheet;
   if (!sheet || !target.actor.isOwner) return;
@@ -252,6 +259,7 @@ async function wearItem(item, wear) {
     const update = {};
     if (system.resources !== '') update['system.resources'] = '';
     if (refill && system.charges?.value !== system.charges?.max) update['system.charges.value'] = system.charges.max;
+    Object.assign(update, refillUsesUpdate(item));
     if (Object.keys(update).length) return item.update(update);
     return;
   }

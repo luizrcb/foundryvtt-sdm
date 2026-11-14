@@ -2,6 +2,7 @@ import { ActorType, GearType, ItemStatusType, ItemType } from './constants.mjs';
 import { $fmt, $l10n } from './globalUtils.mjs';
 import { featureEnabled } from './features.mjs';
 import { lastChargeUpdate } from './itemUtils.mjs';
+import { getUsesCounter, spendUsesUpdate, usesLeft } from './itemUses.mjs';
 
 /**
  * Token light from items (light category or glowing feature).
@@ -126,6 +127,7 @@ export function lightBlockedReason(item) {
   if (system.status === ItemStatusType.BROKEN) return 'SDM.Light.Broken';
   if (system.resources === 'run_out') return 'SDM.Light.RunOut';
   const features = system.features;
+  if (!features?.has?.('replenish') && getUsesCounter(item)) return usesLeft(item) > 0 ? null : 'SDM.Light.NoUses';
   if (!features?.has?.('replenish') && features?.has?.('charges') && (Number(system.charges?.value) || 0) <= 0) {
     return 'SDM.Light.NoCharges';
   }
@@ -188,6 +190,11 @@ async function spendForLight(item) {
   const options = { [SPEND_OPTION]: true };
   if (system.features?.has?.('replenish')) {
     await item.spendUsage(options);
+    return;
+  }
+  if (getUsesCounter(item)) {
+    const update = spendUsesUpdate(item);
+    if (update) await item.update(update, options);
     return;
   }
   if (system.features?.has?.('charges')) {

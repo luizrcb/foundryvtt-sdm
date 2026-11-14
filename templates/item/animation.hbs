@@ -96,10 +96,16 @@
         {{selectOptions (sdmSpeedChoices @root.system.animation.speed) selected=@root.system.animation.speed}}
       </select>
     </div>
-    {{#if hasCharges}}
+    {{#if (or hasCharges hasUsesCounter)}}
     <div class='resource' data-tooltip="{{localize 'SDM.Animation.ChargeCostHint'}}">
       <label class='resource-label'>{{localize 'SDM.Animation.ChargeCost'}} ({{charges.value}}/{{charges.max}})</label>
       <input type='text' name='system.animation.chargeCost' value='{{@root.system.animation.chargeCost}}' data-dtype='Number' {{#unless canManage}}disabled{{/unless}} />
+    </div>
+    {{/if}}
+    {{#if hasReplenish}}
+    <div class='resource' data-tooltip="{{localize 'SDM.Animation.UsageRollHint'}}">
+      <label class='resource-label'>{{localize 'SDM.Animation.UsageRoll'}}</label>
+      <input type='checkbox' name='system.animation.usageRoll' {{checked @root.system.animation.usageRoll}} {{#unless canManage}}disabled{{/unless}} />
     </div>
     {{/if}}
   </div>
