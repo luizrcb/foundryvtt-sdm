@@ -4,6 +4,7 @@ import { convertToSacks, getRowRolls, getWealthFromItems, hasPowerAlbum } from '
 import { getHallmarkUpgradeSummary } from './app/level-upgrades.mjs';
 import { isLightSource, isLit } from './helpers/lights.mjs';
 import { featureEnabled } from './helpers/features.mjs';
+import { describeUse } from './app/use-item.mjs';
 
 export function registerHandlebarsHelpers() {
   const $$ = (name, fn) => Handlebars.registerHelper(name, fn);
@@ -28,6 +29,8 @@ export function registerHandlebarsHelpers() {
     turn: 'SDM.Counter.ResetEachTurn'
   }));
   $$('sdmIsLit', item => isLit(item));
+  // Use icon tooltip: what using a consumable does and what it spends
+  $$('sdmUseTooltip', item => describeUse(item));
 
   const rowRolls = (item, actorType, editable) => getRowRolls(item, actorType, editable);
   $$('sdmRowImage', (item, actorType, editable) => rowRolls(item, actorType, editable).image);

@@ -4,7 +4,7 @@ import { ActorType, GearType, ItemStatusType, ItemType } from './constants.mjs';
 import { $fmt, $l10n } from './globalUtils.mjs';
 import { featureEnabled } from './features.mjs';
 import { hasPowerAlbum, lastChargeUpdate } from './itemUtils.mjs';
-import { getUsesCounter, spendUsesUpdate, usesLeft } from './itemUses.mjs';
+import { getUsesCounter, spendUsesUpdate, usesLeft, usesResources } from './itemUses.mjs';
 
 /**
  * Animated items: an item with the "animated" feature can come to life as an NPC.
@@ -520,12 +520,18 @@ export async function animateItem(item, { app } = {}) {
   };
   // Animating spends the configured charges (souls, energy…)
   const chargeCost = getAnimationChargeCost(item);
-  if (chargeCost > 0 && getUsesCounter(item)) {
-    Object.assign(update, spendUsesUpdate(item, chargeCost) ?? {});
+  const usesCounter = getUsesCounter(item);
+  if (chargeCost > 0 && usesCounter) {
+    const spent = spendUsesUpdate(item, chargeCost) ?? {};
+    Object.assign(update, spent);
+    // Running low / run out from what is left (none left: run out)
+    const next = spent[`system.counters.${usesCounter.key}.value`];
+    if (next !== undefined && !item.system.features?.has?.('replenish')) update['system.resources'] = usesResources(usesCounter, next);
   } else if (chargeCost > 0) {
-    const charges = (Number(item.system.charges?.value) || 0) - chargeCost;
+    const charges = Math.max((Number(item.system.charges?.value) || 0) - chargeCost, 0);
     update['system.charges.value'] = charges;
-    Object.assign(update, lastChargeUpdate(item, charges));
+    // Spending the last charges runs it out (like Use and lighting)
+    Object.assign(update, charges === 0 ? { 'system.resources': 'run_out' } : lastChargeUpdate(item, charges));
   }
   if (item.system.animation.mode === 'walks') update['system.readied'] = false;
   await item.update(update, { [SYNC_OPTION]: true });

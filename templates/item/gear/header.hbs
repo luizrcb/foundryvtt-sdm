@@ -205,6 +205,15 @@
           </div>
           {{/if}}
 
+          {{#if (or (eq system.type 'weapon') (has system.features 'weapon'))}}
+          <div class='resource align-center' data-tooltip="{{localize 'SDM.WorksWhenRunOutHint'}}">
+            <label class='resource-label'>{{localize 'SDM.WorksWhenRunOut'}}</label>
+            <div class='resource-content align-center'>
+              <input type='checkbox' name="system.works_when_run_out" {{checked system.works_when_run_out}} />
+            </div>
+          </div>
+          {{/if}}
+
           {{#if (has system.features 'replenish')}}
           <div class='resource'>
             <label class='resource-label' for="system.replenish.value">{{localize 'SDM.ItemFeature.replenish'}}</label>

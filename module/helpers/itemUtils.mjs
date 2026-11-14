@@ -427,11 +427,14 @@ export function getRowRolls(item, actorType, editable = true) {
   const none = { image: null, icons: [] };
   const system = item?.system;
   if (!system || !editable || actorType === 'caravan') return none;
-  if (system.status === 'broken' || system.resources === 'run_out' || system.size?.unit === 'cash') return none;
+  if (system.status === 'broken' || system.size?.unit === 'cash') return none;
+  // Run out: only items marked "works when run out" keep their damage roll (nothing else)
+  const runOut = system.resources === 'run_out';
+  if (runOut && !system.works_when_run_out) return none;
   if (!system.readied) return none;
   const has = feature => !!system.features?.has?.(feature);
   const canDamage = (system.type === 'weapon' || has('weapon')) && !!system.weapon?.damage?.base;
-  const canAlbum = hasPowerAlbum(item) && (system.powers?.length ?? 0) > 0;
+  const canAlbum = !runOut && hasPowerAlbum(item) && (system.powers?.length ?? 0) > 0;
 
   let image = null;
   if (system.type === 'weapon') image = canDamage ? 'damage' : null;

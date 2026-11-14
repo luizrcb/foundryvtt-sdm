@@ -192,6 +192,52 @@ function effectsToCopy(item) {
   });
 }
 
+/**
+ * Tooltip of the Use icon: what using it does (restores, effects), what it spends and on whom.
+ * Returns HTML (the tooltip renders it).
+ */
+export function describeUse(item) {
+  const system = item?.system;
+  if (!system) return $l10n('SDM.Use.Action');
+  const use = system.use ?? {};
+  const lines = [];
+  if (use.life?.trim()) lines.push(isFullRestore(use.life) ? $l10n('SDM.Use.RestoreAllLife') : $fmt('SDM.Use.RestoreLife', { formula: esc(use.life) }));
+  if (use.ability?.trim()) {
+    lines.push(
+      isFullRestore(use.ability)
+        ? $l10n('SDM.Use.RestoreAllAbilities')
+        : $fmt('SDM.Use.Tip.RestoreAbility', { formula: esc(use.ability) })
+    );
+  }
+  const effects = item.effects?.contents ?? [...(item.effects ?? [])];
+  if (effects.length) lines.push($fmt('SDM.Use.Tip.Effects', { effects: effects.map(e => esc(e.name)).join(', ') }));
+  if (!lines.length) lines.push($l10n('SDM.Use.Tip.Nothing'));
+
+  // What it spends
+  let cost;
+  const uses = getUsesCounter(item);
+  if (system.features?.has?.('replenish')) {
+    cost = system.resources === 'running_low'
+      ? $l10n('SDM.Use.Tip.LastUse')
+      : $fmt('SDM.Use.Tip.UsageRoll', { value: Number(system.replenish?.value) || 0 });
+  } else if (uses) {
+    cost = $fmt('SDM.Use.Tip.Uses', { counter: esc(uses.counter.label), left: usesLeft(item) === Infinity ? '∞' : usesLeft(item) });
+  } else if (system.features?.has?.('charges')) {
+    cost = $fmt('SDM.Use.Tip.Charge', { value: Number(system.charges?.value) || 0, max: Number(system.charges?.max) || 0 });
+  } else {
+    cost = $fmt('SDM.Use.Tip.Quantity', { quantity: Number(system.quantity) || 1 });
+  }
+
+  const several = lines.length > 1 && !lines.includes($l10n('SDM.Use.Tip.Nothing'));
+  return [
+    `<strong>${esc($l10n('SDM.Use.Action'))}</strong>`,
+    `<ul style="margin:2px 0 2px 1em;padding:0">${lines.map(line => `<li>${line}</li>`).join('')}</ul>`,
+    several ? `<em>${$l10n('SDM.Use.Tip.Choose')}</em><br>` : '',
+    `${$l10n('SDM.Use.Tip.Spends')} ${cost}<br>`,
+    `${$l10n('SDM.Use.Tip.Targets')}`
+  ].join('');
+}
+
 /** Can it be used now? Returns a warning key, or null. */
 export function blockedReason(item) {
   const system = item.system;

@@ -73,7 +73,8 @@ export class SdmItemSheetV2 extends SdmItemSheet {
       isWard: isGear && (type === GearType.WARD || has('ward')),
       // Installed mods are hidden only for a weapon that also has the weapon feature (classic behavior)
       showMods: isGear && !(type === GearType.WEAPON && has('weapon')),
-      hasFeatureFields: isGear && (showCharges || FEATURE_VALUE_FIELDS.some(has) || isLightSource(item))
+      hasFeatureFields:
+        isGear && (showCharges || FEATURE_VALUE_FIELDS.some(has) || isLightSource(item) || type === GearType.WEAPON || has('weapon'))
     };
 
     return context;

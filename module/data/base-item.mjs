@@ -50,6 +50,9 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       mode: new fields.StringField({ required: true, blank: false, initial: 'left', choices: ['left', 'spent'] })
     });
 
+    // The item can still make its damage roll while run out (it is still a plain weapon)
+    schema.works_when_run_out = new fields.BooleanField({ required: true, initial: false });
+
     schema.charges = new fields.SchemaField({
       value: new fields.NumberField({
         required: true,

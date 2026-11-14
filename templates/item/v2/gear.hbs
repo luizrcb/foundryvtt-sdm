@@ -196,6 +196,12 @@
       </div>
     </div>
     {{/unless}}
+    {{#if v2.isWeapon}}
+    <label class="v2-field v2-check" data-tooltip="{{localize 'SDM.WorksWhenRunOutHint'}}">
+      <input type="checkbox" name="system.works_when_run_out" {{checked system.works_when_run_out}} />
+      <span class="v2-label">{{localize 'SDM.WorksWhenRunOut'}}</span>
+    </label>
+    {{/if}}
     {{#if (has system.features 'area')}}
     <label class="v2-field">
       <span class="v2-label">{{localize 'SDM.ItemFeature.area'}}</span>

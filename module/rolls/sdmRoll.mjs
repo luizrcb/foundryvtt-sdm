@@ -259,7 +259,8 @@ export default class SDMRoll {
       isDamage &&
       this.item &&
       this.item?.system?.features?.has('replenish') &&
-      this.item.system.replenish?.on_attack !== false
+      this.item.system.replenish?.on_attack !== false &&
+      this.item.system.resources !== 'run_out'
     ) {
       await this.item.spendUsage();
     }

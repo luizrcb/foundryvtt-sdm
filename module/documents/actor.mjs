@@ -1481,6 +1481,48 @@ export class SdmActor extends Actor {
         }
       },
       {
+        label: 'SDM.Animation.Animate',
+        icon: '<i class="fa-solid fa-ghost"></i>',
+        visible: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          return (
+            game.user.isGM &&
+            isAnimatable(item) &&
+            !item.system.animation?.active &&
+            !isAnimationBlocked(item)
+          );
+        },
+        onClick: async (event, target) => {
+          await animateItem(this.sheet._getEmbeddedDocument(target), { app: this.sheet });
+        }
+      },
+      {
+        label: 'SDM.Animation.Request',
+        icon: '<i class="fa-solid fa-hand"></i>',
+        visible: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          return (
+            !game.user.isGM &&
+            item?.isOwner &&
+            isAnimatable(item) &&
+            !item.system.animation?.active &&
+            !isAnimationBlocked(item)
+          );
+        },
+        onClick: async (event, target) => requestAnimation(this.sheet._getEmbeddedDocument(target))
+      },
+      {
+        label: 'SDM.Animation.Deanimate',
+        icon: '<i class="fa-solid fa-box"></i>',
+        visible: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          return game.user.isGM && isAnimatable(item) && !!item.system.animation?.active;
+        },
+        onClick: async (event, target) => {
+          await deanimateItem(this.sheet._getEmbeddedDocument(target));
+        }
+      },
+      {
         label: 'SDM.Item.SplitItems',
         icon: '<i class="fa-solid fa-arrows-split-up-and-left"></i>',
         visible: target => {
@@ -1766,48 +1808,6 @@ export class SdmActor extends Actor {
         onClick: async (event, target) => {
           const item = this.sheet._getEmbeddedDocument(target);
           await item.toggleItemStatus();
-        }
-      },
-      {
-        label: 'SDM.Animation.Animate',
-        icon: '<i class="fa-solid fa-ghost"></i>',
-        visible: target => {
-          const item = this.sheet._getEmbeddedDocument(target);
-          return (
-            game.user.isGM &&
-            isAnimatable(item) &&
-            !item.system.animation?.active &&
-            !isAnimationBlocked(item)
-          );
-        },
-        onClick: async (event, target) => {
-          await animateItem(this.sheet._getEmbeddedDocument(target), { app: this.sheet });
-        }
-      },
-      {
-        label: 'SDM.Animation.Request',
-        icon: '<i class="fa-solid fa-hand"></i>',
-        visible: target => {
-          const item = this.sheet._getEmbeddedDocument(target);
-          return (
-            !game.user.isGM &&
-            item?.isOwner &&
-            isAnimatable(item) &&
-            !item.system.animation?.active &&
-            !isAnimationBlocked(item)
-          );
-        },
-        onClick: async (event, target) => requestAnimation(this.sheet._getEmbeddedDocument(target))
-      },
-      {
-        label: 'SDM.Animation.Deanimate',
-        icon: '<i class="fa-solid fa-box"></i>',
-        visible: target => {
-          const item = this.sheet._getEmbeddedDocument(target);
-          return game.user.isGM && isAnimatable(item) && !!item.system.animation?.active;
-        },
-        onClick: async (event, target) => {
-          await deanimateItem(this.sheet._getEmbeddedDocument(target));
         }
       },
       {

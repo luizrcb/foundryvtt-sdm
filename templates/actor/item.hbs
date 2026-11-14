@@ -70,7 +70,7 @@
         {{/if}}
       {{/each}}
       {{#if (and (has item.system.features 'consumable') @root.editable (ne actorType 'caravan') (ne item.system.status 'broken') (ne item.system.resources 'run_out'))}}
-        <a class="rollable mr-3" data-action="useItem" data-tooltip="{{localize 'SDM.Use.Action'}}"><i class="fa-solid fa-hand-holding-medical"></i></a>
+        <a class="rollable mr-3" data-action="useItem" data-tooltip="{{sdmUseTooltip item}}"><i class="fa-solid fa-hand-holding-medical"></i></a>
       {{/if}}
       {{#if (sdmIsLit item)}}
         <a class="rollable sdm-lit-icon mr-3" {{#if @root.editable}}data-action="putOutLight"{{/if}} data-tooltip="{{localize 'SDM.Light.LitHint'}}"><i class="fa-solid fa-fire-flame-curved"></i></a>
