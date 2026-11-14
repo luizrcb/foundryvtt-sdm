@@ -44,31 +44,59 @@ function getTargets(actor) {
   return [actor];
 }
 
+/** Abilities a consumable can restore: any, only physical or only mental. */
+export const ABILITY_GROUPS = { physical: ['str', 'end', 'agi'], mental: ['cha', 'aur', 'tho'] };
+
+function abilityKeys(group) {
+  const all = Object.keys(CONFIG.SDM.abilities);
+  return ABILITY_GROUPS[group] ? all.filter(key => ABILITY_GROUPS[group].includes(key)) : all;
+}
+
+function abilityOptions(group) {
+  return abilityKeys(group)
+    .map(key => `<option value="${key}">${esc($l10n(CONFIG.SDM.abilities[key]))}</option>`)
+    .join('');
+}
+
+/** Label of the ability restore, naming the group when it is limited. */
+function abilityLabel(use) {
+  const group = ABILITY_GROUPS[use.ability_group] ? $l10n(`SDM.Use.Group.${use.ability_group}`) : '';
+  if (isFullRestore(use.ability)) return group ? $fmt('SDM.Use.RestoreAllGroup', { group }) : $l10n('SDM.Use.RestoreAllAbilities');
+  return group ? $fmt('SDM.Use.RestoreGroup', { formula: esc(use.ability), group }) : $fmt('SDM.Use.RestoreAbility', { formula: esc(use.ability) });
+}
+
 /**
  * What this use does, picked with checkboxes when there is more than one option: restore life,
- * restore an ability (which one), apply the item's effects (Black Light Lotus: smoke it to heal,
- * apply it for the charisma, or both). Only the first option starts ticked.
- * Returns { life, ability, abilityKey, effects } (booleans), or null when closed.
+ * restore an ability (which one), grant temporary life, apply the item's effects (Black Light
+ * Lotus: smoke it to heal, apply it for the charisma, or both). Only the first option starts ticked.
+ * Harm and the roll table are not options: they always happen.
+ * Returns { life, ability, abilityKey, tempLife, effects } (booleans), or null when closed.
  */
 async function chooseUse(use, effects) {
   const hasLife = !!use.life?.trim();
   const hasAbility = !!use.ability?.trim();
+  const hasTemp = !!use.temp_life?.trim();
   const hasEffects = effects.length > 0;
-  const count = hasLife + hasAbility + hasEffects;
+  const count = hasLife + hasAbility + hasTemp + hasEffects;
   const abilityFull = isFullRestore(use.ability);
   if (count <= 1) {
-    return { life: hasLife, ability: hasAbility, abilityKey: null, effects: hasEffects, askAbility: hasAbility && !abilityFull };
+    return {
+      life: hasLife,
+      ability: hasAbility,
+      abilityKey: null,
+      tempLife: hasTemp,
+      effects: hasEffects,
+      askAbility: hasAbility && !abilityFull
+    };
   }
 
-  const first = hasLife ? 'life' : 'ability';
+  const first = hasLife ? 'life' : hasAbility ? 'ability' : hasTemp ? 'tempLife' : 'effects';
   const box = (kind, label) =>
     `<label class="sdm-upgrade-choice"><input type="checkbox" name="${kind}" ${kind === first ? 'checked' : ''} /> ${label}</label>`;
-  const abilities = Object.entries(CONFIG.SDM.abilities)
-    .map(([key, label]) => `<option value="${key}">${esc($l10n(label))}</option>`)
-    .join('');
   const content = `<div class="sdm-upgrade">
       ${hasLife ? box('life', isFullRestore(use.life) ? $l10n('SDM.Use.RestoreAllLife') : $fmt('SDM.Use.RestoreLife', { formula: esc(use.life) })) : ''}
-      ${hasAbility ? (abilityFull ? box('ability', $l10n('SDM.Use.RestoreAllAbilities')) : box('ability', $fmt('SDM.Use.RestoreAbility', { formula: esc(use.ability) })) + `<div class="sdm-upgrade-detail"><select name="abilityKey">${abilities}</select></div>`) : ''}
+      ${hasAbility ? box('ability', abilityLabel(use)) + (abilityFull ? '' : `<div class="sdm-upgrade-detail"><select name="abilityKey">${abilityOptions(use.ability_group)}</select></div>`) : ''}
+      ${hasTemp ? box('tempLife', $fmt('SDM.Use.TempLife', { formula: esc(use.temp_life) })) : ''}
       ${hasEffects ? box('effects', $fmt('SDM.Use.ApplyEffects', { effects: effects.map(e => esc(e.name)).join(', ') })) : ''}
     </div>`;
   return DialogV2.prompt({
@@ -91,6 +119,7 @@ async function chooseUse(use, effects) {
           life: checked('life'),
           ability: checked('ability'),
           abilityKey: button.form.elements.abilityKey?.value,
+          tempLife: checked('tempLife'),
           effects: checked('effects')
         };
       }
@@ -98,17 +127,24 @@ async function chooseUse(use, effects) {
   });
 }
 
-/** Ask only which ability (single option: restore an ability). */
-async function chooseAbility() {
-  const abilities = Object.entries(CONFIG.SDM.abilities)
-    .map(([key, label]) => `<option value="${key}">${esc($l10n(label))}</option>`)
-    .join('');
+/** Ask only which ability (single option: restore an ability), among its group. */
+async function chooseAbility(group = '') {
   return DialogV2.prompt({
     window: { title: $l10n('SDM.Use.Title'), icon: 'fa-solid fa-hand-holding-medical' },
-    content: `<div class="sdm-upgrade"><select name="abilityKey">${abilities}</select></div>`,
+    content: `<div class="sdm-upgrade"><select name="abilityKey">${abilityOptions(group)}</select></div>`,
     rejectClose: false,
     ok: { label: $l10n('SDM.Use.Confirm'), callback: (event, button) => button.form.elements.abilityKey.value }
   });
+}
+
+/** The effect duration of a use, as active effect duration data (null: until removed by hand). */
+function useDuration(use) {
+  const value = Number(use?.duration?.value) || 0;
+  const units = use?.duration?.units;
+  if (!value || !units) return null;
+  if (units === 'rounds') return { value, units: 'rounds', expiry: 'turnEnd' };
+  const seconds = { minutes: 60, hours: 3600, days: 86400, weeks: 604800 }[units];
+  return seconds ? { value: value * seconds, units: 'seconds' } : null;
 }
 
 /** Restoration and effects on one actor (here, or by the active Referee for actors the user does not own). */
@@ -118,7 +154,25 @@ async function applyToActor({ actorUuid, restores = [], restore, effects }) {
   if (restore) restores = [restore]; // older clients
   for (const restore of restores) {
     if (restore?.full) {
-      await restoreAll(actor, restore.kind);
+      await restoreAll(actor, restore.kind, restore.group);
+      continue;
+    }
+    // Harm: life lost by whoever takes it (temporary life first, like damage)
+    if (restore?.kind === 'harm' && restore.amount > 0) {
+      await actor.applyDamage(restore.amount, 1, false, true);
+      continue;
+    }
+    // Temporary life: on top of what it has (actors without temporary life get none)
+    if (restore?.kind === 'temp_life' && restore.amount > 0) {
+      const temp = actor.system.temporary_life;
+      if (temp && 'enabled' in temp) {
+        const value = (Number(temp.value) || 0) + restore.amount;
+        await actor.update({
+          'system.temporary_life.enabled': true,
+          'system.temporary_life.value': value,
+          'system.temporary_life.max': Math.max(Number(temp.max) || 0, value)
+        });
+      }
       continue;
     }
     if (restore?.kind === 'life' && restore.amount > 0) {
@@ -133,8 +187,8 @@ async function applyToActor({ actorUuid, restores = [], restore, effects }) {
   if (effects?.length) await actor.createEmbeddedDocuments('ActiveEffect', effects);
 }
 
-/** All missing life (to its maximum), or every ability back to full. */
-export async function restoreAll(actor, kind) {
+/** All missing life (to its maximum), or every ability back to full (only physical / mental with a group). */
+export async function restoreAll(actor, kind, group = '') {
   if (kind === 'life') {
     const life = actor.system.life;
     if (life && life.value < life.max) await actor.update({ 'system.life.value': life.max });
@@ -142,6 +196,7 @@ export async function restoreAll(actor, kind) {
   }
   const update = {};
   for (const [key, ability] of Object.entries(actor.system.abilities ?? {})) {
+    if (ABILITY_GROUPS[group] && !ABILITY_GROUPS[group].includes(key)) continue;
     const full = ability.full ?? (ability.base ?? 0) + (ability.bonus ?? 0);
     if ((Number(ability.current) || 0) < full) update[`system.abilities.${key}.current`] = full;
   }
@@ -204,14 +259,25 @@ export function describeUse(item) {
   if (use.life?.trim()) lines.push(isFullRestore(use.life) ? $l10n('SDM.Use.RestoreAllLife') : $fmt('SDM.Use.RestoreLife', { formula: esc(use.life) }));
   if (use.ability?.trim()) {
     lines.push(
-      isFullRestore(use.ability)
-        ? $l10n('SDM.Use.RestoreAllAbilities')
+      isFullRestore(use.ability) || ABILITY_GROUPS[use.ability_group]
+        ? abilityLabel(use)
         : $fmt('SDM.Use.Tip.RestoreAbility', { formula: esc(use.ability) })
     );
   }
+  if (use.temp_life?.trim()) lines.push($fmt('SDM.Use.TempLife', { formula: esc(use.temp_life) }));
   const effects = item.effects?.contents ?? [...(item.effects ?? [])];
-  if (effects.length) lines.push($fmt('SDM.Use.Tip.Effects', { effects: effects.map(e => esc(e.name)).join(', ') }));
-  if (!lines.length) lines.push($l10n('SDM.Use.Tip.Nothing'));
+  if (effects.length) {
+    const lasts = describeDuration(use);
+    lines.push($fmt('SDM.Use.Tip.Effects', { effects: effects.map(e => esc(e.name)).join(', ') }) + (lasts ? ` (${lasts})` : ''));
+  }
+  // Always happen (not options)
+  const always = [];
+  if (use.harm?.trim()) always.push($fmt('SDM.Use.Tip.Harm', { formula: esc(use.harm) }));
+  if (use.table) {
+    const table = fromUuidSync(use.table);
+    always.push($fmt('SDM.Use.Tip.Table', { table: esc(table?.name ?? $l10n('SDM.Trigger.Table')) }));
+  }
+  if (!lines.length && !always.length) lines.push($l10n('SDM.Use.Tip.Nothing'));
 
   // What it spends
   let cost;
@@ -231,7 +297,7 @@ export function describeUse(item) {
   const several = lines.length > 1 && !lines.includes($l10n('SDM.Use.Tip.Nothing'));
   return [
     `<strong>${esc($l10n('SDM.Use.Action'))}</strong>`,
-    `<ul style="margin:2px 0 2px 1em;padding:0">${lines.map(line => `<li>${line}</li>`).join('')}</ul>`,
+    `<ul style="margin:2px 0 2px 1em;padding:0">${[...lines, ...always].map(line => `<li>${line}</li>`).join('')}</ul>`,
     several ? `<em>${$l10n('SDM.Use.Tip.Choose')}</em><br>` : '',
     `${$l10n('SDM.Use.Tip.Spends')} ${cost}<br>`,
     `${$l10n('SDM.Use.Tip.Targets')}`
@@ -262,36 +328,56 @@ export async function useItem(item) {
   const itemEffects = effectsToCopy(item);
   const choice = await chooseUse(item.system.use, itemEffects);
   if (!choice) return; // dialog closed
+  const use = item.system.use;
   if (choice.askAbility) {
-    choice.abilityKey = await chooseAbility();
+    choice.abilityKey = await chooseAbility(use.ability_group);
     if (!choice.abilityKey) return;
   }
   const restores = [];
   let rollHtml = '';
+  const rollFormula = async formula => {
+    const roll = await new Roll(formula, actor.getRollData()).evaluate();
+    rollHtml += await roll.render();
+    return Math.max(Number(roll.total) || 0, 0);
+  };
   for (const kind of ['life', 'ability']) {
     if (!choice[kind]) continue;
-    if (isFullRestore(item.system.use[kind])) {
-      restores.push({ kind, full: true, ability: null, amount: 0 });
+    if (isFullRestore(use[kind])) {
+      restores.push({ kind, full: true, ability: null, amount: 0, group: kind === 'ability' ? use.ability_group : '' });
       continue;
     }
-    const roll = await new Roll(item.system.use[kind], actor.getRollData()).evaluate();
-    restores.push({ kind, ability: kind === 'ability' ? choice.abilityKey : null, amount: Math.max(Number(roll.total) || 0, 0) });
-    rollHtml += await roll.render();
+    restores.push({ kind, ability: kind === 'ability' ? choice.abilityKey : null, amount: await rollFormula(use[kind]) });
   }
+  if (choice.tempLife && use.temp_life?.trim()) restores.push({ kind: 'temp_life', amount: await rollFormula(use.temp_life) });
+  // Harm always happens (not an option)
+  if (use.harm?.trim()) restores.push({ kind: 'harm', amount: await rollFormula(use.harm) });
 
-  const effects = choice.effects ? itemEffects : [];
-  if (!restores.length && !effects.length) {
+  // Effects last as long as the use says, unless the effect sets its own duration
+  const duration = useDuration(use);
+  const effects = (choice.effects ? itemEffects : []).map(data =>
+    duration && !(Number(data.duration?.value) > 0) ? { ...data, duration: { ...(data.duration ?? {}), ...duration } } : data
+  );
+  const table = use.table ? await fromUuid(use.table) : null;
+  if (!restores.length && !effects.length && table?.documentName !== 'RollTable') {
     ui.notifications.warn($fmt('SDM.Use.Nothing', { item: item.name }));
     return;
   }
   // Chat card: who used what on whom, and what it did
   const what = [];
   for (const restore of restores) {
-    if (restore.full) what.push($l10n(restore.kind === 'life' ? 'SDM.Use.RestoreAllLife' : 'SDM.Use.RestoreAllAbilities'));
+    if (restore.full && restore.kind === 'life') what.push($l10n('SDM.Use.RestoreAllLife'));
+    else if (restore.full) what.push(abilityLabel(use));
     else if (restore.kind === 'life') what.push($fmt('SDM.Use.ChatLife', { amount: restore.amount }));
+    else if (restore.kind === 'temp_life') what.push($fmt('SDM.Use.ChatTempLife', { amount: restore.amount }));
+    else if (restore.kind === 'harm') what.push($fmt('SDM.Use.ChatHarm', { amount: restore.amount }));
     else what.push($fmt('SDM.Use.ChatAbility', { amount: restore.amount, ability: $l10n(CONFIG.SDM.abilities[restore.ability]) }));
   }
-  if (effects.length) what.push($fmt('SDM.Use.ChatEffects', { effects: effects.map(e => esc(e.name)).join(', ') }));
+  if (effects.length) {
+    what.push(
+      $fmt('SDM.Use.ChatEffects', { effects: effects.map(e => esc(e.name)).join(', ') }) +
+        (duration ? ` (${describeDuration(use)})` : '')
+    );
+  }
   await ChatMessage.create({
     speaker: ChatMessage.getSpeaker({ actor }),
     content: `<p><i class="fa-solid fa-hand-holding-medical"></i> ${$fmt('SDM.Use.Chat', {
@@ -309,7 +395,18 @@ export async function useItem(item) {
     else ui.notifications.warn($l10n('SDM.ErrorNoActiveGM'));
   }
 
+  // The roll table, every time (strange beliefs, vision dreams…)
+  if (table?.documentName === 'RollTable') await table.draw();
+
   await spend(item);
+}
+
+/** "for 2 hours" */
+function describeDuration(use) {
+  const value = Number(use?.duration?.value) || 0;
+  const units = use?.duration?.units;
+  if (!value || !units) return '';
+  return $fmt('SDM.Use.Duration', { value, units: $l10n(`SDM.Use.DurationUnit.${units}`) });
 }
 
 /** Replenish: usage roll (charges untouched). Uses counter: one use. Charges: one charge. Otherwise: one of its quantity. */

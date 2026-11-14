@@ -14,7 +14,9 @@
       "value": 1,
       "unit": "stones"
     },
-    "features": [],
+    "features": [
+      "consumable"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -79,7 +81,19 @@
       "drink",
       "sleep",
       "drug"
-    ]
+    ],
+    "use": {
+      "life": "",
+      "ability": "full",
+      "ability_group": "mental",
+      "temp_life": "",
+      "harm": "",
+      "table": "",
+      "duration": {
+        "value": null,
+        "units": ""
+      }
+    }
   },
   "effects": [],
   "sort": 0,

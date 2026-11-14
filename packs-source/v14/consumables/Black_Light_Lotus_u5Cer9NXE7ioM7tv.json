@@ -86,7 +86,15 @@
     ],
     "use": {
       "life": "1d6",
-      "ability": ""
+      "ability": "",
+      "ability_group": "",
+      "temp_life": "",
+      "harm": "",
+      "table": "",
+      "duration": {
+        "value": 1,
+        "units": "days"
+      }
     }
   },
   "effects": [

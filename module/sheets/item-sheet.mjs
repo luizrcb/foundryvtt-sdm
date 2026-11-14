@@ -382,6 +382,16 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
         ...Object.entries(this.item.system.counters ?? {}).map(([key, counter]) => [key, counter.label])
       ]),
       triggerFrom: { '': 'SDM.Trigger.From.self', any: 'SDM.Trigger.From.any', item: 'SDM.Trigger.From.item' },
+      // Consumables (Use)
+      useAbilityGroups: { '': 'SDM.Use.Group.any', physical: 'SDM.Use.Group.physical', mental: 'SDM.Use.Group.mental' },
+      useDurationUnits: {
+        '': 'SDM.Use.DurationUnit.none',
+        rounds: 'SDM.Use.DurationUnit.rounds',
+        minutes: 'SDM.Use.DurationUnit.minutes',
+        hours: 'SDM.Use.DurationUnit.hours',
+        days: 'SDM.Use.DurationUnit.days',
+        weeks: 'SDM.Use.DurationUnit.weeks'
+      },
       triggerLightModes: {
         '': 'SDM.Trigger.WearNone',
         light: 'SDM.Trigger.LightMode.light',

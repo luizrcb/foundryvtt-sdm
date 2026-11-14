@@ -82,7 +82,15 @@
     ],
     "use": {
       "life": "2d6",
-      "ability": "1"
+      "ability": "1",
+      "ability_group": "physical",
+      "temp_life": "",
+      "harm": "",
+      "table": "",
+      "duration": {
+        "value": null,
+        "units": ""
+      }
     }
   },
   "effects": [],

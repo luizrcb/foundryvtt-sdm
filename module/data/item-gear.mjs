@@ -75,7 +75,20 @@ export default class SdmGear extends SdmItemBase {
     // its effects are copied onto them (and do not apply while it is only carried)
     schema.use = new fields.SchemaField({
       life: new fields.StringField({ required: true, blank: true, initial: '' }),
-      ability: new fields.StringField({ required: true, blank: true, initial: '' })
+      ability: new fields.StringField({ required: true, blank: true, initial: '' }),
+      // Which abilities it can restore: any, only physical (str/end/agi) or only mental (cha/aur/tho)
+      ability_group: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'physical', 'mental'] }),
+      // Temporary life it grants (Red Juice +1d8)
+      temp_life: new fields.StringField({ required: true, blank: true, initial: '' }),
+      // Life it costs the user (Kaffetropist: lose 1d3 life throwing up), every time
+      harm: new fields.StringField({ required: true, blank: true, initial: '' }),
+      // A roll table drawn every time it is used (strange beliefs, vision dreams…)
+      table: new fields.StringField({ required: true, blank: true, initial: '' }),
+      // How long its effects last on the targets (when the effect sets no duration of its own)
+      duration: new fields.SchemaField({
+        value: new fields.NumberField({ required: true, nullable: true, integer: true, initial: null, min: 0 }),
+        units: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'rounds', 'minutes', 'hours', 'days', 'weeks'] })
+      })
     });
     // Token light (light category or glowing feature): a preset, or custom radii in grid squares
     schema.light = defineLightField();
