@@ -72,7 +72,7 @@
       <input class="sdm-counter-label" type="text" name="system.triggers.{{index}}.text" value="{{trigger.text}}" placeholder="{{localize 'SDM.Trigger.TextPlaceholder'}}" />
       {{#if @root.editable}}<a data-action="removeTrigger" data-index="{{index}}" data-tooltip="{{localize 'SDM.Trigger.Remove'}}"><i class="fa-solid fa-trash"></i></a>{{/if}}
     </div>
-    <details class="sdm-trigger-actions" {{#if (or trigger.table trigger.effect trigger.wear trigger.counter trigger.cast trigger.use trigger.light)}}open{{/if}}>
+    <details class="sdm-trigger-actions" {{#if (or trigger.table trigger.effect trigger.wear trigger.counter trigger.cast trigger.use trigger.light trigger.charges_mode)}}open{{/if}}>
       <summary>{{localize 'SDM.Trigger.Actions'}}</summary>
       <div class="sdm-counter-row">
         <label data-tooltip="{{localize 'SDM.Trigger.TableHint'}}">{{localize 'SDM.Trigger.Table'}}
@@ -107,6 +107,15 @@
           {{else}}
           <input type="hidden" name="system.triggers.{{index}}.cast_power" value="{{trigger.cast_power}}" />
           <input type="hidden" name="system.triggers.{{index}}.cast_free" value="{{trigger.cast_free}}" data-dtype="Boolean" />
+          {{/if}}</label>
+        <label data-tooltip="{{localize 'SDM.Trigger.ChargesHint'}}">{{localize 'SDM.Trigger.Charges'}}
+          <select name="system.triggers.{{index}}.charges_mode">{{selectOptions @root.triggerChargeModes selected=trigger.charges_mode localize=true}}</select>
+          {{#if trigger.charges_mode}}
+          <input type="number" min="0" name="system.triggers.{{index}}.charges_amount" value="{{trigger.charges_amount}}" data-dtype="Number" />
+          <select name="system.triggers.{{index}}.charges_item">{{selectOptions @root.triggerChargeItems selected=trigger.charges_item}}</select>
+          {{else}}
+          <input type="hidden" name="system.triggers.{{index}}.charges_amount" value="{{trigger.charges_amount}}" data-dtype="Number" />
+          <input type="hidden" name="system.triggers.{{index}}.charges_item" value="{{trigger.charges_item}}" />
           {{/if}}</label>
         <label data-tooltip="{{localize 'SDM.Trigger.UseHint'}}">{{localize 'SDM.Trigger.Use'}}
           <select name="system.triggers.{{index}}.use">{{selectOptions @root.triggerUseItems selected=trigger.use}}</select></label>

@@ -56,6 +56,21 @@ export function spendUsesUpdate(item, count = 1) {
   return { [`system.counters.${uses.key}.value`]: next };
 }
 
+/** The update that leaves `left` uses (0 up to the counter's maximum, when it has one). */
+export function setUsesLeftUpdate(item, left) {
+  const uses = getUsesCounter(item);
+  if (!uses) return null;
+  const counter = uses.counter;
+  const total = hasMax(counter) ? Number(counter.max) : null;
+  let wanted = Math.max(Math.trunc(Number(left) || 0), 0);
+  if (total !== null) wanted = Math.min(wanted, total);
+  let next;
+  if (uses.mode === 'left') next = wanted;
+  else if (total === null) return null; // uses spent without a maximum: nothing to count down from
+  else next = total - wanted;
+  return next === counter.value ? {} : { [`system.counters.${uses.key}.value`]: next };
+}
+
 /** Recharge: all uses back (uses left: the maximum, else the reset value; uses spent: the reset value). */
 export function refillUsesUpdate(item) {
   const uses = getUsesCounter(item);

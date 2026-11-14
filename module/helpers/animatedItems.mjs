@@ -27,9 +27,12 @@ export function isAnimatable(item) {
 }
 
 /** The item an NPC animates, if any. */
+/** The item an NPC animates (an item in a compendium never animates: it can't be changed). */
 export function getAnimatedSourceItem(actor) {
   const uuid = actor?.getFlag?.('sdm', FLAG);
-  return uuid ? fromUuidSync(uuid) : null;
+  if (!uuid || uuid.startsWith('Compendium.')) return null;
+  const item = fromUuidSync(uuid);
+  return item && !item.pack ? item : null;
 }
 
 export function isAnimatedNpc(actor) {
@@ -420,8 +423,16 @@ export async function linkNpcToItem(item, actor) {
     return;
   }
 
+  // A compendium item (delivered ready to use) points at a compendium NPC: nothing is imported now,
+  // each copy of the item imports its own creature on first animation
+  const inCompendium = !!item.pack;
+  if (inCompendium && !actor.pack) {
+    ui.notifications.warn($l10n('SDM.Animation.CompendiumNeedsCompendiumNpc'));
+    return;
+  }
+
   let npc = actor;
-  if (actor.pack) {
+  if (actor.pack && !inCompendium) {
     const folder = await getAnimatedFolder();
     const data = actor.toObject();
     delete data._id;
@@ -432,13 +443,16 @@ export async function linkNpcToItem(item, actor) {
   const s = npc.system;
   const table =
     s.createdFromTable && NPC_TABLE_KEYS().includes(s.createdFromTable) ? s.createdFromTable : NPC_CUSTOM_TABLE;
-  await npc.update({
-    [`flags.sdm.${FLAG}`]: item.uuid,
-    [`flags.sdm.${DEFENSE_BONUS_FLAG}`]: 0,
-    [`flags.sdm.${KEEP_IDENTITY_FLAG}`]: true,
-    'prototypeToken.disposition': dispositionFromItem(item),
-    'prototypeToken.actorLink': true
-  });
+  // The world creature belongs to this item (a compendium NPC stays as it is)
+  if (!inCompendium) {
+    await npc.update({
+      [`flags.sdm.${FLAG}`]: item.uuid,
+      [`flags.sdm.${DEFENSE_BONUS_FLAG}`]: 0,
+      [`flags.sdm.${KEEP_IDENTITY_FLAG}`]: true,
+      'prototypeToken.disposition': dispositionFromItem(item),
+      'prototypeToken.actorLink': true
+    });
+  }
   await item.update(
     {
       'system.animation.actor': npc.uuid,
@@ -468,7 +482,7 @@ export async function linkNpcToItem(item, actor) {
 
 /** Create (or reuse) the creature and place its token in the current scene. Referee only. */
 export async function animateItem(item, { app } = {}) {
-  if (!game.user.isGM || !isAnimatable(item)) return;
+  if (!game.user.isGM || !isAnimatable(item) || item.pack) return;
   if (!canvas.scene) {
     ui.notifications.warn($l10n('SDM.Animation.NoScene'));
     return;
@@ -599,7 +613,7 @@ export async function animateItem(item, { app } = {}) {
 
 /** Remove the creature's tokens and bring its state back to the item. Referee only. */
 export async function deanimateItem(item, { reason } = {}) {
-  if (!game.user.isGM) return;
+  if (!game.user.isGM || item?.pack) return;
   const npc = getLinkedNpc(item);
 
   if (npc) {

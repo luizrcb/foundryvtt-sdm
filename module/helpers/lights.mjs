@@ -76,9 +76,18 @@ export const POWER_LIGHT_PRESET_CHOICES = {
   custom: 'SDM.Light.Preset.custom'
 };
 
-/** Gear that can light up: light category, or glowing (feature or category) (not powers). */
+/** A trait with a light preset (Glowing Skeleton): it lights like a lamp, for free. */
+export function isLightTrait(item) {
+  if (item?.type !== ItemType.TRAIT) return false;
+  const preset = item.system?.light?.preset;
+  return !!preset && preset !== 'none';
+}
+
+/** Gear that can light up: light category, or glowing (feature or category) (not powers); traits with a light. */
 export function isLightSource(item) {
-  if (item?.type !== ItemType.GEAR || !featureEnabled('lights')) return false;
+  if (!featureEnabled('lights')) return false;
+  if (isLightTrait(item)) return true;
+  if (item?.type !== ItemType.GEAR) return false;
   const system = item.system;
   if (system.type === GearType.POWER || system.size?.unit === 'cash') return false;
   const categories = system.categories;
@@ -122,6 +131,8 @@ export function isLit(item) {
 
 /** Why the item cannot be lit now (localization key), or null. */
 export function lightBlockedReason(item) {
+  // Traits are always at hand
+  if (isLightTrait(item)) return null;
   const system = item.system;
   if (!system.readied) return 'SDM.Light.NotReadied';
   if (system.status === ItemStatusType.BROKEN) return 'SDM.Light.Broken';

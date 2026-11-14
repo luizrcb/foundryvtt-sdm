@@ -1,4 +1,5 @@
 import { defineTriggersField } from './triggers-field.mjs';
+import { defineLightField } from './light-field.mjs';
 import { getDefaultAbility } from '../helpers/globalUtils.mjs';
 import SdmItemBase from './base-item.mjs';
 import PowerDataModel from './power-data.mjs';
@@ -69,6 +70,8 @@ export default class SdmTrait extends SdmItemBase {
 
     // Roll triggers (traits and burdens are always active)
     schema.triggers = defineTriggersField();
+    // A trait can light its bearer's token (lit and put out by the player, free); none by default
+    schema.light = defineLightField({ preset: 'none' });
     return schema;
   }
 

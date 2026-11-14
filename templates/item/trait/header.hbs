@@ -150,6 +150,34 @@
         {{/if}}
       {{/if}}
 
+      {{!-- A trait can light its bearer's token (lit and put out like a lamp, free) --}}
+      {{#if (and (sdmFeature 'lights') (ne item.system.type 'power'))}}
+      <div class='resource' data-tooltip="{{localize 'SDM.Light.TraitHint'}}">
+        <label class='resource-label'><i class="fa-solid fa-fire-flame-curved"></i> {{localize 'SDM.Light.Label'}}</label>
+        <div class='resource-content'>
+          <select name="system.light.preset">{{selectOptions @root.powerLightPresets selected=system.light.preset localize=true}}</select>
+        </div>
+      </div>
+      {{#if (eq system.light.preset 'custom')}}
+      <div class='resource'>
+        <label class='resource-label'>{{localize 'SDM.Light.Bright'}}</label>
+        <div class='resource-content'><input type='number' name="system.light.bright" value="{{system.light.bright}}" min="0" step="any" data-tooltip="{{localize 'SDM.Light.RadiusHint'}}"/></div>
+      </div>
+      <div class='resource'>
+        <label class='resource-label'>{{localize 'SDM.Light.Dim'}}</label>
+        <div class='resource-content'><input type='number' name="system.light.dim" value="{{system.light.dim}}" min="0" step="any" data-tooltip="{{localize 'SDM.Light.RadiusHint'}}"/></div>
+      </div>
+      <div class='resource'>
+        <label class='resource-label'>{{localize 'SDM.Light.Color'}}</label>
+        <div class='resource-content'><color-picker name="system.light.color" value="{{system.light.color}}"></color-picker></div>
+      </div>
+      <div class='resource'>
+        <label class='resource-label'>{{localize 'SDM.Light.Animation'}}</label>
+        <div class='resource-content'><select name="system.light.animation">{{selectOptions @root.lightAnimations selected=system.light.animation localize=true}}</select></div>
+      </div>
+      {{/if}}
+      {{/if}}
+
       {{#if (eq item.system.type 'power')}}
       {{!-- fragment --}}
       {{> ($$ "item/power") item=item abilities=@root.abilities}}

@@ -71,6 +71,39 @@
 </section>
 {{/if}}
 
+{{!-- A trait can light its bearer's token (lit and put out like a lamp, free) --}}
+{{#if (and (sdmFeature 'lights') (ne system.type 'power'))}}
+<section class="v2-card v2-item-card">
+  <span class="v2-card-title"><i class="fa-solid fa-fire-flame-curved"></i> {{localize 'SDM.Light.Label'}}</span>
+  <div class="v2-fields">
+    <label class="v2-field" data-tooltip="{{localize 'SDM.Light.TraitHint'}}">
+      <span class="v2-label">{{localize 'SDM.Light.PresetLabel'}}</span>
+      <select name="system.light.preset">
+        {{selectOptions @root.powerLightPresets selected=system.light.preset localize=true}}
+      </select>
+    </label>
+    {{#if (eq system.light.preset 'custom')}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.Light.Bright'}}</span>
+      <input type="number" name="system.light.bright" value="{{system.light.bright}}" min="0" step="any" data-tooltip="{{localize 'SDM.Light.RadiusHint'}}" />
+    </label>
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.Light.Dim'}}</span>
+      <input type="number" name="system.light.dim" value="{{system.light.dim}}" min="0" step="any" data-tooltip="{{localize 'SDM.Light.RadiusHint'}}" />
+    </label>
+    <div class="v2-field">
+      <span class="v2-label">{{localize 'SDM.Light.Color'}}</span>
+      <color-picker name="system.light.color" value="{{system.light.color}}"></color-picker>
+    </div>
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.Light.Animation'}}</span>
+      <select name="system.light.animation">{{selectOptions @root.lightAnimations selected=system.light.animation localize=true}}</select>
+    </label>
+    {{/if}}
+  </div>
+</section>
+{{/if}}
+
 {{> ($$ "item/v2/hallmark")}}
 
 {{#if (eq system.type 'power')}}{{> ($$ "item/v2/power")}}{{/if}}

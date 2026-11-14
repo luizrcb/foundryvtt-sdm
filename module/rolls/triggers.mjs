@@ -2,7 +2,7 @@ import { applyItemEffectToTargets, isUsable, useItem } from '../app/use-item.mjs
 import { GearType, ItemStatusType, ItemType } from '../helpers/constants.mjs';
 import { resetCounters, stepCounter } from '../helpers/counters.mjs';
 import { getItemIdentifier } from '../helpers/effectReferences.mjs';
-import { refillUsesUpdate } from '../helpers/itemUses.mjs';
+import { getUsesCounter, refillUsesUpdate, setUsesLeftUpdate, usesLeft } from '../helpers/itemUses.mjs';
 import { featureEnabled } from '../helpers/features.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 import { hasPowerAlbum } from '../helpers/itemUtils.mjs';
@@ -171,6 +171,7 @@ async function runActions(fired, { actor } = {}) {
       }
       const roller = actor ?? item.actor;
       if (trigger.light && featureEnabled('lights')) await lightAction(item, roller, trigger);
+      if (trigger.charges_mode) await chargesAction(item, roller, trigger);
       if (trigger.use) await useAction(item, roller, trigger);
       if (trigger.cast) await castAction(item, roller, trigger);
     } catch (error) {
@@ -203,6 +204,43 @@ async function lightAction(holder, actor, trigger) {
   if (trigger.light === 'put_out') return putOutLight(target.actor, { itemId: target.id });
   if (trigger.light === 'light') return isLit(target) ? null : lightItem(target);
   return toggleLight(target);
+}
+
+/** Items whose charges a trigger can change: charges, or uses kept in a counter. */
+export function hasCharges(item) {
+  return !!item?.system?.features?.has?.('charges') || !!getUsesCounter(item);
+}
+
+/**
+ * Spend, add or set charges (or the uses of the item's uses counter), never below 0 or above the
+ * maximum. Like spending elsewhere: one left of several is running low, none is run out, and getting
+ * charges back clears the mark (items with replenish keep the marks of their usage rolls).
+ */
+async function chargesAction(holder, actor, trigger) {
+  const target = resolveTriggerItem(holder, actor, trigger.charges_item || '@self', hasCharges);
+  if (!target) return missingItem(holder, trigger.charges_item || '@self');
+  const amount = Math.max(Number(trigger.charges_amount) || 0, 0);
+  const next = current => (trigger.charges_mode === 'set' ? amount : trigger.charges_mode === 'add' ? current + amount : current - amount);
+
+  // Uses kept in a counter: the counter follows, and its marks are set when it changes
+  if (getUsesCounter(target)) {
+    const left = usesLeft(target);
+    const update = setUsesLeftUpdate(target, next(left === Infinity ? 0 : left));
+    if (update && Object.keys(update).length) await target.update(update);
+    return;
+  }
+
+  const system = target.system;
+  const max = Number(system.charges?.max) || 0;
+  let value = Math.max(next(Number(system.charges?.value) || 0), 0);
+  if (max > 0) value = Math.min(value, max);
+  const update = {};
+  if (value !== system.charges?.value) update['system.charges.value'] = value;
+  if (!system.features?.has?.('replenish')) {
+    const resources = value === 0 ? 'run_out' : value === 1 && max > 1 ? 'running_low' : '';
+    if (resources !== (system.resources ?? '')) update['system.resources'] = resources;
+  }
+  if (Object.keys(update).length) await target.update(update);
 }
 
 /** Use a consumable (its Use action: asks what to apply when it has several options). */

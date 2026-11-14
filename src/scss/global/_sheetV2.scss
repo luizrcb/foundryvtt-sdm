@@ -1711,18 +1711,29 @@ $v2-wide: 1100px;
       display: flex;
       justify-content: flex-end;
     }
-    // Table and mode names are long: they get the room, the level stays narrow
-    .v2-anim-fields {
-      // Table and mode get the room; the rest (level, charges, damage source, NPC) share it
-      grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+    // Animation and Creature cards: four columns; long selects (mode, table, creature damage) take two
+    .v2-anim-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
       align-items: end;
 
-      > :nth-child(1) {
+      .v2-span-2 {
         grid-column: span 2;
       }
-      > :nth-child(2) {
-        grid-column: span 2;
+      // Size: the number keeps its room next to the unit (both are needed)
+      .v2-pair {
+        input[type='text'] {
+          flex: 0 0 3.5em;
+          width: 3.5em;
+        }
+        select {
+          flex: 1 1 auto;
+          width: auto;
+          min-width: 0;
+        }
       }
+    }
+    .v2-anim-npc {
+      align-self: start;
 
       .content-link {
         display: inline-flex;
@@ -1733,6 +1744,9 @@ $v2-wide: 1100px;
         white-space: nowrap;
         text-overflow: ellipsis;
         align-self: flex-start;
+      }
+      .v2-anim-drop {
+        font-size: 0.8em;
       }
     }
     input[type='text'],

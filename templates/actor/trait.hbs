@@ -61,6 +61,9 @@
       {{#if (and (gt trait.system.charges.max 0) (has trait.system.features 'charges'))}}
         <span data-tooltip="{{localize 'SDM.ItemCharges'}}">({{trait.system.charges.value}}/{{trait.system.charges.max}})&nbsp;</span>
       {{/if}}
+      {{#if (sdmIsLit trait)}}
+        <a class="rollable sdm-lit-icon mr-3" {{#if @root.editable}}data-action="putOutLight"{{/if}} data-tooltip="{{localize 'SDM.Light.LitHint'}}"><i class="fa-solid fa-fire-flame-curved"></i></a>
+      {{/if}}
       {{trait.name}}
       {{#if (and (eq trait.system.type 'skill') (gt trait.system.skill.modifier_final 0))}}
         (+{{trait.system.skill.modifier_final}})

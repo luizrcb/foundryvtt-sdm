@@ -91,7 +91,11 @@ export function defineTriggersField() {
         initial: '',
         choices: ['', 'light', 'put_out', 'toggle']
       }),
-      light_item: new fields.StringField({ required: true, blank: true, initial: '@self' })
+      light_item: new fields.StringField({ required: true, blank: true, initial: '@self' }),
+      // Charges: spend, add or set an item's charges (or the uses of its uses counter)
+      charges_mode: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'spend', 'add', 'set'] }),
+      charges_amount: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 1, min: 0 }),
+      charges_item: new fields.StringField({ required: true, blank: true, initial: '@self' })
     })
   );
 }

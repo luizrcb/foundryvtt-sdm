@@ -11,7 +11,7 @@ import { hasPowerAlbum } from '../helpers/itemUtils.mjs';
 import { isLightSource, LIGHT_PRESET_CHOICES, POWER_LIGHT_PRESET_CHOICES } from '../helpers/lights.mjs';
 import { isUsable } from '../app/use-item.mjs';
 import { getUsesCounter, USES_MODES } from '../helpers/itemUses.mjs';
-import { isCastable } from '../rolls/triggers.mjs';
+import { hasCharges as triggerHasCharges, isCastable } from '../rolls/triggers.mjs';
 import {
   animateItem,
   deanimateItem,
@@ -263,7 +263,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       triggerSourceItems: keep(pick(other => other.type === ItemType.GEAR, { withSelf: false }), triggers.map(t => t.from_item)),
       triggerCastItems: keep(pick(isCastable), triggers.map(t => t.cast)),
       triggerUseItems: keep(pick(isUsable), triggers.map(t => t.use)),
-      triggerLightItems: keep(pick(isLightSource, { none: false }), triggers.map(t => t.light_item))
+      triggerLightItems: keep(pick(isLightSource, { none: false }), triggers.map(t => t.light_item)),
+      triggerChargeItems: keep(pick(triggerHasCharges, { none: false }), triggers.map(t => t.charges_item))
     };
   }
 
@@ -392,6 +393,12 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
         hours: 'SDM.Use.DurationUnit.hours',
         days: 'SDM.Use.DurationUnit.days',
         weeks: 'SDM.Use.DurationUnit.weeks'
+      },
+      triggerChargeModes: {
+        '': 'SDM.Trigger.WearNone',
+        spend: 'SDM.Trigger.ChargesMode.spend',
+        add: 'SDM.Trigger.ChargesMode.add',
+        set: 'SDM.Trigger.ChargesMode.set'
       },
       triggerLightModes: {
         '': 'SDM.Trigger.WearNone',

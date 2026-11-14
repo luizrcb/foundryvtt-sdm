@@ -5733,20 +5733,31 @@ input[type=radio]::after {
   justify-content: flex-end;
 }
 
-.application.sheet.sdm.sheet-v2 .v2-item-animation.active .v2-anim-fields {
-  grid-template-columns: repeat(auto-fit, minmax(110px, 1fr));
+.application.sheet.sdm.sheet-v2 .v2-item-animation.active .v2-anim-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   align-items: end;
 }
 
-.application.sheet.sdm.sheet-v2 .v2-item-animation.active .v2-anim-fields > :nth-child(1) {
+.application.sheet.sdm.sheet-v2 .v2-item-animation.active .v2-anim-grid .v2-span-2 {
   grid-column: span 2;
 }
 
-.application.sheet.sdm.sheet-v2 .v2-item-animation.active .v2-anim-fields > :nth-child(2) {
-  grid-column: span 2;
+.application.sheet.sdm.sheet-v2 .v2-item-animation.active .v2-anim-grid .v2-pair input[type=text] {
+  flex: 0 0 3.5em;
+  width: 3.5em;
 }
 
-.application.sheet.sdm.sheet-v2 .v2-item-animation.active .v2-anim-fields .content-link {
+.application.sheet.sdm.sheet-v2 .v2-item-animation.active .v2-anim-grid .v2-pair select {
+  flex: 1 1 auto;
+  width: auto;
+  min-width: 0;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-item-animation.active .v2-anim-npc {
+  align-self: start;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-item-animation.active .v2-anim-npc .content-link {
   display: inline-flex;
   align-items: center;
   gap: 4px;
@@ -5755,6 +5766,10 @@ input[type=radio]::after {
   white-space: nowrap;
   text-overflow: ellipsis;
   align-self: flex-start;
+}
+
+.application.sheet.sdm.sheet-v2 .v2-item-animation.active .v2-anim-npc .v2-anim-drop {
+  font-size: 0.8em;
 }
 
 .application.sheet.sdm.sheet-v2 .v2-item-animation.active input[type=text],
