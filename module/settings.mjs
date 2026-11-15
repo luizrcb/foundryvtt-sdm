@@ -1792,14 +1792,15 @@ export function setupInitialSettings() {
 }
 
 /**
- * Client settings: a swatch of the chosen accent colour, and (with Dice So Nice) a button that rolls a
+ * Client settings (the system's menu and Foundry's window): a swatch of the chosen accent colour, and (with Dice So Nice) a button that rolls a
  * d20 and a d6 in the chosen colour's dice theme, only on this screen (no chat), before saving.
  */
 export function addChromatypePreview(app, html) {
   const root = html instanceof HTMLElement ? html : html?.[0];
-  const accent = root?.querySelector('select[name="sdm.chromatype"]');
-  if (!accent) return;
-  const dsnSelect = root.querySelector('select[name="sdm.diceSoNiceChromatype"]');
+  // The system's client settings menu names them "chromatype"; Foundry's own window "sdm.chromatype"
+  const accent = root?.querySelector('select[name="chromatype"], select[name="sdm.chromatype"]');
+  if (!accent || accent.parentElement?.querySelector('.sdm-chromatype-swatch')) return;
+  const dsnSelect = root.querySelector('select[name="diceSoNiceChromatype"], select[name="sdm.diceSoNiceChromatype"]');
 
   const swatch = document.createElement('span');
   swatch.className = 'sdm-chromatype-swatch';

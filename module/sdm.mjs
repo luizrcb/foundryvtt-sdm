@@ -306,6 +306,7 @@ Hooks.on('renderChatMessageHTML', (message, html, data) => {
 // Accent color lists in the order of the user's language (needs the translations)
 Hooks.once('i18nInit', sortChromatypeChoices);
 // Client settings: accent colour swatch and 3D dice preview
+Hooks.on('renderSDMClientSettingsConfig', addChromatypePreview);
 Hooks.on('renderSettingsConfig', addChromatypePreview);
 
 Hooks.on('renderDialogV2', (dialog, html) => {
