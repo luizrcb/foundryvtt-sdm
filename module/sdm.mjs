@@ -66,6 +66,7 @@ import { gm as gmMacros, player as playerMacros } from './macros/_module.mjs';
 import {
   addChromatypePreview,
   configurePlayerChromatype,
+  fixDiceStyleTypo,
   configureUseHeroDiceButton,
   createBonusHeroDiceDisplay,
   createEscalatorDieDisplay,
@@ -765,6 +766,8 @@ Hooks.once('ready', function () {
   CompendiumBrowser.preloadCache();
   // client custom color system settings
   configurePlayerChromatype();
+  // "Same as the chromatype" dice styles saved with an old typo
+  fixDiceStyleTypo();
 
   Hooks.on('hotbarDrop', (bar, data, slot) => createDocMacro(data, slot));
   // Create container element

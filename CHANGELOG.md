@@ -42,7 +42,8 @@
 - **Roll preview**: the roll dialog of attacks, ability checks, damage and powers shows what each button will roll (one-handed / two-handed, overcharge), updated as the options change: modifier, multiplier, ability, skill, advantage, exploding dice, the album's power and the damage boost ("Rolls: 1d12x + 2" once the boost is ticked). Saves (characters and NPCs), reaction (one line per button), corruption, defeat, group chase, relife and NPC morale show it too
 - Fixed: the reaction, corruption, relife, defeat, dice oracle and consume-supply dialogs no longer cut off their buttons (they size to their content)
 - **Chromatype preview**: in the client settings, a swatch next to *Chromatype* shows the chosen colour, and (with Dice So Nice) a dice button next to each dice colour list (Chromatype, Dice So Nice Chromatype, hero, blood, tourist and oracle dice) rolls in that theme (a d20 and a d6; a d6 for hero, blood and tourist dice), only on your screen and without a chat message, so you can see it before saving
-- Fixed: the accent color (chromatype) and Dice So Nice color lists in the client settings are sorted by their names in the user's language (they kept the English order)
+- Fixed: the accent color (chromatype), Dice So Nice, hero, blood, tourist and oracle dice color lists in the client settings are sorted by their names in the user's language (they kept the English order); *Same as the Chromatype* and each list's default style come first
+- Fixed: hero, blood, tourist and oracle dice set to *Same as the Chromatype* rolled with Dice So Nice's default look (the option was saved with a typo); saved settings are corrected on load
 - Fixed: clicking an empty power album (also from Token Action HUD) threw an error; it now says the album is empty
 - **Caravan free space**: next to Consume Supplies, the inventory shows the free space as whole sacks + stones (e.g. "Free: 3 sk + 4 st")
 - **Automate Caravan Transport** is now on by default

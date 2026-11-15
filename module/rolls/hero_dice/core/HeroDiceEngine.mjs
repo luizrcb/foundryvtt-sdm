@@ -1,3 +1,4 @@
+import { diceStyle } from '../../../settings.mjs';
 import { ExplosiveDie } from '../models/ExplosiveDie.mjs';
 import { RollAnalyzer } from './RollAnalyzer.mjs';
 import { HeroDiceAllocator } from './HeroDiceAllocator.mjs';
@@ -166,7 +167,7 @@ export class HeroDiceEngine {
     healingHouseRule = false,
     resource = 'hero_dice'
   }) {
-    const resourceSetting = game.settings.get('sdm', `${resource}_style`);
+    const resourceSetting = diceStyle(`${resource}_style`);
 
     const diceFormula = `${quantity}d${faces}[${resourceSetting}]`;
     let roll = new Roll(diceFormula);

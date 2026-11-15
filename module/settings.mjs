@@ -951,10 +951,32 @@ export function configureUseHeroDiceButton(message, html, data) {
 }
 
 /**
- * Settings are registered on init, before the translations load, so the accent color lists keep the
- * order of their keys (English). Once translations are in (i18nInit), order them by their translated
+ * Settings are registered on init, before the translations load, so the accent color and dice theme
+ * lists keep the order of their keys (English). Once translations are in (i18nInit), order them by their translated
  * names in the user's language; "same as the accent color" stays first. Stored values don't change.
  */
+/**
+ * "Same as the chromatype" in the hero, blood, tourist and oracle dice lists used to be stored as
+ * "sdm-chomatype" (a typo: no such dice theme, so those dice fell back to Dice So Nice's default).
+ * Fix the stored value once; diceStyle() also reads it right in the meantime.
+ */
+export const DICE_STYLE_KEYS = ['hero_dice_style', 'blood_dice_style', 'tourist_dice_style', 'oracle_dice_style'];
+
+export function diceStyle(key) {
+  const value = game.settings.get('sdm', key);
+  return value === 'sdm-chomatype' ? 'sdm-chromatype' : value;
+}
+
+export async function fixDiceStyleTypo() {
+  for (const key of DICE_STYLE_KEYS) {
+    try {
+      if (game.settings.get('sdm', key) === 'sdm-chomatype') await game.settings.set('sdm', key, 'sdm-chromatype');
+    } catch (error) {
+      console.warn(`SDM | Could not fix the ${key} setting`, error);
+    }
+  }
+}
+
 export function sortChromatypeChoices() {
   const sorted = choices =>
     Object.fromEntries(
@@ -963,6 +985,22 @@ export function sortChromatypeChoices() {
       )
     );
   try {
+    // Dice themes (hero, blood, tourist, oracle dice): "same as the chromatype" first, then the
+    // list's own default style (hero / oracle), then the rest alphabetically
+    const themes = sorted(CONFIG.SDM.diceThemeOptions);
+    const pinned = (...keys) => {
+      const first = Object.fromEntries(keys.filter(key => themes[key]).map(key => [key, themes[key]]));
+      return { ...first, ...themes };
+    };
+    for (const [key, own] of [
+      ['hero_dice_style', 'sdm-hero'],
+      ['blood_dice_style', null],
+      ['tourist_dice_style', null],
+      ['oracle_dice_style', 'sdm-oracle']
+    ]) {
+      const setting = game.settings.settings.get(`sdm.${key}`);
+      if (setting) setting.choices = pinned('sdm-chromatype', ...(own ? [own] : []));
+    }
     const colors = sorted(CONFIG.SDM.accentColorOptions);
     const chromatype = game.settings.settings.get('sdm.chromatype');
     if (chromatype) chromatype.choices = colors;
@@ -1837,7 +1875,7 @@ export function addChromatypePreview(app, html) {
   if (dsnSelect) addDiceButton(dsnSelect, chromatypeTheme);
   // Hero, blood, tourist and oracle dice: their value is the theme; "same as the chromatype" previews
   // the chromatype picked above
-  for (const key of ['hero_dice_style', 'blood_dice_style', 'tourist_dice_style', 'oracle_dice_style']) {
+  for (const key of DICE_STYLE_KEYS) {
     const select = root.querySelector(`select[name="${key}"], select[name="sdm.${key}"]`);
     if (!select) continue;
     addDiceButton(

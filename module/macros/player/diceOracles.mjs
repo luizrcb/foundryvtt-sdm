@@ -1,10 +1,11 @@
+import { diceStyle } from '../../settings.mjs';
 import { $l10n } from '../../helpers/globalUtils.mjs';
 import { sanitizeExpression } from '../../rolls/sdmRoll.mjs';
 
 const { DialogV2 } = foundry.applications.api;
 
 export async function diceOracles() {
-  const oracleDiceStyle = game.settings.get('sdm', 'oracle_dice_style');
+  const oracleDiceStyle = diceStyle('oracle_dice_style');
 
   const ORACLE_CONFIGS = {
     'quick-d6': {

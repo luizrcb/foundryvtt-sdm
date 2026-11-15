@@ -135,7 +135,7 @@ SDM.diceThemeOptions = {
   'sdm-black': 'SDM.ColorBlack',
   'sdm-blue': 'SDM.ColorBlue',
   'sdm-brown': 'SDM.ColorBrown',
-  'sdm-chomatype': 'SDM.DSNChromatypeSame',
+  'sdm-chromatype': 'SDM.DSNChromatypeSame',
   'sdm-cool': 'SDM.DiceTheme.Cool',
   'sdm-crimson': 'SDM.ColorCrimson',
   'sdm-dark': 'SDM.DiceTheme.Dark',
