@@ -1,0 +1,76 @@
+{
+  "folder": "HQbhNVLFCgoQYzUo",
+  "name": "Frenzy",
+  "type": "trait",
+  "_id": "67osxK2pvYcFcSiM",
+  "img": "icons/svg/terror.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcTraitKey": "SDM.NPCTraitFrenzy"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!67osxK2pvYcFcSiM",
+  "system": {
+    "description": "<p>Spend 2 defense to get a free attack.</p><p>(enable the <em>Frenzied</em> effect)</p>",
+    "type": ""
+  },
+  "effects": [
+    {
+      "name": "Frenzied",
+      "origin": null,
+      "img": "icons/svg/terror.svg",
+      "_id": "Zr1NaVXrwZhwVydD",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.defense",
+            "value": "-2",
+            "priority": null,
+            "type": "add",
+            "phase": "initial"
+          }
+        ]
+      },
+      "disabled": true,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "<p>Turn on when trading 2 defense for a free attack.</p>",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!67osxK2pvYcFcSiM.Zr1NaVXrwZhwVydD"
+    }
+  ]
+}

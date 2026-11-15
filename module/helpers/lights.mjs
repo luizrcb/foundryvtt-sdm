@@ -363,7 +363,20 @@ export async function putOutAllLights() {
   }
 }
 
+/**
+ * NPCs with natural light (a trait with a light) enter the scene lit: nobody has to light them.
+ * The creating user lights the token's actor (a linked NPC already lit stays as it is).
+ */
+async function onCreateNpcToken(token, options, userId) {
+  if (userId !== game.user.id || !featureEnabled('lights')) return;
+  const actor = token.actor;
+  if (actor?.type !== ActorType.NPC || getLitEffect(actor)) return;
+  const trait = actor.items.find(isLightTrait);
+  if (trait) await lightItem(trait);
+}
+
 export function setupLights() {
+  Hooks.on('createToken', onCreateNpcToken);
   Hooks.on('updateItem', onUpdateItem);
   Hooks.on('deleteItem', onDeleteItem);
   Hooks.on('renderTokenHUD', onRenderTokenHUD);

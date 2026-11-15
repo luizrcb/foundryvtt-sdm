@@ -1,0 +1,83 @@
+{
+  "folder": "tbESXTQ1MkwlSSXZ",
+  "name": "Teamwork",
+  "type": "trait",
+  "_id": "6Fk3G0XTTvv27Xix",
+  "img": "icons/svg/combat.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcTraitKey": "SDM.NPCTraitTeamwork"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!6Fk3G0XTTvv27Xix",
+  "system": {
+    "description": "<p>+2 bonus and defense next to an ally.</p><p>(enable the <em>Next to an ally</em> effect while it applies)</p>",
+    "type": ""
+  },
+  "effects": [
+    {
+      "name": "Next to an ally",
+      "origin": null,
+      "img": "icons/svg/combat.svg",
+      "_id": "Dx8OlIcNBax7JtXW",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.bonus",
+            "value": "2",
+            "priority": null,
+            "type": "add",
+            "phase": "initial"
+          },
+          {
+            "key": "system.defense",
+            "value": "2",
+            "priority": null,
+            "type": "add",
+            "phase": "initial"
+          }
+        ]
+      },
+      "disabled": true,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "<p>Turn on while next to an ally.</p>",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!6Fk3G0XTTvv27Xix.Dx8OlIcNBax7JtXW"
+    }
+  ]
+}

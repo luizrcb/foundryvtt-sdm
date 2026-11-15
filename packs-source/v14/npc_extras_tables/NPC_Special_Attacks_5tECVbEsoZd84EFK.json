@@ -1,0 +1,231 @@
+{
+  "name": "NPC Special Attacks",
+  "img": "icons/svg/sword.svg",
+  "description": "<p>Natural weapons for generated NPCs.</p>",
+  "replacement": true,
+  "displayRoll": false,
+  "folder": null,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcExtraTable": true
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_id": "5tECVbEsoZd84EFK",
+  "sort": 0,
+  "formula": "1d8",
+  "_key": "!tables!5tECVbEsoZd84EFK",
+  "results": [
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "name": "Venomous Bite",
+      "img": "icons/svg/poison.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.LAfIscwXo5RttcEG",
+      "_id": "vJANnfROTS7di5KW",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.vJANnfROTS7di5KW"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "name": "Acid Spit",
+      "img": "icons/svg/acid.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.fgpKxR3UPK7Ck2hu",
+      "_id": "LVrowaEqNIahCtDn",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.LVrowaEqNIahCtDn"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "name": "Tail Sweep",
+      "img": "icons/svg/falling.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.4f4NyerZR3LNBvht",
+      "_id": "35eLrVd5aYcD3EwA",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.35eLrVd5aYcD3EwA"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "name": "Crushing Grip",
+      "img": "icons/svg/net.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.FFdXoGSR6OlCkvdG",
+      "_id": "QAl9121I5o3sJsa8",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.QAl9121I5o3sJsa8"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "name": "Shock Lash",
+      "img": "icons/svg/lightning.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.4GG55OaPNfteSliB",
+      "_id": "KcW9VR1vkfTKPUDP",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.KcW9VR1vkfTKPUDP"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "name": "Bleeding Claws",
+      "img": "icons/svg/blood.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.v7TXbpOFHbOa6045",
+      "_id": "xES36PNFjAqFaJxA",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.xES36PNFjAqFaJxA"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "name": "Fire Breath",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.qPw9SQoVX71iRkf5",
+      "_id": "xbue8dZczwMkcmXp",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.xbue8dZczwMkcmXp"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "name": "Draining Touch",
+      "img": "icons/svg/degen.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.y5zSJeIYlqo1pgpF",
+      "_id": "WqQt1APhrrblhnol",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.WqQt1APhrrblhnol"
+    }
+  ]
+}

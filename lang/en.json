@@ -2765,5 +2765,13 @@
   "SDM.NpcProfile.Damage": "damage die",
   "SDM.NpcProfile.Average": "average",
   "SDM.NpcProfile.Remove": "Remove the profile (back to the plain table)",
-  "SDM.NpcProfile.RemoveHint": "Current stats stay; from the next level up the NPC follows the table only."
+  "SDM.NpcProfile.RemoveHint": "Current stats stay; from the next level up the NPC follows the table only.",
+  "SDM.SettingsNpcExtraAttacksTable": "NPC extras: special attacks table",
+  "SDM.SettingsNpcExtraOdditiesTable": "NPC extras: oddities table",
+  "SDM.SettingsNpcExtraPowersTable": "NPC extras: powers table",
+  "SDM.SettingsNpcExtraTableHint": "UUID of the roll table the NPC generator draws these extras from (its results link items). Default: the NPC Extras Tables compendium. Drag your own table's UUID here to customize.",
+  "SDM.NpcExtras.Label": "Extras",
+  "SDM.NpcExtras.None": "None",
+  "SDM.NpcExtras.ByLevel": "By level",
+  "SDM.NpcExtras.Hint": "Special attacks, oddities and powers drawn from the NPC extras tables (by level: 0–2 maybe one, 3–6 one, 7+ two)."
 }

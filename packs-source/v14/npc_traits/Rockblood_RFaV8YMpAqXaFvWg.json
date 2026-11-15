@@ -1,0 +1,76 @@
+{
+  "folder": "479Y6TLyMh0dAClj",
+  "name": "Rockblood",
+  "type": "trait",
+  "_id": "RFaV8YMpAqXaFvWg",
+  "img": "icons/svg/frozen.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcTraitKey": "SDM.NPCTraitRockblood"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!RFaV8YMpAqXaFvWg",
+  "system": {
+    "description": "<p>Below half life, double defense.</p><p>(enable the <em>Below half life</em> effect)</p>",
+    "type": ""
+  },
+  "effects": [
+    {
+      "name": "Below half life",
+      "origin": null,
+      "img": "icons/svg/frozen.svg",
+      "_id": "CqRmdpprRRfrSw40",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.defense",
+            "value": "2",
+            "priority": null,
+            "type": "multiply",
+            "phase": "initial"
+          }
+        ]
+      },
+      "disabled": true,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "<p>Turn on while below half life.</p>",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!RFaV8YMpAqXaFvWg.CqRmdpprRRfrSw40"
+    }
+  ]
+}

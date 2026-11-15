@@ -1,0 +1,31 @@
+{
+  "folder": "ygxzgswOLlt8nmOI",
+  "name": "Many Eyes",
+  "type": "trait",
+  "_id": "goYqOLiFFDx1mKQ5",
+  "img": "icons/svg/eye.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcExtra": "oddity"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!goYqOLiFFDx1mKQ5",
+  "system": {
+    "description": "<p>It sees in every direction and in the dark: it can't be surprised.</p>",
+    "type": ""
+  },
+  "effects": []
+}

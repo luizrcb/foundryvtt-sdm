@@ -1,0 +1,61 @@
+{
+  "folder": "vPO6z2wsPggMwQkg",
+  "name": "Draining Touch",
+  "type": "gear",
+  "_id": "y5zSJeIYlqo1pgpF",
+  "img": "icons/svg/degen.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcExtra": "attack"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!y5zSJeIYlqo1pgpF",
+  "system": {
+    "readied": true,
+    "description": "<p>Natural weapon. The creature heals as much life as the damage it deals.</p>",
+    "quantity": 1,
+    "size": {
+      "value": 0,
+      "unit": "soaps"
+    },
+    "features": [],
+    "type": "weapon",
+    "weapon": {
+      "damage": {
+        "base": "1d6",
+        "versatile": "1d6",
+        "bonus": ""
+      },
+      "range": "close",
+      "versatile": false
+    },
+    "triggers": [
+      {
+        "roll": "damage",
+        "condition": "totalAtLeast",
+        "value": "1",
+        "text": "Heals as much life as the damage dealt",
+        "attack": "",
+        "table": "",
+        "effect": "",
+        "wear": "",
+        "counter": "",
+        "counter_step": "1"
+      }
+    ]
+  },
+  "effects": []
+}

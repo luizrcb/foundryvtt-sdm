@@ -214,7 +214,14 @@ export class SDMNPCBehaviorSettingsConfig extends GroupBase {
     }
   };
   static LEGEND = 'SDM.Menu.NPC.Name';
-  static KEYS = ['baseMoraleFormula', 'baseReactionFormula', 'npcInitiativeFormula'];
+  static KEYS = [
+    'baseMoraleFormula',
+    'baseReactionFormula',
+    'npcInitiativeFormula',
+    'npcExtraAttacksTable',
+    'npcExtraOdditiesTable',
+    'npcExtraPowersTable'
+  ];
 }
 
 /* 6) Economy & Currency */

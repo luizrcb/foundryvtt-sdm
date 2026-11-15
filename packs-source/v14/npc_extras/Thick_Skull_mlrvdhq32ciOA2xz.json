@@ -1,0 +1,76 @@
+{
+  "folder": "ygxzgswOLlt8nmOI",
+  "name": "Thick Skull",
+  "type": "trait",
+  "_id": "mlrvdhq32ciOA2xz",
+  "img": "icons/svg/terror.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcExtra": "oddity"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!mlrvdhq32ciOA2xz",
+  "system": {
+    "description": "<p>Too stubborn to run: +2 morale.</p>",
+    "type": ""
+  },
+  "effects": [
+    {
+      "name": "Thick Skull",
+      "origin": null,
+      "img": "icons/svg/terror.svg",
+      "_id": "sCi10gshSUJ7a5vw",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.morale",
+            "value": "2",
+            "priority": null,
+            "type": "add",
+            "phase": "initial"
+          }
+        ]
+      },
+      "disabled": false,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!mlrvdhq32ciOA2xz.sCi10gshSUJ7a5vw"
+    }
+  ]
+}

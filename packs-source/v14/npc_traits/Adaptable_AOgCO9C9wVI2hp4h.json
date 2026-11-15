@@ -1,0 +1,31 @@
+{
+  "folder": "tbESXTQ1MkwlSSXZ",
+  "name": "Adaptable",
+  "type": "trait",
+  "_id": "AOgCO9C9wVI2hp4h",
+  "img": "icons/svg/mystery-man.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcTraitKey": "SDM.NPCTraitAdaptable"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!AOgCO9C9wVI2hp4h",
+  "system": {
+    "description": "<p>Copy an enemy's last used special ability.</p>",
+    "type": ""
+  },
+  "effects": []
+}

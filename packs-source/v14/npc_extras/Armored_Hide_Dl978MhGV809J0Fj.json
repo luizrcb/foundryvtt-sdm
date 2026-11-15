@@ -1,0 +1,76 @@
+{
+  "folder": "ygxzgswOLlt8nmOI",
+  "name": "Armored Hide",
+  "type": "trait",
+  "_id": "Dl978MhGV809J0Fj",
+  "img": "icons/svg/shield.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcExtra": "oddity"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!Dl978MhGV809J0Fj",
+  "system": {
+    "description": "<p>Thick plates or chitin: +2 defense.</p>",
+    "type": ""
+  },
+  "effects": [
+    {
+      "name": "Armored Hide",
+      "origin": null,
+      "img": "icons/svg/shield.svg",
+      "_id": "H3CFhXaPk9zg6EUz",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.defense",
+            "value": "2",
+            "priority": null,
+            "type": "add",
+            "phase": "initial"
+          }
+        ]
+      },
+      "disabled": false,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!Dl978MhGV809J0Fj.H3CFhXaPk9zg6EUz"
+    }
+  ]
+}

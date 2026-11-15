@@ -2765,5 +2765,13 @@
   "SDM.NpcProfile.Damage": "dado de dano",
   "SDM.NpcProfile.Average": "na média",
   "SDM.NpcProfile.Remove": "Remover o perfil (voltar à tabela pura)",
-  "SDM.NpcProfile.RemoveHint": "Os stats atuais ficam; a partir do próximo nível o NPC segue só a tabela."
+  "SDM.NpcProfile.RemoveHint": "Os stats atuais ficam; a partir do próximo nível o NPC segue só a tabela.",
+  "SDM.SettingsNpcExtraAttacksTable": "Extras de NPC: tabela de ataques especiais",
+  "SDM.SettingsNpcExtraOdditiesTable": "Extras de NPC: tabela de peculiaridades",
+  "SDM.SettingsNpcExtraPowersTable": "Extras de NPC: tabela de poderes",
+  "SDM.SettingsNpcExtraTableHint": "UUID da tabela de rolagem de onde o gerador de NPCs sorteia esses extras (os resultados apontam para itens). Padrão: o compêndio Tabelas de Extras de NPC. Use o UUID da sua própria tabela para personalizar.",
+  "SDM.NpcExtras.Label": "Extras",
+  "SDM.NpcExtras.None": "Nenhum",
+  "SDM.NpcExtras.ByLevel": "Pelo nível",
+  "SDM.NpcExtras.Hint": "Ataques especiais, peculiaridades e poderes sorteados nas tabelas de extras de NPC (pelo nível: 0–2 talvez um, 3–6 um, 7+ dois)."
 }

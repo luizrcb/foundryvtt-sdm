@@ -1,0 +1,1631 @@
+{
+  "name": "NPC Powers",
+  "img": "icons/svg/book.svg",
+  "description": "<p>Powers for generated NPCs (powers above the NPC's reach are rolled again).</p>",
+  "replacement": true,
+  "displayRoll": false,
+  "folder": null,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcExtraTable": true
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_id": "eMQTVlxjB8nCMyFl",
+  "sort": 0,
+  "formula": "1d64",
+  "_key": "!tables!eMQTVlxjB8nCMyFl",
+  "results": [
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "name": "Access Noötree",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.nwZH4E5a6yWDNMaE",
+      "_id": "QETlDfkSglFuJcDQ",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.QETlDfkSglFuJcDQ"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "name": "Alter Self",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.jJDkCPAUq9BSYTv5",
+      "_id": "ZRhFHqagnwBlD41r",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.ZRhFHqagnwBlD41r"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "name": "Animate Corpse",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.uuzpRJniKhBhLkxF",
+      "_id": "T3fpb9btNVs10M14",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.T3fpb9btNVs10M14"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "name": "Anne Astec",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.lfMNdFE6y6gW6PKb",
+      "_id": "shj6JYEWEHWGsh88",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.shj6JYEWEHWGsh88"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "name": "Anti-Babylon",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.QttLgsPwwn8H5Ty8",
+      "_id": "78FLhJARi7zaUNpF",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.78FLhJARi7zaUNpF"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "name": "Better Pastures",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.DbJnTKP2PxQnJHSa",
+      "_id": "tjZZ8t75otKDwBkc",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.tjZZ8t75otKDwBkc"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "name": "Blue Lotus",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.Yra8Qz5WFY8wVWud",
+      "_id": "wbg6YPbaRJ1eXMwL",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.wbg6YPbaRJ1eXMwL"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "name": "Burden Share",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.iodUpfHdxkIR6x31",
+      "_id": "Los17wlXP1QDWiKg",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.Los17wlXP1QDWiKg"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "name": "Burdenbeast Modification",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.SJVVY9VM1HAvKt8c",
+      "_id": "dit8Gwqk2uicKEd1",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.dit8Gwqk2uicKEd1"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "name": "Can Trip",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.V601Cc4psvs9WhZz",
+      "_id": "mHcIQNjr89kT2RBs",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.mHcIQNjr89kT2RBs"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "name": "Cerebral Purge",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.oNNGKX0DJY2N4Lah",
+      "_id": "yJ6oFsWgYsgTUHQb",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.yJ6oFsWgYsgTUHQb"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "name": "Counterfire",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.24rPNndkgQFXN4rD",
+      "_id": "5J7269FW3waHwUTT",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.5J7269FW3waHwUTT"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        13,
+        13
+      ],
+      "name": "Dampen Mass",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.7g7FCHk4COB7CGx1",
+      "_id": "TgZB1HZ9KXDAfLwD",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.TgZB1HZ9KXDAfLwD"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        14,
+        14
+      ],
+      "name": "Dancing In The Hail",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.kxK7CBdxAeAXM8jJ",
+      "_id": "bBgpp8LsONbPB1Fa",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.bBgpp8LsONbPB1Fa"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        15,
+        15
+      ],
+      "name": "Depleted Heavy Metal Rain",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.2yL6lTBGTRVNXexN",
+      "_id": "SHbPosOy1XJhkFRz",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.SHbPosOy1XJhkFRz"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        16,
+        16
+      ],
+      "name": "Dissolution and Resolution of the Spirit",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.JTUZMeEhOUFHYO26",
+      "_id": "kOWMgMswyIdYaOGj",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.kOWMgMswyIdYaOGj"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        17,
+        17
+      ],
+      "name": "Dryland Sculpture",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.EW904QJqp5L8OcJe",
+      "_id": "LBiMqa1NgZE1xS6V",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.LBiMqa1NgZE1xS6V"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        18,
+        18
+      ],
+      "name": "Egregious Topology",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.X4WWBPEB9fl6qwKm",
+      "_id": "5VW03ijFTw9zI8Zh",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.5VW03ijFTw9zI8Zh"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        19,
+        19
+      ],
+      "name": "Entropic Reversal",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.p90OPNjPUWxnNJvO",
+      "_id": "ioVQXqgucBDAOIsJ",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.ioVQXqgucBDAOIsJ"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        20,
+        20
+      ],
+      "name": "Essence Sift",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.DbP7DVD8jzBTP5OB",
+      "_id": "oaWiydelrzgGTSz3",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.oaWiydelrzgGTSz3"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        21,
+        21
+      ],
+      "name": "Eyes of Akaula",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.uKxsMjYhb8SMkld2",
+      "_id": "f8joIHLN5CRGjuEF",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.f8joIHLN5CRGjuEF"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        22,
+        22
+      ],
+      "name": "Eyes of the Arrow",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.9Zqi6pWhTob2LkN7",
+      "_id": "LerKfXRnXgBiXf0a",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.LerKfXRnXgBiXf0a"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        23,
+        23
+      ],
+      "name": "Floating Disc",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.0W3XgwXtSPYtEaq0",
+      "_id": "Gz03Kg1bIwGnlTHs",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.Gz03Kg1bIwGnlTHs"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        24,
+        24
+      ],
+      "name": "Gem Bomb",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.0g37ZeE8yxwZ0T5m",
+      "_id": "gLSd4uMky9G8YSKp",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.gLSd4uMky9G8YSKp"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        25,
+        25
+      ],
+      "name": "Green Haven",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.ouzJeCx2u3VeulNP",
+      "_id": "sP1Tw0gXdyeUR60y",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.sP1Tw0gXdyeUR60y"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        26,
+        26
+      ],
+      "name": "Highway Cruiser",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.GhxxJrR0x38IbSbJ",
+      "_id": "qNormFyJ0IHb0qlI",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.qNormFyJ0IHb0qlI"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        27,
+        27
+      ],
+      "name": "Hlod Person",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.xOXJly1gLYLRBljs",
+      "_id": "5PpVD7wtL2SsFhu8",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.5PpVD7wtL2SsFhu8"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        28,
+        28
+      ],
+      "name": "Imbue Edge",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.PnMwDe4ep5WtjPNg",
+      "_id": "Im2cYWtwbx49cThB",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.Im2cYWtwbx49cThB"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        29,
+        29
+      ],
+      "name": "Invoke Ub Dragon",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.LmfGUcUlFI3ruLpw",
+      "_id": "IsmtOzlAtR1tQPZR",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.IsmtOzlAtR1tQPZR"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        30,
+        30
+      ],
+      "name": "Knock / Lock",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.Xpd3xl4YDD2bzOZn",
+      "_id": "7AGByuCJtX2vO3Yx",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.7AGByuCJtX2vO3Yx"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        31,
+        31
+      ],
+      "name": "Linked Portals",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.yUMiVaBgI7MiFPf2",
+      "_id": "h7dSI3Jm39R5WalK",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.h7dSI3Jm39R5WalK"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        32,
+        32
+      ],
+      "name": "Magic Jar",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.SSV9dL0NcCljWp25",
+      "_id": "5MPPrCLI7ODoj4td",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.5MPPrCLI7ODoj4td"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        33,
+        33
+      ],
+      "name": "Metempsychosis",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.ppsHg8bwEKvhGCxK",
+      "_id": "EdRK3R0dMUacAshe",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.EdRK3R0dMUacAshe"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        34,
+        34
+      ],
+      "name": "Mother of Bullets",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.ZO05stEklZz8lb67",
+      "_id": "eAxO93ih1jchnkh1",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.eAxO93ih1jchnkh1"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        35,
+        35
+      ],
+      "name": "Motor Fixative",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.4OY7e1L0eOVOz6Dy",
+      "_id": "nWLtSzTtXXIPmR8L",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.nWLtSzTtXXIPmR8L"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        36,
+        36
+      ],
+      "name": "Nihil Est!",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.rN3Yqwt6oPs2Wyoi",
+      "_id": "gACnEGQSvjIYRMzv",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.gACnEGQSvjIYRMzv"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        37,
+        37
+      ],
+      "name": "Objective Telekinesis",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.rGNmqWbm0QjoiUeq",
+      "_id": "AWjBDHPPgFTbPsXv",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.AWjBDHPPgFTbPsXv"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        38,
+        38
+      ],
+      "name": "Open Person",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.QKhneN81qMD8wFkA",
+      "_id": "ctTSVGgmlLMGGbpP",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.ctTSVGgmlLMGGbpP"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        39,
+        39
+      ],
+      "name": "Orange Dream",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.1AFmtHEZe1OqJodX",
+      "_id": "rX2cUGcB4QM4O5tj",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.rX2cUGcB4QM4O5tj"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        40,
+        40
+      ],
+      "name": "Parasoma Transference",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.bwQeiUJJ1VuqeZbq",
+      "_id": "omXG2jx0hy1yPcOi",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.omXG2jx0hy1yPcOi"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        41,
+        41
+      ],
+      "name": "Primary Desenescence",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.ClEi0dTQCpQDe16e",
+      "_id": "AGa6Bhnx3btEwUmP",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.AGa6Bhnx3btEwUmP"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        42,
+        42
+      ],
+      "name": "Process Food",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.IzdVLwOgpy73j4Ow",
+      "_id": "csP0phtha2LADUIV",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.csP0phtha2LADUIV"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        43,
+        43
+      ],
+      "name": "Purple Memories",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.GJVO6xbLDmFdCGWQ",
+      "_id": "tUmbvgWtqePG90E9",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.tUmbvgWtqePG90E9"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        44,
+        44
+      ],
+      "name": "Pyreball",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.EQneCAZWYdltSFXS",
+      "_id": "eCXESEyejRz1Ctu9",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.eCXESEyejRz1Ctu9"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        45,
+        45
+      ],
+      "name": "Raise Dead",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.3Kfirgv7rYO9tWko",
+      "_id": "oorjdc7OfxhXu4sv",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.oorjdc7OfxhXu4sv"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        46,
+        46
+      ],
+      "name": "Real-time Rebuild",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.XVwqxKEEzRIK2ZkH",
+      "_id": "jig5LLRiLjpX7Osp",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.jig5LLRiLjpX7Osp"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        47,
+        47
+      ],
+      "name": "Reason’s Harvest",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.VKCRUwI9rE26Yw5J",
+      "_id": "C1waDwuN37beOxAL",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.C1waDwuN37beOxAL"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        48,
+        48
+      ],
+      "name": "Recall Soul",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.TMlq4lYHHCZ20DbR",
+      "_id": "7JhnSUfSkOiKxlcE",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.7JhnSUfSkOiKxlcE"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        49,
+        49
+      ],
+      "name": "Red Mist",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.jBq6pmWb0wAq2KR1",
+      "_id": "U7v2pUgQTtp3XDz4",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.U7v2pUgQTtp3XDz4"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        50,
+        50
+      ],
+      "name": "Restorative Slumber",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.mo9Ixs345yoUhYlo",
+      "_id": "V8kfQP9MwPEsdAB2",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.V8kfQP9MwPEsdAB2"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        51,
+        51
+      ],
+      "name": "Ring of Lead",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.fsVkHnunMrz6XIoQ",
+      "_id": "L4VTWfwS2xF6lJBj",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.L4VTWfwS2xF6lJBj"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        52,
+        52
+      ],
+      "name": "Roadfinder",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.DPdg0Tm3HLKkRFHY",
+      "_id": "XPby8XdbXw04US9t",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.XPby8XdbXw04US9t"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        53,
+        53
+      ],
+      "name": "Roadmaker",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.gDiuvAyAdiIRKv2a",
+      "_id": "s9oRVuTmHOxNxEzk",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.s9oRVuTmHOxNxEzk"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        54,
+        54
+      ],
+      "name": "Speak With Husk",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.9dnTnoj3JQtDQCOH",
+      "_id": "LSfLXcQfIGG1Itbl",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.LSfLXcQfIGG1Itbl"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        55,
+        55
+      ],
+      "name": "Supplicate the Rotting God",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.BPC72mUt9cuKalUl",
+      "_id": "xcTxMTbU1hWomJV2",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.xcTxMTbU1hWomJV2"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        56,
+        56
+      ],
+      "name": "Suspended Insight",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.5Dhg8C7RPbr07jwB",
+      "_id": "Xcp5UGkcfWYZ0AHY",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.Xcp5UGkcfWYZ0AHY"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        57,
+        57
+      ],
+      "name": "Suspended in the Light",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.qryBY1xnpWKC9NSk",
+      "_id": "LcQsH9gvDECHXLvs",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.LcQsH9gvDECHXLvs"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        58,
+        58
+      ],
+      "name": "Thornstone Obelisk",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.QzVNCdU1oJWEKwud",
+      "_id": "lc9dUrpanSa0fBLk",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.lc9dUrpanSa0fBLk"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        59,
+        59
+      ],
+      "name": "Three-Point Immobility",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.AgT3GR63o3raQEgv",
+      "_id": "mPjmqkHx5obO4yas",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.mPjmqkHx5obO4yas"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        60,
+        60
+      ],
+      "name": "Toxin Render",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.6HRDOy73RHB0KXSI",
+      "_id": "YNdNiUoScBHKaTmU",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.YNdNiUoScBHKaTmU"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        61,
+        61
+      ],
+      "name": "Tragic Missile",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.KjO6irgJ70h3Ri48",
+      "_id": "mkTO9fLuWss2ccnd",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.mkTO9fLuWss2ccnd"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        62,
+        62
+      ],
+      "name": "Wing And Prayer",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.0UpweATkobFSr7oG",
+      "_id": "5l4ZvNwkufyZGIye",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.5l4ZvNwkufyZGIye"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        63,
+        63
+      ],
+      "name": "Yellow Cloud",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.V1EAZIPbEViHvYjZ",
+      "_id": "24IcFnkoD0Z695cJ",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.24IcFnkoD0Z695cJ"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        64,
+        64
+      ],
+      "name": "Yellow Foresight",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.powers.Item.0wTjrRzvs81m5294",
+      "_id": "3xlmUSrqI1g1Y8Qo",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!eMQTVlxjB8nCMyFl.3xlmUSrqI1g1Y8Qo"
+    }
+  ]
+}

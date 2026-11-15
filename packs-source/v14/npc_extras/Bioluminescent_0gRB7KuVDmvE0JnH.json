@@ -1,0 +1,38 @@
+{
+  "folder": "ygxzgswOLlt8nmOI",
+  "name": "Bioluminescent",
+  "type": "trait",
+  "_id": "0gRB7KuVDmvE0JnH",
+  "img": "icons/svg/light.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcExtra": "oddity"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!0gRB7KuVDmvE0JnH",
+  "system": {
+    "description": "<p>Its skin glows softly in the dark. It enters the scene lit.</p>",
+    "type": "",
+    "light": {
+      "preset": "glow",
+      "bright": 2,
+      "dim": 6,
+      "color": "#7fffd4",
+      "animation": "pulse"
+    }
+  },
+  "effects": []
+}

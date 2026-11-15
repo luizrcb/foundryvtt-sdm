@@ -1,0 +1,31 @@
+{
+  "folder": "479Y6TLyMh0dAClj",
+  "name": "Resistomorph",
+  "type": "trait",
+  "_id": "vphU2bHhFxPoIPNw",
+  "img": "icons/svg/aura.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcTraitKey": "SDM.NPCTraitResistomorph"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!vphU2bHhFxPoIPNw",
+  "system": {
+    "description": "<p>After being hit by an attack, ignore that attack type for one round.</p>",
+    "type": ""
+  },
+  "effects": []
+}

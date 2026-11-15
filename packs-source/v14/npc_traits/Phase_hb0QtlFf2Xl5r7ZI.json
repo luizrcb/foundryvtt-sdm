@@ -1,0 +1,31 @@
+{
+  "folder": "thCFExpn23wSblag",
+  "name": "Phase",
+  "type": "trait",
+  "_id": "hb0QtlFf2Xl5r7ZI",
+  "img": "icons/svg/invisible.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcTraitKey": "SDM.NPCTraitPhase"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!hb0QtlFf2Xl5r7ZI",
+  "system": {
+    "description": "<p>Spend 1 life to become a ghost for 1 round.</p>",
+    "type": ""
+  },
+  "effects": []
+}

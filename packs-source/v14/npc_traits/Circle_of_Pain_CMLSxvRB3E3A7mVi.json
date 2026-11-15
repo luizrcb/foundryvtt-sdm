@@ -1,0 +1,31 @@
+{
+  "folder": "thCFExpn23wSblag",
+  "name": "Circle of Pain",
+  "type": "trait",
+  "_id": "CMLSxvRB3E3A7mVi",
+  "img": "icons/svg/hazard.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcTraitKey": "SDM.NPCTraitCircleOfPain"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!CMLSxvRB3E3A7mVi",
+  "system": {
+    "description": "<p>Nearby allies deal and suffer double damage. Adjacent foes just suffer double damage.</p>",
+    "type": ""
+  },
+  "effects": []
+}

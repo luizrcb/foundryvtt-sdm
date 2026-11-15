@@ -190,6 +190,27 @@
       "system": "sdm"
     },
     {
+      "name": "npc_traits",
+      "label": "NPC Traits",
+      "path": "./packs/npc_traits",
+      "type": "Item",
+      "system": "sdm"
+    },
+    {
+      "name": "npc_extras",
+      "label": "NPC Extras",
+      "path": "./packs/npc_extras",
+      "type": "Item",
+      "system": "sdm"
+    },
+    {
+      "name": "npc_extras_tables",
+      "label": "NPC Extras Tables",
+      "path": "./packs/npc_extras_tables",
+      "type": "RollTable",
+      "system": "sdm"
+    },
+    {
       "name": "creatures",
       "label": "Creatures",
       "path": "./packs/creatures",
@@ -323,7 +344,7 @@
           "name": "Zoa",
           "sorting": "a",
           "color": "#b3ab56",
-          "packs": ["creatures", "npc_generator"]
+          "packs": ["creatures", "npc_generator", "npc_traits", "npc_extras", "npc_extras_tables"]
         }
       ]
     }

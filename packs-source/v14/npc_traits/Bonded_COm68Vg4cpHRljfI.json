@@ -1,0 +1,31 @@
+{
+  "folder": "tbESXTQ1MkwlSSXZ",
+  "name": "Bonded",
+  "type": "trait",
+  "_id": "COm68Vg4cpHRljfI",
+  "img": "icons/svg/heal.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcTraitKey": "SDM.NPCTraitBonded"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!COm68Vg4cpHRljfI",
+  "system": {
+    "description": "<p>Spend life to grant an ally an equal bonus on their next roll.</p>",
+    "type": ""
+  },
+  "effects": []
+}

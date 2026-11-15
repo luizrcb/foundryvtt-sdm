@@ -1,0 +1,76 @@
+{
+  "folder": "tbESXTQ1MkwlSSXZ",
+  "name": "Tactical",
+  "type": "trait",
+  "_id": "ht6NqZNwPabqit5R",
+  "img": "icons/svg/target.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcTraitKey": "SDM.NPCTraitTactical"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!ht6NqZNwPabqit5R",
+  "system": {
+    "description": "<p>After being hit by an attack, gains +3 defense against that attack type.</p><p>(enable the <em>Adapted</em> effect after being hit)</p>",
+    "type": ""
+  },
+  "effects": [
+    {
+      "name": "Adapted",
+      "origin": null,
+      "img": "icons/svg/target.svg",
+      "_id": "s1O7jLPSjujOYIIk",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.defense",
+            "value": "3",
+            "priority": null,
+            "type": "add",
+            "phase": "initial"
+          }
+        ]
+      },
+      "disabled": true,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "<p>Turn on after being hit (against that attack type).</p>",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!ht6NqZNwPabqit5R.s1O7jLPSjujOYIIk"
+    }
+  ]
+}

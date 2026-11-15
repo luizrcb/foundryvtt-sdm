@@ -1,0 +1,76 @@
+{
+  "folder": "IDA7EVLj6I1kMvCK",
+  "name": "Evasive",
+  "type": "trait",
+  "_id": "pkwco4nVNu5dUiZn",
+  "img": "icons/svg/wing.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcTraitKey": "SDM.NPCTraitEvasive"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!pkwco4nVNu5dUiZn",
+  "system": {
+    "description": "<p>Sacrifice attack to add bonus to defense.</p><p>(enable the <em>Evading</em> effect)</p>",
+    "type": ""
+  },
+  "effects": [
+    {
+      "name": "Evading",
+      "origin": null,
+      "img": "icons/svg/wing.svg",
+      "_id": "j6CDJgnNsnggHrWy",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.defense",
+            "value": "@actor.bonus",
+            "priority": null,
+            "type": "add",
+            "phase": "initial"
+          }
+        ]
+      },
+      "disabled": true,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "<p>Turn on when giving up the attack: bonus added to defense.</p>",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!pkwco4nVNu5dUiZn.j6CDJgnNsnggHrWy"
+    }
+  ]
+}

@@ -1,0 +1,40 @@
+{
+  "folder": "thCFExpn23wSblag",
+  "name": "Feedback",
+  "type": "trait",
+  "_id": "q006WSe5RcH8i2Qf",
+  "img": "icons/svg/explosion.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcTraitKey": "SDM.NPCTraitFeedback"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!q006WSe5RcH8i2Qf",
+  "system": {
+    "description": "<p>Each hit suffered adds 1d6 to damage.</p><p>(count hits in the <strong>Hits suffered</strong> counter; add that many d6 to its damage)</p>",
+    "type": "",
+    "counters": {
+      "hits": {
+        "label": "Hits suffered",
+        "value": 0,
+        "max": null,
+        "reset_value": 0,
+        "reset_on_combat_end": true
+      }
+    }
+  },
+  "effects": []
+}

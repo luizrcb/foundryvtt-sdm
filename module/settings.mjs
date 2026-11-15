@@ -1,3 +1,4 @@
+import { registerNpcExtraSettings } from './helpers/npcExtras.mjs';
 import { onCurrencyChanged } from './helpers/currency.mjs';
 import { LIGHT_PRESETS, putOutAllLights } from './helpers/lights.mjs';
 import CompendiumBrowser from './app/compendium-browser.mjs';
@@ -617,6 +618,9 @@ export function registerSystemSettings() {
       }
     });
   }
+
+  // NPC extras: the roll tables the generator draws special attacks, oddities and powers from
+  registerNpcExtraSettings();
 
   // Optional NPC variability: the generator's default, and unlinked tokens when placed
   const variabilityChoices = {

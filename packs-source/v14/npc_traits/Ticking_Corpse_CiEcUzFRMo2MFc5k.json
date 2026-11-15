@@ -1,0 +1,31 @@
+{
+  "folder": "HQbhNVLFCgoQYzUo",
+  "name": "Ticking Corpse",
+  "type": "trait",
+  "_id": "CiEcUzFRMo2MFc5k",
+  "img": "icons/svg/hazard.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcTraitKey": "SDM.NPCTraitTickingCorpse"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!CiEcUzFRMo2MFc5k",
+  "system": {
+    "description": "<p>Deals double damage to all nearby 1d4 rounds after death (save to negate).</p>",
+    "type": ""
+  },
+  "effects": []
+}

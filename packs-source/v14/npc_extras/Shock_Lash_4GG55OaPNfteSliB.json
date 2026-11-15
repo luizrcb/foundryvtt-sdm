@@ -1,0 +1,100 @@
+{
+  "folder": "vPO6z2wsPggMwQkg",
+  "name": "Shock Lash",
+  "type": "gear",
+  "_id": "4GG55OaPNfteSliB",
+  "img": "icons/svg/lightning.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcExtra": "attack"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!4GG55OaPNfteSliB",
+  "system": {
+    "readied": true,
+    "description": "<p>Natural weapon with reach. A natural 20 stuns the target.</p>",
+    "quantity": 1,
+    "size": {
+      "value": 0,
+      "unit": "soaps"
+    },
+    "features": [],
+    "type": "weapon",
+    "weapon": {
+      "damage": {
+        "base": "1d6",
+        "versatile": "1d6",
+        "bonus": ""
+      },
+      "range": "close",
+      "versatile": false
+    },
+    "triggers": [
+      {
+        "roll": "attack",
+        "condition": "natural",
+        "value": "20",
+        "text": "Stuns the target",
+        "attack": "",
+        "table": "",
+        "effect": "s2NaeETT11FfkJzQ",
+        "wear": "",
+        "counter": "",
+        "counter_step": "1"
+      }
+    ]
+  },
+  "effects": [
+    {
+      "name": "Stunned",
+      "origin": null,
+      "img": "icons/svg/daze.svg",
+      "_id": "s2NaeETT11FfkJzQ",
+      "type": "base",
+      "system": {
+        "changes": []
+      },
+      "disabled": true,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "<p>Put on the target by this attack's roll trigger (disabled here so the bearer doesn't get it).</p>",
+      "tint": "#ffffff",
+      "transfer": false,
+      "statuses": [
+        "stun"
+      ],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!4GG55OaPNfteSliB.s2NaeETT11FfkJzQ"
+    }
+  ]
+}

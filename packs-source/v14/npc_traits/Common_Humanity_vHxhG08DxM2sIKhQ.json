@@ -1,0 +1,31 @@
+{
+  "folder": "tbESXTQ1MkwlSSXZ",
+  "name": "Common Humanity",
+  "type": "trait",
+  "_id": "vHxhG08DxM2sIKhQ",
+  "img": "icons/svg/angel.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcTraitKey": "SDM.NPCTraitCommonHumanity"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!vHxhG08DxM2sIKhQ",
+  "system": {
+    "description": "<p>Spend 1 life to appeal for understanding and parlay (save).</p>",
+    "type": ""
+  },
+  "effects": []
+}

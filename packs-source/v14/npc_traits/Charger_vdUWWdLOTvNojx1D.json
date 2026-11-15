@@ -1,0 +1,31 @@
+{
+  "folder": "IDA7EVLj6I1kMvCK",
+  "name": "Charger",
+  "type": "trait",
+  "_id": "vdUWWdLOTvNojx1D",
+  "img": "icons/svg/direction.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcTraitKey": "SDM.NPCTraitCharger"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!vdUWWdLOTvNojx1D",
+  "system": {
+    "description": "<p>Double damage after a direct charge.</p>",
+    "type": ""
+  },
+  "effects": []
+}

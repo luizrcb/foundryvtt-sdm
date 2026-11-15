@@ -1,0 +1,31 @@
+{
+  "folder": "thCFExpn23wSblag",
+  "name": "Desperate Shot",
+  "type": "trait",
+  "_id": "HUwjjw9Ic36E7UYR",
+  "img": "icons/svg/target.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcTraitKey": "SDM.NPCTraitDesperateShot"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!HUwjjw9Ic36E7UYR",
+  "system": {
+    "description": "<p>Deal triple damage when at 1 life.</p>",
+    "type": ""
+  },
+  "effects": []
+}

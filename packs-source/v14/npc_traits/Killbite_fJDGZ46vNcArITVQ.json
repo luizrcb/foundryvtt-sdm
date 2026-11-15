@@ -1,0 +1,31 @@
+{
+  "folder": "HQbhNVLFCgoQYzUo",
+  "name": "Killbite",
+  "type": "trait",
+  "_id": "fJDGZ46vNcArITVQ",
+  "img": "icons/svg/bones.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcTraitKey": "SDM.NPCTraitKillbite"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!fJDGZ46vNcArITVQ",
+  "system": {
+    "description": "<p>Gets free attack on death.</p>",
+    "type": ""
+  },
+  "effects": []
+}

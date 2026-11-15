@@ -1,0 +1,31 @@
+{
+  "folder": "479Y6TLyMh0dAClj",
+  "name": "Slam",
+  "type": "trait",
+  "_id": "tk1lf4wkseFnER6d",
+  "img": "icons/svg/falling.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcTraitKey": "SDM.NPCTraitSlam"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!tk1lf4wkseFnER6d",
+  "system": {
+    "description": "<p>Spend 5 life: knock down adjacent foes (save).</p>",
+    "type": ""
+  },
+  "effects": []
+}

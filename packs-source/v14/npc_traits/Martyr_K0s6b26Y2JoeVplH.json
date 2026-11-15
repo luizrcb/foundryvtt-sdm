@@ -1,0 +1,31 @@
+{
+  "folder": "HQbhNVLFCgoQYzUo",
+  "name": "Martyr",
+  "type": "trait",
+  "_id": "K0s6b26Y2JoeVplH",
+  "img": "icons/svg/holy.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcTraitKey": "SDM.NPCTraitMartyr"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!K0s6b26Y2JoeVplH",
+  "system": {
+    "description": "<p>On death, grants their bonus to nearby allies.</p>",
+    "type": ""
+  },
+  "effects": []
+}

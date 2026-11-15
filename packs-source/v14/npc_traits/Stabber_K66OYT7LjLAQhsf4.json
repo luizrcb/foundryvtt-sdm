@@ -1,0 +1,31 @@
+{
+  "folder": "IDA7EVLj6I1kMvCK",
+  "name": "Stabber",
+  "type": "trait",
+  "_id": "K66OYT7LjLAQhsf4",
+  "img": "icons/svg/blood.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcTraitKey": "SDM.NPCTraitStabber"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!K66OYT7LjLAQhsf4",
+  "system": {
+    "description": "<p>Double damage to surprised opponents.</p>",
+    "type": ""
+  },
+  "effects": []
+}

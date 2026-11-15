@@ -1,0 +1,31 @@
+{
+  "folder": "thCFExpn23wSblag",
+  "name": "Shatter",
+  "type": "trait",
+  "_id": "FXHdpkAkhAitTk4C",
+  "img": "icons/svg/explosion.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcTraitKey": "SDM.NPCTraitShatter"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!FXHdpkAkhAitTk4C",
+  "system": {
+    "description": "<p>On death, level x d4* dmg to all nearby.</p>",
+    "type": ""
+  },
+  "effects": []
+}

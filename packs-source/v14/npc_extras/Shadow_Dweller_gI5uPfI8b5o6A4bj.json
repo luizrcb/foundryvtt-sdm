@@ -1,0 +1,31 @@
+{
+  "folder": "ygxzgswOLlt8nmOI",
+  "name": "Shadow-Dweller",
+  "type": "trait",
+  "_id": "gI5uPfI8b5o6A4bj",
+  "img": "icons/svg/invisible.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcExtra": "oddity"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!gI5uPfI8b5o6A4bj",
+  "system": {
+    "description": "<p>In darkness it is nearly invisible: attacks against it are at disadvantage there.</p>",
+    "type": ""
+  },
+  "effects": []
+}

@@ -1,0 +1,31 @@
+{
+  "folder": "thCFExpn23wSblag",
+  "name": "Overcharge",
+  "type": "trait",
+  "_id": "6BOD3WdM52wP7Hkx",
+  "img": "icons/svg/lightning.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcTraitKey": "SDM.NPCTraitOvercharge"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!6BOD3WdM52wP7Hkx",
+  "system": {
+    "description": "<p>Spend level life to double damage.</p>",
+    "type": ""
+  },
+  "effects": []
+}

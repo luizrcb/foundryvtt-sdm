@@ -1,3 +1,4 @@
+import { addNpcExtras } from './npcExtras.mjs';
 import { applyNpcProfile, FLAG as NPC_PROFILE_FLAG } from './npcVariability.mjs';
 import { SdmItem } from '../documents/item.mjs';
 import { ActorType } from './constants.mjs';
@@ -325,20 +326,45 @@ function makeNPC(name, img = '', biography = '', data, initiative = '') {
   };
 }
 
+/**
+ * The NPC table's trait, rolled on a d6: the trait item from the NPC Traits compendium (description,
+ * and effects or counters where they help), or a plain trait named after it if the compendium lacks it.
+ */
 async function createRandomTrait(targetActor, traitsTable) {
   if (!traitsTable.length) {
     return;
   }
 
-  const traitRoll = Math.floor(Math.random() * 6);
+  const traitRoll = Math.floor(Math.random() * traitsTable.length);
   const traitResult = traitsTable[traitRoll];
-  const localizedTrait = game.i18n.localize(traitResult);
-  await targetActor.createEmbeddedDocuments('Item', [
+  const fromCompendium = await getNpcTraitItem(traitResult);
+  const data =
+    fromCompendium ??
     new Item({
-      name: localizedTrait,
+      name: game.i18n.localize(traitResult),
       type: 'trait'
-    }).toObject()
-  ]);
+    }).toObject();
+  await targetActor.createEmbeddedDocuments('Item', [data]);
+}
+
+/** The NPC Traits compendium item for a table trait key (flags.sdm.npcTraitKey), ready to create. */
+async function getNpcTraitItem(key) {
+  const pack = game.packs.get('sdm.npc_traits');
+  if (!pack) return null;
+  try {
+    const index = await pack.getIndex({ fields: ['flags.sdm.npcTraitKey'] });
+    const entry = index.find(e => e.flags?.sdm?.npcTraitKey === key);
+    if (!entry) return null;
+    const doc = await pack.getDocument(entry._id);
+    const data = doc?.toObject();
+    if (!data) return null;
+    delete data._id;
+    data._stats = { ...(data._stats ?? {}), compendiumSource: doc.uuid };
+    return data;
+  } catch (error) {
+    console.warn('SDM | NPC trait not found in the compendium', key, error);
+    return null;
+  }
 }
 
 // rola um d100 (00 = 100) e seleciona a linha correspondente
@@ -382,7 +408,8 @@ export async function createNPCByLevel({
   biography = '',
   ownership = null,
   linked = false,
-  profile = null
+  profile = null,
+  extras = null
 }) {
   const tableEntry = getNPCDataByLevel(tableName, lvl);
   if (!tableEntry) throw new Error(`Nenhuma entrada encontrada para lvl ${lvl} em ${tableName}`);
@@ -427,6 +454,8 @@ export async function createNPCByLevel({
   const traitsTable = NPCTables[tableName].traits;
 
   await createRandomTrait(targetActor, traitsTable);
+  // Rolled extras (special attacks, oddities, powers): a number, or 'level'
+  if (extras && extras !== 'none') await addNpcExtras(targetActor, { count: extras });
   return npcData;
 }
 

@@ -1,0 +1,31 @@
+{
+  "folder": "IDA7EVLj6I1kMvCK",
+  "name": "Double Attack",
+  "type": "trait",
+  "_id": "ttgcpIGUJZOD6eCv",
+  "img": "icons/svg/sword.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcTraitKey": "SDM.NPCTraitDoubleAttack"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!ttgcpIGUJZOD6eCv",
+  "system": {
+    "description": "<p>Attacks twice with one action.</p>",
+    "type": ""
+  },
+  "effects": []
+}

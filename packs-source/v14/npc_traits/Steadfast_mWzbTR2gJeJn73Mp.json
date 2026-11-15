@@ -1,0 +1,31 @@
+{
+  "folder": "479Y6TLyMh0dAClj",
+  "name": "Steadfast",
+  "type": "trait",
+  "_id": "mWzbTR2gJeJn73Mp",
+  "img": "icons/svg/shield.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcTraitKey": "SDM.NPCTraitSteadfast"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!mWzbTR2gJeJn73Mp",
+  "system": {
+    "description": "<p>Cannot be moved against their will.</p>",
+    "type": ""
+  },
+  "effects": []
+}

@@ -1,0 +1,21 @@
+{
+  "type": "Item",
+  "folder": null,
+  "name": "Special Attacks",
+  "color": null,
+  "sorting": "a",
+  "_id": "vPO6z2wsPggMwQkg",
+  "description": "",
+  "sort": 0,
+  "flags": {},
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!folders!vPO6z2wsPggMwQkg"
+}

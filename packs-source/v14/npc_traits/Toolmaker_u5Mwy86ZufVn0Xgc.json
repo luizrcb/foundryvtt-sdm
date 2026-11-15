@@ -1,0 +1,31 @@
+{
+  "folder": "tbESXTQ1MkwlSSXZ",
+  "name": "Toolmaker",
+  "type": "trait",
+  "_id": "u5Mwy86ZufVn0Xgc",
+  "img": "icons/svg/upgrade.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcTraitKey": "SDM.NPCTraitToolmaker"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!u5Mwy86ZufVn0Xgc",
+  "system": {
+    "description": "<p>Improvise a weapon or tool in 1 round.</p>",
+    "type": ""
+  },
+  "effects": []
+}

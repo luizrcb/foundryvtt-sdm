@@ -1,0 +1,31 @@
+{
+  "folder": "ygxzgswOLlt8nmOI",
+  "name": "Flies",
+  "type": "trait",
+  "_id": "RsXr8vXBHUXpJYS9",
+  "img": "icons/svg/wing.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcExtra": "oddity"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!RsXr8vXBHUXpJYS9",
+  "system": {
+    "description": "<p>It flies, and can move over obstacles and out of reach.</p>",
+    "type": ""
+  },
+  "effects": []
+}

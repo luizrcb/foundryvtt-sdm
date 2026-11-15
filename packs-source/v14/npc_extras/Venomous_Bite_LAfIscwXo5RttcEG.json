@@ -1,0 +1,100 @@
+{
+  "folder": "vPO6z2wsPggMwQkg",
+  "name": "Venomous Bite",
+  "type": "gear",
+  "_id": "LAfIscwXo5RttcEG",
+  "img": "icons/svg/poison.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcExtra": "attack"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!LAfIscwXo5RttcEG",
+  "system": {
+    "readied": true,
+    "description": "<p>Natural weapon. A wound from it poisons the target (save).</p>",
+    "quantity": 1,
+    "size": {
+      "value": 0,
+      "unit": "soaps"
+    },
+    "features": [],
+    "type": "weapon",
+    "weapon": {
+      "damage": {
+        "base": "1d6",
+        "versatile": "1d6",
+        "bonus": ""
+      },
+      "range": "close",
+      "versatile": false
+    },
+    "triggers": [
+      {
+        "roll": "damage",
+        "condition": "totalAtLeast",
+        "value": "1",
+        "text": "Poisons the target (save)",
+        "attack": "",
+        "table": "",
+        "effect": "6b2kFulJ20cTZqXQ",
+        "wear": "",
+        "counter": "",
+        "counter_step": "1"
+      }
+    ]
+  },
+  "effects": [
+    {
+      "name": "Poisoned",
+      "origin": null,
+      "img": "icons/svg/poison.svg",
+      "_id": "6b2kFulJ20cTZqXQ",
+      "type": "base",
+      "system": {
+        "changes": []
+      },
+      "disabled": true,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "<p>Put on the target by this attack's roll trigger (disabled here so the bearer doesn't get it).</p>",
+      "tint": "#ffffff",
+      "transfer": false,
+      "statuses": [
+        "poison"
+      ],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!LAfIscwXo5RttcEG.6b2kFulJ20cTZqXQ"
+    }
+  ]
+}

@@ -1,0 +1,281 @@
+{
+  "name": "NPC Oddities",
+  "img": "icons/svg/mystery-man.svg",
+  "description": "<p>Odd traits for generated NPCs.</p>",
+  "replacement": true,
+  "displayRoll": false,
+  "folder": null,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcExtraTable": true
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_id": "lR2R1gKLCFguH9lX",
+  "sort": 0,
+  "formula": "1d10",
+  "_key": "!tables!lR2R1gKLCFguH9lX",
+  "results": [
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "name": "Bioluminescent",
+      "img": "icons/svg/light.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.0gRB7KuVDmvE0JnH",
+      "_id": "MRcCnafg6MbTlVfk",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.MRcCnafg6MbTlVfk"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "name": "Burning Aura",
+      "img": "icons/svg/fire.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.XBXMvlGkB8wiZjQ2",
+      "_id": "Cpi2NfVVz8kf6Rcj",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.Cpi2NfVVz8kf6Rcj"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "name": "Armored Hide",
+      "img": "icons/svg/shield.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.Dl978MhGV809J0Fj",
+      "_id": "ahOSNcyLGKoVsrd4",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.ahOSNcyLGKoVsrd4"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "name": "Thick Skull",
+      "img": "icons/svg/terror.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.mlrvdhq32ciOA2xz",
+      "_id": "oeNSHytjzvMg1gXs",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.oeNSHytjzvMg1gXs"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "name": "Regenerates",
+      "img": "icons/svg/regen.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.ToYYaiGcLJx1ToQD",
+      "_id": "ZF4jK5CViQXJwTAS",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.ZF4jK5CViQXJwTAS"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "name": "Flies",
+      "img": "icons/svg/wing.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.RsXr8vXBHUXpJYS9",
+      "_id": "qSsIyRhYPEmJj4wL",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.qSsIyRhYPEmJj4wL"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "name": "Venom Blood",
+      "img": "icons/svg/poison.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.lCJ6EUWDkaBWJ42W",
+      "_id": "J1sUIY6kC1jJSDFV",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.J1sUIY6kC1jJSDFV"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "name": "Many Eyes",
+      "img": "icons/svg/eye.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.goYqOLiFFDx1mKQ5",
+      "_id": "qm3tbNg7BlpYENLO",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.qm3tbNg7BlpYENLO"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "name": "Shadow-Dweller",
+      "img": "icons/svg/invisible.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.gI5uPfI8b5o6A4bj",
+      "_id": "m72e4be94nxmsJj5",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.m72e4be94nxmsJj5"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "name": "Swarm Body",
+      "img": "icons/svg/bones.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.GCsX3fzb0HoIdKEq",
+      "_id": "hGnlRSvjynxjuM6W",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.hGnlRSvjynxjuM6W"
+    }
+  ]
+}

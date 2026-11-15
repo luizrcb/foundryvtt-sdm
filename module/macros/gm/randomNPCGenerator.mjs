@@ -49,6 +49,20 @@ export async function randomNPCGenerator() {
   </div>
   <p class="hint">${t('SDM.NpcProfile.GeneratorHint')}</p>`;
 
+  // Rolled extras: special attacks, oddities and powers from the NPC extras tables
+  const extrasHtml = `
+  <div class="form-group">
+    <label>${t('SDM.NpcExtras.Label')}</label>
+    <select name="extras">
+      <option value="none">${t('SDM.NpcExtras.None')}</option>
+      <option value="level">${t('SDM.NpcExtras.ByLevel')}</option>
+      <option value="1">1</option>
+      <option value="2">2</option>
+      <option value="3">3</option>
+    </select>
+  </div>
+  <p class="hint">${t('SDM.NpcExtras.Hint')}</p>`;
+
   // Build dialog content
   const content = `
 <fieldset>
@@ -80,7 +94,7 @@ export async function randomNPCGenerator() {
   <div class="form-group">
     <label>${game.i18n.format('SDM.OptionalField', { field: game.i18n.localize('SDM.CustomInitiative') })}</label>
     <input type="text" name="initiative" class="form-control" placeholder="e.g. 2d6+@bonus">
-  </div>${variabilityHtml}
+  </div>${variabilityHtml}${extrasHtml}
   <label style="font-weight: bold;">${game.i18n.format('SDM.OptionalField', { field: game.i18n.localize('SDM.FieldBiography') })}</label>
   <div class="form-group">
     <prose-mirror name="biography"></prose-mirror>
@@ -152,7 +166,8 @@ export async function randomNPCGenerator() {
       tableName: npcData.table,
       initiative: npcData.initiative,
       biography: npcData.biography,
-      profile: rollNpcProfile({ variability: data.variability ?? 'none', archetype: data.archetype ?? '' })
+      profile: rollNpcProfile({ variability: data.variability ?? 'none', archetype: data.archetype ?? '' }),
+      extras: data.extras ?? 'none'
     });
   } else {
     npc = await game.sdm.api.createNPC(npcData?.name, npcData.table, npcData.initiative, npcData.biography);

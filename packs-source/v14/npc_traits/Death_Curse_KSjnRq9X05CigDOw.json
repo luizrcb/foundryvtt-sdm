@@ -1,0 +1,31 @@
+{
+  "folder": "HQbhNVLFCgoQYzUo",
+  "name": "Death Curse",
+  "type": "trait",
+  "_id": "KSjnRq9X05CigDOw",
+  "img": "icons/svg/skull.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcTraitKey": "SDM.NPCTraitDeathCurse"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!KSjnRq9X05CigDOw",
+  "system": {
+    "description": "<p>Killer suffers a psychic burden.</p>",
+    "type": ""
+  },
+  "effects": []
+}
