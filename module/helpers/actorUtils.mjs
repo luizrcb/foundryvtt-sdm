@@ -344,6 +344,7 @@ async function createRandomTrait(targetActor, traitsTable) {
       name: game.i18n.localize(traitResult),
       type: 'trait'
     }).toObject();
+  foundry.utils.setProperty(data, 'system.readied', true);
   await targetActor.createEmbeddedDocuments('Item', [data]);
 }
 

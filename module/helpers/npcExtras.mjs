@@ -50,7 +50,8 @@ async function drawItem(kind, level, taken) {
     const data = item.toObject();
     delete data._id;
     data._stats = { ...(data._stats ?? {}), compendiumSource: item.uuid };
-    if (data.type === 'gear') foundry.utils.setProperty(data, 'system.readied', true);
+    // Everything an NPC gets is ready to use
+    foundry.utils.setProperty(data, 'system.readied', true);
     foundry.utils.setProperty(data, 'flags.sdm.npcExtra', kind);
     taken.add(item.name);
     return data;
