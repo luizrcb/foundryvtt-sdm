@@ -618,6 +618,39 @@ export function registerSystemSettings() {
     });
   }
 
+  // Optional NPC variability: the generator's default, and unlinked tokens when placed
+  const variabilityChoices = {
+    none: 'SDM.NpcProfile.Variability.none',
+    low: 'SDM.NpcProfile.Variability.low',
+    high: 'SDM.NpcProfile.Variability.high'
+  };
+  game.settings.register('sdm', 'npcVariability', {
+    name: 'SDM.SettingsNpcVariability',
+    hint: 'SDM.SettingsNpcVariabilityHint',
+    scope: 'world',
+    restricted: true,
+    type: String,
+    choices: variabilityChoices,
+    default: 'none'
+  });
+  game.settings.register('sdm', 'npcTokenVariability', {
+    name: 'SDM.SettingsNpcTokenVariability',
+    hint: 'SDM.SettingsNpcTokenVariabilityHint',
+    scope: 'world',
+    restricted: true,
+    type: String,
+    choices: variabilityChoices,
+    default: 'none'
+  });
+  game.settings.register('sdm', 'npcTokenArchetype', {
+    name: 'SDM.SettingsNpcTokenArchetype',
+    hint: 'SDM.SettingsNpcTokenArchetypeHint',
+    scope: 'world',
+    restricted: true,
+    type: Boolean,
+    default: false
+  });
+
   game.settings.register('sdm', 'automatePowerCost', {
     name: 'SDM.SettingsAutomatePowerCost',
     hint: 'SDM.SettingsAutomatePowerCostHint',

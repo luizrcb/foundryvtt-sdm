@@ -600,7 +600,7 @@ export async function animateItem(item, { app } = {}) {
       const tokenDocument = await npc.getTokenDocument(placement);
       tokensData.push(tokenDocument.toObject());
     }
-    if (tokensData.length) await canvas.scene.createEmbeddedDocuments('Token', tokensData);
+    if (tokensData.length) await canvas.scene.createEmbeddedDocuments('Token', tokensData, { sdmNoVariation: true });
   } catch (error) {
     console.error('SDM | Failed to place the animated item token', error);
   } finally {

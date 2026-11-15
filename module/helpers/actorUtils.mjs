@@ -1,3 +1,4 @@
+import { applyNpcProfile, FLAG as NPC_PROFILE_FLAG } from './npcVariability.mjs';
 import { SdmItem } from '../documents/item.mjs';
 import { ActorType } from './constants.mjs';
 import { templatePath } from './templates.mjs';
@@ -380,15 +381,19 @@ export async function createNPCByLevel({
   image = '',
   biography = '',
   ownership = null,
-  linked = false
+  linked = false,
+  profile = null
 }) {
-  const entry = getNPCDataByLevel(tableName, lvl);
-  if (!entry) throw new Error(`Nenhuma entrada encontrada para lvl ${lvl} em ${tableName}`);
+  const tableEntry = getNPCDataByLevel(tableName, lvl);
+  if (!tableEntry) throw new Error(`Nenhuma entrada encontrada para lvl ${lvl} em ${tableName}`);
+  // An individual profile (optional NPC variability) applies on top of the table
+  const entry = applyNpcProfile(tableEntry, profile);
 
   const actorBiography = biography;
   const img = image;
   const npcData = makeNPC(name, img, actorBiography, entry, initiative);
   npcData.system['createdFromTable'] = tableName;
+  if (profile) npcData.flags = { sdm: { [NPC_PROFILE_FLAG]: profile } };
   const isGM = userId => game.users.get(userId)?.isGM ?? false;
 
   const targetActor = await Actor.create(npcData);

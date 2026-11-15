@@ -61,7 +61,7 @@ export function setupPetDropSocket() {
       const { x: tokenX, y: tokenY } = canvas.grid.getTopLeftPoint({ x, y });
 
       const tokenDoc = await petActor.getTokenDocument({ x: tokenX, y: tokenY });
-      await scene.createEmbeddedDocuments('Token', [tokenDoc.toObject()]);
+      await scene.createEmbeddedDocuments('Token', [tokenDoc.toObject()], { sdmNoVariation: true });
 
       // Optionally notify the requesting user of success
       game.socket.emit(CHANNEL, {

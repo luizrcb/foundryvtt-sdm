@@ -1,3 +1,4 @@
+import { describeNpcProfile, getNpcProfile } from '../helpers/npcVariability.mjs';
 import { actorTriggers, renderTriggers, runTriggerActions } from '../rolls/triggers.mjs';
 import { bindCollapsibleSections } from '../helpers/collapsibleSections.mjs';
 import { restActor } from '../app/rest.mjs';
@@ -765,7 +766,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         this.actor.type === ActorType.NPC
           ? game.i18n.localize(
               getNpcTableChoices()[this.actor.system.createdFromTable] ?? 'SDM.generic-synthesized-creature'
-            )
+            ) +
+            (getNpcProfile(this.actor) ? ` · ${describeNpcProfile(getNpcProfile(this.actor))}` : '')
           : ''
     };
 
@@ -2536,15 +2538,31 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const options = Object.entries(choices)
       .map(([key, label]) => `<option value="${key}" ${key === current ? 'selected' : ''}>${game.i18n.localize(label)}</option>`)
       .join('');
-    const table = await foundry.applications.api.DialogV2.prompt({
+    // An individual profile (optional NPC variability) can be removed here: back to the plain table
+    const profile = getNpcProfile(this.actor);
+    const profileHtml = profile
+      ? `<div class="form-group"><label>${game.i18n.localize('SDM.NpcProfile.Label')}</label>
+        <div class="form-fields"><span>${foundry.utils.escapeHTML(describeNpcProfile(profile))}</span></div></div>
+        <div class="form-group"><label><input type="checkbox" name="removeProfile" /> ${game.i18n.localize('SDM.NpcProfile.Remove')}</label></div>
+        <p class="hint">${game.i18n.localize('SDM.NpcProfile.RemoveHint')}</p>`
+      : '';
+    const result = await foundry.applications.api.DialogV2.prompt({
       window: { title: game.i18n.localize('SDM.NpcTable.Title'), icon: 'fa-solid fa-gear' },
       content: `<div class="form-group"><label>${game.i18n.localize('SDM.NpcTable.Label')}</label>
         <div class="form-fields"><select name="table">${options}</select></div></div>
-        <p class="hint">${game.i18n.localize('SDM.NpcTable.Hint')}</p>`,
+        <p class="hint">${game.i18n.localize('SDM.NpcTable.Hint')}</p>${profileHtml}`,
       rejectClose: false,
-      ok: { label: game.i18n.localize('SDM.NpcTable.Save'), callback: (e, button) => button.form.elements.table.value }
+      ok: {
+        label: game.i18n.localize('SDM.NpcTable.Save'),
+        callback: (e, button) => ({
+          table: button.form.elements.table.value,
+          removeProfile: !!button.form.elements.removeProfile?.checked
+        })
+      }
     });
-    if (!table) return;
+    if (!result?.table) return;
+    const { table } = result;
+    if (result.removeProfile) await this.actor.unsetFlag('sdm', 'npcProfile');
     await this.actor.update({ 'system.createdFromTable': table });
     // An animated item's creature: the item keeps the same table
     const item = getAnimatedSourceItem(this.actor);

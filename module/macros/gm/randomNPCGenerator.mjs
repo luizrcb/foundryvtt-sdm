@@ -1,4 +1,5 @@
 import { generateNameFromTable } from './characterGenerator.mjs';
+import { ARCHETYPES, rollNpcProfile, VARIABILITY_LEVELS } from '../../helpers/npcVariability.mjs';
 
 const { DialogV2 } = foundry.applications.api;
 
@@ -24,6 +25,29 @@ export async function randomNPCGenerator() {
     'crystal-cannons': game.i18n.localize('SDM.TableDesc.CrystalCannons'),
     'erratic-expendables': game.i18n.localize('SDM.TableDesc.ErraticExpendables')
   };
+
+  // Optional NPC variability (world setting): how much this NPC differs from its table, and an archetype
+  const defaultVariability = game.settings.get('sdm', 'npcVariability');
+  const t = key => game.i18n.localize(key);
+  const variabilityHtml =
+    defaultVariability === 'none'
+      ? ''
+      : `
+  <div class="form-group">
+    <label>${t('SDM.NpcProfile.VariabilityLabel')}</label>
+    <select name="variability">${VARIABILITY_LEVELS.map(
+      level => `<option value="${level}" ${level === defaultVariability ? 'selected' : ''}>${t(`SDM.NpcProfile.Variability.${level}`)}</option>`
+    ).join('')}</select>
+  </div>
+  <div class="form-group">
+    <label>${t('SDM.NpcProfile.ArchetypeLabel')}</label>
+    <select name="archetype">
+      <option value="">${t('SDM.NpcProfile.Archetype.none')}</option>
+      <option value="random">${t('SDM.NpcProfile.Archetype.random')}</option>
+      ${Object.keys(ARCHETYPES).map(key => `<option value="${key}">${t(`SDM.NpcProfile.Archetype.${key}`)}</option>`).join('')}
+    </select>
+  </div>
+  <p class="hint">${t('SDM.NpcProfile.GeneratorHint')}</p>`;
 
   // Build dialog content
   const content = `
@@ -56,7 +80,7 @@ export async function randomNPCGenerator() {
   <div class="form-group">
     <label>${game.i18n.format('SDM.OptionalField', { field: game.i18n.localize('SDM.CustomInitiative') })}</label>
     <input type="text" name="initiative" class="form-control" placeholder="e.g. 2d6+@bonus">
-  </div>
+  </div>${variabilityHtml}
   <label style="font-weight: bold;">${game.i18n.format('SDM.OptionalField', { field: game.i18n.localize('SDM.FieldBiography') })}</label>
   <div class="form-group">
     <prose-mirror name="biography"></prose-mirror>
@@ -128,6 +152,7 @@ export async function randomNPCGenerator() {
       tableName: npcData.table,
       initiative: npcData.initiative,
       biography: npcData.biography,
+      profile: rollNpcProfile({ variability: data.variability ?? 'none', archetype: data.archetype ?? '' })
     });
   } else {
     npc = await game.sdm.api.createNPC(npcData?.name, npcData.table, npcData.initiative, npcData.biography);

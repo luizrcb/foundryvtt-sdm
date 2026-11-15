@@ -1,3 +1,4 @@
+import { applyNpcProfile, getNpcProfile } from '../helpers/npcVariability.mjs';
 import { featureEnabled } from '../helpers/features.mjs';
 import { isLightSource, isLit, lightBlockedReason, lightItem, putOutLight } from '../helpers/lights.mjs';
 import { blockedReason, isDormantEffect, isUsable, useItem } from '../app/use-item.mjs';
@@ -1444,7 +1445,8 @@ export class SdmActor extends Actor {
     if (this.type !== ActorType.NPC) return;
     const npcData = this.system;
     // Custom table: only the level changes, the Referee updates the stats
-    const entry = getNPCDataByLevel(npcData.createdFromTable || '', targetLevel);
+    // An individual profile (optional NPC variability) applies on top of the table
+    const entry = applyNpcProfile(getNPCDataByLevel(npcData.createdFromTable || '', targetLevel), getNpcProfile(this));
     const update = { 'system.level': targetLevel };
     if (entry) {
       const life = Math.max(npcData.life.max, entry.Life ?? 0);

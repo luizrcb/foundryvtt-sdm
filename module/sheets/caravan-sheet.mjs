@@ -1626,7 +1626,7 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       if (minimized) this.maximize();
     }
 
-    await canvas.scene.createEmbeddedDocuments('Token', tokensData);
+    await canvas.scene.createEmbeddedDocuments('Token', tokensData, { sdmNoVariation: true });
   }
 
   /** Helper Functions */

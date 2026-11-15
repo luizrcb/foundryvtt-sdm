@@ -63,6 +63,7 @@ import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { setupPetDropSocket } from './items/petItem.mjs';
 import { setupPetLinks } from './items/petLinks.mjs';
 import { setupItemPiles } from './integrations/itemPiles.mjs';
+import { setupNpcVariability } from './helpers/npcVariability.mjs';
 import { rememberCurrency } from './helpers/currency.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
 import { gm as gmMacros, player as playerMacros } from './macros/_module.mjs';
@@ -740,6 +741,7 @@ Hooks.once('init', function () {
   setupPetDropSocket();
   setupPetLinks();
   setupItemPiles();
+  setupNpcVariability();
   setupSettingsSocket();
   setupGroupCheckSocket();
   setupCaravanTokenControls();
@@ -807,7 +809,7 @@ Hooks.once('ready', function () {
         return;
       }
       const tokenDoc = await petActor.getTokenDocument({ x: canvasX, y: canvasY });
-      await canvas.scene.createEmbeddedDocuments('Token', [tokenDoc.toObject()]);
+      await canvas.scene.createEmbeddedDocuments('Token', [tokenDoc.toObject()], { sdmNoVariation: true });
       return;
     }
 

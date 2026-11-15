@@ -114,7 +114,16 @@ export class SDMCoreRulesSettingsConfig extends GroupBase {
     'healingHouseRule'
   ];
   // Second section: automations the GM can turn off
-  static OPTIONAL_KEYS = ['automatePowerCost', 'enableTriggers', 'enableCounters', 'enableDamageBoost', 'enableItemLights'];
+  static OPTIONAL_KEYS = [
+    'automatePowerCost',
+    'enableTriggers',
+    'enableCounters',
+    'enableDamageBoost',
+    'enableItemLights',
+    'npcVariability',
+    'npcTokenVariability',
+    'npcTokenArchetype'
+  ];
   static PARTS = {
     config: { template: 'systems/sdm/templates/settings/base-config.hbs' },
     optional: { template: 'systems/sdm/templates/settings/optional-config.hbs' },
