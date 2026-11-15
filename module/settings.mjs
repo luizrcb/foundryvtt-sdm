@@ -1856,11 +1856,12 @@ export function addChromatypePreview(app, html) {
   };
   // Default preview: a d20 and a d6; hero, blood and tourist dice are d6s, so just a d6
   const addDiceButton = (select, themeOf, dice = ['1d20', '1d6']) => {
+    const hint = game.i18n.localize(dice.length === 1 ? 'SDM.ChromatypePreviewD6' : 'SDM.ChromatypePreview');
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'sdm-chromatype-dice';
-    button.dataset.tooltip = game.i18n.localize('SDM.ChromatypePreview');
-    button.setAttribute('aria-label', game.i18n.localize('SDM.ChromatypePreview'));
+    button.dataset.tooltip = hint;
+    button.setAttribute('aria-label', hint);
     button.innerHTML = '<i class="fa-solid fa-dice-d20"></i>';
     button.addEventListener('click', async event => {
       event.preventDefault();
