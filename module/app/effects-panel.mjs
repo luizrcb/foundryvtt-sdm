@@ -1,3 +1,4 @@
+import { conditionTooltip } from '../helpers/conditions.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
@@ -58,9 +59,13 @@ export default class SdmEffectsPanel extends HandlebarsApplicationMixin(Applicat
         : Number.isFinite(duration.remaining) && duration.label
           ? duration.label
           : '';
-      const tooltip = [effect.name, remaining, effect.sourceName && effect.parent !== actor ? effect.sourceName : '']
-        .filter(Boolean)
-        .join(' — ');
+      // Conditions show their summary
+      const status = [...(effect.statuses ?? [])].map(id => conditionTooltip(id)).find(Boolean);
+      const tooltip = status
+        ? [status, remaining].filter(Boolean).join('<br>')
+        : [effect.name, remaining, effect.sourceName && effect.parent !== actor ? effect.sourceName : '']
+            .filter(Boolean)
+            .join(' — ');
       context.effects.push({
         uuid: effect.uuid,
         name: effect.name,

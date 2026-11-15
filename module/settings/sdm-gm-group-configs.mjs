@@ -124,6 +124,7 @@ export class SDMCoreRulesSettingsConfig extends GroupBase {
     'npcTokenVariability',
     'npcTokenArchetype',
     'enableNpcExtras',
+    'automateConditions',
     'npcNaturalLight'
   ];
   static PARTS = {

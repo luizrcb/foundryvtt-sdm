@@ -1,4 +1,5 @@
 import { describeNpcProfile, getNpcProfile } from '../helpers/npcVariability.mjs';
+import { applyDefeatCondition, combineRollModes, conditionRollMode, isWeakened } from '../helpers/conditions.mjs';
 import { actorTriggers, renderTriggers, runTriggerActions } from '../rolls/triggers.mjs';
 import { bindCollapsibleSections } from '../helpers/collapsibleSections.mjs';
 import { restActor } from '../app/rest.mjs';
@@ -271,12 +272,21 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     let shouldExplode = !isDamage && !isPower && !isPowerAlbum;
     let selectedAbility = isAttack ? actorAttack?.default_ability : ability;
 
-    const selectedRollMode =
+    const baseRollMode =
       isAttack && isCharacter
         ? this.actor.system[attack].roll_mode
         : isAbility && isCharacter
           ? this.actor.system.abilities[selectedAbility].roll_mode
           : RollMode.NORMAL;
+    // Optional condition automation: advantage / disadvantage from the roller's and the target's conditions
+    const conditionMode = conditionRollMode(this.actor, {
+      attack,
+      ability: isAttack ? actorAttack?.default_ability ?? '' : ability,
+      target: targetActor,
+      isAttack,
+      isAbility
+    });
+    const selectedRollMode = combineRollModes(baseRollMode, conditionMode);
 
     const actorData = this.actor?.system;
     const damageMultiplier = CONFIG.SDM.getDamageMultiplier(actorData.base_damage_multiplier || 2);
@@ -386,7 +396,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       const {
         selectedAbility: abilityValue,
         modifier = '',
-        rollMode = RollMode.NORMAL,
+        rollMode = conditionMode ?? RollMode.NORMAL,
         shouldExplode: explodeValue,
         multiplier = '',
         selectedSkill: skillValue,
@@ -525,6 +535,12 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     if (heroicDice > currentHeroDice) {
       ui.notifications.error('Not enough hero dice for this roll');
       return;
+    }
+
+    // Weakened (optional condition automation): half the damage dealt, noted on the roll
+    if ((isDamage || isPower || isPowerAlbum) && isWeakened(this.actor)) {
+      title = `${title} (${game.i18n.localize('SDM.Condition.weakened.Note')})`;
+      plan.title = title;
     }
 
     if (plan.boosted) {
@@ -2151,6 +2167,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         active: true
       });
     }
+
+    // Optional condition automation: knocked out (7) or stunned (8–11)
+    await applyDefeatCondition(this.actor, roll.total);
 
     // Defeat triggers (above 6 the character is not defeated)
     const fired = actorTriggers(this.actor, 'defeat', roll, { success: roll.total > 6 });

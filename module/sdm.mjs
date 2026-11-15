@@ -64,6 +64,7 @@ import { setupPetDropSocket } from './items/petItem.mjs';
 import { setupPetLinks } from './items/petLinks.mjs';
 import { setupItemPiles } from './integrations/itemPiles.mjs';
 import { setupNpcVariability } from './helpers/npcVariability.mjs';
+import { configureConditions, localizeConditions, setupConditions } from './helpers/conditions.mjs';
 import { rememberCurrency } from './helpers/currency.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
 import { gm as gmMacros, player as playerMacros } from './macros/_module.mjs';
@@ -310,6 +311,7 @@ Hooks.on('renderChatMessageHTML', (message, html, data) => {
 
 // Accent color lists in the order of the user's language (needs the translations)
 Hooks.once('i18nInit', sortChromatypeChoices);
+Hooks.once('i18nInit', localizeConditions);
 // Client settings: accent colour swatch and 3D dice preview
 Hooks.on('renderSDMClientSettingsConfig', addChromatypePreview);
 Hooks.on('renderSettingsConfig', addChromatypePreview);
@@ -658,6 +660,8 @@ Hooks.once('init', function () {
   // Add custom constants for configuration.
   globalThis.sdm = game.sdm = Object.assign(game.system, globalThis.sdm);
   CONFIG.SDM = SDM;
+  // WTF conditions replace Foundry's status list
+  configureConditions();
 
   // v14
   CONFIG.ActiveEffect.phases = {
@@ -749,6 +753,7 @@ Hooks.once('init', function () {
   setupPetLinks();
   setupItemPiles();
   setupNpcVariability();
+  setupConditions();
   setupSettingsSocket();
   setupGroupCheckSocket();
   setupCaravanTokenControls();
