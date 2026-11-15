@@ -165,6 +165,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       rerollCharacter: this._onRerollCharacter,
       levelUpNPC: this._onLevelUpNPC,
       configureNpcTable: this._onConfigureNpcTable,
+      toggleProtoLink: this._onToggleProtoLink,
       investXp: this._onInvestXp,
       showProgressLog: this._onShowProgressLog,
       chooseUpgrade: this._onChooseUpgrade,
@@ -780,6 +781,17 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         : this.actor.system.experience;
     context.xpToNextLevel = getXpToNextLevel(xpBase);
     context.isToken = this.document.isToken;
+    // Referee: is the prototype token linked? (not on a token's own sheet, not for caravans)
+    context.protoLink = null;
+    if (game.user.isGM && !context.isToken && [ActorType.CHARACTER, ActorType.NPC].includes(this.actor.type)) {
+      const linked = !!this.actor.prototypeToken?.actorLink;
+      context.protoLink = {
+        linked,
+        // A character whose tokens aren't linked is almost always a mistake
+        warn: this.actor.type === ActorType.CHARACTER && !linked,
+        tooltip: game.i18n.localize(linked ? 'SDM.ProtoLink.LinkedHint' : 'SDM.ProtoLink.UnlinkedHint')
+      };
+    }
 
     if (this.actor.type === 'character') {
       const heroDiceType =
@@ -2526,6 +2538,21 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     event.preventDefault();
     event.stopPropagation();
     return openInvestXpDialog(this.actor);
+  }
+
+  /** Referee: Shift+click the link icon by the name to link / unlink the prototype token. */
+  static async _onToggleProtoLink(event) {
+    event.preventDefault();
+    event.stopPropagation();
+    if (!game.user.isGM || !event.shiftKey || this.document.isToken) return;
+    const linked = !this.actor.prototypeToken?.actorLink;
+    await this.actor.update({ 'prototypeToken.actorLink': linked });
+    await ChatMessage.create({
+      content: `<p><i class="fa-solid ${linked ? 'fa-link' : 'fa-link-slash'}"></i> ${foundry.utils.escapeHTML(
+        game.i18n.format(linked ? 'SDM.ProtoLink.NowLinked' : 'SDM.ProtoLink.NowUnlinked', { name: this.actor.name })
+      )}</p>`,
+      whisper: [game.user.id]
+    });
   }
 
   /** Referee: see and change the table the NPC levels up with. */

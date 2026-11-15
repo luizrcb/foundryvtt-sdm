@@ -2471,3 +2471,21 @@ button.sdm-chromatype-dice {
   padding: 0 6px;
   line-height: 1.6em;
 }
+
+// Actor sheet (Referee): prototype token linked / unlinked icon next to the name
+a.sdm-proto-link {
+  margin-left: 4px;
+  font-size: calc(0.8em + 2px);
+  opacity: 0.45;
+  cursor: pointer;
+
+  &:hover {
+    opacity: 1;
+  }
+
+  // A character whose tokens aren't linked
+  &.warn {
+    opacity: 0.9;
+    color: #c0392b;
+  }
+}

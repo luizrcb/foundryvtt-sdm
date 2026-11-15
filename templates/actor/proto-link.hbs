@@ -1,0 +1,2 @@
+{{! Referee: is the prototype token linked? Shift+click switches it (not on a token's own sheet) }}
+{{#if @root.protoLink}}<a class="sdm-proto-link{{#if @root.protoLink.warn}} warn{{/if}}" data-action="toggleProtoLink" data-tooltip="{{@root.protoLink.tooltip}}" aria-label="{{@root.protoLink.tooltip}}"><i class="fa-solid {{#if @root.protoLink.linked}}fa-link{{else}}fa-link-slash{{/if}}"></i></a>{{/if}}

@@ -2789,5 +2789,9 @@
   "SDM.NpcProfile.ArchetypeHint.elite": "Elite: +20% de vida, +1 de defesa, bônus e moral.",
   "SDM.NpcProfile.ArchetypeHint.weak": "Fraco: −25% de vida, −1 de defesa, bônus e moral.",
   "SDM.NpcProfile.ArchetypeHint.coward": "Covarde: −3 de moral.",
-  "SDM.NpcProfile.ArchetypeHint.fearless": "Destemido: +3 de moral."
+  "SDM.NpcProfile.ArchetypeHint.fearless": "Destemido: +3 de moral.",
+  "SDM.ProtoLink.LinkedHint": "Token vinculado: todo token deste ator é o próprio ator; vida e mudanças na cena alteram esta ficha. Shift+clique para desvincular (vale para os próximos tokens).",
+  "SDM.ProtoLink.UnlinkedHint": "Token não vinculado: cada token colocado na cena é uma cópia independente (bom para inimigos repetidos). Shift+clique para vincular (vale para os próximos tokens).",
+  "SDM.ProtoLink.NowLinked": "{name}: os próximos tokens serão vinculados.",
+  "SDM.ProtoLink.NowUnlinked": "{name}: os próximos tokens não serão vinculados."
 }

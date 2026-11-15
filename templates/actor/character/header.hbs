@@ -49,7 +49,7 @@
           <div class="grid grid-2col" style="margin-bottom: 0px;">
             <div class="grid-span-1">
               <label for="name" class='resource-label'>
-                {{localize 'SDM.FieldName'}}{{#if (isDefeated @root.statuses)}} ({{localize 'SDM.DefeatOutcome2to6'}}){{/if}}
+                {{localize 'SDM.FieldName'}}{{#if (isDefeated @root.statuses)}} ({{localize 'SDM.DefeatOutcome2to6'}}){{/if}} {{> ($$ "actor/proto-link")}}
               </label>
               <input name='name' type='text' value='{{actor.name}}' placeholder='Name' />
 {{> ($$ "actor/counter-chips")}}
@@ -583,7 +583,7 @@
           <div class="grid grid-4col">
             <div class="grid-span-1">
               <label for="name" class='resource-label'>
-                {{localize 'SDM.FieldName'}}
+                {{localize 'SDM.FieldName'}} {{> ($$ "actor/proto-link")}}
               </label>
               <input name='name' type='text' value='{{actor.name}}' placeholder='Name' />
 {{> ($$ "actor/counter-chips")}}

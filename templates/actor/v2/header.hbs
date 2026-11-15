@@ -11,7 +11,7 @@
       </div>
       <div class="v2-name">
         <label class="v2-label" for="v2-name-{{actor.id}}">
-          {{localize 'SDM.FieldName'}}{{#if (isDefeated @root.statuses)}} <span class="v2-dead-badge">{{localize 'SDM.DefeatOutcome2to6'}}</span>{{/if}}
+          {{localize 'SDM.FieldName'}}{{#if (isDefeated @root.statuses)}} <span class="v2-dead-badge">{{localize 'SDM.DefeatOutcome2to6'}}</span>{{/if}} {{> ($$ "actor/proto-link")}}
         </label>
         <input id="v2-name-{{actor.id}}" class="v2-title" name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'SDM.FieldName'}}"
           {{#unless isEditMode}}disabled{{/unless}} />

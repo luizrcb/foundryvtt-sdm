@@ -2457,6 +2457,22 @@ button.sdm-chromatype-dice {
   line-height: 1.6em;
 }
 
+a.sdm-proto-link {
+  margin-left: 4px;
+  font-size: calc(0.8em + 2px);
+  opacity: 0.45;
+  cursor: pointer;
+}
+
+a.sdm-proto-link:hover {
+  opacity: 1;
+}
+
+a.sdm-proto-link.warn {
+  opacity: 0.9;
+  color: #c0392b;
+}
+
 .grid,
 .grid-2col {
   display: grid;

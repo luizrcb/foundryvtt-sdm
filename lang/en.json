@@ -2789,5 +2789,9 @@
   "SDM.NpcProfile.ArchetypeHint.elite": "Elite: +20% life, +1 defense, bonus and morale.",
   "SDM.NpcProfile.ArchetypeHint.weak": "Weak: −25% life, −1 defense, bonus and morale.",
   "SDM.NpcProfile.ArchetypeHint.coward": "Coward: −3 morale.",
-  "SDM.NpcProfile.ArchetypeHint.fearless": "Fearless: +3 morale."
+  "SDM.NpcProfile.ArchetypeHint.fearless": "Fearless: +3 morale.",
+  "SDM.ProtoLink.LinkedHint": "Linked token: every token of this actor is the actor itself; life and changes on the scene change this sheet. Shift+click to unlink (applies to tokens placed from now on).",
+  "SDM.ProtoLink.UnlinkedHint": "Unlinked token: each token placed on a scene is an independent copy (good for repeated enemies). Shift+click to link (applies to tokens placed from now on).",
+  "SDM.ProtoLink.NowLinked": "{name}: tokens placed from now on are linked.",
+  "SDM.ProtoLink.NowUnlinked": "{name}: tokens placed from now on are not linked."
 }

@@ -10,7 +10,7 @@
       <div class="grid grid-4col">
         <div class="grid-span-1">
           <label for="name" class='resource-label'>
-            {{localize 'SDM.FieldName'}}
+            {{localize 'SDM.FieldName'}} {{> ($$ "actor/proto-link")}}
           </label>
           <input name='name' type='text' value='{{actor.name}}' placeholder='Name' />
 {{> ($$ "actor/counter-chips")}}
