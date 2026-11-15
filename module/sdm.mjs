@@ -302,6 +302,25 @@ Hooks.on('renderChatMessageHTML', (message, html, data) => {
 });
 
 Hooks.on('renderDialogV2', (dialog, html) => {
+  // Roll dialog: live preview of what each button rolls
+  const rollPreview = dialog.options?.rollPreview;
+  const previewBox = html.querySelector('.sdm-roll-preview');
+  // The form the dialog's buttons read (what gets rolled)
+  const previewForm = html.querySelector('button[data-action]')?.form ?? previewBox?.closest('form');
+  if (typeof rollPreview === 'function' && previewBox && previewForm) {
+    const updatePreview = () => {
+      try {
+        const values = new foundry.applications.ux.FormDataExtended(previewForm).object;
+        previewBox.innerHTML = rollPreview(values);
+      } catch (error) {
+        console.warn('SDM | Roll preview failed', error);
+      }
+    };
+    previewForm.addEventListener('change', updatePreview);
+    previewForm.addEventListener('input', foundry.utils.debounce(updatePreview, 150));
+    updatePreview();
+  }
+
   const powerSelect = html.querySelector('#powerIndex');
   const abilitySelect = html.querySelector('#selectedAbility');
   const overChargeButton = html.querySelector('button.overcharge');

@@ -1254,8 +1254,7 @@ export class SdmActor extends Actor {
     const data = await DialogV2.wait({
       window: { title: game.i18n.localize('SDM.ConsumeSupply') },
       position: {
-        width: 850,
-        height: 370
+        width: 850
       },
       content: await renderTemplate(
         templatePath('/actor/caravan/consume-supply-dialog'),

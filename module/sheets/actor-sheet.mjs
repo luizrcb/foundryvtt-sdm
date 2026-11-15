@@ -305,6 +305,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       powerDanger: powerOptions?.[powerIndex]?.dangerHtml ?? '',
       isPowerRoll: isPower || isPowerAlbum,
       rollTitlePrefix,
+      rollPreview: true,
       title: dialogTitle,
       abilities: CONFIG.SDM.getOrderedAbilities(language),
       ability: isAttack ? actorAttack?.default_ability : ability,
@@ -377,6 +378,115 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     const titleType = capitalizeFirstLetter(toPascalCase(type)).replace(' ', '');
 
+    // What the dialog's values will roll: one plan for the live preview and for the roll itself
+    const planRoll = (values = {}, { useBoost = false } = {}) => {
+      const {
+        selectedAbility: abilityValue,
+        modifier = '',
+        rollMode = RollMode.NORMAL,
+        shouldExplode: explodeValue,
+        multiplier = '',
+        selectedSkill: skillValue,
+        attackTarget = AttackTarget.PHYSICAL,
+        powerIndex: powerIndexValue
+      } = values ?? {};
+      const plan = {
+        title,
+        formula,
+        versatileFormula,
+        rollMode,
+        attackTarget,
+        multiplier,
+        powerIndex,
+        selectedAbility,
+        selectedSkill,
+        shouldExplode
+      };
+      if (powerIndexValue !== undefined) {
+        plan.powerIndex = parseInt(powerIndexValue, 10);
+        plan.selectedAbility = powerOptions[plan.powerIndex].default_ability;
+      }
+      if (skillValue !== undefined) plan.selectedSkill = skillValue;
+      if (explodeValue !== undefined) plan.shouldExplode = explodeValue;
+      if (abilityValue !== undefined) plan.selectedAbility = abilityValue;
+      if (isPowerAlbum) {
+        const power = powerOptions[plan.powerIndex];
+        plan.title = power.name;
+        plan.selectedAbility = power.default_ability;
+        plan.formula = power.formula;
+      }
+      plan.modPart = foundry.dice.Roll.validate(modifier) ? `+${modifier}` : '';
+      // Boost: mandatory ones always (also without the dialog), optional ones when ticked
+      plan.boosted = !!(boost && (boost.mandatory || useBoost));
+      if (plan.boosted) {
+        plan.multiplier = combineMultiplier(multiplier, boost);
+        // Extra and damage can read counters and other values (@item.counters.kills.value)
+        const boostExtra = resolveFormula(boost.extra, { item, actor: this.actor });
+        const boostDamage = resolveFormula(boost.damage, { item, actor: this.actor });
+        if (boostExtra && foundry.dice.Roll.validate(boostExtra)) plan.modPart += `+${boostExtra}`;
+        // The damage becomes the boost's formula (both hands)
+        if (boostDamage && foundry.dice.Roll.validate(boostDamage)) {
+          plan.formula = boostDamage;
+          if (plan.versatileFormula) plan.versatileFormula = boostDamage;
+        }
+      }
+      return plan;
+    };
+
+    const buildRollData = (plan, { versatile: twoHanded = false, overcharge = false } = {}) => {
+      const data = {
+        type,
+        actor: this.actor,
+        from: plan.title,
+        ability: plan.selectedAbility,
+        mode: plan.rollMode,
+        modifier: dmgOrAttackBonus ? `${plan.modPart}+${dmgOrAttackBonus}` : plan.modPart,
+        multiplier: plan.multiplier,
+        explodingDice: plan.shouldExplode,
+        versatile: !!twoHanded,
+        skill: availableSkills[plan.selectedSkill],
+        targetActor,
+        attackTarget: plan.attackTarget,
+        attack: isAttack ? attack : ''
+      };
+      if (plan.formula) data.formula = plan.formula;
+      if (plan.versatileFormula && twoHanded) data.formula = plan.versatileFormula;
+      if (overcharge) data.formula = powerOptions[plan.powerIndex].overchargeFormula;
+      return data;
+    };
+
+    // Live preview: the formula each button rolls with the dialog's current values
+    const rollPreview = values => {
+      const plan = planRoll(values, { useBoost: !!values?.useBoost });
+      const isPowerRoll = isPower || isPowerAlbum;
+      const power = powerOptions?.[plan.powerIndex];
+      const rows = [];
+      const add = (label, options = {}) => {
+        const data = buildRollData(plan, options);
+        if (isPowerRoll && !data.formula) return;
+        let shown = new SDMRoll(data).buildFormula().formula;
+        try {
+          shown = new Roll(shown, this.actor.system).formula;
+        } catch {
+          /* keep the raw formula */
+        }
+        rows.push(
+          `<div class="sdm-roll-preview-row"><span>${foundry.utils.escapeHTML(label)}</span> <code>${foundry.utils.escapeHTML(shown)}</code></div>`
+        );
+      };
+      if (versatile) {
+        add($l10n('SDM.OneHanded'));
+        add($l10n('SDM.TwoHanded'), { versatile: true });
+      } else {
+        add($l10n('SDM.RollPreview.Rolls'));
+      }
+      if (isPowerRoll && (power?.canOvercharge ?? canOvercharge) && power?.overchargeFormula) {
+        add($l10n('SDM.PowerOvercharge'), { overcharge: true });
+      }
+      if (isPowerRoll && !rows.length) rows.push(`<div class="sdm-roll-preview-row">${$l10n('SDM.RollPreview.NoRoll')}</div>`);
+      return rows.join('');
+    };
+
     let rollOptions = {};
 
     if (!isShift) {
@@ -387,6 +497,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         },
         modal: true,
         powerOptions,
+        rollPreview,
         content: template,
         position: {
           width: 400
@@ -399,34 +510,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       return;
     }
 
-    const {
-      selectedAbility: selectedAbilityModal,
-      modifier = '',
-      heroicQty = '0',
-      rollMode = RollMode.NORMAL,
-      shouldExplode: shouldExplodeModal,
-      multiplier = '',
-      selectedSkill: modalSelectedSkill,
-      attackTarget = AttackTarget.PHYSICAL,
-      powerIndex: powerIndexModal
-    } = rollOptions;
-
-    if (powerIndexModal !== undefined) {
-      powerIndex = parseInt(powerIndexModal, 10);
-      selectedAbility = powerOptions[powerIndex].default_ability;
-    }
-
-    if (modalSelectedSkill !== undefined) {
-      selectedSkill = modalSelectedSkill;
-    }
-
-    if (shouldExplodeModal !== undefined) {
-      shouldExplode = shouldExplodeModal;
-    }
-
-    if (selectedAbilityModal !== undefined) {
-      selectedAbility = selectedAbilityModal;
-    }
+    const { heroicQty = '0' } = rollOptions;
+    const plan = planRoll(rollOptions, { useBoost: !!rollOptions.useBoost });
+    powerIndex = plan.powerIndex;
+    selectedAbility = plan.selectedAbility;
+    title = plan.title;
 
     const heroicDice = parseInt(heroicQty || 0, 10);
     const currentHeroDice = this.actor.system.hero_dice?.value ?? 0;
@@ -436,30 +524,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       return;
     }
 
-    if (isPowerAlbum) {
-      title = powerOptions[powerIndex].name;
-      selectedAbility = powerOptions[powerIndex].default_ability;
-      formula = powerOptions[powerIndex].formula;
-    }
-
-    let modPart = foundry.dice.Roll.validate(modifier) ? `+${modifier}` : '';
-
-    // Boost: mandatory ones always (also without the dialog), optional ones when ticked
-    let finalMultiplier = multiplier;
-    if (boost && (boost.mandatory || rollOptions.useBoost)) {
+    if (plan.boosted) {
       const paid = await payBoost(this.actor, boost, item);
       if (paid === null) return;
-      finalMultiplier = combineMultiplier(multiplier, boost);
-      // Extra and damage can read counters and other values (@item.counters.kills.value)
-      const boostExtra = resolveFormula(boost.extra, { item, actor: this.actor });
-      const boostDamage = resolveFormula(boost.damage, { item, actor: this.actor });
-      if (boostExtra && foundry.dice.Roll.validate(boostExtra)) modPart += `+${boostExtra}`;
-      // The damage becomes the boost's formula (both hands)
-      if (boostDamage && foundry.dice.Roll.validate(boostDamage)) {
-        formula = boostDamage;
-        if (versatileFormula) versatileFormula = boostDamage;
-      }
       title = `${title} (${describeBoostPaid(boost, paid)})`;
+      plan.title = title;
     }
 
     // Pay the power's cost (life, and ability points by choice or when life isn't enough)
@@ -473,29 +542,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       if (!costPaid) return;
     }
 
-    const rollData = {
-      type,
-      actor: this.actor,
-      from: title,
-      ability: selectedAbility,
-      mode: rollMode,
-      modifier: dmgOrAttackBonus ? `${modPart}+${dmgOrAttackBonus}` : modPart,
-      multiplier: finalMultiplier,
-      explodingDice: shouldExplode,
-      versatile: !!rollOptions.versatile,
-      skill: availableSkills[selectedSkill],
-      targetActor,
-      attackTarget,
-      attack: isAttack ? attack : ''
-    };
-
-    if (formula) {
-      rollData.formula = formula;
-    }
-
-    if (versatileFormula && rollOptions.versatile) {
-      rollData.formula = versatileFormula;
-    }
+    const rollData = buildRollData(plan, { versatile: !!rollOptions.versatile });
 
     if (isPower || isPowerAlbum) {
       rollData.powerDescription = powerOptions[powerIndex].description;
@@ -1593,8 +1640,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         },
         modal: true,
         position: {
-          width: 500,
-          height: 260
+          width: 500
         },
         content: await renderTemplate(templatePath('corruption-roll-dialog'), {
           rollModes: CONFIG.SDM.rollMode,
@@ -1670,8 +1716,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         },
         modal: true,
         position: {
-          width: 500,
-          height: 300
+          width: 500
         },
         content: await renderTemplate(templatePath('reaction-roll-dialog'), {
           rollModes: CONFIG.SDM.rollMode,
@@ -1786,8 +1831,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         },
         modal: true,
         position: {
-          width: 500,
-          height: 340
+          width: 500
         },
         content: await renderTemplate(templatePath('relife-roll-dialog'), {
           rollModes: CONFIG.SDM.rollMode,
@@ -1899,8 +1943,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         },
         modal: true,
         position: {
-          width: 500,
-          height: 300
+          width: 500
         },
         content: await renderTemplate(templatePath('group-chase-roll-dialog'), {
           rollModes: CONFIG.SDM.rollMode,
@@ -1986,8 +2029,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         },
         modal: true,
         position: {
-          width: 500,
-          height: 300
+          width: 500
         },
         content: await renderTemplate(templatePath('defeat-roll-dialog'), {
           rollModes: CONFIG.SDM.rollMode,

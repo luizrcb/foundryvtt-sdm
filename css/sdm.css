@@ -2413,6 +2413,35 @@ input[type=radio]::after {
   white-space: nowrap;
 }
 
+.sdm-roll-preview {
+  margin: 4px 0 2px;
+  padding: 4px 8px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.05);
+  font-size: 12px;
+}
+
+.sdm-roll-preview:empty {
+  display: none;
+}
+
+.sdm-roll-preview .sdm-roll-preview-row {
+  display: flex;
+  gap: 6px;
+  align-items: baseline;
+}
+
+.sdm-roll-preview .sdm-roll-preview-row span {
+  opacity: 0.75;
+  white-space: nowrap;
+}
+
+.sdm-roll-preview .sdm-roll-preview-row code {
+  font-size: 13px;
+  font-weight: 700;
+  word-break: break-word;
+}
+
 .grid,
 .grid-2col {
   display: grid;

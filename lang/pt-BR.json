@@ -2725,5 +2725,7 @@
   "TYPES.Item.trait": "Traço",
   "TYPES.Item.vehicle": "Veículo",
   "TYPES.Item.ward": "Égide",
-  "TYPES.Item.weapon": "Arma"
+  "TYPES.Item.weapon": "Arma",
+  "SDM.RollPreview.Rolls": "Rola",
+  "SDM.RollPreview.NoRoll": "Sem rolagem: o poder vai para o chat"
 }

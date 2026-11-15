@@ -2725,5 +2725,7 @@
   "TYPES.Item.trait": "Trait",
   "TYPES.Item.vehicle": "Vehicle",
   "TYPES.Item.ward": "Ward",
-  "TYPES.Item.weapon": "Weapon"
+  "TYPES.Item.weapon": "Weapon",
+  "SDM.RollPreview.Rolls": "Rolls",
+  "SDM.RollPreview.NoRoll": "No roll: the power goes to chat"
 }

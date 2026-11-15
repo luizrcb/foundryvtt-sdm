@@ -511,8 +511,7 @@ export async function diceOracles() {
     },
     modal: true,
     position: {
-      width: 500,
-      height: 380
+      width: 500
     },
     content,
     buttons: [

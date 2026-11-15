@@ -56,6 +56,28 @@ export default class SDMRoll {
     this.extraFlags = extraFlags;
   }
 
+  /**
+   * The formula this roll rolls (dice, exploding, multiplier, modifiers, escalator die, damage bonus).
+   * The roll dialog's preview uses it too, so what it shows is what gets rolled.
+   */
+  buildFormula() {
+    const expression = this.#buildDiceComponent();
+    const explodingExpression = this.#applyExplodingDice(expression);
+    const multipliedExpression = this.#applyMultiplier(explodingExpression);
+    const { fixedModifiers, diceModifiers } = this.#calculateModifiers(this.type);
+
+    const formulaComponents = [multipliedExpression, diceModifiers, fixedModifiers];
+
+    const escalatorDie = game.settings.get('sdm', 'escalatorDie') ?? 0;
+    if (escalatorDie > 0) formulaComponents.push(escalatorDie);
+    const isDamageRoll = [RollType.DAMAGE, RollType.POWER, RollType.POWER_ALBUM].includes(this.type);
+    const damageBonus = this.actor.system?.damage_bonus || 0;
+    if (isDamageRoll && damageBonus > 0) formulaComponents.push(damageBonus);
+
+    const formula = sanitizeExpression(formulaComponents.join('+'));
+    return { formula, fixedModifiers, diceModifiers, escalatorDie };
+  }
+
   async evaluate() {
     if (this.sendPowerToChat && this.item) {
       return await this.item.sendToChat({
@@ -68,32 +90,16 @@ export default class SDMRoll {
       });
     }
 
-    const expression = this.#buildDiceComponent();
-    const explodingExpression = this.#applyExplodingDice(expression);
-    const multipliedExpression = this.#applyMultiplier(explodingExpression);
-    const { fixedModifiers, diceModifiers } = this.#calculateModifiers(this.type);
-
-    const formulaComponents = [multipliedExpression, diceModifiers, fixedModifiers];
-
-    const escalatorDie = game.settings.get('sdm', 'escalatorDie') ?? 0;
+    const { formula: sanitizedFormula, fixedModifiers, diceModifiers, escalatorDie } = this.buildFormula();
     const luckySevenRule = game.settings.get('sdm', 'luckySevenRule') || false;
-
-    if (escalatorDie > 0) formulaComponents.push(escalatorDie);
     const isAttack = this.type === RollType.ATTACK;
     const isAbility = this.type === RollType.ABILITY;
     const isDamage = this.type === RollType.DAMAGE;
     const isPower = this.type === RollType.POWER;
     const isPowerAlbum = this.type === RollType.POWER_ALBUM;
     const isDamageRoll = isDamage || isPower || isPowerAlbum;
-    const damageBonus = this.actor.system?.damage_bonus || 0;
     let checkCritical = isAttack || isAbility;
 
-    if (isDamageRoll && damageBonus > 0) {
-      formulaComponents.push(damageBonus);
-    }
-
-    const formula = formulaComponents.join('+');
-    const sanitizedFormula = sanitizeExpression(formula);
     const flavor = this.#buildFlavorText(fixedModifiers, diceModifiers, escalatorDie);
 
     const flags = {};
