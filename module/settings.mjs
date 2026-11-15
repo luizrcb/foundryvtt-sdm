@@ -1816,7 +1816,8 @@ export function addChromatypePreview(app, html) {
     const color = dsnSelect && dsnSelect.value !== 'same' ? dsnSelect.value : accent.value;
     return CHROMATYPE_COLORS[color] ? `sdm-${color}` : null;
   };
-  const addDiceButton = (select, themeOf) => {
+  // Default preview: a d20 and a d6; hero, blood and tourist dice are d6s, so just a d6
+  const addDiceButton = (select, themeOf, dice = ['1d20', '1d6']) => {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'sdm-chromatype-dice';
@@ -1827,7 +1828,7 @@ export function addChromatypePreview(app, html) {
       event.preventDefault();
       const theme = themeOf();
       if (!theme) return;
-      const roll = await new Roll(`1d20[${theme}] + 1d6[${theme}]`).evaluate();
+      const roll = await new Roll(dice.map(die => `${die}[${theme}]`).join(' + ')).evaluate();
       await game.dice3d.showForRoll(roll);
     });
     (select.nextElementSibling?.classList.contains('sdm-chromatype-swatch') ? select.nextElementSibling : select).after(button);
@@ -1839,8 +1840,10 @@ export function addChromatypePreview(app, html) {
   for (const key of ['hero_dice_style', 'blood_dice_style', 'tourist_dice_style', 'oracle_dice_style']) {
     const select = root.querySelector(`select[name="${key}"], select[name="sdm.${key}"]`);
     if (!select) continue;
-    addDiceButton(select, () =>
-      ['sdm-chromatype', 'sdm-chomatype'].includes(select.value) ? chromatypeTheme() : select.value || null
+    addDiceButton(
+      select,
+      () => (['sdm-chromatype', 'sdm-chomatype'].includes(select.value) ? chromatypeTheme() : select.value || null),
+      key === 'oracle_dice_style' ? ['1d20', '1d6'] : ['1d6']
     );
   }
 }
