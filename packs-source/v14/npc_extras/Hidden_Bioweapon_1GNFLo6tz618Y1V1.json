@@ -1,0 +1,48 @@
+{
+  "folder": "vPO6z2wsPggMwQkg",
+  "name": "Hidden Bioweapon",
+  "type": "gear",
+  "_id": "1GNFLo6tz618Y1V1",
+  "img": "icons/svg/biohazard.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcExtra": "attack"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!1GNFLo6tz618Y1V1",
+  "system": {
+    "readied": true,
+    "description": "<p>A weapon grown inside its body, out of sight until it strikes.</p><p><em>From the corruption tables.</em></p>",
+    "quantity": 1,
+    "size": {
+      "value": 0,
+      "unit": "soaps"
+    },
+    "features": [],
+    "type": "weapon",
+    "weapon": {
+      "damage": {
+        "base": "1d6",
+        "versatile": "1d6",
+        "bonus": ""
+      },
+      "range": "close",
+      "versatile": false
+    },
+    "triggers": []
+  },
+  "effects": []
+}

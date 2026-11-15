@@ -2773,5 +2773,20 @@
   "SDM.NpcExtras.Label": "Extras",
   "SDM.NpcExtras.None": "Nenhum",
   "SDM.NpcExtras.ByLevel": "Pelo nível",
-  "SDM.NpcExtras.Hint": "Ataques especiais, peculiaridades e poderes sorteados nas tabelas de extras de NPC (pelo nível: 0–2 talvez um, 3–6 um, 7+ dois)."
+  "SDM.NpcExtras.Hint": "Ataques especiais, peculiaridades, poderes e posses (itens estranhos) sorteados nas tabelas de extras de NPC (pelo nível: 0–2 talvez um, 3–6 um, 7+ dois).",
+  "SDM.SettingsNpcExtraPossessionsTable": "Extras de NPC: tabela de posses",
+  "SDM.SettingsShowRollPreview": "Mostrar a prévia da rolagem",
+  "SDM.SettingsShowRollPreviewHint": "As janelas de rolagem mostram a fórmula que cada botão vai rolar, atualizada conforme você muda as opções.",
+  "SDM.SettingsEnableNpcExtras": "Extras de NPC no gerador",
+  "SDM.SettingsEnableNpcExtrasHint": "O gerador de NPCs oferece extras sorteados (ataques especiais, peculiaridades, poderes, posses). Desligado: a opção fica escondida.",
+  "SDM.SettingsNpcNaturalLight": "NPCs com luz natural entram acesos",
+  "SDM.SettingsNpcNaturalLightHint": "Um NPC com traço de luz é aceso quando seu token é colocado (requer Luzes de itens). Desligado: acenda à mão.",
+  "SDM.SettingsImportCompendiumPets": "Importar companheiros do compêndio",
+  "SDM.SettingsImportCompendiumPetsHint": "Um item de companheiro vinculado a um ator do compêndio traz sua própria cópia para a pasta Companheiros quando entra num ator (e apagar o item apaga a cópia). Desligado: nada é importado; importe e vincule à mão.",
+  "SDM.SettingsRemoveDeletedFromCrew": "Remover atores apagados da tripulação",
+  "SDM.SettingsRemoveDeletedFromCrewHint": "Apagar um ator também o remove da tripulação de todas as caravanas.",
+  "SDM.SettingsRenameMoneyWithCurrency": "Atualizar o dinheiro quando a moeda mudar",
+  "SDM.SettingsRenameMoneyWithCurrencyHint": "Mudar o nome ou a imagem da moeda também atualiza os itens de dinheiro que ainda tinham o nome ou a imagem antigos.",
+  "SDM.SettingsSyncPrototypeToken": "Token acompanha a imagem e o nome do ator",
+  "SDM.SettingsSyncPrototypeTokenHint": "Mudar a imagem ou o nome de um ator também muda os do token protótipo, quando eram iguais."
 }

@@ -24,7 +24,7 @@
   },
   "_id": "lR2R1gKLCFguH9lX",
   "sort": 0,
-  "formula": "1d10",
+  "formula": "1d62",
   "_key": "!tables!lR2R1gKLCFguH9lX",
   "results": [
     {
@@ -276,6 +276,1306 @@
         "lastModifiedBy": null
       },
       "_key": "!tables.results!lR2R1gKLCFguH9lX.hGnlRSvjynxjuM6W"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "name": "1. Glowing Skeleton",
+      "img": "icons/magic/death/undead-skeleton-energy-green.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.x9H0xc4pCzLzplXi",
+      "_id": "MJeWeZsKYzX7sMjq",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.MJeWeZsKYzX7sMjq"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "name": "1. Arboreal",
+      "img": "icons/magic/nature/tree-roots-glow-yellow.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.CvhRje7xGkIpKj2V",
+      "_id": "dfbc7wxZugdJFsqX",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.dfbc7wxZugdJFsqX"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        13,
+        13
+      ],
+      "name": "1. Armorborn",
+      "img": "icons/equipment/shoulder/pauldron-segmented-steel-yellow.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.tZi9l0vRGywj3qLJ",
+      "_id": "2kC3E3iO6bftOZ1l",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.2kC3E3iO6bftOZ1l"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        14,
+        14
+      ],
+      "name": "2. Blood Clad",
+      "img": "icons/skills/wounds/blood-cells-vessel-red-orange.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.b3ARMDI5CkXmS253",
+      "_id": "IJMF7RvwVs2qEKbQ",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.IJMF7RvwVs2qEKbQ"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        15,
+        15
+      ],
+      "name": "4. Feral",
+      "img": "icons/creatures/mammals/wolf-shadow-black.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.B018Kdvt5avldird",
+      "_id": "WAS0T1hi0aZTx35q",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.WAS0T1hi0aZTx35q"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        16,
+        16
+      ],
+      "name": "4. Vampire",
+      "img": "icons/magic/death/mouth-bite-fangs-vampire.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.n86evPTJ5tKUzTFE",
+      "_id": "P3kGpsGpL2Yfx1Dx",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.P3kGpsGpL2Yfx1Dx"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        17,
+        17
+      ],
+      "name": "6. Thorny",
+      "img": "icons/magic/nature/thorns-hand-glow-green.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.TKJj7AEvDaZ4bJBa",
+      "_id": "OZpl9CmOrkDtQiKo",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.OZpl9CmOrkDtQiKo"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        18,
+        18
+      ],
+      "name": "6. Tough",
+      "img": "icons/magic/earth/strike-fist-stone.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.E6mQG8wGjw0XD7Qn",
+      "_id": "yCvEU9259XxebXDC",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.yCvEU9259XxebXDC"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        19,
+        19
+      ],
+      "name": "6. Very Strong",
+      "img": "icons/magic/control/buff-strength-muscle-damage-red.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.znjL0g6PdFhOxSst",
+      "_id": "chuV0DuNkixRz91t",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.chuV0DuNkixRz91t"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        20,
+        20
+      ],
+      "name": "5. Strong",
+      "img": "icons/magic/control/buff-strength-muscle-damage-orange.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.TjobWH36z04QYDUH",
+      "_id": "zLXiYrokk4zpavHO",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.zLXiYrokk4zpavHO"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        21,
+        21
+      ],
+      "name": "3. Grit",
+      "img": "icons/magic/life/heart-cross-purple-orange.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.NQLG4EEMff3aNYA5",
+      "_id": "XPQnbGi9gKVHijEU",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.XPQnbGi9gKVHijEU"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        22,
+        22
+      ],
+      "name": "6. Swift",
+      "img": "icons/magic/movement/trail-streak-zigzag-teal.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.277EsdejSdhWUsAV",
+      "_id": "fw80MecQept5afS7",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.fw80MecQept5afS7"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        23,
+        23
+      ],
+      "name": "6. Telempath",
+      "img": "icons/magic/defensive/illusion-evasion-echo-purple.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.KhlAka74PWjziLXg",
+      "_id": "bvMp3jfcD8uzhNN3",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.bvMp3jfcD8uzhNN3"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        24,
+        24
+      ],
+      "name": "6. Unfred",
+      "img": "icons/creatures/magical/humanoid-silhouette-aliens-green.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.m49iAFXHkmkBllb5",
+      "_id": "KnQFcurmIdjh5tYT",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.KnQFcurmIdjh5tYT"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        25,
+        25
+      ],
+      "name": "5. Cold New Flesh",
+      "img": "icons/magic/death/undead-zombie-grave-green.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.xyHCVN5IOuvUCThr",
+      "_id": "XMRsSQTEM4vbxPEE",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.XMRsSQTEM4vbxPEE"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        26,
+        26
+      ],
+      "name": "4. Divine Blood",
+      "img": "icons/magic/life/heart-hand-gold-green.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.WT6OhjF3S968M1cV",
+      "_id": "UlVQxH8G5RmMkSsR",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.UlVQxH8G5RmMkSsR"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        27,
+        27
+      ],
+      "name": "6. Soiltwined",
+      "img": "icons/magic/nature/root-vine-entangled-humanoid.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.uk2jwNU1JnaY7iWk",
+      "_id": "Hd9MRHONf216qhYm",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.Hd9MRHONf216qhYm"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        28,
+        28
+      ],
+      "name": "3. Void Ward",
+      "img": "icons/magic/death/skull-energy-light-white.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.JYjRW9m6eIjd1SGc",
+      "_id": "DQIOFsYVMgtin76l",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.DQIOFsYVMgtin76l"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        29,
+        29
+      ],
+      "name": "3. Hunter",
+      "img": "icons/weapons/bows/shortbow-arrows-black.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.WuHik39ZXGrMriKV",
+      "_id": "1SkpUXj7oIHBj3fu",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.1SkpUXj7oIHBj3fu"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        30,
+        30
+      ],
+      "name": "3. Death Hunger",
+      "img": "icons/creatures/abilities/mouth-teeth-long-red.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.4d7mC859EOOde7jD",
+      "_id": "2nTkGkVGuBsXJ6df",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.2nTkGkVGuBsXJ6df"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        31,
+        31
+      ],
+      "name": "6. I Am Legion",
+      "img": "icons/skills/melee/blade-tip-chipped-blood-red.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.djd5SqnPqysHGabl",
+      "_id": "Vw75x5ElzLiIWusm",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.Vw75x5ElzLiIWusm"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        32,
+        32
+      ],
+      "name": "1. Dreamwalker",
+      "img": "icons/magic/control/debuff-energy-hold-blue-yellow.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.yc8D0CVgW7enfxRX",
+      "_id": "0QWlDH3mjry9IwG5",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.0QWlDH3mjry9IwG5"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        33,
+        33
+      ],
+      "name": "1. Escapist",
+      "img": "icons/magic/control/buff-luck-fortune-green-gold.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.JXppeJy7EMRNMk6o",
+      "_id": "J73nYjD1R4CCgPS0",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.J73nYjD1R4CCgPS0"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        34,
+        34
+      ],
+      "name": "2. Knight Reflexes",
+      "img": "icons/skills/movement/figure-running-gray.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.EJCoIbPXbzmV7ARh",
+      "_id": "qeG9OCtFtoWg2fpp",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.qeG9OCtFtoWg2fpp"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        35,
+        35
+      ],
+      "name": "4. Demolisher",
+      "img": "icons/skills/melee/strike-hammer-destructive-blue.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.4nsW9P3WpnhFva6U",
+      "_id": "hY3y5dixNYjqaLo5",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.hY3y5dixNYjqaLo5"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        36,
+        36
+      ],
+      "name": "5. Slayer",
+      "img": "icons/skills/melee/maneuver-daggers-paired-orange.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.Bhb0MFHKjq09MQIM",
+      "_id": "7fTRpsOs5J6BOvPM",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.7fTRpsOs5J6BOvPM"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        37,
+        37
+      ],
+      "name": "3. Devastator",
+      "img": "icons/magic/earth/strike-stone-stalactite-blood-red.webp",
+      "documentUuid": "Compendium.sdm.traits.Item.OrGOqJjwW5hzl2bq",
+      "_id": "5lh92U5p08sac0VZ",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.5lh92U5p08sac0VZ"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        38,
+        38
+      ],
+      "name": "Godbone Exoskeleton",
+      "img": "icons/commodities/bones/bones-broken-rib-tan.webp",
+      "documentUuid": "Compendium.sdm.trait_items.Item.rIOxCkzTzyxiPTO3",
+      "_id": "w2pLhVJs2OReYItv",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.w2pLhVJs2OReYItv"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        39,
+        39
+      ],
+      "name": "Living Suit",
+      "img": "icons/magic/nature/root-vine-fire-entangled-hand.webp",
+      "documentUuid": "Compendium.sdm.trait_items.Item.eEZ5g7pfjjRgoSXi",
+      "_id": "oV7QHlkRfNwyHAEV",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.oV7QHlkRfNwyHAEV"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        40,
+        40
+      ],
+      "name": "War Furs",
+      "img": "icons/commodities/leather/fur-white.webp",
+      "documentUuid": "Compendium.sdm.trait_items.Item.o5jLtYv0qF3ndUW5",
+      "_id": "S9QqDHP9pnZC26oY",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.S9QqDHP9pnZC26oY"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        41,
+        41
+      ],
+      "name": "Shipstone Skull",
+      "img": "icons/commodities/bones/skull-deformed-white.webp",
+      "documentUuid": "Compendium.sdm.trait_items.Item.TvikNzn0fAs0iIfr",
+      "_id": "U6HBKTtWvUwE85ym",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.U6HBKTtWvUwE85ym"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        42,
+        42
+      ],
+      "name": "Radioactive Rodent Skull",
+      "img": "icons/commodities/bones/skull-feline-beige.webp",
+      "documentUuid": "Compendium.sdm.trait_items.Item.JZvL4usnqg2fGQOL",
+      "_id": "y5YFw5F98hrD9ug1",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.y5YFw5F98hrD9ug1"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        43,
+        43
+      ],
+      "name": "Second Heart",
+      "img": "icons/commodities/biological/organ-heart-red.webp",
+      "documentUuid": "Compendium.sdm.trait_items.Item.whW1qAiEMY3YS9t2",
+      "_id": "SLGXuXwvYhw1prf2",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.SLGXuXwvYhw1prf2"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        44,
+        44
+      ],
+      "name": "Daemonskin Mask",
+      "img": "icons/equipment/head/mask-horned-brown.webp",
+      "documentUuid": "Compendium.sdm.trait_items.Item.UrMpqXQScbCAg70D",
+      "_id": "bMghpglV1FGdlTjg",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.bMghpglV1FGdlTjg"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        45,
+        45
+      ],
+      "name": "Indigo Face",
+      "img": "icons/magic/water/orb-ice-opaque.webp",
+      "documentUuid": "Compendium.sdm.trait_items.Item.kVAeSdPlhBhrIsWo",
+      "_id": "iOFgz1XGxr6FWR9I",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.iOFgz1XGxr6FWR9I"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        46,
+        46
+      ],
+      "name": "Master Eyeball",
+      "img": "icons/commodities/biological/eye-red-pink.webp",
+      "documentUuid": "Compendium.sdm.trait_items.Item.3A1R3NRpLBaXY3Hg",
+      "_id": "DTMywhIYoE1qzWPy",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.DTMywhIYoE1qzWPy"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        47,
+        47
+      ],
+      "name": "Vidy Unity Box",
+      "img": "icons/commodities/treasure/puzzle-box-glowing-blue.webp",
+      "documentUuid": "Compendium.sdm.trait_items.Item.hZDWZsxIZUsul7nx",
+      "_id": "0o0bdYNCnXYSnL5y",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.0o0bdYNCnXYSnL5y"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        48,
+        48
+      ],
+      "name": "Chaos Skeleton",
+      "img": "icons/svg/skull.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.WOc1jOHyktoYNYkB",
+      "_id": "jZXeMcvgt3hOctNB",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.jZXeMcvgt3hOctNB"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        49,
+        49
+      ],
+      "name": "Living Skull",
+      "img": "icons/svg/terror.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.LmDwG7wl5YPjn24v",
+      "_id": "Db1N3wBfmK6P8XkW",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.Db1N3wBfmK6P8XkW"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        50,
+        50
+      ],
+      "name": "Chameleon Skin",
+      "img": "icons/svg/invisible.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.1FsW6rTbDl1AOc1K",
+      "_id": "M4jQcbr2URKSbHuz",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.M4jQcbr2URKSbHuz"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        51,
+        51
+      ],
+      "name": "Horn Platelets",
+      "img": "icons/svg/shield.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.0KVklu5vCOCO79vw",
+      "_id": "tVlmdf5h43ogyZ6L",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.tVlmdf5h43ogyZ6L"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        52,
+        52
+      ],
+      "name": "Carapace",
+      "img": "icons/svg/shield.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.snfUrcH0dUYSVqed",
+      "_id": "ja1ghlaaHRcQ739i",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.ja1ghlaaHRcQ739i"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        53,
+        53
+      ],
+      "name": "Eerie Sense",
+      "img": "icons/svg/eye.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.Sovrg4bu8g5PO3X3",
+      "_id": "WJ2FUdGieMuA6Cx9",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.WJ2FUdGieMuA6Cx9"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        54,
+        54
+      ],
+      "name": "Gills",
+      "img": "icons/svg/frozen.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.vTF5Y988Wsu1xGT8",
+      "_id": "1N5Cq2RCNuxV8hDf",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.1N5Cq2RCNuxV8hDf"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        55,
+        55
+      ],
+      "name": "Alien Organ",
+      "img": "icons/svg/regen.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.AkoN2aTSYf0bhzod",
+      "_id": "9JEpytKrUoflrGg6",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.9JEpytKrUoflrGg6"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        56,
+        56
+      ],
+      "name": "Secondary Form",
+      "img": "icons/svg/upgrade.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.gSvNcVq2N5Zq9G6z",
+      "_id": "ln8U0eHm1GUQrhUU",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.ln8U0eHm1GUQrhUU"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        57,
+        57
+      ],
+      "name": "Precognitive Flashes",
+      "img": "icons/svg/eye.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.4XLZT3ePVD6C6RaB",
+      "_id": "L5L1GkMGjrByePgO",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.L5L1GkMGjrByePgO"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        58,
+        58
+      ],
+      "name": "Glowing Spores",
+      "img": "icons/svg/light.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.vGBSIGs3ntNGsRNi",
+      "_id": "ks9h2RNkf6Vgl4cx",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.ks9h2RNkf6Vgl4cx"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        59,
+        59
+      ],
+      "name": "Hypermobile Joints",
+      "img": "icons/svg/wing.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.YG9BkHHquGUlV0tW",
+      "_id": "KVKmdHIJIFE3ZZVh",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.KVKmdHIJIFE3ZZVh"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        60,
+        60
+      ],
+      "name": "Vampiric Metabolism",
+      "img": "icons/svg/blood.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.bkujRrmvn4WvpTIs",
+      "_id": "EtaLP9VwdjmDqL1z",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.EtaLP9VwdjmDqL1z"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        61,
+        61
+      ],
+      "name": "Secondary Brain",
+      "img": "icons/svg/mystery-man.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.7qkMk9LUyJmbFlve",
+      "_id": "8MdTEDXcuKqq9xeo",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.8MdTEDXcuKqq9xeo"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        62,
+        62
+      ],
+      "name": "Undying",
+      "img": "icons/svg/skull.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.RMgVWrjI98jwuPAk",
+      "_id": "wkoNzcxJGnTiaehq",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!lR2R1gKLCFguH9lX.wkoNzcxJGnTiaehq"
     }
   ]
 }

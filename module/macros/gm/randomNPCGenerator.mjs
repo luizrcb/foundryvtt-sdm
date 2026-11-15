@@ -50,7 +50,9 @@ export async function randomNPCGenerator() {
   <p class="hint">${t('SDM.NpcProfile.GeneratorHint')}</p>`;
 
   // Rolled extras: special attacks, oddities and powers from the NPC extras tables
-  const extrasHtml = `
+  const extrasHtml = !game.settings.get('sdm', 'enableNpcExtras')
+    ? ''
+    : `
   <div class="form-group">
     <label>${t('SDM.NpcExtras.Label')}</label>
     <select name="extras">

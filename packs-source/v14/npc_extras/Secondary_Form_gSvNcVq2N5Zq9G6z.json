@@ -1,0 +1,83 @@
+{
+  "folder": "ygxzgswOLlt8nmOI",
+  "name": "Secondary Form",
+  "type": "trait",
+  "_id": "gSvNcVq2N5Zq9G6z",
+  "img": "icons/svg/upgrade.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcExtra": "oddity"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!gSvNcVq2N5Zq9G6z",
+  "system": {
+    "description": "<p>A second self, like Hyde or a wolf's were. Once per fight it can change: +2 bonus, −2 defense while changed (enable the <em>Changed</em> effect).</p><p><em>From the corruption tables.</em></p>",
+    "type": ""
+  },
+  "effects": [
+    {
+      "name": "Changed",
+      "origin": null,
+      "img": "icons/svg/upgrade.svg",
+      "_id": "g9cILJVUwUSB93wg",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.bonus",
+            "value": "2",
+            "priority": null,
+            "type": "add",
+            "phase": "initial"
+          },
+          {
+            "key": "system.defense",
+            "value": "-2",
+            "priority": null,
+            "type": "add",
+            "phase": "initial"
+          }
+        ]
+      },
+      "disabled": true,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "<p>Turn on while it is in its secondary form.</p>",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!gSvNcVq2N5Zq9G6z.g9cILJVUwUSB93wg"
+    }
+  ]
+}

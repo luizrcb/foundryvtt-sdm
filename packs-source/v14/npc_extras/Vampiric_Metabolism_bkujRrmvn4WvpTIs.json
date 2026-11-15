@@ -1,0 +1,31 @@
+{
+  "folder": "ygxzgswOLlt8nmOI",
+  "name": "Vampiric Metabolism",
+  "type": "trait",
+  "_id": "bkujRrmvn4WvpTIs",
+  "img": "icons/svg/blood.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcExtra": "oddity"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!bkujRrmvn4WvpTIs",
+  "system": {
+    "description": "<p>It thrives on strange organs: after a kill it can spend a round feeding to regain 1d6 life.</p><p><em>From the corruption tables.</em></p>",
+    "type": ""
+  },
+  "effects": []
+}

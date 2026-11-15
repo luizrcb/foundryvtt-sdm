@@ -146,6 +146,15 @@ export function registerSystemSettings() {
     onChange: value => (CONFIG.ActiveEffect.expiryAction = value)
   });
 
+  // Roll dialogs show the formula each button rolls
+  game.settings.register('sdm', 'showRollPreview', {
+    name: 'SDM.SettingsShowRollPreview',
+    hint: 'SDM.SettingsShowRollPreviewHint',
+    scope: 'client',
+    type: Boolean,
+    default: true
+  });
+
   game.settings.register('sdm', 'showEffectsPanel', {
     name: 'SDM.SettingsShowEffectsPanel',
     hint: 'SDM.SettingsShowEffectsPanelHint',
@@ -621,6 +630,25 @@ export function registerSystemSettings() {
 
   // NPC extras: the roll tables the generator draws special attacks, oddities and powers from
   registerNpcExtraSettings();
+
+  // Automations that can each be turned off (Optional Automations)
+  for (const [key, label] of [
+    ['enableNpcExtras', 'SDM.SettingsEnableNpcExtras'],
+    ['npcNaturalLight', 'SDM.SettingsNpcNaturalLight'],
+    ['importCompendiumPets', 'SDM.SettingsImportCompendiumPets'],
+    ['removeDeletedFromCrew', 'SDM.SettingsRemoveDeletedFromCrew'],
+    ['renameMoneyWithCurrency', 'SDM.SettingsRenameMoneyWithCurrency'],
+    ['syncPrototypeToken', 'SDM.SettingsSyncPrototypeToken']
+  ]) {
+    game.settings.register('sdm', key, {
+      name: label,
+      hint: `${label}Hint`,
+      scope: 'world',
+      restricted: true,
+      type: Boolean,
+      default: true
+    });
+  }
 
   // Optional NPC variability: the generator's default, and unlinked tokens when placed
   const variabilityChoices = {

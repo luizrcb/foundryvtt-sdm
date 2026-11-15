@@ -1,0 +1,31 @@
+{
+  "folder": "ygxzgswOLlt8nmOI",
+  "name": "Undying",
+  "type": "trait",
+  "_id": "RMgVWrjI98jwuPAk",
+  "img": "icons/svg/skull.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcExtra": "oddity"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!RMgVWrjI98jwuPAk",
+  "system": {
+    "description": "<p>Undying, but not undecaying. Unless the body is destroyed, it gets up again in a few hours.</p><p><em>From the corruption tables.</em></p>",
+    "type": ""
+  },
+  "effects": []
+}

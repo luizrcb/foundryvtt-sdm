@@ -316,7 +316,7 @@ Hooks.on('renderSettingsConfig', addChromatypePreview);
 
 Hooks.on('renderDialogV2', (dialog, html) => {
   // Roll dialog: live preview of what each button rolls
-  const rollPreview = dialog.options?.rollPreview;
+  const rollPreview = game.settings.get('sdm', 'showRollPreview') ? dialog.options?.rollPreview : null;
   let previewBox = html.querySelector('.sdm-roll-preview');
   // The form the dialog's buttons read (what gets rolled). Not the header's buttons (close…), which have no form
   const previewForm =

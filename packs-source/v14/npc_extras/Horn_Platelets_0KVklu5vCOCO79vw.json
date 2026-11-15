@@ -1,0 +1,76 @@
+{
+  "folder": "ygxzgswOLlt8nmOI",
+  "name": "Horn Platelets",
+  "type": "trait",
+  "_id": "0KVklu5vCOCO79vw",
+  "img": "icons/svg/shield.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcExtra": "oddity"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!0KVklu5vCOCO79vw",
+  "system": {
+    "description": "<p>Small horns or platelets cover the skin like armor: +1 defense.</p><p><em>From the corruption tables.</em></p>",
+    "type": ""
+  },
+  "effects": [
+    {
+      "name": "Horn Platelets",
+      "origin": null,
+      "img": "icons/svg/shield.svg",
+      "_id": "8IWqOfPhnSKn0vYT",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.defense",
+            "value": "1",
+            "priority": null,
+            "type": "add",
+            "phase": "initial"
+          }
+        ]
+      },
+      "disabled": false,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!0KVklu5vCOCO79vw.8IWqOfPhnSKn0vYT"
+    }
+  ]
+}

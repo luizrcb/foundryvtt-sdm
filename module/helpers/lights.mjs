@@ -368,7 +368,7 @@ export async function putOutAllLights() {
  * The creating user lights the token's actor (a linked NPC already lit stays as it is).
  */
 async function onCreateNpcToken(token, options, userId) {
-  if (userId !== game.user.id || !featureEnabled('lights')) return;
+  if (userId !== game.user.id || !featureEnabled('lights') || !game.settings.get('sdm', 'npcNaturalLight')) return;
   const actor = token.actor;
   if (actor?.type !== ActorType.NPC || getLitEffect(actor)) return;
   const trait = actor.items.find(isLightTrait);

@@ -1,0 +1,38 @@
+{
+  "folder": "ygxzgswOLlt8nmOI",
+  "name": "Glowing Spores",
+  "type": "trait",
+  "_id": "vGBSIGs3ntNGsRNi",
+  "img": "icons/svg/light.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcExtra": "oddity"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!vGBSIGs3ntNGsRNi",
+  "system": {
+    "description": "<p>Suffused with sparkly spores, it glows. It enters the scene lit.</p><p><em>From the corruption tables.</em></p>",
+    "type": "",
+    "light": {
+      "preset": "glow",
+      "bright": 1,
+      "dim": 4,
+      "color": "#d8ff7f",
+      "animation": "sunburst"
+    }
+  },
+  "effects": []
+}

@@ -1,0 +1,100 @@
+{
+  "folder": "vPO6z2wsPggMwQkg",
+  "name": "Radula Tongue",
+  "type": "gear",
+  "_id": "B6O4xvdLfObgeur5",
+  "img": "icons/svg/blood.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcExtra": "attack"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!B6O4xvdLfObgeur5",
+  "system": {
+    "readied": true,
+    "description": "<p>A tongue covered in sharp radulae that rasps flesh away: the wound bleeds.</p><p><em>From the corruption tables.</em></p>",
+    "quantity": 1,
+    "size": {
+      "value": 0,
+      "unit": "soaps"
+    },
+    "features": [],
+    "type": "weapon",
+    "weapon": {
+      "damage": {
+        "base": "1d4",
+        "versatile": "1d4",
+        "bonus": ""
+      },
+      "range": "close",
+      "versatile": false
+    },
+    "triggers": [
+      {
+        "roll": "damage",
+        "condition": "totalAtLeast",
+        "value": "1",
+        "text": "The wound bleeds (1 life each round until bandaged)",
+        "attack": "",
+        "table": "",
+        "effect": "1iiFOyZhSbTnGjmh",
+        "wear": "",
+        "counter": "",
+        "counter_step": "1"
+      }
+    ]
+  },
+  "effects": [
+    {
+      "name": "Bleeding",
+      "origin": null,
+      "img": "icons/svg/blood.svg",
+      "_id": "1iiFOyZhSbTnGjmh",
+      "type": "base",
+      "system": {
+        "changes": []
+      },
+      "disabled": true,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "<p>Put on the target by this attack's roll trigger (disabled here so the bearer doesn't get it).</p>",
+      "tint": "#ffffff",
+      "transfer": false,
+      "statuses": [
+        "bleeding"
+      ],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!B6O4xvdLfObgeur5.1iiFOyZhSbTnGjmh"
+    }
+  ]
+}

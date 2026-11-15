@@ -37,6 +37,7 @@ export class SDMClientSettingsConfig extends GroupBase {
   static KEYS = [
     'reverseShiftKey',
     'showEffectsPanel',
+    'showRollPreview',
     'chromatype',
     'diceSoNiceChromatype',
     'hero_dice_style',
@@ -122,7 +123,13 @@ export class SDMCoreRulesSettingsConfig extends GroupBase {
     'enableItemLights',
     'npcVariability',
     'npcTokenVariability',
-    'npcTokenArchetype'
+    'npcTokenArchetype',
+    'enableNpcExtras',
+    'npcNaturalLight',
+    'importCompendiumPets',
+    'removeDeletedFromCrew',
+    'renameMoneyWithCurrency',
+    'syncPrototypeToken'
   ];
   static PARTS = {
     config: { template: 'systems/sdm/templates/settings/base-config.hbs' },
@@ -220,7 +227,8 @@ export class SDMNPCBehaviorSettingsConfig extends GroupBase {
     'npcInitiativeFormula',
     'npcExtraAttacksTable',
     'npcExtraOdditiesTable',
-    'npcExtraPowersTable'
+    'npcExtraPowersTable',
+    'npcExtraPossessionsTable'
   ];
 }
 

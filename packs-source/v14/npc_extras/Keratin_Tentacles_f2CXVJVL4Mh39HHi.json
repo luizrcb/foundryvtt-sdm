@@ -1,0 +1,100 @@
+{
+  "folder": "vPO6z2wsPggMwQkg",
+  "name": "Keratin Tentacles",
+  "type": "gear",
+  "_id": "f2CXVJVL4Mh39HHi",
+  "img": "icons/svg/net.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcExtra": "attack"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!f2CXVJVL4Mh39HHi",
+  "system": {
+    "readied": true,
+    "description": "<p>Ropey tentacles of hair. On a high attack roll they wrap around the target (save to break free).</p><p><em>From the corruption tables.</em></p>",
+    "quantity": 1,
+    "size": {
+      "value": 0,
+      "unit": "soaps"
+    },
+    "features": [],
+    "type": "weapon",
+    "weapon": {
+      "damage": {
+        "base": "1d4",
+        "versatile": "1d4",
+        "bonus": ""
+      },
+      "range": "close",
+      "versatile": false
+    },
+    "triggers": [
+      {
+        "roll": "attack",
+        "condition": "naturalAtLeast",
+        "value": "17",
+        "text": "Wraps around the target (save to break free)",
+        "attack": "",
+        "table": "",
+        "effect": "HabYNlXK7sEGT0Jc",
+        "wear": "",
+        "counter": "",
+        "counter_step": "1"
+      }
+    ]
+  },
+  "effects": [
+    {
+      "name": "Grabbed",
+      "origin": null,
+      "img": "icons/svg/net.svg",
+      "_id": "HabYNlXK7sEGT0Jc",
+      "type": "base",
+      "system": {
+        "changes": []
+      },
+      "disabled": true,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "<p>Put on the target by this attack's roll trigger (disabled here so the bearer doesn't get it).</p>",
+      "tint": "#ffffff",
+      "transfer": false,
+      "statuses": [
+        "restrain"
+      ],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!f2CXVJVL4Mh39HHi.HabYNlXK7sEGT0Jc"
+    }
+  ]
+}

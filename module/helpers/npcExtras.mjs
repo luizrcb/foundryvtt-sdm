@@ -1,18 +1,25 @@
 /**
  * NPC extras: the NPC generator can add a few rolled extras to a new NPC: special attacks (natural
- * weapons with roll triggers), oddities (traits, some with light or effects) and powers. They are
- * drawn from three roll tables (NPC Extras Tables compendium by default; the Referee can point the
+ * weapons with roll triggers, and fitting weapons of the compendium), oddities (traits, some with light
+ * or effects; many come from the corruption tables), powers and possessions (strange items). They are
+ * drawn from four roll tables (NPC Extras Tables compendium by default; the Referee can point the
  * world settings at their own tables). Powers above the NPC's reach (level higher than half its
  * level, at least 1) are drawn again.
  */
 
-export const EXTRA_KINDS = ['attack', 'oddity', 'power'];
+export const EXTRA_KINDS = ['attack', 'oddity', 'power', 'possession'];
 export const DEFAULT_EXTRA_TABLES = {
   attack: 'Compendium.sdm.npc_extras_tables.RollTable.5tECVbEsoZd84EFK',
   oddity: 'Compendium.sdm.npc_extras_tables.RollTable.lR2R1gKLCFguH9lX',
-  power: 'Compendium.sdm.npc_extras_tables.RollTable.eMQTVlxjB8nCMyFl'
+  power: 'Compendium.sdm.npc_extras_tables.RollTable.eMQTVlxjB8nCMyFl',
+  possession: 'Compendium.sdm.npc_extras_tables.RollTable.u9jde7ccqnMqvxev'
 };
-const SETTING = { attack: 'npcExtraAttacksTable', oddity: 'npcExtraOdditiesTable', power: 'npcExtraPowersTable' };
+const SETTING = {
+  attack: 'npcExtraAttacksTable',
+  oddity: 'npcExtraOdditiesTable',
+  power: 'npcExtraPowersTable',
+  possession: 'npcExtraPossessionsTable'
+};
 
 /** How many extras "by level" gives: levels 0–2 a coin flip for one, 3–6 one, 7+ two. */
 export function extrasForLevel(level) {
@@ -52,8 +59,8 @@ async function drawItem(kind, level, taken) {
 }
 
 /**
- * Add extras to an NPC. count: a number, or 'level' (by level). Kinds are picked at random
- * (attacks and oddities twice as often as powers). Returns the names added.
+ * Add extras to an NPC. count: a number, or 'level' (by level). Kinds are picked at random:
+ * attacks and oddities 35% each, powers and possessions 15% each. Returns the names added.
  */
 export async function addNpcExtras(actor, { count = 'level' } = {}) {
   if (!actor) return [];
@@ -63,8 +70,8 @@ export async function addNpcExtras(actor, { count = 'level' } = {}) {
   const created = [];
   for (let i = 0; i < total; i++) {
     const roll = CONFIG.Dice.randomUniform();
-    const kind = roll < 0.4 ? 'attack' : roll < 0.8 ? 'oddity' : 'power';
-    const data = (await drawItem(kind, level, taken)) ?? (await drawItem(kind === 'power' ? 'attack' : 'oddity', level, taken));
+    const kind = roll < 0.35 ? 'attack' : roll < 0.7 ? 'oddity' : roll < 0.85 ? 'power' : 'possession';
+    const data = (await drawItem(kind, level, taken)) ?? (await drawItem(kind === 'attack' ? 'oddity' : 'attack', level, taken));
     if (data) created.push(data);
   }
   if (created.length) await actor.createEmbeddedDocuments('Item', created);

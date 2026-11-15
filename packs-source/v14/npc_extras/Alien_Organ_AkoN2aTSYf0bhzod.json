@@ -1,0 +1,40 @@
+{
+  "folder": "ygxzgswOLlt8nmOI",
+  "name": "Alien Organ",
+  "type": "trait",
+  "_id": "AkoN2aTSYf0bhzod",
+  "img": "icons/svg/regen.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcExtra": "oddity"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!AkoN2aTSYf0bhzod",
+  "system": {
+    "description": "<p>An alien organ activates on its death and brings back a version of it, once (mark it in the <strong>Revived</strong> counter).</p><p><em>From the corruption tables.</em></p>",
+    "type": "",
+    "counters": {
+      "revived": {
+        "label": "Revived",
+        "value": 0,
+        "max": 1,
+        "reset_value": 0,
+        "reset_on_combat_end": false
+      }
+    }
+  },
+  "effects": []
+}

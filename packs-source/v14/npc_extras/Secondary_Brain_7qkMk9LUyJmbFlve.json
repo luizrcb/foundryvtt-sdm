@@ -1,0 +1,31 @@
+{
+  "folder": "ygxzgswOLlt8nmOI",
+  "name": "Secondary Brain",
+  "type": "trait",
+  "_id": "7qkMk9LUyJmbFlve",
+  "img": "icons/svg/mystery-man.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcExtra": "oddity"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!7qkMk9LUyJmbFlve",
+  "system": {
+    "description": "<p>A second brain thinks on its own: it can't be charmed or controlled while both agree.</p><p><em>From the corruption tables.</em></p>",
+    "type": ""
+  },
+  "effects": []
+}

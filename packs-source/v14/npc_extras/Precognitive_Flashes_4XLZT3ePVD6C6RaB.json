@@ -1,0 +1,40 @@
+{
+  "folder": "ygxzgswOLlt8nmOI",
+  "name": "Precognitive Flashes",
+  "type": "trait",
+  "_id": "4XLZT3ePVD6C6RaB",
+  "img": "icons/svg/eye.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcExtra": "oddity"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!4XLZT3ePVD6C6RaB",
+  "system": {
+    "description": "<p>It sees what comes. Once per fight it negates one roll against it (mark it in the <strong>Foreseen</strong> counter; it resets after combat).</p><p><em>From the corruption tables.</em></p>",
+    "type": "",
+    "counters": {
+      "foreseen": {
+        "label": "Foreseen",
+        "value": 0,
+        "max": 1,
+        "reset_value": 0,
+        "reset_on_combat_end": true
+      }
+    }
+  },
+  "effects": []
+}

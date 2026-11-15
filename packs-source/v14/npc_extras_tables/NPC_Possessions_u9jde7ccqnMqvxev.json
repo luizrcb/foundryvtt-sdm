@@ -1,0 +1,1281 @@
+{
+  "name": "NPC Possessions",
+  "img": "icons/svg/chest.svg",
+  "description": "<p>Strange items an NPC carries.</p>",
+  "replacement": true,
+  "displayRoll": false,
+  "folder": null,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcExtraTable": true
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_id": "u9jde7ccqnMqvxev",
+  "sort": 0,
+  "formula": "1d50",
+  "_key": "!tables!u9jde7ccqnMqvxev",
+  "results": [
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        1,
+        1
+      ],
+      "name": "A shapechanger's preserved hide.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.Tl1shdX1oJO8uzaD",
+      "_id": "739lxZOtEqG9dkjh",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.739lxZOtEqG9dkjh"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        2,
+        2
+      ],
+      "name": "Agave plant that mutates daily. Water monthly.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.oPe7gZUxbhtYNFbV",
+      "_id": "y8b8doUQxSLSzhqN",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.y8b8doUQxSLSzhqN"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        3,
+        3
+      ],
+      "name": "Ammolite relic of the void mollusc period.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.J7XKsPN1ZitVYENU",
+      "_id": "xSwCTOE5AIp036FJ",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.xSwCTOE5AIp036FJ"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        4,
+        4
+      ],
+      "name": "Anthracite eating ooze in a plastic bottle.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.7SVYT29nY5YlcfFe",
+      "_id": "nK75wmWSEITszxNo",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.nK75wmWSEITszxNo"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        5,
+        5
+      ],
+      "name": "Artificial you. Only the face and one hand.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.5lEdhhUCmRs5ZHLO",
+      "_id": "k3NVCTSZo3oWBFaw",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.k3NVCTSZo3oWBFaw"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        6,
+        6
+      ],
+      "name": "Astraporter network manual. Outdated.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.2I2ulBAHFvYO4zxP",
+      "_id": "jcTzHkpRUyM1EvMA",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.jcTzHkpRUyM1EvMA"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        7,
+        7
+      ],
+      "name": "Bluish, mildly anti-gravitic rock—an astrolith.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.Km0Fbw62dOlGncIf",
+      "_id": "Kna48csx3Vk7B1wo",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.Kna48csx3Vk7B1wo"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        8,
+        8
+      ],
+      "name": "Box of ochre ancestor summoning chalks.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.nZe6MuJTHCM9jjLf",
+      "_id": "QW39ZHphwXXYCP8x",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.QW39ZHphwXXYCP8x"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "name": "Brain shaving kit. Delusion tape included.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.Lpsp0FCnFI0ZtvLU",
+      "_id": "YlnqOqxvDgo3NACD",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.YlnqOqxvDgo3NACD"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "name": "Briolette black pearl of the weeping architect.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.ZucCY9WqembZp9fX",
+      "_id": "0wNv1ux5OR2JIWSK",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.0wNv1ux5OR2JIWSK"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "name": "Cameo sapphire amulet of a banker priest.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.A4dOML0Q6Y3PEo7q",
+      "_id": "h4o5942PMpqXRY09",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.h4o5942PMpqXRY09"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "name": "Congealed shadow horn of decaying fruits.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.K65dbfQeNyy3ljgP",
+      "_id": "Q0trAJ9QaTEkVCjm",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.Q0trAJ9QaTEkVCjm"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        13,
+        13
+      ],
+      "name": "Dead grey daemon slab of obsidian and steel.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.5R7NbqSynONmHVxQ",
+      "_id": "h1RzP6gWMRk75c9u",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.h1RzP6gWMRk75c9u"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        14,
+        14
+      ],
+      "name": "Ebony haruspicy liver and odds casting tables.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.AXNzMoPZWWZqbZQF",
+      "_id": "7q7lcJR2KWspHTsR",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.7q7lcJR2KWspHTsR"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        15,
+        15
+      ],
+      "name": "Electromechanical backup V.I.L.E. brain.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.jKaZQ1sODgxgPTGZ",
+      "_id": "EQQCzzoxXF4tEWod",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.EQQCzzoxXF4tEWod"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        16,
+        16
+      ],
+      "name": "Elegant mechanical pit viper (L1).",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.X7bzcwcKrh9Q6rRC",
+      "_id": "LiAPonwoS5B2kdYJ",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.LiAPonwoS5B2kdYJ"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        17,
+        17
+      ],
+      "name": "Ever-growing tooth carved into a spear.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.3KT75ogesfWdDx8b",
+      "_id": "hQFPQGCyDJUFYRud",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.hQFPQGCyDJUFYRud"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        18,
+        18
+      ],
+      "name": "Gold book proclaiming eternal peace.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.ug82izSX94AntSBT",
+      "_id": "hHJedxdLoa7HElEO",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.hHJedxdLoa7HElEO"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        19,
+        19
+      ],
+      "name": "Golem reprogramming probe in a jewel box.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.zwntV0Csln41lzGq",
+      "_id": "YoHEZo2aP8dgi9tb",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.YoHEZo2aP8dgi9tb"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        20,
+        20
+      ],
+      "name": "Gray sphere. Weighs six times more than gold.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.fXKpJA5BMVm8Q6KC",
+      "_id": "BpWs0LkC6VeKF45J",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.BpWs0LkC6VeKF45J"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        21,
+        21
+      ],
+      "name": "Half a crystal skull and two dream powders.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.rnM12Qi3loBiaFP2",
+      "_id": "9tyKTl2EGpdJMcvb",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.9tyKTl2EGpdJMcvb"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        22,
+        22
+      ],
+      "name": "Jar of pickled space worm meat.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.sr16ZmPregt75ovh",
+      "_id": "tIGWi08B7FEm4Qxd",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.tIGWi08B7FEm4Qxd"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        23,
+        23
+      ],
+      "name": "Large carnivorous motile monstera (L3).",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.Keu0GlRMVKzk7PYC",
+      "_id": "aSE4No3rzywUOLEn",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.aSE4No3rzywUOLEn"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        24,
+        24
+      ],
+      "name": "Living seed of your ancestral house.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.dTv7AYI44TLdtiAK",
+      "_id": "YmicnT19ZtWfApny",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.YmicnT19ZtWfApny"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        25,
+        25
+      ],
+      "name": "Moonling undershirt of woven hardlight.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.aPoFA4aBvIxBEDd6",
+      "_id": "J5NiEyOd9hhFPYN2",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.J5NiEyOd9hhFPYN2"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        26,
+        26
+      ],
+      "name": "Mummified cucumber with six human teeth.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.fvTjsOGO9ThLBQLO",
+      "_id": "s2EWJlz8bDFuxc26",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.s2EWJlz8bDFuxc26"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        27,
+        27
+      ],
+      "name": "One lost soul trapped in a stoneware pot.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.pcq79a9IPfgtiJon",
+      "_id": "rqlEe6QqKR098Jyo",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.rqlEe6QqKR098Jyo"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        28,
+        28
+      ],
+      "name": "Opaque hallucinatory mask of bravery.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.8aGjVRBh3HZi4CNq",
+      "_id": "jJnqCLRn9L9rYgYr",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.jJnqCLRn9L9rYgYr"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        29,
+        29
+      ],
+      "name": "Plastinated sacred hand of a relative.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.F4Fdw3k4lT7muRa6",
+      "_id": "wBSSYepZJrv5dF7T",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.wBSSYepZJrv5dF7T"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        30,
+        30
+      ],
+      "name": "Porcelain and jade pipe and no-bacco box set.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.Z522Z0vZnTSOhtvc",
+      "_id": "ncScOwKGLyyEtFrk",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.ncScOwKGLyyEtFrk"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        31,
+        31
+      ],
+      "name": "Pretty ritual tea set of grown posthuman bone.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.Ds0UsaluTDqelPzj",
+      "_id": "OAVS6MAQNWof8bJ1",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.OAVS6MAQNWof8bJ1"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        32,
+        32
+      ],
+      "name": "Procedural entertainment box-and-screen.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.aJDyAfZAFUlm0GRc",
+      "_id": "UyrY6IhHIRn5H6lO",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.UyrY6IhHIRn5H6lO"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        33,
+        33
+      ],
+      "name": "Psychic ash trapped in pink amber.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.Vo39THxoOHRu3toN",
+      "_id": "oTKqGC8BM9yla07B",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.oTKqGC8BM9yla07B"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        34,
+        34
+      ],
+      "name": "Purple brick, dims ambient lights.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.dLiNHgVvmdK3LNRm",
+      "_id": "sY8deywqhP2uPsxP",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.sY8deywqhP2uPsxP"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        35,
+        35
+      ],
+      "name": "Red and green mechanical foot.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.dlsT1o5AabE2intn",
+      "_id": "m9ykZaYl66d6H4po",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.m9ykZaYl66d6H4po"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        36,
+        36
+      ],
+      "name": "Safety orange cultist robe with fruit glyphs.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.VKtSPXKuN6mb9x1Q",
+      "_id": "htomOv8evREU7y3o",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.htomOv8evREU7y3o"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        37,
+        37
+      ],
+      "name": "Semi-sentient fibrous colony blanket.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.2RVTda4mv0hdxMYp",
+      "_id": "p3t1vTN3gbW9pjJ5",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.p3t1vTN3gbW9pjJ5"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        38,
+        38
+      ],
+      "name": "Sentient greenish plastic bucket (L1). Cursed?",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.f0lK44XZcRrHPfNl",
+      "_id": "OFzTLrIMQm37MpcC",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.OFzTLrIMQm37MpcC"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        39,
+        39
+      ],
+      "name": "Seven single-use capsules of universal solvent.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.8ggyr7HxmPn4KT2V",
+      "_id": "4W2oDOkCBkDa0qPJ",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.4W2oDOkCBkDa0qPJ"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        40,
+        40
+      ],
+      "name": "Shed lingish face skin in a velvet pouch.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.R2ASKJ7I3aQZTMhX",
+      "_id": "5NP3exTLoLHW1se6",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.5NP3exTLoLHW1se6"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        41,
+        41
+      ],
+      "name": "Square glasses of perfect vision. 3x zoom.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.i3RL4OWIM3bYCYqS",
+      "_id": "Hk7yebFsAOfBSHux",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.Hk7yebFsAOfBSHux"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        42,
+        42
+      ],
+      "name": "Stone cat (L2). Feed blood to awaken for a day.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.W8YuV2Wan2XZeCpc",
+      "_id": "qof0TSu6p3mtn78u",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.qof0TSu6p3mtn78u"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        43,
+        43
+      ],
+      "name": "Tangerine radiant onion scepter.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.t80rERn7TJfb2TC6",
+      "_id": "aOicz9lIsGZcke9c",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.aOicz9lIsGZcke9c"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        44,
+        44
+      ],
+      "name": "Taxidermied head of a doghead pistolier (L5).",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.M05qUC491qpZU8Zc",
+      "_id": "Rgp2zCq4SDz4Xo6C",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.Rgp2zCq4SDz4Xo6C"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        45,
+        45
+      ],
+      "name": "Teal vase with an undead rose.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.76qeZ4qWV0P3uI2l",
+      "_id": "iWkARkFqNfs73pDF",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.iWkARkFqNfs73pDF"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        46,
+        46
+      ],
+      "name": "Three gilded wooden geese with needle teeth.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.g2LcBK5Xmsd0uqtQ",
+      "_id": "CPn31WeNHHAiOtl3",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.CPn31WeNHHAiOtl3"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        47,
+        47
+      ],
+      "name": "Three old guns reforged into a blue ax.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.3yjKyFmaKMsUGXpL",
+      "_id": "YwxfUpDhxwpSOLNk",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.YwxfUpDhxwpSOLNk"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        48,
+        48
+      ],
+      "name": "Tin head filled with echoes of epic poetry.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.ph3OKjxY51smeyGK",
+      "_id": "59EbLUpM5HdCrlHs",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.59EbLUpM5HdCrlHs"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        49,
+        49
+      ],
+      "name": "Yellowed great-human ivory dining set.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.4xxffbqQktrVqGwF",
+      "_id": "nsN7BGwahvm2Z2c3",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.nsN7BGwahvm2Z2c3"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        50,
+        50
+      ],
+      "name": "Zircon personality jewel of a scion duplicate.",
+      "img": "icons/svg/item-bag.svg",
+      "documentUuid": "Compendium.sdm.strange_items.Item.SrBCeNaeHT6bgMSH",
+      "_id": "frEe0ndwq1IcCAV9",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!u9jde7ccqnMqvxev.frEe0ndwq1IcCAV9"
+    }
+  ]
+}

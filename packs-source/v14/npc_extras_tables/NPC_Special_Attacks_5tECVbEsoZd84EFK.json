@@ -24,7 +24,7 @@
   },
   "_id": "5tECVbEsoZd84EFK",
   "sort": 0,
-  "formula": "1d8",
+  "formula": "1d60",
   "_key": "!tables!5tECVbEsoZd84EFK",
   "results": [
     {
@@ -226,6 +226,1306 @@
         "lastModifiedBy": null
       },
       "_key": "!tables.results!5tECVbEsoZd84EFK.WqQt1APhrrblhnol"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        9,
+        9
+      ],
+      "name": "Access Flenser",
+      "img": "icons/weapons/swords/sword-broad-serrated-blue.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.ziSFtT3nY0ADW13h",
+      "_id": "KGpOyQNcdOyZbkBF",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.KGpOyQNcdOyZbkBF"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        10,
+        10
+      ],
+      "name": "Arzax Lance",
+      "img": "icons/weapons/polearms/spear-ice-crystal-blue.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.AOcSCO2oWMAF2x5m",
+      "_id": "TFoOxtzHq8STZHE6",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.TFoOxtzHq8STZHE6"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        11,
+        11
+      ],
+      "name": "Chain Sword",
+      "img": "icons/weapons/swords/sword-guard-serrated.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.32GErRz1iWywC6AN",
+      "_id": "svi34zWH8xMS9BMo",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.svi34zWH8xMS9BMo"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        12,
+        12
+      ],
+      "name": "Crystal Siege Rod",
+      "img": "icons/weapons/staves/staff-ornate-banded-purple.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.wtf9zvdsjznSuejK",
+      "_id": "XOJrLo8F2nXMzqQd",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.XOJrLo8F2nXMzqQd"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        13,
+        13
+      ],
+      "name": "Fold-Field Array",
+      "img": "icons/commodities/tech/antenna-powered-purple.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.WjU6ISgcE9WBPpaf",
+      "_id": "gCWwDllJtWR6zqlI",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.gCWwDllJtWR6zqlI"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        14,
+        14
+      ],
+      "name": "Forty-Pound Uranium Rod",
+      "img": "icons/weapons/staves/staff-ornate-green.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.c0H7EAxKMb1Ni1Oq",
+      "_id": "KiUBKnCfK2vuAiSD",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.KiUBKnCfK2vuAiSD"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        15,
+        15
+      ],
+      "name": "Gate Daemon Actuator",
+      "img": "icons/commodities/tech/fan-ventilator-copper.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.qwbsP4FJYM6TCLm3",
+      "_id": "MK2xTY2xA6bznBRk",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.MK2xTY2xA6bznBRk"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        16,
+        16
+      ],
+      "name": "Golem Killer",
+      "img": "icons/skills/ranged/cannon-barrel-firing-orange.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.cWchSW05vtyIVJuD",
+      "_id": "irAgsXOhyl9F6sn2",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.irAgsXOhyl9F6sn2"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        17,
+        17
+      ],
+      "name": "Lamarckian Needler",
+      "img": "icons/weapons/wands/wand-gem-green.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.PTTwxaqTDagRnVfV",
+      "_id": "3DSp8kVzjliKE1Qu",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.3DSp8kVzjliKE1Qu"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        18,
+        18
+      ],
+      "name": "Mazing Crown",
+      "img": "icons/equipment/head/crown-gold-blue.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.64nsgbJFK7ZdUbz1",
+      "_id": "fhQNB9reosfhypnX",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.fhQNB9reosfhypnX"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        19,
+        19
+      ],
+      "name": "Mouth of the Void",
+      "img": "icons/creatures/abilities/mouth-teeth-rows-needles-purple.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.fxILIoyiCAFuKSHu",
+      "_id": "LDn8S9wPNWkPLR34",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.LDn8S9wPNWkPLR34"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        20,
+        20
+      ],
+      "name": "Pleasure Thorn",
+      "img": "icons/weapons/daggers/dagger-straight-thin-black.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.ISVyKwieIZcmFXoM",
+      "_id": "7A7TPdoE2u6Qe1NB",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.7A7TPdoE2u6Qe1NB"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        21,
+        21
+      ],
+      "name": "Radiothermal Horn",
+      "img": "icons/tools/instruments/horn-red-grey.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.y4N1XoaqhULuaT4h",
+      "_id": "PBTrbEpvpDbnIIAp",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.PBTrbEpvpDbnIIAp"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        22,
+        22
+      ],
+      "name": "Reality Flense",
+      "img": "icons/skills/toxins/bottle-open-vapors-pink.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.xKrfbwAvjq3oQGeJ",
+      "_id": "00zKLMcyKHKi7M07",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.00zKLMcyKHKi7M07"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        23,
+        23
+      ],
+      "name": "Stun Baton Wand",
+      "img": "icons/weapons/staves/staff-orb-red.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.5CV0LEfvJl3WrT9M",
+      "_id": "QbbStdd8AgdmX2sa",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.QbbStdd8AgdmX2sa"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        24,
+        24
+      ],
+      "name": "Telempathy Blaster",
+      "img": "icons/weapons/wands/wand-totem.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.It0Sugv5CBbFk7sm",
+      "_id": "u4rEE7naW8mHDKw3",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.u4rEE7naW8mHDKw3"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        25,
+        25
+      ],
+      "name": "Noetic Blade",
+      "img": "icons/weapons/swords/sword-guard-flanged-purple.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.vf9R7QAvpP5cVaHK",
+      "_id": "OaWDyyIdYxWDsU78",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.OaWDyyIdYxWDsU78"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        26,
+        26
+      ],
+      "name": "Wire-Ghoul Hammer-Axe",
+      "img": "icons/weapons/axes/axe-battle-eyes-red.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.S0zXIOaxG7DxgjGo",
+      "_id": "E9kcE3oEJJ8X1o95",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.E9kcE3oEJJ8X1o95"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        27,
+        27
+      ],
+      "name": "Agon Whip",
+      "img": "icons/magic/control/debuff-chains-purple.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.w2WOCk1WLqyRPM6Q",
+      "_id": "85yMa6Fv4ngcVnSO",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.85yMa6Fv4ngcVnSO"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        28,
+        28
+      ],
+      "name": "Bola",
+      "img": "icons/weapons/thrown/bolas-stone.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.CAPGWVzHieYFtgyf",
+      "_id": "gsR8uQYuY8CstQTu",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.gsR8uQYuY8CstQTu"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        29,
+        29
+      ],
+      "name": "Bow",
+      "img": "icons/weapons/bows/bow-ornamental-silver-black.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.qDvcnyymY1YS9sqx",
+      "_id": "NzuNGrTFhxhavBTo",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.NzuNGrTFhxhavBTo"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        30,
+        30
+      ],
+      "name": "Crossbow",
+      "img": "icons/weapons/crossbows/crossbow-loaded-black.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.cZMO2QZCSA0n1RnN",
+      "_id": "So2IeJKfLjG7A0nI",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.So2IeJKfLjG7A0nI"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        31,
+        31
+      ],
+      "name": "Machete",
+      "img": "icons/weapons/swords/sword-machete-white.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.72hJKgB42MvVuFgz",
+      "_id": "QoCWVGPqbQTh4DPc",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.QoCWVGPqbQTh4DPc"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        32,
+        32
+      ],
+      "name": "Spear",
+      "img": "icons/weapons/polearms/glaive-simple.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.usP7z6fJMW7bbC7p",
+      "_id": "T850bhhhpwdmnu4L",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.T850bhhhpwdmnu4L"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        33,
+        33
+      ],
+      "name": "Shiv",
+      "img": "icons/weapons/daggers/dagger-simple-green.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.EWDh7VPfiwyCdcLC",
+      "_id": "EqCI9jsl6OUmbXzY",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.EqCI9jsl6OUmbXzY"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        34,
+        34
+      ],
+      "name": "Throwing Knife",
+      "img": "icons/weapons/thrown/daggers-guard-gold.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.x0LdHXFJBBCef3jn",
+      "_id": "3eXwYD9bG56ToaA2",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.3eXwYD9bG56ToaA2"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        35,
+        35
+      ],
+      "name": "Ghost Bone Axe",
+      "img": "icons/weapons/axes/axe-battle-skull-black.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.mFMUBdpTDO3yVLAF",
+      "_id": "iiI4QQHGJIyU65YK",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.iiI4QQHGJIyU65YK"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        36,
+        36
+      ],
+      "name": "Black City Blade",
+      "img": "icons/weapons/swords/sword-guard-flanged.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.XOGYXrO6F7kUbufi",
+      "_id": "tzrSPbFclphD1Cu5",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.tzrSPbFclphD1Cu5"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        37,
+        37
+      ],
+      "name": "Hellfire Hand Cannon",
+      "img": "icons/commodities/tech/metal-insert.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.pUvAIKBkSRzrLGhB",
+      "_id": "LrH9lMnFDOpdJvar",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.LrH9lMnFDOpdJvar"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        38,
+        38
+      ],
+      "name": "Scavenger Bolter",
+      "img": "icons/weapons/guns/rifle-brown.webp",
+      "documentUuid": "Compendium.sdm.weapons.Item.ltpia6YOIecgAjKT",
+      "_id": "wItsjk5inSjV5o3B",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.wItsjk5inSjV5o3B"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        39,
+        39
+      ],
+      "name": "Glass Cannon",
+      "img": "icons/magic/acid/projectile-needles-salvo-green.webp",
+      "documentUuid": "Compendium.sdm.trait_items.Item.wWAt6O6cHCrwV9La",
+      "_id": "DqGsC5IHra8mGXw5",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.DqGsC5IHra8mGXw5"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        40,
+        40
+      ],
+      "name": "Ur Gun",
+      "img": "icons/skills/ranged/bullets-triple-ball-ice-blue.webp",
+      "documentUuid": "Compendium.sdm.trait_items.Item.qruFCb7FafobKe6f",
+      "_id": "zMRl5frPi9NeFsFW",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.zMRl5frPi9NeFsFW"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        41,
+        41
+      ],
+      "name": "Piezo Mace",
+      "img": "icons/weapons/maces/mace-round-studded.webp",
+      "documentUuid": "Compendium.sdm.trait_items.Item.Hdf3GcWOrHRmKYUY",
+      "_id": "5BVI18Ao4eSfi67K",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.5BVI18Ao4eSfi67K"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        42,
+        42
+      ],
+      "name": "Oldtech Dagger-Axe",
+      "img": "icons/weapons/axes/axe-battle-simple.webp",
+      "documentUuid": "Compendium.sdm.trait_items.Item.LZydiJuSLJIwtPt9",
+      "_id": "ClDVwQB9e6k8wmSw",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.ClDVwQB9e6k8wmSw"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        43,
+        43
+      ],
+      "name": "Stakehammer",
+      "img": "icons/weapons/hammers/hammer-war-spiked.webp",
+      "documentUuid": "Compendium.sdm.trait_items.Item.WFmZfrzrd5VoGcLl",
+      "_id": "k81zG4ExeBt876Ir",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.k81zG4ExeBt876Ir"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        44,
+        44
+      ],
+      "name": "Shipgun",
+      "img": "icons/weapons/guns/gun-worn-steel.webp",
+      "documentUuid": "Compendium.sdm.trait_items.Item.AbKaawsLMpNUSWAt",
+      "_id": "oUSqJog95a4gDKba",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.oUSqJog95a4gDKba"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        45,
+        45
+      ],
+      "name": "Swagger Stick (*BILI Brand)",
+      "img": "icons/weapons/staves/staff-ornate-hook.webp",
+      "documentUuid": "Compendium.sdm.trait_items.Item.QvarpFl0Seb8KuJY",
+      "_id": "EgXwZfQ1cSD652Ov",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.EgXwZfQ1cSD652Ov"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        46,
+        46
+      ],
+      "name": "Soul-Eater Nightblade",
+      "img": "icons/weapons/swords/sword-flanged-lightning.webp",
+      "documentUuid": "Compendium.sdm.trait_items.Item.3UU9F5vzJrAmtP7n",
+      "_id": "HjHFFbp48WEXJC7Z",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.HjHFFbp48WEXJC7Z"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        47,
+        47
+      ],
+      "name": "Tooth of the Root Worm",
+      "img": "icons/weapons/fist/claw-leather-black.webp",
+      "documentUuid": "Compendium.sdm.trait_items.Item.fYIUxoWgnGvdqB6o",
+      "_id": "cRZCh96hExzIpIQf",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.cRZCh96hExzIpIQf"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        48,
+        48
+      ],
+      "name": "Rib Bow",
+      "img": "icons/weapons/crossbows/crossbow-white.webp",
+      "documentUuid": "Compendium.sdm.trait_items.Item.jFbh2hM8JQvk6M8q",
+      "_id": "tca4svm9zWxNV31e",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.tca4svm9zWxNV31e"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        49,
+        49
+      ],
+      "name": "Lifestealer Syringe",
+      "img": "icons/weapons/ammunition/arrow-broadhead-bent-teal.webp",
+      "documentUuid": "Compendium.sdm.trait_items.Item.Tu67FORVWzQK6VSh",
+      "_id": "SjE8hlafb0tCYm89",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.SjE8hlafb0tCYm89"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        50,
+        50
+      ],
+      "name": "Eyegun",
+      "img": "icons/commodities/biological/eye-tentacle-green-yellow.webp",
+      "documentUuid": "Compendium.sdm.trait_items.Item.k3QcwKCtkXgLcMwA",
+      "_id": "cZWHUWNo41jlMihe",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.cZWHUWNo41jlMihe"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        51,
+        51
+      ],
+      "name": "Golden Horn",
+      "img": "icons/weapons/daggers/dagger-curved-guard.webp",
+      "documentUuid": "Compendium.sdm.trait_items.Item.iB3tvJQpxrDgySvw",
+      "_id": "nXkVzlZqrE2nd2eC",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.nXkVzlZqrE2nd2eC"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        52,
+        52
+      ],
+      "name": "Yellow Dart",
+      "img": "icons/weapons/polearms/spear-flared-bronze-teal.webp",
+      "documentUuid": "Compendium.sdm.trait_items.Item.0kWVhz0n43y6DYow",
+      "_id": "O2X0WUUmIbuJnG5H",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.O2X0WUUmIbuJnG5H"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        53,
+        53
+      ],
+      "name": "The Spear Named Blood Drinker",
+      "img": "icons/weapons/polearms/spear-hooked-double-engraved.webp",
+      "documentUuid": "Compendium.sdm.trait_items.Item.0jY9JnzOpHLrn4Rk",
+      "_id": "lLB43jU38rDiU2I2",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.lLB43jU38rDiU2I2"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        54,
+        54
+      ],
+      "name": "Hidden Bioweapon",
+      "img": "icons/svg/biohazard.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.1GNFLo6tz618Y1V1",
+      "_id": "YUSZo5ZqGwmcwy4n",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.YUSZo5ZqGwmcwy4n"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        55,
+        55
+      ],
+      "name": "Dagger Claw",
+      "img": "icons/svg/bones.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.uDcvCLT6jyC7rtVq",
+      "_id": "0ktTqFzMD6iGuFEI",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.0ktTqFzMD6iGuFEI"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        56,
+        56
+      ],
+      "name": "Radula Tongue",
+      "img": "icons/svg/blood.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.B6O4xvdLfObgeur5",
+      "_id": "RkOUX4h08TmxizYa",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.RkOUX4h08TmxizYa"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        57,
+        57
+      ],
+      "name": "Needle Teeth",
+      "img": "icons/svg/bones.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.pZANDOngDsOkRnDs",
+      "_id": "1LfabaRhRRQk75XK",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.1LfabaRhRRQk75XK"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        58,
+        58
+      ],
+      "name": "Bone Spikes",
+      "img": "icons/svg/bones.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.8kH38tcf5K82G7va",
+      "_id": "Xe3AlDI6SymeQSoK",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.Xe3AlDI6SymeQSoK"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        59,
+        59
+      ],
+      "name": "Keratin Tentacles",
+      "img": "icons/svg/net.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.f2CXVJVL4Mh39HHi",
+      "_id": "08lbzllmn7ougDBp",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.08lbzllmn7ougDBp"
+    },
+    {
+      "type": "document",
+      "weight": 1,
+      "range": [
+        60,
+        60
+      ],
+      "name": "Corrosive Secretion",
+      "img": "icons/svg/acid.svg",
+      "documentUuid": "Compendium.sdm.npc_extras.Item.GZPhvmiIV6ka5nm0",
+      "_id": "TQdhTTTMCGuHVA6U",
+      "description": "",
+      "drawn": false,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "_key": "!tables.results!5tECVbEsoZd84EFK.TQdhTTTMCGuHVA6U"
     }
   ]
 }

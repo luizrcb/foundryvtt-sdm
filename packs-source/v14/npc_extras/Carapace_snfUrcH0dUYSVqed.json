@@ -1,0 +1,76 @@
+{
+  "folder": "ygxzgswOLlt8nmOI",
+  "name": "Carapace",
+  "type": "trait",
+  "_id": "snfUrcH0dUYSVqed",
+  "img": "icons/svg/shield.svg",
+  "sort": 0,
+  "ownership": {
+    "default": 0
+  },
+  "flags": {
+    "sdm": {
+      "npcExtra": "oddity"
+    }
+  },
+  "_stats": {
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null,
+    "coreVersion": "14.367",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "lastModifiedBy": null
+  },
+  "_key": "!items!snfUrcH0dUYSVqed",
+  "system": {
+    "description": "<p>Its back has fused into a shell-like carapace: +2 defense.</p><p><em>From the corruption tables.</em></p>",
+    "type": ""
+  },
+  "effects": [
+    {
+      "name": "Carapace",
+      "origin": null,
+      "img": "icons/svg/shield.svg",
+      "_id": "p1oW0YMEvSaipUzV",
+      "type": "base",
+      "system": {
+        "changes": [
+          {
+            "key": "system.defense",
+            "value": "2",
+            "priority": null,
+            "type": "add",
+            "phase": "initial"
+          }
+        ]
+      },
+      "disabled": false,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!snfUrcH0dUYSVqed.p1oW0YMEvSaipUzV"
+    }
+  ]
+}
