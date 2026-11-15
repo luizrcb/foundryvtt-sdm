@@ -69,7 +69,7 @@ export async function payCost(actor, { resource = 'life', cost = '1', item = nul
   const roll = await new Roll(formula, actor.getRollData()).evaluate();
   const amount = Math.max(Number(roll.total) || 0, 0);
   const notEnough = () => {
-    ui.notifications.warn($fmt('SDM.Cost.NotEnough', { resource: resourceLabel(resource) }));
+    ui.notifications.warn($fmt('SDM.CostResource.NotEnough', { resource: resourceLabel(resource) }));
     return null;
   };
   if (resource === 'life') {

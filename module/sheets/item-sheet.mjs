@@ -423,9 +423,9 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       },
       triggerCostResources: {
         '': 'SDM.Trigger.WearNone',
-        life: 'SDM.Cost.Life',
+        life: 'SDM.CostResource.Life',
         ...CONFIG.SDM.abilities,
-        hero_die: 'SDM.Cost.HeroDie'
+        hero_die: 'SDM.CostResource.HeroDie'
       },
       triggerChargeModes: {
         '': 'SDM.Trigger.WearNone',
@@ -441,9 +441,9 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       },
       ...this._triggerItemChoices(),
       boostResources: {
-        life: 'SDM.Cost.Life',
+        life: 'SDM.CostResource.Life',
         ...CONFIG.SDM.abilities,
-        hero_die: 'SDM.Cost.HeroDie'
+        hero_die: 'SDM.CostResource.HeroDie'
       }
     };
 
