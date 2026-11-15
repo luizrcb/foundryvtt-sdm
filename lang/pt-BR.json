@@ -2780,13 +2780,5 @@
   "SDM.SettingsEnableNpcExtras": "Extras de NPC no gerador",
   "SDM.SettingsEnableNpcExtrasHint": "O gerador de NPCs oferece extras sorteados (ataques especiais, peculiaridades, poderes, posses). Desligado: a opção fica escondida.",
   "SDM.SettingsNpcNaturalLight": "NPCs com luz natural entram acesos",
-  "SDM.SettingsNpcNaturalLightHint": "Um NPC com traço de luz é aceso quando seu token é colocado (requer Luzes de itens). Desligado: acenda à mão.",
-  "SDM.SettingsImportCompendiumPets": "Importar companheiros do compêndio",
-  "SDM.SettingsImportCompendiumPetsHint": "Um item de companheiro vinculado a um ator do compêndio traz sua própria cópia para a pasta Companheiros quando entra num ator (e apagar o item apaga a cópia). Desligado: nada é importado; importe e vincule à mão.",
-  "SDM.SettingsRemoveDeletedFromCrew": "Remover atores apagados da tripulação",
-  "SDM.SettingsRemoveDeletedFromCrewHint": "Apagar um ator também o remove da tripulação de todas as caravanas.",
-  "SDM.SettingsRenameMoneyWithCurrency": "Atualizar o dinheiro quando a moeda mudar",
-  "SDM.SettingsRenameMoneyWithCurrencyHint": "Mudar o nome ou a imagem da moeda também atualiza os itens de dinheiro que ainda tinham o nome ou a imagem antigos.",
-  "SDM.SettingsSyncPrototypeToken": "Token acompanha a imagem e o nome do ator",
-  "SDM.SettingsSyncPrototypeTokenHint": "Mudar a imagem ou o nome de um ator também muda os do token protótipo, quando eram iguais."
+  "SDM.SettingsNpcNaturalLightHint": "Um NPC com traço de luz é aceso quando seu token é colocado (requer Luzes de itens). Desligado: acenda à mão."
 }

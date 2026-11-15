@@ -125,11 +125,7 @@ export class SDMCoreRulesSettingsConfig extends GroupBase {
     'npcTokenVariability',
     'npcTokenArchetype',
     'enableNpcExtras',
-    'npcNaturalLight',
-    'importCompendiumPets',
-    'removeDeletedFromCrew',
-    'renameMoneyWithCurrency',
-    'syncPrototypeToken'
+    'npcNaturalLight'
   ];
   static PARTS = {
     config: { template: 'systems/sdm/templates/settings/base-config.hbs' },

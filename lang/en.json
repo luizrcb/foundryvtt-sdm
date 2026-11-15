@@ -2780,13 +2780,5 @@
   "SDM.SettingsEnableNpcExtras": "NPC extras in the generator",
   "SDM.SettingsEnableNpcExtrasHint": "The NPC generator offers rolled extras (special attacks, oddities, powers, possessions). Off: the option is hidden.",
   "SDM.SettingsNpcNaturalLight": "NPCs with natural light enter lit",
-  "SDM.SettingsNpcNaturalLightHint": "An NPC with a light trait is lit when its token is placed (needs Item lights). Off: light it by hand.",
-  "SDM.SettingsImportCompendiumPets": "Import compendium pets",
-  "SDM.SettingsImportCompendiumPetsHint": "A pet item linked to a compendium actor brings its own copy into the Pets folder when it joins an actor (and deleting the item deletes that copy). Off: nothing is imported; import and link pets by hand.",
-  "SDM.SettingsRemoveDeletedFromCrew": "Remove deleted actors from caravan crews",
-  "SDM.SettingsRemoveDeletedFromCrewHint": "Deleting an actor also removes it from every caravan's crew.",
-  "SDM.SettingsRenameMoneyWithCurrency": "Update money when the currency changes",
-  "SDM.SettingsRenameMoneyWithCurrencyHint": "Changing the currency name or image also updates the money items that still had the old name or image.",
-  "SDM.SettingsSyncPrototypeToken": "Token follows the actor's image and name",
-  "SDM.SettingsSyncPrototypeTokenHint": "Changing an actor's image or name also changes its prototype token's, when they were the same."
+  "SDM.SettingsNpcNaturalLightHint": "An NPC with a light trait is lit when its token is placed (needs Item lights). Off: light it by hand."
 }

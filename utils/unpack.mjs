@@ -22,6 +22,8 @@ const packs = [
   { name: 'motive_table', output: `packs-source/${foundryVersion}/motive_table` },
   { name: 'mounts_vehicles', output: `packs-source/${foundryVersion}/mounts_vehicles` },
   { name: 'names_tables', output: `packs-source/${foundryVersion}/names_tables` },
+  { name: 'npc_extras_tables', output: `packs-source/${foundryVersion}/npc_extras_tables` },
+  { name: 'npc_extras', output: `packs-source/${foundryVersion}/npc_extras` },
   { name: 'npc_generator', output: `packs-source/${foundryVersion}/npc_generator` },
   { name: 'player_macros', output: `packs-source/${foundryVersion}/player_macros` },
   { name: 'powers', output: `packs-source/${foundryVersion}/powers` },

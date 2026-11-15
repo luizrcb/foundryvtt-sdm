@@ -87,13 +87,12 @@ async function onPetItemDeleted(item) {
 /** An item that comes linked to a compendium creature joins an actor (or is linked to one there). */
 async function onPetItemChanged(item) {
   if (!isActiveGM() || !isPetItem(item) || !item.parent) return;
-  if (!game.settings.get('sdm', 'importCompendiumPets')) return;
   if (isCompendiumUuid(item.system.pet)) await importPetForItem(item);
 }
 
 /** The Referee may have been away: bring in the pets still pointing at the compendium. */
 async function importWaitingPets() {
-  if (!isActiveGM() || !game.settings.get('sdm', 'importCompendiumPets')) return;
+  if (!isActiveGM()) return;
   for (const actor of game.actors) {
     for (const item of actor.items) {
       if (isPetItem(item) && isCompendiumUuid(item.system.pet)) await importPetForItem(item);
@@ -107,7 +106,7 @@ async function importWaitingPets() {
 
 /** A deleted actor leaves every caravan's crew. */
 async function onActorDeleted(actor) {
-  if (!isActiveGM() || !game.settings.get('sdm', 'removeDeletedFromCrew')) return;
+  if (!isActiveGM()) return;
   for (const caravan of game.actors) {
     if (caravan.type !== ActorType.CARAVAN) continue;
     const keys = Object.entries(caravan.system.crew ?? {})

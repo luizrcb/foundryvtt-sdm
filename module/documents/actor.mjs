@@ -130,9 +130,7 @@ export class SdmActor extends Actor {
     // (a token art or a token name set on purpose is left alone)
     const proto = this.prototypeToken;
     const { getProperty, setProperty } = foundry.utils;
-    const syncToken = game.settings.get('sdm', 'syncPrototypeToken');
     if (
-      syncToken &&
       changes.img !== undefined &&
       changes.img !== this.img &&
       proto?.texture?.src === this.img &&
@@ -141,7 +139,6 @@ export class SdmActor extends Actor {
       setProperty(changes, 'prototypeToken.texture.src', changes.img);
     }
     if (
-      syncToken &&
       changes.name !== undefined &&
       changes.name !== this.name &&
       proto?.name === this.name &&

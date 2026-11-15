@@ -634,11 +634,7 @@ export function registerSystemSettings() {
   // Automations that can each be turned off (Optional Automations)
   for (const [key, label] of [
     ['enableNpcExtras', 'SDM.SettingsEnableNpcExtras'],
-    ['npcNaturalLight', 'SDM.SettingsNpcNaturalLight'],
-    ['importCompendiumPets', 'SDM.SettingsImportCompendiumPets'],
-    ['removeDeletedFromCrew', 'SDM.SettingsRemoveDeletedFromCrew'],
-    ['renameMoneyWithCurrency', 'SDM.SettingsRenameMoneyWithCurrency'],
-    ['syncPrototypeToken', 'SDM.SettingsSyncPrototypeToken']
+    ['npcNaturalLight', 'SDM.SettingsNpcNaturalLight']
   ]) {
     game.settings.register('sdm', key, {
       name: label,

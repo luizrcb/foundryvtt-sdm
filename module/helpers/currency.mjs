@@ -33,7 +33,7 @@ export async function onCurrencyChanged() {
   previous = { name, img };
   if (game.users.activeGM?.id !== game.user.id) return;
 
-  if (old && (old.name !== name || old.img !== img) && game.settings.get('sdm', 'renameMoneyWithCurrency')) {
+  if (old && (old.name !== name || old.img !== img)) {
     const changes = item => ({
       ...(old.name !== name && item.name === old.name && { name }),
       ...(old.img !== img && item.img === old.img && { img })
