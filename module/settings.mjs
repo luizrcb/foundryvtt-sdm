@@ -1830,6 +1830,42 @@ export function setupInitialSettings() {
 }
 
 /**
+ * While a preview rolls, keep the Dice So Nice board above every window: clicking a window brings it
+ * to the front, which would otherwise hide the dice. Back to normal once the dice are hidden again.
+ * Returns the function that releases it (several previews in a row share one raise).
+ */
+let diceBoardRaises = 0;
+let diceBoardZ = null;
+function raiseDiceBoard() {
+  const board =
+    document.getElementById('dice-box-canvas') ??
+    (game.dice3d?.canvas instanceof HTMLElement ? game.dice3d.canvas : game.dice3d?.canvas?.[0]);
+  if (!board) return () => {};
+  if (diceBoardRaises++ === 0) {
+    diceBoardZ = board.style.zIndex;
+    const windows = document.querySelectorAll('.application, .app, .window-app');
+    const top = Math.max(0, ...Array.from(windows, el => parseInt(getComputedStyle(el).zIndex, 10) || 0));
+    // Room for the clicks that bring windows forward meanwhile
+    board.style.zIndex = String(top + 1000);
+  }
+  let released = false;
+  return () => {
+    if (released) return;
+    released = true;
+    // The dice stay on screen a moment after the roll ends (Dice So Nice "time before hide")
+    let hideDelay = 2000;
+    try {
+      hideDelay = Number(game.settings.get('dice-so-nice', 'timeBeforeHide')) || hideDelay;
+    } catch {
+      /* setting not available */
+    }
+    setTimeout(() => {
+      if (--diceBoardRaises === 0) board.style.zIndex = diceBoardZ ?? '';
+    }, hideDelay + 1500);
+  };
+}
+
+/**
  * Client settings (the system's menu and Foundry's window): a swatch of the chosen accent colour, and (with Dice So Nice) a button next to each
  * dice colour list (chromatype, Dice So Nice chromatype, hero, blood, tourist, oracle) that rolls a d20
  * and a d6 in the chosen theme, only on this screen (no chat), before saving.
@@ -1868,7 +1904,12 @@ export function addChromatypePreview(app, html) {
       const theme = themeOf();
       if (!theme) return;
       const roll = await new Roll(dice.map(die => `${die}[${theme}]`).join(' + ')).evaluate();
-      await game.dice3d.showForRoll(roll);
+      const release = raiseDiceBoard();
+      try {
+        await game.dice3d.showForRoll(roll);
+      } finally {
+        release();
+      }
     });
     (select.nextElementSibling?.classList.contains('sdm-chromatype-swatch') ? select.nextElementSibling : select).after(button);
   };
