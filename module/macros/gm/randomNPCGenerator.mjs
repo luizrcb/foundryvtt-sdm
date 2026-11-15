@@ -47,6 +47,7 @@ export async function randomNPCGenerator() {
       ${Object.keys(ARCHETYPES).map(key => `<option value="${key}">${t(`SDM.NpcProfile.Archetype.${key}`)}</option>`).join('')}
     </select>
   </div>
+  <p class="hint" id="npc-profile-desc"></p>
   <p class="hint">${t('SDM.NpcProfile.GeneratorHint')}</p>`;
 
   // Rolled extras: special attacks, oddities and powers from the NPC extras tables
@@ -128,6 +129,21 @@ export async function randomNPCGenerator() {
           const val = ev.target.value;
           description.innerHTML = tableDescriptions[val] ?? '';
         });
+      }
+
+      // What the selected variability and archetype mean
+      const variability = html.querySelector('select[name="variability"]');
+      const archetype = html.querySelector('select[name="archetype"]');
+      const profileDesc = html.querySelector('#npc-profile-desc');
+      if (variability && archetype && profileDesc) {
+        const explain = () => {
+          const parts = [t(`SDM.NpcProfile.VariabilityHint.${variability.value}`)];
+          parts.push(t(`SDM.NpcProfile.ArchetypeHint.${archetype.value || 'none'}`));
+          profileDesc.textContent = parts.join(' ');
+        };
+        variability.addEventListener('change', explain);
+        archetype.addEventListener('change', explain);
+        explain();
       }
     }
   });

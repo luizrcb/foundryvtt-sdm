@@ -2778,5 +2778,16 @@
   "SDM.SettingsEnableNpcExtras": "Extras de NPC no gerador",
   "SDM.SettingsEnableNpcExtrasHint": "O gerador de NPCs oferece extras sorteados (ataques especiais, peculiaridades, poderes, posses). Desligado: a opção fica escondida.",
   "SDM.SettingsNpcNaturalLight": "NPCs com luz natural entram acesos",
-  "SDM.SettingsNpcNaturalLightHint": "Um NPC com traço de luz é aceso quando seu token é colocado (requer Luzes de itens). Desligado: acenda à mão."
+  "SDM.SettingsNpcNaturalLightHint": "Um NPC com traço de luz é aceso quando seu token é colocado (requer Luzes de itens). Desligado: acenda à mão.",
+  "SDM.NpcProfile.VariabilityHint.none": "Variabilidade nenhuma: os valores da tabela.",
+  "SDM.NpcProfile.VariabilityHint.low": "Variabilidade baixa: vida ±10%, defesa, bônus e moral de −1 a +1.",
+  "SDM.NpcProfile.VariabilityHint.high": "Variabilidade alta: vida ±25%, defesa, bônus e moral de −2 a +2, dado de dano um degrau acima ou abaixo.",
+  "SDM.NpcProfile.ArchetypeHint.none": "Sem arquétipo.",
+  "SDM.NpcProfile.ArchetypeHint.random": "Arquétipo: um deles, sorteado.",
+  "SDM.NpcProfile.ArchetypeHint.brute": "Brutamonte: +25% de vida, −1 de defesa, dado de dano um degrau acima.",
+  "SDM.NpcProfile.ArchetypeHint.agile": "Ágil: +2 de defesa, −15% de vida.",
+  "SDM.NpcProfile.ArchetypeHint.elite": "Elite: +20% de vida, +1 de defesa, bônus e moral.",
+  "SDM.NpcProfile.ArchetypeHint.weak": "Fraco: −25% de vida, −1 de defesa, bônus e moral.",
+  "SDM.NpcProfile.ArchetypeHint.coward": "Covarde: −3 de moral.",
+  "SDM.NpcProfile.ArchetypeHint.fearless": "Destemido: +3 de moral."
 }

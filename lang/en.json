@@ -2778,5 +2778,16 @@
   "SDM.SettingsEnableNpcExtras": "NPC extras in the generator",
   "SDM.SettingsEnableNpcExtrasHint": "The NPC generator offers rolled extras (special attacks, oddities, powers, possessions). Off: the option is hidden.",
   "SDM.SettingsNpcNaturalLight": "NPCs with natural light enter lit",
-  "SDM.SettingsNpcNaturalLightHint": "An NPC with a light trait is lit when its token is placed (needs Item lights). Off: light it by hand."
+  "SDM.SettingsNpcNaturalLightHint": "An NPC with a light trait is lit when its token is placed (needs Item lights). Off: light it by hand.",
+  "SDM.NpcProfile.VariabilityHint.none": "Variability none: the table's values.",
+  "SDM.NpcProfile.VariabilityHint.low": "Variability low: life ±10%, defense, bonus and morale −1 to +1.",
+  "SDM.NpcProfile.VariabilityHint.high": "Variability high: life ±25%, defense, bonus and morale −2 to +2, damage die one step up or down.",
+  "SDM.NpcProfile.ArchetypeHint.none": "No archetype.",
+  "SDM.NpcProfile.ArchetypeHint.random": "Archetype: one of them at random.",
+  "SDM.NpcProfile.ArchetypeHint.brute": "Brute: +25% life, −1 defense, damage die one step up.",
+  "SDM.NpcProfile.ArchetypeHint.agile": "Agile: +2 defense, −15% life.",
+  "SDM.NpcProfile.ArchetypeHint.elite": "Elite: +20% life, +1 defense, bonus and morale.",
+  "SDM.NpcProfile.ArchetypeHint.weak": "Weak: −25% life, −1 defense, bonus and morale.",
+  "SDM.NpcProfile.ArchetypeHint.coward": "Coward: −3 morale.",
+  "SDM.NpcProfile.ArchetypeHint.fearless": "Fearless: +3 morale."
 }
