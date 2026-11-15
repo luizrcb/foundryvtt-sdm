@@ -2727,5 +2727,6 @@
   "TYPES.Item.ward": "Égide",
   "TYPES.Item.weapon": "Arma",
   "SDM.RollPreview.Rolls": "Rola",
-  "SDM.RollPreview.NoRoll": "Sem rolagem: o poder vai para o chat"
+  "SDM.RollPreview.NoRoll": "Sem rolagem: o poder vai para o chat",
+  "SDM.ChromatypePreview": "Rolar um d20 e um d6 nesta cor (só você vê)"
 }

@@ -2727,5 +2727,6 @@
   "TYPES.Item.ward": "Ward",
   "TYPES.Item.weapon": "Weapon",
   "SDM.RollPreview.Rolls": "Rolls",
-  "SDM.RollPreview.NoRoll": "No roll: the power goes to chat"
+  "SDM.RollPreview.NoRoll": "No roll: the power goes to chat",
+  "SDM.ChromatypePreview": "Roll a d20 and a d6 in this colour (only you see them)"
 }

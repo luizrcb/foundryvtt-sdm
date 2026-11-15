@@ -2442,6 +2442,21 @@ input[type=radio]::after {
   word-break: break-word;
 }
 
+.sdm-chromatype-swatch {
+  flex: 0 0 1.4em;
+  width: 1.4em;
+  height: 1.4em;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+}
+
+button.sdm-chromatype-dice {
+  flex: 0 0 auto;
+  width: auto;
+  padding: 0 6px;
+  line-height: 1.6em;
+}
+
 .grid,
 .grid-2col {
   display: grid;

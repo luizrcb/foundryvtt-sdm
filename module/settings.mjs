@@ -973,6 +973,264 @@ export function sortChromatypeChoices() {
   }
 }
 
+/** Chromatype colours: interface accent (hex / rgb) and their Dice So Nice theme (sdm-<colour>). */
+export const CHROMATYPE_COLORS = {
+  aqua: {
+    hex: '#07cfcfd0',
+    rgb: 'rgba(0, 255, 255, 0.2)',
+    dice: {
+      foreground: '#301B3F',
+      background: '#07cfcfe0',
+      edge: '#301B3F'
+    }
+  },
+  red: {
+    hex: '#E25C65',
+    rgb: 'rgba(226, 92, 101, 0.2)',
+    dice: {
+      foreground: '#177a74ff',
+      background: '#E25C65'
+    }
+  },
+  orange: {
+    hex: '#EC843D',
+    rgb: 'rgba(236, 132, 61, 0.2)',
+    dice: {
+      foreground: '#0075DB',
+      background: '#EC843D'
+    }
+  },
+  yellow: {
+    hex: '#D5CC63',
+    rgb: 'rgba(213, 204, 99, 0.3)',
+    dice: {
+      foreground: '#48C5C7',
+      background: '#D5CC63'
+    }
+  },
+  green: {
+    hex: '#688B75',
+    rgb: 'rgba(104, 139, 117, 0.3)',
+    dice: {
+      foreground: '#463629',
+      background: '#688B75'
+    }
+  },
+  blue: {
+    hex: '#497DAD',
+    rgb: 'rgba(73, 125, 173, 0.25)',
+    dice: {
+      foreground: '#D27F23',
+      background: '#497DAD'
+    }
+  },
+  purple: {
+    hex: '#785DAA',
+    rgb: 'rgba(120, 93, 170, 0.2)',
+    dice: {
+      foreground: '#8faa5d',
+      background: '#785DAA'
+    }
+  },
+  violet: {
+    hex: '#B10FD4',
+    rgb: 'rgba(177, 15, 212, 0.2)',
+    dice: {
+      foreground: '#000000',
+      background: '#B10FD4',
+      edge: '#000000'
+    }
+  },
+  pink: {
+    hex: '#CF6188',
+    rgb: 'rgba(207, 97, 136, 0.2)',
+    dice: {
+      foreground: '#362e63ff',
+      background: '#CF6188',
+      edge: '#362e63ff'
+    }
+  },
+  ultraviolet: {
+    hex: '#7A00FF',
+    rgb: 'rgba(122, 0, 255, 0.2)',
+    dice: {
+      foreground: '#E5CCFF',
+      background: '#7A00FF',
+      edge: '#E5CCFF'
+    }
+  },
+  teal: {
+    hex: '#00817F',
+    rgb: 'rgba(0, 129, 127, 0.15)',
+    dice: {
+      foreground: '#FFFF99',
+      background: '#00817F'
+    }
+  },
+  brown: {
+    hex: '#8b4513',
+    rgb: 'rgba(139, 69, 19, 0.1)',
+    dice: {
+      foreground: '#3098E3',
+      background: '#8b4513',
+      edge: '#3098E3'
+    }
+  },
+  black: {
+    hex: '#000000',
+    rgb: 'rgba(0, 0, 0, 0.25)',
+    dice: {
+      foreground: '#f0f0f0ff',
+      background: '#000000',
+      edge: '#f0f0f0ff'
+    }
+  },
+  white: {
+    hex: 'rgba(255, 255, 255, 0.5)',
+    rgb: 'rgba(255, 255, 255, 0.5)',
+    dice: {
+      foreground: '#462A8F',
+      background: '#ffffff8c',
+      edge: '#462A8F'
+    }
+  },
+  gold: {
+    hex: '#AD8C3F',
+    rgb: 'rgba(173, 140, 63, 0.2)',
+    dice: {
+      foreground: '#0E245A',
+      background: '#AD8C3F',
+      edge: '#0E245A'
+    }
+  },
+  silver: {
+    hex: '#6e6e6e',
+    rgb: 'rgba(192, 192, 192, 0.15)',
+    dice: {
+      foreground: '#f8f8f8ff',
+      background: '#6e6e6e',
+      edge: '#f8f8f8ff'
+    }
+  },
+  crimson: {
+    hex: '#660000',
+    rgb: 'rgba(153, 0, 0, 0.15)',
+    dice: {
+      foreground: '#CFFCF7',
+      background: '#660000',
+      edge: '#CFFCF7'
+    }
+  },
+  emerald: {
+    hex: '#1e7d43',
+    rgb: 'rgba(80, 200, 120, 0.15)',
+    dice: {
+      foreground: '#FADADD',
+      background: '#1e7d43',
+      edge: '#FADADD'
+    }
+  },
+  olive: {
+    hex: '#4a4a00',
+    rgb: 'rgba(128, 128, 0, 0.15)',
+    dice: {
+      foreground: '#EAF0B1',
+      background: '#4a4a00',
+      edge: '#EAF0B1'
+    }
+  },
+  lime: {
+    hex: '#39FF14',
+    rgb: 'rgba(57, 255, 20, 0.2)',
+    dice: {
+      foreground: '#462A8F',
+      background: '#39FF14',
+      edge: '#462A8F'
+    }
+  },
+  neonPurple: {
+    hex: '#FF02FF',
+    rgb: 'rgba(255, 2, 255, 0.3)',
+    dice: {
+      foreground: '#000000',
+      background: '#FF02FF',
+      edge: '#000000'
+    }
+  },
+  neonYellow: {
+    hex: '#FFFF33',
+    rgb: 'rgba(255, 255, 51, 0.3)',
+    dice: {
+      foreground: '#202040',
+      background: '#FFFF33',
+      edge: '#202040'
+    }
+  },
+  neonRose: {
+    hex: '#FF007F',
+    rgb: 'rgba(255, 0, 127, 0.25)',
+    dice: {
+      foreground: '#000000',
+      background: '#FF007F',
+      edge: '#000000'
+    }
+  },
+  mint: {
+    hex: '#3FFFBF',
+    rgb: 'rgba(63, 255, 191, 0.25)',
+    dice: {
+      foreground: '#102020',
+      background: '#3FFFBF',
+      edge: '#102020'
+    }
+  },
+  electricBlue: {
+    hex: '#00BFFF',
+    rgb: 'rgba(0, 191, 255, 0.25)',
+    dice: {
+      foreground: '#101010',
+      background: '#00BFFF',
+      edge: '#101010'
+    }
+  },
+  tangerine: {
+    hex: '#FF7E00',
+    rgb: 'rgba(255, 126, 0, 0.25)',
+    dice: {
+      foreground: '#002244',
+      background: '#FF7E00',
+      edge: '#002244'
+    }
+  },
+  ice: {
+    hex: '#AFFFFF',
+    rgb: 'rgba(175, 255, 255, 0.25)',
+    dice: {
+      foreground: '#003344',
+      background: '#AFFFFF',
+      edge: '#003344'
+    }
+  },
+  sky: {
+    hex: '#87CEFA',
+    rgb: 'rgba(135, 206, 250, 0.25)',
+    dice: {
+      foreground: '#103050',
+      background: '#87CEFA',
+      edge: '#103050'
+    }
+  },
+  roseGold: {
+    hex: '#B76E79',
+    rgb: 'rgba(183, 110, 121, 0.25)',
+    dice: {
+      foreground: '#2C0E10',
+      background: '#B76E79',
+      edge: '#2C0E10'
+    }
+  }
+};
+
 export function configurePlayerChromatype() {
   const color = game.settings.get('sdm', 'chromatype');
   const dsnColor = game.settings.get('sdm', 'diceSoNiceChromatype');
@@ -993,262 +1251,7 @@ export function configurePlayerChromatype() {
     d100: 0.6
   };
 
-  const colorMapping = {
-    aqua: {
-      hex: '#07cfcfd0',
-      rgb: 'rgba(0, 255, 255, 0.2)',
-      dice: {
-        foreground: '#301B3F',
-        background: '#07cfcfe0',
-        edge: '#301B3F'
-      }
-    },
-    red: {
-      hex: '#E25C65',
-      rgb: 'rgba(226, 92, 101, 0.2)',
-      dice: {
-        foreground: '#177a74ff',
-        background: '#E25C65'
-      }
-    },
-    orange: {
-      hex: '#EC843D',
-      rgb: 'rgba(236, 132, 61, 0.2)',
-      dice: {
-        foreground: '#0075DB',
-        background: '#EC843D'
-      }
-    },
-    yellow: {
-      hex: '#D5CC63',
-      rgb: 'rgba(213, 204, 99, 0.3)',
-      dice: {
-        foreground: '#48C5C7',
-        background: '#D5CC63'
-      }
-    },
-    green: {
-      hex: '#688B75',
-      rgb: 'rgba(104, 139, 117, 0.3)',
-      dice: {
-        foreground: '#463629',
-        background: '#688B75'
-      }
-    },
-    blue: {
-      hex: '#497DAD',
-      rgb: 'rgba(73, 125, 173, 0.25)',
-      dice: {
-        foreground: '#D27F23',
-        background: '#497DAD'
-      }
-    },
-    purple: {
-      hex: '#785DAA',
-      rgb: 'rgba(120, 93, 170, 0.2)',
-      dice: {
-        foreground: '#8faa5d',
-        background: '#785DAA'
-      }
-    },
-    violet: {
-      hex: '#B10FD4',
-      rgb: 'rgba(177, 15, 212, 0.2)',
-      dice: {
-        foreground: '#000000',
-        background: '#B10FD4',
-        edge: '#000000'
-      }
-    },
-    pink: {
-      hex: '#CF6188',
-      rgb: 'rgba(207, 97, 136, 0.2)',
-      dice: {
-        foreground: '#362e63ff',
-        background: '#CF6188',
-        edge: '#362e63ff'
-      }
-    },
-    ultraviolet: {
-      hex: '#7A00FF',
-      rgb: 'rgba(122, 0, 255, 0.2)',
-      dice: {
-        foreground: '#E5CCFF',
-        background: '#7A00FF',
-        edge: '#E5CCFF'
-      }
-    },
-    teal: {
-      hex: '#00817F',
-      rgb: 'rgba(0, 129, 127, 0.15)',
-      dice: {
-        foreground: '#FFFF99',
-        background: '#00817F'
-      }
-    },
-    brown: {
-      hex: '#8b4513',
-      rgb: 'rgba(139, 69, 19, 0.1)',
-      dice: {
-        foreground: '#3098E3',
-        background: '#8b4513',
-        edge: '#3098E3'
-      }
-    },
-    black: {
-      hex: '#000000',
-      rgb: 'rgba(0, 0, 0, 0.25)',
-      dice: {
-        foreground: '#f0f0f0ff',
-        background: '#000000',
-        edge: '#f0f0f0ff'
-      }
-    },
-    white: {
-      hex: 'rgba(255, 255, 255, 0.5)',
-      rgb: 'rgba(255, 255, 255, 0.5)',
-      dice: {
-        foreground: '#462A8F',
-        background: '#ffffff8c',
-        edge: '#462A8F'
-      }
-    },
-    gold: {
-      hex: '#AD8C3F',
-      rgb: 'rgba(173, 140, 63, 0.2)',
-      dice: {
-        foreground: '#0E245A',
-        background: '#AD8C3F',
-        edge: '#0E245A'
-      }
-    },
-    silver: {
-      hex: '#6e6e6e',
-      rgb: 'rgba(192, 192, 192, 0.15)',
-      dice: {
-        foreground: '#f8f8f8ff',
-        background: '#6e6e6e',
-        edge: '#f8f8f8ff'
-      }
-    },
-    crimson: {
-      hex: '#660000',
-      rgb: 'rgba(153, 0, 0, 0.15)',
-      dice: {
-        foreground: '#CFFCF7',
-        background: '#660000',
-        edge: '#CFFCF7'
-      }
-    },
-    emerald: {
-      hex: '#1e7d43',
-      rgb: 'rgba(80, 200, 120, 0.15)',
-      dice: {
-        foreground: '#FADADD',
-        background: '#1e7d43',
-        edge: '#FADADD'
-      }
-    },
-    olive: {
-      hex: '#4a4a00',
-      rgb: 'rgba(128, 128, 0, 0.15)',
-      dice: {
-        foreground: '#EAF0B1',
-        background: '#4a4a00',
-        edge: '#EAF0B1'
-      }
-    },
-    lime: {
-      hex: '#39FF14',
-      rgb: 'rgba(57, 255, 20, 0.2)',
-      dice: {
-        foreground: '#462A8F',
-        background: '#39FF14',
-        edge: '#462A8F'
-      }
-    },
-    neonPurple: {
-      hex: '#FF02FF',
-      rgb: 'rgba(255, 2, 255, 0.3)',
-      dice: {
-        foreground: '#000000',
-        background: '#FF02FF',
-        edge: '#000000'
-      }
-    },
-    neonYellow: {
-      hex: '#FFFF33',
-      rgb: 'rgba(255, 255, 51, 0.3)',
-      dice: {
-        foreground: '#202040',
-        background: '#FFFF33',
-        edge: '#202040'
-      }
-    },
-    neonRose: {
-      hex: '#FF007F',
-      rgb: 'rgba(255, 0, 127, 0.25)',
-      dice: {
-        foreground: '#000000',
-        background: '#FF007F',
-        edge: '#000000'
-      }
-    },
-    mint: {
-      hex: '#3FFFBF',
-      rgb: 'rgba(63, 255, 191, 0.25)',
-      dice: {
-        foreground: '#102020',
-        background: '#3FFFBF',
-        edge: '#102020'
-      }
-    },
-    electricBlue: {
-      hex: '#00BFFF',
-      rgb: 'rgba(0, 191, 255, 0.25)',
-      dice: {
-        foreground: '#101010',
-        background: '#00BFFF',
-        edge: '#101010'
-      }
-    },
-    tangerine: {
-      hex: '#FF7E00',
-      rgb: 'rgba(255, 126, 0, 0.25)',
-      dice: {
-        foreground: '#002244',
-        background: '#FF7E00',
-        edge: '#002244'
-      }
-    },
-    ice: {
-      hex: '#AFFFFF',
-      rgb: 'rgba(175, 255, 255, 0.25)',
-      dice: {
-        foreground: '#003344',
-        background: '#AFFFFF',
-        edge: '#003344'
-      }
-    },
-    sky: {
-      hex: '#87CEFA',
-      rgb: 'rgba(135, 206, 250, 0.25)',
-      dice: {
-        foreground: '#103050',
-        background: '#87CEFA',
-        edge: '#103050'
-      }
-    },
-    roseGold: {
-      hex: '#B76E79',
-      rgb: 'rgba(183, 110, 121, 0.25)',
-      dice: {
-        foreground: '#2C0E10',
-        background: '#B76E79',
-        edge: '#2C0E10'
-      }
-    }
-  };
+  const colorMapping = CHROMATYPE_COLORS;
 
   const selectedColor = colorMapping[color];
   const dice3DColor = colorMapping[dsnFinalColor].dice;
@@ -1786,4 +1789,42 @@ export function setupInitialSettings() {
   game.settings.set('core', 'tokenAutoRotate', false);
 
   game.settings.set('sdm', 'initialSettingsConfigured', true);
+}
+
+/**
+ * Client settings: a swatch of the chosen accent colour, and (with Dice So Nice) a button that rolls a
+ * d20 and a d6 in the chosen colour's dice theme, only on this screen (no chat), before saving.
+ */
+export function addChromatypePreview(app, html) {
+  const root = html instanceof HTMLElement ? html : html?.[0];
+  const accent = root?.querySelector('select[name="sdm.chromatype"]');
+  if (!accent) return;
+  const dsnSelect = root.querySelector('select[name="sdm.diceSoNiceChromatype"]');
+
+  const swatch = document.createElement('span');
+  swatch.className = 'sdm-chromatype-swatch';
+  const paint = () => (swatch.style.background = CHROMATYPE_COLORS[accent.value]?.hex ?? 'transparent');
+  paint();
+  accent.addEventListener('change', paint);
+  accent.after(swatch);
+
+  if (!game.dice3d) return;
+  const addDiceButton = (select, colorOf) => {
+    const button = document.createElement('button');
+    button.type = 'button';
+    button.className = 'sdm-chromatype-dice';
+    button.dataset.tooltip = game.i18n.localize('SDM.ChromatypePreview');
+    button.setAttribute('aria-label', game.i18n.localize('SDM.ChromatypePreview'));
+    button.innerHTML = '<i class="fa-solid fa-dice-d20"></i>';
+    button.addEventListener('click', async event => {
+      event.preventDefault();
+      const color = colorOf();
+      if (!CHROMATYPE_COLORS[color]) return;
+      const roll = await new Roll(`1d20[sdm-${color}] + 1d6[sdm-${color}]`).evaluate();
+      await game.dice3d.showForRoll(roll);
+    });
+    (select.nextElementSibling?.classList.contains('sdm-chromatype-swatch') ? select.nextElementSibling : select).after(button);
+  };
+  addDiceButton(accent, () => accent.value);
+  if (dsnSelect) addDiceButton(dsnSelect, () => (dsnSelect.value === 'same' ? accent.value : dsnSelect.value));
 }
