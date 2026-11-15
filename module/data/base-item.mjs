@@ -11,6 +11,10 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
   static migrateData(source) {
     // Animation damage source: the automatic option used to be stored as a blank string
     if (source?.animation && !source.animation.damageSource) source.animation.damageSource = 'auto';
+    // Triggers: "reaches its maximum" merged into "is full"
+    if (Array.isArray(source?.triggers)) {
+      for (const trigger of source.triggers) if (trigger?.condition === 'counterMax') trigger.condition = 'full';
+    }
     return super.migrateData(source);
   }
 

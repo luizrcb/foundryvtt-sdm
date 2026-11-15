@@ -55,6 +55,37 @@ function powerToItemData(power) {
   };
 }
 
+
+const O = 'SDM.Trigger.Option.';
+const D20_CONDITIONS = ['natural', 'naturalAtLeast', 'naturalAtMost', 'total', 'totalAtLeast', 'totalAtMost', 'success', 'failure'];
+const TRIGGER_CONDITIONS_BY_ROLL = {
+  attack: D20_CONDITIONS,
+  save: D20_CONDITIONS,
+  ability: D20_CONDITIONS,
+  defeat: D20_CONDITIONS,
+  damage: ['total', 'totalAtLeast', 'totalAtMost', 'die', 'max', 'min', 'matching'],
+  power: ['total', 'totalAtLeast', 'totalAtMost', 'die', 'max', 'min', 'matching'],
+  usage: ['total', 'totalAtLeast', 'totalAtMost', 'runningLow', 'runOut'],
+  counter: ['total', 'totalAtLeast', 'totalAtMost', 'increases', 'decreases', 'changes', 'full', 'empty'],
+  charges: ['total', 'totalAtLeast', 'totalAtMost', 'increases', 'decreases', 'changes', 'full', 'empty']
+};
+
+/** The condition choices of one trigger: those of its roll (plus its current one, if it is not among them). */
+function triggerConditionChoices(trigger) {
+  const roll = trigger.roll;
+  const tracked = roll === 'counter' || roll === 'charges';
+  const label = condition => {
+    if (condition === 'counterMax') return `${O}full`;
+    if (!condition.startsWith('total')) return `${O}${condition}`;
+    if (tracked) return `${O}${condition.replace('total', 'value')}`;
+    if (roll === 'usage') return `${O}${condition.replace('total', 'result')}`;
+    return `${O}${condition}`;
+  };
+  const list = [...(TRIGGER_CONDITIONS_BY_ROLL[roll] ?? D20_CONDITIONS)];
+  if (trigger.condition && !list.includes(trigger.condition)) list.push(trigger.condition);
+  return Object.fromEntries(list.map(condition => [condition, label(condition)]));
+}
+
 export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemSheetV2) {
   constructor(options = {}) {
     super(options);
@@ -351,28 +382,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
         fantascience: 'SDM.AttackFantascience',
         oldtech: 'SDM.AttackOldtech'
       },
-      triggerConditions: {
-        natural: 'SDM.Trigger.Option.natural',
-        naturalAtLeast: 'SDM.Trigger.Option.naturalAtLeast',
-        naturalAtMost: 'SDM.Trigger.Option.naturalAtMost',
-        total: 'SDM.Trigger.Option.total',
-        totalAtLeast: 'SDM.Trigger.Option.totalAtLeast',
-        totalAtMost: 'SDM.Trigger.Option.totalAtMost',
-        die: 'SDM.Trigger.Option.die',
-        max: 'SDM.Trigger.Option.max',
-        min: 'SDM.Trigger.Option.min',
-        matching: 'SDM.Trigger.Option.matching',
-        success: 'SDM.Trigger.Option.success',
-        failure: 'SDM.Trigger.Option.failure',
-        counterMax: 'SDM.Trigger.Option.counterMax',
-        runningLow: 'SDM.Trigger.Option.runningLow',
-        runOut: 'SDM.Trigger.Option.runOut',
-        changes: 'SDM.Trigger.Option.changes',
-        increases: 'SDM.Trigger.Option.increases',
-        decreases: 'SDM.Trigger.Option.decreases',
-        full: 'SDM.Trigger.Option.full',
-        empty: 'SDM.Trigger.Option.empty'
-      },
+      // Each trigger lists only the conditions that fit its roll
+      triggerConditionChoices: (this.item.system.triggers ?? []).map(trigger => triggerConditionChoices(trigger)),
       triggerWear: {
         '': 'SDM.Trigger.WearNone',
         notch: 'SDM.Trigger.Wear.notch',

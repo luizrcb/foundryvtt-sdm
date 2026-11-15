@@ -69,7 +69,7 @@
       {{else}}
       <input type="hidden" name="system.triggers.{{index}}.power" value="{{trigger.power}}" />
       {{/if}}
-      <select name="system.triggers.{{index}}.condition">{{selectOptions @root.triggerConditions selected=trigger.condition localize=true}}</select>
+      <select name="system.triggers.{{index}}.condition">{{selectOptions (lookup @root.triggerConditionChoices index) selected=trigger.condition localize=true}}</select>
       {{#if (or (eq trigger.condition 'max') (eq trigger.condition 'min') (eq trigger.condition 'matching') (eq trigger.condition 'runningLow') (eq trigger.condition 'runOut') (eq trigger.condition 'success') (eq trigger.condition 'failure') (eq trigger.condition 'counterMax') (eq trigger.condition 'changes') (eq trigger.condition 'increases') (eq trigger.condition 'decreases') (eq trigger.condition 'full') (eq trigger.condition 'empty'))}}
       <input type="hidden" name="system.triggers.{{index}}.value" value="{{trigger.value}}" data-dtype="Number" />
       {{else}}
@@ -79,6 +79,11 @@
       <label class="sdm-trigger-check" data-tooltip="{{localize 'SDM.Trigger.ByChangeHint'}}"><input type="checkbox" name="system.triggers.{{index}}.by_change" {{checked trigger.by_change}} /> {{localize 'SDM.Trigger.ByChange'}}</label>
       {{else}}
       <input type="hidden" name="system.triggers.{{index}}.by_change" value="{{trigger.by_change}}" data-dtype="Boolean" />
+      {{/if}}
+      {{#if (and (or (eq trigger.roll 'counter') (eq trigger.roll 'charges')) (or (eq trigger.condition 'totalAtLeast') (eq trigger.condition 'totalAtMost')))}}
+      <label class="sdm-trigger-check" data-tooltip="{{localize 'SDM.Trigger.OnceHint'}}"><input type="checkbox" name="system.triggers.{{index}}.once" {{checked trigger.once}} /> {{localize 'SDM.Trigger.Once'}}</label>
+      {{else}}
+      <input type="hidden" name="system.triggers.{{index}}.once" value="{{trigger.once}}" data-dtype="Boolean" />
       {{/if}}
       <input class="sdm-counter-label" type="text" name="system.triggers.{{index}}.text" value="{{trigger.text}}" placeholder="{{localize 'SDM.Trigger.TextPlaceholder'}}" />
       {{#if @root.editable}}<a data-action="removeTrigger" data-index="{{index}}" data-tooltip="{{localize 'SDM.Trigger.Remove'}}"><i class="fa-solid fa-trash"></i></a>{{/if}}

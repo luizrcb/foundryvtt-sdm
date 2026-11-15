@@ -51,6 +51,7 @@ export function defineTriggersField() {
           'matching',
           'success',
           'failure',
+          // Legacy: migrated to 'full'
           'counterMax',
           'runningLow',
           'runOut',
@@ -85,6 +86,8 @@ export function defineTriggersField() {
       counter_scope: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'actor'] }),
       // Counter / charge triggers: add and spend amounts are multiplied by the size of the change
       by_change: new fields.BooleanField({ required: true, initial: false }),
+      // Counter / charge triggers with "≥" or "≤": fire only when the condition becomes true
+      once: new fields.BooleanField({ required: true, initial: false }),
       // add (the step; negative lowers), set (to the step's number) or reset (to the counter's reset value)
       counter_mode: new fields.StringField({ required: true, blank: false, initial: 'add', choices: ['add', 'set', 'reset'] }),
       counter_step: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 1 }),

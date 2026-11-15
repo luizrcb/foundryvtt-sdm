@@ -316,7 +316,12 @@ async function wearItem(item, wear) {
 }
 
 export function describeCondition(trigger, item = null) {
-  const text = $fmt(`SDM.Trigger.Condition.${trigger.condition}`, { value: trigger.value });
+  const condition = trigger.condition === 'counterMax' ? 'full' : trigger.condition;
+  // Counters and charges have a value, usage rolls a result
+  const tracked = trigger.roll === 'counter' || trigger.roll === 'charges';
+  const prefix = condition.startsWith('total') ? (tracked ? 'value' : trigger.roll === 'usage' ? 'result' : '') : '';
+  const key = prefix ? condition.replace('total', prefix) : condition;
+  const text = $fmt(`SDM.Trigger.Condition.${key}`, { value: trigger.value });
   // Counter triggers name the counter: "Kills: total 5+"; charge triggers say "Charges"
   if (trigger.roll === 'counter') {
     const owner = trigger.watch_scope === 'actor' ? item?.actor : item;
@@ -371,22 +376,26 @@ function thresholdMatches(condition, target, value, max) {
 
 /**
  * Does a change of a counter or of charges fire this trigger? Changes / increases / decreases fire on
- * every change; thresholds fire once, when they become true.
+ * every change; "=" when the value lands on the number; "≥" / "≤" on every change while true (or only
+ * when they become true, with "once"); full / empty when they are reached.
  */
 function changeMatches(trigger, before, now, max) {
   if (before === now) return false;
-  switch (trigger.condition) {
+  const condition = trigger.condition === 'counterMax' ? 'full' : trigger.condition;
+  const crossed = () =>
+    !thresholdMatches(condition, trigger.value, before, max) && thresholdMatches(condition, trigger.value, now, max);
+  switch (condition) {
     case 'changes':
       return true;
     case 'increases':
       return now > before;
     case 'decreases':
       return now < before;
+    case 'totalAtLeast':
+    case 'totalAtMost':
+      return trigger.once ? crossed() : thresholdMatches(condition, trigger.value, now, max);
     default:
-      return (
-        !thresholdMatches(trigger.condition, trigger.value, before, max) &&
-        thresholdMatches(trigger.condition, trigger.value, now, max)
-      );
+      return crossed();
   }
 }
 
