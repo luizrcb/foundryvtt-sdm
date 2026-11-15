@@ -62,6 +62,8 @@ import { setupTriggers } from './rolls/triggers.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { setupPetDropSocket } from './items/petItem.mjs';
 import { setupPetLinks } from './items/petLinks.mjs';
+import { setupItemPiles } from './integrations/itemPiles.mjs';
+import { rememberCurrency } from './helpers/currency.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
 import { gm as gmMacros, player as playerMacros } from './macros/_module.mjs';
 import {
@@ -737,6 +739,7 @@ Hooks.once('init', function () {
   setupItemTransferSocket();
   setupPetDropSocket();
   setupPetLinks();
+  setupItemPiles();
   setupSettingsSocket();
   setupGroupCheckSocket();
   setupCaravanTokenControls();
@@ -768,6 +771,8 @@ Hooks.once('ready', function () {
   CompendiumBrowser.preloadCache();
   // client custom color system settings
   configurePlayerChromatype();
+  // The currency's name and image, to update the money in inventories when they change
+  rememberCurrency();
   // "Same as the chromatype" dice styles saved with an old typo
   fixDiceStyleTypo();
 

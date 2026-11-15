@@ -2735,5 +2735,6 @@
   "SDM.Pet.FromCompendium": "Comes with {name}: it is brought into the world when the item joins an actor.",
   "SDM.Pet.Imported": "{name} joined {actor} (Pets folder).",
   "SDM.Pet.Removed": "{name} was removed with {item}.",
-  "SDM.Pet.SourceMissing": "{item}: its pet is no longer in the compendium. Unlink it and drop an actor."
+  "SDM.Pet.SourceMissing": "{item}: its pet is no longer in the compendium. Unlink it and drop an actor.",
+  "SDM.ItemPiles.CompanionNotNeeded": "Item Piles support is now part of the WTF system: the \"Item Piles: WTF\" module is no longer needed. Disable it in Manage Modules (the system takes over)."
 }

@@ -1,3 +1,4 @@
+import { onCurrencyChanged } from './helpers/currency.mjs';
 import { LIGHT_PRESETS, putOutAllLights } from './helpers/lights.mjs';
 import CompendiumBrowser from './app/compendium-browser.mjs';
 import { DEFAULT_CASH_ICON, DiceType } from './helpers/constants.mjs';
@@ -190,7 +191,9 @@ export function registerSystemSettings() {
     scope: 'world', // "world" = GM only, "client" = per user
     restricted: true,
     type: String, // Data type: String, Number, Boolean, etc
-    default: 'cash'
+    default: 'cash',
+    // Money in inventories and Item Piles' currency follow it
+    onChange: () => onCurrencyChanged()
   });
 
   game.settings.register('sdm', 'currencyImage', {
@@ -202,7 +205,9 @@ export function registerSystemSettings() {
       categories: ['IMAGE'],
       default: DEFAULT_CASH_ICON
     }),
-    default: DEFAULT_CASH_ICON
+    default: DEFAULT_CASH_ICON,
+    // Money in inventories and Item Piles' currency follow it
+    onChange: () => onCurrencyChanged()
   });
 
   game.settings.register('sdm', 'currencyWeight', {

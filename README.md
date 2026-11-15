@@ -51,9 +51,10 @@ You can also use one of the following alternative installation methods:
 
 ## Add-on Modules Integration
 
+**Item Piles** works out of the box: the system configures it (currency, loot items, prices and quantities), so the old *Item Piles: WTF* companion module is no longer needed.
+
 The WTF system provides companion add-on modules to integrate with the following:
 
-- **Item Piles**: [Item Piles: WTF](https://github.com/luizrcb/item-piles-sdm)
 - **Token Action HUD**: [Token Action HUD WTF](https://github.com/luizrcb/token-action-hud-sdm)
 - **Calendaria: WTF** [Calendaria: WTF](https://github.com/luizrcb/calendaria-sdm)
 - **Seasons & Stars**: [Seasons & Stars: WTF](https://github.com/luizrcb/seasons-and-stars-sdm)
