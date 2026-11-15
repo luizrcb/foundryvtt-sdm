@@ -49,6 +49,7 @@ import { templatePath } from '../helpers/templates.mjs';
 import { openItemTransferDialog } from '../items/transfer.mjs';
 import { directResourceDiceRoll, healingHeroDice } from '../rolls/hero_dice/index.mjs';
 import SDMRoll, { sanitizeExpression } from '../rolls/sdmRoll.mjs';
+import { rollPreviewRows } from '../helpers/rollPreview.mjs';
 import {
   renderCorruptionResult,
   renderDangerResult,
@@ -1564,6 +1565,29 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     let data = { modifier: '' };
 
+    // The formula rolled for the dialog values (also shown live in the dialog)
+    const formulaFor = values => {
+      const burdenPenalty = this.actor.system.burden_penalty || 0;
+      const burdenPart = burdenPenalty > 0 ? -1 * burdenPenalty : 0;
+      const totalBonuses = burdenPart;
+      const bonusPart =
+        totalBonuses === 0 ? '' : totalBonuses > 0 ? `+${totalBonuses}` : totalBonuses;
+
+      const { modifier = '', rollMode = 'normal' } = values ?? {};
+      const modPart = foundry.dice.Roll.validate(modifier) ? `+${modifier}` : '';
+      const basMoraleFormula = game.settings.get('sdm', 'baseMoraleFormula') || '2d6';
+
+      const keepModifier =
+        rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
+
+      const diceExpression = keepModifier
+        ? `{${basMoraleFormula}, ${basMoraleFormula}}${keepModifier}`
+        : basMoraleFormula;
+
+      const formula = `${diceExpression}${bonusPart}${modPart}`;
+      return sanitizeExpression(formula);
+    };
+
     if (!isShift) {
       data = await DialogV2.wait({
         window: {
@@ -1584,6 +1608,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
             })
           }
         ],
+        rollPreview: values => rollPreviewRows([{ label: $l10n('SDM.RollPreview.Rolls'), formula: formulaFor(values) }]),
         rejectClose: false
       });
     }
@@ -1592,25 +1617,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       return;
     }
 
-    const burdenPenalty = this.actor.system.burden_penalty || 0;
-    const burdenPart = burdenPenalty > 0 ? -1 * burdenPenalty : 0;
-    const totalBonuses = burdenPart;
-    const bonusPart =
-      totalBonuses === 0 ? '' : totalBonuses > 0 ? `+${totalBonuses}` : totalBonuses;
-
-    const { modifier = '', rollMode = 'normal' } = data;
-    const modPart = foundry.dice.Roll.validate(modifier) ? `+${modifier}` : '';
-    const basMoraleFormula = game.settings.get('sdm', 'baseMoraleFormula') || '2d6';
-
-    const keepModifier =
-      rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
-
-    const diceExpression = keepModifier
-      ? `{${basMoraleFormula}, ${basMoraleFormula}}${keepModifier}`
-      : basMoraleFormula;
-
-    const formula = `${diceExpression}${bonusPart}${modPart}`;
-    const sanitizedFormula = sanitizeExpression(formula);
+    const sanitizedFormula = formulaFor(data);
     const targetNumber = this.actor.system.morale || 2;
 
     // Create and evaluate the roll
@@ -1632,6 +1639,34 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const isCtrl = !!event.ctrlKey;
     let data = { modifier: '', selectedAbility: '' };
     const selectedRollMode = this.actor.system.corruption.roll_mode || RollMode.NORMAL;
+
+    // The formula rolled for the dialog values (also shown live in the dialog)
+    const formulaFor = values => {
+      const { modifier = '', rollMode = RollMode.NORMAL } = values ?? {};
+
+      const baseFormula = game.settings.get('sdm', 'baseCorruptionFormula') || '2d6';
+      const corruptionBonus = this.actor.system.corruption.roll_bonus || 0;
+      const burdenPenalty = this.actor.system.burden_penalty || 0;
+      const abilityMod =
+        this.actor.type === ActorType.CHARACTER
+          ? this.actor.system.abilities['aur'].current
+          : this.actor.system?.bonus || 0;
+      const burdenPart = burdenPenalty > 0 ? -1 * burdenPenalty : 0;
+      const totalBonuses = abilityMod + burdenPart + corruptionBonus;
+      const bonusPart =
+        totalBonuses === 0 ? '' : totalBonuses > 0 ? `+${totalBonuses}` : totalBonuses;
+      const modPart = foundry.dice.Roll.validate(modifier) ? ` +${modifier}` : '';
+
+      const keepModifier =
+        rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
+
+      const diceExpression = keepModifier
+        ? `{${baseFormula}, ${baseFormula}}${keepModifier}`
+        : baseFormula;
+
+      const formula = `${diceExpression}${bonusPart}${modPart}`;
+      return sanitizeExpression(formula);
+    };
 
     if (!isShift) {
       data = await DialogV2.wait({
@@ -1656,6 +1691,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
             })
           }
         ],
+        rollPreview: values => rollPreviewRows([{ label: $l10n('SDM.RollPreview.Rolls'), formula: formulaFor(values) }]),
         rejectClose: false
       });
     }
@@ -1664,30 +1700,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       return;
     }
 
-    const { modifier = '', rollMode = RollMode.NORMAL } = data;
-
-    const baseFormula = game.settings.get('sdm', 'baseCorruptionFormula') || '2d6';
-    const corruptionBonus = this.actor.system.corruption.roll_bonus || 0;
-    const burdenPenalty = this.actor.system.burden_penalty || 0;
-    const abilityMod =
-      this.actor.type === ActorType.CHARACTER
-        ? this.actor.system.abilities['aur'].current
-        : this.actor.system?.bonus || 0;
-    const burdenPart = burdenPenalty > 0 ? -1 * burdenPenalty : 0;
-    const totalBonuses = abilityMod + burdenPart + corruptionBonus;
-    const bonusPart =
-      totalBonuses === 0 ? '' : totalBonuses > 0 ? `+${totalBonuses}` : totalBonuses;
-    const modPart = foundry.dice.Roll.validate(modifier) ? ` +${modifier}` : '';
-
-    const keepModifier =
-      rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
-
-    const diceExpression = keepModifier
-      ? `{${baseFormula}, ${baseFormula}}${keepModifier}`
-      : baseFormula;
-
-    const formula = `${diceExpression}${bonusPart}${modPart}`;
-    const sanitizedFormula = sanitizeExpression(formula);
+    const sanitizedFormula = formulaFor(data);
 
     let roll = new Roll(sanitizedFormula);
     roll = await roll.evaluate();
@@ -1708,6 +1721,42 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const isCtrl = !!event.ctrlKey;
     let data = { modifier: '', charismaOperator: 1, customBaseFormula: '' };
     const selectedRollMode = this.actor.system.abilities['cha'].roll_mode || RollMode.NORMAL;
+
+    // The formula rolled for the dialog values (also shown live in the dialog)
+    const formulaFor = values => {
+      const {
+        modifier = '',
+        charismaOperator = 1,
+        rollMode = RollMode.NORMAL,
+        customBaseFormula = ''
+      } = values ?? {};
+
+      const baseFormula = game.settings.get('sdm', 'baseReactionFormula') || '2d6';
+
+      const finalBaseFormula = foundry.dice.Roll.validate(customBaseFormula)
+        ? customBaseFormula
+        : baseFormula;
+
+      const reactionBonus = this.actor.system.reaction_bonus || 0;
+      const burdenPenalty = this.actor.system.burden_penalty || 0;
+      const chaMod = this.actor.system.abilities['cha'].current;
+      const burdenPart = burdenPenalty > 0 ? -1 * burdenPenalty : 0;
+      const chaPart = charismaOperator > 0 ? chaMod : -1 * chaMod;
+      const totalBonuses = chaPart + reactionBonus + burdenPart;
+      const bonusPart =
+        totalBonuses === 0 ? '' : totalBonuses > 0 ? `+${totalBonuses}` : totalBonuses;
+      const modPart = foundry.dice.Roll.validate(modifier) ? ` +${modifier}` : '';
+
+      const keepModifier =
+        rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
+
+      const diceExpression = keepModifier
+        ? `{${finalBaseFormula}, ${finalBaseFormula}}${keepModifier}`
+        : finalBaseFormula;
+
+      const formula = `${diceExpression}${bonusPart}${modPart}`;
+      return sanitizeExpression(formula);
+    };
 
     if (!isShift) {
       data = await DialogV2.wait({
@@ -1743,6 +1792,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
             })
           }
         ],
+        rollPreview: values => rollPreviewRows([
+          { label: $l10n('SDM.ReactionCheck'), formula: formulaFor({ ...values, charismaOperator: 1 }) },
+          { label: $l10n('SDM.ReactionProvokeConflict'), formula: formulaFor({ ...values, charismaOperator: -1 }) }
+        ]),
         rejectClose: false
       });
     }
@@ -1751,38 +1804,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       return;
     }
 
-    const {
-      modifier = '',
-      charismaOperator = 1,
-      rollMode = RollMode.NORMAL,
-      customBaseFormula = ''
-    } = data;
-
-    const baseFormula = game.settings.get('sdm', 'baseReactionFormula') || '2d6';
-
-    const finalBaseFormula = foundry.dice.Roll.validate(customBaseFormula)
-      ? customBaseFormula
-      : baseFormula;
-
-    const reactionBonus = this.actor.system.reaction_bonus || 0;
-    const burdenPenalty = this.actor.system.burden_penalty || 0;
-    const chaMod = this.actor.system.abilities['cha'].current;
-    const burdenPart = burdenPenalty > 0 ? -1 * burdenPenalty : 0;
-    const chaPart = charismaOperator > 0 ? chaMod : -1 * chaMod;
-    const totalBonuses = chaPart + reactionBonus + burdenPart;
-    const bonusPart =
-      totalBonuses === 0 ? '' : totalBonuses > 0 ? `+${totalBonuses}` : totalBonuses;
-    const modPart = foundry.dice.Roll.validate(modifier) ? ` +${modifier}` : '';
-
-    const keepModifier =
-      rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
-
-    const diceExpression = keepModifier
-      ? `{${finalBaseFormula}, ${finalBaseFormula}}${keepModifier}`
-      : finalBaseFormula;
-
-    const formula = `${diceExpression}${bonusPart}${modPart}`;
-    const sanitizedFormula = sanitizeExpression(formula);
+    const { charismaOperator = 1 } = data;
+    const sanitizedFormula = formulaFor(data);
 
     let roll = new Roll(sanitizedFormula);
     roll = await roll.evaluate();
@@ -1824,6 +1847,48 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     };
 
     let data = {};
+    // The formula rolled for the dialog values (also shown live in the dialog)
+    const formulaFor = values => {
+      const { modifier = '', relifeType = 'body', rollMode = RollMode.NORMAL } = values ?? {};
+      const ability = relifeTypes.find(t => t.id === relifeType).ability;
+
+      // Base formula (default 1d20, can be overridden by setting)
+      const baseFormula = game.settings.get('sdm', 'baseRelifeFormula') || '1d20';
+
+      // Compute ability modifier
+      const abilityMod = this.actor.system.abilities[ability]?.current || 0;
+
+      // Relife bonus (actor field)
+      const relifeBonus = this.actor.system.relife_bonus || 0;
+
+      // Burden penalty (negative)
+      const burdenPenalty = this.actor.system.burden_penalty || 0;
+
+      // Sum before hard limit
+      let totalBonus = abilityMod + relifeBonus - burdenPenalty;
+
+      // Apply hard limit if enabled
+      const useHardLimit = game.settings.get('sdm', 'useHardLimitRule');
+      const hardLimit = game.settings.get('sdm', 'defaultHardLimitValue') || MAX_MODIFIER;
+      if (useHardLimit) {
+        totalBonus = Math.min(totalBonus, hardLimit);
+      }
+
+      const bonusPart = totalBonus === 0 ? '' : totalBonus > 0 ? `+${totalBonus}` : `${totalBonus}`;
+      const modPart = foundry.dice.Roll.validate(modifier) ? ` +${modifier}` : '';
+
+      // Apply advantage/disadvantage
+      const keepModifier =
+        rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
+
+      const diceExpression = keepModifier
+        ? `{${baseFormula}, ${baseFormula}}${keepModifier}`
+        : baseFormula;
+
+      const formula = `${diceExpression}${bonusPart}${modPart}`;
+      return sanitizeExpression(formula);
+    };
+
     if (!isShift) {
       data = await DialogV2.wait({
         window: {
@@ -1850,6 +1915,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
             })
           }
         ],
+        rollPreview: values => rollPreviewRows([{ label: $l10n('SDM.RollPreview.Rolls'), formula: formulaFor(values) }]),
         rejectClose: false,
         render: (event, dialog) => {
           const html = dialog.element;
@@ -1868,44 +1934,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     if (!data) return;
 
-    const { modifier = '', relifeType = 'body', rollMode = RollMode.NORMAL } = data;
+    const { relifeType = 'body' } = data;
     const ability = relifeTypes.find(t => t.id === relifeType).ability;
-
-    // Base formula (default 1d20, can be overridden by setting)
-    const baseFormula = game.settings.get('sdm', 'baseRelifeFormula') || '1d20';
-
-    // Compute ability modifier
-    const abilityMod = this.actor.system.abilities[ability]?.current || 0;
-
-    // Relife bonus (actor field)
-    const relifeBonus = this.actor.system.relife_bonus || 0;
-
-    // Burden penalty (negative)
-    const burdenPenalty = this.actor.system.burden_penalty || 0;
-
-    // Sum before hard limit
-    let totalBonus = abilityMod + relifeBonus - burdenPenalty;
-
-    // Apply hard limit if enabled
-    const useHardLimit = game.settings.get('sdm', 'useHardLimitRule');
-    const hardLimit = game.settings.get('sdm', 'defaultHardLimitValue') || MAX_MODIFIER;
-    if (useHardLimit) {
-      totalBonus = Math.min(totalBonus, hardLimit);
-    }
-
-    const bonusPart = totalBonus === 0 ? '' : totalBonus > 0 ? `+${totalBonus}` : `${totalBonus}`;
-    const modPart = foundry.dice.Roll.validate(modifier) ? ` +${modifier}` : '';
-
-    // Apply advantage/disadvantage
-    const keepModifier =
-      rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
-
-    const diceExpression = keepModifier
-      ? `{${baseFormula}, ${baseFormula}}${keepModifier}`
-      : baseFormula;
-
-    const formula = `${diceExpression}${bonusPart}${modPart}`;
-    const sanitizedFormula = sanitizeExpression(formula);
+    const sanitizedFormula = formulaFor(data);
 
     let roll = new Roll(sanitizedFormula);
     roll = await roll.evaluate();
@@ -1936,6 +1967,38 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const selectedRollMode = this.actor.system.abilities['end'].roll_mode || RollMode.NORMAL;
     const availableSkills = this.actor.getAvailableSkills();
     const label = $fmt('SDM.RollType', { type: $l10n('SDM.GroupChase') });
+    // The formula rolled for the dialog values (also shown live in the dialog)
+    const formulaFor = values => {
+      const { modifier = '', selectedSkill = '', rollMode = RollMode.NORMAL } = values ?? {};
+
+      const skillPart = selectedSkill ? availableSkills[selectedSkill]?.mod : 0;
+      const baseFormula = game.settings.get('sdm', 'baseGroupChaseFormula') || '1d20';
+
+      const groupChaseBonus = this.actor.system.group_chase_bonus || 0;
+      const burdenPenalty = this.actor.system.burden_penalty || 0;
+      const endMod = this.actor.system.abilities['end'].current;
+      const burdenPart = burdenPenalty > 0 ? -1 * burdenPenalty : 0;
+      const chaseSum = endMod + skillPart + groupChaseBonus + burdenPart;
+
+      const useHardLimitRule = game.settings.get('sdm', 'useHardLimitRule');
+      const defaultHardLimitValue = game.settings.get('sdm', 'defaultHardLimitValue') || MAX_MODIFIER;
+      const finalChaseBonus = useHardLimitRule ? Math.min(chaseSum, defaultHardLimitValue) : chaseSum;
+
+      const bonusPart =
+        finalChaseBonus === 0 ? '' : finalChaseBonus > 0 ? `+${finalChaseBonus}` : finalChaseBonus;
+      const modPart = foundry.dice.Roll.validate(modifier) ? ` +${modifier}` : '';
+
+      const keepModifier =
+        rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
+
+      const diceExpression = keepModifier
+        ? `{${baseFormula}, ${baseFormula}}${keepModifier}`
+        : baseFormula;
+
+      const formula = `${diceExpression}${bonusPart}${modPart}`;
+      return sanitizeExpression(formula);
+    };
+
     if (!isShift) {
       data = await DialogV2.wait({
         window: {
@@ -1960,6 +2023,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
             })
           }
         ],
+        rollPreview: values => rollPreviewRows([{ label: $l10n('SDM.RollPreview.Rolls'), formula: formulaFor(values) }]),
         rejectClose: false
       });
     }
@@ -1968,34 +2032,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       return;
     }
 
-    const { modifier = '', selectedSkill = '', rollMode = RollMode.NORMAL } = data;
-
-    const skillPart = selectedSkill ? availableSkills[selectedSkill]?.mod : 0;
-    const baseFormula = game.settings.get('sdm', 'baseGroupChaseFormula') || '1d20';
-
-    const groupChaseBonus = this.actor.system.group_chase_bonus || 0;
-    const burdenPenalty = this.actor.system.burden_penalty || 0;
-    const endMod = this.actor.system.abilities['end'].current;
-    const burdenPart = burdenPenalty > 0 ? -1 * burdenPenalty : 0;
-    const chaseSum = endMod + skillPart + groupChaseBonus + burdenPart;
-
-    const useHardLimitRule = game.settings.get('sdm', 'useHardLimitRule');
-    const defaultHardLimitValue = game.settings.get('sdm', 'defaultHardLimitValue') || MAX_MODIFIER;
-    const finalChaseBonus = useHardLimitRule ? Math.min(chaseSum, defaultHardLimitValue) : chaseSum;
-
-    const bonusPart =
-      finalChaseBonus === 0 ? '' : finalChaseBonus > 0 ? `+${finalChaseBonus}` : finalChaseBonus;
-    const modPart = foundry.dice.Roll.validate(modifier) ? ` +${modifier}` : '';
-
-    const keepModifier =
-      rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
-
-    const diceExpression = keepModifier
-      ? `{${baseFormula}, ${baseFormula}}${keepModifier}`
-      : baseFormula;
-
-    const formula = `${diceExpression}${bonusPart}${modPart}`;
-    const sanitizedFormula = sanitizeExpression(formula);
+    const sanitizedFormula = formulaFor(data);
 
     let roll = new Roll(sanitizedFormula);
     roll = await roll.evaluate();
@@ -2022,6 +2059,37 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     const selectedRollMode = this.actor.system?.defeat?.roll_mode || RollMode.NORMAL;
 
+    // The formula rolled for the dialog values (also shown live in the dialog)
+    const formulaFor = values => {
+      const { modifier = '', selectedAbility = 'end', rollMode = RollMode.NORMAL } = values ?? {};
+
+      const baseFormula = game.settings.get('sdm', 'baseDefeatFormula') || '2d6';
+
+      const burdenPenalty = this.actor.system.burden_penalty || 0;
+
+      const abilityMod =
+        this.actor.type === ActorType.CHARACTER
+          ? this.actor.system.abilities[selectedAbility].current
+          : this.actor.system?.bonus || 0;
+
+      const burdenPart = burdenPenalty > 0 ? -1 * burdenPenalty : 0;
+      const defeatBonus = this.actor.system.defeat.roll_bonus || 0;
+      const totalBonuses = abilityMod + defeatBonus + burdenPart;
+      const bonusPart =
+        totalBonuses === 0 ? '' : totalBonuses > 0 ? `+${totalBonuses}` : totalBonuses;
+      const modPart = foundry.dice.Roll.validate(modifier) ? ` +${modifier}` : '';
+
+      const keepModifier =
+        rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
+
+      const diceExpression = keepModifier
+        ? `{${baseFormula}, ${baseFormula}}${keepModifier}`
+        : baseFormula;
+
+      const formula = `${diceExpression}${bonusPart}${modPart}`;
+      return sanitizeExpression(formula);
+    };
+
     if (!isShift) {
       data = await DialogV2.wait({
         window: {
@@ -2046,6 +2114,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
             })
           }
         ],
+        rollPreview: values => rollPreviewRows([{ label: $l10n('SDM.RollPreview.Rolls'), formula: formulaFor(values) }]),
         rejectClose: false
       });
     }
@@ -2054,33 +2123,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       return;
     }
 
-    const { modifier = '', selectedAbility = 'end', rollMode = RollMode.NORMAL } = data;
-
-    const baseFormula = game.settings.get('sdm', 'baseDefeatFormula') || '2d6';
-
-    const burdenPenalty = this.actor.system.burden_penalty || 0;
-
-    const abilityMod =
-      this.actor.type === ActorType.CHARACTER
-        ? this.actor.system.abilities[selectedAbility].current
-        : this.actor.system?.bonus || 0;
-
-    const burdenPart = burdenPenalty > 0 ? -1 * burdenPenalty : 0;
-    const defeatBonus = this.actor.system.defeat.roll_bonus || 0;
-    const totalBonuses = abilityMod + defeatBonus + burdenPart;
-    const bonusPart =
-      totalBonuses === 0 ? '' : totalBonuses > 0 ? `+${totalBonuses}` : totalBonuses;
-    const modPart = foundry.dice.Roll.validate(modifier) ? ` +${modifier}` : '';
-
-    const keepModifier =
-      rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
-
-    const diceExpression = keepModifier
-      ? `{${baseFormula}, ${baseFormula}}${keepModifier}`
-      : baseFormula;
-
-    const formula = `${diceExpression}${bonusPart}${modPart}`;
-    const sanitizedFormula = sanitizeExpression(formula);
+    const { selectedAbility = 'end' } = data;
+    const sanitizedFormula = formulaFor(data);
 
     let roll = new Roll(sanitizedFormula);
     roll = await roll.evaluate();
@@ -2295,6 +2339,34 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       }
     ];
 
+    // The formula rolled for the dialog values (also shown live in the dialog)
+    const formulaFor = values => {
+      const modifier = values?.modifier;
+      const rollMode = values?.rollMode;
+
+      const modPart = foundry.dice.Roll.validate(modifier) ? `+${modifier}` : '';
+      const baseRollFormula =
+        game.settings.get('sdm', 'savingThrowBaseRollFormula') || SAVING_THROW_BASE_FORMULA;
+
+      const keepModifier =
+        rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
+
+      const diceExpression = keepModifier
+        ? `{${baseRollFormula}, ${baseRollFormula}}${keepModifier}`
+        : baseRollFormula;
+
+      const bonusPart =
+        finalSavingThrowBonus === 0
+          ? ''
+          : finalSavingThrowBonus > 0
+            ? `+${finalSavingThrowBonus}`
+            : finalSavingThrowBonus;
+
+      let formula = `${diceExpression}${bonusPart}${modPart}`;
+
+      return sanitizeExpression(formula);
+    };
+
     let rollOptions = {};
 
     if (!isShift) {
@@ -2308,6 +2380,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         position: {
           width: 400
         },
+        rollPreview: values => rollPreviewRows([{ label: $l10n('SDM.RollPreview.Rolls'), formula: formulaFor(values) }]),
         rejectClose: false,
         buttons
       });
@@ -2317,31 +2390,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       }
     }
 
-    const modifier = rollOptions?.modifier;
-    const rollMode = rollOptions?.rollMode;
-
-    const modPart = foundry.dice.Roll.validate(modifier) ? `+${modifier}` : '';
-    const baseRollFormula =
-      game.settings.get('sdm', 'savingThrowBaseRollFormula') || SAVING_THROW_BASE_FORMULA;
-
-    const keepModifier =
-      rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
-
-    const diceExpression = keepModifier
-      ? `{${baseRollFormula}, ${baseRollFormula}}${keepModifier}`
-      : baseRollFormula;
-
-    const bonusPart =
-      finalSavingThrowBonus === 0
-        ? ''
-        : finalSavingThrowBonus > 0
-          ? `+${finalSavingThrowBonus}`
-          : finalSavingThrowBonus;
-
-    let formula = `${diceExpression}${bonusPart}${modPart}`;
-
     const targetNumber = rollTarget || this.actor.system?.save_target || DEFAULT_SAVE_VALUE;
-    formula = sanitizeExpression(formula);
+    const formula = formulaFor(rollOptions);
     // Create and evaluate the roll
     let roll = new Roll(formula);
     roll = await roll.evaluate();

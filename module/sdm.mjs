@@ -304,9 +304,19 @@ Hooks.on('renderChatMessageHTML', (message, html, data) => {
 Hooks.on('renderDialogV2', (dialog, html) => {
   // Roll dialog: live preview of what each button rolls
   const rollPreview = dialog.options?.rollPreview;
-  const previewBox = html.querySelector('.sdm-roll-preview');
+  let previewBox = html.querySelector('.sdm-roll-preview');
   // The form the dialog's buttons read (what gets rolled)
   const previewForm = html.querySelector('button[data-action]')?.form ?? previewBox?.closest('form');
+  if (typeof rollPreview === 'function' && !previewBox && previewForm) {
+    // Dialogs without a place for it: right under their heading, or at the top
+    previewBox = document.createElement('div');
+    previewBox.className = 'sdm-roll-preview';
+    previewBox.setAttribute('aria-live', 'polite');
+    const content = html.querySelector('.dialog-content') ?? previewForm;
+    const heading = content.querySelector('h1, h2, h3, h4');
+    if (heading) heading.after(previewBox);
+    else content.prepend(previewBox);
+  }
   if (typeof rollPreview === 'function' && previewBox && previewForm) {
     const updatePreview = () => {
       try {
