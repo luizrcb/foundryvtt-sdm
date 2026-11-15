@@ -305,8 +305,12 @@ Hooks.on('renderDialogV2', (dialog, html) => {
   // Roll dialog: live preview of what each button rolls
   const rollPreview = dialog.options?.rollPreview;
   let previewBox = html.querySelector('.sdm-roll-preview');
-  // The form the dialog's buttons read (what gets rolled)
-  const previewForm = html.querySelector('button[data-action]')?.form ?? previewBox?.closest('form');
+  // The form the dialog's buttons read (what gets rolled). Not the header's buttons (close…), which have no form
+  const previewForm =
+    html.querySelector('.form-footer button')?.form ??
+    html.querySelector('form.dialog-form') ??
+    previewBox?.closest('form') ??
+    html.querySelector('form');
   if (typeof rollPreview === 'function' && !previewBox && previewForm) {
     // Dialogs without a place for it: right under their heading, or at the top
     previewBox = document.createElement('div');
