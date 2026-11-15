@@ -345,7 +345,8 @@ async function createRandomTrait(targetActor, traitsTable) {
       type: 'trait'
     }).toObject();
   foundry.utils.setProperty(data, 'system.readied', true);
-  await targetActor.createEmbeddedDocuments('Item', [data]);
+  // sdmKeepReadied: gear added to an actor is otherwise unreadied on creation
+  await targetActor.createEmbeddedDocuments('Item', [data], { sdmKeepReadied: true });
 }
 
 /** The NPC Traits compendium item for a table trait key (flags.sdm.npcTraitKey), ready to create. */

@@ -75,7 +75,8 @@ export async function addNpcExtras(actor, { count = 'level' } = {}) {
     const data = (await drawItem(kind, level, taken)) ?? (await drawItem(kind === 'attack' ? 'oddity' : 'attack', level, taken));
     if (data) created.push(data);
   }
-  if (created.length) await actor.createEmbeddedDocuments('Item', created);
+  // sdmKeepReadied: gear added to an actor is otherwise unreadied on creation
+  if (created.length) await actor.createEmbeddedDocuments('Item', created, { sdmKeepReadied: true });
   return created.map(data => data.name);
 }
 
