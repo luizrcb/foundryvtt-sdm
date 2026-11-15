@@ -37,7 +37,6 @@ export class SDMClientSettingsConfig extends GroupBase {
   static KEYS = [
     'reverseShiftKey',
     'showEffectsPanel',
-    'showRollPreview',
     'chromatype',
     'diceSoNiceChromatype',
     'hero_dice_style',

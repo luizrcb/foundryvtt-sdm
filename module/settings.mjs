@@ -146,15 +146,6 @@ export function registerSystemSettings() {
     onChange: value => (CONFIG.ActiveEffect.expiryAction = value)
   });
 
-  // Roll dialogs show the formula each button rolls
-  game.settings.register('sdm', 'showRollPreview', {
-    name: 'SDM.SettingsShowRollPreview',
-    hint: 'SDM.SettingsShowRollPreviewHint',
-    scope: 'client',
-    type: Boolean,
-    default: true
-  });
-
   game.settings.register('sdm', 'showEffectsPanel', {
     name: 'SDM.SettingsShowEffectsPanel',
     hint: 'SDM.SettingsShowEffectsPanelHint',

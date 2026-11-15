@@ -2775,8 +2775,6 @@
   "SDM.NpcExtras.ByLevel": "Pelo nível",
   "SDM.NpcExtras.Hint": "Ataques especiais, peculiaridades, poderes e posses (itens estranhos) sorteados nas tabelas de extras de NPC (pelo nível: 0–2 talvez um, 3–6 um, 7+ dois).",
   "SDM.SettingsNpcExtraPossessionsTable": "Extras de NPC: tabela de posses",
-  "SDM.SettingsShowRollPreview": "Mostrar a prévia da rolagem",
-  "SDM.SettingsShowRollPreviewHint": "As janelas de rolagem mostram a fórmula que cada botão vai rolar, atualizada conforme você muda as opções.",
   "SDM.SettingsEnableNpcExtras": "Extras de NPC no gerador",
   "SDM.SettingsEnableNpcExtrasHint": "O gerador de NPCs oferece extras sorteados (ataques especiais, peculiaridades, poderes, posses). Desligado: a opção fica escondida.",
   "SDM.SettingsNpcNaturalLight": "NPCs com luz natural entram acesos",

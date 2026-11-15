@@ -2775,8 +2775,6 @@
   "SDM.NpcExtras.ByLevel": "By level",
   "SDM.NpcExtras.Hint": "Special attacks, oddities, powers and possessions (strange items) drawn from the NPC extras tables (by level: 0–2 maybe one, 3–6 one, 7+ two).",
   "SDM.SettingsNpcExtraPossessionsTable": "NPC extras: possessions table",
-  "SDM.SettingsShowRollPreview": "Show the roll preview",
-  "SDM.SettingsShowRollPreviewHint": "Roll dialogs show the formula each button will roll, updated as you change the options.",
   "SDM.SettingsEnableNpcExtras": "NPC extras in the generator",
   "SDM.SettingsEnableNpcExtrasHint": "The NPC generator offers rolled extras (special attacks, oddities, powers, possessions). Off: the option is hidden.",
   "SDM.SettingsNpcNaturalLight": "NPCs with natural light enter lit",
