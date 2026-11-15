@@ -35,6 +35,8 @@
 - Item mods have a **Mod Cost** field (effect configuration, when *Is Item Mod* is ticked)
 - Fixed the danger roll of a dangerous power used by an NPC (for example an animated item): NPCs roll with their bonus
 - **Dead characters** (V2 sheet): the life card becomes a *Dead* card with a *Roll relife* button and the four relife options, the portrait turns grey with a skull over it, and a red *Dead* badge sits next to the name
+- **Token follows the actor**: changing an actor's image or name also changes its prototype token's image or name, when they were the same before (token art or a token name set on purpose is kept). Renaming an actor no longer renames a token that had its own name
+- Roll triggers: the value, counter step and charges boxes are short again, an actions panel opened or closed by hand stays that way while editing, and the cost and boost resource lists read Life / Hero dice like the abilities
 - The classic character and caravan sheets now open in **compact mode** until it's switched off (the compress button in the header). The choice is now kept **per client** (each browser remembers it per actor), so two people can view the same sheet one compact and one expanded, and anyone who can see the sheet can switch it. The V2 sheets already opened at their compact width
 - Fixed: clicking an empty power album (also from Token Action HUD) threw an error; it now says the album is empty
 - **Caravan free space**: next to Consume Supplies, the inventory shows the free space as whole sacks + stones (e.g. "Free: 3 sk + 4 st")

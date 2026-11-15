@@ -125,6 +125,27 @@ export class SdmActor extends Actor {
       }
     }
 
+    // The prototype token follows the actor's image and name while they were the same
+    // (a token art or a token name set on purpose is left alone)
+    const proto = this.prototypeToken;
+    const { getProperty, setProperty } = foundry.utils;
+    if (
+      changes.img !== undefined &&
+      changes.img !== this.img &&
+      proto?.texture?.src === this.img &&
+      getProperty(changes, 'prototypeToken.texture.src') === undefined
+    ) {
+      setProperty(changes, 'prototypeToken.texture.src', changes.img);
+    }
+    if (
+      changes.name !== undefined &&
+      changes.name !== this.name &&
+      proto?.name === this.name &&
+      getProperty(changes, 'prototypeToken.name') === undefined
+    ) {
+      setProperty(changes, 'prototypeToken.name', changes.name);
+    }
+
     // Character levels gained grant upgrades to choose (each level only once)
     if (
       this.type === ActorType.CHARACTER &&
@@ -166,10 +187,6 @@ export class SdmActor extends Actor {
 
     if (Object.keys(updates).length > 0) {
       await this.update(updates);
-    }
-
-    if (changed.name !== undefined) {
-      await this.update({ 'prototypeToken.name': changed.name });
     }
 
     // Animated item that walked away: losing life notches or breaks the item

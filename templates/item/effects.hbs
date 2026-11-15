@@ -88,7 +88,7 @@
       <input class="sdm-counter-label" type="text" name="system.triggers.{{index}}.text" value="{{trigger.text}}" placeholder="{{localize 'SDM.Trigger.TextPlaceholder'}}" />
       {{#if @root.editable}}<a data-action="removeTrigger" data-index="{{index}}" data-tooltip="{{localize 'SDM.Trigger.Remove'}}"><i class="fa-solid fa-trash"></i></a>{{/if}}
     </div>
-    <details class="sdm-trigger-actions" {{#if (or trigger.cost_resource trigger.table trigger.effect trigger.wear trigger.counter trigger.cast trigger.use trigger.light trigger.charges_mode)}}open{{/if}}>
+    <details class="sdm-trigger-actions" data-index="{{index}}" {{#if (or trigger.cost_resource trigger.table trigger.effect trigger.wear trigger.counter_scope trigger.counter trigger.cast trigger.use trigger.light trigger.charges_mode)}}open{{/if}}>
       <summary>{{localize 'SDM.Trigger.Actions'}}</summary>
       <div class="sdm-counter-row">
         <label data-tooltip="{{localize 'SDM.Trigger.CostHint'}}">{{localize 'SDM.Trigger.Cost'}}

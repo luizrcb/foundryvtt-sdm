@@ -2368,6 +2368,13 @@ input[type='radio']::after {
 
 // Item sheet: roll triggers with their actions
 .sdm-triggers {
+  // Numbers or short formulas (value, counter step, charges): not the whole row
+  input.sdm-trigger-amount {
+    flex: 0 0 5em;
+    width: 5em;
+    text-align: center;
+  }
+
   .sdm-trigger + .sdm-trigger {
     margin-top: 6px;
     padding-top: 6px;
@@ -2400,10 +2407,6 @@ input[type='radio']::after {
 
     input.sdm-trigger-cost {
       width: 4em;
-    }
-
-    input.sdm-trigger-amount {
-      width: 5em;
     }
 
     input[type='number'] {

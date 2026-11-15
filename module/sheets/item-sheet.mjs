@@ -423,9 +423,9 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       },
       triggerCostResources: {
         '': 'SDM.Trigger.WearNone',
-        life: 'SDM.Boost.Life',
+        life: 'SDM.Cost.Life',
         ...CONFIG.SDM.abilities,
-        hero_die: 'SDM.Boost.HeroDie'
+        hero_die: 'SDM.Cost.HeroDie'
       },
       triggerChargeModes: {
         '': 'SDM.Trigger.WearNone',
@@ -441,9 +441,9 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       },
       ...this._triggerItemChoices(),
       boostResources: {
-        life: 'SDM.Boost.Life',
+        life: 'SDM.Cost.Life',
         ...CONFIG.SDM.abilities,
-        hero_die: 'SDM.Boost.HeroDie'
+        hero_die: 'SDM.Cost.HeroDie'
       }
     };
 
@@ -679,6 +679,13 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     this.#dragDrop.forEach(d => d.bind(this.element));
     this.#bindAlbum();
     bindCollapsibleSections(this);
+    // Roll triggers: an actions panel opened or closed by hand stays that way across re-renders
+    this._triggerActionsOpen ??= new Map();
+    this.element.querySelectorAll('details.sdm-trigger-actions[data-index]').forEach(details => {
+      const index = details.dataset.index;
+      if (this._triggerActionsOpen.has(index)) details.open = this._triggerActionsOpen.get(index);
+      details.addEventListener('toggle', () => this._triggerActionsOpen.set(index, details.open));
+    });
     // Roll triggers: drop a roll table on the table field
     this.element.querySelectorAll('input.sdm-trigger-table').forEach(input => {
       input.addEventListener('dragover', event => event.preventDefault());
