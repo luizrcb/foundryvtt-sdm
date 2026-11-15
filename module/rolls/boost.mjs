@@ -28,17 +28,19 @@ export function isFreeBoost(boost) {
 }
 
 /** "Spend 1d6 life: x2 damage", "Spend 1 life: damage 1d12", "x2 (vs vampires)" */
-export function describeBoost(boost) {
+export function describeBoost(boost, { item = null, actor = null } = {}) {
+  // Counter references show as their current values ("pay 3 life", "damage 3d6")
+  const shown = formula => (item || actor ? resolveFormula(formula, { item, actor }) : `${formula ?? ''}`.trim());
   const result = [];
-  if (boost.damage) result.push($fmt('SDM.Boost.DamageBecomes', { formula: boost.damage }));
+  if (boost.damage) result.push($fmt('SDM.Boost.DamageBecomes', { formula: shown(boost.damage) }));
   if (boost.multiplier > 1) result.push(`x${boost.multiplier}`);
-  if (boost.extra) result.push(`+${boost.extra}`);
+  if (boost.extra) result.push(`+${shown(boost.extra)}`);
   const what = result.length ? result.join(' ') : $l10n('SDM.Boost.NoResult');
   const note = boost.note ? ` (${boost.note})` : '';
   if (isFreeBoost(boost)) return `${what}${note}`;
   return (
     $fmt('SDM.Boost.Label', {
-      cost: boost.cost || '1',
+      cost: shown(boost.cost) || '1',
       resource: resourceLabel(boost.resource),
       result: what
     }) + note

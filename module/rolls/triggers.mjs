@@ -7,7 +7,7 @@ import { featureEnabled } from '../helpers/features.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 import { hasPowerAlbum } from '../helpers/itemUtils.mjs';
 import { payCost, resourceLabel } from './boost.mjs';
-import { numberValue, rollAmount } from '../helpers/formulas.mjs';
+import { numberValue, resolveFormula, rollAmount } from '../helpers/formulas.mjs';
 import { isLightSource, isLit, lightItem, putOutLight, toggleLight } from '../helpers/lights.mjs';
 
 /**
@@ -203,14 +203,16 @@ async function runActions(fired, { actor } = {}) {
 async function payTriggerCost(item, trigger, actor) {
   if (!trigger.cost_resource || !actor) return true;
   const cost = `${trigger.cost ?? ''}`.trim() || '1';
+  // Shown with counter references as their current values ("pay 3 life"); rolled only when paid
+  const shownCost = resolveFormula(cost, { item, actor }) || cost;
   const resource = resourceLabel(trigger.cost_resource);
   const skip = key =>
     ChatMessage.create({
       speaker: ChatMessage.getSpeaker({ actor }),
-      content: `<p><i class="fa-solid fa-ban"></i> ${esc($fmt(key, { item: item.name, cost, resource }))}</p>`
+      content: `<p><i class="fa-solid fa-ban"></i> ${esc($fmt(key, { item: item.name, cost: shownCost, resource }))}</p>`
     });
   if (trigger.cost_ask) {
-    const question = $fmt('SDM.Trigger.CostQuestion', { item: item.name, cost, resource });
+    const question = $fmt('SDM.Trigger.CostQuestion', { item: item.name, cost: shownCost, resource });
     const confirmed = await foundry.applications.api.DialogV2.confirm({
       window: { title: item.name },
       content: `<p>${esc(question)}</p>${trigger.text ? `<p><i>${esc(trigger.text)}</i></p>` : ''}`,

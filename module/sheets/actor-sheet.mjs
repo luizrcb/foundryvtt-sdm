@@ -300,7 +300,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     const template = await renderTemplate(templatePath('custom-roll-dialog'), {
       boost,
-      boostLabel: boost ? describeBoost(boost) : '',
+      boostLabel: boost ? describeBoost(boost, { item, actor: this.actor }) : '',
       powerCost,
       powerDanger: powerOptions?.[powerIndex]?.dangerHtml ?? '',
       isPowerRoll: isPower || isPowerAlbum,
