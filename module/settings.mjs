@@ -40,18 +40,6 @@ export function registerSystemSettings() {
     }
   });
 
-  const localizedOptions = Object.keys(CONFIG.SDM.accentColorOptions).map(key => ({
-    key: key,
-    label: game.i18n.localize(CONFIG.SDM.accentColorOptions[key])
-  }));
-
-  localizedOptions.sort((a, b) => a.label.localeCompare(b.label, game.i18n.lang));
-
-  const sortedChoices = localizedOptions.reduce((acc, curr) => {
-    acc[curr.key] = curr.label;
-    return acc;
-  }, {});
-
   game.settings.register('sdm', 'chromatype', {
     name: 'SDM.SettingsChromatype',
     hint: 'SDM.SettingsChromatypeHint',
@@ -70,19 +58,6 @@ export function registerSystemSettings() {
     choices: {
       same: 'SDM.DSNChromatypeSame',
       ...CONFIG.SDM.accentColorOptions
-    },
-    type: String,
-    default: 'same'
-  });
-
-  game.settings.register('sdm', 'diceSoNiceChromatype', {
-    name: 'SDM.SettingsDiceSoNiceChromatype',
-    hint: 'SDM.SettingsDiceSoNiceChromatypeHint',
-    scope: 'client', // or "world"
-    requiresReload: true,
-    choices: {
-      same: 'SDM.DSNChromatypeSame',
-     ...CONFIG.SDM.accentColorOptions
     },
     type: String,
     default: 'same'
@@ -973,6 +948,29 @@ export function configureUseHeroDiceButton(message, html, data) {
     // existing function assumed to exist
     handleHeroDice(ev, message, flags);
   });
+}
+
+/**
+ * Settings are registered on init, before the translations load, so the accent color lists keep the
+ * order of their keys (English). Once translations are in (i18nInit), order them by their translated
+ * names in the user's language; "same as the accent color" stays first. Stored values don't change.
+ */
+export function sortChromatypeChoices() {
+  const sorted = choices =>
+    Object.fromEntries(
+      Object.entries(choices).sort(([, a], [, b]) =>
+        game.i18n.localize(a).localeCompare(game.i18n.localize(b), game.i18n.lang)
+      )
+    );
+  try {
+    const colors = sorted(CONFIG.SDM.accentColorOptions);
+    const chromatype = game.settings.settings.get('sdm.chromatype');
+    if (chromatype) chromatype.choices = colors;
+    const dsn = game.settings.settings.get('sdm.diceSoNiceChromatype');
+    if (dsn) dsn.choices = { same: 'SDM.DSNChromatypeSame', ...colors };
+  } catch (error) {
+    console.warn('SDM | Could not sort the accent colors', error);
+  }
 }
 
 export function configurePlayerChromatype() {

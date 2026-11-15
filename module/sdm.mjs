@@ -72,6 +72,7 @@ import {
   setupBonusHeroDiceBroadcast,
   setupEscalatorDiePositionBroadcast,
   setupInitialSettings,
+  sortChromatypeChoices,
   updateBonusHeroDiceDisplay
 } from './settings.mjs';
 import { registerSDMGMSettingMenus } from './settings/register-gm-menus.mjs';
@@ -300,6 +301,9 @@ Hooks.on('renderChatMessageHTML', (message, html, data) => {
     });
   }
 });
+
+// Accent color lists in the order of the user's language (needs the translations)
+Hooks.once('i18nInit', sortChromatypeChoices);
 
 Hooks.on('renderDialogV2', (dialog, html) => {
   // Roll dialog: live preview of what each button rolls
