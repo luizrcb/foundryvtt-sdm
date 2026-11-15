@@ -66,14 +66,9 @@ export class SdmActorSheetV2 extends SdmActorSheet {
     };
 
     // Attack icons take the color of the ability configured for each attack
-    const abilityIconColor = {
-      str: 'rust',
-      end: 'pumpkin',
-      agi: 'amber',
-      cha: 'lime',
-      aur: 'azure',
-      tho: 'heart'
-    };
+    const abilityIconColor = Object.fromEntries(
+      CONFIG.SDM.abilitiesKeys.map((key, i) => [key, CONFIG.SDM.abilityColors[i]])
+    );
     const attackColor = (attack, fallback) =>
       abilityIconColor[system[attack]?.default_ability || fallback] ?? abilityIconColor[fallback];
 
