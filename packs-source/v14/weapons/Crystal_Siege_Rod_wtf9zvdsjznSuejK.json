@@ -87,14 +87,14 @@
       {
         "roll": "damage",
         "condition": "die",
-        "value": 6,
+        "value": "6",
         "text": "Breaks open doors",
         "attack": "",
         "table": "",
         "effect": "",
         "wear": "",
         "counter": "",
-        "counter_step": 1
+        "counter_step": "1"
       }
     ]
   },

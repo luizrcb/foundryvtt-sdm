@@ -92,14 +92,14 @@
       {
         "roll": "attack",
         "condition": "natural",
-        "value": 13,
+        "value": "13",
         "text": "Re-materialization delay: roll on the Re-materialization delay table",
         "attack": "oldtech",
         "table": "Compendium.sdm.rolltables.RollTable.CvZC0eXNX8sldMPP",
         "effect": "",
         "wear": "",
         "counter": "",
-        "counter_step": 1
+        "counter_step": "1"
       }
     ]
   },

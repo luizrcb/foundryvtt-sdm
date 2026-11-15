@@ -13,7 +13,14 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
     if (source?.animation && !source.animation.damageSource) source.animation.damageSource = 'auto';
     // Triggers: "reaches its maximum" merged into "is full"
     if (Array.isArray(source?.triggers)) {
-      for (const trigger of source.triggers) if (trigger?.condition === 'counterMax') trigger.condition = 'full';
+      for (const trigger of source.triggers) {
+        if (!trigger) continue;
+        if (trigger.condition === 'counterMax') trigger.condition = 'full';
+        // Numbers became formulas (counter references)
+        for (const key of ['value', 'counter_step', 'charges_amount']) {
+          if (typeof trigger[key] === 'number') trigger[key] = String(trigger[key]);
+        }
+      }
     }
     return super.migrateData(source);
   }

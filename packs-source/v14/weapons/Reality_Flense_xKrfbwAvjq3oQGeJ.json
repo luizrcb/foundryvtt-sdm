@@ -90,26 +90,26 @@
       {
         "roll": "attack",
         "condition": "natural",
-        "value": 20,
+        "value": "20",
         "text": "Their mind breaks",
         "attack": "ranged",
         "table": "",
         "effect": "",
         "wear": "",
         "counter": "",
-        "counter_step": 1
+        "counter_step": "1"
       },
       {
         "roll": "attack",
         "condition": "natural",
-        "value": 7,
+        "value": "7",
         "text": "They permanently gain 1 aura",
         "attack": "ranged",
         "table": "",
         "effect": "",
         "wear": "",
         "counter": "",
-        "counter_step": 1
+        "counter_step": "1"
       }
     ]
   },

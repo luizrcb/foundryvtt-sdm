@@ -85,14 +85,14 @@
       {
         "roll": "damage",
         "condition": "matching",
-        "value": 0,
+        "value": "0",
         "text": "Stuns for 1 round",
         "attack": "",
         "table": "",
         "effect": "9XE2FldJyKlRfJO3",
         "wear": "",
         "counter": "",
-        "counter_step": 1
+        "counter_step": "1"
       }
     ]
   },

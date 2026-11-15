@@ -86,14 +86,14 @@
       {
         "roll": "attack",
         "condition": "natural",
-        "value": 1,
+        "value": "1",
         "text": "Backfires",
         "attack": "oldtech",
         "table": "",
         "effect": "",
         "wear": "",
         "counter": "",
-        "counter_step": 1
+        "counter_step": "1"
       }
     ]
   },

@@ -85,14 +85,14 @@
       {
         "roll": "attack",
         "condition": "natural",
-        "value": 7,
+        "value": "7",
         "text": "Paroxysms for 1 round",
         "attack": "oldtech",
         "table": "",
         "effect": "tiQieVZiTmCubS5F",
         "wear": "",
         "counter": "",
-        "counter_step": 1
+        "counter_step": "1"
       }
     ]
   },

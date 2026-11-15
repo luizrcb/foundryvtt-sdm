@@ -82,14 +82,14 @@
       {
         "roll": "attack",
         "condition": "natural",
-        "value": 17,
+        "value": "17",
         "text": "Severs limbs",
         "attack": "melee",
         "table": "",
         "effect": "",
         "wear": "",
         "counter": "",
-        "counter_step": 1
+        "counter_step": "1"
       }
     ]
   },

@@ -89,14 +89,14 @@
       {
         "roll": "attack",
         "condition": "natural",
-        "value": 2,
+        "value": "2",
         "text": "One target's skull folds in on itself instead",
         "attack": "oldtech",
         "table": "",
         "effect": "",
         "wear": "",
         "counter": "",
-        "counter_step": 1
+        "counter_step": "1"
       }
     ]
   },

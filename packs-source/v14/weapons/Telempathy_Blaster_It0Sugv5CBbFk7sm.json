@@ -87,14 +87,14 @@
       {
         "roll": "damage",
         "condition": "min",
-        "value": 0,
+        "value": "0",
         "text": "The target stops fighting for one round and tries to parley",
         "attack": "",
         "table": "",
         "effect": "",
         "wear": "",
         "counter": "",
-        "counter_step": 1
+        "counter_step": "1"
       }
     ]
   },

@@ -7,6 +7,7 @@ import { featureEnabled } from '../helpers/features.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 import { hasPowerAlbum } from '../helpers/itemUtils.mjs';
 import { payCost, resourceLabel } from './boost.mjs';
+import { numberValue, rollAmount } from '../helpers/formulas.mjs';
 import { isLightSource, isLit, lightItem, putOutLight, toggleLight } from '../helpers/lights.mjs';
 
 /**
@@ -28,23 +29,32 @@ function naturalD20(roll) {
   return d20?.results.find(r => r.active !== false)?.result ?? null;
 }
 
-function matches(trigger, roll, { usageTarget = null, success = null } = {}) {
+/** A trigger's number: a number, or a formula reading counters and other values (no dice). */
+function triggerTarget(trigger, item) {
+  return numberValue(trigger.value, { item, actor: item?.actor });
+}
+
+function matches(trigger, roll, { usageTarget = null, success = null } = {}, item = null) {
+  const target = triggerTarget(trigger, item);
+  // A value that is blank or not a number never matches
+  const needsValue = ['natural', 'naturalAtLeast', 'naturalAtMost', 'total', 'totalAtLeast', 'totalAtMost', 'die'];
+  if (target === null && needsValue.includes(trigger.condition)) return false;
   const results = activeResults(roll);
   const natural = naturalD20(roll);
   const total = Number(roll.total);
   switch (trigger.condition) {
     case 'natural':
-      return natural === trigger.value;
+      return natural === target;
     case 'naturalAtLeast':
-      return natural !== null && natural >= trigger.value;
+      return natural !== null && natural >= target;
     case 'naturalAtMost':
-      return natural !== null && natural <= trigger.value;
+      return natural !== null && natural <= target;
     case 'total':
-      return total === trigger.value;
+      return total === target;
     case 'totalAtLeast':
-      return total >= trigger.value;
+      return total >= target;
     case 'totalAtMost':
-      return total <= trigger.value;
+      return total <= target;
     // Saves, defeat, attacks against a target: the roll's outcome (null when it has none)
     case 'success':
       return success === true;
@@ -56,7 +66,7 @@ function matches(trigger, roll, { usageTarget = null, success = null } = {}) {
     case 'runOut':
       return usageTarget !== null && total !== 13 && total <= usageTarget;
     case 'die':
-      return results.some(r => r.value === trigger.value);
+      return results.some(r => r.value === target);
     case 'max':
       return results.length > 0 && results.every(r => r.value === r.faces);
     case 'min':
@@ -89,7 +99,7 @@ export function actorTriggers(actor, rollKind, roll, { attack = '', ability = ''
       if (trigger.roll !== rollKind) continue;
       if (rollKind === 'attack' && trigger.attack && attack && trigger.attack !== attack) continue;
       if (['save', 'ability'].includes(rollKind) && trigger.ability && ability && trigger.ability !== ability) continue;
-      if (matches(trigger, roll, { success })) fired.push({ item, trigger });
+      if (matches(trigger, roll, { success }, item)) fired.push({ item, trigger });
     }
   }
   return fired;
@@ -122,7 +132,7 @@ export function itemRollTriggers(item, rollKind, roll, { power = '', ...options 
     for (const trigger of holder.system?.triggers ?? []) {
       if (trigger.roll !== rollKind || !watchesItem(trigger, holder, item)) continue;
       if (rollKind === 'power' && trigger.power && name && trigger.power.trim().toLowerCase() !== name) continue;
-      if (matches(trigger, roll, options)) fired.push({ item: holder, trigger });
+      if (matches(trigger, roll, options, holder)) fired.push({ item: holder, trigger });
     }
   }
   return fired;
@@ -174,8 +184,10 @@ async function runActions(fired, { actor } = {}) {
       if (trigger.counter && counterDoc?.system?.counters?.[trigger.counter]) {
         const mode = trigger.counter_mode || 'add';
         if (mode === 'reset') await resetCounters(counterDoc, { key: trigger.counter });
-        else if (mode === 'set') await setCounter(counterDoc, trigger.counter, Number(trigger.counter_step) || 0);
-        else await stepCounter(counterDoc, trigger.counter, (Number(trigger.counter_step) || 1) * times);
+        // The step is a number or a formula (dice and references allowed)
+        const amount = ctx => rollAmount(trigger.counter_step, { item, actor: roller, ...ctx }).then(r => r.total);
+        if (mode === 'set') await setCounter(counterDoc, trigger.counter, await amount({ fallback: 0 }));
+        else await stepCounter(counterDoc, trigger.counter, (await amount({ fallback: 1 })) * times);
       }
       if (trigger.light && featureEnabled('lights')) await lightAction(item, roller, trigger);
       if (trigger.charges_mode) await chargesAction(item, roller, trigger, times);
@@ -209,7 +221,7 @@ async function payTriggerCost(item, trigger, actor) {
       return false;
     }
   }
-  const paid = await payCost(actor, { resource: trigger.cost_resource, cost });
+  const paid = await payCost(actor, { resource: trigger.cost_resource, cost, item });
   if (paid === null) {
     await skip('SDM.Trigger.CostUnpaid');
     return false;
@@ -257,7 +269,8 @@ async function chargesAction(holder, actor, trigger, times = 1) {
   const target = resolveTriggerItem(holder, actor, trigger.charges_item || '@self', hasCharges);
   if (!target) return missingItem(holder, trigger.charges_item || '@self');
   // "Set" uses the number as it is; spend / add follow the size of the change when asked
-  const base = Math.max(Number(trigger.charges_amount) || 0, 0);
+  const { total } = await rollAmount(trigger.charges_amount, { item: holder, actor, fallback: 0 });
+  const base = Math.max(total, 0);
   const amount = trigger.charges_mode === 'set' ? base : base * times;
   const next = current => (trigger.charges_mode === 'set' ? amount : trigger.charges_mode === 'add' ? current + amount : current - amount);
 
@@ -354,7 +367,7 @@ export function describeCondition(trigger, item = null) {
   const tracked = trigger.roll === 'counter' || trigger.roll === 'charges';
   const prefix = condition.startsWith('total') ? (tracked ? 'value' : trigger.roll === 'usage' ? 'result' : '') : '';
   const key = prefix ? condition.replace('total', prefix) : condition;
-  const text = $fmt(`SDM.Trigger.Condition.${key}`, { value: trigger.value });
+  const text = $fmt(`SDM.Trigger.Condition.${key}`, { value: triggerTarget(trigger, item) ?? trigger.value });
   // Counter triggers name the counter: "Kills: total 5+"; charge triggers say "Charges"
   if (trigger.roll === 'counter') {
     const owner = trigger.watch_scope === 'actor' ? item?.actor : item;
@@ -389,6 +402,7 @@ async function setCounter(item, key, value) {
 
 /** A threshold condition on a value (with its maximum): =, ≥, ≤, full, empty. */
 function thresholdMatches(condition, target, value, max) {
+  if (target === null && condition.startsWith('total')) return false;
   const hasMax = Number.isFinite(max) && max !== null && max > 0;
   switch (condition) {
     case 'total':
@@ -412,11 +426,12 @@ function thresholdMatches(condition, target, value, max) {
  * every change; "=" when the value lands on the number; "≥" / "≤" on every change while true (or only
  * when they become true, with "once"); full / empty when they are reached.
  */
-function changeMatches(trigger, before, now, max) {
+function changeMatches(trigger, before, now, max, item = null) {
   if (before === now) return false;
+  const target = triggerTarget(trigger, item);
   const condition = trigger.condition === 'counterMax' ? 'full' : trigger.condition;
   const crossed = () =>
-    !thresholdMatches(condition, trigger.value, before, max) && thresholdMatches(condition, trigger.value, now, max);
+    !thresholdMatches(condition, target, before, max) && thresholdMatches(condition, target, now, max);
   switch (condition) {
     case 'changes':
       return true;
@@ -426,7 +441,7 @@ function changeMatches(trigger, before, now, max) {
       return now < before;
     case 'totalAtLeast':
     case 'totalAtMost':
-      return trigger.once ? crossed() : thresholdMatches(condition, trigger.value, now, max);
+      return trigger.once ? crossed() : thresholdMatches(condition, target, now, max);
     default:
       return crossed();
   }
@@ -478,11 +493,11 @@ async function onUpdateItemCounters(item, changes, options, userId) {
       if (!now) continue;
       const before = counters[trigger.watch];
       const value = Number(now.value) || 0;
-      if (changeMatches(trigger, before, value, now.max)) fired.push({ item, trigger, delta: value - before });
+      if (changeMatches(trigger, before, value, now.max, item)) fired.push({ item, trigger, delta: value - before });
     } else if (trigger.roll === 'charges' && charges !== undefined) {
       const value = Number(item.system.charges?.value) || 0;
       const max = Number(item.system.charges?.max) || 0;
-      if (changeMatches(trigger, charges, value, max)) fired.push({ item, trigger, delta: value - charges });
+      if (changeMatches(trigger, charges, value, max, item)) fired.push({ item, trigger, delta: value - charges });
     }
   }
   await fireChangeTriggers(fired, item.actor);
@@ -500,7 +515,7 @@ async function onUpdateActorCounters(actor, changes, options, userId) {
       const now = actor.system.counters?.[trigger.watch];
       if (!now) continue;
       const value = Number(now.value) || 0;
-      if (changeMatches(trigger, before[trigger.watch], value, now.max)) {
+      if (changeMatches(trigger, before[trigger.watch], value, now.max, item)) {
         fired.push({ item, trigger, delta: value - before[trigger.watch] });
       }
     }

@@ -5,6 +5,7 @@ import { getPowerCost, getPowerDangerHtml, paysPowerCost, payPowerCost } from '.
 import { lightFromPower, powerCreatesLight, putOutLight } from '../helpers/lights.mjs';
 import { getCompactMode, setCompactMode } from '../helpers/sheetPrefs.mjs';
 import { consumeSingleUsePower } from '../helpers/singleUsePowers.mjs';
+import { resolveFormula } from '../helpers/formulas.mjs';
 import { combineMultiplier, describeBoost, describeBoostPaid, getBoost, payBoost } from '../rolls/boost.mjs';
 import { useItem } from '../app/use-item.mjs';
 import { ACTOR_COUNTER_ACTIONS, getCounters, resetCounters, stepCounter } from '../helpers/counters.mjs';
@@ -446,14 +447,17 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     // Boost: mandatory ones always (also without the dialog), optional ones when ticked
     let finalMultiplier = multiplier;
     if (boost && (boost.mandatory || rollOptions.useBoost)) {
-      const paid = await payBoost(this.actor, boost);
+      const paid = await payBoost(this.actor, boost, item);
       if (paid === null) return;
       finalMultiplier = combineMultiplier(multiplier, boost);
-      if (boost.extra && foundry.dice.Roll.validate(boost.extra)) modPart += `+${boost.extra}`;
+      // Extra and damage can read counters and other values (@item.counters.kills.value)
+      const boostExtra = resolveFormula(boost.extra, { item, actor: this.actor });
+      const boostDamage = resolveFormula(boost.damage, { item, actor: this.actor });
+      if (boostExtra && foundry.dice.Roll.validate(boostExtra)) modPart += `+${boostExtra}`;
       // The damage becomes the boost's formula (both hands)
-      if (boost.damage && foundry.dice.Roll.validate(boost.damage)) {
-        formula = boost.damage;
-        if (versatileFormula) versatileFormula = boost.damage;
+      if (boostDamage && foundry.dice.Roll.validate(boostDamage)) {
+        formula = boostDamage;
+        if (versatileFormula) versatileFormula = boostDamage;
       }
       title = `${title} (${describeBoostPaid(boost, paid)})`;
     }

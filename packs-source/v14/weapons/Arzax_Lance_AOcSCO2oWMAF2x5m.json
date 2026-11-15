@@ -85,14 +85,14 @@
       {
         "roll": "attack",
         "condition": "natural",
-        "value": 13,
+        "value": "13",
         "text": "Stuns",
         "attack": "melee",
         "table": "",
         "effect": "g18ZiRTadCJeeJAR",
         "wear": "",
         "counter": "",
-        "counter_step": 1
+        "counter_step": "1"
       }
     ]
   },

@@ -2392,6 +2392,10 @@ input[type=radio]::after {
   width: 4em;
 }
 
+.sdm-triggers .sdm-trigger-actions input.sdm-trigger-amount {
+  width: 5em;
+}
+
 .sdm-triggers .sdm-trigger-actions input[type=number] {
   width: 3.5em;
 }

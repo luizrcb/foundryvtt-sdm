@@ -63,7 +63,8 @@ export function defineTriggersField() {
           'empty'
         ]
       }),
-      value: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 13 }),
+      // A number, or a formula reading counters and other values (@item.counters.kills.value; no dice)
+      value: new fields.StringField({ required: true, blank: true, initial: '13' }),
       text: new fields.StringField({ required: true, blank: true, initial: '' }),
       // A cost paid before the actions (life, an ability or hero dice; a formula), optionally asking first
       cost_resource: new fields.StringField({
@@ -99,7 +100,7 @@ export function defineTriggersField() {
       once: new fields.BooleanField({ required: true, initial: false }),
       // add (the step; negative lowers), set (to the step's number) or reset (to the counter's reset value)
       counter_mode: new fields.StringField({ required: true, blank: false, initial: 'add', choices: ['add', 'set', 'reset'] }),
-      counter_step: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 1 }),
+      counter_step: new fields.StringField({ required: true, blank: true, initial: '1' }),
       // Use a power: a power item or an album ('' none, '@self', or an identifier); which album power
       // (by name; blank: the album's selected one); free: no cast dialog and no cost
       cast: new fields.StringField({ required: true, blank: true, initial: '' }),
@@ -117,7 +118,7 @@ export function defineTriggersField() {
       light_item: new fields.StringField({ required: true, blank: true, initial: '@self' }),
       // Charges: spend, add or set an item's charges (or the uses of its uses counter)
       charges_mode: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'spend', 'add', 'set'] }),
-      charges_amount: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 1, min: 0 }),
+      charges_amount: new fields.StringField({ required: true, blank: true, initial: '1' }),
       charges_item: new fields.StringField({ required: true, blank: true, initial: '@self' })
     })
   );

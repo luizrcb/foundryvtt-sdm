@@ -86,14 +86,14 @@
       {
         "roll": "attack",
         "condition": "natural",
-        "value": 20,
+        "value": "20",
         "text": "Decapitate",
         "attack": "melee",
         "table": "",
         "effect": "",
         "wear": "",
         "counter": "",
-        "counter_step": 1
+        "counter_step": "1"
       }
     ]
   },

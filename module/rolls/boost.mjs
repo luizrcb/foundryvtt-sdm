@@ -1,5 +1,6 @@
 import { featureEnabled } from '../helpers/features.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
+import { resolveFormula } from '../helpers/formulas.mjs';
 
 /**
  * Damage boosts paid with a resource (Piezo Mace: spend 1d6 life for x2 damage; Noetic Blade:
@@ -51,17 +52,19 @@ export function describeBoostPaid(boost, amount) {
 }
 
 /** Roll and pay the cost. Returns the amount paid (0 for a free boost), or null when the actor cannot pay it. */
-export async function payBoost(actor, boost) {
+export async function payBoost(actor, boost, item = null) {
   if (isFreeBoost(boost)) return 0;
-  return payCost(actor, { resource: boost.resource, cost: boost.cost || '1' });
+  return payCost(actor, { resource: boost.resource, cost: boost.cost || '1', item });
 }
 
 /**
  * Roll a cost ("1d4") and take it from the actor: life (always paid), an ability's current score or
  * hero dice (refused when there is not enough). Posts what was paid; the amount, or null if unpaid.
  */
-export async function payCost(actor, { resource = 'life', cost = '1' } = {}) {
-  const roll = await new Roll(`${cost}`.trim() || '1', actor.getRollData()).evaluate();
+export async function payCost(actor, { resource = 'life', cost = '1', item = null } = {}) {
+  // The cost can read counters and other values (@item.counters.kills.value)
+  const formula = resolveFormula(`${cost}`.trim() || '1', { item, actor });
+  const roll = await new Roll(formula, actor.getRollData()).evaluate();
   const amount = Math.max(Number(roll.total) || 0, 0);
   const notEnough = () => {
     ui.notifications.warn($fmt('SDM.Cost.NotEnough', { resource: resourceLabel(resource) }));

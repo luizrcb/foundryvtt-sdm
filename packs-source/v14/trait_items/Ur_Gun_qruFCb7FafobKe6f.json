@@ -85,10 +85,10 @@
         "effect": "",
         "wear": "",
         "counter": "",
-        "counter_step": 1,
+        "counter_step": "1",
         "roll": "attack",
         "condition": "natural",
-        "value": 13,
+        "value": "13",
         "text": "Critical hit (if it would miss, it strikes the nearest reasonable target)"
       }
     ]

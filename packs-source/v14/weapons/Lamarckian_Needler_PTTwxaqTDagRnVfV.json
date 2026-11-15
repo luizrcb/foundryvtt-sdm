@@ -84,14 +84,14 @@
       {
         "roll": "damage",
         "condition": "max",
-        "value": 0,
+        "value": "0",
         "text": "Corrupted",
         "attack": "",
         "table": "",
         "effect": "",
         "wear": "",
         "counter": "",
-        "counter_step": 1
+        "counter_step": "1"
       }
     ]
   },

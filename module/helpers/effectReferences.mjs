@@ -97,9 +97,31 @@ export function resolveEffectReferences(value, context) {
   });
 }
 
+/**
+ * Replace the references in a formula (trigger, boost and consumable amounts) with their numbers, so
+ * they work in dice expressions: "(@item.counters.hits.value)d6", "1d@actor.level", "1d6 + @actor.level". A reference that does not resolve to a number counts as 0 (with a warning).
+ * @param {string} formula
+ * @param {object} context  { actor, item }
+ */
+export function resolveFormulaReferences(formula, context) {
+  const text = `${formula ?? ''}`;
+  if (!text.includes('@')) return text;
+  return text.replace(ANY, (full, itemsKey, itemsPath, scope, path) => {
+    const resolved =
+      itemsKey !== undefined ? resolveOne(context, null, itemsPath, itemsKey) : resolveOne(context, scope, path);
+    const number = Number(resolved);
+    if (resolved === undefined || resolved === null || resolved === '' || typeof resolved === 'object' || !Number.isFinite(number)) {
+      warnUnresolved(context, full);
+      return '0';
+    }
+    // Negative numbers in parentheses so "1d6 - @x" stays valid
+    return number < 0 ? `(${number})` : String(number);
+  });
+}
+
 /** Explain once per effect and reference which reference failed and how to write it. */
 function warnUnresolved({ effect, item, actor }, reference) {
-  const key = `${effect?.uuid}|${reference}`;
+  const key = `${effect?.uuid ?? item?.uuid}|${reference}`;
   if (warned.has(key)) return;
   warned.add(key);
   let hint = ' Check the path (e.g. @item.system.skill.rank or @items.trait:dodge.skill.rank).';
@@ -109,7 +131,9 @@ function warnUnresolved({ effect, item, actor }, reference) {
   } else if (/^@items\.[a-z]+:/.test(reference) && !ITEM_TYPES.includes(reference.slice(7).split(':')[0])) {
     hint = ` Unknown item type: use one of ${ITEM_TYPES.join(', ')}.`;
   }
-  console.warn(`SDM | Active Effect (${effect?.uuid ?? '?'}) could not resolve "${reference}".${hint}`);
+  const source = effect ? `Active Effect (${effect.uuid})` : `Item (${item?.uuid ?? '?'})`;
+  console.warn(`SDM | ${source} could not resolve "${reference}".${hint}`);
+  if (!effect) ui.notifications?.warn(`${item?.name ?? 'SDM'}: "${reference}" is not a number (counted as 0).`);
 }
 
 /** The reference other effects use for this item, and an example with one of its fields. */

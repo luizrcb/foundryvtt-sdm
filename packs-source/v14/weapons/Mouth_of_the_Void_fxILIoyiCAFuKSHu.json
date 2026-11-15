@@ -88,14 +88,14 @@
       {
         "roll": "attack",
         "condition": "natural",
-        "value": 13,
+        "value": "13",
         "text": "Stops a heart",
         "attack": "fantascience",
         "table": "",
         "effect": "",
         "wear": "",
         "counter": "",
-        "counter_step": 1
+        "counter_step": "1"
       }
     ]
   },
