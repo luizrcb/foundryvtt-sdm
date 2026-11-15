@@ -2398,6 +2398,10 @@ input[type='radio']::after {
       width: 12em;
     }
 
+    input.sdm-trigger-cost {
+      width: 4em;
+    }
+
     input[type='number'] {
       width: 3.5em;
     }

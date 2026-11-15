@@ -6,6 +6,7 @@ import { getUsesCounter, refillUsesUpdate, setUsesLeftUpdate, usesLeft } from '.
 import { featureEnabled } from '../helpers/features.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 import { hasPowerAlbum } from '../helpers/itemUtils.mjs';
+import { payCost, resourceLabel } from './boost.mjs';
 import { isLightSource, isLit, lightItem, putOutLight, toggleLight } from '../helpers/lights.mjs';
 
 /**
@@ -155,6 +156,8 @@ async function runActions(fired, { actor } = {}) {
     // Counter / charge triggers can scale their add and spend amounts by the size of the change
     const times = trigger.by_change && delta ? Math.abs(delta) : 1;
     try {
+      // A cost is paid first (once, whatever the change); unpaid or declined, the actions are skipped
+      if (!(await payTriggerCost(item, trigger, actor ?? item.actor))) continue;
       if (trigger.table) {
         const table = await fromUuid(trigger.table);
         if (table?.documentName === 'RollTable') await table.draw();
@@ -182,6 +185,36 @@ async function runActions(fired, { actor } = {}) {
       console.error('SDM | Trigger action failed', error);
     }
   }
+}
+
+/** Pay a trigger's cost (asking first if set); false when it is declined or cannot be paid. */
+async function payTriggerCost(item, trigger, actor) {
+  if (!trigger.cost_resource || !actor) return true;
+  const cost = `${trigger.cost ?? ''}`.trim() || '1';
+  const resource = resourceLabel(trigger.cost_resource);
+  const skip = key =>
+    ChatMessage.create({
+      speaker: ChatMessage.getSpeaker({ actor }),
+      content: `<p><i class="fa-solid fa-ban"></i> ${esc($fmt(key, { item: item.name, cost, resource }))}</p>`
+    });
+  if (trigger.cost_ask) {
+    const question = $fmt('SDM.Trigger.CostQuestion', { item: item.name, cost, resource });
+    const confirmed = await foundry.applications.api.DialogV2.confirm({
+      window: { title: item.name },
+      content: `<p>${esc(question)}</p>${trigger.text ? `<p><i>${esc(trigger.text)}</i></p>` : ''}`,
+      rejectClose: false
+    });
+    if (!confirmed) {
+      await skip('SDM.Trigger.CostDeclined');
+      return false;
+    }
+  }
+  const paid = await payCost(actor, { resource: trigger.cost_resource, cost });
+  if (paid === null) {
+    await skip('SDM.Trigger.CostUnpaid');
+    return false;
+  }
+  return true;
 }
 
 /** An item picked in a trigger: '@self' (the item holding the trigger) or an identifier on the actor. */

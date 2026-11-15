@@ -421,6 +421,12 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
         days: 'SDM.Use.DurationUnit.days',
         weeks: 'SDM.Use.DurationUnit.weeks'
       },
+      triggerCostResources: {
+        '': 'SDM.Trigger.WearNone',
+        life: 'SDM.Boost.Life',
+        ...CONFIG.SDM.abilities,
+        hero_die: 'SDM.Boost.HeroDie'
+      },
       triggerChargeModes: {
         '': 'SDM.Trigger.WearNone',
         spend: 'SDM.Trigger.ChargesMode.spend',

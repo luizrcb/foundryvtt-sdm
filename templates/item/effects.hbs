@@ -88,9 +88,18 @@
       <input class="sdm-counter-label" type="text" name="system.triggers.{{index}}.text" value="{{trigger.text}}" placeholder="{{localize 'SDM.Trigger.TextPlaceholder'}}" />
       {{#if @root.editable}}<a data-action="removeTrigger" data-index="{{index}}" data-tooltip="{{localize 'SDM.Trigger.Remove'}}"><i class="fa-solid fa-trash"></i></a>{{/if}}
     </div>
-    <details class="sdm-trigger-actions" {{#if (or trigger.table trigger.effect trigger.wear trigger.counter trigger.cast trigger.use trigger.light trigger.charges_mode)}}open{{/if}}>
+    <details class="sdm-trigger-actions" {{#if (or trigger.cost_resource trigger.table trigger.effect trigger.wear trigger.counter trigger.cast trigger.use trigger.light trigger.charges_mode)}}open{{/if}}>
       <summary>{{localize 'SDM.Trigger.Actions'}}</summary>
       <div class="sdm-counter-row">
+        <label data-tooltip="{{localize 'SDM.Trigger.CostHint'}}">{{localize 'SDM.Trigger.Cost'}}
+          <select name="system.triggers.{{index}}.cost_resource">{{selectOptions @root.triggerCostResources selected=trigger.cost_resource localize=true}}</select>
+          {{#if trigger.cost_resource}}
+          <input class="sdm-trigger-cost" type="text" name="system.triggers.{{index}}.cost" value="{{trigger.cost}}" placeholder="1" data-tooltip="{{localize 'SDM.Trigger.CostFormulaHint'}}" />
+          <span class="sdm-trigger-check" data-tooltip="{{localize 'SDM.Trigger.CostAskHint'}}"><input type="checkbox" name="system.triggers.{{index}}.cost_ask" {{checked trigger.cost_ask}} /> {{localize 'SDM.Trigger.CostAsk'}}</span>
+          {{else}}
+          <input type="hidden" name="system.triggers.{{index}}.cost" value="{{trigger.cost}}" />
+          <input type="hidden" name="system.triggers.{{index}}.cost_ask" value="{{trigger.cost_ask}}" data-dtype="Boolean" />
+          {{/if}}</label>
         <label data-tooltip="{{localize 'SDM.Trigger.TableHint'}}">{{localize 'SDM.Trigger.Table'}}
           <input class="sdm-trigger-table" type="text" name="system.triggers.{{index}}.table" value="{{trigger.table}}" placeholder="{{localize 'SDM.Trigger.TablePlaceholder'}}" /></label>
         <label data-tooltip="{{localize 'SDM.Trigger.EffectHint'}}">{{localize 'SDM.Trigger.Effect'}}

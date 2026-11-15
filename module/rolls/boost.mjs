@@ -14,7 +14,7 @@ export function getBoost(item) {
   return boost?.enabled ? boost : null;
 }
 
-const resourceLabel = resource =>
+export const resourceLabel = resource =>
   resource === 'life'
     ? $l10n('SDM.Boost.Life')
     : resource === 'hero_die'
@@ -53,33 +53,39 @@ export function describeBoostPaid(boost, amount) {
 /** Roll and pay the cost. Returns the amount paid (0 for a free boost), or null when the actor cannot pay it. */
 export async function payBoost(actor, boost) {
   if (isFreeBoost(boost)) return 0;
-  const roll = await new Roll(boost.cost || '1', actor.getRollData()).evaluate();
+  return payCost(actor, { resource: boost.resource, cost: boost.cost || '1' });
+}
+
+/**
+ * Roll a cost ("1d4") and take it from the actor: life (always paid), an ability's current score or
+ * hero dice (refused when there is not enough). Posts what was paid; the amount, or null if unpaid.
+ */
+export async function payCost(actor, { resource = 'life', cost = '1' } = {}) {
+  const roll = await new Roll(`${cost}`.trim() || '1', actor.getRollData()).evaluate();
   const amount = Math.max(Number(roll.total) || 0, 0);
-  if (boost.resource === 'life') {
+  const notEnough = () => {
+    ui.notifications.warn($fmt('SDM.Cost.NotEnough', { resource: resourceLabel(resource) }));
+    return null;
+  };
+  if (resource === 'life') {
     await actor.applyDamage(amount, 1, false, true);
-  } else if (boost.resource === 'hero_die') {
+  } else if (resource === 'hero_die') {
     const dice = Number(actor.system.hero_dice?.value) || 0;
-    if (dice < amount) {
-      ui.notifications.warn($l10n('SDM.Boost.NotEnough'));
-      return null;
-    }
+    if (dice < amount) return notEnough();
     await actor.update({ 'system.hero_dice.value': dice - amount });
   } else {
-    const ability = actor.system.abilities?.[boost.resource];
+    const ability = actor.system.abilities?.[resource];
     if (!ability) return null;
     const current = Number(ability.current) || 0;
-    if (current < amount) {
-      ui.notifications.warn($l10n('SDM.Boost.NotEnough'));
-      return null;
-    }
-    await actor.update({ [`system.abilities.${boost.resource}.current`]: current - amount });
+    if (current < amount) return notEnough();
+    await actor.update({ [`system.abilities.${resource}.current`]: current - amount });
   }
   await ChatMessage.create({
     speaker: ChatMessage.getSpeaker({ actor }),
     content: `<p><i class="fa-solid fa-bolt"></i> ${$fmt('SDM.Boost.Paid', {
       actor: actor.name,
       amount,
-      resource: resourceLabel(boost.resource)
+      resource: resourceLabel(resource)
     })}</p>`
   });
   return amount;

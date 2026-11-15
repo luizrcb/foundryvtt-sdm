@@ -65,6 +65,15 @@ export function defineTriggersField() {
       }),
       value: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 13 }),
       text: new fields.StringField({ required: true, blank: true, initial: '' }),
+      // A cost paid before the actions (life, an ability or hero dice; a formula), optionally asking first
+      cost_resource: new fields.StringField({
+        required: true,
+        blank: true,
+        initial: '',
+        choices: ['', 'life', 'str', 'end', 'agi', 'cha', 'aur', 'tho', 'hero_die']
+      }),
+      cost: new fields.StringField({ required: true, blank: true, initial: '' }),
+      cost_ask: new fields.BooleanField({ required: true, initial: false }),
       // Actions when it fires (all optional)
       table: new fields.StringField({ required: true, blank: true, initial: '' }),
       effect: new fields.StringField({ required: true, blank: true, initial: '' }),
