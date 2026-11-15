@@ -1,5 +1,5 @@
 {{! Character sheet v2 header. Keeps the same names and data-actions as actor/character/header. }}
-<header class="v2-header {{#if isEditMode}}is-edit{{/if}}">
+<header class="v2-header {{#if isEditMode}}is-edit{{/if}} {{#if (isDefeated @root.statuses)}}is-dead{{/if}}">
   <div class="v2-rail">
 
     {{! Identity }}
@@ -7,11 +7,11 @@
       <div class="v2-portrait">
         {{#if isToken}}<div class="token-tag">{{localize 'DOCUMENT.Token'}}</div>{{/if}}
         <img src="{{actor.img}}" data-edit="img" data-action="onEditImage" data-tooltip="{{actor.name}}" />
-        {{#if (isDefeated @root.statuses)}}<i class="fa fa-skull overlay-icon defeated-icon"></i>{{/if}}
+        {{#if (isDefeated @root.statuses)}}<i class="fa-solid fa-skull v2-dead-skull" inert></i>{{/if}}
       </div>
       <div class="v2-name">
         <label class="v2-label" for="v2-name-{{actor.id}}">
-          {{localize 'SDM.FieldName'}}{{#if (isDefeated @root.statuses)}} ({{localize 'SDM.DefeatOutcome2to6'}}){{/if}}
+          {{localize 'SDM.FieldName'}}{{#if (isDefeated @root.statuses)}} <span class="v2-dead-badge">{{localize 'SDM.DefeatOutcome2to6'}}</span>{{/if}}
         </label>
         <input id="v2-name-{{actor.id}}" class="v2-title" name="name" type="text" value="{{actor.name}}" placeholder="{{localize 'SDM.FieldName'}}"
           {{#unless isEditMode}}disabled{{/unless}} />
@@ -69,11 +69,18 @@
           {{/if}}
         </div>
         {{else}}
-        <button type="button" class="v2-card v2-relife rollable" data-action="relifeRoll" data-context="rollable"
-          data-tooltip="{{localize 'SDM.RollType' type=(localize 'SDM.Relife')}}">
-          <span class="v2-card-title">{{localize 'SDM.Relife'}}</span>
-          <i class="fa-solid fa-kit-medical blood"></i>
-        </button>
+        {{! Dead: the life card becomes the relife card }}
+        <div class="v2-card v2-dead">
+          <div class="v2-card-head">
+            <span class="v2-card-title"><i class="fa-solid fa-skull"></i> {{localize 'SDM.DefeatOutcome2to6'}}</span>
+            <span class="v2-dead-life" data-tooltip="{{localize 'SDM.FieldLifeMax'}}">{{localize 'SDM.FieldLifeMax'}} {{system.life.value}} / {{system.life.max}}</span>
+          </div>
+          <button type="button" class="v2-relife-btn rollable" data-action="relifeRoll" data-context="rollable"
+            data-tooltip="{{localize 'SDM.RollType' type=(localize 'SDM.Relife')}}" {{#unless @root.editable}}disabled{{/unless}}>
+            <i class="fa-solid fa-kit-medical"></i> {{localize 'SDM.RelifeRoll'}}
+          </button>
+          <span class="v2-dead-options">{{localize 'SDM.RelifeTypeBody'}} · {{localize 'SDM.RelifeTypeHead'}} · {{localize 'SDM.RelifeTypeJewel'}} · {{localize 'SDM.RelifeTypeShattered'}}</span>
+        </div>
         {{/if}}
 
         <div class="v2-card v2-defense">

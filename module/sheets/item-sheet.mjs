@@ -334,7 +334,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
         save: 'SDM.Trigger.Roll.save',
         ability: 'SDM.Trigger.Roll.ability',
         defeat: 'SDM.Trigger.Roll.defeat',
-        counter: 'SDM.Trigger.Roll.counter'
+        counter: 'SDM.Trigger.Roll.counter',
+        charges: 'SDM.Trigger.Roll.charges'
       },
       triggerCounterModes: {
         add: 'SDM.Trigger.CounterMode.add',
@@ -365,7 +366,12 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
         failure: 'SDM.Trigger.Option.failure',
         counterMax: 'SDM.Trigger.Option.counterMax',
         runningLow: 'SDM.Trigger.Option.runningLow',
-        runOut: 'SDM.Trigger.Option.runOut'
+        runOut: 'SDM.Trigger.Option.runOut',
+        changes: 'SDM.Trigger.Option.changes',
+        increases: 'SDM.Trigger.Option.increases',
+        decreases: 'SDM.Trigger.Option.decreases',
+        full: 'SDM.Trigger.Option.full',
+        empty: 'SDM.Trigger.Option.empty'
       },
       triggerWear: {
         '': 'SDM.Trigger.WearNone',
@@ -382,6 +388,16 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
         ['', ''],
         ...Object.entries(this.item.system.counters ?? {}).map(([key, counter]) => [key, counter.label])
       ]),
+      // The owner's counters (character, NPC); keys used by the triggers stay listed when missing
+      triggerActorCounters: Object.fromEntries([
+        ['', ''],
+        ...Object.entries(this.item.actor?.system?.counters ?? {}).map(([key, counter]) => [key, counter.label]),
+        ...(this.item.system.triggers ?? [])
+          .flatMap(t => [t.watch_scope === 'actor' ? t.watch : '', t.counter_scope === 'actor' ? t.counter : ''])
+          .filter(key => key && !this.item.actor?.system?.counters?.[key])
+          .map(key => [key, key])
+      ]),
+      triggerScopes: { '': 'SDM.Trigger.Scope.item', actor: 'SDM.Trigger.Scope.actor' },
       triggerFrom: { '': 'SDM.Trigger.From.self', any: 'SDM.Trigger.From.any', item: 'SDM.Trigger.From.item' },
       // Consumables (Use)
       // Nothing picked shows empty (any ability / until removed), not a default choice

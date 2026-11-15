@@ -151,7 +151,9 @@ export async function runTriggerActions(fired, { actor } = {}) {
 }
 
 async function runActions(fired, { actor } = {}) {
-  for (const { item, trigger } of fired) {
+  for (const { item, trigger, delta = 0 } of fired) {
+    // Counter / charge triggers can scale their add and spend amounts by the size of the change
+    const times = trigger.by_change && delta ? Math.abs(delta) : 1;
     try {
       if (trigger.table) {
         const table = await fromUuid(trigger.table);
@@ -163,15 +165,17 @@ async function runActions(fired, { actor } = {}) {
         });
       }
       if (trigger.wear) await wearItem(item, trigger.wear);
-      if (trigger.counter && item.system.counters?.[trigger.counter]) {
-        const mode = trigger.counter_mode || 'add';
-        if (mode === 'reset') await resetCounters(item, { key: trigger.counter });
-        else if (mode === 'set') await setCounter(item, trigger.counter, Number(trigger.counter_step) || 0);
-        else await stepCounter(item, trigger.counter, Number(trigger.counter_step) || 1);
-      }
       const roller = actor ?? item.actor;
+      // The counter of this item, or of its owner
+      const counterDoc = trigger.counter_scope === 'actor' ? item.actor ?? roller : item;
+      if (trigger.counter && counterDoc?.system?.counters?.[trigger.counter]) {
+        const mode = trigger.counter_mode || 'add';
+        if (mode === 'reset') await resetCounters(counterDoc, { key: trigger.counter });
+        else if (mode === 'set') await setCounter(counterDoc, trigger.counter, Number(trigger.counter_step) || 0);
+        else await stepCounter(counterDoc, trigger.counter, (Number(trigger.counter_step) || 1) * times);
+      }
       if (trigger.light && featureEnabled('lights')) await lightAction(item, roller, trigger);
-      if (trigger.charges_mode) await chargesAction(item, roller, trigger);
+      if (trigger.charges_mode) await chargesAction(item, roller, trigger, times);
       if (trigger.use) await useAction(item, roller, trigger);
       if (trigger.cast) await castAction(item, roller, trigger);
     } catch (error) {
@@ -216,10 +220,12 @@ export function hasCharges(item) {
  * maximum. Like spending elsewhere: one left of several is running low, none is run out, and getting
  * charges back clears the mark (items with replenish keep the marks of their usage rolls).
  */
-async function chargesAction(holder, actor, trigger) {
+async function chargesAction(holder, actor, trigger, times = 1) {
   const target = resolveTriggerItem(holder, actor, trigger.charges_item || '@self', hasCharges);
   if (!target) return missingItem(holder, trigger.charges_item || '@self');
-  const amount = Math.max(Number(trigger.charges_amount) || 0, 0);
+  // "Set" uses the number as it is; spend / add follow the size of the change when asked
+  const base = Math.max(Number(trigger.charges_amount) || 0, 0);
+  const amount = trigger.charges_mode === 'set' ? base : base * times;
   const next = current => (trigger.charges_mode === 'set' ? amount : trigger.charges_mode === 'add' ? current + amount : current - amount);
 
   // Uses kept in a counter: the counter follows, and its marks are set when it changes
@@ -311,11 +317,13 @@ async function wearItem(item, wear) {
 
 export function describeCondition(trigger, item = null) {
   const text = $fmt(`SDM.Trigger.Condition.${trigger.condition}`, { value: trigger.value });
-  // Counter triggers name the counter: "Kills: total 5+"
+  // Counter triggers name the counter: "Kills: total 5+"; charge triggers say "Charges"
   if (trigger.roll === 'counter') {
-    const label = item?.system?.counters?.[trigger.watch]?.label ?? trigger.watch;
+    const owner = trigger.watch_scope === 'actor' ? item?.actor : item;
+    const label = owner?.system?.counters?.[trigger.watch]?.label ?? trigger.watch;
     return `${label}: ${text}`;
   }
+  if (trigger.roll === 'charges') return `${$l10n('SDM.Trigger.Charges')}: ${text}`;
   return text;
 }
 
@@ -339,58 +347,128 @@ async function setCounter(item, key, value) {
   if (next !== counter.value) await item.update({ [`system.counters.${key}.value`]: next });
 }
 
-/* ---------- Counter triggers: fire when a watched counter's condition becomes true ---------- */
+/* ---------- Counter and charge triggers ---------- */
 
-function counterMatches(trigger, counter) {
-  const value = Number(counter?.value) || 0;
-  switch (trigger.condition) {
+/** A threshold condition on a value (with its maximum): =, ≥, ≤, full, empty. */
+function thresholdMatches(condition, target, value, max) {
+  const hasMax = Number.isFinite(max) && max !== null && max > 0;
+  switch (condition) {
     case 'total':
-      return value === trigger.value;
+      return value === target;
     case 'totalAtLeast':
-      return value >= trigger.value;
+      return value >= target;
     case 'totalAtMost':
-      return value <= trigger.value;
+      return value <= target;
     case 'counterMax':
-      return Number.isFinite(counter?.max) && counter.max !== null && value >= counter.max;
+    case 'full':
+      return hasMax && value >= max;
+    case 'empty':
+      return value <= 0;
     default:
       return false;
   }
 }
 
-/** Before an update: remember the counter values that are about to change. */
-function onPreUpdateItemCounters(item, changes, options) {
-  const changed = foundry.utils.getProperty(changes, 'system.counters');
-  if (!changed || typeof changed !== 'object') return;
-  const before = {};
-  for (const key of Object.keys(changed)) {
-    const counter = item.system?.counters?.[key];
-    if (counter) before[key] = { value: counter.value, max: counter.max };
+/**
+ * Does a change of a counter or of charges fire this trigger? Changes / increases / decreases fire on
+ * every change; thresholds fire once, when they become true.
+ */
+function changeMatches(trigger, before, now, max) {
+  if (before === now) return false;
+  switch (trigger.condition) {
+    case 'changes':
+      return true;
+    case 'increases':
+      return now > before;
+    case 'decreases':
+      return now < before;
+    default:
+      return (
+        !thresholdMatches(trigger.condition, trigger.value, before, max) &&
+        thresholdMatches(trigger.condition, trigger.value, now, max)
+      );
   }
-  if (Object.keys(before).length) options.sdmCountersBefore = before;
 }
 
-/** After the update: fire the counter triggers whose condition just became true (once per crossing). */
-async function onUpdateItemCounters(item, changes, options, userId) {
-  const before = options?.sdmCountersBefore;
-  if (!before || userId !== game.user.id) return;
-  if (!featureEnabled('triggers') || !featureEnabled('counters')) return;
-  if (chainDepth >= MAX_CHAIN) return;
-  const fired = [];
-  for (const trigger of item.system.triggers ?? []) {
-    if (trigger.roll !== 'counter' || !trigger.watch || !(trigger.watch in before)) continue;
-    const now = item.system.counters?.[trigger.watch];
-    if (!now) continue;
-    if (!counterMatches(trigger, before[trigger.watch]) && counterMatches(trigger, now)) fired.push({ item, trigger });
+/** Before an update: remember the counter values (and charges) that are about to change. */
+function rememberBefore(doc, changes, options, key) {
+  const changed = foundry.utils.getProperty(changes, 'system.counters');
+  if (changed && typeof changed === 'object') {
+    const before = {};
+    for (const counterKey of Object.keys(changed)) {
+      const counter = doc.system?.counters?.[counterKey];
+      if (counter) before[counterKey] = Number(counter.value) || 0;
+    }
+    if (Object.keys(before).length) options[key] = before;
   }
+}
+
+function onPreUpdateItemCounters(item, changes, options) {
+  rememberBefore(item, changes, options, 'sdmCountersBefore');
+  if (foundry.utils.getProperty(changes, 'system.charges.value') !== undefined) {
+    options.sdmChargesBefore = Number(item.system?.charges?.value) || 0;
+  }
+}
+
+function onPreUpdateActorCounters(actor, changes, options) {
+  rememberBefore(actor, changes, options, 'sdmActorCountersBefore');
+}
+
+async function fireChangeTriggers(fired, actor) {
   if (!fired.length) return;
   await ChatMessage.create({
-    speaker: ChatMessage.getSpeaker({ actor: item.actor }),
+    speaker: ChatMessage.getSpeaker({ actor }),
     content: renderTriggers(fired)
   });
-  await runTriggerActions(fired, { actor: item.actor });
+  await runTriggerActions(fired, { actor });
+}
+
+/** After an item update: its own counter triggers and its charge triggers. */
+async function onUpdateItemCounters(item, changes, options, userId) {
+  if (userId !== game.user.id || !featureEnabled('triggers') || chainDepth >= MAX_CHAIN) return;
+  const counters = featureEnabled('counters') ? options?.sdmCountersBefore : null;
+  const charges = options?.sdmChargesBefore;
+  if (!counters && charges === undefined) return;
+  const fired = [];
+  for (const trigger of item.system.triggers ?? []) {
+    if (trigger.roll === 'counter' && counters && trigger.watch_scope !== 'actor' && trigger.watch in counters) {
+      const now = item.system.counters?.[trigger.watch];
+      if (!now) continue;
+      const before = counters[trigger.watch];
+      const value = Number(now.value) || 0;
+      if (changeMatches(trigger, before, value, now.max)) fired.push({ item, trigger, delta: value - before });
+    } else if (trigger.roll === 'charges' && charges !== undefined) {
+      const value = Number(item.system.charges?.value) || 0;
+      const max = Number(item.system.charges?.max) || 0;
+      if (changeMatches(trigger, charges, value, max)) fired.push({ item, trigger, delta: value - charges });
+    }
+  }
+  await fireChangeTriggers(fired, item.actor);
+}
+
+/** After an actor update: triggers of its readied gear, traits and burdens watching its counters. */
+async function onUpdateActorCounters(actor, changes, options, userId) {
+  const before = options?.sdmActorCountersBefore;
+  if (!before || userId !== game.user.id) return;
+  if (!featureEnabled('triggers') || !featureEnabled('counters') || chainDepth >= MAX_CHAIN) return;
+  const fired = [];
+  for (const item of watchingItems(actor)) {
+    for (const trigger of item.system?.triggers ?? []) {
+      if (trigger.roll !== 'counter' || trigger.watch_scope !== 'actor' || !(trigger.watch in before)) continue;
+      const now = actor.system.counters?.[trigger.watch];
+      if (!now) continue;
+      const value = Number(now.value) || 0;
+      if (changeMatches(trigger, before[trigger.watch], value, now.max)) {
+        fired.push({ item, trigger, delta: value - before[trigger.watch] });
+      }
+    }
+  }
+  await fireChangeTriggers(fired, actor);
 }
 
 export function setupTriggers() {
   Hooks.on('preUpdateItem', onPreUpdateItemCounters);
   Hooks.on('updateItem', onUpdateItemCounters);
+  Hooks.on('preUpdateActor', onPreUpdateActorCounters);
+  Hooks.on('updateActor', onUpdateActorCounters);
 }

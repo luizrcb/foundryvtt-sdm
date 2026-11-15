@@ -15,13 +15,14 @@ export function defineTriggersField() {
         required: true,
         blank: false,
         initial: 'attack',
-        choices: ['attack', 'damage', 'power', 'usage', 'save', 'ability', 'defeat', 'counter']
+        choices: ['attack', 'damage', 'power', 'usage', 'save', 'ability', 'defeat', 'counter', 'charges']
       }),
       // Item rolls (damage, power, usage): whose rolls fire it: this item (''), any item, or one item
       from: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'any', 'item'] }),
       from_item: new fields.StringField({ required: true, blank: true, initial: '' }),
-      // Counter triggers: which of the item's counters is watched
+      // Counter triggers: which counter is watched, the item's own ('') or its owner's ('actor')
       watch: new fields.StringField({ required: true, blank: true, initial: '' }),
+      watch_scope: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'actor'] }),
       // Attack triggers: which attacks ('' any)
       attack: new fields.StringField({
         required: true,
@@ -52,7 +53,13 @@ export function defineTriggersField() {
           'failure',
           'counterMax',
           'runningLow',
-          'runOut'
+          'runOut',
+          // Counters and charges: every change, every rise, every drop; full / empty once per crossing
+          'changes',
+          'increases',
+          'decreases',
+          'full',
+          'empty'
         ]
       }),
       value: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 13 }),
@@ -74,6 +81,10 @@ export function defineTriggersField() {
         choices: ['', 'notch', 'break', 'running_low', 'run_out', 'repair', 'repair_full', 'recharge']
       }),
       counter: new fields.StringField({ required: true, blank: true, initial: '' }),
+      // The counter action changes this item's counter ('') or the owner's ('actor')
+      counter_scope: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'actor'] }),
+      // Counter / charge triggers: add and spend amounts are multiplied by the size of the change
+      by_change: new fields.BooleanField({ required: true, initial: false }),
       // add (the step; negative lowers), set (to the step's number) or reset (to the counter's reset value)
       counter_mode: new fields.StringField({ required: true, blank: false, initial: 'add', choices: ['add', 'set', 'reset'] }),
       counter_step: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 1 }),

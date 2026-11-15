@@ -349,11 +349,82 @@ $v2-wide: 1100px;
     }
   }
 
-  .v2-relife {
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    font-size: 18px;
+  // Dead: the life card becomes the relife card; portrait greyed with a skull
+  .v2-dead {
+    border-color: #8b1e1e;
+    gap: 8px;
+
+    .v2-card-title i {
+      color: #8b1e1e;
+    }
+    .v2-dead-life {
+      font-size: 12px;
+      color: var(--v2-muted);
+      opacity: 0.8;
+    }
+    .v2-relife-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      width: 100%;
+      padding: 6px 10px;
+      border: 2px solid #8b1e1e;
+      border-radius: 999px;
+      background: transparent;
+      color: var(--v2-ink);
+      font: inherit;
+      font-family: var(--sdm-font-primary);
+      font-size: 17px;
+      cursor: pointer;
+
+      i {
+        color: #8b1e1e;
+      }
+      &:hover:not([disabled]) {
+        background: rgba(139, 30, 30, 0.12);
+      }
+    }
+    .v2-dead-options {
+      font-size: 11px;
+      line-height: 1.3;
+      color: var(--v2-muted);
+    }
+  }
+
+  .v2-dead-badge {
+    display: inline-block;
+    margin-left: 6px;
+    padding: 0 8px;
+    border-radius: 999px;
+    background: #8b1e1e;
+    color: #fff;
+    font-size: 10px;
+    letter-spacing: 0.08em;
+    vertical-align: middle;
+  }
+
+  &.is-dead,
+  .is-dead {
+    .v2-portrait img {
+      filter: grayscale(1) brightness(0.75);
+    }
+  }
+
+  .v2-portrait .v2-dead-skull {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    display: block;
+    width: auto;
+    margin: 0;
+    line-height: 1;
+    font-size: 38px;
+    color: #fff;
+    opacity: 0.75;
+    text-shadow: 0 0 6px rgba(0, 0, 0, 0.6);
+    pointer-events: none;
   }
 
   .v2-defense-row {

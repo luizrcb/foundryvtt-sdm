@@ -48,8 +48,10 @@
       <input type="hidden" name="system.triggers.{{index}}.ability" value="{{trigger.ability}}" />
       {{/if}}
       {{#if (eq trigger.roll 'counter')}}
-      <select name="system.triggers.{{index}}.watch" data-tooltip="{{localize 'SDM.Trigger.WatchHint'}}">{{selectOptions @root.triggerCounters selected=trigger.watch}}</select>
+      <select name="system.triggers.{{index}}.watch_scope" data-tooltip="{{localize 'SDM.Trigger.ScopeHint'}}">{{selectOptions @root.triggerScopes selected=trigger.watch_scope localize=true}}</select>
+      <select name="system.triggers.{{index}}.watch" data-tooltip="{{localize 'SDM.Trigger.WatchHint'}}">{{#if (eq trigger.watch_scope 'actor')}}{{selectOptions @root.triggerActorCounters selected=trigger.watch}}{{else}}{{selectOptions @root.triggerCounters selected=trigger.watch}}{{/if}}</select>
       {{else}}
+      <input type="hidden" name="system.triggers.{{index}}.watch_scope" value="{{trigger.watch_scope}}" />
       <input type="hidden" name="system.triggers.{{index}}.watch" value="{{trigger.watch}}" />
       {{/if}}
       {{#if (or (eq trigger.roll 'damage') (eq trigger.roll 'power') (eq trigger.roll 'usage'))}}
@@ -68,10 +70,15 @@
       <input type="hidden" name="system.triggers.{{index}}.power" value="{{trigger.power}}" />
       {{/if}}
       <select name="system.triggers.{{index}}.condition">{{selectOptions @root.triggerConditions selected=trigger.condition localize=true}}</select>
-      {{#if (or (eq trigger.condition 'max') (eq trigger.condition 'min') (eq trigger.condition 'matching') (eq trigger.condition 'runningLow') (eq trigger.condition 'runOut') (eq trigger.condition 'success') (eq trigger.condition 'failure') (eq trigger.condition 'counterMax'))}}
+      {{#if (or (eq trigger.condition 'max') (eq trigger.condition 'min') (eq trigger.condition 'matching') (eq trigger.condition 'runningLow') (eq trigger.condition 'runOut') (eq trigger.condition 'success') (eq trigger.condition 'failure') (eq trigger.condition 'counterMax') (eq trigger.condition 'changes') (eq trigger.condition 'increases') (eq trigger.condition 'decreases') (eq trigger.condition 'full') (eq trigger.condition 'empty'))}}
       <input type="hidden" name="system.triggers.{{index}}.value" value="{{trigger.value}}" data-dtype="Number" />
       {{else}}
       <input type="number" name="system.triggers.{{index}}.value" value="{{trigger.value}}" data-dtype="Number" />
+      {{/if}}
+      {{#if (or (eq trigger.roll 'counter') (eq trigger.roll 'charges'))}}
+      <label class="sdm-trigger-check" data-tooltip="{{localize 'SDM.Trigger.ByChangeHint'}}"><input type="checkbox" name="system.triggers.{{index}}.by_change" {{checked trigger.by_change}} /> {{localize 'SDM.Trigger.ByChange'}}</label>
+      {{else}}
+      <input type="hidden" name="system.triggers.{{index}}.by_change" value="{{trigger.by_change}}" data-dtype="Boolean" />
       {{/if}}
       <input class="sdm-counter-label" type="text" name="system.triggers.{{index}}.text" value="{{trigger.text}}" placeholder="{{localize 'SDM.Trigger.TextPlaceholder'}}" />
       {{#if @root.editable}}<a data-action="removeTrigger" data-index="{{index}}" data-tooltip="{{localize 'SDM.Trigger.Remove'}}"><i class="fa-solid fa-trash"></i></a>{{/if}}
@@ -92,7 +99,8 @@
         <label>{{localize 'SDM.Trigger.WearLabel'}}
           <select name="system.triggers.{{index}}.wear">{{selectOptions @root.triggerWear selected=trigger.wear localize=true}}</select></label>
         <label>{{localize 'SDM.Trigger.Counter'}}
-          <select name="system.triggers.{{index}}.counter">{{selectOptions @root.triggerCounters selected=trigger.counter}}</select>
+          <select name="system.triggers.{{index}}.counter_scope" data-tooltip="{{localize 'SDM.Trigger.ScopeHint'}}">{{selectOptions @root.triggerScopes selected=trigger.counter_scope localize=true}}</select>
+          <select name="system.triggers.{{index}}.counter">{{#if (eq trigger.counter_scope 'actor')}}{{selectOptions @root.triggerActorCounters selected=trigger.counter}}{{else}}{{selectOptions @root.triggerCounters selected=trigger.counter}}{{/if}}</select>
           {{#if trigger.counter}}
           <select name="system.triggers.{{index}}.counter_mode">{{selectOptions @root.triggerCounterModes selected=trigger.counter_mode localize=true}}</select>
           {{else}}
