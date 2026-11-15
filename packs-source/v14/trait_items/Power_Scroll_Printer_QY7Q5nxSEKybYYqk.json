@@ -82,6 +82,23 @@
     "categories": [
       "noömagus",
       "power"
+    ],
+    "triggers": [
+      {
+        "roll": "usage",
+        "condition": "runOut",
+        "value": "13",
+        "text": "Sacrifice 1d6 life to refill",
+        "attack": "",
+        "table": "",
+        "effect": "",
+        "wear": "recharge",
+        "counter": "",
+        "counter_step": "1",
+        "cost_resource": "life",
+        "cost": "1d6",
+        "cost_ask": true
+      }
     ]
   },
   "effects": [],

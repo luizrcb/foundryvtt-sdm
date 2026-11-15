@@ -1000,7 +1000,11 @@ export class SdmItem extends Item {
     await this.update({ 'system.is_hallmark': !this.system.is_hallmark });
   }
 
-  async usageRoll(target = 0) {
+  /**
+   * Roll 1d20 against the replenish score. With `applyResult` the item is marked (running low / run
+   * out) before its triggers act, so a trigger can undo it ("spend 3 life to reload").
+   */
+  async usageRoll(target = 0, { applyResult = false, options = {} } = {}) {
     let roll = new Roll('1d20');
     roll = await roll.evaluate();
     const label = `[${$l10n('SDM.Item.UsageRoll')}] ${this.name}`;
@@ -1008,6 +1012,7 @@ export class SdmItem extends Item {
     // Usage roll triggers of this item ("backfires on a natural 1", "on run out…")
     const fired = itemRollTriggers(this, 'usage', roll, { usageTarget: Number(target) || 0 });
     await renderUsageResult({ roll, label, target }, { fromHeroDice: false, speaker, extraHtml: renderTriggers(fired) });
+    if (applyResult) await this.applyUsageResult(roll?.total, target, options);
     if (fired.length) await runTriggerActions(fired, { actor: this.actor });
     return roll;
   }
@@ -1029,14 +1034,18 @@ export class SdmItem extends Item {
     const target = Number(this.system.replenish?.value) || 0;
     if (this.system.resources === 'running_low') {
       await this.update({ 'system.resources': 'run_out' }, options);
+      // The last use runs it out without a roll: its "runs out" triggers still fire
+      const fired = itemRollTriggers(this, 'usage', { total: 0, dice: [] }, { usageTarget: Math.max(target, 1) }).filter(
+        ({ trigger }) => trigger.condition === 'runOut'
+      );
       await ChatMessage.create({
         speaker: ChatMessage.getSpeaker({ actor: this.actor }),
-        content: `<p><i class="fa-solid fa-battery-empty"></i> ${$fmt('SDM.Item.LastUse', { name: this.name })}</p>`
+        content: `<p><i class="fa-solid fa-battery-empty"></i> ${$fmt('SDM.Item.LastUse', { name: this.name })}</p>${renderTriggers(fired)}`
       });
+      if (fired.length) await runTriggerActions(fired, { actor: this.actor });
       return;
     }
-    const roll = await this.usageRoll(target);
-    await this.applyUsageResult(roll?.total, target, options);
+    await this.usageRoll(target, { applyResult: true, options });
   }
 
   async toggleItemStatus(action = '') {

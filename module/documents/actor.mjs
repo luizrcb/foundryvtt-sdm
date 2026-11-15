@@ -1655,8 +1655,7 @@ export class SdmActor extends Actor {
         },
         onClick: async (event, target) => {
           const item = this.sheet._getEmbeddedDocument(target);
-          const roll = await item.usageRoll(item.system.replenish.value);
-          await item.applyUsageResult(roll?.total);
+          await item.usageRoll(item.system.replenish.value, { applyResult: true });
         }
       },
       {

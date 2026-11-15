@@ -10,7 +10,7 @@
     "resources": "",
     "cost": 9000,
     "cost_frequency": "",
-    "description": "<p>Each time it wounds a foe, it roars and gains +3 on its next attack. Resets when you switch foes. Two-handed, it deals 1d12 damage.<br><em>(add each wound to the <strong>Wounds</strong> counter; reset it when you switch foes)</em></p>",
+    "description": "<p>Each time it wounds a foe, it roars and gains +3 on its next attack. Resets when you switch foes. Two-handed, it deals 1d12 damage.<br><em>(each damage roll adds a wound to the <strong>Wounds</strong> counter; reset it when you switch foes)</em></p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -90,7 +90,22 @@
         "reset_value": 0,
         "reset_on_combat_end": false
       }
-    }
+    },
+    "triggers": [
+      {
+        "roll": "damage",
+        "condition": "totalAtLeast",
+        "value": "1",
+        "text": "Wounds a foe: +3 on the next attack",
+        "attack": "",
+        "table": "",
+        "effect": "",
+        "wear": "",
+        "counter": "wounds",
+        "counter_step": "1",
+        "counter_mode": "add"
+      }
+    ]
   },
   "effects": [
     {

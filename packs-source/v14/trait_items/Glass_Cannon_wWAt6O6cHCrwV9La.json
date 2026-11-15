@@ -83,6 +83,23 @@
     },
     "categories": [
       "redlander"
+    ],
+    "triggers": [
+      {
+        "roll": "usage",
+        "condition": "runOut",
+        "value": "13",
+        "text": "Spend 3 life to reload",
+        "attack": "",
+        "table": "",
+        "effect": "",
+        "wear": "recharge",
+        "counter": "",
+        "counter_step": "1",
+        "cost_resource": "life",
+        "cost": "3",
+        "cost_ask": true
+      }
     ]
   },
   "effects": [],
