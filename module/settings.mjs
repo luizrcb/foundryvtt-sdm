@@ -1792,8 +1792,9 @@ export function setupInitialSettings() {
 }
 
 /**
- * Client settings (the system's menu and Foundry's window): a swatch of the chosen accent colour, and (with Dice So Nice) a button that rolls a
- * d20 and a d6 in the chosen colour's dice theme, only on this screen (no chat), before saving.
+ * Client settings (the system's menu and Foundry's window): a swatch of the chosen accent colour, and (with Dice So Nice) a button next to each
+ * dice colour list (chromatype, Dice So Nice chromatype, hero, blood, tourist, oracle) that rolls a d20
+ * and a d6 in the chosen theme, only on this screen (no chat), before saving.
  */
 export function addChromatypePreview(app, html) {
   const root = html instanceof HTMLElement ? html : html?.[0];
@@ -1810,7 +1811,12 @@ export function addChromatypePreview(app, html) {
   accent.after(swatch);
 
   if (!game.dice3d) return;
-  const addDiceButton = (select, colorOf) => {
+  // The dice colour picked in this window right now (not yet saved)
+  const chromatypeTheme = () => {
+    const color = dsnSelect && dsnSelect.value !== 'same' ? dsnSelect.value : accent.value;
+    return CHROMATYPE_COLORS[color] ? `sdm-${color}` : null;
+  };
+  const addDiceButton = (select, themeOf) => {
     const button = document.createElement('button');
     button.type = 'button';
     button.className = 'sdm-chromatype-dice';
@@ -1819,13 +1825,22 @@ export function addChromatypePreview(app, html) {
     button.innerHTML = '<i class="fa-solid fa-dice-d20"></i>';
     button.addEventListener('click', async event => {
       event.preventDefault();
-      const color = colorOf();
-      if (!CHROMATYPE_COLORS[color]) return;
-      const roll = await new Roll(`1d20[sdm-${color}] + 1d6[sdm-${color}]`).evaluate();
+      const theme = themeOf();
+      if (!theme) return;
+      const roll = await new Roll(`1d20[${theme}] + 1d6[${theme}]`).evaluate();
       await game.dice3d.showForRoll(roll);
     });
     (select.nextElementSibling?.classList.contains('sdm-chromatype-swatch') ? select.nextElementSibling : select).after(button);
   };
-  addDiceButton(accent, () => accent.value);
-  if (dsnSelect) addDiceButton(dsnSelect, () => (dsnSelect.value === 'same' ? accent.value : dsnSelect.value));
+  addDiceButton(accent, () => (CHROMATYPE_COLORS[accent.value] ? `sdm-${accent.value}` : null));
+  if (dsnSelect) addDiceButton(dsnSelect, chromatypeTheme);
+  // Hero, blood, tourist and oracle dice: their value is the theme; "same as the chromatype" previews
+  // the chromatype picked above
+  for (const key of ['hero_dice_style', 'blood_dice_style', 'tourist_dice_style', 'oracle_dice_style']) {
+    const select = root.querySelector(`select[name="${key}"], select[name="sdm.${key}"]`);
+    if (!select) continue;
+    addDiceButton(select, () =>
+      ['sdm-chromatype', 'sdm-chomatype'].includes(select.value) ? chromatypeTheme() : select.value || null
+    );
+  }
 }
