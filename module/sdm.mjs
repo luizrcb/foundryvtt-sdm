@@ -406,7 +406,7 @@ Hooks.on('createActor', async (actor, _options, _id) => {
 
 registerActiveEffectLimit();
 
-Hooks.on('updateItem', async item => {
+Hooks.on('updateItem', async (item, changes) => {
   const defaultCurrencyImage = game.settings.get('sdm', 'currencyImage') || DEFAULT_CASH_ICON;
   const defaultCurrencyName = game.settings.get('sdm', 'currencyName') || 'cash';
 
@@ -422,6 +422,13 @@ Hooks.on('updateItem', async item => {
     await item.deleteDialog();
     return;
   }
+
+  // A default icon follows the item's type, only when the type (or the cash size) changes: other
+  // updates (readied, quantity, a new item settling on a sheet) keep the image as it is
+  const typeChanged =
+    foundry.utils.hasProperty(changes ?? {}, 'system.type') ||
+    foundry.utils.hasProperty(changes ?? {}, 'system.size.unit');
+  if (!typeChanged) return;
 
   const updateData = {};
   if (
@@ -512,7 +519,7 @@ Hooks.on('updateItem', async item => {
     }
   }
 
-  await item.update(updateData);
+  if (Object.keys(updateData).length) await item.update(updateData);
 });
 
 // Effect expiry is handled by the core ActiveEffectRegistry (V14). Combat-based durations

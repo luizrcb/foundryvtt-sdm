@@ -1,7 +1,7 @@
 import { $l10n } from '../helpers/globalUtils.mjs';
 
 /**
- * Item Piles support, built in (it used to need the "Item Piles: WTF" companion module).
+ * Item Piles support, built in (it used to need the "Item Piles: SDM" companion module).
  * Registered when Item Piles is ready; nothing happens without it. If the old companion module is
  * still active it registers the same configuration, so the system leaves it to it and tells the
  * Referee it can be disabled.

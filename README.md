@@ -51,7 +51,7 @@ You can also use one of the following alternative installation methods:
 
 ## Add-on Modules Integration
 
-**Item Piles** works out of the box: the system configures it (currency, loot items, prices and quantities), so the old *Item Piles: WTF* companion module is no longer needed.
+**Item Piles** works out of the box: the system configures it (currency, loot items, prices and quantities), so the old *Item Piles: SDM* companion module is no longer needed.
 
 The WTF system provides companion add-on modules to integrate with the following:
 

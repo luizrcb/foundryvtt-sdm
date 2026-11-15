@@ -2736,7 +2736,7 @@
   "SDM.Pet.Imported": "{name} joined {actor} (Pets folder).",
   "SDM.Pet.Removed": "{name} was removed with {item}.",
   "SDM.Pet.SourceMissing": "{item}: its pet is no longer in the compendium. Unlink it and drop an actor.",
-  "SDM.ItemPiles.CompanionNotNeeded": "Item Piles support is now part of the WTF system: the \"Item Piles: WTF\" module is no longer needed. Disable it in Manage Modules (the system takes over).",
+  "SDM.ItemPiles.CompanionNotNeeded": "Item Piles support is now part of the WTF system: the \"Item Piles: SDM\" module is no longer needed. Disable it in Manage Modules (the system takes over).",
   "SDM.SettingsNpcVariability": "NPC variability (generator)",
   "SDM.SettingsNpcVariabilityHint": "Default variability of NPCs made with the NPC generator: each one gets an individual profile (life, defense, bonus, morale, damage, optional archetype) applied on top of its table, also when it levels up. None hides the options in the generator.",
   "SDM.SettingsNpcTokenVariability": "Unlinked NPC token variability",

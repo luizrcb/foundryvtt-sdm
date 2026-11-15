@@ -2736,7 +2736,7 @@
   "SDM.Pet.Imported": "{name} se juntou a {actor} (pasta Companheiros).",
   "SDM.Pet.Removed": "{name} foi removido junto com {item}.",
   "SDM.Pet.SourceMissing": "{item}: o companheiro não está mais no compêndio. Desvincule-o e solte um ator.",
-  "SDM.ItemPiles.CompanionNotNeeded": "O suporte ao Item Piles agora faz parte do sistema WTF: o módulo \"Item Piles: WTF\" não é mais necessário. Desative-o em Gerenciar Módulos (o sistema assume).",
+  "SDM.ItemPiles.CompanionNotNeeded": "O suporte ao Item Piles agora faz parte do sistema WTF: o módulo \"Item Piles: SDM\" não é mais necessário. Desative-o em Gerenciar Módulos (o sistema assume).",
   "SDM.SettingsNpcVariability": "Variabilidade de NPCs (gerador)",
   "SDM.SettingsNpcVariabilityHint": "Variabilidade padrão dos NPCs criados pelo gerador de NPCs: cada um recebe um perfil individual (vida, defesa, bônus, moral, dano e arquétipo opcional) aplicado sobre a tabela, também ao subir de nível. Nenhuma esconde as opções no gerador.",
   "SDM.SettingsNpcTokenVariability": "Variabilidade de tokens de NPC não vinculados",
