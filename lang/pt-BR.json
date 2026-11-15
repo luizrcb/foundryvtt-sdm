@@ -2729,5 +2729,11 @@
   "SDM.RollPreview.Rolls": "Rola",
   "SDM.RollPreview.NoRoll": "Sem rolagem: o poder vai para o chat",
   "SDM.ChromatypePreview": "Rolar um d20 e um d6 nesta cor (só você vê)",
-  "SDM.ChromatypePreviewD6": "Rolar um d6 nesta cor (só você vê)"
+  "SDM.ChromatypePreviewD6": "Rolar um d6 nesta cor (só você vê)",
+  "SDM.Pet.Folder": "Companheiros",
+  "SDM.Pet.CompendiumNeedsCompendiumActor": "Um item de companheiro em um compêndio só pode vincular um ator de compêndio.",
+  "SDM.Pet.FromCompendium": "Vem com {name}: ele é trazido ao mundo quando o item entra em um ator.",
+  "SDM.Pet.Imported": "{name} se juntou a {actor} (pasta Companheiros).",
+  "SDM.Pet.Removed": "{name} foi removido junto com {item}.",
+  "SDM.Pet.SourceMissing": "{item}: o companheiro não está mais no compêndio. Desvincule-o e solte um ator."
 }

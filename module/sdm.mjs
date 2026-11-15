@@ -61,6 +61,7 @@ import { restActor, setupRest } from './app/rest.mjs';
 import { setupTriggers } from './rolls/triggers.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { setupPetDropSocket } from './items/petItem.mjs';
+import { setupPetLinks } from './items/petLinks.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
 import { gm as gmMacros, player as playerMacros } from './macros/_module.mjs';
 import {
@@ -735,6 +736,7 @@ Hooks.once('init', function () {
 
   setupItemTransferSocket();
   setupPetDropSocket();
+  setupPetLinks();
   setupSettingsSocket();
   setupGroupCheckSocket();
   setupCaravanTokenControls();

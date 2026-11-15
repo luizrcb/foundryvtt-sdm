@@ -647,6 +647,11 @@ export class SdmItem extends Item {
     let title = `${$l10n(`TYPES.Item.${this.system.type}`)}: ${this.getNameTitle()}`;
     if (!this.system.pet) return title;
 
+    // Still in the compendium: it comes to the world when the item joins an actor
+    if (this.system.pet.startsWith('Compendium.')) {
+      const entry = fromUuidSync(this.system.pet);
+      if (entry) return `${title}<br><br><em>${$fmt('SDM.Pet.FromCompendium', { name: entry.name })}</em>`;
+    }
     const petDocument = fromUuidSync(this.system.pet);
     // Not loaded (deleted, or in a compendium): keep the title, say the pet isn't found
     if (!petDocument || !petDocument.system) return `${title}<br><br><em>${$l10n('SDM.Item.PetNotFound')}</em>`;

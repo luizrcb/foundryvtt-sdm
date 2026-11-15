@@ -1562,12 +1562,26 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     }
 
     const droppedActor = await fromUuid(data.uuid);
-    if (data.uuid.includes('Compendium')) {
-      ui.notifications.warn($l10n('SDM.WarningImportDroppedActor'));
-      return false;
+    if (droppedActor?.documentName !== 'Actor') return false;
+
+    // A compendium pet item (delivered ready to use) points at a compendium actor: nothing is
+    // imported now, each copy imports its own pet when it joins an actor. It keeps its own name and
+    // description; the actor's image replaces only the default pet icon.
+    if (this.item.pack) {
+      if (!droppedActor.pack) {
+        ui.notifications.warn($l10n('SDM.Pet.CompendiumNeedsCompendiumActor'));
+        return false;
+      }
+      await this.item.update({
+        'system.pet': droppedActor.uuid,
+        ...(this.item.img === DEFAULT_PET_ICON && { img: droppedActor.img })
+      });
+      return;
     }
 
     if (!this.item?.parent || this.item?.parent?.id === droppedActor.id) return false;
+    // A compendium actor dropped on an item of an actor: linked now, imported by the Referee
+    // (petLinks.mjs) into the "Pets" folder right after
 
     const { name: petName, img: petImg, system: petData } = droppedActor;
     const { biography: petBiography } = petData;
@@ -1583,7 +1597,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       'flags.sdm.originalDescription': originalDescription
     });
     // A character's pet is on its side
-    if (this.item.parent?.type === ActorType.CHARACTER) await makeNpcFriendly(droppedActor);
+    if (this.item.parent?.type === ActorType.CHARACTER && !droppedActor.pack) await makeNpcFriendly(droppedActor);
   }
 
   /**

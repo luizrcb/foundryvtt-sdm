@@ -2729,5 +2729,11 @@
   "SDM.RollPreview.Rolls": "Rolls",
   "SDM.RollPreview.NoRoll": "No roll: the power goes to chat",
   "SDM.ChromatypePreview": "Roll a d20 and a d6 in this colour (only you see them)",
-  "SDM.ChromatypePreviewD6": "Roll a d6 in this colour (only you see it)"
+  "SDM.ChromatypePreviewD6": "Roll a d6 in this colour (only you see it)",
+  "SDM.Pet.Folder": "Pets",
+  "SDM.Pet.CompendiumNeedsCompendiumActor": "A pet item in a compendium can only link an actor from a compendium.",
+  "SDM.Pet.FromCompendium": "Comes with {name}: it is brought into the world when the item joins an actor.",
+  "SDM.Pet.Imported": "{name} joined {actor} (Pets folder).",
+  "SDM.Pet.Removed": "{name} was removed with {item}.",
+  "SDM.Pet.SourceMissing": "{item}: its pet is no longer in the compendium. Unlink it and drop an actor."
 }
