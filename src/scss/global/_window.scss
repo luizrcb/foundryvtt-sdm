@@ -2386,6 +2386,15 @@ input[type='radio']::after {
     margin: 2px 0 0 4px;
     font-size: 12px;
 
+    // An action with a value: its label stands out (the controls keep their weight)
+    label.filled {
+      font-weight: bold;
+
+      > * {
+        font-weight: normal;
+      }
+    }
+
     summary {
       cursor: pointer;
       opacity: 0.75;
@@ -2464,12 +2473,18 @@ input[type='radio']::after {
   .sdm-range-note {
     flex-basis: 100%;
     color: #b8860b;
-  }
 
-  // What the actor has readied that reaches the target (attack rolls)
-  .sdm-range-reach {
-    flex-basis: 100%;
-    opacity: 0.8;
+    // Melee beyond close: open the ranged attack instead
+    .sdm-switch-ranged {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      width: auto;
+      margin: 4px 0 0;
+      padding: 0 8px;
+      line-height: 22px;
+      font-size: 12px;
+    }
   }
 
   &.warn code {
@@ -2533,6 +2548,22 @@ input[type='radio']::after {
   select {
     height: 1.7em;
     font-size: 11px;
+  }
+}
+
+// Item Effects tab: "Immune to" on one line, the conditions after the label
+.sdm-counters.sdm-immunities {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+
+  strong {
+    flex: 0 0 auto;
+  }
+
+  multi-select {
+    flex: 1 1 auto;
+    min-width: 0;
   }
 }
 

@@ -428,8 +428,8 @@ const isUnarmed = item =>
   item._stats?.compendiumSource === UnarmedDamageItem || item.getFlag?.('sdm', 'fromCompendium') === UnarmedDamageItem;
 
 /**
- * What the actor has readied and its range: weapons (no range = close), powers and the selected
- * power of a power album. Traits are always readied; of them, power traits are listed (traits have no
+ * What the actor has readied and can use, and its range: weapons (no range = close), powers and the
+ * selected power of a power album — not broken items, nor run-out ones unless they work run out. Traits are always readied; of them, power traits are listed (traits have no
  * features). Unarmed Damage is always listed and fits any of the four attacks: close in a melee attack,
  * short in the others (`attack` given), no range otherwise.
  */
@@ -457,6 +457,10 @@ export function attackItems(actor, attack = '') {
     // Gear counts when readied; traits are always readied, and only power traits can be used
     const isTrait = item.type === ItemType.TRAIT;
     if (isTrait ? item.system.type !== GearType.POWER : !item.system?.readied) continue;
+    // Like the inventory's roll buttons: a broken item can't be used, and a run-out one only when it
+    // works run out (and then not its album's powers)
+    const runOut = item.system.resources === 'run_out';
+    if (item.system.status === 'broken' || (runOut && !item.system.works_when_run_out)) continue;
     if (item.system.type === GearType.POWER) {
       entries.push({
         id: item.id,
@@ -473,7 +477,7 @@ export function attackItems(actor, attack = '') {
     const albumPowers = item.system.type === GearType.POWER_ALBUM || has(item, 'album') ? item.system.powers ?? [] : [];
     const albumPower = albumPowers[item.system.powers_current_index] ?? albumPowers[0];
     const isAlbum = item.system.type === GearType.POWER_ALBUM;
-    if (albumPower) {
+    if (albumPower && !runOut) {
       entries.push({
         id: isAlbum ? item.id : `${item.id}:album`,
         itemId: item.id,
@@ -506,6 +510,30 @@ export function attackItems(actor, attack = '') {
   return entries;
 }
 
+// What fits each attack (suggestions): melee and ranged take any weapon whose range fits (a
+// fantascience or oldtech weapon too, after the plain ones); the fantascience and oldtech attacks
+// are the restricted ones: their feature, or a power (oldtech uses oldtech items and powers)
+const ATTACK_FITS = {
+  melee: e => e.kind === 'weapon' && e.band === 0,
+  ranged: e => e.kind === 'weapon' && e.band >= 1,
+  fantascience: e => e.fantascience,
+  oldtech: e => e.oldtech || e.kind !== 'weapon'
+};
+
+/**
+ * Is this item a good one for that attack against the current target: it fits the attack (as the
+ * suggestion sees it, unarmed never) and, with a target, reaches it. Switch to Ranged keeps the item
+ * chosen in melee only then (a bow yes; a sword, fists or a short bow at long range no).
+ */
+export function itemSuitsAttack(actor, attack, itemId) {
+  const entry = attackItems(actor, attack).find(e => e.id === itemId);
+  if (!entry || entry.unarmed || !(ATTACK_FITS[attack] ?? (() => true))(entry)) return false;
+  const target = Array.from(game.user.targets ?? [])[0];
+  const source = tokenFor(actor);
+  const measured = target && source && target !== source ? measureTokens(source, target) : null;
+  return !measured || entry.band === null || entry.band >= measured.band;
+}
+
 /**
  * The item an attack is made with, preselected in the attack dialog: the attack's favorite (if it is
  * still readied), else a suggestion — with a target, the first fitting item that reaches it; else the
@@ -518,49 +546,24 @@ export function suggestAttackItem(actor, attack, entries = attackItems(actor, at
   if (actor?.type === ActorType.NPC) return '';
   const favorite = actor?.system?.[attack]?.favorite_item;
   if (favorite && entries.some(e => e.id === favorite)) return favorite;
-  const fits = {
-    // Fantascience and oldtech weapons are used through those attacks, not melee / ranged
-    melee: e => e.kind === 'weapon' && e.band === 0 && !e.fantascience && !e.oldtech,
-    ranged: e => e.kind === 'weapon' && e.band >= 1 && !e.fantascience && !e.oldtech,
-    fantascience: e => e.fantascience,
-    // Oldtech attacks use oldtech items and powers too
-    oldtech: e => e.oldtech || e.kind !== 'weapon'
-  }[attack] ?? (() => true);
+  const fits = ATTACK_FITS[attack] ?? (() => true);
   // Unarmed is the last resort: suggested only when nothing else fits
   const unarmed = entries.find(e => e.unarmed);
   entries = entries.filter(e => !e.unarmed);
-  const preferred = entries.filter(fits);
+  // Plain weapons before fantascience / oldtech ones in melee and ranged
+  const special = e => (['melee', 'ranged'].includes(attack) && (e.fantascience || e.oldtech) ? 1 : 0);
+  const preferred = entries.filter(fits).sort((a, b) => special(a) - special(b));
   const target = Array.from(game.user.targets ?? [])[0];
   const source = tokenFor(actor);
   const measured = target && source && target !== source ? measureTokens(source, target) : null;
   if (measured) {
     const reaches = e => e.band === null || e.band >= measured.band;
     // Fantascience and oldtech need an item that fits (its feature, or a power): no plain weapon
-    const fallback = ['fantascience', 'oldtech'].includes(attack)
-      ? null
-      : entries.find(e => reaches(e) && !e.fantascience && !e.oldtech);
+    const fallback = ['fantascience', 'oldtech'].includes(attack) ? null : entries.find(e => reaches(e) && e.kind === 'weapon');
     const pick = preferred.find(reaches) ?? fallback;
     if (pick) return pick.id;
   }
   return preferred[0]?.id ?? unarmed?.id ?? '';
-}
-
-function readiedReach(actor) {
-  return attackItems(actor).filter(e => e.band !== null && !e.unarmed);
-}
-
-/** "Reach: Rifle (long), Bow (medium) · Don't reach: Knife (close)" for a target zone. */
-function reachHtml(actor, band) {
-  const entries = readiedReach(actor);
-  if (!entries.length) return '';
-  const list = items => items.map(e => `${e.name} (${bandLabel(e.band)})`).join(', ');
-  const reach = entries.filter(e => e.band >= band).sort((a, b) => a.band - b.band);
-  const short = entries.filter(e => e.band < band).sort((a, b) => b.band - a.band);
-  const parts = [];
-  if (reach.length) parts.push(`${game.i18n.localize('SDM.Zones.Reach')}: ${list(reach)}`);
-  if (short.length) parts.push(`${game.i18n.localize('SDM.Zones.NoReach')}: ${list(short)}`);
-  if (!reach.length) parts.push(game.i18n.localize('SDM.Zones.NothingReaches'));
-  return `<div class="sdm-range-reach">${esc(parts.join(' · '))}</div>`;
 }
 
 /**
@@ -579,21 +582,25 @@ function rangeAdvice(measuredBand, rangeBand, throwing = false) {
 }
 
 /** The roll mode suggested for attacking the current target with an item entry (attackItems), or null. */
-export function attackRangeRollMode(actor, entry) {
+export function attackRangeRollMode(actor, entry, attack = '') {
   if (!entry || !setting('zoneRangeCheck', true) || !zonesActive()) return null;
   const target = Array.from(game.user.targets ?? [])[0];
   const source = tokenFor(actor);
   const measured = target && source && target !== source ? measureTokens(source, target) : null;
-  return measured ? rangeAdvice(measured.band, entry.band, entry.throwing)?.mode ?? null : null;
+  if (!measured) return null;
+  // A melee attack reaches close, whatever the item: beyond it the attack is the wrong one, not harder
+  if (attack === 'melee' && measured.band > 0) return null;
+  return rangeAdvice(measured.band, entry.band, entry.throwing)?.mode ?? null;
 }
 
 /**
  * A row for the roll preview: the target's zone and, when the weapon or power has a range, whether
- * it reaches. With `reach` (attack rolls, which aren't tied to a weapon) it also lists what the
- * actor has readied that reaches the target and what doesn't. No penalty is applied: the book
- * leaves modifiers to the Referee.
+ * it reaches (the attack dialog's With list shows each item's range). No penalty is applied: the book
+ * leaves modifiers to the Referee. `melee`: a melee attack, which reaches close whatever the item
+ * (a bow swung at someone): beyond close it says to use the ranged attack, with a Switch to Ranged
+ * button when `switchToRanged` (the attack dialog handles it).
  */
-export function targetRangeHtml(actor, { range = '', throwing = false, reach = false } = {}) {
+export function targetRangeHtml(actor, { range = '', throwing = false, melee = false, switchToRanged = false, rangedAbility = '' } = {}) {
   if (!setting('zoneRangeCheck', true) || !zonesActive()) return '';
   const target = Array.from(game.user.targets ?? [])[0];
   const source = tokenFor(actor);
@@ -603,12 +610,22 @@ export function targetRangeHtml(actor, { range = '', throwing = false, reach = f
   const units = canvas.scene.grid.units ?? '';
   const shown = `${bandLabel(measured.band)} · ~${Math.round(measured.units * 10) / 10}${units ? ` ${units}` : ''}`;
   const max = ZONE_BANDS.indexOf(`${range ?? ''}`.trim().toLowerCase());
-  const note = rangeAdvice(measured.band, max >= 0 ? max : null, throwing)?.note ?? '';
+  const meleeTooFar = melee && measured.band > 0;
+  const note = meleeTooFar
+    ? game.i18n.format(rangedAbility ? 'SDM.Zones.MeleeOnlyCloseAbility' : 'SDM.Zones.MeleeOnlyClose', {
+        name: target.name,
+        zone: bandLabel(measured.band),
+        ability: rangedAbility
+      })
+    : rangeAdvice(measured.band, max >= 0 ? max : null, throwing)?.note ?? '';
+  const switchButton =
+    meleeTooFar && switchToRanged
+      ? ` <button type="button" class="sdm-switch-ranged"><i class="fa-solid fa-bullseye"></i> ${esc(game.i18n.localize('SDM.Zones.SwitchToRanged'))}</button>`
+      : '';
   return (
     `<div class="sdm-roll-preview-row sdm-range-row${note ? ' warn' : ''}">` +
     `<span>${esc(game.i18n.format('SDM.Zones.Target', { name: target.name }))}</span> <code>${esc(shown)}</code>` +
-    (reach ? reachHtml(actor, measured.band) : '') +
-    (note ? `<div class="sdm-range-note"><i class="fa-solid fa-triangle-exclamation"></i> ${esc(note)}</div>` : '') +
+    (note ? `<div class="sdm-range-note"><i class="fa-solid fa-triangle-exclamation"></i> ${esc(note)}${switchButton}</div>` : '') +
     `</div>`
   );
 }

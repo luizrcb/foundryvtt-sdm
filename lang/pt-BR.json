@@ -2877,9 +2877,6 @@
   "SDM.Zones.SpeedOneZone": "1 zona por rodada",
   "SDM.Zones.SpeedZones": "{zones} zonas por rodada",
   "SDM.Zones.SpeedEvery": "1 zona a cada {rounds} rodadas",
-  "SDM.Zones.Reach": "Alcançam",
-  "SDM.Zones.NoReach": "Não alcançam",
-  "SDM.Zones.NothingReaches": "nada preparado alcança o alvo",
   "SDM.Zones.Highlight": "Botão de zonas no HUD do token",
   "SDM.Zones.HighlightHint": "Um botão no HUD do token mostra as zonas ao redor dele no mapa: perto (verde), curto (amarelo), médio (laranja); além disso é longo. Só quem clicou vê; elas acompanham o token e somem quando ele é desselecionado.",
   "SDM.Zones.HighlightButton": "Mostrar zonas: perto, curto, médio (só você vê)",
@@ -2968,5 +2965,8 @@
   "SDM.Immunity.Hint": "Condições que quem o porta não pode ter (equipamento só quando preparado). Colocar uma é recusado, com um aviso no chat.",
   "SDM.Immunity.Blocked": "{actor} é imune a {condition} ({item}).",
   "SDM.AttackFeature.IgniteButton": "Incendiar {target} (se inflamável e falhar na salvaguarda)",
-  "SDM.Trigger.Condition.always": "sempre"
+  "SDM.Trigger.Condition.always": "sempre",
+  "SDM.Zones.MeleeOnlyClose": "Um ataque corpo a corpo só alcança perto: {name} está no alcance {zone}. Use o ataque à distância.",
+  "SDM.Zones.SwitchToRanged": "Mudar para à distância",
+  "SDM.Zones.MeleeOnlyCloseAbility": "Um ataque corpo a corpo só alcança perto: {name} está no alcance {zone}. Use o ataque à distância ({ability})."
 }

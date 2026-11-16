@@ -2877,9 +2877,6 @@
   "SDM.Zones.SpeedOneZone": "1 zone per round",
   "SDM.Zones.SpeedZones": "{zones} zones per round",
   "SDM.Zones.SpeedEvery": "1 zone every {rounds} rounds",
-  "SDM.Zones.Reach": "Reach",
-  "SDM.Zones.NoReach": "Don't reach",
-  "SDM.Zones.NothingReaches": "nothing readied reaches the target",
   "SDM.Zones.Highlight": "Zones button in the Token HUD",
   "SDM.Zones.HighlightHint": "A button in the Token HUD shows the zones around the token on the map: close (green), short (yellow), medium (orange); beyond is long. Only the user who clicked sees them; they follow the token and go away when it is released.",
   "SDM.Zones.HighlightButton": "Show zones: close, short, medium (only you see them)",
@@ -2968,5 +2965,8 @@
   "SDM.Immunity.Hint": "Conditions its bearer can't get (gear only while readied). Putting one on is refused, with a chat note.",
   "SDM.Immunity.Blocked": "{actor} is immune to {condition} ({item}).",
   "SDM.AttackFeature.IgniteButton": "Set {target} on fire (if flammable and its save fails)",
-  "SDM.Trigger.Condition.always": "always"
+  "SDM.Trigger.Condition.always": "always",
+  "SDM.Zones.MeleeOnlyClose": "A melee attack only reaches close: {name} is at {zone}. Use the ranged attack.",
+  "SDM.Zones.SwitchToRanged": "Switch to Ranged",
+  "SDM.Zones.MeleeOnlyCloseAbility": "A melee attack only reaches close: {name} is at {zone}. Use the ranged attack ({ability})."
 }

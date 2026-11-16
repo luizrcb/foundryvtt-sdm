@@ -28,14 +28,10 @@
   {{/if}}
   {{!-- Conditions the bearer can't get (gear while readied, traits) --}}
   {{#if (or (eq item.type 'gear') (eq item.type 'trait'))}}
-  <div class="sdm-counters sdm-immunities">
-    <header>
-      <strong data-tooltip="{{localize 'SDM.Immunity.Hint'}}">{{localize 'SDM.Immunity.Title'}}</strong>
-    </header>
-    <div class="sdm-counter-row">
-      <multi-select name="system.immunities">{{selectOptions @root.useCureChoices selected=system.immunities}}</multi-select>
-    </div>
-  </div>
+  <label class="sdm-counters sdm-immunities" data-tooltip="{{localize 'SDM.Immunity.Hint'}}">
+    <strong>{{localize 'SDM.Immunity.Title'}}</strong>
+    <multi-select name="system.immunities">{{selectOptions @root.useCureChoices selected=system.immunities}}</multi-select>
+  </label>
   {{/if}}
 
   {{!-- Roll triggers shown on chat cards (gear, traits and burdens) --}}
@@ -102,10 +98,10 @@
       <input class="sdm-counter-label" type="text" name="system.triggers.{{index}}.text" value="{{trigger.text}}" placeholder="{{localize 'SDM.Trigger.TextPlaceholder'}}" />
       {{#if @root.editable}}<a data-action="removeTrigger" data-index="{{index}}" data-tooltip="{{localize 'SDM.Trigger.Remove'}}"><i class="fa-solid fa-trash"></i></a>{{/if}}
     </div>
-    <details class="sdm-trigger-actions" data-index="{{index}}" {{#if (or trigger.cost_resource trigger.table trigger.effect trigger.wear trigger.counter_scope trigger.counter trigger.cast trigger.use trigger.light trigger.charges_mode)}}open{{/if}}>
+    <details class="sdm-trigger-actions" data-index="{{index}}" {{#if (or trigger.cost_resource trigger.table trigger.effect trigger.wear trigger.counter_scope trigger.counter trigger.cast trigger.use trigger.light trigger.charges_mode trigger.status)}}open{{/if}}>
       <summary>{{localize 'SDM.Trigger.Actions'}}</summary>
       <div class="sdm-counter-row">
-        <label data-tooltip="{{localize 'SDM.Trigger.CostHint'}}">{{localize 'SDM.Trigger.Cost'}}
+        <label class="{{#if trigger.cost_resource}}filled{{/if}}" data-tooltip="{{localize 'SDM.Trigger.CostHint'}}">{{localize 'SDM.Trigger.Cost'}}
           <select name="system.triggers.{{index}}.cost_resource">{{selectOptions @root.triggerCostResources selected=trigger.cost_resource localize=true}}</select>
           {{#if trigger.cost_resource}}
           <input class="sdm-trigger-cost" type="text" name="system.triggers.{{index}}.cost" value="{{trigger.cost}}" placeholder="1" data-tooltip="{{localize 'SDM.Trigger.CostFormulaHint'}}" />
@@ -114,9 +110,9 @@
           <input type="hidden" name="system.triggers.{{index}}.cost" value="{{trigger.cost}}" />
           <input type="hidden" name="system.triggers.{{index}}.cost_ask" value="{{trigger.cost_ask}}" data-dtype="Boolean" />
           {{/if}}</label>
-        <label data-tooltip="{{localize 'SDM.Trigger.TableHint'}}">{{localize 'SDM.Trigger.Table'}}
+        <label class="{{#if trigger.table}}filled{{/if}}" data-tooltip="{{localize 'SDM.Trigger.TableHint'}}">{{localize 'SDM.Trigger.Table'}}
           <input class="sdm-trigger-table" type="text" name="system.triggers.{{index}}.table" value="{{trigger.table}}" placeholder="{{localize 'SDM.Trigger.TablePlaceholder'}}" /></label>
-        <label data-tooltip="{{localize 'SDM.Trigger.EffectHint'}}">{{localize 'SDM.Trigger.Effect'}}
+        <label class="{{#if trigger.effect}}filled{{/if}}" data-tooltip="{{localize 'SDM.Trigger.EffectHint'}}">{{localize 'SDM.Trigger.Effect'}}
           <select name="system.triggers.{{index}}.effect">{{selectOptions @root.triggerEffects selected=trigger.effect}}</select>
           {{!-- Details of an action only show once the action is picked --}}
           {{#if trigger.effect}}
@@ -124,7 +120,7 @@
           {{else}}
           <input type="hidden" name="system.triggers.{{index}}.effect_target" value="{{trigger.effect_target}}" />
           {{/if}}</label>
-        <label data-tooltip="{{localize 'SDM.Trigger.StatusHint'}}">{{localize 'SDM.Trigger.Status'}}
+        <label class="{{#if trigger.status}}filled{{/if}}" data-tooltip="{{localize 'SDM.Trigger.StatusHint'}}">{{localize 'SDM.Trigger.Status'}}
           <select name="system.triggers.{{index}}.status">{{selectOptions @root.triggerStatuses selected=trigger.status}}</select>
           {{#if trigger.status}}
           <select name="system.triggers.{{index}}.status_mode">{{selectOptions @root.triggerStatusModes selected=trigger.status_mode localize=true}}</select>
@@ -133,9 +129,9 @@
           <input type="hidden" name="system.triggers.{{index}}.status_mode" value="{{trigger.status_mode}}" />
           <input type="hidden" name="system.triggers.{{index}}.status_target" value="{{trigger.status_target}}" />
           {{/if}}</label>
-        <label>{{localize 'SDM.Trigger.WearLabel'}}
+        <label class="{{#if trigger.wear}}filled{{/if}}">{{localize 'SDM.Trigger.WearLabel'}}
           <select name="system.triggers.{{index}}.wear">{{selectOptions @root.triggerWear selected=trigger.wear localize=true}}</select></label>
-        <label>{{localize 'SDM.Trigger.Counter'}}
+        <label class="{{#if trigger.counter}}filled{{/if}}">{{localize 'SDM.Trigger.Counter'}}
           <select name="system.triggers.{{index}}.counter_scope" data-tooltip="{{localize 'SDM.Trigger.ScopeHint'}}">{{selectOptions @root.triggerScopes selected=trigger.counter_scope localize=true}}</select>
           <select name="system.triggers.{{index}}.counter">{{#if (eq trigger.counter_scope 'actor')}}{{selectOptions @root.triggerActorCounters selected=trigger.counter}}{{else}}{{selectOptions @root.triggerCounters selected=trigger.counter}}{{/if}}</select>
           {{#if trigger.counter}}
@@ -148,7 +144,7 @@
           {{else}}
           <input class="sdm-trigger-amount" type="text" name="system.triggers.{{index}}.counter_step" value="{{trigger.counter_step}}" placeholder="1" data-tooltip="{{localize 'SDM.Trigger.CounterStepHint'}}" />
           {{/if}}</label>
-        <label data-tooltip="{{localize 'SDM.Trigger.CastHint'}}">{{localize 'SDM.Trigger.Cast'}}
+        <label class="{{#if trigger.cast}}filled{{/if}}" data-tooltip="{{localize 'SDM.Trigger.CastHint'}}">{{localize 'SDM.Trigger.Cast'}}
           <select name="system.triggers.{{index}}.cast">{{selectOptions @root.triggerCastItems selected=trigger.cast}}</select>
           {{#if trigger.cast}}
           <input type="text" name="system.triggers.{{index}}.cast_power" value="{{trigger.cast_power}}" placeholder="{{localize 'SDM.Trigger.CastPowerPlaceholder'}}" data-tooltip="{{localize 'SDM.Trigger.CastPowerHint'}}" />
@@ -157,7 +153,7 @@
           <input type="hidden" name="system.triggers.{{index}}.cast_power" value="{{trigger.cast_power}}" />
           <input type="hidden" name="system.triggers.{{index}}.cast_free" value="{{trigger.cast_free}}" data-dtype="Boolean" />
           {{/if}}</label>
-        <label data-tooltip="{{localize 'SDM.Trigger.ChargesHint'}}">{{localize 'SDM.Trigger.Charges'}}
+        <label class="{{#if trigger.charges_mode}}filled{{/if}}" data-tooltip="{{localize 'SDM.Trigger.ChargesHint'}}">{{localize 'SDM.Trigger.Charges'}}
           <select name="system.triggers.{{index}}.charges_mode">{{selectOptions @root.triggerChargeModes selected=trigger.charges_mode localize=true}}</select>
           {{#if trigger.charges_mode}}
           <input class="sdm-trigger-amount" type="text" name="system.triggers.{{index}}.charges_amount" value="{{trigger.charges_amount}}" placeholder="1" data-tooltip="{{localize 'SDM.Trigger.AmountHint'}}" />
@@ -166,10 +162,10 @@
           <input type="hidden" name="system.triggers.{{index}}.charges_amount" value="{{trigger.charges_amount}}" />
           <input type="hidden" name="system.triggers.{{index}}.charges_item" value="{{trigger.charges_item}}" />
           {{/if}}</label>
-        <label data-tooltip="{{localize 'SDM.Trigger.UseHint'}}">{{localize 'SDM.Trigger.Use'}}
+        <label class="{{#if trigger.use}}filled{{/if}}" data-tooltip="{{localize 'SDM.Trigger.UseHint'}}">{{localize 'SDM.Trigger.Use'}}
           <select name="system.triggers.{{index}}.use">{{selectOptions @root.triggerUseItems selected=trigger.use}}</select></label>
         {{#if (sdmFeature 'lights')}}
-        <label data-tooltip="{{localize 'SDM.Trigger.LightHint'}}">{{localize 'SDM.Trigger.Light'}}
+        <label class="{{#if trigger.light}}filled{{/if}}" data-tooltip="{{localize 'SDM.Trigger.LightHint'}}">{{localize 'SDM.Trigger.Light'}}
           <select name="system.triggers.{{index}}.light">{{selectOptions @root.triggerLightModes selected=trigger.light localize=true}}</select>
           {{#if trigger.light}}
           <select name="system.triggers.{{index}}.light_item">{{selectOptions @root.triggerLightItems selected=trigger.light_item}}</select>

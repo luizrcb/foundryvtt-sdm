@@ -2379,6 +2379,14 @@ input[type=radio]::after {
   font-size: 12px;
 }
 
+.sdm-triggers .sdm-trigger-actions label.filled {
+  font-weight: bold;
+}
+
+.sdm-triggers .sdm-trigger-actions label.filled > * {
+  font-weight: normal;
+}
+
 .sdm-triggers .sdm-trigger-actions summary {
   cursor: pointer;
   opacity: 0.75;
@@ -2456,9 +2464,15 @@ input[type=radio]::after {
   color: #b8860b;
 }
 
-.sdm-roll-preview .sdm-roll-preview-row.sdm-range-row .sdm-range-reach {
-  flex-basis: 100%;
-  opacity: 0.8;
+.sdm-roll-preview .sdm-roll-preview-row.sdm-range-row .sdm-range-note .sdm-switch-ranged {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  width: auto;
+  margin: 4px 0 0;
+  padding: 0 8px;
+  line-height: 22px;
+  font-size: 12px;
 }
 
 .sdm-roll-preview .sdm-roll-preview-row.sdm-range-row.warn code {
@@ -2525,6 +2539,21 @@ input[type=radio]::after {
 .resource .flex-between > .sdm-speed select {
   height: 1.7em;
   font-size: 11px;
+}
+
+.sdm-counters.sdm-immunities {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.sdm-counters.sdm-immunities strong {
+  flex: 0 0 auto;
+}
+
+.sdm-counters.sdm-immunities multi-select {
+  flex: 1 1 auto;
+  min-width: 0;
 }
 
 .custom-roll-modal .form-group .sdm-attack-item,

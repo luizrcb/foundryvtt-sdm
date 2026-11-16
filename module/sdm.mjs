@@ -358,6 +358,17 @@ Hooks.on('renderDialogV2', (dialog, html) => {
       }
     });
   }
+  // Melee attack beyond close: Switch to Ranged closes this dialog and opens the ranged attack
+  if (previewBox && typeof dialog.options?.switchAttack === 'function') {
+    previewBox.addEventListener('click', event => {
+      if (!event.target.closest('.sdm-switch-ranged')) return;
+      event.preventDefault();
+      const attackItem = html.querySelector('#attackItem')?.value ?? '';
+      const switchAttack = dialog.options.switchAttack;
+      dialog.close();
+      switchAttack(attackItem);
+    });
+  }
   if (typeof rollPreview === 'function' && previewBox && previewForm) {
     const updatePreview = () => {
       try {
