@@ -69,6 +69,7 @@
   - **Free attack note to the Referee** (optional, off): on a token's own turn, moving out of an enemy's close zone whispers the Referee that the enemy may make a free attack if it disengaged carelessly, once per enemy per turn
   - **Ruler colored by rounds** (optional, on): dragging a token colors the path by the rounds the move takes at the token's speed: green this round, yellow next round, red 3+ (a chase)
   - **Zones button in the Token HUD** (optional, on): shows the zones around the token on the map (close green, short yellow, medium orange), measured like attacks; only the user who clicked sees them, they follow the token and go away when it is released. Gridless scenes and huge scales get rings
+- Fixed: the effects panel now slides along with the right sidebar when it collapses, expands, changes tab or is resized (it jumped to a stale position)
 - Fixed: on the V2 sheet and in Token Action HUD, an attack set to Charisma or Thought had a lime / red icon instead of the colour of that ability (sky / royal)
 - **Caravan free space**: next to Consume Supplies, the inventory shows the free space as whole sacks + stones (e.g. "Free: 3 sk + 4 st")
 - **Automate Caravan Transport** is now on by default

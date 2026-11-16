@@ -94,12 +94,32 @@ export default class SdmEffectsPanel extends HandlebarsApplicationMixin(Applicat
     }
   }
 
-  /** Keep the panel just to the left of the sidebar. */
+  /** Keep the panel just to the left of the sidebar. Returns the sidebar's left edge. */
   setPosition() {
-    if (!this.element) return;
     const sidebar = document.getElementById('sidebar');
     const left = sidebar?.getBoundingClientRect().left ?? window.innerWidth;
-    this.element.style.right = `${Math.max(window.innerWidth - left + 8, 8)}px`;
+    if (this.element) this.element.style.right = `${Math.max(window.innerWidth - left + 8, 8)}px`;
+    return left;
+  }
+
+  /**
+   * Follow the sidebar while it moves (expanding / collapsing animates its width): reposition every
+   * frame until its edge has stayed put for a few frames, so the panel slides along with it.
+   */
+  follow() {
+    this._followUntil = performance.now() + 1500;
+    if (this._following) return;
+    this._following = true;
+    let last = null;
+    let still = 0;
+    const step = () => {
+      const left = this.setPosition();
+      still = left === last ? still + 1 : 0;
+      last = left;
+      if (still < 8 && performance.now() < this._followUntil) requestAnimationFrame(step);
+      else this._following = false;
+    };
+    requestAnimationFrame(step);
   }
 
   static async #onOpenEffect(event, target) {
@@ -131,8 +151,17 @@ export default class SdmEffectsPanel extends HandlebarsApplicationMixin(Applicat
     Hooks.on('updateUser', (user, changes) => {
       if (user.isSelf && 'character' in changes) refresh();
     });
-    Hooks.on('collapseSidebar', () => panel.setPosition());
-    window.addEventListener('resize', () => panel.setPosition());
+    // Slide along with the sidebar: on collapse / expand, on any of its transitions, and whenever its
+    // size changes (resizing the sidebar, the window, popping tabs in and out)
+    Hooks.on('collapseSidebar', () => panel.follow());
+    Hooks.on('changeSidebarTab', () => panel.follow());
+    window.addEventListener('resize', () => panel.follow());
+    const sidebar = document.getElementById('sidebar');
+    if (sidebar) {
+      sidebar.addEventListener('transitionrun', () => panel.follow());
+      sidebar.addEventListener('transitionend', () => panel.follow());
+      new ResizeObserver(() => panel.follow()).observe(sidebar);
+    }
 
     panel.render({ force: true });
   }
