@@ -52,6 +52,7 @@ import { openItemTransferDialog } from '../items/transfer.mjs';
 import { directResourceDiceRoll, healingHeroDice } from '../rolls/hero_dice/index.mjs';
 import SDMRoll, { sanitizeExpression } from '../rolls/sdmRoll.mjs';
 import { rollPreviewRows } from '../helpers/rollPreview.mjs';
+import { speedContext, targetRangeHtml } from '../helpers/zones.mjs';
 import {
   renderCorruptionResult,
   renderDangerResult,
@@ -497,6 +498,15 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         add($l10n('SDM.PowerOvercharge'), { overcharge: true });
       }
       if (isPowerRoll && !rows.length) rows.push(`<div class="sdm-roll-preview-row">${$l10n('SDM.RollPreview.NoRoll')}</div>`);
+      // Optional: the target's zone and whether the weapon or power reaches it (no penalty applied)
+      const weaponRange = item?.system?.weapon?.range ?? '';
+      if (isAttack || isPowerRoll || (isDamage && weaponRange)) {
+        const range = isPowerRoll
+          ? power?.range ?? ''
+          : weaponRange || (isAttack && isCharacter && attack === 'melee' ? 'close' : '');
+        const throwing = !isPowerRoll && !!item?.system?.features?.has?.('throwing');
+        rows.unshift(targetRangeHtml(this.actor, { range, throwing, reach: isAttack }));
+      }
       return rows.join('');
     };
 
@@ -797,6 +807,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         : this.actor.system.experience;
     context.xpToNextLevel = getXpToNextLevel(xpBase);
     context.isToken = this.document.isToken;
+    // Speed in zones per round (shown on character and NPC sheets)
+    context.speed = [ActorType.CHARACTER, ActorType.NPC].includes(this.actor.type) ? speedContext(this.actor) : null;
     // Referee: is the prototype token linked? (not on a token's own sheet, not for caravans)
     context.protoLink = null;
     if (game.user.isGM && !context.isToken && [ActorType.CHARACTER, ActorType.NPC].includes(this.actor.type)) {
@@ -1485,6 +1497,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
             cost: getPowerCost(this.actor.system, powerData),
             dangerHtml: getPowerDangerHtml(this.actor.system, powerData, { canOvercharge: !!powerData.overcharge }),
             default_ability: powerData.default_ability,
+            range: powerData.range,
             description: powerItem.system.description,
             overchargeDescription: powerData.overcharge
           }
@@ -1531,6 +1544,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
             cost: getPowerCost(this.actor.system, power),
             dangerHtml: getPowerDangerHtml(this.actor.system, power, { canOvercharge: !!power.overcharge }),
             default_ability: power.default_ability,
+            range: power.range,
             description: power.description,
             overchargeDescription: power.overcharge
           };

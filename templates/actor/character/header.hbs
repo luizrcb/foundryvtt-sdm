@@ -223,10 +223,11 @@
           </div> --}}
 
           <div class='resource flexcol'>
-            <div class="flexrow">
+            <div class="flexrow flex-between">
               <label for="system.defense" class='resource-label'>
                 {{localize 'SDM.FieldDefense'}}
               </label>
+              {{> ($$ "actor/speed") edit=@root.isEditMode label=true}}
             </div>
             <div class='resource-content flexrow align-center height-32'>
               <div data-tooltip="{{localize 'SDM.FieldPhysicalDefense'}}">
@@ -756,10 +757,11 @@
           </div>
 
           <div class='resource flexcol'>
-            <div class="flexrow">
+            <div class="flexrow flex-between">
               <label for="system.defense" class='resource-label'>
                 {{localize 'SDM.FieldDefense'}}
               </label>
+              {{> ($$ "actor/speed") edit=@root.isEditMode label=true}}
             </div>
             <div class='resource-content flexrow align-center height-32'>
               <div data-tooltip="{{localize 'SDM.FieldPhysicalDefense'}}">

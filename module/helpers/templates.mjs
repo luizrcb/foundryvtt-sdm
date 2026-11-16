@@ -6,6 +6,7 @@ const templatesToLoad = [
   $$('counters'),
   $$('actor/counter-chips'),
   $$('actor/proto-link'),
+  $$('actor/speed'),
   $$('actor/burdens'),
   $$('actor/caravan/header'),
   $$('actor/character/header'),

@@ -2,6 +2,7 @@ import {
   SDMClientSettingsConfig,
   SDMCaravanSettingsConfig,
   SDMCombatSettingsConfig,
+  SDMZonesSettingsConfig,
   SDMCoreRulesSettingsConfig,
   SDMSkillsSettingsConfig,
   SDMBaselinesSettingsConfig,
@@ -46,6 +47,15 @@ export function registerSDMGMSettingMenus() {
     label: 'SDM.Menu.Combat.Label',
     icon: 'fa-solid fa-hand-fist lime',
     type: SDMCombatSettingsConfig,
+    restricted: true
+  });
+
+  game.settings.registerMenu('sdm', '03b-zones', {
+    name: 'SDM.Menu.Zones.Name',
+    hint: 'SDM.Menu.Zones.Hint',
+    label: 'SDM.Menu.Zones.Label',
+    icon: 'fa-solid fa-ruler-combined pine',
+    type: SDMZonesSettingsConfig,
     restricted: true
   });
 

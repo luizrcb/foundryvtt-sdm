@@ -2188,8 +2188,9 @@ input[type='radio']::after {
   color: #e8731c;
 }
 
-// Baselines settings: light presets table
-.sdm-light-presets {
+// Baselines settings: light presets table; Zones menu: zone scales table
+.sdm-light-presets,
+.sdm-zone-scales {
   table {
     width: 100%;
     border-collapse: collapse;
@@ -2454,6 +2455,90 @@ input[type='radio']::after {
       word-break: break-word;
     }
   }
+}
+
+// Roll dialog: the target's zone (zones.mjs), with a warning when out of range
+.sdm-roll-preview .sdm-roll-preview-row.sdm-range-row {
+  flex-wrap: wrap;
+
+  .sdm-range-note {
+    flex-basis: 100%;
+    color: #b8860b;
+  }
+
+  // What the actor has readied that reaches the target (attack rolls)
+  .sdm-range-reach {
+    flex-basis: 100%;
+    opacity: 0.8;
+  }
+
+  &.warn code {
+    color: #b8860b;
+  }
+}
+
+// Actor sheets: speed in zones per round (red when lowered, e.g. slowed)
+.sdm-speed {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+
+  select {
+    width: auto;
+    min-width: 6em;
+  }
+
+  // On character sheets the field has no title of its own: a small label like "Save"
+  .sdm-speed-label {
+    margin-right: -1px;
+    font-size: 11px;
+    font-weight: bold;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    opacity: 0.7;
+  }
+
+  &.slowed {
+    color: #c0392b;
+  }
+}
+
+// Character sheets: speed on the right of the Defense title; on a narrow sheet it goes to the next line
+.v2-defense .v2-card-head,
+.resource .flexrow.flex-between:has(> .sdm-speed) {
+  flex-wrap: wrap;
+  column-gap: 12px;
+  row-gap: 2px;
+}
+
+.v2-defense .v2-card-head .sdm-speed,
+.resource .flex-between > .sdm-speed {
+  flex: 0 1 auto;
+  min-width: 0;
+  margin-left: auto;
+
+  .sdm-speed-name {
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  font-size: 13px;
+
+  i {
+    font-size: 12px;
+  }
+
+  select {
+    height: 1.7em;
+    font-size: 12px;
+  }
+}
+
+// Scene config (Grid tab): zones
+.sdm-scene-zones .form-fields .units {
+  flex: 0 0 auto;
+  opacity: 0.7;
 }
 
 // Client settings: chromatype swatch and 3D dice preview button

@@ -1,6 +1,7 @@
 import { registerNpcExtraSettings } from './helpers/npcExtras.mjs';
 import { onCurrencyChanged } from './helpers/currency.mjs';
 import { LIGHT_PRESETS, putOutAllLights } from './helpers/lights.mjs';
+import { registerZoneSettings } from './helpers/zones.mjs';
 import CompendiumBrowser from './app/compendium-browser.mjs';
 import { DEFAULT_CASH_ICON, DiceType } from './helpers/constants.mjs';
 import { $fmt, $l10n } from './helpers/globalUtils.mjs';
@@ -457,6 +458,9 @@ export function registerSystemSettings() {
     type: Number, // Data type: String, Number, Boolean, etc
     default: 20
   });
+
+  // Movement and range zones (scales, range check, free attack reminder, ruler); edited in the Zones menu
+  registerZoneSettings();
 
   // Token light presets (torch, lantern, candle, glow) for light items and powers; edited in the Baselines menu
   game.settings.register('sdm', 'lightPresets', {

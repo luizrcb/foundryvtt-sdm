@@ -11,7 +11,7 @@ import { ActorType, RollMode } from './constants.mjs';
  *    petrified lose the turn; grabbed is reminded to save, frightened to test morale (chat notes);
  *  - stunned, blinded and confused last 1 round; asleep wakes up when hurt; the defeat roll knocks out
  *    (7: until the end of the fight) or stuns (8–11: loses the next turn);
- *  - corroded −1 defense, slowed −2 defense; weakened halves damage dealt (noted on the roll);
+ *  - corroded −1 defense, slowed −2 defense and −1 speed; weakened halves damage dealt (noted on the roll);
  *  - advantage / disadvantage preselected in the roll dialog (see conditionRollMode).
  * Foundry's ids are kept (stun, prone, poison…), so items using them keep working.
  */
@@ -128,7 +128,11 @@ function onPreCreateEffect(effect, data, options, userId) {
   const changes = [...(effect.system?.changes ?? [])];
   const add = value => changes.push({ key: defenseKey, value: `${value}`, type: 'add', phase: 'initial', priority: null });
   if (statuses.has('corrode')) add(-1);
-  if (statuses.has('slowed')) add(-2);
+  if (statuses.has('slowed')) {
+    add(-2);
+    // Half movement: one step slower on the speed scale (zones per round, see zones.mjs)
+    changes.push({ key: 'system.speed', value: '-1', type: 'add', phase: 'initial', priority: null });
+  }
   const update = {};
   if (changes.length !== (effect.system?.changes ?? []).length) update['system.changes'] = changes;
   // Stunned (loses the next turn), blinded and confused (one round): 1 round unless set otherwise

@@ -91,6 +91,10 @@
         <span class="v2-label">{{localize 'SDM.FieldSupplyPerWeek'}}</span>
         <input type="text" name="system.supply" value="{{system.supply}}" />
       </label>
+      <div class="v2-money-cell">
+        <span class="v2-label">{{localize 'SDM.FieldSpeed'}}</span>
+        {{> ($$ "actor/speed") edit=@root.editable}}
+      </div>
     </div>
   </div>
 

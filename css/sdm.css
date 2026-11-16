@@ -2187,23 +2187,28 @@ input[type=radio]::after {
   color: #e8731c;
 }
 
-.sdm-light-presets table {
+.sdm-light-presets table,
+.sdm-zone-scales table {
   width: 100%;
   border-collapse: collapse;
 }
 
 .sdm-light-presets th,
-.sdm-light-presets td {
+.sdm-light-presets td,
+.sdm-zone-scales th,
+.sdm-zone-scales td {
   padding: 2px 4px;
   text-align: left;
   white-space: nowrap;
 }
 
-.sdm-light-presets input[type=number] {
+.sdm-light-presets input[type=number],
+.sdm-zone-scales input[type=number] {
   width: 4.5em;
 }
 
-.sdm-light-presets select {
+.sdm-light-presets select,
+.sdm-zone-scales select {
   width: 100%;
 }
 
@@ -2440,6 +2445,90 @@ input[type=radio]::after {
   font-size: 13px;
   font-weight: 700;
   word-break: break-word;
+}
+
+.sdm-roll-preview .sdm-roll-preview-row.sdm-range-row {
+  flex-wrap: wrap;
+}
+
+.sdm-roll-preview .sdm-roll-preview-row.sdm-range-row .sdm-range-note {
+  flex-basis: 100%;
+  color: #b8860b;
+}
+
+.sdm-roll-preview .sdm-roll-preview-row.sdm-range-row .sdm-range-reach {
+  flex-basis: 100%;
+  opacity: 0.8;
+}
+
+.sdm-roll-preview .sdm-roll-preview-row.sdm-range-row.warn code {
+  color: #b8860b;
+}
+
+.sdm-speed {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  white-space: nowrap;
+}
+
+.sdm-speed select {
+  width: auto;
+  min-width: 6em;
+}
+
+.sdm-speed .sdm-speed-label {
+  margin-right: -1px;
+  font-size: 11px;
+  font-weight: bold;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.7;
+}
+
+.sdm-speed.slowed {
+  color: #c0392b;
+}
+
+.v2-defense .v2-card-head,
+.resource .flexrow.flex-between:has(> .sdm-speed) {
+  flex-wrap: wrap;
+  column-gap: 12px;
+  row-gap: 2px;
+}
+
+.v2-defense .v2-card-head .sdm-speed,
+.resource .flex-between > .sdm-speed {
+  flex: 0 1 auto;
+  min-width: 0;
+  margin-left: auto;
+}
+
+.v2-defense .v2-card-head .sdm-speed .sdm-speed-name,
+.resource .flex-between > .sdm-speed .sdm-speed-name {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.v2-defense .v2-card-head .sdm-speed,
+.resource .flex-between > .sdm-speed {
+  font-size: 13px;
+}
+
+.v2-defense .v2-card-head .sdm-speed i,
+.resource .flex-between > .sdm-speed i {
+  font-size: 12px;
+}
+
+.v2-defense .v2-card-head .sdm-speed select,
+.resource .flex-between > .sdm-speed select {
+  height: 1.7em;
+  font-size: 12px;
+}
+
+.sdm-scene-zones .form-fields .units {
+  flex: 0 0 auto;
+  opacity: 0.7;
 }
 
 .sdm-chromatype-swatch {

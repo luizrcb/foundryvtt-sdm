@@ -84,7 +84,10 @@
         {{/if}}
 
         <div class="v2-card v2-defense">
-          <span class="v2-card-title">{{localize 'SDM.FieldDefense'}}</span>
+          <div class="v2-card-head">
+            <span class="v2-card-title">{{localize 'SDM.FieldDefense'}}</span>
+            {{> ($$ "actor/speed") edit=@root.isEditMode label=true}}
+          </div>
           <div class="v2-defense-row">
             <div class="v2-def" data-tooltip="{{localize 'SDM.FieldPhysicalDefense'}}">
               <i class="fa-solid fa-shield-halved"></i><span>{{system.defense}}</span>

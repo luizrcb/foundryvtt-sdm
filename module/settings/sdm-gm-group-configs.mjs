@@ -1,6 +1,7 @@
 // Each class defines a single-section AppV2 using your BaseSettingsConfig.
 import BaseSettingsConfig from './base-settings.mjs';
 import { getLightPreset, LIGHT_PRESET_KEYS } from '../helpers/lights.mjs';
+import { getZoneScale, ZONE_SCALE_KEYS } from '../helpers/zones.mjs';
 
 class GroupBase extends BaseSettingsConfig {
   static PARTS = {
@@ -92,6 +93,40 @@ export class SDMCombatSettingsConfig extends GroupBase {
     'initiativeFormula',
     'npcInitiativeFormula'
   ];
+}
+
+/* Movement & range zones: the scales (table), the world default and the optional helpers */
+export class SDMZonesSettingsConfig extends GroupBase {
+  static DEFAULT_OPTIONS = {
+    ...super.DEFAULT_OPTIONS,
+    window: {
+      ...super.DEFAULT_OPTIONS.window,
+      title: 'SDM.Menu.Zones.Label',
+      icon: 'fa-solid fa-ruler-combined'
+    }
+  };
+  static LEGEND = 'SDM.Menu.Zones.Name';
+  static KEYS = ['defaultZoneScale', 'zoneRangeCheck', 'freeAttackReminder', 'zoneRuler', 'zoneHighlight'];
+  static PARTS = {
+    config: { template: 'systems/sdm/templates/settings/base-config.hbs' },
+    scales: { template: 'systems/sdm/templates/settings/zone-scales.hbs' },
+    footer: { template: 'templates/generic/form-footer.hbs' }
+  };
+  // Saved with the rest of the form (as an object); reset with "Reset" too
+  static get ALL_KEYS() {
+    return [...this.KEYS, 'zoneScales'];
+  }
+
+  async _preparePartContext(partId, context, options) {
+    context = await super._preparePartContext(partId, context, options);
+    if (partId !== 'scales') return context;
+    context.scales = ZONE_SCALE_KEYS.map(key => ({
+      key,
+      label: game.i18n.localize(`SDM.Zones.Scale.${key}`),
+      ...getZoneScale(key)
+    }));
+    return context;
+  }
 }
 
 /* 2) Core Rules (Limits & Hero Dice) */

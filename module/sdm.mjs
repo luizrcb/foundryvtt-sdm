@@ -65,6 +65,7 @@ import { setupPetLinks } from './items/petLinks.mjs';
 import { setupItemPiles } from './integrations/itemPiles.mjs';
 import { setupNpcVariability } from './helpers/npcVariability.mjs';
 import { configureConditions, localizeConditions, setupConditions } from './helpers/conditions.mjs';
+import { setupZones } from './helpers/zones.mjs';
 import { rememberCurrency } from './helpers/currency.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
 import { gm as gmMacros, player as playerMacros } from './macros/_module.mjs';
@@ -754,6 +755,7 @@ Hooks.once('init', function () {
   setupItemPiles();
   setupNpcVariability();
   setupConditions();
+  setupZones();
   setupSettingsSocket();
   setupGroupCheckSocket();
   setupCaravanTokenControls();
