@@ -72,7 +72,7 @@
       <input type="hidden" name="system.triggers.{{index}}.power" value="{{trigger.power}}" />
       {{/if}}
       <select name="system.triggers.{{index}}.condition">{{selectOptions (lookup @root.triggerConditionChoices index) selected=trigger.condition localize=true}}</select>
-      {{#if (or (eq trigger.condition 'max') (eq trigger.condition 'min') (eq trigger.condition 'matching') (eq trigger.condition 'runningLow') (eq trigger.condition 'runOut') (eq trigger.condition 'success') (eq trigger.condition 'failure') (eq trigger.condition 'counterMax') (eq trigger.condition 'changes') (eq trigger.condition 'increases') (eq trigger.condition 'decreases') (eq trigger.condition 'full') (eq trigger.condition 'empty'))}}
+      {{#if (or (eq trigger.condition 'max') (eq trigger.condition 'min') (eq trigger.condition 'matching') (eq trigger.condition 'runningLow') (eq trigger.condition 'runOut') (eq trigger.condition 'success') (eq trigger.condition 'failure') (eq trigger.condition 'always') (eq trigger.condition 'counterMax') (eq trigger.condition 'changes') (eq trigger.condition 'increases') (eq trigger.condition 'decreases') (eq trigger.condition 'full') (eq trigger.condition 'empty'))}}
       <input type="hidden" name="system.triggers.{{index}}.value" value="{{trigger.value}}" />
       {{else}}
       <input class="sdm-trigger-amount" type="text" name="system.triggers.{{index}}.value" value="{{trigger.value}}" placeholder="13" data-tooltip="{{localize 'SDM.Trigger.ValueHint'}}" />
@@ -111,6 +111,13 @@
           <select name="system.triggers.{{index}}.effect_target">{{selectOptions @root.triggerEffectTargets selected=trigger.effect_target localize=true}}</select>
           {{else}}
           <input type="hidden" name="system.triggers.{{index}}.effect_target" value="{{trigger.effect_target}}" />
+          {{/if}}</label>
+        <label data-tooltip="{{localize 'SDM.Trigger.StatusHint'}}">{{localize 'SDM.Trigger.Status'}}
+          <select name="system.triggers.{{index}}.status">{{selectOptions @root.triggerStatuses selected=trigger.status}}</select>
+          {{#if trigger.status}}
+          <select name="system.triggers.{{index}}.status_target">{{selectOptions @root.triggerEffectTargets selected=trigger.status_target localize=true}}</select>
+          {{else}}
+          <input type="hidden" name="system.triggers.{{index}}.status_target" value="{{trigger.status_target}}" />
           {{/if}}</label>
         <label>{{localize 'SDM.Trigger.WearLabel'}}
           <select name="system.triggers.{{index}}.wear">{{selectOptions @root.triggerWear selected=trigger.wear localize=true}}</select></label>

@@ -241,6 +241,39 @@ export async function restoreAll(actor, kind, group = '') {
 }
 
 /**
+ * A roll trigger's condition: a status of the Token HUD list put on the user's targeted tokens (or on
+ * the one who rolled), like setting it from the HUD; actors that already have it are skipped.
+ * Targets the user doesn't own are handled by the active GM.
+ */
+export async function applyStatusToTargets(statusId, actor, { self = false } = {}) {
+  const status = CONFIG.statusEffects.find(s => s.id === statusId);
+  if (!status) return;
+  const name = game.i18n.localize(status.name ?? status.label ?? statusId);
+  const targets = (
+    self ? [actor].filter(Boolean) : [...new Set([...(game.user.targets ?? [])].map(token => token.actor).filter(Boolean))]
+  ).filter(target => !target.statuses?.has(statusId));
+  if (!targets.length) {
+    if (!self && !game.user.targets?.size) ui.notifications.info($fmt('SDM.Trigger.NoTarget', { effect: name }));
+    return;
+  }
+  const effect = await ActiveEffect.implementation.fromStatusEffect(statusId);
+  const data = effect.toObject();
+  for (const target of targets) {
+    const payload = { actorUuid: target.uuid, restores: [], effects: [data] };
+    if (target.isOwner) await applyToActor(payload);
+    else if (game.users.activeGM) game.socket.emit(CHANNEL, { action: APPLY_ACTION, payload });
+    else ui.notifications.warn($l10n('SDM.ErrorNoActiveGM'));
+  }
+  await ChatMessage.create({
+    speaker: ChatMessage.getSpeaker({ actor }),
+    content: `<p><i class="fa-solid fa-bolt"></i> ${$fmt('SDM.Trigger.EffectApplied', {
+      effect: esc(name),
+      targets: targets.map(t => esc(t.name)).join(', ')
+    })}</p>`
+  });
+}
+
+/**
  * A roll trigger's effect: one of the item's effects (keep it disabled or not applied to the bearer
  * on the item) copied to the user's targeted tokens as a temporary effect, like Use.
  */

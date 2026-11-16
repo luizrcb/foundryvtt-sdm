@@ -53,7 +53,15 @@ import { directResourceDiceRoll, healingHeroDice } from '../rolls/hero_dice/inde
 import SDMRoll, { sanitizeExpression } from '../rolls/sdmRoll.mjs';
 import { rollPreviewRows } from '../helpers/rollPreview.mjs';
 import { featureRollAdvice, otherWeaponsBonus } from '../rolls/attackFeatures.mjs';
-import { attackItems, attackRangeRollMode, speedContext, suggestAttackItem, targetRangeHtml, ZONE_BANDS } from '../helpers/zones.mjs';
+import {
+  attackItems,
+  attackRangeRollMode,
+  reachFirstNote,
+  speedContext,
+  suggestAttackItem,
+  targetRangeHtml,
+  ZONE_BANDS
+} from '../helpers/zones.mjs';
 
 /** Options for an attack's item select: "Rifle (short, 2d6)", "Fireball (power, medium, 3d6)". */
 function attackItemChoices(actor, entries = attackItems(actor)) {
@@ -573,6 +581,15 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         rows.unshift(targetRangeHtml(this.actor, { range, throwing, reach: isAttack }));
         // The chosen item's features: clumsy, armor piercing against a heavily armored target
         const featureNotes = isAttack ? featureRollAdvice(this.actor, chosen, targetActor).notes : [];
+        // Close combat with an adversary that has reach and hasn't acted yet this round: it strikes first
+        if (isAttack) {
+          const chosenItem = chosen ? this.actor.items.get(chosen.itemId ?? chosen.id) : null;
+          const reachNote = reachFirstNote(this.actor, targetActor, {
+            attack,
+            attackerHasReach: chosenItem ? !!chosenItem.system?.features?.has?.('reach') : null
+          });
+          if (reachNote) featureNotes.push(reachNote);
+        }
         if (featureNotes.length) {
           rows.push(
             `<div class="sdm-roll-preview-row sdm-feature-row"><i class="fa-solid fa-circle-info"></i> ${foundry.utils.escapeHTML(featureNotes.join(' · '))}</div>`
@@ -2539,7 +2556,19 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     });
     await renderSaveResult(
       { roll, label, targetNumber },
-      { fromHeroDice: false, speaker, isCtrl, extraHtml: renderTriggers(fired) }
+      {
+        fromHeroDice: false,
+        speaker,
+        isCtrl,
+        extraHtml: renderTriggers(fired),
+        // Hero dice can change this save: its triggers are checked again on the result
+        triggerCheck: {
+          kind: 'save',
+          actor: this.actor.uuid,
+          ability: ability === ActorType.NPC ? '' : ability,
+          target: targetNumber
+        }
+      }
     );
     if (fired.length) await runTriggerActions(fired, { actor: this.actor });
   }

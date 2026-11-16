@@ -1,6 +1,7 @@
 import { powerCardData } from '../helpers/singleUsePowers.mjs';
 import { attackFollowupHtml, attackItemFlag } from './attackFollowup.mjs';
 import { attackFeatureHtml } from './attackFeatures.mjs';
+import { reachFirstNote } from '../helpers/zones.mjs';
 import { actorTriggers, attackTriggers, damageTriggers, itemRollTriggers, renderTriggers, runTriggerActions } from './triggers.mjs';
 import { createChatMessage } from '../helpers/chatUtils.mjs';
 import { ActorType, AttackTarget, RollMode, RollType } from '../helpers/constants.mjs';
@@ -247,6 +248,17 @@ export default class SDMRoll {
     const attackItem = isAttack ? attackItemFlag(this.actor, this.attackItem) : null;
     // Consecutive natural 20s: the damage button suggests the critical multiplier
     if (attackItem) attackItem.multiplier = criticalMultiplier(this.actor, countConsecutiveTwenties(this.roll));
+    // Close combat against an adversary with reach that hasn't acted yet this round: it strikes first
+    if (isAttack && this.targetActor) {
+      const usedItem = this.attackItem?.id ? this.actor?.items?.get(this.attackItem.id) : null;
+      const reachNote = reachFirstNote(this.actor, this.targetActor, {
+        attack: this.attack,
+        attackerHasReach: usedItem ? !!usedItem.system?.features?.has?.('reach') : null
+      });
+      if (reachNote) {
+        content += `<div class="sdm-attack-features"><div class="sdm-attack-feature"><i class="fa-solid fa-arrows-left-right-to-line"></i> ${foundry.utils.escapeHTML(reachNote)}</div></div>`;
+      }
+    }
     // The item's features: backfiring, vorpal, blinding, burdening; spiked armor against unarmed
     if (isAttack && this.attackItem?.id) {
       const usedItem = this.actor?.items?.get(this.attackItem.id);
@@ -263,6 +275,24 @@ export default class SDMRoll {
     if (attackItem) {
       content += attackFollowupHtml(attackItem);
       flags.sdm = { ...(flags.sdm ?? {}), attackItem };
+    }
+
+    // Hero dice can change this roll: what its triggers need to be checked again on the result
+    if ((isAttack || isAbility) && this.actor) {
+      const defense = isAttack && this.targetActor
+        ? Number(this.targetActor.system?.[this.targetActor.type === ActorType.NPC || this.attackTarget === AttackTarget.PHYSICAL ? 'defense' : `${this.attackTarget}_defense`]) || 0
+        : null;
+      flags.sdm = {
+        ...(flags.sdm ?? {}),
+        triggerCheck: {
+          kind: isAttack ? 'attack' : 'ability',
+          actor: this.actor.uuid,
+          attack: this.attack,
+          ability: this.ability ?? '',
+          withItem: this.attackItem?.id ?? '',
+          defense
+        }
+      };
     }
 
     const chatDataMessage = {

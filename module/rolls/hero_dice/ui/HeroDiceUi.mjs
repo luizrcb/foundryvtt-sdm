@@ -1,5 +1,6 @@
 import { attackFollowupHtml } from '../../attackFollowup.mjs';
 import { criticalMultiplier } from '../../sdmRoll.mjs';
+import { recheckTriggersAfterHeroDice, renderTriggers, runTriggerActions } from '../../triggers.mjs';
 import { createChatMessage } from '../../../helpers/chatUtils.mjs';
 import { $fmt, $l10n, capitalizeFirstLetter } from '../../../helpers/globalUtils.mjs';
 import { templatePath } from '../../../helpers/templates.mjs';
@@ -82,7 +83,7 @@ export class HeroDiceUI {
     `;
   }
 
-  static async renderResultToChat(result, actor, flags, heroicBonusQty = 0, heroMode = 'increase') {
+  static async renderResultToChat(result, actor, flags, heroicBonusQty = 0, heroMode = 'increase', originalRoll = null) {
     const {
       keptDice,
       explosiveDice,
@@ -162,10 +163,14 @@ export class HeroDiceUI {
     if (attackItem) {
       attackItem.multiplier = criticalMultiplier(fromUuidSync(attackItem.actor), heroTwenties(keptDice));
     }
+    // Triggers that match the improved result but didn't match the original roll fire now
+    const recheck = recheckTriggersAfterHeroDice(flags?.sdm?.triggerCheck, originalRoll, result);
     await createChatMessage({
       actor,
       content:
-        (await renderTemplate(templatePath('/chat/hero-dice-result'), templateData)) + attackFollowupHtml(attackItem),
+        (await renderTemplate(templatePath('/chat/hero-dice-result'), templateData)) +
+        renderTriggers(recheck.fired) +
+        attackFollowupHtml(attackItem),
       flavor,
       rolls: [heroResultRoll],
       flags: {
@@ -175,6 +180,8 @@ export class HeroDiceUI {
         }
       }
     });
+
+    if (recheck.fired.length) await runTriggerActions(recheck.fired, { actor: recheck.actor });
 
     if (flags && flags?.sdm?.save) {
       const { label, targetNumber, speaker } = flags.sdm.save;

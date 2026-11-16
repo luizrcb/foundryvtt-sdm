@@ -353,7 +353,7 @@ export async function renderCorruptionResult(
 
 export async function renderSaveResult(
   { roll, label, targetNumber },
-  { fromHeroDice = false, speaker, isCtrl = false, extraHtml = '' }
+  { fromHeroDice = false, speaker, isCtrl = false, extraHtml = '', triggerCheck = null }
 ) {
   const sacrificeOutcome = $l10n('SDM.SavingThrowSacrifice');
   const saveOutcome = $l10n('SDM.SavingThrowSave');
@@ -401,6 +401,8 @@ export async function renderSaveResult(
       targetNumber,
       speaker
     };
+    // Hero dice can change this save: its triggers are checked again on the result
+    if (triggerCheck) flags['sdm.triggerCheck'] = triggerCheck;
   }
 
   const chatMessageData = {

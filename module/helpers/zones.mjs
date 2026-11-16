@@ -637,6 +637,59 @@ function hasTrait(actor, { key, uuid, names = [] }) {
 
 const conditionName = id => game.i18n.localize(`SDM.Condition.${id}.Name`).toLowerCase();
 
+/* -------------------------------------------- */
+/*  Reach ("longer, so it attacks first in close combat")                  */
+/* -------------------------------------------- */
+
+/** A readied weapon with the reach feature (traits have no features). */
+export function hasReach(actor) {
+  return !!actor?.items?.some(item => item.system?.readied && item.system?.features?.has?.('reach'));
+}
+
+/** Can this actor act (strike first)? Not dead, unconscious, asleep, stunned, paralyzed, petrified or mad. */
+const canAct = actor => !OUT_OF_FIGHT.some(id => actor?.statuses?.has(id));
+
+/**
+ * Adversaries with reach whose close zone a token enters going from one position to another, in a
+ * started combat: they strike first. Not when the token has reach too. Same rules as the free attack.
+ */
+function reachEntered(doc, from, to) {
+  if (!canvas?.ready || doc.parent !== canvas.scene || !zonesActive() || hasReach(doc.actor)) return [];
+  const combat = game.combat;
+  if (!combat?.started || !combat.combatants.some(c => c.tokenId === doc.id)) return [];
+  const limits = sceneZoneLimits();
+  const perUnit = metersPerUnit();
+  const start = centerOf(doc, from.x, from.y);
+  const end = centerOf(doc, to.x, to.y);
+  const found = [];
+  for (const other of doc.parent.tokens) {
+    if (other === doc || other.disposition === doc.disposition || (other.hidden && !game.user.isGM)) continue;
+    if (!hasReach(other.actor) || !canAct(other.actor)) continue;
+    if (combat.combatants.find(c => c.tokenId === other.id)?.isDefeated) continue;
+    const before = unitsBetween(doc, start, other, centerOf(other)) * perUnit;
+    const after = unitsBetween(doc, end, other, centerOf(other)) * perUnit;
+    if (before > limits.close && after <= limits.close) found.push({ token: other, details: [] });
+  }
+  return found;
+}
+
+/**
+ * Already in close combat: a melee attack (by an attacker without reach) on an adversary with reach
+ * whose turn hasn't come yet this round — the reach wielder strikes first. The note, or ''.
+ */
+export function reachFirstNote(actor, targetActor, { attack = '', attackerHasReach = null } = {}) {
+  if (!actor || !targetActor || attack !== 'melee') return '';
+  if (attackerHasReach ?? hasReach(actor)) return '';
+  if (!hasReach(targetActor) || !canAct(targetActor)) return '';
+  const combat = game.combat;
+  if (!combat?.started) return '';
+  const combatant = combat.combatants.find(c => c.actor === targetActor || (c.token?.actor ?? null) === targetActor);
+  if (!combatant || combatant.isDefeated) return '';
+  const index = combat.turns.findIndex(c => c.id === combatant.id);
+  if (index < 0 || index <= combat.turn) return '';
+  return game.i18n.format('SDM.Zones.ReachFirst', { name: targetActor.name });
+}
+
 /**
  * Enemies whose close zone a token leaves going from one position (top-left x, y) to another, in a
  * started combat on the current scene, each as { token, details }. Tokens of the same disposition are
@@ -700,13 +753,25 @@ function onPreUpdateToken(doc, changes, options, userId) {
   if (!setting('freeAttackReminder', false)) return;
   const combat = game.combat;
   if (!combat?.started || combat.combatant?.tokenId !== doc.id) return;
-  const enemies = enemiesLeft(doc, doc, { x: changes.x ?? doc.x, y: changes.y ?? doc.y });
+  const destination = { x: changes.x ?? doc.x, y: changes.y ?? doc.y };
+  const enemies = enemiesLeft(doc, doc, destination);
+  // Closing in on an adversary with reach: it strikes first (noted once per turn too)
+  const reach = reachEntered(doc, doc, destination);
   const key = `${combat.id}.${combat.round}.${combat.turn}.${doc.id}`;
   if (!noted.has(key)) {
     noted.clear();
     noted.set(key, new Set());
   }
   const seen = noted.get(key);
+  const freshReach = reach.filter(({ token }) => !seen.has(`reach.${token.id}`));
+  freshReach.forEach(({ token }) => seen.add(`reach.${token.id}`));
+  if (freshReach.length) {
+    ChatMessage.create({
+      speaker: ChatMessage.getSpeaker({ token: doc }),
+      whisper: game.users.filter(user => user.isGM).map(user => user.id),
+      content: `<p><i class="fa-solid fa-arrows-left-right-to-line"></i> ${esc(game.i18n.format('SDM.Zones.ReachEntered', { name: doc.name, enemies: describeEnemies(doc, freshReach) }))}</p>`
+    });
+  }
   const fresh = enemies.filter(({ token }) => !seen.has(token.id));
   if (!fresh.length) return;
   fresh.forEach(({ token }) => seen.add(token.id));
@@ -727,7 +792,13 @@ function freeAttackWarning(token, waypoint) {
   const doc = token.document;
   if (waypoint.x === doc.x && waypoint.y === doc.y) return '';
   const enemies = enemiesLeft(doc, doc, waypoint);
-  return enemies.length ? game.i18n.format('SDM.Zones.RulerWarning', { enemies: describeEnemies(doc, enemies) }) : '';
+  const reach = reachEntered(doc, doc, waypoint);
+  return [
+    enemies.length ? game.i18n.format('SDM.Zones.RulerWarning', { enemies: describeEnemies(doc, enemies) }) : '',
+    reach.length ? game.i18n.format('SDM.Zones.RulerReach', { enemies: describeEnemies(doc, reach) }) : ''
+  ]
+    .filter(Boolean)
+    .join(' ⚠ ');
 }
 
 /* -------------------------------------------- */
@@ -1011,8 +1082,58 @@ function onRenderSceneConfig(app, element) {
 /*  Setup                                       */
 /* -------------------------------------------- */
 
+/* -------------------------------------------- */
+/*  Reach badge on combatants                   */
+/* -------------------------------------------- */
+
+/**
+ * Wherever combatants are drawn (the combat tracker, carousel / dock tracker modules…), each element
+ * tagged with a combatant id gets a reach badge when its actor holds a readied reach weapon.
+ */
+function markReachCombatants(app, html) {
+  const root = html instanceof HTMLElement ? html : html?.[0] ?? app?.element;
+  const combat = game.combat;
+  if (!root?.querySelectorAll || !combat) return;
+  for (const element of root.querySelectorAll('[data-combatant-id]')) {
+    const combatant = combat.combatants.get(element.dataset.combatantId);
+    const reach = hasReach(combatant?.actor);
+    const badge = element.querySelector(':scope .sdm-reach-badge');
+    if (!reach) {
+      badge?.remove();
+      continue;
+    }
+    if (badge) continue;
+    const icon = document.createElement('i');
+    icon.className = 'fa-solid fa-arrows-left-right-to-line sdm-reach-badge';
+    icon.dataset.tooltip = game.i18n.localize('SDM.Zones.ReachBadge');
+    icon.setAttribute('aria-label', icon.dataset.tooltip);
+    // The core tracker: next to the name; other trackers: a corner of the combatant's card
+    const name = element.querySelector('.token-name .name, .token-name h4, .token-name strong, .token-name');
+    if (name) name.append(' ', icon);
+    else {
+      icon.classList.add('sdm-reach-badge-corner');
+      if (getComputedStyle(element).position === 'static') element.style.position = 'relative';
+      element.append(icon);
+    }
+  }
+}
+
+/** Readying / dropping a reach weapon refreshes the combat tracker(s). */
+function refreshReachBadges(item) {
+  if (!item?.system?.features?.has?.('reach') || !game.combat) return;
+  if (!game.combat.combatants.some(c => c.actor === item.parent)) return;
+  ui.combat?.render();
+  game.combat.render?.();
+}
+
 /** Called at init. */
 export function setupZones() {
+  Hooks.on('renderCombatTracker', markReachCombatants);
+  Hooks.on('renderApplicationV2', markReachCombatants);
+  Hooks.on('renderApplication', markReachCombatants);
+  Hooks.on('updateItem', refreshReachBadges);
+  Hooks.on('createItem', refreshReachBadges);
+  Hooks.on('deleteItem', refreshReachBadges);
   registerZoneRuler();
   Hooks.on('preUpdateToken', onPreUpdateToken);
   Hooks.on('renderSceneConfig', onRenderSceneConfig);

@@ -2863,7 +2863,7 @@
   "SDM.Zones.RangeCheck": "Target's zone in the roll dialog",
   "SDM.Zones.RangeCheckHint": "With a token targeted, attack, damage and power dialogs show the target's zone and warn when the weapon or power doesn't reach. No penalty is applied: the Referee decides.",
   "SDM.Zones.FreeAttackSetting": "Free attack note to the Referee",
-  "SDM.Zones.FreeAttackSettingHint": "In combat, on a token's own turn, when it moves out of the close zone of an enemy, the Referee gets a whispered note that the enemy may make a free attack if it disengaged carelessly (once per enemy per turn). Off by default: the ruler warning tells the player before the move.",
+  "SDM.Zones.FreeAttackSettingHint": "In combat, on a token's own turn, when it moves out of the close zone of an enemy, the Referee gets a whispered note that the enemy may make a free attack if it disengaged carelessly (once per enemy per turn), and when it closes in on an adversary with reach (it strikes first). Off by default: the ruler warning tells the player before the move.",
   "SDM.Zones.Ruler": "Ruler colored by rounds",
   "SDM.Zones.RulerHint": "Dragging a token colors the path by the rounds the move takes at the token's speed: green this round, yellow the next, red 3+ rounds (a chase).",
   "SDM.Zones.SceneLegend": "Zones (WTF)",
@@ -2907,7 +2907,7 @@
   "SDM.Zones.UnitM": "Meters (m)",
   "SDM.Zones.UnitConverted": "Distances converted to {unit}: {count} scene(s) updated.",
   "SDM.Zones.RulerWarningSetting": "Free attack warning on the ruler",
-  "SDM.Zones.RulerWarningSettingHint": "In combat, while a token is dragged, the ruler label warns when the path leaves the close zone of an adversary (any other disposition; same disposition are allies), before the move is made, so the player can go around or withdraw carefully. No chat message.",
+  "SDM.Zones.RulerWarningSettingHint": "In combat, while a token is dragged, the ruler label warns when the path leaves the close zone of an adversary (any other disposition; same disposition are allies), before the move is made, so the player can go around or withdraw carefully. It also warns when the path enters the close zone of an adversary with a readied reach weapon (it strikes first). No chat message.",
   "SDM.Zones.RulerWarning": "leaves {enemies}'s reach (free attack if careless)",
   "SDM.Zones.FreeAttackDisadvantage": "{name} attacks with disadvantage: {reasons}",
   "SDM.Zones.FreeAttackFrightened": "frightened: may not attack",
@@ -2943,5 +2943,12 @@
   "SDM.AttackFeature.BurdenGiven": "{target} gets the burden.",
   "SDM.AttackFeature.SpikedButton": "Take 1d3 damage (spiked: {item})",
   "SDM.AttackFeature.SpikedFlavor": "Spiked armor hurts the unarmed attacker",
-  "SDM.AttackFeature.NotAllowed": "Only the Referee or the owner can do that."
+  "SDM.AttackFeature.NotAllowed": "Only the Referee or the owner can do that.",
+  "SDM.Trigger.Status": "Condition",
+  "SDM.Trigger.StatusHint": "Put a condition (the Token HUD's list) on the targeted tokens or on the one who rolled, without needing an effect on this item. Actors that already have it are skipped.",
+  "SDM.Trigger.Option.always": "always (every roll)",
+  "SDM.Zones.RulerReach": "enters {enemies}'s reach (it strikes first)",
+  "SDM.Zones.ReachEntered": "{name} closes in on {enemies}, who has reach and strikes first.",
+  "SDM.Zones.ReachFirst": "{name} has reach: it strikes first this round — resolve its attack before this one.",
+  "SDM.Zones.ReachBadge": "Reach: a readied reach weapon — strikes first in close combat"
 }

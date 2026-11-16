@@ -2558,6 +2558,26 @@ input[type=radio]::after {
   min-width: 0;
 }
 
+.sdm-reach-badge {
+  margin-left: 4px;
+  font-size: 0.85em;
+  opacity: 0.85;
+}
+
+.sdm-reach-badge.sdm-reach-badge-corner {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+  margin: 0;
+  padding: 2px 3px;
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.65);
+  color: #fff;
+  font-size: 11px;
+  z-index: 2;
+  pointer-events: auto;
+}
+
 .sdm-attack-features {
   display: flex;
   flex-direction: column;

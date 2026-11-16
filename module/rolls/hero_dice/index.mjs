@@ -63,7 +63,7 @@ export async function handleHeroDice(event, message, flags) {
     await requestSettingUpdate('bonusHeroDicePool', 0);
   }
 
-  await HeroDiceUI.renderResultToChat(result, actor, flags, bonusHDPool, heroMode);
+  await HeroDiceUI.renderResultToChat(result, actor, flags, bonusHDPool, heroMode, originalRoll);
 }
 
 /**

@@ -2565,6 +2565,27 @@ input[type='radio']::after {
   }
 }
 
+// Combat trackers (core, carousel / dock modules): a combatant holding a readied reach weapon
+.sdm-reach-badge {
+  margin-left: 4px;
+  font-size: 0.85em;
+  opacity: 0.85;
+
+  &.sdm-reach-badge-corner {
+    position: absolute;
+    top: 2px;
+    right: 2px;
+    margin: 0;
+    padding: 2px 3px;
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.65);
+    color: #fff;
+    font-size: 11px;
+    z-index: 2;
+    pointer-events: auto;
+  }
+}
+
 // Chat: notes and buttons for the features of the item an attack was made with
 .sdm-attack-features {
   display: flex;

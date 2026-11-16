@@ -2863,7 +2863,7 @@
   "SDM.Zones.RangeCheck": "Zona do alvo na janela de rolagem",
   "SDM.Zones.RangeCheckHint": "Com um token como alvo, as janelas de ataque, dano e poder mostram a zona do alvo e avisam quando a arma ou o poder não alcança. Nenhuma penalidade é aplicada: o mestre decide.",
   "SDM.Zones.FreeAttackSetting": "Nota de ataque livre para o mestre",
-  "SDM.Zones.FreeAttackSettingHint": "Em combate, no turno do próprio token, quando ele sai da zona perto de um inimigo, o mestre recebe uma nota sussurrada de que o inimigo pode fazer um ataque livre se ele recuou sem cuidado (uma vez por inimigo por turno). Desligado por padrão: o aviso na régua avisa o jogador antes do movimento.",
+  "SDM.Zones.FreeAttackSettingHint": "Em combate, no turno do próprio token, quando ele sai da zona perto de um inimigo, o mestre recebe uma nota sussurrada de que o inimigo pode fazer um ataque livre se ele recuou sem cuidado (uma vez por inimigo por turno), e quando ele se aproxima de um adversário com extensão (que ataca primeiro). Desligado por padrão: o aviso na régua avisa o jogador antes do movimento.",
   "SDM.Zones.Ruler": "Régua colorida por rodadas",
   "SDM.Zones.RulerHint": "Ao arrastar um token, o caminho fica colorido pelas rodadas que o movimento leva na velocidade do token: verde nesta rodada, amarelo na próxima, vermelho 3+ rodadas (uma perseguição).",
   "SDM.Zones.SceneLegend": "Zonas (WTF)",
@@ -2907,7 +2907,7 @@
   "SDM.Zones.UnitM": "Metros (m)",
   "SDM.Zones.UnitConverted": "Distâncias convertidas para {unit}: {count} cena(s) atualizada(s).",
   "SDM.Zones.RulerWarningSetting": "Aviso de ataque livre na régua",
-  "SDM.Zones.RulerWarningSettingHint": "Em combate, ao arrastar um token, o rótulo da régua avisa quando o caminho sai da zona perto de um adversário (qualquer outra disposição; mesma disposição são aliados), antes do movimento, para o jogador contornar ou recuar com cuidado. Sem mensagem no chat.",
+  "SDM.Zones.RulerWarningSettingHint": "Em combate, ao arrastar um token, o rótulo da régua avisa quando o caminho sai da zona perto de um adversário (qualquer outra disposição; mesma disposição são aliados), antes do movimento, para o jogador contornar ou recuar com cuidado. Também avisa quando o caminho entra na zona perto de um adversário com arma de extensão preparada (ele ataca primeiro). Sem mensagem no chat.",
   "SDM.Zones.RulerWarning": "sai do alcance de {enemies} (ataque livre se descuidado)",
   "SDM.Zones.FreeAttackDisadvantage": "{name} ataca com desvantagem: {reasons}",
   "SDM.Zones.FreeAttackFrightened": "com medo: pode não atacar",
@@ -2943,5 +2943,12 @@
   "SDM.AttackFeature.BurdenGiven": "{target} recebe o fardo.",
   "SDM.AttackFeature.SpikedButton": "Sofrer 1d3 de dano (espinhos: {item})",
   "SDM.AttackFeature.SpikedFlavor": "Armadura com espinhos fere o atacante desarmado",
-  "SDM.AttackFeature.NotAllowed": "Só o mestre ou o dono pode fazer isso."
+  "SDM.AttackFeature.NotAllowed": "Só o mestre ou o dono pode fazer isso.",
+  "SDM.Trigger.Status": "Condição",
+  "SDM.Trigger.StatusHint": "Coloca uma condição (a lista do HUD do token) nos tokens alvo ou em quem rolou, sem precisar de um efeito neste item. Quem já tem a condição é ignorado.",
+  "SDM.Trigger.Option.always": "sempre (toda rolagem)",
+  "SDM.Zones.RulerReach": "entra no alcance de {enemies} (ataca primeiro)",
+  "SDM.Zones.ReachEntered": "{name} se aproxima de {enemies}, que tem extensão e ataca primeiro.",
+  "SDM.Zones.ReachFirst": "{name} tem extensão: ataca primeiro nesta rodada — resolva o ataque dele antes deste.",
+  "SDM.Zones.ReachBadge": "Extensão: uma arma com extensão preparada — ataca primeiro em combate corpo a corpo"
 }

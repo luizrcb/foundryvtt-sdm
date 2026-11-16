@@ -1,4 +1,4 @@
-import { applyItemEffectToTargets, isUsable, useItem } from '../app/use-item.mjs';
+import { applyItemEffectToTargets, applyStatusToTargets, isUsable, useItem } from '../app/use-item.mjs';
 import { GearType, ItemStatusType, ItemType } from '../helpers/constants.mjs';
 import { resetCounters, stepCounter } from '../helpers/counters.mjs';
 import { getItemIdentifier } from '../helpers/effectReferences.mjs';
@@ -56,6 +56,8 @@ function matches(trigger, roll, { usageTarget = null, success = null } = {}, ite
     case 'totalAtMost':
       return total <= target;
     // Saves, defeat, attacks against a target: the roll's outcome (null when it has none)
+    case 'always':
+      return true;
     case 'success':
       return success === true;
     case 'failure':
@@ -212,6 +214,9 @@ async function runActions(fired, { actor } = {}) {
         await applyItemEffectToTargets(item, trigger.effect, actor ?? item.actor, {
           self: trigger.effect_target === 'self'
         });
+      }
+      if (trigger.status) {
+        await applyStatusToTargets(trigger.status, actor ?? item.actor, { self: trigger.status_target === 'self' });
       }
       if (trigger.wear) await wearItem(item, trigger.wear);
       const roller = actor ?? item.actor;
@@ -566,4 +571,42 @@ export function setupTriggers() {
   Hooks.on('updateItem', onUpdateItemCounters);
   Hooks.on('preUpdateActor', onPreUpdateActorCounters);
   Hooks.on('updateActor', onUpdateActorCounters);
+}
+
+/**
+ * Hero dice change a roll after its triggers fired: check them again on the improved result and fire
+ * those that match now but didn't before. `check` is the card's flags.sdm.triggerCheck ({ kind:
+ * attack | ability | save, actor, attack, ability, withItem, defense, target }); `heroResult` the hero
+ * dice engine's result (kept dice after the hero dice, total). A die bumped to 20 counts as natural.
+ * Returns { fired, actor } (nothing to fire: fired = []).
+ */
+export function recheckTriggersAfterHeroDice(check, originalRoll, heroResult) {
+  const actor = check?.actor ? fromUuidSync(check.actor) : null;
+  if (!actor || !originalRoll || !heroResult) return { fired: [], actor };
+  const heroRoll = {
+    total: Number(heroResult.total),
+    dice: (heroResult.keptDice ?? []).map(die => ({
+      faces: die.faces,
+      results: [die.modifiedValue, ...(die.newExplosions ?? [])].map(result => ({ result, active: true }))
+    }))
+  };
+  const successOf = roll => {
+    const total = Number(roll.total);
+    if (check.kind === 'save') return Number.isFinite(check.target) ? total >= check.target : null;
+    if (check.kind === 'attack' && Number.isFinite(check.defense)) {
+      const natural = naturalD20(roll);
+      return natural !== 1 && (natural === 20 || total > check.defense);
+    }
+    return null;
+  };
+  const firedFor = roll => {
+    const success = successOf(roll);
+    if (check.kind === 'attack') return attackTriggers(actor, roll, check.attack ?? '', success, { withItem: check.withItem ?? '' });
+    if (check.kind === 'ability') return actorTriggers(actor, 'ability', roll, { ability: check.ability ?? '' });
+    if (check.kind === 'save') return actorTriggers(actor, 'save', roll, { ability: check.ability ?? '', success });
+    return [];
+  };
+  const before = firedFor(originalRoll);
+  const fired = firedFor(heroRoll).filter(entry => !before.some(old => old.item === entry.item && old.trigger === entry.trigger));
+  return { fired, actor };
 }

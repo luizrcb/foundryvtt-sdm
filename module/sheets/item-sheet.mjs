@@ -57,14 +57,14 @@ function powerToItemData(power) {
 
 
 const O = 'SDM.Trigger.Option.';
-const D20_CONDITIONS = ['natural', 'naturalAtLeast', 'naturalAtMost', 'total', 'totalAtLeast', 'totalAtMost', 'success', 'failure'];
+const D20_CONDITIONS = ['always', 'natural', 'naturalAtLeast', 'naturalAtMost', 'total', 'totalAtLeast', 'totalAtMost', 'success', 'failure'];
 const TRIGGER_CONDITIONS_BY_ROLL = {
   attack: D20_CONDITIONS,
   save: D20_CONDITIONS,
   ability: D20_CONDITIONS,
   defeat: D20_CONDITIONS,
-  damage: ['total', 'totalAtLeast', 'totalAtMost', 'die', 'max', 'min', 'matching'],
-  power: ['total', 'totalAtLeast', 'totalAtMost', 'die', 'max', 'min', 'matching'],
+  damage: ['always', 'total', 'totalAtLeast', 'totalAtMost', 'die', 'max', 'min', 'matching'],
+  power: ['always', 'total', 'totalAtLeast', 'totalAtMost', 'die', 'max', 'min', 'matching'],
   usage: ['total', 'totalAtLeast', 'totalAtMost', 'runningLow', 'runOut'],
   counter: ['total', 'totalAtLeast', 'totalAtMost', 'increases', 'decreases', 'changes', 'full', 'empty'],
   charges: ['total', 'totalAtLeast', 'totalAtMost', 'increases', 'decreases', 'changes', 'full', 'empty']
@@ -395,6 +395,13 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
         recharge: 'SDM.Trigger.Wear.recharge'
       },
       triggerEffects: Object.fromEntries([['', ''], ...this.item.effects.map(effect => [effect.id, effect.name])]),
+      // Conditions a trigger can put on its targets / self: the Token HUD's list
+      triggerStatuses: Object.fromEntries([
+        ['', ''],
+        ...CONFIG.statusEffects
+          .map(status => [status.id, game.i18n.localize(status.name ?? status.label ?? status.id)])
+          .sort((a, b) => a[1].localeCompare(b[1], game.i18n.lang))
+      ]),
       triggerCounters: Object.fromEntries([
         ['', ''],
         ...Object.entries(this.item.system.counters ?? {}).map(([key, counter]) => [key, counter.label])

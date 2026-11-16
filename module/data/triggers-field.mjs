@@ -51,6 +51,8 @@ export function defineTriggersField() {
           'matching',
           'success',
           'failure',
+          // Every roll of that kind (e.g. every damage roll of a weapon applies a condition)
+          'always',
           // Legacy: migrated to 'full'
           'counterMax',
           'runningLow',
@@ -85,6 +87,9 @@ export function defineTriggersField() {
         initial: 'targets',
         choices: ['targets', 'self']
       }),
+      // A condition put on the targets or self (any status of the Token HUD list), no effect needed on the item
+      status: new fields.StringField({ required: true, blank: true, initial: '' }),
+      status_target: new fields.StringField({ required: true, blank: false, initial: 'targets', choices: ['targets', 'self'] }),
       wear: new fields.StringField({
         required: true,
         blank: true,
