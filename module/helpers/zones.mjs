@@ -501,13 +501,34 @@ export function targetRangeHtml(actor, { range = '', throwing = false, reach = f
 /*  Free attack when disengaging                */
 /* -------------------------------------------- */
 
-const OUT_OF_FIGHT = ['dead', 'unconscious', 'sleep', 'paralysis', 'petrified', 'stun'];
+// The adversary can't take the free attack (the conditions' own rules: can't act, unplayable)
+const OUT_OF_FIGHT = ['dead', 'unconscious', 'sleep', 'paralysis', 'petrified', 'stun', 'mad'];
+// The adversary's attacks have disadvantage (blinded, poisoned, prone, confused; nauseated: physical rolls)
+const ATTACKS_WITH_DISADVANTAGE = ['blind', 'poison', 'prone', 'confused', 'nauseated'];
+// Compendium traits with a rule about it: Springer jumps away after attacking without provoking it;
+// Eerie Sense isn't fooled by invisibility
+const SPRINGER = { key: 'SDM.NPCTraitSpringer', uuid: 'Compendium.sdm.npc_traits.Item.zjxXwFmJSugiYpCA', names: ['springer', 'saltador'] };
+const EERIE_SENSE = { uuid: 'Compendium.sdm.npc_extras.Item.Sovrg4bu8g5PO3X3', names: ['eerie sense', 'sentido estranho'] };
+
+function hasTrait(actor, { key, uuid, names = [] }) {
+  return !!actor?.items?.some(
+    item =>
+      (key && item.getFlag?.('sdm', 'npcTraitKey') === key) ||
+      (uuid && item._stats?.compendiumSource === uuid) ||
+      names.includes(`${item.name ?? ''}`.trim().toLowerCase())
+  );
+}
+
+const conditionName = id => game.i18n.localize(`SDM.Condition.${id}.Name`).toLowerCase();
 
 /**
  * Enemies whose close zone a token leaves going from one position (top-left x, y) to another, in a
- * started combat on the current scene. Tokens of the same disposition are allies; any other
- * disposition (friendly, neutral, hostile, secret) is an adversary. Hidden tokens only count for the
- * Referee (a player never learns of them this way); out-of-the-fight and defeated ones are left out.
+ * started combat on the current scene, each as { token, details }. Tokens of the same disposition are
+ * allies; any other disposition (friendly, neutral, hostile, secret) is an adversary. Hidden tokens
+ * only count for the Referee (a player never learns of them this way); defeated ones and those that
+ * can't act are left out, and a flying token gets out of reach of an adversary that doesn't fly.
+ * `details` says why the attack is harder: the adversary's conditions with disadvantage, the token
+ * invisible (unless the adversary has Eerie Sense), the adversary frightened (it may not attack).
  */
 function enemiesLeft(doc, from, to) {
   if (!canvas?.ready || doc.parent !== canvas.scene || !zonesActive()) return [];
@@ -520,16 +541,32 @@ function enemiesLeft(doc, from, to) {
   const enemies = [];
   for (const other of doc.parent.tokens) {
     if (other === doc || other.disposition === doc.disposition || (other.hidden && !game.user.isGM)) continue;
-    if (OUT_OF_FIGHT.some(id => other.actor?.statuses?.has(id))) continue;
+    const statuses = other.actor?.statuses ?? new Set();
+    if (OUT_OF_FIGHT.some(id => statuses.has(id))) continue;
     if (combat.combatants.find(c => c.tokenId === other.id)?.isDefeated) continue;
+    if (doc.actor?.statuses?.has('fly') && !statuses.has('fly')) continue;
     const before = unitsBetween(doc, start, other, centerOf(other)) * perUnit;
     const after = unitsBetween(doc, end, other, centerOf(other)) * perUnit;
-    if (before <= limits.close && after > limits.close) enemies.push(other);
+    if (before <= limits.close && after > limits.close) {
+      const harder = ATTACKS_WITH_DISADVANTAGE.filter(id => statuses.has(id)).map(conditionName);
+      if (doc.actor?.statuses?.has('invisible') && !hasTrait(other.actor, EERIE_SENSE)) harder.push(conditionName('invisible'));
+      const details = [];
+      if (harder.length) details.push(game.i18n.format('SDM.Zones.FreeAttackDisadvantage', { reasons: harder.join(', ') }));
+      if (statuses.has('fear')) details.push(game.i18n.localize('SDM.Zones.FreeAttackFrightened'));
+      enemies.push({ token: other, details });
+    }
   }
   return enemies;
 }
 
-const listNames = tokens => new Intl.ListFormat(game.i18n.lang, { type: 'conjunction' }).format(tokens.map(t => t.name));
+/** "Bob (disadvantage: blinded), Ana" and, for a Springer, that jumping away after attacking is safe. */
+function describeEnemies(doc, enemies) {
+  const names = enemies.map(({ token, details }) => (details.length ? `${token.name} (${details.join('; ')})` : token.name));
+  let text = new Intl.ListFormat(game.i18n.lang, { type: 'conjunction' }).format(names);
+  if (hasTrait(doc.actor, SPRINGER)) text += ` · ${game.i18n.localize('SDM.Zones.FreeAttackSpringer')}`;
+  return text;
+}
+
 // Enemies already noted this turn, per moving token: "combat.round.turn.token" → Set of enemy ids
 const noted = new Map();
 
@@ -550,13 +587,13 @@ function onPreUpdateToken(doc, changes, options, userId) {
     noted.set(key, new Set());
   }
   const seen = noted.get(key);
-  const fresh = enemies.filter(enemy => !seen.has(enemy.id));
+  const fresh = enemies.filter(({ token }) => !seen.has(token.id));
   if (!fresh.length) return;
-  fresh.forEach(enemy => seen.add(enemy.id));
+  fresh.forEach(({ token }) => seen.add(token.id));
   ChatMessage.create({
     speaker: ChatMessage.getSpeaker({ token: doc }),
     whisper: game.users.filter(user => user.isGM).map(user => user.id),
-    content: `<p><i class="fa-solid fa-person-running"></i> ${esc(game.i18n.format('SDM.Zones.FreeAttack', { name: doc.name, enemies: listNames(fresh) }))}</p>`
+    content: `<p><i class="fa-solid fa-person-running"></i> ${esc(game.i18n.format('SDM.Zones.FreeAttack', { name: doc.name, enemies: describeEnemies(doc, fresh) }))}</p>`
   });
 }
 
@@ -570,7 +607,7 @@ function freeAttackWarning(token, waypoint) {
   const doc = token.document;
   if (waypoint.x === doc.x && waypoint.y === doc.y) return '';
   const enemies = enemiesLeft(doc, doc, waypoint);
-  return enemies.length ? game.i18n.format('SDM.Zones.RulerWarning', { enemies: listNames(enemies) }) : '';
+  return enemies.length ? game.i18n.format('SDM.Zones.RulerWarning', { enemies: describeEnemies(doc, enemies) }) : '';
 }
 
 /* -------------------------------------------- */

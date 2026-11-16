@@ -2909,5 +2909,8 @@
   "SDM.Zones.UnitConverted": "Distances converted to {unit}: {count} scene(s) updated.",
   "SDM.Zones.RulerWarningSetting": "Free attack warning on the ruler",
   "SDM.Zones.RulerWarningSettingHint": "In combat, while a token is dragged, the ruler label warns when the path leaves the close zone of an adversary (any other disposition; same disposition are allies), before the move is made, so the player can go around or withdraw carefully. No chat message.",
-  "SDM.Zones.RulerWarning": "leaves {enemies}'s reach (free attack if careless)"
+  "SDM.Zones.RulerWarning": "leaves {enemies}'s reach (free attack if careless)",
+  "SDM.Zones.FreeAttackDisadvantage": "disadvantage: {reasons}",
+  "SDM.Zones.FreeAttackFrightened": "frightened: may not attack",
+  "SDM.Zones.FreeAttackSpringer": "Springer: none if it jumps away after attacking"
 }
