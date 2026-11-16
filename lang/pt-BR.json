@@ -2943,7 +2943,5 @@
   "SDM.AttackFeature.BurdenGiven": "{target} recebe o fardo.",
   "SDM.AttackFeature.SpikedButton": "Sofrer 1d3 de dano (espinhos: {item})",
   "SDM.AttackFeature.SpikedFlavor": "Armadura com espinhos fere o atacante desarmado",
-  "SDM.AttackFeature.NotAllowed": "Só o mestre ou o dono pode fazer isso.",
-  "SDM.Settings.HeavilyArmoredNpcDefense": "Defesa de NPC com armadura pesada",
-  "SDM.Settings.HeavilyArmoredNpcDefenseHint": "Armas perfurantes: um NPC sem itens de armadura conta como de armadura pesada quando sua defesa é pelo menos este valor (a defesa dele já inclui a armadura). 0: só armadura pesada ou golem preparada conta."
+  "SDM.AttackFeature.NotAllowed": "Só o mestre ou o dono pode fazer isso."
 }

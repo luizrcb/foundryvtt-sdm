@@ -183,15 +183,6 @@ export function registerZoneSettings() {
     type: Boolean,
     default: true
   });
-  // Armor piercing: an NPC with no armor items counts as heavily armored at this defense (0: never)
-  game.settings.register('sdm', 'heavilyArmoredNpcDefense', {
-    name: 'SDM.Settings.HeavilyArmoredNpcDefense',
-    hint: 'SDM.Settings.HeavilyArmoredNpcDefenseHint',
-    scope: 'world',
-    config: false,
-    type: Number,
-    default: 14
-  });
   game.settings.register('sdm', 'zoneRuler', {
     name: 'SDM.Zones.Ruler',
     hint: 'SDM.Zones.RulerHint',

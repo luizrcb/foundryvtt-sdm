@@ -2943,7 +2943,5 @@
   "SDM.AttackFeature.BurdenGiven": "{target} gets the burden.",
   "SDM.AttackFeature.SpikedButton": "Take 1d3 damage (spiked: {item})",
   "SDM.AttackFeature.SpikedFlavor": "Spiked armor hurts the unarmed attacker",
-  "SDM.AttackFeature.NotAllowed": "Only the Referee or the owner can do that.",
-  "SDM.Settings.HeavilyArmoredNpcDefense": "Heavily armored NPC defense",
-  "SDM.Settings.HeavilyArmoredNpcDefenseHint": "Armor-piercing weapons: an NPC with no armor items counts as heavily armored when its defense is at least this (its defense already counts its armor). 0: only readied heavy or golem armor counts."
+  "SDM.AttackFeature.NotAllowed": "Only the Referee or the owner can do that."
 }

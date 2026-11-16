@@ -1,7 +1,7 @@
 /**
  * What an attack's item features do, now that the attack dialog knows the item ("With"):
  *  - in the dialog: clumsy suggests disadvantage; armor piercing suggests advantage against a heavily
- *    armored target (readied heavy / golem armor, or an NPC with defense 14+);
+ *    armored target (readied heavy / golem armor);
  *  - on the card: backfiring (natural 1) and vorpal (natural 20) notes; blinding (a hit: blind the
  *    target for a round; a critical may blind for good), burdening (a hit: give the target a burden)
  *    and spiked armor (an unarmed attack on it: the attacker takes 1d3) as buttons for the Referee or
@@ -25,20 +25,14 @@ export function isAttackGear(item) {
 }
 
 /**
- * Heavily armored: readied heavy or golem armor; an NPC without armor items (its defense already
- * counts its armor), a defense at or above the world setting (default 14; 0 = never).
+ * Heavily armored: wearing readied heavy or golem armor (characters and NPCs alike). A high defense
+ * alone doesn't count: it may be agility, not armor.
  */
 export function heavilyArmored(actor) {
   if (!actor) return false;
-  const armor = actor.items.filter(item => item.system?.readied && item.system?.type === 'armor');
-  if (armor.some(item => ['heavy', 'golem'].includes(item.system?.armor?.type))) return true;
-  let threshold = 14;
-  try {
-    threshold = Number(game.settings.get('sdm', 'heavilyArmoredNpcDefense'));
-  } catch {
-    /* not registered yet */
-  }
-  return actor.type === 'npc' && !armor.length && threshold > 0 && (Number(actor.system?.defense) || 0) >= threshold;
+  return actor.items.some(
+    item => item.system?.readied && item.system?.type === 'armor' && ['heavy', 'golem'].includes(item.system?.armor?.type)
+  );
 }
 
 /**

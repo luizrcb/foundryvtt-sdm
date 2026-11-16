@@ -91,8 +91,7 @@ export class SDMCombatSettingsConfig extends GroupBase {
     'rerollInitiativeEveryRound',
     'effectExpiryAction',
     'initiativeFormula',
-    'npcInitiativeFormula',
-    'heavilyArmoredNpcDefense'
+    'npcInitiativeFormula'
   ];
 }
 
