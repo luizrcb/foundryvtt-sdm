@@ -467,6 +467,8 @@ export function attackItems(actor, attack = '') {
         name: item.name,
         kind: 'power',
         band: bandOf(item.system.power?.range),
+        // As written ("touch", "a day's march"): shown, never checked (the Referee rules on it)
+        rangeText: `${item.system.power?.range ?? ''}`.trim(),
         fantascience: true,
         roll: item.system.power?.roll_formula ?? ''
       });
@@ -484,6 +486,7 @@ export function attackItems(actor, attack = '') {
         name: isAlbum ? albumPower.name || item.name : `${albumPower.name || item.name} (${item.name})`,
         kind: 'album',
         band: bandOf(albumPower.range),
+        rangeText: `${albumPower.range ?? ''}`.trim(),
         fantascience: true,
         roll: albumPower.roll_formula ?? ''
       });

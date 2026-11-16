@@ -595,7 +595,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       if (isAttack && plan.attackItem) {
         const chosen = plan.attackItem;
         const label = $l10n(chosen.kind === 'weapon' ? 'SDM.RollPreview.Damage' : 'SDM.RollPreview.PowerRoll');
-        const range = chosen.band !== null && chosen.band !== undefined ? $l10n(CONFIG.SDM.rangeType[ZONE_BANDS[chosen.band]]) : '';
+        // A zone, or a power's range as written (no check: the Referee rules on it)
+        const range =
+          chosen.band !== null && chosen.band !== undefined ? $l10n(CONFIG.SDM.rangeType[ZONE_BANDS[chosen.band]]) : chosen.rangeText ?? '';
         const roll = chosen.roll || '—';
         rows.push(
           `<div class="sdm-roll-preview-row"><span>${foundry.utils.escapeHTML(label)}</span> <code>${foundry.utils.escapeHTML(roll)}</code>${
