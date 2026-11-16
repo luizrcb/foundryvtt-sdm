@@ -15,9 +15,9 @@
       {{#each scales as |scale|}}
       <tr>
         <th>{{scale.label}}</th>
-        <td><input type="number" name="zoneScales.{{scale.key}}.close" value="{{scale.close}}" min="0" step="any" /> m</td>
-        <td><input type="number" name="zoneScales.{{scale.key}}.short" value="{{scale.short}}" min="0" step="any" /> m</td>
-        <td><input type="number" name="zoneScales.{{scale.key}}.medium" value="{{scale.medium}}" min="0" step="any" /> m</td>
+        <td><input type="number" name="zoneScales.{{scale.key}}.close" value="{{scale.close}}" min="0" step="any" /> {{@root.unit}}</td>
+        <td><input type="number" name="zoneScales.{{scale.key}}.short" value="{{scale.short}}" min="0" step="any" /> {{@root.unit}}</td>
+        <td><input type="number" name="zoneScales.{{scale.key}}.medium" value="{{scale.medium}}" min="0" step="any" /> {{@root.unit}}</td>
         <td>{{localize 'SDM.Zones.Beyond'}}</td>
       </tr>
       {{/each}}

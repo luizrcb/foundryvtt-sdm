@@ -2526,6 +2526,11 @@ input[type=radio]::after {
   font-size: 12px;
 }
 
+.sdm-free-attack-warning {
+  color: #ffb347;
+  font-weight: bold;
+}
+
 .sdm-scene-zones .form-fields .units {
   flex: 0 0 auto;
   opacity: 0.7;

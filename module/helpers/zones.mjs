@@ -20,40 +20,76 @@ import { GearType } from './constants.mjs';
 import { UnarmedDamageItem } from './itemUtils.mjs';
 
 /**
- * Where close, short and medium end, in meters. Long is anything beyond.
+ * Where close, short and medium end, in the world's distance unit (feet or meters, a world setting).
+ * Long is anything beyond. Each unit has its own numbers, chosen so the zones cover the same number
+ * of squares on the grid each scale is meant for (5 ft = 1.5 m, 30 ft = 10 m…): the game plays the
+ * same in feet and in meters, only the numbers on screen differ.
  * A zone is both a range (a short-range weapon hits the short zone) and movement (short is 1 round
  * away), so a scale shrinks for obstacles and tight places but only grows with how fast the fight
  * moves (riding, vehicles, ships, aircraft), never because the place is open: an open desert crossed
  * on foot is On foot, its long sight lines are the long zone, which has no end.
  */
-export const ZONE_SCALES = {
-  // d20 battlemaps (5 ft squares, 30 ft moves): close = adjacent, short = one move, medium = two
-  battlemap: { close: 1.5, short: 9, medium: 18 },
-  indoor: { close: 2, short: 6, medium: 15 },
-  underground: { close: 2, short: 8, medium: 25 },
-  forest: { close: 3, short: 10, medium: 30 },
-  // The book's on-foot column
-  onFoot: { close: 3, short: 10, medium: 40 },
-  mounted: { close: 5, short: 30, medium: 150 },
-  // The book's autogolem column
-  vehicle: { close: 10, short: 50, medium: 200 },
-  ships: { close: 10, short: 30, medium: 150 },
-  air: { close: 20, short: 100, medium: 500 }
+export const ZONE_PRESETS = {
+  m: {
+    // d20 battlemaps (5 ft squares, 30 ft moves): close = adjacent, short = one move, medium = two
+    battlemap: { close: 1.5, short: 9, medium: 18 },
+    indoor: { close: 2, short: 6, medium: 15 },
+    underground: { close: 2, short: 8, medium: 25 },
+    forest: { close: 3, short: 10, medium: 30 },
+    // The book's on-foot column
+    onFoot: { close: 3, short: 10, medium: 40 },
+    mounted: { close: 5, short: 30, medium: 150 },
+    // The book's autogolem column
+    vehicle: { close: 10, short: 50, medium: 200 },
+    ships: { close: 10, short: 30, medium: 150 },
+    air: { close: 20, short: 100, medium: 500 }
+  },
+  ft: {
+    battlemap: { close: 5, short: 30, medium: 60 },
+    indoor: { close: 5, short: 20, medium: 50 },
+    underground: { close: 5, short: 25, medium: 80 },
+    forest: { close: 10, short: 30, medium: 100 },
+    onFoot: { close: 10, short: 30, medium: 130 },
+    mounted: { close: 15, short: 90, medium: 450 },
+    vehicle: { close: 30, short: 150, medium: 600 },
+    ships: { close: 30, short: 90, medium: 450 },
+    air: { close: 60, short: 300, medium: 1500 }
+  }
 };
-export const ZONE_SCALE_KEYS = Object.keys(ZONE_SCALES);
+export const ZONE_SCALE_KEYS = Object.keys(ZONE_PRESETS.m);
 export const DEFAULT_ZONE_SCALE = 'battlemap';
-/** Meters per grid square each scale is meant for (min, max): shown and checked in the scene config. */
+/** Grid size per square each scale is meant for (min, max), per unit: shown and checked in the scene config. */
 const SCALE_GRID = {
-  battlemap: [1.5, 1.5],
-  indoor: [1.5, 1.5],
-  underground: [1.5, 1.5],
-  forest: [1.5, 1.5],
-  onFoot: [1.5, 3],
-  mounted: [3, 5],
-  vehicle: [10, 10],
-  ships: [10, 10],
-  air: [20, 20]
+  m: {
+    battlemap: [1.5, 1.5],
+    indoor: [1.5, 1.5],
+    underground: [1.5, 1.5],
+    forest: [1.5, 1.5],
+    onFoot: [1.5, 3],
+    mounted: [3, 5],
+    vehicle: [10, 10],
+    ships: [10, 10],
+    air: [20, 20]
+  },
+  ft: {
+    battlemap: [5, 5],
+    indoor: [5, 5],
+    underground: [5, 5],
+    forest: [5, 5],
+    onFoot: [5, 10],
+    mounted: [10, 15],
+    vehicle: [30, 30],
+    ships: [30, 30],
+    air: [60, 60]
+  }
 };
+/** The world's distance unit: 'ft' (default, as the system always set its grid) or 'm'. */
+export const DISTANCE_UNITS = ['ft', 'm'];
+export function worldUnit() {
+  const unit = setting('distanceUnit', 'ft');
+  return DISTANCE_UNITS.includes(unit) ? unit : 'ft';
+}
+const presets = () => ZONE_PRESETS[worldUnit()];
 /** A scene's scale "none": a travel map (pointcrawl, region) with no zones at all. */
 export const NO_ZONES = 'none';
 // Scales renamed before release: city → on foot, open wilds → mounted, sea / air → air
@@ -88,18 +124,44 @@ export function registerZoneSettings() {
     default: DEFAULT_ZONE_SCALE,
     choices: Object.fromEntries(ZONE_SCALE_KEYS.map(key => [key, `SDM.Zones.Scale.${key}`]))
   });
-  // Edited in the Zones menu (table of scales); saved as an object
+  // Feet or meters for every zone number, and the grid of new scenes; changing it converts the scenes
+  game.settings.register('sdm', 'distanceUnit', {
+    name: 'SDM.Zones.Unit',
+    hint: 'SDM.Zones.UnitHint',
+    scope: 'world',
+    config: false,
+    type: String,
+    default: 'ft',
+    choices: { ft: 'SDM.Zones.UnitFt', m: 'SDM.Zones.UnitM' },
+    onChange: () => convertWorldUnit()
+  });
+  // The unit the saved zone numbers (scales table, scene overrides) are written in
+  game.settings.register('sdm', 'zoneValuesUnit', {
+    scope: 'world',
+    config: false,
+    type: String,
+    default: 'm'
+  });
+  // Edited in the Zones menu (table of scales, in the world unit); empty: the presets
   game.settings.register('sdm', 'zoneScales', {
     name: 'SDM.Zones.Scales',
     hint: 'SDM.Zones.ScalesHint',
     scope: 'world',
     config: false,
     type: Object,
-    default: foundry.utils.deepClone(ZONE_SCALES)
+    default: {}
   });
   game.settings.register('sdm', 'zoneRangeCheck', {
     name: 'SDM.Zones.RangeCheck',
     hint: 'SDM.Zones.RangeCheckHint',
+    scope: 'world',
+    config: false,
+    type: Boolean,
+    default: true
+  });
+  game.settings.register('sdm', 'freeAttackRulerWarning', {
+    name: 'SDM.Zones.RulerWarningSetting',
+    hint: 'SDM.Zones.RulerWarningSettingHint',
     scope: 'world',
     config: false,
     type: Boolean,
@@ -111,7 +173,7 @@ export function registerZoneSettings() {
     scope: 'world',
     config: false,
     type: Boolean,
-    default: true
+    default: false
   });
   game.settings.register('sdm', 'zoneHighlight', {
     name: 'SDM.Zones.Highlight',
@@ -133,7 +195,7 @@ export function registerZoneSettings() {
 
 /** A scale as the GM configured it (world setting) over the defaults. */
 export function getZoneScale(key) {
-  const base = ZONE_SCALES[key] ?? ZONE_SCALES[DEFAULT_ZONE_SCALE];
+  const base = presets()[key] ?? presets()[DEFAULT_ZONE_SCALE];
   const configured = setting('zoneScales', {})?.[key] ?? {};
   return sorted(Object.fromEntries(LIMITS.map(limit => [limit, positive(configured[limit]) ?? base[limit]])));
 }
@@ -147,7 +209,7 @@ function sorted(limits) {
 
 export function worldZoneScale() {
   const key = scaleKey(setting('defaultZoneScale', DEFAULT_ZONE_SCALE));
-  return ZONE_SCALES[key] ? key : DEFAULT_ZONE_SCALE;
+  return ZONE_PRESETS.m[key] ? key : DEFAULT_ZONE_SCALE;
 }
 
 /** False on a travel map (scene scale "none"): no ruler colors, range check, free attack note or HUD zones. */
@@ -155,10 +217,10 @@ export function zonesActive(scene = canvas?.scene) {
   return scene?.getFlag?.('sdm', 'zones')?.scale !== NO_ZONES;
 }
 
-/** The scene's zone limits in meters: its scale (or the world's) and any number the scene changed. */
+/** The scene's zone limits in the world unit: its scale (or the world's) and any number the scene changed. */
 export function sceneZoneLimits(scene = canvas?.scene) {
   const flags = scene?.getFlag?.('sdm', 'zones') ?? {};
-  const key = ZONE_SCALES[scaleKey(flags.scale)] ? scaleKey(flags.scale) : worldZoneScale();
+  const key = ZONE_PRESETS.m[scaleKey(flags.scale)] ? scaleKey(flags.scale) : worldZoneScale();
   const scale = getZoneScale(key);
   return { scale: key, ...sorted(Object.fromEntries(LIMITS.map(limit => [limit, positive(flags[limit]) ?? scale[limit]]))) };
 }
@@ -167,26 +229,111 @@ export function sceneZoneLimits(scene = canvas?.scene) {
 /*  Distances                                   */
 /* -------------------------------------------- */
 
+// Feet use the game convention (5 ft square = 1.5 m), so feet and meters scenes play alike
+const METRIC = /^(m|meters?|metres?|metros?)$/;
+const IMPERIAL = /^(ft|feet|foot|pes|pés|pe|pé)$/;
 const UNIT_METERS = [
-  [/^(m|meters?|metres?|metros?)$/, 1],
-  [/^(ft|feet|foot|pes|pés|pe|pé)$/, 0.3048],
+  [METRIC, 1],
+  [IMPERIAL, 0.3],
   [/^(yd|yds|yards?|jardas?)$/, 0.9144],
   [/^(km|kilometers?|kilometres?|quilometros?|quilômetros?)$/, 1000],
   [/^(mi|miles?|milhas?)$/, 1609.344]
 ];
 
-/** Meters in one of the scene's grid units (unknown units are taken as meters). */
+const normalUnits = units => `${units ?? ''}`.trim().toLowerCase().replace(/\.$/, '');
+const unitMeters = units => UNIT_METERS.find(([pattern]) => pattern.test(normalUnits(units)))?.[1];
+
+/** World units in one of the scene's grid units (unknown units are taken as the world unit). */
 export function metersPerUnit(scene = canvas?.scene) {
-  const units = `${scene?.grid?.units ?? ''}`.trim().toLowerCase().replace(/\.$/, '');
-  return UNIT_METERS.find(([pattern]) => pattern.test(units))?.[1] ?? 1;
+  const scene_ = unitMeters(scene?.grid?.units);
+  return scene_ ? scene_ / unitMeters(worldUnit()) : 1;
 }
 
-/** Zone index (0 close … 3 long) of a distance in meters. */
-export function bandForMeters(meters, limits = sceneZoneLimits()) {
-  if (meters <= limits.close) return 0;
-  if (meters <= limits.short) return 1;
-  if (meters <= limits.medium) return 2;
+/** Zone index (0 close … 3 long) of a distance in the world unit. */
+export function bandForMeters(distance, limits = sceneZoneLimits()) {
+  if (distance <= limits.close) return 0;
+  if (distance <= limits.short) return 1;
+  if (distance <= limits.medium) return 2;
   return 3;
+}
+
+/* -------------------------------------------- */
+/*  Changing the world unit                     */
+/* -------------------------------------------- */
+
+// Grid sizes that mean the same squares in both units (the suggested grids of the scales)
+const GRID_PAIRS = [
+  [1.5, 5],
+  [3, 10],
+  [5, 15],
+  [10, 30],
+  [20, 60]
+];
+const round = (value, step) => Math.round(value / step) * step;
+
+/** A distance from one unit to the other: the matching grid size, else the convention (1 ft = 0.3 m). */
+function convertDistance(value, from, to) {
+  if (from === to) return value;
+  const pair = GRID_PAIRS.find(([m, ft]) => (from === 'm' ? m : ft) === value);
+  if (pair) return to === 'm' ? pair[0] : pair[1];
+  return to === 'ft' ? round(value / 0.3, value / 0.3 >= 20 ? 5 : 0.5) : round(value * 0.3, 0.1);
+}
+
+/** A zone number: the other unit's preset when it was the preset, else converted. */
+function convertLimit(value, key, limit, from, to) {
+  const n = positive(value);
+  if (n === null) return value;
+  if (ZONE_PRESETS[from]?.[key]?.[limit] === n) return ZONE_PRESETS[to][key][limit];
+  return convertDistance(n, from, to);
+}
+
+/**
+ * The world unit changed (or the saved numbers are in another unit): convert the scales table, each
+ * scene's zone numbers and (`scenes`) the grid of every scene in feet or meters. The active GM does
+ * it, once. Worlds from before the setting only get their zone numbers converted: their scenes are
+ * left as they are until the GM changes the unit.
+ */
+export async function convertWorldUnit({ scenes = true } = {}) {
+  if (!game.user?.isGM || game.users.activeGM !== game.user) return;
+  const to = worldUnit();
+  const from = setting('zoneValuesUnit', 'm');
+  const sameUnit = from === to;
+  if (!sameUnit) {
+    const table = foundry.utils.deepClone(setting('zoneScales', {}) ?? {});
+    for (const [key, values] of Object.entries(table)) {
+      for (const limit of LIMITS) values[limit] = convertLimit(values?.[limit], scaleKey(key), limit, from, to);
+    }
+    await game.settings.set('sdm', 'zoneScales', table);
+  }
+  const pattern = to === 'm' ? IMPERIAL : METRIC;
+  const updates = [];
+  for (const scene of game.scenes) {
+    const update = { _id: scene.id };
+    const sceneFrom = scenes && pattern.test(normalUnits(scene.grid?.units)) ? (to === 'm' ? 'ft' : 'm') : null;
+    if (sceneFrom) {
+      update['grid.distance'] = convertDistance(Number(scene.grid.distance) || 0, sceneFrom, to);
+      update['grid.units'] = to;
+    }
+    const flags = scene.getFlag('sdm', 'zones');
+    if (!sameUnit && flags) {
+      const key = ZONE_PRESETS.m[scaleKey(flags.scale)] ? scaleKey(flags.scale) : worldZoneScale();
+      for (const limit of LIMITS) {
+        if (positive(flags[limit]) !== null) update[`flags.sdm.zones.${limit}`] = convertLimit(flags[limit], key, limit, from, to);
+      }
+    }
+    if (Object.keys(update).length > 1) updates.push(update);
+  }
+  if (updates.length) await Scene.updateDocuments(updates);
+  if (!sameUnit) await game.settings.set('sdm', 'zoneValuesUnit', to);
+  if (updates.length || !sameUnit) ui.notifications?.info(game.i18n.format('SDM.Zones.UnitConverted', { unit: to, count: updates.length }));
+}
+
+/** New scenes take the world unit's grid (1.5 m) when they come with the system's default (5 ft). */
+function onPreCreateScene(scene, data) {
+  if (worldUnit() !== 'm' || foundry.utils.hasProperty(data, 'grid.units')) return;
+  if (IMPERIAL.test(normalUnits(scene.grid?.units))) {
+    scene.updateSource({ 'grid.distance': convertDistance(Number(scene.grid.distance) || 5, 'ft', 'm'), 'grid.units': 'm' });
+  }
 }
 
 const tokenSize = doc => Math.max(Number(doc?.width) || 1, Number(doc?.height) || 1);
@@ -356,32 +503,74 @@ export function targetRangeHtml(actor, { range = '', throwing = false, reach = f
 
 const OUT_OF_FIGHT = ['dead', 'unconscious', 'sleep', 'paralysis', 'petrified', 'stun'];
 
-/** In combat, a token leaving the close zone of an enemy: note that the enemy may take a free attack. */
-function onPreUpdateToken(doc, changes, options, userId) {
-  if (userId !== game.user.id || !('x' in changes || 'y' in changes)) return;
-  if (!setting('freeAttackReminder', true) || !canvas?.ready || doc.parent !== canvas.scene || !zonesActive()) return;
+/**
+ * Enemies whose close zone a token leaves going from one position (top-left x, y) to another, in a
+ * started combat on the current scene. Tokens of the same disposition are allies; any other
+ * disposition (friendly, neutral, hostile, secret) is an adversary. Hidden tokens only count for the
+ * Referee (a player never learns of them this way); out-of-the-fight and defeated ones are left out.
+ */
+function enemiesLeft(doc, from, to) {
+  if (!canvas?.ready || doc.parent !== canvas.scene || !zonesActive()) return [];
   const combat = game.combat;
-  if (!combat?.started || !combat.combatants.some(c => c.tokenId === doc.id)) return;
-  if (doc.disposition === CONST.TOKEN_DISPOSITIONS.NEUTRAL || doc.disposition === CONST.TOKEN_DISPOSITIONS.SECRET) return;
+  if (!combat?.started || !combat.combatants.some(c => c.tokenId === doc.id)) return [];
   const limits = sceneZoneLimits();
   const perUnit = metersPerUnit();
-  const from = centerOf(doc);
-  const to = centerOf(doc, changes.x ?? doc.x, changes.y ?? doc.y);
+  const start = centerOf(doc, from.x, from.y);
+  const end = centerOf(doc, to.x, to.y);
   const enemies = [];
   for (const other of doc.parent.tokens) {
-    if (other === doc || other.hidden || other.disposition !== -doc.disposition) continue;
+    if (other === doc || other.disposition === doc.disposition || (other.hidden && !game.user.isGM)) continue;
     if (OUT_OF_FIGHT.some(id => other.actor?.statuses?.has(id))) continue;
     if (combat.combatants.find(c => c.tokenId === other.id)?.isDefeated) continue;
-    const before = unitsBetween(doc, from, other, centerOf(other)) * perUnit;
-    const after = unitsBetween(doc, to, other, centerOf(other)) * perUnit;
-    if (before <= limits.close && after > limits.close) enemies.push(other.name);
+    const before = unitsBetween(doc, start, other, centerOf(other)) * perUnit;
+    const after = unitsBetween(doc, end, other, centerOf(other)) * perUnit;
+    if (before <= limits.close && after > limits.close) enemies.push(other);
   }
-  if (!enemies.length) return;
-  const list = new Intl.ListFormat(game.i18n.lang, { type: 'conjunction' }).format(enemies);
+  return enemies;
+}
+
+const listNames = tokens => new Intl.ListFormat(game.i18n.lang, { type: 'conjunction' }).format(tokens.map(t => t.name));
+// Enemies already noted this turn, per moving token: "combat.round.turn.token" → Set of enemy ids
+const noted = new Map();
+
+/**
+ * Optional (off by default): on the moving token's own turn, a note whispered to the Referee that the
+ * enemies it moved away from may make a free attack if it disengaged carelessly; once per enemy per
+ * turn. The ruler warns the player before the move (see the token ruler below).
+ */
+function onPreUpdateToken(doc, changes, options, userId) {
+  if (userId !== game.user.id || !('x' in changes || 'y' in changes)) return;
+  if (!setting('freeAttackReminder', false)) return;
+  const combat = game.combat;
+  if (!combat?.started || combat.combatant?.tokenId !== doc.id) return;
+  const enemies = enemiesLeft(doc, doc, { x: changes.x ?? doc.x, y: changes.y ?? doc.y });
+  const key = `${combat.id}.${combat.round}.${combat.turn}.${doc.id}`;
+  if (!noted.has(key)) {
+    noted.clear();
+    noted.set(key, new Set());
+  }
+  const seen = noted.get(key);
+  const fresh = enemies.filter(enemy => !seen.has(enemy.id));
+  if (!fresh.length) return;
+  fresh.forEach(enemy => seen.add(enemy.id));
   ChatMessage.create({
     speaker: ChatMessage.getSpeaker({ token: doc }),
-    content: `<p><i class="fa-solid fa-person-running"></i> ${esc(game.i18n.format('SDM.Zones.FreeAttack', { name: doc.name, enemies: list }))}</p>`
+    whisper: game.users.filter(user => user.isGM).map(user => user.id),
+    content: `<p><i class="fa-solid fa-person-running"></i> ${esc(game.i18n.format('SDM.Zones.FreeAttack', { name: doc.name, enemies: listNames(fresh) }))}</p>`
   });
+}
+
+/**
+ * The ruler's warning at a waypoint of the move being planned: going there from where the token
+ * stands leaves an enemy's close zone. Waypoints already walked this turn (stage "passed") get none.
+ */
+function freeAttackWarning(token, waypoint) {
+  if (!setting('freeAttackRulerWarning', true) || !token?.document || !waypoint) return '';
+  if (waypoint.stage === 'passed' || !Number.isFinite(waypoint.x) || !Number.isFinite(waypoint.y)) return '';
+  const doc = token.document;
+  if (waypoint.x === doc.x && waypoint.y === doc.y) return '';
+  const enemies = enemiesLeft(doc, doc, waypoint);
+  return enemies.length ? game.i18n.format('SDM.Zones.RulerWarning', { enemies: listNames(enemies) }) : '';
 }
 
 /* -------------------------------------------- */
@@ -409,6 +598,20 @@ function registerZoneRuler() {
 
     _getSegmentStyle(waypoint) {
       return zoneStyle(this.token, waypoint, super._getSegmentStyle(waypoint));
+    }
+
+    // The label of a waypoint whose path leaves an enemy's close zone carries a warning
+    _getWaypointLabelContext(waypoint, state) {
+      const context = super._getWaypointLabelContext(waypoint, state);
+      if (!context) return context;
+      const warning = freeAttackWarning(this.token, waypoint);
+      if (warning) {
+        // The label prints the cost's units when there is a cost (v14 movement), else the units
+        if (context.cost) context.cost = { ...context.cost, units: `${context.cost.units ?? ''} ⚠ ${warning}` };
+        else context.units = `${context.units ?? ''} ⚠ ${warning}`;
+        context.cssClass = `${context.cssClass ?? ''} sdm-free-attack-warning`.trim();
+      }
+      return context;
     }
   }
   CONFIG.Token.rulerClass = SdmTokenRuler;
@@ -572,7 +775,7 @@ function onRenderSceneConfig(app, element) {
       <label>${esc(game.i18n.format('SDM.Zones.LimitLabel', { zone: l(CONFIG.SDM.rangeType[limit]) }))}</label>
       <div class="form-fields">
         <input type="number" name="flags.sdm.zones.${limit}" value="${positive(flags[limit]) ?? ''}" min="0" step="any" data-limit="${limit}">
-        <span class="units">m</span>
+        <span class="units">${worldUnit()}</span>
       </div>
     </div>`;
   const fieldset = document.createElement('fieldset');
@@ -597,9 +800,13 @@ function onRenderSceneConfig(app, element) {
   const about = fieldset.querySelector('.sdm-zones-about');
   const mismatch = fieldset.querySelector('.sdm-zones-mismatch');
   const form = root.querySelector('form') ?? root;
+  // A grid size in the world unit, with the other unit beside it ("5 ft (1.5 m)")
+  const unit = worldUnit();
+  const other = unit === 'm' ? 'ft' : 'm';
   const meters = value => {
     const n = Math.round(value * 100) / 100;
-    return n === 1.5 ? '1.5 m (5 ft)' : `${n} m`;
+    const o = Math.round(convertDistance(n, unit, other) * 100) / 100;
+    return `${n} ${unit} (${o} ${other})`;
   };
   const refresh = () => {
     const none = select.value === NO_ZONES;
@@ -621,7 +828,7 @@ function onRenderSceneConfig(app, element) {
     const distance = Number(form.querySelector('[name="grid.distance"]')?.value) || Number(scene.grid?.distance) || 1;
     const units = form.querySelector('[name="grid.units"]')?.value ?? scene.grid?.units;
     const perSquare = distance * metersPerUnit({ grid: { units } });
-    const [min, max] = SCALE_GRID[key] ?? [perSquare, perSquare];
+    const [min, max] = SCALE_GRID[unit][key] ?? [perSquare, perSquare];
     const squares = limit => Math.floor(limits[limit] / perSquare + 1e-9);
     about.textContent = [
       l(`SDM.Zones.ScaleUse.${key}`),
@@ -652,5 +859,10 @@ export function setupZones() {
   registerZoneRuler();
   Hooks.on('preUpdateToken', onPreUpdateToken);
   Hooks.on('renderSceneConfig', onRenderSceneConfig);
+  Hooks.on('preCreateScene', onPreCreateScene);
+  // Numbers saved in another unit (worlds from before the unit setting): convert them once
+  Hooks.once('ready', () => {
+    if (setting('zoneValuesUnit', 'm') !== worldUnit()) convertWorldUnit({ scenes: false });
+  });
   setupZoneHighlight();
 }

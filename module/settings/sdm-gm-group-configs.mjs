@@ -1,7 +1,7 @@
 // Each class defines a single-section AppV2 using your BaseSettingsConfig.
 import BaseSettingsConfig from './base-settings.mjs';
 import { getLightPreset, LIGHT_PRESET_KEYS } from '../helpers/lights.mjs';
-import { getZoneScale, ZONE_SCALE_KEYS } from '../helpers/zones.mjs';
+import { getZoneScale, worldUnit, ZONE_SCALE_KEYS } from '../helpers/zones.mjs';
 
 class GroupBase extends BaseSettingsConfig {
   static PARTS = {
@@ -106,7 +106,7 @@ export class SDMZonesSettingsConfig extends GroupBase {
     }
   };
   static LEGEND = 'SDM.Menu.Zones.Name';
-  static KEYS = ['defaultZoneScale', 'zoneRangeCheck', 'freeAttackReminder', 'zoneRuler', 'zoneHighlight'];
+  static KEYS = ['distanceUnit', 'defaultZoneScale', 'zoneRangeCheck', 'freeAttackRulerWarning', 'freeAttackReminder', 'zoneRuler', 'zoneHighlight'];
   static PARTS = {
     config: { template: 'systems/sdm/templates/settings/base-config.hbs' },
     scales: { template: 'systems/sdm/templates/settings/zone-scales.hbs' },
@@ -120,12 +120,22 @@ export class SDMZonesSettingsConfig extends GroupBase {
   async _preparePartContext(partId, context, options) {
     context = await super._preparePartContext(partId, context, options);
     if (partId !== 'scales') return context;
+    context.unit = worldUnit();
     context.scales = ZONE_SCALE_KEYS.map(key => ({
       key,
       label: game.i18n.localize(`SDM.Zones.Scale.${key}`),
       ...getZoneScale(key)
     }));
     return context;
+  }
+
+  // Changing the unit converts the scales table itself: don't save the numbers typed in the old unit
+  async _onCommitChanges(event, form, formData) {
+    const unit = formData?.object?.distanceUnit;
+    if (unit && unit !== worldUnit()) {
+      for (const key of Object.keys(formData.object)) if (key.startsWith('zoneScales')) delete formData.object[key];
+    }
+    return super._onCommitChanges(event, form, formData);
   }
 }
 

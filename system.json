@@ -353,8 +353,8 @@
   "background": "systems/sdm/assets/wtf-compatible.webp",
   "grid": {
     "type": 1,
-    "distance": 1.5,
-    "units": "m",
+    "distance": 5,
+    "units": "ft",
     "diagonals": 0
   },
   "primaryTokenAttribute": "life",

@@ -2535,6 +2535,12 @@ input[type='radio']::after {
   }
 }
 
+// Token ruler: a waypoint whose path leaves an enemy's close zone (free attack warning)
+.sdm-free-attack-warning {
+  color: #ffb347;
+  font-weight: bold;
+}
+
 // Scene config (Grid tab): zones
 .sdm-scene-zones {
   .form-fields .units {
