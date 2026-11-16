@@ -2950,5 +2950,22 @@
   "SDM.Zones.RulerReach": "enters {enemies}'s reach (it strikes first)",
   "SDM.Zones.ReachEntered": "{name} closes in on {enemies}, who has reach and strikes first.",
   "SDM.Zones.ReachFirst": "{name} has reach: it strikes first this round — resolve its attack before this one.",
-  "SDM.Zones.ReachBadge": "Reach: a readied reach weapon — strikes first in close combat"
+  "SDM.Zones.ReachBadge": "Reach: a readied reach weapon — strikes first in close combat",
+  "SDM.Trigger.StatusApply": "put on",
+  "SDM.Trigger.StatusRemove": "take off",
+  "SDM.Trigger.StatusRemoved": "{effect} removed from {targets}.",
+  "SDM.Use.CuresLabel": "Cures",
+  "SDM.Use.CuresHint": "Conditions it removes from its targets every time it is used (a bandage stops bleeding, an antidote cures poison). Only conditions put on the actor, not those given by its items.",
+  "SDM.Use.ChatCures": "Cures: {conditions}.",
+  "SDM.AttackFeature.ConfuseButton": "Confuse {target} (1 round)",
+  "SDM.AttackFeature.SleepButton": "Put {target} to sleep",
+  "SDM.AttackFeature.EntangleButton": "Entangle {target} (if its save fails)",
+  "SDM.AttackFeature.PetrifyButton": "Petrify {target} (if its save fails)",
+  "SDM.AttackFeature.MadButton": "Drive {target} mad",
+  "SDM.AttackFeature.MoraleButton": "{target} tests its morale",
+  "SDM.AttackFeature.FrightenButton": "Frighten {target}",
+  "SDM.Immunity.Title": "Immune to",
+  "SDM.Immunity.Hint": "Conditions its bearer can't get (gear only while readied). Putting one on is refused, with a chat note.",
+  "SDM.Immunity.Blocked": "{actor} is immune to {condition} ({item}).",
+  "SDM.AttackFeature.IgniteButton": "Set {target} on fire (if flammable and its save fails)"
 }

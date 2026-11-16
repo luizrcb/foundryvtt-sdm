@@ -76,6 +76,9 @@
     "supply_type": "",
     "categories": [
       "protection"
+    ],
+    "immunities": [
+      "nauseated"
     ]
   },
   "effects": [],

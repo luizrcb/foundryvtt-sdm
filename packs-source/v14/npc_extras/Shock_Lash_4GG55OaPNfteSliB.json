@@ -50,51 +50,15 @@
         "text": "Stuns the target",
         "attack": "",
         "table": "",
-        "effect": "s2NaeETT11FfkJzQ",
+        "effect": "",
         "wear": "",
         "counter": "",
-        "counter_step": "1"
+        "counter_step": "1",
+        "status": "stun",
+        "status_target": "",
+        "status_mode": "apply"
       }
     ]
   },
-  "effects": [
-    {
-      "name": "Stunned",
-      "origin": null,
-      "img": "icons/svg/daze.svg",
-      "_id": "s2NaeETT11FfkJzQ",
-      "type": "base",
-      "system": {
-        "changes": []
-      },
-      "disabled": true,
-      "duration": {
-        "value": null,
-        "units": "seconds",
-        "expiry": null,
-        "expired": false
-      },
-      "description": "<p>Put on the target by this attack's roll trigger (disabled here so the bearer doesn't get it).</p>",
-      "tint": "#ffffff",
-      "transfer": false,
-      "statuses": [
-        "stun"
-      ],
-      "sort": 0,
-      "flags": {},
-      "_stats": {
-        "compendiumSource": null,
-        "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "14.367",
-        "systemId": "sdm",
-        "systemVersion": "1.11.0",
-        "lastModifiedBy": null
-      },
-      "showIcon": 1,
-      "folder": null,
-      "start": null,
-      "_key": "!items.effects!4GG55OaPNfteSliB.s2NaeETT11FfkJzQ"
-    }
-  ]
+  "effects": []
 }

@@ -308,6 +308,10 @@
       <span class="v2-label">{{localize 'SDM.Use.HarmLabel'}}</span>
       <input type="text" name="system.use.harm" value="{{system.use.harm}}" data-tooltip="{{localize 'SDM.Use.HarmHint'}}" />
     </label>
+    <label class="v2-field" data-tooltip="{{localize 'SDM.Use.CuresHint'}}">
+      <span class="v2-label">{{localize 'SDM.Use.CuresLabel'}}</span>
+      <multi-select name="system.use.cures">{{selectOptions @root.useCureChoices selected=system.use.cures}}</multi-select>
+    </label>
     <label class="v2-field">
       <span class="v2-label">{{localize 'SDM.Use.TableLabel'}}</span>
       <input class="sdm-trigger-table" type="text" name="system.use.table" value="{{system.use.table}}" placeholder="{{localize 'SDM.Trigger.TablePlaceholder'}}" data-tooltip="{{localize 'SDM.Use.TableHint'}}" />

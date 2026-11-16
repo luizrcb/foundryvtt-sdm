@@ -26,6 +26,18 @@
     {{/if}}
   </div>
   {{/if}}
+  {{!-- Conditions the bearer can't get (gear while readied, traits) --}}
+  {{#if (or (eq item.type 'gear') (eq item.type 'trait'))}}
+  <div class="sdm-counters sdm-immunities">
+    <header>
+      <strong data-tooltip="{{localize 'SDM.Immunity.Hint'}}">{{localize 'SDM.Immunity.Title'}}</strong>
+    </header>
+    <div class="sdm-counter-row">
+      <multi-select name="system.immunities">{{selectOptions @root.useCureChoices selected=system.immunities}}</multi-select>
+    </div>
+  </div>
+  {{/if}}
+
   {{!-- Roll triggers shown on chat cards (gear, traits and burdens) --}}
   {{#if (and (sdmFeature 'triggers') (or (eq item.type 'gear') (eq item.type 'trait') (eq item.type 'burden')))}}
   <div class="sdm-counters sdm-triggers" data-collapse-key="triggers">
@@ -115,8 +127,10 @@
         <label data-tooltip="{{localize 'SDM.Trigger.StatusHint'}}">{{localize 'SDM.Trigger.Status'}}
           <select name="system.triggers.{{index}}.status">{{selectOptions @root.triggerStatuses selected=trigger.status}}</select>
           {{#if trigger.status}}
+          <select name="system.triggers.{{index}}.status_mode">{{selectOptions @root.triggerStatusModes selected=trigger.status_mode localize=true}}</select>
           <select name="system.triggers.{{index}}.status_target">{{selectOptions @root.triggerEffectTargets selected=trigger.status_target localize=true}}</select>
           {{else}}
+          <input type="hidden" name="system.triggers.{{index}}.status_mode" value="{{trigger.status_mode}}" />
           <input type="hidden" name="system.triggers.{{index}}.status_target" value="{{trigger.status_target}}" />
           {{/if}}</label>
         <label>{{localize 'SDM.Trigger.WearLabel'}}

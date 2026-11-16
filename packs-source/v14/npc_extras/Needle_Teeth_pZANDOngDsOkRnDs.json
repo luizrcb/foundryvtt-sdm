@@ -50,51 +50,15 @@
         "text": "Tears a chunk away: the wound bleeds",
         "attack": "",
         "table": "",
-        "effect": "Q33BxtSOqyKYZIHu",
+        "effect": "",
         "wear": "",
         "counter": "",
-        "counter_step": "1"
+        "counter_step": "1",
+        "status": "bleeding",
+        "status_target": "",
+        "status_mode": "apply"
       }
     ]
   },
-  "effects": [
-    {
-      "name": "Bleeding",
-      "origin": null,
-      "img": "icons/svg/blood.svg",
-      "_id": "Q33BxtSOqyKYZIHu",
-      "type": "base",
-      "system": {
-        "changes": []
-      },
-      "disabled": true,
-      "duration": {
-        "value": null,
-        "units": "seconds",
-        "expiry": null,
-        "expired": false
-      },
-      "description": "<p>Put on the target by this attack's roll trigger (disabled here so the bearer doesn't get it).</p>",
-      "tint": "#ffffff",
-      "transfer": false,
-      "statuses": [
-        "bleeding"
-      ],
-      "sort": 0,
-      "flags": {},
-      "_stats": {
-        "compendiumSource": null,
-        "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "14.367",
-        "systemId": "sdm",
-        "systemVersion": "1.11.0",
-        "lastModifiedBy": null
-      },
-      "showIcon": 1,
-      "folder": null,
-      "start": null,
-      "_key": "!items.effects!pZANDOngDsOkRnDs.Q33BxtSOqyKYZIHu"
-    }
-  ]
+  "effects": []
 }

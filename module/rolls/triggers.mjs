@@ -216,7 +216,10 @@ async function runActions(fired, { actor } = {}) {
         });
       }
       if (trigger.status) {
-        await applyStatusToTargets(trigger.status, actor ?? item.actor, { self: trigger.status_target === 'self' });
+        await applyStatusToTargets(trigger.status, actor ?? item.actor, {
+          self: trigger.status_target === 'self',
+          remove: trigger.status_mode === 'remove'
+        });
       }
       if (trigger.wear) await wearItem(item, trigger.wear);
       const roller = actor ?? item.actor;

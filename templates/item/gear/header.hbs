@@ -266,6 +266,12 @@
               <input type='text' name="system.use.harm" value="{{system.use.harm}}" data-tooltip="{{localize 'SDM.Use.HarmHint'}}"/>
             </div>
           </div>
+          <div class='resource' data-tooltip="{{localize 'SDM.Use.CuresHint'}}">
+            <label class='resource-label'>{{localize 'SDM.Use.CuresLabel'}}</label>
+            <div class='resource-content'>
+              <multi-select name="system.use.cures">{{selectOptions @root.useCureChoices selected=system.use.cures}}</multi-select>
+            </div>
+          </div>
           <div class='resource'>
             <label class='resource-label' for="system.use.table">{{localize 'SDM.Use.TableLabel'}}</label>
             <div class='resource-content'>

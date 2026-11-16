@@ -198,6 +198,12 @@ async function applyToActor({ actorUuid, restores = [], restore, effects }) {
   if (!actor) return;
   if (restore) restores = [restore]; // older clients
   for (const restore of restores) {
+    // Cures: remove the actor's own conditions (not those given by its items)
+    if (restore?.kind === 'cure' && restore.statuses?.length) {
+      const ids = actor.effects.filter(e => [...(e.statuses ?? [])].some(s => restore.statuses.includes(s))).map(e => e.id);
+      if (ids.length) await actor.deleteEmbeddedDocuments('ActiveEffect', ids);
+      continue;
+    }
     if (restore?.full) {
       await restoreAll(actor, restore.kind, restore.group);
       continue;
@@ -245,32 +251,48 @@ export async function restoreAll(actor, kind, group = '') {
  * the one who rolled), like setting it from the HUD; actors that already have it are skipped.
  * Targets the user doesn't own are handled by the active GM.
  */
-export async function applyStatusToTargets(statusId, actor, { self = false } = {}) {
+export async function applyStatusToTargets(statusId, actor, { self = false, remove = false, targets: given = null, rounds = 0 } = {}) {
   const status = CONFIG.statusEffects.find(s => s.id === statusId);
   if (!status) return;
   const name = game.i18n.localize(status.name ?? status.label ?? statusId);
-  const targets = (
-    self ? [actor].filter(Boolean) : [...new Set([...(game.user.targets ?? [])].map(token => token.actor).filter(Boolean))]
-  ).filter(target => !target.statuses?.has(statusId));
+  // Apply: those that don't have it yet; remove: those that have it. `given`: these actors instead
+  // of the user's targets (a card button names its target)
+  const candidates = given
+    ? given.filter(Boolean)
+    : self
+      ? [actor].filter(Boolean)
+      : [...new Set([...(game.user.targets ?? [])].map(token => token.actor).filter(Boolean))];
+  const targets = candidates.filter(target => !!target.statuses?.has(statusId) === remove);
   if (!targets.length) {
-    if (!self && !game.user.targets?.size) ui.notifications.info($fmt('SDM.Trigger.NoTarget', { effect: name }));
+    if (!given && !self && !game.user.targets?.size) ui.notifications.info($fmt('SDM.Trigger.NoTarget', { effect: name }));
     return;
   }
-  const effect = await ActiveEffect.implementation.fromStatusEffect(statusId);
-  const data = effect.toObject();
+  const data = remove ? null : (await ActiveEffect.implementation.fromStatusEffect(statusId)).toObject();
+  if (data && rounds > 0) data.duration = { ...(data.duration ?? {}), rounds };
   for (const target of targets) {
-    const payload = { actorUuid: target.uuid, restores: [], effects: [data] };
+    const payload = remove
+      ? { actorUuid: target.uuid, restores: [{ kind: 'cure', statuses: [statusId] }], effects: [] }
+      : { actorUuid: target.uuid, restores: [], effects: [data] };
     if (target.isOwner) await applyToActor(payload);
     else if (game.users.activeGM) game.socket.emit(CHANNEL, { action: APPLY_ACTION, payload });
     else ui.notifications.warn($l10n('SDM.ErrorNoActiveGM'));
   }
   await ChatMessage.create({
     speaker: ChatMessage.getSpeaker({ actor }),
-    content: `<p><i class="fa-solid fa-bolt"></i> ${$fmt('SDM.Trigger.EffectApplied', {
+    content: `<p><i class="fa-solid fa-bolt"></i> ${$fmt(remove ? 'SDM.Trigger.StatusRemoved' : 'SDM.Trigger.EffectApplied', {
       effect: esc(name),
       targets: targets.map(t => esc(t.name)).join(', ')
     })}</p>`
   });
+}
+
+/** "poisoned, bleeding" */
+export function statusNames(ids = []) {
+  return ids
+    .map(id => CONFIG.statusEffects.find(s => s.id === id))
+    .filter(Boolean)
+    .map(s => game.i18n.localize(s.name ?? s.label ?? s.id).toLowerCase())
+    .join(', ');
 }
 
 /**
@@ -343,6 +365,7 @@ export function describeUse(item) {
   // Always happen (not options)
   const always = [];
   if (use.harm?.trim()) always.push($fmt('SDM.Use.Tip.Harm', { formula: esc(use.harm) }));
+  if (use.cures?.length) always.push($fmt('SDM.Use.ChatCures', { conditions: esc(statusNames(use.cures)) }));
   if (use.table) {
     const table = fromUuidSync(use.table);
     always.push($fmt('SDM.Use.Tip.Table', { table: esc(table?.name ?? $l10n('SDM.Trigger.Table')) }));
@@ -411,6 +434,9 @@ export async function useItem(item) {
   }
   // Harm always happens (not an option)
   if (use.harm?.trim()) restores.push({ kind: 'harm', amount: await rollFormula(use.harm) });
+  // Cures always happen too
+  const cures = (use.cures ?? []).filter(id => CONFIG.statusEffects.some(s => s.id === id));
+  if (cures.length) restores.push({ kind: 'cure', statuses: cures });
 
   // Effects last as long as the use says, unless the effect sets its own duration
   const duration = useDuration(use);
@@ -430,6 +456,7 @@ export async function useItem(item) {
     else if (restore.kind === 'life') what.push($fmt('SDM.Use.ChatLife', { amount: restore.amount }));
     else if (restore.kind === 'temp_life') what.push($fmt('SDM.Use.ChatTempLife', { amount: restore.amount }));
     else if (restore.kind === 'harm') what.push($fmt('SDM.Use.ChatHarm', { amount: restore.amount }));
+    else if (restore.kind === 'cure') what.push($fmt('SDM.Use.ChatCures', { conditions: esc(statusNames(restore.statuses)) }));
     else what.push($fmt('SDM.Use.ChatAbility', { amount: restore.amount, ability: $l10n(CONFIG.SDM.abilities[restore.ability]) }));
   }
   if (effects.length) {

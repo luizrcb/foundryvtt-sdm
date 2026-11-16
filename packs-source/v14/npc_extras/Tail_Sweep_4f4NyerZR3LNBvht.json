@@ -50,51 +50,15 @@
         "text": "Knocks the target down (save)",
         "attack": "",
         "table": "",
-        "effect": "BqM820x5eXHXXkAw",
+        "effect": "",
         "wear": "",
         "counter": "",
-        "counter_step": "1"
+        "counter_step": "1",
+        "status": "prone",
+        "status_target": "",
+        "status_mode": "apply"
       }
     ]
   },
-  "effects": [
-    {
-      "name": "Knocked down",
-      "origin": null,
-      "img": "icons/svg/falling.svg",
-      "_id": "BqM820x5eXHXXkAw",
-      "type": "base",
-      "system": {
-        "changes": []
-      },
-      "disabled": true,
-      "duration": {
-        "value": null,
-        "units": "seconds",
-        "expiry": null,
-        "expired": false
-      },
-      "description": "<p>Put on the target by this attack's roll trigger (disabled here so the bearer doesn't get it).</p>",
-      "tint": "#ffffff",
-      "transfer": false,
-      "statuses": [
-        "prone"
-      ],
-      "sort": 0,
-      "flags": {},
-      "_stats": {
-        "compendiumSource": null,
-        "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "14.367",
-        "systemId": "sdm",
-        "systemVersion": "1.11.0",
-        "lastModifiedBy": null
-      },
-      "showIcon": 1,
-      "folder": null,
-      "start": null,
-      "_key": "!items.effects!4f4NyerZR3LNBvht.BqM820x5eXHXXkAw"
-    }
-  ]
+  "effects": []
 }

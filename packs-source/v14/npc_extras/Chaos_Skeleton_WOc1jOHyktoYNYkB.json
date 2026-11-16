@@ -25,7 +25,11 @@
   "_key": "!items!WOc1jOHyktoYNYkB",
   "system": {
     "description": "<p>Only bones remain. It doesn't bleed, breathe or eat, and poison means nothing to it.</p><p><em>From the corruption tables.</em></p>",
-    "type": ""
+    "type": "",
+    "immunities": [
+      "bleeding",
+      "poison"
+    ]
   },
   "effects": []
 }

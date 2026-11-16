@@ -70,6 +70,8 @@ export default class SdmTrait extends SdmItemBase {
 
     // Roll triggers (traits and burdens are always active)
     schema.triggers = defineTriggersField();
+    // Conditions its bearer can't get (a skeleton doesn't bleed)
+    schema.immunities = new fields.ArrayField(new fields.StringField({ blank: false }), { initial: [] });
     // A trait can light its bearer's token (lit and put out by the player, free); none by default
     schema.light = defineLightField({ preset: 'none' });
     return schema;

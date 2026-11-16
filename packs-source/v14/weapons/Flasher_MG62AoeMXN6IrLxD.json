@@ -82,6 +82,38 @@
     },
     "categories": [
       "blinding"
+    ],
+    "triggers": [
+      {
+        "roll": "damage",
+        "condition": "totalAtLeast",
+        "value": "1",
+        "attack": "",
+        "table": "",
+        "effect": "",
+        "wear": "",
+        "counter": "",
+        "counter_step": "1",
+        "status_target": "",
+        "status_mode": "apply",
+        "text": "Blinds the target (blindness, nausea and/or robot dancing)",
+        "status": "blind"
+      },
+      {
+        "roll": "damage",
+        "condition": "totalAtLeast",
+        "value": "1",
+        "attack": "",
+        "table": "",
+        "effect": "",
+        "wear": "",
+        "counter": "",
+        "counter_step": "1",
+        "status_target": "",
+        "status_mode": "apply",
+        "text": "Nauseates the target",
+        "status": "nauseated"
+      }
     ]
   },
   "effects": [],

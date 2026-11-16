@@ -50,51 +50,15 @@
         "text": "Sets the targets on fire (save)",
         "attack": "",
         "table": "",
-        "effect": "QC59aYIdw1rdIcNR",
+        "effect": "",
         "wear": "",
         "counter": "",
-        "counter_step": "1"
+        "counter_step": "1",
+        "status": "burning",
+        "status_target": "",
+        "status_mode": "apply"
       }
     ]
   },
-  "effects": [
-    {
-      "name": "Burning",
-      "origin": null,
-      "img": "icons/svg/fire.svg",
-      "_id": "QC59aYIdw1rdIcNR",
-      "type": "base",
-      "system": {
-        "changes": []
-      },
-      "disabled": true,
-      "duration": {
-        "value": null,
-        "units": "seconds",
-        "expiry": null,
-        "expired": false
-      },
-      "description": "<p>Put on the target by this attack's roll trigger (disabled here so the bearer doesn't get it).</p>",
-      "tint": "#ffffff",
-      "transfer": false,
-      "statuses": [
-        "burning"
-      ],
-      "sort": 0,
-      "flags": {},
-      "_stats": {
-        "compendiumSource": null,
-        "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "14.367",
-        "systemId": "sdm",
-        "systemVersion": "1.11.0",
-        "lastModifiedBy": null
-      },
-      "showIcon": 1,
-      "folder": null,
-      "start": null,
-      "_key": "!items.effects!qPw9SQoVX71iRkf5.QC59aYIdw1rdIcNR"
-    }
-  ]
+  "effects": []
 }

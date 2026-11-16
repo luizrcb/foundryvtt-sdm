@@ -396,12 +396,19 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       },
       triggerEffects: Object.fromEntries([['', ''], ...this.item.effects.map(effect => [effect.id, effect.name])]),
       // Conditions a trigger can put on its targets / self: the Token HUD's list
+      triggerStatusModes: { apply: 'SDM.Trigger.StatusApply', remove: 'SDM.Trigger.StatusRemove' },
       triggerStatuses: Object.fromEntries([
         ['', ''],
         ...CONFIG.statusEffects
           .map(status => [status.id, game.i18n.localize(status.name ?? status.label ?? status.id)])
           .sort((a, b) => a[1].localeCompare(b[1], game.i18n.lang))
       ]),
+      // A consumable's Use: the conditions it cures (same list, no blank)
+      useCureChoices: Object.fromEntries(
+        CONFIG.statusEffects
+          .map(status => [status.id, game.i18n.localize(status.name ?? status.label ?? status.id)])
+          .sort((a, b) => a[1].localeCompare(b[1], game.i18n.lang))
+      ),
       triggerCounters: Object.fromEntries([
         ['', ''],
         ...Object.entries(this.item.system.counters ?? {}).map(([key, counter]) => [key, counter.label])

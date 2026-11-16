@@ -119,6 +119,45 @@ export function isWeakened(actor) {
 /* -------------------------------------------- */
 
 /** Defense penalties and the stun duration, added when the condition is put on. */
+/**
+ * Conditions an actor can't get: listed on its traits and its readied gear ("Immune to"). The
+ * item that grants it, by condition id.
+ */
+export function immunitySources(actor) {
+  const sources = new Map();
+  for (const item of actor?.items ?? []) {
+    const list = item.system?.immunities;
+    if (!list?.length) continue;
+    if (item.type === 'gear' && !item.system?.readied) continue;
+    if (item.type !== 'gear' && item.type !== 'trait') continue;
+    for (const id of list) if (!sources.has(id)) sources.set(id, item);
+  }
+  return sources;
+}
+
+/** Immunities (a rule of the items, not of the automation): the condition isn't put on, with a note. */
+function onPreCreateImmune(effect, data, options, userId) {
+  const actor = effect.parent;
+  if (!(actor instanceof Actor) || options?.sdmIgnoreImmunity) return;
+  const statuses = [...(data.statuses ?? effect.statuses ?? [])];
+  if (!statuses.length) return;
+  const sources = immunitySources(actor);
+  const blocked = statuses.filter(id => sources.has(id));
+  if (!blocked.length) return;
+  if (userId === game.user.id) {
+    const name = id => game.i18n.localize(CONFIG.statusEffects.find(s => s.id === id)?.name ?? id);
+    ChatMessage.create({
+      speaker: ChatMessage.getSpeaker({ actor }),
+      content: `<p><i class="fa-solid fa-shield-halved"></i> ${game.i18n.format('SDM.Immunity.Blocked', {
+        actor: foundry.utils.escapeHTML(actor.name),
+        condition: foundry.utils.escapeHTML(blocked.map(name).join(', ')),
+        item: foundry.utils.escapeHTML(sources.get(blocked[0]).name)
+      })}</p>`
+    });
+  }
+  return false;
+}
+
 function onPreCreateEffect(effect, data, options, userId) {
   if (userId !== game.user.id || !automated()) return;
   const actor = effect.parent;
@@ -216,6 +255,7 @@ function onRenderTokenHUD(hud, html) {
 }
 
 export function setupConditions() {
+  Hooks.on('preCreateActiveEffect', onPreCreateImmune);
   Hooks.on('preCreateActiveEffect', onPreCreateEffect);
   Hooks.on('updateCombat', onCombatTurn);
   Hooks.on('preUpdateActor', onPreUpdateActor);

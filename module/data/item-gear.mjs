@@ -75,6 +75,9 @@ export default class SdmGear extends SdmItemBase {
       mandatory: new fields.BooleanField({ initial: false })
     });
 
+    // Conditions its bearer can't get while it is readied (nasal filters: nausea)
+    schema.immunities = new fields.ArrayField(new fields.StringField({ blank: false }), { initial: [] });
+
     // Consumables (feature "consumable"): what "Use" restores (formulas) on its targets;
     // its effects are copied onto them (and do not apply while it is only carried)
     schema.use = new fields.SchemaField({
@@ -86,6 +89,8 @@ export default class SdmGear extends SdmItemBase {
       temp_life: new fields.StringField({ required: true, blank: true, initial: '' }),
       // Life it costs the user (Kaffetropist: lose 1d3 life throwing up), every time
       harm: new fields.StringField({ required: true, blank: true, initial: '' }),
+      // Conditions it removes from its targets, every time (a bandage stops bleeding, an antidote cures poison)
+      cures: new fields.ArrayField(new fields.StringField({ blank: false }), { initial: [] }),
       // A roll table drawn every time it is used (strange beliefs, vision dreams…)
       table: new fields.StringField({ required: true, blank: true, initial: '' }),
       // How long its effects last on the targets (when the effect sets no duration of its own)

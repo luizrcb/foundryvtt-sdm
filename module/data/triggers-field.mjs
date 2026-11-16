@@ -90,6 +90,8 @@ export function defineTriggersField() {
       // A condition put on the targets or self (any status of the Token HUD list), no effect needed on the item
       status: new fields.StringField({ required: true, blank: true, initial: '' }),
       status_target: new fields.StringField({ required: true, blank: false, initial: 'targets', choices: ['targets', 'self'] }),
+      // Put the condition on (apply) or take it off (remove)
+      status_mode: new fields.StringField({ required: true, blank: false, initial: 'apply', choices: ['apply', 'remove'] }),
       wear: new fields.StringField({
         required: true,
         blank: true,

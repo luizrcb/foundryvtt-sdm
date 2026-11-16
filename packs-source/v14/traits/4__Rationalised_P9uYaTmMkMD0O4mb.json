@@ -62,6 +62,9 @@
       "soldier",
       "resistance",
       "protection"
+    ],
+    "immunities": [
+      "fear"
     ]
   },
   "effects": [

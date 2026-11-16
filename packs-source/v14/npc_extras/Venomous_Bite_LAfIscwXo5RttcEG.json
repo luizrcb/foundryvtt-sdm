@@ -50,51 +50,15 @@
         "text": "Poisons the target (save)",
         "attack": "",
         "table": "",
-        "effect": "6b2kFulJ20cTZqXQ",
+        "effect": "",
         "wear": "",
         "counter": "",
-        "counter_step": "1"
+        "counter_step": "1",
+        "status": "poison",
+        "status_target": "",
+        "status_mode": "apply"
       }
     ]
   },
-  "effects": [
-    {
-      "name": "Poisoned",
-      "origin": null,
-      "img": "icons/svg/poison.svg",
-      "_id": "6b2kFulJ20cTZqXQ",
-      "type": "base",
-      "system": {
-        "changes": []
-      },
-      "disabled": true,
-      "duration": {
-        "value": null,
-        "units": "seconds",
-        "expiry": null,
-        "expired": false
-      },
-      "description": "<p>Put on the target by this attack's roll trigger (disabled here so the bearer doesn't get it).</p>",
-      "tint": "#ffffff",
-      "transfer": false,
-      "statuses": [
-        "poison"
-      ],
-      "sort": 0,
-      "flags": {},
-      "_stats": {
-        "compendiumSource": null,
-        "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "14.367",
-        "systemId": "sdm",
-        "systemVersion": "1.11.0",
-        "lastModifiedBy": null
-      },
-      "showIcon": 1,
-      "folder": null,
-      "start": null,
-      "_key": "!items.effects!LAfIscwXo5RttcEG.6b2kFulJ20cTZqXQ"
-    }
-  ]
+  "effects": []
 }

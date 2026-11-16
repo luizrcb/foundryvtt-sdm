@@ -2950,5 +2950,22 @@
   "SDM.Zones.RulerReach": "entra no alcance de {enemies} (ataca primeiro)",
   "SDM.Zones.ReachEntered": "{name} se aproxima de {enemies}, que tem extensão e ataca primeiro.",
   "SDM.Zones.ReachFirst": "{name} tem extensão: ataca primeiro nesta rodada — resolva o ataque dele antes deste.",
-  "SDM.Zones.ReachBadge": "Extensão: uma arma com extensão preparada — ataca primeiro em combate corpo a corpo"
+  "SDM.Zones.ReachBadge": "Extensão: uma arma com extensão preparada — ataca primeiro em combate corpo a corpo",
+  "SDM.Trigger.StatusApply": "colocar",
+  "SDM.Trigger.StatusRemove": "tirar",
+  "SDM.Trigger.StatusRemoved": "{effect} removido de {targets}.",
+  "SDM.Use.CuresLabel": "Cura",
+  "SDM.Use.CuresHint": "Condições que remove dos alvos toda vez que é usado (uma bandagem estanca o sangramento, um antídoto cura o veneno). Só condições colocadas no ator, não as dadas pelos itens dele.",
+  "SDM.Use.ChatCures": "Cura: {conditions}.",
+  "SDM.AttackFeature.ConfuseButton": "Confundir {target} (1 rodada)",
+  "SDM.AttackFeature.SleepButton": "Fazer {target} dormir",
+  "SDM.AttackFeature.EntangleButton": "Enredar {target} (se falhar na salvaguarda)",
+  "SDM.AttackFeature.PetrifyButton": "Petrificar {target} (se falhar na salvaguarda)",
+  "SDM.AttackFeature.MadButton": "Enlouquecer {target}",
+  "SDM.AttackFeature.MoraleButton": "{target} testa a moral",
+  "SDM.AttackFeature.FrightenButton": "Amedrontar {target}",
+  "SDM.Immunity.Title": "Imune a",
+  "SDM.Immunity.Hint": "Condições que quem o porta não pode ter (equipamento só quando preparado). Colocar uma é recusado, com um aviso no chat.",
+  "SDM.Immunity.Blocked": "{actor} é imune a {condition} ({item}).",
+  "SDM.AttackFeature.IgniteButton": "Incendiar {target} (se inflamável e falhar na salvaguarda)"
 }

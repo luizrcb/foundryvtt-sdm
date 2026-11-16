@@ -25,7 +25,10 @@
   "_key": "!items!YG9BkHHquGUlV0tW",
   "system": {
     "description": "<p>Weak but hypermobile joints: it slips out of grabs and bonds.</p><p><em>From the corruption tables.</em></p>",
-    "type": ""
+    "type": "",
+    "immunities": [
+      "restrain"
+    ]
   },
   "effects": []
 }

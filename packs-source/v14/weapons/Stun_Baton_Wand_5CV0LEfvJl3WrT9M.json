@@ -88,56 +88,20 @@
         "text": "Spend 1 life to stun (save)",
         "attack": "",
         "table": "",
-        "effect": "oZFLFSjTCAjVjanM",
+        "effect": "",
         "wear": "",
         "counter": "",
         "counter_step": "1",
         "cost_resource": "life",
         "cost": "1",
-        "cost_ask": true
+        "cost_ask": true,
+        "status": "stun",
+        "status_target": "",
+        "status_mode": "apply"
       }
     ]
   },
-  "effects": [
-    {
-      "name": "Stunned",
-      "origin": null,
-      "img": "icons/svg/daze.svg",
-      "_id": "oZFLFSjTCAjVjanM",
-      "type": "base",
-      "system": {
-        "changes": []
-      },
-      "disabled": true,
-      "duration": {
-        "value": null,
-        "units": "seconds",
-        "expiry": null,
-        "expired": false
-      },
-      "description": "<p>Put on the target by this item's roll trigger (disabled here so the bearer doesn't get it).</p>",
-      "tint": "#ffffff",
-      "transfer": false,
-      "statuses": [
-        "stun"
-      ],
-      "sort": 0,
-      "flags": {},
-      "_stats": {
-        "compendiumSource": null,
-        "duplicateSource": null,
-        "exportSource": null,
-        "coreVersion": "14.367",
-        "systemId": "sdm",
-        "systemVersion": "1.11.0",
-        "lastModifiedBy": null
-      },
-      "showIcon": 1,
-      "folder": null,
-      "start": null,
-      "_key": "!items.effects!5CV0LEfvJl3WrT9M.oZFLFSjTCAjVjanM"
-    }
-  ],
+  "effects": [],
   "sort": 100000,
   "ownership": {
     "default": 0,
