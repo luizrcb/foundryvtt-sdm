@@ -31,7 +31,9 @@
       "value": 0,
       "unit": "soaps"
     },
-    "features": [],
+    "features": [
+      "area"
+    ],
     "type": "weapon",
     "weapon": {
       "damage": {
@@ -58,7 +60,10 @@
         "status_target": "",
         "status_mode": "apply"
       }
-    ]
+    ],
+    "area": {
+      "value": "small"
+    }
   },
   "effects": []
 }

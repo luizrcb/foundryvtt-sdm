@@ -31,7 +31,9 @@
       "value": 0,
       "unit": "soaps"
     },
-    "features": [],
+    "features": [
+      "reach"
+    ],
     "type": "weapon",
     "weapon": {
       "damage": {

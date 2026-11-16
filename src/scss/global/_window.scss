@@ -2521,6 +2521,7 @@ input[type='radio']::after {
   .sdm-speed-name {
     overflow: hidden;
     text-overflow: ellipsis;
+    font-size: 11px;
   }
 
   font-size: 13px;
@@ -2531,7 +2532,7 @@ input[type='radio']::after {
 
   select {
     height: 1.7em;
-    font-size: 12px;
+    font-size: 11px;
   }
 }
 
