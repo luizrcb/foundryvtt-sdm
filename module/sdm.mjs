@@ -66,6 +66,7 @@ import { setupItemPiles } from './integrations/itemPiles.mjs';
 import { setupNpcVariability } from './helpers/npcVariability.mjs';
 import { configureConditions, localizeConditions, setupConditions } from './helpers/conditions.mjs';
 import { setupZones } from './helpers/zones.mjs';
+import { bindAttackFollowup } from './rolls/attackFollowup.mjs';
 import { rememberCurrency } from './helpers/currency.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
 import { gm as gmMacros, player as playerMacros } from './macros/_module.mjs';
@@ -296,6 +297,8 @@ Hooks.on('renderChatMessageHTML', (message, html, data) => {
   configureUseHeroDiceButton(message, html, data);
   addCatchHandle(message, html);
   configureChatListeners(html);
+  // Attack card (and its hero dice result): roll the damage of the weapon / the power it was made with
+  bindAttackFollowup(html);
   const dangerousElement = html.querySelector('[data-action="rollDangerous"]');
   if (dangerousElement) {
     dangerousElement.addEventListener('click', async event => {
@@ -336,6 +339,15 @@ Hooks.on('renderDialogV2', (dialog, html) => {
     const heading = content.querySelector('h1, h2, h3, h4');
     if (heading) heading.after(previewBox);
     else content.prepend(previewBox);
+  }
+  // Attack dialog: choosing the item re-suggests the roll mode (before the preview reads the form)
+  const attackItemSelect = html.querySelector('#attackItem');
+  const rollModeSelect = html.querySelector('#rollMode');
+  if (attackItemSelect && rollModeSelect && typeof dialog.options?.attackItemRollMode === 'function') {
+    attackItemSelect.addEventListener('change', () => {
+      const mode = dialog.options.attackItemRollMode(attackItemSelect.value);
+      if (mode) rollModeSelect.value = mode;
+    });
   }
   if (typeof rollPreview === 'function' && previewBox && previewForm) {
     const updatePreview = () => {

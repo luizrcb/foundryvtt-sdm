@@ -9,6 +9,13 @@
         {{radioBoxes 'attackTarget' attackTargetChoices checked='physical' localize=true}}
       </div>
     </div>
+    <div class="form-group mt-10">
+      <label for="attackItem">{{localize 'SDM.AttackItem'}}</label>
+      <select name="attackItem" id="attackItem">
+        <option value="">{{attackItemNoneLabel}}</option>
+        {{selectOptions attackItemOptions valueAttr="id" labelAttr="label" selected=selectedAttackItem}}
+      </select>
+    </div>
     {{/if}}
     {{#if (eq type 'power_album')}}
      <div class="form-group mt-10">
@@ -43,7 +50,7 @@
     <div class="form-group mt-10">
       <label for="multiplier">{{localize 'SDM.RollMultiplier'}}</label>
       <select name="multiplier" id="multiplier">
-        {{selectOptions multiplierOptions blank=""}}
+        {{selectOptions multiplierOptions blank="" selected=selectedMultiplier}}
       </select>
     </div>
     {{/if}}

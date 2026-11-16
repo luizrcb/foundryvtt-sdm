@@ -91,10 +91,12 @@ function watchingItems(actor) {
  * Triggers of a roll not tied to an item (attack, save, ability check, defeat): the actor's readied
  * gear, traits and burdens. Filters: the kind of attack, the ability ('' = any).
  */
-export function actorTriggers(actor, rollKind, roll, { attack = '', ability = '', success = null } = {}) {
+export function actorTriggers(actor, rollKind, roll, { attack = '', ability = '', success = null, withItem = '' } = {}) {
   const fired = [];
   if (!featureEnabled('triggers')) return fired;
   for (const item of watchingItems(actor)) {
+    // An attack made with a chosen weapon / power: the other weapons and powers don't fire
+    if (rollKind === 'attack' && withItem && item.id !== withItem && isAttackGear(item)) continue;
     for (const trigger of item.system.triggers ?? []) {
       if (trigger.roll !== rollKind) continue;
       if (rollKind === 'attack' && trigger.attack && attack && trigger.attack !== attack) continue;
@@ -105,9 +107,20 @@ export function actorTriggers(actor, rollKind, roll, { attack = '', ability = ''
   return fired;
 }
 
-/** Triggers of an attack, for that kind of attack (melee, ranged, fantascience, oldtech). */
-export function attackTriggers(actor, roll, attack = '', success = null) {
-  return actorTriggers(actor, 'attack', roll, { attack, success });
+/** Gear an attack can be made with: weapons (or the weapon feature), powers and power albums. */
+function isAttackGear(item) {
+  if (item.type !== ItemType.GEAR) return false;
+  const type = item.system?.type;
+  return type === 'weapon' || type === 'power' || type === 'power_album' || !!item.system?.features?.has?.('weapon');
+}
+
+/**
+ * Triggers of an attack, for that kind of attack (melee, ranged, fantascience, oldtech). Made with a
+ * chosen item (`withItem`), the other weapons and powers are left out; other gear, traits and burdens
+ * still watch it.
+ */
+export function attackTriggers(actor, roll, attack = '', success = null, { withItem = '' } = {}) {
+  return actorTriggers(actor, 'attack', roll, { attack, success, withItem });
 }
 
 /** Does this trigger (held by `holder`) watch the rolls of `item`? ("From": this item, any item, one item) */

@@ -16,7 +16,7 @@
  * by the rounds the move takes, and a Token HUD button that shows the zones around a token (local).
  */
 
-import { ActorType, GearType } from './constants.mjs';
+import { ActorType, GearType, ItemType, RollMode } from './constants.mjs';
 import { UnarmedDamageItem } from './itemUtils.mjs';
 
 /**
@@ -428,28 +428,76 @@ const isUnarmed = item =>
   item._stats?.compendiumSource === UnarmedDamageItem || item.getFlag?.('sdm', 'fromCompendium') === UnarmedDamageItem;
 
 /**
- * What the actor has readied and its range: weapons (no range = close) and powers with a range
- * (power items and the selected power of a power album). Unarmed is left out: it can be used with
+ * What the actor has readied and its range: weapons (no range = close), powers and the selected
+ * power of a power album. Traits are always readied; of them, power traits are listed (traits have no features). Unarmed is left out: it can be used with
  * any of the four attacks, so it has no range of its own.
  */
-function readiedReach(actor) {
+export function attackItems(actor) {
   const entries = [];
-  for (const item of actor.items ?? []) {
-    if (!item.system?.readied) continue;
+  const bandOf = range => {
+    const band = ZONE_BANDS.indexOf(`${range ?? ''}`.trim().toLowerCase());
+    return band >= 0 ? band : null;
+  };
+  const has = (item, feature) => !!item.system?.features?.has?.(feature);
+  for (const item of actor?.items ?? []) {
+    // Gear counts when readied; traits are always readied, and only power traits can be used
+    const isTrait = item.type === ItemType.TRAIT;
+    if (isTrait ? item.system.type !== GearType.POWER : !item.system?.readied) continue;
     if (item.system.type === GearType.POWER) {
-      const range = `${item.system.power?.range ?? ''}`.trim().toLowerCase();
-      if (ZONE_BANDS.includes(range)) entries.push({ name: item.name, band: ZONE_BANDS.indexOf(range) });
+      entries.push({ id: item.id, name: item.name, kind: 'power', band: bandOf(item.system.power?.range), fantascience: true });
     } else if (item.system.type === GearType.POWER_ALBUM) {
       const powers = item.system.powers ?? [];
       const power = powers[item.system.powers_current_index] ?? powers[0];
-      const range = `${power?.range ?? ''}`.trim().toLowerCase();
-      if (power && ZONE_BANDS.includes(range)) entries.push({ name: power.name || item.name, band: ZONE_BANDS.indexOf(range) });
+      if (!power) continue;
+      entries.push({ id: item.id, name: power.name || item.name, kind: 'album', band: bandOf(power.range), fantascience: true });
     } else if (isWeaponItem(item) && !isUnarmed(item)) {
-      const range = `${item.system.weapon?.range ?? ''}`.trim().toLowerCase();
-      entries.push({ name: item.name, band: Math.max(ZONE_BANDS.indexOf(range), 0) });
+      entries.push({
+        id: item.id,
+        name: item.name,
+        kind: 'weapon',
+        // A weapon without a range is a close-combat weapon
+        band: bandOf(item.system.weapon?.range) ?? 0,
+        throwing: has(item, 'throwing'),
+        oldtech: has(item, 'oldtech'),
+        fantascience: has(item, 'fantascience')
+      });
     }
   }
   return entries;
+}
+
+/**
+ * The item an attack is made with, preselected in the attack dialog: the attack's favorite (if it is
+ * still readied), else a suggestion — with a target, the first fitting item that reaches it; else the
+ * first that fits the attack (melee: a close weapon; ranged: a weapon of short range or more;
+ * fantascience: a power or fantascience item; oldtech: an oldtech item or a power). '' = not chosen.
+ */
+export function suggestAttackItem(actor, attack, entries = attackItems(actor)) {
+  // NPCs attack with their own damage by default (items can still be picked)
+  if (actor?.type === ActorType.NPC) return '';
+  const favorite = actor?.system?.[attack]?.favorite_item;
+  if (favorite && entries.some(e => e.id === favorite)) return favorite;
+  const fits = {
+    melee: e => e.kind === 'weapon' && e.band === 0,
+    ranged: e => e.kind === 'weapon' && e.band >= 1,
+    fantascience: e => e.fantascience,
+    // Oldtech attacks use oldtech items and powers too
+    oldtech: e => e.oldtech || e.kind !== 'weapon'
+  }[attack] ?? (() => true);
+  const preferred = entries.filter(fits);
+  const target = Array.from(game.user.targets ?? [])[0];
+  const source = tokenFor(actor);
+  const measured = target && source && target !== source ? measureTokens(source, target) : null;
+  if (measured) {
+    const reaches = e => e.band === null || e.band >= measured.band;
+    const pick = preferred.find(reaches) ?? entries.find(reaches);
+    if (pick) return pick.id;
+  }
+  return preferred[0]?.id ?? '';
+}
+
+function readiedReach(actor) {
+  return attackItems(actor).filter(e => e.band !== null);
 }
 
 /** "Reach: Rifle (long), Bow (medium) · Don't reach: Knife (close)" for a target zone. */
@@ -464,6 +512,30 @@ function reachHtml(actor, band) {
   if (short.length) parts.push(`${game.i18n.localize('SDM.Zones.NoReach')}: ${list(short)}`);
   if (!reach.length) parts.push(game.i18n.localize('SDM.Zones.NothingReaches'));
   return `<div class="sdm-range-reach">${esc(parts.join(' · '))}</div>`;
+}
+
+/**
+ * How far a target is beyond a range (0 close … 3 long): 1 zone beyond → disadvantage suggested,
+ * 2 or more → it doesn't reach; a thrown weapon beyond short (within its range) → disadvantage
+ * suggested. Returns { beyond, mode, note } or null without a target or a known range.
+ */
+function rangeAdvice(measuredBand, rangeBand, throwing = false) {
+  if (rangeBand === null || rangeBand === undefined || rangeBand < 0) return null;
+  const beyond = measuredBand - rangeBand;
+  const range = bandLabel(rangeBand);
+  if (beyond >= 2) return { beyond, mode: null, note: game.i18n.format('SDM.Zones.OutOfRangeFar', { range }) };
+  if (beyond === 1) return { beyond, mode: RollMode.DISADVANTAGE, note: game.i18n.format('SDM.Zones.OutOfRangeOne', { range }) };
+  if (throwing && measuredBand > 1) return { beyond: 0, mode: RollMode.DISADVANTAGE, note: game.i18n.localize('SDM.Zones.ThrowingPenalty') };
+  return null;
+}
+
+/** The roll mode suggested for attacking the current target with an item entry (attackItems), or null. */
+export function attackRangeRollMode(actor, entry) {
+  if (!entry || !setting('zoneRangeCheck', true) || !zonesActive()) return null;
+  const target = Array.from(game.user.targets ?? [])[0];
+  const source = tokenFor(actor);
+  const measured = target && source && target !== source ? measureTokens(source, target) : null;
+  return measured ? rangeAdvice(measured.band, entry.band, entry.throwing)?.mode ?? null : null;
 }
 
 /**
@@ -482,12 +554,7 @@ export function targetRangeHtml(actor, { range = '', throwing = false, reach = f
   const units = canvas.scene.grid.units ?? '';
   const shown = `${bandLabel(measured.band)} · ~${Math.round(measured.units * 10) / 10}${units ? ` ${units}` : ''}`;
   const max = ZONE_BANDS.indexOf(`${range ?? ''}`.trim().toLowerCase());
-  let note = '';
-  if (max >= 0 && measured.band > max) {
-    note = game.i18n.format('SDM.Zones.OutOfRange', { range: bandLabel(max) });
-  } else if (throwing && measured.band > 1) {
-    note = game.i18n.localize('SDM.Zones.ThrowingPenalty');
-  }
+  const note = rangeAdvice(measured.band, max >= 0 ? max : null, throwing)?.note ?? '';
   return (
     `<div class="sdm-roll-preview-row sdm-range-row${note ? ' warn' : ''}">` +
     `<span>${esc(game.i18n.format('SDM.Zones.Target', { name: target.name }))}</span> <code>${esc(shown)}</code>` +

@@ -21,5 +21,15 @@
         {{selectOptions skills valueAttr='id' labelAttr='name' selected=selectedSkill sort=true}}
       </select>
     </div>
+    <div class='grid-span-1'>
+      <label class='resource-label'>
+        {{localize 'SDM.FavoriteAttackItem'}}
+      </label>
+      <select name='favorite_item' class='resource-content'>
+        <option value=''>{{localize 'SDM.AttackItemSuggest'}}</option>
+        {{selectOptions attackItems valueAttr='id' labelAttr='label' selected=selectedItem}}
+      </select>
+      <p class='hint'>{{localize 'SDM.FavoriteAttackItemHint'}}</p>
+    </div>
   </div>
 </form>

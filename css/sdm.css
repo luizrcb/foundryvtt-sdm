@@ -2526,6 +2526,33 @@ input[type=radio]::after {
   font-size: 12px;
 }
 
+.sdm-attack-followup {
+  margin-top: 6px;
+}
+
+.sdm-attack-followup button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  width: 100%;
+  height: auto;
+  min-height: 28px;
+  padding: 4px 8px;
+  line-height: 1.25;
+  white-space: normal;
+  text-align: center;
+}
+
+.sdm-attack-followup button i {
+  flex: 0 0 auto;
+}
+
+.sdm-attack-followup button span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
 .sdm-free-attack-warning {
   color: #ffb347;
   font-weight: bold;

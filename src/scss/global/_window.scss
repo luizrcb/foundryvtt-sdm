@@ -2535,6 +2535,35 @@ input[type='radio']::after {
   }
 }
 
+// Chat: an attack made with a weapon / power, the button to roll its damage next
+.sdm-attack-followup {
+  margin-top: 6px;
+
+  // A long item name wraps next to the icon instead of stretching the button
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    height: auto;
+    min-height: 28px;
+    padding: 4px 8px;
+    line-height: 1.25;
+    white-space: normal;
+    text-align: center;
+
+    i {
+      flex: 0 0 auto;
+    }
+
+    span {
+      min-width: 0;
+      overflow-wrap: anywhere;
+    }
+  }
+}
+
 // Token ruler: a waypoint whose path leaves an enemy's close zone (free attack warning)
 .sdm-free-attack-warning {
   color: #ffb347;

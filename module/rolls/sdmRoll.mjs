@@ -1,4 +1,5 @@
 import { powerCardData } from '../helpers/singleUsePowers.mjs';
+import { attackFollowupHtml, attackItemFlag } from './attackFollowup.mjs';
 import { actorTriggers, attackTriggers, damageTriggers, itemRollTriggers, renderTriggers, runTriggerActions } from './triggers.mjs';
 import { createChatMessage } from '../helpers/chatUtils.mjs';
 import { ActorType, AttackTarget, RollMode, RollType } from '../helpers/constants.mjs';
@@ -27,9 +28,12 @@ export default class SDMRoll {
     extraFlags = {},
     attack = '',
     triggerItem = null,
-    powerName = ''
+    powerName = '',
+    attackItem = null
   }) {
     this.actor = actor;
+    // Attacks: the weapon / power the attack is made with ({ id, name, kind }), from the attack dialog
+    this.attackItem = attackItem;
     // Which attack (melee, ranged, fantascience, oldtech): attack triggers can be limited to one
     this.attack = attack || '';
     // Album powers: the album holds the triggers (filtered by the power's name)
@@ -225,7 +229,7 @@ export default class SDMRoll {
 
     // Roll triggers: natural results on attacks (readied gear), damage results of the item
     const firedTriggers = isAttack
-      ? attackTriggers(this.actor, this.roll, this.attack, attackSuccess)
+      ? attackTriggers(this.actor, this.roll, this.attack, attackSuccess, { withItem: this.attackItem?.id ?? '' })
       : isAbility
         ? actorTriggers(this.actor, 'ability', this.roll, { ability: this.ability })
         : isDamage && this.item
@@ -236,6 +240,16 @@ export default class SDMRoll {
               ? itemRollTriggers(this.triggerItem, 'power', this.roll, { power: this.powerName })
               : [];
     content += renderTriggers(firedTriggers);
+
+    // Attack made with a weapon or power: a button to roll its damage / the power next (kept in the
+    // flags, so a hero dice result for this attack gets it too)
+    const attackItem = isAttack ? attackItemFlag(this.actor, this.attackItem) : null;
+    // Consecutive natural 20s: the damage button suggests the critical multiplier
+    if (attackItem) attackItem.multiplier = criticalMultiplier(this.actor, countConsecutiveTwenties(this.roll));
+    if (attackItem) {
+      content += attackFollowupHtml(attackItem);
+      flags.sdm = { ...(flags.sdm ?? {}), attackItem };
+    }
 
     const chatDataMessage = {
       actor: this.actor,
@@ -446,6 +460,39 @@ export function collectAllDice(term) {
     return term.terms.flatMap(collectAllDice);
   }
   return [];
+}
+
+/**
+ * Consecutive natural 20s of the kept d20 (an exploding d20 rolling 20, 20, …): 0 when the kept die
+ * didn't start with a 20.
+ */
+export function countConsecutiveTwenties(roll) {
+  let best = 0;
+  const count = die => {
+    if (!(die instanceof foundry.dice.terms.Die) || die.faces !== 20) return;
+    let n = 0;
+    for (const result of die.results) {
+      if (result.result !== 20) break;
+      n++;
+    }
+    best = Math.max(best, n);
+  };
+  for (const term of roll?.terms ?? []) {
+    if (term instanceof foundry.dice.terms.PoolTerm) {
+      term.results.forEach((res, index) => {
+        if (res.active && term.rolls[index]) collectAllDice(term.rolls[index]).forEach(count);
+      });
+    } else collectAllDice(term).forEach(count);
+  }
+  return best;
+}
+
+/** The damage multiplier for consecutive natural 20s: the base (×2) for one, doubled for each more. */
+export function criticalMultiplier(actor, twenties) {
+  if (!twenties) return '';
+  const base = Number(actor?.system?.base_damage_multiplier) || 2;
+  const options = Object.keys(CONFIG.SDM.getDamageMultiplier(base));
+  return options[Math.min(twenties, options.length) - 1] ?? '';
 }
 
 export function detectNat1OrNat20(roll) {

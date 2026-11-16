@@ -1,3 +1,5 @@
+import { attackFollowupHtml } from '../../attackFollowup.mjs';
+import { criticalMultiplier } from '../../sdmRoll.mjs';
 import { createChatMessage } from '../../../helpers/chatUtils.mjs';
 import { $fmt, $l10n, capitalizeFirstLetter } from '../../../helpers/globalUtils.mjs';
 import { templatePath } from '../../../helpers/templates.mjs';
@@ -154,14 +156,22 @@ export class HeroDiceUI {
       `${heroMode === 'decrease' ? `<br>${$l10n('SDM.HeroDiceModeDecrease')}` : ''}` +
       `${heroicBonusQty > 0 ? ` (${$l10n('SDM.FieldBonus')}: ${heroicBonusQty})` : ''}`;
 
+    // An attack made with a weapon / power keeps its damage button on the hero dice result. Hero dice
+    // can bump d20s to natural 20s (which explode again): the multiplier follows the result's 20s
+    const attackItem = flags?.sdm?.attackItem ? { ...flags.sdm.attackItem } : null;
+    if (attackItem) {
+      attackItem.multiplier = criticalMultiplier(fromUuidSync(attackItem.actor), heroTwenties(keptDice));
+    }
     await createChatMessage({
       actor,
-      content: await renderTemplate(templatePath('/chat/hero-dice-result'), templateData),
+      content:
+        (await renderTemplate(templatePath('/chat/hero-dice-result'), templateData)) + attackFollowupHtml(attackItem),
       flavor,
       rolls: [heroResultRoll],
       flags: {
         sdm: {
-          isHeroResult: true
+          isHeroResult: true,
+          ...(attackItem ? { attackItem } : {})
         }
       }
     });
@@ -265,4 +275,36 @@ export class HeroDiceUI {
       );
     }
   }
+}
+
+/**
+ * Consecutive natural 20s of the kept d20s after hero dice: each chain (an exploding d20 split in
+ * segments) read in order — every segment's value after the hero dice, then its new explosions —
+ * counting 20s until the first other result. The best chain counts.
+ */
+export function heroTwenties(keptDice = []) {
+  const chains = new Map();
+  for (const die of keptDice) {
+    if (die?.faces !== 20) continue;
+    const key = die.chainId ?? `die-${die.dieIndex}`;
+    if (!chains.has(key)) chains.set(key, []);
+    chains.get(key).push(die);
+  }
+  let best = 0;
+  for (const segments of chains.values()) {
+    segments.sort((a, b) => (a.segmentIndex ?? 0) - (b.segmentIndex ?? 0));
+    // A die holding several results (not split in segments): its earlier results come first
+    const sequence = segments.flatMap(die => [
+      ...(die.originalResults ?? []).slice(0, -1).map(r => r.result),
+      die.modifiedValue,
+      ...(die.newExplosions ?? [])
+    ]);
+    let n = 0;
+    for (const value of sequence) {
+      if (value !== 20) break;
+      n++;
+    }
+    best = Math.max(best, n);
+  }
+  return best;
 }

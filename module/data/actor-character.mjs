@@ -421,6 +421,8 @@ export default class SdmCharacter extends SdmActorBase {
         initial: 0
       }),
       favorite_skill: new fields.DocumentUUIDField({ required: false, blank: true, initial: '' }),
+      // Weapon, power or power album the attack is usually made with (preselected in the attack dialog)
+      favorite_item: new fields.StringField({ required: false, blank: true, initial: '' }),
       default_ability: getDefaultAbility('str'),
       roll_mode: new fields.StringField({
         nullable: false,
@@ -437,6 +439,8 @@ export default class SdmCharacter extends SdmActorBase {
         initial: 0
       }),
       favorite_skill: new fields.DocumentUUIDField({ required: false, blank: true, initial: '' }),
+      // Weapon, power or power album the attack is usually made with (preselected in the attack dialog)
+      favorite_item: new fields.StringField({ required: false, blank: true, initial: '' }),
       default_ability: getDefaultAbility('agi'),
       roll_mode: new fields.StringField({
         nullable: false,
@@ -465,6 +469,8 @@ export default class SdmCharacter extends SdmActorBase {
         initial: 0
       }),
       favorite_skill: new fields.DocumentUUIDField({ required: false, blank: true, initial: '' }),
+      // Weapon, power or power album the attack is usually made with (preselected in the attack dialog)
+      favorite_item: new fields.StringField({ required: false, blank: true, initial: '' }),
       default_ability: getDefaultAbility('tho'),
       roll_mode: new fields.StringField({
         nullable: false,
@@ -481,6 +487,8 @@ export default class SdmCharacter extends SdmActorBase {
         initial: 0
       }),
       favorite_skill: new fields.DocumentUUIDField({ required: false, blank: true, initial: '' }),
+      // Weapon, power or power album the attack is usually made with (preselected in the attack dialog)
+      favorite_item: new fields.StringField({ required: false, blank: true, initial: '' }),
       default_ability: getDefaultAbility('cha'),
       roll_mode: new fields.StringField({
         nullable: false,

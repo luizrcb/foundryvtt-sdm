@@ -52,7 +52,17 @@ import { openItemTransferDialog } from '../items/transfer.mjs';
 import { directResourceDiceRoll, healingHeroDice } from '../rolls/hero_dice/index.mjs';
 import SDMRoll, { sanitizeExpression } from '../rolls/sdmRoll.mjs';
 import { rollPreviewRows } from '../helpers/rollPreview.mjs';
-import { speedContext, targetRangeHtml } from '../helpers/zones.mjs';
+import { attackItems, attackRangeRollMode, speedContext, suggestAttackItem, targetRangeHtml, ZONE_BANDS } from '../helpers/zones.mjs';
+
+/** Options for an attack's item select: "Rifle (short)", "Fireball (power, medium)". */
+function attackItemChoices(actor, entries = attackItems(actor)) {
+  return entries.map(entry => {
+    const parts = [];
+    if (entry.kind !== 'weapon') parts.push($l10n(entry.kind === 'album' ? 'SDM.AttackItemAlbumPower' : 'TYPES.Item.power').toLowerCase());
+    if (entry.band !== null) parts.push($l10n(CONFIG.SDM.rangeType[ZONE_BANDS[entry.band]]));
+    return { id: entry.id, label: parts.length ? `${entry.name} (${parts.join(', ')})` : entry.name };
+  });
+}
 import {
   renderCorruptionResult,
   renderDangerResult,
@@ -234,7 +244,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       powerOptions = [],
       powerIndex = 0,
       item = null,
-      freeCast = false
+      freeCast = false,
+      // Suggested damage multiplier (an attack's consecutive natural 20s, from its card's button)
+      multiplier: suggestedMultiplier = ''
     },
     isShift = false,
     isCtrl = false
@@ -287,7 +299,17 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       isAttack,
       isAbility
     });
-    const selectedRollMode = combineRollModes(baseRollMode, conditionMode);
+    // Attacks aren't tied to an item: pick the weapon, power or album power it is made with (the
+    // attack's favorite, else a suggestion), or none — then it works as before. A chosen item gives the
+    // range warning and the roll's title, and out of range by one zone suggests disadvantage.
+    const attackEntries = isAttack ? attackItems(this.actor) : [];
+    const attackItemOptions = isAttack ? attackItemChoices(this.actor, attackEntries) : [];
+    const suggestedAttackItem = isAttack ? suggestAttackItem(this.actor, attack, attackEntries) : '';
+    const rollModeWith = itemId => {
+      const entry = attackEntries.find(e => e.id === itemId);
+      return combineRollModes(combineRollModes(baseRollMode, conditionMode), attackRangeRollMode(this.actor, entry));
+    };
+    const selectedRollMode = isAttack ? rollModeWith(suggestedAttackItem) : combineRollModes(baseRollMode, conditionMode);
 
     const actorData = this.actor?.system;
     const damageMultiplier = CONFIG.SDM.getDamageMultiplier(actorData.base_damage_multiplier || 2);
@@ -327,11 +349,19 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       availableSkills,
       selectedSkill,
       multiplierOptions: damageMultiplier,
+      selectedMultiplier: suggestedMultiplier,
       rollModes: CONFIG.SDM.rollMode,
       selectedRollMode: selectedRollMode || RollMode.NORMAL,
       type,
       isCharacterActor,
       attackTargetChoices: CONFIG.SDM.attackTarget,
+      attackItemOptions,
+      selectedAttackItem: suggestedAttackItem,
+      // NPCs: the empty choice is their own damage ("Damage (1d8)")
+      attackItemNoneLabel:
+        this.actor.type === ActorType.NPC
+          ? game.i18n.format('SDM.AttackItemNpcDamage', { damage: this.actor.system.damage || '1d4' })
+          : $l10n('SDM.AttackItemNone'),
       powerOptions,
       powerIndex,
       blindGMRoll: isCtrl
@@ -397,18 +427,19 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       const {
         selectedAbility: abilityValue,
         modifier = '',
-        rollMode = conditionMode ?? RollMode.NORMAL,
+        rollMode: rollModeValue,
         shouldExplode: explodeValue,
-        multiplier = '',
+        multiplier = suggestedMultiplier,
         selectedSkill: skillValue,
         attackTarget = AttackTarget.PHYSICAL,
-        powerIndex: powerIndexValue
+        powerIndex: powerIndexValue,
+        attackItem = suggestedAttackItem
       } = values ?? {};
       const plan = {
         title,
         formula,
         versatileFormula,
-        rollMode,
+        rollMode: rollModeValue,
         attackTarget,
         multiplier,
         powerIndex,
@@ -423,6 +454,15 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       if (skillValue !== undefined) plan.selectedSkill = skillValue;
       if (explodeValue !== undefined) plan.shouldExplode = explodeValue;
       if (abilityValue !== undefined) plan.selectedAbility = abilityValue;
+      // The item the attack is made with: "Melee (with Spear)"
+      plan.attackItem = isAttack ? attackEntries.find(entry => entry.id === attackItem) ?? null : null;
+      // Without the dialog (Shift): the conditions' mode, and the range suggestion for the chosen item
+      if (rollModeValue === undefined) {
+        plan.rollMode =
+          combineRollModes(conditionMode ?? RollMode.NORMAL, isAttack ? attackRangeRollMode(this.actor, plan.attackItem) : null) ||
+          RollMode.NORMAL;
+      }
+      if (plan.attackItem) plan.title = `${title} (${game.i18n.format('SDM.AttackWith', { item: plan.attackItem.name })})`;
       if (isPowerAlbum) {
         const power = powerOptions[plan.powerIndex];
         plan.title = power.name;
@@ -461,7 +501,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         skill: availableSkills[plan.selectedSkill],
         targetActor,
         attackTarget: plan.attackTarget,
-        attack: isAttack ? attack : ''
+        attack: isAttack ? attack : '',
+        attackItem: plan.attackItem ? { id: plan.attackItem.id, name: plan.attackItem.name, kind: plan.attackItem.kind } : null
       };
       if (plan.formula) data.formula = plan.formula;
       if (plan.versatileFormula && twoHanded) data.formula = plan.versatileFormula;
@@ -501,10 +542,13 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       // Optional: the target's zone and whether the weapon or power reaches it (no penalty applied)
       const weaponRange = item?.system?.weapon?.range ?? '';
       if (isAttack || isPowerRoll || (isDamage && weaponRange)) {
+        const chosen = plan.attackItem;
         const range = isPowerRoll
           ? power?.range ?? ''
-          : weaponRange || (isAttack && isCharacter && attack === 'melee' ? 'close' : '');
-        const throwing = !isPowerRoll && !!item?.system?.features?.has?.('throwing');
+          : chosen
+            ? chosen.band === null ? '' : ZONE_BANDS[chosen.band]
+            : weaponRange || (isAttack && isCharacter && attack === 'melee' ? 'close' : '');
+        const throwing = isPowerRoll ? false : chosen ? !!chosen.throwing : !!item?.system?.features?.has?.('throwing');
         rows.unshift(targetRangeHtml(this.actor, { range, throwing, reach: isAttack }));
       }
       return rows.join('');
@@ -521,6 +565,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         modal: true,
         powerOptions,
         rollPreview,
+        // Choosing another item re-suggests the roll mode (out of range → disadvantage)
+        attackItemRollMode: isAttack ? rollModeWith : null,
         content: template,
         position: {
           width: 400
@@ -649,14 +695,22 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const skills = Object.values(availableSkills);
     const lang = game.i18n.lang;
     const attackSystemData = this.actor.system[attack];
-    const { default_ability: selectedAbility, favorite_skill: selectedSkill } = attackSystemData;
+    const { default_ability: selectedAbility, favorite_skill: selectedSkill, favorite_item: selectedItem = '' } = attackSystemData;
+    // Readied weapons, powers and albums (their selected power); a favorite no longer readied stays listed
+    const attackItemOptions = attackItemChoices(this.actor);
+    if (selectedItem && !attackItemOptions.some(option => option.id === selectedItem)) {
+      const item = this.actor.items.get(selectedItem);
+      if (item) attackItemOptions.push({ id: item.id, label: `${item.name} (${$l10n('SDM.AttackItemNotReadied')})` });
+    }
 
     const template = await renderTemplate(templatePath('actor/character/update-attack'), {
       skills,
       abilities: CONFIG.SDM.getOrderedAbilities(lang),
       attack: $l10n(`SDM.Attack${capitalizedAttack}`),
       selectedAbility,
-      selectedSkill
+      selectedSkill,
+      attackItems: attackItemOptions,
+      selectedItem
     });
 
     const updateAttackOptions = await foundry.applications.api.DialogV2.prompt({
@@ -677,13 +731,14 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     if (!updateAttackOptions) return;
 
-    const { default_ability = '', favorite_skill = '' } = updateAttackOptions;
+    const { default_ability = '', favorite_skill = '', favorite_item = '' } = updateAttackOptions;
 
     await this.actor.update({
       [`system.${attack}`]: {
         ...this.actor.system[attack],
         default_ability,
-        favorite_skill
+        favorite_skill,
+        favorite_item
       }
     });
   }
@@ -1572,7 +1627,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       powerIndex,
       item: rollItem,
       // Free cast (a trigger's "free"): no dialog and no cost
-      freeCast: dataset.freeCast === 'true'
+      freeCast: dataset.freeCast === 'true',
+      multiplier: dataset.multiplier || ''
     };
 
     this._openCustomRollModal(rollAttributes, isShift || rollAttributes.freeCast, isCtrl);
@@ -1592,7 +1648,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const rollAttributes = {
       type: RollType.DAMAGE,
       from: this.actor.name,
-      formula: damage
+      formula: damage,
+      // From an attack card's button: the critical multiplier of consecutive natural 20s
+      multiplier: target?.dataset?.multiplier || ''
     };
 
     this._openCustomRollModal(rollAttributes, isShift, isCtrl);
