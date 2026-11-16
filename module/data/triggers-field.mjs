@@ -87,6 +87,9 @@ export function defineTriggersField() {
         initial: 'targets',
         choices: ['targets', 'self']
       }),
+      // Copied only if a save fails (like the Condition action's save)
+      effect_save: new fields.BooleanField({ initial: false }),
+      effect_save_ability: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'str', 'end', 'agi', 'cha', 'aur', 'tho'] }),
       // A condition put on the targets or self (any status of the Token HUD list), no effect needed on the item
       status: new fields.StringField({ required: true, blank: true, initial: '' }),
       status_target: new fields.StringField({ required: true, blank: false, initial: 'targets', choices: ['targets', 'self'] }),

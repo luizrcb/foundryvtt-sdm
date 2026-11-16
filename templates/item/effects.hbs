@@ -117,8 +117,16 @@
           {{!-- Details of an action only show once the action is picked --}}
           {{#if trigger.effect}}
           <select name="system.triggers.{{index}}.effect_target">{{selectOptions @root.triggerEffectTargets selected=trigger.effect_target localize=true}}</select>
+          <span class="sdm-trigger-check" data-tooltip="{{localize 'SDM.Trigger.EffectSaveHint'}}"><input type="checkbox" name="system.triggers.{{index}}.effect_save" {{checked trigger.effect_save}} /> {{localize 'SDM.Trigger.StatusSave'}}</span>
+          {{#if trigger.effect_save}}
+          <select name="system.triggers.{{index}}.effect_save_ability" data-tooltip="{{localize 'SDM.Trigger.StatusSaveAbilityHint'}}">{{selectOptions @root.triggerSaveAbilities selected=trigger.effect_save_ability localize=true}}</select>
+          {{else}}
+          <input type="hidden" name="system.triggers.{{index}}.effect_save_ability" value="{{trigger.effect_save_ability}}" />
+          {{/if}}
           {{else}}
           <input type="hidden" name="system.triggers.{{index}}.effect_target" value="{{trigger.effect_target}}" />
+          <input type="hidden" name="system.triggers.{{index}}.effect_save" value="{{trigger.effect_save}}" data-dtype="Boolean" />
+          <input type="hidden" name="system.triggers.{{index}}.effect_save_ability" value="{{trigger.effect_save_ability}}" />
           {{/if}}</label>
         <label class="{{#if trigger.status}}filled{{/if}}" data-tooltip="{{localize 'SDM.Trigger.StatusHint'}}">{{localize 'SDM.Trigger.Status'}}
           <select name="system.triggers.{{index}}.status">{{selectOptions @root.triggerStatuses selected=trigger.status}}</select>

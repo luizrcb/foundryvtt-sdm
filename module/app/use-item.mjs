@@ -204,6 +204,14 @@ async function applyToActor({ actorUuid, restores = [], restore, effects }) {
       if (ids.length) await actor.deleteEmbeddedDocuments('ActiveEffect', ids);
       continue;
     }
+    // An item's effect copied by a trigger, taken off again (hero dice turned its save around)
+    if (restore?.kind === 'uneffect' && restore.usedItem) {
+      const ids = actor.effects
+        .filter(e => e.getFlag('sdm', 'usedItem') === restore.usedItem && (!restore.name || e.name === restore.name))
+        .map(e => e.id);
+      if (ids.length) await actor.deleteEmbeddedDocuments('ActiveEffect', ids);
+      continue;
+    }
     if (restore?.full) {
       await restoreAll(actor, restore.kind, restore.group);
       continue;
@@ -309,15 +317,47 @@ export function statusNames(ids = []) {
  * A roll trigger's effect: one of the item's effects (keep it disabled or not applied to the bearer
  * on the item) copied to the user's targeted tokens as a temporary effect, like Use.
  */
-export async function applyItemEffectToTargets(item, effectId, actor, { self = false } = {}) {
+export async function applyItemEffectToTargets(item, effectId, actor, { self = false, targets: given = null, save = null, remove = false } = {}) {
   const effects = effectsToCopy(item).filter((data, index) => item.effects.contents[index]?.id === effectId);
   if (!effects.length) return;
-  // "self": the one who rolled; otherwise the user's targeted tokens
-  const targets = self
-    ? [actor ?? item.actor].filter(Boolean)
-    : [...new Set([...(game.user.targets ?? [])].map(token => token.actor).filter(Boolean))];
+  // "self": the one who rolled; `given`: these actors; otherwise the user's targeted tokens
+  const targets = given
+    ? given.filter(Boolean)
+    : self
+      ? [actor ?? item.actor].filter(Boolean)
+      : [...new Set([...(game.user.targets ?? [])].map(token => token.actor).filter(Boolean))];
   if (!targets.length) {
-    ui.notifications.info($fmt('SDM.Trigger.NoTarget', { effect: effects[0].name }));
+    if (!given) ui.notifications.info($fmt('SDM.Trigger.NoTarget', { effect: effects[0].name }));
+    return;
+  }
+  // A save allowed: each target saves first (see save-against.mjs) and gets it only on a failure
+  if (save) {
+    const { saveAgainst } = await import('./save-against.mjs');
+    const statuses = [...(effects[0].statuses ?? [])];
+    for (const target of targets) {
+      await saveAgainst(target, {
+        effect: { item: item.uuid, id: effectId, name: effects[0].name },
+        status: statuses[0] ?? '',
+        source: save.source ?? item.name,
+        ability: save.ability ?? ''
+      });
+    }
+    return;
+  }
+  // Taken off again (hero dice turned a failed save into a success)
+  if (remove) {
+    for (const target of targets) {
+      const payload = { actorUuid: target.uuid, restores: [{ kind: 'uneffect', usedItem: item.uuid, name: effects[0].name }], effects: [] };
+      if (target.isOwner) await applyToActor(payload);
+      else if (game.users.activeGM) game.socket.emit(CHANNEL, { action: APPLY_ACTION, payload });
+    }
+    await ChatMessage.create({
+      speaker: ChatMessage.getSpeaker({ actor }),
+      content: `<p><i class="fa-solid fa-bolt"></i> ${$fmt('SDM.Trigger.StatusRemoved', {
+        effect: esc(effects[0].name),
+        targets: targets.map(t => esc(t.name)).join(', ')
+      })}</p>`
+    });
     return;
   }
   for (const target of targets) {

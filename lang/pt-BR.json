@@ -2988,5 +2988,6 @@
   "SDM.SaveAgainst.Request": "{actor}: salvaguarda contra {condition} ({source})",
   "SDM.SaveAgainst.RequestNoSource": "{actor}: salvaguarda contra {condition}",
   "SDM.SaveAgainst.Failed": "Falhou: {condition}",
-  "SDM.SaveAgainst.Resisted": "Resistiu: sem {condition}"
+  "SDM.SaveAgainst.Resisted": "Resistiu: sem {condition}",
+  "SDM.Trigger.EffectSaveHint": "Salvaguarda permitida: um PdM alvo rola a salvaguarda, um personagem recebe um pedido de salvaguarda; o efeito só é copiado se a salvaguarda falhar"
 }

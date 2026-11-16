@@ -2988,5 +2988,6 @@
   "SDM.SaveAgainst.Request": "{actor}: save against {condition} ({source})",
   "SDM.SaveAgainst.RequestNoSource": "{actor}: save against {condition}",
   "SDM.SaveAgainst.Failed": "Failed: {condition}",
-  "SDM.SaveAgainst.Resisted": "Resisted: no {condition}"
+  "SDM.SaveAgainst.Resisted": "Resisted: no {condition}",
+  "SDM.Trigger.EffectSaveHint": "A save allowed: an NPC target rolls its save, a character gets a save request; the effect is copied only if the save fails"
 }

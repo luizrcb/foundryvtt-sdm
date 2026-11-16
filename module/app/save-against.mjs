@@ -1,6 +1,7 @@
 /**
- * Saves against a condition ("target saves or is immobilized", "poisons the target (save)"): instead of
- * putting the condition on, the target saves first and gets it only if the save fails.
+ * Saves against a condition ("target saves or is immobilized", "poisons the target (save)") or one of
+ * an item's effects (a trigger's Effect action): instead of putting it on, the target saves first and
+ * gets it only if the save fails.
  *  - an NPC rolls its save at once (in the Referee's game when the user doesn't own it);
  *  - a character gets a save request card with one button per ability (the suggested one
  *    highlighted: the book's static abilities resist, Endurance the body, Aura the mind); its owner or
@@ -9,7 +10,7 @@
  * the outcome put it on or take it off (see HeroDiceUi).
  */
 import { ActorType } from '../helpers/constants.mjs';
-import { applyStatusToTargets } from './use-item.mjs';
+import { applyItemEffectToTargets, applyStatusToTargets } from './use-item.mjs';
 
 const CHANNEL = 'system.sdm';
 const ROLL_ACTION = 'sdmSaveAgainstRoll';
@@ -18,10 +19,12 @@ const ABILITIES = ['str', 'end', 'agi', 'cha', 'aur', 'tho'];
 
 const esc = text => foundry.utils.escapeHTML(String(text ?? ''));
 const statusName = id => game.i18n.localize(CONFIG.statusEffects.find(s => s.id === id)?.name ?? id);
+// What the save is against: the item's effect (by its name), else the condition
+const againstName = info => info?.effect?.name || statusName(info?.status);
 
 /** The ability a character resists a condition with, by default: Aura for the mind, else Endurance. */
 export function suggestedSaveAbility(statusId) {
-  return MIND.includes(statusId) ? 'aur' : 'end';
+  return statusId && MIND.includes(statusId) ? 'aur' : 'end';
 }
 
 export function setupSaveAgainst() {
@@ -39,12 +42,14 @@ function rollSave(actor, ability, info) {
 }
 
 /**
- * Ask a target to save against a condition. info: { status, rounds, source, ability } (ability: the
- * suggested one for characters; blank: by the condition).
+ * Ask a target to save against a condition or an item's effect. info: { status, effect: { item, id,
+ * name }, rounds, source, ability } (ability: the suggested one for characters; blank: by the
+ * condition — an effect by the condition it carries, else Endurance).
  */
 export async function saveAgainst(target, info) {
-  if (!target || !info?.status) return;
-  const data = { status: info.status, rounds: Number(info.rounds) || 0, source: info.source ?? '' };
+  if (!target || !(info?.status || info?.effect)) return;
+  const data = { status: info.status ?? '', rounds: Number(info.rounds) || 0, source: info.source ?? '' };
+  if (info.effect) data.effect = info.effect;
   if (target.type !== ActorType.CHARACTER) {
     if (target.isOwner) return rollSave(target, ActorType.NPC, data);
     if (!game.users.activeGM) return ui.notifications.warn(game.i18n.localize('SDM.ErrorNoActiveGM'));
@@ -63,7 +68,7 @@ export async function saveAgainst(target, info) {
       <p><i class="fa-solid fa-shield-halved"></i> ${esc(
         game.i18n.format(data.source ? 'SDM.SaveAgainst.Request' : 'SDM.SaveAgainst.RequestNoSource', {
           actor: target.name,
-          condition: statusName(data.status),
+          condition: againstName(data),
           source: data.source
         })
       )}</p>
@@ -99,24 +104,34 @@ export function bindSaveAgainst(html) {
 
 /** The line on the save card: whether the condition sticks. */
 export function saveAgainstHtml(info, success) {
-  if (!info?.status) return '';
+  if (!(info?.status || info?.effect)) return '';
   const key = success ? 'SDM.SaveAgainst.Resisted' : 'SDM.SaveAgainst.Failed';
   return `<p class="sdm-save-against ${success ? 'resisted' : 'failed'}"><i class="fa-solid fa-${success ? 'shield-halved' : 'triangle-exclamation'}"></i> ${esc(
-    game.i18n.format(key, { condition: statusName(info.status) })
+    game.i18n.format(key, { condition: againstName(info) })
   )}</p>`;
 }
 
 /** After the save: a failure puts the condition on (the roller owns the actor). */
 export async function resolveSaveAgainst(actor, info, success) {
-  if (!info?.status || success) return;
-  await applyStatusToTargets(info.status, null, { targets: [actor], rounds: Number(info.rounds) || 0 });
+  if (success) return;
+  await putOn(actor, info, false);
 }
 
-/** Hero dice changed a save's outcome: the condition follows (on when it now fails, off when it now passes). */
+/** Put the condition / effect on the actor, or take it off. */
+async function putOn(actor, info, remove) {
+  if (info?.effect?.item) {
+    const item = await fromUuid(info.effect.item);
+    if (item) await applyItemEffectToTargets(item, info.effect.id, null, { targets: [actor], remove });
+    return;
+  }
+  if (info?.status) await applyStatusToTargets(info.status, null, { targets: [actor], remove, rounds: Number(info.rounds) || 0 });
+}
+
+/** Hero dice changed a save's outcome: the condition / effect follows (on when it now fails, off when it now passes). */
 export async function recheckSaveAgainst(check, before, after) {
   const info = check?.saveAgainst;
-  if (!info?.status || before === after || before === null || after === null) return;
+  if (!(info?.status || info?.effect) || before === after || before === null || after === null) return;
   const actor = fromUuidSync(check.actor);
   if (!actor) return;
-  await applyStatusToTargets(info.status, null, { targets: [actor], remove: after, rounds: Number(info.rounds) || 0 });
+  await putOn(actor, info, after);
 }

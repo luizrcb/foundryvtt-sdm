@@ -212,7 +212,8 @@ async function runActions(fired, { actor } = {}) {
       }
       if (trigger.effect) {
         await applyItemEffectToTargets(item, trigger.effect, actor ?? item.actor, {
-          self: trigger.effect_target === 'self'
+          self: trigger.effect_target === 'self',
+          save: trigger.effect_save ? { ability: trigger.effect_save_ability ?? '', source: item.name } : null
         });
       }
       if (trigger.status) {
