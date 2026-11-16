@@ -2929,5 +2929,21 @@
   "SDM.AttackItemNpcDamage": "Dano ({damage})",
   "SDM.AttackItemUnarmed": "qualquer ataque",
   "SDM.Rest.Conditions": "Também encerrar estas condições: {conditions}",
-  "SDM.Rest.ChatConditions": "Não está mais: {conditions}."
+  "SDM.Rest.ChatConditions": "Não está mais: {conditions}.",
+  "SDM.Trigger.From.unarmed": "desarmado",
+  "SDM.Trigger.FromAttackHint": "Quais ataques o disparam, pelo que o ataque usa (o Com da janela de ataque): este item (numa arma ou poder: ataques com ele ou sem nada escolhido; em outro equipamento, traços e fardos: qualquer ataque), qualquer item, um item ou Dano Desarmado.",
+  "SDM.AttackFeature.Clumsy": "Arma desajeitada: desvantagem sugerida.",
+  "SDM.AttackFeature.ArmorPiercing": "Perfurante contra alvo com armadura pesada: vantagem sugerida.",
+  "SDM.AttackFeature.Backfiring": "{item} sai pela culatra no 1 natural: fere quem o usa.",
+  "SDM.AttackFeature.Vorpal": "{item} é vorpal: no 20 natural decapita, divide ou trunca — um alvo vira dois ex-alvos.",
+  "SDM.AttackFeature.BlindButton": "Cegar {target} (1 rodada)",
+  "SDM.AttackFeature.BlindForGood": "Crítico com arma ofuscante: a cegueira pode ser permanente (o mestre decide).",
+  "SDM.AttackFeature.BurdenButton": "Dar fardo a {target} (−1 em todas as rolagens)",
+  "SDM.AttackFeature.BurdenName": "Fardo de {item}",
+  "SDM.AttackFeature.BurdenGiven": "{target} recebe o fardo.",
+  "SDM.AttackFeature.SpikedButton": "Sofrer 1d3 de dano (espinhos: {item})",
+  "SDM.AttackFeature.SpikedFlavor": "Armadura com espinhos fere o atacante desarmado",
+  "SDM.AttackFeature.NotAllowed": "Só o mestre ou o dono pode fazer isso.",
+  "SDM.Settings.HeavilyArmoredNpcDefense": "Defesa de NPC com armadura pesada",
+  "SDM.Settings.HeavilyArmoredNpcDefenseHint": "Armas perfurantes: um NPC sem itens de armadura conta como de armadura pesada quando sua defesa é pelo menos este valor (a defesa dele já inclui a armadura). 0: só armadura pesada ou golem preparada conta."
 }

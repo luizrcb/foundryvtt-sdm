@@ -5,7 +5,7 @@ import { getItemIdentifier } from '../helpers/effectReferences.mjs';
 import { getUsesCounter, refillUsesUpdate, setUsesLeftUpdate, usesLeft } from '../helpers/itemUses.mjs';
 import { featureEnabled } from '../helpers/features.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
-import { hasPowerAlbum } from '../helpers/itemUtils.mjs';
+import { hasPowerAlbum, UnarmedDamageItem } from '../helpers/itemUtils.mjs';
 import { payCost, resourceLabel } from './boost.mjs';
 import { numberValue, resolveFormula, rollAmount } from '../helpers/formulas.mjs';
 import { isLightSource, isLit, lightItem, putOutLight, toggleLight } from '../helpers/lights.mjs';
@@ -94,17 +94,40 @@ function watchingItems(actor) {
 export function actorTriggers(actor, rollKind, roll, { attack = '', ability = '', success = null, withItem = '' } = {}) {
   const fired = [];
   if (!featureEnabled('triggers')) return fired;
+  const chosen = rollKind === 'attack' && withItem ? actor.items.get(withItem) ?? null : null;
   for (const item of watchingItems(actor)) {
-    // An attack made with a chosen weapon / power: the other weapons and powers don't fire
-    if (rollKind === 'attack' && withItem && item.id !== withItem && isAttackGear(item)) continue;
     for (const trigger of item.system.triggers ?? []) {
       if (trigger.roll !== rollKind) continue;
+      // Attacks: whose attack fires it ("From" — the item it is made with, chosen in the attack dialog)
+      if (rollKind === 'attack' && !attackFromMatches(item, trigger, chosen)) continue;
       if (rollKind === 'attack' && trigger.attack && attack && trigger.attack !== attack) continue;
       if (['save', 'ability'].includes(rollKind) && trigger.ability && ability && trigger.ability !== ability) continue;
       if (matches(trigger, roll, { success }, item)) fired.push({ item, trigger });
     }
   }
   return fired;
+}
+
+const isUnarmedItem = item =>
+  item?._stats?.compendiumSource === UnarmedDamageItem || item?.getFlag?.('sdm', 'fromCompendium') === UnarmedDamageItem;
+
+/**
+ * Does an attack made with `chosen` (null: none chosen, "—") fire this trigger held by `holder`?
+ * From "this item" (the default): on a weapon / power, only an attack made with it (or with none
+ * chosen); on other gear, traits and burdens, any attack. "Any item": any attack. "The item…": an
+ * attack made with that item (by identifier). "Unarmed": an attack made with Unarmed Damage.
+ */
+function attackFromMatches(holder, trigger, chosen) {
+  switch (trigger.from || '') {
+    case 'any':
+      return true;
+    case 'item':
+      return !!chosen && !!trigger.from_item && getItemIdentifier(chosen) === trigger.from_item;
+    case 'unarmed':
+      return !!chosen && isUnarmedItem(chosen);
+    default:
+      return isAttackGear(holder) ? !chosen || chosen.id === holder.id : true;
+  }
 }
 
 /** Gear an attack can be made with: weapons (or the weapon feature), powers and power albums. */

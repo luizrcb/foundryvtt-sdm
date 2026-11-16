@@ -2929,5 +2929,21 @@
   "SDM.AttackItemNpcDamage": "Damage ({damage})",
   "SDM.AttackItemUnarmed": "any attack",
   "SDM.Rest.Conditions": "Also end these conditions: {conditions}",
-  "SDM.Rest.ChatConditions": "No longer: {conditions}."
+  "SDM.Rest.ChatConditions": "No longer: {conditions}.",
+  "SDM.Trigger.From.unarmed": "unarmed",
+  "SDM.Trigger.FromAttackHint": "Which attacks fire it, by what the attack is made with (the attack dialog's With): this item (on a weapon or power: attacks made with it or with nothing chosen; on other gear, traits and burdens: any attack), any item, one item, or Unarmed Damage.",
+  "SDM.AttackFeature.Clumsy": "Clumsy weapon: disadvantage suggested.",
+  "SDM.AttackFeature.ArmorPiercing": "Armor piercing against a heavily armored target: advantage suggested.",
+  "SDM.AttackFeature.Backfiring": "{item} backfires on the natural 1: it harms its user.",
+  "SDM.AttackFeature.Vorpal": "{item} is vorpal: on the natural 20 it decapitates, bisects or truncates — one target becomes two ex-targets.",
+  "SDM.AttackFeature.BlindButton": "Blind {target} (1 round)",
+  "SDM.AttackFeature.BlindForGood": "Critical hit with a blinding weapon: the blindness may be permanent (the Referee decides).",
+  "SDM.AttackFeature.BurdenButton": "Burden {target} (−1 to all rolls)",
+  "SDM.AttackFeature.BurdenName": "Burdened by {item}",
+  "SDM.AttackFeature.BurdenGiven": "{target} gets the burden.",
+  "SDM.AttackFeature.SpikedButton": "Take 1d3 damage (spiked: {item})",
+  "SDM.AttackFeature.SpikedFlavor": "Spiked armor hurts the unarmed attacker",
+  "SDM.AttackFeature.NotAllowed": "Only the Referee or the owner can do that.",
+  "SDM.Settings.HeavilyArmoredNpcDefense": "Heavily armored NPC defense",
+  "SDM.Settings.HeavilyArmoredNpcDefenseHint": "Armor-piercing weapons: an NPC with no armor items counts as heavily armored when its defense is at least this (its defense already counts its armor). 0: only readied heavy or golem armor counts."
 }

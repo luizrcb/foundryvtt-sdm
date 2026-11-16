@@ -1,5 +1,6 @@
 import { powerCardData } from '../helpers/singleUsePowers.mjs';
 import { attackFollowupHtml, attackItemFlag } from './attackFollowup.mjs';
+import { attackFeatureHtml } from './attackFeatures.mjs';
 import { actorTriggers, attackTriggers, damageTriggers, itemRollTriggers, renderTriggers, runTriggerActions } from './triggers.mjs';
 import { createChatMessage } from '../helpers/chatUtils.mjs';
 import { ActorType, AttackTarget, RollMode, RollType } from '../helpers/constants.mjs';
@@ -246,6 +247,19 @@ export default class SDMRoll {
     const attackItem = isAttack ? attackItemFlag(this.actor, this.attackItem) : null;
     // Consecutive natural 20s: the damage button suggests the critical multiplier
     if (attackItem) attackItem.multiplier = criticalMultiplier(this.actor, countConsecutiveTwenties(this.roll));
+    // The item's features: backfiring, vorpal, blinding, burdening; spiked armor against unarmed
+    if (isAttack && this.attackItem?.id) {
+      const usedItem = this.actor?.items?.get(this.attackItem.id);
+      const nat = detectNat1OrNat20(this.roll);
+      content += attackFeatureHtml({
+        actor: this.actor,
+        item: usedItem,
+        targetActor: this.targetActor,
+        success: attackSuccess,
+        isNat1: nat.isNat1,
+        isNat20: nat.isNat20
+      });
+    }
     if (attackItem) {
       content += attackFollowupHtml(attackItem);
       flags.sdm = { ...(flags.sdm ?? {}), attackItem };

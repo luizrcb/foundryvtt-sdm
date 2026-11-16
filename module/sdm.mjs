@@ -67,6 +67,7 @@ import { setupNpcVariability } from './helpers/npcVariability.mjs';
 import { configureConditions, localizeConditions, setupConditions } from './helpers/conditions.mjs';
 import { setupZones } from './helpers/zones.mjs';
 import { bindAttackFollowup } from './rolls/attackFollowup.mjs';
+import { bindAttackFeatures } from './rolls/attackFeatures.mjs';
 import { rememberCurrency } from './helpers/currency.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
 import { gm as gmMacros, player as playerMacros } from './macros/_module.mjs';
@@ -299,6 +300,7 @@ Hooks.on('renderChatMessageHTML', (message, html, data) => {
   configureChatListeners(html);
   // Attack card (and its hero dice result): roll the damage of the weapon / the power it was made with
   bindAttackFollowup(html);
+  bindAttackFeatures(html);
   const dangerousElement = html.querySelector('[data-action="rollDangerous"]');
   if (dangerousElement) {
     dangerousElement.addEventListener('click', async event => {

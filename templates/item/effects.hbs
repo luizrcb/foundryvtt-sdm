@@ -56,10 +56,12 @@
       {{/if}}
       {{#if (or (eq trigger.roll 'damage') (eq trigger.roll 'power') (eq trigger.roll 'usage'))}}
       <select name="system.triggers.{{index}}.from" data-tooltip="{{localize 'SDM.Trigger.FromHint'}}">{{selectOptions @root.triggerFrom selected=trigger.from localize=true}}</select>
+      {{else if (eq trigger.roll 'attack')}}
+      <select name="system.triggers.{{index}}.from" data-tooltip="{{localize 'SDM.Trigger.FromAttackHint'}}">{{selectOptions @root.triggerAttackFrom selected=trigger.from localize=true}}</select>
       {{else}}
       <input type="hidden" name="system.triggers.{{index}}.from" value="{{trigger.from}}" />
       {{/if}}
-      {{#if (and (eq trigger.from 'item') (or (eq trigger.roll 'damage') (eq trigger.roll 'power') (eq trigger.roll 'usage')))}}
+      {{#if (and (eq trigger.from 'item') (or (eq trigger.roll 'damage') (eq trigger.roll 'power') (eq trigger.roll 'usage') (eq trigger.roll 'attack')))}}
       <select name="system.triggers.{{index}}.from_item" data-tooltip="{{localize 'SDM.Trigger.FromItemHint'}}">{{selectOptions @root.triggerSourceItems selected=trigger.from_item}}</select>
       {{else}}
       <input type="hidden" name="system.triggers.{{index}}.from_item" value="{{trigger.from_item}}" />

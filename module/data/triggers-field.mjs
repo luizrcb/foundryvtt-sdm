@@ -18,7 +18,7 @@ export function defineTriggersField() {
         choices: ['attack', 'damage', 'power', 'usage', 'save', 'ability', 'defeat', 'counter', 'charges']
       }),
       // Item rolls (damage, power, usage): whose rolls fire it: this item (''), any item, or one item
-      from: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'any', 'item'] }),
+      from: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'any', 'item', 'unarmed'] }),
       from_item: new fields.StringField({ required: true, blank: true, initial: '' }),
       // Counter triggers: which counter is watched, the item's own ('') or its owner's ('actor')
       watch: new fields.StringField({ required: true, blank: true, initial: '' }),

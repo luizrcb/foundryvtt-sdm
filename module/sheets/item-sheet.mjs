@@ -410,6 +410,13 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       ]),
       triggerScopes: { '': 'SDM.Trigger.Scope.item', actor: 'SDM.Trigger.Scope.actor' },
       triggerFrom: { '': 'SDM.Trigger.From.self', any: 'SDM.Trigger.From.any', item: 'SDM.Trigger.From.item' },
+      // Attack triggers: the item the attack is made with (attack dialog's "With"), or unarmed
+      triggerAttackFrom: {
+        '': 'SDM.Trigger.From.self',
+        any: 'SDM.Trigger.From.any',
+        item: 'SDM.Trigger.From.item',
+        unarmed: 'SDM.Trigger.From.unarmed'
+      },
       // Consumables (Use)
       // Nothing picked shows empty (any ability / until removed), not a default choice
       useAbilityGroups: { '': '', physical: 'SDM.Use.Group.physical', mental: 'SDM.Use.Group.mental' },

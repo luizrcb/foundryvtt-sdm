@@ -52,6 +52,7 @@ import { openItemTransferDialog } from '../items/transfer.mjs';
 import { directResourceDiceRoll, healingHeroDice } from '../rolls/hero_dice/index.mjs';
 import SDMRoll, { sanitizeExpression } from '../rolls/sdmRoll.mjs';
 import { rollPreviewRows } from '../helpers/rollPreview.mjs';
+import { featureRollAdvice, otherWeaponsBonus } from '../rolls/attackFeatures.mjs';
 import { attackItems, attackRangeRollMode, speedContext, suggestAttackItem, targetRangeHtml, ZONE_BANDS } from '../helpers/zones.mjs';
 
 /** Options for an attack's item select: "Rifle (short, 2d6)", "Fireball (power, medium, 3d6)". */
@@ -281,6 +282,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const actorAttackBonus = isAttack && isCharacter ? actorAttack.bonus || 0 : 0;
     const allAttackBonus = isAttack && isCharacter ? this.actor.system?.attack_bonus || 0 : 0;
     const dmgOrAttackBonus = bonusDamage || actorAttackBonus + allAttackBonus;
+    // Attack made with a chosen item: bonuses from other readied weapons' / powers' effects don't count
+    const attackBonusFor = plan =>
+      isAttack && !bonusDamage && plan?.attackItem
+        ? dmgOrAttackBonus - otherWeaponsBonus(this.actor, attack, plan.attackItem.itemId ?? plan.attackItem.id)
+        : dmgOrAttackBonus;
     const availableSkills = this.actor.getAvailableSkills();
     const isCharacterActor = this.actor.type === ActorType.CHARACTER;
     const language = game.i18n.lang;
@@ -311,9 +317,14 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     // The image before the selector: the item's, an NPC's own for its own damage, none for "—"
     const attackItemImage = itemId =>
       attackEntries.find(e => e.id === itemId)?.img || (this.actor.type === ActorType.NPC && !itemId ? this.actor.img : '');
+    // Range (out of range: disadvantage) and the item's features (clumsy, armor piercing) suggest a mode
     const rollModeWith = itemId => {
       const entry = attackEntries.find(e => e.id === itemId);
-      return combineRollModes(combineRollModes(baseRollMode, conditionMode), attackRangeRollMode(this.actor, entry));
+      const featureMode = featureRollAdvice(this.actor, entry, targetActor).mode;
+      return combineRollModes(
+        combineRollModes(combineRollModes(baseRollMode, conditionMode), attackRangeRollMode(this.actor, entry)),
+        featureMode
+      );
     };
     const selectedRollMode = isAttack ? rollModeWith(suggestedAttackItem) : combineRollModes(baseRollMode, conditionMode);
 
@@ -501,7 +512,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         from: plan.title,
         ability: plan.selectedAbility,
         mode: plan.rollMode,
-        modifier: dmgOrAttackBonus ? `${plan.modPart}+${dmgOrAttackBonus}` : plan.modPart,
+        modifier: attackBonusFor(plan) ? `${plan.modPart}+${attackBonusFor(plan)}` : plan.modPart,
         multiplier: plan.multiplier,
         explodingDice: plan.shouldExplode,
         versatile: !!twoHanded,
@@ -560,6 +571,13 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
             : weaponRange || (isAttack && isCharacter && attack === 'melee' ? 'close' : '');
         const throwing = isPowerRoll ? false : chosen ? !!chosen.throwing : !!item?.system?.features?.has?.('throwing');
         rows.unshift(targetRangeHtml(this.actor, { range, throwing, reach: isAttack }));
+        // The chosen item's features: clumsy, armor piercing against a heavily armored target
+        const featureNotes = isAttack ? featureRollAdvice(this.actor, chosen, targetActor).notes : [];
+        if (featureNotes.length) {
+          rows.push(
+            `<div class="sdm-roll-preview-row sdm-feature-row"><i class="fa-solid fa-circle-info"></i> ${foundry.utils.escapeHTML(featureNotes.join(' · '))}</div>`
+          );
+        }
       }
       return rows.join('');
     };

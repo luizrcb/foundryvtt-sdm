@@ -183,6 +183,15 @@ export function registerZoneSettings() {
     type: Boolean,
     default: true
   });
+  // Armor piercing: an NPC with no armor items counts as heavily armored at this defense (0: never)
+  game.settings.register('sdm', 'heavilyArmoredNpcDefense', {
+    name: 'SDM.Settings.HeavilyArmoredNpcDefense',
+    hint: 'SDM.Settings.HeavilyArmoredNpcDefenseHint',
+    scope: 'world',
+    config: false,
+    type: Number,
+    default: 14
+  });
   game.settings.register('sdm', 'zoneRuler', {
     name: 'SDM.Zones.Ruler',
     hint: 'SDM.Zones.RulerHint',
@@ -519,8 +528,9 @@ export function suggestAttackItem(actor, attack, entries = attackItems(actor, at
   const favorite = actor?.system?.[attack]?.favorite_item;
   if (favorite && entries.some(e => e.id === favorite)) return favorite;
   const fits = {
-    melee: e => e.kind === 'weapon' && e.band === 0,
-    ranged: e => e.kind === 'weapon' && e.band >= 1,
+    // Fantascience and oldtech weapons are used through those attacks, not melee / ranged
+    melee: e => e.kind === 'weapon' && e.band === 0 && !e.fantascience && !e.oldtech,
+    ranged: e => e.kind === 'weapon' && e.band >= 1 && !e.fantascience && !e.oldtech,
     fantascience: e => e.fantascience,
     // Oldtech attacks use oldtech items and powers too
     oldtech: e => e.oldtech || e.kind !== 'weapon'
@@ -535,7 +545,9 @@ export function suggestAttackItem(actor, attack, entries = attackItems(actor, at
   if (measured) {
     const reaches = e => e.band === null || e.band >= measured.band;
     // Fantascience and oldtech need an item that fits (its feature, or a power): no plain weapon
-    const fallback = ['fantascience', 'oldtech'].includes(attack) ? null : entries.find(reaches);
+    const fallback = ['fantascience', 'oldtech'].includes(attack)
+      ? null
+      : entries.find(e => reaches(e) && !e.fantascience && !e.oldtech);
     const pick = preferred.find(reaches) ?? fallback;
     if (pick) return pick.id;
   }

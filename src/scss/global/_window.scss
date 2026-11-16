@@ -2565,6 +2565,31 @@ input[type='radio']::after {
   }
 }
 
+// Chat: notes and buttons for the features of the item an attack was made with
+.sdm-attack-features {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-top: 6px;
+
+  .sdm-attack-feature {
+    font-size: 0.9em;
+  }
+
+  button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    width: 100%;
+    height: auto;
+    min-height: 26px;
+    padding: 3px 8px;
+    line-height: 1.25;
+    white-space: normal;
+  }
+}
+
 // Chat: an attack made with a weapon / power, the button to roll its damage next
 .sdm-attack-followup {
   margin-top: 6px;
