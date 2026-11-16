@@ -538,9 +538,10 @@ function setupZoneHighlight() {
   // The scene's zone scale or grid changed: redraw
   Hooks.on('updateScene', (scene, changes) => {
     if (scene !== canvas.scene || !(foundry.utils.hasProperty(changes, 'flags.sdm') || 'grid' in changes)) return;
-    for (const id of shown.keys()) {
+    for (const id of [...shown.keys()]) {
       const token = canvas.tokens.get(id);
-      if (token) drawZones(token);
+      // A travel map (scale "none") has no zones
+      if (token && zonesActive(scene)) drawZones(token);
       else clearZones(id);
     }
   });
