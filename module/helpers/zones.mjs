@@ -524,20 +524,6 @@ const ATTACK_FITS = {
 };
 
 /**
- * Is this item a good one for that attack against the current target: it fits the attack (as the
- * suggestion sees it, unarmed never) and, with a target, reaches it. Switch to Ranged keeps the item
- * chosen in melee only then (a bow yes; a sword, fists or a short bow at long range no).
- */
-export function itemSuitsAttack(actor, attack, itemId) {
-  const entry = attackItems(actor, attack).find(e => e.id === itemId);
-  if (!entry || entry.unarmed || !(ATTACK_FITS[attack] ?? (() => true))(entry)) return false;
-  const target = Array.from(game.user.targets ?? [])[0];
-  const source = tokenFor(actor);
-  const measured = target && source && target !== source ? measureTokens(source, target) : null;
-  return !measured || entry.band === null || entry.band >= measured.band;
-}
-
-/**
  * The item an attack is made with, preselected in the attack dialog: the attack's favorite (if it is
  * still readied), else a suggestion — with a target, the first fitting item that reaches it; else the
  * first that fits the attack (melee: a close weapon; ranged: a weapon of short range or more;
@@ -602,10 +588,9 @@ export function attackRangeRollMode(actor, entry, attack = '') {
  * A row for the roll preview: the target's zone and, when the weapon or power has a range, whether
  * it reaches (the attack dialog's With list shows each item's range). No penalty is applied: the book
  * leaves modifiers to the Referee. `melee`: a melee attack, which reaches close whatever the item
- * (a bow swung at someone): beyond close it says to use the ranged attack, with a Switch to Ranged
- * button when `switchToRanged` (the attack dialog handles it).
+ * (a bow swung at someone): beyond close it says so.
  */
-export function targetRangeHtml(actor, { range = '', throwing = false, melee = false, switchToRanged = false, rangedAbility = '' } = {}) {
+export function targetRangeHtml(actor, { range = '', throwing = false, melee = false } = {}) {
   if (!setting('zoneRangeCheck', true) || !zonesActive()) return '';
   const target = Array.from(game.user.targets ?? [])[0];
   const source = tokenFor(actor);
@@ -617,11 +602,7 @@ export function targetRangeHtml(actor, { range = '', throwing = false, melee = f
   const max = ZONE_BANDS.indexOf(`${range ?? ''}`.trim().toLowerCase());
   const meleeTooFar = melee && measured.band > 0;
   const note = meleeTooFar
-    ? game.i18n.format(rangedAbility ? 'SDM.Zones.MeleeOnlyCloseAbility' : 'SDM.Zones.MeleeOnlyClose', {
-        name: target.name,
-        zone: bandLabel(measured.band),
-        ability: rangedAbility
-      })
+    ? game.i18n.format('SDM.Zones.MeleeOnlyClose', { name: target.name, zone: bandLabel(measured.band) })
     : null;
   const advice = meleeTooFar ? null : rangeAdvice(measured.band, max >= 0 ? max : null, throwing);
   const shownNote = note ?? advice?.note ?? '';
@@ -629,14 +610,10 @@ export function targetRangeHtml(actor, { range = '', throwing = false, melee = f
   const penalty = meleeTooFar || advice?.mode === RollMode.DISADVANTAGE;
   // The attack can't work as it is (it doesn't reach, or melee beyond close): the Roll button warns
   const unreachable = meleeTooFar || (advice?.beyond ?? 0) >= 2;
-  const switchButton =
-    meleeTooFar && switchToRanged
-      ? ` <button type="button" class="sdm-switch-ranged"><i class="fa-solid fa-bullseye"></i> ${esc(game.i18n.localize('SDM.Zones.SwitchToRanged'))}</button>`
-      : '';
   return (
     `<div class="sdm-roll-preview-row sdm-range-row${shownNote ? ' warn' : ''}${penalty ? ' penalty' : ''}${unreachable ? ' unreachable' : ''}">` +
     `<span>${esc(game.i18n.format('SDM.Zones.Target', { name: target.name }))}</span> <code>${esc(shown)}</code>` +
-    (shownNote ? `<div class="sdm-range-note"><i class="fa-solid fa-triangle-exclamation"></i> ${esc(shownNote)}${switchButton}</div>` : '') +
+    (shownNote ? `<div class="sdm-range-note"><i class="fa-solid fa-triangle-exclamation"></i> ${esc(shownNote)}</div>` : '') +
     `</div>`
   );
 }

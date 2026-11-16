@@ -56,7 +56,6 @@ import { rollPreviewRows } from '../helpers/rollPreview.mjs';
 import { featureRollAdvice, otherWeaponsBonus } from '../rolls/attackFeatures.mjs';
 import {
   attackItems,
-  itemSuitsAttack,
   attackRangeRollMode,
   reachFirstNote,
   speedContext,
@@ -260,9 +259,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       item = null,
       freeCast = false,
       // Suggested damage multiplier (an attack's consecutive natural 20s, from its card's button)
-      multiplier: suggestedMultiplier = '',
-      // Attacks: the item to start on (Switch to Ranged keeps the one chosen in melee)
-      attackItem: preferredAttackItem = ''
+      multiplier: suggestedMultiplier = ''
     },
     isShift = false,
     isCtrl = false
@@ -325,11 +322,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     // range warning and the roll's title, and out of range by one zone suggests disadvantage.
     const attackEntries = isAttack ? attackItems(this.actor, attack) : [];
     const attackItemOptions = isAttack ? attackItemChoices(this.actor, attackEntries) : [];
-    const suggestedAttackItem = !isAttack
-      ? ''
-      : preferredAttackItem && attackEntries.some(e => e.id === preferredAttackItem)
-        ? preferredAttackItem
-        : suggestAttackItem(this.actor, attack, attackEntries);
+    const suggestedAttackItem = isAttack ? suggestAttackItem(this.actor, attack, attackEntries) : '';
     // The image before the selector: the item's, an NPC's own for its own damage, none for "—"
     const attackItemImage = itemId =>
       attackEntries.find(e => e.id === itemId)?.img || (this.actor.type === ActorType.NPC && !itemId ? this.actor.img : '');
@@ -548,21 +541,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     };
 
     // Live preview: the formula each button rolls with the dialog's current values
-    // Melee beyond close: the dialog offers the ranged attack instead (characters that have one)
-    const canSwitchToRanged = isAttack && attack === 'melee' && isCharacter && !!this.actor.system?.ranged;
-    const rangedAbilityKey = this.actor.system?.ranged?.default_ability;
-    const rangedAbilityLabel = rangedAbilityKey ? $l10n(CONFIG.SDM.abilities?.[rangedAbilityKey] ?? rangedAbilityKey) : '';
-    const switchAttack = canSwitchToRanged
-      ? attackItemId =>
-          this._openCustomRollModal({
-            type,
-            from: $l10n('SDM.AttackRanged'),
-            attack: 'ranged',
-            // The melee item if it suits a ranged attack on this target, else the usual suggestion
-            attackItem: attackItemId && itemSuitsAttack(this.actor, 'ranged', attackItemId) ? attackItemId : ''
-          })
-      : null;
-
     const rollPreview = values => {
       const plan = planRoll(values, { useBoost: !!values?.useBoost });
       const isPowerRoll = isPower || isPowerAlbum;
@@ -619,9 +597,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
           targetRangeHtml(this.actor, {
             range,
             throwing,
-            melee: isAttack && attack === 'melee',
-            switchToRanged: canSwitchToRanged,
-            rangedAbility: canSwitchToRanged ? rangedAbilityLabel : ''
+            melee: isAttack && attack === 'melee'
           })
         );
         // The chosen item's features: clumsy, armor piercing against a heavily armored target
@@ -658,7 +634,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         // Choosing another item re-suggests the roll mode (out of range → disadvantage) and shows its image
         attackItemRollMode: isAttack ? rollModeWith : null,
         attackItemImage: isAttack ? attackItemImage : null,
-        switchAttack,
         content: template,
         position: {
           width: 400

@@ -2479,18 +2479,6 @@ input[type='radio']::after {
   .sdm-range-note {
     flex-basis: 100%;
     color: #b8860b;
-
-    // Melee beyond close: open the ranged attack instead
-    .sdm-switch-ranged {
-      display: inline-flex;
-      align-items: center;
-      gap: 4px;
-      width: auto;
-      margin: 4px 0 0;
-      padding: 0 8px;
-      line-height: 22px;
-      font-size: 12px;
-    }
   }
 
   &.warn code {

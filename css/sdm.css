@@ -2469,17 +2469,6 @@ input[type=radio]::after {
   color: #b8860b;
 }
 
-.sdm-roll-preview .sdm-roll-preview-row.sdm-range-row .sdm-range-note .sdm-switch-ranged {
-  display: inline-flex;
-  align-items: center;
-  gap: 4px;
-  width: auto;
-  margin: 4px 0 0;
-  padding: 0 8px;
-  line-height: 22px;
-  font-size: 12px;
-}
-
 .sdm-roll-preview .sdm-roll-preview-row.sdm-range-row.warn code {
   color: #b8860b;
 }
