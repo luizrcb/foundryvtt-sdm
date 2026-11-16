@@ -510,12 +510,12 @@ export function attackItems(actor, attack = '') {
   return entries;
 }
 
-// What fits each attack (suggestions): melee and ranged take any weapon whose range fits (a
-// fantascience or oldtech weapon too, after the plain ones); the fantascience and oldtech attacks
-// are the restricted ones: their feature, or a power (oldtech uses oldtech items and powers)
+// What fits each attack (suggestions): fantascience and oldtech weapons are used through those
+// attacks, so melee and ranged never suggest them (they can still be picked); oldtech attacks use
+// oldtech items and powers too
 const ATTACK_FITS = {
-  melee: e => e.kind === 'weapon' && e.band === 0,
-  ranged: e => e.kind === 'weapon' && e.band >= 1,
+  melee: e => e.kind === 'weapon' && e.band === 0 && !e.fantascience && !e.oldtech,
+  ranged: e => e.kind === 'weapon' && e.band >= 1 && !e.fantascience && !e.oldtech,
   fantascience: e => e.fantascience,
   oldtech: e => e.oldtech || e.kind !== 'weapon'
 };
@@ -550,16 +550,16 @@ export function suggestAttackItem(actor, attack, entries = attackItems(actor, at
   // Unarmed is the last resort: suggested only when nothing else fits
   const unarmed = entries.find(e => e.unarmed);
   entries = entries.filter(e => !e.unarmed);
-  // Plain weapons before fantascience / oldtech ones in melee and ranged
-  const special = e => (['melee', 'ranged'].includes(attack) && (e.fantascience || e.oldtech) ? 1 : 0);
-  const preferred = entries.filter(fits).sort((a, b) => special(a) - special(b));
+  const preferred = entries.filter(fits);
   const target = Array.from(game.user.targets ?? [])[0];
   const source = tokenFor(actor);
   const measured = target && source && target !== source ? measureTokens(source, target) : null;
   if (measured) {
     const reaches = e => e.band === null || e.band >= measured.band;
     // Fantascience and oldtech need an item that fits (its feature, or a power): no plain weapon
-    const fallback = ['fantascience', 'oldtech'].includes(attack) ? null : entries.find(e => reaches(e) && e.kind === 'weapon');
+    const fallback = ['fantascience', 'oldtech'].includes(attack)
+      ? null
+      : entries.find(e => reaches(e) && !e.fantascience && !e.oldtech);
     const pick = preferred.find(reaches) ?? fallback;
     if (pick) return pick.id;
   }
@@ -617,15 +617,19 @@ export function targetRangeHtml(actor, { range = '', throwing = false, melee = f
         zone: bandLabel(measured.band),
         ability: rangedAbility
       })
-    : rangeAdvice(measured.band, max >= 0 ? max : null, throwing)?.note ?? '';
+    : null;
+  const advice = meleeTooFar ? null : rangeAdvice(measured.band, max >= 0 ? max : null, throwing);
+  const shownNote = note ?? advice?.note ?? '';
+  // A penalty suggested (disadvantage, or the Bonus and Penalty row's -1 / -6 / -1d6 instead)
+  const penalty = advice?.mode === RollMode.DISADVANTAGE;
   const switchButton =
     meleeTooFar && switchToRanged
       ? ` <button type="button" class="sdm-switch-ranged"><i class="fa-solid fa-bullseye"></i> ${esc(game.i18n.localize('SDM.Zones.SwitchToRanged'))}</button>`
       : '';
   return (
-    `<div class="sdm-roll-preview-row sdm-range-row${note ? ' warn' : ''}">` +
+    `<div class="sdm-roll-preview-row sdm-range-row${shownNote ? ' warn' : ''}${penalty ? ' penalty' : ''}">` +
     `<span>${esc(game.i18n.format('SDM.Zones.Target', { name: target.name }))}</span> <code>${esc(shown)}</code>` +
-    (note ? `<div class="sdm-range-note"><i class="fa-solid fa-triangle-exclamation"></i> ${esc(note)}${switchButton}</div>` : '') +
+    (shownNote ? `<div class="sdm-range-note"><i class="fa-solid fa-triangle-exclamation"></i> ${esc(shownNote)}${switchButton}</div>` : '') +
     `</div>`
   );
 }

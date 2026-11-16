@@ -36,6 +36,7 @@ import {
   capitalizeFirstLetter,
   constructHTMLButton,
   isNewFormulaBetter,
+  modifierPart,
   toPascalCase
 } from '../helpers/globalUtils.mjs';
 import {
@@ -502,7 +503,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         plan.selectedAbility = power.default_ability;
         plan.formula = power.formula;
       }
-      plan.modPart = foundry.dice.Roll.validate(modifier) ? `+${modifier}` : '';
+      plan.modPart = modifierPart(modifier);
       // Boost: mandatory ones always (also without the dialog), optional ones when ticked
       plan.boosted = !!(boost && (boost.mandatory || useBoost));
       if (plan.boosted) {
@@ -1753,7 +1754,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         totalBonuses === 0 ? '' : totalBonuses > 0 ? `+${totalBonuses}` : totalBonuses;
 
       const { modifier = '', rollMode = 'normal' } = values ?? {};
-      const modPart = foundry.dice.Roll.validate(modifier) ? `+${modifier}` : '';
+      const modPart = modifierPart(modifier);
       const basMoraleFormula = game.settings.get('sdm', 'baseMoraleFormula') || '2d6';
 
       const keepModifier =
@@ -1834,7 +1835,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       const totalBonuses = abilityMod + burdenPart + corruptionBonus;
       const bonusPart =
         totalBonuses === 0 ? '' : totalBonuses > 0 ? `+${totalBonuses}` : totalBonuses;
-      const modPart = foundry.dice.Roll.validate(modifier) ? ` +${modifier}` : '';
+      const modPart = modifierPart(modifier, { space: true });
 
       const keepModifier =
         rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
@@ -1924,7 +1925,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       const totalBonuses = chaPart + reactionBonus + burdenPart;
       const bonusPart =
         totalBonuses === 0 ? '' : totalBonuses > 0 ? `+${totalBonuses}` : totalBonuses;
-      const modPart = foundry.dice.Roll.validate(modifier) ? ` +${modifier}` : '';
+      const modPart = modifierPart(modifier, { space: true });
 
       const keepModifier =
         rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
@@ -2054,7 +2055,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       }
 
       const bonusPart = totalBonus === 0 ? '' : totalBonus > 0 ? `+${totalBonus}` : `${totalBonus}`;
-      const modPart = foundry.dice.Roll.validate(modifier) ? ` +${modifier}` : '';
+      const modPart = modifierPart(modifier, { space: true });
 
       // Apply advantage/disadvantage
       const keepModifier =
@@ -2165,7 +2166,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
       const bonusPart =
         finalChaseBonus === 0 ? '' : finalChaseBonus > 0 ? `+${finalChaseBonus}` : finalChaseBonus;
-      const modPart = foundry.dice.Roll.validate(modifier) ? ` +${modifier}` : '';
+      const modPart = modifierPart(modifier, { space: true });
 
       const keepModifier =
         rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
@@ -2256,7 +2257,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       const totalBonuses = abilityMod + defeatBonus + burdenPart;
       const bonusPart =
         totalBonuses === 0 ? '' : totalBonuses > 0 ? `+${totalBonuses}` : totalBonuses;
-      const modPart = foundry.dice.Roll.validate(modifier) ? ` +${modifier}` : '';
+      const modPart = modifierPart(modifier, { space: true });
 
       const keepModifier =
         rollMode === RollMode.ADVANTAGE ? 'kh' : rollMode === RollMode.DISADVANTAGE ? 'kl' : '';
@@ -2402,7 +2403,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const rollMode = rollOptions?.rollMode;
     const selectedAbility = rollOptions?.selectedAbility;
     const selectedSkill = rollOptions?.selectedSkill;
-    const modPart = foundry.dice.Roll.validate(modifier) ? `+${modifier}` : '';
+    const modPart = modifierPart(modifier);
     const baseRollFormula =
       game.settings.get('sdm', 'savingThrowBaseRollFormula') || SAVING_THROW_BASE_FORMULA;
 
@@ -2526,7 +2527,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       const modifier = values?.modifier;
       const rollMode = values?.rollMode;
 
-      const modPart = foundry.dice.Roll.validate(modifier) ? `+${modifier}` : '';
+      const modPart = modifierPart(modifier);
       const baseRollFormula =
         game.settings.get('sdm', 'savingThrowBaseRollFormula') || SAVING_THROW_BASE_FORMULA;
 

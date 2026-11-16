@@ -2872,7 +2872,7 @@
   "SDM.Zones.LimitLabel": "{zone} up to",
   "SDM.Zones.SceneHint": "In the world's distance unit. Leave a number empty to use the scale's value (shown in grey); change one to adjust this scene only.",
   "SDM.Zones.Target": "Target {name}",
-  "SDM.Zones.ThrowingPenalty": "Thrown beyond short range: disadvantage suggested.",
+  "SDM.Zones.ThrowingPenalty": "Thrown beyond short range: a penalty is suggested (disadvantage, or another below).",
   "SDM.Zones.FreeAttack": "{name} moved away from {enemies}, who may make a free attack if it disengaged carelessly.",
   "SDM.Zones.SpeedOneZone": "1 zone per round",
   "SDM.Zones.SpeedZones": "{zones} zones per round",
@@ -2918,7 +2918,7 @@
   "SDM.AttackWith": "with {item}",
   "SDM.FavoriteAttackItem": "Favorite weapon or power",
   "SDM.FavoriteAttackItemHint": "Preselected in this attack's dialog while it is readied. Without one, the dialog suggests a readied item that fits the attack and reaches the target.",
-  "SDM.Zones.OutOfRangeOne": "Out of range ({range}), one zone beyond: disadvantage suggested.",
+  "SDM.Zones.OutOfRangeOne": "Out of range ({range}), one zone beyond: a penalty is suggested (disadvantage, or another below).",
   "SDM.Zones.OutOfRangeFar": "Out of range ({range}): two or more zones beyond, it doesn't reach.",
   "SDM.AttackFollowupDamage": "Roll damage ({item})",
   "SDM.AttackFollowupPower": "Roll power ({item})",
@@ -2968,5 +2968,14 @@
   "SDM.Trigger.Condition.always": "always",
   "SDM.Zones.MeleeOnlyClose": "A melee attack only reaches close: {name} is at {zone}. Use the ranged attack.",
   "SDM.Zones.SwitchToRanged": "Switch to Ranged",
-  "SDM.Zones.MeleeOnlyCloseAbility": "A melee attack only reaches close: {name} is at {zone}. Use the ranged attack ({ability})."
+  "SDM.Zones.MeleeOnlyCloseAbility": "A melee attack only reaches close: {name} is at {zone}. Use the ranged attack ({ability}).",
+  "SDM.BonusPenalty.Label": "Bonus / penalty",
+  "SDM.BonusPenalty.Hint": "The book's typical modifiers (their size is up to the Referee): ±1 tiny, ±6 significant, ±1d6 random, advantage / disadvantage. A click fills the Modifier or the roll mode; another click clears it.",
+  "SDM.BonusPenalty.TinyHint": "Tiny: barely noticeable in play (5%)",
+  "SDM.BonusPenalty.SignificantHint": "Significant: very noticeable even in a short scene (30%)",
+  "SDM.BonusPenalty.RandomHint": "Random: useful in muddled situations (17.5%)",
+  "SDM.BonusPenalty.Advantage": "Adv",
+  "SDM.BonusPenalty.Disadvantage": "Dis",
+  "SDM.BonusPenalty.AdvantageHint": "Roll 2 dice and take the better (advantage) or worse (disadvantage) result (16.6%)",
+  "SDM.BonusPenalty.RangeHint": "Out of range: a penalty is suggested. Disadvantage is preselected; pick −1, −6 or −1d6 instead if you prefer (the Referee decides)."
 }

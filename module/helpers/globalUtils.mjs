@@ -318,3 +318,14 @@ export function getI18nKey(keyValue) {
   }
   return keyValue;
 }
+
+/**
+ * A roll dialog's Modifier as a formula part: "+2", "-1d6", "+1d6" (a value typed with its own sign
+ * keeps it, so the Bonus and Penalty buttons' "-6" doesn't become "+-6"); '' when empty or invalid.
+ */
+export function modifierPart(modifier, { space = false } = {}) {
+  const text = `${modifier ?? ''}`.trim();
+  if (!text || !foundry.dice.Roll.validate(text)) return '';
+  const signed = /^[+-]/.test(text) ? text : `+${text}`;
+  return space ? ` ${signed}` : signed;
+}

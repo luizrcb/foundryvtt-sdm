@@ -2556,6 +2556,44 @@ input[type=radio]::after {
   min-width: 0;
 }
 
+.sdm-bonus-penalty {
+  flex-wrap: wrap;
+}
+
+.sdm-bonus-penalty .sdm-bp-buttons {
+  display: flex;
+  flex: 2;
+  flex-wrap: wrap;
+  gap: 3px;
+}
+
+.sdm-bonus-penalty .sdm-bp-buttons button {
+  flex: 0 0 auto;
+  width: auto;
+  min-width: 2.6em;
+  margin: 0;
+  padding: 0 6px;
+  line-height: 22px;
+  font-size: 12px;
+}
+
+.sdm-bonus-penalty .sdm-bp-buttons button.active {
+  background: var(--color-warm-2, #c9593f);
+  color: #fff;
+}
+
+.sdm-bonus-penalty.range-penalty button.penalty:not(.active) {
+  border-color: #b8860b;
+  box-shadow: 0 0 0 1px #b8860b inset;
+}
+
+.sdm-bonus-penalty .sdm-bp-range {
+  flex-basis: 100%;
+  margin: 4px 0 0;
+  color: #b8860b;
+  font-size: 11px;
+}
+
 .custom-roll-modal .form-group .sdm-attack-item,
 .sdm-attack-item {
   display: flex;

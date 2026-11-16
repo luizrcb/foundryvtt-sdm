@@ -109,6 +109,7 @@ import {
   GEAR_ICONS
 } from './helpers/constants.mjs';
 import { $l10n } from './helpers/globalUtils.mjs';
+import { addBonusPenalty, markRangePenalty } from './app/bonus-penalty.mjs';
 
 const { ActiveEffectConfig } = foundry.applications.sheets;
 const { Actors, Items } = foundry.documents.collections;
@@ -342,6 +343,8 @@ Hooks.on('renderDialogV2', (dialog, html) => {
     if (heading) heading.after(previewBox);
     else content.prepend(previewBox);
   }
+  // d20 roll dialogs: the book's typical bonuses and penalties as buttons under the Modifier
+  addBonusPenalty(html);
   // Attack dialog: choosing the item re-suggests the roll mode (before the preview reads the form)
   const attackItemSelect = html.querySelector('#attackItem');
   const rollModeSelect = html.querySelector('#rollMode');
@@ -374,6 +377,7 @@ Hooks.on('renderDialogV2', (dialog, html) => {
       try {
         const values = new foundry.applications.ux.FormDataExtended(previewForm).object;
         previewBox.innerHTML = rollPreview(values);
+        markRangePenalty(html);
       } catch (error) {
         console.warn('SDM | Roll preview failed', error);
       }
