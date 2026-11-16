@@ -591,6 +591,18 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         add($l10n('SDM.PowerOvercharge'), { overcharge: true });
       }
       if (isPowerRoll && !rows.length) rows.push(`<div class="sdm-roll-preview-row">${$l10n('SDM.RollPreview.NoRoll')}</div>`);
+      // Attack with an item: what it rolls next (damage or the power's roll) and its range, always in view
+      if (isAttack && plan.attackItem) {
+        const chosen = plan.attackItem;
+        const label = $l10n(chosen.kind === 'weapon' ? 'SDM.RollPreview.Damage' : 'SDM.RollPreview.PowerRoll');
+        const range = chosen.band !== null && chosen.band !== undefined ? $l10n(CONFIG.SDM.rangeType[ZONE_BANDS[chosen.band]]) : '';
+        const roll = chosen.roll || '—';
+        rows.push(
+          `<div class="sdm-roll-preview-row"><span>${foundry.utils.escapeHTML(label)}</span> <code>${foundry.utils.escapeHTML(roll)}</code>${
+            range ? ` <span class="sdm-preview-range">${foundry.utils.escapeHTML(range)}</span>` : ''
+          }</div>`
+        );
+      }
       // Optional: the target's zone and whether the weapon or power reaches it (no penalty applied)
       const weaponRange = item?.system?.weapon?.range ?? '';
       if (isAttack || isPowerRoll || (isDamage && weaponRange)) {

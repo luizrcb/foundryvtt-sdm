@@ -2970,7 +2970,7 @@
   "SDM.Zones.SwitchToRanged": "Switch to Ranged",
   "SDM.Zones.MeleeOnlyCloseAbility": "A melee attack only reaches close: {name} is at {zone}. Use the ranged attack ({ability}).",
   "SDM.BonusPenalty.Label": "Bonus / penalty",
-  "SDM.BonusPenalty.Hint": "The book's typical modifiers (their size is up to the Referee): ±1 tiny, ±6 significant, ±1d6 random, advantage / disadvantage. A click fills the Modifier or the roll mode; another click clears it.",
+  "SDM.BonusPenalty.Hint": "The book's typical modifiers (their size is up to the Referee): ±1 tiny, ±3 moderate, ±6 significant, ±1d6 random, advantage / disadvantage. A click fills the Modifier or the roll mode; another click clears it.",
   "SDM.BonusPenalty.TinyHint": "Tiny: barely noticeable in play (5%)",
   "SDM.BonusPenalty.SignificantHint": "Significant: very noticeable even in a short scene (30%)",
   "SDM.BonusPenalty.RandomHint": "Random: useful in muddled situations (17.5%)",
@@ -2979,5 +2979,8 @@
   "SDM.BonusPenalty.AdvantageHint": "Roll 2 dice and take the better (advantage) or worse (disadvantage) result (16.6%)",
   "SDM.BonusPenalty.RangeHint": "A penalty is suggested. Disadvantage is preselected (check the Referee's decision)",
   "SDM.Zones.UnreachableNote": "The target is out of reach: this attack shouldn't be rolled (unless the Referee allows it)",
-  "SDM.Zones.UnreachableHint": "Out of reach: roll only if the Referee allows it"
+  "SDM.Zones.UnreachableHint": "Out of reach: roll only if the Referee allows it",
+  "SDM.BonusPenalty.ModerateHint": "Moderate: as much as a skill (15%)",
+  "SDM.RollPreview.Damage": "Damage",
+  "SDM.RollPreview.PowerRoll": "Power"
 }

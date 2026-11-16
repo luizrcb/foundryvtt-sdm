@@ -2,20 +2,22 @@
  * Bonus and Penalty (the book: "the referee assigns a bonus [+] or penalty [-] to d20 rolls when
  * circumstances favor or hinder a PC. The size of the modifier is up to the referee"). Its typical
  * modifiers become one-click buttons under the Modifier of d20 roll dialogs (those whose Modifier
- * input has data-bonus-penalty): +1 / -1 (tiny), +6 / -6 (significant), +1d6 / -1d6 (random, for
+ * input has data-bonus-penalty): +1 / -1 (tiny), +3 / -3 (moderate, a skill's worth), +6 / -6 (significant), +1d6 / -1d6 (random, for
  * muddled situations), advantage / disadvantage (the roll mode). A button fills the field (again:
  * clears it); nothing is applied that the dialog doesn't show.
  *
  * Out of range by one zone (or a thrown weapon beyond short), the dialog suggests disadvantage and
- * highlights the penalties: picking -1 / -6 / -1d6 instead puts the roll mode back to normal.
+ * highlights the penalties: picking -1 / -3 / -6 / -1d6 instead puts the roll mode back to normal.
  */
 import { RollMode } from '../helpers/constants.mjs';
 
 const MODIFIERS = [
   { value: '+1', hint: 'SDM.BonusPenalty.TinyHint' },
+  { value: '+3', hint: 'SDM.BonusPenalty.ModerateHint' },
   { value: '+6', hint: 'SDM.BonusPenalty.SignificantHint' },
   { value: '+1d6', hint: 'SDM.BonusPenalty.RandomHint' },
   { value: '-1', hint: 'SDM.BonusPenalty.TinyHint', penalty: true },
+  { value: '-3', hint: 'SDM.BonusPenalty.ModerateHint', penalty: true },
   { value: '-6', hint: 'SDM.BonusPenalty.SignificantHint', penalty: true },
   { value: '-1d6', hint: 'SDM.BonusPenalty.RandomHint', penalty: true }
 ];
@@ -34,16 +36,17 @@ export function addBonusPenalty(html) {
   const hasMode = mode => !!rollMode?.querySelector(`option[value="${mode}"]`);
   const l = key => game.i18n.localize(key);
   const esc = text => foundry.utils.escapeHTML(String(text ?? ''));
-  const buttons = [
-    ...MODIFIERS.map(
-      m =>
-        `<button type="button" data-bp-value="${m.value}" class="${m.penalty ? 'penalty' : 'bonus'}" data-tooltip="${esc(l(m.hint))}">${esc(shown(m.value))}</button>`
-    ),
-    ...MODES.filter(m => hasMode(m.mode)).map(
-      m =>
-        `<button type="button" data-bp-mode="${m.mode}" class="${m.penalty ? 'penalty' : 'bonus'}" data-tooltip="${esc(l(m.hint))}">${esc(l(m.label))}</button>`
-    )
-  ].join('');
+  const modifierButton = m =>
+    `<button type="button" data-bp-value="${m.value}" class="${m.penalty ? 'penalty' : 'bonus'}" data-tooltip="${esc(l(m.hint))}">${esc(shown(m.value))}</button>`;
+  const modeButton = m =>
+    `<button type="button" data-bp-mode="${m.mode}" class="${m.penalty ? 'penalty' : 'bonus'}" data-tooltip="${esc(l(m.hint))}">${esc(l(m.label))}</button>`;
+  // Two lines: bonuses and advantage, penalties and disadvantage
+  const line = penalty =>
+    `<div class="sdm-bp-line">${[
+      ...MODIFIERS.filter(m => !!m.penalty === penalty).map(modifierButton),
+      ...MODES.filter(m => !!m.penalty === penalty && hasMode(m.mode)).map(modeButton)
+    ].join('')}</div>`;
+  const buttons = line(false) + line(true);
   const row = document.createElement('div');
   row.className = 'form-group mt-10 sdm-bonus-penalty';
   row.innerHTML = `<label data-tooltip="${esc(l('SDM.BonusPenalty.Hint'))}">${esc(l('SDM.BonusPenalty.Label'))}</label>

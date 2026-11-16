@@ -568,14 +568,15 @@ export function suggestAttackItem(actor, attack, entries = attackItems(actor, at
 
 /**
  * How far a target is beyond a range (0 close … 3 long): 1 zone beyond → disadvantage suggested,
- * 2 or more → it doesn't reach; a thrown weapon beyond short (within its range) → disadvantage
+ * 2 or more → it doesn't reach (disadvantage still preselected); a thrown weapon beyond short (within its range) → disadvantage
  * suggested. Returns { beyond, mode, note } or null without a target or a known range.
  */
 function rangeAdvice(measuredBand, rangeBand, throwing = false) {
   if (rangeBand === null || rangeBand === undefined || rangeBand < 0) return null;
   const beyond = measuredBand - rangeBand;
   const range = bandLabel(rangeBand);
-  if (beyond >= 2) return { beyond, mode: null, note: game.i18n.format('SDM.Zones.OutOfRangeFar', { range }) };
+  // Out of reach: disadvantage is still preselected, in case the Referee lets it be rolled
+  if (beyond >= 2) return { beyond, mode: RollMode.DISADVANTAGE, note: game.i18n.format('SDM.Zones.OutOfRangeFar', { range }) };
   if (beyond === 1) return { beyond, mode: RollMode.DISADVANTAGE, note: game.i18n.format('SDM.Zones.OutOfRangeOne', { range }) };
   if (throwing && measuredBand > 1) return { beyond: 0, mode: RollMode.DISADVANTAGE, note: game.i18n.localize('SDM.Zones.ThrowingPenalty') };
   return null;
@@ -588,8 +589,9 @@ export function attackRangeRollMode(actor, entry, attack = '') {
   const source = tokenFor(actor);
   const measured = target && source && target !== source ? measureTokens(source, target) : null;
   if (!measured) return null;
-  // A melee attack reaches close, whatever the item: beyond it the attack is the wrong one, not harder
-  if (attack === 'melee' && measured.band > 0) return null;
+  // A melee attack reaches close, whatever the item: beyond it the attack is the wrong one (the Roll
+  // button warns); disadvantage is still preselected, in case the Referee lets it be rolled
+  if (attack === 'melee' && measured.band > 0) return RollMode.DISADVANTAGE;
   return rangeAdvice(measured.band, entry.band, entry.throwing)?.mode ?? null;
 }
 
@@ -621,7 +623,7 @@ export function targetRangeHtml(actor, { range = '', throwing = false, melee = f
   const advice = meleeTooFar ? null : rangeAdvice(measured.band, max >= 0 ? max : null, throwing);
   const shownNote = note ?? advice?.note ?? '';
   // A penalty suggested (disadvantage, or the Bonus and Penalty row's -1 / -6 / -1d6 instead)
-  const penalty = advice?.mode === RollMode.DISADVANTAGE;
+  const penalty = meleeTooFar || advice?.mode === RollMode.DISADVANTAGE;
   // The attack can't work as it is (it doesn't reach, or melee beyond close): the Roll button warns
   const unreachable = meleeTooFar || (advice?.beyond ?? 0) >= 2;
   const switchButton =

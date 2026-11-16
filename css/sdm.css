@@ -2459,6 +2459,11 @@ input[type=radio]::after {
   flex-wrap: wrap;
 }
 
+.sdm-roll-preview .sdm-roll-preview-row.sdm-range-row .sdm-preview-range {
+  opacity: 0.75;
+  font-size: 12px;
+}
+
 .sdm-roll-preview .sdm-roll-preview-row.sdm-range-row .sdm-range-note {
   flex-basis: 100%;
   color: #b8860b;
@@ -2579,21 +2584,28 @@ input[type=radio]::after {
 .sdm-bonus-penalty .sdm-bp-buttons {
   display: flex;
   flex: 2;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 3px;
 }
 
-.sdm-bonus-penalty .sdm-bp-buttons button {
-  flex: 0 0 auto;
+.sdm-bonus-penalty .sdm-bp-line {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 3px;
+}
+
+.sdm-bonus-penalty .sdm-bp-line button {
+  flex: 1 1 0;
   width: auto;
-  min-width: 2.6em;
+  min-width: 0;
   margin: 0;
-  padding: 0 6px;
+  padding: 0 4px;
+  white-space: nowrap;
   line-height: 22px;
   font-size: 12px;
 }
 
-.sdm-bonus-penalty .sdm-bp-buttons button.active {
+.sdm-bonus-penalty .sdm-bp-line button.active {
   background: var(--color-warm-2, #c9593f);
   color: #fff;
 }
