@@ -2967,5 +2967,6 @@
   "SDM.Immunity.Title": "Imune a",
   "SDM.Immunity.Hint": "Condições que quem o porta não pode ter (equipamento só quando preparado). Colocar uma é recusado, com um aviso no chat.",
   "SDM.Immunity.Blocked": "{actor} é imune a {condition} ({item}).",
-  "SDM.AttackFeature.IgniteButton": "Incendiar {target} (se inflamável e falhar na salvaguarda)"
+  "SDM.AttackFeature.IgniteButton": "Incendiar {target} (se inflamável e falhar na salvaguarda)",
+  "SDM.Trigger.Condition.always": "sempre"
 }

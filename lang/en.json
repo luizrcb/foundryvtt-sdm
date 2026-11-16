@@ -2967,5 +2967,6 @@
   "SDM.Immunity.Title": "Immune to",
   "SDM.Immunity.Hint": "Conditions its bearer can't get (gear only while readied). Putting one on is refused, with a chat note.",
   "SDM.Immunity.Blocked": "{actor} is immune to {condition} ({item}).",
-  "SDM.AttackFeature.IgniteButton": "Set {target} on fire (if flammable and its save fails)"
+  "SDM.AttackFeature.IgniteButton": "Set {target} on fire (if flammable and its save fails)",
+  "SDM.Trigger.Condition.always": "always"
 }
