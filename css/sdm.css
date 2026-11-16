@@ -2550,6 +2550,38 @@ input[type=radio]::after {
   min-width: 0;
 }
 
+.sdm-save-request .sdm-save-request-buttons {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 3px;
+}
+
+.sdm-save-request .sdm-save-request-buttons button {
+  margin: 0;
+  line-height: 24px;
+  font-size: 12px;
+}
+
+.sdm-save-request .sdm-save-request-buttons button.suggested {
+  font-weight: bold;
+  border-color: var(--color-warm-2, #c9593f);
+  box-shadow: 0 0 0 1px var(--color-warm-2, #c9593f) inset;
+}
+
+.sdm-save-against {
+  margin: 4px 0;
+  text-align: center;
+  font-weight: bold;
+}
+
+.sdm-save-against.failed {
+  color: #c0392b;
+}
+
+.sdm-save-against.resisted {
+  color: #2e7d32;
+}
+
 .sdm-unreachable-note {
   margin: 8px 0 4px;
   color: #c0392b;

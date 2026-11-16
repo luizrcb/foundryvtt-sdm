@@ -397,6 +397,11 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       triggerEffects: Object.fromEntries([['', ''], ...this.item.effects.map(effect => [effect.id, effect.name])]),
       // Conditions a trigger can put on its targets / self: the Token HUD's list
       triggerStatusModes: { apply: 'SDM.Trigger.StatusApply', remove: 'SDM.Trigger.StatusRemove' },
+      // A condition with a save: the ability suggested to characters ('' = by the condition)
+      triggerSaveAbilities: {
+        '': 'SDM.Trigger.StatusSaveAbilityAuto',
+        ...Object.fromEntries(['str', 'end', 'agi', 'cha', 'aur', 'tho'].map(key => [key, CONFIG.SDM.abilities[key]]))
+      },
       triggerStatuses: Object.fromEntries([
         ['', ''],
         ...CONFIG.statusEffects

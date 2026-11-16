@@ -97,7 +97,9 @@
         "cost_ask": true,
         "status": "stun",
         "status_target": "",
-        "status_mode": "apply"
+        "status_mode": "apply",
+        "status_save": true,
+        "status_save_ability": ""
       }
     ]
   },

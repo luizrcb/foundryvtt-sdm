@@ -1,6 +1,7 @@
 import { attackFollowupHtml } from '../../attackFollowup.mjs';
 import { criticalMultiplier } from '../../sdmRoll.mjs';
 import { recheckTriggersAfterHeroDice, renderTriggers, runTriggerActions } from '../../triggers.mjs';
+import { recheckSaveAgainst } from '../../../app/save-against.mjs';
 import { createChatMessage } from '../../../helpers/chatUtils.mjs';
 import { $fmt, $l10n, capitalizeFirstLetter } from '../../../helpers/globalUtils.mjs';
 import { templatePath } from '../../../helpers/templates.mjs';
@@ -182,6 +183,11 @@ export class HeroDiceUI {
     });
 
     if (recheck.fired.length) await runTriggerActions(recheck.fired, { actor: recheck.actor });
+    // A save against a condition whose outcome the hero dice changed: the condition follows
+    const check = flags?.sdm?.triggerCheck;
+    if (check?.kind === 'save' && check.saveAgainst && originalRoll && Number.isFinite(check.target)) {
+      await recheckSaveAgainst(check, Number(originalRoll?.total) >= check.target, Number(result?.total) >= check.target);
+    }
 
     if (flags && flags?.sdm?.save) {
       const { label, targetNumber, speaker } = flags.sdm.save;

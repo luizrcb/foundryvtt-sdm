@@ -2561,6 +2561,42 @@ input[type='radio']::after {
   }
 }
 
+// Chat: a character's save request against a condition (one button per ability, the suggested one marked)
+.sdm-save-request {
+  .sdm-save-request-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3px;
+
+    button {
+      margin: 0;
+      line-height: 24px;
+      font-size: 12px;
+
+      &.suggested {
+        font-weight: bold;
+        border-color: var(--color-warm-2, #c9593f);
+        box-shadow: 0 0 0 1px var(--color-warm-2, #c9593f) inset;
+      }
+    }
+  }
+}
+
+// Save card: whether the condition it was against sticks
+.sdm-save-against {
+  margin: 4px 0;
+  text-align: center;
+  font-weight: bold;
+
+  &.failed {
+    color: #c0392b;
+  }
+
+  &.resisted {
+    color: #2e7d32;
+  }
+}
+
 // Roll dialogs: the target is out of reach (doesn't reach, melee beyond close): the Roll buttons warn
 .sdm-unreachable-note {
   margin: 8px 0 4px;

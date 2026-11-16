@@ -218,7 +218,8 @@ async function runActions(fired, { actor } = {}) {
       if (trigger.status) {
         await applyStatusToTargets(trigger.status, actor ?? item.actor, {
           self: trigger.status_target === 'self',
-          remove: trigger.status_mode === 'remove'
+          remove: trigger.status_mode === 'remove',
+          save: trigger.status_mode !== 'remove' && trigger.status_save ? { ability: trigger.status_save_ability ?? '', source: item.name } : null
         });
       }
       if (trigger.wear) await wearItem(item, trigger.wear);

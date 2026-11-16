@@ -68,6 +68,7 @@ import { configureConditions, localizeConditions, setupConditions } from './help
 import { setupZones } from './helpers/zones.mjs';
 import { bindAttackFollowup } from './rolls/attackFollowup.mjs';
 import { bindAttackFeatures } from './rolls/attackFeatures.mjs';
+import { bindSaveAgainst, setupSaveAgainst } from './app/save-against.mjs';
 import { rememberCurrency } from './helpers/currency.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
 import { gm as gmMacros, player as playerMacros } from './macros/_module.mjs';
@@ -302,6 +303,8 @@ Hooks.on('renderChatMessageHTML', (message, html, data) => {
   // Attack card (and its hero dice result): roll the damage of the weapon / the power it was made with
   bindAttackFollowup(html);
   bindAttackFeatures(html);
+  // Save request (a character saves against a condition): its owner or the Referee picks the ability
+  bindSaveAgainst(html);
   const dangerousElement = html.querySelector('[data-action="rollDangerous"]');
   if (dangerousElement) {
     dangerousElement.addEventListener('click', async event => {
@@ -787,6 +790,7 @@ Hooks.once('init', function () {
   setupInvestXp();
   setupCounters();
   setupUseItem();
+  setupSaveAgainst();
   setupAnimatedItems();
   setupLights();
   setupRest();

@@ -92,6 +92,10 @@ export function defineTriggersField() {
       status_target: new fields.StringField({ required: true, blank: false, initial: 'targets', choices: ['targets', 'self'] }),
       // Put the condition on (apply) or take it off (remove)
       status_mode: new fields.StringField({ required: true, blank: false, initial: 'apply', choices: ['apply', 'remove'] }),
+      // Put on only if a save fails: NPC targets roll it, characters get a save request with the
+      // suggested ability ('' = by the condition: Aura for the mind, else Endurance)
+      status_save: new fields.BooleanField({ initial: false }),
+      status_save_ability: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'str', 'end', 'agi', 'cha', 'aur', 'tho'] }),
       wear: new fields.StringField({
         required: true,
         blank: true,

@@ -251,7 +251,11 @@ export async function restoreAll(actor, kind, group = '') {
  * the one who rolled), like setting it from the HUD; actors that already have it are skipped.
  * Targets the user doesn't own are handled by the active GM.
  */
-export async function applyStatusToTargets(statusId, actor, { self = false, remove = false, targets: given = null, rounds = 0 } = {}) {
+export async function applyStatusToTargets(
+  statusId,
+  actor,
+  { self = false, remove = false, targets: given = null, rounds = 0, save = null } = {}
+) {
   const status = CONFIG.statusEffects.find(s => s.id === statusId);
   if (!status) return;
   const name = game.i18n.localize(status.name ?? status.label ?? statusId);
@@ -265,6 +269,12 @@ export async function applyStatusToTargets(statusId, actor, { self = false, remo
   const targets = candidates.filter(target => !!target.statuses?.has(statusId) === remove);
   if (!targets.length) {
     if (!given && !self && !game.user.targets?.size) ui.notifications.info($fmt('SDM.Trigger.NoTarget', { effect: name }));
+    return;
+  }
+  // A save allowed: each target saves first (see save-against.mjs) and gets it only on a failure
+  if (save && !remove) {
+    const { saveAgainst } = await import('./save-against.mjs');
+    for (const target of targets) await saveAgainst(target, { status: statusId, rounds, source: save.source ?? '', ability: save.ability ?? '' });
     return;
   }
   const data = remove ? null : (await ActiveEffect.implementation.fromStatusEffect(statusId)).toObject();

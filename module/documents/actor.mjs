@@ -2218,7 +2218,7 @@ export class SdmActor extends Actor {
         },
         save: {
           handler: '_onRollSavingThrow',
-          dataset: { action: 'save', ability: actionKey, rollTarget: args?.rollTarget }
+          dataset: { action: 'save', ability: actionKey, rollTarget: args?.rollTarget, saveAgainst: args?.saveAgainst }
         },
         attack: {
           handler: '_onRoll',

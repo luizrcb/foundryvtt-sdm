@@ -88,6 +88,7 @@ import {
 } from '../rolls/ui/renderResults.mjs';
 import { DEFAULT_SAVE_VALUE, SAVING_THROW_BASE_FORMULA } from '../settings.mjs';
 import { bindNumberInputs, unformatNumberInputs, reformatNumberInputs } from '../helpers/numberFormat.mjs';
+import { resolveSaveAgainst, saveAgainstHtml } from '../app/save-against.mjs';
 
 const { api, sheets } = foundry.applications;
 const { DialogV2 } = foundry.applications.api;
@@ -2449,6 +2450,14 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     // Get common data attributes
     const dataset = target.dataset;
     const { ability, rollTarget } = dataset;
+    // A save against a condition (a feature button, a trigger, a save request): no dialog, and a
+    // failure puts the condition on
+    let saveAgainstInfo = null;
+    try {
+      saveAgainstInfo = dataset.saveAgainst ? JSON.parse(dataset.saveAgainst) : null;
+    } catch {
+      saveAgainstInfo = null;
+    }
     const abilityData =
       ability !== ActorType.NPC
         ? this.actor.system.abilities[ability]
@@ -2474,6 +2483,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     let label = $fmt('SDM.SavingThrowRoll', {
       ability: $l10n(CONFIG.SDM.abilities[ability]) || $l10n('TYPES.Actor.npc')
     });
+    if (saveAgainstInfo?.source) label += ` — ${saveAgainstInfo.source}`;
 
     if (ward > 0) {
       label += ` (${$l10n('TYPES.Item.ward').toLowerCase()} +${ward})`;
@@ -2541,7 +2551,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     let rollOptions = {};
 
-    if (!isShift) {
+    if (!isShift && !saveAgainstInfo) {
       // Create and render the modal
       rollOptions = await foundry.applications.api.DialogV2.wait({
         window: {
@@ -2571,9 +2581,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const speaker = ChatMessage.getSpeaker({ actor: this.actor });
 
     // Save triggers of the actor's readied gear, traits and burdens (a save at or above the target succeeds)
+    const saveSuccess = roll.total >= targetNumber;
     const fired = actorTriggers(this.actor, 'save', roll, {
       ability: ability === ActorType.NPC ? '' : ability,
-      success: roll.total >= targetNumber
+      success: saveSuccess
     });
     await renderSaveResult(
       { roll, label, targetNumber },
@@ -2581,16 +2592,18 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         fromHeroDice: false,
         speaker,
         isCtrl,
-        extraHtml: renderTriggers(fired),
-        // Hero dice can change this save: its triggers are checked again on the result
+        extraHtml: saveAgainstHtml(saveAgainstInfo, saveSuccess) + renderTriggers(fired),
+        // Hero dice can change this save: its triggers (and a condition it was against) are checked again
         triggerCheck: {
           kind: 'save',
           actor: this.actor.uuid,
           ability: ability === ActorType.NPC ? '' : ability,
-          target: targetNumber
+          target: targetNumber,
+          ...(saveAgainstInfo ? { saveAgainst: saveAgainstInfo } : {})
         }
       }
     );
+    await resolveSaveAgainst(this.actor, saveAgainstInfo, saveSuccess);
     if (fired.length) await runTriggerActions(fired, { actor: this.actor });
   }
 

@@ -56,7 +56,9 @@
         "counter_step": "1",
         "status": "poison",
         "status_target": "",
-        "status_mode": "apply"
+        "status_mode": "apply",
+        "status_save": true,
+        "status_save_ability": ""
       }
     ]
   },
