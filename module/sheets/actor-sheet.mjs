@@ -509,7 +509,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         targetActor,
         attackTarget: plan.attackTarget,
         attack: isAttack ? attack : '',
-        attackItem: plan.attackItem ? { id: plan.attackItem.id, name: plan.attackItem.name, kind: plan.attackItem.kind } : null
+        // The real item (an album-feature entry is "<id>:album"), what it rolls next and its name
+        attackItem: plan.attackItem
+          ? { id: plan.attackItem.itemId ?? plan.attackItem.id, name: plan.attackItem.name, kind: plan.attackItem.kind }
+          : null
       };
       if (plan.formula) data.formula = plan.formula;
       if (plan.versatileFormula && twoHanded) data.formula = plan.versatileFormula;
@@ -707,8 +710,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     // Readied weapons, powers and albums (their selected power); a favorite no longer readied stays listed
     const attackItemOptions = attackItemChoices(this.actor, attackItems(this.actor, attack));
     if (selectedItem && !attackItemOptions.some(option => option.id === selectedItem)) {
-      const item = this.actor.items.get(selectedItem);
-      if (item) attackItemOptions.push({ id: item.id, label: `${item.name} (${$l10n('SDM.AttackItemNotReadied')})` });
+      const item = this.actor.items.get(`${selectedItem}`.split(':')[0]);
+      if (item) attackItemOptions.push({ id: selectedItem, label: `${item.name} (${$l10n('SDM.AttackItemNotReadied')})` });
     }
 
     const template = await renderTemplate(templatePath('actor/character/update-attack'), {

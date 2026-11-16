@@ -2526,11 +2526,16 @@ input[type=radio]::after {
   font-size: 12px;
 }
 
+.custom-roll-modal .form-group .sdm-attack-item,
 .sdm-attack-item {
+  display: flex;
+  flex-wrap: nowrap;
   align-items: center;
   gap: 6px;
+  min-width: 0;
 }
 
+.custom-roll-modal .form-group .sdm-attack-item .sdm-attack-item-img,
 .sdm-attack-item .sdm-attack-item-img {
   flex: 0 0 32px;
   width: 32px;
@@ -2541,12 +2546,15 @@ input[type=radio]::after {
   background: rgba(0, 0, 0, 0.15);
 }
 
+.custom-roll-modal .form-group .sdm-attack-item .sdm-attack-item-img[hidden],
 .sdm-attack-item .sdm-attack-item-img[hidden] {
   display: none;
 }
 
+.custom-roll-modal .form-group .sdm-attack-item select,
 .sdm-attack-item select {
-  flex: 1 1 auto;
+  flex: 1 1 0;
+  width: auto;
   min-width: 0;
 }
 

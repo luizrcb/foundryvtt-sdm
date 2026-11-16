@@ -2536,9 +2536,13 @@ input[type='radio']::after {
 }
 
 // Attack dialog: the chosen item's image before the "With" selector
+.custom-roll-modal .form-group .sdm-attack-item,
 .sdm-attack-item {
+  display: flex;
+  flex-wrap: nowrap;
   align-items: center;
   gap: 6px;
+  min-width: 0;
 
   .sdm-attack-item-img {
     flex: 0 0 32px;
@@ -2555,7 +2559,8 @@ input[type='radio']::after {
   }
 
   select {
-    flex: 1 1 auto;
+    flex: 1 1 0;
+    width: auto;
     min-width: 0;
   }
 }

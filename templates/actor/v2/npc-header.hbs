@@ -1,15 +1,15 @@
 {{! NPC sheet v2 header. Keeps the same names and data-actions as actor/npc/header. Single layout (no compact/wide). }}
-<header class="v2-header v2-npc">
+<header class="v2-header v2-npc {{#if (isDefeated @root.statuses)}}is-dead{{/if}}">
   <div class="v2-rail">
     {{! Identity }}
     <div class="v2-identity">
       <div class="v2-portrait">
         {{#if isToken}}<div class="token-tag">{{localize 'DOCUMENT.Token'}}</div>{{/if}}
         <img src="{{actor.img}}" data-edit="img" data-action="onEditImage" data-tooltip="{{actor.name}}" />
-        {{#if (isDefeated @root.statuses)}}<i class="fa fa-skull overlay-icon defeated-icon"></i>{{/if}}
+        {{#if (isDefeated @root.statuses)}}<i class="fa-solid fa-skull v2-dead-skull" inert></i>{{/if}}
       </div>
       <div class="v2-name">
-        <label class="v2-label" for="v2-name-{{actor.id}}">{{localize 'SDM.FieldName'}} {{> ($$ "actor/proto-link")}}</label>
+        <label class="v2-label" for="v2-name-{{actor.id}}">{{localize 'SDM.FieldName'}}{{#if (isDefeated @root.statuses)}} <span class="v2-dead-badge">{{localize 'SDM.DefeatOutcome2to6'}}</span>{{/if}} {{> ($$ "actor/proto-link")}}</label>
         <input id="v2-name-{{actor.id}}" class="v2-title" name="name" type="text" value="{{actor.name}}"
           placeholder="{{localize 'SDM.FieldName'}}" />
         {{> ($$ "actor/counter-chips")}}

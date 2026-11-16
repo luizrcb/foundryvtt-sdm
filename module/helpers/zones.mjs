@@ -466,19 +466,25 @@ export function attackItems(actor, attack = '') {
         fantascience: true,
         roll: item.system.power?.roll_formula ?? ''
       });
-    } else if (item.system.type === GearType.POWER_ALBUM) {
-      const powers = item.system.powers ?? [];
-      const power = powers[item.system.powers_current_index] ?? powers[0];
-      if (!power) continue;
+      continue;
+    }
+    // Powers held by gear: a power album, or any gear with the album feature (its selected power).
+    // Gear that is also a weapon gets a second entry for its power ("<id>:album")
+    const albumPowers = item.system.type === GearType.POWER_ALBUM || has(item, 'album') ? item.system.powers ?? [] : [];
+    const albumPower = albumPowers[item.system.powers_current_index] ?? albumPowers[0];
+    const isAlbum = item.system.type === GearType.POWER_ALBUM;
+    if (albumPower) {
       entries.push({
-        id: item.id,
-        name: power.name || item.name,
+        id: isAlbum ? item.id : `${item.id}:album`,
+        itemId: item.id,
+        name: isAlbum ? albumPower.name || item.name : `${albumPower.name || item.name} (${item.name})`,
         kind: 'album',
-        band: bandOf(power.range),
+        band: bandOf(albumPower.range),
         fantascience: true,
-        roll: power.roll_formula ?? ''
+        roll: albumPower.roll_formula ?? ''
       });
-    } else if (isWeaponItem(item) && !isUnarmed(item)) {
+    }
+    if (!isAlbum && isWeaponItem(item) && !isUnarmed(item)) {
       entries.push({
         id: item.id,
         name: item.name,
@@ -492,8 +498,11 @@ export function attackItems(actor, attack = '') {
       });
     }
   }
-  // The item's image (shown next to the attack dialog's selector)
-  for (const entry of entries) entry.img ??= actor.items.get(entry.id)?.img ?? '';
+  // The item behind each entry, and its image (shown next to the attack dialog's selector)
+  for (const entry of entries) {
+    entry.itemId ??= entry.id;
+    entry.img ??= actor.items.get(entry.itemId)?.img ?? '';
+  }
   return entries;
 }
 
@@ -525,7 +534,9 @@ export function suggestAttackItem(actor, attack, entries = attackItems(actor, at
   const measured = target && source && target !== source ? measureTokens(source, target) : null;
   if (measured) {
     const reaches = e => e.band === null || e.band >= measured.band;
-    const pick = preferred.find(reaches) ?? entries.find(reaches);
+    // Fantascience and oldtech need an item that fits (its feature, or a power): no plain weapon
+    const fallback = ['fantascience', 'oldtech'].includes(attack) ? null : entries.find(reaches);
+    const pick = preferred.find(reaches) ?? fallback;
     if (pick) return pick.id;
   }
   return preferred[0]?.id ?? unarmed?.id ?? '';
