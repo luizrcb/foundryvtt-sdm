@@ -2926,5 +2926,6 @@
   "SDM.AttackFollowupDamage": "Rolar dano ({item})",
   "SDM.AttackFollowupPower": "Rolar poder ({item})",
   "SDM.AttackFollowupGone": "Esse item não está mais com este ator.",
-  "SDM.AttackItemNpcDamage": "Dano ({damage})"
+  "SDM.AttackItemNpcDamage": "Dano ({damage})",
+  "SDM.AttackItemUnarmed": "qualquer ataque"
 }

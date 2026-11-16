@@ -2926,5 +2926,6 @@
   "SDM.AttackFollowupDamage": "Roll damage ({item})",
   "SDM.AttackFollowupPower": "Roll power ({item})",
   "SDM.AttackFollowupGone": "That item is no longer with this actor.",
-  "SDM.AttackItemNpcDamage": "Damage ({damage})"
+  "SDM.AttackItemNpcDamage": "Damage ({damage})",
+  "SDM.AttackItemUnarmed": "any attack"
 }

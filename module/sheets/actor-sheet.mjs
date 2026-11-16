@@ -58,6 +58,7 @@ import { attackItems, attackRangeRollMode, speedContext, suggestAttackItem, targ
 function attackItemChoices(actor, entries = attackItems(actor)) {
   return entries.map(entry => {
     const parts = [];
+    if (entry.unarmed && entry.band === null) parts.push($l10n('SDM.AttackItemUnarmed'));
     if (entry.kind !== 'weapon') parts.push($l10n(entry.kind === 'album' ? 'SDM.AttackItemAlbumPower' : 'TYPES.Item.power').toLowerCase());
     if (entry.band !== null) parts.push($l10n(CONFIG.SDM.rangeType[ZONE_BANDS[entry.band]]));
     return { id: entry.id, label: parts.length ? `${entry.name} (${parts.join(', ')})` : entry.name };
@@ -302,7 +303,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     // Attacks aren't tied to an item: pick the weapon, power or album power it is made with (the
     // attack's favorite, else a suggestion), or none — then it works as before. A chosen item gives the
     // range warning and the roll's title, and out of range by one zone suggests disadvantage.
-    const attackEntries = isAttack ? attackItems(this.actor) : [];
+    const attackEntries = isAttack ? attackItems(this.actor, attack) : [];
     const attackItemOptions = isAttack ? attackItemChoices(this.actor, attackEntries) : [];
     const suggestedAttackItem = isAttack ? suggestAttackItem(this.actor, attack, attackEntries) : '';
     const rollModeWith = itemId => {
@@ -697,7 +698,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const attackSystemData = this.actor.system[attack];
     const { default_ability: selectedAbility, favorite_skill: selectedSkill, favorite_item: selectedItem = '' } = attackSystemData;
     // Readied weapons, powers and albums (their selected power); a favorite no longer readied stays listed
-    const attackItemOptions = attackItemChoices(this.actor);
+    const attackItemOptions = attackItemChoices(this.actor, attackItems(this.actor, attack));
     if (selectedItem && !attackItemOptions.some(option => option.id === selectedItem)) {
       const item = this.actor.items.get(selectedItem);
       if (item) attackItemOptions.push({ id: item.id, label: `${item.name} (${$l10n('SDM.AttackItemNotReadied')})` });

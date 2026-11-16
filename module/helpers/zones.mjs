@@ -429,10 +429,11 @@ const isUnarmed = item =>
 
 /**
  * What the actor has readied and its range: weapons (no range = close), powers and the selected
- * power of a power album. Traits are always readied; of them, power traits are listed (traits have no features). Unarmed is left out: it can be used with
- * any of the four attacks, so it has no range of its own.
+ * power of a power album. Traits are always readied; of them, power traits are listed (traits have no
+ * features). Unarmed Damage is always listed and fits any of the four attacks: close in a melee attack,
+ * short in the others (`attack` given), no range otherwise.
  */
-export function attackItems(actor) {
+export function attackItems(actor, attack = '') {
   const entries = [];
   const bandOf = range => {
     const band = ZONE_BANDS.indexOf(`${range ?? ''}`.trim().toLowerCase());
@@ -440,6 +441,13 @@ export function attackItems(actor) {
   };
   const has = (item, feature) => !!item.system?.features?.has?.(feature);
   for (const item of actor?.items ?? []) {
+    // Unarmed Damage: always at hand; fists in melee (close), something thrown, a gesture or a device
+    // at hand in the other attacks (short)
+    if (isUnarmed(item)) {
+      const band = attack ? (attack === 'melee' ? 0 : 1) : null;
+      entries.push({ id: item.id, name: item.name, kind: 'weapon', band, unarmed: true });
+      continue;
+    }
     // Gear counts when readied; traits are always readied, and only power traits can be used
     const isTrait = item.type === ItemType.TRAIT;
     if (isTrait ? item.system.type !== GearType.POWER : !item.system?.readied) continue;
@@ -470,9 +478,10 @@ export function attackItems(actor) {
  * The item an attack is made with, preselected in the attack dialog: the attack's favorite (if it is
  * still readied), else a suggestion — with a target, the first fitting item that reaches it; else the
  * first that fits the attack (melee: a close weapon; ranged: a weapon of short range or more;
- * fantascience: a power or fantascience item; oldtech: an oldtech item or a power). '' = not chosen.
+ * fantascience: a power or fantascience item; oldtech: an oldtech item or a power), and Unarmed Damage
+ * only when nothing else fits. '' = not chosen.
  */
-export function suggestAttackItem(actor, attack, entries = attackItems(actor)) {
+export function suggestAttackItem(actor, attack, entries = attackItems(actor, attack)) {
   // NPCs attack with their own damage by default (items can still be picked)
   if (actor?.type === ActorType.NPC) return '';
   const favorite = actor?.system?.[attack]?.favorite_item;
@@ -484,6 +493,9 @@ export function suggestAttackItem(actor, attack, entries = attackItems(actor)) {
     // Oldtech attacks use oldtech items and powers too
     oldtech: e => e.oldtech || e.kind !== 'weapon'
   }[attack] ?? (() => true);
+  // Unarmed is the last resort: suggested only when nothing else fits
+  const unarmed = entries.find(e => e.unarmed);
+  entries = entries.filter(e => !e.unarmed);
   const preferred = entries.filter(fits);
   const target = Array.from(game.user.targets ?? [])[0];
   const source = tokenFor(actor);
@@ -493,11 +505,11 @@ export function suggestAttackItem(actor, attack, entries = attackItems(actor)) {
     const pick = preferred.find(reaches) ?? entries.find(reaches);
     if (pick) return pick.id;
   }
-  return preferred[0]?.id ?? '';
+  return preferred[0]?.id ?? unarmed?.id ?? '';
 }
 
 function readiedReach(actor) {
-  return attackItems(actor).filter(e => e.band !== null);
+  return attackItems(actor).filter(e => e.band !== null && !e.unarmed);
 }
 
 /** "Reach: Rifle (long), Bow (medium) · Don't reach: Knife (close)" for a target zone. */
