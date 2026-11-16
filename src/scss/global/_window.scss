@@ -2536,9 +2536,19 @@ input[type='radio']::after {
 }
 
 // Scene config (Grid tab): zones
-.sdm-scene-zones .form-fields .units {
-  flex: 0 0 auto;
-  opacity: 0.7;
+.sdm-scene-zones {
+  .form-fields .units {
+    flex: 0 0 auto;
+    opacity: 0.7;
+  }
+
+  .sdm-zones-mismatch {
+    color: #c0392b;
+
+    &:empty {
+      display: none;
+    }
+  }
 }
 
 // Client settings: chromatype swatch and 3D dice preview button

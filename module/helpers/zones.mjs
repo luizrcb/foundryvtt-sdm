@@ -19,19 +19,46 @@
 import { GearType } from './constants.mjs';
 import { UnarmedDamageItem } from './itemUtils.mjs';
 
-/** Where close, short and medium end, in meters. Long is anything beyond. */
+/**
+ * Where close, short and medium end, in meters. Long is anything beyond.
+ * A zone is both a range (a short-range weapon hits the short zone) and movement (short is 1 round
+ * away), so a scale shrinks for obstacles and tight places but only grows with how fast the fight
+ * moves (riding, vehicles, ships, aircraft), never because the place is open: an open desert crossed
+ * on foot is On foot, its long sight lines are the long zone, which has no end.
+ */
 export const ZONE_SCALES = {
+  // d20 battlemaps (5 ft squares, 30 ft moves): close = adjacent, short = one move, medium = two
+  battlemap: { close: 1.5, short: 9, medium: 18 },
   indoor: { close: 2, short: 6, medium: 15 },
   underground: { close: 2, short: 8, medium: 25 },
-  city: { close: 3, short: 15, medium: 60 },
-  onFoot: { close: 3, short: 10, medium: 40 },
   forest: { close: 3, short: 10, medium: 30 },
-  wilds: { close: 5, short: 30, medium: 150 },
+  // The book's on-foot column
+  onFoot: { close: 3, short: 10, medium: 40 },
+  mounted: { close: 5, short: 30, medium: 150 },
+  // The book's autogolem column
   vehicle: { close: 10, short: 50, medium: 200 },
-  sea: { close: 20, short: 100, medium: 500 }
+  ships: { close: 10, short: 30, medium: 150 },
+  air: { close: 20, short: 100, medium: 500 }
 };
 export const ZONE_SCALE_KEYS = Object.keys(ZONE_SCALES);
-export const DEFAULT_ZONE_SCALE = 'onFoot';
+export const DEFAULT_ZONE_SCALE = 'battlemap';
+/** Meters per grid square each scale is meant for (min, max): shown and checked in the scene config. */
+const SCALE_GRID = {
+  battlemap: [1.5, 1.5],
+  indoor: [1.5, 1.5],
+  underground: [1.5, 1.5],
+  forest: [1.5, 1.5],
+  onFoot: [1.5, 3],
+  mounted: [3, 5],
+  vehicle: [10, 10],
+  ships: [10, 10],
+  air: [20, 20]
+};
+/** A scene's scale "none": a travel map (pointcrawl, region) with no zones at all. */
+export const NO_ZONES = 'none';
+// Scales renamed before release: city → on foot, open wilds → mounted, sea / air → air
+const RENAMED_SCALES = { city: 'onFoot', wilds: 'mounted', sea: 'air' };
+const scaleKey = key => RENAMED_SCALES[key] ?? key;
 export const ZONE_BANDS = ['close', 'short', 'medium', 'long'];
 const LIMITS = ['close', 'short', 'medium'];
 
@@ -119,14 +146,19 @@ function sorted(limits) {
 }
 
 export function worldZoneScale() {
-  const key = setting('defaultZoneScale', DEFAULT_ZONE_SCALE);
+  const key = scaleKey(setting('defaultZoneScale', DEFAULT_ZONE_SCALE));
   return ZONE_SCALES[key] ? key : DEFAULT_ZONE_SCALE;
+}
+
+/** False on a travel map (scene scale "none"): no ruler colors, range check, free attack note or HUD zones. */
+export function zonesActive(scene = canvas?.scene) {
+  return scene?.getFlag?.('sdm', 'zones')?.scale !== NO_ZONES;
 }
 
 /** The scene's zone limits in meters: its scale (or the world's) and any number the scene changed. */
 export function sceneZoneLimits(scene = canvas?.scene) {
   const flags = scene?.getFlag?.('sdm', 'zones') ?? {};
-  const key = ZONE_SCALES[flags.scale] ? flags.scale : worldZoneScale();
+  const key = ZONE_SCALES[scaleKey(flags.scale)] ? scaleKey(flags.scale) : worldZoneScale();
   const scale = getZoneScale(key);
   return { scale: key, ...sorted(Object.fromEntries(LIMITS.map(limit => [limit, positive(flags[limit]) ?? scale[limit]]))) };
 }
@@ -294,7 +326,7 @@ function reachHtml(actor, band) {
  * leaves modifiers to the Referee.
  */
 export function targetRangeHtml(actor, { range = '', throwing = false, reach = false } = {}) {
-  if (!setting('zoneRangeCheck', true)) return '';
+  if (!setting('zoneRangeCheck', true) || !zonesActive()) return '';
   const target = Array.from(game.user.targets ?? [])[0];
   const source = tokenFor(actor);
   if (!target || !source || target === source) return '';
@@ -327,7 +359,7 @@ const OUT_OF_FIGHT = ['dead', 'unconscious', 'sleep', 'paralysis', 'petrified', 
 /** In combat, a token leaving the close zone of an enemy: note that the enemy may take a free attack. */
 function onPreUpdateToken(doc, changes, options, userId) {
   if (userId !== game.user.id || !('x' in changes || 'y' in changes)) return;
-  if (!setting('freeAttackReminder', true) || !canvas?.ready || doc.parent !== canvas.scene) return;
+  if (!setting('freeAttackReminder', true) || !canvas?.ready || doc.parent !== canvas.scene || !zonesActive()) return;
   const combat = game.combat;
   if (!combat?.started || !combat.combatants.some(c => c.tokenId === doc.id)) return;
   if (doc.disposition === CONST.TOKEN_DISPOSITIONS.NEUTRAL || doc.disposition === CONST.TOKEN_DISPOSITIONS.SECRET) return;
@@ -360,7 +392,7 @@ const RULER_COLORS = [0x3fb950, 0x3fb950, 0xd29922, 0xf85149];
 
 /** Color by the rounds the move takes at the token's speed: this round, next round, 3+ (a chase). */
 function zoneStyle(token, waypoint, style) {
-  if (!style || !setting('zoneRuler', true) || !token?.actor) return style;
+  if (!style || !setting('zoneRuler', true) || !token?.actor || !zonesActive(token.scene)) return style;
   const units = Number(waypoint?.measurement?.distance) || 0;
   const band = bandForMeters(units * metersPerUnit());
   const rounds = roundsToBand(band, token.actor.system?.speed);
@@ -469,7 +501,7 @@ function toggleZones(token) {
 }
 
 function onRenderTokenHUDZones(hud, html) {
-  if (!setting('zoneHighlight', true)) return;
+  if (!setting('zoneHighlight', true) || !zonesActive()) return;
   const token = hud?.object;
   const root = html?.querySelectorAll ? html : html?.[0];
   if (!token || !root || root.querySelector('.sdm-zones-toggle')) return;
@@ -530,8 +562,9 @@ function onRenderSceneConfig(app, element) {
   const options = [
     `<option value="">${esc(game.i18n.format('SDM.Zones.WorldDefault', { scale: l(`SDM.Zones.Scale.${worldKey}`) }))}</option>`,
     ...ZONE_SCALE_KEYS.map(
-      key => `<option value="${key}"${flags.scale === key ? ' selected' : ''}>${esc(l(`SDM.Zones.Scale.${key}`))}</option>`
-    )
+      key => `<option value="${key}"${scaleKey(flags.scale) === key ? ' selected' : ''}>${esc(l(`SDM.Zones.Scale.${key}`))}</option>`
+    ),
+    `<option value="${NO_ZONES}"${flags.scale === NO_ZONES ? ' selected' : ''}>${esc(l('SDM.Zones.Scale.none'))}</option>`
   ].join('');
   const limitRow = limit => `
     <div class="form-group">
@@ -549,16 +582,62 @@ function onRenderSceneConfig(app, element) {
       <label>${esc(l('SDM.Zones.SceneScale'))}</label>
       <div class="form-fields"><select name="flags.sdm.zones.scale">${options}</select></div>
     </div>
-    ${LIMITS.map(limitRow).join('')}
-    <p class="hint">${esc(l('SDM.Zones.SceneHint'))}</p>`;
+    <p class="hint sdm-zones-about"></p>
+    <p class="hint sdm-zones-mismatch"></p>
+    <div class="sdm-zones-limits">
+      ${LIMITS.map(limitRow).join('')}
+      <p class="hint">${esc(l('SDM.Zones.SceneHint'))}</p>
+    </div>`;
   tab.append(fieldset);
-  // Empty numbers use the selected scale: show its values as placeholders
+  // Empty numbers use the selected scale: show its values as placeholders. Under the select: what the
+  // scale is for, its grid, how many squares each zone is on this scene's grid, and a warning when the
+  // grid doesn't suit it. Follows the grid inputs of the same form as they change.
   const select = fieldset.querySelector('select');
+  const about = fieldset.querySelector('.sdm-zones-about');
+  const mismatch = fieldset.querySelector('.sdm-zones-mismatch');
+  const form = root.querySelector('form') ?? root;
+  const meters = value => {
+    const n = Math.round(value * 100) / 100;
+    return n === 1.5 ? '1.5 m (5 ft)' : `${n} m`;
+  };
   const refresh = () => {
-    const scale = getZoneScale(select.value || worldKey);
+    const none = select.value === NO_ZONES;
+    fieldset.querySelector('.sdm-zones-limits').hidden = none;
+    mismatch.textContent = '';
+    if (none) {
+      about.textContent = l('SDM.Zones.ScaleUse.none');
+      return app.setPosition?.({ height: 'auto' });
+    }
+    const key = select.value || worldKey;
+    const scale = getZoneScale(key);
+    const limits = Object.fromEntries(
+      LIMITS.map(limit => {
+        const typed = positive(fieldset.querySelector(`input[data-limit="${limit}"]`)?.value);
+        return [limit, typed ?? scale[limit]];
+      })
+    );
     fieldset.querySelectorAll('input[data-limit]').forEach(input => (input.placeholder = `${scale[input.dataset.limit]}`));
+    const distance = Number(form.querySelector('[name="grid.distance"]')?.value) || Number(scene.grid?.distance) || 1;
+    const units = form.querySelector('[name="grid.units"]')?.value ?? scene.grid?.units;
+    const perSquare = distance * metersPerUnit({ grid: { units } });
+    const [min, max] = SCALE_GRID[key] ?? [perSquare, perSquare];
+    const squares = limit => Math.floor(limits[limit] / perSquare + 1e-9);
+    about.textContent = [
+      l(`SDM.Zones.ScaleUse.${key}`),
+      game.i18n.format('SDM.Zones.SuggestedGrid', { grid: min === max ? meters(min) : `${meters(min)} – ${meters(max)}` }),
+      game.i18n.format('SDM.Zones.HereSquares', { close: squares('close'), short: squares('short'), medium: squares('medium') })
+    ].join(' ');
+    if (perSquare < min * 0.66 || perSquare > max * 1.5 || squares('close') < 1) {
+      mismatch.textContent = game.i18n.format('SDM.Zones.GridMismatch', {
+        here: meters(perSquare),
+        grid: min === max ? meters(min) : `${meters(min)} – ${meters(max)}`
+      });
+    }
+    app.setPosition?.({ height: 'auto' });
   };
   select.addEventListener('change', refresh);
+  fieldset.addEventListener('input', event => event.target.matches('input[data-limit]') && refresh());
+  form.querySelectorAll('[name="grid.distance"], [name="grid.units"]').forEach(input => input.addEventListener('change', refresh));
   refresh();
   app.setPosition?.({ height: 'auto' });
 }

@@ -2531,6 +2531,14 @@ input[type=radio]::after {
   opacity: 0.7;
 }
 
+.sdm-scene-zones .sdm-zones-mismatch {
+  color: #c0392b;
+}
+
+.sdm-scene-zones .sdm-zones-mismatch:empty {
+  display: none;
+}
+
 .sdm-chromatype-swatch {
   flex: 0 0 1.4em;
   width: 1.4em;
