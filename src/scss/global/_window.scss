@@ -2535,6 +2535,31 @@ input[type='radio']::after {
   }
 }
 
+// Attack dialog: the chosen item's image before the "With" selector
+.sdm-attack-item {
+  align-items: center;
+  gap: 6px;
+
+  .sdm-attack-item-img {
+    flex: 0 0 32px;
+    width: 32px;
+    height: 32px;
+    object-fit: contain;
+    border: 1px solid var(--color-border, #444);
+    border-radius: 4px;
+    background: rgba(0, 0, 0, 0.15);
+
+    &[hidden] {
+      display: none;
+    }
+  }
+
+  select {
+    flex: 1 1 auto;
+    min-width: 0;
+  }
+}
+
 // Chat: an attack made with a weapon / power, the button to roll its damage next
 .sdm-attack-followup {
   margin-top: 6px;

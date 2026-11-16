@@ -11,10 +11,13 @@
     </div>
     <div class="form-group mt-10">
       <label for="attackItem">{{localize 'SDM.AttackItem'}}</label>
+      <div class="form-fields sdm-attack-item">
+      <img class="sdm-attack-item-img" src="{{selectedAttackItemImg}}" alt="" {{#unless selectedAttackItemImg}}hidden{{/unless}} />
       <select name="attackItem" id="attackItem">
         <option value="">{{attackItemNoneLabel}}</option>
         {{selectOptions attackItemOptions valueAttr="id" labelAttr="label" selected=selectedAttackItem}}
       </select>
+      </div>
     </div>
     {{/if}}
     {{#if (eq type 'power_album')}}

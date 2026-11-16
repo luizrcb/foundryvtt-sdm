@@ -347,6 +347,13 @@ Hooks.on('renderDialogV2', (dialog, html) => {
     attackItemSelect.addEventListener('change', () => {
       const mode = dialog.options.attackItemRollMode(attackItemSelect.value);
       if (mode) rollModeSelect.value = mode;
+      // The chosen item's image, before the selector
+      const img = html.querySelector('.sdm-attack-item-img');
+      const src = dialog.options.attackItemImage?.(attackItemSelect.value) || '';
+      if (img) {
+        img.src = src;
+        img.hidden = !src;
+      }
     });
   }
   if (typeof rollPreview === 'function' && previewBox && previewForm) {

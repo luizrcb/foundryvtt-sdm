@@ -32,7 +32,7 @@
   "SDM.Counter.Create": "Create",
   "SDM.Use.Title": "Use",
   "SDM.Rest.Title": "Rest",
-  "SDM.Rest.Tooltip": "Rest (one week): regain all life, restore one ability or remove one burden",
+  "SDM.Rest.Tooltip": "Rest (one week): regain all life, restore one ability or remove one burden; short-term conditions end",
   "SDM.Rest.Hint": "Each week of rest removes one affliction or insult:",
   "SDM.Rest.Life": "Regain all missing life",
   "SDM.Rest.Ability": "Fully restore one missing ability score:",
@@ -2927,5 +2927,7 @@
   "SDM.AttackFollowupPower": "Roll power ({item})",
   "SDM.AttackFollowupGone": "That item is no longer with this actor.",
   "SDM.AttackItemNpcDamage": "Damage ({damage})",
-  "SDM.AttackItemUnarmed": "any attack"
+  "SDM.AttackItemUnarmed": "any attack",
+  "SDM.Rest.Conditions": "Also end these conditions: {conditions}",
+  "SDM.Rest.ChatConditions": "No longer: {conditions}."
 }

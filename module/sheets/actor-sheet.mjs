@@ -54,13 +54,15 @@ import SDMRoll, { sanitizeExpression } from '../rolls/sdmRoll.mjs';
 import { rollPreviewRows } from '../helpers/rollPreview.mjs';
 import { attackItems, attackRangeRollMode, speedContext, suggestAttackItem, targetRangeHtml, ZONE_BANDS } from '../helpers/zones.mjs';
 
-/** Options for an attack's item select: "Rifle (short)", "Fireball (power, medium)". */
+/** Options for an attack's item select: "Rifle (short, 2d6)", "Fireball (power, medium, 3d6)". */
 function attackItemChoices(actor, entries = attackItems(actor)) {
   return entries.map(entry => {
     const parts = [];
     if (entry.unarmed && entry.band === null) parts.push($l10n('SDM.AttackItemUnarmed'));
     if (entry.kind !== 'weapon') parts.push($l10n(entry.kind === 'album' ? 'SDM.AttackItemAlbumPower' : 'TYPES.Item.power').toLowerCase());
     if (entry.band !== null) parts.push($l10n(CONFIG.SDM.rangeType[ZONE_BANDS[entry.band]]));
+    // What it rolls: damage, or the power's roll
+    if (entry.roll) parts.push(entry.roll);
     return { id: entry.id, label: parts.length ? `${entry.name} (${parts.join(', ')})` : entry.name };
   });
 }
@@ -306,6 +308,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const attackEntries = isAttack ? attackItems(this.actor, attack) : [];
     const attackItemOptions = isAttack ? attackItemChoices(this.actor, attackEntries) : [];
     const suggestedAttackItem = isAttack ? suggestAttackItem(this.actor, attack, attackEntries) : '';
+    // The image before the selector: the item's, an NPC's own for its own damage, none for "—"
+    const attackItemImage = itemId =>
+      attackEntries.find(e => e.id === itemId)?.img || (this.actor.type === ActorType.NPC && !itemId ? this.actor.img : '');
     const rollModeWith = itemId => {
       const entry = attackEntries.find(e => e.id === itemId);
       return combineRollModes(combineRollModes(baseRollMode, conditionMode), attackRangeRollMode(this.actor, entry));
@@ -358,6 +363,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       attackTargetChoices: CONFIG.SDM.attackTarget,
       attackItemOptions,
       selectedAttackItem: suggestedAttackItem,
+      selectedAttackItemImg: attackItemImage(suggestedAttackItem),
       // NPCs: the empty choice is their own damage ("Damage (1d8)")
       attackItemNoneLabel:
         this.actor.type === ActorType.NPC
@@ -566,8 +572,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         modal: true,
         powerOptions,
         rollPreview,
-        // Choosing another item re-suggests the roll mode (out of range → disadvantage)
+        // Choosing another item re-suggests the roll mode (out of range → disadvantage) and shows its image
         attackItemRollMode: isAttack ? rollModeWith : null,
+        attackItemImage: isAttack ? attackItemImage : null,
         content: template,
         position: {
           width: 400

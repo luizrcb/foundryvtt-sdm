@@ -2526,6 +2526,30 @@ input[type=radio]::after {
   font-size: 12px;
 }
 
+.sdm-attack-item {
+  align-items: center;
+  gap: 6px;
+}
+
+.sdm-attack-item .sdm-attack-item-img {
+  flex: 0 0 32px;
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  border: 1px solid var(--color-border, #444);
+  border-radius: 4px;
+  background: rgba(0, 0, 0, 0.15);
+}
+
+.sdm-attack-item .sdm-attack-item-img[hidden] {
+  display: none;
+}
+
+.sdm-attack-item select {
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
 .sdm-attack-followup {
   margin-top: 6px;
 }

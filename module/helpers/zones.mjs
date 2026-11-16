@@ -440,24 +440,44 @@ export function attackItems(actor, attack = '') {
     return band >= 0 ? band : null;
   };
   const has = (item, feature) => !!item.system?.features?.has?.(feature);
+  // What the item rolls: a weapon's damage (one-handed / two-handed when versatile), a power's roll
+  const weaponRoll = item => {
+    const damage = item.system?.weapon?.damage ?? {};
+    const versatile = item.system?.weapon?.versatile || has(item, 'versatile');
+    return [damage.base, versatile ? damage.versatile : ''].filter(Boolean).join(' / ');
+  };
   for (const item of actor?.items ?? []) {
     // Unarmed Damage: always at hand; fists in melee (close), something thrown, a gesture or a device
     // at hand in the other attacks (short)
     if (isUnarmed(item)) {
       const band = attack ? (attack === 'melee' ? 0 : 1) : null;
-      entries.push({ id: item.id, name: item.name, kind: 'weapon', band, unarmed: true });
+      entries.push({ id: item.id, name: item.name, kind: 'weapon', band, unarmed: true, roll: weaponRoll(item), img: item.img });
       continue;
     }
     // Gear counts when readied; traits are always readied, and only power traits can be used
     const isTrait = item.type === ItemType.TRAIT;
     if (isTrait ? item.system.type !== GearType.POWER : !item.system?.readied) continue;
     if (item.system.type === GearType.POWER) {
-      entries.push({ id: item.id, name: item.name, kind: 'power', band: bandOf(item.system.power?.range), fantascience: true });
+      entries.push({
+        id: item.id,
+        name: item.name,
+        kind: 'power',
+        band: bandOf(item.system.power?.range),
+        fantascience: true,
+        roll: item.system.power?.roll_formula ?? ''
+      });
     } else if (item.system.type === GearType.POWER_ALBUM) {
       const powers = item.system.powers ?? [];
       const power = powers[item.system.powers_current_index] ?? powers[0];
       if (!power) continue;
-      entries.push({ id: item.id, name: power.name || item.name, kind: 'album', band: bandOf(power.range), fantascience: true });
+      entries.push({
+        id: item.id,
+        name: power.name || item.name,
+        kind: 'album',
+        band: bandOf(power.range),
+        fantascience: true,
+        roll: power.roll_formula ?? ''
+      });
     } else if (isWeaponItem(item) && !isUnarmed(item)) {
       entries.push({
         id: item.id,
@@ -465,12 +485,15 @@ export function attackItems(actor, attack = '') {
         kind: 'weapon',
         // A weapon without a range is a close-combat weapon
         band: bandOf(item.system.weapon?.range) ?? 0,
+        roll: weaponRoll(item),
         throwing: has(item, 'throwing'),
         oldtech: has(item, 'oldtech'),
         fantascience: has(item, 'fantascience')
       });
     }
   }
+  // The item's image (shown next to the attack dialog's selector)
+  for (const entry of entries) entry.img ??= actor.items.get(entry.id)?.img ?? '';
   return entries;
 }
 

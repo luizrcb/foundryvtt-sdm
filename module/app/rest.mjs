@@ -7,9 +7,45 @@ import { restoreAll } from './use-item.mjs';
  *   regain all missing life, fully restore one missing ability score, or remove one burden
  *   (the Referee confirms that one: "terms and conditions apply").
  *
- * Programmatic use: game.sdm.api.rest(actorOrUuid, { choice: 'life' | 'ability' | 'burden', ability, burdenId })
- * opens the dialog when no choice is given.
+ * A week of rest also ends the short-term conditions put on the actor (stunned, poisoned, bleeding…;
+ * see REST_CLEARS). Lasting ones stay: dead (relife), mad (treatment), corroded (repair), petrified, and
+ * invisible / flying (usually an item or power). Conditions given by a carried item stay with it.
+ *
+ * Programmatic use: game.sdm.api.rest(actorOrUuid, { choice: 'life' | 'ability' | 'burden', ability, burdenId,
+ * clearConditions = true }) opens the dialog when no choice is given.
  */
+
+/** Conditions a week of rest ends. */
+export const REST_CLEARS = [
+  'stun',
+  'confused',
+  'nauseated',
+  'slowed',
+  'weakened',
+  'blind',
+  'deaf',
+  'fear',
+  'prone',
+  'sleep',
+  'unconscious',
+  'restrain',
+  'bleeding',
+  'burning',
+  'poison'
+];
+
+/** The actor's own effects that are only short-term conditions (not those from its items). */
+export function restConditions(actor) {
+  return (actor?.effects ?? []).filter(effect => {
+    const statuses = [...(effect.statuses ?? [])];
+    return statuses.length > 0 && statuses.every(id => REST_CLEARS.includes(id));
+  });
+}
+
+const conditionNames = effects =>
+  [...new Set(effects.flatMap(effect => [...effect.statuses]))]
+    .map(id => game.i18n.localize(`SDM.Condition.${id}.Name`).toLowerCase())
+    .join(', ');
 
 const { DialogV2 } = foundry.applications.api;
 const esc = text => foundry.utils.escapeHTML?.(String(text ?? '')) ?? String(text ?? '');
@@ -38,7 +74,7 @@ export function getRestOptions(actor) {
   };
 }
 
-export async function restActor(actorOrUuid, { choice, ability, burdenId } = {}) {
+export async function restActor(actorOrUuid, { choice, ability, burdenId, clearConditions = true } = {}) {
   const actor = typeof actorOrUuid === 'string' ? await fromUuid(actorOrUuid) : actorOrUuid;
   if (!actor || ![ActorType.CHARACTER, ActorType.NPC].includes(actor.type)) return null;
   if (!actor.isOwner) {
@@ -47,13 +83,31 @@ export async function restActor(actorOrUuid, { choice, ability, burdenId } = {})
   }
   const options = getRestOptions(actor);
 
-  let picked = choice ? { choice, ability, burdenId } : await chooseRest(actor, options);
+  let picked = choice ? { choice, ability, burdenId, clearConditions } : await chooseRest(actor, options);
   if (!picked) return null;
+
+  // The week of rest also ends short-term conditions (the dialog's checkbox, ticked by default)
+  const endConditions = async () => {
+    if (!picked.clearConditions) return '';
+    const effects = restConditions(actor);
+    if (!effects.length) return '';
+    const names = conditionNames(effects);
+    await actor.deleteEmbeddedDocuments('ActiveEffect', effects.map(effect => effect.id));
+    return `<p>${$fmt('SDM.Rest.ChatConditions', { conditions: esc(names) })}</p>`;
+  };
+
+  // Only the conditions (nothing else to recover)
+  if (!picked.choice) {
+    const cleared = await endConditions();
+    if (!cleared) return warnNothing(actor);
+    await postRest(actor, '', cleared);
+    return picked;
+  }
 
   if (picked.choice === 'life') {
     if (!options.lifeMissing) return warnNothing(actor);
     await restoreAll(actor, 'life');
-    await postRest(actor, $l10n('SDM.Rest.ChatLife'));
+    await postRest(actor, $l10n('SDM.Rest.ChatLife'), await endConditions());
     return picked;
   }
 
@@ -61,7 +115,11 @@ export async function restActor(actorOrUuid, { choice, ability, burdenId } = {})
     const missing = options.missingAbilities.find(entry => entry.key === picked.ability);
     if (!missing) return warnNothing(actor);
     await actor.update({ [`system.abilities.${missing.key}.current`]: missing.full });
-    await postRest(actor, $fmt('SDM.Rest.ChatAbility', { ability: $l10n(CONFIG.SDM.abilities[missing.key]) }));
+    await postRest(
+      actor,
+      $fmt('SDM.Rest.ChatAbility', { ability: $l10n(CONFIG.SDM.abilities[missing.key]) }),
+      await endConditions()
+    );
     return picked;
   }
 
@@ -85,7 +143,7 @@ export async function restActor(actorOrUuid, { choice, ability, burdenId } = {})
       ui.notifications.info($fmt('SDM.Rest.BurdenDenied', { burden: burden.name }));
       return null;
     }
-    await postRest(actor, $fmt('SDM.Rest.ChatBurden', { burden: esc(burden.name) }));
+    await postRest(actor, $fmt('SDM.Rest.ChatBurden', { burden: esc(burden.name) }), await endConditions());
     return picked;
   }
   return null;
@@ -96,10 +154,10 @@ function warnNothing(actor) {
   return null;
 }
 
-async function postRest(actor, text) {
+async function postRest(actor, text, extra = '') {
   await ChatMessage.create({
     speaker: ChatMessage.getSpeaker({ actor }),
-    content: `<p><i class="fa-solid fa-bed"></i> ${$fmt('SDM.Rest.Chat', { actor: esc(actor.name) })}</p><p>${text}</p>`
+    content: `<p><i class="fa-solid fa-bed"></i> ${$fmt('SDM.Rest.Chat', { actor: esc(actor.name) })}</p>${text ? `<p>${text}</p>` : ''}${extra}`
   });
 }
 
@@ -125,9 +183,11 @@ async function confirmBurdenRemoval({ itemUuid, userId }) {
 /** The rest dialog: one choice. Options with nothing to recover are disabled. */
 async function chooseRest(actor, options) {
   const { lifeMissing, life, missingAbilities, burdens } = options;
-  if (!lifeMissing && !missingAbilities.length && !burdens.length) return warnNothing(actor);
+  const conditions = restConditions(actor);
+  const anyChoice = lifeMissing || missingAbilities.length || burdens.length;
+  if (!anyChoice && !conditions.length) return warnNothing(actor);
 
-  const first = lifeMissing ? 'life' : missingAbilities.length ? 'ability' : 'burden';
+  const first = lifeMissing ? 'life' : missingAbilities.length ? 'ability' : burdens.length ? 'burden' : '';
   const radio = (value, label, enabled) =>
     `<label class="sdm-upgrade-choice${enabled ? '' : ' disabled'}"><input type="radio" name="choice" value="${value}" ${value === first ? 'checked' : ''} ${enabled ? '' : 'disabled'} /> ${label}</label>`;
   const abilityOptions = missingAbilities
@@ -147,6 +207,11 @@ async function chooseRest(actor, options) {
       }
       ${radio('burden', $l10n('SDM.Rest.Burden'), burdens.length > 0)}
       ${burdens.length ? `<div class="sdm-upgrade-detail"><select name="burdenId">${burdenOptions}</select></div>` : ''}
+      ${
+        conditions.length
+          ? `<label class="sdm-rest-conditions"><input type="checkbox" name="clearConditions" checked /> ${$fmt('SDM.Rest.Conditions', { conditions: esc(conditionNames(conditions)) })}</label>`
+          : ''
+      }
     </div>`;
 
   return DialogV2.prompt({
@@ -169,7 +234,8 @@ async function chooseRest(actor, options) {
       callback: (event, button) => ({
         choice: button.form.querySelector('input[name="choice"]:checked')?.value,
         ability: button.form.elements.ability?.value,
-        burdenId: button.form.elements.burdenId?.value
+        burdenId: button.form.elements.burdenId?.value,
+        clearConditions: !!button.form.elements.clearConditions?.checked
       })
     }
   });

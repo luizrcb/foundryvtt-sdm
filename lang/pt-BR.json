@@ -32,7 +32,7 @@
   "SDM.Counter.Create": "Criar",
   "SDM.Use.Title": "Usar",
   "SDM.Rest.Title": "Descanso",
-  "SDM.Rest.Tooltip": "Descansar (uma semana): recuperar toda a vida, restaurar um atributo ou remover um fardo",
+  "SDM.Rest.Tooltip": "Descansar (uma semana): recuperar toda a vida, restaurar um atributo ou remover um fardo; condições passageiras terminam",
   "SDM.Rest.Hint": "Cada semana de descanso remove uma aflição ou ofensa:",
   "SDM.Rest.Life": "Recuperar toda a vida perdida",
   "SDM.Rest.Ability": "Restaurar totalmente um atributo perdido:",
@@ -2927,5 +2927,7 @@
   "SDM.AttackFollowupPower": "Rolar poder ({item})",
   "SDM.AttackFollowupGone": "Esse item não está mais com este ator.",
   "SDM.AttackItemNpcDamage": "Dano ({damage})",
-  "SDM.AttackItemUnarmed": "qualquer ataque"
+  "SDM.AttackItemUnarmed": "qualquer ataque",
+  "SDM.Rest.Conditions": "Também encerrar estas condições: {conditions}",
+  "SDM.Rest.ChatConditions": "Não está mais: {conditions}."
 }
