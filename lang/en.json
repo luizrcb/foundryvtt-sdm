@@ -2845,7 +2845,7 @@
   "SDM.Condition.LosesTurn": "{name} loses this turn ({condition}).",
   "SDM.Condition.weakened.Note": "weakened: half damage",
   "SDM.SettingsAutomateConditions": "Automate conditions",
-  "SDM.SettingsAutomateConditionsHint": "Conditions act on their own: bleeding and burning cost life each turn, stunned / paralyzed / unconscious / asleep / petrified lose the turn, stunned, blinded and confused last a round, asleep wakes when hurt, corroded and slowed lower defense (slowed also speed), the defeat roll knocks out or stuns, and the roll dialog preselects advantage or disadvantage from the conditions (5e-inspired where the game says nothing).",
+  "SDM.SettingsAutomateConditionsHint": "Conditions act on their own: bleeding and burning cost life each turn, stunned / paralyzed / unconscious / asleep / petrified lose the turn, stunned, blinded and confused last a round, asleep wakes when hurt, corroded and slowed lower defense (slowed also speed), the defeat roll knocks out or stuns, and the roll dialog preselects advantage or disadvantage from the conditions.",
   "SDM.Menu.Zones.Name": "Movement & Range Zones",
   "SDM.Menu.Zones.Hint": "How many meters each zone (close, short, medium, long) is in each kind of scene, and the optional helpers on the map.",
   "SDM.Menu.Zones.Label": "Configure Zones",

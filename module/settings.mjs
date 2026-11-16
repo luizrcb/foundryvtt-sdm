@@ -626,7 +626,7 @@ export function registerSystemSettings() {
   // NPC extras: the roll tables the generator draws special attacks, oddities and powers from
   registerNpcExtraSettings();
 
-  // Conditions: damage over time, lost turns, roll modes… (5e-inspired, so off by default)
+  // Conditions: damage over time, lost turns, roll modes… (beyond what the game's texts say, so off by default)
   game.settings.register('sdm', 'automateConditions', {
     name: 'SDM.SettingsAutomateConditions',
     hint: 'SDM.SettingsAutomateConditionsHint',

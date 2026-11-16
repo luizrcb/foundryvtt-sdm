@@ -5,7 +5,7 @@ import { ActorType, RollMode } from './constants.mjs';
  * mention — item features (blinding: can't see for a round; confusing: a penalty to its actions for a
  * round; entangling: immobilized; fearsome: morale test; petrifying; slumber; mad; heat: catches fire),
  * the defeat roll (knocked out until the end of the fight; lose the next turn), items, traits, powers —
- * with short summaries (5e-inspired where the texts say nothing). The list and the summaries (Token HUD and effects panel hover) are system
+ * with short summaries (common tabletop conventions where the texts say nothing). The list and the summaries (Token HUD and effects panel hover) are system
  * rules. The automation (world setting "Automate conditions", off by default) adds:
  *  - start of turn: bleeding loses 1 life, burning 1d4; stunned, paralyzed, unconscious, asleep and
  *    petrified lose the turn; grabbed is reminded to save, frightened to test morale (chat notes);

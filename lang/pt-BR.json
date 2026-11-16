@@ -2845,7 +2845,7 @@
   "SDM.Condition.LosesTurn": "{name} perde este turno ({condition}).",
   "SDM.Condition.weakened.Note": "enfraquecido: metade do dano",
   "SDM.SettingsAutomateConditions": "Automatizar condições",
-  "SDM.SettingsAutomateConditionsHint": "As condições agem sozinhas: sangrando e em chamas custam vida a cada turno, atordoado / paralisado / inconsciente / dormindo / petrificado perdem o turno, atordoado, cego e confuso duram uma rodada, dormindo acorda ao sofrer dano, corroído e lento baixam a defesa (lento também a velocidade), a rolagem de derrota nocauteia ou atordoa, e a janela de rolagem já marca vantagem ou desvantagem pelas condições (inspirado no 5e onde o jogo não diz nada).",
+  "SDM.SettingsAutomateConditionsHint": "As condições agem sozinhas: sangrando e em chamas custam vida a cada turno, atordoado / paralisado / inconsciente / dormindo / petrificado perdem o turno, atordoado, cego e confuso duram uma rodada, dormindo acorda ao sofrer dano, corroído e lento baixam a defesa (lento também a velocidade), a rolagem de derrota nocauteia ou atordoa, e a janela de rolagem já marca vantagem ou desvantagem pelas condições.",
   "SDM.Menu.Zones.Name": "Zonas de Movimento e Alcance",
   "SDM.Menu.Zones.Hint": "Quantos metros tem cada zona (perto, curto, médio, longo) em cada tipo de cena, e os auxílios opcionais no mapa.",
   "SDM.Menu.Zones.Label": "Configurar Zonas",
