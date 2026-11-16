@@ -622,12 +622,14 @@ export function targetRangeHtml(actor, { range = '', throwing = false, melee = f
   const shownNote = note ?? advice?.note ?? '';
   // A penalty suggested (disadvantage, or the Bonus and Penalty row's -1 / -6 / -1d6 instead)
   const penalty = advice?.mode === RollMode.DISADVANTAGE;
+  // The attack can't work as it is (it doesn't reach, or melee beyond close): the Roll button warns
+  const unreachable = meleeTooFar || (advice?.beyond ?? 0) >= 2;
   const switchButton =
     meleeTooFar && switchToRanged
       ? ` <button type="button" class="sdm-switch-ranged"><i class="fa-solid fa-bullseye"></i> ${esc(game.i18n.localize('SDM.Zones.SwitchToRanged'))}</button>`
       : '';
   return (
-    `<div class="sdm-roll-preview-row sdm-range-row${shownNote ? ' warn' : ''}${penalty ? ' penalty' : ''}">` +
+    `<div class="sdm-roll-preview-row sdm-range-row${shownNote ? ' warn' : ''}${penalty ? ' penalty' : ''}${unreachable ? ' unreachable' : ''}">` +
     `<span>${esc(game.i18n.format('SDM.Zones.Target', { name: target.name }))}</span> <code>${esc(shown)}</code>` +
     (shownNote ? `<div class="sdm-range-note"><i class="fa-solid fa-triangle-exclamation"></i> ${esc(shownNote)}${switchButton}</div>` : '') +
     `</div>`

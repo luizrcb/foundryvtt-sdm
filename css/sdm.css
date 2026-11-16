@@ -2556,6 +2556,22 @@ input[type=radio]::after {
   min-width: 0;
 }
 
+.sdm-unreachable-note {
+  margin: 8px 0 4px;
+  color: #c0392b;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.form-footer button.sdm-unreachable {
+  border-color: #c0392b;
+  color: #c0392b;
+}
+
+.form-footer button.sdm-unreachable .sdm-unreachable-icon {
+  margin-right: 2px;
+}
+
 .sdm-bonus-penalty {
   flex-wrap: wrap;
 }

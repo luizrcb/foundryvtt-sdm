@@ -78,17 +78,57 @@ export function addBonusPenalty(html) {
     }
     refresh();
   });
+  // The roll mode also changes from code (choosing another With item re-suggests it): markRangePenalty refreshes too
+  row.sdmRefresh = refresh;
   input.addEventListener('input', refresh);
   rollMode?.addEventListener('change', refresh);
   refresh();
 }
 
+/**
+ * After the roll preview updates: the Roll buttons warn (icon and a line above them) when the target
+ * can't be reached as it is — two or more zones beyond the item's range, or a melee attack beyond
+ * close. They still work: the Referee may allow it.
+ */
+function markUnreachable(html) {
+  const unreachable = !!html.querySelector('.sdm-range-row.unreachable');
+  const footer = html.querySelector('.form-footer');
+  if (!footer) return;
+  footer.querySelectorAll('button').forEach(button => {
+    button.classList.toggle('sdm-unreachable', unreachable);
+    let icon = button.querySelector('.sdm-unreachable-icon');
+    if (unreachable && !icon) {
+      icon = document.createElement('i');
+      icon.className = 'fa-solid fa-triangle-exclamation sdm-unreachable-icon';
+      button.prepend(icon);
+    } else if (!unreachable) icon?.remove();
+    // Keep a tooltip the button had of its own
+    if (unreachable) {
+      if (!('sdmTooltip' in button.dataset)) button.dataset.sdmTooltip = button.dataset.tooltip ?? '';
+      button.dataset.tooltip = game.i18n.localize('SDM.Zones.UnreachableHint');
+    } else if ('sdmTooltip' in button.dataset) {
+      if (button.dataset.sdmTooltip) button.dataset.tooltip = button.dataset.sdmTooltip;
+      else delete button.dataset.tooltip;
+      delete button.dataset.sdmTooltip;
+    }
+  });
+  let note = html.querySelector('.sdm-unreachable-note');
+  if (unreachable && !note) {
+    note = document.createElement('p');
+    note.className = 'sdm-unreachable-note';
+    note.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> ${foundry.utils.escapeHTML(game.i18n.localize('SDM.Zones.UnreachableNote'))}`;
+    footer.before(note);
+  } else if (!unreachable) note?.remove();
+}
+
 /** After the roll preview updates: highlight the penalties when the range suggests one. */
 export function markRangePenalty(html) {
+  markUnreachable(html);
   const row = html.querySelector('.sdm-bonus-penalty');
   if (!row) return;
   const penalty = !!html.querySelector('.sdm-range-row.penalty');
   row.classList.toggle('range-penalty', penalty);
   const hint = row.querySelector('.sdm-bp-range');
   if (hint) hint.hidden = !penalty;
+  row.sdmRefresh?.();
 }

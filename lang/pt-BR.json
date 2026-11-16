@@ -2872,7 +2872,7 @@
   "SDM.Zones.LimitLabel": "{zone} até",
   "SDM.Zones.SceneHint": "Na unidade de distância do mundo. Deixe um número vazio para usar o valor da escala (em cinza); mude um para ajustar só esta cena.",
   "SDM.Zones.Target": "Alvo {name}",
-  "SDM.Zones.ThrowingPenalty": "Arremessado além do alcance curto: uma penalidade é sugerida (desvantagem, ou outra abaixo).",
+  "SDM.Zones.ThrowingPenalty": "Arremessado além do alcance curto",
   "SDM.Zones.FreeAttack": "{name} se afastou de {enemies}, que pode fazer um ataque livre se ele recuou sem cuidado.",
   "SDM.Zones.SpeedOneZone": "1 zona por rodada",
   "SDM.Zones.SpeedZones": "{zones} zonas por rodada",
@@ -2918,7 +2918,7 @@
   "SDM.AttackWith": "com {item}",
   "SDM.FavoriteAttackItem": "Arma ou poder favorito",
   "SDM.FavoriteAttackItemHint": "Já vem selecionado na janela deste ataque enquanto estiver preparado. Sem favorito, a janela sugere um item preparado que combine com o ataque e alcance o alvo.",
-  "SDM.Zones.OutOfRangeOne": "Fora do alcance ({range}), uma zona além: uma penalidade é sugerida (desvantagem, ou outra abaixo).",
+  "SDM.Zones.OutOfRangeOne": "Fora do alcance ({range}), uma zona além",
   "SDM.Zones.OutOfRangeFar": "Fora do alcance ({range}): duas ou mais zonas além, não alcança.",
   "SDM.AttackFollowupDamage": "Rolar dano ({item})",
   "SDM.AttackFollowupPower": "Rolar poder ({item})",
@@ -2977,5 +2977,7 @@
   "SDM.BonusPenalty.Advantage": "Vant",
   "SDM.BonusPenalty.Disadvantage": "Desv",
   "SDM.BonusPenalty.AdvantageHint": "Role 2 dados e fique com o melhor (vantagem) ou o pior (desvantagem) resultado (16,6%)",
-  "SDM.BonusPenalty.RangeHint": "Fora do alcance: uma penalidade é sugerida. Desvantagem vem selecionada; escolha −1, −6 ou −1d6 no lugar, se preferir (o Mestre decide)."
+  "SDM.BonusPenalty.RangeHint": "Uma penalidade é sugerida. Desvantagem vem selecionada (confira a decisão do Mestre)",
+  "SDM.Zones.UnreachableNote": "O alvo está fora de alcance: este ataque não deveria ser rolado (a não ser que o Mestre permita)",
+  "SDM.Zones.UnreachableHint": "Fora de alcance: role só se o Mestre permitir"
 }

@@ -2567,6 +2567,23 @@ input[type='radio']::after {
   }
 }
 
+// Roll dialogs: the target is out of reach (doesn't reach, melee beyond close): the Roll buttons warn
+.sdm-unreachable-note {
+  margin: 8px 0 4px;
+  color: #c0392b;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.form-footer button.sdm-unreachable {
+  border-color: #c0392b;
+  color: #c0392b;
+
+  .sdm-unreachable-icon {
+    margin-right: 2px;
+  }
+}
+
 // d20 roll dialogs: the book's typical bonuses and penalties, one click each
 .sdm-bonus-penalty {
   flex-wrap: wrap;
