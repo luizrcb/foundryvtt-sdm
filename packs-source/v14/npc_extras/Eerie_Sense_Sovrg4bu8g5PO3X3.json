@@ -27,5 +27,44 @@
     "description": "<p>It senses vibration, electricity or magnetism: darkness and invisibility don't hide anyone from it.</p><p><em>From the corruption tables.</em></p>",
     "type": ""
   },
-  "effects": []
+  "effects": [
+    {
+      "name": "Sees invisible",
+      "origin": null,
+      "img": "icons/svg/eye.svg",
+      "_id": "NjZKpotpiSygWDx0",
+      "type": "base",
+      "system": {
+        "changes": []
+      },
+      "disabled": false,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [
+        "seeInvisible"
+      ],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!Sovrg4bu8g5PO3X3.NjZKpotpiSygWDx0"
+    }
+  ]
 }

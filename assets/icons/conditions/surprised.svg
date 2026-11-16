@@ -1,0 +1,16 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Surprised: a startled head (wide eyes, open mouth) under a big "!" (white like the core status icons; the face is cut out) -->
+  <defs>
+    <mask id="face">
+      <rect width="512" height="512" fill="#fff"/>
+      <circle cx="210" cy="318" r="24" fill="#000"/>
+      <circle cx="302" cy="318" r="24" fill="#000"/>
+      <ellipse cx="256" cy="396" rx="22" ry="30" fill="#000"/>
+    </mask>
+  </defs>
+  <g fill="#fff">
+    <circle cx="256" cy="344" r="128" mask="url(#face)"/>
+    <path d="M234 16h44l-8 118h-28z"/>
+    <circle cx="256" cy="166" r="20"/>
+  </g>
+</svg>

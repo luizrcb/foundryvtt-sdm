@@ -25,7 +25,10 @@
   "_key": "!items!goYqOLiFFDx1mKQ5",
   "system": {
     "description": "<p>It sees in every direction and in the dark: it can't be surprised.</p>",
-    "type": ""
+    "type": "",
+    "immunities": [
+      "surprised"
+    ]
   },
   "effects": []
 }

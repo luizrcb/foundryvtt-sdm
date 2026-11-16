@@ -76,6 +76,25 @@
     "categories": [
       "vision",
       "ghost"
+    ],
+    "triggers": [
+      {
+        "roll": "power",
+        "condition": "always",
+        "value": "",
+        "text": "Sees invisible (1 day)",
+        "attack": "",
+        "table": "",
+        "effect": "",
+        "wear": "",
+        "counter": "",
+        "counter_step": "1",
+        "status": "seeInvisible",
+        "status_target": "self",
+        "status_mode": "apply",
+        "status_save": false,
+        "status_save_ability": ""
+      }
     ]
   },
   "effects": [],

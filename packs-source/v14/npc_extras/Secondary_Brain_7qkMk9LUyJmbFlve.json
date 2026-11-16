@@ -25,7 +25,10 @@
   "_key": "!items!7qkMk9LUyJmbFlve",
   "system": {
     "description": "<p>A second brain thinks on its own: it can't be charmed or controlled while both agree.</p><p><em>From the corruption tables.</em></p>",
-    "type": ""
+    "type": "",
+    "immunities": [
+      "controlled"
+    ]
   },
   "effects": []
 }

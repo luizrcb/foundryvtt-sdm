@@ -2825,7 +2825,7 @@
   "SDM.Condition.restrain.Name": "Agarrado",
   "SDM.Condition.restrain.Hint": "Imobilizado (agarrado, enredado, preso): não se move; soltar-se pede salvaguarda ou algum trabalho.",
   "SDM.Condition.invisible.Name": "Invisível",
-  "SDM.Condition.invisible.Hint": "Não pode ser visto: ataques contra ele têm desvantagem.",
+  "SDM.Condition.invisible.Hint": "Não pode ser visto: seus ataques têm vantagem, ataques contra ele desvantagem (a não ser que vejam o invisível).",
   "SDM.Condition.petrified.Name": "Petrificado",
   "SDM.Condition.petrified.Hint": "Sente-se transformado em pedra: não se move nem age.",
   "SDM.Condition.poison.Name": "Envenenado",
@@ -2989,5 +2989,13 @@
   "SDM.SaveAgainst.RequestNoSource": "{actor}: salvaguarda contra {condition}",
   "SDM.SaveAgainst.Failed": "Falhou: {condition}",
   "SDM.SaveAgainst.Resisted": "Resistiu: sem {condition}",
-  "SDM.Trigger.EffectSaveHint": "Salvaguarda permitida: um PdM alvo rola a salvaguarda, um personagem recebe um pedido de salvaguarda; o efeito só é copiado se a salvaguarda falhar"
+  "SDM.Trigger.EffectSaveHint": "Salvaguarda permitida: um PdM alvo rola a salvaguarda, um personagem recebe um pedido de salvaguarda; o efeito só é copiado se a salvaguarda falhar",
+  "SDM.Condition.hidden.Name": "Escondido",
+  "SDM.Condition.hidden.Hint": "Não visto até agir: seus ataques têm vantagem, ataques contra ele desvantagem (a não ser que vejam o invisível). É visto assim que ataca.",
+  "SDM.Condition.surprised.Name": "Surpreendido",
+  "SDM.Condition.surprised.Hint": "Pego desprevenido: perde o primeiro turno; até lá, ataques contra ele têm vantagem.",
+  "SDM.Condition.controlled.Name": "Controlado",
+  "SDM.Condition.controlled.Hint": "Encantado ou comandado: age como outro ordena.",
+  "SDM.Condition.seeInvisible.Name": "Vê o invisível",
+  "SDM.Condition.seeInvisible.Hint": "Criaturas invisíveis e escondidas não têm vantagem contra ele, nem ele desvantagem ao atacá-las."
 }

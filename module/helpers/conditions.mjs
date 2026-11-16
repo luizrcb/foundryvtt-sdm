@@ -8,7 +8,9 @@ import { ActorType, RollMode } from './constants.mjs';
  * with short summaries (common tabletop conventions where the texts say nothing). The list and the summaries (Token HUD and effects panel hover) are system
  * rules. The automation (world setting "Automate conditions", off by default) adds:
  *  - start of turn: bleeding loses 1 life, burning 1d4; stunned, paralyzed, unconscious, asleep and
- *    petrified lose the turn; grabbed is reminded to save, frightened to test morale (chat notes);
+ *    petrified lose the turn, and so does surprised (its first turn: then it's over); grabbed is
+ *    reminded to save, frightened to test morale (chat notes);
+ *  - a hidden attacker is seen once it attacks (hidden comes off);
  *  - stunned, blinded and confused last 1 round; asleep wakes up when hurt; the defeat roll knocks out
  *    (7: until the end of the fight) or stuns (8–11: loses the next turn);
  *  - corroded −1 defense, slowed −2 defense and −1 speed; weakened halves damage dealt (noted on the roll);
@@ -40,7 +42,14 @@ export const CONDITIONS = [
   C('bleeding', 'icons/svg/blood.svg'),
   C('burning', 'icons/svg/fire.svg'),
   C('corrode', 'icons/svg/acid.svg'),
-  C('fly', 'icons/svg/wing.svg')
+  C('fly', 'icons/svg/wing.svg'),
+  // From the compendium texts: stealth (hide, unseen), "can't be surprised", mind control, and what
+  // sees through invisibility (Eyes of Akaula, Eerie Sense)
+  // Own icon: the core hooded figures are taken (mad) or black, and look alike once darkened on sheets
+  C('hidden', 'systems/sdm/assets/icons/conditions/hidden.svg'),
+  C('surprised', 'systems/sdm/assets/icons/conditions/surprised.svg'),
+  C('controlled', 'icons/svg/aura.svg'),
+  C('seeInvisible', 'icons/svg/eye.svg')
 ];
 
 const automated = () => {
@@ -78,8 +87,10 @@ const has = (actor, id) => !!actor?.statuses?.has?.(id);
 /**
  * The roll mode conditions suggest for a roll: disadvantage when the roller is blind, poisoned,
  * prone, confused or (physical abilities) nauseated; when attacking a target, advantage against a
- * paralyzed, unconscious, stunned or (melee) prone target, disadvantage against an invisible or
- * (ranged) prone one. Advantage and disadvantage cancel out. Returns null without automation.
+ * paralyzed, unconscious, stunned, surprised or (melee) prone target, disadvantage against an
+ * invisible, hidden or (ranged) prone one — unless the attacker sees invisible; an invisible or hidden
+ * attacker has advantage, unless the target sees invisible. Advantage and disadvantage cancel out.
+ * Returns null without automation.
  */
 export function conditionRollMode(actor, { attack = '', ability = '', target = null, isAttack = false, isAbility = false } = {}) {
   if (!automated() || !actor) return null;
@@ -90,12 +101,15 @@ export function conditionRollMode(actor, { attack = '', ability = '', target = n
     if (has(actor, 'nauseated') && ['str', 'end', 'agi'].includes(ability)) disadvantage = true;
   }
   if (isAttack && target && target !== actor) {
-    if (['paralysis', 'unconscious', 'stun', 'sleep'].some(id => has(target, id))) advantage = true;
+    if (['paralysis', 'unconscious', 'stun', 'sleep', 'surprised'].some(id => has(target, id))) advantage = true;
     if (has(target, 'prone')) {
       if (attack === 'melee') advantage = true;
       else disadvantage = true;
     }
-    if (has(target, 'invisible')) disadvantage = true;
+    // Unseen: invisible or hidden, unless the other one sees through it
+    const unseen = actor => has(actor, 'invisible') || has(actor, 'hidden');
+    if (unseen(target) && !has(actor, 'seeInvisible')) disadvantage = true;
+    if (unseen(actor) && !has(target, 'seeInvisible')) advantage = true;
   }
   if (advantage && !disadvantage) return RollMode.ADVANTAGE;
   if (disadvantage && !advantage) return RollMode.DISADVANTAGE;
@@ -203,8 +217,10 @@ async function onCombatTurn(combat, changed) {
     await actor.applyDamage(roll.total, 1, false, true);
     await note(actor, 'SDM.Condition.burning.Turn', { amount: roll.total });
   }
-  const lost = ['stun', 'paralysis', 'unconscious', 'sleep', 'petrified'].find(id => has(actor, id));
+  const lost = ['stun', 'paralysis', 'unconscious', 'sleep', 'petrified', 'surprised'].find(id => has(actor, id));
   if (lost) await note(actor, 'SDM.Condition.LosesTurn', { condition: game.i18n.localize(`SDM.Condition.${lost}.Name`) });
+  // Surprised: only its first turn is lost
+  if (has(actor, 'surprised')) await actor.toggleStatusEffect('surprised', { active: false });
   else {
     if (has(actor, 'restrain')) await note(actor, 'SDM.Condition.restrain.Turn');
     if (has(actor, 'fear')) await note(actor, 'SDM.Condition.fear.Turn');
@@ -254,7 +270,97 @@ function onRenderTokenHUD(hud, html) {
   });
 }
 
+/* -------------------------------------------- */
+/*  Sees invisible: the token's See Invisibility  */
+/* -------------------------------------------- */
+
+const SEE_MODE = 'seeInvisibility';
+
+/** The token's detection modes as { id: { enabled, range } } (array or record, whichever the core keeps). */
+function modesOf(token) {
+  const modes = token.detectionModes ?? token._source?.detectionModes;
+  if (Array.isArray(modes)) return Object.fromEntries(modes.map(m => [m.id, m]));
+  return modes ?? {};
+}
+
+/**
+ * Give or take the token's See Invisibility detection mode, following the actor's Sees invisible
+ * status (only what this added is taken away: a mode set by hand stays). Range: as far as the
+ * scene goes (the token's sight range is often 0 — it sees only lit areas — which would see nothing).
+ */
+const SEE_RANGE = 9999;
+async function syncSeeInvisibility(token, on) {
+  if (!CONFIG.Canvas?.detectionModes?.[SEE_MODE]) return;
+  const raw = token._source?.detectionModes;
+  const modes = modesOf(token);
+  const added = !!token.getFlag?.('sdm', 'seeInvisibility');
+  const mode = modes[SEE_MODE];
+  // Set by hand: left alone; added by this and already working: nothing to do
+  if (on && mode && !added) return;
+  if (on && mode?.enabled && mode.range >= SEE_RANGE) return;
+  if (!on && (!mode || !added)) return;
+  const range = SEE_RANGE;
+  let next;
+  if (Array.isArray(raw)) {
+    const others = raw.filter(m => m.id !== SEE_MODE);
+    next = on ? [...others, { id: SEE_MODE, enabled: true, range }] : others;
+    await token.update({ detectionModes: next, 'flags.sdm.seeInvisibility': on });
+  } else {
+    await token.update(
+      on
+        ? { [`detectionModes.${SEE_MODE}`]: { enabled: true, range }, 'flags.sdm.seeInvisibility': true }
+        : { [`detectionModes.-=${SEE_MODE}`]: null, 'flags.sdm.seeInvisibility': false }
+    );
+  }
+}
+
+/** Every token of the actor (linked: all scenes; unlinked: its own token). */
+function tokensOf(actor) {
+  if (actor?.isToken) return [actor.token].filter(Boolean);
+  return game.scenes.contents.flatMap(scene => scene.tokens.filter(t => t.actorLink && t.actorId === actor?.id));
+}
+
+async function syncActor(actor) {
+  if (!(actor instanceof Actor)) return;
+  const on = has(actor, 'seeInvisible');
+  for (const token of tokensOf(actor)) await syncSeeInvisibility(token, on);
+}
+
+// The status on the actor, or on one of its items (Eerie Sense gives it while the NPC has it)
+async function onSeeInvisibleChange(effect) {
+  if (game.users.activeGM?.id !== game.user.id || !effect.statuses?.has?.('seeInvisible')) return;
+  await syncActor(effect.parent instanceof Actor ? effect.parent : effect.parent?.parent);
+}
+
+async function onItemWithSeeInvisible(item) {
+  if (game.users.activeGM?.id !== game.user.id) return;
+  if (!item.effects?.some?.(e => e.statuses?.has?.('seeInvisible'))) return;
+  await syncActor(item.parent);
+}
+
+async function onTokenCreated(token) {
+  if (game.users.activeGM?.id !== game.user.id) return;
+  if (has(token.actor, 'seeInvisible')) await syncSeeInvisibility(token, true);
+}
+
+/** A hidden attacker is seen once it attacks (on the attacker's user's game). */
+async function onAttackMessage(message, options, userId) {
+  if (!automated() || userId !== game.user.id) return;
+  const check = message.getFlag?.('sdm', 'triggerCheck');
+  if (check?.kind !== 'attack') return;
+  const actor = fromUuidSync(check.actor);
+  if (has(actor, 'hidden') && actor.isOwner) await actor.toggleStatusEffect('hidden', { active: false });
+}
+
 export function setupConditions() {
+  Hooks.on('createChatMessage', onAttackMessage);
+  // Sees invisible also gives the token Foundry's See Invisibility (invisible tokens show on the map)
+  Hooks.on('createActiveEffect', onSeeInvisibleChange);
+  Hooks.on('deleteActiveEffect', onSeeInvisibleChange);
+  Hooks.on('updateActiveEffect', onSeeInvisibleChange);
+  Hooks.on('createToken', onTokenCreated);
+  Hooks.on('createItem', onItemWithSeeInvisible);
+  Hooks.on('deleteItem', onItemWithSeeInvisible);
   Hooks.on('preCreateActiveEffect', onPreCreateImmune);
   Hooks.on('preCreateActiveEffect', onPreCreateEffect);
   Hooks.on('updateCombat', onCombatTurn);

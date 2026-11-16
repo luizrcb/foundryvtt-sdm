@@ -31,7 +31,9 @@ export const REST_CLEARS = [
   'restrain',
   'bleeding',
   'burning',
-  'poison'
+  'poison',
+  'hidden',
+  'surprised'
 ];
 
 /** The actor's own effects that are only short-term conditions (not those from its items). */

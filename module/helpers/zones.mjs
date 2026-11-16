@@ -623,7 +623,7 @@ export function targetRangeHtml(actor, { range = '', throwing = false, melee = f
 /* -------------------------------------------- */
 
 // The adversary can't take the free attack (the conditions' own rules: can't act, unplayable)
-const OUT_OF_FIGHT = ['dead', 'unconscious', 'sleep', 'paralysis', 'petrified', 'stun', 'mad'];
+const OUT_OF_FIGHT = ['dead', 'unconscious', 'sleep', 'paralysis', 'petrified', 'stun', 'mad', 'surprised'];
 // The adversary's attacks have disadvantage (blinded, poisoned, prone, confused; nauseated: physical rolls)
 const ATTACKS_WITH_DISADVANTAGE = ['blind', 'poison', 'prone', 'confused', 'nauseated'];
 // Compendium traits with a rule about it: Springer jumps away after attacking without provoking it;

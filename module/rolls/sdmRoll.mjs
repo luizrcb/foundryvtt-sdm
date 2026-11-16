@@ -86,7 +86,7 @@ export default class SDMRoll {
 
   async evaluate() {
     if (this.sendPowerToChat && this.item) {
-      return await this.item.sendToChat({
+      const sent = await this.item.sendToChat({
         actor: this.actor,
         flavor: this.#buildFlavorText(),
         collapsed: true,
@@ -94,6 +94,16 @@ export default class SDMRoll {
         blindGMRoll: this.isCtrl,
         overcharged: this.overcharged
       });
+      // A power with no roll still fires its "always" power triggers (Eyes of Akaula: sees invisible)
+      const source = this.triggerItem ?? this.item;
+      const fired = itemRollTriggers(source, 'power', { total: 0, dice: [] }, { power: this.powerName }).filter(
+        entry => entry.trigger.condition === 'always'
+      );
+      if (fired.length) {
+        await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), content: renderTriggers(fired) });
+        await runTriggerActions(fired, { actor: this.actor });
+      }
+      return sent;
     }
 
     const { formula: sanitizedFormula, fixedModifiers, diceModifiers, escalatorDie } = this.buildFormula();

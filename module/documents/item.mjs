@@ -403,7 +403,8 @@ export class SdmItem extends Item {
           return c;
         })
       );
-      for (const statusId of effect.statuses) this.statuses.add(statusId);
+      // Items have no status set of their own (an effect with a condition, e.g. Sees invisible on Eerie Sense, is for the bearer)
+      if (this.statuses instanceof Set) for (const statusId of effect.statuses) this.statuses.add(statusId);
     }
     changes.sort((a, b) => a.priority - b.priority);
 

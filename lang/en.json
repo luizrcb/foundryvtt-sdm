@@ -2825,7 +2825,7 @@
   "SDM.Condition.restrain.Name": "Grabbed",
   "SDM.Condition.restrain.Hint": "Immobilized (grabbed, entangled, tethered): can't move; getting free takes a save or some work.",
   "SDM.Condition.invisible.Name": "Invisible",
-  "SDM.Condition.invisible.Hint": "Can't be seen: attacks against it have disadvantage.",
+  "SDM.Condition.invisible.Hint": "Can't be seen: its attacks have advantage, attacks against it disadvantage (unless they see invisible).",
   "SDM.Condition.petrified.Name": "Petrified",
   "SDM.Condition.petrified.Hint": "Feels turned to stone: can't move or act.",
   "SDM.Condition.poison.Name": "Poisoned",
@@ -2989,5 +2989,13 @@
   "SDM.SaveAgainst.RequestNoSource": "{actor}: save against {condition}",
   "SDM.SaveAgainst.Failed": "Failed: {condition}",
   "SDM.SaveAgainst.Resisted": "Resisted: no {condition}",
-  "SDM.Trigger.EffectSaveHint": "A save allowed: an NPC target rolls its save, a character gets a save request; the effect is copied only if the save fails"
+  "SDM.Trigger.EffectSaveHint": "A save allowed: an NPC target rolls its save, a character gets a save request; the effect is copied only if the save fails",
+  "SDM.Condition.hidden.Name": "Hidden",
+  "SDM.Condition.hidden.Hint": "Unseen until it acts: its attacks have advantage, attacks against it disadvantage (unless they see invisible). It's seen once it attacks.",
+  "SDM.Condition.surprised.Name": "Surprised",
+  "SDM.Condition.surprised.Hint": "Caught off guard: loses its first turn; attacks against it have advantage until then.",
+  "SDM.Condition.controlled.Name": "Controlled",
+  "SDM.Condition.controlled.Hint": "Charmed or commanded: acts as someone else orders.",
+  "SDM.Condition.seeInvisible.Name": "Sees invisible",
+  "SDM.Condition.seeInvisible.Hint": "Invisible and hidden creatures don't get advantage against it, nor disadvantage when it attacks them."
 }

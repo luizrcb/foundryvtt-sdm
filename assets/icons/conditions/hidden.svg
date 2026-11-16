@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Hidden: a head peeking over a low wall (white like the core status icons; bricks and eyes are cut out) -->
+  <defs>
+    <mask id="cut">
+      <rect width="512" height="512" fill="#fff"/>
+      <g fill="none" stroke="#000" stroke-width="12">
+        <path d="M56 346h400M56 404h400M160 290v56M288 290v56M416 290v56M96 346v58M224 346v58M352 346v58M160 404v56M288 404v56M416 404v56"/>
+      </g>
+      <ellipse cx="226" cy="178" rx="14" ry="10" fill="#000"/>
+      <ellipse cx="286" cy="178" rx="14" ry="10" fill="#000"/>
+    </mask>
+  </defs>
+  <g fill="#fff" mask="url(#cut)">
+    <circle cx="256" cy="176" r="74"/>
+    <path d="M146 290c18-40 60-62 110-62s92 22 110 62z"/>
+    <rect x="56" y="282" width="400" height="180" rx="8"/>
+  </g>
+</svg>
