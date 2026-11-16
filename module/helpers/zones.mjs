@@ -16,7 +16,7 @@
  * by the rounds the move takes, and a Token HUD button that shows the zones around a token (local).
  */
 
-import { GearType } from './constants.mjs';
+import { ActorType, GearType } from './constants.mjs';
 import { UnarmedDamageItem } from './itemUtils.mjs';
 
 /**
@@ -551,8 +551,12 @@ function enemiesLeft(doc, from, to) {
       const harder = ATTACKS_WITH_DISADVANTAGE.filter(id => statuses.has(id)).map(conditionName);
       if (doc.actor?.statuses?.has('invisible') && !hasTrait(other.actor, EERIE_SENSE)) harder.push(conditionName('invisible'));
       const details = [];
-      if (harder.length) details.push(game.i18n.format('SDM.Zones.FreeAttackDisadvantage', { reasons: harder.join(', ') }));
-      if (statuses.has('fear')) details.push(game.i18n.localize('SDM.Zones.FreeAttackFrightened'));
+      // The adversary's attack has the disadvantage (its conditions, or the token moving away invisible)
+      if (harder.length) details.push(game.i18n.format('SDM.Zones.FreeAttackDisadvantage', { name: other.name, reasons: harder.join(', ') }));
+      // Frightened: it may not attack; an NPC tests its morale (characters have no morale)
+      if (statuses.has('fear')) {
+        details.push(game.i18n.localize(other.actor?.type === ActorType.NPC ? 'SDM.Zones.FreeAttackFrightenedNpc' : 'SDM.Zones.FreeAttackFrightened'));
+      }
       enemies.push({ token: other, details });
     }
   }
