@@ -385,6 +385,27 @@ export function roundsToBand(band, speed = 0) {
   return Math.ceil(band / zonesPerRound(speed) - 1e-9);
 }
 
+/**
+ * How many zones a distance (world unit) covers, as a fraction: within close 0; the edge of short 1,
+ * of medium 2; beyond medium each further medium−short step is one more zone (long has no edge).
+ * In between it is proportional, so a slow token (½ zone a round) goes halfway to the edge of short
+ * in a round and the whole of it in two — what a normal token does in one.
+ */
+export function zonesForDistance(distance, limits = sceneZoneLimits()) {
+  const { close, short, medium } = limits;
+  if (distance <= close) return 0;
+  if (distance <= short) return (distance - close) / Math.max(short - close, 1e-9);
+  if (distance <= medium) return 1 + (distance - short) / Math.max(medium - short, 1e-9);
+  return 2 + (distance - medium) / Math.max(medium - short, 1e-9);
+}
+
+/** Rounds a move of that distance takes at a speed (0 within close). */
+export function roundsForDistance(distance, speed = 0, limits = sceneZoneLimits()) {
+  const zones = zonesForDistance(distance, limits);
+  if (zones <= 0) return 0;
+  return Math.ceil(zones / zonesPerRound(speed) - 1e-9);
+}
+
 /** Speed name (Normal, Slow…) and what it means in zones. */
 export function describeSpeed(speed = 0) {
   const s = Math.round(Number(speed) || 0);
@@ -816,8 +837,8 @@ const RULER_COLORS = [0x3fb950, 0x3fb950, 0xd29922, 0xf85149];
 function zoneStyle(token, waypoint, style) {
   if (!style || !setting('zoneRuler', true) || !token?.actor || !zonesActive(token.scene)) return style;
   const units = Number(waypoint?.measurement?.distance) || 0;
-  const band = bandForMeters(units * metersPerUnit());
-  const rounds = roundsToBand(band, token.actor.system?.speed);
+  // Proportional within zones: a slow token covers half of what a normal one does in a round
+  const rounds = roundsForDistance(units * metersPerUnit(), token.actor.system?.speed);
   return { ...style, color: RULER_COLORS[Math.min(rounds, 3)] };
 }
 

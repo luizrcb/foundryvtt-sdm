@@ -27,7 +27,7 @@ export const CONDITIONS = [
   C('stun', 'icons/svg/daze.svg'),
   C('paralysis', 'icons/svg/paralysis.svg'),
   C('confused', 'icons/svg/hazard.svg'),
-  C('mad', 'icons/svg/mystery-man.svg'),
+  C('mad', 'systems/sdm/assets/icons/conditions/mad.svg'),
   C('nauseated', 'icons/svg/biohazard.svg'),
   C('slowed', 'icons/svg/downgrade.svg'),
   C('weakened', 'icons/svg/degen.svg'),
