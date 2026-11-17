@@ -2597,7 +2597,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       ability: ability === ActorType.NPC ? '' : ability,
       success: saveSuccess
     });
-    await renderSaveResult(
+    const saveMessage = await renderSaveResult(
       { roll, label, targetNumber },
       {
         fromHeroDice: false,
@@ -2616,6 +2616,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         }
       }
     );
+    // The condition's message comes after the save card: wait for its 3D dice (Dice So Nice) to land
+    if (saveAgainstInfo && againstOutcome === false && saveMessage?.id) await game.dice3d?.waitFor3DAnimationByMessageID?.(saveMessage.id);
     await resolveSaveAgainst(this.actor, saveAgainstInfo, againstOutcome);
     if (fired.length) await runTriggerActions(fired, { actor: this.actor });
   }

@@ -275,7 +275,7 @@ export async function restoreAll(actor, kind, group = '') {
 export async function applyStatusToTargets(
   statusId,
   actor,
-  { self = false, remove = false, targets: given = null, rounds = 0, duration = null, save = null } = {}
+  { self = false, remove = false, targets: given = null, rounds = 0, duration = null, save = null, silent = false } = {}
 ) {
   const status = CONFIG.statusEffects.find(s => s.id === statusId);
   if (!status) return;
@@ -312,8 +312,17 @@ export async function applyStatusToTargets(
     else if (game.users.activeGM) game.socket.emit(CHANNEL, { action: APPLY_ACTION, payload });
     else ui.notifications.warn($l10n('SDM.ErrorNoActiveGM'));
   }
+  if (!silent) await conditionLine(actor, targets, name, remove);
+}
+
+/**
+ * The chat line for a condition or effect put on / taken off: "Bob: Grabbed" ("Bob: no longer
+ * Grabbed"), in the name of the one who got it (the roller's when several did). `silent`: the save
+ * card already says it (a failed save, no sacrifice, hero dice).
+ */
+async function conditionLine(actor, targets, name, remove) {
   await ChatMessage.create({
-    speaker: ChatMessage.getSpeaker({ actor }),
+    speaker: ChatMessage.getSpeaker({ actor: targets.length === 1 ? targets[0] : actor }),
     content: `<div class="sdm-card"><div class="sdm-card-tag info"><i class="fa-solid fa-bolt"></i> ${$fmt(remove ? 'SDM.Trigger.StatusRemoved' : 'SDM.Trigger.EffectApplied', {
       effect: esc(name),
       targets: targets.map(t => esc(t.name)).join(', ')
@@ -351,7 +360,7 @@ export function statusNames(ids = []) {
  * A roll trigger's effect: one of the item's effects (keep it disabled or not applied to the bearer
  * on the item) copied to the user's targeted tokens as a temporary effect, like Use.
  */
-export async function applyItemEffectToTargets(item, effectId, actor, { self = false, targets: given = null, save = null, remove = false } = {}) {
+export async function applyItemEffectToTargets(item, effectId, actor, { self = false, targets: given = null, save = null, remove = false, silent = false } = {}) {
   const effects = effectsToCopy(item).filter((data, index) => item.effects.contents[index]?.id === effectId);
   if (!effects.length) return;
   // "self": the one who rolled; `given`: these actors; otherwise the user's targeted tokens
@@ -385,13 +394,7 @@ export async function applyItemEffectToTargets(item, effectId, actor, { self = f
       if (target.isOwner) await applyToActor(payload);
       else if (game.users.activeGM) game.socket.emit(CHANNEL, { action: APPLY_ACTION, payload });
     }
-    await ChatMessage.create({
-      speaker: ChatMessage.getSpeaker({ actor }),
-      content: `<div class="sdm-card"><div class="sdm-card-tag info"><i class="fa-solid fa-bolt"></i> ${$fmt('SDM.Trigger.StatusRemoved', {
-        effect: esc(effects[0].name),
-        targets: targets.map(t => esc(t.name)).join(', ')
-      })}</div></div>`
-    });
+    if (!silent) await conditionLine(actor, targets, effects[0].name, true);
     return;
   }
   for (const target of targets) {
@@ -400,13 +403,7 @@ export async function applyItemEffectToTargets(item, effectId, actor, { self = f
     else if (game.users.activeGM) game.socket.emit(CHANNEL, { action: APPLY_ACTION, payload });
     else ui.notifications.warn($l10n('SDM.ErrorNoActiveGM'));
   }
-  await ChatMessage.create({
-    speaker: ChatMessage.getSpeaker({ actor }),
-    content: `<div class="sdm-card"><div class="sdm-card-tag info"><i class="fa-solid fa-bolt"></i> ${$fmt('SDM.Trigger.EffectApplied', {
-      effect: esc(effects[0].name),
-      targets: targets.map(t => esc(t.name)).join(', ')
-    })}</div></div>`
-  });
+  if (!silent) await conditionLine(actor, targets, effects[0].name, false);
 }
 
 /** The item's effects, as temporary effects of the target (removed by hand). */

@@ -444,7 +444,7 @@ export async function renderSaveResult(
     chatMessageData.rollMode = CONST.DICE_ROLL_MODES.BLIND;
   }
 
-  await createChatMessage(chatMessageData);
+  return createChatMessage(chatMessageData);
 }
 
 export async function renderUsageResult(

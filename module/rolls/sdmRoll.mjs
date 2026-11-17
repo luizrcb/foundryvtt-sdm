@@ -344,7 +344,10 @@ export default class SDMRoll {
     }
 
     chatDataMessage.flags = { ...chatDataMessage.flags, ...this.extraFlags };
-    await createChatMessage(chatDataMessage);
+    const rollMessage = await createChatMessage(chatDataMessage);
+    // What follows the roll (damage applied, a trigger's condition or save) comes after its card: wait
+    // for its 3D dice (Dice So Nice) to land
+    if ((autoTarget || firedTriggers.length) && rollMessage?.id) await game.dice3d?.waitFor3DAnimationByMessageID?.(rollMessage.id);
     if (autoTarget) await changeLifeOf(autoTarget, this.roll.total);
     // The roll's target (the one an attack hit, carried by its damage button) gets the triggers' conditions
     if (firedTriggers.length) {

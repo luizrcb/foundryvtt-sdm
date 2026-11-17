@@ -150,15 +150,15 @@ export async function resolveSaveAgainst(actor, info, success) {
   await putOn(actor, info, false);
 }
 
-/** Put the condition / effect on the actor, or take it off. */
+/** Put the condition / effect on the actor, or take it off (the save card says so: no chat line). */
 async function putOn(actor, info, remove) {
   if (info?.effect?.item) {
     const item = await fromUuid(info.effect.item);
-    if (item) await applyItemEffectToTargets(item, info.effect.id, null, { targets: [actor], remove });
+    if (item) await applyItemEffectToTargets(item, info.effect.id, null, { targets: [actor], remove, silent: true });
     return;
   }
   if (info?.status) {
-    await applyStatusToTargets(info.status, null, { targets: [actor], remove, rounds: Number(info.rounds) || 0, duration: info.duration ?? null });
+    await applyStatusToTargets(info.status, null, { targets: [actor], remove, rounds: Number(info.rounds) || 0, duration: info.duration ?? null, silent: true });
   }
 }
 

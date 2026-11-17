@@ -216,10 +216,6 @@ export class HeroDiceUI {
     });
 
     if (recheck.fired.length) await runTriggerActions(recheck.fired, { actor: recheck.actor });
-    // A save against a condition whose outcome the hero dice changed: the condition follows
-    if (check?.kind === 'save' && check.saveAgainst && originalRoll && Number.isFinite(check.target)) {
-      await recheckSaveAgainst(check, saveOutcome(originalRoll?.total, check.target), saveOutcome(result?.total, check.target));
-    }
 
     if (flags && flags?.sdm?.save) {
       const { label, targetNumber, speaker, cardTitle = '', chips = [] } = flags.sdm.save;
@@ -235,6 +231,12 @@ export class HeroDiceUI {
           extraHtml: against ? saveAgainstHtml(against, saveOutcome(total, targetNumber), fromUuidSync(check.actor)) : ''
         }
       );
+    }
+
+    // A save against a condition whose outcome the hero dice changed: the condition follows (after the
+    // new save card, so its message comes under it)
+    if (check?.kind === 'save' && check.saveAgainst && originalRoll && Number.isFinite(check.target)) {
+      await recheckSaveAgainst(check, saveOutcome(originalRoll?.total, check.target), saveOutcome(result?.total, check.target));
     }
 
     if (flags && flags?.sdm?.corruption) {
