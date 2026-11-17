@@ -24,6 +24,7 @@ export default class SDMRoll {
     explodingDice = true,
     versatile = false,
     targetActor,
+    targetFromCard = false,
     attackTarget = AttackTarget.PHYSICAL,
     sendPowerToChat = false,
     powerDescription = '',
@@ -55,6 +56,7 @@ export default class SDMRoll {
     this.explodingDice = explodingDice;
     this.versatile = versatile;
     this.targetActor = targetActor;
+    this.targetFromCard = targetFromCard;
     this.attackTarget = attackTarget;
     this.sendPowerToChat = sendPowerToChat;
     this.powerDescription = powerDescription;
@@ -344,7 +346,12 @@ export default class SDMRoll {
     chatDataMessage.flags = { ...chatDataMessage.flags, ...this.extraFlags };
     await createChatMessage(chatDataMessage);
     if (autoTarget) await changeLifeOf(autoTarget, this.roll.total);
-    if (firedTriggers.length) await runTriggerActions(firedTriggers, { actor: this.actor });
+    // The roll's target (the one an attack hit, carried by its damage button) gets the triggers' conditions
+    if (firedTriggers.length) {
+      // Only the target the attack card carried; otherwise the user's targeted tokens, as always
+      const rollTargets = this.targetFromCard && this.targetActor && this.targetActor !== this.actor ? [this.targetActor] : null;
+      await runTriggerActions(firedTriggers, { actor: this.actor, targets: rollTargets });
+    }
 
     if (isDamage && this.item && this.item?.system?.features?.has('draining')) {
       const drainingAmount = this.item?.system?.draining?.value ?? 0;

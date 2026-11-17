@@ -189,18 +189,20 @@ export function damageTriggers(item, roll) {
 let chainDepth = 0;
 const MAX_CHAIN = 3;
 
-export async function runTriggerActions(fired, { actor } = {}) {
+export async function runTriggerActions(fired, { actor, targets = null } = {}) {
   // Actions can roll again (a power, a usage roll…): stop long chains and loops
   if (chainDepth >= MAX_CHAIN) return;
   chainDepth++;
   try {
-    await runActions(fired, { actor });
+    await runActions(fired, { actor, targets });
   } finally {
     chainDepth--;
   }
 }
 
-async function runActions(fired, { actor } = {}) {
+// `targets`: the roll's own target (a damage roll from the card of an attack that hit it), used instead
+// of the user's targeted tokens, which may have changed or be empty by then
+async function runActions(fired, { actor, targets = null } = {}) {
   for (const { item, trigger, delta = 0 } of fired) {
     // Counter / charge triggers can scale their add and spend amounts by the size of the change
     const times = trigger.by_change && delta ? Math.abs(delta) : 1;
@@ -214,12 +216,14 @@ async function runActions(fired, { actor } = {}) {
       if (trigger.effect) {
         await applyItemEffectToTargets(item, trigger.effect, actor ?? item.actor, {
           self: trigger.effect_target === 'self',
+          targets: trigger.effect_target === 'self' ? null : targets,
           save: trigger.effect_save ? { ability: trigger.effect_save_ability ?? '', source: item.name } : null
         });
       }
       if (trigger.status) {
         await applyStatusToTargets(trigger.status, actor ?? item.actor, {
           self: trigger.status_target === 'self',
+          targets: trigger.status_target === 'self' ? null : targets,
           remove: trigger.status_mode === 'remove',
           duration: durationData(trigger.status_duration, trigger.status_duration_units),
           save: trigger.status_mode !== 'remove' && trigger.status_save ? { ability: trigger.status_save_ability ?? '', source: item.name } : null

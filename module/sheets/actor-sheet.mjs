@@ -535,6 +535,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         versatile: !!twoHanded,
         skill: availableSkills[plan.selectedSkill],
         targetActor,
+        // The target came with the attack card's button (not the user's targeted tokens)
+        targetFromCard: followed instanceof Actor,
         attackTarget: plan.attackTarget,
         attack: isAttack ? attack : '',
         // The real item (an album-feature entry is "<id>:album"), what it rolls next and its name
