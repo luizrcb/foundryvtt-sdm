@@ -2065,7 +2065,6 @@ export class SdmActor extends Actor {
         content: `<p>${$fmt('SDM.UseFlarePrompt', { actor: this.name, flare })}</p>`,
         yes: { label: $l10n('SDM.ButtonYes') },
         no: { label: $l10n('SDM.ButtonNo') },
-        modal: true,
         rejectClose: false
       });
 

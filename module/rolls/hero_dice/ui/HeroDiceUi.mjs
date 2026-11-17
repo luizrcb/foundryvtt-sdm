@@ -2,7 +2,7 @@ import { attackFollowupHtml } from '../../attackFollowup.mjs';
 import { cardHeader, cardWrap, marginText, resultStrip } from '../../ui/cardParts.mjs';
 import { criticalMultiplier } from '../../sdmRoll.mjs';
 import { recheckTriggersAfterHeroDice, renderTriggers, runTriggerActions } from '../../triggers.mjs';
-import { recheckSaveAgainst } from '../../../app/save-against.mjs';
+import { recheckSaveAgainst, saveAgainstHtml, saveOutcome } from '../../../app/save-against.mjs';
 import { createChatMessage } from '../../../helpers/chatUtils.mjs';
 import { $fmt, $l10n, capitalizeFirstLetter } from '../../../helpers/globalUtils.mjs';
 import { templatePath } from '../../../helpers/templates.mjs';
@@ -209,6 +209,7 @@ export class HeroDiceUI {
       flags: {
         sdm: {
           isHeroResult: true,
+          ...(flags?.sdm?.sourceMessage ? { heroOf: flags.sdm.sourceMessage } : {}),
           ...(attackItem ? { attackItem } : {})
         }
       }
@@ -217,18 +218,21 @@ export class HeroDiceUI {
     if (recheck.fired.length) await runTriggerActions(recheck.fired, { actor: recheck.actor });
     // A save against a condition whose outcome the hero dice changed: the condition follows
     if (check?.kind === 'save' && check.saveAgainst && originalRoll && Number.isFinite(check.target)) {
-      await recheckSaveAgainst(check, Number(originalRoll?.total) >= check.target, Number(result?.total) >= check.target);
+      await recheckSaveAgainst(check, saveOutcome(originalRoll?.total, check.target), saveOutcome(result?.total, check.target));
     }
 
     if (flags && flags?.sdm?.save) {
       const { label, targetNumber, speaker, cardTitle = '', chips = [] } = flags.sdm.save;
+      // A save against a condition: the new card says whether it sticks (equal: the sacrifice buttons)
+      const against = check?.kind === 'save' && check.saveAgainst ? check.saveAgainst : null;
       await renderSaveResult(
         { roll: heroResultRoll, label, targetNumber },
         {
           fromHeroDice: true,
           speaker,
           cardTitle,
-          chips
+          chips,
+          extraHtml: against ? saveAgainstHtml(against, saveOutcome(total, targetNumber), fromUuidSync(check.actor)) : ''
         }
       );
     }

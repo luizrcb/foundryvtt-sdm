@@ -18,6 +18,29 @@ export function attackItemFlag(actor, attackItem) {
   return null;
 }
 
+/**
+ * What the button will roll, read from the item as it is now: a weapon's damage (and its two-handed
+ * damage), a power's or an album power's roll; an NPC's damage is already the button's name.
+ */
+function followupFormula(flag, actor) {
+  if (flag.kind === 'npc') return '';
+  const item = actor.items?.get(flag.id);
+  if (!item) return '';
+  if (flag.kind === 'weapon') {
+    const damage = item.system?.weapon?.damage ?? {};
+    const bonus = Number(damage.bonus) || 0;
+    const withBonus = formula => (formula && bonus ? `${formula}${bonus > 0 ? '+' : ''}${bonus}` : formula);
+    const versatile = item.system?.weapon?.versatile || item.system?.features?.has?.('versatile');
+    return [withBonus(damage.base), versatile ? withBonus(damage.versatile) : ''].filter(Boolean).join(' / ');
+  }
+  if (flag.kind === 'power') return `${item.system?.power?.roll_formula ?? ''}`;
+  if (flag.kind === 'album') {
+    const powers = item.system?.powers ?? [];
+    return `${(powers[item.system?.powers_current_index] ?? powers[0])?.roll_formula ?? ''}`;
+  }
+  return '';
+}
+
 /** The button's HTML, or '' when the item is no longer on the actor. */
 export function attackFollowupHtml(flag) {
   if (!flag?.kind) return '';
@@ -26,14 +49,16 @@ export function attackFollowupHtml(flag) {
   if (flag.kind !== 'npc' && !actor.items?.get(flag.id)) return '';
   const kind = ROLL_KIND[flag.kind] ?? 'damage';
   const isDamage = kind === 'damage' || kind === 'rollNPCDamage';
-  let label = game.i18n.format(isDamage ? 'SDM.AttackFollowupDamage' : 'SDM.AttackFollowupPower', { item: flag.name });
-  // A critical (consecutive natural 20s): the multiplier the damage dialog starts with
-  if (flag.multiplier) label += ` ${flag.multiplier.replace('*', '×')}`;
+  const label = game.i18n.format(isDamage ? 'SDM.AttackFollowupDamage' : 'SDM.AttackFollowupPower', { item: flag.name });
+  // What it rolls, and on a critical (consecutive natural 20s) the multiplier the dialog starts with
+  const multiplier = flag.multiplier ? flag.multiplier.replace('*', '×') : '';
+  const formula = [followupFormula(flag, actor), multiplier].filter(Boolean).join(' ');
   const icon = isDamage ? 'fa-solid fa-burst' : 'fa-solid fa-wand-magic-sparkles';
   const esc = foundry.utils.escapeHTML;
   return (
     `<div class="sdm-attack-followup"><button type="button" class="sdm-primary" data-action="sdmAttackFollowup" data-kind="${kind}"` +
-    ` data-item-id="${esc(flag.id)}" data-actor-uuid="${esc(flag.actor)}" data-multiplier="${esc(flag.multiplier ?? '')}" data-target-uuid="${esc(flag.target ?? '')}"><i class="${icon}"></i><span>${esc(label)}</span></button></div>`
+    ` data-item-id="${esc(flag.id)}" data-actor-uuid="${esc(flag.actor)}" data-multiplier="${esc(flag.multiplier ?? '')}" data-target-uuid="${esc(flag.target ?? '')}"><i class="${icon}"></i><span>${esc(label)}</span>` +
+    `${formula ? `<span class="sdm-followup-formula">${esc(formula)}</span>` : ''}</button></div>`
   );
 }
 

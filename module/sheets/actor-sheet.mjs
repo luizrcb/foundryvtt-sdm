@@ -88,7 +88,7 @@ import {
 } from '../rolls/ui/renderResults.mjs';
 import { DEFAULT_SAVE_VALUE, SAVING_THROW_BASE_FORMULA } from '../settings.mjs';
 import { bindNumberInputs, unformatNumberInputs, reformatNumberInputs } from '../helpers/numberFormat.mjs';
-import { resolveSaveAgainst, saveAgainstHtml } from '../app/save-against.mjs';
+import { resolveSaveAgainst, saveAgainstHtml, saveOutcome } from '../app/save-against.mjs';
 
 const { api, sheets } = foundry.applications;
 const { DialogV2 } = foundry.applications.api;
@@ -638,7 +638,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         window: {
           title: $fmt('SDM.RollType', { type: $l10n(`SDM.${titleType}`) })
         },
-        modal: true,
         powerOptions,
         rollPreview,
         // Choosing another item re-suggests the roll mode (out of range → disadvantage) and shows its image
@@ -1776,7 +1775,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
           title: $fmt('SDM.RollType', { type: $l10n('SDM.Morale') }),
           resizable: true
         },
-        modal: true,
         content: await renderTemplate(templatePath('actor/npc/morale-roll-dialog'), {
           rollModes: CONFIG.SDM.rollMode,
           blindGMRoll: isCtrl
@@ -1855,7 +1853,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         window: {
           title: $fmt('SDM.RollType', { type: $l10n('SDM.Corruption') })
         },
-        modal: true,
         position: {
           width: 500
         },
@@ -1945,7 +1942,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         window: {
           title: $fmt('SDM.RollType', { type: $l10n('SDM.Reaction') })
         },
-        modal: true,
         position: {
           width: 500
         },
@@ -2186,7 +2182,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         window: {
           title: label
         },
-        modal: true,
         position: {
           width: 500
         },
@@ -2277,7 +2272,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         window: {
           title: $fmt('SDM.RollType', { type: $l10n('SDM.Defeat') })
         },
-        modal: true,
         position: {
           width: 500
         },
@@ -2387,7 +2381,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         window: {
           title
         },
-        modal: true,
         content: template,
         position: {
           width: 400
@@ -2574,7 +2567,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         window: {
           title: $fmt('SDM.RollType', { type: $l10n('SDM.FieldSaveTarget') })
         },
-        modal: true,
         content: template,
         position: {
           width: 400
@@ -2599,6 +2591,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     // Save triggers of the actor's readied gear, traits and burdens (a save at or above the target succeeds)
     const saveSuccess = roll.total >= targetNumber;
+    // Against a condition: equal to the target asks for a sacrifice (the Referee decides on the card)
+    const againstOutcome = saveOutcome(roll.total, targetNumber);
     const fired = actorTriggers(this.actor, 'save', roll, {
       ability: ability === ActorType.NPC ? '' : ability,
       success: saveSuccess
@@ -2611,7 +2605,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         isCtrl,
         cardTitle,
         chips: cardChips,
-        extraHtml: saveAgainstHtml(saveAgainstInfo, saveSuccess) + renderTriggers(fired),
+        extraHtml: saveAgainstHtml(saveAgainstInfo, againstOutcome, this.actor) + renderTriggers(fired),
         // Hero dice can change this save: its triggers (and a condition it was against) are checked again
         triggerCheck: {
           kind: 'save',
@@ -2622,7 +2616,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         }
       }
     );
-    await resolveSaveAgainst(this.actor, saveAgainstInfo, saveSuccess);
+    await resolveSaveAgainst(this.actor, saveAgainstInfo, againstOutcome);
     if (fired.length) await runTriggerActions(fired, { actor: this.actor });
   }
 

@@ -3020,5 +3020,9 @@
   "SDM.Card.HealSelf": "Heal {actor} (+{amount})",
   "SDM.Card.Healed": "{actor} healed {amount} life",
   "SDM.Card.HealUndone": "Undone: {amount} healing taken back from {actor}",
-  "SDM.Card.Save": "Save"
+  "SDM.Card.Save": "Save",
+  "SDM.SaveAgainst.Sacrifice": "Equal: avoids {condition} only by losing something valuable (the Referee decides)",
+  "SDM.SaveAgainst.SacrificeMade": "Sacrificed",
+  "SDM.SaveAgainst.SacrificeNot": "No sacrifice",
+  "SDM.SaveAgainst.SacrificeAvoided": "Avoided: {condition} (sacrificed something)"
 }

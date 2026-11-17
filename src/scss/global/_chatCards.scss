@@ -8,7 +8,7 @@
   --sdm-card-muted: rgba(0, 0, 0, 0.55);
   --sdm-card-good: #3d7a12;
   --sdm-card-bad: #9b2c22;
-  --sdm-card-crit: #b07a00;
+  --sdm-card-crit: #3d7a12; // critical success: the hit's green, with more emphasis (see .crit)
   --sdm-card-mid: #c88a00;
   --sdm-card-info: #465ab2;
   display: flex;
@@ -89,6 +89,7 @@
 
     &.critical {
       color: var(--sdm-card-crit);
+      text-shadow: 0 0 1px var(--sdm-card-crit);
     }
     &.fumble {
       color: var(--sdm-card-bad);
@@ -153,8 +154,9 @@
   // Outcome: who or what it's against, and the word on the right
   .sdm-result-strip {
     display: flex;
+    flex-wrap: wrap;
     align-items: center;
-    gap: 8px;
+    gap: 2px 8px;
     padding: 6px 8px;
     border-left: 5px solid var(--sdm-card-good);
     border-radius: 5px;
@@ -168,10 +170,17 @@
       }
     }
     &.crit {
+      border-left-width: 7px;
       border-color: var(--sdm-card-crit);
-      background: rgba(176, 122, 0, 0.12);
+      background: rgba(61, 122, 18, 0.18);
+      box-shadow: inset 0 0 0 1px rgba(61, 122, 18, 0.45);
       .sdm-result-word {
         color: var(--sdm-card-crit);
+        font-size: 18px;
+        text-shadow: 0 0 1px var(--sdm-card-crit);
+      }
+      .sdm-result-word.long {
+        font-size: 14px;
       }
     }
     &.neutral {
@@ -213,6 +222,14 @@
       color: var(--sdm-card-muted);
       font-size: 12px;
     }
+  }
+
+  // Table results: the message under the target and outcome, full width
+  .sdm-result-message {
+    flex: 1 0 100%;
+    color: var(--sdm-card-muted);
+    font-size: 12px;
+    line-height: 1.25;
   }
 
   .sdm-result-word {
@@ -262,6 +279,12 @@
       background: rgba(155, 44, 34, 0.11);
       color: #7d1f17;
     }
+    &.crit {
+      background: rgba(61, 122, 18, 0.18);
+      box-shadow: inset 0 0 0 1px rgba(61, 122, 18, 0.45);
+      color: #2d5c0d;
+      font-weight: bold;
+    }
   }
 
   // Actions: the main one filled, the others outlined
@@ -284,6 +307,37 @@
     &:hover {
       filter: brightness(1.08);
     }
+  }
+
+  // A save equal to its target: the Referee's sacrifice buttons under the tag
+  .sdm-save-sacrifice {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+  }
+
+  .sdm-sacrifice-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+
+    button {
+      margin: 0;
+      line-height: 24px;
+      font-size: 12px;
+    }
+  }
+
+  // The damage / power button: what it will roll, beside the label
+  .sdm-followup-formula {
+    margin-left: 6px;
+    padding: 0 6px;
+    border-radius: 4px;
+    background: rgba(255, 255, 255, 0.2);
+    font-family: var(--font-mono, monospace);
+    font-size: 12px;
+    font-weight: normal;
+    white-space: nowrap;
   }
 
   .sdm-card-foot {

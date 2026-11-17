@@ -17,6 +17,7 @@ async function renderCard(data, roll, title, { extra = '', icon = 'fa-solid fa-d
   return renderTemplate(templatePath('chat/roll-result-card'), {
     ...data,
     header: cardHeader({ icon, title, chips }),
+    outcome: String(data.outcome ?? '').toUpperCase(),
     outcomeLong: String(data.outcome ?? '').length > 12,
     tone: tone ?? toneFor[data.borderColor] ?? 'neutral',
     rollBox: await rollBox(roll),
@@ -34,11 +35,15 @@ export async function renderNPCMoraleResult(
 
   // Determine outcome and message
   let outcome, message;
+  // The NPC's side: keeps fighting (green), a last push (amber), breaks (red)
+  let tone = 'good';
   if (roll.total === targetNumber) {
     outcome = equalOutcome;
+    tone = 'mid';
     message = $l10n('SDM.MoraleEqualOutcomeMessage');
   } else if (roll.total > targetNumber) {
     outcome = overOutcome;
+    tone = 'bad';
     message = $l10n('SDM.MoraleOverOutcomeMessage');
   } else {
     outcome = underOutcome;
@@ -67,7 +72,7 @@ export async function renderNPCMoraleResult(
   }
 
   const chatMessageData = {
-    content: await renderCard(templateData, roll, $fmt('SDM.RollType', { type: $l10n('SDM.Morale') }), { icon: 'fa-solid fa-flag' }),
+    content: await renderCard(templateData, roll, $fmt('SDM.RollType', { type: $l10n('SDM.Morale') }), { icon: 'fa-solid fa-flag', tone }),
     flavor: '',
     rolls: [roll],
     speaker,

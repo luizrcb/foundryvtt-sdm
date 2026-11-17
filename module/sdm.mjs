@@ -68,7 +68,7 @@ import { configureConditions, localizeConditions, setupConditions } from './help
 import { setupZones } from './helpers/zones.mjs';
 import { bindAttackFollowup } from './rolls/attackFollowup.mjs';
 import { bindAttackFeatures } from './rolls/attackFeatures.mjs';
-import { bindSaveAgainst, setupSaveAgainst } from './app/save-against.mjs';
+import { bindSacrifice, bindSaveAgainst, rerenderChangedSave, setupSaveAgainst } from './app/save-against.mjs';
 import { bindApplyDamage, bindHeroHeal, bindUndoDamage } from './rolls/ui/applyDamage.mjs';
 import { rememberCurrency } from './helpers/currency.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
@@ -297,6 +297,8 @@ Hooks.on('updateCombat', async (combat, update) => {
   }
 });
 
+Hooks.on('createChatMessage', message => rerenderChangedSave(message));
+
 Hooks.on('renderChatMessageHTML', (message, html, data) => {
   configureUseHeroDiceButton(message, html, data);
   addCatchHandle(message, html);
@@ -306,6 +308,7 @@ Hooks.on('renderChatMessageHTML', (message, html, data) => {
   bindAttackFeatures(html);
   // Save request (a character saves against a condition): its owner or the Referee picks the ability
   bindSaveAgainst(html);
+  bindSacrifice(message, html);
   // Damage card: apply to the selected tokens
   bindApplyDamage(html);
   bindUndoDamage(message, html);

@@ -6,8 +6,10 @@
  *  - a character gets a save request card with one button per ability (the suggested one
  *    highlighted: the book's static abilities resist, Endurance the body, Aura the mind); its owner or
  *    the Referee clicks one and the save is rolled.
- * The save card says whether the condition sticks; a failed save puts it on. Hero dice that change
- * the outcome put it on or take it off (see HeroDiceUi).
+ * The save card says whether the condition sticks; a failed save puts it on. A save equal to the
+ * target succeeds only by losing something valuable: nothing is put on, and the Referee says on the
+ * card whether the sacrifice was made (avoided) or not (put on). Hero dice that change the outcome
+ * (up or down) put it on, take it off or ask for the sacrifice again (see HeroDiceUi).
  */
 import { ActorType } from '../helpers/constants.mjs';
 import { applyItemEffectToTargets, applyStatusToTargets } from './use-item.mjs';
@@ -84,6 +86,12 @@ export async function saveAgainst(target, info) {
   });
 }
 
+/** createChatMessage: a hero dice result re-renders the card it changed (its sacrifice buttons go). */
+export function rerenderChangedSave(message) {
+  const source = game.messages.get(message.getFlag('sdm', 'heroOf') ?? '');
+  if (source?.content?.includes('sdm-save-sacrifice')) ui.chat?.updateMessage?.(source);
+}
+
 /** renderChatMessageHTML: the save request's ability buttons, for the character's owner and the Referee. */
 export function bindSaveAgainst(html) {
   const box = html.querySelector('.sdm-save-request');
@@ -109,9 +117,26 @@ export function bindSaveAgainst(html) {
   );
 }
 
-/** The line on the save card: whether the condition sticks. */
-export function saveAgainstHtml(info, success) {
+/** The save's outcome against a condition: true (saved), false (failed) or 'equal' (sacrifice). */
+export function saveOutcome(total, target) {
+  const value = Number(total);
+  if (!Number.isFinite(value) || !Number.isFinite(Number(target))) return null;
+  return value > target ? true : value === Number(target) ? 'equal' : false;
+}
+
+/** The line on the save card: whether the condition sticks (or, equal, the Referee's sacrifice buttons). */
+export function saveAgainstHtml(info, success, actor = null) {
   if (!(info?.status || info?.effect)) return '';
+  if (success === 'equal') {
+    const button = (choice, icon, key) =>
+      `<button type="button" data-action="sdmSacrifice" data-choice="${choice}"><i class="fa-solid ${icon}"></i> ${esc(game.i18n.localize(key))}</button>`;
+    return (
+      `<div class="sdm-save-sacrifice" data-actor="${esc(actor?.uuid ?? '')}" data-info="${esc(JSON.stringify(info))}">` +
+      cardTag(game.i18n.format('SDM.SaveAgainst.Sacrifice', { condition: againstName(info) }), { icon: 'fa-solid fa-scale-balanced' }) +
+      `<div class="sdm-sacrifice-buttons">${button('made', 'fa-shield-halved', 'SDM.SaveAgainst.SacrificeMade')}${button('not', 'fa-triangle-exclamation', 'SDM.SaveAgainst.SacrificeNot')}</div>` +
+      `</div>`
+    );
+  }
   const key = success ? 'SDM.SaveAgainst.Resisted' : 'SDM.SaveAgainst.Failed';
   return cardTag(game.i18n.format(key, { condition: againstName(info) }), {
     tone: success ? 'good' : 'bad',
@@ -119,9 +144,9 @@ export function saveAgainstHtml(info, success) {
   });
 }
 
-/** After the save: a failure puts the condition on (the roller owns the actor). */
+/** After the save: a failure puts the condition on (the roller owns the actor); equal waits for the Referee. */
 export async function resolveSaveAgainst(actor, info, success) {
-  if (success) return;
+  if (success !== false) return;
   await putOn(actor, info, false);
 }
 
@@ -137,11 +162,60 @@ async function putOn(actor, info, remove) {
   }
 }
 
-/** Hero dice changed a save's outcome: the condition / effect follows (on when it now fails, off when it now passes). */
+/**
+ * Hero dice changed a save's outcome (true, false or 'equal'): the condition / effect follows — on
+ * when it now fails, off when it now passes or is equal (the new card asks the Referee about the
+ * sacrifice). Taking off what isn't there and putting on what is already there do nothing.
+ */
 export async function recheckSaveAgainst(check, before, after) {
   const info = check?.saveAgainst;
   if (!(info?.status || info?.effect) || before === after || before === null || after === null) return;
   const actor = fromUuidSync(check.actor);
   if (!actor) return;
-  await putOn(actor, info, after);
+  await putOn(actor, info, after !== false);
+}
+
+/**
+ * renderChatMessageHTML: a save equal to its target — the Referee says whether the sacrifice was made
+ * (the condition is avoided) or not (it is put on); the card then shows the result to everyone.
+ */
+export function bindSacrifice(message, html) {
+  const box = html.querySelector('.sdm-save-sacrifice');
+  if (!box) return;
+  let info;
+  try {
+    info = JSON.parse(box.dataset.info);
+  } catch {
+    return;
+  }
+  // Hero dice changed this result: no longer equal to the target, so no buttons (the new card decides)
+  if (game.messages.some(other => other.getFlag('sdm', 'heroOf') === message.id)) {
+    box.querySelector('.sdm-sacrifice-buttons')?.remove();
+    return;
+  }
+  const choice = message.getFlag('sdm', 'sacrifice');
+  if (choice) {
+    const made = choice === 'made';
+    const tag = document.createElement('div');
+    tag.innerHTML = cardTag(
+      game.i18n.format(made ? 'SDM.SaveAgainst.SacrificeAvoided' : 'SDM.SaveAgainst.Failed', { condition: againstName(info) }),
+      { tone: made ? 'good' : 'bad', icon: `fa-solid fa-${made ? 'shield-halved' : 'triangle-exclamation'}` }
+    );
+    box.replaceWith(tag.firstElementChild);
+    return;
+  }
+  const buttons = box.querySelector('.sdm-sacrifice-buttons');
+  if (!game.user.isGM) {
+    buttons?.remove();
+    return;
+  }
+  box.querySelectorAll('[data-action="sdmSacrifice"]').forEach(button =>
+    button.addEventListener('click', async event => {
+      event.preventDefault();
+      box.querySelectorAll('button').forEach(b => (b.disabled = true));
+      const actor = fromUuidSync(box.dataset.actor);
+      if (button.dataset.choice === 'not' && actor) await putOn(actor, info, false);
+      await message.setFlag('sdm', 'sacrifice', button.dataset.choice);
+    })
+  );
 }

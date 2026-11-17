@@ -2665,7 +2665,7 @@
   "SDM.UnselectAll": "Desselecionar Todos",
   "SDM.UpdateAttack": "Configurar Ataque {attack}",
   "SDM.UpdatedHeroDice": "Dados heroicos atualizados para {number} personagem(ns)!",
-  "SDM.UseFlarePrompt": "<b>{actor}</b> tem um item com a caracter <i style='cursor:pointer;' data-tooltip='SDM.ItemFeature.flareDescription'>CLARÃO <span class='fa fa-circle-info'></span></i>. Limitar este dano para o máximo de: <b>{flare}</b> ?",
+  "SDM.UseFlarePrompt": "<b>{actor}</b> tem um item com a característica <i style='cursor:pointer;' data-tooltip='SDM.ItemFeature.flareDescription'>CLARÃO <span class='fa fa-circle-info'></span></i>. Limitar este dano para o máximo de: <b>{flare}</b> ?",
   "SDM.UseFlareTitle": "Ativação da Característica Clarão",
   "SDM.WardType": "Tipo",
   "SDM.WardTypeBulky": "Volumoso",
@@ -3020,5 +3020,9 @@
   "SDM.Card.HealSelf": "Curar {actor} (+{amount})",
   "SDM.Card.Healed": "{actor} recuperou {amount} de vida",
   "SDM.Card.HealUndone": "Desfeito: {amount} de cura retirada de {actor}",
-  "SDM.Card.Save": "Salvaguarda"
+  "SDM.Card.Save": "Salvaguarda",
+  "SDM.SaveAgainst.Sacrifice": "Empate: evita {condition} só perdendo algo valioso (o Mestre decide)",
+  "SDM.SaveAgainst.SacrificeMade": "Sacrificou",
+  "SDM.SaveAgainst.SacrificeNot": "Não sacrificou",
+  "SDM.SaveAgainst.SacrificeAvoided": "Evitou: {condition} (sacrificou algo)"
 }

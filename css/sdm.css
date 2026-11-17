@@ -7141,7 +7141,7 @@ a.sdm-proto-link.warn {
   --sdm-card-muted: rgba(0, 0, 0, 0.55);
   --sdm-card-good: #3d7a12;
   --sdm-card-bad: #9b2c22;
-  --sdm-card-crit: #b07a00;
+  --sdm-card-crit: #3d7a12;
   --sdm-card-mid: #c88a00;
   --sdm-card-info: #465ab2;
   display: flex;
@@ -7275,6 +7275,7 @@ a.sdm-proto-link.warn {
 
 .sdm-card .sdm-roll-total.critical {
   color: var(--sdm-card-crit);
+  text-shadow: 0 0 1px var(--sdm-card-crit);
 }
 
 .sdm-card .sdm-roll-total.fumble {
@@ -7343,8 +7344,9 @@ a.sdm-proto-link.warn {
 
 .sdm-card .sdm-result-strip {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 8px;
+  gap: 2px 8px;
   padding: 6px 8px;
   border-left: 5px solid var(--sdm-card-good);
   border-radius: 5px;
@@ -7361,12 +7363,20 @@ a.sdm-proto-link.warn {
 }
 
 .sdm-card .sdm-result-strip.crit {
+  border-left-width: 7px;
   border-color: var(--sdm-card-crit);
-  background: rgba(176, 122, 0, 0.12);
+  background: rgba(61, 122, 18, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(61, 122, 18, 0.45);
 }
 
 .sdm-card .sdm-result-strip.crit .sdm-result-word {
   color: var(--sdm-card-crit);
+  font-size: 18px;
+  text-shadow: 0 0 1px var(--sdm-card-crit);
+}
+
+.sdm-card .sdm-result-strip.crit .sdm-result-word.long {
+  font-size: 14px;
 }
 
 .sdm-card .sdm-result-strip.neutral {
@@ -7411,6 +7421,13 @@ a.sdm-proto-link.warn {
   display: block;
   color: var(--sdm-card-muted);
   font-size: 12px;
+}
+
+.sdm-card .sdm-result-message {
+  flex: 1 0 100%;
+  color: var(--sdm-card-muted);
+  font-size: 12px;
+  line-height: 1.25;
 }
 
 .sdm-card .sdm-result-word {
@@ -7464,6 +7481,13 @@ a.sdm-proto-link.warn {
   color: #7d1f17;
 }
 
+.sdm-card .sdm-card-tag.crit {
+  background: rgba(61, 122, 18, 0.18);
+  box-shadow: inset 0 0 0 1px rgba(61, 122, 18, 0.45);
+  color: #2d5c0d;
+  font-weight: bold;
+}
+
 .sdm-card .sdm-card-actions {
   display: flex;
   flex-direction: column;
@@ -7483,6 +7507,35 @@ a.sdm-proto-link.warn {
 
 .sdm-card button.sdm-primary:hover {
   filter: brightness(1.08);
+}
+
+.sdm-card .sdm-save-sacrifice {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.sdm-card .sdm-sacrifice-buttons {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+
+.sdm-card .sdm-sacrifice-buttons button {
+  margin: 0;
+  line-height: 24px;
+  font-size: 12px;
+}
+
+.sdm-card .sdm-followup-formula {
+  margin-left: 6px;
+  padding: 0 6px;
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.2);
+  font-family: var(--font-mono, monospace);
+  font-size: 12px;
+  font-weight: normal;
+  white-space: nowrap;
 }
 
 .sdm-card .sdm-card-foot {

@@ -84,7 +84,7 @@ export async function createChatMessage({
         // New cards: the total colored and a tag before the footer
         if (content.includes('sdm-card-foot')) {
           const natural = isNat20
-            ? ['critical', 'good', 'fa-solid fa-star', 'SDM.CriticalSuccess']
+            ? ['critical', 'crit', 'fa-solid fa-star', 'SDM.CriticalSuccess']
             : isNat1
               ? ['fumble', 'bad', 'fa-solid fa-skull', 'SDM.CriticalFailure']
               : is13
