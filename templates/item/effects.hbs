@@ -134,6 +134,8 @@
           <select name="system.triggers.{{index}}.status_mode">{{selectOptions @root.triggerStatusModes selected=trigger.status_mode localize=true}}</select>
           <select name="system.triggers.{{index}}.status_target">{{selectOptions @root.triggerEffectTargets selected=trigger.status_target localize=true}}</select>
           {{#if (ne trigger.status_mode 'remove')}}
+          <input class="sdm-trigger-amount" type="number" min="0" step="1" name="system.triggers.{{index}}.status_duration" value="{{trigger.status_duration}}" placeholder="∞" data-tooltip="{{localize 'SDM.Trigger.StatusDurationHint'}}" />
+          <select name="system.triggers.{{index}}.status_duration_units" data-tooltip="{{localize 'SDM.Trigger.StatusDurationHint'}}">{{selectOptions @root.useDurationUnits selected=trigger.status_duration_units localize=true}}</select>
           <span class="sdm-trigger-check" data-tooltip="{{localize 'SDM.Trigger.StatusSaveHint'}}"><input type="checkbox" name="system.triggers.{{index}}.status_save" {{checked trigger.status_save}} /> {{localize 'SDM.Trigger.StatusSave'}}</span>
           {{#if trigger.status_save}}
           <select name="system.triggers.{{index}}.status_save_ability" data-tooltip="{{localize 'SDM.Trigger.StatusSaveAbilityHint'}}">{{selectOptions @root.triggerSaveAbilities selected=trigger.status_save_ability localize=true}}</select>
@@ -141,12 +143,16 @@
           <input type="hidden" name="system.triggers.{{index}}.status_save_ability" value="{{trigger.status_save_ability}}" />
           {{/if}}
           {{else}}
+          <input type="hidden" name="system.triggers.{{index}}.status_duration" value="{{trigger.status_duration}}" />
+          <input type="hidden" name="system.triggers.{{index}}.status_duration_units" value="{{trigger.status_duration_units}}" />
           <input type="hidden" name="system.triggers.{{index}}.status_save" value="{{trigger.status_save}}" data-dtype="Boolean" />
           <input type="hidden" name="system.triggers.{{index}}.status_save_ability" value="{{trigger.status_save_ability}}" />
           {{/if}}
           {{else}}
           <input type="hidden" name="system.triggers.{{index}}.status_mode" value="{{trigger.status_mode}}" />
           <input type="hidden" name="system.triggers.{{index}}.status_target" value="{{trigger.status_target}}" />
+          <input type="hidden" name="system.triggers.{{index}}.status_duration" value="{{trigger.status_duration}}" />
+          <input type="hidden" name="system.triggers.{{index}}.status_duration_units" value="{{trigger.status_duration_units}}" />
           <input type="hidden" name="system.triggers.{{index}}.status_save" value="{{trigger.status_save}}" data-dtype="Boolean" />
           <input type="hidden" name="system.triggers.{{index}}.status_save_ability" value="{{trigger.status_save_ability}}" />
           {{/if}}</label>

@@ -49,6 +49,7 @@ function rollSave(actor, ability, info) {
 export async function saveAgainst(target, info) {
   if (!target || !(info?.status || info?.effect)) return;
   const data = { status: info.status ?? '', rounds: Number(info.rounds) || 0, source: info.source ?? '' };
+  if (info.duration) data.duration = info.duration;
   if (info.effect) data.effect = info.effect;
   if (target.type !== ActorType.CHARACTER) {
     if (target.isOwner) return rollSave(target, ActorType.NPC, data);
@@ -124,7 +125,9 @@ async function putOn(actor, info, remove) {
     if (item) await applyItemEffectToTargets(item, info.effect.id, null, { targets: [actor], remove });
     return;
   }
-  if (info?.status) await applyStatusToTargets(info.status, null, { targets: [actor], remove, rounds: Number(info.rounds) || 0 });
+  if (info?.status) {
+    await applyStatusToTargets(info.status, null, { targets: [actor], remove, rounds: Number(info.rounds) || 0, duration: info.duration ?? null });
+  }
 }
 
 /** Hero dice changed a save's outcome: the condition / effect follows (on when it now fails, off when it now passes). */

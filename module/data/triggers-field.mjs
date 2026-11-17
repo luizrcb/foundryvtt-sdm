@@ -97,6 +97,9 @@ export function defineTriggersField() {
       status_mode: new fields.StringField({ required: true, blank: false, initial: 'apply', choices: ['apply', 'remove'] }),
       // Put on only if a save fails: NPC targets roll it, characters get a save request with the
       // suggested ability ('' = by the condition: Aura for the mind, else Endurance)
+      // How long the condition lasts (blank: until removed); world-time units expire with the calendar
+      status_duration: new fields.NumberField({ required: true, nullable: true, integer: true, initial: null, min: 0 }),
+      status_duration_units: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'rounds', 'minutes', 'hours', 'days', 'weeks'] }),
       status_save: new fields.BooleanField({ initial: false }),
       status_save_ability: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'str', 'end', 'agi', 'cha', 'aur', 'tho'] }),
       wear: new fields.StringField({

@@ -93,7 +93,9 @@
         "status_target": "self",
         "status_mode": "apply",
         "status_save": false,
-        "status_save_ability": ""
+        "status_save_ability": "",
+        "status_duration": 1,
+        "status_duration_units": "days"
       }
     ]
   },

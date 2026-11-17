@@ -1,4 +1,4 @@
-import { applyItemEffectToTargets, applyStatusToTargets, isUsable, useItem } from '../app/use-item.mjs';
+import { applyItemEffectToTargets, applyStatusToTargets, durationData, isUsable, useItem } from '../app/use-item.mjs';
 import { GearType, ItemStatusType, ItemType } from '../helpers/constants.mjs';
 import { resetCounters, stepCounter } from '../helpers/counters.mjs';
 import { getItemIdentifier } from '../helpers/effectReferences.mjs';
@@ -220,6 +220,7 @@ async function runActions(fired, { actor } = {}) {
         await applyStatusToTargets(trigger.status, actor ?? item.actor, {
           self: trigger.status_target === 'self',
           remove: trigger.status_mode === 'remove',
+          duration: durationData(trigger.status_duration, trigger.status_duration_units),
           save: trigger.status_mode !== 'remove' && trigger.status_save ? { ability: trigger.status_save_ability ?? '', source: item.name } : null
         });
       }

@@ -184,8 +184,16 @@ async function chooseAbility(group = '') {
 
 /** The effect duration of a use, as active effect duration data (null: until removed by hand). */
 function useDuration(use) {
-  const value = Number(use?.duration?.value) || 0;
-  const units = use?.duration?.units;
+  return durationData(use?.duration?.value, use?.duration?.units);
+}
+
+/**
+ * An effect's duration (V14 shape) from a number and a unit: rounds end at the end of a turn,
+ * minutes … weeks become seconds of world time (a calendar module advancing it expires them).
+ * null when there is none.
+ */
+export function durationData(amount, units) {
+  const value = Number(amount) || 0;
   if (!value || !units) return null;
   if (units === 'rounds') return { value, units: 'rounds', expiry: 'turnEnd' };
   const seconds = { minutes: 60, hours: 3600, days: 86400, weeks: 604800 }[units];
@@ -262,7 +270,7 @@ export async function restoreAll(actor, kind, group = '') {
 export async function applyStatusToTargets(
   statusId,
   actor,
-  { self = false, remove = false, targets: given = null, rounds = 0, save = null } = {}
+  { self = false, remove = false, targets: given = null, rounds = 0, duration = null, save = null } = {}
 ) {
   const status = CONFIG.statusEffects.find(s => s.id === statusId);
   if (!status) return;
@@ -282,11 +290,15 @@ export async function applyStatusToTargets(
   // A save allowed: each target saves first (see save-against.mjs) and gets it only on a failure
   if (save && !remove) {
     const { saveAgainst } = await import('./save-against.mjs');
-    for (const target of targets) await saveAgainst(target, { status: statusId, rounds, source: save.source ?? '', ability: save.ability ?? '' });
+    for (const target of targets) {
+      await saveAgainst(target, { status: statusId, rounds, duration, source: save.source ?? '', ability: save.ability ?? '' });
+    }
     return;
   }
   const data = remove ? null : (await ActiveEffect.implementation.fromStatusEffect(statusId)).toObject();
-  if (data && rounds > 0) data.duration = { ...(data.duration ?? {}), rounds };
+  // How long it lasts: a duration given (a trigger's), else a number of rounds (a feature button's)
+  const lasts = duration ?? (rounds > 0 ? durationData(rounds, 'rounds') : null);
+  if (data && lasts) data.duration = { ...(data.duration ?? {}), ...lasts };
   for (const target of targets) {
     const payload = remove
       ? { actorUuid: target.uuid, restores: [{ kind: 'cure', statuses: [statusId] }], effects: [] }

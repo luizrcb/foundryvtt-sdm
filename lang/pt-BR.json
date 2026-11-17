@@ -2997,5 +2997,6 @@
   "SDM.Condition.controlled.Name": "Controlado",
   "SDM.Condition.controlled.Hint": "Encantado ou comandado: age como outro ordena.",
   "SDM.Condition.seeInvisible.Name": "Vê o invisível",
-  "SDM.Condition.seeInvisible.Hint": "Criaturas invisíveis e escondidas não têm vantagem contra ele, nem ele desvantagem ao atacá-las."
+  "SDM.Condition.seeInvisible.Hint": "Criaturas invisíveis e escondidas não têm vantagem contra ele, nem ele desvantagem ao atacá-las.",
+  "SDM.Trigger.StatusDurationHint": "Quanto tempo a condição dura (vazio: até ser removida). Rodadas acabam com o turno; minutos a semanas seguem o tempo do mundo (um módulo de calendário as expira)"
 }

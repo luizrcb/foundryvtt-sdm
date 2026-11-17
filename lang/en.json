@@ -2997,5 +2997,6 @@
   "SDM.Condition.controlled.Name": "Controlled",
   "SDM.Condition.controlled.Hint": "Charmed or commanded: acts as someone else orders.",
   "SDM.Condition.seeInvisible.Name": "Sees invisible",
-  "SDM.Condition.seeInvisible.Hint": "Invisible and hidden creatures don't get advantage against it, nor disadvantage when it attacks them."
+  "SDM.Condition.seeInvisible.Hint": "Invisible and hidden creatures don't get advantage against it, nor disadvantage when it attacks them.",
+  "SDM.Trigger.StatusDurationHint": "How long the condition lasts (blank: until removed). Rounds end with the turn; minutes to weeks follow the world time (a calendar module expires them)"
 }
