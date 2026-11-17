@@ -81,6 +81,27 @@ export async function createChatMessage({
 
         if (!content) content = await roll.render();
 
+        // New cards: the total colored and a tag before the footer
+        if (content.includes('sdm-card-foot')) {
+          const natural = isNat20
+            ? ['critical', 'good', 'fa-solid fa-star', 'SDM.CriticalSuccess']
+            : isNat1
+              ? ['fumble', 'bad', 'fa-solid fa-skull', 'SDM.CriticalFailure']
+              : is13
+                ? ['force', 'warn', 'fa-solid fa-triangle-exclamation', 'SDM.DepletedResources']
+                : luckySevenRule && is7
+                  ? ['lucky', 'good', 'fa-solid fa-clover', 'SDM.LuckySeven']
+                  : null;
+          if (natural) {
+            const [tone, tagTone, icon, key] = natural;
+            content = content.replace('sdm-roll-total ', `sdm-roll-total ${tone} `);
+            const at = content.lastIndexOf('<div class="sdm-card-foot">');
+            const tag = `<div class="sdm-card-tag ${tagTone}"><i class="${icon}"></i> ${$l10n(key)}</div>`;
+            content = content.slice(0, at) + tag + content.slice(at);
+          }
+          continue;
+        }
+
         if (isNat20) {
           content = content.replace('dice-total', 'dice-total critical');
           content += `<div class='flex-group-center mt-10'><span class='critical'>${$l10n('SDM.CriticalSuccess').toUpperCase()}</span></div>`;

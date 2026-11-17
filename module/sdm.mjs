@@ -69,7 +69,7 @@ import { setupZones } from './helpers/zones.mjs';
 import { bindAttackFollowup } from './rolls/attackFollowup.mjs';
 import { bindAttackFeatures } from './rolls/attackFeatures.mjs';
 import { bindSaveAgainst, setupSaveAgainst } from './app/save-against.mjs';
-import { bindApplyDamage, bindUndoDamage } from './rolls/ui/applyDamage.mjs';
+import { bindApplyDamage, bindHeroHeal, bindUndoDamage } from './rolls/ui/applyDamage.mjs';
 import { rememberCurrency } from './helpers/currency.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
 import { gm as gmMacros, player as playerMacros } from './macros/_module.mjs';
@@ -309,6 +309,7 @@ Hooks.on('renderChatMessageHTML', (message, html, data) => {
   // Damage card: apply to the selected tokens
   bindApplyDamage(html);
   bindUndoDamage(message, html);
+  bindHeroHeal(message, html);
   const dangerousElement = html.querySelector('[data-action="rollDangerous"]');
   if (dangerousElement) {
     dangerousElement.addEventListener('click', async event => {

@@ -20,7 +20,7 @@
     align-items: center;
     gap: 6px;
     font-family: var(--sdm-font-tab);
-    font-size: 17px;
+    font-size: 15px;
     letter-spacing: 0.03em;
     line-height: 1.1;
 
@@ -96,6 +96,9 @@
     &.force {
       color: var(--sdm-card-mid);
     }
+    &.lucky {
+      color: var(--sdm-card-good);
+    }
   }
 
   .sdm-roll-formula {
@@ -134,6 +137,10 @@
     }
     &.dropped {
       opacity: 0.35;
+    }
+    &.hero {
+      border-color: #e39e00;
+      background: rgba(227, 158, 0, 0.12);
     }
   }
 
@@ -196,12 +203,13 @@
     flex: 1;
     min-width: 0;
     line-height: 1.2;
-    white-space: pre-line;
+    overflow-wrap: break-word;
 
     b {
       display: block;
     }
     span {
+      display: block;
       color: var(--sdm-card-muted);
       font-size: 12px;
     }
@@ -214,7 +222,12 @@
     line-height: 1.1;
     text-align: right;
     max-width: 55%;
-    overflow-wrap: anywhere;
+    overflow-wrap: break-word;
+
+    &.long {
+      max-width: 50%;
+      font-size: 13px;
+    }
 
     small {
       display: block;
@@ -298,7 +311,8 @@
   }
 
   // Damage applied automatically: the line and its Undo
-  .sdm-auto-damage {
+  .sdm-auto-damage,
+  .sdm-hero-healed {
     display: flex;
     align-items: center;
     gap: 6px;

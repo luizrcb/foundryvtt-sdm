@@ -176,7 +176,8 @@ export class HeroDiceUI {
     // The card: title and chips, the dice (the template), an attack's outcome before → after, the
     // triggers that fire now, and the damage button
     const check = flags?.sdm?.triggerCheck;
-    const chips = [game.i18n.format('SDM.Card.HeroDiceSpent', { count: distribution?.heroicResults?.length ?? 0 })];
+    const spent = distribution?.heroicResults?.length ?? 0;
+    const chips = [game.i18n.format(spent === 1 ? 'SDM.Card.HeroDieSpent' : 'SDM.Card.HeroDiceSpent', { count: spent })];
     if (heroMode === 'decrease') chips.push($l10n('SDM.HeroDiceModeDecrease'));
     if (heroicBonusQty > 0) chips.push(`${$l10n('SDM.FieldBonus')}: ${heroicBonusQty}`);
     let strip = '';
@@ -220,12 +221,14 @@ export class HeroDiceUI {
     }
 
     if (flags && flags?.sdm?.save) {
-      const { label, targetNumber, speaker } = flags.sdm.save;
+      const { label, targetNumber, speaker, cardTitle = '', chips = [] } = flags.sdm.save;
       await renderSaveResult(
         { roll: heroResultRoll, label, targetNumber },
         {
           fromHeroDice: true,
-          speaker
+          speaker,
+          cardTitle,
+          chips
         }
       );
     }

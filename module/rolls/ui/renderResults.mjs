@@ -2,7 +2,7 @@ import { createChatMessage } from '../../helpers/chatUtils.mjs';
 import { RollType } from '../../helpers/constants.mjs';
 import { $fmt, $l10n, toPascalCase } from '../../helpers/globalUtils.mjs';
 import { templatePath } from '../../helpers/templates.mjs';
-import { rollBox } from './cardParts.mjs';
+import { cardHeader, rollBox } from './cardParts.mjs';
 
 const { renderTemplate } = foundry.applications.handlebars;
 
@@ -12,12 +12,12 @@ const { renderTemplate } = foundry.applications.handlebars;
  * the target number when there is one), then any extra HTML (triggers, a save's condition line).
  * Tone: from the old border color (save / usage / danger), else neutral.
  */
-async function renderCard(data, roll, title, { extra = '', icon = 'fa-solid fa-dice-d20', tone = null } = {}) {
+async function renderCard(data, roll, title, { extra = '', icon = 'fa-solid fa-dice-d20', tone = null, chips = [] } = {}) {
   const toneFor = { '#aa0200': 'bad', '#18520B': 'good', '#d4af37': 'mid' };
   return renderTemplate(templatePath('chat/roll-result-card'), {
     ...data,
-    title,
-    icon,
+    header: cardHeader({ icon, title, chips }),
+    outcomeLong: String(data.outcome ?? '').length > 12,
     tone: tone ?? toneFor[data.borderColor] ?? 'neutral',
     rollBox: await rollBox(roll),
     extra: extra || ''
@@ -372,7 +372,7 @@ export async function renderCorruptionResult(
 
 export async function renderSaveResult(
   { roll, label, targetNumber },
-  { fromHeroDice = false, speaker, isCtrl = false, extraHtml = '', triggerCheck = null }
+  { fromHeroDice = false, speaker, isCtrl = false, extraHtml = '', triggerCheck = null, cardTitle = '', chips = [] }
 ) {
   const sacrificeOutcome = $l10n('SDM.SavingThrowSacrifice');
   const saveOutcome = $l10n('SDM.SavingThrowSave');
@@ -417,6 +417,8 @@ export async function renderSaveResult(
   } else {
     flags['sdm.' + RollType.SAVE] = {
       label,
+      cardTitle,
+      chips,
       targetNumber,
       speaker
     };
@@ -425,7 +427,7 @@ export async function renderSaveResult(
   }
 
   const chatMessageData = {
-    content: await renderCard(templateData, roll, label, { extra: extraHtml, icon: 'fa-solid fa-shield-halved' }),
+    content: await renderCard(templateData, roll, cardTitle || label, { extra: extraHtml, icon: 'fa-solid fa-shield-halved', chips }),
     flavor: '',
     rolls: [roll],
     checkCritical: true,

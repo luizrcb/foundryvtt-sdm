@@ -3013,5 +3013,12 @@
   "SDM.SettingsAutoApplyDamageHint": "Damage rolled with a token targeted, or from the Roll damage button of an attack that hit, is applied to that target at once (by the Referee's game when the player doesn't own it). The card shows it, with an Undo for the roller and the Referee.",
   "SDM.Card.DamageApplied": "{amount} damage applied to {target}",
   "SDM.Card.Undo": "Undo",
-  "SDM.Card.Undone": "Undone: {amount} life given back to {target}"
+  "SDM.Card.Undone": "Undone: {amount} life given back to {target}",
+  "SDM.Card.HeroDieSpent": "{count} hero die",
+  "SDM.Card.HeroDiceLeft": "Hero dice: {value} / {max}",
+  "SDM.Card.HeroHealTitle": "Hero dice · Healing",
+  "SDM.Card.HealSelf": "Heal {actor} (+{amount})",
+  "SDM.Card.Healed": "{actor} healed {amount} life",
+  "SDM.Card.HealUndone": "Undone: {amount} healing taken back from {actor}",
+  "SDM.Card.Save": "Save"
 }

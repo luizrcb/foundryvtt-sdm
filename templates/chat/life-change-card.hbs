@@ -1,7 +1,5 @@
-<div class="flexcol life-change-card" data-message-id="{{messageId}}">
-  <header class="message-header flexrow life-header">
-    <span class="flavor-text life-flavor">{{#if isHealing}}{{localize 'SDM.Healing'}}{{else}}{{localize 'SDM.Damage'}}{{/if}}</span>
-  </header>
+<div class="sdm-card life-change-card" data-message-id="{{messageId}}">
+  <div class="sdm-card-title">{{#if isHealing}}<i class="fa-solid fa-heart lime"></i><span>{{localize 'SDM.Healing'}}</span>{{else}}<i class="fa-solid fa-heart-crack rust"></i><span>{{localize 'SDM.Damage'}}</span>{{/if}}</div>
 
   <div class="message-content life-content">
     <div class="life-row" data-actor-id="{{actorId}}">

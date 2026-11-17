@@ -432,13 +432,30 @@ export function describeCondition(trigger, item = null) {
   return text;
 }
 
+/** What a trigger without a text does, from its condition and effect actions: "Burning (save)". */
+function actionSummary(item, trigger) {
+  const parts = [];
+  const save = ` (${game.i18n.localize('SDM.Trigger.StatusSave')})`;
+  if (trigger.status) {
+    const status = CONFIG.statusEffects.find(effect => effect.id === trigger.status);
+    const name = status ? game.i18n.localize(status.name) : trigger.status;
+    const removing = trigger.status_mode === 'remove';
+    parts.push(`${removing ? '− ' : ''}${name}${!removing && trigger.status_save ? save : ''}`);
+  }
+  if (trigger.effect) {
+    const effect = item.effects?.get?.(trigger.effect);
+    if (effect) parts.push(`${effect.name}${trigger.effect_save ? save : ''}`);
+  }
+  return parts.join(', ');
+}
+
 export function renderTriggers(fired) {
   if (!fired.length) return '';
   const rows = fired
-    .map(
-      ({ item, trigger }) =>
-        `<li><i class="fa-solid fa-bolt"></i> <b>${esc(item.name)}</b> (${esc(describeCondition(trigger, item))}): ${esc(trigger.text)}</li>`
-    )
+    .map(({ item, trigger }) => {
+      const text = trigger.text || actionSummary(item, trigger);
+      return `<li><i class="fa-solid fa-bolt"></i> <b>${esc(item.name)}</b> (${esc(describeCondition(trigger, item))})${text ? `: ${esc(text)}` : ''}</li>`;
+    })
     .join('');
   return `<div class="sdm-roll-triggers"><b>${$l10n('SDM.Trigger.Fired')}</b><ul>${rows}</ul></div>`;
 }

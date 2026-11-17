@@ -4,6 +4,8 @@ import { $fmt, $l10n, toPascalCase } from '../../helpers/globalUtils.mjs';
 import { requestSettingUpdate } from '../../settingsSocket.mjs';
 import { HeroDiceEngine } from './core/HeroDiceEngine.mjs';
 import { HeroDiceUI } from './ui/HeroDiceUi.mjs';
+import { cardHeader, cardWrap, rollBox } from '../ui/cardParts.mjs';
+import { applyDamageHtml } from '../ui/applyDamage.mjs';
 
 export async function _promptHeroOptions(actor, bonusHeroDice = 0) {
   const defaultHeroDiceType = game.settings.get('sdm', 'defaultHeroDiceType');
@@ -156,9 +158,37 @@ export async function healingHeroDice(event, actor, onlySpendWithoutRolling = fa
     flavor += `, ${$l10n('SDM.WithoutRollingDice')}`;
   }
 
+  // Rolled for healing: the card heals the roller in one click (the Referee can undo it), and the
+  // buttons apply the result to the selected tokens by hand
+  let content;
+  if (rolls.length) {
+    const roll = rolls[0];
+    const amount = Number(roll.total) || 0;
+    const chips = [
+      game.i18n.format(heroicDiceQty === 1 ? 'SDM.Card.HeroDieSpent' : 'SDM.Card.HeroDiceSpent', { count: heroicDiceQty })
+    ];
+    if (healingHouseRule) chips.push($l10n('SDM.SettingsHealingHouseRule'));
+    const healButton =
+      amount > 0
+        ? `<div class="sdm-card-actions sdm-hero-heal" data-actor-uuid="${foundry.utils.escapeHTML(actor.uuid)}" data-amount="${amount}">` +
+          `<button type="button" class="sdm-primary" data-action="sdmHeroHeal"><i class="fa-solid fa-heart"></i> ${foundry.utils.escapeHTML(
+            $fmt('SDM.Card.HealSelf', { actor: actor.name, amount })
+          )}</button></div>`
+        : '';
+    content = cardWrap(
+      cardHeader({ icon: 'fa-solid fa-heart', color: 'lime', title: $l10n('SDM.Card.HeroHealTitle'), chips }) +
+        (await rollBox(roll)) +
+        healButton +
+        applyDamageHtml(amount),
+      { kind: 'hero' }
+    );
+    flags['sdm.heroHeal'] = true;
+  }
+
   await createChatMessage({
     actor,
-    flavor,
+    flavor: content ? '' : flavor,
+    content,
     rolls,
     flags
   });

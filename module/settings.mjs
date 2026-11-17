@@ -1019,7 +1019,7 @@ export function configureUseHeroDiceButton(message, html, data) {
     if (heroes && !cardFoot.querySelector('.sdm-hero-left')) {
       const left = document.createElement('span');
       left.className = 'sdm-hero-left';
-      left.textContent = `${$l10n('SDM.FieldHeroDice')}: ${heroes.value ?? 0} / ${heroes.max ?? 0}`;
+      left.textContent = game.i18n.format('SDM.Card.HeroDiceLeft', { value: heroes.value ?? 0, max: heroes.max ?? 0 });
       cardFoot.prepend(left);
     }
     cardFoot.appendChild(heroBtn);

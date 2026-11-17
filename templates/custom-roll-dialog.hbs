@@ -102,8 +102,9 @@
     {{/if}}
     {{#if (and (ne type 'save') (ne type 'danger'))}}
     <div class="form-group mt-10">
-      <label for="shouldExplode">{{localize "SDM.ExplodingDice"}}</label>
-      <input id="shouldExplode" type="checkbox" name="shouldExplode"
+      {{!-- No "for": only the checkbox toggles it (the row sits next to the Roll button) --}}
+      <label>{{localize "SDM.ExplodingDice"}}</label>
+      <input id="shouldExplode" type="checkbox" name="shouldExplode" aria-label="{{localize "SDM.ExplodingDice"}}"
         {{#if (and (ne type 'damage') (ne type 'power') (ne type 'power_album'))}}checked{{/if}}
       />
     </div>

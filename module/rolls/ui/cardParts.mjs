@@ -79,7 +79,7 @@ export function resultStrip({ tone = 'good', img = '', name = '', sub = '', outc
     `<div class="sdm-result-strip ${esc(tone)}">` +
     (img ? `<img class="sdm-result-img" src="${esc(img)}" alt="" />` : '') +
     `<div class="sdm-result-who"><b>${esc(name)}</b>${sub ? `<span>${sub}</span>` : ''}</div>` +
-    `<div class="sdm-result-word">${outcomeHtml || esc(outcome)}${margin ? `<small>${esc(margin)}</small>` : ''}</div>` +
+    `<div class="sdm-result-word${String(outcome).length > 12 ? ' long' : ''}">${outcomeHtml || esc(outcome)}${margin ? `<small>${esc(margin)}</small>` : ''}</div>` +
     `</div>`
   );
 }

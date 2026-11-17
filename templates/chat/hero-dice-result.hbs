@@ -1,7 +1,15 @@
-<div class="dice-roll" data-action="expandRoll">
-  <div class="dice-result">
-    <div class="dice-formula">{{heroicTotal.length}}{{heroDiceType}}</div>
-    <div class="dice-tooltip">
+{{!-- The new card's roll box: the total, the hero dice, the original dice (dropped ones faded) --}}
+<div class="sdm-roll-box dice-roll" data-action="expandRoll">
+  <div class="sdm-roll-total">{{total}}</div>
+  <div class="sdm-roll-detail">
+    <div class="sdm-roll-formula">+{{heroicTotal.length}}{{heroDiceType}}</div>
+    <div class="sdm-roll-dice">
+      {{#each heroicTotal as |heroicDice|}}<span class="sdm-die hero{{#unless (contains ../heroicUsed heroicDice.index)}} dropped{{/unless}}">{{heroicDice.result}}</span>{{/each}}
+      {{#each dice}}<span class="sdm-die{{#if (eq original dieFaces)}} max{{/if}}{{#unless isKept}} dropped{{/unless}}">{{original}}</span>{{/each}}
+      {{#each explosions as |explosion|}}{{#each explosion.chain as |face|}}<span class="sdm-die{{#if (eq face explosion.dieFaces)}} max{{/if}}{{#unless explosion.isKept}} dropped{{/unless}}">{{face}}</span>{{/each}}{{/each}}
+    </div>
+  </div>
+    <div class="dice-tooltip sdm-roll-tooltip">
       <div class="wrapper">
         <section class="tooltip-part">
           <div class="dice">
@@ -87,8 +95,4 @@
         {{/if}}
       </div>
     </div>
-    <h4 class="dice-total">
-      {{total}}
-    </h4>
-  </div>
 </div>

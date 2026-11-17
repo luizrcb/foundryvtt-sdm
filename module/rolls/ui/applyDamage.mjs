@@ -65,3 +65,53 @@ export function bindUndoDamage(message, html) {
     else button.disabled = false;
   });
 }
+
+/**
+ * Hero dice rolled for healing (from the sheet): Heal heals the roller (its owner or the Referee
+ * click it); once healed, the card says so and the Referee can undo it.
+ */
+export function bindHeroHeal(message, html) {
+  const box = html.querySelector('.sdm-hero-heal');
+  if (!box) return;
+  const actor = fromUuidSync(box.dataset.actorUuid);
+  const amount = Number(box.dataset.amount) || 0;
+  const healed = message.getFlag('sdm', 'heroHealed');
+  if (healed) {
+    const undone = message.getFlag('sdm', 'heroHealUndone');
+    const line = document.createElement('div');
+    line.className = `sdm-card-tag ${undone ? 'info undone' : 'good'} sdm-hero-healed`;
+    line.innerHTML = `<i class="fa-solid ${undone ? 'fa-rotate-left' : 'fa-heart'}"></i> `;
+    line.append(
+      game.i18n.format(undone ? 'SDM.Card.HealUndone' : 'SDM.Card.Healed', { amount, actor: actor?.name ?? '?' })
+    );
+    if (!undone && game.user.isGM && actor) {
+      const undo = document.createElement('button');
+      undo.type = 'button';
+      undo.innerHTML = `<i class="fa-solid fa-rotate-left"></i> ${foundry.utils.escapeHTML(game.i18n.localize('SDM.Card.Undo'))}`;
+      undo.addEventListener('click', async event => {
+        event.preventDefault();
+        undo.disabled = true;
+        if (await changeLifeOf(actor, amount)) await message.setFlag('sdm', 'heroHealUndone', true);
+        else undo.disabled = false;
+      });
+      line.append(undo);
+    }
+    box.replaceWith(line);
+    return;
+  }
+  const button = box.querySelector('[data-action="sdmHeroHeal"]');
+  if (!actor || !(game.user.isGM || actor.isOwner)) {
+    box.remove();
+    return;
+  }
+  button?.addEventListener('click', async event => {
+    event.preventDefault();
+    button.disabled = true;
+    if (!(await changeLifeOf(actor, amount, { heal: true }))) {
+      button.disabled = false;
+      return;
+    }
+    // The message is the roller's: they (or the Referee) mark it healed; another owner just heals
+    if (message.isOwner) await message.setFlag('sdm', 'heroHealed', true);
+  });
+}

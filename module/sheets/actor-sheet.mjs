@@ -2492,10 +2492,15 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const isShift = reverseShift !== !!event.shiftKey;
     const isCtrl = !!event.ctrlKey;
 
-    let label = $fmt('SDM.SavingThrowRoll', {
-      ability: $l10n(CONFIG.SDM.abilities[ability]) || $l10n('TYPES.Actor.npc')
-    });
-    if (saveAgainstInfo?.source) label += ` — ${saveAgainstInfo.source}`;
+    const abilityName = $l10n(CONFIG.SDM.abilities[ability]) || $l10n('TYPES.Actor.npc');
+    let label = $fmt('SDM.SavingThrowRoll', { ability: abilityName });
+    if (saveAgainstInfo?.source) label += ` · ${saveAgainstInfo.source}`;
+    // The chat card: a short title (against a source: "Save · Bolas", the ability as a chip)
+    const cardTitle = saveAgainstInfo?.source
+      ? `${$l10n('SDM.Card.Save')} · ${saveAgainstInfo.source}`
+      : $fmt('SDM.SavingThrowRoll', { ability: abilityName });
+    const cardChips = saveAgainstInfo?.source ? [abilityName] : [];
+    if (ward > 0) cardChips.push(`${$l10n('TYPES.Item.ward').toLowerCase()} +${ward}`);
 
     if (ward > 0) {
       label += ` (${$l10n('TYPES.Item.ward').toLowerCase()} +${ward})`;
@@ -2604,6 +2609,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         fromHeroDice: false,
         speaker,
         isCtrl,
+        cardTitle,
+        chips: cardChips,
         extraHtml: saveAgainstHtml(saveAgainstInfo, saveSuccess) + renderTriggers(fired),
         // Hero dice can change this save: its triggers (and a condition it was against) are checked again
         triggerCheck: {

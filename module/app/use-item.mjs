@@ -314,10 +314,10 @@ export async function applyStatusToTargets(
   }
   await ChatMessage.create({
     speaker: ChatMessage.getSpeaker({ actor }),
-    content: `<p><i class="fa-solid fa-bolt"></i> ${$fmt(remove ? 'SDM.Trigger.StatusRemoved' : 'SDM.Trigger.EffectApplied', {
+    content: `<div class="sdm-card"><div class="sdm-card-tag info"><i class="fa-solid fa-bolt"></i> ${$fmt(remove ? 'SDM.Trigger.StatusRemoved' : 'SDM.Trigger.EffectApplied', {
       effect: esc(name),
       targets: targets.map(t => esc(t.name)).join(', ')
-    })}</p>`
+    })}</div></div>`
   });
 }
 
@@ -387,10 +387,10 @@ export async function applyItemEffectToTargets(item, effectId, actor, { self = f
     }
     await ChatMessage.create({
       speaker: ChatMessage.getSpeaker({ actor }),
-      content: `<p><i class="fa-solid fa-bolt"></i> ${$fmt('SDM.Trigger.StatusRemoved', {
+      content: `<div class="sdm-card"><div class="sdm-card-tag info"><i class="fa-solid fa-bolt"></i> ${$fmt('SDM.Trigger.StatusRemoved', {
         effect: esc(effects[0].name),
         targets: targets.map(t => esc(t.name)).join(', ')
-      })}</p>`
+      })}</div></div>`
     });
     return;
   }
@@ -402,10 +402,10 @@ export async function applyItemEffectToTargets(item, effectId, actor, { self = f
   }
   await ChatMessage.create({
     speaker: ChatMessage.getSpeaker({ actor }),
-    content: `<p><i class="fa-solid fa-bolt"></i> ${$fmt('SDM.Trigger.EffectApplied', {
+    content: `<div class="sdm-card"><div class="sdm-card-tag info"><i class="fa-solid fa-bolt"></i> ${$fmt('SDM.Trigger.EffectApplied', {
       effect: esc(effects[0].name),
       targets: targets.map(t => esc(t.name)).join(', ')
-    })}</p>`
+    })}</div></div>`
   });
 }
 

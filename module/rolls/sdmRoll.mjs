@@ -466,14 +466,20 @@ export default class SDMRoll {
 
   /** The card's title: "Ranged attack · Bola", "Damage · Spear", a power's name, an ability check. */
   #cardTitle() {
-    const item = this.attackItem?.name ? ` · ${this.attackItem.name}` : '';
     if (this.type === RollType.ATTACK) {
-      const key = this.attack && this.attack !== 'attack' ? `SDM.Attack${capitalizeFirstLetter(this.attack)}` : 'SDM.Attack';
-      const attack = $l10n(key);
-      return (this.attack && this.attack !== 'attack' ? game.i18n.format('SDM.Card.AttackTitle', { attack }) : attack) + item;
+      // With a weapon / power: its name (the icon and a chip say the kind); else "Melee attack"
+      if (this.attackItem?.name) return this.attackItem.name;
+      const kind = this.#attackKind();
+      return kind ? capitalizeFirstLetter(game.i18n.format('SDM.Card.AttackTitle', { attack: kind })) : $l10n('SDM.Attack');
     }
     if (this.type === RollType.DAMAGE) return game.i18n.format('SDM.Card.DamageTitle', { item: this.from });
     return `${this.from ?? ''}`;
+  }
+
+  /** "corpo a corpo", "à distância"… (empty for a plain attack). */
+  #attackKind() {
+    if (!this.attack || this.attack === 'attack') return '';
+    return $l10n(`SDM.Attack${capitalizeFirstLetter(this.attack)}`).toLowerCase();
   }
 
   /** Icon, color, badge and chips of the card's title (what the old bracket flavor listed). */
@@ -493,6 +499,7 @@ export default class SDMRoll {
       color = 'heart';
     }
     const chips = [];
+    if (this.type === RollType.ATTACK && this.attackItem?.name && this.#attackKind()) chips.push(this.#attackKind());
     if (this.ability && this.type !== RollType.ABILITY && CONFIG.SDM.abilityAbbreviations?.[this.ability]) {
       chips.push({ text: $l10n(CONFIG.SDM.abilityAbbreviations[this.ability]), color: abilityColor(this.ability) });
     }
