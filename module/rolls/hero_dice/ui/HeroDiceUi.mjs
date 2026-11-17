@@ -1,4 +1,5 @@
 import { attackFollowupHtml } from '../../attackFollowup.mjs';
+import { cardHeader, cardWrap, marginText, resultStrip } from '../../ui/cardParts.mjs';
 import { criticalMultiplier } from '../../sdmRoll.mjs';
 import { recheckTriggersAfterHeroDice, renderTriggers, runTriggerActions } from '../../triggers.mjs';
 import { recheckSaveAgainst } from '../../../app/save-against.mjs';
@@ -166,13 +167,37 @@ export class HeroDiceUI {
     }
     // Triggers that match the improved result but didn't match the original roll fire now
     const recheck = recheckTriggersAfterHeroDice(flags?.sdm?.triggerCheck, originalRoll, result);
+    // The card: title and chips, the dice (the template), an attack's outcome before → after, the
+    // triggers that fire now, and the damage button
+    const check = flags?.sdm?.triggerCheck;
+    const chips = [game.i18n.format('SDM.Card.HeroDiceSpent', { count: distribution?.heroicResults?.length ?? 0 })];
+    if (heroMode === 'decrease') chips.push($l10n('SDM.HeroDiceModeDecrease'));
+    if (heroicBonusQty > 0) chips.push(`${$l10n('SDM.FieldBonus')}: ${heroicBonusQty}`);
+    let strip = '';
+    if (check?.kind === 'attack' && Number.isFinite(check.defense) && check.defense !== null && originalRoll) {
+      const hit = value => Number(value) > check.defense;
+      const word = value => $l10n(hit(value) ? 'SDM.Card.Hit' : 'SDM.Card.Miss').toUpperCase();
+      const before = word(originalRoll.total);
+      const after = word(total);
+      strip = resultStrip({
+        tone: hit(total) ? 'good' : 'bad',
+        name: `${$l10n('SDM.FieldDefense')} ${check.defense}`,
+        outcomeHtml: before === after ? foundry.utils.escapeHTML(after) : `<span class="was">${before}</span> → ${after}`,
+        margin: marginText(total - check.defense)
+      });
+    }
+    const actions = attackFollowupHtml(attackItem);
     await createChatMessage({
       actor,
-      content:
-        (await renderTemplate(templatePath('/chat/hero-dice-result'), templateData)) +
-        renderTriggers(recheck.fired) +
-        attackFollowupHtml(attackItem),
-      flavor,
+      content: cardWrap(
+        cardHeader({ icon: 'fa-solid fa-dice-d6', color: 'amber', title: $l10n('SDM.FieldHeroDice'), chips }) +
+          (await renderTemplate(templatePath('/chat/hero-dice-result'), templateData)) +
+          strip +
+          renderTriggers(recheck.fired) +
+          (actions ? `<div class="sdm-card-actions">${actions}</div>` : ''),
+        { kind: 'hero' }
+      ),
+      flavor: '',
       rolls: [heroResultRoll],
       flags: {
         sdm: {
@@ -184,7 +209,6 @@ export class HeroDiceUI {
 
     if (recheck.fired.length) await runTriggerActions(recheck.fired, { actor: recheck.actor });
     // A save against a condition whose outcome the hero dice changed: the condition follows
-    const check = flags?.sdm?.triggerCheck;
     if (check?.kind === 'save' && check.saveAgainst && originalRoll && Number.isFinite(check.target)) {
       await recheckSaveAgainst(check, Number(originalRoll?.total) >= check.target, Number(result?.total) >= check.target);
     }

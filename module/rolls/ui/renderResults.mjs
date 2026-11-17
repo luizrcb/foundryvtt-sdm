@@ -2,8 +2,27 @@ import { createChatMessage } from '../../helpers/chatUtils.mjs';
 import { RollType } from '../../helpers/constants.mjs';
 import { $fmt, $l10n, toPascalCase } from '../../helpers/globalUtils.mjs';
 import { templatePath } from '../../helpers/templates.mjs';
+import { rollBox } from './cardParts.mjs';
 
 const { renderTemplate } = foundry.applications.handlebars;
+
+/**
+ * The card for table and target rolls (save, usage, danger, morale, reaction, defeat, corruption,
+ * group chase, relife): title, the roll box, and a strip with the outcome (its message under it,
+ * the target number when there is one), then any extra HTML (triggers, a save's condition line).
+ * Tone: from the old border color (save / usage / danger), else neutral.
+ */
+async function renderCard(data, roll, title, { extra = '', icon = 'fa-solid fa-dice-d20', tone = null } = {}) {
+  const toneFor = { '#aa0200': 'bad', '#18520B': 'good', '#d4af37': 'mid' };
+  return renderTemplate(templatePath('chat/roll-result-card'), {
+    ...data,
+    title,
+    icon,
+    tone: tone ?? toneFor[data.borderColor] ?? 'neutral',
+    rollBox: await rollBox(roll),
+    extra: extra || ''
+  });
+}
 
 export async function renderNPCMoraleResult(
   { roll, targetNumber },
@@ -48,8 +67,8 @@ export async function renderNPCMoraleResult(
   }
 
   const chatMessageData = {
-    content: await renderTemplate(templatePath('chat/morale-roll-result'), templateData),
-    flavor: $fmt('SDM.RollType', { type: $l10n('SDM.Morale') }),
+    content: await renderCard(templateData, roll, $fmt('SDM.RollType', { type: $l10n('SDM.Morale') }), { icon: 'fa-solid fa-flag' }),
+    flavor: '',
     rolls: [roll],
     speaker,
     flags
@@ -142,8 +161,8 @@ export async function renderReactionResult(
   }
 
   const chatMessageData = {
-    content: await renderTemplate(templatePath('chat/reaction-roll-result'), templateData),
-    flavor,
+    content: await renderCard(templateData, roll, flavor),
+    flavor: '',
     rolls: [roll],
     flags,
     speaker
@@ -254,8 +273,8 @@ export async function renderDefeatResult(
   }
 
   const chatMessageData = {
-    content: (await renderTemplate(templatePath('chat/reaction-roll-result'), templateData)) + (extraHtml || ''),
-    flavor,
+    content: await renderCard(templateData, roll, flavor, { extra: extraHtml, icon: 'fa-solid fa-skull' }),
+    flavor: '',
     rolls: [roll],
     flags,
     speaker
@@ -337,8 +356,8 @@ export async function renderCorruptionResult(
   }
 
   const chatMessageData = {
-    content: await renderTemplate(templatePath('chat/reaction-roll-result'), templateData),
-    flavor,
+    content: await renderCard(templateData, roll, flavor),
+    flavor: '',
     rolls: [roll],
     flags,
     speaker
@@ -406,8 +425,8 @@ export async function renderSaveResult(
   }
 
   const chatMessageData = {
-    content: (await renderTemplate(templatePath('chat/saving-throw-result'), templateData)) + (extraHtml || ''),
-    flavor: label,
+    content: await renderCard(templateData, roll, label, { extra: extraHtml, icon: 'fa-solid fa-shield-halved' }),
+    flavor: '',
     rolls: [roll],
     checkCritical: true,
     flags,
@@ -473,8 +492,8 @@ export async function renderUsageResult(
   }
 
   const chatMessageData = {
-    content: (await renderTemplate(templatePath('chat/saving-throw-result'), templateData)) + (extraHtml || ''),
-    flavor: label,
+    content: await renderCard(templateData, roll, label, { extra: extraHtml, icon: 'fa-solid fa-shield-halved' }),
+    flavor: '',
     rolls: [roll],
     checkCritical: false,
     flags,
@@ -529,8 +548,8 @@ export async function renderDangerResult(
   }
 
   const chatMessageData = {
-    content: await renderTemplate(templatePath('chat/saving-throw-result'), templateData),
-    flavor: label,
+    content: await renderCard(templateData, roll, label, { icon: 'fa-solid fa-triangle-exclamation' }),
+    flavor: '',
     rolls: [roll],
     checkCritical: true,
     flags,
@@ -596,8 +615,8 @@ export async function renderGroupChaseResult(
   }
 
   const chatMessageData = {
-    content: await renderTemplate(templatePath('chat/reaction-roll-result'), templateData),
-    flavor: label,
+    content: await renderCard(templateData, roll, label, { icon: 'fa-solid fa-person-running' }),
+    flavor: '',
     rolls: [roll],
     flags,
     speaker
@@ -662,8 +681,8 @@ export async function renderRelifeResult(
   }
 
   const chatMessageData = {
-    content: await renderTemplate(templatePath('chat/relife-roll-result'), templateData),
-    flavor: label,
+    content: await renderCard(templateData, roll, label, { icon: 'fa-solid fa-heart-pulse' }),
+    flavor: '',
     rolls: [roll],
     flags,
     speaker

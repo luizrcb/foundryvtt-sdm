@@ -1,0 +1,378 @@
+@use 'sass:color';
+
+// Chat cards (attack, damage, power, saves, hero dice, defeat…): title + chips, roll box, result
+// strip, tags, actions and footer. Built by module/rolls/ui/cardParts.mjs. System fonts: titles in
+// the tab font, outcome words in the dice font, text in the secondary font.
+.sdm-card {
+  --sdm-card-line: rgba(0, 0, 0, 0.18);
+  --sdm-card-muted: rgba(0, 0, 0, 0.55);
+  --sdm-card-good: #3d7a12;
+  --sdm-card-bad: #9b2c22;
+  --sdm-card-crit: #b07a00;
+  --sdm-card-mid: #c88a00;
+  --sdm-card-info: #465ab2;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+
+  .sdm-card-title {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-family: var(--sdm-font-tab);
+    font-size: 17px;
+    letter-spacing: 0.03em;
+    line-height: 1.1;
+
+    > span:first-of-type {
+      flex: 0 1 auto;
+    }
+  }
+
+  .sdm-card-badge {
+    padding: 0 6px;
+    border-radius: 4px;
+    background: var(--sdm-card-bad);
+    color: #fff;
+    font-size: 13px;
+  }
+
+  .sdm-card-chips {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 4px;
+    margin-top: -2px;
+  }
+
+  .sdm-chip {
+    padding: 0 7px;
+    border: 1px solid var(--sdm-card-line);
+    border-radius: 9px;
+    background: rgba(0, 0, 0, 0.05);
+    color: var(--sdm-card-muted);
+    font-size: 11.5px;
+    line-height: 17px;
+    white-space: nowrap;
+  }
+
+  @each $name, $color in (rust: #cc2f00, pumpkin: #db6600, amber: #e39e00, sky: #006486, azure: #007cb5, royal: #465ab2, lime: #76b80d, pine: #007668, heart: #6d47b1, plum: #873b9c) {
+    .sdm-chip-#{$name} {
+      border-color: $color;
+      background: rgba($color, 0.1);
+      color: color.adjust($color, $lightness: -12%);
+    }
+  }
+
+  // The roll: total large, formula and dice faces beside it
+  .sdm-roll-box {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    column-gap: 10px;
+    padding: 6px 9px;
+    border: 1px solid var(--sdm-card-line);
+    border-radius: 5px;
+    background: rgba(255, 255, 255, 0.45);
+    cursor: pointer;
+
+    .sdm-roll-tooltip {
+      grid-column: 1 / -1;
+    }
+  }
+
+  .sdm-roll-total {
+    min-width: 42px;
+    font-family: var(--sdm-font-dice);
+    font-size: 30px;
+    line-height: 1;
+    text-align: center;
+
+    &.critical {
+      color: var(--sdm-card-crit);
+    }
+    &.fumble {
+      color: var(--sdm-card-bad);
+    }
+    &.force {
+      color: var(--sdm-card-mid);
+    }
+  }
+
+  .sdm-roll-formula {
+    color: var(--sdm-card-muted);
+    font-family: var(--font-mono, monospace);
+    font-size: 11.5px;
+    word-break: break-word;
+  }
+
+  .sdm-roll-dice {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 3px;
+    margin-top: 3px;
+  }
+
+  .sdm-die {
+    min-width: 22px;
+    height: 22px;
+    padding: 0 3px;
+    border: 1px solid rgba(0, 0, 0, 0.4);
+    border-radius: 5px;
+    background: #fff;
+    font-family: var(--sdm-font-dice);
+    font-size: 12px;
+    line-height: 20px;
+    text-align: center;
+
+    &.max {
+      border-color: var(--sdm-card-good);
+      color: var(--sdm-card-good);
+    }
+    &.min {
+      border-color: var(--sdm-card-bad);
+      color: var(--sdm-card-bad);
+    }
+    &.dropped {
+      opacity: 0.35;
+    }
+  }
+
+  .sdm-roll-note {
+    align-self: center;
+    color: var(--sdm-card-muted);
+    font-size: 11.5px;
+  }
+
+  // Outcome: who or what it's against, and the word on the right
+  .sdm-result-strip {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 8px;
+    border-left: 5px solid var(--sdm-card-good);
+    border-radius: 5px;
+    background: rgba(61, 122, 18, 0.09);
+
+    &.bad {
+      border-color: var(--sdm-card-bad);
+      background: rgba(155, 44, 34, 0.09);
+      .sdm-result-word {
+        color: var(--sdm-card-bad);
+      }
+    }
+    &.crit {
+      border-color: var(--sdm-card-crit);
+      background: rgba(176, 122, 0, 0.12);
+      .sdm-result-word {
+        color: var(--sdm-card-crit);
+      }
+    }
+    &.neutral {
+      border-color: rgba(0, 0, 0, 0.35);
+      background: rgba(0, 0, 0, 0.05);
+      .sdm-result-word {
+        color: inherit;
+      }
+    }
+    &.mid {
+      border-color: var(--sdm-card-mid);
+      background: rgba(200, 138, 0, 0.12);
+      .sdm-result-word {
+        color: #8a5d00;
+      }
+    }
+  }
+
+  .sdm-result-img {
+    width: 28px;
+    height: 28px;
+    flex: 0 0 28px;
+    border: 1px solid var(--sdm-card-line);
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .sdm-result-who {
+    flex: 1;
+    min-width: 0;
+    line-height: 1.2;
+    white-space: pre-line;
+
+    b {
+      display: block;
+    }
+    span {
+      color: var(--sdm-card-muted);
+      font-size: 12px;
+    }
+  }
+
+  .sdm-result-word {
+    color: var(--sdm-card-good);
+    font-family: var(--sdm-font-dice);
+    font-size: 16px;
+    line-height: 1.1;
+    text-align: right;
+    max-width: 55%;
+    overflow-wrap: anywhere;
+
+    small {
+      display: block;
+      color: var(--sdm-card-muted);
+      font-family: var(--sdm-font-secondary);
+      font-size: 11px;
+    }
+
+    .was {
+      color: var(--sdm-card-bad);
+      opacity: 0.6;
+      text-decoration: line-through;
+    }
+  }
+
+  .sdm-card-tag {
+    padding: 3px 7px;
+    border-radius: 4px;
+    background: rgba(200, 138, 0, 0.14);
+    color: #6e4c00;
+    font-size: 12.5px;
+
+    &.info {
+      background: rgba(70, 90, 178, 0.11);
+      color: #2d3d80;
+    }
+    &.good {
+      background: rgba(61, 122, 18, 0.11);
+      color: #2d5c0d;
+    }
+    &.bad {
+      background: rgba(155, 44, 34, 0.11);
+      color: #7d1f17;
+    }
+  }
+
+  // Actions: the main one filled, the others outlined
+  .sdm-card-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    button {
+      margin: 0;
+    }
+  }
+
+  button.sdm-primary {
+    border-color: #5e2a6d;
+    background: var(--sdm-c-plum, #873b9c);
+    color: #fff;
+    font-weight: bold;
+
+    &:hover {
+      filter: brightness(1.08);
+    }
+  }
+
+  .sdm-card-foot {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 6px;
+    padding-top: 5px;
+    border-top: 1px dashed var(--sdm-card-line);
+    color: var(--sdm-card-muted);
+    font-size: 12px;
+
+    &:empty {
+      display: none;
+    }
+
+    button {
+      flex: 0 0 auto;
+      width: auto;
+      margin: 0;
+      padding: 0 8px;
+      line-height: 22px;
+      font-size: 12px;
+    }
+  }
+
+  // Damage: apply to the selected tokens
+  .sdm-apply-damage {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+
+    button {
+      margin: 0;
+      padding: 2px;
+      font-size: 12px;
+      line-height: 20px;
+    }
+  }
+
+  // Fired triggers and item feature notes: info / warn tags
+  .sdm-roll-triggers {
+    padding: 4px 7px;
+    border-radius: 4px;
+    background: rgba(70, 90, 178, 0.11);
+    color: #2d3d80;
+    font-size: 12.5px;
+
+    ul {
+      margin: 2px 0 0;
+      padding-left: 0;
+      list-style: none;
+    }
+  }
+
+  .sdm-attack-features {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    .sdm-attack-feature {
+      padding: 3px 7px;
+      border-radius: 4px;
+      background: rgba(200, 138, 0, 0.14);
+      color: #6e4c00;
+      font-size: 12.5px;
+    }
+  }
+
+  .sdm-save-request p {
+    margin: 0 0 6px;
+  }
+
+  .sdm-save-request-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+
+    button {
+      margin: 0;
+      line-height: 24px;
+    }
+  }
+
+  // Save request: the six abilities, the suggested one marked
+  .sdm-save-request-buttons button.suggested {
+    border: 2px solid var(--sdm-c-plum, #873b9c);
+    color: var(--sdm-c-plum, #873b9c);
+  }
+}
+
+// Dark theme: lighter muted text and backgrounds
+.theme-dark .sdm-card {
+  --sdm-card-line: rgba(255, 255, 255, 0.2);
+  --sdm-card-muted: rgba(255, 255, 255, 0.6);
+
+  .sdm-roll-box {
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  .sdm-die {
+    background: transparent;
+    border-color: rgba(255, 255, 255, 0.4);
+  }
+}

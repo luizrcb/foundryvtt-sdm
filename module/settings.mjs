@@ -1002,14 +1002,23 @@ export function configureUseHeroDiceButton(message, html, data) {
 
   heroBtn.append(` ${$l10n('SDM.RollUseHeroDice')}`);
 
-  // Append hero button (container)
-  const heroContainer = document.createElement('div');
-  heroContainer.classList.add('flex', 'flex-group-center');
-  heroContainer.appendChild(heroBtn);
-
-  const messageContent = html.querySelector('.message-content');
-  if (messageContent) {
-    messageContent.appendChild(heroContainer);
+  // New cards: in the footer, with the hero dice left; other messages: centered under the content
+  const cardFoot = html.querySelector('.sdm-card .sdm-card-foot');
+  if (cardFoot) {
+    const heroes = actor?.system?.hero_dice;
+    if (heroes && !cardFoot.querySelector('.sdm-hero-left')) {
+      const left = document.createElement('span');
+      left.className = 'sdm-hero-left';
+      left.textContent = `${$l10n('SDM.FieldHeroDice')}: ${heroes.value ?? 0} / ${heroes.max ?? 0}`;
+      cardFoot.prepend(left);
+    }
+    cardFoot.appendChild(heroBtn);
+  } else {
+    const heroContainer = document.createElement('div');
+    heroContainer.classList.add('flex', 'flex-group-center');
+    heroContainer.appendChild(heroBtn);
+    const messageContent = html.querySelector('.message-content');
+    if (messageContent) messageContent.appendChild(heroContainer);
   }
 
   // Hero button handler (unchanged call site)

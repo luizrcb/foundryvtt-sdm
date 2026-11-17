@@ -69,6 +69,7 @@ import { setupZones } from './helpers/zones.mjs';
 import { bindAttackFollowup } from './rolls/attackFollowup.mjs';
 import { bindAttackFeatures } from './rolls/attackFeatures.mjs';
 import { bindSaveAgainst, setupSaveAgainst } from './app/save-against.mjs';
+import { bindApplyDamage } from './rolls/ui/applyDamage.mjs';
 import { rememberCurrency } from './helpers/currency.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
 import { gm as gmMacros, player as playerMacros } from './macros/_module.mjs';
@@ -305,6 +306,8 @@ Hooks.on('renderChatMessageHTML', (message, html, data) => {
   bindAttackFeatures(html);
   // Save request (a character saves against a condition): its owner or the Referee picks the ability
   bindSaveAgainst(html);
+  // Damage card: apply to the selected tokens
+  bindApplyDamage(html);
   const dangerousElement = html.querySelector('[data-action="rollDangerous"]');
   if (dangerousElement) {
     dangerousElement.addEventListener('click', async event => {

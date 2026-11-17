@@ -6,6 +6,8 @@ import { actorTriggers, attackTriggers, damageTriggers, itemRollTriggers, render
 import { createChatMessage } from '../helpers/chatUtils.mjs';
 import { ActorType, AttackTarget, RollMode, RollType } from '../helpers/constants.mjs';
 import { $l10n, capitalizeFirstLetter, toPascalCase } from '../helpers/globalUtils.mjs';
+import { cardHeader, cardTag, cardWrap, marginText, resultStrip, rollBox } from './ui/cardParts.mjs';
+import { applyDamageHtml } from './ui/applyDamage.mjs';
 
 export default class SDMRoll {
   constructor({
@@ -148,87 +150,79 @@ export default class SDMRoll {
     this.roll = new Roll(sanitizedFormula, this.actor.system);
     await this.roll.evaluate();
 
-    let content = await this.roll.render();
+    let content = '';
     let attackSuccess = null; // known when attacking a target
+    const nat = detectNat1OrNat20(this.roll);
+    const { isNat1, isNat20, is13, is7 } = nat;
+    // Card pieces (see ui/cardParts.mjs): result strip, note tags, extras, actions
+    let resultHtml = '';
+    const tags = [];
+    let rollTone = '';
 
     if (this.type === RollType.ATTACK && this.targetActor && this.targetActor !== this.actor) {
       checkCritical = false;
       const isNPCTarget = this.targetActor.type === ActorType.NPC;
       const target = isNPCTarget ? AttackTarget.PHYSICAL : this.attackTarget;
 
-      let { icon, property } = attackMapping[target];
+      const { icon, property } = attackMapping[target];
 
       const targetDefense = this.targetActor?.system[property] || 0;
       const targetResistances = this.targetActor?.resistances || [];
 
       const attackResult = this.roll.total;
-      const { isNat1, isNat20, is13, is7 } = detectNat1OrNat20(this.roll);
       const isSuccess = !isNat1 && (isNat20 || attackResult > targetDefense);
       attackSuccess = isSuccess;
       const forceOrFail = attackResult === targetDefense;
 
-      let resultMessage = (isSuccess ? $l10n('SDM.Success') : $l10n('SDM.Failure')).toUpperCase();
-      const textClass = isSuccess
-        ? 'critical'
-        : forceOrFail
-          ? 'force'
-          : isNat1
-            ? 'fumble'
-            : 'failure';
-
-      content = content.replace(
-        '<li class="roll die d20">13</li>',
-        '<li class="roll die d20 is13">13</li>'
-      );
-
-      if (luckySevenRule) {
-        content = content.replace(
-          '<li class="roll die d20">7</li>',
-          '<li class="roll die d20 is7">7</li>'
-        );
-      }
-
+      let outcome = $l10n(isSuccess ? 'SDM.Card.Hit' : 'SDM.Card.Miss');
+      let tone = isSuccess ? 'good' : 'bad';
       if (isNat1) {
-        resultMessage = $l10n('SDM.CriticalFailure').toUpperCase();
-        content = content.replace('dice-total', 'dice-total fumble');
+        outcome = $l10n('SDM.CriticalFailure');
+        tone = 'bad';
+        rollTone = 'fumble';
       }
-
       if (isNat20) {
-        resultMessage = $l10n('SDM.CriticalSuccess').toUpperCase();
-        content = content.replace('dice-total', 'dice-total critical');
+        outcome = $l10n('SDM.CriticalSuccess');
+        tone = 'crit';
+        rollTone = 'critical';
       }
-
       if (forceOrFail) {
-        resultMessage = $l10n('SDM.ForceOrFail').toUpperCase();
-        content = content.replace('dice-total', 'dice-total force');
+        outcome = $l10n('SDM.ForceOrFail');
+        tone = 'mid';
+        rollTone = 'force';
       }
-
-      content += `
-      <br>
-      <div>
-        <div class="flexrow"><div class="flex-group-center"><span><b>${$l10n(
-          'SDM.Target'
-        )}:</b> ${this.targetActor.name}</span></div><div class="flex-group-center"><b>${$l10n(
-          'SDM.FieldDefense'
-        )}:</b> ${icon} ${targetDefense}</span></div></div><br>
-        ${
-          targetResistances.length > 0
-            ? `<div class="flex-group-center"><b>${$l10n('SDM.Resistances')}:</b> ${targetResistances.join(', ')}</div>`
-            : ''
-        }<br>
-        <div class="flex-group-center"><span class="${textClass}"}> ${resultMessage}</span><div>
-        ${
-          is13
-            ? `
-        <div class="flex-group-center"><span class="is13"><b>${$l10n('SDM.DepletedResources')}</b></span></div>
-        `
-            : is7 && luckySevenRule
-              ? `<div class="flex-group-center"><span class="is7"><b>${$l10n('SDM.LuckySeven')}</b></span></div>`
-              : ''
-        }
-      <div>`;
+      const token = this.targetActor.getActiveTokens?.()[0]?.document;
+      resultHtml = resultStrip({
+        tone,
+        img: token?.texture?.src || this.targetActor.img,
+        name: this.targetActor.name,
+        sub: `${icon} ${foundry.utils.escapeHTML($l10n('SDM.FieldDefense'))} ${targetDefense}`,
+        outcome: outcome.toUpperCase(),
+        margin: forceOrFail || isNat1 || isNat20 ? '' : marginText(attackResult - targetDefense)
+      });
+      if (targetResistances.length > 0) {
+        tags.push(cardTag(`${$l10n('SDM.Resistances')}: ${targetResistances.join(', ')}`, { tone: 'info' }));
+      }
+      if (is13) tags.push(cardTag($l10n('SDM.DepletedResources'), { icon: 'fa-solid fa-triangle-exclamation' }));
+      else if (is7 && luckySevenRule) tags.push(cardTag($l10n('SDM.LuckySeven'), { tone: 'good', icon: 'fa-solid fa-clover' }));
+    } else if (checkCritical) {
+      // No target (or an ability check): the natural 20 / 1 / 13 / 7 on the card itself
+      checkCritical = false;
+      if (isNat20) {
+        rollTone = 'critical';
+        resultHtml = resultStrip({ tone: 'crit', name: this.#cardTitle(), outcome: $l10n('SDM.CriticalSuccess').toUpperCase() });
+      } else if (isNat1) {
+        rollTone = 'fumble';
+        resultHtml = resultStrip({ tone: 'bad', name: this.#cardTitle(), outcome: $l10n('SDM.CriticalFailure').toUpperCase() });
+      } else if (is13) {
+        rollTone = 'force';
+        tags.push(cardTag($l10n('SDM.DepletedResources'), { icon: 'fa-solid fa-triangle-exclamation' }));
+      } else if (luckySevenRule && is7) {
+        tags.push(cardTag($l10n('SDM.LuckySeven'), { tone: 'good', icon: 'fa-solid fa-clover' }));
+      }
     }
 
+    let extras = '';
     if (this.powerDescription || isPower || isPowerAlbum) {
       const powerCard = await this.item.getItemChatCard({
         collapsed: true,
@@ -236,7 +230,7 @@ export default class SDMRoll {
         actor: this.actor,
         overcharged: this.overcharged
       });
-      content += powerCard;
+      extras += powerCard;
     }
 
     // Roll triggers: natural results on attacks (readied gear), damage results of the item
@@ -251,7 +245,7 @@ export default class SDMRoll {
             : isPowerAlbum && this.triggerItem
               ? itemRollTriggers(this.triggerItem, 'power', this.roll, { power: this.powerName })
               : [];
-    content += renderTriggers(firedTriggers);
+    extras += renderTriggers(firedTriggers);
 
     // Attack made with a weapon or power: a button to roll its damage / the power next (kept in the
     // flags, so a hero dice result for this attack gets it too)
@@ -265,27 +259,39 @@ export default class SDMRoll {
         attack: this.attack,
         attackerHasReach: usedItem ? !!usedItem.system?.features?.has?.('reach') : null
       });
-      if (reachNote) {
-        content += `<div class="sdm-attack-features"><div class="sdm-attack-feature"><i class="fa-solid fa-arrows-left-right-to-line"></i> ${foundry.utils.escapeHTML(reachNote)}</div></div>`;
-      }
+      if (reachNote) tags.push(cardTag(reachNote, { tone: 'info', icon: 'fa-solid fa-arrows-left-right-to-line' }));
+    }
+    // Actions: the damage / power button first (the main one), then the item's feature buttons
+    let actions = '';
+    if (attackItem) {
+      actions += attackFollowupHtml(attackItem);
+      flags.sdm = { ...(flags.sdm ?? {}), attackItem };
     }
     // The item's features: backfiring, vorpal, blinding, burdening; spiked armor against unarmed
     if (isAttack && this.attackItem?.id) {
       const usedItem = this.actor?.items?.get(this.attackItem.id);
-      const nat = detectNat1OrNat20(this.roll);
-      content += attackFeatureHtml({
+      actions += attackFeatureHtml({
         actor: this.actor,
         item: usedItem,
         targetActor: this.targetActor,
         success: attackSuccess,
-        isNat1: nat.isNat1,
-        isNat20: nat.isNat20
+        isNat1,
+        isNat20
       });
     }
-    if (attackItem) {
-      content += attackFollowupHtml(attackItem);
-      flags.sdm = { ...(flags.sdm ?? {}), attackItem };
-    }
+    // Damage: apply it to the selected tokens (also in the card's right-click menu)
+    if (isDamage || ((isPower || isPowerAlbum) && this.roll.dice.length)) actions += applyDamageHtml(this.roll.total);
+
+    content = cardWrap(
+      cardHeader(this.#cardHeaderData(fixedModifiers, diceModifiers)) +
+        (await rollBox(this.roll, { tone: rollTone })) +
+        resultHtml +
+        tags.join('') +
+        extras +
+        (actions ? `<div class="sdm-card-actions">${actions}</div>` : '') +
+        `<div class="sdm-card-foot"></div>`,
+      { kind: this.type }
+    );
 
     // Hero dice can change this roll: what its triggers need to be checked again on the result
     if ((isAttack || isAbility) && this.actor) {
@@ -308,7 +314,8 @@ export default class SDMRoll {
     const chatDataMessage = {
       actor: this.actor,
       rolls: [this.roll],
-      flavor,
+      // The card has its own title and chips (the old bracket line stays only in the roll's data)
+      flavor: '',
       content,
       flags,
       checkCritical
@@ -431,6 +438,61 @@ export default class SDMRoll {
     fixedAndDice.fixedModifiers = finalFixed;
 
     return fixedAndDice;
+  }
+
+  /** The card's title: "Ranged attack · Bola", "Damage · Spear", a power's name, an ability check. */
+  #cardTitle() {
+    const item = this.attackItem?.name ? ` · ${this.attackItem.name}` : '';
+    if (this.type === RollType.ATTACK) {
+      const key = this.attack && this.attack !== 'attack' ? `SDM.Attack${capitalizeFirstLetter(this.attack)}` : 'SDM.Attack';
+      const attack = $l10n(key);
+      return (this.attack && this.attack !== 'attack' ? game.i18n.format('SDM.Card.AttackTitle', { attack }) : attack) + item;
+    }
+    if (this.type === RollType.DAMAGE) return game.i18n.format('SDM.Card.DamageTitle', { item: this.from });
+    return `${this.from ?? ''}`;
+  }
+
+  /** Icon, color, badge and chips of the card's title (what the old bracket flavor listed). */
+  #cardHeaderData(fixedModifiers, diceModifiers) {
+    const abilityColor = key => CONFIG.SDM.abilityColors?.[CONFIG.SDM.abilitiesKeys?.indexOf(key)] ?? '';
+    const icons = { melee: 'fa-solid fa-sword', ranged: 'fa-solid fa-gun', fantascience: 'fa-solid fa-hat-wizard', oldtech: 'fa-solid fa-gamepad' };
+    const isPowerRoll = this.type === RollType.POWER || this.type === RollType.POWER_ALBUM;
+    let icon = 'fa-solid fa-dice-d20';
+    let color = abilityColor(this.ability);
+    if (this.type === RollType.ATTACK) icon = icons[this.attack] ?? 'fa-solid fa-swords';
+    if (this.type === RollType.DAMAGE) {
+      icon = 'fa-solid fa-burst';
+      color = 'rust';
+    }
+    if (isPowerRoll) {
+      icon = 'fa-solid fa-wand-magic-sparkles';
+      color = 'heart';
+    }
+    const chips = [];
+    if (this.ability && this.type !== RollType.ABILITY && CONFIG.SDM.abilityAbbreviations?.[this.ability]) {
+      chips.push({ text: $l10n(CONFIG.SDM.abilityAbbreviations[this.ability]), color: abilityColor(this.ability) });
+    }
+    if (this.skill?.name) chips.push(`${this.skill.name}${this.skill.mod ? ` ${this.skill.mod > 0 ? '+' : ''}${this.skill.mod}` : ''}`);
+    if ([RollType.ATTACK, RollType.POWER, RollType.POWER_ALBUM].includes(this.type) && this.attackTarget && this.attackTarget !== AttackTarget.PHYSICAL) {
+      chips.push($l10n('SDM.Attack' + capitalizeFirstLetter(this.attackTarget)).toLowerCase());
+    }
+    if (fixedModifiers) chips.push({ text: `${fixedModifiers > 0 ? '+' : ''}${fixedModifiers}`, tooltip: $l10n('SDM.RollModifiers') });
+    if (diceModifiers) chips.push(`${diceModifiers}`);
+    if (this.mode && this.mode !== RollMode.NORMAL) chips.push($l10n(CONFIG.SDM.rollMode[this.mode] ?? this.mode).toLowerCase());
+    if (this.versatile) chips.push($l10n('SDM.TwoHanded').toLowerCase());
+    if (this.type === RollType.DAMAGE && this.explodingDice) chips.push($l10n('SDM.ExplodingDice').toLowerCase());
+    // A power: its range, target and duration as written
+    if (isPowerRoll) {
+      const power =
+        this.type === RollType.POWER
+          ? this.item?.system?.power
+          : (this.item?.system?.powers ?? []).find(p => `${p.name ?? ''}`.trim() === `${this.powerName ?? this.from ?? ''}`.trim());
+      for (const field of ['range', 'target', 'duration']) if (power?.[field]) chips.push(`${power[field]}`);
+      if (this.overcharged) chips.push({ text: $l10n('SDM.PowerOvercharge').toLowerCase(), color: 'heart' });
+    }
+    const damageMultiplier = CONFIG.SDM.getDamageMultiplier(this.actor?.system?.base_damage_multiplier || 2);
+    const badge = this.multiplier ? `${damageMultiplier[this.multiplier] ?? `${this.multiplier}`}`.replace('*', '×').replace(/^x/, '×') : '';
+    return { icon, color, title: this.#cardTitle(), badge, chips };
   }
 
   #buildFlavorText(fixedModifiers, diceModifiers) {

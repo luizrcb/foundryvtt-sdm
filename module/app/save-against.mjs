@@ -11,6 +11,7 @@
  */
 import { ActorType } from '../helpers/constants.mjs';
 import { applyItemEffectToTargets, applyStatusToTargets } from './use-item.mjs';
+import { cardHeader, cardTag, cardWrap } from '../rolls/ui/cardParts.mjs';
 
 const CHANNEL = 'system.sdm';
 const ROLL_ACTION = 'sdmSaveAgainstRoll';
@@ -60,13 +61,15 @@ export async function saveAgainst(target, info) {
   const buttons = ABILITIES.map(
     key =>
       `<button type="button" data-action="sdmSaveAgainst" data-ability="${key}"${key === suggested ? ' class="suggested"' : ''}>${esc(
-        game.i18n.localize(CONFIG.SDM.abilities[key])
-      )}</button>`
+        game.i18n.localize(CONFIG.SDM.abilityAbbreviations?.[key] ?? CONFIG.SDM.abilities[key])
+      )}${key === suggested ? ' ★' : ''}</button>`
   ).join('');
   await ChatMessage.create({
     speaker: ChatMessage.getSpeaker({ actor: target }),
-    content: `<div class="sdm-save-request" data-actor="${esc(target.uuid)}" data-info="${esc(JSON.stringify(data))}">
-      <p><i class="fa-solid fa-shield-halved"></i> ${esc(
+    content: cardWrap(
+      cardHeader({ icon: 'fa-solid fa-shield-halved', title: game.i18n.localize('SDM.SaveAgainst.Title') }) +
+        `<div class="sdm-save-request" data-actor="${esc(target.uuid)}" data-info="${esc(JSON.stringify(data))}">
+      <p>${esc(
         game.i18n.format(data.source ? 'SDM.SaveAgainst.Request' : 'SDM.SaveAgainst.RequestNoSource', {
           actor: target.name,
           condition: againstName(data),
@@ -74,7 +77,10 @@ export async function saveAgainst(target, info) {
         })
       )}</p>
       <div class="sdm-save-request-buttons">${buttons}</div>
-    </div>`
+    </div>` +
+        `<div class="sdm-card-foot"><span>${esc(game.i18n.localize('SDM.SaveAgainst.Who'))}</span></div>`,
+      { kind: 'save-request' }
+    )
   });
 }
 
@@ -107,9 +113,10 @@ export function bindSaveAgainst(html) {
 export function saveAgainstHtml(info, success) {
   if (!(info?.status || info?.effect)) return '';
   const key = success ? 'SDM.SaveAgainst.Resisted' : 'SDM.SaveAgainst.Failed';
-  return `<p class="sdm-save-against ${success ? 'resisted' : 'failed'}"><i class="fa-solid fa-${success ? 'shield-halved' : 'triangle-exclamation'}"></i> ${esc(
-    game.i18n.format(key, { condition: againstName(info) })
-  )}</p>`;
+  return cardTag(game.i18n.format(key, { condition: againstName(info) }), {
+    tone: success ? 'good' : 'bad',
+    icon: `fa-solid fa-${success ? 'shield-halved' : 'triangle-exclamation'}`
+  });
 }
 
 /** After the save: a failure puts the condition on (the roller owns the actor). */

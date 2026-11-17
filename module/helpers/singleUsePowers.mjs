@@ -58,6 +58,12 @@ export function addCatchHandle(message, html) {
     foundry.utils.setProperty(data, 'system.power.single_use', true);
     event.dataTransfer.setData('text/plain', JSON.stringify({ type: 'Item', data, sdmCaught: true }));
   });
+  // New cards: in the footer, on the left
+  const cardFoot = html.querySelector('.sdm-card .sdm-card-foot');
+  if (cardFoot) {
+    cardFoot.prepend(handle);
+    return;
+  }
   // On the flavor line ("[Power] … (cost: N)") so it never squeezes the card or the roll;
   // without a flavor, on a line of its own above the content
   const flavor = html.querySelector('.message-header .flavor-text');

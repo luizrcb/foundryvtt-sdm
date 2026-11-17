@@ -1,0 +1,14 @@
+{{!-- Saves, usage, danger, morale, reaction, defeat, corruption, group chase, relife (renderResults.mjs renderCard) --}}
+<div class="sdm-card sdm-card-result">
+  <div class="sdm-card-title"><i class="{{icon}}"></i><span>{{title}}</span></div>
+  {{{rollBox}}}
+  <div class="sdm-result-strip {{tone}}">
+    <div class="sdm-result-who">
+      {{#if targetNumber}}<b>{{targetLabel}} {{targetNumber}}</b>{{/if}}
+      {{#if message}}<span>{{message}}</span>{{/if}}
+    </div>
+    <div class="sdm-result-word">{{outcome}}</div>
+  </div>
+  {{{extra}}}
+  <div class="sdm-card-foot"></div>
+</div>

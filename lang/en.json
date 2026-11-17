@@ -2998,5 +2998,15 @@
   "SDM.Condition.controlled.Hint": "Charmed or commanded: acts as someone else orders.",
   "SDM.Condition.seeInvisible.Name": "Sees invisible",
   "SDM.Condition.seeInvisible.Hint": "Invisible and hidden creatures don't get advantage against it, nor disadvantage when it attacks them.",
-  "SDM.Trigger.StatusDurationHint": "How long the condition lasts (blank: until removed). Rounds end with the turn; minutes to weeks follow the world time (a calendar module expires them)"
+  "SDM.Trigger.StatusDurationHint": "How long the condition lasts (blank: until removed). Rounds end with the turn; minutes to weeks follow the world time (a calendar module expires them)",
+  "SDM.Card.Hit": "Hit",
+  "SDM.Card.Miss": "Miss",
+  "SDM.Card.By": "by {amount}",
+  "SDM.Card.AttackTitle": "{attack} attack",
+  "SDM.Card.DamageTitle": "Damage · {item}",
+  "SDM.Card.Heal": "heal",
+  "SDM.Card.HealHint": "Heal the selected tokens by this amount",
+  "SDM.Card.HeroDiceSpent": "{count} hero dice",
+  "SDM.SaveAgainst.Title": "Save requested",
+  "SDM.SaveAgainst.Who": "★ suggested · its owner or the Referee rolls"
 }

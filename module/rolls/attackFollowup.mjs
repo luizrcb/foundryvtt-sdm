@@ -32,7 +32,7 @@ export function attackFollowupHtml(flag) {
   const icon = isDamage ? 'fa-solid fa-burst' : 'fa-solid fa-wand-magic-sparkles';
   const esc = foundry.utils.escapeHTML;
   return (
-    `<div class="sdm-attack-followup"><button type="button" data-action="sdmAttackFollowup" data-kind="${kind}"` +
+    `<div class="sdm-attack-followup"><button type="button" class="sdm-primary" data-action="sdmAttackFollowup" data-kind="${kind}"` +
     ` data-item-id="${esc(flag.id)}" data-actor-uuid="${esc(flag.actor)}" data-multiplier="${esc(flag.multiplier ?? '')}"><i class="${icon}"></i><span>${esc(label)}</span></button></div>`
   );
 }
