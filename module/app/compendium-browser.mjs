@@ -1,6 +1,7 @@
 import { $l10n, capitalizeFirstLetter, formatNumber } from '../helpers/globalUtils.mjs';
 import { convertSizeUnit } from '../helpers/itemUtils.mjs';
 import { SizeUnit } from '../helpers/constants.mjs';
+import { bindingLabel, currentBinding } from '../helpers/keybindingSettings.mjs';
 
 const ApplicationV2 = foundry.applications?.api?.ApplicationV2;
 const HandlebarsApplicationMixin = foundry.applications?.api?.HandlebarsApplicationMixin;
@@ -307,7 +308,10 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
       if (!this.#successNotified) {
         this.#successNotified = true;
         ui.notifications.info(
-          game.i18n.format('SDM.CompendiumBrowser.Loaded', { count: items.length }),
+          // The shortcut as the user has it now (none: no shortcut in the message)
+          currentBinding('openCompendiumBrowser')
+            ? game.i18n.format('SDM.CompendiumBrowser.Loaded', { count: items.length, shortcut: bindingLabel(currentBinding('openCompendiumBrowser')) })
+            : game.i18n.format('SDM.CompendiumBrowser.LoadedNoKey', { count: items.length }),
           { timeout: 3000 }
         );
       }

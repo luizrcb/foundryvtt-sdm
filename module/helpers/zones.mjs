@@ -18,6 +18,7 @@
 
 import { ActorType, GearType, ItemType, RollMode } from './constants.mjs';
 import { UnarmedDamageItem } from './itemUtils.mjs';
+import { registerKeybindingSetting } from './keybindingSettings.mjs';
 
 /**
  * Where close, short and medium end, in the world's distance unit (feet or meters, a world setting).
@@ -190,6 +191,17 @@ export function registerZoneSettings() {
     config: false,
     type: Boolean,
     default: true
+  });
+  // Each user: hold a key (Z by default) to see the zones of their token; no key = off. Set in the
+  // Client Settings menu ("Shift+KeyZ"; blank: no key) or Configure Controls, which stays the source:
+  // the menu shows the binding as it is and writes it there
+  registerKeybindingSetting('zoneHoldKeyBinding', { name: 'SDM.Zones.HoldKey', hint: 'SDM.Zones.HoldKeyMenuHint', default: 'KeyZ' });
+  game.keybindings.register('sdm', 'showZonesHold', {
+    name: 'SDM.Zones.HoldKey',
+    hint: 'SDM.Zones.HoldKeyHint',
+    editable: [{ key: 'KeyZ' }],
+    onDown: () => showHeldZones(),
+    onUp: () => hideHeldZones()
   });
 }
 
@@ -951,7 +963,40 @@ function drawZones(token) {
   shown.set(id, graphics);
 }
 
+/**
+ * Hold to show (keybinding): the zones of the user's single selected token, else of their main
+ * character's token on this scene; released, they go (a token whose zones were turned on from the
+ * Token HUD keeps them).
+ */
+const held = new Set();
+
+function heldZonesToken() {
+  const controlled = canvas.tokens?.controlled ?? [];
+  if (controlled.length === 1) return controlled[0];
+  if (controlled.length > 1) return null;
+  // Tokens on the canvas (this scene) only
+  return game.user.character?.getActiveTokens?.()?.find(token => token.document?.parent === canvas.scene) ?? null;
+}
+
+function showHeldZones() {
+  if (!setting('zoneHighlight', true) || !canvas?.ready || !zonesActive()) return false;
+  const token = heldZonesToken();
+  if (!token || shown.has(token.id)) return false;
+  drawZones(token);
+  held.add(token.id);
+  return true;
+}
+
+function hideHeldZones() {
+  if (!held.size) return false;
+  for (const id of held) clearZones(id);
+  held.clear();
+  return true;
+}
+
 function toggleZones(token) {
+  // Turned on from the HUD while held: it stays after the key is released
+  if (held.delete(token.id)) return true;
   if (shown.has(token.id)) clearZones(token.id);
   else drawZones(token);
   return shown.has(token.id);

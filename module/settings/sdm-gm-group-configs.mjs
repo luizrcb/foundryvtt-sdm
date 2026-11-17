@@ -2,6 +2,7 @@
 import BaseSettingsConfig from './base-settings.mjs';
 import { getLightPreset, LIGHT_PRESET_KEYS } from '../helpers/lights.mjs';
 import { getZoneScale, worldUnit, ZONE_SCALE_KEYS } from '../helpers/zones.mjs';
+import { bindingLabel, currentBinding, KEYBINDING_SETTINGS, setBinding } from '../helpers/keybindingSettings.mjs';
 
 class GroupBase extends BaseSettingsConfig {
   static PARTS = {
@@ -44,8 +45,59 @@ export class SDMClientSettingsConfig extends GroupBase {
     'blood_dice_style',
     'tourist_dice_style',
     'oracle_dice_style',
-    'shouldPlayLevelUpSoundFx'
+    'shouldPlayLevelUpSoundFx',
+    'zoneHoldKeyBinding',
+    'compendiumBrowserKeyBinding'
   ];
+
+  /** Key fields (Show zones, Compendium Browser): press the key combination in the box (Backspace: no key). */
+  async _preparePartContext(partId, context, options) {
+    context = await super._preparePartContext(partId, context, options);
+    const esc = foundry.utils.escapeHTML;
+    for (const field of context.fields ?? []) {
+      const action = KEYBINDING_SETTINGS[field.key];
+      if (!action) continue;
+      const value = currentBinding(action);
+      field.inputHTML =
+        `<input type="hidden" name="${field.key}" value="${esc(value)}">` +
+        `<input type="text" class="sdm-key-capture" data-for="${field.key}" readonly value="${esc(bindingLabel(value))}" placeholder="${esc(game.i18n.localize('SDM.Zones.HoldKeyPress'))}">`;
+    }
+    return context;
+  }
+
+  /** Saved: each key goes to Configure Controls even if its setting itself didn't change. */
+  async _onCommitChanges(event, form, formData) {
+    await super._onCommitChanges(event, form, formData);
+    if (event?.submitter?.dataset?.action === 'cancel') return;
+    for (const [setting, action] of Object.entries(KEYBINDING_SETTINGS)) {
+      const value = form?.querySelector?.(`input[name="${setting}"]`)?.value;
+      if (value !== undefined && value !== currentBinding(action)) await setBinding(action, value);
+    }
+  }
+
+  _onRender(context, options) {
+    super._onRender(context, options);
+    const modifierKeys = ['ShiftLeft', 'ShiftRight', 'ControlLeft', 'ControlRight', 'AltLeft', 'AltRight', 'MetaLeft', 'MetaRight'];
+    this.element.querySelectorAll('.sdm-key-capture').forEach(box => {
+      const hidden = this.element.querySelector(`input[name="${box.dataset.for}"]`);
+      if (!hidden) return;
+      box.addEventListener('keydown', event => {
+        if (event.key === 'Tab') return;
+        event.preventDefault();
+        event.stopPropagation();
+        if (event.code === 'Backspace' || event.code === 'Delete') {
+          hidden.value = '';
+          box.value = '';
+          return;
+        }
+        // A modifier alone is not a key yet; Cmd on a Mac counts as Control (as Foundry reads it)
+        if (modifierKeys.includes(event.code)) return;
+        const modifiers = [(event.ctrlKey || event.metaKey) && 'Control', event.shiftKey && 'Shift', event.altKey && 'Alt'].filter(Boolean);
+        hidden.value = [...modifiers, event.code].join('+');
+        box.value = bindingLabel(hidden.value);
+      });
+    });
+  }
 }
 
 export class SDMCaravanSettingsConfig extends GroupBase {

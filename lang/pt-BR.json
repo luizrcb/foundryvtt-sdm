@@ -1125,7 +1125,7 @@
   "SDM.CompendiumBrowser.Filters.Transport": "Filtros de Transporte",
   "SDM.CompendiumBrowser.Filters.Ward": "Filtros de Égides",
   "SDM.CompendiumBrowser.Filters.Weapon": "Filtros de Armas",
-  "SDM.CompendiumBrowser.Loaded": "Navegador de Compêndios carregado com {count} itens. Atalho: CTRL+SHIFT+b para abrir o navegador!",
+  "SDM.CompendiumBrowser.Loaded": "Navegador de Compêndios carregado com {count} itens. Atalho: {shortcut} para abrir o navegador!",
   "SDM.CompendiumBrowser.LoadError": "Falha ao carregar índice do Navegador de Compêndios.",
   "SDM.CompendiumBrowser.Loading": "Carregando índice do Navegador de Compêndios...",
   "SDM.CompendiumBrowser.NoFiltersApplied": "Nenhum Filtro foi Aplicado!",
@@ -3039,5 +3039,11 @@
   "SDM.SaveDifficulty.Feature": "Dificuldade da salvaguarda",
   "SDM.SaveDifficulty.FeatureHint": "Salvaguardas contra enredar, petrificar e calor deste item: fácil baixa o alvo em 3, difícil sobe em 3. O Mediador ainda pode mudar no pedido de salvaguarda de um personagem.",
   "SDM.Trigger.ApplyToTargets": "{what} → tokens marcados",
-  "SDM.Trigger.ApplyNoTarget": "Marque um token como alvo primeiro (T)."
+  "SDM.Trigger.ApplyNoTarget": "Marque um token como alvo primeiro (T).",
+  "SDM.Zones.HoldKey": "Mostrar zonas (segurar)",
+  "SDM.Zones.HoldKeyHint": "Segure para ver as zonas em volta do token selecionado (ou do token do seu personagem principal).",
+  "SDM.Zones.HoldKeyMenuHint": "Enquanto você segura esta tecla, as zonas aparecem em volta do token selecionado, ou do token do seu personagem principal nesta cena. Clique na caixa e aperte a tecla (com Ctrl, Shift ou Alt se quiser); Backspace deixa sem tecla, o que desliga. É a mesma tecla de Configurar controles.",
+  "SDM.Zones.HoldKeyPress": "aperte uma tecla",
+  "SDM.CompendiumBrowser.KeyMenuHint": "Clique na caixa e aperte a combinação de teclas (Ctrl é ⌘ no Mac); Backspace deixa sem tecla, o que desliga. É a mesma tecla de Configurar controles.",
+  "SDM.CompendiumBrowser.LoadedNoKey": "Navegador de Compêndios carregado com {count} itens."
 }

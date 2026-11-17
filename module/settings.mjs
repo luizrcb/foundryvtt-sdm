@@ -2,6 +2,7 @@ import { registerNpcExtraSettings } from './helpers/npcExtras.mjs';
 import { onCurrencyChanged } from './helpers/currency.mjs';
 import { LIGHT_PRESETS, putOutAllLights } from './helpers/lights.mjs';
 import { registerZoneSettings } from './helpers/zones.mjs';
+import { registerKeybindingSetting } from './helpers/keybindingSettings.mjs';
 import CompendiumBrowser from './app/compendium-browser.mjs';
 import { DEFAULT_CASH_ICON, DiceType } from './helpers/constants.mjs';
 import { $fmt, $l10n } from './helpers/globalUtils.mjs';
@@ -29,13 +30,19 @@ export function registerSystemSettings() {
 
   /** qol settings */
 
+  // Also set in the Client Settings menu (Control is Cmd on a Mac)
+  registerKeybindingSetting('compendiumBrowserKeyBinding', {
+    name: 'SDM.CompendiumBrowser.Open',
+    hint: 'SDM.CompendiumBrowser.KeyMenuHint',
+    default: 'Shift+KeyB'
+  });
   game.keybindings.register('sdm', 'openCompendiumBrowser', {
     name: 'SDM.CompendiumBrowser.Open',
     hint: 'SDM.CompendiumBrowser.OpenHint',
     editable: [
       {
         key: 'KeyB',
-        modifiers: ['Control', 'Shift']
+        modifiers: ['Shift']
       }
     ],
     onDown: () => {

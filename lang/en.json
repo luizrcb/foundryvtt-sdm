@@ -1125,7 +1125,7 @@
   "SDM.CompendiumBrowser.Filters.Transport": "Transport Filters",
   "SDM.CompendiumBrowser.Filters.Ward": "Ward Filters",
   "SDM.CompendiumBrowser.Filters.Weapon": "Weapon Filters",
-  "SDM.CompendiumBrowser.Loaded": "Compendium Browser loaded with {count} items. Shortcut: CTRL+SHIFT+b to open the browser",
+  "SDM.CompendiumBrowser.Loaded": "Compendium Browser loaded with {count} items. Shortcut: {shortcut} to open the browser",
   "SDM.CompendiumBrowser.LoadError": "Failed to load Compendium Browser index",
   "SDM.CompendiumBrowser.Loading": "Loading Compendium Browser index...",
   "SDM.CompendiumBrowser.NoFiltersApplied": "No Filters Were Applied!",
@@ -3039,5 +3039,11 @@
   "SDM.SaveDifficulty.Feature": "Save difficulty",
   "SDM.SaveDifficulty.FeatureHint": "Saves against this item's entangling, petrifying and heat: easy moves the target 3 down, hard 3 up. The Referee can still change it on a character's save request.",
   "SDM.Trigger.ApplyToTargets": "{what} → targeted tokens",
-  "SDM.Trigger.ApplyNoTarget": "Target a token first (T)."
+  "SDM.Trigger.ApplyNoTarget": "Target a token first (T).",
+  "SDM.Zones.HoldKey": "Show zones (hold)",
+  "SDM.Zones.HoldKeyHint": "Hold to see the zones around your selected token (or your main character's token).",
+  "SDM.Zones.HoldKeyMenuHint": "While you hold this key, the zones show around your selected token, or your main character's token on this scene. Click the box and press the key (with Ctrl, Shift or Alt if you want); Backspace leaves it without a key, which turns it off. The same key as in Configure Controls.",
+  "SDM.Zones.HoldKeyPress": "press a key",
+  "SDM.CompendiumBrowser.KeyMenuHint": "Click the box and press the key combination (Ctrl is ⌘ on a Mac); Backspace leaves it without a key, which turns it off. The same key as in Configure Controls.",
+  "SDM.CompendiumBrowser.LoadedNoKey": "Compendium Browser loaded with {count} items."
 }
