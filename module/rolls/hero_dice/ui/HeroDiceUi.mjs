@@ -164,6 +164,12 @@ export class HeroDiceUI {
     const attackItem = flags?.sdm?.attackItem ? { ...flags.sdm.attackItem } : null;
     if (attackItem) {
       attackItem.multiplier = criticalMultiplier(fromUuidSync(attackItem.actor), heroTwenties(keptDice));
+      // The target goes with the damage button only if the attack now hits it
+      const checkHit = flags?.sdm?.triggerCheck;
+      if (checkHit?.kind === 'attack' && Number.isFinite(checkHit.defense) && checkHit.defense !== null) {
+        if (Number(total) > checkHit.defense && checkHit.targetUuid) attackItem.target = checkHit.targetUuid;
+        else delete attackItem.target;
+      }
     }
     // Triggers that match the improved result but didn't match the original roll fire now
     const recheck = recheckTriggersAfterHeroDice(flags?.sdm?.triggerCheck, originalRoll, result);

@@ -260,7 +260,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       item = null,
       freeCast = false,
       // Suggested damage multiplier (an attack's consecutive natural 20s, from its card's button)
-      multiplier: suggestedMultiplier = ''
+      multiplier: suggestedMultiplier = '',
+      // The target of the attack the damage follows (its card's button): it wins over the user's target
+      targetUuid = ''
     },
     isShift = false,
     isCtrl = false
@@ -272,6 +274,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const isPower = type === RollType.POWER;
     const isCharacter = this.actor.type === ActorType.CHARACTER;
     const isPowerAlbum = type === RollType.POWER_ALBUM;
+    // NPCs have a single attack (their sheet's button says "melee", the Token Action HUD "attack"):
+    // it is no melee attack, so no melee-only range rule, melee triggers or "Melee attack" title
+    if (isAttack && !isCharacter) attack = 'attack';
 
     let targetActor;
 
@@ -279,6 +284,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     if (firstTarget) {
       targetActor = firstTarget.actor;
     }
+    const followed = targetUuid ? fromUuidSync(targetUuid) : null;
+    if (followed instanceof Actor) targetActor = followed;
 
     if (isDamage) rollTitlePrefix = $l10n('SDM.Damage');
     if (isAttack) rollTitlePrefix = $l10n('SDM.Attack');
@@ -1696,7 +1703,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       item: rollItem,
       // Free cast (a trigger's "free"): no dialog and no cost
       freeCast: dataset.freeCast === 'true',
-      multiplier: dataset.multiplier || ''
+      multiplier: dataset.multiplier || '',
+      targetUuid: dataset.targetUuid || ''
     };
 
     this._openCustomRollModal(rollAttributes, isShift || rollAttributes.freeCast, isCtrl);
@@ -1718,7 +1726,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       from: this.actor.name,
       formula: damage,
       // From an attack card's button: the critical multiplier of consecutive natural 20s
-      multiplier: target?.dataset?.multiplier || ''
+      multiplier: target?.dataset?.multiplier || '',
+      // …and the target that attack hit (damage applied to it with "Apply damage automatically")
+      targetUuid: target?.dataset?.targetUuid || ''
     };
 
     this._openCustomRollModal(rollAttributes, isShift, isCtrl);

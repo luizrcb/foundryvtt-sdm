@@ -3008,5 +3008,10 @@
   "SDM.Card.HealHint": "Heal the selected tokens by this amount",
   "SDM.Card.HeroDiceSpent": "{count} hero dice",
   "SDM.SaveAgainst.Title": "Save requested",
-  "SDM.SaveAgainst.Who": "★ suggested · its owner or the Referee rolls"
+  "SDM.SaveAgainst.Who": "★ suggested · its owner or the Referee rolls",
+  "SDM.SettingsAutoApplyDamage": "Apply damage automatically",
+  "SDM.SettingsAutoApplyDamageHint": "Damage rolled with a token targeted, or from the Roll damage button of an attack that hit, is applied to that target at once (by the Referee's game when the player doesn't own it). The card shows it, with an Undo for the roller and the Referee.",
+  "SDM.Card.DamageApplied": "{amount} damage applied to {target}",
+  "SDM.Card.Undo": "Undo",
+  "SDM.Card.Undone": "Undone: {amount} life given back to {target}"
 }

@@ -33,7 +33,7 @@ export function attackFollowupHtml(flag) {
   const esc = foundry.utils.escapeHTML;
   return (
     `<div class="sdm-attack-followup"><button type="button" class="sdm-primary" data-action="sdmAttackFollowup" data-kind="${kind}"` +
-    ` data-item-id="${esc(flag.id)}" data-actor-uuid="${esc(flag.actor)}" data-multiplier="${esc(flag.multiplier ?? '')}"><i class="${icon}"></i><span>${esc(label)}</span></button></div>`
+    ` data-item-id="${esc(flag.id)}" data-actor-uuid="${esc(flag.actor)}" data-multiplier="${esc(flag.multiplier ?? '')}" data-target-uuid="${esc(flag.target ?? '')}"><i class="${icon}"></i><span>${esc(label)}</span></button></div>`
   );
 }
 
@@ -45,14 +45,20 @@ export function bindAttackFollowup(html) {
       const actor = fromUuidSync(button.dataset.actorUuid);
       if (!actor?.isOwner) return;
       if (button.dataset.kind === 'rollNPCDamage') {
-        return actor.performHudAction('rollNPCDamage', '', { multiplier: button.dataset.multiplier }, !!event.shiftKey, !!event.ctrlKey);
+        return actor.performHudAction(
+          'rollNPCDamage',
+          '',
+          { multiplier: button.dataset.multiplier, targetUuid: button.dataset.targetUuid },
+          !!event.shiftKey,
+          !!event.ctrlKey
+        );
       }
       const item = actor.items.get(button.dataset.itemId);
       if (!item) return ui.notifications.warn(game.i18n.localize('SDM.AttackFollowupGone'));
       await actor.performHudAction(
         button.dataset.kind,
         item.id,
-        { label: item.name, multiplier: button.dataset.multiplier },
+        { label: item.name, multiplier: button.dataset.multiplier, targetUuid: button.dataset.targetUuid },
         !!event.shiftKey,
         !!event.ctrlKey
       );

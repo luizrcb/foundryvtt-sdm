@@ -229,6 +229,11 @@ async function applyToActor({ actorUuid, restores = [], restore, effects }) {
       await actor.applyDamage(restore.amount, 1, false, true);
       continue;
     }
+    // Healing (undoing damage applied automatically)
+    if (restore?.kind === 'heal' && restore.amount > 0) {
+      await actor.applyDamage(restore.amount, -1, false, true);
+      continue;
+    }
     // Temporary life: an effect for as long as the item's effects last (actors without temporary life get none)
     if (restore?.kind === 'temp_life' && restore.amount > 0) {
       await grantTemporaryLife(actor, restore);
@@ -314,6 +319,23 @@ export async function applyStatusToTargets(
       targets: targets.map(t => esc(t.name)).join(', ')
     })}</p>`
   });
+}
+
+/**
+ * Damage (or healing) on one actor, here when the user owns it, else by the active Referee — for
+ * damage applied automatically to the target of a damage roll, and its undo.
+ */
+export async function changeLifeOf(actor, amount, { heal = false } = {}) {
+  const value = Number(amount) || 0;
+  if (!actor || value <= 0) return false;
+  const payload = { actorUuid: actor.uuid, restores: [{ kind: heal ? 'heal' : 'harm', amount: value }], effects: [] };
+  if (actor.isOwner) await applyToActor(payload);
+  else if (game.users.activeGM) game.socket.emit(CHANNEL, { action: APPLY_ACTION, payload });
+  else {
+    ui.notifications.warn($l10n('SDM.ErrorNoActiveGM'));
+    return false;
+  }
+  return true;
 }
 
 /** "poisoned, bleeding" */

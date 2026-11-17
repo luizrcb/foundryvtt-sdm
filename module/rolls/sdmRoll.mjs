@@ -8,6 +8,7 @@ import { ActorType, AttackTarget, RollMode, RollType } from '../helpers/constant
 import { $l10n, capitalizeFirstLetter, toPascalCase } from '../helpers/globalUtils.mjs';
 import { cardHeader, cardTag, cardWrap, marginText, resultStrip, rollBox } from './ui/cardParts.mjs';
 import { applyDamageHtml } from './ui/applyDamage.mjs';
+import { changeLifeOf } from '../app/use-item.mjs';
 
 export default class SDMRoll {
   constructor({
@@ -263,6 +264,20 @@ export default class SDMRoll {
     }
     // Actions: the damage / power button first (the main one), then the item's feature buttons
     let actions = '';
+    // The target it hit goes with the damage button (applied to it with "Apply damage automatically")
+    if (attackItem && attackSuccess && this.targetActor) attackItem.target = this.targetActor.uuid;
+    // Damage with a target: applied to it at once (optional), with an Undo for the roller and the Referee
+    const autoTarget =
+      isDamage && game.settings.get('sdm', 'autoApplyDamage') && this.targetActor && this.targetActor !== this.actor && this.roll.total > 0
+        ? this.targetActor
+        : null;
+    if (autoTarget) {
+      tags.push(
+        `<div class="sdm-card-tag info sdm-auto-damage" data-target-uuid="${foundry.utils.escapeHTML(autoTarget.uuid)}" data-amount="${this.roll.total}">` +
+          `<i class="fa-solid fa-heart-crack"></i> ${foundry.utils.escapeHTML(game.i18n.format('SDM.Card.DamageApplied', { amount: this.roll.total, target: autoTarget.name }))}` +
+          ` <button type="button" data-action="sdmUndoDamage"><i class="fa-solid fa-rotate-left"></i> ${foundry.utils.escapeHTML($l10n('SDM.Card.Undo'))}</button></div>`
+      );
+    }
     if (attackItem) {
       actions += attackFollowupHtml(attackItem);
       flags.sdm = { ...(flags.sdm ?? {}), attackItem };
@@ -306,7 +321,8 @@ export default class SDMRoll {
           attack: this.attack,
           ability: this.ability ?? '',
           withItem: this.attackItem?.id ?? '',
-          defense
+          defense,
+          targetUuid: isAttack && this.targetActor ? this.targetActor.uuid : ''
         }
       };
     }
@@ -327,6 +343,7 @@ export default class SDMRoll {
 
     chatDataMessage.flags = { ...chatDataMessage.flags, ...this.extraFlags };
     await createChatMessage(chatDataMessage);
+    if (autoTarget) await changeLifeOf(autoTarget, this.roll.total);
     if (firedTriggers.length) await runTriggerActions(firedTriggers, { actor: this.actor });
 
     if (isDamage && this.item && this.item?.system?.features?.has('draining')) {

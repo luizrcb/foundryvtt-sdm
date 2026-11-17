@@ -636,6 +636,16 @@ export function registerSystemSettings() {
     default: false
   });
 
+  // Damage rolled with a target (or from the card of an attack that hit one) is applied to it at once
+  game.settings.register('sdm', 'autoApplyDamage', {
+    name: 'SDM.SettingsAutoApplyDamage',
+    hint: 'SDM.SettingsAutoApplyDamageHint',
+    scope: 'world',
+    restricted: true,
+    type: Boolean,
+    default: false
+  });
+
   // Automations that can each be turned off (Optional Automations)
   for (const [key, label] of [
     ['enableNpcExtras', 'SDM.SettingsEnableNpcExtras'],

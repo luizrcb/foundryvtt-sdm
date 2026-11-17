@@ -2,6 +2,8 @@
  * Damage card: apply the damage to the selected tokens in one click — full, half (rounded up),
  * double, or as healing. The same as the card's right-click menu.
  */
+import { changeLifeOf } from '../../app/use-item.mjs';
+
 const esc = text => foundry.utils.escapeHTML(String(text ?? ''));
 
 export function applyDamageHtml(total) {
@@ -34,4 +36,32 @@ export function bindApplyDamage(html) {
       await Promise.all(tokens.map(token => token.actor?.applyDamage(amount, multiplier)));
     })
   );
+}
+
+/**
+ * Damage applied automatically (setting): its Undo gives the life back, for the one who rolled and
+ * the Referee only; once used, the card says so.
+ */
+export function bindUndoDamage(message, html) {
+  const line = html.querySelector('.sdm-auto-damage');
+  if (!line) return;
+  const button = line.querySelector('[data-action="sdmUndoDamage"]');
+  const target = fromUuidSync(line.dataset.targetUuid);
+  const amount = Number(line.dataset.amount) || 0;
+  if (message.getFlag('sdm', 'damageUndone')) {
+    line.classList.add('undone');
+    line.textContent = game.i18n.format('SDM.Card.Undone', { amount, target: target?.name ?? '?' });
+    return;
+  }
+  const allowed = game.user.isGM || message.author?.id === game.user.id;
+  if (!allowed || !target) {
+    button?.remove();
+    return;
+  }
+  button?.addEventListener('click', async event => {
+    event.preventDefault();
+    button.disabled = true;
+    if (await changeLifeOf(target, amount, { heal: true })) await message.setFlag('sdm', 'damageUndone', true);
+    else button.disabled = false;
+  });
 }

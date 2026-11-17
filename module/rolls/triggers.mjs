@@ -102,7 +102,8 @@ export function actorTriggers(actor, rollKind, roll, { attack = '', ability = ''
       if (trigger.roll !== rollKind) continue;
       // Attacks: whose attack fires it ("From" — the item it is made with, chosen in the attack dialog)
       if (rollKind === 'attack' && !attackFromMatches(item, trigger, chosen)) continue;
-      if (rollKind === 'attack' && trigger.attack && attack && trigger.attack !== attack) continue;
+      // An NPC's single attack ('attack') fires the triggers of any attack type (its weapon decides)
+      if (rollKind === 'attack' && trigger.attack && attack && attack !== 'attack' && trigger.attack !== attack) continue;
       if (['save', 'ability'].includes(rollKind) && trigger.ability && ability && trigger.ability !== ability) continue;
       if (matches(trigger, roll, { success }, item)) fired.push({ item, trigger });
     }

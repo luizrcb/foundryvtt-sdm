@@ -3008,5 +3008,10 @@
   "SDM.Card.HealHint": "Cura os tokens selecionados neste valor",
   "SDM.Card.HeroDiceSpent": "{count} dados heroicos",
   "SDM.SaveAgainst.Title": "Salvaguarda pedida",
-  "SDM.SaveAgainst.Who": "★ sugerido · quem o controla ou o Mestre rola"
+  "SDM.SaveAgainst.Who": "★ sugerido · quem o controla ou o Mestre rola",
+  "SDM.SettingsAutoApplyDamage": "Aplicar dano automaticamente",
+  "SDM.SettingsAutoApplyDamageHint": "Dano rolado com um token como alvo, ou pelo botão Rolar dano de um ataque que acertou, é aplicado a esse alvo na hora (pelo jogo do Mestre quando o jogador não o controla). O card mostra isso, com um Desfazer para quem rolou e para o Mestre.",
+  "SDM.Card.DamageApplied": "{amount} de dano aplicado a {target}",
+  "SDM.Card.Undo": "Desfazer",
+  "SDM.Card.Undone": "Desfeito: {amount} de vida devolvida a {target}"
 }

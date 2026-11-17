@@ -297,6 +297,27 @@
     }
   }
 
+  // Damage applied automatically: the line and its Undo
+  .sdm-auto-damage {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    button {
+      flex: 0 0 auto;
+      width: auto;
+      margin: 0 0 0 auto;
+      padding: 0 7px;
+      line-height: 20px;
+      font-size: 11.5px;
+    }
+
+    &.undone {
+      opacity: 0.7;
+      text-decoration: line-through;
+    }
+  }
+
   // Damage: apply to the selected tokens
   .sdm-apply-damage {
     display: grid;
