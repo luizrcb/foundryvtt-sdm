@@ -66,6 +66,7 @@ const TRIGGER_CONDITIONS_BY_ROLL = {
   damage: ['always', 'total', 'totalAtLeast', 'totalAtMost', 'die', 'max', 'min', 'matching'],
   power: ['always', 'total', 'totalAtLeast', 'totalAtMost', 'die', 'max', 'min', 'matching'],
   usage: ['total', 'totalAtLeast', 'totalAtMost', 'runningLow', 'runOut'],
+  use: ['always'],
   counter: ['total', 'totalAtLeast', 'totalAtMost', 'increases', 'decreases', 'changes', 'full', 'empty'],
   charges: ['total', 'totalAtLeast', 'totalAtMost', 'increases', 'decreases', 'changes', 'full', 'empty']
 };
@@ -362,6 +363,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
         damage: 'SDM.Trigger.Roll.damage',
         power: 'SDM.Trigger.Roll.power',
         usage: 'SDM.Trigger.Roll.usage',
+        use: 'SDM.Trigger.Roll.use',
         save: 'SDM.Trigger.Roll.save',
         ability: 'SDM.Trigger.Roll.ability',
         defeat: 'SDM.Trigger.Roll.defeat',
@@ -398,6 +400,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       // Conditions a trigger can put on its targets / self: the Token HUD's list
       triggerStatusModes: { apply: 'SDM.Trigger.StatusApply', remove: 'SDM.Trigger.StatusRemove' },
       // A condition with a save: the ability suggested to characters ('' = by the condition)
+      triggerSaveDifficulties: { '': 'SDM.SaveDifficulty.standard', easy: 'SDM.SaveDifficulty.easy', hard: 'SDM.SaveDifficulty.hard' },
       triggerSaveAbilities: {
         '': 'SDM.Trigger.StatusSaveAbilityAuto',
         ...Object.fromEntries(['str', 'end', 'agi', 'cha', 'aur', 'tho'].map(key => [key, CONFIG.SDM.abilities[key]]))

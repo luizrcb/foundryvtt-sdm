@@ -226,12 +226,12 @@ async function applyToActor({ actorUuid, restores = [], restore, effects }) {
     }
     // Harm: life lost by whoever takes it (temporary life first, like damage)
     if (restore?.kind === 'harm' && restore.amount > 0) {
-      await actor.applyDamage(restore.amount, 1, false, true);
+      await actor.applyDamage(restore.amount, 1, false, true, { reason: restore.reason ?? '' });
       continue;
     }
     // Healing (undoing damage applied automatically)
     if (restore?.kind === 'heal' && restore.amount > 0) {
-      await actor.applyDamage(restore.amount, -1, false, true);
+      await actor.applyDamage(restore.amount, -1, false, true, { reason: restore.reason ?? '' });
       continue;
     }
     // Temporary life: an effect for as long as the item's effects last (actors without temporary life get none)
@@ -296,7 +296,7 @@ export async function applyStatusToTargets(
   if (save && !remove) {
     const { saveAgainst } = await import('./save-against.mjs');
     for (const target of targets) {
-      await saveAgainst(target, { status: statusId, rounds, duration, source: save.source ?? '', ability: save.ability ?? '' });
+      await saveAgainst(target, { status: statusId, rounds, duration, source: save.source ?? '', ability: save.ability ?? '', difficulty: save.difficulty ?? '' });
     }
     return;
   }
@@ -334,10 +334,10 @@ async function conditionLine(actor, targets, name, remove) {
  * Damage (or healing) on one actor, here when the user owns it, else by the active Referee — for
  * damage applied automatically to the target of a damage roll, and its undo.
  */
-export async function changeLifeOf(actor, amount, { heal = false } = {}) {
+export async function changeLifeOf(actor, amount, { heal = false, reason = '' } = {}) {
   const value = Number(amount) || 0;
   if (!actor || value <= 0) return false;
-  const payload = { actorUuid: actor.uuid, restores: [{ kind: heal ? 'heal' : 'harm', amount: value }], effects: [] };
+  const payload = { actorUuid: actor.uuid, restores: [{ kind: heal ? 'heal' : 'harm', amount: value, ...(reason ? { reason } : {}) }], effects: [] };
   if (actor.isOwner) await applyToActor(payload);
   else if (game.users.activeGM) game.socket.emit(CHANNEL, { action: APPLY_ACTION, payload });
   else {
@@ -382,7 +382,8 @@ export async function applyItemEffectToTargets(item, effectId, actor, { self = f
         effect: { item: item.uuid, id: effectId, name: effects[0].name },
         status: statuses[0] ?? '',
         source: save.source ?? item.name,
-        ability: save.ability ?? ''
+        ability: save.ability ?? '',
+        difficulty: save.difficulty ?? ''
       });
     }
     return;
@@ -546,13 +547,17 @@ export async function useItem(item) {
         (duration ? ` (${describeDuration(use)})` : '')
     );
   }
+  // Triggers on Use (this item's, and readied gear / traits / burdens watching it): on the card, then
+  // their actions on the same targets
+  const { itemRollTriggers, renderTriggers, runTriggerActions } = await import('../rolls/triggers.mjs');
+  const fired = itemRollTriggers(item, 'use', { total: 0, dice: [] });
   await ChatMessage.create({
     speaker: ChatMessage.getSpeaker({ actor }),
     content: `<p><i class="fa-solid fa-hand-holding-medical"></i> ${$fmt('SDM.Use.Chat', {
       actor: esc(actor.name),
       item: esc(item.name),
       targets: targets.map(t => esc(t.name)).join(', ')
-    })}</p>${what.length ? `<p>${what.join('<br>')}</p>` : ''}${rollHtml}`
+    })}</p>${what.length ? `<p>${what.join('<br>')}</p>` : ''}${rollHtml}${renderTriggers(fired, { targets })}`
   });
 
   // Applied after the card, so the chat reads: use → healing
@@ -565,6 +570,9 @@ export async function useItem(item) {
 
   // The roll table, every time (strange beliefs, vision dreams…)
   if (table?.documentName === 'RollTable') await table.draw();
+
+  // Before it is spent (the last one deletes the item, whose triggers and effects the actions need)
+  if (fired.length) await runTriggerActions(fired, { actor, targets });
 
   await spend(item);
 }

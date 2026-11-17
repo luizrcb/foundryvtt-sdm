@@ -88,7 +88,7 @@ import {
 } from '../rolls/ui/renderResults.mjs';
 import { DEFAULT_SAVE_VALUE, SAVING_THROW_BASE_FORMULA } from '../settings.mjs';
 import { bindNumberInputs, unformatNumberInputs, reformatNumberInputs } from '../helpers/numberFormat.mjs';
-import { resolveSaveAgainst, saveAgainstHtml, saveOutcome } from '../app/save-against.mjs';
+import { SAVE_DIFFICULTY_SHIFT, resolveSaveAgainst, saveAgainstHtml, saveOutcome } from '../app/save-against.mjs';
 
 const { api, sheets } = foundry.applications;
 const { DialogV2 } = foundry.applications.api;
@@ -2494,6 +2494,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       : $fmt('SDM.SavingThrowRoll', { ability: abilityName });
     const cardChips = saveAgainstInfo?.source ? [abilityName] : [];
     if (ward > 0) cardChips.push(`${$l10n('TYPES.Item.ward').toLowerCase()} +${ward}`);
+    if (saveAgainstInfo?.difficulty) cardChips.push($l10n(`SDM.SaveDifficulty.${saveAgainstInfo.difficulty}`).toLowerCase());
 
     if (ward > 0) {
       label += ` (${$l10n('TYPES.Item.ward').toLowerCase()} +${ward})`;
@@ -2581,7 +2582,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       }
     }
 
-    const targetNumber = rollTarget || this.actor.system?.save_target || DEFAULT_SAVE_VALUE;
+    // A save against a condition can be easy or hard: its target moves by 3
+    const difficultyShift = SAVE_DIFFICULTY_SHIFT[saveAgainstInfo?.difficulty] ?? 0;
+    const targetNumber = Number(rollTarget || this.actor.system?.save_target || DEFAULT_SAVE_VALUE) + difficultyShift;
     const formula = formulaFor(rollOptions);
     // Create and evaluate the roll
     let roll = new Roll(formula);

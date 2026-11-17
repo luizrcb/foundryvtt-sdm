@@ -248,7 +248,10 @@ export default class SDMRoll {
             : isPowerAlbum && this.triggerItem
               ? itemRollTriggers(this.triggerItem, 'power', this.roll, { power: this.powerName })
               : [];
-    extras += renderTriggers(firedTriggers);
+    // Whom the triggers act on: the target the attack card carried, else the user's targeted tokens
+    const triggerTargets =
+      this.targetFromCard && this.targetActor && this.targetActor !== this.actor ? [this.targetActor] : [...(game.user?.targets ?? [])];
+    extras += renderTriggers(firedTriggers, { targets: triggerTargets });
 
     // Attack made with a weapon or power: a button to roll its damage / the power next (kept in the
     // flags, so a hero dice result for this attack gets it too)

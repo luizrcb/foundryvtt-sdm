@@ -119,6 +119,7 @@ export function attackFeatureHtml({ actor, item, targetActor = null, success = n
           status,
           rounds,
           save: save ? '1' : '',
+          difficulty: save ? item.system?.feature_save ?? '' : '',
           source: item.name
         })
       );
@@ -174,11 +175,11 @@ export function bindAttackFeatures(html) {
     );
 
   // Anyone who sees the card may press it: a target they don't own goes through the Referee
-  on('sdmFeatureCondition', async ({ target, status, rounds, save, source }, button) => {
+  on('sdmFeatureCondition', async ({ target, status, rounds, save, difficulty, source }, button) => {
     const actor = await fromUuid(target);
     if (!actor) return;
     // A save allowed: the target saves first (an NPC rolls now, a character gets a save request)
-    if (save) return saveAgainst(actor, { status, rounds: Number(rounds) || 0, source });
+    if (save) return saveAgainst(actor, { status, rounds: Number(rounds) || 0, source, difficulty: difficulty ?? '' });
     const speaker = game.messages.get(button.closest('[data-message-id]')?.dataset.messageId)?.speaker;
     await applyStatusToTargets(status, ChatMessage.getSpeakerActor?.(speaker) ?? null, { targets: [actor], rounds: Number(rounds) || 0 });
   });

@@ -218,6 +218,12 @@
       </select>
     </label>
     {{/if}}
+    {{#if (or (has system.features 'entangling') (has system.features 'petrifying') (has system.features 'heat'))}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.SaveDifficulty.Feature'}}</span>
+      <select name="system.feature_save" data-tooltip="{{localize 'SDM.SaveDifficulty.FeatureHint'}}">{{selectOptions @root.triggerSaveDifficulties selected=system.feature_save localize=true}}</select>
+    </label>
+    {{/if}}
     {{#if (has system.features 'flare')}}
     <label class="v2-field">
       <span class="v2-label">{{localize 'SDM.ItemFeature.flare'}}</span>

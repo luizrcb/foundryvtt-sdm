@@ -1,5 +1,5 @@
 <div class="sdm-card life-change-card" data-message-id="{{messageId}}">
-  <div class="sdm-card-title">{{#if isHealing}}<i class="fa-solid fa-heart lime"></i><span>{{localize 'SDM.Healing'}}</span>{{else}}<i class="fa-solid fa-heart-crack rust"></i><span>{{localize 'SDM.Damage'}}</span>{{/if}}</div>
+  <div class="sdm-card-title">{{#if reasonTitle}}<i class="fa-solid fa-rotate-left"></i><span>{{reasonTitle}}</span>{{else if isHealing}}<i class="fa-solid fa-heart lime"></i><span>{{localize 'SDM.Healing'}}</span>{{else}}<i class="fa-solid fa-heart-crack rust"></i><span>{{localize 'SDM.Damage'}}</span>{{/if}}</div>
 
   <div class="message-content life-content">
     <div class="life-row" data-actor-id="{{actorId}}">

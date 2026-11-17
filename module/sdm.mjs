@@ -58,7 +58,7 @@ import { blockedReason, isUsable, setupUseItem, useItem } from './app/use-item.m
 import { setupAnimatedItems } from './helpers/animatedItems.mjs';
 import { getLightItems, getLitEffect, isLightSource, isLit, lightItem, putOutLight, setupLights, toggleLight } from './helpers/lights.mjs';
 import { restActor, setupRest } from './app/rest.mjs';
-import { setupTriggers } from './rolls/triggers.mjs';
+import { bindTriggerApply, setupTriggers } from './rolls/triggers.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { setupPetDropSocket } from './items/petItem.mjs';
 import { setupPetLinks } from './items/petLinks.mjs';
@@ -307,8 +307,10 @@ Hooks.on('renderChatMessageHTML', (message, html, data) => {
   bindAttackFollowup(html);
   bindAttackFeatures(html);
   // Save request (a character saves against a condition): its owner or the Referee picks the ability
-  bindSaveAgainst(html);
+  bindSaveAgainst(message, html);
   bindSacrifice(message, html);
+  // A trigger that fired with no target: apply its condition / effect to the tokens targeted now
+  bindTriggerApply(message, html);
   // Damage card: apply to the selected tokens
   bindApplyDamage(html);
   bindUndoDamage(message, html);

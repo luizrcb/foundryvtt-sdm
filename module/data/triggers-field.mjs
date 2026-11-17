@@ -1,7 +1,8 @@
 /**
  * Roll triggers (gear, traits and burdens): what happens on a roll result, shown on the chat card,
  * with optional actions. Rolls not tied to an item (attacks, saves, ability checks, defeat) check the
- * actor's readied gear and all its traits and burdens. Item rolls (damage, power, usage) fire the triggers
+ * actor's readied gear and all its traits and burdens. Item rolls (damage, power, usage) and a consumable's
+ * Use (no roll: it always fires) fire the triggers
  * of the item that rolled, or of any readied gear / trait / burden whose trigger watches that item ("From").
  *
  * Item pickers store '@self' (the item holding the trigger) or an item identifier (the slug of its
@@ -15,7 +16,7 @@ export function defineTriggersField() {
         required: true,
         blank: false,
         initial: 'attack',
-        choices: ['attack', 'damage', 'power', 'usage', 'save', 'ability', 'defeat', 'counter', 'charges']
+        choices: ['attack', 'damage', 'power', 'usage', 'use', 'save', 'ability', 'defeat', 'counter', 'charges']
       }),
       // Item rolls (damage, power, usage): whose rolls fire it: this item (''), any item, or one item
       from: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'any', 'item', 'unarmed'] }),
@@ -90,6 +91,8 @@ export function defineTriggersField() {
       // Copied only if a save fails (like the Condition action's save)
       effect_save: new fields.BooleanField({ initial: false }),
       effect_save_ability: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'str', 'end', 'agi', 'cha', 'aur', 'tho'] }),
+      // The save's difficulty: standard (''), easy (target −3) or hard (target +3)
+      effect_save_difficulty: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'easy', 'hard'] }),
       // A condition put on the targets or self (any status of the Token HUD list), no effect needed on the item
       status: new fields.StringField({ required: true, blank: true, initial: '' }),
       status_target: new fields.StringField({ required: true, blank: false, initial: 'targets', choices: ['targets', 'self'] }),
@@ -102,6 +105,7 @@ export function defineTriggersField() {
       status_duration_units: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'rounds', 'minutes', 'hours', 'days', 'weeks'] }),
       status_save: new fields.BooleanField({ initial: false }),
       status_save_ability: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'str', 'end', 'agi', 'cha', 'aur', 'tho'] }),
+      status_save_difficulty: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'easy', 'hard'] }),
       wear: new fields.StringField({
         required: true,
         blank: true,

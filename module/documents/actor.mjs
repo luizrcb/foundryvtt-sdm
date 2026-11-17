@@ -2044,7 +2044,7 @@ export class SdmActor extends Actor {
     });
   }
 
-  async applyDamage(damageValue = 0, multiplier = 1, temporaryOnly = false, skipFlare = false) {
+  async applyDamage(damageValue = 0, multiplier = 1, temporaryOnly = false, skipFlare = false, lifeCard = {}) {
     const life = this.system.life;
     const tempLife = this.system.temporary_life;
     const bloodClad = !!this.system.blood_dice?.enabled;
@@ -2075,7 +2075,7 @@ export class SdmActor extends Actor {
     }
 
     // Call the hook/logging you already had
-    await postLifeChange(this, damageValue, multiplier);
+    await postLifeChange(this, damageValue, multiplier, lifeCard);
 
     // Helper clamps (in case your environment doesn't have Math.clamp)
     const clamp = (v, a, b) => Math.min(Math.max(v, a), b);

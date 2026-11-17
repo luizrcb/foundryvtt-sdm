@@ -187,6 +187,15 @@
           </div>
           {{/if}}
 
+          {{#if (or (has system.features 'entangling') (has system.features 'petrifying') (has system.features 'heat'))}}
+          <div class='resource'>
+            <label class='resource-label'>{{localize 'SDM.SaveDifficulty.Feature'}}</label>
+            <div class='resource-content'>
+              <select name="system.feature_save" data-tooltip="{{localize 'SDM.SaveDifficulty.FeatureHint'}}">{{selectOptions @root.triggerSaveDifficulties selected=system.feature_save localize=true}}</select>
+            </div>
+          </div>
+          {{/if}}
+
           {{#if (has system.features 'flare')}}
           <div class='resource'>
             <label class='resource-label' for="system.flare.value">{{localize 'SDM.ItemFeature.flare'}}</label>

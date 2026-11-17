@@ -104,6 +104,9 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       })
     });
 
+    // Saves the item's features allow (entangling, petrifying, heat): standard (''), easy or hard
+    schema.feature_save = new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'easy', 'hard'] });
+
     schema.flare = new fields.SchemaField({
       value: new fields.NumberField({
         required: true,

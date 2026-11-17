@@ -38,6 +38,19 @@ export function bindApplyDamage(html) {
   );
 }
 
+/** An undone line: what it did, struck through, then "· Undone" (the button goes). */
+function markUndone(line) {
+  line.querySelector('button')?.remove();
+  const icon = line.querySelector('i');
+  const text = line.textContent.trim();
+  line.classList.add('undone');
+  line.textContent = '';
+  if (icon) line.append(icon, ' ');
+  const struck = document.createElement('s');
+  struck.textContent = text;
+  line.append(struck, ` · ${game.i18n.localize('SDM.Card.UndoneShort')}`);
+}
+
 /**
  * Damage applied automatically (setting): its Undo gives the life back, for the one who rolled and
  * the Referee only; once used, the card says so.
@@ -48,9 +61,10 @@ export function bindUndoDamage(message, html) {
   const button = line.querySelector('[data-action="sdmUndoDamage"]');
   const target = fromUuidSync(line.dataset.targetUuid);
   const amount = Number(line.dataset.amount) || 0;
+  // A hero dice correction that gave life back (lower total): its undo takes it again
+  const gaveBack = line.dataset.heal === '1';
   if (message.getFlag('sdm', 'damageUndone')) {
-    line.classList.add('undone');
-    line.textContent = game.i18n.format('SDM.Card.Undone', { amount, target: target?.name ?? '?' });
+    markUndone(line);
     return;
   }
   const allowed = game.user.isGM || message.author?.id === game.user.id;
@@ -61,7 +75,7 @@ export function bindUndoDamage(message, html) {
   button?.addEventListener('click', async event => {
     event.preventDefault();
     button.disabled = true;
-    if (await changeLifeOf(target, amount, { heal: true })) await message.setFlag('sdm', 'damageUndone', true);
+    if (await changeLifeOf(target, amount, { heal: !gaveBack, reason: gaveBack ? 'FixUndone' : 'DamageUndone' })) await message.setFlag('sdm', 'damageUndone', true);
     else button.disabled = false;
   });
 }
@@ -79,11 +93,10 @@ export function bindHeroHeal(message, html) {
   if (healed) {
     const undone = message.getFlag('sdm', 'heroHealUndone');
     const line = document.createElement('div');
-    line.className = `sdm-card-tag ${undone ? 'info undone' : 'good'} sdm-hero-healed`;
-    line.innerHTML = `<i class="fa-solid ${undone ? 'fa-rotate-left' : 'fa-heart'}"></i> `;
-    line.append(
-      game.i18n.format(undone ? 'SDM.Card.HealUndone' : 'SDM.Card.Healed', { amount, actor: actor?.name ?? '?' })
-    );
+    line.className = 'sdm-card-tag good sdm-hero-healed';
+    line.innerHTML = `<i class="fa-solid fa-heart"></i> `;
+    line.append(game.i18n.format('SDM.Card.Healed', { amount, actor: actor?.name ?? '?' }));
+    if (undone) markUndone(line);
     if (!undone && game.user.isGM && actor) {
       const undo = document.createElement('button');
       undo.type = 'button';
@@ -91,7 +104,7 @@ export function bindHeroHeal(message, html) {
       undo.addEventListener('click', async event => {
         event.preventDefault();
         undo.disabled = true;
-        if (await changeLifeOf(actor, amount)) await message.setFlag('sdm', 'heroHealUndone', true);
+        if (await changeLifeOf(actor, amount, { reason: 'HealUndone' })) await message.setFlag('sdm', 'heroHealUndone', true);
         else undo.disabled = false;
       });
       line.append(undo);

@@ -94,6 +94,24 @@
         "wear": "",
         "counter": "",
         "counter_step": "1"
+      },
+      {
+        "roll": "damage",
+        "condition": "totalAtLeast",
+        "value": "1",
+        "text": "Causes illness (hard save)",
+        "attack": "",
+        "table": "",
+        "effect": "",
+        "wear": "",
+        "counter": "",
+        "counter_step": "1",
+        "status": "nauseated",
+        "status_target": "",
+        "status_mode": "apply",
+        "status_save": true,
+        "status_save_ability": "",
+        "status_save_difficulty": "hard"
       }
     ]
   },

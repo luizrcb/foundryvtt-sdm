@@ -1,4 +1,7 @@
 import { attackFollowupHtml } from '../../attackFollowup.mjs';
+import { attackFeatureHtml } from '../../attackFeatures.mjs';
+import { applyDamageHtml } from '../../ui/applyDamage.mjs';
+import { changeLifeOf } from '../../../app/use-item.mjs';
 import { cardHeader, cardWrap, marginText, resultStrip } from '../../ui/cardParts.mjs';
 import { criticalMultiplier } from '../../sdmRoll.mjs';
 import { recheckTriggersAfterHeroDice, renderTriggers, runTriggerActions } from '../../triggers.mjs';
@@ -186,20 +189,66 @@ export class HeroDiceUI {
       const word = value => $l10n(hit(value) ? 'SDM.Card.Hit' : 'SDM.Card.Miss').toUpperCase();
       const before = word(originalRoll.total);
       const after = word(total);
+      // The attack's target, as on the attack's card (this card takes its place)
+      const target = check.targetUuid ? fromUuidSync(check.targetUuid) : null;
+      const token = target?.getActiveTokens?.()[0]?.document;
       strip = resultStrip({
         tone: hit(total) ? 'good' : 'bad',
-        name: `${$l10n('SDM.FieldDefense')} ${check.defense}`,
+        img: target ? token?.texture?.src || target.img : '',
+        name: target ? target.name : `${$l10n('SDM.FieldDefense')} ${check.defense}`,
+        sub: target ? `<i class="fa-solid fa-shield-halved"></i> ${foundry.utils.escapeHTML($l10n('SDM.FieldDefense'))} ${check.defense}` : '',
         outcomeHtml: before === after ? foundry.utils.escapeHTML(after) : `<span class="was">${before}</span> → ${after}`,
         margin: marginText(total - check.defense)
       });
     }
-    const actions = attackFollowupHtml(attackItem);
+    let actions = attackFollowupHtml(attackItem);
+    // The item's feature buttons and notes (entangle, petrify…, vorpal), as on the attack's card, for
+    // the result as it is now (a natural 20 made by hero dice counts)
+    if (check?.kind === 'attack' && check.withItem) {
+      const attacker = fromUuidSync(check.actor);
+      const target = check.targetUuid ? fromUuidSync(check.targetUuid) : null;
+      const hits = Number.isFinite(check.defense) && check.defense !== null ? Number(total) > check.defense : null;
+      actions += attackFeatureHtml({
+        actor: attacker,
+        item: attacker?.items?.get(check.withItem),
+        targetActor: target,
+        success: hits,
+        isNat20: heroTwenties(keptDice) > 0
+      });
+    }
+    // A damage roll (its card had the apply buttons): this card gets them for the new total, and damage
+    // applied automatically by that card is corrected to it — only the difference, which this card's
+    // Undo gives back (the old card's Undo still gives back what it applied)
+    const source = game.messages.get(flags?.sdm?.sourceMessage ?? '');
+    const sourceDiv = source?.content?.includes('sdm-apply-damage') ? document.createElement('div') : null;
+    let damageTag = '';
+    let damageFix = null;
+    if (sourceDiv) {
+      sourceDiv.innerHTML = source.content;
+      actions += applyDamageHtml(total);
+      const auto = sourceDiv.querySelector('.sdm-auto-damage');
+      const autoTarget = auto ? fromUuidSync(auto.dataset.targetUuid) : null;
+      const diff = Number(total) - (Number(auto?.dataset.amount) || 0);
+      if (autoTarget && diff && !source.getFlag('sdm', 'damageUndone')) {
+        damageFix = { target: autoTarget, amount: Math.abs(diff), heal: diff < 0 };
+        const text = game.i18n.format(diff > 0 ? 'SDM.Card.DamageAdded' : 'SDM.Card.DamageReduced', {
+          amount: Math.abs(diff),
+          target: autoTarget.name,
+          total
+        });
+        damageTag =
+          `<div class="sdm-card-tag info sdm-auto-damage" data-target-uuid="${foundry.utils.escapeHTML(autoTarget.uuid)}" data-amount="${Math.abs(diff)}"${diff < 0 ? ' data-heal="1"' : ''}>` +
+          `<i class="fa-solid fa-heart-crack"></i> ${foundry.utils.escapeHTML(text)}` +
+          ` <button type="button" data-action="sdmUndoDamage"><i class="fa-solid fa-rotate-left"></i> ${foundry.utils.escapeHTML($l10n('SDM.Card.Undo'))}</button></div>`;
+      }
+    }
     await createChatMessage({
       actor,
       content: cardWrap(
         cardHeader({ icon: 'fa-solid fa-dice-d6', color: 'amber', title: $l10n('SDM.FieldHeroDice'), chips }) +
           (await renderTemplate(templatePath('/chat/hero-dice-result'), templateData)) +
           strip +
+          damageTag +
           renderTriggers(recheck.fired) +
           (actions ? `<div class="sdm-card-actions">${actions}</div>` : ''),
         { kind: 'hero' }
@@ -215,6 +264,7 @@ export class HeroDiceUI {
       }
     });
 
+    if (damageFix) await changeLifeOf(damageFix.target, damageFix.amount, { heal: damageFix.heal, reason: damageFix.heal ? 'DamageFixed' : '' });
     if (recheck.fired.length) await runTriggerActions(recheck.fired, { actor: recheck.actor });
 
     if (flags && flags?.sdm?.save) {

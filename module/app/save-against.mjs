@@ -19,6 +19,10 @@ const CHANNEL = 'system.sdm';
 const ROLL_ACTION = 'sdmSaveAgainstRoll';
 const MIND = ['mad', 'fear', 'confused', 'sleep'];
 const ABILITIES = ['str', 'end', 'agi', 'cha', 'aur', 'tho'];
+// A save's difficulty moves its target: easy −3, hard +3 (standard: the actor's save target)
+export const SAVE_DIFFICULTY_SHIFT = { easy: -3, hard: 3 };
+export const SAVE_DIFFICULTIES = ['easy', '', 'hard'];
+const difficultyName = key => game.i18n.localize(`SDM.SaveDifficulty.${key || 'standard'}`);
 
 const esc = text => foundry.utils.escapeHTML(String(text ?? ''));
 const statusName = id => game.i18n.localize(CONFIG.statusEffects.find(s => s.id === id)?.name ?? id);
@@ -51,7 +55,7 @@ function rollSave(actor, ability, info) {
  */
 export async function saveAgainst(target, info) {
   if (!target || !(info?.status || info?.effect)) return;
-  const data = { status: info.status ?? '', rounds: Number(info.rounds) || 0, source: info.source ?? '' };
+  const data = { status: info.status ?? '', rounds: Number(info.rounds) || 0, source: info.source ?? '', difficulty: info.difficulty ?? '' };
   if (info.duration) data.duration = info.duration;
   if (info.effect) data.effect = info.effect;
   if (target.type !== ActorType.CHARACTER) {
@@ -78,6 +82,10 @@ export async function saveAgainst(target, info) {
           source: data.source
         })
       )}</p>
+      <div class="sdm-save-difficulty">${SAVE_DIFFICULTIES.map(
+        key =>
+          `<button type="button" data-action="sdmSaveDifficulty" data-difficulty="${key}"${key === data.difficulty ? ' class="active"' : ''}>${esc(difficultyName(key))}</button>`
+      ).join('')}</div>
       <div class="sdm-save-request-buttons">${buttons}</div>
     </div>` +
         `<div class="sdm-card-foot"><span>${esc(game.i18n.localize('SDM.SaveAgainst.Who'))}</span></div>`,
@@ -93,19 +101,35 @@ export function rerenderChangedSave(message) {
 }
 
 /** renderChatMessageHTML: the save request's ability buttons, for the character's owner and the Referee. */
-export function bindSaveAgainst(html) {
+export function bindSaveAgainst(message, html) {
   const box = html.querySelector('.sdm-save-request');
   if (!box) return;
   const actor = fromUuidSync(box.dataset.actor);
   const buttons = box.querySelectorAll('[data-action="sdmSaveAgainst"]');
-  if (!actor?.isOwner) {
-    buttons.forEach(button => (button.disabled = true));
-    return;
-  }
   let info;
   try {
     info = JSON.parse(box.dataset.info);
   } catch {
+    return;
+  }
+  // The difficulty: the Referee can change it on the card (easy / standard / hard); players see it
+  const difficulty = message?.getFlag('sdm', 'saveDifficulty') ?? info.difficulty ?? '';
+  info.difficulty = difficulty;
+  const row = box.querySelector('.sdm-save-difficulty');
+  row?.querySelectorAll('button').forEach(button => {
+    button.classList.toggle('active', button.dataset.difficulty === difficulty);
+    if (!game.user.isGM) button.disabled = true;
+    else
+      button.addEventListener('click', event => {
+        event.preventDefault();
+        message?.setFlag('sdm', 'saveDifficulty', button.dataset.difficulty);
+      });
+  });
+  // Players: only the current difficulty, and only when it isn't standard
+  if (!game.user.isGM) row?.querySelectorAll('button:not(.active)').forEach(button => button.remove());
+  if (!game.user.isGM && !difficulty) row?.remove();
+  if (!actor?.isOwner) {
+    buttons.forEach(button => (button.disabled = true));
     return;
   }
   buttons.forEach(button =>

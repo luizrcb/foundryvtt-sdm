@@ -171,7 +171,8 @@ export function itemRollTriggers(item, rollKind, roll, { power = '', ...options 
     for (const trigger of holder.system?.triggers ?? []) {
       if (trigger.roll !== rollKind || !watchesItem(trigger, holder, item)) continue;
       if (rollKind === 'power' && trigger.power && name && trigger.power.trim().toLowerCase() !== name) continue;
-      if (matches(trigger, roll, options, holder)) fired.push({ item: holder, trigger });
+      // A consumable's Use has no roll: it always fires
+      if (rollKind === 'use' || matches(trigger, roll, options, holder)) fired.push({ item: holder, trigger });
     }
   }
   return fired;
@@ -217,7 +218,7 @@ async function runActions(fired, { actor, targets = null } = {}) {
         await applyItemEffectToTargets(item, trigger.effect, actor ?? item.actor, {
           self: trigger.effect_target === 'self',
           targets: trigger.effect_target === 'self' ? null : targets,
-          save: trigger.effect_save ? { ability: trigger.effect_save_ability ?? '', source: item.name } : null
+          save: trigger.effect_save ? { ability: trigger.effect_save_ability ?? '', difficulty: trigger.effect_save_difficulty ?? '', source: item.name } : null
         });
       }
       if (trigger.status) {
@@ -226,7 +227,9 @@ async function runActions(fired, { actor, targets = null } = {}) {
           targets: trigger.status_target === 'self' ? null : targets,
           remove: trigger.status_mode === 'remove',
           duration: durationData(trigger.status_duration, trigger.status_duration_units),
-          save: trigger.status_mode !== 'remove' && trigger.status_save ? { ability: trigger.status_save_ability ?? '', source: item.name } : null
+          save: trigger.status_mode !== 'remove' && trigger.status_save
+            ? { ability: trigger.status_save_ability ?? '', difficulty: trigger.status_save_difficulty ?? '', source: item.name }
+            : null
         });
       }
       if (trigger.wear) await wearItem(item, trigger.wear);
@@ -416,6 +419,7 @@ async function wearItem(item, wear) {
 }
 
 export function describeCondition(trigger, item = null) {
+  if (trigger.roll === 'use') return game.i18n.localize('SDM.Trigger.OnUse');
   const condition = trigger.condition === 'counterMax' ? 'full' : trigger.condition;
   // Counters and charges have a value, usage rolls a result
   const tracked = trigger.roll === 'counter' || trigger.roll === 'charges';
@@ -449,15 +453,79 @@ function actionSummary(item, trigger) {
   return parts.join(', ');
 }
 
-export function renderTriggers(fired) {
+/**
+ * Trigger actions that act on targets (a Condition or an Effect not on the roller) when the roll had
+ * none: the row gets a button to apply them to the tokens targeted later.
+ */
+function targetActionButton(item, trigger) {
+  const onTargets = (trigger.status && trigger.status_target !== 'self') || (trigger.effect && trigger.effect_target !== 'self');
+  if (!onTargets || !item?.uuid) return '';
+  const index = (item.system?.triggers ?? []).indexOf(trigger);
+  if (index < 0) return '';
+  const names = [];
+  if (trigger.status && trigger.status_target !== 'self') {
+    const status = CONFIG.statusEffects.find(effect => effect.id === trigger.status);
+    names.push(`${trigger.status_mode === 'remove' ? '− ' : ''}${status ? game.i18n.localize(status.name) : trigger.status}`);
+  }
+  if (trigger.effect && trigger.effect_target !== 'self') names.push(item.effects?.get?.(trigger.effect)?.name ?? '');
+  const label = game.i18n.format('SDM.Trigger.ApplyToTargets', { what: names.filter(Boolean).join(', ') });
+  return (
+    `<button type="button" class="sdm-trigger-apply" data-action="sdmTriggerApply" data-item-uuid="${esc(item.uuid)}" data-index="${index}">` +
+    `<i class="fa-solid fa-crosshairs"></i> ${esc(label)}</button>`
+  );
+}
+
+/**
+ * The triggers that fired, on the roll's card. `targets`: whom their actions act on (default: the
+ * user's targeted tokens); with none, actions on targets get an "apply to targets" button.
+ */
+export function renderTriggers(fired, { targets } = {}) {
   if (!fired.length) return '';
+  const hasTargets = (targets ?? [...(game.user?.targets ?? [])]).length > 0;
   const rows = fired
     .map(({ item, trigger }) => {
       const text = trigger.text || actionSummary(item, trigger);
-      return `<li><i class="fa-solid fa-bolt"></i> <b>${esc(item.name)}</b> (${esc(describeCondition(trigger, item))})${text ? `: ${esc(text)}` : ''}</li>`;
+      const button = hasTargets ? '' : targetActionButton(item, trigger);
+      return `<li><i class="fa-solid fa-bolt"></i> <b>${esc(item.name)}</b> (${esc(describeCondition(trigger, item))})${text ? `: ${esc(text)}` : ''}${button}</li>`;
     })
     .join('');
   return `<div class="sdm-roll-triggers"><b>${$l10n('SDM.Trigger.Fired')}</b><ul>${rows}</ul></div>`;
+}
+
+/**
+ * renderChatMessageHTML: a trigger's "apply to targets" button — its Condition and Effect actions on
+ * the tokens the user targets now (a save, its difficulty and the duration as the trigger says;
+ * targets the user doesn't own go through the Referee). The roller is the card's speaker.
+ */
+export function bindTriggerApply(message, html) {
+  html.querySelectorAll('[data-action="sdmTriggerApply"]').forEach(button =>
+    button.addEventListener('click', async event => {
+      event.preventDefault();
+      const item = await fromUuid(button.dataset.itemUuid);
+      const trigger = item?.system?.triggers?.[Number(button.dataset.index)];
+      if (!trigger) return;
+      const targets = [...new Set([...(game.user.targets ?? [])].map(token => token.actor).filter(Boolean))];
+      if (!targets.length) return ui.notifications.info(game.i18n.localize('SDM.Trigger.ApplyNoTarget'));
+      const actor = ChatMessage.getSpeakerActor?.(message.speaker) ?? item.actor;
+      if (trigger.effect && trigger.effect_target !== 'self') {
+        await applyItemEffectToTargets(item, trigger.effect, actor, {
+          targets,
+          save: trigger.effect_save ? { ability: trigger.effect_save_ability ?? '', difficulty: trigger.effect_save_difficulty ?? '', source: item.name } : null
+        });
+      }
+      if (trigger.status && trigger.status_target !== 'self') {
+        await applyStatusToTargets(trigger.status, actor, {
+          targets,
+          remove: trigger.status_mode === 'remove',
+          duration: durationData(trigger.status_duration, trigger.status_duration_units),
+          save:
+            trigger.status_mode !== 'remove' && trigger.status_save
+              ? { ability: trigger.status_save_ability ?? '', difficulty: trigger.status_save_difficulty ?? '', source: item.name }
+              : null
+        });
+      }
+    })
+  );
 }
 
 /** Set a counter to a value (between 0 and its maximum). */
