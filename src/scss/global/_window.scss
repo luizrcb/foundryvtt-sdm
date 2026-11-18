@@ -3038,3 +3038,25 @@ a.sdm-proto-link {
     filter: grayscale(1) opacity(0.55);
   }
 }
+
+// Item sheet Features tab: locked until the pencil is clicked
+.sdm-features-edit-bar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 4px;
+  .sdm-features-edit {
+    padding: 2px 6px;
+    border-radius: 4px;
+    opacity: 0.7;
+    &:hover,
+    &.active {
+      opacity: 1;
+    }
+  }
+}
+.sdm-features-list.is-locked {
+  opacity: 0.85;
+  input[type='checkbox'] {
+    cursor: default;
+  }
+}

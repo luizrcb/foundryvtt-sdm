@@ -3014,6 +3014,30 @@ a.sdm-proto-link.warn {
   filter: grayscale(1) opacity(0.55);
 }
 
+.sdm-features-edit-bar {
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 4px;
+}
+
+.sdm-features-edit-bar .sdm-features-edit {
+  padding: 2px 6px;
+  border-radius: 4px;
+  opacity: 0.7;
+}
+
+.sdm-features-edit-bar .sdm-features-edit:hover, .sdm-features-edit-bar .sdm-features-edit.active {
+  opacity: 1;
+}
+
+.sdm-features-list.is-locked {
+  opacity: 0.85;
+}
+
+.sdm-features-list.is-locked input[type=checkbox] {
+  cursor: default;
+}
+
 .grid,
 .grid-2col {
   display: grid;

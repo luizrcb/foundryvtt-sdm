@@ -2847,7 +2847,6 @@
   "SDM.SettingsAutomateConditions": "Automate conditions",
   "SDM.SettingsAutomateConditionsHint": "Conditions act on their own: bleeding and burning cost life each turn, stunned / paralyzed / unconscious / asleep / petrified lose the turn, stunned, blinded and confused last a round, asleep wakes when hurt, corroded and slowed lower defense (slowed also speed), the defeat roll knocks out or stuns, and the roll dialog preselects advantage or disadvantage from the conditions.",
   "SDM.Menu.Zones.Name": "Movement & Range Zones",
-  "SDM.Menu.Zones.Hint": "How many meters each zone (close, short, medium, long) is in each kind of scene, and the optional helpers on the map.",
   "SDM.Menu.Zones.Label": "Configure Zones",
   "SDM.Zones.DefaultScale": "Default zone scale",
   "SDM.Zones.DefaultScaleHint": "Used by scenes that don't pick their own scale (Scene configuration, Grid tab).",
@@ -2899,7 +2898,7 @@
   "SDM.Zones.HereSquares": "On this scene's grid: close up to {close} square(s) away (1 = adjacent), short {short}, medium {medium}.",
   "SDM.Zones.GridMismatch": "This scene's grid is {here} per square, but this scale is meant for {grid}: zones will look too small or too large on the map. Change the grid size, or pick another scale.",
   "SDM.Zones.Unit": "Distance unit",
-  "SDM.Zones.UnitHint": "Feet or meters for the zone numbers, the scene settings and new scenes (5 ft or 1.5 m squares). Changing it converts every scene in feet or meters (5 ft ↔ 1.5 m, 30 ft ↔ 10 m…) and the zone numbers: the game plays the same, only the numbers change.",
+  "SDM.Zones.UnitHint": "Feet or meters for the zone numbers, the scene settings and new scenes (5 ft or 1.5 m squares). Changing it converts every scene in feet or meters (5 ft ↔ 1.5 m, 10 ft ↔ 3 m…) and the zone numbers: the game plays the same, only the numbers change.",
   "SDM.Zones.UnitFt": "Feet (ft)",
   "SDM.Zones.UnitM": "Meters (m)",
   "SDM.Zones.UnitConverted": "Distances converted to {unit}: {count} scene(s) updated.",
@@ -3128,5 +3127,7 @@
   "SDM.Ride.ClickRecall": "click to recall",
   "SDM.Ride.ClickRequest": "Click to ask the Referee to deploy it",
   "SDM.Ride.EndWithCombat": "Recall when combat ends",
-  "SDM.Zones.HighlightButtonHold": "{button} · or hold {key}"
+  "SDM.Zones.HighlightButtonHold": "{button} · or hold {key}",
+  "SDM.FeaturesEdit": "Edit features",
+  "SDM.FeaturesEditDone": "Done editing"
 }

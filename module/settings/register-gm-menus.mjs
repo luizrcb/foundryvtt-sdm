@@ -52,7 +52,6 @@ export function registerSDMGMSettingMenus() {
 
   game.settings.registerMenu('sdm', '03b-zones', {
     name: 'SDM.Menu.Zones.Name',
-    hint: 'SDM.Menu.Zones.Hint',
     label: 'SDM.Menu.Zones.Label',
     icon: 'fa-solid fa-ruler-combined pine',
     type: SDMZonesSettingsConfig,

@@ -99,7 +99,9 @@
   - **Deploy / Recall**: a ride can take the field as a creature (no feature or cost needed) with its stats, speed, size, capacity, cost and supply (always the ride's, mods included); the Referee deploys it from the caravan's transport rows (flag icon), the right-click menu or the ride's sheet, and recalls it the same way, from its token HUD or by deleting its token; players ask the Referee. At 0 life it is broken and goes back to the caravan; optional: recalled when the combat ends
   - The caravan's transport rows show notched and broken rides on their image
 - **Animated items**: deleting a creature's last token turns it back into its item (as Deanimate)
-- **Inventory rows**: the Use button only shows on readied items; an unlit light source shows an unlit flame — click to light it; an animatable item shows a faded ghost — click to animate it (Referee) or ask to (owner); a walking creature's ghost deanimates it on click (Referee)
+- **Inventory rows**: the Use button only shows on readied items; an unlit light source shows an unlit flame — click to light it; an animatable item shows a faded ghost (before its charges) — click to animate it (Referee) or ask to (owner); a walking creature's ghost deanimates it on click (Referee)
+- **Features tab** (item sheets): the feature checkboxes are locked so moving around the sheet doesn't tick one by mistake; the pencil at the top unlocks them, and changing tab locks them again
+- Zones Settings: the menu entry has no description line; the distance unit hint's example is now 10 ft ↔ 3 m
 - New default icons for caravans, mounts, vehicles, skills, powers and wards
 - Token Action HUD: only readied consumables are listed
 - **Show zones (hold)**: hold a key (Z by default) to see the zones around your selected token, or your main character's token on the scene; released, they go (zones turned on from the Token HUD stay). Set the key in the Client Settings menu (or Configure Controls); no key turns it off; the Token HUD's zones button mentions the key on hover

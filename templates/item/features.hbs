@@ -1,5 +1,15 @@
-{{! Features Tab }}
+{{! Features Tab. Locked until the pencil is clicked, so moving around the sheet doesn't tick features by mistake
+    (inert, not disabled: the checked features are still sent with the form) }}
 <section class='tab features scrollable {{tab.cssClass}}' data-group='primary' data-tab='features'>
+  {{#if editable}}
+  <div class="sdm-features-edit-bar">
+    <a class="sdm-features-edit{{#if featuresEditing}} active{{/if}}" data-action="toggleFeaturesEdit"
+       data-tooltip="{{#if featuresEditing}}{{localize 'SDM.FeaturesEditDone'}}{{else}}{{localize 'SDM.FeaturesEdit'}}{{/if}}">
+      <i class="fa-solid {{#if featuresEditing}}fa-check{{else}}fa-pencil{{/if}}"></i>
+    </a>
+  </div>
+  {{/if}}
+  <div class="sdm-features-list{{#unless featuresEditing}} is-locked{{/unless}}" {{#unless featuresEditing}}inert{{/unless}}>
   {{formInput
     systemFields.features
     type="checkboxes"
@@ -9,4 +19,5 @@
     sort=true
     localize=true
   }}
+  </div>
 </section>

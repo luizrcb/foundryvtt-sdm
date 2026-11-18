@@ -162,6 +162,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       deanimateItem: this._onDeanimateItem,
       fillAnimationFromTable: this._onFillAnimationFromTable,
       sendToChat: this._onSendToChat,
+      toggleFeaturesEdit: this._onToggleFeaturesEdit,
       openPetActor: this._onOpenPetActor,
       unlinkActor: this._onUnlinkActor
     },
@@ -547,6 +548,10 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       case 'attributesMount':
       case 'powerAlbum':
       case 'features':
+        context.tab = context.tabs[partId];
+        // Locked until the pencil is clicked (avoids ticking features by mistake)
+        context.featuresEditing = !!this._featuresEditing;
+        break;
       case 'categories':
         // Necessary for preserving active tab on re-render
         context.tab = context.tabs[partId];
@@ -1328,6 +1333,21 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
 
   static async _toggleItemStatus(event) {
     await this.item.toggleItemStatus(event);
+  }
+
+  /** Leaving the Features tab locks it again. */
+  changeTab(tab, group, options) {
+    super.changeTab(tab, group, options);
+    if (tab !== 'features' && this._featuresEditing) {
+      this._featuresEditing = false;
+      this.render({ parts: ['features'] });
+    }
+  }
+
+  /** Features tab: lock / unlock the checkboxes. */
+  static _onToggleFeaturesEdit() {
+    this._featuresEditing = !this._featuresEditing;
+    this.render({ parts: ['features'] });
   }
 
   static async _onSendToChat(event, target) {

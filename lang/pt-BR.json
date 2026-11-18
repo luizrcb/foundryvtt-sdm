@@ -2847,7 +2847,6 @@
   "SDM.SettingsAutomateConditions": "Automatizar condições",
   "SDM.SettingsAutomateConditionsHint": "As condições agem sozinhas: sangrando e em chamas custam vida a cada turno, atordoado / paralisado / inconsciente / dormindo / petrificado perdem o turno, atordoado, cego e confuso duram uma rodada, dormindo acorda ao sofrer dano, corroído e lento baixam a defesa (lento também a velocidade), a rolagem de derrota nocauteia ou atordoa, e a janela de rolagem já marca vantagem ou desvantagem pelas condições.",
   "SDM.Menu.Zones.Name": "Zonas de Movimento e Alcance",
-  "SDM.Menu.Zones.Hint": "Quantos metros tem cada zona (perto, curto, médio, longo) em cada tipo de cena, e os auxílios opcionais no mapa.",
   "SDM.Menu.Zones.Label": "Configurar Zonas",
   "SDM.Zones.DefaultScale": "Escala de zonas padrão",
   "SDM.Zones.DefaultScaleHint": "Usada pelas cenas que não escolhem a própria escala (configuração da cena, aba Grade).",
@@ -2899,7 +2898,7 @@
   "SDM.Zones.HereSquares": "Na grade desta cena: perto até {close} quadrado(s) de distância (1 = adjacente), curto {short}, médio {medium}.",
   "SDM.Zones.GridMismatch": "A grade desta cena tem {here} por quadrado, mas esta escala é feita para {grid}: as zonas vão parecer pequenas ou grandes demais no mapa. Mude o tamanho da grade ou escolha outra escala.",
   "SDM.Zones.Unit": "Unidade de distância",
-  "SDM.Zones.UnitHint": "Pés ou metros para os números das zonas, a configuração das cenas e as cenas novas (quadrados de 5 ft ou 1,5 m). Ao mudar, todas as cenas em pés ou metros são convertidas (5 ft ↔ 1,5 m, 30 ft ↔ 10 m…), assim como os números das zonas: o jogo funciona igual, só os números mudam.",
+  "SDM.Zones.UnitHint": "Pés ou metros para os números das zonas, a configuração das cenas e as cenas novas (quadrados de 5 ft ou 1,5 m). Ao mudar, todas as cenas em pés ou metros são convertidas (5 ft ↔ 1,5 m, 10 ft ↔ 3 m…), assim como os números das zonas: o jogo funciona igual, só os números mudam.",
   "SDM.Zones.UnitFt": "Pés (ft)",
   "SDM.Zones.UnitM": "Metros (m)",
   "SDM.Zones.UnitConverted": "Distâncias convertidas para {unit}: {count} cena(s) atualizada(s).",
@@ -3128,5 +3127,7 @@
   "SDM.Ride.ClickRecall": "clique para recolher",
   "SDM.Ride.ClickRequest": "Clique para pedir ao Mediador para mobilizar",
   "SDM.Ride.EndWithCombat": "Recolher ao fim do combate",
-  "SDM.Zones.HighlightButtonHold": "{button} · ou segure {key}"
+  "SDM.Zones.HighlightButtonHold": "{button} · ou segure {key}",
+  "SDM.FeaturesEdit": "Editar características",
+  "SDM.FeaturesEditDone": "Concluir edição"
 }
