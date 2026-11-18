@@ -3216,5 +3216,10 @@
   "SDM.AreaTie": "{name}: empate — só acerta sacrificando algo (o Mediador decide)",
   "SDM.AreaTieHit": "{name}: atingido (sacrificou algo)",
   "SDM.AreaTieMiss": "{name}: errou (sem sacrifício)",
-  "SDM.AttackFeature.SplashTie": "{name} empatou (defesa {defense})"
+  "SDM.AttackFeature.SplashTie": "{name} empatou (defesa {defense})",
+  "SDM.AreaAcross": "Diâmetro",
+  "SDM.AreaAcrossHint": "Um tamanho próprio, de lado a lado, na unidade do mundo (pés ou metros); vazio ou 0: pelo tamanho pequena / média / grande. Dois quadrados numa grade de 1,5 m: 3.",
+  "SDM.AreaAcrossBySize": "pelo tamanho",
+  "SDM.AreaFollows": "Segue o usuário",
+  "SDM.AreaFollowsHint": "A área persistente se move com o token do usuário (uma bênção em volta de você)."
 }

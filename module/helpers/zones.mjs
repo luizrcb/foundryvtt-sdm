@@ -267,6 +267,11 @@ export function sceneUnitsForMeters(meters, scene = canvas?.scene) {
   return meters / perUnit;
 }
 
+/** A size in the world unit (ft or m), in meters. */
+export function metersForWorldUnits(value) {
+  return (Number(value) || 0) * unitMeters(worldUnit());
+}
+
 /** A size in meters, in the world unit (ft or m), rounded for display. */
 export function worldUnitsForMeters(meters) {
   const value = meters / unitMeters(worldUnit());

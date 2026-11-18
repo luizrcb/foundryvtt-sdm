@@ -1,5 +1,5 @@
 import { ItemType } from '../helpers/constants.mjs';
-import { itemArea, placeArea } from '../helpers/areas.mjs';
+import { areaDamageReduction, itemArea, placeArea } from '../helpers/areas.mjs';
 import { resolveFormula } from '../helpers/formulas.mjs';
 import { lastChargeUpdate } from '../helpers/itemUtils.mjs';
 import { getUsesCounter, spendUsesUpdate, usesLeft } from '../helpers/itemUses.mjs';
@@ -599,7 +599,11 @@ export async function useItem(item) {
 
   // Applied after the card, so the chat reads: use → healing
   for (const target of targets) {
-    const payload = { actorUuid: target.uuid, restores, effects };
+    // In an area: harm less its reduction (Bystander)
+    const own = areaTargets
+      ? restores.map(r => (r.kind === 'harm' ? { ...r, amount: Math.max(r.amount - areaDamageReduction(target), 0) } : r))
+      : restores;
+    const payload = { actorUuid: target.uuid, restores: own, effects };
     if (target.isOwner) await applyToActor(payload);
     else if (game.users.activeGM) game.socket.emit(CHANNEL, { action: APPLY_ACTION, payload });
     else ui.notifications.warn($l10n('SDM.ErrorNoActiveGM'));

@@ -11,6 +11,9 @@
   - A circle or square placed beyond the item's range (its zone) gets a warning, also on the card; cones and lines start at the attacker; ranges written as text aren't checked
   - Fire Breath is a cone (run npm run build:packs)
   - **Lingers** (gear and powers): the area stays on the map and whoever stands in it has the item's effects (not its mods, nor those it gives its bearer), following *Affects*; it lasts its *Rounds* in combat (0: until removed). A consumable used in one doesn't also copy its effects. Uses the Auras automation
+    - an effect of the item with *Damage each round* (to the tokens in its aura) hurts whoever is in the lingering area at the start of each round (a wall of fire, burning ground); *Follows the user*: the area moves with its user's token (a blessing around you)
+  - **Across**: a size of its own in the world unit (two squares on a 5 ft grid: 10), instead of small / medium / large
+  - The power's area card has a damage and a heal button per token (a healing wave); a consumable's *Harm* in an area takes Bystander's level off
   - The attack dialog shows the area of the chosen item
   - Hero dice on an area's damage correct every token it was applied to
 - **Damage each round**: an effect can deal damage at the start of each combat round, to the tokens in its aura or to the last foe its actor attacked

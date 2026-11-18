@@ -189,7 +189,12 @@
           <div class='resource' data-tooltip="{{localize 'SDM.AreaLingerHint'}}">
             <label class='resource-label'>{{localize 'SDM.AreaLinger'}}</label>
             <input type='checkbox' name='system.area.linger' {{checked system.area.linger}} />
-            {{#if system.area.linger}}<input type='number' name='system.area.rounds' value='{{system.area.rounds}}' min='0' step='1' data-dtype='Number' data-tooltip="{{localize 'SDM.AreaRoundsHint'}}" />{{/if}}
+            {{#if system.area.linger}}<input type='number' name='system.area.rounds' value='{{system.area.rounds}}' min='0' step='1' data-dtype='Number' data-tooltip="{{localize 'SDM.AreaRoundsHint'}}" />
+            <label data-tooltip="{{localize 'SDM.AreaFollowsHint'}}"><input type='checkbox' name='system.area.follows' {{checked system.area.follows}} /> {{localize 'SDM.AreaFollows'}}</label>{{/if}}
+          </div>
+          <div class='resource' data-tooltip="{{localize 'SDM.AreaAcrossHint'}}">
+            <label class='resource-label'>{{localize 'SDM.AreaAcross'}}</label>
+            <input type='number' name='system.area.across' value='{{system.area.across}}' min='0' step='any' data-dtype='Number' placeholder="{{localize 'SDM.AreaAcrossBySize'}}" />
           </div>
           <div class='resource' data-tooltip="{{localize 'SDM.AreaVehicleHint'}}">
             <label class='resource-label'>{{localize 'SDM.AreaVehicle'}}</label>

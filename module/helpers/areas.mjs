@@ -4,7 +4,7 @@ import { cardHeader, cardWrap, marginText, resultStrip } from '../rolls/ui/cardP
 import { createChatMessage } from './chatUtils.mjs';
 import { attackFollowupHtml } from '../rolls/attackFollowup.mjs';
 import { getItemIdentifier } from './effectReferences.mjs';
-import { bandForMeters, metersPerUnit, sceneUnitsForMeters, sceneZoneLimits, worldUnit, worldUnitsForMeters, ZONE_BANDS } from './zones.mjs';
+import { bandForMeters, metersForWorldUnits, metersPerUnit, sceneUnitsForMeters, sceneZoneLimits, worldUnit, worldUnitsForMeters, ZONE_BANDS } from './zones.mjs';
 
 /**
  * Areas (H7): an item with an area (small, medium, large) is placed on the map as a region, and the
@@ -55,7 +55,8 @@ export function itemArea(item, kind = '') {
       affects: power.area_affects || 'everyone',
       linger: kind !== 'album' && !!power.area_linger,
       rounds: Number(power.area_rounds) || 0,
-      meters: AREA_METERS.foot[power.area],
+      follows: !!power.area_follows,
+      meters: Number(power.area_across) > 0 ? metersForWorldUnits(power.area_across) : AREA_METERS.foot[power.area],
       range: `${power.range ?? ''}`
     };
   }
@@ -64,7 +65,9 @@ export function itemArea(item, kind = '') {
   if (!size || !AREA_METERS.foot[size]) return null;
   if (!item.system?.features?.has?.('area')) return null;
   const shape = item.system.area.shape || 'circle';
-  const meters = AREA_METERS[item.system.area.vehicle ? 'vehicle' : 'foot'][size];
+  // A size of its own (across, in the world unit), else the size's
+  const across = Number(item.system.area.across) || 0;
+  const meters = across > 0 ? metersForWorldUnits(across) : AREA_METERS[item.system.area.vehicle ? 'vehicle' : 'foot'][size];
   const range = item.system?.weapon?.range || item.system?.range?.value || '';
   return {
     size,
@@ -72,6 +75,7 @@ export function itemArea(item, kind = '') {
     affects: item.system.area.affects || 'everyone',
     linger: !!item.system.area.linger,
     rounds: Number(item.system.area.rounds) || 0,
+    follows: !!item.system.area.follows,
     meters,
     range: `${range}`
   };
@@ -233,7 +237,14 @@ async function finishPlacement({ area, scene, placed, sourceToken, fromToken, or
   const outOfRange = !fromToken && sourceToken ? rangeWarning(area, scene, origin, placed) : '';
   if (outOfRange) ui.notifications.warn(outOfRange);
 
-  await createArea(scene, placed.toObject());
+  const regionData = placed.toObject();
+  // A lingering area that follows its user: attached to the token, it moves with it
+  if (area.linger && area.follows && sourceToken && regionData.flags?.sdm?.[AREA_FLAG]?.linger) {
+    regionData.attachment = { token: sourceToken.id };
+    regionData.hidden = sourceToken.hidden;
+    if (sourceToken.level !== undefined && sourceToken.level !== null) regionData.levels = [sourceToken.level];
+  }
+  await createArea(scene, regionData);
   setTargets(tokens);
   return { areaId, tokens, outOfRange, lingers: !!placed.getFlag('sdm', AREA_FLAG)?.linger };
 }
@@ -366,16 +377,24 @@ export function areaShares(actors, total) {
   });
 }
 
-/** A button per target to apply its share (damage not applied automatically). */
-export function areaApplyButtonsHtml(shares) {
+/**
+ * A button per target to apply its share (damage not applied automatically); with heal, a second
+ * one heals it instead (a power that heals in an area: everyone inside gets the roll back).
+ */
+export function areaApplyButtonsHtml(shares, { heal = false, total = 0 } = {}) {
   if (!shares.length) return '';
   return (
     `<div class="sdm-area-apply">` +
     shares
       .map(
         share =>
+          `<span class="sdm-area-share">` +
           `<button type="button" data-action="sdmAreaApplyDamage" data-target-uuid="${esc(share.target.uuid)}" data-amount="${share.amount}">` +
-          `<i class="fa-solid fa-heart-crack"></i> ${esc(share.target.name)} −${share.amount}${share.reduction ? ` (−${share.reduction})` : ''}</button>`
+          `<i class="fa-solid fa-heart-crack"></i> ${esc(share.target.name)} −${share.amount}${share.reduction ? ` (−${share.reduction})` : ''}</button>` +
+          (heal
+            ? `<button type="button" data-action="sdmAreaApplyDamage" data-heal="1" data-target-uuid="${esc(share.target.uuid)}" data-amount="${Number(total) || share.amount}" data-tooltip="${esc($l10n('SDM.Card.Heal'))}"><i class="fa-solid fa-heart"></i> +${Number(total) || share.amount}</button>`
+            : '') +
+          `</span>`
       )
       .join('') +
     `</div>`
@@ -400,7 +419,7 @@ async function onPlacePowerArea(button) {
     cardHeader({ icon: 'fa-solid fa-bullseye', title: item.name, chips: [areaLabel(item, kind), lingerLabel(item, kind)] }) +
       (placed.outOfRange ? `<div class="sdm-card-tag warn">${esc(placed.outOfRange)}</div>` : '') +
       (names ? `<div class="sdm-card-tag info">${esc($l10n('SDM.AreaInside'))}: ${names}</div>` : `<div class="sdm-card-tag info">${esc($l10n('SDM.AreaEmpty'))}</div>`) +
-      (total > 0 ? areaApplyButtonsHtml(areaShares(targets, total)) : '') +
+      (total > 0 ? areaApplyButtonsHtml(areaShares(targets, total), { heal: true, total }) : '') +
       `<div class="sdm-card-actions">${actions}</div>`,
     { kind: 'power' }
   );

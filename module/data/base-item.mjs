@@ -100,7 +100,11 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       affects: new fields.StringField({ required: true, blank: false, initial: 'everyone', choices: ['everyone', 'enemies', 'allies'] }),
       // Lingers on the map: whoever stands in it has the item's effects (rounds: 0 = until removed)
       linger: new fields.BooleanField({ required: true, initial: false }),
-      rounds: new fields.NumberField({ required: true, nullable: false, integer: true, min: 0, initial: 0 })
+      rounds: new fields.NumberField({ required: true, nullable: false, integer: true, min: 0, initial: 0 }),
+      // A size of its own, across, in the world unit (0: by small / medium / large)
+      across: new fields.NumberField({ required: true, nullable: false, min: 0, initial: 0 }),
+      // A lingering area that moves with its user's token
+      follows: new fields.BooleanField({ required: true, initial: false })
     });
 
     schema.range = new fields.SchemaField({

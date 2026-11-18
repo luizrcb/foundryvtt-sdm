@@ -93,7 +93,7 @@ export function bindAreaApply(message, html) {
       const amount = Number(button.dataset.amount) || 0;
       if (!target || amount <= 0) return;
       button.disabled = true;
-      if (!(await changeLifeOf(target, amount))) button.disabled = false;
+      if (!(await changeLifeOf(target, amount, { heal: button.dataset.heal === '1' }))) button.disabled = false;
     })
   );
 }

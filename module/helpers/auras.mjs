@@ -429,6 +429,25 @@ async function onCombatRound(combat, changed, options) {
       }
     }
   }
+  // Lingering areas: their effects with damage each round (to the tokens inside) hurt whoever is in them
+  if (scene && aurasEnabled()) {
+    for (const region of scene.regions) {
+      const flag = region.getFlag('sdm', AREA_FLAG);
+      if (!flag?.linger) continue;
+      const placer = fromUuidSync(flag.actor);
+      for (const uuid of flag.effects ?? []) {
+        const effect = fromUuidSync(uuid);
+        if (!effect?.system?.roundDamage?.formula || effect.system.roundDamage.target !== 'inside') continue;
+        for (const token of region.tokens ?? []) {
+          if (!token.actor) continue;
+          if (flag.affects === 'enemies' && flag.disposition !== null && token.disposition === flag.disposition) continue;
+          if (flag.affects === 'allies' && flag.disposition !== null && token.disposition !== flag.disposition) continue;
+          const amount = await rollRoundDamage(effect, placer ?? token.actor);
+          if (amount > 0) await changeLifeOf(token.actor, amount, { reason: region.name });
+        }
+      }
+    }
+  }
   for (const combatant of combat.combatants) {
     const actor = combatant.actor;
     if (!actor || combatant.defeated) continue;

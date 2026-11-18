@@ -237,7 +237,15 @@
       <span class="v2-label">{{localize 'SDM.AreaRounds'}}</span>
       <input type="number" name="system.area.rounds" value="{{system.area.rounds}}" min="0" step="1" data-dtype="Number" />
     </label>
+    <label class="v2-field v2-check" data-tooltip="{{localize 'SDM.AreaFollowsHint'}}">
+      <input type="checkbox" name="system.area.follows" {{checked system.area.follows}} data-dtype="Boolean" />
+      <span class="v2-label">{{localize 'SDM.AreaFollows'}}</span>
+    </label>
     {{/if}}
+    <label class="v2-field" data-tooltip="{{localize 'SDM.AreaAcrossHint'}}">
+      <span class="v2-label">{{localize 'SDM.AreaAcross'}}</span>
+      <input type="number" name="system.area.across" value="{{system.area.across}}" min="0" step="any" data-dtype="Number" placeholder="{{localize 'SDM.AreaAcrossBySize'}}" />
+    </label>
     <label class="v2-field v2-check" data-tooltip="{{localize 'SDM.AreaVehicleHint'}}">
       <input type="checkbox" name="system.area.vehicle" {{checked system.area.vehicle}} data-dtype="Boolean" />
       <span class="v2-label">{{localize 'SDM.AreaVehicle'}}</span>

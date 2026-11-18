@@ -3094,6 +3094,11 @@ a.sdm-proto-link.warn {
   padding: 2px 8px;
 }
 
+.sdm-area-share {
+  display: inline-flex;
+  gap: 2px;
+}
+
 .grid,
 .grid-2col {
   display: grid;

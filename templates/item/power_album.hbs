@@ -46,6 +46,8 @@
           <select name="{{concat 'system.powers.' @index '.area_shape'}}">{{selectOptions @root.areaShapes localize=true selected=power.area_shape}}</select></label>
         <label><span>{{localize 'SDM.AreaAffects.Label'}}</span>
           <select name="{{concat 'system.powers.' @index '.area_affects'}}">{{selectOptions @root.areaAffects localize=true selected=power.area_affects}}</select></label>
+        <label data-tooltip="{{localize 'SDM.AreaAcrossHint'}}"><span>{{localize 'SDM.AreaAcross'}}</span>
+          <input type="number" name="{{concat 'system.powers.' @index '.area_across'}}" value="{{power.area_across}}" min="0" step="any" data-dtype="Number" /></label>
         {{/if}}
       </div>
 

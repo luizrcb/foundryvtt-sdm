@@ -28,6 +28,8 @@ export default class PowerDataModel extends foundry.abstract.DataModel {
       area_affects: new fields.StringField({ required: true, blank: false, initial: 'everyone' }),
       area_linger: new fields.BooleanField({ required: true, initial: false }),
       area_rounds: new fields.NumberField({ required: true, nullable: false, integer: true, min: 0, initial: 0 }),
+      area_across: new fields.NumberField({ required: true, nullable: false, min: 0, initial: 0 }),
+      area_follows: new fields.BooleanField({ required: true, initial: false }),
       target: new fields.StringField({ required: true, blank: true, initial: '' }),
       duration: new fields.StringField({ required: true, blank: true, initial: '' }),
       overcharge: new fields.StringField({ required: false, blank: true, initial: '' }),
