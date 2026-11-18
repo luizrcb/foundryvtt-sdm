@@ -20,6 +20,34 @@
     {{formGroup fields.isHallmarkUpgrade value=source.system.isHallmarkUpgrade rootId=rootId}}
     {{/if}}
 
+    {{#if canAura}}
+    {{formGroup fields.aura.enabled value=source.system.aura.enabled rootId=rootId}}
+    {{#if source.system.aura.enabled}}
+    <fieldset class="sdm-aura-fields">
+      <legend>{{localize 'SDM.Aura.Title'}}</legend>
+      {{formGroup fields.aura.band value=source.system.aura.band localize=true rootId=rootId}}
+      {{#if (eq source.system.aura.band 'custom')}}
+      {{formGroup fields.aura.distance value=source.system.aura.distance rootId=rootId hint=(localize 'SDM.Aura.DistanceHint')}}
+      {{/if}}
+      {{formGroup fields.aura.disposition value=source.system.aura.disposition localize=true rootId=rootId}}
+      {{formGroup fields.aura.applyToSelf value=source.system.aura.applyToSelf rootId=rootId}}
+      {{formGroup fields.aura.evaluateOnSource value=source.system.aura.evaluateOnSource rootId=rootId}}
+      {{formGroup fields.aura.canStack value=source.system.aura.canStack rootId=rootId}}
+      {{#unless source.system.aura.canStack}}
+      {{formGroup fields.aura.bestFormula value=source.system.aura.bestFormula rootId=rootId placeholder=(localize 'SDM.Aura.BestFormulaPlaceholder')}}
+      {{/unless}}
+      {{formGroup fields.aura.walls value=source.system.aura.walls rootId=rootId}}
+      {{formGroup fields.aura.combatOnly value=source.system.aura.combatOnly rootId=rootId}}
+      {{formGroup fields.aura.showRadius value=source.system.aura.showRadius rootId=rootId}}
+      {{formGroup fields.aura.color value=source.system.aura.color rootId=rootId}}
+    </fieldset>
+    {{/if}}
+    {{formGroup fields.roundDamage.formula value=source.system.roundDamage.formula rootId=rootId placeholder="@actor.level"}}
+    {{#if source.system.roundDamage.formula}}
+    {{formGroup fields.roundDamage.target value=source.system.roundDamage.target localize=true rootId=rootId}}
+    {{/if}}
+    {{/if}}
+
     {{#if isActorEffect}}
     {{formGroup fields.origin value=source.origin rootId=rootId disabled=true}}
     {{else if isItemEffect}}

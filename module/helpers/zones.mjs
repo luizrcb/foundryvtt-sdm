@@ -261,6 +261,18 @@ export function metersPerUnit(scene = canvas?.scene) {
   return scene_ ? scene_ / unitMeters(worldUnit()) : 1;
 }
 
+/** A size in meters, in the scene's grid units (unknown units are taken as the world unit). */
+export function sceneUnitsForMeters(meters, scene = canvas?.scene) {
+  const perUnit = unitMeters(scene?.grid?.units) ?? unitMeters(worldUnit());
+  return meters / perUnit;
+}
+
+/** A size in meters, in the world unit (ft or m), rounded for display. */
+export function worldUnitsForMeters(meters) {
+  const value = meters / unitMeters(worldUnit());
+  return value >= 20 ? Math.round(value / 5) * 5 : Math.round(value * 10) / 10;
+}
+
 /** Zone index (0 close … 3 long) of a distance in the world unit. */
 export function bandForMeters(distance, limits = sceneZoneLimits()) {
   if (distance <= limits.close) return 0;

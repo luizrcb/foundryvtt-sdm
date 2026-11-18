@@ -1,5 +1,22 @@
 # CHANGELOG
 
+## v1.12.0
+
+- **Auras** (optional, on by default): an effect can be an aura (effect sheet: *Aura*). It radiates from its actor's tokens to the tokens in reach: a zone band of the scene (close, short, medium) or a distance of its own; allies, enemies or everyone; walls can block it; only in combat; its reach shown or only on the Regions layer. Tokens inside get a copy of the effect (marked "Aura from Bob"), removed when they leave; the aura's own changes don't apply to its actor unless *applies to its actor too*. *Values from the source* reads @actor / @item on the source; auras of the same name that don't stack: only the best one applies (*best by* formula, else the sum of its values). The Referee's game does the work, on the scenes people are on. Off while the Aura Effects module is active (a warning tells the Referee)
+  - Soldier's *Ally Defense Bonus* is now an aura: allies next to the Soldier add the Soldier's charisma to their defense, the best Soldier only (run npm run build:packs)
+- **Areas**: items with an area have a *Shape* (circle, cone, line, square) and *Vehicle size*. Sizes follow the item (on foot ~3 / 10 / 30 m across, vehicles ~10 / 50 / 150 m), not the scene
+  - The attack card of an item with an area has **Place area**: Foundry's region placement (wheel rotates, click places, right-click cancels; cones and lines start at the attacker's token and point at the cursor). A card compares the attack with every defense inside (hit, miss, critical, force or fail) and targets the hits; its **Roll damage** button rolls once for the whole area: with *Apply damage automatically* every token hit takes it (a line and an Undo each), otherwise a button per token hit applies its share. Conditions and triggers act on the hits. **Target hits** and **Remove area** on the card; the area stays on the map until removed
+  - Consumables with an area (grenades): Use places the area first, and the tokens inside are the Use's targets (saves included)
+  - The attack dialog shows the area of the chosen item
+  - Hero dice on an area's damage correct every token it was applied to
+- **Damage each round**: an effect can deal damage at the start of each combat round, to the tokens in its aura or to the last foe its actor attacked
+  - Glowing Skeleton: *Radiant Bones (unclothed)*, switched on by hand: adjacent creatures lose life equal to your level each round
+  - Mouth of the Void: *Song of the Void*, switched on by hand: adjacent creatures suffer 1d6 each round
+  - Irresistible: your level in damage each round to the last foe you attacked, hit or miss
+  - Bystander: takes its level off an area's damage
+- **Colonist**: drop up to five creatures on the trait's sheet to form the hexad; *Night with the hexad* gives each one temporary life equal to your level
+- **Expert Friends**: pet items say what their pet or sidekick is an expert at; the pet's roll dialog reminds the +6
+
 ## v1.11.0
 
 - **Investing XP**: a new button next to Player XP on the character sheet lets players invest their Player XP in the character, in one of its hallmark items or in one of their pets, or donate it to another player's Player XP. The dialog shows how much XP each one needs to level up, and every investment is recorded in the chat

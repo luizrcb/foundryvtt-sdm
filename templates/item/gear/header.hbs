@@ -110,6 +110,12 @@
               </div>
             </div>
           {{/if}}
+          {{#if showExpertAt}}
+            <div class='resource' style='grid-column: 1 / -1;' data-tooltip="{{localize 'SDM.ExpertAtHint'}}">
+              <label class='resource-label'>{{localize 'SDM.ExpertAt'}}</label>
+              <input type='text' name='system.expert_at' value='{{system.expert_at}}' placeholder="{{localize 'SDM.ExpertAtPlaceholder'}}" />
+            </div>
+          {{/if}}
           </div>
         {{else}}
         {{#unless (or
@@ -176,6 +182,16 @@
               {{selectOptions areaValues localize=true selected=system.area.value blank=''}}
             </select>
           </div>
+          {{#if (and system.area.value (ne system.area.value 'single'))}}
+          <div class='resource'>
+            <label class='resource-label'>{{localize 'SDM.AreaShape.Label'}}</label>
+            <select name='system.area.shape'>{{selectOptions areaShapes localize=true selected=system.area.shape}}</select>
+          </div>
+          <div class='resource' data-tooltip="{{localize 'SDM.AreaVehicleHint'}}">
+            <label class='resource-label'>{{localize 'SDM.AreaVehicle'}}</label>
+            <input type='checkbox' name='system.area.vehicle' {{checked system.area.vehicle}} />
+          </div>
+          {{/if}}
           {{/if}}
 
           {{#if (has system.features 'range')}}

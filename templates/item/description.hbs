@@ -1,5 +1,6 @@
 {{! Description Tab }}
 <section class='tab scrollable {{tab.cssClass}}' data-group='primary' data-tab='description'>
+  {{> ($$ "item/hexad")}}
   {{#if (and item.parent (eq system.type 'pet') (not system.pet))}}
     <div class="flex align-center mt-10">
       <span class="features-label">{{localize 'SDM.PetLink'}}</span>

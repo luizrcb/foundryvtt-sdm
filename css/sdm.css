@@ -3038,6 +3038,62 @@ a.sdm-proto-link.warn {
   cursor: default;
 }
 
+.sdm-aura-mark {
+  margin-left: 4px;
+  font-size: 0.8em;
+  color: var(--sdm-c-teal, #2a8a8a);
+}
+
+.sdm-aura-mark.is-copy {
+  opacity: 0.7;
+}
+
+.sdm-aura-fields {
+  margin: 4px 0;
+  padding: 4px 8px;
+}
+
+.sdm-hexad-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  margin: 4px 0 6px;
+}
+
+.sdm-hexad-list li {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sdm-hexad-list a[data-action=openHexadMember] {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sdm-hexad-list img {
+  border: none;
+  border-radius: 50%;
+}
+
+.sdm-hexad-list .sdm-hexad-remove {
+  opacity: 0.6;
+}
+
+.sdm-area-apply {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 4px 0;
+}
+
+.sdm-area-apply button {
+  flex: 0 0 auto;
+  width: auto;
+  padding: 2px 8px;
+}
+
 .grid,
 .grid-2col {
   display: grid;

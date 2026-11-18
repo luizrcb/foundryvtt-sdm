@@ -159,6 +159,8 @@ export default class SdmGear extends SdmItemBase {
     );
 
     schema.pet = new fields.DocumentUUIDField({ required: true, blank: true, initial: '' });
+    // Expert Friends: what the pet or sidekick is an expert at (+6 to it)
+    schema.expert_at = new fields.StringField({ required: true, blank: true, initial: '' });
 
     return schema;
   }

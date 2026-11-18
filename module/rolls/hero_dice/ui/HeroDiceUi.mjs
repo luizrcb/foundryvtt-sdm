@@ -222,21 +222,26 @@ export class HeroDiceUI {
     const source = game.messages.get(flags?.sdm?.sourceMessage ?? '');
     const sourceDiv = source?.content?.includes('sdm-apply-damage') ? document.createElement('div') : null;
     let damageTag = '';
-    let damageFix = null;
+    const damageFixes = [];
     if (sourceDiv) {
       sourceDiv.innerHTML = source.content;
       actions += applyDamageHtml(total);
-      const auto = sourceDiv.querySelector('.sdm-auto-damage');
-      const autoTarget = auto ? fromUuidSync(auto.dataset.targetUuid) : null;
-      const diff = Number(total) - (Number(auto?.dataset.amount) || 0);
-      if (autoTarget && diff && !source.getFlag('sdm', 'damageUndone')) {
-        damageFix = { target: autoTarget, amount: Math.abs(diff), heal: diff < 0 };
+      // Every target the damage was applied to (one, or each one an area hit), unless undone
+      const undone = source.getFlag('sdm', 'damageUndoneTargets') ?? [];
+      for (const auto of sourceDiv.querySelectorAll('.sdm-auto-damage')) {
+        const autoTarget = fromUuidSync(auto.dataset.targetUuid);
+        // An area target with a reduction (Bystander): the same reduction on the new total
+        const reduction = Number(auto.dataset.reduction) || 0;
+        const newAmount = Math.max(Number(total) - reduction, 0);
+        const diff = newAmount - (Number(auto.dataset.amount) || 0);
+        if (!autoTarget || !diff || source.getFlag('sdm', 'damageUndone') || undone.includes(autoTarget.uuid)) continue;
+        damageFixes.push({ target: autoTarget, amount: Math.abs(diff), heal: diff < 0 });
         const text = game.i18n.format(diff > 0 ? 'SDM.Card.DamageAdded' : 'SDM.Card.DamageReduced', {
           amount: Math.abs(diff),
           target: autoTarget.name,
-          total
+          total: newAmount
         });
-        damageTag =
+        damageTag +=
           `<div class="sdm-card-tag info sdm-auto-damage" data-target-uuid="${foundry.utils.escapeHTML(autoTarget.uuid)}" data-amount="${Math.abs(diff)}"${diff < 0 ? ' data-heal="1"' : ''}>` +
           `<i class="fa-solid fa-heart-crack"></i> ${foundry.utils.escapeHTML(text)}` +
           ` <button type="button" data-action="sdmUndoDamage"><i class="fa-solid fa-rotate-left"></i> ${foundry.utils.escapeHTML($l10n('SDM.Card.Undo'))}</button></div>`;
@@ -264,7 +269,7 @@ export class HeroDiceUI {
       }
     });
 
-    if (damageFix) await changeLifeOf(damageFix.target, damageFix.amount, { heal: damageFix.heal, reason: damageFix.heal ? 'DamageFixed' : '' });
+    for (const fix of damageFixes) await changeLifeOf(fix.target, fix.amount, { heal: fix.heal, reason: fix.heal ? 'DamageFixed' : '' });
     if (recheck.fired.length) await runTriggerActions(recheck.fired, { actor: recheck.actor });
 
     if (flags && flags?.sdm?.save) {

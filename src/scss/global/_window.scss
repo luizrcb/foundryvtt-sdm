@@ -3060,3 +3060,55 @@ a.sdm-proto-link {
     cursor: default;
   }
 }
+
+// Auras: the mark on aura effects and on the copies they give
+.sdm-aura-mark {
+  margin-left: 4px;
+  font-size: 0.8em;
+  color: var(--sdm-c-teal, #2a8a8a);
+  &.is-copy {
+    opacity: 0.7;
+  }
+}
+.sdm-aura-fields {
+  margin: 4px 0;
+  padding: 4px 8px;
+}
+
+// Colonist: the hexad on the trait's sheet
+.sdm-hexad-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px 10px;
+  margin: 4px 0 6px;
+  li {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+  }
+  a[data-action='openHexadMember'] {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+  }
+  img {
+    border: none;
+    border-radius: 50%;
+  }
+  .sdm-hexad-remove {
+    opacity: 0.6;
+  }
+}
+
+// An area's damage, not applied automatically: a button per token hit
+.sdm-area-apply {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  margin: 4px 0;
+  button {
+    flex: 0 0 auto;
+    width: auto;
+    padding: 2px 8px;
+  }
+}

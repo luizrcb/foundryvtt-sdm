@@ -1,5 +1,22 @@
 import { $l10n } from '../helpers/globalUtils.mjs';
 
+/** Aura reach: a zone band of the scene, or a distance of its own. */
+export const AURA_BANDS = {
+  close: 'SDM.RangeClose',
+  short: 'SDM.RangeShort',
+  medium: 'SDM.RangeMedium',
+  custom: 'SDM.Aura.CustomDistance'
+};
+export const ROUND_DAMAGE_TARGETS = {
+  inside: 'SDM.RoundDamage.Inside',
+  lastFoe: 'SDM.RoundDamage.LastFoe'
+};
+export const AURA_DISPOSITIONS = {
+  allies: 'SDM.Aura.Allies',
+  enemies: 'SDM.Aura.Enemies',
+  any: 'SDM.Aura.Any'
+};
+
 export class SDMActiveEffectData extends foundry.data.ActiveEffectTypeDataModel {
   static defineSchema() {
     const fields = foundry.data.fields;
@@ -30,6 +47,27 @@ export class SDMActiveEffectData extends foundry.data.ActiveEffectTypeDataModel 
         initial: false,
         label: $l10n('SDM.ItemModCostPerCapacity'),
         hint: $l10n('SDM.ItemModCostPerCapacityHint')
+      }),
+      // Aura: the effect radiates from its actor's tokens to other tokens in range (see helpers/auras.mjs)
+      aura: new fields.SchemaField({
+        enabled: new fields.BooleanField({ required: true, initial: false, label: $l10n('SDM.Aura.Enabled'), hint: $l10n('SDM.Aura.EnabledHint') }),
+        // A zone band of the scene (close / short / medium) or a distance of its own
+        band: new fields.StringField({ required: true, initial: 'close', choices: AURA_BANDS, label: $l10n('SDM.Aura.Band') }),
+        distance: new fields.NumberField({ required: true, nullable: false, min: 0, initial: 0, label: $l10n('SDM.Aura.Distance') }),
+        disposition: new fields.StringField({ required: true, initial: 'allies', choices: AURA_DISPOSITIONS, label: $l10n('SDM.Aura.Disposition') }),
+        applyToSelf: new fields.BooleanField({ required: true, initial: false, label: $l10n('SDM.Aura.ApplyToSelf'), hint: $l10n('SDM.Aura.ApplyToSelfHint') }),
+        canStack: new fields.BooleanField({ required: true, initial: false, label: $l10n('SDM.Aura.CanStack'), hint: $l10n('SDM.Aura.CanStackHint') }),
+        bestFormula: new fields.StringField({ required: true, blank: true, initial: '', label: $l10n('SDM.Aura.BestFormula'), hint: $l10n('SDM.Aura.BestFormulaHint') }),
+        evaluateOnSource: new fields.BooleanField({ required: true, initial: true, label: $l10n('SDM.Aura.EvaluateOnSource'), hint: $l10n('SDM.Aura.EvaluateOnSourceHint') }),
+        walls: new fields.BooleanField({ required: true, initial: true, label: $l10n('SDM.Aura.Walls'), hint: $l10n('SDM.Aura.WallsHint') }),
+        combatOnly: new fields.BooleanField({ required: true, initial: false, label: $l10n('SDM.Aura.CombatOnly') }),
+        showRadius: new fields.BooleanField({ required: true, initial: false, label: $l10n('SDM.Aura.ShowRadius'), hint: $l10n('SDM.Aura.ShowRadiusHint') }),
+        color: new fields.ColorField({ required: false, nullable: true, initial: null, label: $l10n('SDM.Aura.Color') })
+      }),
+      // Damage at the start of each combat round: to the tokens in its aura, or to the last foe its actor attacked
+      roundDamage: new fields.SchemaField({
+        formula: new fields.StringField({ required: true, blank: true, initial: '', label: $l10n('SDM.RoundDamage.Formula'), hint: $l10n('SDM.RoundDamage.FormulaHint') }),
+        target: new fields.StringField({ required: true, initial: 'inside', choices: ROUND_DAMAGE_TARGETS, label: $l10n('SDM.RoundDamage.Target') })
       })
     };
   }

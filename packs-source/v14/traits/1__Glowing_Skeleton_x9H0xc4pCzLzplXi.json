@@ -72,7 +72,71 @@
       "animation": "torch"
     }
   },
-  "effects": [],
+  "effects": [
+    {
+      "name": "Radiant Bones (unclothed)",
+      "origin": null,
+      "img": "icons/magic/death/undead-skeleton-energy-green.webp",
+      "disabled": true,
+      "_id": "dRgP4mKPWeTeSg9f",
+      "type": "base",
+      "system": {
+        "changes": [],
+        "aura": {
+          "enabled": true,
+          "band": "close",
+          "distance": 0,
+          "disposition": "any",
+          "applyToSelf": false,
+          "canStack": true,
+          "bestFormula": "",
+          "evaluateOnSource": true,
+          "walls": true,
+          "combatOnly": false,
+          "showRadius": false,
+          "color": null
+        },
+        "roundDamage": {
+          "formula": "@actor.level",
+          "target": "inside"
+        }
+      },
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "<p>Turn it on while unclothed: adjacent creatures lose life equal to your level at the start of each round.</p>",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.353",
+        "systemId": "sdm",
+        "systemVersion": "0.4.5",
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": "XnQAppzUXfkn5LcX"
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": {
+        "combat": null,
+        "round": null,
+        "time": 0,
+        "turn": null,
+        "combatant": null,
+        "initiative": null
+      },
+      "_key": "!items.effects!x9H0xc4pCzLzplXi.dRgP4mKPWeTeSg9f"
+    }
+  ],
   "sort": 0,
   "ownership": {
     "default": 0,

@@ -9,7 +9,7 @@ import { getHallmarkUpgradeSummary, openHallmarkUpgradeDialog } from '../app/lev
 import { makeNpcFriendly } from '../items/petItem.mjs';
 import { hasPowerAlbum } from '../helpers/itemUtils.mjs';
 import { isLightSource, LIGHT_PRESET_CHOICES, POWER_LIGHT_PRESET_CHOICES } from '../helpers/lights.mjs';
-import { isUsable } from '../app/use-item.mjs';
+import { giveTemporaryLife, isUsable } from '../app/use-item.mjs';
 import { isSentientRide, refillRideStats, rideTable } from '../helpers/rideStats.mjs';
 import { getUsesCounter, USES_MODES } from '../helpers/itemUses.mjs';
 import { hasCharges as triggerHasCharges, isCastable } from '../rolls/triggers.mjs';
@@ -35,6 +35,9 @@ import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
 import { $fmt, $l10n, constructHTMLButton } from '../helpers/globalUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { bindNumberInputs, unformatNumberInputs, reformatNumberInputs } from '../helpers/numberFormat.mjs';
+
+/** Colonist: members of the hexad. */
+const HEXAD_MAX = 5;
 
 const { api, sheets } = foundry.applications;
 const { DialogV2 } = foundry.applications.api;
@@ -163,6 +166,9 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       fillAnimationFromTable: this._onFillAnimationFromTable,
       sendToChat: this._onSendToChat,
       toggleFeaturesEdit: this._onToggleFeaturesEdit,
+      removeHexadMember: this._onRemoveHexadMember,
+      openHexadMember: this._onOpenHexadMember,
+      nightWithHexad: this._onNightWithHexad,
       openPetActor: this._onOpenPetActor,
       unlinkActor: this._onUnlinkActor
     },
@@ -335,6 +341,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       possibleRiders: getActorOptions('character'),
       sizeUnits: CONFIG.SDM.sizeUnits,
       areaValues: CONFIG.SDM.areaValues,
+      areaShapes: CONFIG.SDM.areaShapes,
       rangeValues: CONFIG.SDM.rangeType,
       skillMod: allSKillMods,
       skillModifierStep: defaultModifierStep,
@@ -511,6 +518,20 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     }
 
     const isPet = this.item.system.type === GearType.PET;
+
+    // Expert Friends: a pet item of its bearer says what its pet is an expert at
+    context.showExpertAt = !!this.item.actor?.items?.some(i => getItemIdentifier(i) === 'expert-friends') && (isPet || !!this.item.system.pet);
+
+    // Colonist: the hexad (up to five creatures) and the night that gives them temporary life
+    if (getItemIdentifier(this.item) === 'colonist' && this.item.actor) {
+      const members = (this.item.getFlag('sdm', 'hexad') ?? []).map(uuid => ({ uuid, actor: fromUuidSync(uuid) }));
+      context.hexad = {
+        members: members.map(m => ({ uuid: m.uuid, name: m.actor?.name ?? game.i18n.localize('SDM.Item.PetNotFound'), img: m.actor?.img, missing: !m.actor })),
+        count: members.length,
+        max: HEXAD_MAX,
+        level: Number(this.item.actor.system?.level) || 0
+      };
+    }
 
     if (isPet && this.item.system.pet) {
       context.petActor = await fromUuid(this.item.system.pet).catch(() => null);
@@ -1335,6 +1356,32 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     await this.item.toggleItemStatus(event);
   }
 
+  /** Colonist: take a creature out of the hexad. */
+  static async _onRemoveHexadMember(event, target) {
+    const uuid = target.closest('[data-uuid]')?.dataset.uuid;
+    const hexad = this.item.getFlag('sdm', 'hexad') ?? [];
+    await this.item.setFlag('sdm', 'hexad', hexad.filter(u => u !== uuid));
+  }
+
+  static async _onOpenHexadMember(event, target) {
+    const actor = await fromUuid(target.closest('[data-uuid]')?.dataset.uuid ?? '');
+    actor?.sheet?.render(true);
+  }
+
+  /** Colonist: a night in the colonist's vicinity gives each hexad member temporary life equal to the colonist's level. */
+  static async _onNightWithHexad() {
+    const owner = this.item.actor;
+    const level = Number(owner?.system?.level) || 0;
+    if (!owner || level <= 0) return;
+    const members = (this.item.getFlag('sdm', 'hexad') ?? []).map(uuid => fromUuidSync(uuid)).filter(Boolean);
+    if (!members.length) return;
+    for (const actor of members) await giveTemporaryLife(actor, level, { name: this.item.name, img: this.item.img });
+    await ChatMessage.create({
+      speaker: ChatMessage.getSpeaker({ actor: owner }),
+      content: `<p>${foundry.utils.escapeHTML($fmt('SDM.Hexad.NightDone', { name: owner.name, amount: level, members: members.map(a => a.name).join(', ') }))}</p>`
+    });
+  }
+
   /** Leaving the Features tab locks it again. */
   changeTab(tab, group, options) {
     super.changeTab(tab, group, options);
@@ -1619,6 +1666,18 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
    */
   async _onDropActor(event, data) {
     if (!this.item.isOwner) return false;
+    // Colonist: a creature dropped on the trait joins the hexad (up to five, not the colonist)
+    if (getItemIdentifier(this.item) === 'colonist' && this.item.actor) {
+      const actor = await fromUuid(data.uuid);
+      if (actor?.documentName !== 'Actor' || actor === this.item.actor) return false;
+      const hexad = this.item.getFlag('sdm', 'hexad') ?? [];
+      if (hexad.includes(actor.uuid)) return false;
+      if (hexad.length >= HEXAD_MAX) {
+        ui.notifications.warn($fmt('SDM.Hexad.Full', { max: HEXAD_MAX }));
+        return false;
+      }
+      return this.item.setFlag('sdm', 'hexad', [...hexad, actor.uuid]);
+    }
     // Animated items: the Referee drops the NPC the item turns into
     if (isAnimatable(this.item) && game.user.isGM) {
       const actor = await fromUuid(data.uuid);

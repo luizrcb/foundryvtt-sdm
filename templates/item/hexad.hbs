@@ -1,0 +1,21 @@
+{{! Colonist: the hexad (drop creatures on the sheet) and the night that gives them temporary life }}
+{{#if hexad}}
+<section class="v2-card v2-item-card sdm-hexad">
+  <span class="v2-card-title">{{localize 'SDM.Hexad.Title'}} ({{hexad.count}}/{{hexad.max}})</span>
+  {{#if hexad.members.length}}
+  <ul class="sdm-hexad-list unlist">
+    {{#each hexad.members}}
+    <li data-uuid="{{uuid}}">
+      <a data-action="openHexadMember">{{#if img}}<img src="{{img}}" width="20" height="20" alt="" />{{/if}}<span>{{name}}</span></a>
+      {{#if @root.editable}}<a class="sdm-hexad-remove" data-action="removeHexadMember" data-tooltip="{{localize 'SDM.Hexad.Remove'}}"><i class="fa-solid fa-xmark"></i></a>{{/if}}
+    </li>
+    {{/each}}
+  </ul>
+  {{#if @root.editable}}
+  <button type="button" class="v2-chip-btn" data-action="nightWithHexad"><i class="fa-solid fa-moon"></i> {{localize 'SDM.Hexad.Night' amount=hexad.level}}</button>
+  {{/if}}
+  {{else}}
+  <p class="v2-hint">{{localize 'SDM.Hexad.Empty'}}</p>
+  {{/if}}
+</section>
+{{/if}}

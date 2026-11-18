@@ -68,10 +68,12 @@ import { setupItemPiles } from './integrations/itemPiles.mjs';
 import { setupNpcVariability } from './helpers/npcVariability.mjs';
 import { configureConditions, localizeConditions, setupConditions } from './helpers/conditions.mjs';
 import { setupZones } from './helpers/zones.mjs';
+import { setupAuras } from './helpers/auras.mjs';
+import { bindAreaButtons, setupAreas } from './helpers/areas.mjs';
 import { bindAttackFollowup } from './rolls/attackFollowup.mjs';
 import { bindAttackFeatures } from './rolls/attackFeatures.mjs';
 import { bindSacrifice, bindSaveAgainst, rerenderChangedSave, setupSaveAgainst } from './app/save-against.mjs';
-import { bindApplyDamage, bindHeroHeal, bindUndoDamage } from './rolls/ui/applyDamage.mjs';
+import { bindApplyDamage, bindAreaApply, bindHeroHeal, bindUndoDamage } from './rolls/ui/applyDamage.mjs';
 import { rememberCurrency } from './helpers/currency.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
 import { gm as gmMacros, player as playerMacros } from './macros/_module.mjs';
@@ -308,6 +310,8 @@ Hooks.on('renderChatMessageHTML', (message, html, data) => {
   // Attack card (and its hero dice result): roll the damage of the weapon / the power it was made with
   bindAttackFollowup(html);
   bindAttackFeatures(html);
+  // Areas: place the attack's area; target its hits; remove it
+  bindAreaButtons(message, html);
   // Save request (a character saves against a condition): its owner or the Referee picks the ability
   bindSaveAgainst(message, html);
   bindSacrifice(message, html);
@@ -315,6 +319,8 @@ Hooks.on('renderChatMessageHTML', (message, html, data) => {
   bindTriggerApply(message, html);
   // Damage card: apply to the selected tokens
   bindApplyDamage(html);
+  // An area's damage, not applied automatically: a button per token hit
+  bindAreaApply(message, html);
   bindUndoDamage(message, html);
   bindHeroHeal(message, html);
   const dangerousElement = html.querySelector('[data-action="rollDangerous"]');
@@ -796,6 +802,8 @@ Hooks.once('init', function () {
   setupNpcVariability();
   setupConditions();
   setupZones();
+  setupAuras();
+  setupAreas();
   setupNextRoll();
   setupRideStats();
   setupSettingsSocket();

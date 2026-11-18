@@ -217,6 +217,7 @@ export class SDMCoreRulesSettingsConfig extends GroupBase {
     'enableCounters',
     'enableDamageBoost',
     'enableItemLights',
+    'enableAuras',
     'npcVariability',
     'npcTokenVariability',
     'npcTokenArchetype',

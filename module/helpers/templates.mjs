@@ -41,6 +41,7 @@ const templatesToLoad = [
   $$('item/v2/hallmark'),
   $$('item/v2/cure-steps'),
   $$('item/v2/installed-mods'),
+  $$('item/hexad'),
   $$('item/v2/pet-link'),
   $$('item/v2/description'),
   $$('item/v2/gm-notes'),

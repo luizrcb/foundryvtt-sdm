@@ -2,6 +2,8 @@ import { powerCardData } from '../helpers/singleUsePowers.mjs';
 import { attackFollowupHtml, attackItemFlag } from './attackFollowup.mjs';
 import { attackFeatureHtml } from './attackFeatures.mjs';
 import { reachFirstNote } from '../helpers/zones.mjs';
+import { areaAttackButton, areaDamageReduction } from '../helpers/areas.mjs';
+import { hasLastFoeDamage } from '../helpers/auras.mjs';
 import { actorTriggers, attackTriggers, damageTriggers, itemRollTriggers, renderTriggers, runTriggerActions } from './triggers.mjs';
 import { createChatMessage } from '../helpers/chatUtils.mjs';
 import { ActorType, AttackTarget, RollMode, RollType } from '../helpers/constants.mjs';
@@ -25,6 +27,8 @@ export default class SDMRoll {
     versatile = false,
     targetActor,
     targetFromCard = false,
+    // Damage for an area: the tokens it hit (actor uuids), each gets the damage
+    areaTargets = [],
     attackTarget = AttackTarget.PHYSICAL,
     sendPowerToChat = false,
     powerDescription = '',
@@ -57,6 +61,7 @@ export default class SDMRoll {
     this.versatile = versatile;
     this.targetActor = targetActor;
     this.targetFromCard = targetFromCard;
+    this.areaTargets = (areaTargets ?? []).map(uuid => fromUuidSync(uuid)).filter(a => a instanceof Actor);
     this.attackTarget = attackTarget;
     this.sendPowerToChat = sendPowerToChat;
     this.powerDescription = powerDescription;
@@ -164,6 +169,10 @@ export default class SDMRoll {
 
     if (this.type === RollType.ATTACK && this.targetActor && this.targetActor !== this.actor) {
       checkCritical = false;
+      // Remember the foe attacked (hit or miss), for damage each round to the last foe (Irresistible)
+      if (this.actor?.isOwner && hasLastFoeDamage(this.actor) && this.actor.getFlag('sdm', 'lastAttacked') !== this.targetActor.uuid) {
+        await this.actor.setFlag('sdm', 'lastAttacked', this.targetActor.uuid);
+      }
       const isNPCTarget = this.targetActor.type === ActorType.NPC;
       const target = isNPCTarget ? AttackTarget.PHYSICAL : this.attackTarget;
 
@@ -272,20 +281,61 @@ export default class SDMRoll {
     // The target it hit goes with the damage button (applied to it with "Apply damage automatically")
     if (attackItem && attackSuccess && this.targetActor) attackItem.target = this.targetActor.uuid;
     // Damage with a target: applied to it at once (optional), with an Undo for the roller and the Referee
+    // An area's damage: every token it hit, each less its reduction (Bystander: its level)
+    const areaShares =
+      isDamage && this.areaTargets.length && this.roll.total > 0
+        ? this.areaTargets.map(target => {
+            const reduction = areaDamageReduction(target);
+            return { target, reduction, amount: Math.max(this.roll.total - reduction, 0) };
+          })
+        : [];
+    const autoApply = isDamage && game.settings.get('sdm', 'autoApplyDamage');
     const autoTarget =
-      isDamage && game.settings.get('sdm', 'autoApplyDamage') && this.targetActor && this.targetActor !== this.actor && this.roll.total > 0
+      !areaShares.length && autoApply && this.targetActor && this.targetActor !== this.actor && this.roll.total > 0
         ? this.targetActor
         : null;
-    if (autoTarget) {
+    const autoShares = autoTarget ? [{ target: autoTarget, reduction: 0, amount: this.roll.total }] : autoApply ? areaShares.filter(s => s.amount > 0) : [];
+    for (const share of autoShares) {
+      const reduced = share.reduction ? ` (−${share.reduction})` : '';
       tags.push(
-        `<div class="sdm-card-tag info sdm-auto-damage" data-target-uuid="${foundry.utils.escapeHTML(autoTarget.uuid)}" data-amount="${this.roll.total}">` +
-          `<i class="fa-solid fa-heart-crack"></i> ${foundry.utils.escapeHTML(game.i18n.format('SDM.Card.DamageApplied', { amount: this.roll.total, target: autoTarget.name }))}` +
+        `<div class="sdm-card-tag info sdm-auto-damage" data-target-uuid="${foundry.utils.escapeHTML(share.target.uuid)}" data-amount="${share.amount}" data-reduction="${share.reduction}">` +
+          `<i class="fa-solid fa-heart-crack"></i> ${foundry.utils.escapeHTML(game.i18n.format('SDM.Card.DamageApplied', { amount: share.amount, target: share.target.name }) + reduced)}` +
           ` <button type="button" data-action="sdmUndoDamage"><i class="fa-solid fa-rotate-left"></i> ${foundry.utils.escapeHTML($l10n('SDM.Card.Undo'))}</button></div>`
+      );
+    }
+    // Not applied automatically: a button per token hit
+    if (!autoApply && areaShares.length) {
+      tags.push(
+        `<div class="sdm-area-apply">` +
+          areaShares
+            .map(
+              share =>
+                `<button type="button" data-action="sdmAreaApplyDamage" data-target-uuid="${foundry.utils.escapeHTML(share.target.uuid)}" data-amount="${share.amount}">` +
+                `<i class="fa-solid fa-heart-crack"></i> ${foundry.utils.escapeHTML(share.target.name)} −${share.amount}${share.reduction ? ` (−${share.reduction})` : ''}</button>`
+            )
+            .join('') +
+          `</div>`
       );
     }
     if (attackItem) {
       actions += attackFollowupHtml(attackItem);
       flags.sdm = { ...(flags.sdm ?? {}), attackItem };
+    }
+    // An item with an area: place it, and the attack is compared with every defense inside (helpers/areas.mjs)
+    if (isAttack && this.attackItem?.id && this.actor) {
+      const areaItem = this.actor.items?.get(this.attackItem.id);
+      if (areaItem) {
+        actions += areaAttackButton({
+          actor: this.actor,
+          item: areaItem,
+          total: this.roll.total,
+          isNat1,
+          isNat20,
+          attackTarget: this.attackTarget,
+          kind: this.attackItem.kind,
+          multiplier: attackItem?.multiplier ?? ''
+        });
+      }
     }
     // The item's features: backfiring, vorpal, blinding, burdening; spiked armor against unarmed
     if (isAttack && this.attackItem?.id) {
@@ -350,12 +400,14 @@ export default class SDMRoll {
     const rollMessage = await createChatMessage(chatDataMessage);
     // What follows the roll (damage applied, a trigger's condition or save) comes after its card: wait
     // for its 3D dice (Dice So Nice) to land
-    if ((autoTarget || firedTriggers.length) && rollMessage?.id) await game.dice3d?.waitFor3DAnimationByMessageID?.(rollMessage.id);
-    if (autoTarget) await changeLifeOf(autoTarget, this.roll.total);
+    if ((autoShares.length || firedTriggers.length) && rollMessage?.id) await game.dice3d?.waitFor3DAnimationByMessageID?.(rollMessage.id);
+    for (const share of autoShares) await changeLifeOf(share.target, share.amount);
     // The roll's target (the one an attack hit, carried by its damage button) gets the triggers' conditions
     if (firedTriggers.length) {
       // Only the target the attack card carried; otherwise the user's targeted tokens, as always
-      const rollTargets = this.targetFromCard && this.targetActor && this.targetActor !== this.actor ? [this.targetActor] : null;
+      const rollTargets = this.areaTargets.length
+        ? this.areaTargets
+        : this.targetFromCard && this.targetActor && this.targetActor !== this.actor ? [this.targetActor] : null;
       await runTriggerActions(firedTriggers, { actor: this.actor, targets: rollTargets });
     }
 

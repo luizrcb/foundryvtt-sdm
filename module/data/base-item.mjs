@@ -92,7 +92,10 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
         blank: true,
         nullable: true,
         initial: ''
-      })
+      }),
+      // Shape of the area placed on the map (helpers/areas.mjs) and whether it takes the vehicle sizes
+      shape: new fields.StringField({ required: true, blank: false, initial: 'circle', choices: ['circle', 'cone', 'line', 'square'] }),
+      vehicle: new fields.BooleanField({ required: true, initial: false })
     });
 
     schema.range = new fields.SchemaField({

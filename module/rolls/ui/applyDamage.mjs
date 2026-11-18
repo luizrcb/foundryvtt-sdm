@@ -56,28 +56,46 @@ function markUndone(line) {
  * the Referee only; once used, the card says so.
  */
 export function bindUndoDamage(message, html) {
-  const line = html.querySelector('.sdm-auto-damage');
-  if (!line) return;
-  const button = line.querySelector('[data-action="sdmUndoDamage"]');
-  const target = fromUuidSync(line.dataset.targetUuid);
-  const amount = Number(line.dataset.amount) || 0;
-  // A hero dice correction that gave life back (lower total): its undo takes it again
-  const gaveBack = line.dataset.heal === '1';
-  if (message.getFlag('sdm', 'damageUndone')) {
-    markUndone(line);
-    return;
+  // One line per target the damage went to (an area: one per token hit), each with its own Undo
+  const undoneTargets = message.getFlag('sdm', 'damageUndoneTargets') ?? [];
+  for (const line of html.querySelectorAll('.sdm-auto-damage')) {
+    const button = line.querySelector('[data-action="sdmUndoDamage"]');
+    const target = fromUuidSync(line.dataset.targetUuid);
+    const amount = Number(line.dataset.amount) || 0;
+    // A hero dice correction that gave life back (lower total): its undo takes it again
+    const gaveBack = line.dataset.heal === '1';
+    if (message.getFlag('sdm', 'damageUndone') || undoneTargets.includes(line.dataset.targetUuid)) {
+      markUndone(line);
+      continue;
+    }
+    const allowed = game.user.isGM || message.author?.id === game.user.id;
+    if (!allowed || !target) {
+      button?.remove();
+      continue;
+    }
+    button?.addEventListener('click', async event => {
+      event.preventDefault();
+      button.disabled = true;
+      if (await changeLifeOf(target, amount, { heal: !gaveBack, reason: gaveBack ? 'FixUndone' : 'DamageUndone' })) {
+        const done = message.getFlag('sdm', 'damageUndoneTargets') ?? [];
+        await message.setFlag('sdm', 'damageUndoneTargets', [...done, target.uuid]);
+      } else button.disabled = false;
+    });
   }
-  const allowed = game.user.isGM || message.author?.id === game.user.id;
-  if (!allowed || !target) {
-    button?.remove();
-    return;
-  }
-  button?.addEventListener('click', async event => {
-    event.preventDefault();
-    button.disabled = true;
-    if (await changeLifeOf(target, amount, { heal: !gaveBack, reason: gaveBack ? 'FixUndone' : 'DamageUndone' })) await message.setFlag('sdm', 'damageUndone', true);
-    else button.disabled = false;
-  });
+}
+
+/** Area damage with "Apply damage automatically" off: a button per token hit applies its share. */
+export function bindAreaApply(message, html) {
+  html.querySelectorAll('[data-action="sdmAreaApplyDamage"]').forEach(button =>
+    button.addEventListener('click', async event => {
+      event.preventDefault();
+      const target = fromUuidSync(button.dataset.targetUuid);
+      const amount = Number(button.dataset.amount) || 0;
+      if (!target || amount <= 0) return;
+      button.disabled = true;
+      if (!(await changeLifeOf(target, amount))) button.disabled = false;
+    })
+  );
 }
 
 /**

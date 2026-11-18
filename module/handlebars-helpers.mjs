@@ -6,6 +6,7 @@ import { isLightSource, isLit, lightBlockedReason } from './helpers/lights.mjs';
 import { featureEnabled } from './helpers/features.mjs';
 import { describeUse } from './app/use-item.mjs';
 import { isAnimatable, isAnimationBlocked } from './helpers/animatedItems.mjs';
+import { auraSourceName, isAura } from './helpers/auras.mjs';
 
 export function registerHandlebarsHelpers() {
   const $$ = (name, fn) => Handlebars.registerHelper(name, fn);
@@ -34,6 +35,9 @@ export function registerHandlebarsHelpers() {
   // Can be animated now (the animated feature, not animated, nothing blocking it): the row's faded ghost
   $$('sdmCanAnimate', item => isAnimatable(item) && !item.system?.animation?.active && !isAnimationBlocked(item));
   $$('sdmCanLight', item => isLightSource(item) && !isLit(item) && !lightBlockedReason(item));
+  // Auras: an aura effect, and the source of a copy an aura gave ("Aura from Bob")
+  $$('sdmIsAura', effect => isAura(effect));
+  $$('sdmAuraSource', effect => auraSourceName(effect));
   // Use icon tooltip: what using a consumable does and what it spends
   $$('sdmUseTooltip', item => describeUse(item));
 

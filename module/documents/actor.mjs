@@ -5,6 +5,7 @@ import { blockedReason, isDormantEffect, isUsable, useItem } from '../app/use-it
 import { resetCounters } from '../helpers/counters.mjs';
 import { canRefillUses, refillUsesUpdate } from '../helpers/itemUses.mjs';
 import { resolveEffectReferences } from '../helpers/effectReferences.mjs';
+import { skipsItsActor } from '../helpers/auras.mjs';
 import {
   BASE_DEFENSE_VALUE,
   getLevel,
@@ -443,6 +444,8 @@ export class SdmActor extends Actor {
   *allApplicableEffects() {
     for (const effect of super.allApplicableEffects()) {
       if (isDormantEffect(effect)) continue;
+      // An aura's changes go to the tokens around (copies), not to its own actor unless "applies to self"
+      if (skipsItsActor(effect, this)) continue;
       // While core collects token changes (see applyActiveEffects): only token-only effects
       if (this._sdmTokenEffectsOnly && !isTokenOnlyEffect(effect)) continue;
       yield effect;
@@ -2287,7 +2290,7 @@ export class SdmActor extends Actor {
         roll: { handler: '_onRoll', dataset: { action: 'roll', roll: actionKey } },
         rollNPCDamage: {
           handler: '_onRollNPCDamage',
-          dataset: { action: 'rollNPCDamage', damage: actionKey, label: $l10n('SDM.Damage'), multiplier: args?.multiplier ?? '', targetUuid: args?.targetUuid ?? '' }
+          dataset: { action: 'rollNPCDamage', damage: actionKey, label: $l10n('SDM.Damage'), multiplier: args?.multiplier ?? '', targetUuid: args?.targetUuid ?? '', areaTargets: args?.areaTargets ?? '' }
         },
         rollNPCMorale: {
           handler: '_onRollNPCMorale',
@@ -2307,7 +2310,7 @@ export class SdmActor extends Actor {
         },
         item: {
           handler: '_onRoll',
-          dataset: { action: 'roll', type: actionType, label: args.label, tooltip: args.tooltip, multiplier: args?.multiplier ?? '', targetUuid: args?.targetUuid ?? '' },
+          dataset: { action: 'roll', type: actionType, label: args.label, tooltip: args.tooltip, multiplier: args?.multiplier ?? '', targetUuid: args?.targetUuid ?? '', areaTargets: args?.areaTargets ?? '' },
           closestReturn: { dataset: { documentClass: 'Item', itemId: actionKey } }
         },
         transferCash: {

@@ -1,4 +1,5 @@
 import { ItemType } from '../helpers/constants.mjs';
+import { itemArea, placeArea } from '../helpers/areas.mjs';
 import { resolveFormula } from '../helpers/formulas.mjs';
 import { lastChargeUpdate } from '../helpers/itemUtils.mjs';
 import { getUsesCounter, spendUsesUpdate, usesLeft } from '../helpers/itemUses.mjs';
@@ -361,6 +362,20 @@ export async function changeLifeOf(actor, amount, { heal = false, reason = '' } 
   return true;
 }
 
+/** Temporary life for an actor (through the Referee when the user doesn't own it): Colonist's night with the hexad. */
+export async function giveTemporaryLife(actor, amount, { name = '', img = '' } = {}) {
+  const value = Number(amount) || 0;
+  if (!actor || value <= 0) return false;
+  const payload = { actorUuid: actor.uuid, restores: [{ kind: 'temp_life', amount: value, name, img }], effects: [] };
+  if (actor.isOwner) await applyToActor(payload);
+  else if (game.users.activeGM) game.socket.emit(CHANNEL, { action: APPLY_ACTION, payload });
+  else {
+    ui.notifications.warn($l10n('SDM.ErrorNoActiveGM'));
+    return false;
+  }
+  return true;
+}
+
 /** "poisoned, bleeding" */
 export function statusNames(ids = []) {
   return ids
@@ -493,7 +508,14 @@ export async function useItem(item) {
     return;
   }
 
-  const targets = getTargets(actor);
+  // An item with an area: place it first; the tokens inside are the targets (none: nobody)
+  let areaTargets = null;
+  if (itemArea(item) && canvas?.ready && canvas.scene) {
+    const placed = await placeArea({ actor, item });
+    if (!placed) return;
+    areaTargets = [...new Set(placed.tokens.map(token => token.actor).filter(Boolean))];
+  }
+  const targets = areaTargets ?? getTargets(actor);
   const itemEffects = effectsToCopy(item);
   const choice = await chooseUse(item.system.use, itemEffects);
   if (!choice) return; // dialog closed

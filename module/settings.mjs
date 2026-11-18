@@ -1,4 +1,5 @@
 import { registerNpcExtraSettings } from './helpers/npcExtras.mjs';
+import { registerAuraSettings } from './helpers/auras.mjs';
 import { onCurrencyChanged } from './helpers/currency.mjs';
 import { LIGHT_PRESETS, putOutAllLights } from './helpers/lights.mjs';
 import { registerZoneSettings } from './helpers/zones.mjs';
@@ -632,6 +633,9 @@ export function registerSystemSettings() {
 
   // NPC extras: the roll tables the generator draws special attacks, oddities and powers from
   registerNpcExtraSettings();
+
+  // Auras (on by default; off while the Aura Effects module is active)
+  registerAuraSettings();
 
   // Conditions: damage over time, lost turns, roll modes… (beyond what the game's texts say, so off by default)
   game.settings.register('sdm', 'automateConditions', {

@@ -60,6 +60,13 @@ SDM.abilityAbbreviations = {
   tho: 'SDM.AbilityThoAbbr'
 };
 
+SDM.areaShapes = {
+  circle: 'SDM.AreaShape.circle',
+  cone: 'SDM.AreaShape.cone',
+  line: 'SDM.AreaShape.line',
+  square: 'SDM.AreaShape.square'
+};
+
 SDM.areaValues = {
   single: 'SDM.AreaSingle',
   small: 'SDM.AreaSmall',
