@@ -1,4 +1,22 @@
 # Adapted from draw-steel
+#
+# Releases from a version tag, pushed or created with a GitHub release:
+# - Stable ("v1.11.0"): release with the files, published to the Foundry listing. The released
+#   system.json keeps the repository's manifest (the v14 branch), as before.
+# - Test ("v1.10.90-beta.1", "v1.10.90-rc.1": any suffix after "-"): release with the files, marked
+#   as a pre-release and not the latest, NOT published to Foundry.
+# - Beta channel: a fixed release tagged "beta" holds one system.json. Testers install once from
+#   https://github.com/<repo>/releases/download/beta/system.json; every test release points its
+#   manifest there and replaces that file, so testers get each test release as an update. A stable
+#   release replaces it too (when newer), so testers update to it and its manifest moves them back
+#   to v14. Number test releases just below the version they lead to (v1.10.90-beta.1 → v1.11.0):
+#   Foundry's isNewerVersion doesn't see "1.11.0" as newer than "1.11.0-beta.1".
+# - Promote: merge into v14, commit the version there, and tag the plain version ("v1.11.0").
+# The workflow writes the version, download and manifest into the released system.json from the
+# tag, so a test release needs no file edits (stable users, who follow v14's system.json, see
+# nothing). For a stable release, commit the version on v14 too so their installs see it.
+# Run it by hand (Actions → Release Creation → Run workflow) for a dry run: it builds the zip and
+# keeps it as a workflow artifact, with no release and nothing published.
 name: Release Creation
 
 env:
@@ -8,10 +26,17 @@ on:
   push:
     tags:
       - 'v*'
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: 'Version tag to build as (e.g. v1.11.0-beta.1). Dry run: no release, nothing published'
+        required: true
 
 jobs:
   build:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
     - uses: actions/checkout@v7
@@ -28,67 +53,63 @@ jobs:
         echo "packs=$(jq -c '.packs' system.json)" >> $GITHUB_OUTPUT
         echo "styles=$(jq -c '.styles' system.json)" >> $GITHUB_OUTPUT
 
-    # Extract version embedded in the tag.
-    - name: Extract Version From Tag
-      id: get_version
-      run: |
-        TAG="${GITHUB_REF_NAME}"
-        VERSION="${TAG#v}"
-        echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
-        echo "version-without-v=${VERSION}" >> "$GITHUB_OUTPUT"
-
-    # Set up our some variables for future use
-    # Adapted from https://github.community/t/how-to-get-just-the-tag-name/16241/7
-    # Tag name: ${{ env.TAG_NAME }}
-    # Zip name: ${{ env.ZIP_NAME }}
-    # Expected Release Download URL: ${{ env.RELEASE_DOWNLOAD_URL }}
-    # Expected Release system.json URL: ${{ env.RELEASE_INSTALL_URL }}
+    # The tag (pushed, or typed for a dry run), its version and whether it is a test release
     - name: Set up variables
-      id: get_vars
+      env:
+        INPUT_TAG: ${{ inputs.tag }}
       run: |
-        TAG=${GITHUB_REF/refs\/tags\//}
+        if [[ "${GITHUB_EVENT_NAME}" == "workflow_dispatch" ]]; then
+          TAG="$INPUT_TAG"
+          DRY_RUN=true
+        else
+          TAG="${GITHUB_REF_NAME}"
+          DRY_RUN=false
+        fi
+        if [[ ! "$TAG" =~ ^v[0-9]+\.[0-9]+\.[0-9]+(-[0-9A-Za-z.-]+)?$ ]]; then
+          echo "::error::'$TAG' is not a version tag (v1.11.0 or v1.11.0-beta.1)."
+          exit 1
+        fi
+        VERSION="${TAG#v}"
+        if [[ "$VERSION" == *-* ]]; then PRERELEASE=true; else PRERELEASE=false; fi
         PACKAGE_ID=${{ steps.manifest.outputs.id }}
-        VERSION=${{steps.get_version.outputs.version-without-v}}
         PACKAGE_TYPE="system"
         echo "TAG_NAME=$TAG" >> $GITHUB_ENV
+        echo "VERSION=$VERSION" >> $GITHUB_ENV
+        echo "IS_PRERELEASE=$PRERELEASE" >> $GITHUB_ENV
+        echo "DRY_RUN=$DRY_RUN" >> $GITHUB_ENV
         echo "PACKAGE_ID=$PACKAGE_ID" >> $GITHUB_ENV
         echo "PACKAGE_TYPE=$PACKAGE_TYPE" >> $GITHUB_ENV
         echo "ZIP_NAME=$PACKAGE_ID-$VERSION.zip" >> $GITHUB_ENV
         echo "RELEASE_DOWNLOAD_URL=https://github.com/${{ github.repository }}/releases/download/$TAG/$PACKAGE_ID-$VERSION.zip" >> $GITHUB_ENV
         echo "RELEASE_INSTALL_URL=https://github.com/${{ github.repository }}/releases/download/$TAG/$PACKAGE_TYPE.json" >> $GITHUB_ENV
+        echo "BETA_CHANNEL_URL=https://github.com/${{ github.repository }}/releases/download/beta/$PACKAGE_TYPE.json" >> $GITHUB_ENV
 
-    # Run some tests to make sure our `system.json` is correct
-    # Exit before setting up node if not
-    - name: Verify correct naming
+    # Stable releases: the repository's system.json should already say this version, since
+    # installed worlds read the v14 branch's copy to find updates. Warn only; the release still works.
+    - name: Check the repository version
+      if: env.IS_PRERELEASE == 'false'
       env:
-        TAG_NAME: ${{ env.TAG_NAME }}
-        RELEASE_DOWNLOAD: ${{ env.RELEASE_DOWNLOAD_URL }}
-        PACKAGE_TYPE: ${{ env.PACKAGE_TYPE }}
         PACKAGE_VERSION: ${{ steps.manifest.outputs.version }}
         PACKAGE_DOWNLOAD: ${{ steps.manifest.outputs.download }}
       run: |
-        # Validate that the tag being released matches the package version.
-        if [[ ! $TAG_NAME == v$PACKAGE_VERSION ]]; then
-          echo "The $PACKAGE_TYPE.json version does not match tag name."
-          echo "$PACKAGE_TYPE.json: $PACKAGE_VERSION"
-          echo "tag name: $TAG_NAME"
-          echo "Please fix this and push the tag again."
-          exit 1
+        if [[ "$PACKAGE_VERSION" != "$VERSION" ]]; then
+          echo "::warning::system.json says $PACKAGE_VERSION, the tag $VERSION. The release uses $VERSION; commit it on v14 so installed worlds see the update."
+        fi
+        if [[ "$PACKAGE_DOWNLOAD" != "$RELEASE_DOWNLOAD_URL" ]]; then
+          echo "::warning::system.json download is $PACKAGE_DOWNLOAD; the release uses $RELEASE_DOWNLOAD_URL."
         fi
 
-        # Validate that the package download url matches the release asset that will be created.
-        if [[ ! $RELEASE_DOWNLOAD == $PACKAGE_DOWNLOAD ]]; then
-          echo "The $PACKAGE_TYPE.json download url does not match the created release asset url."
-          echo "$PACKAGE_TYPE.json: $PACKAGE_DOWNLOAD"
-          echo "release asset url: $RELEASE_DOWNLOAD"
-          echo "Please fix this and push the tag again."
-          exit 1
-        fi
-
-    # Adjust manifest (replace TomaszKandula/variable-substitution)
+    # The released system.json: version and download from the tag; a test release's manifest
+    # points at the beta channel (stable keeps the repository's manifest)
     - name: Adjust manifest
       run: |
-        jq '.flags.hotReload = false' system.json > tmp.json && mv tmp.json system.json
+        jq --arg version "$VERSION" --arg download "$RELEASE_DOWNLOAD_URL" \
+          '.version = $version | .download = $download | .flags.hotReload = false' \
+          system.json > tmp.json && mv tmp.json system.json
+        if [[ "$IS_PRERELEASE" == "true" ]]; then
+          jq --arg manifest "$BETA_CHANNEL_URL" '.manifest = $manifest' system.json > tmp.json && mv tmp.json system.json
+        fi
+        jq '{version, manifest, download}' system.json
 
     - name: Use Node.js ${{ env.NODE_VERSION }}
       uses: actions/setup-node@v6
@@ -154,7 +175,18 @@ jobs:
     - name: Zip package
       run: zip ${{ env.ZIP_NAME }} -r  ${{ steps.archive.outputs.result }}
 
+    # Dry run: keep the zip and system.json as a workflow artifact
+    - name: Keep the files (dry run)
+      if: env.DRY_RUN == 'true'
+      uses: actions/upload-artifact@v4
+      with:
+        name: ${{ env.PACKAGE_ID }}-${{ env.VERSION }}
+        path: |
+          ${{ env.PACKAGE_TYPE }}.json
+          ${{ env.ZIP_NAME }}
+
     - name: Fetch Release Body
+      if: env.DRY_RUN == 'false'
       id: release
       uses: cardinalby/git-get-release-action@v1
       env:
@@ -163,29 +195,72 @@ jobs:
         tag: ${{ env.TAG_NAME }}
         doNotFailIfNotFound: true
 
+    # Test releases are pre-releases and never the latest; stable releases are neither
     - name: Update Release with Files
+      if: env.DRY_RUN == 'false'
       id: create_version_release
       uses: ncipollo/release-action@v1
       with:
         allowUpdates: true # Set this to false if you want to prevent updating existing releases
         name: ${{ env.TAG_NAME }}
         draft: false
-        prerelease: true
+        prerelease: ${{ env.IS_PRERELEASE == 'true' }}
+        makeLatest: ${{ env.IS_PRERELEASE == 'true' && 'false' || 'true' }}
         omitDraftDuringUpdate: true
-        omitPrereleaseDuringUpdate: true
         token: ${{ secrets.GITHUB_TOKEN }}
         artifacts: './${{ env.PACKAGE_TYPE }}.json, ./${{ env.ZIP_NAME }}'
         tag: ${{ env.TAG_NAME }}
         body: |
           ${{ steps.release.outputs.body }}
 
-          **Installation:** To manually install this release, please use the following manifest URL: ${{ env.RELEASE_INSTALL_URL }}
+          **Installation:** To manually install this ${{ env.IS_PRERELEASE == 'true' && 'test release' || 'release' }}, please use the following manifest URL: ${{ env.IS_PRERELEASE == 'true' && env.BETA_CHANNEL_URL || env.RELEASE_INSTALL_URL }}${{ env.IS_PRERELEASE == 'true' && ' (the beta channel: later test releases and the next stable release come as updates)' || '' }}
 
-    # Publish update to Foundry Admin interface via API
+    # Publish update to Foundry Admin interface via API (stable releases only)
     - name: Publish Module to FoundryVTT Website
+      if: env.DRY_RUN == 'false' && env.IS_PRERELEASE == 'false'
       id: publish-to-foundry-website
       uses: cs96and/FoundryVTT-release-package@v1
       with:
         package-token: ${{ secrets.PACKAGE_TOKEN }}
         manifest-url: ${{ env.RELEASE_INSTALL_URL }}
         notes-url: https://github.com/${{github.repository}}/releases/tag/${{env.TAG_NAME}}
+
+    # Beta channel: the fixed "beta" release's system.json follows the newest release. A test
+    # release always replaces it unless it's older than what's there; a stable one only when newer
+    # (a hotfix doesn't pull testers off a newer test line). Same comparison as Foundry's
+    # isNewerVersion.
+    - name: Update the beta channel
+      if: env.DRY_RUN == 'false'
+      env:
+        GH_TOKEN: ${{ github.token }}
+      run: |
+        CURRENT=""
+        if gh release download beta --repo "${{ github.repository }}" --pattern "$PACKAGE_TYPE.json" --output channel.json 2>/dev/null; then
+          CURRENT=$(jq -r '.version' channel.json)
+        fi
+        WRITE=$(node -e '
+          const [v1, v0, test] = process.argv.slice(1);
+          const num = s => s !== "" && !isNaN(Number(s));
+          function isNewer(a, b) {
+            const p = String(a).split("."), q = String(b).split(".");
+            for (const [i, p1] of p.entries()) {
+              const p0 = q[i];
+              if (p0 === undefined) return true;
+              if (num(p0) && num(p1)) { if (Number(p1) !== Number(p0)) return Number(p1) > Number(p0); }
+              else if (p1 !== p0) return p1 > p0;
+            }
+            if (q.length > p.length) return false;
+            return p.join(".") !== q.join(".");
+          }
+          if (!v0) console.log("true");
+          else if (test === "true") console.log(String(v1 === v0 || isNewer(v1, v0)));
+          else console.log(String(isNewer(v1, v0)));
+        ' "$VERSION" "$CURRENT" "$IS_PRERELEASE")
+        echo "Beta channel: ${CURRENT:-none} → $VERSION: $WRITE"
+        if [[ "$WRITE" != "true" ]]; then exit 0; fi
+        if ! gh release view beta --repo "${{ github.repository }}" >/dev/null 2>&1; then
+          gh release create beta --repo "${{ github.repository }}" --target "${GITHUB_SHA}" \
+            --prerelease --latest=false --title "Beta channel" \
+            --notes "Install test releases from this manifest URL: ${BETA_CHANNEL_URL}. Each test release and the next stable release come as updates; the stable release moves you back to the regular channel."
+        fi
+        gh release upload beta "$PACKAGE_TYPE.json" --repo "${{ github.repository }}" --clobber
