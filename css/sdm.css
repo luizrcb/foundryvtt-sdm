@@ -7921,17 +7921,37 @@ a.sdm-proto-link.warn {
 }
 
 .theme-dark .sdm-card {
-  --sdm-card-line: rgba(255, 255, 255, 0.2);
-  --sdm-card-muted: rgba(255, 255, 255, 0.6);
+  --sdm-c-dark: #191813;
+  --sdm-c-faint: #c9c7b8;
+  --sdm-c-beige: #b5b3a4;
+  --sdm-c-tan: #444444;
+  --sdm-c-white: #ffffff;
+  --sdm-c-black: #000000;
+  --sdm-c-groove: #eeede0;
+  --sdm-c-border: rgb(51, 51, 51);
+  --sdm-c-font: rgb(102, 102, 102);
+  --sdm-c-ligh-border: #b5b3a4;
+  --sdm-c-violet: #7f00ff;
+  --sdm-c-ultraviolet: #b84eff;
+  --sdm-c-rust: #cc2f00;
+  --sdm-c-pumpkin: #db6600;
+  --sdm-c-amber: #e39e00;
+  --sdm-c-lime: #76b80d;
+  --sdm-c-pine: #007668;
+  --sdm-c-sky: #006486;
+  --sdm-c-azure: #007cb5;
+  --sdm-c-royal: #465ab2;
+  --sdm-c-heart: #6d47b1;
+  --sdm-c-plum: #873b9c;
+  --sdm-c-readied: #000000;
+  --sdm-c-not-readied: grey;
+  --sdm-c-highlight: var(--sdm-c-ultraviolet);
+  --sdm-c-accent: var(--sdm-c-plum);
 }
 
-.theme-dark .sdm-card .sdm-roll-box {
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.theme-dark .sdm-card .sdm-die {
-  background: transparent;
-  border-color: rgba(255, 255, 255, 0.4);
+.theme-dark .sdm-card select option {
+  background: #ffffff;
+  color: var(--sdm-c-dark);
 }
 
 .sdm :root {
