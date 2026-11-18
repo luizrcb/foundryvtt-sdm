@@ -3127,5 +3127,6 @@
   "SDM.Ride.ClickDeploy": "Click to deploy",
   "SDM.Ride.ClickRecall": "click to recall",
   "SDM.Ride.ClickRequest": "Click to ask the Referee to deploy it",
-  "SDM.Ride.EndWithCombat": "Recall when combat ends"
+  "SDM.Ride.EndWithCombat": "Recall when combat ends",
+  "SDM.Zones.HighlightButtonHold": "{button} · or hold {key}"
 }

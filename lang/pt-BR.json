@@ -3127,5 +3127,6 @@
   "SDM.Ride.ClickDeploy": "Clique para mobilizar",
   "SDM.Ride.ClickRecall": "clique para recolher",
   "SDM.Ride.ClickRequest": "Clique para pedir ao Mediador para mobilizar",
-  "SDM.Ride.EndWithCombat": "Recolher ao fim do combate"
+  "SDM.Ride.EndWithCombat": "Recolher ao fim do combate",
+  "SDM.Zones.HighlightButtonHold": "{button} · ou segure {key}"
 }

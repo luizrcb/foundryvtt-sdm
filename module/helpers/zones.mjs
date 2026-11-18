@@ -18,7 +18,7 @@
 
 import { ActorType, GearType, ItemType, RollMode } from './constants.mjs';
 import { UnarmedDamageItem } from './itemUtils.mjs';
-import { registerKeybindingSetting } from './keybindingSettings.mjs';
+import { bindingLabel, currentBinding, registerKeybindingSetting } from './keybindingSettings.mjs';
 
 /**
  * Where close, short and medium end, in the world's distance unit (feet or meters, a world setting).
@@ -1011,7 +1011,11 @@ function onRenderTokenHUDZones(hud, html) {
   button.type = 'button';
   button.classList.add('control-icon', 'sdm-zones-toggle');
   if (shown.has(token.id)) button.classList.add('active');
-  const label = game.i18n.localize('SDM.Zones.HighlightButton');
+  // The hold key, when there is one: "… · or hold Z"
+  const key = bindingLabel(currentBinding('showZonesHold'));
+  const label = key
+    ? game.i18n.format('SDM.Zones.HighlightButtonHold', { button: game.i18n.localize('SDM.Zones.HighlightButton'), key })
+    : game.i18n.localize('SDM.Zones.HighlightButton');
   button.dataset.tooltip = label;
   button.setAttribute('aria-label', label);
   button.innerHTML = '<i class="fa-solid fa-ruler-combined" inert></i>';
