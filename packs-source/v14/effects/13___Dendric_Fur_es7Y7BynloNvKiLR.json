@@ -1,0 +1,57 @@
+{
+  "folder": "29ih90EskKRjUoCJ",
+  "name": "13 - Dendric Fur",
+  "_id": "es7Y7BynloNvKiLR",
+  "img": "icons/commodities/leather/fur-white.webp",
+  "type": "base",
+  "system": {
+    "changes": [
+      {
+        "key": "system.supply",
+        "type": "multiply",
+        "value": 0.5,
+        "priority": null,
+        "phase": "initial"
+      },
+      {
+        "key": "system.capacity",
+        "type": "add",
+        "value": -3,
+        "priority": null,
+        "phase": "initial"
+      }
+    ],
+    "isItemMod": true,
+    "modType": "ride",
+    "modCost": 100,
+    "modCostPerCapacity": true
+  },
+  "disabled": false,
+  "start": null,
+  "duration": {
+    "value": null,
+    "units": "seconds",
+    "expiry": null,
+    "expired": false
+  },
+  "description": "<p>Bright green photosynthetic fur coat. Halves supply requirements. Fills 3 sk.</p><p><strong>Mod Cost</strong>: $100/cap</p>",
+  "origin": null,
+  "tint": "#ffffff",
+  "transfer": false,
+  "statuses": [],
+  "showIcon": 1,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.370",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "createdTime": 1795000000000,
+    "modifiedTime": 1795000000000,
+    "lastModifiedBy": null,
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "sort": 13000,
+  "_key": "!effects!es7Y7BynloNvKiLR"
+}

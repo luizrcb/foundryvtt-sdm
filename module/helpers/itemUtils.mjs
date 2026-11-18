@@ -269,6 +269,23 @@ export function registerActiveEffectLimit() {
 
     if (!isItemMod) return;
 
+    // Rides (mounts and vehicles) take ride mods only, up to their level + 1; gear never takes them
+    if (isRide(parent)) {
+      if (modType !== 'ride') {
+        warnInvalidItemMod(parent);
+        return false;
+      }
+      if (isAtItemModCap(parent)) {
+        warnItemModCap(parent);
+        return false;
+      }
+      return;
+    }
+    if (modType === 'ride') {
+      warnInvalidItemMod(parent);
+      return false;
+    }
+
     if (parent.type !== ItemType.GEAR) {
       // warn and return false
       warnInvalidItemMod(parent);
@@ -335,8 +352,9 @@ export function registerActiveEffectLimit() {
 
     if (changingModType) {
       const newModType = changes.system?.modType;
-      const invalid =
-        !newModType || (newModType !== 'gear' && !newModType.includes(parent.system.type));
+      const invalid = isRide(parent)
+        ? newModType !== 'ride'
+        : !newModType || newModType === 'ride' || (newModType !== 'gear' && !newModType.includes(parent.system.type));
 
       if (
         (newModType === 'weapon' && parent.system.features.has('weapon')) ||
@@ -355,8 +373,19 @@ export function registerActiveEffectLimit() {
 }
 
 // ---------------------------------------------------------------------------
+/** A mount or a vehicle (a "ride" in the book). */
+function isRide(item) {
+  return item?.type === ItemType.MOUNT || item?.type === ItemType.VEHICLE;
+}
+
+/** How many mods an item takes: a ride its level + 1 (the book), other items their hallmark level + 1. */
+export function itemModLimit(item) {
+  const level = isRide(item) ? Number(item.system?.level) || 0 : item.system?.hallmark?.level ?? 0;
+  return level + 1;
+}
+
 function isAtItemModCap(item, excludeId = null) {
-  const max = (item.system?.hallmark?.level ?? 0) + 1;
+  const max = itemModLimit(item);
   const current = item.effects.filter(
     e => e.id !== excludeId && e.system?.isItemMod === true && !e.system?.isHallmarkUpgrade
   ).length;
@@ -364,7 +393,7 @@ function isAtItemModCap(item, excludeId = null) {
 }
 
 function warnItemModCap(item) {
-  const max = (item.system?.hallmark?.level ?? 0) + 1;
+  const max = itemModLimit(item);
   ui.notifications.warn(game.i18n.format('SDM.Warn.ItemModLimit', { max }));
 }
 

@@ -104,8 +104,14 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       })
     });
 
+    // Attack bonus of attacks made with this item (the attack dialog's With): 0, raised by the item's
+    // own effects and mods (not transferred to the bearer), e.g. Blood Drinker, a Precision mod
+    schema.attack_bonus = new fields.NumberField({ required: true, nullable: false, initial: 0 });
+
     // Saves the item's features allow (entangling, petrifying, heat): standard (''), easy or hard
-    schema.feature_save = new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'easy', 'hard'] });
+    schema.feature_save = new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'veryEasy', 'easy', 'hard', 'veryHard', 'target'] });
+    // "Target…": the exact save target
+    schema.feature_save_target = new fields.NumberField({ required: true, nullable: false, integer: true, initial: 13, min: 1 });
 
     schema.flare = new fields.SchemaField({
       value: new fields.NumberField({

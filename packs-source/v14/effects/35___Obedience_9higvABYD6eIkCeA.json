@@ -1,0 +1,50 @@
+{
+  "folder": "29ih90EskKRjUoCJ",
+  "name": "35 - Obedience",
+  "_id": "9higvABYD6eIkCeA",
+  "img": "icons/tools/hand/wrench-iron-grey.webp",
+  "type": "base",
+  "system": {
+    "changes": [
+      {
+        "key": "system.attributes.bonus",
+        "type": "add",
+        "value": -1,
+        "priority": null,
+        "phase": "initial"
+      }
+    ],
+    "isItemMod": true,
+    "modType": "ride",
+    "modCost": 50,
+    "modCostPerCapacity": false
+  },
+  "disabled": false,
+  "start": null,
+  "duration": {
+    "value": null,
+    "units": "seconds",
+    "expiry": null,
+    "expired": false
+  },
+  "description": "<p>Surgical loyalty. Ride no longer tests morale. Personality loss and -1 to attacks.</p><p><strong>Mod Cost</strong>: $50</p>",
+  "origin": null,
+  "tint": "#ffffff",
+  "transfer": false,
+  "statuses": [],
+  "showIcon": 1,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.370",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "createdTime": 1795000000000,
+    "modifiedTime": 1795000000000,
+    "lastModifiedBy": null,
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "sort": 35000,
+  "_key": "!effects!9higvABYD6eIkCeA"
+}

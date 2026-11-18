@@ -191,7 +191,7 @@
           <div class='resource'>
             <label class='resource-label'>{{localize 'SDM.SaveDifficulty.Feature'}}</label>
             <div class='resource-content'>
-              <select name="system.feature_save" data-tooltip="{{localize 'SDM.SaveDifficulty.FeatureHint'}}">{{selectOptions @root.triggerSaveDifficulties selected=system.feature_save localize=true}}</select>
+              <select name="system.feature_save" data-tooltip="{{localize 'SDM.SaveDifficulty.FeatureHint'}}">{{selectOptions @root.triggerSaveDifficulties selected=system.feature_save localize=true}}</select>{{#if (eq system.feature_save 'target')}}<input type="number" min="1" step="1" name="system.feature_save_target" value="{{system.feature_save_target}}" style="max-width:4em" data-tooltip="{{localize 'SDM.SaveDifficulty.TargetHint'}}" />{{/if}}
             </div>
           </div>
           {{/if}}
@@ -420,6 +420,12 @@
           <input type='text' name='system.weapon.damage.base' value='{{system.weapon.damage.base}}' />
         </div>
       </div>
+      {{#if system.attack_bonus}}
+      <div class='resource' data-tooltip="{{localize 'SDM.ItemAttackBonusHint'}}">
+        <label class='resource-label'>{{localize 'SDM.ItemAttackBonus'}}</label>
+        <div class='resource-content'><span>{{numberFormat system.attack_bonus sign=true}}</span></div>
+      </div>
+      {{/if}}
       <div class="resource">
         <label class='resource-label'>{{localize 'SDM.WeaponRange'}}</label>
         <select id='weapon_range' name='system.weapon.range' class="resource-content">

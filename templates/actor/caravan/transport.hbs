@@ -45,7 +45,11 @@
               data-item-id='{{vehicle.id}}' data-document-class='Item'
               data-vehicle-drop data-drop data-drag>
             <div class='item-name flexlarge flexrow'>
-              <img class='item-image' src='{{vehicle.img}}' width='24' height='24' />
+              <span class='sdm-ride-image{{#if (eq vehicle.system.status 'broken')}} is-broken{{/if}}'>
+                <img class='item-image' src='{{vehicle.img}}' width='24' height='24' />
+                {{#if (eq vehicle.system.status 'notched')}}<i class='fa fa-hammer sdm-ride-wear notched-icon' data-tooltip="{{localize 'SDM.ItemStatusNotched'}}"></i>{{/if}}
+                {{#if (eq vehicle.system.status 'broken')}}<i class='fa fa-ban sdm-ride-wear broken-icon' data-tooltip="{{localize 'SDM.ItemStatusBroken'}}"></i>{{/if}}
+              </span>
               <a data-action='viewDoc'>{{vehicle.name}}</a>
               {{#if vehicle.system.automatic}}
               <span class='tag ml-5' data-tooltip="{{localize 'SDM.ItemVehicleAutomaticHint'}}"><i class='fa-solid fa-gears'></i></span>
@@ -72,6 +76,24 @@
             </div>
             <div class='flex-group-center'><input type='text' data-item-field='system.supply' value='{{vehicle.system.supply}}' {{#unless @root.editable}}disabled{{/unless}} /></div>
             <div class='item-controls flex align-right mr-6'>
+              {{#if vehicle.deployed}}
+              <a class='item-control sdm-deployed-icon' {{#if @root.isGM}}data-action='recallRide'{{/if}}
+                 data-tooltip="{{localize 'SDM.Ride.Deployed'}}{{#if @root.isGM}}: {{localize 'SDM.Ride.ClickRecall'}}{{/if}}">
+                <i class='fa-solid fa-flag'></i>
+              </a>
+              {{else if @root.isGM}}
+              {{#unless vehicle.deployBlocked}}
+              <a class='item-control sdm-unanimated-icon' data-action='deployRide' data-tooltip="{{localize 'SDM.Ride.ClickDeploy'}}">
+                <i class='fa-solid fa-flag'></i>
+              </a>
+              {{/unless}}
+              {{else if @root.editable}}
+              {{#unless vehicle.deployBlocked}}
+              <a class='item-control sdm-unanimated-icon' data-action='requestDeployRide' data-tooltip="{{localize 'SDM.Ride.ClickRequest'}}">
+                <i class='fa-solid fa-flag'></i>
+              </a>
+              {{/unless}}
+              {{/if}}
               {{#if @root.editable}}
               <a class='item-control item-delete' data-action='deleteDoc'
                  data-tooltip="{{localize 'DOCUMENT.Delete' type=(localize 'TYPES.Item.vehicle')}}">
@@ -108,7 +130,11 @@
           {{#each @root.transportMounts as |mount|}}
           <li class='item flexrow' data-item-id='{{mount.id}}' data-document-class='Item' data-drag>
             <div class='item-name flexlarge flexrow'>
-              <img class='item-image' src='{{mount.img}}' width='24' height='24' />
+              <span class='sdm-ride-image{{#if (eq mount.system.status 'broken')}} is-broken{{/if}}'>
+                <img class='item-image' src='{{mount.img}}' width='24' height='24' />
+                {{#if (eq mount.system.status 'notched')}}<i class='fa fa-hammer sdm-ride-wear notched-icon' data-tooltip="{{localize 'SDM.ItemStatusNotched'}}"></i>{{/if}}
+                {{#if (eq mount.system.status 'broken')}}<i class='fa fa-ban sdm-ride-wear broken-icon' data-tooltip="{{localize 'SDM.ItemStatusBroken'}}"></i>{{/if}}
+              </span>
               <a data-action='viewDoc'>{{mount.name}}</a>
               {{#if mount.features.length}}
               <ul class='pills unlist ml-5'>
@@ -144,6 +170,24 @@
             </div>
             <div class='flex-group-center'><input type='text' data-item-field='system.supply' value='{{mount.system.supply}}' {{#unless @root.editable}}disabled{{/unless}} /></div>
             <div class='item-controls flex align-right mr-6'>
+              {{#if mount.deployed}}
+              <a class='item-control sdm-deployed-icon' {{#if @root.isGM}}data-action='recallRide'{{/if}}
+                 data-tooltip="{{localize 'SDM.Ride.Deployed'}}{{#if @root.isGM}}: {{localize 'SDM.Ride.ClickRecall'}}{{/if}}">
+                <i class='fa-solid fa-flag'></i>
+              </a>
+              {{else if @root.isGM}}
+              {{#unless mount.deployBlocked}}
+              <a class='item-control sdm-unanimated-icon' data-action='deployRide' data-tooltip="{{localize 'SDM.Ride.ClickDeploy'}}">
+                <i class='fa-solid fa-flag'></i>
+              </a>
+              {{/unless}}
+              {{else if @root.editable}}
+              {{#unless mount.deployBlocked}}
+              <a class='item-control sdm-unanimated-icon' data-action='requestDeployRide' data-tooltip="{{localize 'SDM.Ride.ClickRequest'}}">
+                <i class='fa-solid fa-flag'></i>
+              </a>
+              {{/unless}}
+              {{/if}}
               {{#if @root.editable}}
               <a class='item-control item-delete' data-action='deleteDoc'
                  data-tooltip="{{localize 'DOCUMENT.Delete' type=(localize 'TYPES.Item.mount')}}">

@@ -91,8 +91,10 @@ export function defineTriggersField() {
       // Copied only if a save fails (like the Condition action's save)
       effect_save: new fields.BooleanField({ initial: false }),
       effect_save_ability: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'str', 'end', 'agi', 'cha', 'aur', 'tho'] }),
-      // The save's difficulty: standard (''), easy (target −3) or hard (target +3)
-      effect_save_difficulty: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'easy', 'hard'] }),
+      // The save's difficulty: standard (''), very easy / easy (target −4 / −2), hard / very hard (+2 / +4)
+      // or an exact target ("target": the *_save_target number)
+      effect_save_difficulty: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'veryEasy', 'easy', 'hard', 'veryHard', 'target'] }),
+      effect_save_target: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 13, min: 1 }),
       // A condition put on the targets or self (any status of the Token HUD list), no effect needed on the item
       status: new fields.StringField({ required: true, blank: true, initial: '' }),
       status_target: new fields.StringField({ required: true, blank: false, initial: 'targets', choices: ['targets', 'self'] }),
@@ -105,7 +107,8 @@ export function defineTriggersField() {
       status_duration_units: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'rounds', 'minutes', 'hours', 'days', 'weeks'] }),
       status_save: new fields.BooleanField({ initial: false }),
       status_save_ability: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'str', 'end', 'agi', 'cha', 'aur', 'tho'] }),
-      status_save_difficulty: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'easy', 'hard'] }),
+      status_save_difficulty: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'veryEasy', 'easy', 'hard', 'veryHard', 'target'] }),
+      status_save_target: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 13, min: 1 }),
       wear: new fields.StringField({
         required: true,
         blank: true,

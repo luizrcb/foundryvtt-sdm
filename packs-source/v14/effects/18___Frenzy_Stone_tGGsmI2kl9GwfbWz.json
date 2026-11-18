@@ -1,0 +1,64 @@
+{
+  "folder": "29ih90EskKRjUoCJ",
+  "name": "18 - Frenzy Stone",
+  "_id": "tGGsmI2kl9GwfbWz",
+  "img": "icons/commodities/gems/gem-faceted-radiant-red.webp",
+  "type": "base",
+  "system": {
+    "changes": [
+      {
+        "key": "system.attributes.bonus",
+        "type": "multiply",
+        "value": 2,
+        "priority": null,
+        "phase": "initial"
+      },
+      {
+        "key": "system.speed",
+        "type": "add",
+        "value": 1,
+        "priority": null,
+        "phase": "initial"
+      },
+      {
+        "key": "system.attributes.defense",
+        "type": "add",
+        "value": -1,
+        "priority": null,
+        "phase": "initial"
+      }
+    ],
+    "isItemMod": true,
+    "modType": "ride",
+    "modCost": 50,
+    "modCostPerCapacity": false
+  },
+  "disabled": true,
+  "start": null,
+  "duration": {
+    "value": null,
+    "units": "seconds",
+    "expiry": null,
+    "expired": false
+  },
+  "description": "<p>Implantable combat jewel. Activate remotely to turn the ride into a relentless killing machine. Doubles attack bonus and boosts speed. Irreversible. -1 defense. (Enable this effect when it is activated.)</p><p><strong>Mod Cost</strong>: $50</p>",
+  "origin": null,
+  "tint": "#ffffff",
+  "transfer": false,
+  "statuses": [],
+  "showIcon": 1,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.370",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "createdTime": 1795000000000,
+    "modifiedTime": 1795000000000,
+    "lastModifiedBy": null,
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "sort": 18000,
+  "_key": "!effects!tGGsmI2kl9GwfbWz"
+}

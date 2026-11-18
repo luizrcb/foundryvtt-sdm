@@ -1,0 +1,50 @@
+{
+  "folder": "29ih90EskKRjUoCJ",
+  "name": "28 - Lamprey",
+  "_id": "Hn1Qe9pCMe46stVG",
+  "img": "icons/commodities/tech/pipe-tech-exhaust-steel.webp",
+  "type": "base",
+  "system": {
+    "changes": [
+      {
+        "key": "system.capacity",
+        "type": "add",
+        "value": -2,
+        "priority": null,
+        "phase": "initial"
+      }
+    ],
+    "isItemMod": true,
+    "modType": "ride",
+    "modCost": 500,
+    "modCostPerCapacity": false
+  },
+  "disabled": false,
+  "start": null,
+  "duration": {
+    "value": null,
+    "units": "seconds",
+    "expiry": null,
+    "expired": false
+  },
+  "description": "<p>Cartilaginous extensible hose that serves as a boarding tunnel. Fills 2 sk.</p><p><strong>Mod Cost</strong>: $500</p>",
+  "origin": null,
+  "tint": "#ffffff",
+  "transfer": false,
+  "statuses": [],
+  "showIcon": 1,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.370",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "createdTime": 1795000000000,
+    "modifiedTime": 1795000000000,
+    "lastModifiedBy": null,
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "sort": 28000,
+  "_key": "!effects!Hn1Qe9pCMe46stVG"
+}

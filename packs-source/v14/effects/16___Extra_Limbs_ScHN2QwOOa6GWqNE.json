@@ -1,0 +1,50 @@
+{
+  "folder": "29ih90EskKRjUoCJ",
+  "name": "16 - Extra Limbs",
+  "_id": "ScHN2QwOOa6GWqNE",
+  "img": "icons/commodities/bones/bones-broken-rib-tan.webp",
+  "type": "base",
+  "system": {
+    "changes": [
+      {
+        "key": "system.capacity",
+        "type": "add",
+        "value": -1,
+        "priority": null,
+        "phase": "initial"
+      }
+    ],
+    "isItemMod": true,
+    "modType": "ride",
+    "modCost": 75,
+    "modCostPerCapacity": true
+  },
+  "disabled": false,
+  "start": null,
+  "duration": {
+    "value": null,
+    "units": "seconds",
+    "expiry": null,
+    "expired": false
+  },
+  "description": "<p>Two hands to hold weapons, or two legs to increase stability and endurance. Fills 1 sk.</p><p><strong>Mod Cost</strong>: $75/cap</p>",
+  "origin": null,
+  "tint": "#ffffff",
+  "transfer": false,
+  "statuses": [],
+  "showIcon": 1,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.370",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "createdTime": 1795000000000,
+    "modifiedTime": 1795000000000,
+    "lastModifiedBy": null,
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "sort": 16000,
+  "_key": "!effects!ScHN2QwOOa6GWqNE"
+}

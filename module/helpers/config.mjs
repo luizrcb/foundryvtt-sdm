@@ -451,6 +451,8 @@ SDM.itemModType = {
   container: 'SDM.ItemMod.Container',
   gear: 'SDM.ItemMod.Gear',
   power_album: 'SDM.ItemMod.PowerAlbum',
+  // Mounts and vehicles (the book's Mods & Upgrades for rides)
+  ride: 'SDM.ItemMod.Ride',
   weapon: 'SDM.ItemMod.Weapon'
 };
 

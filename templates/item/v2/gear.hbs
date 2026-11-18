@@ -109,6 +109,12 @@
       <span class="v2-label">{{localize 'SDM.WeaponDamage'}}</span>
       <input type="text" name="system.weapon.damage.base" value="{{system.weapon.damage.base}}" />
     </label>
+    {{#if system.attack_bonus}}
+    <span class="v2-field" data-tooltip="{{localize 'SDM.ItemAttackBonusHint'}}">
+      <span class="v2-label">{{localize 'SDM.ItemAttackBonus'}}</span>
+      <span>{{numberFormat system.attack_bonus sign=true}}</span>
+    </span>
+    {{/if}}
     <label class="v2-field">
       <span class="v2-label">{{localize 'SDM.WeaponRange'}}</span>
       <select name="system.weapon.range">
@@ -221,7 +227,7 @@
     {{#if (or (has system.features 'entangling') (has system.features 'petrifying') (has system.features 'heat'))}}
     <label class="v2-field">
       <span class="v2-label">{{localize 'SDM.SaveDifficulty.Feature'}}</span>
-      <select name="system.feature_save" data-tooltip="{{localize 'SDM.SaveDifficulty.FeatureHint'}}">{{selectOptions @root.triggerSaveDifficulties selected=system.feature_save localize=true}}</select>
+      <select name="system.feature_save" data-tooltip="{{localize 'SDM.SaveDifficulty.FeatureHint'}}">{{selectOptions @root.triggerSaveDifficulties selected=system.feature_save localize=true}}</select>{{#if (eq system.feature_save 'target')}}<input type="number" min="1" step="1" name="system.feature_save_target" value="{{system.feature_save_target}}" style="max-width:4em" data-tooltip="{{localize 'SDM.SaveDifficulty.TargetHint'}}" />{{/if}}
     </label>
     {{/if}}
     {{#if (has system.features 'flare')}}

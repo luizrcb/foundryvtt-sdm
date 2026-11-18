@@ -63,6 +63,8 @@
       {{/if}}
       {{#if (sdmIsLit trait)}}
         <a class="rollable sdm-lit-icon mr-3" {{#if @root.editable}}data-action="putOutLight"{{/if}} data-tooltip="{{localize 'SDM.Light.LitHint'}}"><i class="fa-solid fa-fire-flame-curved"></i></a>
+      {{else if (and @root.editable (sdmCanLight trait))}}
+        <a class="rollable sdm-unlit-icon mr-3" data-action="lightItem" data-tooltip="{{localize 'SDM.Light.UnlitHint'}}"><i class="fa-solid fa-fire-flame-curved"></i></a>
       {{/if}}
       {{trait.name}}
       {{#if (and (eq trait.system.type 'skill') (gt trait.system.skill.modifier_final 0))}}

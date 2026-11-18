@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Vehicle: a rugged rover with big wheels (white; windows and hubs are cut out) -->
+  <defs>
+    <mask id="m">
+      <rect width="512" height="512" fill="#fff"/>
+      <path d="M190 190h70v62h-92zM282 190h64l22 62h-86z" fill="#000"/>
+      <circle cx="140" cy="372" r="22" fill="#000"/>
+      <circle cx="372" cy="372" r="22" fill="#000"/>
+    </mask>
+  </defs>
+  <g fill="#fff" mask="url(#m)">
+    <path d="M60 330v-62c0-14 10-24 24-26l70-10 22-62c4-12 16-20 28-20h150c14 0 26 8 30 22l26 62 34 8c16 4 28 18 28 34v54z"/>
+    <circle cx="140" cy="372" r="66"/>
+    <circle cx="372" cy="372" r="66"/>
+    <rect x="300" y="110" width="12" height="40"/>
+  </g>
+</svg>

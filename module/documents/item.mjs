@@ -7,6 +7,7 @@ import {
   healAnimatedCreature,
   isWearImproved,
   SYNC_OPTION,
+  isRideItem,
   syncAnimationLevel
 } from '../helpers/animatedItems.mjs';
 import { createChatMessage } from '../helpers/chatUtils.mjs';
@@ -273,6 +274,7 @@ export class SdmItem extends Item {
       !options?.[SYNC_OPTION] &&
       (changed?.system?.hallmark?.level !== undefined ||
         changed?.system?.attributes?.level !== undefined ||
+        (isRideItem(this) && changed?.system?.level !== undefined) ||
         changed?.system?.animation?.damageSource !== undefined ||
         changed?.system?.animation?.table !== undefined)
     ) {
@@ -418,7 +420,9 @@ export class SdmItem extends Item {
 
       const isDamageKey =
         change.key === 'system.weapon.damage.base' ||
-        change.key === 'system.weapon.damage.versatile';
+        change.key === 'system.weapon.damage.versatile' ||
+        // A ride's (or animated item's) creature damage: Osteoliths, one step up
+        change.key === 'system.attributes.damage';
 
       const isAreaKey = change.key === 'system.area.value';
       const isWeaponRangeKey = change.key === 'system.weapon.range';
@@ -460,6 +464,17 @@ export class SdmItem extends Item {
 
       // @actor / @item / @items.<identifier or id> references
       change.value = resolveEffectReferences(change.value, { actor: this.actor, item: this, effect: change.effect });
+
+      // A ride's supply is text ("1", "0.5", "necro"): a ride mod adds to or multiplies a number
+      // (Big Treads ×2, Hover Wheels +1, Dendric Fur ×½); a supply that isn't a number is left alone
+      if (change.key === 'system.supply' && (change.type === 'add' || change.type === 'multiply')) {
+        const current = parseFloat(currentVal);
+        const delta = parseFloat(change.value);
+        if (!Number.isFinite(current) || !Number.isFinite(delta)) continue;
+        const next = change.type === 'add' ? current + delta : current * delta;
+        change.value = String(Math.max(Math.round(next * 100) / 100, 0));
+        change.type = 'override';
+      }
 
       const applied = ActiveEffect.applyChange(this, change, { replacementData: rollData });
       Object.assign(overrides, applied);

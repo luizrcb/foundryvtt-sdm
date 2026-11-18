@@ -162,7 +162,7 @@ export const SkillMod = Object.freeze({
 
 export const DEFAULT_CHARACTER_ICON = 'icons/svg/mystery-man.svg';
 export const DEFAULT_NPC_ICON = 'icons/svg/mystery-man-black.svg';
-export const DEFAULT_CARAVAN_ICON = 'icons/svg/target.svg';
+export const DEFAULT_CARAVAN_ICON = 'systems/sdm/assets/icons/defaults/caravan.svg';
 
 export const DEFAULT_ARMOR_ICON = 'icons/svg/shield.svg';
 export const DEFAULT_BURDEN_ICON = 'icons/svg/stoned.svg';
@@ -170,17 +170,28 @@ export const DEFAULT_CASH_ICON = 'icons/commodities/currency/coins-stitched-pouc
 export const DEFAULT_CORRUPTION_ICON = 'icons/svg/biohazard.svg';
 export const DEFAULT_GEAR_ICON = 'icons/svg/item-bag.svg';
 export const DEFAULT_POWER_ALBUM_ICON = 'icons/svg/book.svg';
-export const DEFAULT_POWER_ICON = 'icons/svg/fire.svg';
-export const DEFAULT_SKILL_ICON = 'icons/svg/jump.svg';
+export const DEFAULT_POWER_ICON = 'systems/sdm/assets/icons/defaults/power.svg';
+export const DEFAULT_SKILL_ICON = 'systems/sdm/assets/icons/defaults/skill.svg';
 export const DEFAULT_TRAIT_ICON = 'icons/svg/walk.svg';
-export const DEFAULT_WARD_ICON = 'icons/svg/eye.svg';
+export const DEFAULT_WARD_ICON = 'systems/sdm/assets/icons/defaults/ward.svg';
 export const DEFAULT_WEAPON_ICON = 'icons/svg/sword.svg';
 export const DEFAULT_PET_ICON = 'icons/svg/pawprint.svg';
 export const DEFAULT_AFFLICTION_ICON = 'icons/svg/stoned.svg';
 export const DEFAULT_AUGMENT_ICON = 'icons/svg/upgrade.svg';
 export const DEFAULT_CONTAINER_ICON = 'icons/svg/chest.svg';
-export const DEFAULT_MOUNT_ICON = 'icons/tools/smithing/horsehoe-worn-steel-grey.webp';
-export const DEFAULT_VEHICLE_ICON = 'icons/commodities/tech/pipe-tech-exhaust-steel.webp';
+export const DEFAULT_MOUNT_ICON = 'systems/sdm/assets/icons/defaults/mount.svg';
+export const DEFAULT_VEHICLE_ICON = 'systems/sdm/assets/icons/defaults/vehicle.svg';
+
+// The defaults before 1.11 (caravan, power, skill, ward, mount, vehicle): still recognized as "the
+// default", so an item that kept one gets its type's new default when its type changes
+export const LEGACY_DEFAULT_ICONS = {
+  power: 'icons/svg/fire.svg',
+  skill: 'icons/svg/jump.svg',
+  ward: 'icons/svg/eye.svg',
+  caravan: 'icons/svg/target.svg',
+  mount: 'icons/tools/smithing/horsehoe-worn-steel-grey.webp',
+  vehicle: 'icons/commodities/tech/pipe-tech-exhaust-steel.webp'
+};
 
 export const GEAR_ICONS = [
   DEFAULT_GEAR_ICON,
@@ -193,7 +204,9 @@ export const GEAR_ICONS = [
   DEFAULT_AFFLICTION_ICON,
   DEFAULT_AUGMENT_ICON,
   DEFAULT_PET_ICON,
-  DEFAULT_CONTAINER_ICON
+  DEFAULT_CONTAINER_ICON,
+  LEGACY_DEFAULT_ICONS.power,
+  LEGACY_DEFAULT_ICONS.ward
 ];
 
 export const TRAIT_ICONS = [
@@ -203,9 +216,11 @@ export const TRAIT_ICONS = [
   DEFAULT_CORRUPTION_ICON,
   DEFAULT_AFFLICTION_ICON,
   DEFAULT_AUGMENT_ICON,
-  DEFAULT_PET_ICON
+  DEFAULT_PET_ICON,
+  LEGACY_DEFAULT_ICONS.power,
+  LEGACY_DEFAULT_ICONS.skill
 ];
 
-export const BURDEN_ICONS = [DEFAULT_BURDEN_ICON, DEFAULT_AFFLICTION_ICON, DEFAULT_POWER_ICON];
+export const BURDEN_ICONS = [DEFAULT_BURDEN_ICON, DEFAULT_AFFLICTION_ICON, DEFAULT_POWER_ICON, LEGACY_DEFAULT_ICONS.power];
 
 export const SLOTS_PER_SACK = 10;

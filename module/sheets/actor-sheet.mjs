@@ -1,10 +1,11 @@
 import { describeNpcProfile, getNpcProfile } from '../helpers/npcVariability.mjs';
-import { applyDefeatCondition, combineRollModes, conditionRollMode, isWeakened } from '../helpers/conditions.mjs';
+import { applyDefeatCondition, combineRollModes, conditionRollMode, isWeakened, tacticalRollAdvice } from '../helpers/conditions.mjs';
+import { consumeNextRoll, nextRollAdvice } from '../app/next-roll.mjs';
 import { actorTriggers, renderTriggers, runTriggerActions } from '../rolls/triggers.mjs';
 import { bindCollapsibleSections } from '../helpers/collapsibleSections.mjs';
 import { restActor } from '../app/rest.mjs';
 import { getPowerCost, getPowerDangerHtml, paysPowerCost, payPowerCost } from '../helpers/powerCost.mjs';
-import { lightFromPower, powerCreatesLight, putOutLight } from '../helpers/lights.mjs';
+import { lightFromPower, lightItem, powerCreatesLight, putOutLight } from '../helpers/lights.mjs';
 import { getCompactMode, setCompactMode } from '../helpers/sheetPrefs.mjs';
 import { consumeSingleUsePower } from '../helpers/singleUsePowers.mjs';
 import { resolveFormula } from '../helpers/formulas.mjs';
@@ -47,13 +48,13 @@ import {
 import { openInvestXpDialog } from '../app/invest-xp.mjs';
 import { openProgressLog } from '../app/progress-log.mjs';
 import { openCharacterUpgradeDialog, openHallmarkUpgradeDialog } from '../app/level-upgrades.mjs';
-import { getAnimatedSourceItem, isAnimatedNpc } from '../helpers/animatedItems.mjs';
+import { animateItem, deanimateItem, getAnimatedSourceItem, isAnimatedNpc, requestAnimation } from '../helpers/animatedItems.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { openItemTransferDialog } from '../items/transfer.mjs';
 import { directResourceDiceRoll, healingHeroDice } from '../rolls/hero_dice/index.mjs';
 import SDMRoll, { sanitizeExpression } from '../rolls/sdmRoll.mjs';
 import { rollPreviewRows } from '../helpers/rollPreview.mjs';
-import { featureRollAdvice, otherWeaponsBonus } from '../rolls/attackFeatures.mjs';
+import { featureRollAdvice } from '../rolls/attackFeatures.mjs';
 import {
   attackItems,
   attackRangeRollMode,
@@ -88,7 +89,7 @@ import {
 } from '../rolls/ui/renderResults.mjs';
 import { DEFAULT_SAVE_VALUE, SAVING_THROW_BASE_FORMULA } from '../settings.mjs';
 import { bindNumberInputs, unformatNumberInputs, reformatNumberInputs } from '../helpers/numberFormat.mjs';
-import { SAVE_DIFFICULTY_SHIFT, resolveSaveAgainst, saveAgainstHtml, saveOutcome } from '../app/save-against.mjs';
+import { resolveSaveAgainst, saveAgainstHtml, saveDifficultyLabel, saveOutcome, saveTargetFor } from '../app/save-against.mjs';
 
 const { api, sheets } = foundry.applications;
 const { DialogV2 } = foundry.applications.api;
@@ -203,6 +204,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       ...ACTOR_COUNTER_ACTIONS,
       useItem: this._onUseItem,
       putOutLight: this._onPutOutLight,
+      lightItem: this._onLightItem,
+      animateItem: this._onAnimateItem,
+      deanimateItem: this._onDeanimateItem,
+      requestAnimation: this._onRequestAnimation,
       restActor: this._onRestActor,
       openPetSheet: this._onOpenPetSheet,
       toggleCompact: this._onToggleCompact
@@ -299,11 +304,12 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const actorAttackBonus = isAttack && isCharacter ? actorAttack.bonus || 0 : 0;
     const allAttackBonus = isAttack && isCharacter ? this.actor.system?.attack_bonus || 0 : 0;
     const dmgOrAttackBonus = bonusDamage || actorAttackBonus + allAttackBonus;
-    // Attack made with a chosen item: bonuses from other readied weapons' / powers' effects don't count
-    const attackBonusFor = plan =>
-      isAttack && !bonusDamage && plan?.attackItem
-        ? dmgOrAttackBonus - otherWeaponsBonus(this.actor, attack, plan.attackItem.itemId ?? plan.attackItem.id)
-        : dmgOrAttackBonus;
+    // Attack made with a chosen item: the item's own attack bonus (its effects and mods) is added
+    const attackBonusFor = plan => {
+      if (!isAttack || bonusDamage || !plan?.attackItem) return dmgOrAttackBonus;
+      const chosenItem = this.actor.items.get(plan.attackItem.itemId ?? plan.attackItem.id);
+      return dmgOrAttackBonus + (Number(chosenItem?.system?.attack_bonus) || 0);
+    };
     const availableSkills = this.actor.getAvailableSkills();
     const isCharacterActor = this.actor.type === ActorType.CHARACTER;
     const language = game.i18n.lang;
@@ -317,14 +323,26 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         : isAbility && isCharacter
           ? this.actor.system.abilities[selectedAbility].roll_mode
           : RollMode.NORMAL;
-    // Optional condition automation: advantage / disadvantage from the roller's and the target's conditions
-    const conditionMode = conditionRollMode(this.actor, {
+    // The Referee's next-roll modifier (the roller's own, the target's "against"): mode and modifier
+    const nextRoll = nextRollAdvice(this.actor, { target: targetActor, isAttack, isAbility });
+    // Conditions (the automation's and the declared actions'): advantage / disadvantage; with the
+    // Referee's next-roll mode
+    const conditionMode = combineRollModes(
+      conditionRollMode(this.actor, {
+        attack,
+        ability: isAttack ? actorAttack?.default_ability ?? '' : ability,
+        target: targetActor,
+        isAttack,
+        isAbility
+      }),
+      nextRoll.mode
+    );
+    const tacticalNotes = tacticalRollAdvice(this.actor, {
       attack,
-      ability: isAttack ? actorAttack?.default_ability ?? '' : ability,
       target: targetActor,
       isAttack,
       isAbility
-    });
+    }).notes.concat(nextRoll.notes);
     // Attacks aren't tied to an item: pick the weapon, power or album power it is made with (the
     // attack's favorite, else a suggestion), or none — then it works as before. A chosen item gives the
     // range warning and the roll's title, and out of range by one zone suggests disadvantage.
@@ -386,6 +404,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       selectedMultiplier: suggestedMultiplier,
       rollModes: CONFIG.SDM.rollMode,
       selectedRollMode: selectedRollMode || RollMode.NORMAL,
+      presetModifier: nextRoll.modifier,
       type,
       isCharacterActor,
       attackTargetChoices: CONFIG.SDM.attackTarget,
@@ -461,7 +480,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     const planRoll = (values = {}, { useBoost = false } = {}) => {
       const {
         selectedAbility: abilityValue,
-        modifier = '',
+        // Shift (no dialog): the Referee's next-roll modifier
+        modifier = nextRoll.modifier,
         rollMode: rollModeValue,
         shouldExplode: explodeValue,
         multiplier = suggestedMultiplier,
@@ -627,6 +647,12 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
           );
         }
       }
+      // Declared actions (charging, defending, in cover…): why a bonus or penalty is preselected
+      if (tacticalNotes.length) {
+        rows.push(
+          `<div class="sdm-roll-preview-row sdm-feature-row sdm-tactical-row"><i class="fa-solid fa-chess-knight"></i> ${foundry.utils.escapeHTML(tacticalNotes.join(' · '))}</div>`
+        );
+      }
       return rows.join('');
     };
 
@@ -694,6 +720,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     }
 
     const rollData = buildRollData(plan, { versatile: !!rollOptions.versatile });
+    // The Referee's next-roll modifiers this roll used are gone
+    if (nextRoll.used.length) await consumeNextRoll(nextRoll);
 
     if (isPower || isPowerAlbum) {
       rollData.powerDescription = powerOptions[powerIndex].description;
@@ -2494,7 +2522,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       : $fmt('SDM.SavingThrowRoll', { ability: abilityName });
     const cardChips = saveAgainstInfo?.source ? [abilityName] : [];
     if (ward > 0) cardChips.push(`${$l10n('TYPES.Item.ward').toLowerCase()} +${ward}`);
-    if (saveAgainstInfo?.difficulty) cardChips.push($l10n(`SDM.SaveDifficulty.${saveAgainstInfo.difficulty}`).toLowerCase());
+    if (saveAgainstInfo?.difficulty) cardChips.push(saveDifficultyLabel(saveAgainstInfo.difficulty));
 
     if (ward > 0) {
       label += ` (${$l10n('TYPES.Item.ward').toLowerCase()} +${ward})`;
@@ -2582,9 +2610,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       }
     }
 
-    // A save against a condition can be easy or hard: its target moves by 3
-    const difficultyShift = SAVE_DIFFICULTY_SHIFT[saveAgainstInfo?.difficulty] ?? 0;
-    const targetNumber = Number(rollTarget || this.actor.system?.save_target || DEFAULT_SAVE_VALUE) + difficultyShift;
+    // A save against a condition: its difficulty moves the target (±2 / ±4) or sets it
+    const targetNumber = saveTargetFor(rollTarget || this.actor.system?.save_target || DEFAULT_SAVE_VALUE, saveAgainstInfo?.difficulty);
     const formula = formulaFor(rollOptions);
     // Create and evaluate the roll
     let roll = new Roll(formula);
@@ -2694,6 +2721,36 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     event.stopPropagation();
     const item = this._getEmbeddedDocument(target);
     if (item) await putOutLight(this.actor, { itemId: item.id });
+  }
+
+  /** Inventory row ghost: animate / deanimate the item (the Referee), or ask the Referee (its owner). */
+  static async _onAnimateItem(event, target) {
+    event.preventDefault();
+    event.stopPropagation();
+    const item = this._getEmbeddedDocument(target);
+    if (item && game.user.isGM) await animateItem(item, { app: this });
+  }
+
+  static async _onDeanimateItem(event, target) {
+    event.preventDefault();
+    event.stopPropagation();
+    const item = this._getEmbeddedDocument(target);
+    if (item && game.user.isGM) await deanimateItem(item);
+  }
+
+  static async _onRequestAnimation(event, target) {
+    event.preventDefault();
+    event.stopPropagation();
+    const item = this._getEmbeddedDocument(target);
+    if (item?.isOwner) await requestAnimation(item);
+  }
+
+  /** Inventory row unlit flame: light the item (or trait), as its right-click Light. */
+  static async _onLightItem(event, target) {
+    event.preventDefault();
+    event.stopPropagation();
+    const item = this._getEmbeddedDocument(target);
+    if (item) await lightItem(item);
   }
 
   /** Inventory counter: click +1, right-click −1. */

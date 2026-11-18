@@ -1,0 +1,50 @@
+{
+  "folder": "29ih90EskKRjUoCJ",
+  "name": "60 - Xenon Drive",
+  "_id": "l1oKmIp0kutOmyNZ",
+  "img": "icons/tools/smithing/furnace-fire-metal-orange.webp",
+  "type": "base",
+  "system": {
+    "changes": [
+      {
+        "key": "system.capacity",
+        "type": "add",
+        "value": -1,
+        "priority": null,
+        "phase": "initial"
+      }
+    ],
+    "isItemMod": true,
+    "modType": "ride",
+    "modCost": 40,
+    "modCostPerCapacity": true
+  },
+  "disabled": false,
+  "start": null,
+  "duration": {
+    "value": null,
+    "units": "seconds",
+    "expiry": null,
+    "expired": false
+  },
+  "description": "<p>Oldtech ur-metal cables grant minor anti-gravity and contrails at high speed. Fills 1 sk.</p><p><strong>Mod Cost</strong>: $40/cap</p>",
+  "origin": null,
+  "tint": "#ffffff",
+  "transfer": false,
+  "statuses": [],
+  "showIcon": 1,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.370",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "createdTime": 1795000000000,
+    "modifiedTime": 1795000000000,
+    "lastModifiedBy": null,
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "sort": 60000,
+  "_key": "!effects!l1oKmIp0kutOmyNZ"
+}

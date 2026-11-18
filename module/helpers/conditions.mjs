@@ -49,8 +49,25 @@ export const CONDITIONS = [
   C('hidden', 'systems/sdm/assets/icons/conditions/hidden.svg'),
   C('surprised', 'systems/sdm/assets/icons/conditions/surprised.svg'),
   C('controlled', 'icons/svg/aura.svg'),
-  C('seeInvisible', 'icons/svg/eye.svg')
+  C('seeInvisible', 'icons/svg/eye.svg'),
+  // Declared actions (the book's Actions): what a combatant is doing until its next turn. They only
+  // suggest a bonus or penalty in the roll dialogs (preselected, changeable), with or without the
+  // automation; put on during a combat they end at the start of its next turn
+  C('charging', 'icons/svg/jump.svg', { tactical: true }),
+  C('careless', 'icons/svg/sword.svg', { tactical: true }),
+  C('furious', 'icons/svg/lightning.svg', { tactical: true }),
+  C('defending', 'icons/svg/shield.svg', { tactical: true }),
+  C('cover', 'systems/sdm/assets/icons/conditions/cover.svg', { tactical: true }),
+  C('protected', 'systems/sdm/assets/icons/conditions/protected.svg', { tactical: true }),
+  C('suppressed', 'icons/svg/target.svg', { tactical: true }),
+  C('readyAttack', 'icons/svg/dice-target.svg', { tactical: true }),
+  // The Referee's next-roll modifiers (next-roll.mjs): not in the Token HUD list, set from its own button
+  C('nextRoll', 'icons/svg/upgrade.svg', { hud: false }),
+  C('nextRollAgainst', 'icons/svg/upgrade.svg', { hud: false })
 ];
+
+/** The declared-action conditions (short, until the combatant's next turn). */
+export const TACTICAL_CONDITIONS = CONDITIONS.filter(c => c.tactical).map(c => c.id);
 
 const automated = () => {
   try {
@@ -62,7 +79,7 @@ const automated = () => {
 
 /** Init: the system's condition list replaces Foundry's. */
 export function configureConditions() {
-  CONFIG.statusEffects = CONDITIONS.map(({ hint, ...status }) => ({ ...status, description: hint }));
+  CONFIG.statusEffects = CONDITIONS.map(({ hint, tactical, ...status }) => ({ ...status, description: hint }));
 }
 
 /** Once translations are loaded: names and summaries in the user's language. */
@@ -90,10 +107,19 @@ const has = (actor, id) => !!actor?.statuses?.has?.(id);
  * paralyzed, unconscious, stunned, surprised or (melee) prone target, disadvantage against an
  * invisible, hidden or (ranged) prone one — unless the attacker sees invisible; an invisible or hidden
  * attacker has advantage, unless the target sees invisible. Advantage and disadvantage cancel out.
- * Returns null without automation.
+ * Without the automation only the declared actions count (tacticalRollAdvice).
  */
-export function conditionRollMode(actor, { attack = '', ability = '', target = null, isAttack = false, isAbility = false } = {}) {
-  if (!automated() || !actor) return null;
+export function conditionRollMode(actor, options = {}) {
+  const automatic = automated() ? automatedRollMode(actor, options) : null;
+  const tactical = tacticalRollAdvice(actor, options).mode;
+  if (!automatic) return tactical;
+  if (!tactical) return automatic;
+  return automatic === tactical ? automatic : null;
+}
+
+/** The automation's part (conditionRollMode). */
+function automatedRollMode(actor, { attack = '', ability = '', target = null, isAttack = false, isAbility = false } = {}) {
+  if (!actor) return null;
   let advantage = false;
   let disadvantage = false;
   if (isAttack || isAbility) {
@@ -114,6 +140,61 @@ export function conditionRollMode(actor, { attack = '', ability = '', target = n
   if (advantage && !disadvantage) return RollMode.ADVANTAGE;
   if (disadvantage && !advantage) return RollMode.DISADVANTAGE;
   return null;
+}
+
+/**
+ * Declared actions (always, not only with the automation): a bonus or penalty they suggest for a roll
+ * and why. The book gives no size: advantage / disadvantage is preselected and the bonus / penalty
+ * row is there to pick a modifier instead.
+ *  - the roller: charging and careless attack with a bonus; suppressed rolls (attacks, ability checks)
+ *    with a penalty;
+ *  - attacking a target: charging or furious targets give a bonus; defending or protected ones a
+ *    penalty, and so does one in cover against a ranged attack; a careless one notes the free
+ *    counterattack, a ready one that it strikes first.
+ */
+export function tacticalRollAdvice(actor, { attack = '', target = null, isAttack = false, isAbility = false } = {}) {
+  const notes = [];
+  let bonus = 0;
+  let penalty = 0;
+  const name = id => game.i18n.localize(`SDM.Condition.${id}.Name`);
+  const say = (key, data) => notes.push(game.i18n.format(key, data));
+  if (!actor) return { mode: null, notes };
+  if (isAttack) {
+    for (const id of ['charging', 'careless']) {
+      if (has(actor, id)) {
+        bonus++;
+        say('SDM.Tactical.OwnBonus', { condition: name(id) });
+      }
+    }
+    if (has(actor, 'furious')) say('SDM.Tactical.Furious', {});
+  }
+  if ((isAttack || isAbility) && has(actor, 'suppressed')) {
+    penalty++;
+    say('SDM.Tactical.OwnPenalty', { condition: name('suppressed') });
+  }
+  if (isAttack && target && target !== actor) {
+    const who = target.name;
+    for (const id of ['charging', 'furious']) {
+      if (has(target, id)) {
+        bonus++;
+        say('SDM.Tactical.TargetBonus', { target: who, condition: name(id).toLowerCase() });
+      }
+    }
+    for (const id of ['defending', 'protected']) {
+      if (has(target, id)) {
+        penalty++;
+        say('SDM.Tactical.TargetPenalty', { target: who, condition: name(id).toLowerCase() });
+      }
+    }
+    if (has(target, 'cover') && attack && attack !== 'melee') {
+      penalty++;
+      say('SDM.Tactical.TargetPenalty', { target: who, condition: name('cover').toLowerCase() });
+    }
+    if (has(target, 'careless')) say('SDM.Tactical.Counterattack', { target: who });
+    if (has(target, 'readyAttack')) say('SDM.Tactical.Ready', { target: who });
+  }
+  const mode = bonus && !penalty ? RollMode.ADVANTAGE : penalty && !bonus ? RollMode.DISADVANTAGE : null;
+  return { mode, notes };
 }
 
 /** A base roll mode (e.g. the character's own) combined with the conditions' (they cancel out). */
@@ -170,6 +251,18 @@ function onPreCreateImmune(effect, data, options, userId) {
     });
   }
   return false;
+}
+
+/**
+ * Declared actions: during a combat, until the start of the combatant's next turn (unless set). Core
+ * Foundry ends it: a duration in rounds with the "turnStart" expiry event is matched against the
+ * turn of the actor that holds the effect (1 round: its next turn, not the current one).
+ */
+function onPreCreateTactical(effect, data, options, userId) {
+  if (userId !== game.user.id || !game.combat?.started) return;
+  const statuses = [...(data.statuses ?? [])];
+  if (!statuses.some(id => TACTICAL_CONDITIONS.includes(id)) || data.duration?.value) return;
+  effect.updateSource({ duration: { value: 1, units: 'rounds', expiry: 'turnStart' } });
 }
 
 function onPreCreateEffect(effect, data, options, userId) {
@@ -259,6 +352,65 @@ async function onActorHurt(actor, changes, options, userId) {
 
 function onPreUpdateActor(actor, changes, options) {
   if (foundry.utils.hasProperty(changes, 'system.life.value')) options.sdmLifeBefore = actor.system?.life?.value;
+}
+
+/**
+ * Combat tracker: under each combatant's name, chips for what it is doing this round (the declared
+ * actions) and the Referee's next-roll modifiers, so nobody forgets the Charge bonus.
+ */
+function markTacticsInTracker(app, html) {
+  const root = html instanceof HTMLElement ? html : html?.[0] ?? app?.element;
+  const combat = game.combat;
+  if (!root?.querySelectorAll || !combat) return;
+  for (const element of root.querySelectorAll('li[data-combatant-id], .combatant[data-combatant-id]')) {
+    element.querySelector(':scope .sdm-tracker-tactics')?.remove();
+    const actor = combat.combatants.get(element.dataset.combatantId)?.actor;
+    if (!actor) continue;
+    const chips = [];
+    for (const id of TACTICAL_CONDITIONS) {
+      if (has(actor, id)) chips.push({ text: game.i18n.localize(`SDM.Condition.${id}.Name`), tooltip: conditionTooltip(id) });
+    }
+    for (const effect of actor.effects ?? []) {
+      if (effect.getFlag('sdm', 'nextRoll')) chips.push({ text: effect.name, tooltip: effect.name, referee: true });
+    }
+    if (!chips.length) continue;
+    const box = document.createElement('div');
+    box.className = 'sdm-tracker-tactics';
+    for (const chip of chips) {
+      const span = document.createElement('span');
+      span.className = `sdm-tracker-chip${chip.referee ? ' referee' : ''}`;
+      span.textContent = chip.text;
+      span.dataset.tooltip = chip.tooltip;
+      box.append(span);
+    }
+    const name = element.querySelector('.token-name');
+    (name ?? element).append(box);
+  }
+}
+
+/** An actor in the combat gained or lost a declared action or a next-roll modifier: refresh the tracker. */
+function refreshTrackerTactics(effect) {
+  const actor = effect?.parent;
+  if (!(actor instanceof Actor) || !game.combat?.combatants?.some(c => c.actor === actor)) return;
+  const relevant = effect.getFlag?.('sdm', 'nextRoll') || [...(effect.statuses ?? [])].some(id => TACTICAL_CONDITIONS.includes(id));
+  if (relevant) ui.combat?.render();
+}
+
+/**
+ * Core only marks an expired effect (suppressed, kept on the actor), so rewinding the combat brings it
+ * back. When the combat ends, the Referee's game deletes the expired conditions of everyone who was
+ * in it (declared actions, stunned / blinded / confused for a round, a trigger's condition with a
+ * duration); other expired effects are left as core leaves them.
+ */
+const CONDITION_IDS = new Set(CONDITIONS.map(c => c.id));
+async function clearExpiredConditions(combat) {
+  if (game.users.activeGM?.id !== game.user.id) return;
+  for (const actor of new Set(combat.combatants.map(c => c.actor).filter(Boolean))) {
+    const ids = actor.effects
+      .filter(e => e.duration?.expired && [...(e.statuses ?? [])].some(id => CONDITION_IDS.has(id)))
+      .map(e => e.id);
+    if (ids.length) await actor.deleteEmbeddedDocuments('ActiveEffect', ids).catch(() => null);
+  }
 }
 
 /** Token HUD: each condition shows its summary on hover. */
@@ -363,9 +515,16 @@ export function setupConditions() {
   Hooks.on('deleteItem', onItemWithSeeInvisible);
   Hooks.on('preCreateActiveEffect', onPreCreateImmune);
   Hooks.on('preCreateActiveEffect', onPreCreateEffect);
+  Hooks.on('preCreateActiveEffect', onPreCreateTactical);
+  Hooks.on('renderCombatTracker', markTacticsInTracker);
+  // Expired (suppressed by core, kept on the actor as core does) or toggled: the chips follow
+  Hooks.on('updateActiveEffect', refreshTrackerTactics);
+  Hooks.on('createActiveEffect', refreshTrackerTactics);
+  Hooks.on('deleteActiveEffect', refreshTrackerTactics);
   Hooks.on('updateCombat', onCombatTurn);
   Hooks.on('preUpdateActor', onPreUpdateActor);
   Hooks.on('updateActor', onActorHurt);
   Hooks.on('renderTokenHUD', onRenderTokenHUD);
   Hooks.on('deleteCombat', onCombatEnded);
+  Hooks.on('deleteCombat', clearExpiredConditions);
 }

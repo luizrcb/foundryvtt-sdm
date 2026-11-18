@@ -36,6 +36,7 @@ const templatesToLoad = [
   $$('item/v2/trait'),
   $$('item/v2/burden'),
   $$('item/v2/transport'),
+  $$('item/ride-stats'),
   $$('item/v2/power'),
   $$('item/v2/hallmark'),
   $$('item/v2/cure-steps'),

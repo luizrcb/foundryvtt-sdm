@@ -33,6 +33,6 @@
     {{#if (eq item.type 'gear')}}{{> ($$ "item/v2/gear")}}{{/if}}
     {{#if (eq item.type 'trait')}}{{> ($$ "item/v2/trait")}}{{/if}}
     {{#if (eq item.type 'burden')}}{{> ($$ "item/v2/burden")}}{{/if}}
-    {{#if (or (eq item.type 'mount') (eq item.type 'vehicle'))}}{{> ($$ "item/v2/transport")}}{{/if}}
+    {{#if (or (eq item.type 'mount') (eq item.type 'vehicle'))}}{{> ($$ "item/v2/transport")}}{{> ($$ "item/ride-stats")}}{{/if}}
   </div>
 </header>

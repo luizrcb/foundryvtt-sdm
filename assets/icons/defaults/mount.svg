@@ -1,0 +1,32 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Mount: a horse's head and neck in profile, facing right, with its mane (white; the eye, nostril
+       and the line of the jaw are cut out) -->
+  <defs>
+    <mask id="m">
+      <rect width="512" height="512" fill="#fff"/>
+      <ellipse cx="292" cy="170" rx="15" ry="11" fill="#000"/>
+      <ellipse cx="430" cy="300" rx="10" ry="7" fill="#000"/>
+      <path d="M318 226c26 22 44 46 58 74" fill="none" stroke="#000" stroke-width="9" stroke-linecap="round"/>
+      <path d="M236 150 C214 186 196 222 186 268 C172 330 178 400 196 478" fill="none" stroke="#000" stroke-width="8"/>
+    </mask>
+  </defs>
+  <g fill="#fff" mask="url(#m)">
+    <!-- head and neck: ears at the top, forehead, long face down to the muzzle, jaw, throat, chest -->
+    <path d="M196 478
+             C178 400 172 330 186 268
+             C196 222 214 186 236 150
+             L232 74 L262 120 L276 64 L292 124
+             C330 136 364 166 392 206
+             L452 286
+             C466 306 458 330 434 336
+             L398 344
+             C380 348 364 340 354 326
+             L330 290
+             C312 304 302 324 300 350
+             C298 396 304 440 318 478 Z"/>
+    <!-- mane: tufts down the back of the neck, a forelock between the ears -->
+    <path d="M232 132 C200 150 176 178 160 214 L180 216 C166 246 154 278 148 312 L168 310 C158 344 154 378 158 412 L176 404
+             C172 432 174 458 180 478 L196 478 C178 400 172 330 186 268 C196 222 214 186 236 150 Z"/>
+    <path d="M262 120 C254 142 252 160 258 178 C266 158 274 142 288 130 Z"/>
+  </g>
+</svg>

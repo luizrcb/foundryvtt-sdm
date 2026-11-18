@@ -47,7 +47,7 @@
     {{/if}}
     <div class="form-group mt-10">
       <label for="modifier">{{localize 'SDM.RollModifier' }}</label>
-      <input id="modifier" type="text" name="modifier" value="" {{#unless (or (eq type 'damage') (eq type 'power') (eq type 'power_album') (eq type 'danger'))}}data-bonus-penalty{{/unless}} />
+      <input id="modifier" type="text" name="modifier" value="{{presetModifier}}" {{#unless (or (eq type 'damage') (eq type 'power') (eq type 'power_album') (eq type 'danger'))}}data-bonus-penalty{{/unless}} />
     </div>
     {{#if (or (eq type 'damage') (eq type 'power') (eq type 'power_album'))}}
     <div class="form-group mt-10">

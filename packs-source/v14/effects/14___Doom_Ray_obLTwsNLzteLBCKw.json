@@ -1,0 +1,50 @@
+{
+  "folder": "29ih90EskKRjUoCJ",
+  "name": "14 - Doom Ray",
+  "_id": "obLTwsNLzteLBCKw",
+  "img": "icons/commodities/tech/detonator-radio.webp",
+  "type": "base",
+  "system": {
+    "changes": [
+      {
+        "key": "system.capacity",
+        "type": "add",
+        "value": -4,
+        "priority": null,
+        "phase": "initial"
+      }
+    ],
+    "isItemMod": true,
+    "modType": "ride",
+    "modCost": 6000,
+    "modCostPerCapacity": false
+  },
+  "disabled": false,
+  "start": null,
+  "duration": {
+    "value": null,
+    "units": "seconds",
+    "expiry": null,
+    "expired": false
+  },
+  "description": "<p>Requires one round to charge. 3d20 + level damage, long, re 10. Fills 4 sk.</p><p><strong>Mod Cost</strong>: $6,000</p>",
+  "origin": null,
+  "tint": "#ffffff",
+  "transfer": false,
+  "statuses": [],
+  "showIcon": 1,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.370",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "createdTime": 1795000000000,
+    "modifiedTime": 1795000000000,
+    "lastModifiedBy": null,
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "sort": 14000,
+  "_key": "!effects!obLTwsNLzteLBCKw"
+}

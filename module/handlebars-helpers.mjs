@@ -2,9 +2,10 @@ import { SizeUnit } from './helpers/constants.mjs';
 import { $l10n, formatNumber, toPascalCase } from './helpers/globalUtils.mjs';
 import { convertToSacks, getRowRolls, getWealthFromItems, hasPowerAlbum } from './helpers/itemUtils.mjs';
 import { getHallmarkUpgradeSummary } from './app/level-upgrades.mjs';
-import { isLightSource, isLit } from './helpers/lights.mjs';
+import { isLightSource, isLit, lightBlockedReason } from './helpers/lights.mjs';
 import { featureEnabled } from './helpers/features.mjs';
 import { describeUse } from './app/use-item.mjs';
+import { isAnimatable, isAnimationBlocked } from './helpers/animatedItems.mjs';
 
 export function registerHandlebarsHelpers() {
   const $$ = (name, fn) => Handlebars.registerHelper(name, fn);
@@ -29,6 +30,10 @@ export function registerHandlebarsHelpers() {
     turn: 'SDM.Counter.ResetEachTurn'
   }));
   $$('sdmIsLit', item => isLit(item));
+  // Can be lit now (a light source not lit, not blocked): the row shows the unlit flame to click
+  // Can be animated now (the animated feature, not animated, nothing blocking it): the row's faded ghost
+  $$('sdmCanAnimate', item => isAnimatable(item) && !item.system?.animation?.active && !isAnimationBlocked(item));
+  $$('sdmCanLight', item => isLightSource(item) && !isLit(item) && !lightBlockedReason(item));
   // Use icon tooltip: what using a consumable does and what it spends
   $$('sdmUseTooltip', item => describeUse(item));
 

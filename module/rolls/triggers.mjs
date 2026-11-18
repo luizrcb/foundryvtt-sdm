@@ -1,4 +1,5 @@
 import { applyItemEffectToTargets, applyStatusToTargets, durationData, isUsable, useItem } from '../app/use-item.mjs';
+import { saveDifficultyValue } from '../app/save-against.mjs';
 import { GearType, ItemStatusType, ItemType } from '../helpers/constants.mjs';
 import { resetCounters, stepCounter } from '../helpers/counters.mjs';
 import { getItemIdentifier } from '../helpers/effectReferences.mjs';
@@ -218,7 +219,7 @@ async function runActions(fired, { actor, targets = null } = {}) {
         await applyItemEffectToTargets(item, trigger.effect, actor ?? item.actor, {
           self: trigger.effect_target === 'self',
           targets: trigger.effect_target === 'self' ? null : targets,
-          save: trigger.effect_save ? { ability: trigger.effect_save_ability ?? '', difficulty: trigger.effect_save_difficulty ?? '', source: item.name } : null
+          save: trigger.effect_save ? { ability: trigger.effect_save_ability ?? '', difficulty: saveDifficultyValue(trigger.effect_save_difficulty, trigger.effect_save_target), source: item.name } : null
         });
       }
       if (trigger.status) {
@@ -228,7 +229,7 @@ async function runActions(fired, { actor, targets = null } = {}) {
           remove: trigger.status_mode === 'remove',
           duration: durationData(trigger.status_duration, trigger.status_duration_units),
           save: trigger.status_mode !== 'remove' && trigger.status_save
-            ? { ability: trigger.status_save_ability ?? '', difficulty: trigger.status_save_difficulty ?? '', source: item.name }
+            ? { ability: trigger.status_save_ability ?? '', difficulty: saveDifficultyValue(trigger.status_save_difficulty, trigger.status_save_target), source: item.name }
             : null
         });
       }
@@ -510,7 +511,7 @@ export function bindTriggerApply(message, html) {
       if (trigger.effect && trigger.effect_target !== 'self') {
         await applyItemEffectToTargets(item, trigger.effect, actor, {
           targets,
-          save: trigger.effect_save ? { ability: trigger.effect_save_ability ?? '', difficulty: trigger.effect_save_difficulty ?? '', source: item.name } : null
+          save: trigger.effect_save ? { ability: trigger.effect_save_ability ?? '', difficulty: saveDifficultyValue(trigger.effect_save_difficulty, trigger.effect_save_target), source: item.name } : null
         });
       }
       if (trigger.status && trigger.status_target !== 'self') {
@@ -520,7 +521,7 @@ export function bindTriggerApply(message, html) {
           duration: durationData(trigger.status_duration, trigger.status_duration_units),
           save:
             trigger.status_mode !== 'remove' && trigger.status_save
-              ? { ability: trigger.status_save_ability ?? '', difficulty: trigger.status_save_difficulty ?? '', source: item.name }
+              ? { ability: trigger.status_save_ability ?? '', difficulty: saveDifficultyValue(trigger.status_save_difficulty, trigger.status_save_target), source: item.name }
               : null
         });
       }

@@ -1,0 +1,50 @@
+{
+  "folder": "29ih90EskKRjUoCJ",
+  "name": "55 - Turret",
+  "_id": "NWHv1Bg2cPUqvl62",
+  "img": "icons/commodities/tech/detonator-radio.webp",
+  "type": "base",
+  "system": {
+    "changes": [
+      {
+        "key": "system.capacity",
+        "type": "add",
+        "value": -2,
+        "priority": null,
+        "phase": "initial"
+      }
+    ],
+    "isItemMod": true,
+    "modType": "ride",
+    "modCost": 500,
+    "modCostPerCapacity": false
+  },
+  "disabled": false,
+  "start": null,
+  "duration": {
+    "value": null,
+    "units": "seconds",
+    "expiry": null,
+    "expired": false
+  },
+  "description": "<p>Cover an entire hemisphere with your ranged weapons. Fills 2 sk.</p><p><strong>Mod Cost</strong>: $500</p>",
+  "origin": null,
+  "tint": "#ffffff",
+  "transfer": false,
+  "statuses": [],
+  "showIcon": 1,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.370",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "createdTime": 1795000000000,
+    "modifiedTime": 1795000000000,
+    "lastModifiedBy": null,
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "sort": 55000,
+  "_key": "!effects!NWHv1Bg2cPUqvl62"
+}

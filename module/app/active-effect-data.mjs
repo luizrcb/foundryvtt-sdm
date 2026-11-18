@@ -23,6 +23,13 @@ export class SDMActiveEffectData extends foundry.data.ActiveEffectTypeDataModel 
         initial: 0,
         label: $l10n('SDM.ItemModCost'),
         hint: $l10n('SDM.ItemModCostHint')
+      }),
+      // Ride mods priced per capacity ("€500/cap"): the cost is modCost × the ride's capacity
+      modCostPerCapacity: new fields.BooleanField({
+        required: true,
+        initial: false,
+        label: $l10n('SDM.ItemModCostPerCapacity'),
+        hint: $l10n('SDM.ItemModCostPerCapacityHint')
       })
     };
   }

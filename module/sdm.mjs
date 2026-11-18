@@ -59,6 +59,8 @@ import { setupAnimatedItems } from './helpers/animatedItems.mjs';
 import { getLightItems, getLitEffect, isLightSource, isLit, lightItem, putOutLight, setupLights, toggleLight } from './helpers/lights.mjs';
 import { restActor, setupRest } from './app/rest.mjs';
 import { bindTriggerApply, setupTriggers } from './rolls/triggers.mjs';
+import { setupNextRoll } from './app/next-roll.mjs';
+import { setupRideStats } from './helpers/rideStats.mjs';
 import { preloadHandlebarsTemplates } from './helpers/templates.mjs';
 import { setupPetDropSocket } from './items/petItem.mjs';
 import { setupPetLinks } from './items/petLinks.mjs';
@@ -794,6 +796,8 @@ Hooks.once('init', function () {
   setupNpcVariability();
   setupConditions();
   setupZones();
+  setupNextRoll();
+  setupRideStats();
   setupSettingsSocket();
   setupGroupCheckSocket();
   setupCaravanTokenControls();

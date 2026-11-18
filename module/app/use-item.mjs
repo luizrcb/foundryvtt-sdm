@@ -212,6 +212,12 @@ async function applyToActor({ actorUuid, restores = [], restore, effects }) {
       if (ids.length) await actor.deleteEmbeddedDocuments('ActiveEffect', ids);
       continue;
     }
+    // Effects by id (a Referee's next-roll modifier, used by a roll)
+    if (restore?.kind === 'deleteEffects' && restore.ids?.length) {
+      const ids = restore.ids.filter(id => actor.effects.has(id));
+      if (ids.length) await actor.deleteEmbeddedDocuments('ActiveEffect', ids);
+      continue;
+    }
     // An item's effect copied by a trigger, taken off again (hero dice turned its save around)
     if (restore?.kind === 'uneffect' && restore.usedItem) {
       const ids = actor.effects
@@ -328,6 +334,14 @@ async function conditionLine(actor, targets, name, remove) {
       targets: targets.map(t => esc(t.name)).join(', ')
     })}</div></div>`
   });
+}
+
+/** Delete some of an actor's effects, here when the user owns it, else by the active Referee. */
+export async function deleteEffectsOf(actor, ids = []) {
+  if (!actor || !ids.length) return;
+  const payload = { actorUuid: actor.uuid, restores: [{ kind: 'deleteEffects', ids }], effects: [] };
+  if (actor.isOwner) await applyToActor(payload);
+  else if (game.users.activeGM) game.socket.emit(CHANNEL, { action: APPLY_ACTION, payload });
 }
 
 /**

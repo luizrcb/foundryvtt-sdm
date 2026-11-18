@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Protected: a figure with a big shield raised in front of it (white like the core status icons) -->
+  <g fill="#fff">
+    <circle cx="176" cy="120" r="56"/>
+    <path d="M112 196h128l24 120h-48l-12 164h-56l-12-164H88z"/>
+    <path d="M300 150l152 40v120c0 92-64 150-152 186-88-36-152-94-152-186V190z" opacity="0.95"/>
+  </g>
+  <path d="M300 196l112 30v84c0 66-44 110-112 140z" fill="#000" opacity="0.25"/>
+</svg>

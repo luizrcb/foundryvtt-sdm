@@ -1,5 +1,6 @@
 import TokenPlacement from '../canvas/token-placement.mjs';
 import { getNPCDataByLevel, getNpcTableChoices, NPC_CUSTOM_TABLE, NPC_TABLE_KEYS } from './actorUtils.mjs';
+import { refillRideStats } from './rideStats.mjs';
 import { ActorType, GearType, ItemStatusType, ItemType } from './constants.mjs';
 import { $fmt, $l10n } from './globalUtils.mjs';
 import { featureEnabled } from './features.mjs';
@@ -21,7 +22,22 @@ const HUD_BUTTON_CLASS = 'sdm-deanimate-item';
 /** Options marking updates made by this module (they must not trigger another sync). */
 export const SYNC_OPTION = 'sdmAnimationSync';
 
+/**
+ * Rides (mounts and vehicles) use this same machinery to take the field — "Deploy" / "Recall":
+ * no feature, no cost, their own stats (ride stats, see rideStats.mjs), level, speed and size.
+ */
+export function isRideItem(item) {
+  return item?.type === ItemType.MOUNT || item?.type === ItemType.VEHICLE;
+}
+
+/** The text key for this item: the ride's wording (Deploy / Recall) when there is one, else the animation's. */
+function textKey(item, key) {
+  const ride = `SDM.Ride.${key}`;
+  return isRideItem(item) && game.i18n.has(ride) ? ride : `SDM.Animation.${key}`;
+}
+
 export function isAnimatable(item) {
+  if (isRideItem(item)) return true;
   const features = item?.system?.features;
   return typeof features?.has === 'function' && features.has(ANIMATED_FEATURE);
 }
@@ -41,6 +57,7 @@ export function isAnimatedNpc(actor) {
 
 /** Level of the creature: the hallmark level for hallmarks, otherwise the Referee's level. */
 export function getAnimationLevel(item) {
+  if (isRideItem(item)) return Number(item.system.level) || 0;
   if (item.system.is_hallmark) return Number(item.system.hallmark?.level) || 0;
   return Number(item.system.attributes?.level) || 0;
 }
@@ -96,7 +113,7 @@ export function isAnimationBlocked(item) {
 /** Warn why the item cannot be animated. */
 function warnAnimationBlock(item) {
   const block = getAnimationBlock(item);
-  const key = block === 'SDM.Animation.BlockedHint' ? 'SDM.Animation.Blocked' : 'SDM.Animation.NoCharges';
+  const key = block === 'SDM.Animation.BlockedHint' ? textKey(item, 'Blocked') : 'SDM.Animation.NoCharges';
   ui.notifications.warn($fmt(key, { name: item.name, cost: getAnimationChargeCost(item) }));
 }
 
@@ -369,9 +386,12 @@ function npcSystemFromItem(item) {
     damage: weaponDamage(item)?.base || a.damage,
     initiative: a.initiative,
     capacity: a.capacity,
-    size: { value: item.system.animation?.size?.value ?? 1, unit: item.system.animation?.size?.unit || 'sacks' },
-    speed: item.system.animation?.speed ?? 0,
-    createdFromTable: getAnimationTable(item)
+    // A ride: its own size and speed; its table (non-sentient rides have none to level up from)
+    size: isRideItem(item)
+      ? { value: item.system.size?.value ?? 1, unit: item.system.size?.unit || 'sacks' }
+      : { value: item.system.animation?.size?.value ?? 1, unit: item.system.animation?.size?.unit || 'sacks' },
+    speed: isRideItem(item) ? Number(item.system.speed) || 0 : item.system.animation?.speed ?? 0,
+    createdFromTable: isRideItem(item) && !item.system.features?.has?.('sentient') ? NPC_CUSTOM_TABLE : getAnimationTable(item)
   };
 }
 
@@ -484,7 +504,7 @@ export async function linkNpcToItem(item, actor) {
 export async function animateItem(item, { app } = {}) {
   if (!game.user.isGM || !isAnimatable(item) || item.pack) return;
   if (!canvas.scene) {
-    ui.notifications.warn($l10n('SDM.Animation.NoScene'));
+    ui.notifications.warn($l10n(textKey(item, 'NoScene')));
     return;
   }
 
@@ -496,7 +516,11 @@ export async function animateItem(item, { app } = {}) {
   // Linked to a compendium NPC: import a copy for this item first
   await importCompendiumCreature(item);
 
-  if (!item.system.animation.filled) await fillAttributesFromTable(item);
+  // A ride fills its stats from its own table (ride or NPC); other items from their NPC table
+  if (!item.system.animation.filled) {
+    if (isRideItem(item)) await refillRideStats(item);
+    else await fillAttributesFromTable(item);
+  }
 
   // Repaired or recharged after the creature fell: it comes back with full life
   if ((Number(item.system.attributes.life.value) || 0) <= 0) {
@@ -607,7 +631,7 @@ export async function animateItem(item, { app } = {}) {
     if (restore) await app.maximize();
   }
 
-  ui.notifications.info($fmt('SDM.Animation.Animated', { name: item.name }));
+  ui.notifications.info($fmt(textKey(item, 'Animated'), { name: item.name }));
   return npc;
 }
 
@@ -632,9 +656,14 @@ export async function deanimateItem(item, { reason } = {}) {
         'system.attributes.damage': s.damage,
         'system.attributes.initiative': s.initiative ?? '',
         'system.attributes.capacity': s.capacity ?? item.system.attributes.capacity,
-        'system.animation.size.value': s.size?.value ?? 1,
-        'system.animation.size.unit': s.size?.unit ?? 'sacks',
-        'system.animation.speed': s.speed ?? 0,
+        // A ride keeps its own size and speed (they are the caravan's)
+        ...(isRideItem(item)
+          ? {}
+          : {
+              'system.animation.size.value': s.size?.value ?? 1,
+              'system.animation.size.unit': s.size?.unit ?? 'sacks',
+              'system.animation.speed': s.speed ?? 0
+            }),
         'system.animation.active': false
       },
       { [SYNC_OPTION]: true }
@@ -650,7 +679,8 @@ export async function deanimateItem(item, { reason } = {}) {
     await item.update(update, { [SYNC_OPTION]: true });
   }
 
-  ui.notifications.info($fmt(reason ?? 'SDM.Animation.Deanimated', { name: item.name }));
+  const reasonKey = reason?.startsWith('SDM.Animation.') ? textKey(item, reason.slice('SDM.Animation.'.length)) : reason;
+  ui.notifications.info($fmt(reasonKey ?? textKey(item, 'Deanimated'), { name: item.name }));
 }
 
 const WEAR_SEVERITY = {
@@ -698,6 +728,16 @@ export async function deanimateFallenCreature(npc) {
  */
 export async function syncAnimationLevel(item, { damageSourceChanged = false } = {}) {
   if (!isAnimatable(item)) return;
+  // A ride: its stats follow its level (rideStats.mjs); deployed, its creature takes them
+  if (isRideItem(item)) {
+    const npc = getLinkedNpc(item);
+    if (item.system.animation.active && npc?.isOwner) {
+      const { life, ...rest } = npcSystemFromItem(item);
+      await npc.update({ system: { ...rest, 'life.max': life.max } });
+      await applyDefenseBonus(item, npc);
+    }
+    return;
+  }
   const level = getAnimationLevel(item);
   const npc = getLinkedNpc(item);
   if (item.system.animation.active && npc) {
@@ -726,6 +766,13 @@ export async function applyAnimatedWear(npc) {
 
   const value = Number(npc.system.life?.value) || 0;
   const max = Number(npc.system.life?.max) || 0;
+  // A ride is only wrecked at 0 life (broken: repair it before deploying it again)
+  if (isRideItem(item)) {
+    if (value <= 0 && item.system.status !== ItemStatusType.BROKEN) {
+      await item.update({ 'system.status': ItemStatusType.BROKEN }, { [SYNC_OPTION]: true });
+    }
+    return;
+  }
   const stage = value <= 0 ? 2 : max > 0 && value <= max / 2 ? 1 : 0;
   if (!stage) return;
 
@@ -812,12 +859,13 @@ export function requestAnimation(item) {
     return;
   }
   game.socket.emit(CHANNEL, { action: REQUEST_ACTION, userId: game.user.id, itemUuid: item.uuid });
-  ui.notifications.info($fmt('SDM.Animation.RequestSent', { name: item.name }));
+  ui.notifications.info($fmt(textKey(item, 'RequestSent'), { name: item.name }));
 }
 
 async function onSocketMessage(message) {
   if (message?.action === RESULT_ACTION && message.userId === game.user.id) {
-    const key = message.approved ? 'SDM.Animation.RequestApproved' : 'SDM.Animation.RequestDenied';
+    const kind = message.ride ? 'SDM.Ride' : 'SDM.Animation';
+    const key = `${kind}.${message.approved ? 'RequestApproved' : 'RequestDenied'}`;
     ui.notifications.info($fmt(key, { name: message.itemName ?? '' }));
     return;
   }
@@ -831,13 +879,14 @@ async function onSocketMessage(message) {
       action: RESULT_ACTION,
       userId: message.userId,
       approved,
-      itemName: item?.name
+      itemName: item?.name,
+      ride: isRideItem(item)
     });
   if (!user || !item || !item.testUserPermission(user, 'OWNER')) return respond(false);
 
   const approved = await foundry.applications.api.DialogV2.confirm({
-    window: { title: $l10n('SDM.Animation.RequestTitle'), icon: 'fa-solid fa-ghost' },
-    content: `<p>${$fmt('SDM.Animation.RequestPrompt', {
+    window: { title: $l10n(textKey(item, 'RequestTitle')), icon: isRideItem(item) ? 'fa-solid fa-flag' : 'fa-solid fa-ghost' },
+    content: `<p>${$fmt(textKey(item, 'RequestPrompt'), {
       user: user.name,
       name: item.name,
       actor: item.parent?.name ?? ''
@@ -858,7 +907,7 @@ function onRenderTokenHUD(hud, html) {
   const root = html?.querySelectorAll ? html : html?.[0];
   if (!root || root.querySelector(`.${HUD_BUTTON_CLASS}`)) return;
 
-  const label = $l10n('SDM.Animation.Deanimate');
+  const label = $l10n(textKey(item, 'Deanimate'));
   const button = document.createElement('button');
   button.type = 'button';
   button.classList.add('control-icon', HUD_BUTTON_CLASS);

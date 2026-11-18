@@ -13,8 +13,9 @@
  */
 import { ActorType, ItemType, RollMode } from '../helpers/constants.mjs';
 import { UnarmedDamageItem } from '../helpers/itemUtils.mjs';
+import { numberValue } from '../helpers/formulas.mjs';
 import { applyStatusToTargets } from '../app/use-item.mjs';
-import { saveAgainst } from '../app/save-against.mjs';
+import { saveAgainst, saveDifficultyValue } from '../app/save-against.mjs';
 
 /**
  * Features that put a condition on whoever is hit: [feature, condition, rounds (0: until removed),
@@ -75,27 +76,6 @@ export function featureRollAdvice(actor, entry, targetActor = null) {
   return { mode, notes };
 }
 
-/**
- * Attack bonus that comes from the effects of readied weapons / powers other than the chosen one
- * (added to `system.<attack>.bonus` or `system.attack_bonus`): an attack made with another item
- * leaves it out. 0 when nothing is chosen.
- */
-export function otherWeaponsBonus(actor, attack, chosenItemId) {
-  if (!actor || !chosenItemId) return 0;
-  const keys = [`system.${attack}.bonus`, 'system.attack_bonus'];
-  let total = 0;
-  for (const effect of actor.allApplicableEffects?.() ?? []) {
-    if (effect.disabled || effect.isSuppressed) continue;
-    const item = effect.parent;
-    if (!(item instanceof Item) || item.id === chosenItemId || !isAttackGear(item)) continue;
-    for (const change of effect.system?.changes ?? effect.changes ?? []) {
-      const isAdd = change.type === 'add' || change.mode === CONST.ACTIVE_EFFECT_MODES?.ADD;
-      const value = Number(change.value);
-      if (keys.includes(change.key) && isAdd && Number.isFinite(value)) total += value;
-    }
-  }
-  return total;
-}
 
 /** Card notes and buttons for the features of the item an attack was made with. */
 export function attackFeatureHtml({ actor, item, targetActor = null, success = null, isNat1 = false, isNat20 = false }) {
@@ -119,7 +99,7 @@ export function attackFeatureHtml({ actor, item, targetActor = null, success = n
           status,
           rounds,
           save: save ? '1' : '',
-          difficulty: save ? item.system?.feature_save ?? '' : '',
+          difficulty: save ? saveDifficultyValue(item.system?.feature_save, item.system?.feature_save_target) : '',
           source: item.name
         })
       );

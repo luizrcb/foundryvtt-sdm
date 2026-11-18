@@ -126,15 +126,20 @@
           {{#if trigger.effect_save}}
           <select name="system.triggers.{{index}}.effect_save_ability" data-tooltip="{{localize 'SDM.Trigger.StatusSaveAbilityHint'}}">{{selectOptions @root.triggerSaveAbilities selected=trigger.effect_save_ability localize=true}}</select>
           <select name="system.triggers.{{index}}.effect_save_difficulty" data-tooltip="{{localize 'SDM.SaveDifficulty.Hint'}}">{{selectOptions @root.triggerSaveDifficulties selected=trigger.effect_save_difficulty localize=true}}</select>
+          {{#if (eq trigger.effect_save_difficulty 'target')}}
+          <input class="sdm-trigger-amount" type="number" min="1" step="1" name="system.triggers.{{index}}.effect_save_target" value="{{trigger.effect_save_target}}" data-tooltip="{{localize 'SDM.SaveDifficulty.TargetHint'}}" />
           {{else}}
-          <input type="hidden" name="system.triggers.{{index}}.effect_save_difficulty" value="{{trigger.effect_save_difficulty}}" />
+          <input type="hidden" name="system.triggers.{{index}}.effect_save_target" value="{{trigger.effect_save_target}}" />
+          {{/if}}
+          {{else}}
+          <input type="hidden" name="system.triggers.{{index}}.effect_save_difficulty" value="{{trigger.effect_save_difficulty}}" /><input type="hidden" name="system.triggers.{{index}}.effect_save_target" value="{{trigger.effect_save_target}}" />
           <input type="hidden" name="system.triggers.{{index}}.effect_save_ability" value="{{trigger.effect_save_ability}}" />
           {{/if}}
           {{else}}
           <input type="hidden" name="system.triggers.{{index}}.effect_target" value="{{trigger.effect_target}}" />
           <input type="hidden" name="system.triggers.{{index}}.effect_save" value="{{trigger.effect_save}}" data-dtype="Boolean" />
           <input type="hidden" name="system.triggers.{{index}}.effect_save_ability" value="{{trigger.effect_save_ability}}" />
-          <input type="hidden" name="system.triggers.{{index}}.effect_save_difficulty" value="{{trigger.effect_save_difficulty}}" />
+          <input type="hidden" name="system.triggers.{{index}}.effect_save_difficulty" value="{{trigger.effect_save_difficulty}}" /><input type="hidden" name="system.triggers.{{index}}.effect_save_target" value="{{trigger.effect_save_target}}" />
           {{/if}}</label>
         <label class="{{#if trigger.status}}filled{{/if}}" data-tooltip="{{localize 'SDM.Trigger.StatusHint'}}">{{localize 'SDM.Trigger.Status'}}
           <select name="system.triggers.{{index}}.status">{{selectOptions @root.triggerStatuses selected=trigger.status}}</select>
@@ -148,8 +153,13 @@
           {{#if trigger.status_save}}
           <select name="system.triggers.{{index}}.status_save_ability" data-tooltip="{{localize 'SDM.Trigger.StatusSaveAbilityHint'}}">{{selectOptions @root.triggerSaveAbilities selected=trigger.status_save_ability localize=true}}</select>
           <select name="system.triggers.{{index}}.status_save_difficulty" data-tooltip="{{localize 'SDM.SaveDifficulty.Hint'}}">{{selectOptions @root.triggerSaveDifficulties selected=trigger.status_save_difficulty localize=true}}</select>
+          {{#if (eq trigger.status_save_difficulty 'target')}}
+          <input class="sdm-trigger-amount" type="number" min="1" step="1" name="system.triggers.{{index}}.status_save_target" value="{{trigger.status_save_target}}" data-tooltip="{{localize 'SDM.SaveDifficulty.TargetHint'}}" />
           {{else}}
-          <input type="hidden" name="system.triggers.{{index}}.status_save_difficulty" value="{{trigger.status_save_difficulty}}" />
+          <input type="hidden" name="system.triggers.{{index}}.status_save_target" value="{{trigger.status_save_target}}" />
+          {{/if}}
+          {{else}}
+          <input type="hidden" name="system.triggers.{{index}}.status_save_difficulty" value="{{trigger.status_save_difficulty}}" /><input type="hidden" name="system.triggers.{{index}}.status_save_target" value="{{trigger.status_save_target}}" />
           <input type="hidden" name="system.triggers.{{index}}.status_save_ability" value="{{trigger.status_save_ability}}" />
           {{/if}}
           {{else}}
@@ -157,7 +167,7 @@
           <input type="hidden" name="system.triggers.{{index}}.status_duration_units" value="{{trigger.status_duration_units}}" />
           <input type="hidden" name="system.triggers.{{index}}.status_save" value="{{trigger.status_save}}" data-dtype="Boolean" />
           <input type="hidden" name="system.triggers.{{index}}.status_save_ability" value="{{trigger.status_save_ability}}" />
-          <input type="hidden" name="system.triggers.{{index}}.status_save_difficulty" value="{{trigger.status_save_difficulty}}" />
+          <input type="hidden" name="system.triggers.{{index}}.status_save_difficulty" value="{{trigger.status_save_difficulty}}" /><input type="hidden" name="system.triggers.{{index}}.status_save_target" value="{{trigger.status_save_target}}" />
           {{/if}}
           {{else}}
           <input type="hidden" name="system.triggers.{{index}}.status_mode" value="{{trigger.status_mode}}" />
@@ -166,7 +176,7 @@
           <input type="hidden" name="system.triggers.{{index}}.status_duration_units" value="{{trigger.status_duration_units}}" />
           <input type="hidden" name="system.triggers.{{index}}.status_save" value="{{trigger.status_save}}" data-dtype="Boolean" />
           <input type="hidden" name="system.triggers.{{index}}.status_save_ability" value="{{trigger.status_save_ability}}" />
-          <input type="hidden" name="system.triggers.{{index}}.status_save_difficulty" value="{{trigger.status_save_difficulty}}" />
+          <input type="hidden" name="system.triggers.{{index}}.status_save_difficulty" value="{{trigger.status_save_difficulty}}" /><input type="hidden" name="system.triggers.{{index}}.status_save_target" value="{{trigger.status_save_target}}" />
           {{/if}}</label>
         <label class="{{#if trigger.wear}}filled{{/if}}">{{localize 'SDM.Trigger.WearLabel'}}
           <select name="system.triggers.{{index}}.wear">{{selectOptions @root.triggerWear selected=trigger.wear localize=true}}</select></label>

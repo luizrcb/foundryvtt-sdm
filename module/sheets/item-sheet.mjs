@@ -10,6 +10,7 @@ import { makeNpcFriendly } from '../items/petItem.mjs';
 import { hasPowerAlbum } from '../helpers/itemUtils.mjs';
 import { isLightSource, LIGHT_PRESET_CHOICES, POWER_LIGHT_PRESET_CHOICES } from '../helpers/lights.mjs';
 import { isUsable } from '../app/use-item.mjs';
+import { isSentientRide, refillRideStats, rideTable } from '../helpers/rideStats.mjs';
 import { getUsesCounter, USES_MODES } from '../helpers/itemUses.mjs';
 import { hasCharges as triggerHasCharges, isCastable } from '../rolls/triggers.mjs';
 import {
@@ -24,6 +25,7 @@ import {
   isAnimatable,
   getAnimationBlock,
   isAnimationBlocked,
+  isRideItem,
   isWeaponItem,
   linkNpcToItem,
   requestAnimation
@@ -123,6 +125,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       resizable: true
     },
     actions: {
+      refillRideStats: this._onRefillRideStats,
       onEditImage: this._onEditImage,
       onEditPowerImage: this._onEditPowerImage,
       viewDoc: this._viewEffect,
@@ -257,7 +260,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
     }
 
     // Items with the "animated" feature get the Animation tab
-    if (isAnimatable(this.document)) options.parts.push('animation');
+    if (isAnimatable(this.document) && !isRideItem(this.document)) options.parts.push('animation');
 
     // GM-only notes tab, for every item type
     if (game.user.isGM) options.parts.push('gmNotes');
@@ -400,7 +403,14 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       // Conditions a trigger can put on its targets / self: the Token HUD's list
       triggerStatusModes: { apply: 'SDM.Trigger.StatusApply', remove: 'SDM.Trigger.StatusRemove' },
       // A condition with a save: the ability suggested to characters ('' = by the condition)
-      triggerSaveDifficulties: { '': 'SDM.SaveDifficulty.standard', easy: 'SDM.SaveDifficulty.easy', hard: 'SDM.SaveDifficulty.hard' },
+      triggerSaveDifficulties: {
+        veryEasy: 'SDM.SaveDifficulty.veryEasyStep',
+        easy: 'SDM.SaveDifficulty.easyStep',
+        '': 'SDM.SaveDifficulty.standard',
+        hard: 'SDM.SaveDifficulty.hardStep',
+        veryHard: 'SDM.SaveDifficulty.veryHardStep',
+        target: 'SDM.SaveDifficulty.target'
+      },
       triggerSaveAbilities: {
         '': 'SDM.Trigger.StatusSaveAbilityAuto',
         ...Object.fromEntries(['str', 'end', 'agi', 'cha', 'aur', 'tho'].map(key => [key, CONFIG.SDM.abilities[key]]))
@@ -484,6 +494,17 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       context.itemFeatures = [...CONFIG.SDM.baseFeatures, ...CONFIG.SDM.weaponFeatures];
     } else if ([ItemType.MOUNT, ItemType.VEHICLE].includes(this.item.type)) {
       context.itemFeatures = [...CONFIG.SDM.transportFeatures];
+      // The ride's stats: the book's ride table, or (sentient) an NPC table to pick
+      context.rideStats = {
+        sentient: isSentientRide(this.item),
+        table: rideTable(this.item),
+        tables: getAnimationTableChoices(),
+        // Deploy / Recall: the Referee does it, owners ask
+        deployed: !!this.item.system.animation?.active,
+        blocked: isAnimationBlocked(this.item),
+        canManage: game.user.isGM && !this.item.pack,
+        canRequest: !game.user.isGM && this.item.isOwner && !this.item.pack
+      };
     } else {
       context.itemFeatures = [...CONFIG.SDM.baseFeatures];
     }
@@ -1780,6 +1801,12 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
    * @protected
    * @override
    */
+  /** Ride stats card: fill the stats from the ride's table at its level now. */
+  static async _onRefillRideStats(event) {
+    event.preventDefault();
+    await refillRideStats(this.item);
+  }
+
   async _processSubmitData(event, form, submitData) {
     const overrides = foundry.utils.flattenObject(this.item.overrides);
     for (let k of Object.keys(overrides)) delete submitData[k];

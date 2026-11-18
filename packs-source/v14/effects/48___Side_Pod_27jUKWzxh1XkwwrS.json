@@ -1,0 +1,57 @@
+{
+  "folder": "29ih90EskKRjUoCJ",
+  "name": "48 - Side Pod",
+  "_id": "27jUKWzxh1XkwwrS",
+  "img": "icons/commodities/treasure/puzzle-box-glowing-blue.webp",
+  "type": "base",
+  "system": {
+    "changes": [
+      {
+        "key": "system.capacity",
+        "type": "add",
+        "value": 1,
+        "priority": null,
+        "phase": "initial"
+      },
+      {
+        "key": "system.speed",
+        "type": "add",
+        "value": -1,
+        "priority": null,
+        "phase": "initial"
+      }
+    ],
+    "isItemMod": true,
+    "modType": "ride",
+    "modCost": 50,
+    "modCostPerCapacity": false
+  },
+  "disabled": false,
+  "start": null,
+  "duration": {
+    "value": null,
+    "units": "seconds",
+    "expiry": null,
+    "expired": false
+  },
+  "description": "<p>Bolted-on or grown-into the ride. Adds +1 capacity. -1 speed.</p><p><strong>Mod Cost</strong>: $50</p>",
+  "origin": null,
+  "tint": "#ffffff",
+  "transfer": false,
+  "statuses": [],
+  "showIcon": 1,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.370",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "createdTime": 1795000000000,
+    "modifiedTime": 1795000000000,
+    "lastModifiedBy": null,
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "sort": 48000,
+  "_key": "!effects!27jUKWzxh1XkwwrS"
+}

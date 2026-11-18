@@ -50,6 +50,7 @@ import {
   isAnimatable,
   isAnimatedNpc,
   isAnimationBlocked,
+  isRideItem,
   requestAnimation
 } from '../helpers/animatedItems.mjs';
 import { addCashToActor, removeCashFromActor } from '../macros/gm/giveCash.mjs';
@@ -1506,6 +1507,7 @@ export class SdmActor extends Actor {
           return (
             game.user.isGM &&
             isAnimatable(item) &&
+            !isRideItem(item) &&
             !item.system.animation?.active &&
             !isAnimationBlocked(item)
           );
@@ -1523,6 +1525,7 @@ export class SdmActor extends Actor {
             !game.user.isGM &&
             item?.isOwner &&
             isAnimatable(item) &&
+            !isRideItem(item) &&
             !item.system.animation?.active &&
             !isAnimationBlocked(item)
           );
@@ -1534,7 +1537,45 @@ export class SdmActor extends Actor {
         icon: '<i class="fa-solid fa-box"></i>',
         visible: target => {
           const item = this.sheet._getEmbeddedDocument(target);
-          return game.user.isGM && isAnimatable(item) && !!item.system.animation?.active;
+          return game.user.isGM && isAnimatable(item) && !isRideItem(item) && !!item.system.animation?.active;
+        },
+        onClick: async (event, target) => {
+          await deanimateItem(this.sheet._getEmbeddedDocument(target));
+        }
+      },
+      // Rides (mounts and vehicles) take the field: Deploy / Recall, no cost
+      {
+        label: 'SDM.Ride.Deploy',
+        icon: '<i class="fa-solid fa-flag"></i>',
+        visible: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          return game.user.isGM && isRideItem(item) && !item.system.animation?.active && !isAnimationBlocked(item);
+        },
+        onClick: async (event, target) => {
+          await animateItem(this.sheet._getEmbeddedDocument(target), { app: this.sheet });
+        }
+      },
+      {
+        label: 'SDM.Ride.Request',
+        icon: '<i class="fa-solid fa-hand"></i>',
+        visible: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          return (
+            !game.user.isGM &&
+            item?.isOwner &&
+            isRideItem(item) &&
+            !item.system.animation?.active &&
+            !isAnimationBlocked(item)
+          );
+        },
+        onClick: async (event, target) => requestAnimation(this.sheet._getEmbeddedDocument(target))
+      },
+      {
+        label: 'SDM.Ride.Deanimate',
+        icon: '<i class="fa-solid fa-house-flag"></i>',
+        visible: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          return game.user.isGM && isRideItem(item) && !!item.system.animation?.active;
         },
         onClick: async (event, target) => {
           await deanimateItem(this.sheet._getEmbeddedDocument(target));
@@ -1606,7 +1647,8 @@ export class SdmActor extends Actor {
         icon: '<i class="fa-solid fa-hand-holding-medical"></i>',
         visible: target => {
           const item = this.sheet._getEmbeddedDocument(target);
-          return this.type !== ActorType.CARAVAN && !!item?.isOwner && isUsable(item) && !blockedReason(item);
+          // Only readied: a packed item takes an action to ready first
+          return this.type !== ActorType.CARAVAN && !!item?.isOwner && isUsable(item) && !!item.system?.readied && !blockedReason(item);
         },
         onClick: async (event, target) => {
           await useItem(this.sheet._getEmbeddedDocument(target));

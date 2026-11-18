@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Caravan: a covered wagon (white like the core icons; the canvas ribs and the wheel spokes are cut out) -->
+  <defs>
+    <mask id="m">
+      <rect width="512" height="512" fill="#fff"/>
+      <g fill="none" stroke="#000" stroke-width="12">
+        <path d="M176 128v176M256 112v192M336 128v176"/>
+        <circle cx="146" cy="380" r="30"/><circle cx="366" cy="380" r="30"/>
+        <path d="M146 330v100M96 380h100M366 330v100M316 380h100"/>
+      </g>
+    </mask>
+  </defs>
+  <g fill="#fff" mask="url(#m)">
+    <path d="M96 304V200c0-60 60-104 160-104s160 44 160 104v104z"/>
+    <rect x="72" y="296" width="368" height="30" rx="6"/>
+    <circle cx="146" cy="380" r="58"/>
+    <circle cx="366" cy="380" r="58"/>
+    <path d="M440 300l52-28 8 14-52 30z"/>
+  </g>
+</svg>

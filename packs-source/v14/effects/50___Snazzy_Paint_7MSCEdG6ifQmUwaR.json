@@ -1,0 +1,42 @@
+{
+  "folder": "29ih90EskKRjUoCJ",
+  "name": "50 - Snazzy Paint",
+  "_id": "7MSCEdG6ifQmUwaR",
+  "img": "icons/tools/hand/brush-paint-brown-tan.webp",
+  "type": "base",
+  "system": {
+    "changes": [],
+    "isItemMod": true,
+    "modType": "ride",
+    "modCost": 50,
+    "modCostPerCapacity": true
+  },
+  "disabled": false,
+  "start": null,
+  "duration": {
+    "value": null,
+    "units": "seconds",
+    "expiry": null,
+    "expired": false
+  },
+  "description": "<p>Scarabeo, fordite swirl, vantablack, gibbon, splunge, or red. Grants you +1 cha while you're in or near the ride and obviously appear to be its owner.</p><p><strong>Mod Cost</strong>: $50/cap</p>",
+  "origin": null,
+  "tint": "#ffffff",
+  "transfer": false,
+  "statuses": [],
+  "showIcon": 1,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.370",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "createdTime": 1795000000000,
+    "modifiedTime": 1795000000000,
+    "lastModifiedBy": null,
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "sort": 50000,
+  "_key": "!effects!7MSCEdG6ifQmUwaR"
+}

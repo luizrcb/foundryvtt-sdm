@@ -21,6 +21,7 @@ import {
   SUBTYPES_NOT_ALLOWED_IN_CARAVANS
 } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
+import { animateItem, deanimateItem, isAnimationBlocked, requestAnimation } from '../helpers/animatedItems.mjs';
 import { pullMultiplier, vehiclePullMode } from '../helpers/transportUtils.mjs';
 import { openItemTransferDialog } from '../items/transfer.mjs';
 import { bindNumberInputs, unformatNumberInputs, reformatNumberInputs } from '../helpers/numberFormat.mjs';
@@ -82,6 +83,9 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
       toggleCompact: this._onToggleCompact,
       placeCrewMembers: this._onPlaceCrewMembers,
       openCompendiumBrowser: this._onOpenCompendiumBrowser,
+      deployRide: this._onDeployRide,
+      recallRide: this._onRecallRide,
+      requestDeployRide: this._onRequestDeployRide,
       assignMountVehicle: this._onAssignMountVehicle,
       setMountPullMode: this._onSetMountPullMode
     },
@@ -510,7 +514,9 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
         pullPower: info.pullPower ?? 0,
         underHauled: underHauled.has(v.id),
         mountCount: mountDocs.filter(m => m.system.pull_vehicle_id === v.id).length,
-        features: featureTags(v)
+        features: featureTags(v),
+        deployed: !!v.system.animation?.active,
+        deployBlocked: isAnimationBlocked(v)
       };
     });
 
@@ -526,6 +532,8 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
         name: m.name,
         img: m.img,
         system: m.system,
+        deployed: !!m.system.animation?.active,
+        deployBlocked: isAnimationBlocked(m),
         assigned,
         selectedVehicleId: assigned ? vehicle.id : '',
         pullMode,
@@ -1205,6 +1213,22 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
    * @param {HTMLElement} target   The capturing HTML element which defined a [data-action]
    * @protected
    */
+  /** Rides take the field: the Referee deploys and recalls them, owners ask. */
+  static async _onDeployRide(event, target) {
+    const item = this._getEmbeddedDocument(target);
+    if (item && game.user.isGM) await animateItem(item, { app: this });
+  }
+
+  static async _onRecallRide(event, target) {
+    const item = this._getEmbeddedDocument(target);
+    if (item && game.user.isGM) await deanimateItem(item);
+  }
+
+  static async _onRequestDeployRide(event, target) {
+    const item = this._getEmbeddedDocument(target);
+    if (item?.isOwner) await requestAnimation(item);
+  }
+
   static async _viewDoc(event, target) {
     const doc = this._getEmbeddedDocument(target);
     doc.sheet.render(true);

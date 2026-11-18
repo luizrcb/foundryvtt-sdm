@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Ward: an amulet on a chain, a protective rune in its center (white; the rune is cut out) -->
+  <defs>
+    <mask id="m">
+      <rect width="512" height="512" fill="#fff"/>
+      <g fill="none" stroke="#000" stroke-width="14" stroke-linecap="round">
+        <circle cx="256" cy="322" r="96"/>
+        <path d="M256 250v144M206 290l100 64M306 290l-100 64"/>
+      </g>
+    </mask>
+  </defs>
+  <g fill="none" stroke="#fff" stroke-width="14">
+    <path d="M150 60c0 70 40 120 106 136 66-16 106-66 106-136"/>
+  </g>
+  <g fill="#fff" mask="url(#m)">
+    <circle cx="256" cy="322" r="140"/>
+    <rect x="236" y="166" width="40" height="40" rx="8"/>
+  </g>
+</svg>

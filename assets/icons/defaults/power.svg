@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Power: a hand casting a spiral of energy with sparks (white) -->
+  <g fill="#fff">
+    <path d="M140 480l-40-120c-6-18 4-36 22-40 14-4 28 4 34 16l10 20V190c0-16 12-28 28-28s28 12 28 28v-30c0-16 12-28 28-28s28 12 28 28v24c0-16 12-28 28-28s28 12 28 28v40c0-14 12-26 26-26s26 12 26 26v120c0 60-30 108-80 136z"/>
+  </g>
+  <g fill="none" stroke="#fff" stroke-width="16" stroke-linecap="round">
+    <path d="M264 96c0-26 22-46 48-46 34 0 58 30 58 62 0 42-36 74-78 74"/>
+  </g>
+  <g fill="#fff">
+    <path d="M430 40l8 24 24 8-24 8-8 24-8-24-24-8 24-8z"/>
+    <path d="M160 70l6 16 16 6-16 6-6 16-6-16-16-6 16-6z"/>
+    <path d="M440 170l5 14 14 5-14 5-5 14-5-14-14-5 14-5z"/>
+  </g>
+</svg>

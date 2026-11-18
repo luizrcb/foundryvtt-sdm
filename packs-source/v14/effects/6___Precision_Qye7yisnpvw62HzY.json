@@ -29,7 +29,7 @@
   "description": "<p>Precognitive daemons guide the weapon, granting a +1 bonus to attacks.</p><p><strong>Mod Cost</strong>: $100, <strong>Repeatable</strong></p>",
   "origin": null,
   "tint": "#ffffff",
-  "transfer": true,
+  "transfer": false,
   "statuses": [],
   "showIcon": 1,
   "flags": {},

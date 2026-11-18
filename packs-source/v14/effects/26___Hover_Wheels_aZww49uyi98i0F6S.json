@@ -1,0 +1,50 @@
+{
+  "folder": "29ih90EskKRjUoCJ",
+  "name": "26 - Hover Wheels",
+  "_id": "aZww49uyi98i0F6S",
+  "img": "icons/commodities/tech/pipe-tech-exhaust-steel.webp",
+  "type": "base",
+  "system": {
+    "changes": [
+      {
+        "key": "system.supply",
+        "type": "add",
+        "value": 1,
+        "priority": null,
+        "phase": "initial"
+      }
+    ],
+    "isItemMod": true,
+    "modType": "ride",
+    "modCost": 250,
+    "modCostPerCapacity": true
+  },
+  "disabled": false,
+  "start": null,
+  "duration": {
+    "value": null,
+    "units": "seconds",
+    "expiry": null,
+    "expired": false
+  },
+  "description": "<p>Oldtech down-thrusters let you ignore moderately difficult terrain. Uses +1 supplies.</p><p><strong>Mod Cost</strong>: $250/cap</p>",
+  "origin": null,
+  "tint": "#ffffff",
+  "transfer": false,
+  "statuses": [],
+  "showIcon": 1,
+  "flags": {},
+  "_stats": {
+    "coreVersion": "14.370",
+    "systemId": "sdm",
+    "systemVersion": "1.11.0",
+    "createdTime": 1795000000000,
+    "modifiedTime": 1795000000000,
+    "lastModifiedBy": null,
+    "compendiumSource": null,
+    "duplicateSource": null,
+    "exportSource": null
+  },
+  "sort": 26000,
+  "_key": "!effects!aZww49uyi98i0F6S"
+}

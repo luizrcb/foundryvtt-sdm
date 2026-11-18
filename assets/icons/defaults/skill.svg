@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- Skill: a merit badge, a rosette with a star and two ribbon tails (white; the star is cut out) -->
+  <defs>
+    <mask id="m">
+      <rect width="512" height="512" fill="#fff"/>
+      <path d="M256 104l24 50 54 7-40 37 10 54-48-26-48 26 10-54-40-37 54-7z" fill="#000"/>
+      <circle cx="256" cy="190" r="104" fill="none" stroke="#000" stroke-width="10"/>
+    </mask>
+  </defs>
+  <g fill="#fff" mask="url(#m)">
+    <path d="M176 270l-54 196 66-30 40 54 40-170z"/>
+    <path d="M336 270l54 196-66-30-40 54-40-170z"/>
+    <circle cx="256" cy="190" r="132"/>
+  </g>
+</svg>

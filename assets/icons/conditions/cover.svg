@@ -1,0 +1,14 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- In cover: a tall barricade on the left, three arrows stuck in it, shot from the right (white like
+       the core status icons; no head, so it reads apart from Hidden's head over a wall) -->
+  <g fill="#fff">
+    <path d="M50 50h160v412H50z"/>
+    <!-- arrows: head at the barricade, shaft, fletching on the right -->
+    <path d="M210 150l44-24v48z"/><path d="M250 142h170v16H250z"/><path d="M420 150l40-30h24l-34 30 34 30h-24z"/>
+    <path d="M210 270l44-24v48z"/><path d="M250 262h170v16H250z"/><path d="M420 270l40-30h24l-34 30 34 30h-24z"/>
+    <path d="M210 390l44-24v48z"/><path d="M250 382h170v16H250z"/><path d="M420 390l40-30h24l-34 30 34 30h-24z"/>
+  </g>
+  <g fill="none" stroke="#000" stroke-width="10" opacity="0.35">
+    <path d="M50 190h160M50 330h160M130 50v140M130 330v132"/>
+  </g>
+</svg>

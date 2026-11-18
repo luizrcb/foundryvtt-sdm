@@ -14,6 +14,9 @@
       </div>
       {{#if fields.modCost.hint}}<p class="hint">{{localize fields.modCost.hint}}</p>{{/if}}
     </div>
+    {{#if (eq source.system.modType 'ride')}}
+    {{formGroup fields.modCostPerCapacity value=source.system.modCostPerCapacity rootId=rootId}}
+    {{/if}}
     {{formGroup fields.isHallmarkUpgrade value=source.system.isHallmarkUpgrade rootId=rootId}}
     {{/if}}
 

@@ -455,24 +455,23 @@
   // Save request: the difficulty (the Referee picks it; players see it when not standard)
   .sdm-save-difficulty {
     display: flex;
+    align-items: center;
     gap: 4px;
     margin-bottom: 6px;
 
-    button {
+    select {
       flex: 1;
-      margin: 0;
-      line-height: 20px;
+    }
+    .sdm-save-target {
+      width: 4em;
+      flex: 0 0 auto;
+    }
+    .sdm-save-difficulty-shown {
+      padding: 0 7px;
+      border: 1px solid var(--sdm-c-plum, #873b9c);
+      border-radius: 9px;
       font-size: 11.5px;
-
-      &.active {
-        border-color: var(--sdm-c-plum, #873b9c);
-        background: rgba(135, 59, 156, 0.15);
-        font-weight: bold;
-      }
-      &:disabled {
-        opacity: 1;
-        cursor: default;
-      }
+      font-weight: bold;
     }
   }
 

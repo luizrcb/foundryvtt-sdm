@@ -19,9 +19,29 @@ const CHANNEL = 'system.sdm';
 const ROLL_ACTION = 'sdmSaveAgainstRoll';
 const MIND = ['mad', 'fear', 'confused', 'sleep'];
 const ABILITIES = ['str', 'end', 'agi', 'cha', 'aur', 'tho'];
-// A save's difficulty moves its target: easy −3, hard +3 (standard: the actor's save target)
-export const SAVE_DIFFICULTY_SHIFT = { easy: -3, hard: 3 };
-export const SAVE_DIFFICULTIES = ['easy', '', 'hard'];
+// A save's difficulty moves its target (very easy −4, easy −2, hard +2, very hard +4; standard: the
+// actor's save target) or sets it: a number ("14") is the exact target
+export const SAVE_DIFFICULTY_SHIFT = { veryEasy: -4, easy: -2, hard: 2, veryHard: 4 };
+export const SAVE_DIFFICULTIES = ['veryEasy', 'easy', '', 'hard', 'veryHard'];
+const isExact = difficulty => /^\d+$/.test(`${difficulty ?? ''}`);
+
+/** The difficulty to pass on: the key, or the exact target as text when "target" is picked. */
+export function saveDifficultyValue(key, target) {
+  return key === 'target' ? String(Math.max(Number(target) || 13, 1)) : key ?? '';
+}
+
+/** The save's target: the base moved by the difficulty, or the exact target. */
+export function saveTargetFor(base, difficulty) {
+  if (isExact(difficulty)) return Number(difficulty);
+  return Number(base) + (SAVE_DIFFICULTY_SHIFT[difficulty] ?? 0);
+}
+
+/** "hard", "very easy", "target 14" (blank for standard). */
+export function saveDifficultyLabel(difficulty) {
+  if (!difficulty) return '';
+  if (isExact(difficulty)) return game.i18n.format('SDM.SaveDifficulty.TargetChip', { target: difficulty });
+  return game.i18n.localize(`SDM.SaveDifficulty.${difficulty}`).toLowerCase();
+}
 const difficultyName = key => game.i18n.localize(`SDM.SaveDifficulty.${key || 'standard'}`);
 
 const esc = text => foundry.utils.escapeHTML(String(text ?? ''));
@@ -82,10 +102,9 @@ export async function saveAgainst(target, info) {
           source: data.source
         })
       )}</p>
-      <div class="sdm-save-difficulty">${SAVE_DIFFICULTIES.map(
-        key =>
-          `<button type="button" data-action="sdmSaveDifficulty" data-difficulty="${key}"${key === data.difficulty ? ' class="active"' : ''}>${esc(difficultyName(key))}</button>`
-      ).join('')}</div>
+      <div class="sdm-save-difficulty"><select data-action="sdmSaveDifficulty">${[...SAVE_DIFFICULTIES, 'target']
+        .map(key => `<option value="${key}">${esc(key === 'target' ? game.i18n.localize('SDM.SaveDifficulty.target') : difficultyName(key))}</option>`)
+        .join('')}</select><input type="number" min="1" step="1" class="sdm-save-target" /><span class="sdm-save-difficulty-shown"></span></div>
       <div class="sdm-save-request-buttons">${buttons}</div>
     </div>` +
         `<div class="sdm-card-foot"><span>${esc(game.i18n.localize('SDM.SaveAgainst.Who'))}</span></div>`,
@@ -116,18 +135,26 @@ export function bindSaveAgainst(message, html) {
   const difficulty = message?.getFlag('sdm', 'saveDifficulty') ?? info.difficulty ?? '';
   info.difficulty = difficulty;
   const row = box.querySelector('.sdm-save-difficulty');
-  row?.querySelectorAll('button').forEach(button => {
-    button.classList.toggle('active', button.dataset.difficulty === difficulty);
-    if (!game.user.isGM) button.disabled = true;
-    else
-      button.addEventListener('click', event => {
-        event.preventDefault();
-        message?.setFlag('sdm', 'saveDifficulty', button.dataset.difficulty);
-      });
-  });
-  // Players: only the current difficulty, and only when it isn't standard
-  if (!game.user.isGM) row?.querySelectorAll('button:not(.active)').forEach(button => button.remove());
-  if (!game.user.isGM && !difficulty) row?.remove();
+  const select = row?.querySelector('select');
+  const number = row?.querySelector('.sdm-save-target');
+  if (row && game.user.isGM) {
+    // The Referee: a step, or "Target…" with the exact number
+    select.value = isExact(difficulty) ? 'target' : difficulty;
+    number.value = isExact(difficulty) ? difficulty : actor?.system?.save_target || 13;
+    number.hidden = select.value !== 'target';
+    row.querySelector('.sdm-save-difficulty-shown')?.remove();
+    const save = () => message?.setFlag('sdm', 'saveDifficulty', saveDifficultyValue(select.value, number.value));
+    select.addEventListener('change', save);
+    number.addEventListener('change', save);
+  } else if (row) {
+    // Players: only the current difficulty, and only when it isn't standard
+    if (!difficulty) row.remove();
+    else {
+      select.remove();
+      number.remove();
+      row.querySelector('.sdm-save-difficulty-shown').textContent = saveDifficultyLabel(difficulty);
+    }
+  }
   if (!actor?.isOwner) {
     buttons.forEach(button => (button.disabled = true));
     return;

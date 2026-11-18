@@ -69,11 +69,14 @@
         </div>
         {{/if}}
       {{/each}}
-      {{#if (and (has item.system.features 'consumable') @root.editable (ne actorType 'caravan') (ne item.system.status 'broken') (ne item.system.resources 'run_out'))}}
+      {{!-- Use: only readied (a packed item takes an action to ready first) --}}
+      {{#if (and (has item.system.features 'consumable') item.system.readied @root.editable (ne actorType 'caravan') (ne item.system.status 'broken') (ne item.system.resources 'run_out'))}}
         <a class="rollable mr-3" data-action="useItem" data-tooltip="{{sdmUseTooltip item}}"><i class="fa-solid fa-hand-holding-medical"></i></a>
       {{/if}}
       {{#if (sdmIsLit item)}}
         <a class="rollable sdm-lit-icon mr-3" {{#if @root.editable}}data-action="putOutLight"{{/if}} data-tooltip="{{localize 'SDM.Light.LitHint'}}"><i class="fa-solid fa-fire-flame-curved"></i></a>
+      {{else if (and @root.editable (ne actorType 'caravan') (sdmCanLight item))}}
+        <a class="rollable sdm-unlit-icon mr-3" data-action="lightItem" data-tooltip="{{localize 'SDM.Light.UnlitHint'}}"><i class="fa-solid fa-fire-flame-curved"></i></a>
       {{/if}}
       {{#if (eq item.system.resources 'running_low')}}
         <div data-tooltip="{{localize 'SDM.ItemStatusRunningLow'}}">
@@ -122,8 +125,12 @@
         <span data-tooltip="{{localize 'SDM.ItemCharges'}}" class="mr-3">({{item.system.charges.value}}/{{item.system.charges.max}})</span>
       {{/if}}
 
+      {{!-- Animated: the ghost (the Referee clicks it to deanimate); can be animated: a faded ghost to
+            animate it (the Referee) or ask the Referee (the owner), as the right-click menu --}}
       {{#if item.system.animation.active}}
-        <i class="fa-solid fa-ghost mr-3 sdm-animated-icon" data-tooltip="{{#if (eq item.system.animation.mode 'walks')}}{{localize 'SDM.Animation.Walked'}}{{else}}{{localize 'SDM.Animation.EnergyActive'}}{{/if}}"></i>
+        <a class="mr-3 sdm-animated-icon{{#if @root.isGM}} rollable{{/if}}" {{#if @root.isGM}}data-action="deanimateItem"{{/if}} data-tooltip="{{#if (eq item.system.animation.mode 'walks')}}{{localize 'SDM.Animation.Walked'}}{{else}}{{localize 'SDM.Animation.EnergyActive'}}{{/if}}{{#if @root.isGM}}: {{localize 'SDM.Animation.ClickDeanimate'}}{{/if}}"><i class="fa-solid fa-ghost"></i></a>
+      {{else if (and @root.editable (ne actorType 'caravan') (sdmCanAnimate item))}}
+        <a class="rollable mr-3 sdm-unanimated-icon" data-action="{{#if @root.isGM}}animateItem{{else}}requestAnimation{{/if}}" data-tooltip="{{#if @root.isGM}}{{localize 'SDM.Animation.ClickAnimate'}}{{else}}{{localize 'SDM.Animation.ClickRequest'}}{{/if}}"><i class="fa-solid fa-ghost"></i></a>
       {{/if}}
 
       {{#if (and item.system.starting_kit (gt item.system.packed_remaining_items 0))}}

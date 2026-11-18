@@ -1,0 +1,56 @@
+{{! Mount and vehicle: the ride's stats from its level (book table; sentient: an NPC table), changed by ride mods }}
+<section class="v2-card v2-item-card sdm-ride-stats">
+  <span class="v2-card-title"><span data-tooltip="{{localize 'SDM.RideStats.Hint'}}">{{localize 'SDM.RideStats.Title'}} <i class="fa-solid fa-circle-question"></i></span>
+    {{#if editable}}<a class="sdm-ride-refill" data-action="refillRideStats" data-tooltip="{{localize 'SDM.RideStats.Refill'}}"><i class="fa-solid fa-rotate"></i></a>{{/if}}</span>
+  <div class="v2-fields">
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.RideStats.Table'}}</span>
+      {{#if rideStats.sentient}}
+      <select name="system.animation.table">{{selectOptions rideStats.tables selected=rideStats.table localize=true}}</select>
+      {{else}}
+      <span class="sdm-ride-table">{{localize 'SDM.RideStats.RideTable'}}</span>
+      {{/if}}
+    </label>
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.RideStats.Life'}}</span>
+      <span class="sdm-ride-life">
+        <input type="number" name="system.attributes.life.value" value="{{system.attributes.life.value}}" data-dtype="Number" />
+        /
+        <input type="number" name="system.attributes.life.max" value="{{system.attributes.life.max}}" data-dtype="Number" />
+      </span>
+    </label>
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.FieldDefense'}}</span>
+      <input type="number" name="system.attributes.defense" value="{{system.attributes.defense}}" data-dtype="Number" />
+    </label>
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.FieldBonus'}}</span>
+      <input type="number" name="system.attributes.bonus" value="{{system.attributes.bonus}}" data-dtype="Number" />
+    </label>
+    <label class="v2-field" data-tooltip="{{localize 'SDM.RideStats.DamageHint'}}">
+      <span class="v2-label">{{localize 'SDM.Damage'}}</span>
+      <input type="text" name="system.attributes.damage" value="{{system.attributes.damage}}" />
+    </label>
+    {{#if rideStats.sentient}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.Morale'}}</span>
+      <input type="number" name="system.attributes.morale" value="{{system.attributes.morale}}" data-dtype="Number" />
+    </label>
+    {{/if}}
+    <label class="v2-field sdm-ride-recall">
+      <span class="v2-label">{{localize 'SDM.Ride.EndWithCombat'}}</span>
+      <input type="checkbox" name="system.animation.endWithCombat" {{checked system.animation.endWithCombat}} />
+    </label>
+  </div>
+  {{#if rideStats.deployed}}
+  {{#if rideStats.canManage}}
+  <div class="v2-anim-actions"><button type="button" class="v2-chip-btn" data-action="deanimateItem"><i class="fa-solid fa-house-flag"></i> {{localize 'SDM.Ride.Deanimate'}}</button></div>
+  {{/if}}
+  {{else if rideStats.blocked}}
+  <div class="v2-anim-actions"><span class="v2-hint">{{localize 'SDM.Ride.BlockedHint'}}</span></div>
+  {{else if rideStats.canManage}}
+  <div class="v2-anim-actions"><button type="button" class="v2-chip-btn" data-action="animateItem"><i class="fa-solid fa-flag"></i> {{localize 'SDM.Ride.Deploy'}}</button></div>
+  {{else if rideStats.canRequest}}
+  <div class="v2-anim-actions"><button type="button" class="v2-chip-btn" data-action="requestAnimation"><i class="fa-solid fa-hand"></i> {{localize 'SDM.Ride.Request'}}</button></div>
+  {{/if}}
+</section>
