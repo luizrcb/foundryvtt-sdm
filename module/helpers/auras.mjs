@@ -17,6 +17,7 @@ import { metersPerUnit, sceneZoneLimits } from './zones.mjs';
 const REGION_FLAG = 'auraRegion'; // region: { effect: <effect uuid>, token: <token id> }
 const COPY_FLAG = 'fromAura'; // copy on the recipient: <source effect uuid>
 const SOURCE_FLAG = 'auraSource'; // copy: the source's name (tooltip)
+const AREA_FLAG = 'area'; // a placed area (helpers/areas.mjs); lingering ones give their item's effects
 const SETTING = 'enableAuras';
 const AURA_EFFECTS_MODULE = 'auraeffects';
 
@@ -185,7 +186,7 @@ function fitsDisposition(aura, source, target) {
 }
 
 /** The copy the recipient gets: the source's values when "evaluate on the source" is ticked. */
-function copyData(effect, sourceActor) {
+function copyData(effect, sourceActor, sourceName = sourceActor?.name) {
   const aura = effect.system.aura;
   const item = effect.parent?.documentName === 'Item' ? effect.parent : null;
   const changes = effect.system.changes.map(change => {
@@ -206,7 +207,7 @@ function copyData(effect, sourceActor) {
     disabled: false,
     statuses: [...(effect.statuses ?? [])],
     system: { changes, aura: { enabled: false } },
-    flags: { sdm: { [COPY_FLAG]: effect.uuid, [SOURCE_FLAG]: sourceActor.name } }
+    flags: { sdm: { [COPY_FLAG]: effect.uuid, [SOURCE_FLAG]: sourceName ?? '' } }
   };
 }
 
@@ -230,6 +231,7 @@ function wantedCopies(scenes) {
   const byActor = new Map(); // uuid → { actor, candidates: [] }
   for (const scene of scenes) {
     const regions = scene.regions.filter(r => r.getFlag('sdm', REGION_FLAG));
+    const lingering = scene.regions.filter(r => r.getFlag('sdm', AREA_FLAG)?.linger);
     for (const token of scene.tokens) {
       const actor = token.actor;
       if (!actor) continue;
@@ -247,6 +249,20 @@ function wantedCopies(scenes) {
         const copy = copyData(effect, source.actor);
         entry.candidates.push({ effect, copy, value: auraValue(effect, source.actor, copy) });
       }
+      // Lingering areas (helpers/areas.mjs): whoever stands in one has its item's effects
+      for (const region of lingering) {
+        if (!region.tokens?.has(token)) continue;
+        const flag = region.getFlag('sdm', AREA_FLAG);
+        if (flag.affects === 'enemies' && flag.disposition !== null && token.disposition === flag.disposition) continue;
+        if (flag.affects === 'allies' && flag.disposition !== null && token.disposition !== flag.disposition) continue;
+        const sourceActor = fromUuidSync(flag.actor);
+        for (const uuid of flag.effects ?? []) {
+          const effect = fromUuidSync(uuid);
+          if (!effect || entry.candidates.some(c => c.effect.uuid === effect.uuid)) continue;
+          const copy = copyData(effect, sourceActor ?? actor, region.name);
+          entry.candidates.push({ effect, copy, value: auraValue(effect, sourceActor ?? actor, copy) });
+        }
+      }
     }
   }
   // Auras that don't stack: the best of each name
@@ -254,7 +270,7 @@ function wantedCopies(scenes) {
     const best = new Map();
     const kept = [];
     for (const c of entry.candidates) {
-      if (c.effect.system.aura.canStack) {
+      if (c.effect.system.aura?.canStack) {
         kept.push(c);
         continue;
       }
@@ -354,7 +370,7 @@ function onEffectChange(effect) {
 }
 
 function onRegionChange(region) {
-  if (region.getFlag('sdm', REGION_FLAG)) scheduleAuraSync();
+  if (region.getFlag('sdm', REGION_FLAG) || region.getFlag('sdm', AREA_FLAG)?.linger) scheduleAuraSync();
 }
 
 /* -------------------------------------------- */
@@ -390,6 +406,14 @@ async function onCombatRound(combat, changed, options) {
   if (game.users.activeGM?.id !== game.user.id) return;
   const { changeLifeOf } = await import('../app/use-item.mjs');
   const scene = combat.scene;
+  // Lingering areas whose rounds are over go away (and with them their effects)
+  if (scene) {
+    const ended = scene.regions.filter(r => {
+      const expires = r.getFlag('sdm', AREA_FLAG)?.expires;
+      return expires && expires.combat === combat.id && combat.round >= expires.round;
+    });
+    if (ended.length) await scene.deleteEmbeddedDocuments('Region', ended.map(r => r.id));
+  }
   if (scene && aurasEnabled()) {
     for (const region of scene.regions) {
       const flag = region.getFlag('sdm', REGION_FLAG);

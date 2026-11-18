@@ -53,6 +53,8 @@ export function itemArea(item, kind = '') {
       size: power.area,
       shape: power.area_shape || 'circle',
       affects: power.area_affects || 'everyone',
+      linger: kind !== 'album' && !!power.area_linger,
+      rounds: Number(power.area_rounds) || 0,
       meters: AREA_METERS.foot[power.area],
       range: `${power.range ?? ''}`
     };
@@ -64,7 +66,27 @@ export function itemArea(item, kind = '') {
   const shape = item.system.area.shape || 'circle';
   const meters = AREA_METERS[item.system.area.vehicle ? 'vehicle' : 'foot'][size];
   const range = item.system?.weapon?.range || item.system?.range?.value || '';
-  return { size, shape, affects: item.system.area.affects || 'everyone', meters, range: `${range}` };
+  return {
+    size,
+    shape,
+    affects: item.system.area.affects || 'everyone',
+    linger: !!item.system.area.linger,
+    rounds: Number(item.system.area.rounds) || 0,
+    meters,
+    range: `${range}`
+  };
+}
+
+/** The effects a lingering area gives whoever stands in it: the item's own, except mods and those given to its bearer. */
+export function lingerEffects(item) {
+  return (item?.effects ?? []).filter(e => !e.transfer && !e.system?.isItemMod && !e.system?.isHallmarkUpgrade);
+}
+
+/** "Lingers 3 rounds" / "Lingers" for a lingering area with effects, else ''. */
+function lingerLabel(item, kind) {
+  const area = itemArea(item, kind);
+  if (!area?.linger || !lingerEffects(item).length) return '';
+  return area.rounds > 0 ? $fmt('SDM.AreaLingersRounds', { rounds: area.rounds }) : $l10n('SDM.AreaLingers');
 }
 
 /** "small circle (~10 ft)" in the world unit. */
@@ -154,6 +176,19 @@ export async function placeArea({ actor, item, kind = '' }) {
     ownership: { default: CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE, [game.user.id]: CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER },
     flags: { sdm: { [AREA_FLAG]: { id: areaId, item: item.uuid, actor: actor?.uuid ?? '', user: game.user.id } } }
   };
+  // Lingering: whoever stands in it has the item's effects (helpers/auras.mjs keeps them), for some rounds
+  const effects = area.linger ? lingerEffects(item) : [];
+  if (effects.length) {
+    const combat = game.combats.find(c => c.started && c.scene?.id === scene.id) ?? null;
+    Object.assign(data.flags.sdm[AREA_FLAG], {
+      linger: true,
+      effects: effects.map(e => e.uuid),
+      affects: area.affects,
+      disposition: sourceToken?.disposition ?? null,
+      sourceToken: sourceToken?.id ?? '',
+      expires: combat && area.rounds > 0 ? { combat: combat.id, round: combat.round + area.rounds } : null
+    });
+  }
   if (canvas.level?.id) data.levels = [canvas.level.id];
 
   // An emanation needs no placing: it is around the token already
@@ -200,7 +235,7 @@ async function finishPlacement({ area, scene, placed, sourceToken, fromToken, or
 
   await createArea(scene, placed.toObject());
   setTargets(tokens);
-  return { areaId, tokens, outOfRange };
+  return { areaId, tokens, outOfRange, lingers: !!placed.getFlag('sdm', AREA_FLAG)?.linger };
 }
 
 /** "Beyond Fireball's range (short): the area's center is at medium." when the center is out of range. */
@@ -316,7 +351,7 @@ async function onPlacePowerArea(button) {
     `<button type="button" data-action="sdmAreaTargetHits"><i class="fa-solid fa-crosshairs"></i> ${esc($l10n('SDM.AreaTargetInside'))}</button>` +
     `<button type="button" data-action="sdmAreaRemove"><i class="fa-solid fa-eraser"></i> ${esc($l10n('SDM.AreaRemove'))}</button>`;
   const content = cardWrap(
-    cardHeader({ icon: 'fa-solid fa-bullseye', title: item.name, chips: [areaLabel(item, kind)] }) +
+    cardHeader({ icon: 'fa-solid fa-bullseye', title: item.name, chips: [areaLabel(item, kind), lingerLabel(item, kind)] }) +
       (placed.outOfRange ? `<div class="sdm-card-tag warn">${esc(placed.outOfRange)}</div>` : '') +
       (names ? `<div class="sdm-card-tag info">${esc($l10n('SDM.AreaInside'))}: ${names}</div>` : `<div class="sdm-card-tag info">${esc($l10n('SDM.AreaEmpty'))}</div>`) +
       (total > 0 ? areaApplyButtonsHtml(areaShares(targets, total)) : '') +
@@ -389,7 +424,7 @@ async function onPlaceAreaFromAttack(button) {
     `<button type="button" data-action="sdmAreaTargetHits"><i class="fa-solid fa-crosshairs"></i> ${esc($l10n('SDM.AreaTargetHits'))}</button>` +
     `<button type="button" data-action="sdmAreaRemove"><i class="fa-solid fa-eraser"></i> ${esc($l10n('SDM.AreaRemove'))}</button>`;
   const content = cardWrap(
-    cardHeader({ icon: 'fa-solid fa-bullseye', title: item.name, chips: [areaLabel(item, button.dataset.kind), $fmt('SDM.AreaAttackTotal', { total })] }) +
+    cardHeader({ icon: 'fa-solid fa-bullseye', title: item.name, chips: [areaLabel(item, button.dataset.kind), lingerLabel(item, button.dataset.kind), $fmt('SDM.AreaAttackTotal', { total })] }) +
       (placed.outOfRange ? `<div class="sdm-card-tag warn">${esc(placed.outOfRange)}</div>` : '') +
       (rows.length ? rows.join('') : `<div class="sdm-card-tag info">${esc($l10n('SDM.AreaEmpty'))}</div>`) +
       `<div class="sdm-card-actions">${actions}</div>`,

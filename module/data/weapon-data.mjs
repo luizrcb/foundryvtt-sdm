@@ -36,7 +36,10 @@ export default class WeaponDataModel extends foundry.abstract.DataModel {
         choices: CONFIG.SDM.rangeType,
       }),
 
-      versatile: new fields.BooleanField({ required: true, initial: false })
+      versatile: new fields.BooleanField({ required: true, initial: false }),
+
+      // Damage to the creatures adjacent to the target, once per attack that hits (Mouth of the Void: 1d6)
+      splash: new fields.StringField({ required: true, blank: true, initial: '' })
     };
   }
 }

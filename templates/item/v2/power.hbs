@@ -27,6 +27,16 @@
       <span class="v2-label">{{localize 'SDM.AreaAffects.Label'}}</span>
       <select name="system.power.area_affects">{{selectOptions @root.areaAffects localize=true selected=system.power.area_affects}}</select>
     </label>
+    <label class="v2-field v2-check" data-tooltip="{{localize 'SDM.AreaLingerHint'}}">
+      <input type="checkbox" name="system.power.area_linger" {{checked system.power.area_linger}} data-dtype="Boolean" />
+      <span class="v2-label">{{localize 'SDM.AreaLinger'}}</span>
+    </label>
+    {{#if system.power.area_linger}}
+    <label class="v2-field" data-tooltip="{{localize 'SDM.AreaRoundsHint'}}">
+      <span class="v2-label">{{localize 'SDM.AreaRounds'}}</span>
+      <input type="number" name="system.power.area_rounds" value="{{system.power.area_rounds}}" min="0" step="1" data-dtype="Number" />
+    </label>
+    {{/if}}
     {{/if}}
     <label class="v2-field">
       <span class="v2-label">{{localize 'SDM.PowerDuration'}}</span>

@@ -14,7 +14,7 @@
 import { ActorType, ItemType, RollMode } from '../helpers/constants.mjs';
 import { UnarmedDamageItem } from '../helpers/itemUtils.mjs';
 import { numberValue } from '../helpers/formulas.mjs';
-import { applyStatusToTargets } from '../app/use-item.mjs';
+import { applyStatusToTargets, changeLifeOf } from '../app/use-item.mjs';
 import { saveAgainst, saveDifficultyValue } from '../app/save-against.mjs';
 
 /**
@@ -120,6 +120,18 @@ export function attackFeatureHtml({ actor, item, targetActor = null, success = n
             })
       );
     }
+    // Splash: the creatures adjacent to the target take its damage (once per attack that hits)
+    const splash = `${item.system?.weapon?.splash ?? ''}`.trim();
+    if (splash) {
+      parts.push(
+        button('sdmFeatureSplash', 'fa-solid fa-burst', game.i18n.format('SDM.AttackFeature.SplashButton', { formula: splash, target: targetActor.name }), {
+          target: targetActor.uuid,
+          formula: splash,
+          item: item.name,
+          actor: actor.uuid
+        })
+      );
+    }
     if (has(item, 'burdening')) {
       parts.push(
         button('sdmFeatureBurden', 'fa-solid fa-weight-hanging', game.i18n.format('SDM.AttackFeature.BurdenButton', { target: targetActor.name }), {
@@ -142,6 +154,17 @@ export function attackFeatureHtml({ actor, item, targetActor = null, success = n
     }
   }
   return parts.length ? `<div class="sdm-attack-features">${parts.join('')}</div>` : '';
+}
+
+/** Two tokens side by side: their grid spaces touch (diagonals count). */
+function isAdjacent(a, b) {
+  const size = a.parent.grid.size;
+  const box = t => ({ x0: t.x, y0: t.y, x1: t.x + t.width * size, y1: t.y + t.height * size });
+  const p = box(a);
+  const q = box(b);
+  const gapX = Math.max(q.x0 - p.x1, p.x0 - q.x1, 0);
+  const gapY = Math.max(q.y0 - p.y1, p.y0 - q.y1, 0);
+  return gapX < size / 2 && gapY < size / 2;
 }
 
 /** renderChatMessageHTML: the feature buttons (the Referee, or the owner of whoever they affect). */
@@ -182,6 +205,26 @@ export function bindAttackFeatures(html) {
       }
     ]);
     ui.notifications.info(game.i18n.format('SDM.AttackFeature.BurdenGiven', { target: actor.name }));
+  });
+
+  // Splash: roll once, then every creature adjacent to the target's token takes it (through the Referee when not owned)
+  on('sdmFeatureSplash', async ({ target, formula, item, actor: attackerUuid }, button) => {
+    const targetActor = await fromUuid(target);
+    const token = targetActor?.getActiveTokens?.(false, true)?.find(t => t.parent === canvas.scene);
+    if (!token) return ui.notifications.warn(game.i18n.localize('SDM.AttackFeature.SplashNoToken'));
+    const attacker = await fromUuid(attackerUuid);
+    const roll = await new Roll(formula, attacker?.getRollData?.() ?? {}).evaluate();
+    const adjacent = canvas.scene.tokens.filter(other => other !== token && other.actor && isAdjacent(token, other));
+    await roll.toMessage({
+      speaker: ChatMessage.getSpeaker({ actor: attacker ?? undefined }),
+      flavor: game.i18n.format('SDM.AttackFeature.SplashFlavor', {
+        item,
+        target: targetActor.name,
+        names: adjacent.map(t => t.name).join(', ') || '—'
+      })
+    });
+    for (const other of adjacent) await changeLifeOf(other.actor, roll.total, { reason: item });
+    button.disabled = true;
   });
 
   on('sdmFeatureSpiked', async ({ actor: uuid }, button) => {

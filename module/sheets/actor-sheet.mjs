@@ -92,15 +92,6 @@ import { DEFAULT_SAVE_VALUE, SAVING_THROW_BASE_FORMULA } from '../settings.mjs';
 import { bindNumberInputs, unformatNumberInputs, reformatNumberInputs } from '../helpers/numberFormat.mjs';
 import { resolveSaveAgainst, saveAgainstHtml, saveDifficultyLabel, saveOutcome, saveTargetFor } from '../app/save-against.mjs';
 
-/** Expert Friends: what this NPC (a pet or sidekick) is an expert at, from its owner's pet item. */
-function petExpertise(actor) {
-  if (actor?.type !== ActorType.NPC) return '';
-  for (const owner of game.actors) {
-    const item = owner.items.find(i => i.system?.pet === actor.uuid && `${i.system?.expert_at ?? ''}`.trim());
-    if (item) return item.system.expert_at.trim();
-  }
-  return '';
-}
 
 const { api, sheets } = foundry.applications;
 const { DialogV2 } = foundry.applications.api;
@@ -666,13 +657,6 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
             `<div class="sdm-roll-preview-row sdm-feature-row"><i class="fa-solid fa-circle-info"></i> ${foundry.utils.escapeHTML(featureNotes.join(' · '))}</div>`
           );
         }
-      }
-      // Expert Friends: the pet or sidekick is an expert at one thing (+6 when the roll is about it)
-      const expertAt = petExpertise(this.actor);
-      if (expertAt) {
-        rows.push(
-          `<div class="sdm-roll-preview-row sdm-feature-row"><i class="fa-solid fa-star"></i> ${foundry.utils.escapeHTML($fmt('SDM.ExpertAtNote', { thing: expertAt }))}</div>`
-        );
       }
       // Declared actions (charging, defending, in cover…): why a bonus or penalty is preselected
       if (tacticalNotes.length) {

@@ -97,7 +97,10 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       shape: new fields.StringField({ required: true, blank: false, initial: 'circle', choices: ['circle', 'cone', 'line', 'square', 'ring', 'emanation'] }),
       vehicle: new fields.BooleanField({ required: true, initial: false }),
       // Who the area hits: everyone inside, or only enemies / allies of the one placing it
-      affects: new fields.StringField({ required: true, blank: false, initial: 'everyone', choices: ['everyone', 'enemies', 'allies'] })
+      affects: new fields.StringField({ required: true, blank: false, initial: 'everyone', choices: ['everyone', 'enemies', 'allies'] }),
+      // Lingers on the map: whoever stands in it has the item's effects (rounds: 0 = until removed)
+      linger: new fields.BooleanField({ required: true, initial: false }),
+      rounds: new fields.NumberField({ required: true, nullable: false, integer: true, min: 0, initial: 0 })
     });
 
     schema.range = new fields.SchemaField({

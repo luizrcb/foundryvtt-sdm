@@ -10,15 +10,15 @@
   - Powers (and each power of an album) have an *Area* and *Shape*: attacks with them place the area like weapons, and the power's card has **Place area**: a card lists who is inside, targets them, and has a button per token to apply the power's roll
   - A circle or square placed beyond the item's range (its zone) gets a warning, also on the card; cones and lines start at the attacker; ranges written as text aren't checked
   - Fire Breath is a cone (run npm run build:packs)
+  - **Lingers** (gear and powers): the area stays on the map and whoever stands in it has the item's effects (not its mods, nor those it gives its bearer), following *Affects*; it lasts its *Rounds* in combat (0: until removed). A consumable used in one doesn't also copy its effects. Uses the Auras automation
   - The attack dialog shows the area of the chosen item
   - Hero dice on an area's damage correct every token it was applied to
 - **Damage each round**: an effect can deal damage at the start of each combat round, to the tokens in its aura or to the last foe its actor attacked
   - Glowing Skeleton: *Radiant Bones (unclothed)*, switched on by hand: adjacent creatures lose life equal to your level each round
-  - Mouth of the Void: *Song of the Void*, switched on by hand: adjacent creatures suffer 1d6 each round
   - Irresistible: your level in damage each round to the last foe you attacked, hit or miss
   - Bystander: takes its level off an area's damage
 - **Colonist**: drop up to five creatures on the trait's sheet to form the hexad; *Night with the hexad* gives each one temporary life equal to your level
-- **Expert Friends**: pet items say what their pet or sidekick is an expert at; the pet's roll dialog reminds the +6
+- **Splash** (weapons): damage to the creatures next to the target, once per attack that hits: a button on the attack card rolls it and applies it to each one. Mouth of the Void splashes 1d6 (run npm run build:packs)
 
 ## v1.11.0
 

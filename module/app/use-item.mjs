@@ -516,7 +516,8 @@ export async function useItem(item) {
     areaTargets = [...new Set(placed.tokens.map(token => token.actor).filter(Boolean))];
   }
   const targets = areaTargets ?? getTargets(actor);
-  const itemEffects = effectsToCopy(item);
+  // A lingering area gives the item's effects to whoever stands in it: the Use doesn't copy them too
+  const itemEffects = areaTargets && itemArea(item)?.linger ? [] : effectsToCopy(item);
   const choice = await chooseUse(item.system.use, itemEffects);
   if (!choice) return; // dialog closed
   const use = item.system.use;

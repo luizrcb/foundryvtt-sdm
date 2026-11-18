@@ -3191,10 +3191,6 @@
   "SDM.Hexad.Empty": "Drop up to five creatures on this sheet to make them your hexad.",
   "SDM.Hexad.Full": "The hexad already has {max} members.",
   "SDM.Hexad.NightDone": "{name}'s hexad spent the night together: {members} gain {amount} temporary life.",
-  "SDM.ExpertAt": "Expert at",
-  "SDM.ExpertAtHint": "Expert Friends: the pet or sidekick gets +6 at this.",
-  "SDM.ExpertAtPlaceholder": "lockpicking",
-  "SDM.ExpertAtNote": "Expert at {thing}: +6 when the roll is about it (Expert Friends)",
   "SDM.AreaOutOfRange": "Beyond {item}'s range ({range}): the area's center is at {zone}.",
   "SDM.AreaTargetInside": "Target everyone inside",
   "SDM.AreaInside": "Inside",
@@ -3203,5 +3199,16 @@
   "SDM.AreaAffects.enemies": "Enemies only",
   "SDM.AreaAffects.allies": "Allies only",
   "SDM.AreaShape.ring": "Ring",
-  "SDM.AreaShape.emanation": "Around the user"
+  "SDM.AreaShape.emanation": "Around the user",
+  "SDM.AreaLinger": "Lingers",
+  "SDM.AreaLingerHint": "The area stays on the map, and whoever stands in it has the item's effects (not its mods, nor those it gives its bearer), following Affects. Uses the Auras automation.",
+  "SDM.AreaRounds": "Rounds",
+  "SDM.AreaRoundsHint": "How many combat rounds it lasts; 0: until removed.",
+  "SDM.AreaLingers": "Lingers",
+  "SDM.AreaLingersRounds": "Lingers {rounds} rounds",
+  "SDM.WeaponSplash": "Splash",
+  "SDM.WeaponSplashHint": "Damage to the creatures next to the target, once per attack that hits (e.g. 1d6).",
+  "SDM.AttackFeature.SplashButton": "Splash {formula} around {target}",
+  "SDM.AttackFeature.SplashFlavor": "{item}: splash around {target} — {names}",
+  "SDM.AttackFeature.SplashNoToken": "The target has no token on this scene."
 }

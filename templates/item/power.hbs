@@ -30,6 +30,8 @@
     {{#if system.power.area}}
     <select name='system.power.area_shape'>{{selectOptions @root.areaShapes localize=true selected=system.power.area_shape}}</select>
     <select name='system.power.area_affects'>{{selectOptions @root.areaAffects localize=true selected=system.power.area_affects}}</select>
+    <label data-tooltip="{{localize 'SDM.AreaLingerHint'}}"><input type='checkbox' name='system.power.area_linger' {{checked system.power.area_linger}} /> {{localize 'SDM.AreaLinger'}}</label>
+    {{#if system.power.area_linger}}<input type='number' name='system.power.area_rounds' value='{{system.power.area_rounds}}' min='0' step='1' data-dtype='Number' data-tooltip="{{localize 'SDM.AreaRoundsHint'}}" />{{/if}}
     {{/if}}
   </div>
 </div>

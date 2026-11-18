@@ -522,9 +522,6 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
 
     const isPet = this.item.system.type === GearType.PET;
 
-    // Expert Friends: a pet item of its bearer says what its pet is an expert at
-    context.showExpertAt = !!this.item.actor?.items?.some(i => getItemIdentifier(i) === 'expert-friends') && (isPet || !!this.item.system.pet);
-
     // Colonist: the hexad (up to five creatures) and the night that gives them temporary life
     if (getItemIdentifier(this.item) === 'colonist' && this.item.actor) {
       const members = (this.item.getFlag('sdm', 'hexad') ?? []).map(uuid => ({ uuid, actor: fromUuidSync(uuid) }));

@@ -3191,10 +3191,6 @@
   "SDM.Hexad.Empty": "Solte até cinco criaturas nesta ficha para formar sua hexade.",
   "SDM.Hexad.Full": "A hexade já tem {max} membros.",
   "SDM.Hexad.NightDone": "A hexade de {name} passou a noite junto: {members} ganham {amount} de vida temporária.",
-  "SDM.ExpertAt": "Especialista em",
-  "SDM.ExpertAtHint": "Amigos Especialistas: o mascote ou ajudante ganha +6 nisso.",
-  "SDM.ExpertAtPlaceholder": "arrombar fechaduras",
-  "SDM.ExpertAtNote": "Especialista em {thing}: +6 quando a rolagem for sobre isso (Amigos Especialistas)",
   "SDM.AreaOutOfRange": "Além do alcance de {item} ({range}): o centro da área está a {zone}.",
   "SDM.AreaTargetInside": "Mirar todos dentro",
   "SDM.AreaInside": "Dentro",
@@ -3203,5 +3199,16 @@
   "SDM.AreaAffects.enemies": "Só inimigos",
   "SDM.AreaAffects.allies": "Só aliados",
   "SDM.AreaShape.ring": "Anel",
-  "SDM.AreaShape.emanation": "Em volta do usuário"
+  "SDM.AreaShape.emanation": "Em volta do usuário",
+  "SDM.AreaLinger": "Persiste",
+  "SDM.AreaLingerHint": "A área fica no mapa, e quem estiver nela tem os efeitos do item (não seus mods, nem os que ele dá a quem o carrega), seguindo Afeta. Usa a automação de Auras.",
+  "SDM.AreaRounds": "Rodadas",
+  "SDM.AreaRoundsHint": "Quantas rodadas de combate dura; 0: até ser removida.",
+  "SDM.AreaLingers": "Persiste",
+  "SDM.AreaLingersRounds": "Persiste {rounds} rodadas",
+  "SDM.WeaponSplash": "Respingo",
+  "SDM.WeaponSplashHint": "Dano às criaturas ao lado do alvo, uma vez por ataque que acerta (ex.: 1d6).",
+  "SDM.AttackFeature.SplashButton": "Respingo {formula} em volta de {target}",
+  "SDM.AttackFeature.SplashFlavor": "{item}: respingo em volta de {target} — {names}",
+  "SDM.AttackFeature.SplashNoToken": "O alvo não tem token nesta cena."
 }
