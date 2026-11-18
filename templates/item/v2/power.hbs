@@ -15,6 +15,16 @@
       <input type="text" name="system.power.target" value="{{system.power.target}}" />
     </label>
     <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.ItemFeature.area'}}</span>
+      <select name="system.power.area">{{selectOptions @root.powerAreaValues localize=true selected=system.power.area blank=''}}</select>
+    </label>
+    {{#if system.power.area}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.AreaShape.Label'}}</span>
+      <select name="system.power.area_shape">{{selectOptions @root.areaShapes localize=true selected=system.power.area_shape}}</select>
+    </label>
+    {{/if}}
+    <label class="v2-field">
       <span class="v2-label">{{localize 'SDM.PowerDuration'}}</span>
       <input type="text" name="system.power.duration" value="{{system.power.duration}}" />
     </label>

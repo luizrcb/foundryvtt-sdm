@@ -628,7 +628,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         );
         // An item with an area: placed from the attack's card
         const chosenItem = this.actor.items.get(chosen.itemId ?? chosen.id);
-        const area = chosenItem ? areaLabel(chosenItem) : '';
+        const area = chosenItem ? areaLabel(chosenItem, chosen.kind) : '';
         if (area) {
           rows.push(`<div class="sdm-roll-preview-row"><i class="fa-solid fa-bullseye"></i> ${foundry.utils.escapeHTML($fmt('SDM.AreaPreview', { area }))}</div>`);
         }

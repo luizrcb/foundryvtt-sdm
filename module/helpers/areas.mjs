@@ -4,7 +4,7 @@ import { cardHeader, cardWrap, marginText, resultStrip } from '../rolls/ui/cardP
 import { createChatMessage } from './chatUtils.mjs';
 import { attackFollowupHtml } from '../rolls/attackFollowup.mjs';
 import { getItemIdentifier } from './effectReferences.mjs';
-import { sceneUnitsForMeters, worldUnit, worldUnitsForMeters } from './zones.mjs';
+import { bandForMeters, metersPerUnit, sceneUnitsForMeters, sceneZoneLimits, worldUnit, worldUnitsForMeters, ZONE_BANDS } from './zones.mjs';
 
 /**
  * Areas (H7): an item with an area (small, medium, large) is placed on the map as a region, and the
@@ -32,19 +32,38 @@ const LINE_WIDTH_METERS = 1.5;
 
 const esc = text => foundry.utils.escapeHTML(String(text ?? ''));
 
-/** The item's area, or null (no area, or a single target). */
-export function itemArea(item) {
+/** The power an item rolls: a power item's own, or an album's selected power (kind "album"). */
+function areaPower(item, kind) {
+  if (kind === 'album') {
+    const powers = item?.system?.powers ?? [];
+    return powers[item.system.powers_current_index] ?? powers[0] ?? null;
+  }
+  if (kind === 'power' || (!kind && item?.system?.type === 'power')) return item?.system?.power ?? null;
+  return null;
+}
+
+/**
+ * The item's area, or null (no area, or a single target): a power's area (power items and the
+ * album's selected power, kind "power" / "album"), else the gear's area feature.
+ */
+export function itemArea(item, kind = '') {
+  const power = areaPower(item, kind);
+  if (power?.area && AREA_METERS.foot[power.area]) {
+    return { size: power.area, shape: power.area_shape || 'circle', meters: AREA_METERS.foot[power.area], range: `${power.range ?? ''}` };
+  }
+  if (kind === 'album' || kind === 'power') return null;
   const size = item?.system?.area?.value;
   if (!size || !AREA_METERS.foot[size]) return null;
   if (!item.system?.features?.has?.('area')) return null;
   const shape = item.system.area.shape || 'circle';
   const meters = AREA_METERS[item.system.area.vehicle ? 'vehicle' : 'foot'][size];
-  return { size, shape, meters };
+  const range = item.system?.weapon?.range || item.system?.range?.value || '';
+  return { size, shape, meters, range: `${range}` };
 }
 
-/** "Area: medium (~10 m)" in the world unit. */
-export function areaLabel(item) {
-  const area = itemArea(item);
+/** "small circle (~10 ft)" in the world unit. */
+export function areaLabel(item, kind = '') {
+  const area = itemArea(item, kind);
   if (!area) return '';
   return $fmt('SDM.AreaLabel', {
     size: $l10n(CONFIG.SDM.areaValues[area.size]).toLowerCase(),
@@ -87,8 +106,8 @@ function areaShape(area, scene, origin) {
  * Cones and lines start at the user's token and point at the cursor.
  * @returns {Promise<{areaId, tokens: TokenDocument[]}|null>} null when cancelled or impossible.
  */
-export async function placeArea({ actor, item }) {
-  const area = itemArea(item);
+export async function placeArea({ actor, item, kind = '' }) {
+  const area = itemArea(item, kind);
   const scene = canvas?.scene;
   if (!area || !scene || !canvas.ready) {
     if (area) ui.notifications.warn($l10n('SDM.AreaNoScene'));
@@ -141,9 +160,27 @@ export async function placeArea({ actor, item }) {
     return placed.testPoint({ x: center.x, y: center.y, elevation: token.elevation ?? 0 });
   });
 
+  // Its center within the item's range (a zone band): a warning when beyond (no penalty, your call)
+  const outOfRange = !fromToken && sourceToken ? rangeWarning(area, scene, origin, placed) : '';
+  if (outOfRange) ui.notifications.warn(outOfRange);
+
   await createArea(scene, placed.toObject());
   setTargets(tokens);
-  return { areaId, tokens };
+  return { areaId, tokens, outOfRange };
+}
+
+/** "Beyond Fireball's range (short): the area's center is at medium." when the center is out of range. */
+function rangeWarning(area, scene, origin, placed) {
+  const rangeIndex = ZONE_BANDS.indexOf(area.range.trim().toLowerCase());
+  if (rangeIndex < 0) return '';
+  const shape = placed.shapes[0];
+  // Circles and squares (anchored at their middle) have their center at x, y
+  const pixels = Math.hypot(shape.x - origin.x, shape.y - origin.y);
+  const distance = (pixels / scene.dimensions.distancePixels) * metersPerUnit(scene);
+  const band = bandForMeters(distance, sceneZoneLimits(scene));
+  if (band <= rangeIndex) return '';
+  const label = index => $l10n(CONFIG.SDM.rangeType?.[ZONE_BANDS[index]] ?? ZONE_BANDS[index]);
+  return $fmt('SDM.AreaOutOfRange', { item: placed.name, range: label(rangeIndex), zone: label(band) });
 }
 
 async function createArea(scene, data) {
@@ -187,13 +224,76 @@ const DEFENSE_FIELD = { physical: 'defense', mental: 'mental_defense', social: '
 
 /** The attack card's "Place area" button, when the attack was made with an item that has an area. */
 export function areaAttackButton({ actor, item, total, isNat1, isNat20, attackTarget, kind = 'weapon', multiplier = '' }) {
-  if (!itemArea(item)) return '';
+  if (!itemArea(item, kind)) return '';
   return (
     `<button type="button" data-action="sdmPlaceArea" data-actor-uuid="${esc(actor.uuid)}" data-item-id="${esc(item.id)}"` +
     ` data-kind="${esc(kind ?? 'weapon')}" data-multiplier="${esc(multiplier ?? '')}"` +
     ` data-total="${Number(total) || 0}" data-nat1="${isNat1 ? 1 : 0}" data-nat20="${isNat20 ? 1 : 0}" data-attack-target="${esc(attackTarget ?? 'physical')}">` +
-    `<i class="fa-solid fa-bullseye"></i> ${esc($l10n('SDM.AreaPlace'))} <span class="sdm-followup-formula">${esc(areaLabel(item))}</span></button>`
+    `<i class="fa-solid fa-bullseye"></i> ${esc($l10n('SDM.AreaPlace'))} <span class="sdm-followup-formula">${esc(areaLabel(item, kind))}</span></button>`
   );
+}
+
+/** A power card's "Place area" (a power with an area): everyone inside takes the power's roll. */
+export function areaPowerButton({ actor, item, kind, total }) {
+  if (!actor || !item || !itemArea(item, kind)) return '';
+  return (
+    `<button type="button" data-action="sdmPlacePowerArea" data-actor-uuid="${esc(actor.uuid)}" data-item-id="${esc(item.id)}"` +
+    ` data-kind="${esc(kind)}" data-total="${Number(total) || 0}">` +
+    `<i class="fa-solid fa-bullseye"></i> ${esc($l10n('SDM.AreaPlace'))} <span class="sdm-followup-formula">${esc(areaLabel(item, kind))}</span></button>`
+  );
+}
+
+/** Each target's share of an area's damage: the total less its reduction (Bystander). */
+export function areaShares(actors, total) {
+  return actors.map(target => {
+    const reduction = areaDamageReduction(target);
+    return { target, reduction, amount: Math.max((Number(total) || 0) - reduction, 0) };
+  });
+}
+
+/** A button per target to apply its share (damage not applied automatically). */
+export function areaApplyButtonsHtml(shares) {
+  if (!shares.length) return '';
+  return (
+    `<div class="sdm-area-apply">` +
+    shares
+      .map(
+        share =>
+          `<button type="button" data-action="sdmAreaApplyDamage" data-target-uuid="${esc(share.target.uuid)}" data-amount="${share.amount}">` +
+          `<i class="fa-solid fa-heart-crack"></i> ${esc(share.target.name)} −${share.amount}${share.reduction ? ` (−${share.reduction})` : ''}</button>`
+      )
+      .join('') +
+    `</div>`
+  );
+}
+
+/** Place a power's area from its card: a card lists who is inside, with a button each for the roll. */
+async function onPlacePowerArea(button) {
+  const actor = fromUuidSync(button.dataset.actorUuid);
+  const item = actor?.items?.get(button.dataset.itemId);
+  const kind = button.dataset.kind;
+  if (!actor?.isOwner || !item) return;
+  const placed = await placeArea({ actor, item, kind });
+  if (!placed) return;
+  const total = Number(button.dataset.total) || 0;
+  const targets = [...new Set(placed.tokens.map(t => t.actor).filter(Boolean))];
+  const names = placed.tokens.map(t => esc(t.name)).join(', ');
+  const actions =
+    `<button type="button" data-action="sdmAreaTargetHits"><i class="fa-solid fa-crosshairs"></i> ${esc($l10n('SDM.AreaTargetInside'))}</button>` +
+    `<button type="button" data-action="sdmAreaRemove"><i class="fa-solid fa-eraser"></i> ${esc($l10n('SDM.AreaRemove'))}</button>`;
+  const content = cardWrap(
+    cardHeader({ icon: 'fa-solid fa-bullseye', title: item.name, chips: [areaLabel(item, kind)] }) +
+      (placed.outOfRange ? `<div class="sdm-card-tag warn">${esc(placed.outOfRange)}</div>` : '') +
+      (names ? `<div class="sdm-card-tag info">${esc($l10n('SDM.AreaInside'))}: ${names}</div>` : `<div class="sdm-card-tag info">${esc($l10n('SDM.AreaEmpty'))}</div>`) +
+      (total > 0 ? areaApplyButtonsHtml(areaShares(targets, total)) : '') +
+      `<div class="sdm-card-actions">${actions}</div>`,
+    { kind: 'power' }
+  );
+  await createChatMessage({
+    actor,
+    content,
+    flags: { sdm: { areaCard: { sceneId: canvas.scene.id, areaId: placed.areaId, hits: placed.tokens.map(t => t.uuid) } } }
+  });
 }
 
 function outcomeFor(total, defense, isNat1, isNat20) {
@@ -208,7 +308,7 @@ async function onPlaceAreaFromAttack(button) {
   const actor = fromUuidSync(button.dataset.actorUuid);
   const item = actor?.items?.get(button.dataset.itemId);
   if (!actor?.isOwner || !item) return;
-  const placed = await placeArea({ actor, item });
+  const placed = await placeArea({ actor, item, kind: button.dataset.kind });
   if (!placed) return;
   const total = Number(button.dataset.total) || 0;
   const isNat1 = button.dataset.nat1 === '1';
@@ -255,7 +355,8 @@ async function onPlaceAreaFromAttack(button) {
     `<button type="button" data-action="sdmAreaTargetHits"><i class="fa-solid fa-crosshairs"></i> ${esc($l10n('SDM.AreaTargetHits'))}</button>` +
     `<button type="button" data-action="sdmAreaRemove"><i class="fa-solid fa-eraser"></i> ${esc($l10n('SDM.AreaRemove'))}</button>`;
   const content = cardWrap(
-    cardHeader({ icon: 'fa-solid fa-bullseye', title: item.name, chips: [areaLabel(item), $fmt('SDM.AreaAttackTotal', { total })] }) +
+    cardHeader({ icon: 'fa-solid fa-bullseye', title: item.name, chips: [areaLabel(item, button.dataset.kind), $fmt('SDM.AreaAttackTotal', { total })] }) +
+      (placed.outOfRange ? `<div class="sdm-card-tag warn">${esc(placed.outOfRange)}</div>` : '') +
       (rows.length ? rows.join('') : `<div class="sdm-card-tag info">${esc($l10n('SDM.AreaEmpty'))}</div>`) +
       `<div class="sdm-card-actions">${actions}</div>`,
     { kind: 'attack' }
@@ -277,6 +378,12 @@ export function bindAreaButtons(message, html) {
     button.addEventListener('click', event => {
       event.preventDefault();
       onPlaceAreaFromAttack(button);
+    })
+  );
+  html.querySelectorAll('[data-action="sdmPlacePowerArea"]').forEach(button =>
+    button.addEventListener('click', event => {
+      event.preventDefault();
+      onPlacePowerArea(button);
     })
   );
   const card = message?.getFlag?.('sdm', 'areaCard');

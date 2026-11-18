@@ -2,7 +2,7 @@ import { powerCardData } from '../helpers/singleUsePowers.mjs';
 import { attackFollowupHtml, attackItemFlag } from './attackFollowup.mjs';
 import { attackFeatureHtml } from './attackFeatures.mjs';
 import { reachFirstNote } from '../helpers/zones.mjs';
-import { areaAttackButton, areaDamageReduction } from '../helpers/areas.mjs';
+import { areaApplyButtonsHtml, areaAttackButton, areaPowerButton, areaShares } from '../helpers/areas.mjs';
 import { hasLastFoeDamage } from '../helpers/auras.mjs';
 import { actorTriggers, attackTriggers, damageTriggers, itemRollTriggers, renderTriggers, runTriggerActions } from './triggers.mjs';
 import { createChatMessage } from '../helpers/chatUtils.mjs';
@@ -282,19 +282,13 @@ export default class SDMRoll {
     if (attackItem && attackSuccess && this.targetActor) attackItem.target = this.targetActor.uuid;
     // Damage with a target: applied to it at once (optional), with an Undo for the roller and the Referee
     // An area's damage: every token it hit, each less its reduction (Bystander: its level)
-    const areaShares =
-      isDamage && this.areaTargets.length && this.roll.total > 0
-        ? this.areaTargets.map(target => {
-            const reduction = areaDamageReduction(target);
-            return { target, reduction, amount: Math.max(this.roll.total - reduction, 0) };
-          })
-        : [];
+    const shares = isDamage && this.areaTargets.length && this.roll.total > 0 ? areaShares(this.areaTargets, this.roll.total) : [];
     const autoApply = isDamage && game.settings.get('sdm', 'autoApplyDamage');
     const autoTarget =
       !areaShares.length && autoApply && this.targetActor && this.targetActor !== this.actor && this.roll.total > 0
         ? this.targetActor
         : null;
-    const autoShares = autoTarget ? [{ target: autoTarget, reduction: 0, amount: this.roll.total }] : autoApply ? areaShares.filter(s => s.amount > 0) : [];
+    const autoShares = autoTarget ? [{ target: autoTarget, reduction: 0, amount: this.roll.total }] : autoApply ? shares.filter(s => s.amount > 0) : [];
     for (const share of autoShares) {
       const reduced = share.reduction ? ` (−${share.reduction})` : '';
       tags.push(
@@ -304,19 +298,7 @@ export default class SDMRoll {
       );
     }
     // Not applied automatically: a button per token hit
-    if (!autoApply && areaShares.length) {
-      tags.push(
-        `<div class="sdm-area-apply">` +
-          areaShares
-            .map(
-              share =>
-                `<button type="button" data-action="sdmAreaApplyDamage" data-target-uuid="${foundry.utils.escapeHTML(share.target.uuid)}" data-amount="${share.amount}">` +
-                `<i class="fa-solid fa-heart-crack"></i> ${foundry.utils.escapeHTML(share.target.name)} −${share.amount}${share.reduction ? ` (−${share.reduction})` : ''}</button>`
-            )
-            .join('') +
-          `</div>`
-      );
-    }
+    if (!autoApply && shares.length) tags.push(areaApplyButtonsHtml(shares));
     if (attackItem) {
       actions += attackFollowupHtml(attackItem);
       flags.sdm = { ...(flags.sdm ?? {}), attackItem };
@@ -348,6 +330,11 @@ export default class SDMRoll {
         isNat1,
         isNat20
       });
+    }
+    // A power with an area: place it; everyone inside can take the power's roll
+    if (isPower || isPowerAlbum) {
+      const castItem = isPowerAlbum ? this.triggerItem : this.item?.id ? this.item : null;
+      actions += areaPowerButton({ actor: this.actor, item: castItem, kind: isPowerAlbum ? 'album' : 'power', total: this.roll.dice.length ? this.roll.total : 0 });
     }
     // Damage: apply it to the selected tokens (also in the card's right-click menu)
     if (isDamage || ((isPower || isPowerAlbum) && this.roll.dice.length)) actions += applyDamageHtml(this.roll.total);

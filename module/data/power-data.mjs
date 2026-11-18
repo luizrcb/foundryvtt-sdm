@@ -22,6 +22,9 @@ export default class PowerDataModel extends foundry.abstract.DataModel {
       light: defineLightField({ preset: 'none' }),
       level: new fields.NumberField({ required: true, initial: 1, min: 0 }),
       range: new fields.StringField({ required: true, blank: true, initial: '' }),
+      // Area of the power (small, medium, large) and its shape, placed from the power's card (helpers/areas.mjs)
+      area: new fields.StringField({ required: true, blank: true, initial: '' }),
+      area_shape: new fields.StringField({ required: true, blank: false, initial: 'circle' }),
       target: new fields.StringField({ required: true, blank: true, initial: '' }),
       duration: new fields.StringField({ required: true, blank: true, initial: '' }),
       overcharge: new fields.StringField({ required: false, blank: true, initial: '' }),

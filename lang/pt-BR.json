@@ -3194,5 +3194,8 @@
   "SDM.ExpertAt": "Especialista em",
   "SDM.ExpertAtHint": "Amigos Especialistas: o mascote ou ajudante ganha +6 nisso.",
   "SDM.ExpertAtPlaceholder": "arrombar fechaduras",
-  "SDM.ExpertAtNote": "Especialista em {thing}: +6 quando a rolagem for sobre isso (Amigos Especialistas)"
+  "SDM.ExpertAtNote": "Especialista em {thing}: +6 quando a rolagem for sobre isso (Amigos Especialistas)",
+  "SDM.AreaOutOfRange": "Além do alcance de {item} ({range}): o centro da área está a {zone}.",
+  "SDM.AreaTargetInside": "Mirar todos dentro",
+  "SDM.AreaInside": "Dentro"
 }

@@ -38,6 +38,15 @@
           <input type="text" name="{{concat 'system.powers.' @index '.duration'}}" value="{{power.duration}}" /></label>
       </div>
 
+      <div class="sdm-album-fields sdm-album-fields-3">
+        <label><span>{{localize 'SDM.ItemFeature.area'}}</span>
+          <select name="{{concat 'system.powers.' @index '.area'}}">{{selectOptions @root.powerAreaValues localize=true selected=power.area blank=''}}</select></label>
+        {{#if power.area}}
+        <label><span>{{localize 'SDM.AreaShape.Label'}}</span>
+          <select name="{{concat 'system.powers.' @index '.area_shape'}}">{{selectOptions @root.areaShapes localize=true selected=power.area_shape}}</select></label>
+        {{/if}}
+      </div>
+
       <div class="sdm-album-fields sdm-album-fields-4">
         <label><span>{{localize 'SDM.PowerRollFormula'}}</span>
           <input type="text" name="{{concat 'system.powers.' @index '.roll_formula'}}" value="{{power.roll_formula}}" /></label>

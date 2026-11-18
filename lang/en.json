@@ -3194,5 +3194,8 @@
   "SDM.ExpertAt": "Expert at",
   "SDM.ExpertAtHint": "Expert Friends: the pet or sidekick gets +6 at this.",
   "SDM.ExpertAtPlaceholder": "lockpicking",
-  "SDM.ExpertAtNote": "Expert at {thing}: +6 when the roll is about it (Expert Friends)"
+  "SDM.ExpertAtNote": "Expert at {thing}: +6 when the roll is about it (Expert Friends)",
+  "SDM.AreaOutOfRange": "Beyond {item}'s range ({range}): the area's center is at {zone}.",
+  "SDM.AreaTargetInside": "Target everyone inside",
+  "SDM.AreaInside": "Inside"
 }

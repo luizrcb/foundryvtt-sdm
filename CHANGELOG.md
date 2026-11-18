@@ -7,6 +7,9 @@
 - **Areas**: items with an area have a *Shape* (circle, cone, line, square) and *Vehicle size*. Sizes follow the item (on foot ~3 / 10 / 30 m across, vehicles ~10 / 50 / 150 m), not the scene
   - The attack card of an item with an area has **Place area**: Foundry's region placement (wheel rotates, click places, right-click cancels; cones and lines start at the attacker's token and point at the cursor). A card compares the attack with every defense inside (hit, miss, critical, force or fail) and targets the hits; its **Roll damage** button rolls once for the whole area: with *Apply damage automatically* every token hit takes it (a line and an Undo each), otherwise a button per token hit applies its share. Conditions and triggers act on the hits. **Target hits** and **Remove area** on the card; the area stays on the map until removed
   - Consumables with an area (grenades): Use places the area first, and the tokens inside are the Use's targets (saves included)
+  - Powers (and each power of an album) have an *Area* and *Shape*: attacks with them place the area like weapons, and the power's card has **Place area**: a card lists who is inside, targets them, and has a button per token to apply the power's roll
+  - A circle or square placed beyond the item's range (its zone) gets a warning, also on the card; cones and lines start at the attacker; ranges written as text aren't checked
+  - Fire Breath is a cone (run npm run build:packs)
   - The attack dialog shows the area of the chosen item
   - Hero dice on an area's damage correct every token it was applied to
 - **Damage each round**: an effect can deal damage at the start of each combat round, to the tokens in its aura or to the last foe its actor attacked

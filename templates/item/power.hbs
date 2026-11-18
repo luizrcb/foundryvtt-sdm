@@ -24,6 +24,15 @@
   </div>
 </div>
 <div class='resource'>
+  <label class='resource-label'>{{localize 'SDM.ItemFeature.area'}}</label>
+  <div class='resource-content'>
+    <select name='system.power.area'>{{selectOptions @root.powerAreaValues localize=true selected=system.power.area blank=''}}</select>
+    {{#if system.power.area}}
+    <select name='system.power.area_shape'>{{selectOptions @root.areaShapes localize=true selected=system.power.area_shape}}</select>
+    {{/if}}
+  </div>
+</div>
+<div class='resource'>
   <label class='resource-label'>
     {{localize 'SDM.PowerDuration'}}
   </label>

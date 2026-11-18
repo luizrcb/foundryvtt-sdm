@@ -64,7 +64,8 @@
       }
     ],
     "area": {
-      "value": "small"
+      "value": "small",
+      "shape": "cone"
     }
   },
   "effects": []
