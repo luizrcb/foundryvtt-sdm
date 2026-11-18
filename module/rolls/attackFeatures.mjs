@@ -15,7 +15,7 @@ import { ActorType, ItemType, RollMode } from '../helpers/constants.mjs';
 import { UnarmedDamageItem } from '../helpers/itemUtils.mjs';
 import { numberValue } from '../helpers/formulas.mjs';
 import { applyStatusToTargets, changeLifeOf } from '../app/use-item.mjs';
-import { tieButtons } from '../helpers/areas.mjs';
+import { splashTokens, tieButtons, weaponSplash } from '../helpers/areas.mjs';
 import { saveAgainst, saveDifficultyValue } from '../app/save-against.mjs';
 
 /**
@@ -133,13 +133,15 @@ export function attackFeatureHtml({ actor, item, targetActor = null, success = n
 
   // Splash: every attack (hit or miss) also hits the creatures next to the target whose defense it
   // beats, with the splash damage (Mouth of the Void: 1d6)
-  const splash = `${item.system?.weapon?.splash ?? ''}`.trim();
+  const splash = weaponSplash(item);
   if (targetActor && splash && total !== null) {
+    const what = splash.damage === 'formula' ? splash.formula : game.i18n.localize(`SDM.SplashDamage.${splash.damage}`);
+    const where = game.i18n.localize(`SDM.SplashShape.${splash.shape}`);
     parts.push(
-      button('sdmFeatureSplash', 'fa-solid fa-burst', game.i18n.format('SDM.AttackFeature.SplashButton', { formula: splash, target: targetActor.name }), {
+      button('sdmFeatureSplash', 'fa-solid fa-burst', game.i18n.format('SDM.AttackFeature.SplashButton', { formula: what, target: targetActor.name, where }), {
         target: targetActor.uuid,
-        formula: splash,
         item: item.name,
+        'item-id': item.id,
         actor: actor.uuid,
         total,
         nat1: isNat1 ? '1' : '',
@@ -165,16 +167,15 @@ export function attackFeatureHtml({ actor, item, targetActor = null, success = n
 
 const SPLASH_DEFENSE = { physical: 'defense', mental: 'mental_defense', social: 'social_defense' };
 
-/** Two tokens side by side: their grid spaces touch (diagonals count). */
-function isAdjacent(a, b) {
-  const size = a.parent.grid.size;
-  const box = t => ({ x0: t.x, y0: t.y, x1: t.x + t.width * size, y1: t.y + t.height * size });
-  const p = box(a);
-  const q = box(b);
-  const gapX = Math.max(q.x0 - p.x1, p.x0 - q.x1, 0);
-  const gapY = Math.max(q.y0 - p.y1, p.y0 - q.y1, 0);
-  return gapX < size / 2 && gapY < size / 2;
+/** The weapon's damage as a formula: its base damage and its bonus. */
+function weaponDamageFormula(weapon) {
+  const damage = weapon?.system?.weapon?.damage ?? {};
+  const bonus = Number(damage.bonus) || 0;
+  const base = `${damage.base ?? ''}`.trim();
+  if (!base) return '';
+  return bonus ? `${base}${bonus > 0 ? '+' : ''}${bonus}` : base;
 }
+
 
 /** renderChatMessageHTML: the feature buttons (the Referee, or the owner of whoever they affect). */
 export function bindAttackFeatures(html) {
@@ -217,16 +218,21 @@ export function bindAttackFeatures(html) {
   });
 
   // Splash: roll once, then every creature adjacent to the target's token takes it (through the Referee when not owned)
-  on('sdmFeatureSplash', async ({ target, formula, item, actor: attackerUuid, total, nat1, nat20, attackTarget }, button) => {
+  on('sdmFeatureSplash', async ({ target, item, itemId, actor: attackerUuid, total, nat1, nat20, attackTarget }, button) => {
     const targetActor = await fromUuid(target);
     const token = targetActor?.getActiveTokens?.(false, true)?.find(t => t.parent === canvas.scene);
     if (!token) return ui.notifications.warn(game.i18n.localize('SDM.AttackFeature.SplashNoToken'));
     const attacker = await fromUuid(attackerUuid);
+    if (!attacker?.isOwner && !game.user.isGM) return ui.notifications.warn(game.i18n.localize('SDM.AttackFeature.NotAllowed'));
+    const weapon = attacker?.items?.get(itemId);
+    const splash = weaponSplash(weapon);
+    if (!splash) return;
     const attackerToken = attacker?.getActiveTokens?.(false, true)?.find(t => t.parent === canvas.scene) ?? null;
-    // The attack against each one's defense: a natural 1 misses all, a natural 20 hits all, a tie misses
+    // The attack against each one's defense: a natural 1 misses all, a natural 20 hits all, a tie asks for a sacrifice
     const attackTotal = Number(total) || 0;
-    const adjacent = canvas.scene.tokens.filter(other => other !== token && other !== attackerToken && other.actor && isAdjacent(token, other));
-    const results = adjacent.map(other => {
+    const reached = await splashTokens({ splash, attackerToken, targetToken: token, name: weapon.name });
+    if (!reached) return;
+    const results = reached.map(other => {
       const field = other.actor.type === ActorType.NPC ? 'defense' : SPLASH_DEFENSE[attackTarget] ?? 'defense';
       const defense = Number(other.actor.system?.[field]) || 0;
       const hit = !nat1 && (!!nat20 || attackTotal > defense);
@@ -236,7 +242,11 @@ export function bindAttackFeatures(html) {
     });
     const hits = results.filter(r => r.hit);
     const ties = results.filter(r => r.tie);
-    const roll = hits.length || ties.length ? await new Roll(formula, attacker?.getRollData?.() ?? {}).evaluate() : null;
+    // The splash damage: its formula, or the weapon's damage (all of it, or half rounded up)
+    const formula = splash.damage === 'formula' ? splash.formula : weaponDamageFormula(weapon);
+    const rolled = hits.length || ties.length ? await new Roll(formula || '0', attacker?.getRollData?.() ?? {}).evaluate() : null;
+    const roll = rolled;
+    const amount = rolled ? (splash.damage === 'half' ? Math.ceil(rolled.total / 2) : rolled.total) : 0;
     const lines = results
       .map(r =>
         game.i18n.format(r.hit ? 'SDM.AttackFeature.SplashHit' : r.tie ? 'SDM.AttackFeature.SplashTie' : 'SDM.AttackFeature.SplashMiss', {
@@ -247,15 +257,16 @@ export function bindAttackFeatures(html) {
       .join(', ');
     const flavor = game.i18n.format('SDM.AttackFeature.SplashFlavor', { item, target: targetActor.name, total: attackTotal, names: lines || '—' });
     const speaker = ChatMessage.getSpeaker({ actor: attacker ?? undefined });
-    const tieRows = roll ? ties.map(r => tieButtons({ kind: 'splash', actorUuid: r.token.actor.uuid, name: r.token.name, amount: roll.total, reason: item })).join('') : '';
+    const tieRows = roll ? ties.map(r => tieButtons({ kind: 'splash', actorUuid: r.token.actor.uuid, name: r.token.name, amount, reason: item })).join('') : '';
+    const halfNote = roll && splash.damage === 'half' ? `<p>${esc(game.i18n.format('SDM.AttackFeature.SplashHalf', { amount }))}</p>` : '';
     if (roll) {
       await ChatMessage.create({
         speaker,
         rolls: [roll],
-        content: `<p>${esc(flavor)}</p>${await roll.render()}${tieRows}`
+        content: `<p>${esc(flavor)}</p>${await roll.render()}${halfNote}${tieRows}`
       });
     } else await ChatMessage.create({ speaker, content: `<p>${esc(flavor)}</p>` });
-    for (const r of hits) await changeLifeOf(r.token.actor, roll.total, { reason: item });
+    for (const r of hits) await changeLifeOf(r.token.actor, amount, { reason: item });
     button.disabled = true;
   });
 

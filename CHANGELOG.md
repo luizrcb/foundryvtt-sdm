@@ -21,7 +21,7 @@
   - Irresistible: your level in damage each round to the last foe you attacked, hit or miss
   - Bystander: takes its level off an area's damage
 - **Colonist**: drop up to five creatures on the trait's sheet to form the hexad; *Night with the hexad* gives each one temporary life equal to your level
-- **Splash** (weapons): damage to the creatures next to the target, once per attack (hit or miss): a button on the attack card compares the attack with each one's defense (natural 1 misses all, natural 20 hits all) and applies the damage to those hit; a tie gets *Sacrificed* / *No sacrifice* for the Referee (sacrificed: it takes the damage). Mouth of the Void splashes 1d6 (run npm run build:packs)
+- **Splash** (weapons): more creatures than the target, once per attack (hit or miss), each one against its own defense (natural 1 misses all, natural 20 hits all; a tie gets *Sacrificed* / *No sacrifice* for the Referee). Shape: around the target (adjacent), a cone from the attacker (placed: a cleave), or behind the target (a line or a cone continuing the attack: a piercing shot, a blast through), with a size (small / medium / large or Across) and *Affects*. Damage: a formula, the weapon's damage, or half of it. A button on the attack card rolls it once and applies it to those hit. Mouth of the Void splashes 1d6 around the target (run npm run build:packs)
 
 ## v1.11.0
 

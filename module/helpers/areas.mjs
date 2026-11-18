@@ -297,6 +297,105 @@ export function setTargets(tokens) {
 }
 
 /* -------------------------------------------- */
+/*  Splash                                      */
+/* -------------------------------------------- */
+
+/** Two tokens side by side: their grid spaces touch (diagonals count). */
+export function isAdjacent(a, b) {
+  const size = a.parent.grid.size;
+  const box = t => ({ x0: t.x, y0: t.y, x1: t.x + t.width * size, y1: t.y + t.height * size });
+  const p = box(a);
+  const q = box(b);
+  const gapX = Math.max(q.x0 - p.x1, p.x0 - q.x1, 0);
+  const gapY = Math.max(q.y0 - p.y1, p.y0 - q.y1, 0);
+  return gapX < size / 2 && gapY < size / 2;
+}
+
+/** A weapon's splash settings, or null when it has none. */
+export function weaponSplash(item) {
+  const w = item?.system?.weapon;
+  if (!w) return null;
+  const damage = w.splash_damage || 'formula';
+  const formula = `${w.splash ?? ''}`.trim();
+  if (damage === 'formula' && !formula) return null;
+  const across = Number(w.splash_across) || 0;
+  return {
+    damage,
+    formula,
+    shape: w.splash_shape || 'around',
+    meters: across > 0 ? metersForWorldUnits(across) : AREA_METERS.foot[w.splash_size || 'small'] ?? AREA_METERS.foot.small,
+    affects: w.splash_affects || 'everyone'
+  };
+}
+
+/**
+ * Who a splash reaches (never the target nor the attacker): adjacent to the target; in a cone the
+ * user places from the attacker (a cleave); or behind the target, a line or a cone continuing the
+ * attack's direction (a piercing shot, a blast through). Null when the placement is cancelled.
+ */
+export async function splashTokens({ splash, attackerToken, targetToken, name }) {
+  const scene = targetToken.parent;
+  const sides = token => {
+    if (!attackerToken || splash.affects === 'everyone') return true;
+    return splash.affects === 'enemies' ? token.disposition !== attackerToken.disposition : token.disposition === attackerToken.disposition;
+  };
+  const candidates = scene.tokens.filter(t => t !== targetToken && t !== attackerToken && t.actor && !(t.hidden && !game.user.isGM) && sides(t));
+  if (splash.shape === 'around') return candidates.filter(t => isAdjacent(targetToken, t));
+
+  const length = splash.meters * pixelsPerMeter(scene);
+  const target = tokenCenter(targetToken);
+  const base = {
+    name,
+    color: game.user.color?.css,
+    restriction: { enabled: false },
+    visibility: CONST.REGION_VISIBILITY.ALWAYS,
+    highlightMode: 'coverage',
+    displayMeasurements: true
+  };
+  if (canvas.level?.id) base.levels = [canvas.level.id];
+  let region;
+  if (splash.shape === 'cone') {
+    if (!attackerToken) {
+      ui.notifications.warn($l10n('SDM.AttackFeature.SplashNoAttacker'));
+      return null;
+    }
+    const origin = tokenCenter(attackerToken);
+    const toward = point => Math.toDegrees(Math.atan2(point.y - origin.y, point.x - origin.x));
+    ui.notifications.info($l10n('SDM.AreaPlaceHint'));
+    try {
+      region = await canvas.regions.placeRegion(
+        { ...base, shapes: [{ type: 'cone', x: origin.x, y: origin.y, radius: length, angle: CONE_ANGLE, rotation: toward(target), curvature: 'round', gridBased: true }] },
+        {
+          create: false,
+          allowRotation: false,
+          onMove: ({ shape, position }) => {
+            shape.updateSource({ x: origin.x, y: origin.y, rotation: toward(position) });
+            return false;
+          }
+        }
+      );
+    } catch (error) {
+      console.error('SDM | Placing the splash failed', error);
+      return null;
+    }
+    if (!region) return null;
+  } else {
+    // Behind the target: from it, away from the attacker
+    const from = attackerToken ? tokenCenter(attackerToken) : { x: target.x - 1, y: target.y };
+    const rotation = Math.toDegrees(Math.atan2(target.y - from.y, target.x - from.x));
+    const shape =
+      splash.shape === 'behind_line'
+        ? { type: 'line', x: target.x, y: target.y, length, width: LINE_WIDTH_METERS * pixelsPerMeter(scene), rotation, gridBased: true }
+        : { type: 'cone', x: target.x, y: target.y, radius: length, angle: CONE_ANGLE, rotation, curvature: 'round', gridBased: true };
+    region = new CONFIG.Region.documentClass({ ...base, shapes: [shape] }, { parent: scene });
+  }
+  return candidates.filter(t => {
+    const c = tokenCenter(t);
+    return region.testPoint({ x: c.x, y: c.y, elevation: t.elevation ?? 0 });
+  });
+}
+
+/* -------------------------------------------- */
 /*  Attack card                                 */
 /* -------------------------------------------- */
 

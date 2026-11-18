@@ -75,6 +75,19 @@ SDM.areaAffects = {
   allies: 'SDM.AreaAffects.allies'
 };
 
+SDM.splashDamage = {
+  formula: 'SDM.SplashDamage.formula',
+  weapon: 'SDM.SplashDamage.weapon',
+  half: 'SDM.SplashDamage.half'
+};
+
+SDM.splashShapes = {
+  around: 'SDM.SplashShape.around',
+  cone: 'SDM.SplashShape.cone',
+  behind_line: 'SDM.SplashShape.behind_line',
+  behind_cone: 'SDM.SplashShape.behind_cone'
+};
+
 SDM.areaValues = {
   single: 'SDM.AreaSingle',
   small: 'SDM.AreaSmall',

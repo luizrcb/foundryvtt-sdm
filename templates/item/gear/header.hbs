@@ -459,8 +459,20 @@
       </div>
       <div class="resource" data-tooltip="{{localize 'SDM.WeaponSplashHint'}}">
         <label class='resource-label'>{{localize 'SDM.WeaponSplash'}}</label>
-        <input type='text' name='system.weapon.splash' value='{{system.weapon.splash}}' placeholder='1d6' />
+        <select name='system.weapon.splash_damage'>{{selectOptions splashDamage localize=true selected=system.weapon.splash_damage}}</select>
+        {{#if (eq system.weapon.splash_damage 'formula')}}<input type='text' name='system.weapon.splash' value='{{system.weapon.splash}}' placeholder='1d6' data-tooltip="{{localize 'SDM.WeaponSplashFormulaHint'}}" />{{/if}}
       </div>
+      {{#if (or system.weapon.splash (ne system.weapon.splash_damage 'formula'))}}
+      <div class="resource">
+        <label class='resource-label'>{{localize 'SDM.WeaponSplashShape'}}</label>
+        <select name='system.weapon.splash_shape'>{{selectOptions splashShapes localize=true selected=system.weapon.splash_shape}}</select>
+        {{#if (ne system.weapon.splash_shape 'around')}}
+        <select name='system.weapon.splash_size'>{{selectOptions powerAreaValues localize=true selected=system.weapon.splash_size}}</select>
+        <input type='number' name='system.weapon.splash_across' value='{{system.weapon.splash_across}}' min='0' step='any' data-dtype='Number' placeholder="{{localize 'SDM.AreaAcross'}}" data-tooltip="{{localize 'SDM.AreaAcrossHint'}}" />
+        {{/if}}
+        <select name='system.weapon.splash_affects'>{{selectOptions areaAffects localize=true selected=system.weapon.splash_affects}}</select>
+      </div>
+      {{/if}}
 
       {{!-- <div class='resource align-center'>
         <label class='resource-label'>

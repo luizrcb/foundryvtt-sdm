@@ -123,8 +123,34 @@
     </label>
     <label class="v2-field" data-tooltip="{{localize 'SDM.WeaponSplashHint'}}">
       <span class="v2-label">{{localize 'SDM.WeaponSplash'}}</span>
+      <select name="system.weapon.splash_damage">{{selectOptions splashDamage localize=true selected=system.weapon.splash_damage}}</select>
+    </label>
+    {{#if (eq system.weapon.splash_damage 'formula')}}
+    <label class="v2-field" data-tooltip="{{localize 'SDM.WeaponSplashFormulaHint'}}">
+      <span class="v2-label">{{localize 'SDM.WeaponSplashFormula'}}</span>
       <input type="text" name="system.weapon.splash" value="{{system.weapon.splash}}" placeholder="1d6" />
     </label>
+    {{/if}}
+    {{#if (or system.weapon.splash (ne system.weapon.splash_damage 'formula'))}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.WeaponSplashShape'}}</span>
+      <select name="system.weapon.splash_shape">{{selectOptions splashShapes localize=true selected=system.weapon.splash_shape}}</select>
+    </label>
+    {{#if (ne system.weapon.splash_shape 'around')}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.WeaponSplashSize'}}</span>
+      <select name="system.weapon.splash_size">{{selectOptions powerAreaValues localize=true selected=system.weapon.splash_size}}</select>
+    </label>
+    <label class="v2-field" data-tooltip="{{localize 'SDM.AreaAcrossHint'}}">
+      <span class="v2-label">{{localize 'SDM.AreaAcross'}}</span>
+      <input type="number" name="system.weapon.splash_across" value="{{system.weapon.splash_across}}" min="0" step="any" data-dtype="Number" placeholder="{{localize 'SDM.AreaAcrossBySize'}}" />
+    </label>
+    {{/if}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.AreaAffects.Label'}}</span>
+      <select name="system.weapon.splash_affects">{{selectOptions areaAffects localize=true selected=system.weapon.splash_affects}}</select>
+    </label>
+    {{/if}}
     {{#if (or system.weapon.versatile (has system.features 'versatile'))}}
     <label class="v2-field">
       <span class="v2-label">{{localize 'SDM.WeaponVersatileDamage'}}</span>

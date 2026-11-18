@@ -343,6 +343,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       areaValues: CONFIG.SDM.areaValues,
       areaShapes: CONFIG.SDM.areaShapes,
       areaAffects: CONFIG.SDM.areaAffects,
+      splashDamage: CONFIG.SDM.splashDamage,
+      splashShapes: CONFIG.SDM.splashShapes,
       // Powers: an area of small, medium or large (no single target entry)
       powerAreaValues: Object.fromEntries(Object.entries(CONFIG.SDM.areaValues).filter(([key]) => key !== 'single')),
       rangeValues: CONFIG.SDM.rangeType,
