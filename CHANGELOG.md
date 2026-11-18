@@ -16,6 +16,8 @@
   - The power's area card has a damage and a heal button per token (a healing wave); a consumable's *Harm* in an area takes Bystander's level off
   - The attack dialog shows the area of the chosen item
   - Hero dice on an area's damage correct every token it was applied to
+  - **Area first**: rolling an attack or power with an area places the area before the roll (right-click or Esc skips it: **Place area** stays on the card); the card shows everyone inside, with **Reposition area** (placed again, everyone checked again) and **Remove area**. Hero dice on the attack check everyone again with the new total
+  - **Resolved by a save** (gear and powers): instead of the attack, everyone inside saves (an ability or their choice, and a difficulty); the card shows each result. A passed save avoids it, takes half damage (rounded up) or gets shorter effects (1 round); a failed one takes the full damage and the item's effects; a tie gets the sacrifice buttons. Consumables used with a save area post the area card: Harm by each save, Life and cures for everyone
 - **Damage each round**: an effect can deal damage at the start of each combat round, to the tokens in its aura or to the last foe its actor attacked
   - Glowing Skeleton: *Radiant Bones (unclothed)*, switched on by hand: adjacent creatures lose life equal to your level each round
   - Irresistible: your level in damage each round to the last foe you attacked, hit or miss

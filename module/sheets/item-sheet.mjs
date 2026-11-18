@@ -39,6 +39,16 @@ import { bindNumberInputs, unformatNumberInputs, reformatNumberInputs } from '..
 /** Colonist: members of the hexad. */
 const HEXAD_MAX = 5;
 
+/** The save difficulties an area's save can have (labels as on the save request). */
+const AREA_SAVE_DIFFICULTIES = () => ({
+  '': 'SDM.SaveDifficulty.standard',
+  veryEasy: 'SDM.SaveDifficulty.veryEasy',
+  easy: 'SDM.SaveDifficulty.easy',
+  hard: 'SDM.SaveDifficulty.hard',
+  veryHard: 'SDM.SaveDifficulty.veryHard',
+  target: 'SDM.SaveDifficulty.target'
+});
+
 const { api, sheets } = foundry.applications;
 const { DialogV2 } = foundry.applications.api;
 const DragDrop = foundry.applications.ux.DragDrop.implementation;
@@ -344,6 +354,11 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       areaShapes: CONFIG.SDM.areaShapes,
       areaAffects: CONFIG.SDM.areaAffects,
       splashDamage: CONFIG.SDM.splashDamage,
+      areaResolve: CONFIG.SDM.areaResolve,
+      areaSavePass: CONFIG.SDM.areaSavePass,
+      // Save difficulties (standard, easier, harder, a target) and abilities, for areas resolved by a save
+      areaSaveDifficulties: AREA_SAVE_DIFFICULTIES(),
+      areaSaveAbilities: { '': 'SDM.AreaSaveAbilityAny', ...CONFIG.SDM.abilities },
       splashShapes: CONFIG.SDM.splashShapes,
       // Powers: an area of small, medium or large (no single target entry)
       powerAreaValues: Object.fromEntries(Object.entries(CONFIG.SDM.areaValues).filter(([key]) => key !== 'single')),

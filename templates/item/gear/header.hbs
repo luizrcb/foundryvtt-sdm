@@ -186,6 +186,16 @@
             <label class='resource-label'>{{localize 'SDM.AreaAffects.Label'}}</label>
             <select name='system.area.affects'>{{selectOptions areaAffects localize=true selected=system.area.affects}}</select>
           </div>
+          <div class='resource'>
+            <label class='resource-label'>{{localize 'SDM.AreaResolve.Label'}}</label>
+            <select name='system.area.resolve'>{{selectOptions @root.areaResolve localize=true selected=system.area.resolve}}</select>
+            {{#if (eq system.area.resolve 'save')}}
+            <select name='system.area.save_ability'>{{selectOptions @root.areaSaveAbilities localize=true selected=system.area.save_ability}}</select>
+            <select name='system.area.save_difficulty'>{{selectOptions @root.areaSaveDifficulties localize=true selected=system.area.save_difficulty}}</select>
+            {{#if (eq system.area.save_difficulty 'target')}}<input type='number' name='system.area.save_target' value='{{system.area.save_target}}' min='1' step='1' data-dtype='Number' />{{/if}}
+            <select name='system.area.save_pass'>{{selectOptions @root.areaSavePass localize=true selected=system.area.save_pass}}</select>
+            {{/if}}
+          </div>
           <div class='resource' data-tooltip="{{localize 'SDM.AreaLingerHint'}}">
             <label class='resource-label'>{{localize 'SDM.AreaLinger'}}</label>
             <input type='checkbox' name='system.area.linger' {{checked system.area.linger}} />

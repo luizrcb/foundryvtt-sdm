@@ -30,6 +30,13 @@
     {{#if system.power.area}}
     <select name='system.power.area_shape'>{{selectOptions @root.areaShapes localize=true selected=system.power.area_shape}}</select>
     <select name='system.power.area_affects'>{{selectOptions @root.areaAffects localize=true selected=system.power.area_affects}}</select>
+    <select name='system.power.area_resolve'>{{selectOptions @root.areaResolve localize=true selected=system.power.area_resolve}}</select>
+    {{#if (eq system.power.area_resolve 'save')}}
+    <select name='system.power.area_save_ability'>{{selectOptions @root.areaSaveAbilities localize=true selected=system.power.area_save_ability}}</select>
+    <select name='system.power.area_save_difficulty'>{{selectOptions @root.areaSaveDifficulties localize=true selected=system.power.area_save_difficulty}}</select>
+    {{#if (eq system.power.area_save_difficulty 'target')}}<input type='number' name='system.power.area_save_target' value='{{system.power.area_save_target}}' min='1' step='1' data-dtype='Number' />{{/if}}
+    <select name='system.power.area_save_pass'>{{selectOptions @root.areaSavePass localize=true selected=system.power.area_save_pass}}</select>
+    {{/if}}
     <label data-tooltip="{{localize 'SDM.AreaLingerHint'}}"><input type='checkbox' name='system.power.area_linger' {{checked system.power.area_linger}} /> {{localize 'SDM.AreaLinger'}}</label>
     {{#if system.power.area_linger}}<input type='number' name='system.power.area_rounds' value='{{system.power.area_rounds}}' min='0' step='1' data-dtype='Number' data-tooltip="{{localize 'SDM.AreaRoundsHint'}}" />
     <label data-tooltip="{{localize 'SDM.AreaFollowsHint'}}"><input type='checkbox' name='system.power.area_follows' {{checked system.power.area_follows}} /> {{localize 'SDM.AreaFollows'}}</label>{{/if}}

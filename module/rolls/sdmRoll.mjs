@@ -2,7 +2,7 @@ import { powerCardData } from '../helpers/singleUsePowers.mjs';
 import { attackFollowupHtml, attackItemFlag } from './attackFollowup.mjs';
 import { attackFeatureHtml } from './attackFeatures.mjs';
 import { reachFirstNote } from '../helpers/zones.mjs';
-import { areaApplyButtonsHtml, areaAttackButton, areaPowerButton, areaShares } from '../helpers/areas.mjs';
+import { areaApplyButtonsHtml, areaAttackButton, areaBlock, areaPowerButton, areaShares, areaState, requestAreaSaves, setTargets } from '../helpers/areas.mjs';
 import { hasLastFoeDamage } from '../helpers/auras.mjs';
 import { actorTriggers, attackTriggers, damageTriggers, itemRollTriggers, renderTriggers, runTriggerActions } from './triggers.mjs';
 import { createChatMessage } from '../helpers/chatUtils.mjs';
@@ -29,6 +29,11 @@ export default class SDMRoll {
     targetFromCard = false,
     // Damage for an area: the tokens it hit (actor uuids), each gets the damage
     areaTargets = [],
+    // An area resolved by a save: the targets who passed it, and what a passed save does
+    areaSaved = [],
+    areaPass = '',
+    // An area placed before the roll: { placed, item, kind } (helpers/areas.mjs)
+    areaPlaced = null,
     attackTarget = AttackTarget.PHYSICAL,
     sendPowerToChat = false,
     powerDescription = '',
@@ -62,6 +67,9 @@ export default class SDMRoll {
     this.targetActor = targetActor;
     this.targetFromCard = targetFromCard;
     this.areaTargets = (areaTargets ?? []).map(uuid => fromUuidSync(uuid)).filter(a => a instanceof Actor);
+    this.areaPlaced = areaPlaced;
+    this.areaSaved = Array.isArray(areaSaved) ? areaSaved : `${areaSaved ?? ''}`.split(',').filter(Boolean);
+    this.areaPass = areaPass || '';
     this.attackTarget = attackTarget;
     this.sendPowerToChat = sendPowerToChat;
     this.powerDescription = powerDescription;
@@ -282,10 +290,10 @@ export default class SDMRoll {
     if (attackItem && attackSuccess && this.targetActor) attackItem.target = this.targetActor.uuid;
     // Damage with a target: applied to it at once (optional), with an Undo for the roller and the Referee
     // An area's damage: every token it hit, each less its reduction (Bystander: its level)
-    const shares = isDamage && this.areaTargets.length && this.roll.total > 0 ? areaShares(this.areaTargets, this.roll.total) : [];
+    const shares = isDamage && this.areaTargets.length && this.roll.total > 0 ? areaShares(this.areaTargets, this.roll.total, { saved: this.areaSaved, pass: this.areaPass }) : [];
     const autoApply = isDamage && game.settings.get('sdm', 'autoApplyDamage');
     const autoTarget =
-      !areaShares.length && autoApply && this.targetActor && this.targetActor !== this.actor && this.roll.total > 0
+      !shares.length && autoApply && this.targetActor && this.targetActor !== this.actor && this.roll.total > 0
         ? this.targetActor
         : null;
     const autoShares = autoTarget ? [{ target: autoTarget, reduction: 0, amount: this.roll.total }] : autoApply ? shares.filter(s => s.amount > 0) : [];
@@ -299,12 +307,34 @@ export default class SDMRoll {
     }
     // Not applied automatically: a button per token hit
     if (!autoApply && shares.length) tags.push(areaApplyButtonsHtml(shares));
-    if (attackItem) {
+    // The area was placed before the roll (an item with an area): the card shows each one inside
+    let areaPlacedBlock = null;
+    if (this.areaPlaced && (isAttack || isPower || isPowerAlbum)) {
+      const { placed, item: areaItem, kind } = this.areaPlaced;
+      areaPlacedBlock = areaBlock(
+        areaState({
+          mode: isAttack ? 'attack' : 'power',
+          actor: this.actor,
+          item: areaItem,
+          kind,
+          placed,
+          total: isAttack ? this.roll.total : this.roll.dice.length ? this.roll.total : 0,
+          isNat1,
+          isNat20,
+          attackTarget: this.attackTarget,
+          multiplier: attackItem?.multiplier ?? ''
+        })
+      );
+      extras += areaPlacedBlock.html;
+      flags.sdm = { ...(flags.sdm ?? {}), areaCard: areaPlacedBlock.card, ...(areaPlacedBlock.attackItem ? { attackItem: areaPlacedBlock.attackItem } : {}) };
+      setTargets(areaPlacedBlock.hits);
+    }
+    if (attackItem && !areaPlacedBlock) {
       actions += attackFollowupHtml(attackItem);
       flags.sdm = { ...(flags.sdm ?? {}), attackItem };
     }
     // An item with an area: place it, and the attack is compared with every defense inside (helpers/areas.mjs)
-    if (isAttack && this.attackItem?.id && this.actor) {
+    if (isAttack && this.attackItem?.id && this.actor && !areaPlacedBlock) {
       const areaItem = this.actor.items?.get(this.attackItem.id);
       if (areaItem) {
         actions += areaAttackButton({
@@ -334,7 +364,7 @@ export default class SDMRoll {
       });
     }
     // A power with an area: place it; everyone inside can take the power's roll
-    if (isPower || isPowerAlbum) {
+    if ((isPower || isPowerAlbum) && !areaPlacedBlock) {
       const castItem = isPowerAlbum ? this.triggerItem : this.item?.id ? this.item : null;
       actions += areaPowerButton({ actor: this.actor, item: castItem, kind: isPowerAlbum ? 'album' : 'power', total: this.roll.dice.length ? this.roll.total : 0 });
     }
@@ -391,6 +421,8 @@ export default class SDMRoll {
     // for its 3D dice (Dice So Nice) to land
     if ((autoShares.length || firedTriggers.length) && rollMessage?.id) await game.dice3d?.waitFor3DAnimationByMessageID?.(rollMessage.id);
     for (const share of autoShares) await changeLifeOf(share.target, share.amount);
+    // An area resolved by a save: everyone inside saves
+    if (areaPlacedBlock?.card.save && rollMessage) await requestAreaSaves(rollMessage);
     // The roll's target (the one an attack hit, carried by its damage button) gets the triggers' conditions
     if (firedTriggers.length) {
       // Only the target the attack card carried; otherwise the user's targeted tokens, as always

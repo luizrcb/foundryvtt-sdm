@@ -1,5 +1,5 @@
 import { describeNpcProfile, getNpcProfile } from '../helpers/npcVariability.mjs';
-import { areaLabel } from '../helpers/areas.mjs';
+import { areaLabel, itemArea, placeArea } from '../helpers/areas.mjs';
 import { applyDefeatCondition, combineRollModes, conditionRollMode, isWeakened, tacticalRollAdvice } from '../helpers/conditions.mjs';
 import { consumeNextRoll, nextRollAdvice } from '../app/next-roll.mjs';
 import { actorTriggers, renderTriggers, runTriggerActions } from '../rolls/triggers.mjs';
@@ -271,7 +271,10 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       // The target of the attack the damage follows (its card's button): it wins over the user's target
       targetUuid = '',
       // An area card's damage: the tokens it hit (actor uuids, comma-separated)
-      areaTargets = ''
+      areaTargets = '',
+      // An area resolved by a save: who passed it, and what a passed save does
+      areaSaved = '',
+      areaPass = ''
     },
     isShift = false,
     isCtrl = false
@@ -562,6 +565,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         // The target came with the attack card's button (not the user's targeted tokens)
         targetFromCard: followed instanceof Actor,
         areaTargets: `${areaTargets ?? ''}`.split(',').filter(Boolean),
+        areaSaved: `${areaSaved ?? ''}`.split(',').filter(Boolean),
+        areaPass,
         attackTarget: plan.attackTarget,
         attack: isAttack ? attack : '',
         // The real item (an album-feature entry is "<id>:album"), what it rolls next and its name
@@ -774,6 +779,20 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     }
 
     rollData.isCtrl = isCtrl;
+    // An item with an area: place the area first (its tokens become the targets), then roll; the card
+    // checks everyone inside. Right-click or Esc skips placing (Place area stays on the card).
+    if (canvas?.ready && canvas.scene && (isAttack || isPower || isPowerAlbum)) {
+      const areaItem = isAttack ? this.actor.items.get(rollData.attackItem?.id ?? '') : item;
+      const areaKind = isAttack ? rollData.attackItem?.kind ?? '' : isPowerAlbum ? 'album' : 'power';
+      if (areaItem && itemArea(areaItem, areaKind)) {
+        const placed = await placeArea({ actor: this.actor, item: areaItem, kind: areaKind });
+        if (placed) {
+          rollData.areaPlaced = { placed, item: areaItem, kind: areaKind };
+          rollData.targetActor = null;
+          rollData.targetFromCard = false;
+        }
+      }
+    }
     const sdmRoll = new SDMRoll(rollData);
     await sdmRoll.evaluate();
 
@@ -1746,7 +1765,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       multiplier: dataset.multiplier || '',
       targetUuid: dataset.targetUuid || '',
       // From an area card: the tokens it hit, each gets the damage
-      areaTargets: dataset.areaTargets || ''
+      areaTargets: dataset.areaTargets || '',
+      areaSaved: dataset.areaSaved || '',
+      areaPass: dataset.areaPass || ''
     };
 
     this._openCustomRollModal(rollAttributes, isShift || rollAttributes.freeCast, isCtrl);
@@ -1771,7 +1792,9 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       multiplier: target?.dataset?.multiplier || '',
       // …and the target that attack hit (damage applied to it with "Apply damage automatically")
       targetUuid: target?.dataset?.targetUuid || '',
-      areaTargets: target?.dataset?.areaTargets || ''
+      areaTargets: target?.dataset?.areaTargets || '',
+      areaSaved: target?.dataset?.areaSaved || '',
+      areaPass: target?.dataset?.areaPass || ''
     };
 
     this._openCustomRollModal(rollAttributes, isShift, isCtrl);

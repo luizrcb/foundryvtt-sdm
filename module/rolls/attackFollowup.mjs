@@ -57,7 +57,7 @@ export function attackFollowupHtml(flag) {
   const esc = foundry.utils.escapeHTML;
   return (
     `<div class="sdm-attack-followup"><button type="button" class="sdm-primary" data-action="sdmAttackFollowup" data-kind="${kind}"` +
-    ` data-item-id="${esc(flag.id)}" data-actor-uuid="${esc(flag.actor)}" data-multiplier="${esc(flag.multiplier ?? '')}" data-target-uuid="${esc(flag.target ?? '')}" data-area-targets="${esc((flag.areaTargets ?? []).join(','))}"><i class="${icon}"></i><span>${esc(label)}</span>` +
+    ` data-item-id="${esc(flag.id)}" data-actor-uuid="${esc(flag.actor)}" data-multiplier="${esc(flag.multiplier ?? '')}" data-target-uuid="${esc(flag.target ?? '')}" data-area-targets="${esc((flag.areaTargets ?? []).join(','))}" data-area-saved="${esc((flag.areaSaved ?? []).join(','))}" data-area-pass="${esc(flag.areaPass ?? '')}"><i class="${icon}"></i><span>${esc(label)}</span>` +
     `${formula ? `<span class="sdm-followup-formula">${esc(formula)}</span>` : ''}</button></div>`
   );
 }
@@ -81,7 +81,7 @@ export function bindAttackFollowup(html) {
         return actor.performHudAction(
           'rollNPCDamage',
           '',
-          { multiplier: button.dataset.multiplier, targetUuid: button.dataset.targetUuid, areaTargets: button.dataset.areaTargets ?? '' },
+          { multiplier: button.dataset.multiplier, targetUuid: button.dataset.targetUuid, areaTargets: button.dataset.areaTargets ?? '', areaSaved: button.dataset.areaSaved ?? '', areaPass: button.dataset.areaPass ?? '' },
           !!event.shiftKey,
           !!event.ctrlKey
         );
@@ -91,7 +91,7 @@ export function bindAttackFollowup(html) {
       await actor.performHudAction(
         button.dataset.kind,
         item.id,
-        { label: item.name, multiplier: button.dataset.multiplier, targetUuid: button.dataset.targetUuid, areaTargets: button.dataset.areaTargets ?? '' },
+        { label: item.name, multiplier: button.dataset.multiplier, targetUuid: button.dataset.targetUuid, areaTargets: button.dataset.areaTargets ?? '', areaSaved: button.dataset.areaSaved ?? '', areaPass: button.dataset.areaPass ?? '' },
         !!event.shiftKey,
         !!event.ctrlKey
       );

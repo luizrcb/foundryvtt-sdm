@@ -47,7 +47,10 @@ const difficultyName = key => game.i18n.localize(`SDM.SaveDifficulty.${key || 's
 const esc = text => foundry.utils.escapeHTML(String(text ?? ''));
 const statusName = id => game.i18n.localize(CONFIG.statusEffects.find(s => s.id === id)?.name ?? id);
 // What the save is against: the item's effect (by its name), else the condition
-const againstName = info => info?.effect?.name || statusName(info?.status);
+// (an area's save: the item's name)
+const againstName = info => info?.effect?.name || (info?.status ? statusName(info.status) : info?.source || '');
+// What a save is against: a condition, an item's effect, or an area (helpers/areas.mjs)
+const hasAgainst = info => !!(info?.status || info?.effect || info?.area);
 
 /** The ability a character resists a condition with, by default: Aura for the mind, else Endurance. */
 export function suggestedSaveAbility(statusId) {
@@ -74,10 +77,11 @@ function rollSave(actor, ability, info) {
  * condition — an effect by the condition it carries, else Endurance).
  */
 export async function saveAgainst(target, info) {
-  if (!target || !(info?.status || info?.effect)) return;
+  if (!target || !hasAgainst(info)) return;
   const data = { status: info.status ?? '', rounds: Number(info.rounds) || 0, source: info.source ?? '', difficulty: info.difficulty ?? '' };
   if (info.duration) data.duration = info.duration;
   if (info.effect) data.effect = info.effect;
+  if (info.area) data.area = info.area;
   if (target.type !== ActorType.CHARACTER) {
     if (target.isOwner) return rollSave(target, ActorType.NPC, data);
     if (!game.users.activeGM) return ui.notifications.warn(game.i18n.localize('SDM.ErrorNoActiveGM'));
@@ -177,7 +181,7 @@ export function saveOutcome(total, target) {
 
 /** The line on the save card: whether the condition sticks (or, equal, the Referee's sacrifice buttons). */
 export function saveAgainstHtml(info, success, actor = null) {
-  if (!(info?.status || info?.effect)) return '';
+  if (!hasAgainst(info)) return '';
   if (success === 'equal') {
     const button = (choice, icon, key) =>
       `<button type="button" data-action="sdmSacrifice" data-choice="${choice}"><i class="fa-solid ${icon}"></i> ${esc(game.i18n.localize(key))}</button>`;
@@ -197,8 +201,16 @@ export function saveAgainstHtml(info, success, actor = null) {
 
 /** After the save: a failure puts the condition on (the roller owns the actor); equal waits for the Referee. */
 export async function resolveSaveAgainst(actor, info, success) {
+  // An area's save: the area card gets the result (and gives what a failed save gets)
+  if (info?.area) return reportArea(info, success);
   if (success !== false) return;
   await putOn(actor, info, false);
+}
+
+/** An area's save result goes to its card (helpers/areas.mjs). */
+async function reportArea(info, result) {
+  const { reportAreaSave } = await import('../helpers/areas.mjs');
+  await reportAreaSave(info.area, result);
 }
 
 /** Put the condition / effect on the actor, or take it off (the save card says so: no chat line). */
@@ -220,7 +232,8 @@ async function putOn(actor, info, remove) {
  */
 export async function recheckSaveAgainst(check, before, after) {
   const info = check?.saveAgainst;
-  if (!(info?.status || info?.effect) || before === after || before === null || after === null) return;
+  if (!hasAgainst(info) || before === after || before === null || after === null) return;
+  if (info.area) return reportArea(info, after);
   const actor = fromUuidSync(check.actor);
   if (!actor) return;
   await putOn(actor, info, after !== false);
@@ -265,7 +278,8 @@ export function bindSacrifice(message, html) {
       event.preventDefault();
       box.querySelectorAll('button').forEach(b => (b.disabled = true));
       const actor = fromUuidSync(box.dataset.actor);
-      if (button.dataset.choice === 'not' && actor) await putOn(actor, info, false);
+      if (info.area) await reportArea(info, button.dataset.choice === 'made');
+      else if (button.dataset.choice === 'not' && actor) await putOn(actor, info, false);
       await message.setFlag('sdm', 'sacrifice', button.dataset.choice);
     })
   );

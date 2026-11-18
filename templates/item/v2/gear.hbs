@@ -254,6 +254,30 @@
       <span class="v2-label">{{localize 'SDM.AreaAffects.Label'}}</span>
       <select name="system.area.affects">{{selectOptions areaAffects localize=true selected=system.area.affects}}</select>
     </label>
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.AreaResolve.Label'}}</span>
+      <select name="system.area.resolve">{{selectOptions @root.areaResolve localize=true selected=system.area.resolve}}</select>
+    </label>
+    {{#if (eq system.area.resolve 'save')}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.AreaSaveAbility'}}</span>
+      <select name="system.area.save_ability">{{selectOptions @root.areaSaveAbilities localize=true selected=system.area.save_ability}}</select>
+    </label>
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.SaveDifficulty.Feature'}}</span>
+      <select name="system.area.save_difficulty">{{selectOptions @root.areaSaveDifficulties localize=true selected=system.area.save_difficulty}}</select>
+    </label>
+    {{#if (eq system.area.save_difficulty 'target')}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.SaveDifficulty.target'}}</span>
+      <input type="number" name="system.area.save_target" value="{{system.area.save_target}}" min="1" step="1" data-dtype="Number" />
+    </label>
+    {{/if}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.AreaSavePass.Label'}}</span>
+      <select name="system.area.save_pass">{{selectOptions @root.areaSavePass localize=true selected=system.area.save_pass}}</select>
+    </label>
+    {{/if}}
     <label class="v2-field v2-check" data-tooltip="{{localize 'SDM.AreaLingerHint'}}">
       <input type="checkbox" name="system.area.linger" {{checked system.area.linger}} data-dtype="Boolean" />
       <span class="v2-label">{{localize 'SDM.AreaLinger'}}</span>

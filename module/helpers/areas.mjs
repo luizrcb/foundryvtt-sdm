@@ -2,6 +2,7 @@ import { ActorType } from './constants.mjs';
 import { $fmt, $l10n } from './globalUtils.mjs';
 import { cardHeader, cardWrap, marginText, resultStrip } from '../rolls/ui/cardParts.mjs';
 import { createChatMessage } from './chatUtils.mjs';
+import { saveDifficultyLabel, saveDifficultyValue } from '../app/save-against.mjs';
 import { attackFollowupHtml } from '../rolls/attackFollowup.mjs';
 import { getItemIdentifier } from './effectReferences.mjs';
 import { bandForMeters, metersForWorldUnits, metersPerUnit, sceneUnitsForMeters, sceneZoneLimits, worldUnit, worldUnitsForMeters, ZONE_BANDS } from './zones.mjs';
@@ -21,6 +22,7 @@ import { bandForMeters, metersForWorldUnits, metersPerUnit, sceneUnitsForMeters,
 const CHANNEL = 'system.sdm';
 const CREATE_ACTION = 'areaCreate';
 const REMOVE_ACTION = 'areaRemove';
+const SAVE_ACTION = 'areaSave';
 const AREA_FLAG = 'area';
 
 export const AREA_METERS = {
@@ -31,6 +33,11 @@ const CONE_ANGLE = 60; // degrees
 const LINE_WIDTH_METERS = 1.5;
 
 const esc = text => foundry.utils.escapeHTML(String(text ?? ''));
+
+/** An area resolved by a save: its ability (blank: the one saving picks), difficulty and what a passed save does. */
+function areaSave(ability, difficulty, target, pass) {
+  return { ability: ability || '', difficulty: saveDifficultyValue(difficulty || '', target), pass: pass || 'avoid' };
+}
 
 /** The power an item rolls: a power item's own, or an album's selected power (kind "album"). */
 function areaPower(item, kind) {
@@ -56,6 +63,7 @@ export function itemArea(item, kind = '') {
       linger: kind !== 'album' && !!power.area_linger,
       rounds: Number(power.area_rounds) || 0,
       follows: !!power.area_follows,
+      save: power.area_resolve === 'save' ? areaSave(power.area_save_ability, power.area_save_difficulty, power.area_save_target, power.area_save_pass) : null,
       meters: Number(power.area_across) > 0 ? metersForWorldUnits(power.area_across) : AREA_METERS.foot[power.area],
       range: `${power.range ?? ''}`
     };
@@ -76,6 +84,10 @@ export function itemArea(item, kind = '') {
     linger: !!item.system.area.linger,
     rounds: Number(item.system.area.rounds) || 0,
     follows: !!item.system.area.follows,
+    save:
+      item.system.area.resolve === 'save'
+        ? areaSave(item.system.area.save_ability, item.system.area.save_difficulty, item.system.area.save_target, item.system.area.save_pass)
+        : null,
     meters,
     range: `${range}`
   };
@@ -469,10 +481,14 @@ async function onTieSacrifice(message, button) {
 }
 
 /** Each target's share of an area's damage: the total less its reduction (Bystander). */
-export function areaShares(actors, total) {
+export function areaShares(actors, total, { saved = [], pass = '' } = {}) {
+  const passed = new Set(saved);
   return actors.map(target => {
     const reduction = areaDamageReduction(target);
-    return { target, reduction, amount: Math.max((Number(total) || 0) - reduction, 0) };
+    // A passed save: half the damage (rounded up) or none; "shorter" only shortens the effects
+    let base = Number(total) || 0;
+    if (passed.has(target.uuid)) base = pass === 'half' ? Math.ceil(base / 2) : pass === 'avoid' ? 0 : base;
+    return { target, reduction, amount: Math.max(base - reduction, 0), saved: passed.has(target.uuid) };
   });
 }
 
@@ -500,34 +516,6 @@ export function areaApplyButtonsHtml(shares, { heal = false, total = 0 } = {}) {
   );
 }
 
-/** Place a power's area from its card: a card lists who is inside, with a button each for the roll. */
-async function onPlacePowerArea(button) {
-  const actor = fromUuidSync(button.dataset.actorUuid);
-  const item = actor?.items?.get(button.dataset.itemId);
-  const kind = button.dataset.kind;
-  if (!actor?.isOwner || !item) return;
-  const placed = await placeArea({ actor, item, kind });
-  if (!placed) return;
-  const total = Number(button.dataset.total) || 0;
-  const targets = [...new Set(placed.tokens.map(t => t.actor).filter(Boolean))];
-  const names = placed.tokens.map(t => esc(t.name)).join(', ');
-  const actions =
-    `<button type="button" data-action="sdmAreaTargetHits"><i class="fa-solid fa-crosshairs"></i> ${esc($l10n('SDM.AreaTargetInside'))}</button>` +
-    `<button type="button" data-action="sdmAreaRemove"><i class="fa-solid fa-eraser"></i> ${esc($l10n('SDM.AreaRemove'))}</button>`;
-  const content = cardWrap(
-    cardHeader({ icon: 'fa-solid fa-bullseye', title: item.name, chips: [areaLabel(item, kind), lingerLabel(item, kind)] }) +
-      (placed.outOfRange ? `<div class="sdm-card-tag warn">${esc(placed.outOfRange)}</div>` : '') +
-      (names ? `<div class="sdm-card-tag info">${esc($l10n('SDM.AreaInside'))}: ${names}</div>` : `<div class="sdm-card-tag info">${esc($l10n('SDM.AreaEmpty'))}</div>`) +
-      (total > 0 ? areaApplyButtonsHtml(areaShares(targets, total), { heal: true, total }) : '') +
-      `<div class="sdm-card-actions">${actions}</div>`,
-    { kind: 'power' }
-  );
-  await createChatMessage({
-    actor,
-    content,
-    flags: { sdm: { areaCard: { sceneId: canvas.scene.id, areaId: placed.areaId, hits: placed.tokens.map(t => t.uuid) } } }
-  });
-}
 
 function outcomeFor(total, defense, isNat1, isNat20) {
   if (isNat1) return { hit: false, tone: 'bad', word: $l10n('SDM.CriticalFailure') };
@@ -536,93 +524,316 @@ function outcomeFor(total, defense, isNat1, isNat20) {
   return total > defense ? { hit: true, tone: 'good', word: $l10n('SDM.Card.Hit') } : { hit: false, tone: 'bad', word: $l10n('SDM.Card.Miss') };
 }
 
-/** Place the area from the attack card, then post who it hit (one attack against each defense). */
-async function onPlaceAreaFromAttack(button) {
-  const actor = fromUuidSync(button.dataset.actorUuid);
-  const item = actor?.items?.get(button.dataset.itemId);
-  if (!actor?.isOwner || !item) return;
-  const placed = await placeArea({ actor, item, kind: button.dataset.kind });
-  if (!placed) return;
-  const total = Number(button.dataset.total) || 0;
-  const isNat1 = button.dataset.nat1 === '1';
-  const isNat20 = button.dataset.nat20 === '1';
+/* -------------------------------------------- */
+/*  The area block (area first)                 */
+/* -------------------------------------------- */
+
+/**
+ * What an area card keeps (flags.sdm.areaCard): the item, the placed area, who is inside, the roll,
+ * and for an area resolved by a save, its save and each one's result.
+ * mode: 'attack' (the attack against each defense, or their saves), 'power' (everyone inside gets the
+ * roll) or 'use' (an item's Use resolved by a save: its harm, by each one's save).
+ */
+export function areaState({ mode, actor, item, kind, placed, total = 0, isNat1 = false, isNat20 = false, attackTarget = 'physical', multiplier = '' }) {
+  const area = itemArea(item, kind);
+  return {
+    mode,
+    actor: actor?.uuid ?? '',
+    itemId: item.id,
+    itemName: item.name,
+    kind: kind || (mode === 'attack' ? 'weapon' : mode === 'power' ? 'power' : ''),
+    chips: [areaLabel(item, kind), lingerLabel(item, kind)].filter(Boolean),
+    save: area?.save ?? null,
+    saves: {},
+    lingers: !!area?.linger,
+    sceneId: canvas.scene?.id ?? '',
+    areaId: placed.areaId,
+    inside: placed.tokens.map(t => t.uuid),
+    outOfRange: placed.outOfRange ?? '',
+    total: Number(total) || 0,
+    isNat1: !!isNat1,
+    isNat20: !!isNat20,
+    attackTarget: attackTarget || 'physical',
+    multiplier: multiplier || ''
+  };
+}
+
+/**
+ * The area's part of a card: who is inside and what happened to each (hit / miss, or their save),
+ * with the damage button (attack) or each one's share (power), Target, Reposition and Remove.
+ * @returns {{html: string, card: object, attackItem: object|null, hits: TokenDocument[]}}
+ */
+export function areaBlock(state) {
+  const tokens = (state.inside ?? []).map(uuid => fromUuidSync(uuid)).filter(t => t?.actor);
+  const total = Number(state.total) || 0;
   const rows = [];
   const hits = [];
   const ties = [];
-  for (const token of placed.tokens) {
-    const target = token.actor;
-    if (!target) continue;
-    const field = target.type === ActorType.NPC ? 'defense' : DEFENSE_FIELD[button.dataset.attackTarget] ?? 'defense';
-    const defense = Number(target.system?.[field]) || 0;
-    const result = outcomeFor(total, defense, isNat1, isNat20);
-    if (result.hit) hits.push(token);
-    // Bystander: less damage from areas, by its level (taken off when the area's damage is applied)
-    const reduction = areaDamageReduction(target);
-    rows.push(
-      resultStrip({
-        tone: result.tone,
-        img: token.texture?.src || target.img,
-        name: token.name,
-        sub: `${esc($l10n('SDM.FieldDefense'))} ${defense}`,
-        outcome: result.word.toUpperCase(),
-        margin: result.tone === 'good' || (result.tone === 'bad' && !isNat1) ? marginText(total - defense) : ''
-      })
-    );
-    if (reduction && result.hit) {
-      rows.push(`<div class="sdm-card-tag info">${esc($fmt('SDM.AreaBystander', { name: token.name, amount: reduction }))}</div>`);
+  let attackItem = null;
+  let actions = '';
+  const chips = [...(state.chips ?? [])];
+  if (state.mode === 'attack' && !state.save) chips.push($fmt('SDM.AreaAttackTotal', { total }));
+  if (state.save) chips.push($fmt('SDM.AreaSaveChip', { pass: $l10n(CONFIG.SDM.areaSavePass[state.save.pass] ?? 'SDM.AreaSavePass.avoid').toLowerCase() }));
+  if (chips.length) rows.push(`<div class="sdm-card-chips">${chips.map(c => `<span class="sdm-chip">${esc(c)}</span>`).join('')}</div>`);
+  if (state.outOfRange) rows.push(`<div class="sdm-card-tag warn">${esc(state.outOfRange)}</div>`);
+  const targetLabel = state.mode === 'attack' && !state.save ? 'SDM.AreaTargetHits' : 'SDM.AreaTargetInside';
+
+  if (state.save) {
+    // Resolved by a save: each one inside saves (NPCs at once, characters on their request card)
+    const saves = state.saves ?? {};
+    const savedActors = [];
+    for (const token of tokens) {
+      const result = saves[token.uuid];
+      const word =
+        result === true
+          ? $l10n(`SDM.AreaSaveResult.${state.save.pass}`)
+          : result === false
+            ? $l10n('SDM.AreaSaveResult.failed')
+            : result === 'equal'
+              ? $l10n('SDM.AreaSaveResult.equal')
+              : $l10n('SDM.AreaSaveResult.pending');
+      if (result === true) savedActors.push(token.actor.uuid);
+      rows.push(
+        resultStrip({
+          tone: result === true ? 'good' : result === false ? 'bad' : 'mid',
+          img: token.texture?.src || token.actor.img,
+          name: token.name,
+          sub: esc(saveDifficultyLabel(state.save.difficulty) || $l10n('SDM.AreaSaveStandard')),
+          outcome: word.toUpperCase()
+        })
+      );
+      hits.push(token);
     }
-    // A tie: sacrifice something to hit it, or miss (the Referee decides)
-    if (result.tone === 'mid') {
-      ties.push(token.uuid);
-      rows.push(tieButtons({ kind: 'area', tokenUuid: token.uuid, actorUuid: target.uuid, name: token.name }));
+    if (!tokens.length) rows.push(`<div class="sdm-card-tag info">${esc($l10n('SDM.AreaEmpty'))}</div>`);
+    const targets = [...new Set(tokens.map(t => t.actor))];
+    if (state.mode === 'attack') {
+      attackItem = {
+        id: state.itemId,
+        name: state.itemName,
+        kind: state.kind || 'weapon',
+        actor: state.actor,
+        multiplier: state.multiplier || '',
+        areaTargets: targets.map(a => a.uuid),
+        areaSaved: savedActors,
+        areaPass: state.save.pass
+      };
+      if (targets.length) actions += attackFollowupHtml(attackItem);
+    } else if (total > 0 && targets.length) {
+      rows.push(areaApplyButtonsHtml(areaShares(targets, total, { saved: savedActors, pass: state.save.pass }), { heal: state.mode === 'power', total }));
+    }
+  } else if (state.mode === 'attack') {
+    // The attack against each defense inside
+    for (const token of tokens) {
+      const target = token.actor;
+      const field = target.type === ActorType.NPC ? 'defense' : DEFENSE_FIELD[state.attackTarget] ?? 'defense';
+      const defense = Number(target.system?.[field]) || 0;
+      const result = outcomeFor(total, defense, state.isNat1, state.isNat20);
+      if (result.hit) hits.push(token);
+      rows.push(
+        resultStrip({
+          tone: result.tone,
+          img: token.texture?.src || target.img,
+          name: token.name,
+          sub: `${esc($l10n('SDM.FieldDefense'))} ${defense}`,
+          outcome: result.word.toUpperCase(),
+          margin: result.tone === 'good' || (result.tone === 'bad' && !state.isNat1) ? marginText(total - defense) : ''
+        })
+      );
+      // Bystander: less damage from areas, by its level (taken off when the damage is applied)
+      const reduction = areaDamageReduction(target);
+      if (reduction && result.hit) rows.push(`<div class="sdm-card-tag info">${esc($fmt('SDM.AreaBystander', { name: token.name, amount: reduction }))}</div>`);
+      // A tie: sacrifice something to hit it, or miss (the Referee decides)
+      if (result.tone === 'mid') {
+        ties.push(token.uuid);
+        rows.push(tieButtons({ kind: 'area', tokenUuid: token.uuid, actorUuid: target.uuid, name: token.name }));
+      }
+    }
+    if (!tokens.length) rows.push(`<div class="sdm-card-tag info">${esc($l10n('SDM.AreaEmpty'))}</div>`);
+    attackItem = {
+      id: state.itemId,
+      name: state.itemName,
+      kind: state.kind || 'weapon',
+      actor: state.actor,
+      multiplier: state.multiplier || '',
+      areaTargets: hits.map(t => t.actor.uuid)
+    };
+    if (hits.length) actions += attackFollowupHtml(attackItem);
+  } else {
+    // A power: everyone inside, each with its share of the roll
+    hits.push(...tokens);
+    const names = tokens.map(t => esc(t.name)).join(', ');
+    rows.push(
+      names
+        ? `<div class="sdm-card-tag info">${esc($l10n('SDM.AreaInside'))}: ${names}</div>`
+        : `<div class="sdm-card-tag info">${esc($l10n('SDM.AreaEmpty'))}</div>`
+    );
+    const targets = [...new Set(tokens.map(t => t.actor))];
+    if (total > 0 && targets.length) rows.push(areaApplyButtonsHtml(areaShares(targets, total), { heal: true, total }));
+  }
+
+  actions +=
+    `<button type="button" data-action="sdmAreaTargetHits"><i class="fa-solid fa-crosshairs"></i> ${esc($l10n(targetLabel))}</button>` +
+    `<button type="button" data-action="sdmAreaReposition"><i class="fa-solid fa-arrows-up-down-left-right"></i> ${esc($l10n('SDM.AreaReposition'))}</button>` +
+    `<button type="button" data-action="sdmAreaRemove"><i class="fa-solid fa-eraser"></i> ${esc($l10n('SDM.AreaRemove'))}</button>`;
+  const card = { ...state, hits: hits.map(t => t.uuid), ties };
+  const html = `<div class="sdm-area-block">${rows.join('')}<div class="sdm-card-actions">${actions}</div></div>`;
+  return { html, card, attackItem, hits };
+}
+
+/** The flags a card with an area block keeps. */
+function blockFlags(block) {
+  return { 'flags.sdm.areaCard': block.card, ...(block.attackItem ? { 'flags.sdm.attackItem': block.attackItem } : {}) };
+}
+
+/** Put a new area block in the message's place of the old one. */
+async function replaceBlock(message, block) {
+  const div = document.createElement('div');
+  div.innerHTML = message.content;
+  const old = div.querySelector('.sdm-area-block');
+  if (old) old.outerHTML = block.html;
+  await message.update({ content: div.innerHTML, ...blockFlags(block) });
+}
+
+/**
+ * "Place area" on a card whose area wasn't placed before the roll (skipped, or no scene then): a card
+ * of its own with the area block, for the attack (mode 'attack') or the power ('power').
+ */
+async function onPlaceAreaFromCard(button, mode) {
+  const actor = fromUuidSync(button.dataset.actorUuid);
+  const item = actor?.items?.get(button.dataset.itemId);
+  if (!actor?.isOwner || !item) return;
+  const kind = button.dataset.kind || (mode === 'attack' ? 'weapon' : 'power');
+  const placed = await placeArea({ actor, item, kind });
+  if (!placed) return;
+  const block = areaBlock(
+    areaState({
+      mode,
+      actor,
+      item,
+      kind,
+      placed,
+      total: Number(button.dataset.total) || 0,
+      isNat1: button.dataset.nat1 === '1',
+      isNat20: button.dataset.nat20 === '1',
+      attackTarget: button.dataset.attackTarget || 'physical',
+      multiplier: button.dataset.multiplier || ''
+    })
+  );
+  setTargets(block.hits);
+  const message = await createChatMessage({
+    actor,
+    content: cardWrap(cardHeader({ icon: 'fa-solid fa-bullseye', title: item.name }) + block.html, { kind: mode === 'attack' ? 'attack' : 'power' }),
+    flags: { sdm: { areaCard: block.card, ...(block.attackItem ? { attackItem: block.attackItem } : {}) } }
+  });
+  if (block.card.save && message) await requestAreaSaves(message);
+}
+
+/** Reposition: the area is placed again (the old one goes), and the card checks who is inside now. */
+async function onReposition(message, card) {
+  const actor = fromUuidSync(card.actor);
+  const item = actor?.items?.get(card.itemId);
+  if (!actor || !item) return;
+  if (canvas.scene?.id !== card.sceneId) return ui.notifications.warn($l10n('SDM.AreaNoScene'));
+  const placed = await placeArea({ actor, item, kind: card.kind });
+  if (!placed) return;
+  await removeArea(card.sceneId, card.areaId);
+  const block = areaBlock({
+    ...card,
+    saves: {},
+    areaId: placed.areaId,
+    sceneId: canvas.scene.id,
+    inside: placed.tokens.map(t => t.uuid),
+    outOfRange: placed.outOfRange ?? ''
+  });
+  setTargets(block.hits);
+  await replaceBlock(message, block);
+  // A save area: everyone inside now saves (again)
+  if (block.card.save) await requestAreaSaves(game.messages.get(message.id));
+}
+
+/* -------------------------------------------- */
+/*  Saves                                       */
+/* -------------------------------------------- */
+
+/** A save area: everyone inside is asked for the save (NPCs roll at once, characters get a request). */
+export async function requestAreaSaves(message) {
+  const card = message?.getFlag?.('sdm', 'areaCard');
+  if (!card?.save) return;
+  const { saveAgainst } = await import('../app/save-against.mjs');
+  for (const uuid of card.inside ?? []) {
+    const token = fromUuidSync(uuid);
+    if (!token?.actor) continue;
+    await saveAgainst(token.actor, {
+      area: { message: message.id, token: uuid },
+      source: card.itemName,
+      ability: card.save.ability || '',
+      difficulty: card.save.difficulty || ''
+    });
+  }
+}
+
+/** A save made for an area (true, false or 'equal'): the area card is told (by the Referee's game). */
+export async function reportAreaSave(area, result) {
+  if (!area?.message || !area?.token) return;
+  if (game.user.isGM) return applyAreaSave(area, result);
+  if (!game.users.activeGM) return ui.notifications.warn($l10n('SDM.ErrorNoActiveGM'));
+  game.socket.emit(CHANNEL, { action: SAVE_ACTION, area, result });
+}
+
+/**
+ * The Referee's game records a save on the area card and gives its effects: a failed save gets the
+ * item's effects, a passed one none (or for 1 round when the passed save only shortens them). A
+ * lingering area gives its effects by itself, so none are given here.
+ */
+async function applyAreaSave(area, result) {
+  const message = game.messages.get(area.message);
+  const card = foundry.utils.deepClone(message?.getFlag('sdm', 'areaCard') ?? null);
+  if (!message || !card?.save) return;
+  // A save for an area placed before a reposition: no longer counts
+  if (!(card.inside ?? []).includes(area.token)) return;
+  card.saves = { ...(card.saves ?? {}), [area.token]: result };
+  const actor = fromUuidSync(area.token)?.actor;
+  const item = fromUuidSync(card.actor)?.items?.get(card.itemId);
+  if (actor && item && !card.lingers && result !== 'equal') {
+    // What it gave before goes (hero dice may have changed the result), then what the result gives
+    const key = `${message.id}|${area.token}`;
+    const old = actor.effects.filter(e => e.getFlag('sdm', 'areaSave') === key).map(e => e.id);
+    if (old.length) await actor.deleteEmbeddedDocuments('ActiveEffect', old);
+    const shorter = result === true && card.save.pass === 'shorter';
+    if (result === false || shorter) {
+      const data = lingerEffects(item).map(effect => {
+        const copy = effect.toObject();
+        delete copy._id;
+        copy.origin = item.uuid;
+        copy.transfer = false;
+        copy.disabled = false;
+        foundry.utils.setProperty(copy, 'flags.sdm.temporary', true);
+        foundry.utils.setProperty(copy, 'flags.sdm.areaSave', key);
+        if (shorter) copy.duration = { ...(copy.duration ?? {}), value: 1, units: 'rounds' };
+        return copy;
+      });
+      if (data.length) await actor.createEmbeddedDocuments('ActiveEffect', data);
     }
   }
-  setTargets(hits);
-  const scene = canvas.scene;
-  // Damage (or the power) once for the whole area: every token hit gets it
-  const flag = {
-    id: item.id,
-    name: item.name,
-    kind: button.dataset.kind || 'weapon',
-    actor: actor.uuid,
-    multiplier: button.dataset.multiplier || '',
-    areaTargets: hits.map(t => t.actor?.uuid).filter(Boolean)
-  };
-  const damageButton = hits.length ? attackFollowupHtml(flag) : '';
-  const actions =
-    damageButton +
-    `<button type="button" data-action="sdmAreaTargetHits"><i class="fa-solid fa-crosshairs"></i> ${esc($l10n('SDM.AreaTargetHits'))}</button>` +
-    `<button type="button" data-action="sdmAreaRemove"><i class="fa-solid fa-eraser"></i> ${esc($l10n('SDM.AreaRemove'))}</button>`;
-  const content = cardWrap(
-    cardHeader({ icon: 'fa-solid fa-bullseye', title: item.name, chips: [areaLabel(item, button.dataset.kind), lingerLabel(item, button.dataset.kind), $fmt('SDM.AreaAttackTotal', { total })] }) +
-      (placed.outOfRange ? `<div class="sdm-card-tag warn">${esc(placed.outOfRange)}</div>` : '') +
-      (rows.length ? rows.join('') : `<div class="sdm-card-tag info">${esc($l10n('SDM.AreaEmpty'))}</div>`) +
-      `<div class="sdm-card-actions">${actions}</div>`,
-    { kind: 'attack' }
-  );
-  await createChatMessage({
-    actor,
-    content,
-    flags: { sdm: { areaCard: { sceneId: scene.id, areaId: placed.areaId, hits: hits.map(t => t.uuid), ties }, attackItem: flag } }
-  });
+  await replaceBlock(message, areaBlock(card));
 }
 
 /* -------------------------------------------- */
 /*  Chat and socket                             */
 /* -------------------------------------------- */
 
-/** renderChatMessageHTML: Place area (attack card), Target hits and Remove area (area card). */
+/** renderChatMessageHTML: Place area, ties, and the area block's Target, Reposition and Remove. */
 export function bindAreaButtons(message, html) {
   html.querySelectorAll('[data-action="sdmPlaceArea"]').forEach(button =>
     button.addEventListener('click', event => {
       event.preventDefault();
-      onPlaceAreaFromAttack(button);
+      onPlaceAreaFromCard(button, 'attack');
     })
   );
   html.querySelectorAll('[data-action="sdmPlacePowerArea"]').forEach(button =>
     button.addEventListener('click', event => {
       event.preventDefault();
-      onPlacePowerArea(button);
+      onPlaceAreaFromCard(button, 'power');
     })
   );
   // Ties (area card, splash): only the Referee decides
@@ -636,6 +847,7 @@ export function bindAreaButtons(message, html) {
   });
   const card = message?.getFlag?.('sdm', 'areaCard');
   if (!card) return;
+  const allowed = game.user.isGM || message.isAuthor;
   html.querySelectorAll('[data-action="sdmAreaTargetHits"]').forEach(button =>
     button.addEventListener('click', event => {
       event.preventDefault();
@@ -643,8 +855,15 @@ export function bindAreaButtons(message, html) {
       setTargets(tokens);
     })
   );
+  html.querySelectorAll('[data-action="sdmAreaReposition"]').forEach(button => {
+    // Only the card's own (the newest card of a hero dice chain carries it too)
+    if (!allowed || !card.itemId) return button.remove();
+    button.addEventListener('click', event => {
+      event.preventDefault();
+      onReposition(message, card).catch(error => console.error('SDM | Reposition failed', error));
+    });
+  });
   html.querySelectorAll('[data-action="sdmAreaRemove"]').forEach(button => {
-    const allowed = game.user.isGM || message.isAuthor;
     if (!allowed) return button.remove();
     button.addEventListener('click', event => {
       event.preventDefault();
@@ -656,6 +875,7 @@ export function bindAreaButtons(message, html) {
 export function setupAreas() {
   game.socket.on(CHANNEL, async message => {
     if (game.users.activeGM?.id !== game.user.id) return;
+    if (message?.action === SAVE_ACTION) return applyAreaSave(message.area, message.result);
     const scene = game.scenes.get(message?.sceneId);
     if (!scene) return;
     if (message.action === CREATE_ACTION) await scene.createEmbeddedDocuments('Region', [message.data]);

@@ -88,6 +88,17 @@ SDM.splashShapes = {
   behind_cone: 'SDM.SplashShape.behind_cone'
 };
 
+SDM.areaResolve = {
+  attack: 'SDM.AreaResolve.attack',
+  save: 'SDM.AreaResolve.save'
+};
+
+SDM.areaSavePass = {
+  avoid: 'SDM.AreaSavePass.avoid',
+  half: 'SDM.AreaSavePass.half',
+  shorter: 'SDM.AreaSavePass.shorter'
+};
+
 SDM.areaValues = {
   single: 'SDM.AreaSingle',
   small: 'SDM.AreaSmall',

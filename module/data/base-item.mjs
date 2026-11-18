@@ -104,7 +104,14 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       // A size of its own, across, in the world unit (0: by small / medium / large)
       across: new fields.NumberField({ required: true, nullable: false, min: 0, initial: 0 }),
       // A lingering area that moves with its user's token
-      follows: new fields.BooleanField({ required: true, initial: false })
+      follows: new fields.BooleanField({ required: true, initial: false }),
+      // Resolved by an attack against each defense, or by a save of each one inside
+      resolve: new fields.StringField({ required: true, blank: false, initial: 'attack', choices: ['attack', 'save'] }),
+      save_ability: new fields.StringField({ required: true, blank: true, initial: '' }),
+      save_difficulty: new fields.StringField({ required: true, blank: true, initial: '' }),
+      save_target: new fields.NumberField({ required: true, nullable: false, integer: true, min: 1, initial: 13 }),
+      // A passed save: avoids it, halves the damage, or shortens the effect (1 round)
+      save_pass: new fields.StringField({ required: true, blank: false, initial: 'avoid', choices: ['avoid', 'half', 'shorter'] })
     });
 
     schema.range = new fields.SchemaField({

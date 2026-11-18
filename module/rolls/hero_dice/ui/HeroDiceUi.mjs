@@ -1,4 +1,5 @@
 import { attackFollowupHtml } from '../../attackFollowup.mjs';
+import { areaBlock, setTargets } from '../../../helpers/areas.mjs';
 import { attackFeatureHtml } from '../../attackFeatures.mjs';
 import { applyDamageHtml } from '../../ui/applyDamage.mjs';
 import { changeLifeOf } from '../../../app/use-item.mjs';
@@ -201,7 +202,15 @@ export class HeroDiceUI {
         margin: marginText(total - check.defense)
       });
     }
-    let actions = attackFollowupHtml(attackItem);
+    // An area attack: every target inside checked again against the new total (the card takes the place
+    // of the attack's card, with its own Reposition, Target hits and Roll damage)
+    const areaCard = flags?.sdm?.areaCard?.mode === 'attack' && !flags.sdm.areaCard.save ? flags.sdm.areaCard : null;
+    let areaHero = null;
+    if (areaCard) {
+      areaHero = areaBlock({ ...areaCard, total: Number(total) || 0, isNat1: false, isNat20: heroTwenties(keptDice) > 0, multiplier: attackItem?.multiplier ?? areaCard.multiplier });
+      strip = areaHero.html;
+    }
+    let actions = areaHero ? '' : attackFollowupHtml(attackItem);
     // The item's feature buttons and notes (entangle, petrify…, vorpal), as on the attack's card, for
     // the result as it is now (a natural 20 made by hero dice counts)
     if (check?.kind === 'attack' && check.withItem) {
@@ -264,10 +273,12 @@ export class HeroDiceUI {
         sdm: {
           isHeroResult: true,
           ...(flags?.sdm?.sourceMessage ? { heroOf: flags.sdm.sourceMessage } : {}),
-          ...(attackItem ? { attackItem } : {})
+          ...(attackItem ? { attackItem } : {}),
+          ...(areaHero ? { areaCard: areaHero.card, ...(areaHero.attackItem ? { attackItem: areaHero.attackItem } : {}) } : {})
         }
       }
     });
+    if (areaHero) setTargets(areaHero.hits);
 
     for (const fix of damageFixes) await changeLifeOf(fix.target, fix.amount, { heal: fix.heal, reason: fix.heal ? 'DamageFixed' : '' });
     if (recheck.fired.length) await runTriggerActions(recheck.fired, { actor: recheck.actor });

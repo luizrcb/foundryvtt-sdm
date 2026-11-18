@@ -1,5 +1,7 @@
 import { ItemType } from '../helpers/constants.mjs';
-import { areaDamageReduction, itemArea, placeArea } from '../helpers/areas.mjs';
+import { areaBlock, areaDamageReduction, areaState, itemArea, lingerEffects, placeArea, requestAreaSaves } from '../helpers/areas.mjs';
+import { createChatMessage } from '../helpers/chatUtils.mjs';
+import { cardHeader, cardWrap } from '../rolls/ui/cardParts.mjs';
 import { resolveFormula } from '../helpers/formulas.mjs';
 import { lastChargeUpdate } from '../helpers/itemUtils.mjs';
 import { getUsesCounter, spendUsesUpdate, usesLeft } from '../helpers/itemUses.mjs';
@@ -510,14 +512,17 @@ export async function useItem(item) {
 
   // An item with an area: place it first; the tokens inside are the targets (none: nobody)
   let areaTargets = null;
+  let placed = null;
   if (itemArea(item) && canvas?.ready && canvas.scene) {
-    const placed = await placeArea({ actor, item });
+    placed = await placeArea({ actor, item });
     if (!placed) return;
     areaTargets = [...new Set(placed.tokens.map(token => token.actor).filter(Boolean))];
   }
   const targets = areaTargets ?? getTargets(actor);
+  // An area resolved by a save: its card asks everyone inside, and the harm and effects follow each save
+  const areaSave = !!(areaTargets && itemArea(item)?.save);
   // A lingering area gives the item's effects to whoever stands in it: the Use doesn't copy them too
-  const itemEffects = areaTargets && itemArea(item)?.linger ? [] : effectsToCopy(item);
+  const itemEffects = (areaTargets && itemArea(item)?.linger) || areaSave ? [] : effectsToCopy(item);
   const choice = await chooseUse(item.system.use, itemEffects);
   if (!choice) return; // dialog closed
   const use = item.system.use;
@@ -563,7 +568,7 @@ export async function useItem(item) {
     duration && !(Number(data.duration?.value) > 0) ? { ...data, duration: { ...(data.duration ?? {}), ...duration } } : data
   );
   const table = use.table ? await fromUuid(use.table) : null;
-  if (!restores.length && !effects.length && table?.documentName !== 'RollTable') {
+  if (!restores.length && !effects.length && !(areaSave && lingerEffects(item).length) && table?.documentName !== 'RollTable') {
     ui.notifications.warn($fmt('SDM.Use.Nothing', { item: item.name }));
     return;
   }
@@ -597,12 +602,26 @@ export async function useItem(item) {
     })}</p>${what.length ? `<p>${what.join('<br>')}</p>` : ''}${rollHtml}${renderTriggers(fired, { targets })}`
   });
 
+  // A save area: its card, with the harm for each one by their save (buttons) and the effects on a failed one
+  const harm = restores.find(r => r.kind === 'harm');
+  if (areaSave) {
+    const block = areaBlock(areaState({ mode: 'use', actor, item, kind: '', placed, total: harm?.amount ?? 0 }));
+    const message = await createChatMessage({
+      actor,
+      content: cardWrap(cardHeader({ icon: 'fa-solid fa-bullseye', title: item.name }) + block.html, { kind: 'power' }),
+      flags: { sdm: { areaCard: block.card } }
+    });
+    if (message) await requestAreaSaves(message);
+  }
+
   // Applied after the card, so the chat reads: use → healing
   for (const target of targets) {
-    // In an area: harm less its reduction (Bystander)
-    const own = areaTargets
-      ? restores.map(r => (r.kind === 'harm' ? { ...r, amount: Math.max(r.amount - areaDamageReduction(target), 0) } : r))
-      : restores;
+    // In an area: harm less its reduction (Bystander); a save area's harm is on its card
+    const own = areaSave
+      ? restores.filter(r => r.kind !== 'harm')
+      : areaTargets
+        ? restores.map(r => (r.kind === 'harm' ? { ...r, amount: Math.max(r.amount - areaDamageReduction(target), 0) } : r))
+        : restores;
     const payload = { actorUuid: target.uuid, restores: own, effects };
     if (target.isOwner) await applyToActor(payload);
     else if (game.users.activeGM) game.socket.emit(CHANNEL, { action: APPLY_ACTION, payload });

@@ -2290,7 +2290,7 @@ export class SdmActor extends Actor {
         roll: { handler: '_onRoll', dataset: { action: 'roll', roll: actionKey } },
         rollNPCDamage: {
           handler: '_onRollNPCDamage',
-          dataset: { action: 'rollNPCDamage', damage: actionKey, label: $l10n('SDM.Damage'), multiplier: args?.multiplier ?? '', targetUuid: args?.targetUuid ?? '', areaTargets: args?.areaTargets ?? '' }
+          dataset: { action: 'rollNPCDamage', damage: actionKey, label: $l10n('SDM.Damage'), multiplier: args?.multiplier ?? '', targetUuid: args?.targetUuid ?? '', areaTargets: args?.areaTargets ?? '', areaSaved: args?.areaSaved ?? '', areaPass: args?.areaPass ?? '' }
         },
         rollNPCMorale: {
           handler: '_onRollNPCMorale',
@@ -2310,7 +2310,7 @@ export class SdmActor extends Actor {
         },
         item: {
           handler: '_onRoll',
-          dataset: { action: 'roll', type: actionType, label: args.label, tooltip: args.tooltip, multiplier: args?.multiplier ?? '', targetUuid: args?.targetUuid ?? '', areaTargets: args?.areaTargets ?? '' },
+          dataset: { action: 'roll', type: actionType, label: args.label, tooltip: args.tooltip, multiplier: args?.multiplier ?? '', targetUuid: args?.targetUuid ?? '', areaTargets: args?.areaTargets ?? '', areaSaved: args?.areaSaved ?? '', areaPass: args?.areaPass ?? '' },
           closestReturn: { dataset: { documentClass: 'Item', itemId: actionKey } }
         },
         transferCash: {
