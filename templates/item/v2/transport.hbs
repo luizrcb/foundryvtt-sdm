@@ -24,6 +24,7 @@
       <span class="v2-label">{{localize 'SDM.FieldSupply'}}</span>
       <input type="text" name="system.supply" value="{{system.supply}}" />
     </label>
+    {{> ($$ "item/v2/installed-mods")}}
     {{#if (eq item.type 'vehicle')}}
     <label class="v2-field v2-check" data-tooltip="{{localize 'SDM.ItemVehicleAutomaticHint'}}">
       <input type="checkbox" name="system.automatic" {{checked system.automatic}} data-dtype="Boolean" />

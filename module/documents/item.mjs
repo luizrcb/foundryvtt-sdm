@@ -7,7 +7,6 @@ import {
   healAnimatedCreature,
   isWearImproved,
   SYNC_OPTION,
-  isRideItem,
   syncAnimationLevel
 } from '../helpers/animatedItems.mjs';
 import { createChatMessage } from '../helpers/chatUtils.mjs';
@@ -25,7 +24,7 @@ import {
   TraitType
 } from '../helpers/constants.mjs';
 import { $fmt, $l10n, capitalizeFirstLetter, safeEvaluate, formatNumber } from '../helpers/globalUtils.mjs';
-import { ALBUM_FEATURE_MAX_POWERS, getDescriptionExcerpt, lastChargeUpdate, getSlotsTaken, hasPowerAlbum, UnarmedDamageItem } from '../helpers/itemUtils.mjs';
+import { ALBUM_FEATURE_MAX_POWERS, getDescriptionExcerpt, itemModLimit, lastChargeUpdate, getSlotsTaken, hasPowerAlbum, UnarmedDamageItem } from '../helpers/itemUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { applyUsesResources } from '../helpers/itemUses.mjs';
 import { renderUsageResult } from '../rolls/ui/renderResults.mjs';
@@ -274,7 +273,6 @@ export class SdmItem extends Item {
       !options?.[SYNC_OPTION] &&
       (changed?.system?.hallmark?.level !== undefined ||
         changed?.system?.attributes?.level !== undefined ||
-        (isRideItem(this) && changed?.system?.level !== undefined) ||
         changed?.system?.animation?.damageSource !== undefined ||
         changed?.system?.animation?.table !== undefined)
     ) {
@@ -640,8 +638,9 @@ export class SdmItem extends Item {
     return this.itemModEffects.length;
   }
 
+  /** Hallmark level + 1; a ride (mount, vehicle): its level + 1. */
   get maxItemMods() {
-    return (this.system?.hallmark?.level ?? 0) + 1;
+    return itemModLimit(this);
   }
 
   getArmorTitle() {

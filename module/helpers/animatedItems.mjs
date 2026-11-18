@@ -391,8 +391,37 @@ function npcSystemFromItem(item) {
       ? { value: item.system.size?.value ?? 1, unit: item.system.size?.unit || 'sacks' }
       : { value: item.system.animation?.size?.value ?? 1, unit: item.system.animation?.size?.unit || 'sacks' },
     speed: isRideItem(item) ? Number(item.system.speed) || 0 : item.system.animation?.speed ?? 0,
-    createdFromTable: isRideItem(item) && !item.system.features?.has?.('sentient') ? NPC_CUSTOM_TABLE : getAnimationTable(item)
+    createdFromTable: isRideItem(item) && !item.system.features?.has?.('sentient') ? NPC_CUSTOM_TABLE : getAnimationTable(item),
+    // A ride's creature is the ride: its capacity, cost and supply are the item's (mods included)
+    ...(isRideItem(item)
+      ? {
+          capacity: Number(item.system.capacity) || 0,
+          cost: String(item.system.cost ?? ''),
+          supply: String(item.system.supply ?? '')
+        }
+      : {})
   };
+}
+
+/** A deployed ride's creature keeps the ride's stats, speed, size, capacity, cost and supply. */
+async function syncDeployedRide(item) {
+  if (!isRideItem(item) || !item.system.animation?.active) return;
+  if (game.users.activeGM?.id !== game.user.id) return;
+  const npc = getLinkedNpc(item);
+  if (!npc) return;
+  const { life, ...rest } = npcSystemFromItem(item);
+  await npc.update({ system: { ...rest, 'life.max': life.max } });
+  await applyDefenseBonus(item, npc);
+}
+
+/** The ride or one of its mods changed: its deployed creature follows. */
+function onRideChanged(document, changes, options) {
+  if (options?.[SYNC_OPTION]) return;
+  const item = document.documentName === 'ActiveEffect' ? document.parent : document;
+  if (item?.documentName !== 'Item' || !isRideItem(item)) return;
+  // A change to the deployment itself (deploy / recall) is not a change of the ride
+  if (document === item && changes?.system?.animation?.active !== undefined) return;
+  syncDeployedRide(item);
 }
 
 /**
@@ -643,7 +672,7 @@ export async function deanimateItem(item, { reason } = {}) {
   if (npc) {
     for (const scene of game.scenes) {
       const ids = scene.tokens.filter(token => token.actorId === npc.id).map(token => token.id);
-      if (ids.length) await scene.deleteEmbeddedDocuments('Token', ids);
+      if (ids.length) await scene.deleteEmbeddedDocuments('Token', ids, { [SYNC_OPTION]: true });
     }
     const s = npc.system;
     await item.update(
@@ -655,8 +684,8 @@ export async function deanimateItem(item, { reason } = {}) {
         'system.attributes.bonus': s.bonus,
         'system.attributes.damage': s.damage,
         'system.attributes.initiative': s.initiative ?? '',
-        'system.attributes.capacity': s.capacity ?? item.system.attributes.capacity,
-        // A ride keeps its own size and speed (they are the caravan's)
+        // A ride keeps its own capacity, size and speed (the creature only copies them)
+        ...(isRideItem(item) ? {} : { 'system.attributes.capacity': s.capacity ?? item.system.attributes.capacity }),
         ...(isRideItem(item)
           ? {}
           : {
@@ -729,15 +758,8 @@ export async function deanimateFallenCreature(npc) {
 export async function syncAnimationLevel(item, { damageSourceChanged = false } = {}) {
   if (!isAnimatable(item)) return;
   // A ride: its stats follow its level (rideStats.mjs); deployed, its creature takes them
-  if (isRideItem(item)) {
-    const npc = getLinkedNpc(item);
-    if (item.system.animation.active && npc?.isOwner) {
-      const { life, ...rest } = npcSystemFromItem(item);
-      await npc.update({ system: { ...rest, 'life.max': life.max } });
-      await applyDefenseBonus(item, npc);
-    }
-    return;
-  }
+  // (rides: syncDeployedRide follows every change of the ride)
+  if (isRideItem(item)) return;
   const level = getAnimationLevel(item);
   const npc = getLinkedNpc(item);
   if (item.system.animation.active && npc) {
@@ -795,6 +817,11 @@ export function setupAnimatedItems() {
   Hooks.on('renderTokenHUD', onRenderTokenHUD);
   Hooks.on('deleteCombat', onCombatEnded);
   Hooks.on('deleteItem', onAnimatedItemDeleted);
+  Hooks.on('updateItem', onRideChanged);
+  Hooks.on('deleteToken', onCreatureTokenDeleted);
+  Hooks.on('createActiveEffect', (effect, options) => onRideChanged(effect, null, options));
+  Hooks.on('updateActiveEffect', onRideChanged);
+  Hooks.on('deleteActiveEffect', (effect, options) => onRideChanged(effect, null, options));
   game.socket.on(CHANNEL, onSocketMessage);
 }
 
@@ -826,6 +853,21 @@ async function onAnimatedItemDeleted(item) {
   }
   await npc.delete();
   ui.notifications.info($fmt('SDM.Animation.CreatureRemoved', { name: npc.name, item: item.name }));
+}
+
+/**
+ * The last token of an animated creature or deployed ride deleted by hand: it turns back into its
+ * item (back to its sheet; a ride, back to the caravan). Done by the active Referee.
+ */
+async function onCreatureTokenDeleted(token, options) {
+  if (options?.[SYNC_OPTION] || game.users.activeGM?.id !== game.user.id) return;
+  const npc = game.actors.get(token.actorId);
+  if (!isAnimatedNpc(npc)) return;
+  const item = getAnimatedSourceItem(npc);
+  if (!item?.system.animation?.active) return;
+  // Another token of it still on a scene: it stays
+  if (game.scenes.some(scene => scene.tokens.some(t => t.actorId === npc.id))) return;
+  await deanimateItem(item);
 }
 
 /** Creatures set to "end with combat" turn back into their items when the combat ends. */
