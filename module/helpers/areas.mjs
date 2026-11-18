@@ -312,6 +312,52 @@ export function areaPowerButton({ actor, item, kind, total }) {
   );
 }
 
+/** "Sacrificed" / "No sacrifice" for a tie (area card, splash): the Referee's call. */
+export function tieButtons({ kind, tokenUuid = '', actorUuid, name, amount = 0, reason = '' }) {
+  const data = `data-kind="${esc(kind)}" data-token-uuid="${esc(tokenUuid)}" data-actor-uuid="${esc(actorUuid)}" data-name="${esc(name)}" data-amount="${Number(amount) || 0}" data-reason="${esc(reason)}"`;
+  return (
+    `<div class="sdm-card-tag warn sdm-tie-row" data-actor-uuid="${esc(actorUuid)}"><i class="fa-solid fa-scale-balanced"></i> ${esc($fmt('SDM.AreaTie', { name }))}` +
+    ` <button type="button" data-action="sdmTieSacrifice" data-yes="1" ${data}>${esc($l10n('SDM.SaveAgainst.SacrificeMade'))}</button>` +
+    `<button type="button" data-action="sdmTieSacrifice" data-yes="" ${data}>${esc($l10n('SDM.SaveAgainst.SacrificeNot'))}</button></div>`
+  );
+}
+
+/**
+ * A tie resolved by the Referee: on the area card a sacrifice makes it a hit (added to the damage
+ * button's targets); on a splash it takes the splash damage already rolled. The row says what was chosen.
+ */
+async function onTieSacrifice(message, button) {
+  const yes = button.dataset.yes === '1';
+  const { kind, tokenUuid, actorUuid, name } = button.dataset;
+  const flags = foundry.utils.deepClone(message.flags?.sdm ?? {});
+  const div = document.createElement('div');
+  div.innerHTML = message.content;
+  const row = [...div.querySelectorAll('.sdm-tie-row')].find(r => r.dataset.actorUuid === actorUuid);
+  if (!row) return;
+  const line = document.createElement('div');
+  line.className = `sdm-card-tag ${yes ? 'good' : 'info'}`;
+  line.textContent = $fmt(yes ? 'SDM.AreaTieHit' : 'SDM.AreaTieMiss', { name });
+  row.replaceWith(line);
+  if (kind === 'area' && yes && flags.areaCard) {
+    flags.areaCard.hits = [...new Set([...(flags.areaCard.hits ?? []), tokenUuid])];
+    if (flags.attackItem) {
+      flags.attackItem.areaTargets = [...new Set([...(flags.attackItem.areaTargets ?? []), actorUuid])];
+      flags.attackItem.sacrificed = [...new Set([...(flags.attackItem.sacrificed ?? []), actorUuid])];
+      const damageButton = div.querySelector('[data-action="sdmAttackFollowup"]');
+      if (damageButton) {
+        damageButton.dataset.areaTargets = flags.attackItem.areaTargets.join(',');
+        damageButton.dataset.areaExtra = flags.attackItem.sacrificed.join(',');
+      }
+    }
+  }
+  if (kind === 'splash' && yes) {
+    const actor = fromUuidSync(actorUuid);
+    const { changeLifeOf } = await import('../app/use-item.mjs');
+    if (actor) await changeLifeOf(actor, Number(button.dataset.amount) || 0, { reason: button.dataset.reason });
+  }
+  await message.update({ content: div.innerHTML, 'flags.sdm': flags });
+}
+
 /** Each target's share of an area's damage: the total less its reduction (Bystander). */
 export function areaShares(actors, total) {
   return actors.map(target => {
@@ -384,6 +430,7 @@ async function onPlaceAreaFromAttack(button) {
   const isNat20 = button.dataset.nat20 === '1';
   const rows = [];
   const hits = [];
+  const ties = [];
   for (const token of placed.tokens) {
     const target = token.actor;
     if (!target) continue;
@@ -405,6 +452,11 @@ async function onPlaceAreaFromAttack(button) {
     );
     if (reduction && result.hit) {
       rows.push(`<div class="sdm-card-tag info">${esc($fmt('SDM.AreaBystander', { name: token.name, amount: reduction }))}</div>`);
+    }
+    // A tie: sacrifice something to hit it, or miss (the Referee decides)
+    if (result.tone === 'mid') {
+      ties.push(token.uuid);
+      rows.push(tieButtons({ kind: 'area', tokenUuid: token.uuid, actorUuid: target.uuid, name: token.name }));
     }
   }
   setTargets(hits);
@@ -433,7 +485,7 @@ async function onPlaceAreaFromAttack(button) {
   await createChatMessage({
     actor,
     content,
-    flags: { sdm: { areaCard: { sceneId: scene.id, areaId: placed.areaId, hits: hits.map(t => t.uuid) }, attackItem: flag } }
+    flags: { sdm: { areaCard: { sceneId: scene.id, areaId: placed.areaId, hits: hits.map(t => t.uuid), ties }, attackItem: flag } }
   });
 }
 
@@ -455,6 +507,15 @@ export function bindAreaButtons(message, html) {
       onPlacePowerArea(button);
     })
   );
+  // Ties (area card, splash): only the Referee decides
+  html.querySelectorAll('[data-action="sdmTieSacrifice"]').forEach(button => {
+    if (!game.user.isGM) return button.remove();
+    button.addEventListener('click', event => {
+      event.preventDefault();
+      button.disabled = true;
+      onTieSacrifice(message, button).catch(error => console.error('SDM | Tie failed', error));
+    });
+  });
   const card = message?.getFlag?.('sdm', 'areaCard');
   if (!card) return;
   html.querySelectorAll('[data-action="sdmAreaTargetHits"]').forEach(button =>

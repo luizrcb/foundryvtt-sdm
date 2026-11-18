@@ -72,8 +72,10 @@ export function bindAttackFollowup(html) {
       // An area's damage: the tokens targeted now (the card targeted its hits; Shift+T adds or removes),
       // else the hits it stored
       if (button.dataset.areaTargets) {
-        const targeted = [...new Set([...(game.user.targets ?? [])].map(t => t.actor?.uuid).filter(Boolean))];
-        if (targeted.length) button.dataset.areaTargets = targeted.join(',');
+        const targeted = [...(game.user.targets ?? [])].map(t => t.actor?.uuid).filter(Boolean);
+        // …plus the ties the Referee let hit with a sacrifice
+        const sacrificed = (button.dataset.areaExtra ?? '').split(',').filter(Boolean);
+        if (targeted.length) button.dataset.areaTargets = [...new Set([...targeted, ...sacrificed])].join(',');
       }
       if (button.dataset.kind === 'rollNPCDamage') {
         return actor.performHudAction(

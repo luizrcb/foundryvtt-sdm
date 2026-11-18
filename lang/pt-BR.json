@@ -3207,8 +3207,14 @@
   "SDM.AreaLingers": "Persiste",
   "SDM.AreaLingersRounds": "Persiste {rounds} rodadas",
   "SDM.WeaponSplash": "Respingo",
-  "SDM.WeaponSplashHint": "Dano às criaturas ao lado do alvo, uma vez por ataque que acerta (ex.: 1d6).",
+  "SDM.WeaponSplashHint": "Dano às criaturas ao lado do alvo, uma vez por ataque (acerte ou erre): o ataque é comparado com a defesa de cada uma (ex.: 1d6).",
   "SDM.AttackFeature.SplashButton": "Respingo {formula} em volta de {target}",
-  "SDM.AttackFeature.SplashFlavor": "{item}: respingo em volta de {target} — {names}",
-  "SDM.AttackFeature.SplashNoToken": "O alvo não tem token nesta cena."
+  "SDM.AttackFeature.SplashFlavor": "{item}: respingo em volta de {target} (ataque {total}) — {names}",
+  "SDM.AttackFeature.SplashNoToken": "O alvo não tem token nesta cena.",
+  "SDM.AttackFeature.SplashHit": "{name} atingido (defesa {defense})",
+  "SDM.AttackFeature.SplashMiss": "{name} escapou (defesa {defense})",
+  "SDM.AreaTie": "{name}: empate — só acerta sacrificando algo (o Mediador decide)",
+  "SDM.AreaTieHit": "{name}: atingido (sacrificou algo)",
+  "SDM.AreaTieMiss": "{name}: errou (sem sacrifício)",
+  "SDM.AttackFeature.SplashTie": "{name} empatou (defesa {defense})"
 }

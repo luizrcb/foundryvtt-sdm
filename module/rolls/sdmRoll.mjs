@@ -328,7 +328,9 @@ export default class SDMRoll {
         targetActor: this.targetActor,
         success: attackSuccess,
         isNat1,
-        isNat20
+        isNat20,
+        total: this.roll.total,
+        attackTarget: this.attackTarget
       });
     }
     // A power with an area: place it; everyone inside can take the power's roll

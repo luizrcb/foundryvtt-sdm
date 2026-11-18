@@ -3207,8 +3207,14 @@
   "SDM.AreaLingers": "Lingers",
   "SDM.AreaLingersRounds": "Lingers {rounds} rounds",
   "SDM.WeaponSplash": "Splash",
-  "SDM.WeaponSplashHint": "Damage to the creatures next to the target, once per attack that hits (e.g. 1d6).",
+  "SDM.WeaponSplashHint": "Damage to the creatures next to the target, once per attack (hit or miss): the attack is compared with each one's defense (e.g. 1d6).",
   "SDM.AttackFeature.SplashButton": "Splash {formula} around {target}",
-  "SDM.AttackFeature.SplashFlavor": "{item}: splash around {target} — {names}",
-  "SDM.AttackFeature.SplashNoToken": "The target has no token on this scene."
+  "SDM.AttackFeature.SplashFlavor": "{item}: splash around {target} (attack {total}) — {names}",
+  "SDM.AttackFeature.SplashNoToken": "The target has no token on this scene.",
+  "SDM.AttackFeature.SplashHit": "{name} hit (defense {defense})",
+  "SDM.AttackFeature.SplashMiss": "{name} missed (defense {defense})",
+  "SDM.AreaTie": "{name}: a tie — hit only by sacrificing something (the Referee decides)",
+  "SDM.AreaTieHit": "{name}: hit (sacrificed something)",
+  "SDM.AreaTieMiss": "{name}: missed (no sacrifice)",
+  "SDM.AttackFeature.SplashTie": "{name} tied (defense {defense})"
 }
