@@ -69,6 +69,12 @@ export function bindAttackFollowup(html) {
       event.preventDefault();
       const actor = fromUuidSync(button.dataset.actorUuid);
       if (!actor?.isOwner) return;
+      // An area's damage: the tokens targeted now (the card targeted its hits; Shift+T adds or removes),
+      // else the hits it stored
+      if (button.dataset.areaTargets) {
+        const targeted = [...new Set([...(game.user.targets ?? [])].map(t => t.actor?.uuid).filter(Boolean))];
+        if (targeted.length) button.dataset.areaTargets = targeted.join(',');
+      }
       if (button.dataset.kind === 'rollNPCDamage') {
         return actor.performHudAction(
           'rollNPCDamage',

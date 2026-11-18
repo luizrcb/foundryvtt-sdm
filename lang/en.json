@@ -3197,5 +3197,11 @@
   "SDM.ExpertAtNote": "Expert at {thing}: +6 when the roll is about it (Expert Friends)",
   "SDM.AreaOutOfRange": "Beyond {item}'s range ({range}): the area's center is at {zone}.",
   "SDM.AreaTargetInside": "Target everyone inside",
-  "SDM.AreaInside": "Inside"
+  "SDM.AreaInside": "Inside",
+  "SDM.AreaAffects.Label": "Affects",
+  "SDM.AreaAffects.everyone": "Everyone",
+  "SDM.AreaAffects.enemies": "Enemies only",
+  "SDM.AreaAffects.allies": "Allies only",
+  "SDM.AreaShape.ring": "Ring",
+  "SDM.AreaShape.emanation": "Around the user"
 }

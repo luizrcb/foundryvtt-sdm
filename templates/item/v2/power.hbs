@@ -23,6 +23,10 @@
       <span class="v2-label">{{localize 'SDM.AreaShape.Label'}}</span>
       <select name="system.power.area_shape">{{selectOptions @root.areaShapes localize=true selected=system.power.area_shape}}</select>
     </label>
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.AreaAffects.Label'}}</span>
+      <select name="system.power.area_affects">{{selectOptions @root.areaAffects localize=true selected=system.power.area_affects}}</select>
+    </label>
     {{/if}}
     <label class="v2-field">
       <span class="v2-label">{{localize 'SDM.PowerDuration'}}</span>

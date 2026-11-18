@@ -3197,5 +3197,11 @@
   "SDM.ExpertAtNote": "Especialista em {thing}: +6 quando a rolagem for sobre isso (Amigos Especialistas)",
   "SDM.AreaOutOfRange": "Além do alcance de {item} ({range}): o centro da área está a {zone}.",
   "SDM.AreaTargetInside": "Mirar todos dentro",
-  "SDM.AreaInside": "Dentro"
+  "SDM.AreaInside": "Dentro",
+  "SDM.AreaAffects.Label": "Afeta",
+  "SDM.AreaAffects.everyone": "Todos",
+  "SDM.AreaAffects.enemies": "Só inimigos",
+  "SDM.AreaAffects.allies": "Só aliados",
+  "SDM.AreaShape.ring": "Anel",
+  "SDM.AreaShape.emanation": "Em volta do usuário"
 }

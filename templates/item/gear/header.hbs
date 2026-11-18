@@ -187,6 +187,10 @@
             <label class='resource-label'>{{localize 'SDM.AreaShape.Label'}}</label>
             <select name='system.area.shape'>{{selectOptions areaShapes localize=true selected=system.area.shape}}</select>
           </div>
+          <div class='resource'>
+            <label class='resource-label'>{{localize 'SDM.AreaAffects.Label'}}</label>
+            <select name='system.area.affects'>{{selectOptions areaAffects localize=true selected=system.area.affects}}</select>
+          </div>
           <div class='resource' data-tooltip="{{localize 'SDM.AreaVehicleHint'}}">
             <label class='resource-label'>{{localize 'SDM.AreaVehicle'}}</label>
             <input type='checkbox' name='system.area.vehicle' {{checked system.area.vehicle}} />

@@ -49,7 +49,13 @@ function areaPower(item, kind) {
 export function itemArea(item, kind = '') {
   const power = areaPower(item, kind);
   if (power?.area && AREA_METERS.foot[power.area]) {
-    return { size: power.area, shape: power.area_shape || 'circle', meters: AREA_METERS.foot[power.area], range: `${power.range ?? ''}` };
+    return {
+      size: power.area,
+      shape: power.area_shape || 'circle',
+      affects: power.area_affects || 'everyone',
+      meters: AREA_METERS.foot[power.area],
+      range: `${power.range ?? ''}`
+    };
   }
   if (kind === 'album' || kind === 'power') return null;
   const size = item?.system?.area?.value;
@@ -58,7 +64,7 @@ export function itemArea(item, kind = '') {
   const shape = item.system.area.shape || 'circle';
   const meters = AREA_METERS[item.system.area.vehicle ? 'vehicle' : 'foot'][size];
   const range = item.system?.weapon?.range || item.system?.range?.value || '';
-  return { size, shape, meters, range: `${range}` };
+  return { size, shape, affects: item.system.area.affects || 'everyone', meters, range: `${range}` };
 }
 
 /** "small circle (~10 ft)" in the world unit. */
@@ -86,7 +92,7 @@ function tokenCenter(token) {
 }
 
 /** The region shape of the area (Foundry v14 shapes: circle, cone, line, rectangle), placed at the cursor. */
-function areaShape(area, scene, origin) {
+function areaShape(area, scene, origin, token = null) {
   const across = area.meters * pixelsPerMeter(scene);
   switch (area.shape) {
     case 'cone':
@@ -95,6 +101,21 @@ function areaShape(area, scene, origin) {
       return { type: 'line', x: origin.x, y: origin.y, length: across, width: LINE_WIDTH_METERS * pixelsPerMeter(scene), rotation: 0, gridBased: true };
     case 'square':
       return { type: 'rectangle', x: 0, y: 0, width: across, height: across, anchorX: 0.5, anchorY: 0.5, rotation: 0, gridBased: true };
+    case 'ring': {
+      // A band one square wide (1.5 m) on the area's edge: a wall of fire around a point
+      const half = (LINE_WIDTH_METERS * pixelsPerMeter(scene)) / 2;
+      return { type: 'ring', x: 0, y: 0, radius: across / 2, innerWidth: half, outerWidth: half, gridBased: true };
+    }
+    case 'emanation': {
+      // Around the user's token (a burst from its space): the area's size beyond its edge
+      const source = token._source;
+      return {
+        type: 'emanation',
+        base: { type: 'token', x: source.x, y: source.y, width: source.width, height: source.height, shape: source.shape },
+        radius: across / 2,
+        gridBased: true
+      };
+    }
     default:
       return { type: 'circle', x: 0, y: 0, radius: across / 2, gridBased: true };
   }
@@ -113,7 +134,8 @@ export async function placeArea({ actor, item, kind = '' }) {
     if (area) ui.notifications.warn($l10n('SDM.AreaNoScene'));
     return null;
   }
-  const fromToken = area.shape === 'cone' || area.shape === 'line';
+  // Cones and lines start at the user's token; an emanation surrounds it
+  const fromToken = area.shape === 'cone' || area.shape === 'line' || area.shape === 'emanation';
   const sourceToken = actor?.getActiveTokens?.(false, true)?.find(t => t.parent === scene) ?? null;
   if (fromToken && !sourceToken) {
     ui.notifications.warn($fmt('SDM.AreaNeedsToken', { name: actor?.name ?? '' }));
@@ -124,7 +146,7 @@ export async function placeArea({ actor, item, kind = '' }) {
   const data = {
     name: item.name,
     color: game.user.color?.css,
-    shapes: [areaShape(area, scene, origin)],
+    shapes: [areaShape(area, scene, origin, sourceToken)],
     restriction: { enabled: false },
     visibility: CONST.REGION_VISIBILITY.ALWAYS,
     highlightMode: 'coverage',
@@ -134,6 +156,11 @@ export async function placeArea({ actor, item, kind = '' }) {
   };
   if (canvas.level?.id) data.levels = [canvas.level.id];
 
+  // An emanation needs no placing: it is around the token already
+  if (area.shape === 'emanation') {
+    const placed = new CONFIG.Region.documentClass(foundry.utils.deepClone(data), { parent: scene });
+    return finishPlacement({ area, scene, placed, sourceToken, fromToken, origin, areaId });
+  }
   ui.notifications.info($l10n('SDM.AreaPlaceHint'));
   // Cones and lines: the origin stays on the token, the cursor sets the direction
   const onMove = fromToken
@@ -151,11 +178,18 @@ export async function placeArea({ actor, item, kind = '' }) {
     return null;
   }
   if (!placed) return null;
+  return finishPlacement({ area, scene, placed, sourceToken, fromToken, origin, areaId });
+}
 
-  // Who is inside (the attacker too, unless the area starts at them: cones and lines)
+/** The tokens inside the placed area (its side), the range warning, then the region created. */
+async function finishPlacement({ area, scene, placed, sourceToken, fromToken, origin, areaId }) {
+  // Who is inside (the attacker too, unless the area starts at or surrounds them)
   const tokens = scene.tokens.filter(token => {
     if (token.hidden && !game.user.isGM) return false;
     if (fromToken && token === sourceToken) return false;
+    // No friendly fire (or only allies): by the disposition of the one placing it
+    if (sourceToken && area.affects === 'enemies' && token.disposition === sourceToken.disposition) return false;
+    if (sourceToken && area.affects === 'allies' && token.disposition !== sourceToken.disposition) return false;
     const center = tokenCenter(token);
     return placed.testPoint({ x: center.x, y: center.y, elevation: token.elevation ?? 0 });
   });

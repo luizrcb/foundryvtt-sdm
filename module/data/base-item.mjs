@@ -94,8 +94,10 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
         initial: ''
       }),
       // Shape of the area placed on the map (helpers/areas.mjs) and whether it takes the vehicle sizes
-      shape: new fields.StringField({ required: true, blank: false, initial: 'circle', choices: ['circle', 'cone', 'line', 'square'] }),
-      vehicle: new fields.BooleanField({ required: true, initial: false })
+      shape: new fields.StringField({ required: true, blank: false, initial: 'circle', choices: ['circle', 'cone', 'line', 'square', 'ring', 'emanation'] }),
+      vehicle: new fields.BooleanField({ required: true, initial: false }),
+      // Who the area hits: everyone inside, or only enemies / allies of the one placing it
+      affects: new fields.StringField({ required: true, blank: false, initial: 'everyone', choices: ['everyone', 'enemies', 'allies'] })
     });
 
     schema.range = new fields.SchemaField({

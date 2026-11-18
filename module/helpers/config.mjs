@@ -64,7 +64,15 @@ SDM.areaShapes = {
   circle: 'SDM.AreaShape.circle',
   cone: 'SDM.AreaShape.cone',
   line: 'SDM.AreaShape.line',
-  square: 'SDM.AreaShape.square'
+  square: 'SDM.AreaShape.square',
+  ring: 'SDM.AreaShape.ring',
+  emanation: 'SDM.AreaShape.emanation'
+};
+
+SDM.areaAffects = {
+  everyone: 'SDM.AreaAffects.everyone',
+  enemies: 'SDM.AreaAffects.enemies',
+  allies: 'SDM.AreaAffects.allies'
 };
 
 SDM.areaValues = {

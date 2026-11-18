@@ -44,6 +44,8 @@
         {{#if power.area}}
         <label><span>{{localize 'SDM.AreaShape.Label'}}</span>
           <select name="{{concat 'system.powers.' @index '.area_shape'}}">{{selectOptions @root.areaShapes localize=true selected=power.area_shape}}</select></label>
+        <label><span>{{localize 'SDM.AreaAffects.Label'}}</span>
+          <select name="{{concat 'system.powers.' @index '.area_affects'}}">{{selectOptions @root.areaAffects localize=true selected=power.area_affects}}</select></label>
         {{/if}}
       </div>
 
