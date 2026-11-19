@@ -44,6 +44,10 @@
 - **Effects panel**: an aura the actor radiates has a solid round border when it also applies to its actor, a dashed one when only to the others ("Aura — on itself too / not on itself" on hover); hovering an aura also shows the start of its description
 - **Leave a light on the map**: a lit item in hand can be left on the token's square (Token HUD light palette, or the item's right-click menu). With Item Piles it goes into a pile whose token sheds its light (it moves with the pile and goes with it) and whoever picks it up gets it back lit; without, an ambient light and the item's image mark the square under the token, the item stays in the inventory greyed and marked as left (it takes no slots and can't be lit), and *Pick up* on the owner's token HUD next to it brings it back lit. Leaving and picking it up spend nothing — only lighting does; the chat says so (Item Piles posts its own pick-ups)
 - **Item Piles**: an item dropped on the map keeps its effects on (its aura radiates from the pile), and a pile created by dropping any item takes its dropper's disposition (an aura for allies helps the dropper's side; the Referee's game sets it, so the Referee must be connected)
+- Damage each round (auras, lingering areas, the last foe) and hazards leave alone tokens at 0 life or defeated
+- Damage and power cards from an area keep only their per-token buttons and *Apply to all* (no −N / ½ / ×2 / heal row too)
+- An area card with nobody inside says why when *Affects* is set: "Nobody inside (enemies only)"
+- Rerolling a character no longer fails ("ActiveEffect … does not exist!") when deleting its items also removed some of its effects (a light, an aura's)
 ## v1.11.0
 
 - **Investing XP**: a new button next to Player XP on the character sheet lets players invest their Player XP in the character, in one of its hallmark items or in one of their pets, or donate it to another player's Player XP. The dialog shows how much XP each one needs to level up, and every investment is recorded in the chat
