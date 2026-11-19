@@ -711,6 +711,19 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       return;
     }
 
+    // An item with an area: place the area first, then roll. Right-click or Esc cancels the roll
+    // (nothing is paid); with no token for a cone or line it rolls, and Place area stays on the card
+    let areaPlaced = null;
+    if (canvas?.ready && canvas.scene && (isAttack || isPower || isPowerAlbum)) {
+      const areaItem = isAttack ? this.actor.items.get(plan.attackItem?.itemId ?? plan.attackItem?.id ?? '') : item;
+      const areaKind = isAttack ? plan.attackItem?.kind ?? '' : isPowerAlbum ? 'album' : 'power';
+      if (areaItem && itemArea(areaItem, areaKind)) {
+        const placed = await placeArea({ actor: this.actor, item: areaItem, kind: areaKind });
+        if (placed === false) return;
+        if (placed) areaPlaced = { placed, item: areaItem, kind: areaKind };
+      }
+    }
+
     // Weakened (optional condition automation): half the damage dealt, noted on the roll
     if ((isDamage || isPower || isPowerAlbum) && isWeakened(this.actor)) {
       title = `${title} (${game.i18n.localize('SDM.Condition.weakened.Note')})`;
@@ -779,19 +792,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     }
 
     rollData.isCtrl = isCtrl;
-    // An item with an area: place the area first (its tokens become the targets), then roll; the card
-    // checks everyone inside. Right-click or Esc skips placing (Place area stays on the card).
-    if (canvas?.ready && canvas.scene && (isAttack || isPower || isPowerAlbum)) {
-      const areaItem = isAttack ? this.actor.items.get(rollData.attackItem?.id ?? '') : item;
-      const areaKind = isAttack ? rollData.attackItem?.kind ?? '' : isPowerAlbum ? 'album' : 'power';
-      if (areaItem && itemArea(areaItem, areaKind)) {
-        const placed = await placeArea({ actor: this.actor, item: areaItem, kind: areaKind });
-        if (placed) {
-          rollData.areaPlaced = { placed, item: areaItem, kind: areaKind };
-          rollData.targetActor = null;
-          rollData.targetFromCard = false;
-        }
-      }
+    // The area placed before paying anything: its tokens become the targets; the card checks everyone inside
+    if (areaPlaced) {
+      rollData.areaPlaced = areaPlaced;
+      rollData.targetActor = null;
+      rollData.targetFromCard = false;
     }
     const sdmRoll = new SDMRoll(rollData);
     await sdmRoll.evaluate();

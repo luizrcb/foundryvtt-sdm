@@ -179,8 +179,11 @@ function squaresOf(meters, scene, { even = false } = {}) {
   return even ? Math.max(2, Math.round(squares / 2) * 2) : Math.max(1, Math.round(squares));
 }
 
-/** The squares (offsets {i, j}) a region covers more than half of (or the middle of), less the excluded ones. */
-function coveredSquares(region, scene, exclude = new Set()) {
+/**
+ * The squares (offsets {i, j}) a region covers more than half of (or the middle of), less the
+ * excluded ones; touched: every square it touches at all (cones).
+ */
+function coveredSquares(region, scene, exclude = new Set(), { touched = false } = {}) {
   const size = scene.grid.size;
   const bounds = region.bounds;
   const squares = [];
@@ -190,17 +193,23 @@ function coveredSquares(region, scene, exclude = new Set()) {
   const j0 = Math.floor(bounds.x / size);
   const j1 = Math.ceil((bounds.x + bounds.width) / size);
   const tree = region.polygonTree;
+  // Touched: a finer sample, so slivers count too
+  const samples = touched ? 12 : SAMPLES;
   for (let i = i0; i < i1; i++) {
     for (let j = j0; j < j1; j++) {
       if (exclude.has(`${i}.${j}`)) continue;
       let inside = 0;
-      for (let a = 0; a < SAMPLES; a++) {
-        for (let b = 0; b < SAMPLES; b++) {
-          if (tree.testPoint({ x: (j + (b + 0.5) / SAMPLES) * size, y: (i + (a + 0.5) / SAMPLES) * size })) inside++;
+      for (let a = 0; a < samples && !(touched && inside); a++) {
+        for (let b = 0; b < samples; b++) {
+          if (tree.testPoint({ x: (j + (b + 0.5) / samples) * size, y: (i + (a + 0.5) / samples) * size })) inside++;
         }
       }
+      if (touched) {
+        if (inside) squares.push({ i, j });
+        continue;
+      }
       // A narrow cone's point covers little of a square: its middle inside counts too
-      if (inside * 2 > SAMPLES * SAMPLES || tree.testPoint({ x: (j + 0.5) * size, y: (i + 0.5) * size })) squares.push({ i, j });
+      if (inside * 2 > samples * samples || tree.testPoint({ x: (j + 0.5) * size, y: (i + 0.5) * size })) squares.push({ i, j });
     }
   }
   return squares;
@@ -323,7 +332,8 @@ function areaShape(area, scene, origin, token = null) {
  * the wheel rotates it, click places it, right-click or Esc cancels) and target the tokens inside.
  * On square grids it snaps to intersections (always) and shows the squares it covers; cones and
  * lines start on an intersection of the user's token edge and point at the cursor.
- * @returns {Promise<{areaId, tokens: TokenDocument[]}|null>} null when cancelled or impossible.
+ * @returns {Promise<{areaId, tokens: TokenDocument[]}|false|null>} false when the user cancelled
+ *   (right-click or Esc), null when it can't be placed (no scene, no token for a cone).
  */
 export async function placeArea({ actor, item, kind = '' }) {
   const area = itemArea(item, kind);
@@ -387,7 +397,7 @@ export async function placeArea({ actor, item, kind = '' }) {
     shape.updateSource(snapToIntersection(position));
     return false;
   };
-  const onChange = squares ? ({ document }) => previewSquares(coveredSquares(document, scene, userSquares), color) : undefined;
+  const onChange = squares ? ({ document }) => previewSquares(coveredSquares(document, scene, userSquares, { touched: area.shape === 'cone' }), color) : undefined;
   let placed;
   try {
     placed = await canvas.regions.placeRegion(data, { create: false, onMove, onChange, allowRotation: !fromToken && !squares });
@@ -397,7 +407,7 @@ export async function placeArea({ actor, item, kind = '' }) {
   } finally {
     if (squares) clearPreview();
   }
-  if (!placed) return null;
+  if (!placed) return false;
   return finishPlacement({ area, scene, placed, sourceToken, fromToken, origin, areaId });
 }
 
@@ -422,7 +432,7 @@ async function finishPlacement({ area, scene, placed, sourceToken, fromToken, or
   if (squareGrid(scene)) {
     // The squares it covers more than half of (not the user's own for cones, lines and emanations)
     const exclude = new Set(fromToken && sourceToken ? tokenSquares(sourceToken).map(squareKey) : []);
-    const squares = coveredSquares(placed, scene, exclude);
+    const squares = coveredSquares(placed, scene, exclude, { touched: area.shape === 'cone' });
     tokens = tokensOnSquares(squares, candidates);
     if (squares.length) regionData.shapes = squareShapes(squares, scene);
   } else {
@@ -573,7 +583,7 @@ export async function splashTokens({ splash, attackerToken, targetToken, name })
             if (aim) shape.updateSource(aim);
             return false;
           },
-          onChange: squares ? ({ document }) => previewSquares(coveredSquares(document, scene, exclude), color) : undefined
+          onChange: squares ? ({ document }) => previewSquares(coveredSquares(document, scene, exclude, { touched: true }), color) : undefined
         }
       );
     } catch (error) {
@@ -596,7 +606,7 @@ export async function splashTokens({ splash, attackerToken, targetToken, name })
   // Square grids: anyone on a square it covers more than half of (not the target's or attacker's squares)
   if (squares) {
     const exclude = new Set([...tokenSquares(targetToken), ...(attackerToken ? tokenSquares(attackerToken) : [])].map(squareKey));
-    return tokensOnSquares(coveredSquares(region, scene, exclude), candidates);
+    return tokensOnSquares(coveredSquares(region, scene, exclude, { touched: splash.shape !== 'behind_line' }), candidates);
   }
   return candidates.filter(t => {
     const c = tokenCenter(t);
