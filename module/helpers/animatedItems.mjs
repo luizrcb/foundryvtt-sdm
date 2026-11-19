@@ -68,8 +68,15 @@ export function normalizeNpcTable(table) {
   return NPC_TABLE_KEYS().includes(table) ? table : 'generic-synthesized-creature';
 }
 
+/** A ride with no table picked: vehicles are Brick Bastions, mounts the generic creature. */
+export function defaultRideTable(item) {
+  return item?.type === ItemType.VEHICLE ? 'brick-bastions' : 'generic-synthesized-creature';
+}
+
 export function getAnimationTable(item) {
-  return normalizeNpcTable(item.system.animation?.table);
+  const table = item.system.animation?.table;
+  if (!table && isRideItem(item)) return defaultRideTable(item);
+  return normalizeNpcTable(table);
 }
 
 export function getAnimationTableChoices() {

@@ -9,7 +9,7 @@
  */
 import { ItemType } from './constants.mjs';
 import { getNPCDataByLevel, NPC_CUSTOM_TABLE } from './actorUtils.mjs';
-import { normalizeNpcTable } from './animatedItems.mjs';
+import { defaultRideTable, normalizeNpcTable } from './animatedItems.mjs';
 
 // Lvl, Life, Def, Bon, Dmg (the book's table, levels 0–13)
 const RIDE_TABLE = [
@@ -45,10 +45,14 @@ export function isSemiSentientRide(item, features = item?.system?.features) {
   return featureSet(features).has('ride_semi_sentient');
 }
 
-/** The ride's table: the book's ride table (non-sentient), else its NPC table ("custom": none). */
+/**
+ * The ride's table: the book's ride table (non-sentient), else its NPC table ("custom": none); with
+ * none picked, vehicles use Brick Bastions and mounts the generic creature.
+ */
 export function rideTable(item, { features, table } = {}) {
   if (!isSentientRide(item, features ?? item?.system?.features)) return 'ride';
-  return normalizeNpcTable(table ?? item?.system?.animation?.table);
+  const picked = table ?? item?.system?.animation?.table;
+  return picked ? normalizeNpcTable(picked) : defaultRideTable(item);
 }
 
 /** Life, defense, bonus, damage (and morale for sentient rides) at a level, or null ("custom"). */
