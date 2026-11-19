@@ -3252,5 +3252,10 @@
   "SDM.AreaSaveResult.shorter": "Mais curto",
   "SDM.AreaSaveResult.failed": "Falhou",
   "SDM.AreaSaveResult.equal": "Empate",
-  "SDM.AreaSaveResult.pending": "Salvando…"
+  "SDM.AreaSaveResult.pending": "Salvando…",
+  "SDM.AreaDraw": "Desenhar área",
+  "SDM.AreaDrawSize": "Tamanho",
+  "SDM.AreaDrawPlace": "Posicionar",
+  "SDM.AreaDrawClear": "Apagar áreas desenhadas",
+  "SDM.AreaDrawNeedsToken": "Selecione um token: cones, linhas e \"ao redor do usuário\" saem dele."
 }

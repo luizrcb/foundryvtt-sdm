@@ -26,26 +26,30 @@ const SAVE_ACTION = 'areaSave';
 const AREA_FLAG = 'area';
 
 /**
- * Sizes in standard squares (1.5 m / 5 ft), from the book's area table: circles, squares and rings by
- * the squares across (2 / 6 / 20: ~3 / 9 / 30 m); cones by length, 30° / 60° / 90° wide (3 / 6 / 11:
- * ~4 / 9 / 16 m); lines by length, one square wide (5 / 21 / 85: ~8 / 32 / 128 m). Vehicle weapons:
- * circles ~10 / 50 / 150 m across, cones and lines five times as long. Other grid scales convert by
- * meters, so the area keeps its size.
+ * Sizes in standard squares (1.5 m / 5 ft): the book's area table mixed with the d20 grid rules,
+ * checked against the book's numbers of targets (a few / some / many). Circles and squares by the
+ * squares across (2 / 6 / 20: ~3 / 9 / 30 m, on an intersection); rings by the squares across,
+ * centered on a square (5 / 11 / 21), a wall one square thick; cones by length (3 / 6 / 11: 7 / 24 /
+ * 71 squares straight, about as wide as they are far); lines by length, one square wide (4 / 12 /
+ * 24). Vehicle weapons: circles ~10 / 50 / 150 m across, cones and lines five times as long. Other
+ * grid scales convert by meters, so the area keeps its size.
  */
 const SQUARE_METERS = 1.5;
 const AREA_SQUARES = {
   foot: {
     across: { small: 2, medium: 6, large: 20 },
+    ring: { small: 5, medium: 11, large: 21 },
     cone: { small: 3, medium: 6, large: 11 },
-    line: { small: 5, medium: 21, large: 85 }
+    line: { small: 4, medium: 12, large: 24 }
   },
   vehicle: {
     across: { small: 6, medium: 34, large: 100 },
+    ring: { small: 7, medium: 33, large: 101 },
     cone: { small: 15, medium: 30, large: 55 },
-    line: { small: 25, medium: 105, large: 425 }
+    line: { small: 20, medium: 60, large: 120 }
   }
 };
-const CONE_ANGLES = { small: 30, medium: 60, large: 90 };
+const CONE_ANGLE = 60; // degrees: the guide while placing, and the cone on gridless and hex scenes
 const LINE_WIDTH_METERS = SQUARE_METERS;
 const AREA_SIZES = ['small', 'medium', 'large'];
 const isAreaSize = size => AREA_SIZES.includes(size);
@@ -56,8 +60,8 @@ const isAreaSize = size => AREA_SIZES.includes(size);
  */
 function areaSize(size, shape, { vehicle = false, across = 0 } = {}) {
   const table = AREA_SQUARES[vehicle ? 'vehicle' : 'foot'];
-  const squares = (shape === 'cone' ? table.cone : shape === 'line' ? table.line : table.across)[size] ?? table.across.small;
-  const angle = shape === 'cone' ? CONE_ANGLES[size] ?? 60 : null;
+  const squares = (table[shape] ?? table.across)[size] ?? table.across.small;
+  const angle = shape === 'cone' ? CONE_ANGLE : null;
   if (Number(across) > 0) return { meters: metersForWorldUnits(across), angle, distance: Number(across) };
   const distance = worldUnit() === 'ft' ? squares * 5 : worldUnit() === 'm' ? squares * SQUARE_METERS : worldUnitsForMeters(squares * SQUARE_METERS);
   return { meters: squares * SQUARE_METERS, angle, distance };
@@ -173,10 +177,33 @@ const metersPerSquare = scene => scene.grid.distance / sceneUnitsForMeters(1, sc
 const SAMPLES = 6; // 6 × 6 points per square: more than half of them inside counts it
 const squareKey = ({ i, j }) => `${i}.${j}`;
 
-/** A size in the scene's squares (even for areas centered on an intersection). */
-function squaresOf(meters, scene, { even = false } = {}) {
+/** A size in the scene's squares (even for areas centered on an intersection, odd for those on a square). */
+function squaresOf(meters, scene, { even = false, odd = false } = {}) {
   const squares = meters / metersPerSquare(scene);
-  return even ? Math.max(2, Math.round(squares / 2) * 2) : Math.max(1, Math.round(squares));
+  if (even) return Math.max(2, Math.round(squares / 2) * 2);
+  if (odd) return Math.max(3, 2 * Math.round((squares - 1) / 2) + 1);
+  return Math.max(1, Math.round(squares));
+}
+
+/**
+ * A ring's wall closed at its diagonals: where two of its squares touch only by a corner, the square
+ * farther from the middle joins them (nobody slips through).
+ */
+function closeRing(squares, center, size) {
+  const keys = new Set(squares.map(squareKey));
+  const added = [];
+  const distance = ({ i, j }) => Math.hypot((j + 0.5) * size - center.x, (i + 0.5) * size - center.y);
+  for (const { i, j } of squares) {
+    for (const [di, dj] of [[1, 1], [1, -1]]) {
+      if (!keys.has(`${i + di}.${j + dj}`) || keys.has(`${i + di}.${j}`) || keys.has(`${i}.${j + dj}`)) continue;
+      const a = { i: i + di, j };
+      const b = { i, j: j + dj };
+      const pick = distance(a) >= distance(b) ? a : b;
+      keys.add(squareKey(pick));
+      added.push(pick);
+    }
+  }
+  return [...squares, ...added];
 }
 
 /** The squares (offsets {i, j}) a region covers more than half of (or the middle of), less the excluded ones. */
@@ -238,9 +265,6 @@ function tokensOnSquares(squares, candidates) {
   return candidates.filter(token => tokenSquares(token).some(offset => keys.has(squareKey(offset))));
 }
 
-/** The intersection nearest a point. */
-const snapToIntersection = point => canvas.grid.getSnappedPoint(point, { mode: CONST.GRID_SNAPPING_MODES.VERTEX });
-
 /** A cone or line on gridless and hex scenes: from the token's middle toward a point. */
 function aimShape(token, toward) {
   const origin = tokenCenter(token);
@@ -249,16 +273,13 @@ function aimShape(token, toward) {
 }
 
 const DIRECTIONS = [[1, 0], [1, 1], [0, 1], [-1, 1], [-1, 0], [-1, -1], [0, -1], [1, -1]];
-const nearestOdd = value => Math.max(1, 2 * Math.round((value - 1) / 2) + 1);
 
 /**
- * Cones and lines on square grids are fixed patterns in eight directions (the one nearest the
- * point), leaving the token's side (straight) or corner (diagonal). A straight line is one row of
- * squares and a diagonal one a staircase; a straight cone widens symmetrically row by row by its
- * angle (30° stays one square wide when small, 90° grows by two a row); a diagonal cone takes the
- * squares within its angle of the diagonal.
+ * Where a cone or line points (square grids): one of eight directions, the nearest to the point, from
+ * the middle of the token's side (straight: the row or column of the token nearest the point) or its
+ * corner (diagonal).
  */
-function patternSquares(token, point, shape, length, angle = 60) {
+function patternFrame(token, point) {
   const size = token.parent.grid.size;
   const ti = Math.round(token.y / size);
   const tj = Math.round(token.x / size);
@@ -268,24 +289,39 @@ function patternSquares(token, point, shape, length, angle = 60) {
   const index = (((Math.round(Math.atan2(point.y - center.y, point.x - center.x) / (Math.PI / 4)) % 8) + 8) % 8);
   const [dx, dy] = DIRECTIONS[index];
   const clamp = (value, min, max) => Math.min(Math.max(value, min), max);
-  const spread = Math.tan(Math.toRadians(angle / 2));
+  const axis = dx && dy ? null : dx ? clamp(Math.floor(point.y / size), ti, ti + h - 1) : clamp(Math.floor(point.x / size), tj, tj + w - 1);
+  let origin;
+  if (dx && dy) origin = { x: (dx > 0 ? tj + w : tj) * size, y: (dy > 0 ? ti + h : ti) * size };
+  else if (dx) origin = { x: (dx > 0 ? tj + w : tj) * size, y: (axis + 0.5) * size };
+  else origin = { x: (axis + 0.5) * size, y: (dy > 0 ? ti + h : ti) * size };
+  return { ti, tj, w, h, dx, dy, axis, origin, rotation: index * 45 };
+}
+
+/**
+ * Cones and lines on square grids are fixed patterns (the d20 way): a straight line is one row of
+ * squares and a diagonal one a staircase; a straight cone is as wide as it is far, symmetric (rows of
+ * 1, 3, 3, 5, 5, 7…); a diagonal cone fans out from the corner, the squares within 30° of the
+ * diagonal and its length.
+ */
+function patternSquares(token, point, shape, length) {
+  const { ti, tj, w, h, dx, dy, axis } = patternFrame(token, point);
   const squares = [];
   if (!dx || !dy) {
-    // The row (or column) of the token nearest the point is the middle of the pattern
-    const axis = dx ? clamp(Math.floor(point.y / size), ti, ti + h - 1) : clamp(Math.floor(point.x / size), tj, tj + w - 1);
     for (let k = 1; k <= length; k++) {
-      const width = shape === 'line' ? 1 : nearestOdd(2 * (k - 0.5) * spread);
+      const width = shape === 'line' ? 1 : 2 * Math.floor(k / 2) + 1;
       const step = dx ? (dx > 0 ? tj + w - 1 + k : tj - k) : dy > 0 ? ti + h - 1 + k : ti - k;
       for (let o = -(width - 1) / 2; o <= (width - 1) / 2; o++) squares.push(dx ? { i: axis + o, j: step } : { i: step, j: axis + o });
     }
     return squares;
   }
-  // Diagonal: from the token's corner
   const i0 = dy > 0 ? ti + h : ti - 1;
   const j0 = dx > 0 ? tj + w : tj - 1;
   for (let a = 0; a < length; a++) {
     for (let b = 0; b < length; b++) {
-      const inside = shape === 'line' ? a === b : Math.abs(Math.toDegrees(Math.atan2(b + 0.5, a + 0.5)) - 45) <= angle / 2 + 1e-6;
+      const inside =
+        shape === 'line'
+          ? a === b
+          : Math.abs(Math.toDegrees(Math.atan2(b + 0.5, a + 0.5)) - 45) <= CONE_ANGLE / 2 + 1e-6 && Math.hypot(a + 0.5, b + 0.5) <= length;
       if (inside) squares.push({ i: i0 + dy * b, j: j0 + dx * a });
     }
   }
@@ -293,50 +329,33 @@ function patternSquares(token, point, shape, length, angle = 60) {
 }
 
 /**
- * Point a cone or line (square grids): the pattern follows the cursor around the token, click places
- * it, right-click or Esc cancels. Resolves to its squares, or false when cancelled.
+ * Point a cone or line (square grids) with Foundry's placement, so its outline and measurements show:
+ * the guide turns to the nearest of eight directions around the token and the pattern's squares
+ * light up; click places it, right-click or Esc cancels. Resolves to the squares, or false.
  */
-function pickPattern(token, shape, length, angle) {
-  const view = canvas.app.view;
+async function placePattern({ data, token, shape, length, scene }) {
+  const size = scene.grid.size;
   const color = game.user.color ?? 0x33bbff;
-  let current = [];
-  const show = point => {
-    current = patternSquares(token, point, shape, length, angle);
-    previewSquares(current, color);
+  let last = canvas.mousePosition ?? tokenCenter(token);
+  const guide =
+    shape === 'cone'
+      ? { type: 'cone', x: 0, y: 0, radius: length * size, angle: CONE_ANGLE, rotation: 0, curvature: 'round', gridBased: false }
+      : { type: 'line', x: 0, y: 0, length: length * size, width: size, rotation: 0, gridBased: false };
+  const onMove = ({ shape: current, position }) => {
+    last = position;
+    const { origin, rotation } = patternFrame(token, position);
+    current.updateSource({ x: origin.x, y: origin.y, rotation });
+    return false;
   };
-  const fromEvent = event => canvas.canvasCoordinatesFromClient({ x: event.clientX, y: event.clientY });
-  return new Promise(resolve => {
-    const stop = event => {
-      event.preventDefault();
-      event.stopImmediatePropagation();
-    };
-    const finish = result => {
-      view.removeEventListener('pointermove', move, true);
-      view.removeEventListener('pointerdown', down, true);
-      view.removeEventListener('contextmenu', stop, true);
-      window.removeEventListener('keydown', key, true);
-      clearPreview();
-      resolve(result);
-    };
-    const move = event => show(fromEvent(event));
-    const down = event => {
-      if (event.button !== 0 && event.button !== 2) return;
-      stop(event);
-      if (event.button === 2) return finish(false);
-      show(fromEvent(event));
-      finish(current.length ? current : false);
-    };
-    const key = event => {
-      if (event.key !== 'Escape') return;
-      stop(event);
-      finish(false);
-    };
-    view.addEventListener('pointermove', move, true);
-    view.addEventListener('pointerdown', down, true);
-    view.addEventListener('contextmenu', stop, true);
-    window.addEventListener('keydown', key, true);
-    show(canvas.mousePosition ?? tokenCenter(token));
-  });
+  const onChange = () => previewSquares(patternSquares(token, last, shape, length), color);
+  let placed;
+  try {
+    placed = await canvas.regions.placeRegion({ ...data, shapes: [guide] }, { create: false, onMove, onChange, allowRotation: false });
+  } finally {
+    clearPreview();
+  }
+  if (!placed) return false;
+  return patternSquares(token, last, shape, length);
 }
 
 /** Show the squares while placing (the grid's highlight), or clear them. */
@@ -360,19 +379,22 @@ function areaShape(area, scene, origin, token = null) {
   const squares = squareGrid(scene);
   // On square grids the area is counted in squares (see coveredSquares), so the shape is exact
   const gridBased = !squares;
-  const centered = !['cone', 'line'].includes(area.shape);
-  const across = squares ? squaresOf(area.meters, scene, { even: centered }) * scene.grid.size : area.meters * pixelsPerMeter(scene);
+  // Circles and squares are centered on an intersection (even sizes), rings on a square (odd sizes)
+  const ring = area.shape === 'ring';
+  const centered = !['cone', 'line', 'ring'].includes(area.shape);
+  const across = squares ? squaresOf(area.meters, scene, { even: centered, odd: ring }) * scene.grid.size : area.meters * pixelsPerMeter(scene);
   const width = squares ? scene.grid.size : LINE_WIDTH_METERS * pixelsPerMeter(scene);
   switch (area.shape) {
     case 'cone':
-      return { type: 'cone', x: origin.x, y: origin.y, radius: across, angle: area.angle ?? 60, rotation: 0, curvature: 'round', gridBased };
+      return { type: 'cone', x: origin.x, y: origin.y, radius: across, angle: area.angle ?? CONE_ANGLE, rotation: 0, curvature: 'round', gridBased };
     case 'line':
       return { type: 'line', x: origin.x, y: origin.y, length: across, width, rotation: 0, gridBased };
     case 'square':
       return { type: 'rectangle', x: 0, y: 0, width: across, height: across, anchorX: 0.5, anchorY: 0.5, rotation: 0, gridBased };
     case 'ring':
-      // A band one square wide on the area's edge: a wall of fire around a point
-      return { type: 'ring', x: 0, y: 0, radius: across / 2, innerWidth: width / 2, outerWidth: width / 2, gridBased };
+      // A wall one square thick around a point: on square grids its outer squares make the size across
+      // (the wall's middle runs through their middles)
+      return { type: 'ring', x: 0, y: 0, radius: (squares ? across - width : across) / 2, innerWidth: width / 2, outerWidth: width / 2, gridBased };
     case 'emanation': {
       // Around the user's token (a burst from its space): the area's size beyond its edge
       const source = token._source;
@@ -391,29 +413,31 @@ function areaShape(area, scene, origin, token = null) {
 /**
  * Place the item's area on the current scene (Foundry's region placement: it follows the cursor,
  * the wheel rotates it, click places it, right-click or Esc cancels) and target the tokens inside.
- * On square grids it snaps to intersections (always) and shows the squares it covers; cones and
- * lines start on an intersection of the user's token edge and point at the cursor.
+ * On square grids circles and squares snap to intersections and rings to the middle of a square
+ * (always), showing the squares they cover; cones and lines are fixed patterns pointed around the
+ * user's token. Without an item (area: drawn from the scene controls) it only draws the area.
  * @returns {Promise<{areaId, tokens: TokenDocument[]}|false|null>} false when the user cancelled
  *   (right-click or Esc), null when it can't be placed (no scene, no token for a cone).
  */
-export async function placeArea({ actor, item, kind = '' }) {
-  const area = itemArea(item, kind);
+export async function placeArea({ actor = null, item = null, kind = '', area: given = null, token = null, name = '' }) {
+  const area = given ?? itemArea(item, kind);
   const scene = canvas?.scene;
   if (!area || !scene || !canvas.ready) {
     if (area) ui.notifications.warn($l10n('SDM.AreaNoScene'));
     return null;
   }
+  const free = !item;
   // Cones and lines start at the user's token; an emanation surrounds it
   const fromToken = area.shape === 'cone' || area.shape === 'line' || area.shape === 'emanation';
-  const sourceToken = actor?.getActiveTokens?.(false, true)?.find(t => t.parent === scene) ?? null;
+  const sourceToken = token ?? actor?.getActiveTokens?.(false, true)?.find(t => t.parent === scene) ?? null;
   if (fromToken && !sourceToken) {
-    ui.notifications.warn($fmt('SDM.AreaNeedsToken', { name: actor?.name ?? '' }));
+    ui.notifications.warn(free ? $l10n('SDM.AreaDrawNeedsToken') : $fmt('SDM.AreaNeedsToken', { name: actor?.name ?? '' }));
     return null;
   }
   const origin = sourceToken ? tokenCenter(sourceToken) : { x: 0, y: 0 };
   const areaId = foundry.utils.randomID();
   const data = {
-    name: item.name,
+    name: item?.name ?? name,
     color: game.user.color?.css,
     shapes: [areaShape(area, scene, origin, sourceToken)],
     restriction: { enabled: false },
@@ -421,10 +445,10 @@ export async function placeArea({ actor, item, kind = '' }) {
     highlightMode: 'coverage',
     displayMeasurements: true,
     ownership: { default: CONST.DOCUMENT_OWNERSHIP_LEVELS.NONE, [game.user.id]: CONST.DOCUMENT_OWNERSHIP_LEVELS.OWNER },
-    flags: { sdm: { [AREA_FLAG]: { id: areaId, item: item.uuid, actor: actor?.uuid ?? '', user: game.user.id } } }
+    flags: { sdm: { [AREA_FLAG]: { id: areaId, item: item?.uuid ?? '', actor: actor?.uuid ?? '', user: game.user.id, ...(free ? { free: true } : {}) } } }
   };
   // Lingering: whoever stands in it has the item's effects (helpers/auras.mjs keeps them), for some rounds
-  const effects = area.linger ? lingerEffects(item) : [];
+  const effects = item && area.linger ? lingerEffects(item) : [];
   if (effects.length) {
     const combat = game.combats.find(c => c.started && c.scene?.id === scene.id) ?? null;
     Object.assign(data.flags.sdm[AREA_FLAG], {
@@ -437,24 +461,28 @@ export async function placeArea({ actor, item, kind = '' }) {
     });
   }
   if (canvas.level?.id) data.levels = [canvas.level.id];
+  const finish = (placed, squares = null) => finishPlacement({ area, scene, placed, sourceToken, fromToken, origin, areaId, squares, free });
 
   // An emanation needs no placing: it is around the token already
-  if (area.shape === 'emanation') {
-    const placed = new CONFIG.Region.documentClass(foundry.utils.deepClone(data), { parent: scene });
-    return finishPlacement({ area, scene, placed, sourceToken, fromToken, origin, areaId });
-  }
+  if (area.shape === 'emanation') return finish(new CONFIG.Region.documentClass(foundry.utils.deepClone(data), { parent: scene }));
   ui.notifications.info($l10n('SDM.AreaPlaceHint'));
   const squares = squareGrid(scene);
   // Square grids: cones and lines are fixed patterns pointed around the token
   if (squares && (area.shape === 'cone' || area.shape === 'line')) {
-    const picked = await pickPattern(sourceToken, area.shape, squaresOf(area.meters, scene), area.angle ?? 60);
+    let picked;
+    try {
+      picked = await placePattern({ data, token: sourceToken, shape: area.shape, length: squaresOf(area.meters, scene), scene });
+    } catch (error) {
+      console.error('SDM | Placing the area failed', error);
+      return null;
+    }
     if (!picked) return false;
-    const placed = new CONFIG.Region.documentClass({ ...foundry.utils.deepClone(data), shapes: squareShapes(picked, scene) }, { parent: scene });
-    return finishPlacement({ area, scene, placed, sourceToken, fromToken, origin, areaId, squares: picked });
+    return finish(new CONFIG.Region.documentClass({ ...foundry.utils.deepClone(data), shapes: squareShapes(picked, scene) }, { parent: scene }), picked);
   }
-  const userSquares = new Set(fromToken && sourceToken ? tokenSquares(sourceToken).map(squareKey) : []);
   const color = game.user.color ?? 0x33bbff;
-  // Cones and lines: from the token toward the cursor; the rest on the intersection nearest the cursor
+  const ring = area.shape === 'ring';
+  // Cones and lines (gridless, hex): from the token toward the cursor; square grids: rings on the middle
+  // of a square, the rest on the intersection nearest the cursor
   const onMove = ({ shape, position }) => {
     if (fromToken) {
       const aim = aimShape(sourceToken, position);
@@ -462,10 +490,10 @@ export async function placeArea({ actor, item, kind = '' }) {
       return false;
     }
     if (!squares) return;
-    shape.updateSource(snapToIntersection(position));
+    shape.updateSource(canvas.grid.getSnappedPoint(position, { mode: ring ? CONST.GRID_SNAPPING_MODES.CENTER : CONST.GRID_SNAPPING_MODES.VERTEX }));
     return false;
   };
-  const onChange = squares ? ({ document }) => previewSquares(coveredSquares(document, scene, userSquares), color) : undefined;
+  const onChange = squares ? ({ document }) => previewSquares(areaSquares(area, document, scene), color) : undefined;
   let placed;
   try {
     placed = await canvas.regions.placeRegion(data, { create: false, onMove, onChange, allowRotation: !fromToken && !squares });
@@ -476,11 +504,19 @@ export async function placeArea({ actor, item, kind = '' }) {
     if (squares) clearPreview();
   }
   if (!placed) return false;
-  return finishPlacement({ area, scene, placed, sourceToken, fromToken, origin, areaId });
+  return finish(placed);
+}
+
+/** The squares a placed (circle, square, ring, emanation) area covers; a ring's wall closed at its diagonals. */
+function areaSquares(area, region, scene, exclude = new Set()) {
+  const squares = coveredSquares(region, scene, exclude);
+  if (area.shape !== 'ring') return squares;
+  const shape = region.shapes[0];
+  return closeRing(squares, { x: shape.x, y: shape.y }, scene.grid.size);
 }
 
 /** The tokens inside the placed area (its side), the range warning, then the region created. */
-async function finishPlacement({ area, scene, placed, sourceToken, fromToken, origin, areaId, squares: picked = null }) {
+async function finishPlacement({ area, scene, placed, sourceToken, fromToken, origin, areaId, squares: picked = null, free = false }) {
   const candidates = scene.tokens.filter(token => {
     if (token.hidden && !game.user.isGM) return false;
     // The area starting at or surrounding its user leaves the user out
@@ -492,17 +528,21 @@ async function finishPlacement({ area, scene, placed, sourceToken, fromToken, or
   });
 
   // Its center within the item's range (a zone band): a warning when beyond (no penalty, your call)
-  const outOfRange = !fromToken && sourceToken ? rangeWarning(area, scene, origin, placed) : '';
+  const outOfRange = !free && !fromToken && sourceToken ? rangeWarning(area, scene, origin, placed) : '';
   if (outOfRange) ui.notifications.warn(outOfRange);
 
   const regionData = placed.toObject();
   let tokens;
   if (squareGrid(scene)) {
-    // The squares it covers more than half of (not the user's own for cones, lines and emanations)
+    // The squares it covers (not the user's own for cones, lines and emanations), drawn as those squares
     const exclude = new Set(fromToken && sourceToken ? tokenSquares(sourceToken).map(squareKey) : []);
-    const squares = picked ?? coveredSquares(placed, scene, exclude);
+    const squares = picked ?? areaSquares(area, placed, scene, exclude);
     tokens = tokensOnSquares(squares, candidates);
-    if (squares.length) regionData.shapes = squareShapes(squares, scene);
+    if (squares.length) {
+      regionData.shapes = squareShapes(squares, scene);
+      // The measurements were for placing it: on the squares they'd be one label per row
+      regionData.displayMeasurements = false;
+    }
   } else {
     tokens = candidates.filter(token => {
       const center = tokenCenter(token);
@@ -517,8 +557,58 @@ async function finishPlacement({ area, scene, placed, sourceToken, fromToken, or
     if (sourceToken.level !== undefined && sourceToken.level !== null) regionData.levels = [sourceToken.level];
   }
   await createArea(scene, regionData);
-  setTargets(tokens);
+  // Drawn only (no item): nobody is targeted
+  if (!free) setTargets(tokens);
   return { areaId, tokens, outOfRange, lingers: !!placed.getFlag('sdm', AREA_FLAG)?.linger };
+}
+
+/* -------------------------------------------- */
+/*  Drawing an area (no item)                   */
+/* -------------------------------------------- */
+
+/**
+ * The scene controls' "Area" button: pick a shape and a size and place it on the map, with no item,
+ * roll or card (cones, lines and "around the user" from the selected token). Also removes the areas
+ * drawn this way (the user's own; the Referee's: everyone's on the scene).
+ */
+export async function drawArea() {
+  if (!canvas?.ready || !canvas.scene) return ui.notifications.warn($l10n('SDM.AreaNoScene'));
+  const option = (value, label, selected) => `<option value="${value}"${selected ? ' selected' : ''}>${esc($l10n(label))}</option>`;
+  const shapes = Object.entries(CONFIG.SDM.areaShapes).map(([key, label], index) => option(key, label, index === 0)).join('');
+  const sizes = AREA_SIZES.map(key => option(key, CONFIG.SDM.areaValues[key], key === 'medium')).join('');
+  const content =
+    `<div class="form-group"><label>${esc($l10n('SDM.AreaShape.Label'))}</label><select name="shape">${shapes}</select></div>` +
+    `<div class="form-group"><label>${esc($l10n('SDM.AreaDrawSize'))}</label><select name="size">${sizes}</select></div>`;
+  const choice = await foundry.applications.api.DialogV2.wait({
+    window: { title: 'SDM.AreaDraw', icon: 'fa-solid fa-draw-polygon' },
+    content,
+    buttons: [
+      {
+        action: 'place',
+        label: 'SDM.AreaDrawPlace',
+        icon: 'fa-solid fa-bullseye',
+        default: true,
+        callback: (event, button) => ({ shape: button.form.elements.shape.value, size: button.form.elements.size.value })
+      },
+      { action: 'clear', label: 'SDM.AreaDrawClear', icon: 'fa-solid fa-eraser', callback: () => 'clear' }
+    ],
+    rejectClose: false
+  });
+  if (!choice) return;
+  if (choice === 'clear') return clearDrawnAreas();
+  const area = { ...areaSize(choice.size, choice.shape), size: choice.size, shape: choice.shape, affects: 'everyone', linger: false, rounds: 0, follows: false, save: null, range: '' };
+  const token = canvas.tokens.controlled[0]?.document ?? game.user.character?.getActiveTokens?.(false, true)?.find(t => t.parent === canvas.scene) ?? null;
+  const label = `${$l10n(CONFIG.SDM.areaValues[choice.size])} ${$l10n(CONFIG.SDM.areaShapes[choice.shape]).toLowerCase()}`;
+  await placeArea({ area, token, name: label });
+}
+
+/** Remove the areas drawn with the Area button: the user's own, or (the Referee) all on the scene. */
+async function clearDrawnAreas() {
+  const regions = canvas.scene.regions.filter(r => {
+    const flag = r.getFlag('sdm', AREA_FLAG);
+    return flag?.free && (game.user.isGM || flag.user === game.user.id);
+  });
+  for (const region of regions) await removeArea(canvas.scene.id, region.getFlag('sdm', AREA_FLAG).id);
 }
 
 /** "Beyond Fireball's range (short): the area's center is at medium." when the center is out of range. */
@@ -640,13 +730,18 @@ export async function splashTokens({ splash, attackerToken, targetToken, name })
         return null;
       }
       ui.notifications.info($l10n('SDM.AreaPlaceHint'));
-      picked = await pickPattern(attackerToken, 'cone', size, splash.angle ?? 60);
+      try {
+        picked = await placePattern({ data: base, token: attackerToken, shape: 'cone', length: size, scene });
+      } catch (error) {
+        console.error('SDM | Placing the splash failed', error);
+        return null;
+      }
       if (!picked) return null;
     } else {
       // Behind the target: from its far side, away from the attacker
       const from = attackerToken ? tokenCenter(attackerToken) : { x: target.x - 1, y: target.y };
       const beyond = { x: target.x + (target.x - from.x), y: target.y + (target.y - from.y) };
-      picked = patternSquares(targetToken, beyond, splash.shape === 'behind_line' ? 'line' : 'cone', size, splash.angle ?? 60);
+      picked = patternSquares(targetToken, beyond, splash.shape === 'behind_line' ? 'line' : 'cone', size);
     }
     return tokensOnSquares(picked.filter(square => !exclude.has(squareKey(square))), candidates);
   }
@@ -656,7 +751,7 @@ export async function splashTokens({ splash, attackerToken, targetToken, name })
       ui.notifications.warn($l10n('SDM.AttackFeature.SplashNoAttacker'));
       return null;
     }
-    const cone = { type: 'cone', radius: length, angle: splash.angle ?? 60, curvature: 'round', gridBased };
+    const cone = { type: 'cone', radius: length, angle: CONE_ANGLE, curvature: 'round', gridBased };
     Object.assign(cone, aimShape(attackerToken, target) ?? { ...tokenCenter(attackerToken), rotation: 0 });
     ui.notifications.info($l10n('SDM.AreaPlaceHint'));
     try {
@@ -684,7 +779,7 @@ export async function splashTokens({ splash, attackerToken, targetToken, name })
     const shape =
       splash.shape === 'behind_line'
         ? { type: 'line', x: target.x, y: target.y, length, width, rotation, gridBased }
-        : { type: 'cone', x: target.x, y: target.y, radius: length, angle: splash.angle ?? 60, rotation, curvature: 'round', gridBased };
+        : { type: 'cone', x: target.x, y: target.y, radius: length, angle: CONE_ANGLE, rotation, curvature: 'round', gridBased };
     region = new CONFIG.Region.documentClass({ ...base, shapes: [shape] }, { parent: scene });
   }
   return candidates.filter(t => {

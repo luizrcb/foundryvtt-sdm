@@ -69,7 +69,7 @@ import { setupNpcVariability } from './helpers/npcVariability.mjs';
 import { configureConditions, localizeConditions, setupConditions } from './helpers/conditions.mjs';
 import { setupZones } from './helpers/zones.mjs';
 import { setupAuras } from './helpers/auras.mjs';
-import { bindAreaButtons, setupAreas } from './helpers/areas.mjs';
+import { bindAreaButtons, drawArea, setupAreas } from './helpers/areas.mjs';
 import { bindAttackFollowup } from './rolls/attackFollowup.mjs';
 import { bindAttackFeatures } from './rolls/attackFeatures.mjs';
 import { bindSacrifice, bindSaveAgainst, rerenderChangedSave, setupSaveAgainst } from './app/save-against.mjs';
@@ -227,6 +227,16 @@ Hooks.on('getSceneControlButtons', function (controls) {
       }
     };
   }
+  // Draw an area on the map (no item, roll or card): helpers/areas.mjs
+  controls.tokens.tools['sdm-area'] = {
+    icon: 'fa-solid fa-draw-polygon',
+    name: 'sdm-area',
+    title: 'SDM.AreaDraw',
+    button: true,
+    onChange: async (event, active) => {
+      if (active) await drawArea();
+    }
+  };
   controls.tokens.tools['sdm-dice-oracles'] = {
     icon: 'fa-solid fa-dice',
     name: 'sdm-dice-oracles',
