@@ -49,15 +49,15 @@
     ],
     "attributes": {
       "initiative": "",
-      "level": 0,
+      "level": 11,
       "life": {
-        "value": 1,
-        "max": 1
+        "value": 155,
+        "max": 155
       },
-      "morale": 2,
-      "defense": 7,
-      "bonus": 1,
-      "damage": "1d4",
+      "morale": 9,
+      "defense": 16,
+      "bonus": 13,
+      "damage": "1d20+1d8+13",
       "capacity": 1
     },
     "is_hallmark": false,
@@ -69,7 +69,11 @@
     "supply": "3",
     "capacity": 60,
     "speed": -1,
-    "automatic": true
+    "automatic": true,
+    "animation": {
+      "table": "generic-synthesized-creature",
+      "filled": true
+    }
   },
   "effects": [],
   "sort": 0,

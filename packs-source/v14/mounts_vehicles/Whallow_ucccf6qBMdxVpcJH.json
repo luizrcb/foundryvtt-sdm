@@ -49,15 +49,15 @@
     ],
     "attributes": {
       "initiative": "",
-      "level": 0,
+      "level": 8,
       "life": {
-        "value": 1,
-        "max": 1
+        "value": 110,
+        "max": 110
       },
-      "morale": 2,
-      "defense": 7,
-      "bonus": 1,
-      "damage": "1d4",
+      "morale": 0,
+      "defense": 4,
+      "bonus": 3,
+      "damage": "3d6+9",
       "capacity": 1
     },
     "is_hallmark": false,
@@ -69,7 +69,10 @@
     "supply": "1",
     "capacity": 40,
     "speed": -2,
-    "automatic": true
+    "automatic": true,
+    "animation": {
+      "filled": true
+    }
   },
   "effects": [],
   "sort": 0,
