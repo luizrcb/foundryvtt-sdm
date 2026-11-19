@@ -315,6 +315,10 @@
       <input type="number" name="system.area.round_condition_rounds" value="{{system.area.round_condition_rounds}}" min="0" step="1" data-dtype="Number" />
     </label>
     {{/if}}
+    <label class="v2-field" data-tooltip="{{localize 'SDM.AreaLightHint'}}">
+      <span class="v2-label">{{localize 'SDM.AreaLight'}}</span>
+      <select name="system.area.light">{{selectOptions @root.areaLights localize=true selected=system.area.light}}</select>
+    </label>
     {{/if}}
     <label class="v2-field" data-tooltip="{{localize 'SDM.AreaAcrossHint'}}">
       <span class="v2-label">{{localize 'SDM.AreaAcross'}}</span>

@@ -266,7 +266,7 @@ const LEFT_FLAG = 'lightLeft'; // on an item: it was left on the map lit (Item P
 const LEAVE_ACTION = 'sdmLightLeave';
 
 /** A token's (or an ambient light's) light config from the light settings. */
-function lightConfig(settings, distance) {
+export function lightConfig(settings, distance) {
   return {
     dim: settings.dim * distance,
     bright: settings.bright * distance,

@@ -357,6 +357,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       areaResolve: CONFIG.SDM.areaResolve,
       areaSavePass: CONFIG.SDM.areaSavePass,
       areaRoundDamage: CONFIG.SDM.areaRoundDamage,
+      areaLights: CONFIG.SDM.areaLights,
       // Save difficulties (standard, easier, harder, a target) and abilities, for areas resolved by a save
       areaSaveDifficulties: AREA_SAVE_DIFFICULTIES(),
       areaSaveAbilities: { '': 'SDM.AreaSaveAbilityAny', ...CONFIG.SDM.abilities },

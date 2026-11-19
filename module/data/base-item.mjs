@@ -118,7 +118,10 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       round_formula: new fields.StringField({ required: true, blank: true, initial: '' }),
       round_enter: new fields.BooleanField({ required: true, initial: false }),
       round_condition: new fields.StringField({ required: true, blank: true, initial: '' }),
-      round_condition_rounds: new fields.NumberField({ required: true, nullable: false, integer: true, min: 0, initial: 1 })
+      round_condition_rounds: new fields.NumberField({ required: true, nullable: false, integer: true, min: 0, initial: 1 }),
+      // A lingering area's light (none, its reach, a light preset): an ambient light in it, or the user's
+      // token when it follows the user
+      light: new fields.StringField({ required: true, blank: false, initial: 'none', choices: ['none', 'reach', 'torch', 'lantern', 'candle', 'glow'] })
     });
 
     schema.range = new fields.SchemaField({

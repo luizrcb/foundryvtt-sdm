@@ -3317,5 +3317,13 @@
   "SDM.Light.LeftChat": "{actor} deixa {item} aceso no chão.",
   "SDM.Light.PickedUpChat": "{actor} pega {item} de volta, ainda aceso.",
   "SDM.Light.LeftOnMapRow": "Deixado aceso no mapa: pegue pelo HUD do seu token, ao lado dele.",
-  "SDM.AreaEmptyAffects": "Ninguém dentro ({affects})."
+  "SDM.AreaEmptyAffects": "Ninguém dentro ({affects}).",
+  "SDM.AreaLight": "Luz",
+  "SDM.AreaLightHint": "A área persistente ilumina enquanto dura (o alcance dela: até a borda); se segue o usuário, é o token dele que ilumina.",
+  "SDM.AreaDrawHazard": "Perigo",
+  "SDM.AreaDrawHazardHint": "Fere ou aplica uma condição em quem estiver nela (mais opções na região: comportamento Perigo).",
+  "SDM.AreaDrawWhen": "Quando",
+  "SDM.AreaDrawDamage": "Dano",
+  "SDM.AreaDrawCondition": "Condição",
+  "SDM.AreaDrawUses": "Usos (0: ilimitado)"
 }

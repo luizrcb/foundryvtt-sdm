@@ -3317,5 +3317,13 @@
   "SDM.Light.LeftChat": "{actor} leaves {item} lit on the ground.",
   "SDM.Light.PickedUpChat": "{actor} picks {item} back up, still lit.",
   "SDM.Light.LeftOnMapRow": "Left lit on the map: pick it up from your token's HUD, next to it.",
-  "SDM.AreaEmptyAffects": "Nobody inside ({affects})."
+  "SDM.AreaEmptyAffects": "Nobody inside ({affects}).",
+  "SDM.AreaLight": "Light",
+  "SDM.AreaLightHint": "The lingering area sheds light while it lasts (its reach: to its edge); when it follows the user, the user's token does.",
+  "SDM.AreaDrawHazard": "Hazard",
+  "SDM.AreaDrawHazardHint": "Hurts or puts a condition on whoever is in it (more settings on the region: Hazard behavior).",
+  "SDM.AreaDrawWhen": "When",
+  "SDM.AreaDrawDamage": "Damage",
+  "SDM.AreaDrawCondition": "Condition",
+  "SDM.AreaDrawUses": "Uses (0: unlimited)"
 }

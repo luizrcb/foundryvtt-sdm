@@ -5,6 +5,7 @@ import { createChatMessage } from './chatUtils.mjs';
 import { saveDifficultyLabel, saveDifficultyValue } from '../app/save-against.mjs';
 import { attackFollowupHtml, powerWithoutRoll } from '../rolls/attackFollowup.mjs';
 import { getItemIdentifier, resolveFormulaReferences } from './effectReferences.mjs';
+import { buildChanges, getLightPreset, lightConfig } from './lights.mjs';
 import { bandForMeters, metersForWorldUnits, metersPerUnit, sceneUnitsForMeters, sceneZoneLimits, worldUnit, worldUnitsForMeters, ZONE_BANDS } from './zones.mjs';
 
 /**
@@ -116,6 +117,7 @@ export function itemArea(item, kind = '') {
       linger: kind !== 'album' && !!power.area_linger,
       rounds: Number(power.area_rounds) || 0,
       follows: !!power.area_follows,
+      light: power.area_light || 'none',
       round: areaRound(power.area_round_damage, power.area_round_formula, power.area_round_enter, power.area_round_condition, power.area_round_condition_rounds),
       save: power.area_resolve === 'save' ? areaSave(power.area_save_ability, power.area_save_difficulty, power.area_save_target, power.area_save_pass) : null,
       range: `${power.range ?? ''}`
@@ -136,6 +138,7 @@ export function itemArea(item, kind = '') {
     linger: !!item.system.area.linger,
     rounds: Number(item.system.area.rounds) || 0,
     follows: !!item.system.area.follows,
+    light: item.system.area.light || 'none',
     round: areaRound(
       item.system.area.round_damage,
       item.system.area.round_formula,
@@ -466,7 +469,7 @@ function areaShape(area, scene, origin, token = null) {
  * @returns {Promise<{areaId, tokens: TokenDocument[]}|false|null>} false when the user cancelled
  *   (right-click or Esc), null when it can't be placed (no scene, no token for a cone).
  */
-export async function placeArea({ actor = null, item = null, kind = '', area: given = null, token = null, name = '' }) {
+export async function placeArea({ actor = null, item = null, kind = '', area: given = null, token = null, name = '', hazard: givenHazard = null }) {
   const area = given ?? itemArea(item, kind);
   const scene = canvas?.scene;
   if (!area || !scene || !canvas.ready) {
@@ -497,8 +500,12 @@ export async function placeArea({ actor = null, item = null, kind = '', area: gi
   // Lingering: whoever stands in it has the item's effects (helpers/auras.mjs keeps them), for some rounds
   const effects = item && area.linger ? lingerEffects(item) : [];
   // …and damage and conditions each round (and on entering): a hazard on its region
-  const hazard = item && area.linger ? areaHazard(area, item, kind, sourceToken, actor) : null;
-  if (effects.length || hazard) {
+  // (a drawn area: the hazard set in the dialog)
+  const hazard = givenHazard ?? (item && area.linger ? areaHazard(area, item, kind, sourceToken, actor) : null);
+  // …and light while it lasts (the Referee's game makes it, see setupAreas)
+  const light = item && area.linger && area.light && area.light !== 'none' ? areaLightData(area, item, actor) : null;
+  if (light) data.flags.sdm[AREA_FLAG].light = light;
+  if (effects.length || (hazard && !givenHazard) || light) {
     // The combat on this scene (linked to it, or with combatants here)
     const combat = game.combats.find(c => c.started && (c.scene?.id === scene.id || c.combatants.some(cb => cb.sceneId === scene.id))) ?? null;
     Object.assign(data.flags.sdm[AREA_FLAG], {
@@ -625,6 +632,70 @@ async function finishPlacement({ area, scene, placed, sourceToken, fromToken, or
 }
 
 /* -------------------------------------------- */
+/*  A lingering area's light                    */
+/* -------------------------------------------- */
+
+const LIGHT_KEY = 'areaLight'; // an ambient light, or an effect on the user's actor: <area id>
+
+/** What a lingering area's light needs (stored on the region; the Referee's game makes it). */
+function areaLightData(area, item, actor) {
+  const own = item.system?.light ?? {};
+  return {
+    preset: area.light,
+    color: own.color || '',
+    animation: own.animation || '',
+    follows: !!area.follows,
+    actor: actor?.uuid ?? ''
+  };
+}
+
+/** The light settings (radii in grid squares) for a region: its reach (to its edge, bright half), or a preset. */
+function regionLightSettings(region, light) {
+  const scene = region.parent;
+  if (light.preset !== 'reach') return getLightPreset(light.preset);
+  const bounds = region.bounds;
+  const reach = bounds ? Math.max(bounds.width, bounds.height) / 2 / scene.grid.size : 1;
+  return { ...getLightPreset('glow'), dim: reach, bright: reach / 2, color: light.color || getLightPreset('glow').color, animation: light.animation || '' };
+}
+
+/** The Referee's game: a lingering area with a light gets it (an ambient light in its middle, or its user's token). */
+async function onAreaCreated(region) {
+  if (!game.users.activeGM?.isSelf) return;
+  const flag = region.getFlag('sdm', AREA_FLAG);
+  if (!flag?.light) return;
+  const scene = region.parent;
+  const settings = regionLightSettings(region, flag.light);
+  const distance = Number(scene.grid.distance) || 5;
+  const key = `flags.sdm.${LIGHT_KEY}`;
+  if (flag.light.follows && flag.light.actor) {
+    const actor = fromUuidSync(flag.light.actor);
+    if (!actor) return;
+    await actor.createEmbeddedDocuments('ActiveEffect', [
+      { name: region.name, img: 'icons/svg/light.svg', transfer: false, system: { changes: buildChanges(settings, distance) }, flags: { sdm: { [LIGHT_KEY]: flag.id } } }
+    ]);
+    return;
+  }
+  const bounds = region.bounds;
+  if (!bounds) return;
+  await scene.createEmbeddedDocuments('AmbientLight', [
+    { x: Math.round(bounds.x + bounds.width / 2), y: Math.round(bounds.y + bounds.height / 2), config: lightConfig(settings, distance), [key]: flag.id }
+  ]);
+}
+
+/** The Referee's game: a lingering area gone takes its light with it. */
+async function onAreaDeleted(region) {
+  if (!game.users.activeGM?.isSelf) return;
+  const flag = region.getFlag('sdm', AREA_FLAG);
+  if (!flag?.light) return;
+  const scene = region.parent;
+  const lights = scene.lights.filter(l => l.getFlag('sdm', LIGHT_KEY) === flag.id).map(l => l.id);
+  if (lights.length) await scene.deleteEmbeddedDocuments('AmbientLight', lights);
+  const actor = flag.light.actor ? fromUuidSync(flag.light.actor) : null;
+  const effects = actor?.effects.filter(e => e.getFlag('sdm', LIGHT_KEY) === flag.id).map(e => e.id) ?? [];
+  if (effects.length) await actor.deleteEmbeddedDocuments('ActiveEffect', effects);
+}
+
+/* -------------------------------------------- */
 /*  Drawing an area (no item)                   */
 /* -------------------------------------------- */
 
@@ -640,7 +711,8 @@ export async function drawArea() {
   const sizes = AREA_SIZES.map(key => option(key, CONFIG.SDM.areaValues[key], key === 'medium')).join('');
   const content =
     `<div class="form-group"><label>${esc($l10n('SDM.AreaShape.Label'))}</label><select name="shape">${shapes}</select></div>` +
-    `<div class="form-group"><label>${esc($l10n('SDM.AreaDrawSize'))}</label><select name="size">${sizes}</select></div>`;
+    `<div class="form-group"><label>${esc($l10n('SDM.AreaDrawSize'))}</label><select name="size">${sizes}</select></div>` +
+    (game.user.isGM ? hazardFields() : '');
   const choice = await foundry.applications.api.DialogV2.wait({
     window: { title: 'SDM.AreaDraw', icon: 'fa-solid fa-draw-polygon' },
     content,
@@ -650,7 +722,7 @@ export async function drawArea() {
         label: 'SDM.AreaDrawPlace',
         icon: 'fa-solid fa-bullseye',
         default: true,
-        callback: (event, button) => ({ shape: button.form.elements.shape.value, size: button.form.elements.size.value })
+        callback: (event, button) => ({ shape: button.form.elements.shape.value, size: button.form.elements.size.value, hazard: hazardFromForm(button.form) })
       },
       { action: 'clear', label: 'SDM.AreaDrawClear', icon: 'fa-solid fa-eraser', callback: () => 'clear' }
     ],
@@ -661,7 +733,59 @@ export async function drawArea() {
   const area = { ...areaSize(choice.size, choice.shape), size: choice.size, shape: choice.shape, affects: 'everyone', linger: false, rounds: 0, follows: false, save: null, range: '' };
   const token = canvas.tokens.controlled[0]?.document ?? game.user.character?.getActiveTokens?.(false, true)?.find(t => t.parent === canvas.scene) ?? null;
   const label = `${$l10n(CONFIG.SDM.areaValues[choice.size])} ${$l10n(CONFIG.SDM.areaShapes[choice.shape]).toLowerCase()}`;
-  await placeArea({ area, token, name: label });
+  const hazard = choice.hazard ? { ...choice.hazard, name: label } : null;
+  if (hazard) foundry.utils.setProperty(hazard, 'flags.sdm.hazard.disposition', token?.disposition ?? null);
+  await placeArea({ area, token, name: label, hazard });
+}
+
+/** The Referee's hazard settings in "Draw an area" (none: no damage and no condition). */
+function hazardFields() {
+  const E = CONST.REGION_EVENTS;
+  const events = [E.TOKEN_ENTER, E.TOKEN_TURN_START, E.TOKEN_ROUND_START]
+    .map(
+      (event, index) =>
+        `<label class="checkbox"><input type="checkbox" name="hazardEvent" value="${event}"${index === 0 ? ' checked' : ''}> ${esc($l10n(`REGION.EVENTS.${event}.label`))}</label>`
+    )
+    .join(' ');
+  const conditions = CONFIG.statusEffects
+    .map(status => [status.id, $l10n(status.name ?? status.label ?? status.id)])
+    .sort((a, b) => a[1].localeCompare(b[1], game.i18n.lang))
+    .map(([id, label]) => `<option value="${esc(id)}">${esc(label)}</option>`)
+    .join('');
+  return (
+    `<fieldset><legend>${esc($l10n('SDM.AreaDrawHazard'))}</legend>` +
+    `<p class="hint">${esc($l10n('SDM.AreaDrawHazardHint'))}</p>` +
+    `<div class="form-group"><label>${esc($l10n('SDM.AreaDrawWhen'))}</label><div class="form-fields">${events}</div></div>` +
+    `<div class="form-group"><label>${esc($l10n('SDM.AreaDrawDamage'))}</label><input type="text" name="hazardDamage"></div>` +
+    `<div class="form-group"><label>${esc($l10n('SDM.AreaDrawCondition'))}</label><select name="hazardCondition"><option value=""></option>${conditions}</select></div>` +
+    `<div class="form-group"><label>${esc($l10n('SDM.AreaDrawUses'))}</label><input type="number" name="hazardUses" min="0" step="1"></div>` +
+    `</fieldset>`
+  );
+}
+
+/** The hazard behavior from the dialog's fields (null: none set, or not the Referee). */
+function hazardFromForm(form) {
+  if (!game.user.isGM || !form.elements.hazardDamage) return null;
+  const damage = form.elements.hazardDamage.value.trim();
+  const condition = form.elements.hazardCondition.value;
+  if (!damage && !condition) return null;
+  const events = [...form.querySelectorAll('input[name="hazardEvent"]:checked')].map(input => input.value);
+  return {
+    type: HAZARD_TYPE,
+    system: {
+      events: events.length ? events : [CONST.REGION_EVENTS.TOKEN_ENTER],
+      damage,
+      condition,
+      conditionRounds: 1,
+      save: false,
+      saveAbility: '',
+      saveDifficulty: '',
+      savePass: 'avoid',
+      affects: 'everyone',
+      uses: Math.max(Math.floor(Number(form.elements.hazardUses.value) || 0), 0)
+    },
+    flags: { sdm: { hazard: {} } }
+  };
 }
 
 /** Remove the areas drawn with the Area button: the user's own, or (the Referee) all on the scene. */
@@ -1512,6 +1636,8 @@ export function bindAreaButtons(message, html) {
 }
 
 export function setupAreas() {
+  Hooks.on('createRegion', region => onAreaCreated(region).catch(error => console.warn('SDM | Area light failed', error)));
+  Hooks.on('deleteRegion', region => onAreaDeleted(region).catch(error => console.warn('SDM | Area light removal failed', error)));
   game.socket.on(CHANNEL, async message => {
     if (game.users.activeGM?.id !== game.user.id) return;
     if (message?.action === SAVE_ACTION) return applyAreaSave(message.area, message.result);

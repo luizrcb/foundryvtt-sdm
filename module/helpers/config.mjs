@@ -93,6 +93,15 @@ SDM.areaResolve = {
   save: 'SDM.AreaResolve.save'
 };
 
+SDM.areaLights = {
+  none: 'SDM.Light.Preset.none',
+  reach: 'SDM.Aura.LightReach',
+  torch: 'SDM.Light.Preset.torch',
+  lantern: 'SDM.Light.Preset.lantern',
+  candle: 'SDM.Light.Preset.candle',
+  glow: 'SDM.Light.Preset.glow'
+};
+
 SDM.areaRoundDamage = {
   none: 'SDM.AreaRoundDamage.none',
   item: 'SDM.AreaRoundDamage.item',
