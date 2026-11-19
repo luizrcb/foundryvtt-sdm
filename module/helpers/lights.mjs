@@ -354,7 +354,9 @@ async function pickUpLight(token, light) {
 export async function relightLeft(item) {
   if (!item?.actor?.isOwner) return;
   await item.update({ [`flags.sdm.-=${LEFT_FLAG}`]: null, 'system.readied': true }, { [SPEND_OPTION]: true });
-  if (!isLightSource(item) || isLit(item) || lightBlockedReason(item)) return;
+  // No resources: it was burning all along. Not its uses, charges or usage (lighting spent the last one,
+  // it still burns); only a broken item doesn't come back lit
+  if (!isLightSource(item) || isLit(item) || item.system.status === ItemStatusType.BROKEN) return;
   const current = getLitEffect(item.actor);
   if (current) await current.delete();
   await item.actor.createEmbeddedDocuments('ActiveEffect', [
