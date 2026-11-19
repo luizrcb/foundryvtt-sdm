@@ -15,6 +15,12 @@ export default class SdmNPC extends SdmActorBase {
       ...baseActorSchema,
       ...npcBaseFields(),
 
+      // Bonuses from effects, the same keys as characters': added to the typed defense (mental and
+      // social: the defense against those attacks). Defaults fill old NPCs: no migration.
+      defense_bonus: new fields.NumberField({ required: true, nullable: false, initial: 0 }),
+      mental_defense_bonus: new fields.NumberField({ required: true, nullable: false, initial: 0 }),
+      social_defense_bonus: new fields.NumberField({ required: true, nullable: false, initial: 0 }),
+
       // npc wage
       cost: new fields.StringField({
         required: false,

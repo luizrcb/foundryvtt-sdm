@@ -48,7 +48,8 @@
         <span class="v2-card-title">{{localize 'SDM.FieldDefense'}}</span>
         <span class="v2-stat-row">
           <i class="fa-solid fa-shield-halved"></i>
-          <input class="v2-big" type="text" name="system.defense" value="{{system.defense}}" data-dtype="Number" />
+          <input class="v2-big" type="text" name="system.defense" value="{{actor._source.system.defense}}" data-dtype="Number" />
+          {{#if (ne system.defense actor._source.system.defense)}}<span class="v2-stat-effective" data-tooltip="{{localize 'SDM.DefenseWithEffects'}}">→ {{system.defense}}</span>{{/if}}
         </span>
       </label>
 

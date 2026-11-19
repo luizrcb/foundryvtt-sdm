@@ -181,12 +181,10 @@ export default class SDMRoll {
       if (this.actor?.isOwner && hasLastFoeDamage(this.actor) && this.actor.getFlag('sdm', 'lastAttacked') !== this.targetActor.uuid) {
         await this.actor.setFlag('sdm', 'lastAttacked', this.targetActor.uuid);
       }
-      const isNPCTarget = this.targetActor.type === ActorType.NPC;
-      const target = isNPCTarget ? AttackTarget.PHYSICAL : this.attackTarget;
+      // NPCs too: their mental and social defenses are the typed one plus those bonuses
+      const { icon, property } = attackMapping[this.attackTarget] ?? attackMapping[AttackTarget.PHYSICAL];
 
-      const { icon, property } = attackMapping[target];
-
-      const targetDefense = this.targetActor?.system[property] || 0;
+      const targetDefense = this.targetActor?.system[property] ?? this.targetActor?.system?.defense ?? 0;
       const targetResistances = this.targetActor?.resistances || [];
 
       const attackResult = this.roll.total;
@@ -388,7 +386,7 @@ export default class SDMRoll {
     // Hero dice can change this roll: what its triggers need to be checked again on the result
     if ((isAttack || isAbility) && this.actor) {
       const defense = isAttack && this.targetActor
-        ? Number(this.targetActor.system?.[this.targetActor.type === ActorType.NPC || this.attackTarget === AttackTarget.PHYSICAL ? 'defense' : `${this.attackTarget}_defense`]) || 0
+        ? Number(this.targetActor.system?.[this.attackTarget === AttackTarget.PHYSICAL ? 'defense' : `${this.attackTarget}_defense`] ?? this.targetActor.system?.defense) || 0
         : null;
       flags.sdm = {
         ...(flags.sdm ?? {}),

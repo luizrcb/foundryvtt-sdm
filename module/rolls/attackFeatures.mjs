@@ -233,7 +233,7 @@ export function bindAttackFeatures(html) {
     const reached = await splashTokens({ splash, attackerToken, targetToken: token, name: weapon.name });
     if (!reached) return;
     const results = reached.map(other => {
-      const field = other.actor.type === ActorType.NPC ? 'defense' : SPLASH_DEFENSE[attackTarget] ?? 'defense';
+      const field = SPLASH_DEFENSE[attackTarget] ?? 'defense';
       const defense = Number(other.actor.system?.[field]) || 0;
       const hit = !nat1 && (!!nat20 || attackTotal > defense);
       // A tie: sacrifice something to hit it, or miss (the Referee decides)

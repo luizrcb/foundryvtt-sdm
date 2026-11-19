@@ -357,7 +357,8 @@ export function getDefenseBonus(item) {
 
 /** The creature's defense without the armor/ward bonus (the table or Animation tab value). */
 function baseDefense(npc) {
-  return (Number(npc.system.defense) || 0) - (Number(npc.getFlag('sdm', DEFENSE_BONUS_FLAG)) || 0);
+  // The typed defense (without the effects' bonuses)
+  return (Number(npc._source.system.defense) || 0) - (Number(npc.getFlag('sdm', DEFENSE_BONUS_FLAG)) || 0);
 }
 
 /** Put the item's current armor/ward bonus on top of the creature's base defense. */

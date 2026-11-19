@@ -638,6 +638,14 @@ export class SdmActor extends Actor {
   }
 
   _prepareNpcData() {
+    // Defense: the typed value plus the effects' bonuses (system.defense_bonus, as for characters);
+    // mental and social attacks meet it plus their own bonuses. The sheet edits the typed value.
+    const data = this.system;
+    const typed = Number(data.defense) || 0;
+    data.defense = Math.max(typed + (Number(data.defense_bonus) || 0), 0);
+    data.mental_defense = Math.max(typed + (Number(data.mental_defense_bonus) || 0), 0);
+    data.social_defense = Math.max(typed + (Number(data.social_defense_bonus) || 0), 0);
+
     const { burdenPenalty, items } = this.checkInventorySlots();
 
     if (!this.id || this.inCompendium) {
@@ -1458,7 +1466,8 @@ export class SdmActor extends Actor {
         'system.life.value': life,
         'system.life.max': life,
         'system.morale': Math.max(npcData.morale, entry.Mor ?? 0),
-        'system.defense': Math.max(npcData.defense, entry.Def ?? 0),
+        // The typed defense (without the effects' bonuses)
+        'system.defense': Math.max(Number(this._source.system.defense) || 0, entry.Def ?? 0),
         'system.bonus': Math.max(npcData.bonus, entry.Bon ?? 0),
         'system.damage': isNewFormulaBetter(npcData.damage, entry.Dmg) ? entry.Dmg : npcData.damage
       });

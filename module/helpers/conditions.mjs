@@ -270,7 +270,8 @@ function onPreCreateEffect(effect, data, options, userId) {
   const actor = effect.parent;
   if (!(actor instanceof Actor)) return;
   const statuses = new Set(data.statuses ?? []);
-  const defenseKey = actor.type === ActorType.NPC ? 'system.defense' : 'system.defense_bonus';
+  // The same key for characters and NPCs (NPCs add it to their typed defense)
+  const defenseKey = 'system.defense_bonus';
   const changes = [...(effect.system?.changes ?? [])];
   const add = value => changes.push({ key: defenseKey, value: `${value}`, type: 'add', phase: 'initial', priority: null });
   if (statuses.has('corrode')) add(-1);

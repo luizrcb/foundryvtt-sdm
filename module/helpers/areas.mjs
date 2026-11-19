@@ -1085,8 +1085,9 @@ export function areaBlock(state) {
     // The attack against each defense inside
     for (const token of tokens) {
       const target = token.actor;
-      const field = target.type === ActorType.NPC ? 'defense' : DEFENSE_FIELD[state.attackTarget] ?? 'defense';
-      const defense = Number(target.system?.[field]) || 0;
+      // NPCs too: their mental and social defenses are the typed one plus those bonuses
+      const field = DEFENSE_FIELD[state.attackTarget] ?? 'defense';
+      const defense = Number(target.system?.[field] ?? target.system?.defense) || 0;
       const result = outcomeFor(total, defense, state.isNat1, state.isNat20);
       if (result.hit) hits.push(token);
       rows.push(

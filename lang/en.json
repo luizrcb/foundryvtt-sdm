@@ -3298,5 +3298,6 @@
   "SDM.AreaRoundCondition": "Condition",
   "SDM.AreaRoundConditionHint": "Put on whoever is hurt by the area each round (or enters it).",
   "SDM.AreaRoundConditionRounds": "Condition rounds",
-  "SDM.AreaRoundConditionRoundsHint": "0: until removed."
+  "SDM.AreaRoundConditionRoundsHint": "0: until removed.",
+  "SDM.DefenseWithEffects": "With effects"
 }

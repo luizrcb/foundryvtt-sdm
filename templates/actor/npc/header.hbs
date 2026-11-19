@@ -68,7 +68,8 @@
               {{localize 'SDM.FieldDefense'}}
             </label>
             <div class='resource-content flexrow flex-center flex-between'>
-              <input type='text' name='system.defense' value='{{system.defense}}' data-dtype="Number" />
+              <input type='text' name='system.defense' value='{{actor._source.system.defense}}' data-dtype="Number" />
+              {{#if (ne system.defense actor._source.system.defense)}}<span data-tooltip="{{localize 'SDM.DefenseWithEffects'}}">→ {{system.defense}}</span>{{/if}}
             </div>
           </div>
 
