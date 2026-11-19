@@ -28,7 +28,7 @@ const AREA_FLAG = 'area';
 /**
  * Sizes in standard squares (1.5 m / 5 ft): the book's area table mixed with the d20 grid rules,
  * checked against the book's numbers of targets (a few / some / many). Circles and squares by the
- * squares across (2 / 6 / 20: ~3 / 9 / 30 m, on an intersection); rings by the squares across,
+ * squares across (2 / 6 / 10: ~3 / 9 / 15 m, on an intersection; 4 / 32 / 80 squares); rings by the squares across,
  * centered on a square (3 / 7 / 13: around one creature, a small group, a crowd), a wall one square thick; cones by length (3 / 6 / 11: 7 / 24 /
  * 71 squares straight, about as wide as they are far); lines by length, one square wide (4 / 12 /
  * 24). Vehicle weapons: circles ~10 / 50 / 150 m across, rings three times and cones and lines five times
@@ -38,7 +38,7 @@ const AREA_FLAG = 'area';
 const SQUARE_METERS = 1.5;
 const AREA_SQUARES = {
   foot: {
-    across: { small: 2, medium: 6, large: 20 },
+    across: { small: 2, medium: 6, large: 10 },
     ring: { small: 3, medium: 7, large: 13 },
     cone: { small: 3, medium: 6, large: 11 },
     line: { small: 4, medium: 12, large: 24 }
