@@ -414,50 +414,57 @@ async function rollRoundDamage(effect, sourceActor) {
  * At the start of each round (the active GM): auras with damage each round hurt the tokens inside
  * (Glowing Skeleton, Mouth of the Void), and effects aimed at the last foe hurt it (Irresistible).
  */
+/** The scenes a combat is on: the one it's linked to, else those of its combatants' tokens. */
+export function combatScenes(combat) {
+  return [...new Set([combat?.scene, ...(combat?.combatants ?? []).map(c => c.token?.parent ?? game.scenes.get(c.sceneId))].filter(Boolean))];
+}
+
 async function onCombatRound(combat, changed, options) {
   if (!('round' in (changed ?? {})) || !combat.started) return;
   if (options?.direction !== undefined && options.direction < 0) return;
   if (game.users.activeGM?.id !== game.user.id) return;
   const { changeLifeOf } = await import('../app/use-item.mjs');
-  const scene = combat.scene;
-  // Lingering areas whose rounds are over go away (and with them their effects)
-  if (scene) {
-    const ended = scene.regions.filter(r => {
-      const expires = r.getFlag('sdm', AREA_FLAG)?.expires;
-      return expires && expires.combat === combat.id && combat.round >= expires.round;
-    });
-    if (ended.length) await scene.deleteEmbeddedDocuments('Region', ended.map(r => r.id));
-  }
-  if (scene && aurasEnabled()) {
-    for (const region of scene.regions) {
-      const flag = region.getFlag('sdm', REGION_FLAG);
-      if (!flag) continue;
-      const effect = fromUuidSync(flag.effect);
-      const source = scene.tokens.get(flag.token);
-      if (!effect?.system?.roundDamage?.formula || effect.system.roundDamage.target !== 'inside' || !source?.actor) continue;
-      for (const token of region.tokens ?? []) {
-        if (token === source || !token.actor || token.actor === source.actor) continue;
-        if (!fitsDisposition(effect.system.aura, source, token)) continue;
-        const amount = await rollRoundDamage(effect, source.actor);
-        if (amount > 0) await changeLifeOf(token.actor, amount, { reason: effect.name });
+  // The scenes the combat is on: its own, or (a combat not linked to a scene) its combatants'
+  for (const scene of combatScenes(combat)) {
+    // Lingering areas whose rounds are over go away (and with them their effects)
+    if (scene) {
+      const ended = scene.regions.filter(r => {
+        const expires = r.getFlag('sdm', AREA_FLAG)?.expires;
+        return expires && expires.combat === combat.id && combat.round >= expires.round;
+      });
+      if (ended.length) await scene.deleteEmbeddedDocuments('Region', ended.map(r => r.id));
+    }
+    if (scene && aurasEnabled()) {
+      for (const region of scene.regions) {
+        const flag = region.getFlag('sdm', REGION_FLAG);
+        if (!flag) continue;
+        const effect = fromUuidSync(flag.effect);
+        const source = scene.tokens.get(flag.token);
+        if (!effect?.system?.roundDamage?.formula || effect.system.roundDamage.target !== 'inside' || !source?.actor) continue;
+        for (const token of region.tokens ?? []) {
+          if (token === source || !token.actor || token.actor === source.actor) continue;
+          if (!fitsDisposition(effect.system.aura, source, token)) continue;
+          const amount = await rollRoundDamage(effect, source.actor);
+          if (amount > 0) await changeLifeOf(token.actor, amount, { reason: effect.name });
+        }
       }
     }
-  }
-  // Lingering areas: their effects with damage each round (to the tokens inside) hurt whoever is in them
-  if (scene && aurasEnabled()) {
-    for (const region of scene.regions) {
-      const flag = region.getFlag('sdm', AREA_FLAG);
-      if (!flag?.linger) continue;
-      const placer = fromUuidSync(flag.actor);
-      for (const uuid of flag.effects ?? []) {
-        const effect = fromUuidSync(uuid);
-        if (!effect?.system?.roundDamage?.formula || effect.system.roundDamage.target !== 'inside') continue;
-        for (const token of region.tokens ?? []) {
-          if (!token.actor) continue;
-          if (flag.affects === 'enemies' && flag.disposition !== null && token.disposition === flag.disposition) continue;
-          if (flag.affects === 'allies' && flag.disposition !== null && token.disposition !== flag.disposition) continue;
-          const amount = await rollRoundDamage(effect, placer ?? token.actor);
-          if (amount > 0) await changeLifeOf(token.actor, amount, { reason: region.name });
+    // Lingering areas: their effects with damage each round (to the tokens inside) hurt whoever is in them
+    if (scene && aurasEnabled()) {
+      for (const region of scene.regions) {
+        const flag = region.getFlag('sdm', AREA_FLAG);
+        if (!flag?.linger) continue;
+        const placer = fromUuidSync(flag.actor);
+        for (const uuid of flag.effects ?? []) {
+          const effect = fromUuidSync(uuid);
+          if (!effect?.system?.roundDamage?.formula || effect.system.roundDamage.target !== 'inside') continue;
+          for (const token of region.tokens ?? []) {
+            if (!token.actor) continue;
+            if (flag.affects === 'enemies' && flag.disposition !== null && token.disposition === flag.disposition) continue;
+            if (flag.affects === 'allies' && flag.disposition !== null && token.disposition !== flag.disposition) continue;
+            const amount = await rollRoundDamage(effect, placer ?? token.actor);
+            if (amount > 0) await changeLifeOf(token.actor, amount, { reason: region.name });
+          }
         }
       }
     }

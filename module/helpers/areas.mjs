@@ -499,7 +499,8 @@ export async function placeArea({ actor = null, item = null, kind = '', area: gi
   // …and damage and conditions each round (and on entering): a hazard on its region
   const hazard = item && area.linger ? areaHazard(area, item, kind, sourceToken, actor) : null;
   if (effects.length || hazard) {
-    const combat = game.combats.find(c => c.started && c.scene?.id === scene.id) ?? null;
+    // The combat on this scene (linked to it, or with combatants here)
+    const combat = game.combats.find(c => c.started && (c.scene?.id === scene.id || c.combatants.some(cb => cb.sceneId === scene.id))) ?? null;
     Object.assign(data.flags.sdm[AREA_FLAG], {
       linger: true,
       effects: effects.map(e => e.uuid),
@@ -1366,7 +1367,7 @@ export async function hazardEvent(behavior, token, eventName = '') {
   // Inside when the item's area was placed: it doesn't "enter" until it leaves and comes back
   const initial = behavior.getFlag('sdm', 'hazard')?.initial ?? [];
   if (eventName === CONST.REGION_EVENTS.TOKEN_ENTER && initial.includes(token.uuid)) return;
-  const combat = game.combats.find(c => c.started && c.scene?.id === token.parent?.id) ?? null;
+  const combat = game.combats.find(c => c.started && (c.scene?.id === token.parent?.id || c.combatants.some(cb => cb.sceneId === token.parent?.id))) ?? null;
   if (combat) {
     const key = `${behavior.uuid}|${token.uuid}`;
     const stamp = `${combat.id}|${combat.round}`;
