@@ -334,11 +334,13 @@ export async function leaveLight(item, token) {
     else await item.delete();
     return;
   }
-  // On the token's (top-left) square: the light in its middle and the item's image on it, to see where it is
+  // Where the token stands: the light in its middle and the item's image centered on it, to see where it is
   const size = scene.grid.size;
+  const center = { x: token.x + (token.width * size) / 2, y: token.y + (token.height * size) / 2 };
   const flags = { sdm: { [LEFT_FLAG]: { actor: actor.uuid, item: item.id } } };
-  const light = { x: token.x + size / 2, y: token.y + size / 2, config, flags };
-  const tile = { texture: { src: item.img }, x: token.x + size * 0.15, y: token.y + size * 0.15, width: size * 0.7, height: size * 0.7, flags };
+  const light = { x: center.x, y: center.y, config, flags };
+  const side = size * 0.7;
+  const tile = { texture: { src: item.img }, x: center.x - side / 2, y: center.y - side / 2, width: side, height: side, flags };
   await item.update({ [`flags.sdm.${LEFT_FLAG}`]: true, 'system.readied': false }, { [SPEND_OPTION]: true });
   await gmLight({ op: 'create', sceneId: scene.id, light, tile });
   await lightChat(actor, 'SDM.Light.LeftChat', item);
