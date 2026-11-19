@@ -2514,3 +2514,13 @@ $v2-wide: 1100px;
     }
   }
 }
+
+// Every placeholder in the system's sheets and dialogs reads as a hint (italic, faded), never as a value
+.application.sdm,
+.sdm-card {
+  input::placeholder,
+  textarea::placeholder {
+    font-style: italic;
+    opacity: 0.45;
+  }
+}

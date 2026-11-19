@@ -201,13 +201,13 @@
             <input type='checkbox' name='system.area.linger' {{checked system.area.linger}} />
             {{#if system.area.linger}}<input type='number' name='system.area.rounds' value='{{system.area.rounds}}' min='0' step='1' data-dtype='Number' data-tooltip="{{localize 'SDM.AreaRoundsHint'}}" />
             <label data-tooltip="{{localize 'SDM.AreaFollowsHint'}}"><input type='checkbox' name='system.area.follows' {{checked system.area.follows}} /> {{localize 'SDM.AreaFollows'}}</label>
-            <select name='system.area.round_damage' data-tooltip="{{localize 'SDM.AreaRoundDamageHint'}}">{{selectOptions @root.areaRoundDamage localize=true selected=system.area.round_damage}}</select>{{#if (eq system.area.round_damage 'formula')}}<input type='text' name='system.area.round_formula' value='{{system.area.round_formula}}' placeholder="{{localize 'SDM.AreaRoundFormula'}}" />{{/if}}
+            <select name='system.area.round_damage' data-tooltip="{{localize 'SDM.AreaRoundDamageHint'}}">{{selectOptions @root.areaRoundDamage localize=true selected=system.area.round_damage}}</select>{{#if (eq system.area.round_damage 'formula')}}<input type='text' name='system.area.round_formula' value='{{system.area.round_formula}}' data-tooltip="{{localize 'SDM.AreaRoundFormula'}}" />{{/if}}
             <label data-tooltip="{{localize 'SDM.AreaRoundEnterHint'}}"><input type='checkbox' name='system.area.round_enter' {{checked system.area.round_enter}} /> {{localize 'SDM.AreaRoundEnter'}}</label>
             <select name='system.area.round_condition' data-tooltip="{{localize 'SDM.AreaRoundConditionHint'}}">{{selectOptions @root.triggerStatuses selected=system.area.round_condition}}</select>{{#if system.area.round_condition}}<input type='number' name='system.area.round_condition_rounds' value='{{system.area.round_condition_rounds}}' min='0' step='1' data-dtype='Number' data-tooltip="{{localize 'SDM.AreaRoundConditionRounds'}}: {{localize 'SDM.AreaRoundConditionRoundsHint'}}" />{{/if}}{{/if}}
           </div>
           <div class='resource' data-tooltip="{{localize 'SDM.AreaAcrossHint'}}">
             <label class='resource-label'>{{localize 'SDM.AreaAcross'}}</label>
-            <input type='number' name='system.area.across' value='{{system.area.across}}' min='0' step='any' data-dtype='Number' placeholder="{{localize 'SDM.AreaAcrossBySize'}}" />
+            <input type='number' name='system.area.across' value='{{system.area.across}}' min='0' step='any' data-dtype='Number' />
           </div>
           <div class='resource' data-tooltip="{{localize 'SDM.AreaVehicleHint'}}">
             <label class='resource-label'>{{localize 'SDM.AreaVehicle'}}</label>
@@ -473,7 +473,7 @@
       <div class="resource" data-tooltip="{{localize 'SDM.WeaponSplashHint'}}">
         <label class='resource-label'>{{localize 'SDM.WeaponSplash'}}</label>
         <select name='system.weapon.splash_damage'>{{selectOptions splashDamage localize=true selected=system.weapon.splash_damage}}</select>
-        {{#if (eq system.weapon.splash_damage 'formula')}}<input type='text' name='system.weapon.splash' value='{{system.weapon.splash}}' placeholder='1d6' data-tooltip="{{localize 'SDM.WeaponSplashFormulaHint'}}" />{{/if}}
+        {{#if (eq system.weapon.splash_damage 'formula')}}<input type='text' name='system.weapon.splash' value='{{system.weapon.splash}}' data-tooltip="{{localize 'SDM.WeaponSplashFormulaHint'}}" />{{/if}}
       </div>
       {{#if (or system.weapon.splash (ne system.weapon.splash_damage 'formula'))}}
       <div class="resource">
@@ -481,7 +481,7 @@
         <select name='system.weapon.splash_shape'>{{selectOptions splashShapes localize=true selected=system.weapon.splash_shape}}</select>
         {{#if (ne system.weapon.splash_shape 'around')}}
         <select name='system.weapon.splash_size'>{{selectOptions powerAreaValues localize=true selected=system.weapon.splash_size}}</select>
-        <input type='number' name='system.weapon.splash_across' value='{{system.weapon.splash_across}}' min='0' step='any' data-dtype='Number' placeholder="{{localize 'SDM.AreaAcross'}}" data-tooltip="{{localize 'SDM.AreaAcrossHint'}}" />
+        <input type='number' name='system.weapon.splash_across' value='{{system.weapon.splash_across}}' min='0' step='any' data-dtype='Number' data-tooltip="{{localize 'SDM.AreaAcrossHint'}}" />
         {{/if}}
         <select name='system.weapon.splash_affects'>{{selectOptions areaAffects localize=true selected=system.weapon.splash_affects}}</select>
       </div>

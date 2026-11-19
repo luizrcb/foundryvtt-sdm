@@ -7231,6 +7231,14 @@ a.sdm-proto-link.warn {
     justify-content: flex-start;
   }
 }
+.application.sdm input::placeholder,
+.application.sdm textarea::placeholder,
+.sdm-card input::placeholder,
+.sdm-card textarea::placeholder {
+  font-style: italic;
+  opacity: 0.45;
+}
+
 .application.sheet.sdm.item {
   --sdm-cond-warn: #b07a1e;
   --sdm-cond-danger: #9b2c22;

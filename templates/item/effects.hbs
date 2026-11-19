@@ -9,15 +9,15 @@
     {{#if system.boost.enabled}}
     <div class="sdm-counter-row">
       <label>{{localize 'SDM.Boost.Cost'}}
-        <input type="text" name="system.boost.cost" value="{{system.boost.cost}}" placeholder="1" data-tooltip="{{localize 'SDM.Boost.CostHint'}}" /></label>
+        <input type="text" name="system.boost.cost" value="{{system.boost.cost}}" data-tooltip="{{localize 'SDM.Boost.CostHint'}}" /></label>
       <label>{{localize 'SDM.Boost.Resource'}}
         <select name="system.boost.resource">{{selectOptions boostResources selected=system.boost.resource localize=true}}</select></label>
       <label data-tooltip="{{localize 'SDM.Boost.MultiplierHint'}}">{{localize 'SDM.Boost.Multiplier'}}
         <input type="number" min="0" name="system.boost.multiplier" value="{{system.boost.multiplier}}" data-dtype="Number" /></label>
       <label data-tooltip="{{localize 'SDM.Boost.ExtraHint'}}">{{localize 'SDM.Boost.Extra'}}
-        <input type="text" name="system.boost.extra" value="{{system.boost.extra}}" placeholder="1d6" data-tooltip="{{localize 'SDM.Boost.ExtraHint'}}" /></label>
+        <input type="text" name="system.boost.extra" value="{{system.boost.extra}}" data-tooltip="{{localize 'SDM.Boost.ExtraHint'}}" /></label>
       <label data-tooltip="{{localize 'SDM.Boost.DamageHint'}}">{{localize 'SDM.Boost.Damage'}}
-        <input type="text" name="system.boost.damage" value="{{system.boost.damage}}" placeholder="1d12" data-tooltip="{{localize 'SDM.Boost.DamageHint'}}" /></label>
+        <input type="text" name="system.boost.damage" value="{{system.boost.damage}}" data-tooltip="{{localize 'SDM.Boost.DamageHint'}}" /></label>
       <label data-tooltip="{{localize 'SDM.Boost.NoteHint'}}">{{localize 'SDM.Boost.Note'}}
         <input class="sdm-counter-label" type="text" name="system.boost.note" value="{{system.boost.note}}" placeholder="{{localize 'SDM.Boost.NotePlaceholder'}}" /></label>
       <label data-tooltip="{{localize 'SDM.Boost.MandatoryHint'}}">
@@ -88,7 +88,7 @@
       {{#if (or (eq trigger.roll 'use') (eq trigger.condition 'max') (eq trigger.condition 'min') (eq trigger.condition 'matching') (eq trigger.condition 'runningLow') (eq trigger.condition 'runOut') (eq trigger.condition 'success') (eq trigger.condition 'failure') (eq trigger.condition 'always') (eq trigger.condition 'counterMax') (eq trigger.condition 'changes') (eq trigger.condition 'increases') (eq trigger.condition 'decreases') (eq trigger.condition 'full') (eq trigger.condition 'empty'))}}
       <input type="hidden" name="system.triggers.{{index}}.value" value="{{trigger.value}}" />
       {{else}}
-      <input class="sdm-trigger-amount" type="text" name="system.triggers.{{index}}.value" value="{{trigger.value}}" placeholder="13" data-tooltip="{{localize 'SDM.Trigger.ValueHint'}}" />
+      <input class="sdm-trigger-amount" type="text" name="system.triggers.{{index}}.value" value="{{trigger.value}}" data-tooltip="{{localize 'SDM.Trigger.ValueHint'}}" />
       {{/if}}
       {{#if (or (eq trigger.roll 'counter') (eq trigger.roll 'charges'))}}
       <label class="sdm-trigger-check" data-tooltip="{{localize 'SDM.Trigger.ByChangeHint'}}"><input type="checkbox" name="system.triggers.{{index}}.by_change" {{checked trigger.by_change}} /> {{localize 'SDM.Trigger.ByChange'}}</label>
@@ -109,7 +109,7 @@
         <label class="{{#if trigger.cost_resource}}filled{{/if}}" data-tooltip="{{localize 'SDM.Trigger.CostHint'}}">{{localize 'SDM.Trigger.Cost'}}
           <select name="system.triggers.{{index}}.cost_resource">{{selectOptions @root.triggerCostResources selected=trigger.cost_resource localize=true}}</select>
           {{#if trigger.cost_resource}}
-          <input class="sdm-trigger-cost" type="text" name="system.triggers.{{index}}.cost" value="{{trigger.cost}}" placeholder="1" data-tooltip="{{localize 'SDM.Trigger.CostFormulaHint'}}" />
+          <input class="sdm-trigger-cost" type="text" name="system.triggers.{{index}}.cost" value="{{trigger.cost}}" data-tooltip="{{localize 'SDM.Trigger.CostFormulaHint'}}" />
           <span class="sdm-trigger-check" data-tooltip="{{localize 'SDM.Trigger.CostAskHint'}}"><input type="checkbox" name="system.triggers.{{index}}.cost_ask" {{checked trigger.cost_ask}} /> {{localize 'SDM.Trigger.CostAsk'}}</span>
           {{else}}
           <input type="hidden" name="system.triggers.{{index}}.cost" value="{{trigger.cost}}" />
@@ -147,7 +147,7 @@
           <select name="system.triggers.{{index}}.status_mode">{{selectOptions @root.triggerStatusModes selected=trigger.status_mode localize=true}}</select>
           <select name="system.triggers.{{index}}.status_target">{{selectOptions @root.triggerEffectTargets selected=trigger.status_target localize=true}}</select>
           {{#if (ne trigger.status_mode 'remove')}}
-          <input class="sdm-trigger-amount" type="number" min="0" step="1" name="system.triggers.{{index}}.status_duration" value="{{trigger.status_duration}}" placeholder="∞" data-tooltip="{{localize 'SDM.Trigger.StatusDurationHint'}}" />
+          <input class="sdm-trigger-amount" type="number" min="0" step="1" name="system.triggers.{{index}}.status_duration" value="{{trigger.status_duration}}" data-tooltip="{{localize 'SDM.Trigger.StatusDurationHint'}}" />
           <select name="system.triggers.{{index}}.status_duration_units" data-tooltip="{{localize 'SDM.Trigger.StatusDurationHint'}}">{{selectOptions @root.useDurationUnits selected=trigger.status_duration_units localize=true}}</select>
           <span class="sdm-trigger-check" data-tooltip="{{localize 'SDM.Trigger.StatusSaveHint'}}"><input type="checkbox" name="system.triggers.{{index}}.status_save" {{checked trigger.status_save}} /> {{localize 'SDM.Trigger.StatusSave'}}</span>
           {{#if trigger.status_save}}
@@ -191,7 +191,7 @@
           {{#if (or (not trigger.counter) (eq trigger.counter_mode 'reset'))}}
           <input type="hidden" name="system.triggers.{{index}}.counter_step" value="{{trigger.counter_step}}" />
           {{else}}
-          <input class="sdm-trigger-amount" type="text" name="system.triggers.{{index}}.counter_step" value="{{trigger.counter_step}}" placeholder="1" data-tooltip="{{localize 'SDM.Trigger.CounterStepHint'}}" />
+          <input class="sdm-trigger-amount" type="text" name="system.triggers.{{index}}.counter_step" value="{{trigger.counter_step}}" data-tooltip="{{localize 'SDM.Trigger.CounterStepHint'}}" />
           {{/if}}</label>
         <label class="{{#if trigger.cast}}filled{{/if}}" data-tooltip="{{localize 'SDM.Trigger.CastHint'}}">{{localize 'SDM.Trigger.Cast'}}
           <select name="system.triggers.{{index}}.cast">{{selectOptions @root.triggerCastItems selected=trigger.cast}}</select>
@@ -205,7 +205,7 @@
         <label class="{{#if trigger.charges_mode}}filled{{/if}}" data-tooltip="{{localize 'SDM.Trigger.ChargesHint'}}">{{localize 'SDM.Trigger.Charges'}}
           <select name="system.triggers.{{index}}.charges_mode">{{selectOptions @root.triggerChargeModes selected=trigger.charges_mode localize=true}}</select>
           {{#if trigger.charges_mode}}
-          <input class="sdm-trigger-amount" type="text" name="system.triggers.{{index}}.charges_amount" value="{{trigger.charges_amount}}" placeholder="1" data-tooltip="{{localize 'SDM.Trigger.AmountHint'}}" />
+          <input class="sdm-trigger-amount" type="text" name="system.triggers.{{index}}.charges_amount" value="{{trigger.charges_amount}}" data-tooltip="{{localize 'SDM.Trigger.AmountHint'}}" />
           <select name="system.triggers.{{index}}.charges_item">{{selectOptions @root.triggerChargeItems selected=trigger.charges_item}}</select>
           {{else}}
           <input type="hidden" name="system.triggers.{{index}}.charges_amount" value="{{trigger.charges_amount}}" />
