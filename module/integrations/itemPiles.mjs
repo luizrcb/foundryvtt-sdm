@@ -97,9 +97,10 @@ export async function syncItemPilesCurrency() {
 /* -------------------------------------------- */
 
 const CHANNEL = 'system.sdm';
-const DISPOSITION_ACTION = 'pileDisposition';
-// Piles just created (item-piles-createItemPile), so a drop onto an existing pile changes nothing
-const newPiles = new Set();
+const DROP_ACTION = 'pileDrop';
+const MATCH_MS = 20000;
+// The Referee's game: drops that will create a pile, waiting for its token ({ sceneId, x, y, disposition, at })
+const pendingDrops = [];
 
 /** The disposition of whoever dropped the item: their token on that scene, else their prototype token. */
 function dropperDisposition(source, scene) {
@@ -109,29 +110,49 @@ function dropperDisposition(source, scene) {
   return token?.disposition ?? actor.prototypeToken?.disposition ?? null;
 }
 
-async function setPileDisposition(tokenUuid, disposition) {
-  const token = fromUuidSync(tokenUuid);
-  if (!token || disposition === null || token.disposition === disposition) return;
-  if (token.canUserModify(game.user, 'update')) return token.update({ disposition });
-  if (game.users.activeGM) game.socket.emit(CHANNEL, { action: DISPOSITION_ACTION, tokenUuid, disposition });
+/**
+ * Dropping an item on the map where there's no pile (the dropper's game, before the drop): the
+ * Referee's game is told where, and with which disposition, the new pile's token should be created.
+ */
+function onPreDropItem(source, target, itemData, position) {
+  if (target || !position || !canvas?.scene) return;
+  const disposition = dropperDisposition(source, canvas.scene);
+  if (disposition === null || disposition === undefined) return;
+  const drop = { sceneId: canvas.scene.id, x: Number(position.x) || 0, y: Number(position.y) || 0, disposition };
+  if (game.user.isGM) rememberDrop(drop);
+  else game.socket.emit(CHANNEL, { action: DROP_ACTION, drop });
 }
 
-function onDropItem(source, target) {
-  if (!target?.uuid || !newPiles.has(target.uuid)) return;
-  newPiles.delete(target.uuid);
-  setPileDisposition(target.uuid, dropperDisposition(source, target.parent)).catch(error =>
-    console.warn('SDM | Could not set the pile token disposition', error)
+function rememberDrop(drop) {
+  if (game.users.activeGM?.id !== game.user.id) return;
+  pendingDrops.push({ ...drop, at: Date.now() });
+}
+
+/** The Referee's game: a pile token created where an item was just dropped takes the dropper's disposition. */
+function onCreateToken(token) {
+  if (game.users.activeGM?.id !== game.user.id || !pendingDrops.length) return;
+  const now = Date.now();
+  for (let i = pendingDrops.length - 1; i >= 0; i--) if (now - pendingDrops[i].at > MATCH_MS) pendingDrops.splice(i, 1);
+  const isPile = token.getFlag?.('item-piles', 'data')?.enabled || token.actor?.getFlag?.('item-piles', 'data')?.enabled;
+  if (!isPile) return;
+  const size = token.parent.grid.size;
+  const center = { x: token.x + (token.width * size) / 2, y: token.y + (token.height * size) / 2 };
+  const index = pendingDrops.findIndex(
+    drop => drop.sceneId === token.parent.id && Math.hypot(drop.x - center.x, drop.y - center.y) <= size * 1.5
   );
+  if (index < 0) return;
+  const [drop] = pendingDrops.splice(index, 1);
+  if (token.disposition !== drop.disposition) {
+    token.update({ disposition: drop.disposition }).catch(error => console.warn('SDM | Could not set the pile token disposition', error));
+  }
 }
 
 export function setupItemPiles() {
-  Hooks.on('item-piles-createItemPile', document => {
-    if (document?.uuid) newPiles.add(document.uuid);
-  });
-  Hooks.on('item-piles-dropItem', onDropItem);
+  // A pile created by dropping an item takes its dropper's disposition (an aura for allies helps their side)
+  Hooks.on('item-piles-preDropItem', onPreDropItem);
+  Hooks.on('createToken', onCreateToken);
   game.socket.on(CHANNEL, message => {
-    if (message?.action !== DISPOSITION_ACTION || game.users.activeGM?.id !== game.user.id) return;
-    setPileDisposition(message.tokenUuid, message.disposition);
+    if (message?.action === DROP_ACTION) rememberDrop(message.drop);
   });
   Hooks.once('item-piles-ready', () => {
     if (game.modules.get(COMPANION_ID)?.active) {
