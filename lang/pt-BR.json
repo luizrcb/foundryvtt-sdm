@@ -3315,5 +3315,6 @@
   "SDM.Light.LeftOnMap": "{name} está no mapa: pegue pelo HUD do seu token, ao lado dela.",
   "SDM.Light.LeaveHere": "Deixar aqui (no mapa)",
   "SDM.Light.LeftChat": "{actor} deixa {item} aceso no chão.",
-  "SDM.Light.PickedUpChat": "{actor} pega {item} de volta, ainda aceso."
+  "SDM.Light.PickedUpChat": "{actor} pega {item} de volta, ainda aceso.",
+  "SDM.Light.LeftOnMapRow": "Deixado aceso no mapa: pegue pelo HUD do seu token, ao lado dele."
 }

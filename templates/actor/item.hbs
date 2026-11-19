@@ -1,5 +1,5 @@
 <li
-  class='item flexrow {{item.system.status}} {{#if (ne item.system.container "")}}inContainer{{/if}} {{#if (and item.system.animation.active (eq item.system.animation.mode "walks"))}}is-walked-away{{/if}}'
+  class='item flexrow {{item.system.status}} {{#if (ne item.system.container "")}}inContainer{{/if}} {{#if (or (and item.system.animation.active (eq item.system.animation.mode "walks")) item.flags.sdm.lightLeft)}}is-walked-away{{/if}}'
   data-item-id='{{item._id}}'
   data-drag='true'
   data-document-class='Item'
@@ -120,6 +120,10 @@
         <a class="sdm-counter-chip mr-3" {{#if @root.editable}}data-action="stepItemCounter"{{/if}} data-key="{{key}}"
           data-tooltip="{{localize 'SDM.Counter.RowHint' label=counter.label}}">{{counter.label}} {{counter.value}}</a>
       {{/each}}
+      {{/if}}
+      {{!-- A lit item left on the map (no Item Piles): picked up from the token's HUD next to it --}}
+      {{#if item.flags.sdm.lightLeft}}
+        <a class="mr-3 sdm-animated-icon" data-tooltip="{{localize 'SDM.Light.LeftOnMapRow'}}"><i class="fa-solid fa-location-dot"></i></a>
       {{/if}}
       {{!-- Animated: the ghost (the Referee clicks it to deanimate); can be animated: a faded ghost to
             animate it (the Referee) or ask the Referee (the owner), as the right-click menu --}}

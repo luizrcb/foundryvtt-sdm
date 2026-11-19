@@ -176,8 +176,9 @@ async function toggleEffectTransfer(effect, shouldBeActive) {
 }
 
 export function getSlotsTaken(itemSystem) {
-  // An animated item that walked away does not weigh on its owner
+  // An animated item that walked away does not weigh on its owner, nor a light left on the map
   if (itemSystem?.animation?.active && itemSystem.animation.mode === 'walks') return 0;
+  if (itemSystem?.parent?.getFlag?.('sdm', 'lightLeft')) return 0;
 
   if (itemSystem?.slots_override !== undefined && itemSystem?.slots_override >= 0) {
     return itemSystem?.slots_override;

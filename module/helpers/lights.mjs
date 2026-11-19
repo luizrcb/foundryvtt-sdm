@@ -334,10 +334,13 @@ export async function leaveLight(item, token) {
     else await item.delete();
     return;
   }
-  const center = token.object?.center ?? { x: token.x + (token.width * scene.grid.size) / 2, y: token.y + (token.height * scene.grid.size) / 2 };
-  const light = { x: center.x, y: center.y, config, flags: { sdm: { [LEFT_FLAG]: { actor: actor.uuid, item: item.id } } } };
+  // On the token's (top-left) square: the light in its middle and the item's image on it, to see where it is
+  const size = scene.grid.size;
+  const flags = { sdm: { [LEFT_FLAG]: { actor: actor.uuid, item: item.id } } };
+  const light = { x: token.x + size / 2, y: token.y + size / 2, config, flags };
+  const tile = { texture: { src: item.img }, x: token.x + size * 0.15, y: token.y + size * 0.15, width: size * 0.7, height: size * 0.7, flags };
   await item.update({ [`flags.sdm.${LEFT_FLAG}`]: true, 'system.readied': false }, { [SPEND_OPTION]: true });
-  await gmLight({ op: 'create', sceneId: scene.id, light });
+  await gmLight({ op: 'create', sceneId: scene.id, light, tile });
   await lightChat(actor, 'SDM.Light.LeftChat', item);
 }
 
@@ -391,11 +394,20 @@ async function gmLight(op) {
   game.socket.emit('system.sdm', { action: LEAVE_ACTION, op });
 }
 
-async function runLightOp({ op, sceneId, light, id, tokenId }) {
+async function runLightOp({ op, sceneId, light, tile, id, tokenId }) {
   const scene = game.scenes.get(sceneId);
   if (!scene) return;
-  if (op === 'create') await scene.createEmbeddedDocuments('AmbientLight', [light]);
-  if (op === 'delete') await scene.lights.get(id)?.delete();
+  if (op === 'create') {
+    await scene.createEmbeddedDocuments('AmbientLight', [light]);
+    if (tile) await scene.createEmbeddedDocuments('Tile', [tile]);
+  }
+  if (op === 'delete') {
+    const flag = scene.lights.get(id)?.getFlag('sdm', LEFT_FLAG);
+    await scene.lights.get(id)?.delete();
+    // Its image on the square goes too
+    const tiles = scene.tiles.filter(t => flag && t.getFlag('sdm', LEFT_FLAG)?.actor === flag.actor && t.getFlag('sdm', LEFT_FLAG)?.item === flag.item);
+    if (tiles.length) await scene.deleteEmbeddedDocuments('Tile', tiles.map(t => t.id));
+  }
   if (op === 'dark') await scene.tokens.get(tokenId)?.update({ light: NO_LIGHT });
 }
 
