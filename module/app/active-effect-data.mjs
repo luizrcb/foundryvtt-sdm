@@ -7,6 +7,16 @@ export const AURA_BANDS = {
   medium: 'SDM.RangeMedium',
   custom: 'SDM.Aura.CustomDistance'
 };
+/** An aura's light: none, the aura's own reach, a light preset, or custom. */
+export const AURA_LIGHTS = {
+  none: 'SDM.Light.Preset.none',
+  reach: 'SDM.Aura.LightReach',
+  torch: 'SDM.Light.Preset.torch',
+  lantern: 'SDM.Light.Preset.lantern',
+  candle: 'SDM.Light.Preset.candle',
+  glow: 'SDM.Light.Preset.glow',
+  custom: 'SDM.Light.Preset.custom'
+};
 export const ROUND_DAMAGE_TARGETS = {
   inside: 'SDM.RoundDamage.Inside',
   lastFoe: 'SDM.RoundDamage.LastFoe'
@@ -65,7 +75,19 @@ export class SDMActiveEffectData extends foundry.data.ActiveEffectTypeDataModel 
         walls: new fields.BooleanField({ required: true, initial: true, label: $l10n('SDM.Aura.Walls'), hint: $l10n('SDM.Aura.WallsHint') }),
         combatOnly: new fields.BooleanField({ required: true, initial: false, label: $l10n('SDM.Aura.CombatOnly') }),
         showRadius: new fields.BooleanField({ required: true, initial: false, label: $l10n('SDM.Aura.ShowRadius'), hint: $l10n('SDM.Aura.ShowRadiusHint') }),
-        color: new fields.ColorField({ required: false, nullable: true, initial: null, label: $l10n('SDM.Aura.Color') })
+        color: new fields.ColorField({ required: false, nullable: true, initial: null, label: $l10n('SDM.Aura.Color') }),
+        // Light from the source token (not the copies): the aura's reach, a light preset, or one of its own
+        // (bright / dim in grid spaces from the token's middle); its color is the aura's
+        lightPreset: new fields.StringField({ required: true, initial: 'none', choices: AURA_LIGHTS, label: $l10n('SDM.Aura.Light'), hint: $l10n('SDM.Aura.LightHint') }),
+        lightBright: new fields.NumberField({ required: true, nullable: false, min: 0, initial: 2, label: $l10n('SDM.Aura.LightBright') }),
+        lightDim: new fields.NumberField({ required: true, nullable: false, min: 0, initial: 4, label: $l10n('SDM.Aura.LightDim') }),
+        lightAnimation: new fields.StringField({
+          required: true,
+          blank: true,
+          initial: '',
+          label: $l10n('SDM.Aura.LightAnimation'),
+          choices: () => ({ '': '', ...Object.fromEntries(Object.entries(CONFIG.Canvas.lightAnimations ?? {}).map(([key, value]) => [key, value.label ?? key])) })
+        })
       }),
       // Damage at the start of each combat round: to the tokens in its aura, or to the last foe its actor attacked
       roundDamage: new fields.SchemaField({

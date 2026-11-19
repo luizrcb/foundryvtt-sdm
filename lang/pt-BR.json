@@ -3303,5 +3303,11 @@
   "SDM.Aura.OnSelf": "também em si",
   "SDM.Aura.NotOnSelf": "não em si",
   "SDM.Aura.Spaces": "Espaços",
-  "SDM.Aura.SpacesHint": "Quadrados (ou hexágonos) além da borda do token: 1 = os espaços ao lado dele."
+  "SDM.Aura.SpacesHint": "Quadrados (ou hexágonos) além da borda do token: 1 = os espaços ao lado dele.",
+  "SDM.Aura.Light": "Luz",
+  "SDM.Aura.LightHint": "O token de origem emite luz (não quem recebe a aura); a cor é a da aura.",
+  "SDM.Aura.LightReach": "O alcance dela",
+  "SDM.Aura.LightBright": "Luz plena (espaços)",
+  "SDM.Aura.LightDim": "Penumbra (espaços)",
+  "SDM.Aura.LightAnimation": "Animação da luz"
 }

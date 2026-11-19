@@ -101,7 +101,7 @@ export function getLightSettings(item) {
 }
 
 /** Settings from a light field (fallback preset for auto). */
-function lightSettingsFrom(light = {}, fallback = 'torch') {
+export function lightSettingsFrom(light = {}, fallback = 'torch') {
   const preset = light.preset && light.preset !== 'none' ? light.preset : fallback;
   if (preset === 'custom') {
     return {
@@ -156,7 +156,7 @@ function gridDistance(actor) {
   return Number(token?.parent?.grid?.distance ?? canvas?.scene?.grid?.distance) || 5;
 }
 
-function buildChanges(settings, distance) {
+export function buildChanges(settings, distance) {
   const entry = (key, value) => ({ key: `token.light.${key}`, value, type: 'override', phase: 'initial', priority: LIGHT_PRIORITY });
   return [
     entry('dim', settings.dim * distance),

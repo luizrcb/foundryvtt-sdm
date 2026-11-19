@@ -1,6 +1,7 @@
 import { resolveEffectReferences, resolveFormulaReferences } from './effectReferences.mjs';
 import { $l10n } from './globalUtils.mjs';
 import { metersPerUnit, sceneZoneLimits } from './zones.mjs';
+import { buildChanges, getLightPreset, lightSettingsFrom } from './lights.mjs';
 
 /**
  * Auras: an active effect with its aura on radiates from its actor's tokens. Each source token gets
@@ -333,6 +334,65 @@ async function syncActorCopies(actor, copies) {
 }
 
 /* -------------------------------------------- */
+/*  Light                                       */
+/* -------------------------------------------- */
+
+const LIGHT_FLAG = 'auraLight'; // an actor's light from its aura: <aura effect uuid>
+
+/** The light an aura gives its source token (settings in grid spaces, and the scene's grid distance), or null. */
+function auraLightSettings(effect, token) {
+  const aura = effect.system.aura;
+  const preset = aura.lightPreset;
+  if (!preset || preset === 'none') return null;
+  const scene = token.parent;
+  const unit = Number(scene.grid.distance) || 1;
+  let settings;
+  if (preset === 'reach') {
+    // Dim to the aura's edge (from the token's middle), bright half of it
+    const dim = auraDistance(effect, scene) / unit + (Number(token.width) || 1) / 2;
+    settings = { ...getLightPreset('glow'), dim, bright: dim / 2 };
+  } else {
+    settings = { ...lightSettingsFrom({ preset, bright: aura.lightBright, dim: aura.lightDim, color: '', animation: '' }, 'glow') };
+  }
+  // The aura's color (or, for its reach and custom light, the owner's), and its animation when set
+  const color = aura.color ? aura.color.css ?? String(aura.color) : preset === 'reach' || preset === 'custom' ? auraColor(effect, token.actor) : '';
+  if (color) settings.color = color;
+  if (aura.lightAnimation) settings.animation = aura.lightAnimation;
+  return { settings, distance: unit };
+}
+
+/** The light effect an actor should have from its auras (the first aura with light), or null. */
+function lightData(actor, token) {
+  for (const effect of auraEffectsOf(actor)) {
+    if (effect.system.aura.combatOnly && !inStartedCombat(token)) continue;
+    const light = auraLightSettings(effect, token);
+    if (!light) continue;
+    return {
+      name: effect.name,
+      img: effect.img,
+      transfer: false,
+      disabled: false,
+      system: { changes: buildChanges(light.settings, light.distance) },
+      flags: { sdm: { [LIGHT_FLAG]: effect.uuid } }
+    };
+  }
+  return null;
+}
+
+/** Put on, update or take off an actor's aura light. */
+async function syncActorLight(actor, data) {
+  const existing = actor.effects.filter(e => e.getFlag('sdm', LIGHT_FLAG));
+  const [current, ...extra] = existing;
+  if (extra.length || (current && !data)) await actor.deleteEmbeddedDocuments('ActiveEffect', (data ? extra : existing).map(e => e.id));
+  if (!data) return;
+  if (!current) return actor.createEmbeddedDocuments('ActiveEffect', [data]);
+  const same =
+    current.getFlag('sdm', LIGHT_FLAG) === data.flags.sdm[LIGHT_FLAG] &&
+    JSON.stringify(current.system.changes.map(c => [c.key, String(c.value)])) === JSON.stringify(data.system.changes.map(c => [c.key, String(c.value)]));
+  if (!same) await actor.updateEmbeddedDocuments('ActiveEffect', [{ _id: current.id, name: data.name, img: data.img, 'system.changes': data.system.changes, [`flags.sdm.${LIGHT_FLAG}`]: data.flags.sdm[LIGHT_FLAG] }]);
+}
+
+/* -------------------------------------------- */
 /*  Sync                                        */
 /* -------------------------------------------- */
 
@@ -370,6 +430,26 @@ async function syncAuras() {
       }
     }
     for (const { actor, copies: list } of copies.values()) await syncActorCopies(actor, list ?? []);
+    // Light from auras: the source tokens' actors (hidden tokens shed none), and those that no longer have it
+    const lights = new Map();
+    if (enabled) {
+      for (const scene of scenes) {
+        for (const token of scene.tokens) {
+          if (token.hidden || !token.actor || lights.get(token.actor.uuid)?.data) continue;
+          lights.set(token.actor.uuid, { actor: token.actor, data: lightData(token.actor, token) });
+        }
+      }
+    }
+    for (const actor of game.actors) {
+      if (!lights.has(actor.uuid) && actor.effects.some(e => e.getFlag('sdm', LIGHT_FLAG))) lights.set(actor.uuid, { actor, data: null });
+    }
+    for (const scene of scenes) {
+      for (const token of scene.tokens) {
+        const actor = token.actor;
+        if (actor && !lights.has(actor.uuid) && actor.effects.some(e => e.getFlag('sdm', LIGHT_FLAG))) lights.set(actor.uuid, { actor, data: null });
+      }
+    }
+    for (const { actor, data } of lights.values()) await syncActorLight(actor, data);
   } catch (error) {
     console.error('SDM | Aura update failed', error);
   } finally {
@@ -385,7 +465,7 @@ export const scheduleAuraSync = foundry.utils.debounce(() => syncAuras(), 150);
 
 /** A change that can move, add or remove auras or their copies (not the copies themselves). */
 function onEffectChange(effect) {
-  if (isAuraCopy(effect)) return;
+  if (isAuraCopy(effect) || effect.getFlag?.('sdm', LIGHT_FLAG)) return;
   scheduleAuraSync();
 }
 

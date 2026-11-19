@@ -3303,5 +3303,11 @@
   "SDM.Aura.OnSelf": "on itself too",
   "SDM.Aura.NotOnSelf": "not on itself",
   "SDM.Aura.Spaces": "Spaces",
-  "SDM.Aura.SpacesHint": "Squares (or hexes) beyond the token's edge: 1 = the spaces next to it."
+  "SDM.Aura.SpacesHint": "Squares (or hexes) beyond the token's edge: 1 = the spaces next to it.",
+  "SDM.Aura.Light": "Light",
+  "SDM.Aura.LightHint": "The source token sheds light (not those who get the aura); its color is the aura's.",
+  "SDM.Aura.LightReach": "Its reach",
+  "SDM.Aura.LightBright": "Bright light (spaces)",
+  "SDM.Aura.LightDim": "Dim light (spaces)",
+  "SDM.Aura.LightAnimation": "Light animation"
 }

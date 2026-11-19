@@ -41,6 +41,14 @@
       {{formGroup fields.aura.combatOnly value=source.system.aura.combatOnly rootId=rootId}}
       {{formGroup fields.aura.showRadius value=source.system.aura.showRadius rootId=rootId}}
       {{formGroup fields.aura.color value=source.system.aura.color rootId=rootId}}
+      {{formGroup fields.aura.lightPreset value=source.system.aura.lightPreset localize=true rootId=rootId}}
+      {{#if (eq source.system.aura.lightPreset 'custom')}}
+      {{formGroup fields.aura.lightBright value=source.system.aura.lightBright rootId=rootId}}
+      {{formGroup fields.aura.lightDim value=source.system.aura.lightDim rootId=rootId}}
+      {{/if}}
+      {{#unless (eq source.system.aura.lightPreset 'none')}}
+      {{formGroup fields.aura.lightAnimation value=source.system.aura.lightAnimation localize=true rootId=rootId}}
+      {{/unless}}
     </fieldset>
     {{/if}}
     {{formGroup fields.roundDamage.formula value=source.system.roundDamage.formula rootId=rootId placeholder="@actor.level"}}
