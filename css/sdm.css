@@ -7825,6 +7825,10 @@ a.sdm-proto-link.warn {
   gap: 4px;
 }
 
+.sdm-tie-row .sdm-card .sdm-sacrifice-buttons {
+  margin-top: 4px;
+}
+
 .sdm-card .sdm-sacrifice-buttons button {
   margin: 0;
   line-height: 24px;

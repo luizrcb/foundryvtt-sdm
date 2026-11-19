@@ -889,8 +889,9 @@ export function tieButtons({ kind, tokenUuid = '', actorUuid, name, amount = 0, 
   const data = `data-kind="${esc(kind)}" data-token-uuid="${esc(tokenUuid)}" data-actor-uuid="${esc(actorUuid)}" data-name="${esc(name)}" data-amount="${Number(amount) || 0}" data-reason="${esc(reason)}"`;
   return (
     `<div class="sdm-card-tag warn sdm-tie-row" data-actor-uuid="${esc(actorUuid)}"><i class="fa-solid fa-scale-balanced"></i> ${esc($fmt('SDM.AreaTie', { name }))}` +
-    ` <button type="button" data-action="sdmTieSacrifice" data-yes="1" ${data}>${esc($l10n('SDM.SaveAgainst.SacrificeMade'))}</button>` +
-    `<button type="button" data-action="sdmTieSacrifice" data-yes="" ${data}>${esc($l10n('SDM.SaveAgainst.SacrificeNot'))}</button></div>`
+    // Side by side under the text, as on the save card
+    `<div class="sdm-sacrifice-buttons"><button type="button" data-action="sdmTieSacrifice" data-yes="1" ${data}><i class="fa-solid fa-shield-halved"></i> ${esc($l10n('SDM.SaveAgainst.SacrificeMade'))}</button>` +
+    `<button type="button" data-action="sdmTieSacrifice" data-yes="" ${data}><i class="fa-solid fa-triangle-exclamation"></i> ${esc($l10n('SDM.SaveAgainst.SacrificeNot'))}</button></div></div>`
   );
 }
 

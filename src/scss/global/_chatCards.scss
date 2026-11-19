@@ -321,6 +321,11 @@
     grid-template-columns: 1fr 1fr;
     gap: 4px;
 
+    // A tie on an area or splash card: under the line
+    .sdm-tie-row & {
+      margin-top: 4px;
+    }
+
     button {
       margin: 0;
       line-height: 24px;
