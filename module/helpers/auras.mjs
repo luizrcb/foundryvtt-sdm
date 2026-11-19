@@ -118,8 +118,8 @@ function regionData(effect, token) {
           height: token._source.height,
           shape: token._source.shape
         },
-        // Round (not stepped along the grid), around the token's edge
-        gridBased: false,
+        // Along the grid (the spaces around the token's edge)
+        gridBased: true,
         hole: false,
         radius: auraDistance(effect, scene) * scene.dimensions.distancePixels
       }
@@ -134,8 +134,8 @@ function regionData(effect, token) {
 /** What changes a region needs (reach, look, walls); null when it is up to date. Compared by what we last
  *  wrote (the flag's signature), not by the shape core may adjust, so updates never loop. */
 function regionSignature(data) {
-  // "round": regions drawn before auras were round get redrawn
-  return JSON.stringify(['round', data.name, Math.round(data.shapes[0].radius), data.visibility, !!data.restriction.enabled, data.color ?? '']);
+  // "grid": regions drawn while auras were round get redrawn along the grid
+  return JSON.stringify(['grid', data.name, Math.round(data.shapes[0].radius), data.visibility, !!data.restriction.enabled, data.color ?? '']);
 }
 
 function regionChanges(region, data) {
