@@ -39,6 +39,11 @@
 - Damage each round (auras, lingering areas), lingering areas' rounds and hazards work with a combat not linked to a scene
 - Life cards name the aura, area or hazard that did it
 - Ties on area and splash cards: *Sacrificed* / *No sacrifice* side by side under the line
+- **Aura reach in grid spaces**: an aura's *Distance of its own* is now *Spaces* (squares or hexes beyond the token's edge: 1 = the spaces next to it); auras with the older distance (feet or meters) keep it. Auras are drawn along the grid, following the scene's *Grid Diagonals*
+- **Aura light**: an aura can light its source token (not those who get it) — its reach (dim to the edge, bright half), a light preset (torch, lantern, candle, glow) or custom (bright / dim in spaces), with an optional animation; its color is the aura's. It follows the aura (combat only, off, removed)
+- **Effects panel**: an aura the actor radiates has a solid round border when it also applies to its actor, a dashed one when only to the others ("Aura — on itself too / not on itself" on hover); hovering an aura also shows the start of its description
+- **Leave a light on the map**: a lit item in hand can be left on the token's square (Token HUD light palette, or the item's right-click menu). With Item Piles it goes into a pile whose token sheds its light (it moves with the pile and goes with it) and whoever picks it up gets it back lit; without, an ambient light marks the spot, the item stays in the inventory marked as left, and *Pick up* on the owner's token HUD next to it brings it back lit. Leaving and picking it up spend nothing — only lighting does
+- **Item Piles**: an item dropped on the map keeps its effects on (its aura radiates from the pile), and a pile created by dropping an item takes its dropper's disposition (an aura for allies helps the dropper's side)
 ## v1.11.0
 
 - **Investing XP**: a new button next to Player XP on the character sheet lets players invest their Player XP in the character, in one of its hallmark items or in one of their pets, or donate it to another player's Player XP. The dialog shows how much XP each one needs to level up, and every investment is recorded in the chat
