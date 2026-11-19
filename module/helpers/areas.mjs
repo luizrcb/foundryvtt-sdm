@@ -257,6 +257,24 @@ function squareShapes(squares, scene) {
   return shapes;
 }
 
+/**
+ * Line of effect: an area doesn't go through walls. A point is reached when nothing blocking movement
+ * (walls, closed doors) stands between the area's origin (its middle; a cone's or line's point on the
+ * user's token; the token for "around the user") and it.
+ */
+function reaches(origin) {
+  const backend = CONFIG.Canvas.polygonBackends?.move;
+  if (!origin || !backend?.testCollision) return () => true;
+  const level = canvas.level ?? undefined;
+  return point => !backend.testCollision(origin, point, { type: 'move', mode: 'any', ...(level ? { level } : {}) });
+}
+
+/** The squares the area reaches from its origin (line of effect). */
+function reachedSquares(squares, origin, size) {
+  const clear = reaches(origin);
+  return squares.filter(({ i, j }) => clear({ x: (j + 0.5) * size, y: (i + 0.5) * size }));
+}
+
 /** The squares a token stands on. */
 const tokenSquares = token => token.getOccupiedGridSpaceOffsets?.() ?? [];
 
@@ -305,7 +323,12 @@ function patternFrame(token, point) {
  * diagonal and its length.
  */
 function patternSquares(token, point, shape, length) {
-  const { ti, tj, w, h, dx, dy, axis } = patternFrame(token, point);
+  const { ti, tj, w, h, dx, dy, axis, origin: edge } = patternFrame(token, point);
+  const size = token.parent.grid.size;
+  // Line of effect from just inside the token: a wall along its side blocks the pattern
+  const center = tokenCenter(token);
+  const nudge = 2 / Math.max(Math.hypot(center.x - edge.x, center.y - edge.y), 1);
+  const origin = { x: edge.x + (center.x - edge.x) * nudge, y: edge.y + (center.y - edge.y) * nudge };
   const squares = [];
   if (!dx || !dy) {
     for (let k = 1; k <= length; k++) {
@@ -313,7 +336,7 @@ function patternSquares(token, point, shape, length) {
       const step = dx ? (dx > 0 ? tj + w - 1 + k : tj - k) : dy > 0 ? ti + h - 1 + k : ti - k;
       for (let o = -(width - 1) / 2; o <= (width - 1) / 2; o++) squares.push(dx ? { i: axis + o, j: step } : { i: step, j: axis + o });
     }
-    return squares;
+    return reachedSquares(squares, origin, size);
   }
   const i0 = dy > 0 ? ti + h : ti - 1;
   const j0 = dx > 0 ? tj + w : tj - 1;
@@ -326,7 +349,7 @@ function patternSquares(token, point, shape, length) {
       if (inside) squares.push({ i: i0 + dy * b, j: j0 + dx * a });
     }
   }
-  return squares;
+  return reachedSquares(squares, origin, size);
 }
 
 /**
@@ -509,11 +532,13 @@ export async function placeArea({ actor = null, item = null, kind = '', area: gi
 }
 
 /** The squares a placed (circle, square, ring, emanation) area covers; a ring's wall closed at its diagonals. */
-function areaSquares(area, region, scene, exclude = new Set()) {
-  const squares = coveredSquares(region, scene, exclude);
-  if (area.shape !== 'ring') return squares;
+function areaSquares(area, region, scene, exclude = new Set(), from = null) {
   const shape = region.shapes[0];
-  return closeRing(squares, { x: shape.x, y: shape.y }, scene.grid.size);
+  // Its middle (or the user's token, around the user): walls stop it there
+  const origin = from ?? { x: shape.x, y: shape.y };
+  let squares = coveredSquares(region, scene, exclude);
+  if (area.shape === 'ring') squares = closeRing(squares, { x: shape.x, y: shape.y }, scene.grid.size);
+  return reachedSquares(squares, origin, scene.grid.size);
 }
 
 /** The tokens inside the placed area (its side), the range warning, then the region created. */
@@ -537,7 +562,7 @@ async function finishPlacement({ area, scene, placed, sourceToken, fromToken, or
   if (squareGrid(scene)) {
     // The squares it covers (not the user's own for cones, lines and emanations), drawn as those squares
     const exclude = new Set(fromToken && sourceToken ? tokenSquares(sourceToken).map(squareKey) : []);
-    const squares = picked ?? areaSquares(area, placed, scene, exclude);
+    const squares = picked ?? areaSquares(area, placed, scene, exclude, fromToken ? origin : null);
     tokens = tokensOnSquares(squares, candidates);
     if (squares.length) {
       regionData.shapes = squareShapes(squares, scene);
@@ -545,9 +570,12 @@ async function finishPlacement({ area, scene, placed, sourceToken, fromToken, or
       regionData.displayMeasurements = false;
     }
   } else {
+    // Gridless and hex: the tokens' centers, reached from the area's middle (or the user's token)
+    const shape = placed.shapes[0];
+    const clear = reaches(fromToken ? origin : { x: shape.x, y: shape.y });
     tokens = candidates.filter(token => {
       const center = tokenCenter(token);
-      return placed.testPoint({ x: center.x, y: center.y, elevation: token.elevation ?? 0 });
+      return placed.testPoint({ x: center.x, y: center.y, elevation: token.elevation ?? 0 }) && clear(center);
     });
   }
 
@@ -704,7 +732,11 @@ export async function splashTokens({ splash, attackerToken, targetToken, name })
     return splash.affects === 'enemies' ? token.disposition !== attackerToken.disposition : token.disposition === attackerToken.disposition;
   };
   const candidates = scene.tokens.filter(t => t !== targetToken && t !== attackerToken && t.actor && !(t.hidden && !game.user.isGM) && sides(t));
-  if (splash.shape === 'around') return candidates.filter(t => isAdjacent(targetToken, t));
+  if (splash.shape === 'around') {
+    // Next to the target, with no wall between them
+    const clear = reaches(tokenCenter(targetToken));
+    return candidates.filter(t => isAdjacent(targetToken, t) && clear(tokenCenter(t)));
+  }
 
   const squares = squareGrid(scene);
   const length = squares ? squaresOf(splash.meters, scene) * scene.grid.size : splash.meters * pixelsPerMeter(scene);
@@ -783,9 +815,11 @@ export async function splashTokens({ splash, attackerToken, targetToken, name })
         : { type: 'cone', x: target.x, y: target.y, radius: length, angle: CONE_ANGLE, rotation, curvature: 'round', gridBased };
     region = new CONFIG.Region.documentClass({ ...base, shapes: [shape] }, { parent: scene });
   }
+  const shape = region.shapes[0];
+  const clear = reaches({ x: shape.x, y: shape.y });
   return candidates.filter(t => {
     const c = tokenCenter(t);
-    return region.testPoint({ x: c.x, y: c.y, elevation: t.elevation ?? 0 });
+    return region.testPoint({ x: c.x, y: c.y, elevation: t.elevation ?? 0 }) && clear(c);
   });
 }
 
