@@ -1,3 +1,4 @@
+import { listedEffects } from '../helpers/auras.mjs';
 import { describeNpcProfile, getNpcProfile } from '../helpers/npcVariability.mjs';
 import { areaLabel, itemArea, placeArea } from '../helpers/areas.mjs';
 import { applyDefeatCondition, combineRollModes, conditionRollMode, isWeakened, tacticalRollAdvice } from '../helpers/conditions.mjs';
@@ -1073,9 +1074,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         context.counterScope = '@actor';
         // Prepare active effects
         context.effects = prepareActiveEffectCategories(
-          // A generator that returns all effects stored on the actor
-          // as well as any items
-          this.actor.allApplicableEffects()
+          // All effects stored on the actor and its items, its auras included
+          listedEffects(this.actor)
         );
         break;
     }

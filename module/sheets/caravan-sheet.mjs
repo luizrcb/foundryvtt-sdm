@@ -1,3 +1,4 @@
+import { listedEffects } from '../helpers/auras.mjs';
 import { bindCollapsibleSections } from '../helpers/collapsibleSections.mjs';
 import { ACTOR_COUNTER_ACTIONS, getCounters, stepCounter } from '../helpers/counters.mjs';
 import CompendiumBrowser from '../app/compendium-browser.mjs';
@@ -389,9 +390,8 @@ export class SdmCaravanSheet extends api.HandlebarsApplicationMixin(sheets.Actor
         context.counterScope = '@actor';
         // Prepare active effects
         context.effects = prepareActiveEffectCategories(
-          // A generator that returns all effects stored on the actor
-          // as well as any items
-          this.actor.allApplicableEffects()
+          // All effects stored on the actor and its items, its auras included
+          listedEffects(this.actor)
         );
         break;
     }

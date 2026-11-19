@@ -55,6 +55,20 @@ export function auraEffectsOf(actor) {
   }
 }
 
+/**
+ * The actor's effects as its sheet lists them: its auras too (they don't apply to the actor itself, so
+ * allApplicableEffects leaves them out, but they're the actor's to edit or delete).
+ */
+export function listedEffects(actor) {
+  if (!actor) return [];
+  actor._sdmListingAuras = true;
+  try {
+    return [...actor.allApplicableEffects()];
+  } finally {
+    actor._sdmListingAuras = false;
+  }
+}
+
 /** True for an aura effect whose changes must not apply to its own actor (see SdmActor#allApplicableEffects). */
 export function skipsItsActor(effect, actor) {
   return isAura(effect) && !effect.system.aura.applyToSelf && !actor?._sdmListingAuras;
