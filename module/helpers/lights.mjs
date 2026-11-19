@@ -343,11 +343,12 @@ export async function leaveLight(item, token) {
   const light = { x: center.x, y: center.y, config, flags };
   const side = size * 0.7;
   const tile = {
-    texture: { src: item.img },
-    x: center.x - side / 2,
-    y: center.y - side / 2,
-    width: side,
-    height: side,
+    texture: { src: item.img, anchorX: 0.5, anchorY: 0.5 },
+    // v14 tiles are placed by their anchor (their middle by default)
+    x: Math.round(center.x),
+    y: Math.round(center.y),
+    width: Math.round(side),
+    height: Math.round(side),
     elevation: Number(token.elevation) || 0,
     flags
   };
