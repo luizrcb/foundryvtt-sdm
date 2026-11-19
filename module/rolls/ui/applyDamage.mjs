@@ -30,18 +30,17 @@ export function damageTokens() {
   return targeted.length ? targeted : canvas.tokens?.controlled ?? [];
 }
 
-/** Damage (or, multiplier −1, heal) the targeted tokens, else the selected ones; through the Referee for those the user doesn't own. */
+/**
+ * Damage (or, multiplier −1, heal) the targeted tokens, else the selected ones. Only tokens the user
+ * owns (the Referee: all): the others are left for the Referee, and a warning says how many.
+ */
 export async function applyToTokens(amount, multiplier = 1) {
   const tokens = damageTokens();
   if (!tokens.length) return ui.notifications.warn(game.i18n.localize('SDM.ChatContextNoTokensSelected'));
-  await Promise.all(
-    tokens.map(token => {
-      const actor = token.actor;
-      if (!actor) return null;
-      if (actor.isOwner) return actor.applyDamage(amount, multiplier);
-      return changeLifeOf(actor, amount, { heal: multiplier < 0 });
-    })
-  );
+  const owned = tokens.filter(token => token.actor?.isOwner);
+  const skipped = tokens.length - owned.length;
+  if (skipped) ui.notifications.warn(game.i18n.format('SDM.ApplyNotOwned', { count: skipped }));
+  await Promise.all(owned.map(token => token.actor.applyDamage(amount, multiplier)));
 }
 
 /** renderChatMessageHTML: the buttons act on the targeted tokens, else the selected ones. */
@@ -107,7 +106,8 @@ export function bindUndoDamage(message, html) {
 /**
  * Area damage with "Apply damage automatically" off: a button per token hit applies its share (or
  * heals it), Apply to all / Heal all everyone not done yet. What was applied stays on the card
- * (flags.sdm.areaApplied) as a line with an Undo; the roller and the Referee use them.
+ * (flags.sdm.areaApplied) as a line with an Undo. The roller uses them on the tokens they own, the
+ * Referee on all ("Apply damage automatically" applies to anyone, through the Referee).
  */
 export function bindAreaApply(message, html) {
   const box = html.querySelector('.sdm-area-apply');
@@ -119,8 +119,10 @@ export function bindAreaApply(message, html) {
   for (const share of shares) {
     const done = applied.find(entry => entry.uuid === share.dataset.targetUuid);
     if (!done) {
-      if (!allowed) share.querySelectorAll('button').forEach(button => button.remove());
-      pending.push(share);
+      // The roller applies to the tokens they own; the Referee to all
+      const owned = !!fromUuidSync(share.dataset.targetUuid)?.isOwner;
+      if (!allowed || !owned) share.querySelectorAll('button').forEach(button => button.remove());
+      else pending.push(share);
       continue;
     }
     // Applied: what it did, and its Undo

@@ -3260,5 +3260,6 @@
   "SDM.AreaDrawNeedsToken": "Selecione um token: cones, linhas e \"ao redor do usuário\" saem dele.",
   "SDM.AreaApplyAll": "Aplicar a todos",
   "SDM.AreaHealAll": "Curar todos",
-  "SDM.AreaHealApplied": "{amount} de cura em {target}"
+  "SDM.AreaHealApplied": "{amount} de cura em {target}",
+  "SDM.ApplyNotOwned": "{count} token(s) que não são seus: o Mediador aplica neles."
 }

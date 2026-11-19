@@ -3260,5 +3260,6 @@
   "SDM.AreaDrawNeedsToken": "Select a token: cones, lines and \"around the user\" start at it.",
   "SDM.AreaApplyAll": "Apply to all",
   "SDM.AreaHealAll": "Heal all",
-  "SDM.AreaHealApplied": "{amount} healed on {target}"
+  "SDM.AreaHealApplied": "{amount} healed on {target}",
+  "SDM.ApplyNotOwned": "{count} token(s) not yours: the Referee applies it to them."
 }
