@@ -49,8 +49,8 @@ const statusName = id => game.i18n.localize(CONFIG.statusEffects.find(s => s.id 
 // What the save is against: the item's effect (by its name), else the condition
 // (an area's save: the item's name)
 const againstName = info => info?.effect?.name || (info?.status ? statusName(info.status) : info?.source || '');
-// What a save is against: a condition, an item's effect, or an area (helpers/areas.mjs)
-const hasAgainst = info => !!(info?.status || info?.effect || info?.area);
+// What a save is against: a condition, an item's effect, an area or a hazard (helpers/areas.mjs)
+const hasAgainst = info => !!(info?.status || info?.effect || info?.area || info?.hazard);
 
 /** The ability a character resists a condition with, by default: Aura for the mind, else Endurance. */
 export function suggestedSaveAbility(statusId) {
@@ -82,6 +82,7 @@ export async function saveAgainst(target, info) {
   if (info.duration) data.duration = info.duration;
   if (info.effect) data.effect = info.effect;
   if (info.area) data.area = info.area;
+  if (info.hazard) data.hazard = info.hazard;
   if (target.type !== ActorType.CHARACTER) {
     if (target.isOwner) return rollSave(target, ActorType.NPC, data);
     if (!game.users.activeGM) return ui.notifications.warn(game.i18n.localize('SDM.ErrorNoActiveGM'));
@@ -202,14 +203,15 @@ export function saveAgainstHtml(info, success, actor = null) {
 /** After the save: a failure puts the condition on (the roller owns the actor); equal waits for the Referee. */
 export async function resolveSaveAgainst(actor, info, success) {
   // An area's save: the area card gets the result (and gives what a failed save gets)
-  if (info?.area) return reportArea(info, success);
+  if (info?.area || info?.hazard) return reportArea(info, success);
   if (success !== false) return;
   await putOn(actor, info, false);
 }
 
-/** An area's save result goes to its card (helpers/areas.mjs). */
-async function reportArea(info, result) {
-  const { reportAreaSave } = await import('../helpers/areas.mjs');
+/** An area's save result goes to its card, a hazard's to the Referee's game (helpers/areas.mjs). */
+async function reportArea(info, result, previous) {
+  const { reportAreaSave, reportHazardSave } = await import('../helpers/areas.mjs');
+  if (info.hazard) return reportHazardSave(info.hazard, result, previous);
   await reportAreaSave(info.area, result);
 }
 
@@ -233,7 +235,7 @@ async function putOn(actor, info, remove) {
 export async function recheckSaveAgainst(check, before, after) {
   const info = check?.saveAgainst;
   if (!hasAgainst(info) || before === after || before === null || after === null) return;
-  if (info.area) return reportArea(info, after);
+  if (info.area || info.hazard) return reportArea(info, after, before);
   const actor = fromUuidSync(check.actor);
   if (!actor) return;
   await putOn(actor, info, after !== false);
@@ -278,7 +280,7 @@ export function bindSacrifice(message, html) {
       event.preventDefault();
       box.querySelectorAll('button').forEach(b => (b.disabled = true));
       const actor = fromUuidSync(box.dataset.actor);
-      if (info.area) await reportArea(info, button.dataset.choice === 'made');
+      if (info.area || info.hazard) await reportArea(info, button.dataset.choice === 'made');
       else if (button.dataset.choice === 'not' && actor) await putOn(actor, info, false);
       await message.setFlag('sdm', 'sacrifice', button.dataset.choice);
     })

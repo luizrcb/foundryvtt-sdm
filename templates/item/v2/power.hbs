@@ -64,6 +64,30 @@
       <input type="checkbox" name="system.power.area_follows" {{checked system.power.area_follows}} data-dtype="Boolean" />
       <span class="v2-label">{{localize 'SDM.AreaFollows'}}</span>
     </label>
+    <label class="v2-field" data-tooltip="{{localize 'SDM.AreaRoundDamageHint'}}">
+      <span class="v2-label">{{localize 'SDM.AreaRoundDamage.Label'}}</span>
+      <select name="system.power.area_round_damage">{{selectOptions @root.areaRoundDamage localize=true selected=system.power.area_round_damage}}</select>
+    </label>
+    {{#if (eq system.power.area_round_damage 'formula')}}
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.AreaRoundFormula'}}</span>
+      <input type="text" name="system.power.area_round_formula" value="{{system.power.area_round_formula}}" />
+    </label>
+    {{/if}}
+    <label class="v2-field v2-check" data-tooltip="{{localize 'SDM.AreaRoundEnterHint'}}">
+      <input type="checkbox" name="system.power.area_round_enter" {{checked system.power.area_round_enter}} data-dtype="Boolean" />
+      <span class="v2-label">{{localize 'SDM.AreaRoundEnter'}}</span>
+    </label>
+    <label class="v2-field" data-tooltip="{{localize 'SDM.AreaRoundConditionHint'}}">
+      <span class="v2-label">{{localize 'SDM.AreaRoundCondition'}}</span>
+      <select name="system.power.area_round_condition">{{selectOptions @root.triggerStatuses selected=system.power.area_round_condition}}</select>
+    </label>
+    {{#if system.power.area_round_condition}}
+    <label class="v2-field" data-tooltip="{{localize 'SDM.AreaRoundConditionRoundsHint'}}">
+      <span class="v2-label">{{localize 'SDM.AreaRoundConditionRounds'}}</span>
+      <input type="number" name="system.power.area_round_condition_rounds" value="{{system.power.area_round_condition_rounds}}" min="0" step="1" data-dtype="Number" />
+    </label>
+    {{/if}}
     {{/if}}
     <label class="v2-field" data-tooltip="{{localize 'SDM.AreaAcrossHint'}}">
       <span class="v2-label">{{localize 'SDM.AreaAcross'}}</span>

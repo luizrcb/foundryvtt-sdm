@@ -93,6 +93,12 @@ SDM.areaResolve = {
   save: 'SDM.AreaResolve.save'
 };
 
+SDM.areaRoundDamage = {
+  none: 'SDM.AreaRoundDamage.none',
+  item: 'SDM.AreaRoundDamage.item',
+  formula: 'SDM.AreaRoundDamage.formula'
+};
+
 SDM.areaSavePass = {
   avoid: 'SDM.AreaSavePass.avoid',
   half: 'SDM.AreaSavePass.half',

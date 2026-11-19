@@ -111,7 +111,14 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       save_difficulty: new fields.StringField({ required: true, blank: true, initial: '' }),
       save_target: new fields.NumberField({ required: true, nullable: false, integer: true, min: 1, initial: 13 }),
       // A passed save: avoids it, halves the damage, or shortens the effect (1 round)
-      save_pass: new fields.StringField({ required: true, blank: false, initial: 'avoid', choices: ['avoid', 'half', 'shorter'] })
+      save_pass: new fields.StringField({ required: true, blank: false, initial: 'avoid', choices: ['avoid', 'half', 'shorter'] }),
+      // A lingering area each round: damage (none, the item's own, a formula), also when someone enters
+      // it, and a condition (for some rounds; 0 = until removed); with the area's save when it has one
+      round_damage: new fields.StringField({ required: true, blank: false, initial: 'none', choices: ['none', 'item', 'formula'] }),
+      round_formula: new fields.StringField({ required: true, blank: true, initial: '' }),
+      round_enter: new fields.BooleanField({ required: true, initial: false }),
+      round_condition: new fields.StringField({ required: true, blank: true, initial: '' }),
+      round_condition_rounds: new fields.NumberField({ required: true, nullable: false, integer: true, min: 0, initial: 1 })
     });
 
     schema.range = new fields.SchemaField({

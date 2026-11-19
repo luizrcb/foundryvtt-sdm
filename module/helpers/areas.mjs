@@ -4,7 +4,7 @@ import { cardHeader, cardWrap, marginText, resultStrip } from '../rolls/ui/cardP
 import { createChatMessage } from './chatUtils.mjs';
 import { saveDifficultyLabel, saveDifficultyValue } from '../app/save-against.mjs';
 import { attackFollowupHtml, powerWithoutRoll } from '../rolls/attackFollowup.mjs';
-import { getItemIdentifier } from './effectReferences.mjs';
+import { getItemIdentifier, resolveFormulaReferences } from './effectReferences.mjs';
 import { bandForMeters, metersForWorldUnits, metersPerUnit, sceneUnitsForMeters, sceneZoneLimits, worldUnit, worldUnitsForMeters, ZONE_BANDS } from './zones.mjs';
 
 /**
@@ -23,6 +23,7 @@ const CHANNEL = 'system.sdm';
 const CREATE_ACTION = 'areaCreate';
 const REMOVE_ACTION = 'areaRemove';
 const SAVE_ACTION = 'areaSave';
+const HAZARD_ACTION = 'hazardSave';
 const AREA_FLAG = 'area';
 
 /**
@@ -75,6 +76,20 @@ function areaSave(ability, difficulty, target, pass) {
   return { ability: ability || '', difficulty: saveDifficultyValue(difficulty || '', target), pass: pass || 'avoid' };
 }
 
+/** A lingering area's damage each round (and on entering) and its condition, or null when it has none. */
+function areaRound(damage, formula, enter, condition, conditionRounds) {
+  const hasDamage = damage === 'item' || (damage === 'formula' && `${formula ?? ''}`.trim());
+  const hasCondition = !!condition && CONFIG.statusEffects.some(s => s.id === condition);
+  if (!hasDamage && !hasCondition) return null;
+  return {
+    damage: hasDamage ? damage : 'none',
+    formula: damage === 'formula' ? `${formula}`.trim() : '',
+    enter: !!enter,
+    condition: hasCondition ? condition : '',
+    conditionRounds: Math.max(Number(conditionRounds) || 0, 0)
+  };
+}
+
 /** The power an item rolls: a power item's own, or an album's selected power (kind "album"). */
 function areaPower(item, kind) {
   if (kind === 'album') {
@@ -101,6 +116,7 @@ export function itemArea(item, kind = '') {
       linger: kind !== 'album' && !!power.area_linger,
       rounds: Number(power.area_rounds) || 0,
       follows: !!power.area_follows,
+      round: areaRound(power.area_round_damage, power.area_round_formula, power.area_round_enter, power.area_round_condition, power.area_round_condition_rounds),
       save: power.area_resolve === 'save' ? areaSave(power.area_save_ability, power.area_save_difficulty, power.area_save_target, power.area_save_pass) : null,
       range: `${power.range ?? ''}`
     };
@@ -120,6 +136,13 @@ export function itemArea(item, kind = '') {
     linger: !!item.system.area.linger,
     rounds: Number(item.system.area.rounds) || 0,
     follows: !!item.system.area.follows,
+    round: areaRound(
+      item.system.area.round_damage,
+      item.system.area.round_formula,
+      item.system.area.round_enter,
+      item.system.area.round_condition,
+      item.system.area.round_condition_rounds
+    ),
     save:
       item.system.area.resolve === 'save'
         ? areaSave(item.system.area.save_ability, item.system.area.save_difficulty, item.system.area.save_target, item.system.area.save_pass)
@@ -136,7 +159,7 @@ export function lingerEffects(item) {
 /** "Lingers 3 rounds" / "Lingers" for a lingering area with effects, else ''. */
 function lingerLabel(item, kind) {
   const area = itemArea(item, kind);
-  if (!area?.linger || !lingerEffects(item).length) return '';
+  if (!area?.linger || !(lingerEffects(item).length || area.round)) return '';
   return area.rounds > 0 ? $fmt('SDM.AreaLingersRounds', { rounds: area.rounds }) : $l10n('SDM.AreaLingers');
 }
 
@@ -473,7 +496,9 @@ export async function placeArea({ actor = null, item = null, kind = '', area: gi
   };
   // Lingering: whoever stands in it has the item's effects (helpers/auras.mjs keeps them), for some rounds
   const effects = item && area.linger ? lingerEffects(item) : [];
-  if (effects.length) {
+  // …and damage and conditions each round (and on entering): a hazard on its region
+  const hazard = item && area.linger ? areaHazard(area, item, kind, sourceToken, actor) : null;
+  if (effects.length || hazard) {
     const combat = game.combats.find(c => c.started && c.scene?.id === scene.id) ?? null;
     Object.assign(data.flags.sdm[AREA_FLAG], {
       linger: true,
@@ -485,7 +510,7 @@ export async function placeArea({ actor = null, item = null, kind = '', area: gi
     });
   }
   if (canvas.level?.id) data.levels = [canvas.level.id];
-  const finish = (placed, squares = null) => finishPlacement({ area, scene, placed, sourceToken, fromToken, origin, areaId, squares, free });
+  const finish = (placed, squares = null) => finishPlacement({ area, scene, placed, sourceToken, fromToken, origin, areaId, squares, free, hazard });
 
   // An emanation needs no placing: it is around the token already
   if (area.shape === 'emanation') return finish(new CONFIG.Region.documentClass(foundry.utils.deepClone(data), { parent: scene }));
@@ -542,7 +567,7 @@ function areaSquares(area, region, scene, exclude = new Set(), from = null) {
 }
 
 /** The tokens inside the placed area (its side), the range warning, then the region created. */
-async function finishPlacement({ area, scene, placed, sourceToken, fromToken, origin, areaId, squares: picked = null, free = false }) {
+async function finishPlacement({ area, scene, placed, sourceToken, fromToken, origin, areaId, squares: picked = null, free = false, hazard = null }) {
   const candidates = scene.tokens.filter(token => {
     if (token.hidden && !game.user.isGM) return false;
     // The area starting at or surrounding its user leaves the user out
@@ -577,6 +602,13 @@ async function finishPlacement({ area, scene, placed, sourceToken, fromToken, or
       const center = tokenCenter(token);
       return placed.testPoint({ x: center.x, y: center.y, elevation: token.elevation ?? 0 }) && clear(center);
     });
+  }
+
+  // Its hazard (damage, condition each round): those inside now aren't "entering" it (the area just hit them)
+  if (hazard) {
+    const inside = squareGrid(scene) ? tokensOnSquares(regionSquares(regionData, scene), scene.tokens.contents) : tokens;
+    foundry.utils.setProperty(hazard, 'flags.sdm.hazard.initial', inside.map(t => t.uuid));
+    regionData.behaviors = [hazard];
   }
 
   // A lingering area that follows its user: attached to the token, it moves with it
@@ -656,7 +688,8 @@ function rangeWarning(area, scene, origin, placed) {
 
 async function createArea(scene, data) {
   delete data._id;
-  if (game.user.isGM || CONFIG.Region.documentClass.canUserCreate(game.user)) return scene.createEmbeddedDocuments('Region', [data]);
+  // With a hazard (a behavior), only the Referee's game creates it
+  if (game.user.isGM || (!data.behaviors?.length && CONFIG.Region.documentClass.canUserCreate(game.user))) return scene.createEmbeddedDocuments('Region', [data]);
   if (!game.users.activeGM) return ui.notifications.warn($l10n('SDM.AreaNoGM'));
   game.socket.emit(CHANNEL, { action: CREATE_ACTION, sceneId: scene.id, data });
 }
@@ -1244,6 +1277,175 @@ async function applyAreaSave(area, result) {
 }
 
 /* -------------------------------------------- */
+/*  Hazards (region behavior)                   */
+/* -------------------------------------------- */
+
+export const HAZARD_TYPE = 'sdm.hazard';
+// A token is hit at most once per round (in combat) by each hazard
+const hazardHits = new Map();
+
+/** The damage formula an item deals: a power's roll, a weapon's damage (with its bonus), a consumable's Harm. */
+function itemDamageFormula(item, kind = '') {
+  const power = areaPower(item, kind);
+  if (power) return `${power.roll_formula ?? ''}`.trim();
+  const damage = item?.system?.weapon?.damage;
+  if (damage?.base) {
+    const bonus = Number(damage.bonus) || 0;
+    return bonus ? `${damage.base}${bonus > 0 ? '+' : ''}${bonus}` : `${damage.base}`;
+  }
+  return `${item?.system?.use?.harm ?? ''}`.trim();
+}
+
+/** The hazard a lingering item area puts on its region (damage, condition, save each round), or null. */
+function areaHazard(area, item, kind, sourceToken, actor) {
+  const round = area.round;
+  if (!round) return null;
+  const E = CONST.REGION_EVENTS;
+  const save = area.save;
+  const exact = /^\d+$/.test(`${save?.difficulty ?? ''}`);
+  return {
+    type: HAZARD_TYPE,
+    name: item.name,
+    system: {
+      events: [E.TOKEN_ROUND_START, ...(round.enter ? [E.TOKEN_ENTER] : [])],
+      damage: round.damage === 'item' ? itemDamageFormula(item, kind) : round.damage === 'formula' ? round.formula : '',
+      condition: round.condition,
+      conditionRounds: round.conditionRounds,
+      save: !!save,
+      saveAbility: save?.ability ?? '',
+      saveDifficulty: save && !exact ? save.difficulty ?? '' : '',
+      savePass: save?.pass ?? 'avoid',
+      affects: area.affects || 'everyone',
+      uses: 0
+    },
+    flags: {
+      sdm: {
+        hazard: {
+          actor: actor?.uuid ?? '',
+          item: item.uuid,
+          disposition: sourceToken?.disposition ?? null,
+          ...(exact ? { difficulty: save.difficulty } : {})
+        }
+      }
+    }
+  };
+}
+
+/** The squares a region's rectangles cover (an area drawn as squares). */
+function regionSquares(regionData, scene) {
+  const size = scene.grid.size;
+  const squares = [];
+  for (const shape of regionData.shapes ?? []) {
+    if (shape.type !== 'rectangle') continue;
+    for (let i = Math.round(shape.y / size); i < Math.round((shape.y + shape.height) / size); i++) {
+      for (let j = Math.round(shape.x / size); j < Math.round((shape.x + shape.width) / size); j++) squares.push({ i, j });
+    }
+  }
+  return squares;
+}
+
+/** Does the hazard affect this token (its side)? */
+function hazardAffects(behavior, token) {
+  const affects = behavior.system.affects;
+  const D = CONST.TOKEN_DISPOSITIONS;
+  const placer = behavior.getFlag('sdm', 'hazard')?.disposition ?? null;
+  if (affects === 'hostile') return token.disposition === D.HOSTILE;
+  if (affects === 'friendly') return token.disposition === D.FRIENDLY;
+  if (affects === 'neutral') return token.disposition === D.NEUTRAL;
+  if (affects === 'enemies') return placer === null || token.disposition !== placer;
+  if (affects === 'allies') return placer === null || token.disposition === placer;
+  return true;
+}
+
+/**
+ * A hazard's event (the Referee's game): the token entered, started its turn, or was inside when the
+ * round started. Once per round in combat; uses (when set) run out and switch it off.
+ */
+export async function hazardEvent(behavior, token, eventName = '') {
+  if (!hazardAffects(behavior, token)) return;
+  // Inside when the item's area was placed: it doesn't "enter" until it leaves and comes back
+  const initial = behavior.getFlag('sdm', 'hazard')?.initial ?? [];
+  if (eventName === CONST.REGION_EVENTS.TOKEN_ENTER && initial.includes(token.uuid)) return;
+  const combat = game.combats.find(c => c.started && c.scene?.id === token.parent?.id) ?? null;
+  if (combat) {
+    const key = `${behavior.uuid}|${token.uuid}`;
+    const stamp = `${combat.id}|${combat.round}`;
+    if (hazardHits.get(key) === stamp) return;
+    hazardHits.set(key, stamp);
+  }
+  const flag = behavior.getFlag('sdm', 'hazard') ?? {};
+  const uses = Number(behavior.system.uses) || 0;
+  if (uses > 0) {
+    const used = (Number(flag.used) || 0) + 1;
+    await behavior.update({ 'flags.sdm.hazard.used': used, ...(used >= uses ? { disabled: true } : {}) });
+  }
+  // The damage (Bystander takes its level off), then the save or the result at once
+  let amount = 0;
+  const formula = `${behavior.system.damage ?? ''}`.trim();
+  if (formula) {
+    const actor = flag.actor ? fromUuidSync(flag.actor) : null;
+    const item = flag.item ? fromUuidSync(flag.item) : null;
+    try {
+      const roll = await new Roll(resolveFormulaReferences(formula, { actor, item }), actor?.getRollData?.() ?? {}).evaluate();
+      amount = Math.max((Number(roll.total) || 0) - areaDamageReduction(token.actor), 0);
+    } catch (error) {
+      console.warn(`SDM | ${behavior.name}: "${formula}" could not be rolled`, error);
+    }
+  }
+  const condition = behavior.system.condition;
+  if (amount <= 0 && !condition) return;
+  const name = behavior.name || behavior.region?.name || '';
+  const hit = { token: token.uuid, amount, condition, rounds: Number(behavior.system.conditionRounds) || 0, pass: behavior.system.savePass, name };
+  if (!behavior.system.save) return applyHazard(hit, false);
+  const { saveAgainst } = await import('../app/save-against.mjs');
+  await saveAgainst(token.actor, {
+    hazard: hit,
+    source: name,
+    ability: behavior.system.saveAbility || '',
+    difficulty: flag.difficulty || behavior.system.saveDifficulty || ''
+  });
+}
+
+/** A token leaving a hazard's region: from now on, coming back in counts as entering. */
+export async function hazardExit(behavior, token) {
+  const initial = behavior.getFlag('sdm', 'hazard')?.initial ?? [];
+  if (initial.includes(token.uuid)) await behavior.setFlag('sdm', 'hazard', { initial: initial.filter(uuid => uuid !== token.uuid) });
+}
+
+/** What a hazard's result gives: damage and the condition's rounds (null: none); a tie waits for the Referee. */
+function hazardOutcome(hit, result) {
+  if (result === undefined || result === null || result === 'equal') return { amount: 0, rounds: null };
+  if (result === false) return { amount: hit.amount, rounds: hit.condition ? hit.rounds : null };
+  if (hit.pass === 'half') return { amount: Math.ceil(hit.amount / 2), rounds: null };
+  if (hit.pass === 'shorter') return { amount: hit.amount, rounds: hit.condition ? 1 : null };
+  return { amount: 0, rounds: null };
+}
+
+/** A hazard's save result (true, false, 'equal'): applied by the Referee's game. */
+export async function reportHazardSave(hit, result, previous) {
+  if (game.user.isGM) return applyHazard(hit, result, previous);
+  if (!game.users.activeGM) return ui.notifications.warn($l10n('SDM.ErrorNoActiveGM'));
+  game.socket.emit(CHANNEL, { action: HAZARD_ACTION, hit, result, previous });
+}
+
+/**
+ * Apply a hazard's result; when hero dice change it (previous), only the difference: damage added or
+ * given back, the condition put on, taken off or put on again for its new rounds.
+ */
+async function applyHazard(hit, result, previous) {
+  const actor = fromUuidSync(hit.token)?.actor;
+  if (!actor) return;
+  const now = hazardOutcome(hit, result);
+  const before = hazardOutcome(hit, previous);
+  const { changeLifeOf, applyStatusToTargets } = await import('../app/use-item.mjs');
+  const diff = now.amount - before.amount;
+  if (diff) await changeLifeOf(actor, Math.abs(diff), { heal: diff < 0, reason: hit.name });
+  if (!hit.condition || now.rounds === before.rounds) return;
+  if (before.rounds !== null) await applyStatusToTargets(hit.condition, null, { targets: [actor], remove: true, silent: true });
+  if (now.rounds !== null) await applyStatusToTargets(hit.condition, null, { targets: [actor], rounds: now.rounds });
+}
+
+/* -------------------------------------------- */
 /*  Chat and socket                             */
 /* -------------------------------------------- */
 
@@ -1301,6 +1503,7 @@ export function setupAreas() {
   game.socket.on(CHANNEL, async message => {
     if (game.users.activeGM?.id !== game.user.id) return;
     if (message?.action === SAVE_ACTION) return applyAreaSave(message.area, message.result);
+    if (message?.action === HAZARD_ACTION) return applyHazard(message.hit, message.result, message.previous);
     const scene = game.scenes.get(message?.sceneId);
     if (!scene) return;
     if (message.action === CREATE_ACTION) await scene.createEmbeddedDocuments('Region', [message.data]);

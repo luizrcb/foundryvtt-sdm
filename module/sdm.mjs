@@ -70,6 +70,7 @@ import { configureConditions, localizeConditions, setupConditions } from './help
 import { setupZones } from './helpers/zones.mjs';
 import { setupAuras } from './helpers/auras.mjs';
 import { bindAreaButtons, drawArea, setupAreas } from './helpers/areas.mjs';
+import HazardBehaviorData from './data/hazard-behavior.mjs';
 import { bindAttackFollowup } from './rolls/attackFollowup.mjs';
 import { bindAttackFeatures } from './rolls/attackFeatures.mjs';
 import { bindSacrifice, bindSaveAgainst, rerenderChangedSave, setupSaveAgainst } from './app/save-against.mjs';
@@ -734,6 +735,9 @@ Hooks.once('init', function () {
     mount: models.SdmMount,
     vehicle: models.SdmVehicle
   };
+  // Region behaviors: Hazard (traps, burning ground, lingering areas' damage and conditions)
+  CONFIG.RegionBehavior.dataModels['sdm.hazard'] = HazardBehaviorData;
+  CONFIG.RegionBehavior.typeIcons['sdm.hazard'] = 'fa-solid fa-skull-crossbones';
 
   _configureFonts();
 

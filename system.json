@@ -31,6 +31,9 @@
         "htmlFields": ["biography", "notes"]
       }
     },
+    "RegionBehavior": {
+      "hazard": {}
+    },
     "Item": {
       "gear": {
         "htmlFields": ["description", "gm_notes", "powers.element.description"],
