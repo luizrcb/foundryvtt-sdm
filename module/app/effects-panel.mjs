@@ -4,6 +4,18 @@ import { templatePath } from '../helpers/templates.mjs';
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
+const EXCERPT_LENGTH = 140;
+
+/** The first characters of a description, as plain text (escaped), "…" when cut. */
+function excerpt(html) {
+  const div = document.createElement('div');
+  div.innerHTML = `${html ?? ''}`;
+  const text = div.textContent.replace(/\s+/g, ' ').trim();
+  if (!text) return '';
+  const cut = text.length > EXCERPT_LENGTH ? `${text.slice(0, EXCERPT_LENGTH).replace(/\s+\S*$/, '')}…` : text;
+  return `<em>${foundry.utils.escapeHTML(cut)}</em>`;
+}
+
 /**
  * A small HUD next to the sidebar listing the temporary effects and conditions of the
  * controlled token's actor (or the user's assigned character), with their remaining duration, and
@@ -70,11 +82,16 @@ export default class SdmEffectsPanel extends HandlebarsApplicationMixin(Applicat
       // A received aura says where from; its own aura says it's an aura
       const copy = isAuraCopy(effect);
       const from = copy ? game.i18n.format('SDM.Aura.From', { name: auraSourceName(effect) }) : isAura(effect) ? game.i18n.localize('SDM.Aura.Title') : '';
+      // An aura: the start of its description too, on its own line
+      const about = from ? excerpt(effect.description) : '';
       const tooltip = status
-        ? [status, from, remaining].filter(Boolean).join('<br>')
-        : [effect.name, from, remaining, !copy && effect.sourceName && effect.parent !== actor ? effect.sourceName : '']
+        ? [status, from, remaining, about].filter(Boolean).join('<br>')
+        : [
+            [effect.name, from, remaining, !copy && effect.sourceName && effect.parent !== actor ? effect.sourceName : ''].filter(Boolean).join(' — '),
+            about
+          ]
             .filter(Boolean)
-            .join(' — ');
+            .join('<br>');
       context.effects.push({
         uuid: effect.uuid,
         name: effect.name,
