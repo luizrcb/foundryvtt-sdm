@@ -690,7 +690,8 @@ export async function postLifeChange(actor, damageValue = 0, multiplier = 1, opt
     note: opts.note ?? '',
     // Undo of damage / healing applied from a card, or a damage corrected by hero dice: its own title
     // (not "Healing" / "Damage", which would read as a new one)
-    reasonTitle: opts.reason ? game.i18n.localize(`SDM.Card.Life.${opts.reason}`) : '',
+    // A known reason (undone, corrected…), else its own text: the aura, area or hazard that did it
+    reasonTitle: opts.reason ? (game.i18n.has(`SDM.Card.Life.${opts.reason}`) ? game.i18n.localize(`SDM.Card.Life.${opts.reason}`) : opts.reason) : '',
     // Temporary life fields (only used in template when tempEnabled is true)
     tempEnabled,
     beforeTemp,
