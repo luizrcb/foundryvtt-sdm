@@ -3316,5 +3316,6 @@
   "SDM.Light.LeaveHere": "Leave it here (on the map)",
   "SDM.Light.LeftChat": "{actor} leaves {item} lit on the ground.",
   "SDM.Light.PickedUpChat": "{actor} picks {item} back up, still lit.",
-  "SDM.Light.LeftOnMapRow": "Left lit on the map: pick it up from your token's HUD, next to it."
+  "SDM.Light.LeftOnMapRow": "Left lit on the map: pick it up from your token's HUD, next to it.",
+  "SDM.AreaEmptyAffects": "Nobody inside ({affects})."
 }

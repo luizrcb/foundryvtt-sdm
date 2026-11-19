@@ -1005,6 +1005,7 @@ export function areaState({ mode, actor, item, kind, placed, total = 0, isNat1 =
     save: area?.save ?? null,
     saves: {},
     lingers: !!area?.linger,
+    affects: area?.affects ?? 'everyone',
     sceneId: canvas.scene?.id ?? '',
     areaId: placed.areaId,
     inside: placed.tokens.map(t => t.uuid),
@@ -1036,6 +1037,12 @@ export function areaBlock(state) {
   if (chips.length) rows.push(`<div class="sdm-card-chips">${chips.map(c => `<span class="sdm-chip">${esc(c)}</span>`).join('')}</div>`);
   if (state.outOfRange) rows.push(`<div class="sdm-card-tag warn">${esc(state.outOfRange)}</div>`);
   const targetLabel = state.mode === 'attack' && !state.save ? 'SDM.AreaTargetHits' : 'SDM.AreaTargetInside';
+  // Nobody inside: with Affects set, say so (the others were left out on purpose)
+  const empty = `<div class="sdm-card-tag info">${esc(
+    state.affects && state.affects !== 'everyone'
+      ? $fmt('SDM.AreaEmptyAffects', { affects: $l10n(CONFIG.SDM.areaAffects[state.affects] ?? '').toLowerCase() })
+      : $l10n('SDM.AreaEmpty')
+  )}</div>`;
 
   if (state.save) {
     // Resolved by a save: each one inside saves (NPCs at once, characters on their request card)
@@ -1063,7 +1070,7 @@ export function areaBlock(state) {
       );
       hits.push(token);
     }
-    if (!tokens.length) rows.push(`<div class="sdm-card-tag info">${esc($l10n('SDM.AreaEmpty'))}</div>`);
+    if (!tokens.length) rows.push(empty);
     const targets = [...new Set(tokens.map(t => t.actor))];
     if (state.mode === 'attack') {
       attackItem = {
@@ -1109,7 +1116,7 @@ export function areaBlock(state) {
         rows.push(tieButtons({ kind: 'area', tokenUuid: token.uuid, actorUuid: target.uuid, name: token.name }));
       }
     }
-    if (!tokens.length) rows.push(`<div class="sdm-card-tag info">${esc($l10n('SDM.AreaEmpty'))}</div>`);
+    if (!tokens.length) rows.push(empty);
     attackItem = {
       id: state.itemId,
       name: state.itemName,
@@ -1126,7 +1133,7 @@ export function areaBlock(state) {
     rows.push(
       names
         ? `<div class="sdm-card-tag info">${esc($l10n('SDM.AreaInside'))}: ${names}</div>`
-        : `<div class="sdm-card-tag info">${esc($l10n('SDM.AreaEmpty'))}</div>`
+        : empty
     );
     const targets = [...new Set(tokens.map(t => t.actor))];
     if (total > 0 && targets.length) rows.push(areaApplyButtonsHtml(areaShares(targets, total), { heal: true, total }));
@@ -1365,7 +1372,9 @@ function hazardAffects(behavior, token) {
  * round started. Once per round in combat; uses (when set) run out and switch it off.
  */
 export async function hazardEvent(behavior, token, eventName = '') {
-  if (!hazardAffects(behavior, token)) return;
+  // Not on those already down (0 life, defeated)
+  const { isDown } = await import('./auras.mjs');
+  if (!hazardAffects(behavior, token) || isDown(token.actor)) return;
   // Inside when the item's area was placed: it doesn't "enter" until it leaves and comes back
   const initial = behavior.getFlag('sdm', 'hazard')?.initial ?? [];
   if (eventName === CONST.REGION_EVENTS.TOKEN_ENTER && initial.includes(token.uuid)) return;

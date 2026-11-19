@@ -477,6 +477,15 @@ function onRegionChange(region) {
 /*  Damage each round                           */
 /* -------------------------------------------- */
 
+/** Down: at 0 life or defeated (dead). Damage each round, lingering areas and hazards leave it alone. */
+export function isDown(actor) {
+  if (!actor) return true;
+  const life = actor.system?.life?.value;
+  if (life !== undefined && life !== null && Number(life) <= 0) return true;
+  const defeated = CONFIG.specialStatusEffects?.DEFEATED ?? 'dead';
+  return !!actor.statuses?.has?.(defeated);
+}
+
 /** True when the actor has an effect dealing damage each round to the last foe it attacked (Irresistible). */
 export function hasLastFoeDamage(actor) {
   return [...(actor?.allApplicableEffects?.() ?? [])].some(
@@ -528,7 +537,7 @@ async function onCombatRound(combat, changed, options) {
         const source = scene.tokens.get(flag.token);
         if (!effect?.system?.roundDamage?.formula || effect.system.roundDamage.target !== 'inside' || !source?.actor) continue;
         for (const token of region.tokens ?? []) {
-          if (token === source || !token.actor || token.actor === source.actor) continue;
+          if (token === source || !token.actor || token.actor === source.actor || isDown(token.actor)) continue;
           if (!fitsDisposition(effect.system.aura, source, token)) continue;
           const amount = await rollRoundDamage(effect, source.actor);
           if (amount > 0) await changeLifeOf(token.actor, amount, { reason: effect.name });
@@ -545,7 +554,7 @@ async function onCombatRound(combat, changed, options) {
           const effect = fromUuidSync(uuid);
           if (!effect?.system?.roundDamage?.formula || effect.system.roundDamage.target !== 'inside') continue;
           for (const token of region.tokens ?? []) {
-            if (!token.actor) continue;
+            if (!token.actor || isDown(token.actor)) continue;
             if (flag.affects === 'enemies' && flag.disposition !== null && token.disposition === flag.disposition) continue;
             if (flag.affects === 'allies' && flag.disposition !== null && token.disposition !== flag.disposition) continue;
             const amount = await rollRoundDamage(effect, placer ?? token.actor);
@@ -563,7 +572,7 @@ async function onCombatRound(combat, changed, options) {
     );
     if (!effects.length) continue;
     const foe = fromUuidSync(actor.getFlag('sdm', 'lastAttacked') ?? '');
-    if (!foe || foe.documentName !== 'Actor') continue;
+    if (!foe || foe.documentName !== 'Actor' || isDown(foe)) continue;
     for (const effect of effects) {
       const amount = await rollRoundDamage(effect, actor);
       if (amount > 0) await changeLifeOf(foe, amount, { reason: effect.name });

@@ -370,7 +370,9 @@ export default class SDMRoll {
       actions += areaPowerButton({ actor: this.actor, item: castItem, kind: isPowerAlbum ? 'album' : 'power', total: this.roll.dice.length ? this.roll.total : 0 });
     }
     // Damage: apply it to the selected tokens (also in the card's right-click menu)
-    if (isDamage || ((isPower || isPowerAlbum) && this.roll.dice.length)) actions += applyDamageHtml(this.roll.total);
+    // (not on an area's card: it has a button per token, and Apply to all)
+    const areaButtons = shares.length || (areaPlacedBlock && !isAttack);
+    if (!areaButtons && (isDamage || ((isPower || isPowerAlbum) && this.roll.dice.length))) actions += applyDamageHtml(this.roll.total);
 
     content = cardWrap(
       cardHeader(this.#cardHeaderData(fixedModifiers, diceModifiers)) +
