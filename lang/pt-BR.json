@@ -3309,5 +3309,8 @@
   "SDM.Aura.LightReach": "O alcance dela",
   "SDM.Aura.LightBright": "Luz plena (espaços)",
   "SDM.Aura.LightDim": "Penumbra (espaços)",
-  "SDM.Aura.LightAnimation": "Animação da luz"
+  "SDM.Aura.LightAnimation": "Animação da luz",
+  "SDM.Light.Leave": "Deixar {name} aqui",
+  "SDM.Light.PickUp": "Pegar {name}",
+  "SDM.Light.LeftOnMap": "{name} está no mapa: pegue pelo HUD do seu token, ao lado dela."
 }

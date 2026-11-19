@@ -133,6 +133,8 @@ export function isLit(item) {
 export function lightBlockedReason(item) {
   // Traits are always at hand
   if (isLightTrait(item)) return null;
+  // Left lit on the map (no Item Piles): picked up from the token's HUD
+  if (item.getFlag?.('sdm', LEFT_FLAG)) return 'SDM.Light.LeftOnMap';
   const system = item.system;
   if (!system.readied) return 'SDM.Light.NotReadied';
   if (system.status === ItemStatusType.BROKEN) return 'SDM.Light.Broken';
@@ -258,6 +260,146 @@ export async function toggleLight(item) {
   return lightItem(item);
 }
 
+/* ---------------- Leaving a light on the map ---------------- */
+
+const LEFT_FLAG = 'lightLeft'; // on an item: it was left on the map lit (Item Piles: in a pile; else: an ambient light)
+const LEAVE_ACTION = 'sdmLightLeave';
+
+/** A token's (or an ambient light's) light config from the light settings. */
+function lightConfig(settings, distance) {
+  return {
+    dim: settings.dim * distance,
+    bright: settings.bright * distance,
+    angle: 360,
+    color: settings.color || null,
+    alpha: settings.alpha,
+    negative: false,
+    animation: { type: settings.animation || null, speed: settings.speed, intensity: settings.intensity, reverse: false }
+  };
+}
+const NO_LIGHT = { dim: 0, bright: 0 };
+
+/** Can this lit item be left on the map (gear in hand, not a trait or a power's light)? */
+export function canLeaveLight(item) {
+  return !!item?.actor && isLit(item) && item.type === ItemType.GEAR && !isLightTrait(item);
+}
+
+/** An Item Piles pile actor (the module active). */
+function isPile(actor) {
+  if (!actor || !game.modules.get('item-piles')?.active) return false;
+  try {
+    if (game.itempiles?.API?.isValidItemPile) return !!game.itempiles.API.isValidItemPile(actor);
+  } catch {
+    /* the flag below */
+  }
+  return !!actor.getFlag?.('item-piles', 'data')?.enabled;
+}
+
+/**
+ * Leave the lit item on the token's square. With Item Piles: the item goes into a new pile whose token
+ * sheds the item's light (it moves with the pile and goes with it); picking it up brings it back lit.
+ * Without: an ambient light on the square, the item stays in the inventory marked as left, and the
+ * owner's token next to it picks it up from its HUD.
+ */
+export async function leaveLight(item, token) {
+  if (!canLeaveLight(item) || !token) return;
+  const actor = item.actor;
+  const scene = token.parent;
+  const distance = Number(scene.grid.distance) || 5;
+  const config = lightConfig(getLightSettings(item), distance);
+  await putOutLight(actor, { itemId: item.id });
+  const api = game.itempiles?.API;
+  if (game.modules.get('item-piles')?.active && api?.createItemPile) {
+    const data = item.toObject();
+    delete data._id;
+    data.system.quantity = 1;
+    foundry.utils.setProperty(data, `flags.sdm.${LEFT_FLAG}`, true);
+    await api.createItemPile({
+      position: { x: token.x, y: token.y },
+      sceneId: scene.id,
+      items: [data],
+      tokenOverrides: { light: config, disposition: token.disposition }
+    });
+    const quantity = Number(item.system.quantity) || 1;
+    if (quantity > 1) await item.update({ 'system.quantity': quantity - 1 });
+    else await item.delete();
+    return;
+  }
+  const center = token.object?.center ?? { x: token.x + (token.width * scene.grid.size) / 2, y: token.y + (token.height * scene.grid.size) / 2 };
+  const light = { x: center.x, y: center.y, config, flags: { sdm: { [LEFT_FLAG]: { actor: actor.uuid, item: item.id } } } };
+  await item.update({ [`flags.sdm.${LEFT_FLAG}`]: true, 'system.readied': false }, { [SPEND_OPTION]: true });
+  await gmLight({ op: 'create', sceneId: scene.id, light });
+}
+
+/** The ambient lights the owner left on this scene within reach of the token (on or next to its squares). */
+function lightsInReach(token) {
+  const actor = token.actor;
+  const scene = token.parent;
+  const size = scene.grid.size;
+  const box = { x0: token.x - size, y0: token.y - size, x1: token.x + (token.width + 1) * size, y1: token.y + (token.height + 1) * size };
+  return scene.lights.filter(light => {
+    const flag = light.getFlag('sdm', LEFT_FLAG);
+    return flag?.actor === actor?.uuid && light.x >= box.x0 && light.x <= box.x1 && light.y >= box.y0 && light.y <= box.y1;
+  });
+}
+
+/** Pick a light left on the map back up (no Item Piles): the light goes and the item comes back lit. */
+async function pickUpLight(token, light) {
+  const item = token.actor?.items.get(light.getFlag('sdm', LEFT_FLAG)?.item);
+  await gmLight({ op: 'delete', sceneId: token.parent.id, id: light.id });
+  if (item) await relightLeft(item);
+}
+
+/** A left light's item back in hand: readied and lit, free (it was burning all along). */
+export async function relightLeft(item) {
+  if (!item?.actor?.isOwner) return;
+  await item.update({ [`flags.sdm.-=${LEFT_FLAG}`]: null, 'system.readied': true }, { [SPEND_OPTION]: true });
+  if (!isLightSource(item) || isLit(item) || lightBlockedReason(item)) return;
+  const current = getLitEffect(item.actor);
+  if (current) await current.delete();
+  await item.actor.createEmbeddedDocuments('ActiveEffect', [
+    {
+      name: $fmt('SDM.Light.EffectName', { name: item.name }),
+      img: item.img,
+      origin: item.uuid,
+      transfer: false,
+      system: { changes: buildChanges(getLightSettings(item), gridDistance(item.actor)) },
+      flags: { sdm: { [LIGHT_FLAG]: { itemId: item.id } } }
+    }
+  ]);
+}
+
+/** Ambient lights and pile tokens are the Referee's: done by the active GM's game. */
+async function gmLight(op) {
+  if (game.user.isGM) return runLightOp(op);
+  if (!game.users.activeGM) return ui.notifications.warn($l10n('SDM.ErrorNoActiveGM'));
+  game.socket.emit('system.sdm', { action: LEAVE_ACTION, op });
+}
+
+async function runLightOp({ op, sceneId, light, id, tokenId }) {
+  const scene = game.scenes.get(sceneId);
+  if (!scene) return;
+  if (op === 'create') await scene.createEmbeddedDocuments('AmbientLight', [light]);
+  if (op === 'delete') await scene.lights.get(id)?.delete();
+  if (op === 'dark') await scene.tokens.get(tokenId)?.update({ light: NO_LIGHT });
+}
+
+/** A pile no longer holding a left light (picked up, moved out): its token stops shedding it. */
+function onPileItemGone(item) {
+  const actor = item.parent;
+  if (!item.getFlag('sdm', LEFT_FLAG) || !isPile(actor) || !game.users.activeGM?.isSelf) return;
+  if (actor.items.some(other => other.id !== item.id && other.getFlag('sdm', LEFT_FLAG))) return;
+  const tokens = actor.isToken ? [actor.token] : actor.getActiveTokens(false, true);
+  for (const token of tokens) if (token?.parent) runLightOp({ op: 'dark', sceneId: token.parent.id, tokenId: token.id });
+}
+
+/** A left light's item arriving on someone (picked up from a pile): back in hand, lit. */
+function onLeftItemCreated(item, options, userId) {
+  if (userId !== game.user.id || !item.getFlag('sdm', LEFT_FLAG) || !item.actor || isPile(item.actor)) return;
+  // After the item's own creation update (it is unreadied when created)
+  setTimeout(() => relightLeft(item).catch(error => console.warn('SDM | Relighting failed', error)), 250);
+}
+
 /* ---------------- Hooks ---------------- */
 
 /** Running out, breaking or unreadying a lit item puts its light out. */
@@ -301,6 +443,15 @@ function onRenderTokenHUD(hud, html) {
   }));
   if (powerLight) {
     entries.unshift({ name: powerLight.name, img: powerLight.img, lit: true, toggle: () => powerLight.delete() });
+  }
+  // The lit item can be left on the token's square; lights left within reach can be picked up
+  const litItem = lit?.getFlag('sdm', LIGHT_FLAG)?.itemId ? actor.items.get(lit.getFlag('sdm', LIGHT_FLAG).itemId) : null;
+  if (canLeaveLight(litItem)) {
+    entries.push({ name: $fmt('SDM.Light.Leave', { name: litItem.name }), img: litItem.img, lit: false, icon: 'fa-solid fa-hand-holding', toggle: () => leaveLight(litItem, token) });
+  }
+  for (const left of lightsInReach(token)) {
+    const leftItem = actor.items.get(left.getFlag('sdm', LEFT_FLAG)?.item);
+    entries.push({ name: $fmt('SDM.Light.PickUp', { name: leftItem?.name ?? '' }), img: leftItem?.img ?? 'icons/svg/light.svg', lit: false, toggle: () => pickUpLight(token, left) });
   }
   if (!entries.length) return;
   const root = html?.querySelectorAll ? html : html?.[0];
@@ -380,4 +531,10 @@ export function setupLights() {
   Hooks.on('updateItem', onUpdateItem);
   Hooks.on('deleteItem', onDeleteItem);
   Hooks.on('renderTokenHUD', onRenderTokenHUD);
+  Hooks.on('deleteItem', onPileItemGone);
+  Hooks.on('createItem', onLeftItemCreated);
+  game.socket.on('system.sdm', message => {
+    if (message?.action !== LEAVE_ACTION || !game.users.activeGM?.isSelf) return;
+    runLightOp(message.op);
+  });
 }

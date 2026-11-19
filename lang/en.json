@@ -3309,5 +3309,8 @@
   "SDM.Aura.LightReach": "Its reach",
   "SDM.Aura.LightBright": "Bright light (spaces)",
   "SDM.Aura.LightDim": "Dim light (spaces)",
-  "SDM.Aura.LightAnimation": "Light animation"
+  "SDM.Aura.LightAnimation": "Light animation",
+  "SDM.Light.Leave": "Leave {name} here",
+  "SDM.Light.PickUp": "Pick up {name}",
+  "SDM.Light.LeftOnMap": "{name} is on the map: pick it up from your token's HUD, next to it."
 }
