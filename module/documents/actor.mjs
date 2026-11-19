@@ -1,6 +1,6 @@
 import { applyNpcProfile, getNpcProfile } from '../helpers/npcVariability.mjs';
 import { featureEnabled } from '../helpers/features.mjs';
-import { isLightSource, isLit, lightBlockedReason, lightItem, putOutLight } from '../helpers/lights.mjs';
+import { canLeaveLight, isLightSource, isLit, leaveLight, lightBlockedReason, lightItem, putOutLight } from '../helpers/lights.mjs';
 import { blockedReason, isDormantEffect, isUsable, useItem } from '../app/use-item.mjs';
 import { resetCounters } from '../helpers/counters.mjs';
 import { canRefillUses, refillUsesUpdate } from '../helpers/itemUses.mjs';
@@ -1687,6 +1687,20 @@ export class SdmActor extends Actor {
         onClick: async (event, target) => {
           const item = this.sheet._getEmbeddedDocument(target);
           await putOutLight(this, { itemId: item.id });
+        }
+      },
+      {
+        // A lit item left on the map, on the square of the actor's token in the scene being viewed
+        label: 'SDM.Light.LeaveHere',
+        icon: '<i class="fa-solid fa-hand-holding"></i>',
+        visible: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          return !!item?.isOwner && canLeaveLight(item) && !!this.getActiveTokens(false, true).some(t => t.parent === canvas?.scene);
+        },
+        onClick: async (event, target) => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          const token = this.getActiveTokens(false, true).find(t => t.parent === canvas?.scene);
+          await leaveLight(item, token);
         }
       },
       {

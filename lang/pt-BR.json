@@ -3312,5 +3312,6 @@
   "SDM.Aura.LightAnimation": "Animação da luz",
   "SDM.Light.Leave": "Deixar {name} aqui",
   "SDM.Light.PickUp": "Pegar {name}",
-  "SDM.Light.LeftOnMap": "{name} está no mapa: pegue pelo HUD do seu token, ao lado dela."
+  "SDM.Light.LeftOnMap": "{name} está no mapa: pegue pelo HUD do seu token, ao lado dela.",
+  "SDM.Light.LeaveHere": "Deixar aqui (no mapa)"
 }
