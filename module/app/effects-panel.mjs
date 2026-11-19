@@ -1,11 +1,14 @@
 import { conditionTooltip } from '../helpers/conditions.mjs';
+import { auraSourceName, isAura, isAuraCopy, listedEffects } from '../helpers/auras.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
 /**
  * A small HUD next to the sidebar listing the temporary effects and conditions of the
- * controlled token's actor (or the user's assigned character), with their remaining duration.
+ * controlled token's actor (or the user's assigned character), with their remaining duration, and
+ * its auras: those it radiates (marked) and those it receives ("Aura from …"). The Referee removes an
+ * effect with a right-click (not a received aura: it comes back while the token is inside).
  */
 export default class SdmEffectsPanel extends HandlebarsApplicationMixin(ApplicationV2) {
   static DEFAULT_OPTIONS = {
@@ -36,6 +39,8 @@ export default class SdmEffectsPanel extends HandlebarsApplicationMixin(Applicat
   static isDisplayed(effect) {
     if (effect.disabled) return false;
     return (
+      isAura(effect) ||
+      isAuraCopy(effect) ||
       effect.isTemporary ||
       !!effect.getFlag?.('sdm', 'temporary') ||
       effect.statuses?.size > 0 ||
@@ -50,7 +55,8 @@ export default class SdmEffectsPanel extends HandlebarsApplicationMixin(Applicat
     context.effects = [];
     if (!actor || !game.settings.get('sdm', 'showEffectsPanel')) return context;
 
-    for (const effect of actor.allApplicableEffects()) {
+    // Its own auras too (they don't apply to it, so allApplicableEffects leaves them out)
+    for (const effect of listedEffects(actor)) {
       if (!SdmEffectsPanel.isDisplayed(effect)) continue;
       const duration = effect.duration ?? {};
       const expired = !!duration.expired;
@@ -61,9 +67,12 @@ export default class SdmEffectsPanel extends HandlebarsApplicationMixin(Applicat
           : '';
       // Conditions show their summary
       const status = [...(effect.statuses ?? [])].map(id => conditionTooltip(id)).find(Boolean);
+      // A received aura says where from; its own aura says it's an aura
+      const copy = isAuraCopy(effect);
+      const from = copy ? game.i18n.format('SDM.Aura.From', { name: auraSourceName(effect) }) : isAura(effect) ? game.i18n.localize('SDM.Aura.Title') : '';
       const tooltip = status
-        ? [status, remaining].filter(Boolean).join('<br>')
-        : [effect.name, remaining, effect.sourceName && effect.parent !== actor ? effect.sourceName : '']
+        ? [status, from, remaining].filter(Boolean).join('<br>')
+        : [effect.name, from, remaining, !copy && effect.sourceName && effect.parent !== actor ? effect.sourceName : '']
             .filter(Boolean)
             .join(' — ');
       context.effects.push({
@@ -73,7 +82,9 @@ export default class SdmEffectsPanel extends HandlebarsApplicationMixin(Applicat
         remaining,
         expired,
         tooltip,
-        canDelete: effect.parent === actor && effect.isOwner
+        aura: isAura(effect) && !copy,
+        // The Referee's right-click: effects stored on the actor, not received auras
+        canDelete: game.user.isGM && effect.parent === actor && !copy
       });
     }
     return context;
@@ -84,7 +95,7 @@ export default class SdmEffectsPanel extends HandlebarsApplicationMixin(Applicat
     this.element.classList.toggle('empty', !context.effects.length);
     this.setPosition();
 
-    // Right-click removes the effect (only effects stored directly on the actor)
+    // Right-click removes the effect (the Referee; only effects stored directly on the actor)
     for (const li of this.element.querySelectorAll('[data-uuid][data-can-delete]')) {
       li.addEventListener('contextmenu', async event => {
         event.preventDefault();

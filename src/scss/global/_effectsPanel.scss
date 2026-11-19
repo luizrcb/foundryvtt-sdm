@@ -44,6 +44,12 @@
       filter: grayscale(1);
       opacity: 0.6;
     }
+
+    // An aura the actor radiates (received ones look like any effect, with "Aura from …")
+    &.aura img {
+      border: 2px dashed var(--sdm-c-accent, #873b9c);
+      border-radius: 50%;
+    }
   }
 
   .sdm-effects-panel-duration {
