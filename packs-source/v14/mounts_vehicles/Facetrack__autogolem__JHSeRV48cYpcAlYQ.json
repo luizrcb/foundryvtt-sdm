@@ -50,13 +50,13 @@
       "initiative": "",
       "level": 10,
       "life": {
-        "value": 120,
-        "max": 120
+        "value": 433,
+        "max": 433
       },
-      "morale": 9,
-      "defense": 16,
-      "bonus": 12,
-      "damage": "1d20+1d6+12",
+      "morale": 11,
+      "defense": 7,
+      "bonus": 5,
+      "damage": "11d6",
       "capacity": 1
     },
     "is_hallmark": false,
@@ -70,7 +70,7 @@
     "speed": -1,
     "automatic": true,
     "animation": {
-      "table": "generic-synthesized-creature",
+      "table": "brick-bastions",
       "filled": true
     }
   },
