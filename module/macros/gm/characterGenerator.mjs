@@ -973,10 +973,15 @@ async function generateCharacterWithOptions(options = {}, existingActor) {
         'Item',
         existingActor.items.contents.map(item => item.id)
       );
-      await existingActor.deleteEmbeddedDocuments(
-        'ActiveEffect',
-        existingActor.effects.contents.map(effect => effect.id)
-      );
+      // Deleting the items can delete some effects on its own meanwhile (a lit item's light, aura
+      // copies and lights): if one is already gone, delete those still there
+      const effectIds = existingActor.effects.contents.map(effect => effect.id);
+      try {
+        if (effectIds.length) await existingActor.deleteEmbeddedDocuments('ActiveEffect', effectIds);
+      } catch {
+        const left = effectIds.filter(id => existingActor.effects.has(id));
+        if (left.length) await existingActor.deleteEmbeddedDocuments('ActiveEffect', left);
+      }
       await existingActor.unsetFlag('sdm', REPEAT_UPGRADE_FLAG);
       // A rerolled character starts a new progress history
       await existingActor.unsetFlag('sdm', 'progressLog');
