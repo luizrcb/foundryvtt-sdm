@@ -114,8 +114,15 @@ function dropperDisposition(source, scene) {
  * Dropping an item on the map where there's no pile (the dropper's game, before the drop): the
  * Referee's game is told where, and with which disposition, the new pile's token should be created.
  */
-function onPreDropItem(source, target, itemData, position) {
-  if (target || !position || !canvas?.scene) return;
+function onPreDropItem(source, ...args) {
+  // The arguments' order changes between Item Piles versions: the pile under the drop is a token
+  // document (none: a new pile), the position the object with x and y
+  if (args.some(arg => arg?.documentName === 'Token') || !canvas?.scene) return;
+  // (else where the mouse let go: the drop point)
+  const position =
+    args.find(arg => arg && typeof arg === 'object' && !arg.documentName && Number.isFinite(Number(arg.x)) && Number.isFinite(Number(arg.y)) && arg.x !== null) ??
+    canvas.mousePosition;
+  if (!position) return;
   const disposition = dropperDisposition(source, canvas.scene);
   if (disposition === null || disposition === undefined) return;
   const drop = { sceneId: canvas.scene.id, x: Number(position.x) || 0, y: Number(position.y) || 0, disposition };
