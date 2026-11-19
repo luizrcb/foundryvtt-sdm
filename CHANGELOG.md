@@ -48,6 +48,8 @@
 - Damage and power cards from an area keep only their per-token buttons and *Apply to all* (no −N / ½ / ×2 / heal row too)
 - An area card with nobody inside says why when *Affects* is set: "Nobody inside (enemies only)"
 - Rerolling a character no longer fails ("ActiveEffect … does not exist!") when deleting its items also removed some of its effects (a light, an aura's)
+- Empty fields look empty: settings no longer show placeholders that read as values (formulas, numbers, colors); the hints that remain (drop a table, any power…) are italic and faded in every sheet and dialog
+- Auras: *Best by* is now *Best aura by*, and it and *Stacks* explain how auras with the same name compete
 ## v1.11.0
 
 - **Investing XP**: a new button next to Player XP on the character sheet lets players invest their Player XP in the character, in one of its hallmark items or in one of their pets, or donate it to another player's Player XP. The dialog shows how much XP each one needs to level up, and every investment is recorded in the chat
