@@ -25,12 +25,43 @@ const REMOVE_ACTION = 'areaRemove';
 const SAVE_ACTION = 'areaSave';
 const AREA_FLAG = 'area';
 
-export const AREA_METERS = {
-  foot: { small: 3, medium: 10, large: 30 },
-  vehicle: { small: 10, medium: 50, large: 150 }
+/**
+ * Sizes in standard squares (1.5 m / 5 ft), from the book's area table: circles, squares and rings by
+ * the squares across (2 / 6 / 20: ~3 / 9 / 30 m); cones by length, 30° / 60° / 90° wide (3 / 6 / 11:
+ * ~4 / 9 / 16 m); lines by length, one square wide (5 / 21 / 85: ~8 / 32 / 128 m). Vehicle weapons:
+ * circles ~10 / 50 / 150 m across, cones and lines five times as long. Other grid scales convert by
+ * meters, so the area keeps its size.
+ */
+const SQUARE_METERS = 1.5;
+const AREA_SQUARES = {
+  foot: {
+    across: { small: 2, medium: 6, large: 20 },
+    cone: { small: 3, medium: 6, large: 11 },
+    line: { small: 5, medium: 21, large: 85 }
+  },
+  vehicle: {
+    across: { small: 6, medium: 34, large: 100 },
+    cone: { small: 15, medium: 30, large: 55 },
+    line: { small: 25, medium: 105, large: 425 }
+  }
 };
-const CONE_ANGLE = 60; // degrees
-const LINE_WIDTH_METERS = 1.5;
+const CONE_ANGLES = { small: 30, medium: 60, large: 90 };
+const LINE_WIDTH_METERS = SQUARE_METERS;
+const AREA_SIZES = ['small', 'medium', 'large'];
+const isAreaSize = size => AREA_SIZES.includes(size);
+
+/**
+ * An area's size: meters (across, or length for cones and lines), the cone's angle, and the distance
+ * shown on its label (the world unit). Across (in the world unit) replaces the size's length.
+ */
+function areaSize(size, shape, { vehicle = false, across = 0 } = {}) {
+  const table = AREA_SQUARES[vehicle ? 'vehicle' : 'foot'];
+  const squares = (shape === 'cone' ? table.cone : shape === 'line' ? table.line : table.across)[size] ?? table.across.small;
+  const angle = shape === 'cone' ? CONE_ANGLES[size] ?? 60 : null;
+  if (Number(across) > 0) return { meters: metersForWorldUnits(across), angle, distance: Number(across) };
+  const distance = worldUnit() === 'ft' ? squares * 5 : worldUnit() === 'm' ? squares * SQUARE_METERS : worldUnitsForMeters(squares * SQUARE_METERS);
+  return { meters: squares * SQUARE_METERS, angle, distance };
+}
 
 const esc = text => foundry.utils.escapeHTML(String(text ?? ''));
 
@@ -55,29 +86,29 @@ function areaPower(item, kind) {
  */
 export function itemArea(item, kind = '') {
   const power = areaPower(item, kind);
-  if (power?.area && AREA_METERS.foot[power.area]) {
+  if (power?.area && isAreaSize(power.area)) {
+    const shape = power.area_shape || 'circle';
     return {
+      ...areaSize(power.area, shape, { across: power.area_across }),
       size: power.area,
-      shape: power.area_shape || 'circle',
+      shape,
       affects: power.area_affects || 'everyone',
       linger: kind !== 'album' && !!power.area_linger,
       rounds: Number(power.area_rounds) || 0,
       follows: !!power.area_follows,
       save: power.area_resolve === 'save' ? areaSave(power.area_save_ability, power.area_save_difficulty, power.area_save_target, power.area_save_pass) : null,
-      meters: Number(power.area_across) > 0 ? metersForWorldUnits(power.area_across) : AREA_METERS.foot[power.area],
       range: `${power.range ?? ''}`
     };
   }
   if (kind === 'album' || kind === 'power') return null;
   const size = item?.system?.area?.value;
-  if (!size || !AREA_METERS.foot[size]) return null;
+  if (!size || !isAreaSize(size)) return null;
   if (!item.system?.features?.has?.('area')) return null;
   const shape = item.system.area.shape || 'circle';
-  // A size of its own (across, in the world unit), else the size's
-  const across = Number(item.system.area.across) || 0;
-  const meters = across > 0 ? metersForWorldUnits(across) : AREA_METERS[item.system.area.vehicle ? 'vehicle' : 'foot'][size];
   const range = item.system?.weapon?.range || item.system?.range?.value || '';
   return {
+    // A size of its own (across, in the world unit), else the size's
+    ...areaSize(size, shape, { vehicle: !!item.system.area.vehicle, across: item.system.area.across }),
     size,
     shape,
     affects: item.system.area.affects || 'everyone',
@@ -88,7 +119,6 @@ export function itemArea(item, kind = '') {
       item.system.area.resolve === 'save'
         ? areaSave(item.system.area.save_ability, item.system.area.save_difficulty, item.system.area.save_target, item.system.area.save_pass)
         : null,
-    meters,
     range: `${range}`
   };
 }
@@ -112,13 +142,13 @@ export function areaLabel(item, kind = '') {
   return $fmt('SDM.AreaLabel', {
     size: $l10n(CONFIG.SDM.areaValues[area.size]).toLowerCase(),
     shape: $l10n(CONFIG.SDM.areaShapes[area.shape]).toLowerCase(),
-    distance: worldUnitsForMeters(area.meters),
+    distance: area.distance,
     unit: worldUnit()
   });
 }
 
 /* -------------------------------------------- */
-/*  Placing                                     */
+/*  Geometry                                    */
 /* -------------------------------------------- */
 
 const pixelsPerMeter = scene => scene.dimensions.distancePixels * sceneUnitsForMeters(1, scene);
@@ -129,21 +159,150 @@ function tokenCenter(token) {
   return { x: token.x + (token.width * size) / 2, y: token.y + (token.height * size) / 2 };
 }
 
-/** The region shape of the area (Foundry v14 shapes: circle, cone, line, rectangle), placed at the cursor. */
+/* -------------------------------------------- */
+/*  Squares                                     */
+/* -------------------------------------------- */
+
+/**
+ * On square grids an area is the squares it covers more than half of, or whose middle it covers (a
+ * circle loses the corner squares a square would have); circles, squares and rings are placed on
+ * grid intersections; who is inside is any token on one of those squares. Gridless and hex scenes use the shape itself and the tokens' centers.
+ */
+const squareGrid = scene => scene?.grid?.type === CONST.GRID_TYPES.SQUARE;
+const metersPerSquare = scene => scene.grid.distance / sceneUnitsForMeters(1, scene);
+const SAMPLES = 6; // 6 × 6 points per square: more than half of them inside counts it
+const squareKey = ({ i, j }) => `${i}.${j}`;
+
+/** A size in the scene's squares (even for areas centered on an intersection). */
+function squaresOf(meters, scene, { even = false } = {}) {
+  const squares = meters / metersPerSquare(scene);
+  return even ? Math.max(2, Math.round(squares / 2) * 2) : Math.max(1, Math.round(squares));
+}
+
+/** The squares (offsets {i, j}) a region covers more than half of (or the middle of), less the excluded ones. */
+function coveredSquares(region, scene, exclude = new Set()) {
+  const size = scene.grid.size;
+  const bounds = region.bounds;
+  const squares = [];
+  if (!bounds) return squares;
+  const i0 = Math.floor(bounds.y / size);
+  const i1 = Math.ceil((bounds.y + bounds.height) / size);
+  const j0 = Math.floor(bounds.x / size);
+  const j1 = Math.ceil((bounds.x + bounds.width) / size);
+  const tree = region.polygonTree;
+  for (let i = i0; i < i1; i++) {
+    for (let j = j0; j < j1; j++) {
+      if (exclude.has(`${i}.${j}`)) continue;
+      let inside = 0;
+      for (let a = 0; a < SAMPLES; a++) {
+        for (let b = 0; b < SAMPLES; b++) {
+          if (tree.testPoint({ x: (j + (b + 0.5) / SAMPLES) * size, y: (i + (a + 0.5) / SAMPLES) * size })) inside++;
+        }
+      }
+      // A narrow cone's point covers little of a square: its middle inside counts too
+      if (inside * 2 > SAMPLES * SAMPLES || tree.testPoint({ x: (j + 0.5) * size, y: (i + 0.5) * size })) squares.push({ i, j });
+    }
+  }
+  return squares;
+}
+
+/** The squares as region shapes: one rectangle per run of squares in a row. */
+function squareShapes(squares, scene) {
+  const size = scene.grid.size;
+  const rows = new Map();
+  for (const { i, j } of squares) rows.set(i, [...(rows.get(i) ?? []), j]);
+  const shapes = [];
+  for (const [i, js] of rows) {
+    js.sort((a, b) => a - b);
+    let start = js[0];
+    let last = js[0];
+    for (const j of [...js.slice(1), null]) {
+      if (j === last + 1) {
+        last = j;
+        continue;
+      }
+      shapes.push({ type: 'rectangle', x: start * size, y: i * size, width: (last - start + 1) * size, height: size, anchorX: 0, anchorY: 0, rotation: 0, gridBased: false });
+      start = last = j;
+    }
+  }
+  return shapes;
+}
+
+/** The squares a token stands on. */
+const tokenSquares = token => token.getOccupiedGridSpaceOffsets?.() ?? [];
+
+/** Tokens on any of the squares. */
+function tokensOnSquares(squares, candidates) {
+  const keys = new Set(squares.map(squareKey));
+  return candidates.filter(token => tokenSquares(token).some(offset => keys.has(squareKey(offset))));
+}
+
+/**
+ * Where a cone or line leaves the token: the point on its edge (a corner, or the middle of a side)
+ * nearest the square it points at. A straight cone from a corner would split every square along it
+ * in half (a small one would cover none), so straight ones leave from the middle of a side and
+ * diagonal ones from a corner.
+ */
+function edgePoint(token, point) {
+  const size = token.parent.grid.size;
+  let best = null;
+  for (let i = 0; i <= token.width * 2; i++) {
+    for (let j = 0; j <= token.height * 2; j++) {
+      if (i > 0 && i < token.width * 2 && j > 0 && j < token.height * 2) continue;
+      const candidate = { x: token.x + (i * size) / 2, y: token.y + (j * size) / 2 };
+      const distance = Math.hypot(candidate.x - point.x, candidate.y - point.y);
+      if (!best || distance < best.distance - 0.01) best = { ...candidate, distance };
+    }
+  }
+  return { x: best.x, y: best.y };
+}
+
+/** The intersection nearest a point. */
+const snapToIntersection = point => canvas.grid.getSnappedPoint(point, { mode: CONST.GRID_SNAPPING_MODES.VERTEX });
+
+/** A cone or line from the user's token toward a point (on square grids: toward the middle of the square pointed at). */
+function aimShape(shape, token, toward, scene) {
+  const square = squareGrid(scene);
+  const target = square ? canvas.grid.getSnappedPoint(toward, { mode: CONST.GRID_SNAPPING_MODES.CENTER }) : toward;
+  const origin = square ? edgePoint(token, target) : tokenCenter(token);
+  if (Math.hypot(target.x - origin.x, target.y - origin.y) < 1) return null;
+  return { x: origin.x, y: origin.y, rotation: Math.toDegrees(Math.atan2(target.y - origin.y, target.x - origin.x)) };
+}
+
+/** Show the squares while placing (the grid's highlight), or clear them. */
+const PREVIEW_LAYER = 'sdmAreaPreview';
+function previewSquares(squares, color) {
+  const grid = canvas.interface?.grid;
+  if (!grid) return;
+  if (!grid.highlightLayers?.[PREVIEW_LAYER]) grid.addHighlightLayer(PREVIEW_LAYER);
+  grid.clearHighlightLayer(PREVIEW_LAYER);
+  const size = canvas.grid.size;
+  for (const { i, j } of squares ?? []) grid.highlightPosition(PREVIEW_LAYER, { x: j * size, y: i * size, color, border: color, alpha: 0.35 });
+}
+const clearPreview = () => canvas.interface?.grid?.destroyHighlightLayer?.(PREVIEW_LAYER);
+
+/* -------------------------------------------- */
+/*  Placing                                     */
+/* -------------------------------------------- */
+
+/** The region shape of the area (Foundry v14 shapes: circle, cone, line, rectangle, ring, emanation). */
 function areaShape(area, scene, origin, token = null) {
-  const across = area.meters * pixelsPerMeter(scene);
+  const squares = squareGrid(scene);
+  // On square grids the area is counted in squares (see coveredSquares), so the shape is exact
+  const gridBased = !squares;
+  const centered = !['cone', 'line'].includes(area.shape);
+  const across = squares ? squaresOf(area.meters, scene, { even: centered }) * scene.grid.size : area.meters * pixelsPerMeter(scene);
+  const width = squares ? scene.grid.size : LINE_WIDTH_METERS * pixelsPerMeter(scene);
   switch (area.shape) {
     case 'cone':
-      return { type: 'cone', x: origin.x, y: origin.y, radius: across, angle: CONE_ANGLE, rotation: 0, curvature: 'round', gridBased: true };
+      return { type: 'cone', x: origin.x, y: origin.y, radius: across, angle: area.angle ?? 60, rotation: 0, curvature: 'round', gridBased };
     case 'line':
-      return { type: 'line', x: origin.x, y: origin.y, length: across, width: LINE_WIDTH_METERS * pixelsPerMeter(scene), rotation: 0, gridBased: true };
+      return { type: 'line', x: origin.x, y: origin.y, length: across, width, rotation: 0, gridBased };
     case 'square':
-      return { type: 'rectangle', x: 0, y: 0, width: across, height: across, anchorX: 0.5, anchorY: 0.5, rotation: 0, gridBased: true };
-    case 'ring': {
-      // A band one square wide (1.5 m) on the area's edge: a wall of fire around a point
-      const half = (LINE_WIDTH_METERS * pixelsPerMeter(scene)) / 2;
-      return { type: 'ring', x: 0, y: 0, radius: across / 2, innerWidth: half, outerWidth: half, gridBased: true };
-    }
+      return { type: 'rectangle', x: 0, y: 0, width: across, height: across, anchorX: 0.5, anchorY: 0.5, rotation: 0, gridBased };
+    case 'ring':
+      // A band one square wide on the area's edge: a wall of fire around a point
+      return { type: 'ring', x: 0, y: 0, radius: across / 2, innerWidth: width / 2, outerWidth: width / 2, gridBased };
     case 'emanation': {
       // Around the user's token (a burst from its space): the area's size beyond its edge
       const source = token._source;
@@ -151,18 +310,19 @@ function areaShape(area, scene, origin, token = null) {
         type: 'emanation',
         base: { type: 'token', x: source.x, y: source.y, width: source.width, height: source.height, shape: source.shape },
         radius: across / 2,
-        gridBased: true
+        gridBased
       };
     }
     default:
-      return { type: 'circle', x: 0, y: 0, radius: across / 2, gridBased: true };
+      return { type: 'circle', x: 0, y: 0, radius: across / 2, gridBased };
   }
 }
 
 /**
  * Place the item's area on the current scene (Foundry's region placement: it follows the cursor,
  * the wheel rotates it, click places it, right-click or Esc cancels) and target the tokens inside.
- * Cones and lines start at the user's token and point at the cursor.
+ * On square grids it snaps to intersections (always) and shows the squares it covers; cones and
+ * lines start on an intersection of the user's token edge and point at the cursor.
  * @returns {Promise<{areaId, tokens: TokenDocument[]}|null>} null when cancelled or impossible.
  */
 export async function placeArea({ actor, item, kind = '' }) {
@@ -213,20 +373,29 @@ export async function placeArea({ actor, item, kind = '' }) {
     return finishPlacement({ area, scene, placed, sourceToken, fromToken, origin, areaId });
   }
   ui.notifications.info($l10n('SDM.AreaPlaceHint'));
-  // Cones and lines: the origin stays on the token, the cursor sets the direction
-  const onMove = fromToken
-    ? ({ shape, position }) => {
-        const rotation = Math.toDegrees(Math.atan2(position.y - origin.y, position.x - origin.x));
-        shape.updateSource({ x: origin.x, y: origin.y, rotation });
-        return false;
-      }
-    : undefined;
+  const squares = squareGrid(scene);
+  const userSquares = new Set(fromToken && sourceToken ? tokenSquares(sourceToken).map(squareKey) : []);
+  const color = game.user.color ?? 0x33bbff;
+  // Cones and lines: from the token toward the cursor; the rest on the intersection nearest the cursor
+  const onMove = ({ shape, position }) => {
+    if (fromToken) {
+      const aim = aimShape(shape, sourceToken, position, scene);
+      if (aim) shape.updateSource(aim);
+      return false;
+    }
+    if (!squares) return;
+    shape.updateSource(snapToIntersection(position));
+    return false;
+  };
+  const onChange = squares ? ({ document }) => previewSquares(coveredSquares(document, scene, userSquares), color) : undefined;
   let placed;
   try {
-    placed = await canvas.regions.placeRegion(data, { create: false, onMove, allowRotation: !fromToken });
+    placed = await canvas.regions.placeRegion(data, { create: false, onMove, onChange, allowRotation: !fromToken && !squares });
   } catch (error) {
     console.error('SDM | Placing the area failed', error);
     return null;
+  } finally {
+    if (squares) clearPreview();
   }
   if (!placed) return null;
   return finishPlacement({ area, scene, placed, sourceToken, fromToken, origin, areaId });
@@ -234,15 +403,14 @@ export async function placeArea({ actor, item, kind = '' }) {
 
 /** The tokens inside the placed area (its side), the range warning, then the region created. */
 async function finishPlacement({ area, scene, placed, sourceToken, fromToken, origin, areaId }) {
-  // Who is inside (the attacker too, unless the area starts at or surrounds them)
-  const tokens = scene.tokens.filter(token => {
+  const candidates = scene.tokens.filter(token => {
     if (token.hidden && !game.user.isGM) return false;
+    // The area starting at or surrounding its user leaves the user out
     if (fromToken && token === sourceToken) return false;
     // No friendly fire (or only allies): by the disposition of the one placing it
     if (sourceToken && area.affects === 'enemies' && token.disposition === sourceToken.disposition) return false;
     if (sourceToken && area.affects === 'allies' && token.disposition !== sourceToken.disposition) return false;
-    const center = tokenCenter(token);
-    return placed.testPoint({ x: center.x, y: center.y, elevation: token.elevation ?? 0 });
+    return true;
   });
 
   // Its center within the item's range (a zone band): a warning when beyond (no penalty, your call)
@@ -250,6 +418,20 @@ async function finishPlacement({ area, scene, placed, sourceToken, fromToken, or
   if (outOfRange) ui.notifications.warn(outOfRange);
 
   const regionData = placed.toObject();
+  let tokens;
+  if (squareGrid(scene)) {
+    // The squares it covers more than half of (not the user's own for cones, lines and emanations)
+    const exclude = new Set(fromToken && sourceToken ? tokenSquares(sourceToken).map(squareKey) : []);
+    const squares = coveredSquares(placed, scene, exclude);
+    tokens = tokensOnSquares(squares, candidates);
+    if (squares.length) regionData.shapes = squareShapes(squares, scene);
+  } else {
+    tokens = candidates.filter(token => {
+      const center = tokenCenter(token);
+      return placed.testPoint({ x: center.x, y: center.y, elevation: token.elevation ?? 0 });
+    });
+  }
+
   // A lingering area that follows its user: attached to the token, it moves with it
   if (area.linger && area.follows && sourceToken && regionData.flags?.sdm?.[AREA_FLAG]?.linger) {
     regionData.attachment = { token: sourceToken.id };
@@ -335,7 +517,8 @@ export function weaponSplash(item) {
     damage,
     formula,
     shape: w.splash_shape || 'around',
-    meters: across > 0 ? metersForWorldUnits(across) : AREA_METERS.foot[w.splash_size || 'small'] ?? AREA_METERS.foot.small,
+    // Sized like areas: a cone (from the attacker or behind) as a cone, behind in a line as a line
+    ...areaSize(isAreaSize(w.splash_size) ? w.splash_size : 'small', w.splash_shape === 'behind_line' ? 'line' : 'cone', { across }),
     affects: w.splash_affects || 'everyone'
   };
 }
@@ -354,7 +537,10 @@ export async function splashTokens({ splash, attackerToken, targetToken, name })
   const candidates = scene.tokens.filter(t => t !== targetToken && t !== attackerToken && t.actor && !(t.hidden && !game.user.isGM) && sides(t));
   if (splash.shape === 'around') return candidates.filter(t => isAdjacent(targetToken, t));
 
-  const length = splash.meters * pixelsPerMeter(scene);
+  const squares = squareGrid(scene);
+  const length = squares ? squaresOf(splash.meters, scene) * scene.grid.size : splash.meters * pixelsPerMeter(scene);
+  const width = squares ? scene.grid.size : LINE_WIDTH_METERS * pixelsPerMeter(scene);
+  const gridBased = !squares;
   const target = tokenCenter(targetToken);
   const base = {
     name,
@@ -371,24 +557,30 @@ export async function splashTokens({ splash, attackerToken, targetToken, name })
       ui.notifications.warn($l10n('SDM.AttackFeature.SplashNoAttacker'));
       return null;
     }
-    const origin = tokenCenter(attackerToken);
-    const toward = point => Math.toDegrees(Math.atan2(point.y - origin.y, point.x - origin.x));
+    const cone = { type: 'cone', radius: length, angle: splash.angle ?? 60, curvature: 'round', gridBased };
+    Object.assign(cone, aimShape(cone, attackerToken, target, scene) ?? { ...tokenCenter(attackerToken), rotation: 0 });
+    const color = game.user.color ?? 0x33bbff;
+    const exclude = new Set(tokenSquares(attackerToken).map(squareKey));
     ui.notifications.info($l10n('SDM.AreaPlaceHint'));
     try {
       region = await canvas.regions.placeRegion(
-        { ...base, shapes: [{ type: 'cone', x: origin.x, y: origin.y, radius: length, angle: CONE_ANGLE, rotation: toward(target), curvature: 'round', gridBased: true }] },
+        { ...base, shapes: [cone] },
         {
           create: false,
           allowRotation: false,
           onMove: ({ shape, position }) => {
-            shape.updateSource({ x: origin.x, y: origin.y, rotation: toward(position) });
+            const aim = aimShape(shape, attackerToken, position, scene);
+            if (aim) shape.updateSource(aim);
             return false;
-          }
+          },
+          onChange: squares ? ({ document }) => previewSquares(coveredSquares(document, scene, exclude), color) : undefined
         }
       );
     } catch (error) {
       console.error('SDM | Placing the splash failed', error);
       return null;
+    } finally {
+      if (squares) clearPreview();
     }
     if (!region) return null;
   } else {
@@ -397,9 +589,14 @@ export async function splashTokens({ splash, attackerToken, targetToken, name })
     const rotation = Math.toDegrees(Math.atan2(target.y - from.y, target.x - from.x));
     const shape =
       splash.shape === 'behind_line'
-        ? { type: 'line', x: target.x, y: target.y, length, width: LINE_WIDTH_METERS * pixelsPerMeter(scene), rotation, gridBased: true }
-        : { type: 'cone', x: target.x, y: target.y, radius: length, angle: CONE_ANGLE, rotation, curvature: 'round', gridBased: true };
+        ? { type: 'line', x: target.x, y: target.y, length, width, rotation, gridBased }
+        : { type: 'cone', x: target.x, y: target.y, radius: length, angle: splash.angle ?? 60, rotation, curvature: 'round', gridBased };
     region = new CONFIG.Region.documentClass({ ...base, shapes: [shape] }, { parent: scene });
+  }
+  // Square grids: anyone on a square it covers more than half of (not the target's or attacker's squares)
+  if (squares) {
+    const exclude = new Set([...tokenSquares(targetToken), ...(attackerToken ? tokenSquares(attackerToken) : [])].map(squareKey));
+    return tokensOnSquares(coveredSquares(region, scene, exclude), candidates);
   }
   return candidates.filter(t => {
     const c = tokenCenter(t);
