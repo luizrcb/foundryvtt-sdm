@@ -279,6 +279,14 @@ function lightConfig(settings, distance) {
 }
 const NO_LIGHT = { dim: 0, bright: 0 };
 
+/** A chat line about a light left on the map or picked up (Item Piles only posts its own pick-ups). */
+async function lightChat(actor, key, item) {
+  await ChatMessage.create({
+    speaker: ChatMessage.getSpeaker({ actor }),
+    content: `<p><i class="fa-solid fa-fire-flame-curved"></i> ${foundry.utils.escapeHTML($fmt(key, { actor: actor.name, item: item.name }))}</p>`
+  });
+}
+
 /** Can this lit item be left on the map (gear in hand, not a trait or a power's light)? */
 export function canLeaveLight(item) {
   return !!item?.actor && isLit(item) && item.type === ItemType.GEAR && !isLightTrait(item);
@@ -320,6 +328,7 @@ export async function leaveLight(item, token) {
       items: [data],
       tokenOverrides: { light: config, disposition: token.disposition }
     });
+    await lightChat(actor, 'SDM.Light.LeftChat', item);
     const quantity = Number(item.system.quantity) || 1;
     if (quantity > 1) await item.update({ 'system.quantity': quantity - 1 });
     else await item.delete();
@@ -329,6 +338,7 @@ export async function leaveLight(item, token) {
   const light = { x: center.x, y: center.y, config, flags: { sdm: { [LEFT_FLAG]: { actor: actor.uuid, item: item.id } } } };
   await item.update({ [`flags.sdm.${LEFT_FLAG}`]: true, 'system.readied': false }, { [SPEND_OPTION]: true });
   await gmLight({ op: 'create', sceneId: scene.id, light });
+  await lightChat(actor, 'SDM.Light.LeftChat', item);
 }
 
 /** The ambient lights the owner left on this scene within reach of the token (on or next to its squares). */
@@ -347,7 +357,10 @@ function lightsInReach(token) {
 async function pickUpLight(token, light) {
   const item = token.actor?.items.get(light.getFlag('sdm', LEFT_FLAG)?.item);
   await gmLight({ op: 'delete', sceneId: token.parent.id, id: light.id });
-  if (item) await relightLeft(item);
+  if (item) {
+    await relightLeft(item);
+    await lightChat(token.actor, 'SDM.Light.PickedUpChat', item);
+  }
 }
 
 /** A left light's item back in hand: readied and lit, free (it was burning all along). */
