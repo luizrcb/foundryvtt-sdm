@@ -7819,14 +7819,14 @@ a.sdm-proto-link.warn {
   gap: 4px;
 }
 
+.sdm-card .sdm-tie-row .sdm-sacrifice-buttons {
+  margin-top: 4px;
+}
+
 .sdm-card .sdm-sacrifice-buttons {
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: 4px;
-}
-
-.sdm-tie-row .sdm-card .sdm-sacrifice-buttons {
-  margin-top: 4px;
 }
 
 .sdm-card .sdm-sacrifice-buttons button {
