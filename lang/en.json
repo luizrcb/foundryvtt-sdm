@@ -3301,5 +3301,7 @@
   "SDM.AreaRoundConditionRoundsHint": "0: until removed.",
   "SDM.DefenseWithEffects": "With effects",
   "SDM.Aura.OnSelf": "on itself too",
-  "SDM.Aura.NotOnSelf": "not on itself"
+  "SDM.Aura.NotOnSelf": "not on itself",
+  "SDM.Aura.Spaces": "Spaces",
+  "SDM.Aura.SpacesHint": "Squares (or hexes) beyond the token's edge: 1 = the spaces next to it."
 }

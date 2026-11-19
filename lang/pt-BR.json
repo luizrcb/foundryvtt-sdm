@@ -3301,5 +3301,7 @@
   "SDM.AreaRoundConditionRoundsHint": "0: até ser removida.",
   "SDM.DefenseWithEffects": "Com efeitos",
   "SDM.Aura.OnSelf": "também em si",
-  "SDM.Aura.NotOnSelf": "não em si"
+  "SDM.Aura.NotOnSelf": "não em si",
+  "SDM.Aura.Spaces": "Espaços",
+  "SDM.Aura.SpacesHint": "Quadrados (ou hexágonos) além da borda do token: 1 = os espaços ao lado dele."
 }

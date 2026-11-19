@@ -27,7 +27,8 @@
       <legend>{{localize 'SDM.Aura.Title'}}</legend>
       {{formGroup fields.aura.band value=source.system.aura.band localize=true rootId=rootId}}
       {{#if (eq source.system.aura.band 'custom')}}
-      {{formGroup fields.aura.distance value=source.system.aura.distance rootId=rootId hint=(localize 'SDM.Aura.DistanceHint')}}
+      {{formGroup fields.aura.spaces value=source.system.aura.spaces rootId=rootId}}
+      {{#if source.system.aura.distance}}{{formGroup fields.aura.distance value=source.system.aura.distance rootId=rootId hint=(localize 'SDM.Aura.DistanceHint')}}{{/if}}
       {{/if}}
       {{formGroup fields.aura.disposition value=source.system.aura.disposition localize=true rootId=rootId}}
       {{formGroup fields.aura.applyToSelf value=source.system.aura.applyToSelf rootId=rootId}}

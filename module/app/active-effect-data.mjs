@@ -53,6 +53,9 @@ export class SDMActiveEffectData extends foundry.data.ActiveEffectTypeDataModel 
         enabled: new fields.BooleanField({ required: true, initial: false, label: $l10n('SDM.Aura.Enabled'), hint: $l10n('SDM.Aura.EnabledHint') }),
         // A zone band of the scene (close / short / medium) or a distance of its own
         band: new fields.StringField({ required: true, initial: 'close', choices: AURA_BANDS, label: $l10n('SDM.Aura.Band') }),
+        // A reach of its own in grid spaces (squares or hexes beyond the token's edge); distance (world unit)
+        // is the older way, still read when spaces is 0
+        spaces: new fields.NumberField({ required: true, nullable: false, min: 0, initial: 0, label: $l10n('SDM.Aura.Spaces'), hint: $l10n('SDM.Aura.SpacesHint') }),
         distance: new fields.NumberField({ required: true, nullable: false, min: 0, initial: 0, label: $l10n('SDM.Aura.Distance') }),
         disposition: new fields.StringField({ required: true, initial: 'allies', choices: AURA_DISPOSITIONS, label: $l10n('SDM.Aura.Disposition') }),
         applyToSelf: new fields.BooleanField({ required: true, initial: false, label: $l10n('SDM.Aura.ApplyToSelf'), hint: $l10n('SDM.Aura.ApplyToSelfHint') }),

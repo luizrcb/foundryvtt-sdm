@@ -78,9 +78,13 @@ export function skipsItsActor(effect, actor) {
 /*  Regions                                     */
 /* -------------------------------------------- */
 
-/** The aura's reach in the scene's grid units: its band in the scene's zone scale, or its own distance (world unit). */
+/**
+ * The aura's reach in the scene's grid units: its band in the scene's zone scale, or its own reach in
+ * grid spaces (squares or hexes; older auras: a distance in the world unit).
+ */
 function auraDistance(effect, scene) {
   const aura = effect.system.aura;
+  if (aura.band === 'custom' && Number(aura.spaces) > 0) return Number(aura.spaces) * (Number(scene.grid.distance) || 1);
   const world = aura.band === 'custom' ? Number(aura.distance) || 0 : sceneZoneLimits(scene)[aura.band] ?? 0;
   return Math.max(world / metersPerUnit(scene), 0);
 }
@@ -114,7 +118,8 @@ function regionData(effect, token) {
           height: token._source.height,
           shape: token._source.shape
         },
-        gridBased: true,
+        // Round (not stepped along the grid), around the token's edge
+        gridBased: false,
         hole: false,
         radius: auraDistance(effect, scene) * scene.dimensions.distancePixels
       }
@@ -129,7 +134,8 @@ function regionData(effect, token) {
 /** What changes a region needs (reach, look, walls); null when it is up to date. Compared by what we last
  *  wrote (the flag's signature), not by the shape core may adjust, so updates never loop. */
 function regionSignature(data) {
-  return JSON.stringify([data.name, Math.round(data.shapes[0].radius), data.visibility, !!data.restriction.enabled, data.color ?? '']);
+  // "round": regions drawn before auras were round get redrawn
+  return JSON.stringify(['round', data.name, Math.round(data.shapes[0].radius), data.visibility, !!data.restriction.enabled, data.color ?? '']);
 }
 
 function regionChanges(region, data) {
