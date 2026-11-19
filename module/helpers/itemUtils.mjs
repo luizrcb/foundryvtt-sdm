@@ -127,6 +127,17 @@ export async function onItemUpdate(item, updateData) {
   }
 }
 
+/** An Item Piles pile (an item lying on the map, a chest…), when the module is active. */
+export function isItemPileActor(actor) {
+  if (!actor || !game.modules.get('item-piles')?.active) return false;
+  try {
+    if (game.itempiles?.API?.isValidItemPile) return !!game.itempiles.API.isValidItemPile(actor);
+  } catch {
+    /* fall back to the flag */
+  }
+  return !!actor.getFlag?.('item-piles', 'data')?.enabled;
+}
+
 export async function onItemCreateActiveEffects(item) {
   if (item.type === ItemType.GEAR) {
     if (item.getFlag?.('sdm', 'fromCompendium') === UnarmedDamageItem) {
@@ -140,6 +151,8 @@ export async function onItemCreateActiveEffects(item) {
       if (item.parent && item.parent.type === ActorType.CARAVAN) {
         enabledEffect = true;
       }
+      // An item lying on the map (an Item Piles pile): its effects are on, so its aura radiates from there
+      if (isItemPileActor(item.parent)) enabledEffect = true;
       await toggleEffectTransfer(effect, enabledEffect);
     }
   }
