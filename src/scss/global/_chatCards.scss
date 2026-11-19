@@ -55,7 +55,7 @@
     white-space: nowrap;
   }
 
-  @each $name, $color in (rust: #cc2f00, pumpkin: #db6600, amber: #e39e00, sky: #006486, azure: #007cb5, royal: #465ab2, lime: #76b80d, pine: #007668, heart: #6d47b1, plum: #873b9c) {
+  @each $name, $color in ("rust": #cc2f00, "pumpkin": #db6600, "amber": #e39e00, "sky": #006486, "azure": #007cb5, "royal": #465ab2, "lime": #76b80d, "pine": #007668, "heart": #6d47b1, "plum": #873b9c) {
     .sdm-chip-#{$name} {
       border-color: $color;
       background: rgba($color, 0.1);
