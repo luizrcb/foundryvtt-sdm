@@ -81,7 +81,13 @@ export default class SdmEffectsPanel extends HandlebarsApplicationMixin(Applicat
       const status = [...(effect.statuses ?? [])].map(id => conditionTooltip(id)).find(Boolean);
       // A received aura says where from; its own aura says it's an aura
       const copy = isAuraCopy(effect);
-      const from = copy ? game.i18n.format('SDM.Aura.From', { name: auraSourceName(effect) }) : isAura(effect) ? game.i18n.localize('SDM.Aura.Title') : '';
+      // Its own aura: whether it also applies to the actor (solid border) or only to the others (dashed)
+      const onSelf = isAura(effect) && !!effect.system?.aura?.applyToSelf;
+      const from = copy
+        ? game.i18n.format('SDM.Aura.From', { name: auraSourceName(effect) })
+        : isAura(effect)
+          ? `${game.i18n.localize('SDM.Aura.Title')} — ${game.i18n.localize(onSelf ? 'SDM.Aura.OnSelf' : 'SDM.Aura.NotOnSelf')}`
+          : '';
       // An aura: the start of its description too, on its own line
       const about = from ? excerpt(effect.description) : '';
       const tooltip = status
@@ -100,6 +106,7 @@ export default class SdmEffectsPanel extends HandlebarsApplicationMixin(Applicat
         expired,
         tooltip,
         aura: isAura(effect) && !copy,
+        auraSelf: onSelf && !copy,
         // The Referee's right-click: effects stored on the actor, not received auras
         canDelete: game.user.isGM && effect.parent === actor && !copy
       });

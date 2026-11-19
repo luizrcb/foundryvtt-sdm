@@ -7430,6 +7430,10 @@ a.sdm-proto-link.warn {
   border-radius: 50%;
 }
 
+#sdm-effects-panel .sdm-effects-panel-entry.aura.self img {
+  border-style: solid;
+}
+
 #sdm-effects-panel .sdm-effects-panel-duration {
   padding: 1px 6px;
   border-radius: 3px;

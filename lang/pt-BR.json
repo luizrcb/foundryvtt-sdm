@@ -3299,5 +3299,7 @@
   "SDM.AreaRoundConditionHint": "Aplicada em quem a área atingir a cada rodada (ou ao entrar).",
   "SDM.AreaRoundConditionRounds": "Rodadas da condição",
   "SDM.AreaRoundConditionRoundsHint": "0: até ser removida.",
-  "SDM.DefenseWithEffects": "Com efeitos"
+  "SDM.DefenseWithEffects": "Com efeitos",
+  "SDM.Aura.OnSelf": "também em si",
+  "SDM.Aura.NotOnSelf": "não em si"
 }
