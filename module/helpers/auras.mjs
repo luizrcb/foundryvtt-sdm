@@ -2,7 +2,6 @@ import { resolveEffectReferences, resolveFormulaReferences } from './effectRefer
 import { $l10n } from './globalUtils.mjs';
 import { metersPerUnit, sceneZoneLimits } from './zones.mjs';
 import { buildChanges, getLightPreset, lightSettingsFrom } from './lights.mjs';
-import { isItemPileActor } from './itemUtils.mjs';
 
 /**
  * Auras: an active effect with its aura on radiates from its actor's tokens. Each source token gets
@@ -198,13 +197,7 @@ async function syncSceneRegions(scene, enabled) {
 /*  Copies                                      */
 /* -------------------------------------------- */
 
-/**
- * Same side? A neutral item pile (an item lying on the map) counts as the party's: its allies are the
- * friendly tokens, its enemies the others. Give the pile's token another disposition to change it.
- */
 function sameSide(a, b) {
-  const D = CONST.TOKEN_DISPOSITIONS;
-  if (a.disposition === D.NEUTRAL && isItemPileActor(a.actor)) return b.disposition === D.FRIENDLY;
   return a.disposition === b.disposition;
 }
 

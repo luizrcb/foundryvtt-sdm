@@ -92,7 +92,47 @@ export async function syncItemPilesCurrency() {
   }
 }
 
+/* -------------------------------------------- */
+/*  A dropped item's pile takes its dropper's side */
+/* -------------------------------------------- */
+
+const CHANNEL = 'system.sdm';
+const DISPOSITION_ACTION = 'pileDisposition';
+// Piles just created (item-piles-createItemPile), so a drop onto an existing pile changes nothing
+const newPiles = new Set();
+
+/** The disposition of whoever dropped the item: their token on that scene, else their prototype token. */
+function dropperDisposition(source, scene) {
+  const actor = source?.actor ?? source;
+  if (!actor) return null;
+  const token = source?.documentName === 'Token' ? source : actor.getActiveTokens?.(false, true)?.find(t => t.parent === scene);
+  return token?.disposition ?? actor.prototypeToken?.disposition ?? null;
+}
+
+async function setPileDisposition(tokenUuid, disposition) {
+  const token = fromUuidSync(tokenUuid);
+  if (!token || disposition === null || token.disposition === disposition) return;
+  if (token.canUserModify(game.user, 'update')) return token.update({ disposition });
+  if (game.users.activeGM) game.socket.emit(CHANNEL, { action: DISPOSITION_ACTION, tokenUuid, disposition });
+}
+
+function onDropItem(source, target) {
+  if (!target?.uuid || !newPiles.has(target.uuid)) return;
+  newPiles.delete(target.uuid);
+  setPileDisposition(target.uuid, dropperDisposition(source, target.parent)).catch(error =>
+    console.warn('SDM | Could not set the pile token disposition', error)
+  );
+}
+
 export function setupItemPiles() {
+  Hooks.on('item-piles-createItemPile', document => {
+    if (document?.uuid) newPiles.add(document.uuid);
+  });
+  Hooks.on('item-piles-dropItem', onDropItem);
+  game.socket.on(CHANNEL, message => {
+    if (message?.action !== DISPOSITION_ACTION || game.users.activeGM?.id !== game.user.id) return;
+    setPileDisposition(message.tokenUuid, message.disposition);
+  });
   Hooks.once('item-piles-ready', () => {
     if (game.modules.get(COMPANION_ID)?.active) {
       if (game.user.isGM) ui.notifications.info($l10n('SDM.ItemPiles.CompanionNotNeeded'), { permanent: true });
