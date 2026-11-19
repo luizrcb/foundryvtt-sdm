@@ -73,7 +73,7 @@ import { bindAreaButtons, drawArea, setupAreas } from './helpers/areas.mjs';
 import { bindAttackFollowup } from './rolls/attackFollowup.mjs';
 import { bindAttackFeatures } from './rolls/attackFeatures.mjs';
 import { bindSacrifice, bindSaveAgainst, rerenderChangedSave, setupSaveAgainst } from './app/save-against.mjs';
-import { bindApplyDamage, bindAreaApply, bindHeroHeal, bindUndoDamage } from './rolls/ui/applyDamage.mjs';
+import { applyToTokens, bindApplyDamage, bindAreaApply, bindHeroHeal, bindUndoDamage, damageTokens } from './rolls/ui/applyDamage.mjs';
 import { rememberCurrency } from './helpers/currency.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
 import { gm as gmMacros, player as playerMacros } from './macros/_module.mjs';
@@ -616,7 +616,7 @@ Hooks.on('getChatMessageContextOptions', (html, options) => {
       (!message.blind || game.user.isGM) &&
       message.rolls &&
       message.rolls.length &&
-      canvas.tokens.controlled.length
+      damageTokens().length
     );
   };
 
@@ -626,7 +626,7 @@ Hooks.on('getChatMessageContextOptions', (html, options) => {
       (!message.blind || game.user.isGM) &&
       message.rolls &&
       message.rolls.length &&
-      !canvas.tokens.controlled.length
+      !damageTokens().length
     );
   };
 
@@ -652,8 +652,8 @@ Hooks.on('getChatMessageContextOptions', (html, options) => {
         const orig = message.rolls[0].total;
         // Using Math.ceil so small values don't reduce to 0. Use Math.floor if you prefer.
         const damageAmount = Math.ceil(orig / 2);
-
-        await Promise.all(canvas.tokens.controlled.map(t => t.actor?.applyDamage(damageAmount, 1)));
+        // The targeted tokens, else the selected ones
+        await applyToTokens(damageAmount, 1);
       },
       group: 'damage'
     },
@@ -666,12 +666,7 @@ Hooks.on('getChatMessageContextOptions', (html, options) => {
         if (!message.rolls || !message.rolls.length) return;
 
         const damageAmount = message.rolls[0].total;
-
-        await Promise.all(
-          canvas.tokens.controlled.map(t => {
-            return t.actor?.applyDamage(damageAmount, 1);
-          })
-        );
+        await applyToTokens(damageAmount, 1);
       },
       group: 'damage'
     },
@@ -685,8 +680,7 @@ Hooks.on('getChatMessageContextOptions', (html, options) => {
         if (!message?.rolls?.length) return;
         const orig = message.rolls[0].total;
         const damageAmount = orig * 2;
-
-        await Promise.all(canvas.tokens.controlled.map(t => t.actor?.applyDamage(damageAmount, 1)));
+        await applyToTokens(damageAmount, 1);
       },
       group: 'damage'
     },
@@ -699,12 +693,7 @@ Hooks.on('getChatMessageContextOptions', (html, options) => {
         const message = game.messages.get(li.dataset.messageId);
         if (!message.rolls || !message.rolls.length) return;
         const damageAmount = message.rolls[0].total;
-
-        await Promise.all(
-          canvas.tokens.controlled.map(t => {
-            return t.actor?.applyDamage(damageAmount, -1);
-          })
-        );
+        await applyToTokens(damageAmount, -1);
       },
       group: 'healing'
     }

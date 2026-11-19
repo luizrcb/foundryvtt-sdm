@@ -1084,7 +1084,7 @@
   "SDM.ChatContextHalfDamage": "Apply Half Damage",
   "SDM.ChatContextHalfHealing": "Apply Half Healing",
   "SDM.ChatContextHealing": "Apply Healing",
-  "SDM.ChatContextNoTokensSelected": "Cannot Apply: No token selected!",
+  "SDM.ChatContextNoTokensSelected": "Cannot apply: no token targeted or selected!",
   "SDM.ClampedFrom": "clamped from",
   "SDM.ColorAqua": "Aqua",
   "SDM.ColorBlack": "Black",
@@ -3257,5 +3257,8 @@
   "SDM.AreaDrawSize": "Size",
   "SDM.AreaDrawPlace": "Place",
   "SDM.AreaDrawClear": "Remove drawn areas",
-  "SDM.AreaDrawNeedsToken": "Select a token: cones, lines and \"around the user\" start at it."
+  "SDM.AreaDrawNeedsToken": "Select a token: cones, lines and \"around the user\" start at it.",
+  "SDM.AreaApplyAll": "Apply to all",
+  "SDM.AreaHealAll": "Heal all",
+  "SDM.AreaHealApplied": "{amount} healed on {target}"
 }

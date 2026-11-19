@@ -21,19 +21,39 @@ export function applyDamageHtml(total) {
   );
 }
 
-/** renderChatMessageHTML: the buttons act on the user's selected tokens. */
+/**
+ * Who a card's apply buttons (and its right-click menu) act on: the user's targeted tokens, else the
+ * selected ones.
+ */
+export function damageTokens() {
+  const targeted = [...(game.user.targets ?? [])];
+  return targeted.length ? targeted : canvas.tokens?.controlled ?? [];
+}
+
+/** Damage (or, multiplier −1, heal) the targeted tokens, else the selected ones; through the Referee for those the user doesn't own. */
+export async function applyToTokens(amount, multiplier = 1) {
+  const tokens = damageTokens();
+  if (!tokens.length) return ui.notifications.warn(game.i18n.localize('SDM.ChatContextNoTokensSelected'));
+  await Promise.all(
+    tokens.map(token => {
+      const actor = token.actor;
+      if (!actor) return null;
+      if (actor.isOwner) return actor.applyDamage(amount, multiplier);
+      return changeLifeOf(actor, amount, { heal: multiplier < 0 });
+    })
+  );
+}
+
+/** renderChatMessageHTML: the buttons act on the targeted tokens, else the selected ones. */
 export function bindApplyDamage(html) {
   html.querySelectorAll('[data-action="sdmApplyDamage"]').forEach(button =>
     button.addEventListener('click', async event => {
       event.preventDefault();
-      const tokens = canvas.tokens?.controlled ?? [];
-      if (!tokens.length) return ui.notifications.warn(game.i18n.localize('SDM.ChatContextNoTokensSelected'));
       const base = Number(button.dataset.amount) || 0;
       const mode = button.dataset.mode;
       const amount = mode === 'half' ? Math.ceil(base / 2) : mode === 'double' ? base * 2 : base;
       // Healing: a negative multiplier (applyDamage heals with it)
-      const multiplier = mode === 'heal' ? -1 : 1;
-      await Promise.all(tokens.map(token => token.actor?.applyDamage(amount, multiplier)));
+      await applyToTokens(amount, mode === 'heal' ? -1 : 1);
     })
   );
 }
@@ -84,16 +104,71 @@ export function bindUndoDamage(message, html) {
   }
 }
 
-/** Area damage with "Apply damage automatically" off: a button per token hit applies its share. */
+/**
+ * Area damage with "Apply damage automatically" off: a button per token hit applies its share (or
+ * heals it), Apply to all / Heal all everyone not done yet. What was applied stays on the card
+ * (flags.sdm.areaApplied) as a line with an Undo; the roller and the Referee use them.
+ */
 export function bindAreaApply(message, html) {
-  html.querySelectorAll('[data-action="sdmAreaApplyDamage"]').forEach(button =>
+  const box = html.querySelector('.sdm-area-apply');
+  if (!box) return;
+  const applied = message.getFlag('sdm', 'areaApplied') ?? [];
+  const allowed = game.user.isGM || message.isAuthor;
+  const shares = [...box.querySelectorAll('.sdm-area-share')];
+  const pending = [];
+  for (const share of shares) {
+    const done = applied.find(entry => entry.uuid === share.dataset.targetUuid);
+    if (!done) {
+      if (!allowed) share.querySelectorAll('button').forEach(button => button.remove());
+      pending.push(share);
+      continue;
+    }
+    // Applied: what it did, and its Undo
+    const target = fromUuidSync(done.uuid);
+    const text = done.heal
+      ? game.i18n.format('SDM.AreaHealApplied', { amount: done.amount, target: target?.name ?? '' })
+      : game.i18n.format('SDM.Card.DamageApplied', { amount: done.amount, target: target?.name ?? '' });
+    share.innerHTML =
+      `<span class="sdm-card-tag info"><i class="fa-solid fa-${done.heal ? 'heart' : 'heart-crack'}"></i> ${esc(text)}` +
+      (allowed ? ` <button type="button" data-action="sdmAreaUndo"><i class="fa-solid fa-rotate-left"></i> ${esc(game.i18n.localize('SDM.Card.Undo'))}</button>` : '') +
+      `</span>`;
+    share.querySelector('[data-action="sdmAreaUndo"]')?.addEventListener('click', async event => {
+      event.preventDefault();
+      event.currentTarget.disabled = true;
+      if (target && !(await changeLifeOf(target, done.amount, { heal: !done.heal, reason: done.heal ? '' : 'DamageUndone' }))) return;
+      const now = message.getFlag('sdm', 'areaApplied') ?? [];
+      await message.setFlag('sdm', 'areaApplied', now.filter(entry => entry.uuid !== done.uuid));
+    });
+  }
+  // Apply some: each share's damage (or heal), then the card keeps what was done
+  const apply = async list => {
+    const done = [];
+    for (const { uuid, amount, heal } of list) {
+      const target = fromUuidSync(uuid);
+      if (!target || amount <= 0) continue;
+      if (await changeLifeOf(target, amount, { heal })) done.push({ uuid, amount, heal });
+    }
+    if (done.length) await message.setFlag('sdm', 'areaApplied', [...(message.getFlag('sdm', 'areaApplied') ?? []), ...done]);
+  };
+  const shareOf = (share, heal) => {
+    const button = share.querySelector(`[data-action="sdmAreaApplyDamage"]${heal ? '[data-heal="1"]' : ':not([data-heal])'}`);
+    return button ? { uuid: share.dataset.targetUuid, amount: Number(button.dataset.amount) || 0, heal } : null;
+  };
+  box.querySelectorAll('[data-action="sdmAreaApplyDamage"]').forEach(button =>
     button.addEventListener('click', async event => {
       event.preventDefault();
-      const target = fromUuidSync(button.dataset.targetUuid);
-      const amount = Number(button.dataset.amount) || 0;
-      if (!target || amount <= 0) return;
-      button.disabled = true;
-      if (!(await changeLifeOf(target, amount, { heal: button.dataset.heal === '1' }))) button.disabled = false;
+      box.querySelectorAll('button').forEach(b => (b.disabled = true));
+      await apply([{ uuid: button.dataset.targetUuid, amount: Number(button.dataset.amount) || 0, heal: button.dataset.heal === '1' }]);
+    })
+  );
+  const all = box.querySelector('.sdm-area-all');
+  if (!allowed || !pending.length) all?.remove();
+  all?.querySelectorAll('[data-action="sdmAreaApplyAll"]').forEach(button =>
+    button.addEventListener('click', async event => {
+      event.preventDefault();
+      box.querySelectorAll('button').forEach(b => (b.disabled = true));
+      const heal = button.dataset.heal === '1';
+      await apply(pending.map(share => shareOf(share, heal)).filter(Boolean));
     })
   );
 }

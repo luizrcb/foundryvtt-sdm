@@ -1084,7 +1084,7 @@
   "SDM.ChatContextHalfDamage": "Aplicar Metade do Dano",
   "SDM.ChatContextHalfHealing": "Aplicar Metade da Cura",
   "SDM.ChatContextHealing": "Aplicar Cura",
-  "SDM.ChatContextNoTokensSelected": "Não pode Aplicar: Nenhum token selecionado!",
+  "SDM.ChatContextNoTokensSelected": "Não pode aplicar: nenhum token alvo ou selecionado!",
   "SDM.ClampedFrom": "limitado de",
   "SDM.ColorAqua": "Água",
   "SDM.ColorBlack": "Preto",
@@ -3257,5 +3257,8 @@
   "SDM.AreaDrawSize": "Tamanho",
   "SDM.AreaDrawPlace": "Posicionar",
   "SDM.AreaDrawClear": "Apagar áreas desenhadas",
-  "SDM.AreaDrawNeedsToken": "Selecione um token: cones, linhas e \"ao redor do usuário\" saem dele."
+  "SDM.AreaDrawNeedsToken": "Selecione um token: cones, linhas e \"ao redor do usuário\" saem dele.",
+  "SDM.AreaApplyAll": "Aplicar a todos",
+  "SDM.AreaHealAll": "Curar todos",
+  "SDM.AreaHealApplied": "{amount} de cura em {target}"
 }

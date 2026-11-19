@@ -910,7 +910,9 @@ export function areaShares(actors, total, { saved = [], pass = '' } = {}) {
 
 /**
  * A button per target to apply its share (damage not applied automatically); with heal, a second
- * one heals it instead (a power that heals in an area: everyone inside gets the roll back).
+ * one heals it instead (a power that heals in an area: everyone inside gets the roll back). With
+ * more than one target, Apply to all (and Heal all) does everyone not done yet. What was applied is
+ * kept on the card (rolls/ui/applyDamage.mjs), with an Undo each.
  */
 export function areaApplyButtonsHtml(shares, { heal = false, total = 0 } = {}) {
   if (!shares.length) return '';
@@ -919,7 +921,7 @@ export function areaApplyButtonsHtml(shares, { heal = false, total = 0 } = {}) {
     shares
       .map(
         share =>
-          `<span class="sdm-area-share">` +
+          `<span class="sdm-area-share" data-target-uuid="${esc(share.target.uuid)}">` +
           `<button type="button" data-action="sdmAreaApplyDamage" data-target-uuid="${esc(share.target.uuid)}" data-amount="${share.amount}">` +
           `<i class="fa-solid fa-heart-crack"></i> ${esc(share.target.name)} −${share.amount}${share.reduction ? ` (−${share.reduction})` : ''}</button>` +
           (heal
@@ -928,6 +930,12 @@ export function areaApplyButtonsHtml(shares, { heal = false, total = 0 } = {}) {
           `</span>`
       )
       .join('') +
+    // Everyone at once (each their own share)
+    (shares.length > 1
+      ? `<span class="sdm-area-all"><button type="button" data-action="sdmAreaApplyAll"><i class="fa-solid fa-heart-crack"></i> ${esc($l10n('SDM.AreaApplyAll'))}</button>` +
+        (heal ? `<button type="button" data-action="sdmAreaApplyAll" data-heal="1"><i class="fa-solid fa-heart"></i> ${esc($l10n('SDM.AreaHealAll'))}</button>` : '') +
+        `</span>`
+      : '') +
     `</div>`
   );
 }
