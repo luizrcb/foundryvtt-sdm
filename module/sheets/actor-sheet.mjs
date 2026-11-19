@@ -714,7 +714,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     // An item with an area: place the area first, then roll. Right-click or Esc cancels the roll
     // (nothing is paid); with no token for a cone or line it rolls, and Place area stays on the card
     let areaPlaced = null;
-    if (canvas?.ready && canvas.scene && (isAttack || isPower || isPowerAlbum)) {
+    // (not for a power rolled from an area attack's card: its area is placed already)
+    if (canvas?.ready && canvas.scene && (isAttack || isPower || isPowerAlbum) && !`${areaTargets ?? ''}`) {
       const areaItem = isAttack ? this.actor.items.get(plan.attackItem?.itemId ?? plan.attackItem?.id ?? '') : item;
       const areaKind = isAttack ? plan.attackItem?.kind ?? '' : isPowerAlbum ? 'album' : 'power';
       if (areaItem && itemArea(areaItem, areaKind)) {

@@ -41,6 +41,27 @@ function followupFormula(flag, actor) {
   return '';
 }
 
+/** A power (or album power) that rolls nothing: after an area attack it is used at once, with no button. */
+export function powerWithoutRoll(flag) {
+  if (flag?.kind !== 'power' && flag?.kind !== 'album') return false;
+  const actor = fromUuidSync(flag.actor);
+  return !!actor?.items?.get(flag.id) && !followupFormula(flag, actor).trim();
+}
+
+/** Use the power that follows an area attack on the area's targets (no dialog: it rolls nothing). */
+export async function usePowerOnArea(flag) {
+  const actor = fromUuidSync(flag?.actor);
+  const item = actor?.items?.get(flag?.id);
+  if (!actor?.isOwner || !item || !(flag.areaTargets ?? []).length) return;
+  await actor.performHudAction(
+    ROLL_KIND[flag.kind],
+    item.id,
+    { label: item.name, areaTargets: flag.areaTargets.join(','), areaSaved: (flag.areaSaved ?? []).join(','), areaPass: flag.areaPass ?? '' },
+    true,
+    false
+  );
+}
+
 /** The button's HTML, or '' when the item is no longer on the actor. */
 export function attackFollowupHtml(flag) {
   if (!flag?.kind) return '';

@@ -1,5 +1,5 @@
 import { powerCardData } from '../helpers/singleUsePowers.mjs';
-import { attackFollowupHtml, attackItemFlag } from './attackFollowup.mjs';
+import { attackFollowupHtml, attackItemFlag, powerWithoutRoll, usePowerOnArea } from './attackFollowup.mjs';
 import { attackFeatureHtml } from './attackFeatures.mjs';
 import { reachFirstNote } from '../helpers/zones.mjs';
 import { areaApplyButtonsHtml, areaAttackButton, areaBlock, areaPowerButton, areaShares, areaState, requestAreaSaves, setTargets } from '../helpers/areas.mjs';
@@ -289,8 +289,10 @@ export default class SDMRoll {
     // The target it hit goes with the damage button (applied to it with "Apply damage automatically")
     if (attackItem && attackSuccess && this.targetActor) attackItem.target = this.targetActor.uuid;
     // Damage with a target: applied to it at once (optional), with an Undo for the roller and the Referee
-    // An area's damage: every token it hit, each less its reduction (Bystander: its level)
-    const shares = isDamage && this.areaTargets.length && this.roll.total > 0 ? areaShares(this.areaTargets, this.roll.total, { saved: this.areaSaved, pass: this.areaPass }) : [];
+    // An area's damage (or its power's roll: damage or healing): every token it hit, each less its
+    // reduction (Bystander: its level)
+    const areaRoll = (isDamage || ((isPower || isPowerAlbum) && this.roll.dice.length)) && this.areaTargets.length && this.roll.total > 0;
+    const shares = areaRoll ? areaShares(this.areaTargets, this.roll.total, { saved: this.areaSaved, pass: this.areaPass }) : [];
     const autoApply = isDamage && game.settings.get('sdm', 'autoApplyDamage');
     const autoTarget =
       !shares.length && autoApply && this.targetActor && this.targetActor !== this.actor && this.roll.total > 0
@@ -305,8 +307,8 @@ export default class SDMRoll {
           ` <button type="button" data-action="sdmUndoDamage"><i class="fa-solid fa-rotate-left"></i> ${foundry.utils.escapeHTML($l10n('SDM.Card.Undo'))}</button></div>`
       );
     }
-    // Not applied automatically: a button per token hit
-    if (!autoApply && shares.length) tags.push(areaApplyButtonsHtml(shares));
+    // Not applied automatically: a button per token hit (a power's: damage or heal)
+    if (!autoApply && shares.length) tags.push(areaApplyButtonsHtml(shares, { heal: !isDamage, total: this.roll.total }));
     // The area was placed before the roll (an item with an area): the card shows each one inside
     let areaPlacedBlock = null;
     if (this.areaPlaced && (isAttack || isPower || isPowerAlbum)) {
@@ -363,8 +365,9 @@ export default class SDMRoll {
         attackTarget: this.attackTarget
       });
     }
-    // A power with an area: place it; everyone inside can take the power's roll
-    if ((isPower || isPowerAlbum) && !areaPlacedBlock) {
+    // A power with an area: place it; everyone inside can take the power's roll (not when the power
+    // follows an area attack: the area is placed already)
+    if ((isPower || isPowerAlbum) && !areaPlacedBlock && !this.areaTargets.length) {
       const castItem = isPowerAlbum ? this.triggerItem : this.item?.id ? this.item : null;
       actions += areaPowerButton({ actor: this.actor, item: castItem, kind: isPowerAlbum ? 'album' : 'power', total: this.roll.dice.length ? this.roll.total : 0 });
     }
@@ -423,6 +426,8 @@ export default class SDMRoll {
     for (const share of autoShares) await changeLifeOf(share.target, share.amount);
     // An area resolved by a save: everyone inside saves
     if (areaPlacedBlock?.card.save && rollMessage) await requestAreaSaves(rollMessage);
+    // An area attack with a power that rolls nothing: the power happens now, on those hit (or inside)
+    if (isAttack && areaPlacedBlock?.attackItem && powerWithoutRoll(areaPlacedBlock.attackItem)) await usePowerOnArea(areaPlacedBlock.attackItem);
     // The roll's target (the one an attack hit, carried by its damage button) gets the triggers' conditions
     if (firedTriggers.length) {
       // Only the target the attack card carried; otherwise the user's targeted tokens, as always

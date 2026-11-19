@@ -10,6 +10,7 @@
   - **Draw an area** (scene controls, Tokens): a shape and a size placed on the map with no item, roll or card (cones, lines and around the user from the selected token); the same button removes the drawn areas (your own; the Referee's: all on the scene)
   - Consumables with an area (grenades): Use places the area first, and the tokens inside are the Use's targets (saves included)
   - Powers (and each power of an album) have an *Area* and *Shape*: attacks with them place the area like weapons, and the power's card has **Place area**: a card lists who is inside, targets them, and has a button per token to apply the power's roll
+    - An attack made with a power that has an area places the area once: the power's roll from the area card (damage or healing) isn't placed again and has a damage and a heal button per token hit; a power that rolls nothing is used at once after the attack, on those hit (or everyone inside, for a save)
   - A circle or square placed beyond the item's range (its zone) gets a warning, also on the card; cones and lines start at the attacker; ranges written as text aren't checked
   - Fire Breath is a cone (run npm run build:packs)
   - **Lingers** (gear and powers): the area stays on the map and whoever stands in it has the item's effects (not its mods, nor those it gives its bearer), following *Affects*; it lasts its *Rounds* in combat (0: until removed). A consumable used in one doesn't also copy its effects. Uses the Auras automation

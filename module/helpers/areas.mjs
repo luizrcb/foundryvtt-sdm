@@ -3,7 +3,7 @@ import { $fmt, $l10n } from './globalUtils.mjs';
 import { cardHeader, cardWrap, marginText, resultStrip } from '../rolls/ui/cardParts.mjs';
 import { createChatMessage } from './chatUtils.mjs';
 import { saveDifficultyLabel, saveDifficultyValue } from '../app/save-against.mjs';
-import { attackFollowupHtml } from '../rolls/attackFollowup.mjs';
+import { attackFollowupHtml, powerWithoutRoll } from '../rolls/attackFollowup.mjs';
 import { getItemIdentifier } from './effectReferences.mjs';
 import { bandForMeters, metersForWorldUnits, metersPerUnit, sceneUnitsForMeters, sceneZoneLimits, worldUnit, worldUnitsForMeters, ZONE_BANDS } from './zones.mjs';
 
@@ -999,7 +999,8 @@ export function areaBlock(state) {
         areaSaved: savedActors,
         areaPass: state.save.pass
       };
-      if (targets.length) actions += attackFollowupHtml(attackItem);
+      // A power that rolls nothing is used at once after the attack (rolls/sdmRoll.mjs): no button
+      if (targets.length && !powerWithoutRoll(attackItem)) actions += attackFollowupHtml(attackItem);
     } else if (total > 0 && targets.length) {
       rows.push(areaApplyButtonsHtml(areaShares(targets, total, { saved: savedActors, pass: state.save.pass }), { heal: state.mode === 'power', total }));
     }
@@ -1039,7 +1040,7 @@ export function areaBlock(state) {
       multiplier: state.multiplier || '',
       areaTargets: hits.map(t => t.actor.uuid)
     };
-    if (hits.length) actions += attackFollowupHtml(attackItem);
+    if (hits.length && !powerWithoutRoll(attackItem)) actions += attackFollowupHtml(attackItem);
   } else {
     // A power: everyone inside, each with its share of the roll
     hits.push(...tokens);
