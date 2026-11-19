@@ -54,7 +54,7 @@
         "value": 110,
         "max": 110
       },
-      "morale": 0,
+      "morale": 8,
       "defense": 4,
       "bonus": 3,
       "damage": "3d6+9",
