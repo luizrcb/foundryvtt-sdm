@@ -146,17 +146,30 @@ export async function onItemCreateActiveEffects(item) {
 
     if (['corruption', 'affliction', 'augment', 'pet'].includes(item.system.type)) return;
 
+    // Picked up from an Item Piles pile: its effects stay as they were on the ground (an aura keeps
+    // radiating, now from its new bearer)
+    const inPile = isItemPileActor(item.parent);
+    if (!inPile && item.getFlag?.('sdm', PILE_FLAG)) {
+      if (item.isOwner) await item.unsetFlag('sdm', PILE_FLAG);
+      return;
+    }
+
     for (const effect of item.effects) {
       let enabledEffect = false;
       if (item.parent && item.parent.type === ActorType.CARAVAN) {
         enabledEffect = true;
       }
       // An item lying on the map (an Item Piles pile): its effects are on, so its aura radiates from there
-      if (isItemPileActor(item.parent)) enabledEffect = true;
+      if (inPile) enabledEffect = true;
       await toggleEffectTransfer(effect, enabledEffect);
     }
+    // Marked as lying in a pile: whoever picks it up gets it with its effects as they are
+    if (inPile && item.isOwner && !item.getFlag?.('sdm', PILE_FLAG)) await item.setFlag('sdm', PILE_FLAG, true);
   }
 }
+
+/** On an item lying in an Item Piles pile (its data goes with it when picked up). */
+const PILE_FLAG = 'fromPile';
 
 async function toggleEffectTransfer(effect, shouldBeActive) {
   const effectUpdates = {};
