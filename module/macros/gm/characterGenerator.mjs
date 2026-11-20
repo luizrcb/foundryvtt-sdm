@@ -988,18 +988,25 @@ async function generateCharacterWithOptions(options = {}, existingActor) {
     }).toObject();
 
     const actor = existingActor || (await SdmActor.create(newActor));
-    await actor.update({
-      name: name,
-      'prototypeToken.name': name,
-      system: newActor.system
-    });
+    // A player rerolling their own character may reset its XP (otherwise only the Referee edits XP)
+    await actor.update(
+      {
+        name: name,
+        'prototypeToken.name': name,
+        system: newActor.system
+      },
+      { sdmReroll: true }
+    );
 
     // A new character starts at level 1 with its traits already chosen: no pending upgrade
-    await actor.update({
-      'system.experience': '300',
-      'system.upgrades_level': 1,
-      'system.pending_upgrades': 0
-    });
+    await actor.update(
+      {
+        'system.experience': '300',
+        'system.upgrades_level': 1,
+        'system.pending_upgrades': 0
+      },
+      { sdmReroll: true }
+    );
 
     if (existingActor) {
       await addCompendiumItemToActor(actor, UnarmedDamageItem);

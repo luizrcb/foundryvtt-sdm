@@ -118,8 +118,9 @@ export class SdmActor extends Actor {
     const result = await super._preUpdate(changes, options, user);
     if (result === false) return false;
 
-    // Only the Referee edits XP directly; players invest it (sdmInvestXp option)
-    if (!user.isGM && !options.sdmInvestXp && changes.system) {
+    // Only the Referee edits XP directly; players invest it (sdmInvestXp option) or reroll their
+    // character (sdmReroll: XP back to a new character's)
+    if (!user.isGM && !options.sdmInvestXp && !options.sdmReroll && changes.system) {
       for (const key of ['experience', 'player_experience']) {
         if (changes.system[key] !== undefined && `${changes.system[key]}` !== `${this.system[key]}`) {
           delete changes.system[key];
