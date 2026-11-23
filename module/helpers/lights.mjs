@@ -110,8 +110,8 @@ function lightSettingsFrom(light = {}, fallback = 'torch') {
       color: light.color || '',
       alpha: 0.4,
       animation: light.animation || '',
-      speed: 5,
-      intensity: 5
+      speed: Math.min(Math.max(Number(light.speed ?? 5) || 0, 0), 10),
+      intensity: Math.min(Math.max(Number(light.intensity ?? 5) || 0, 0), 10)
     };
   }
   return getLightPreset(preset);

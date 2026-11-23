@@ -70,6 +70,10 @@
           <color-picker name="{{concat 'system.powers.' @index '.light.color'}}" value="{{power.light.color}}"></color-picker></label>
         <label><span>{{localize 'SDM.Light.Animation'}}</span>
           <select name="{{concat 'system.powers.' @index '.light.animation'}}">{{selectOptions @root.lightAnimations selected=power.light.animation localize=true}}</select></label>
+        <label><span>{{localize 'SDM.Light.Speed'}}</span>
+          <input type="number" name="{{concat 'system.powers.' @index '.light.speed'}}" value="{{power.light.speed}}" min="0" max="10" step="1" /></label>
+        <label><span>{{localize 'SDM.Light.Intensity'}}</span>
+          <input type="number" name="{{concat 'system.powers.' @index '.light.intensity'}}" value="{{power.light.intensity}}" min="0" max="10" step="1" /></label>
       </div>
       {{else}}
       <input type="hidden" name="{{concat 'system.powers.' @index '.light.bright'}}" value="{{power.light.bright}}" data-dtype="Number" />
