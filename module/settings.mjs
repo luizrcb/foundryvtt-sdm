@@ -1019,16 +1019,10 @@ export function configureUseHeroDiceButton(message, html, data) {
 
   heroBtn.append(` ${$l10n('SDM.RollUseHeroDice')}`);
 
-  // New cards: in the footer, with the hero dice left; other messages: centered under the content
+  // New cards: in the footer, on the right; other messages: centered under the content
   const cardFoot = html.querySelector('.sdm-card .sdm-card-foot');
   if (cardFoot) {
-    const heroes = actor?.system?.hero_dice;
-    if (heroes && !cardFoot.querySelector('.sdm-hero-left')) {
-      const left = document.createElement('span');
-      left.className = 'sdm-hero-left';
-      left.textContent = game.i18n.format('SDM.Card.HeroDiceLeft', { value: heroes.value ?? 0, max: heroes.max ?? 0 });
-      cardFoot.prepend(left);
-    }
+    heroBtn.style.marginLeft = 'auto';
     cardFoot.appendChild(heroBtn);
   } else {
     const heroContainer = document.createElement('div');
