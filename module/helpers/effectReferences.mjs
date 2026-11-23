@@ -63,8 +63,33 @@ function getItemsValue(actor, typedKey, path) {
   return numbers.length === values.length ? Math.max(...numbers) : values[0];
 }
 
-function resolveOne({ actor, item }, scope, path, itemsKey) {
+/**
+ * Actor values the system calculates after active effects are applied (defenses, armor, ward,
+ * slots, wealth, a caravan's capacity and speed). An effect reading one gets the stored value,
+ * not the one on the sheet: use what they are made from (abilities, defense_bonus…) instead.
+ */
+const CALCULATED_ACTOR_PATHS = new Set([
+  'armor', 'ward', 'defense', 'mental_defense', 'social_defense', 'burden_penalty',
+  'item_slots_taken', 'trait_slots_taken', 'packed_item_slots_taken', 'inventory_value',
+  'total_cash', 'wealth', 'capacity', 'speed'
+]);
+
+function warnCalculated({ effect, item }, path) {
+  const field = path.replace(/^system\./, '');
+  if (!effect || !CALCULATED_ACTOR_PATHS.has(field)) return;
+  const key = `${effect.uuid ?? item?.uuid}|calc|${field}`;
+  if (warned.has(key)) return;
+  warned.add(key);
+  console.warn(
+    `SDM | Active Effect (${effect.uuid}): @actor.${path} is calculated after active effects, so the effect ` +
+      `reads its stored value, not the one on the sheet. Use what it is made from instead (e.g. @actor.abilities.agi.current, @actor.defense_bonus).`
+  );
+}
+
+function resolveOne(context, scope, path, itemsKey) {
+  const { actor, item } = context;
   if (itemsKey !== undefined) return getItemsValue(actor, itemsKey, path);
+  if (scope === 'actor') warnCalculated(context, path);
   return getPath(scope === 'actor' ? actor : item, path);
 }
 
