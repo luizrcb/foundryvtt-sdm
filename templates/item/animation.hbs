@@ -6,24 +6,24 @@
   <div class="grid grid-4col">
     <div class='resource' style="grid-column: span 2">
       <label class='resource-label'>{{localize 'SDM.Animation.Mode'}}</label>
-      <select name='system.animation.mode' {{#unless canManage}}disabled{{/unless}}>
+      <select name='system.animation.mode' {{#unless canEdit}}disabled{{/unless}}>
         {{selectOptions modes selected=@root.system.animation.mode localize=true}}
       </select>
     </div>
     {{#if (or hasCharges hasUsesCounter)}}
     <div class='resource' data-tooltip="{{localize 'SDM.Animation.ChargeCostHint'}}">
       <label class='resource-label'>{{localize 'SDM.Animation.ChargeCost'}} ({{charges.value}}/{{charges.max}})</label>
-      <input type='text' name='system.animation.chargeCost' value='{{@root.system.animation.chargeCost}}' data-dtype='Number' {{#unless canManage}}disabled{{/unless}} />
+      <input type='text' name='system.animation.chargeCost' value='{{@root.system.animation.chargeCost}}' data-dtype='Number' {{#unless canEdit}}disabled{{/unless}} />
     </div>
     {{/if}}
     {{#if hasReplenish}}
     <div class='resource' data-tooltip="{{localize 'SDM.Animation.UsageRollHint'}}">
       <label class='resource-label'>{{localize 'SDM.Animation.UsageRoll'}}</label>
-      <input type='checkbox' name='system.animation.usageRoll' {{checked @root.system.animation.usageRoll}} {{#unless canManage}}disabled{{/unless}} />
+      <input type='checkbox' name='system.animation.usageRoll' {{checked @root.system.animation.usageRoll}} {{#unless canEdit}}disabled{{/unless}} />
     </div>
     {{/if}}
   </div>
-  {{#if canManage}}
+  {{#if canEdit}}
   <label class="flexrow mt-6">
     <input class="flex0" type="checkbox" name="system.animation.endWithCombat" {{checked @root.system.animation.endWithCombat}} />
     <span>{{localize 'SDM.Animation.EndWithCombat'}}</span>
@@ -33,12 +33,12 @@
   {{!-- Who it becomes --}}
   <h3 class="mt-10 flexrow">
     <span>{{localize 'SDM.Animation.Creature'}}</span>
-    {{#if canManage}}
+    {{#if canEdit}}
     <a class="flex0" data-action="fillAnimationFromTable" data-tooltip="{{localize 'SDM.Animation.FillHint'}}"><i class="fa-solid fa-table-list"></i> {{localize 'SDM.Animation.Fill'}}</a>
     {{/if}}
   </h3>
   <div class="grid grid-4col">
-    <div class='resource' {{#if canManage}}data-tooltip="{{localize 'SDM.Animation.DropNpcShort'}}"{{/if}}>
+    <div class='resource' {{#if canEdit}}data-tooltip="{{localize 'SDM.Animation.DropNpcShort'}}"{{/if}}>
       <label class='resource-label'>{{localize 'TYPES.Actor.npc'}}</label>
       {{#if npc}}
       <a class="content-link" draggable="true" data-link data-uuid="{{npc.uuid}}" data-type="Actor"><i class="fa-solid fa-user"></i> {{npc.name}}</a>
@@ -48,7 +48,7 @@
     </div>
     <div class='resource' style="grid-column: span 2">
       <label class='resource-label'>{{localize 'SDM.Animation.Table'}}</label>
-      <select name='system.animation.table' {{#unless canManage}}disabled{{/unless}}>
+      <select name='system.animation.table' {{#unless canEdit}}disabled{{/unless}}>
         {{selectOptions tables selected=table localize=true}}
       </select>
     </div>
@@ -60,60 +60,60 @@
     {{else}}
     <div class='resource' data-tooltip="{{localize 'SDM.Animation.LevelHint'}}">
       <label class='resource-label'>{{localize 'SDM.FieldLevel'}}</label>
-      <input type='text' name='system.attributes.level' value='{{@root.system.attributes.level}}' data-dtype='Number' {{#unless canManage}}disabled{{/unless}} />
+      <input type='text' name='system.attributes.level' value='{{@root.system.attributes.level}}' data-dtype='Number' {{#unless canEdit}}disabled{{/unless}} />
     </div>
     {{/if}}
     <div class='resource'>
       <label class='resource-label'>{{localize 'SDM.FieldLifeMax'}}</label>
       <div class="flexrow">
-        <input type='text' name='system.attributes.life.value' value='{{@root.system.attributes.life.value}}' data-dtype='Number' {{#unless canManage}}disabled{{/unless}} />
-        <input type='text' name='system.attributes.life.max' value='{{@root.system.attributes.life.max}}' data-dtype='Number' {{#unless canManage}}disabled{{/unless}} />
+        <input type='text' name='system.attributes.life.value' value='{{@root.system.attributes.life.value}}' data-dtype='Number' {{#unless canEdit}}disabled{{/unless}} />
+        <input type='text' name='system.attributes.life.max' value='{{@root.system.attributes.life.max}}' data-dtype='Number' {{#unless canEdit}}disabled{{/unless}} />
       </div>
     </div>
     <div class='resource'>
       <label class='resource-label'>{{localize 'SDM.FieldDefense'}}</label>
-      <input type='text' name='system.attributes.defense' value='{{@root.system.attributes.defense}}' data-dtype='Number' {{#unless canManage}}disabled{{/unless}} />
+      <input type='text' name='system.attributes.defense' value='{{@root.system.attributes.defense}}' data-dtype='Number' {{#unless canEdit}}disabled{{/unless}} />
     </div>
     <div class='resource'>
       <label class='resource-label'>{{localize 'SDM.Morale'}}</label>
-      <input type='text' name='system.attributes.morale' value='{{@root.system.attributes.morale}}' data-dtype='Number' {{#unless canManage}}disabled{{/unless}} />
+      <input type='text' name='system.attributes.morale' value='{{@root.system.attributes.morale}}' data-dtype='Number' {{#unless canEdit}}disabled{{/unless}} />
     </div>
     <div class='resource'>
       <label class='resource-label'>{{localize 'SDM.FieldBonus'}}</label>
-      <input type='text' name='system.attributes.bonus' value='{{@root.system.attributes.bonus}}' data-dtype='Number' {{#unless canManage}}disabled{{/unless}} />
+      <input type='text' name='system.attributes.bonus' value='{{@root.system.attributes.bonus}}' data-dtype='Number' {{#unless canEdit}}disabled{{/unless}} />
     </div>
     <div class='resource'>
       <label class='resource-label'>{{localize 'SDM.Damage'}}</label>
-      <input type='text' name='system.attributes.damage' value='{{@root.system.attributes.damage}}' {{#unless canManage}}disabled{{/unless}} />
+      <input type='text' name='system.attributes.damage' value='{{@root.system.attributes.damage}}' {{#unless canEdit}}disabled{{/unless}} />
     </div>
     {{#if isWeapon}}
     <div class='resource' style="grid-column: span 2" data-tooltip="{{localize 'SDM.Animation.DamageSourceHint'}}">
       <label class='resource-label'>{{localize 'SDM.Animation.DamageSource'}}</label>
-      <select name='system.animation.damageSource' {{#unless canManage}}disabled{{/unless}}>
+      <select name='system.animation.damageSource' {{#unless canEdit}}disabled{{/unless}}>
         {{selectOptions damageSources selected=@root.system.animation.damageSource localize=true}}
       </select>
     </div>
     {{/if}}
     <div class='resource'>
       <label class='resource-label'>{{localize 'SDM.Initiative'}}</label>
-      <input type='text' name='system.attributes.initiative' value='{{@root.system.attributes.initiative}}' {{#unless canManage}}disabled{{/unless}} />
+      <input type='text' name='system.attributes.initiative' value='{{@root.system.attributes.initiative}}' {{#unless canEdit}}disabled{{/unless}} />
     </div>
     <div class='resource'>
       <label class='resource-label'>{{localize 'SDM.FieldCapacity'}}</label>
-      <input type='text' name='system.attributes.capacity' value='{{@root.system.attributes.capacity}}' data-dtype='Number' {{#unless canManage}}disabled{{/unless}} />
+      <input type='text' name='system.attributes.capacity' value='{{@root.system.attributes.capacity}}' data-dtype='Number' {{#unless canEdit}}disabled{{/unless}} />
     </div>
     <div class='resource'>
       <label class='resource-label'>{{localize 'SDM.ItemSizeValue'}}</label>
       <div class="flexrow">
-        <input type='text' name='system.animation.size.value' value='{{@root.system.animation.size.value}}' data-dtype='Number' {{#unless canManage}}disabled{{/unless}} />
-        <select name='system.animation.size.unit' {{#unless canManage}}disabled{{/unless}}>
+        <input type='text' name='system.animation.size.value' value='{{@root.system.animation.size.value}}' data-dtype='Number' {{#unless canEdit}}disabled{{/unless}} />
+        <select name='system.animation.size.unit' {{#unless canEdit}}disabled{{/unless}}>
           {{selectOptions @root.sizeUnits selected=@root.system.animation.size.unit localize=true}}
         </select>
       </div>
     </div>
     <div class='resource'>
       <label class='resource-label'>{{localize 'SDM.FieldSpeed'}}</label>
-      <select name='system.animation.speed' data-dtype='Number' {{#unless canManage}}disabled{{/unless}}>
+      <select name='system.animation.speed' data-dtype='Number' {{#unless canEdit}}disabled{{/unless}}>
         {{selectOptions (sdmSpeedChoices @root.system.animation.speed) selected=@root.system.animation.speed}}
       </select>
     </div>

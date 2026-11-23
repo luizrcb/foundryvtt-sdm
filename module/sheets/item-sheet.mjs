@@ -612,7 +612,9 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
             weapon: 'SDM.Animation.DamageWeapon',
             creature: 'SDM.Animation.DamageCreature'
           },
+          // Animating and deanimating are the Referee's; the item's owner configures the tab (for now)
           canManage: game.user.isGM,
+          canEdit: this.item.isOwner && !this.item.pack,
           // Players who own the item ask the Referee to animate it
           canRequest:
             !game.user.isGM && this.item.isOwner && !this.item.system.animation?.active && !!this.item.parent
@@ -1388,7 +1390,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
   }
 
   static async _onFillAnimationFromTable() {
-    if (!game.user.isGM) return;
+    if (!this.item.isOwner) return;
     await fillAttributesFromTable(this.item);
   }
 
@@ -1620,7 +1622,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
   async _onDropActor(event, data) {
     if (!this.item.isOwner) return false;
     // Animated items: the Referee drops the NPC the item turns into
-    if (isAnimatable(this.item) && game.user.isGM) {
+    if (isAnimatable(this.item)) {
       const actor = await fromUuid(data.uuid);
       if (actor?.type === ActorType.NPC) return linkNpcToItem(this.item, actor);
     }

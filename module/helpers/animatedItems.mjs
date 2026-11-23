@@ -473,7 +473,7 @@ async function getAnimatedFolder() {
  * fill the tab (compendium NPCs are imported into the "Animated Items" folder first).
  */
 export async function linkNpcToItem(item, actor) {
-  if (!game.user.isGM || !isAnimatable(item) || actor?.type !== ActorType.NPC) return;
+  if (!item?.isOwner || !isAnimatable(item) || actor?.type !== ActorType.NPC) return;
   if (item.system.animation?.active) {
     ui.notifications.warn($l10n('SDM.Animation.LinkWhileActive'));
     return;
@@ -489,11 +489,18 @@ export async function linkNpcToItem(item, actor) {
 
   let npc = actor;
   if (actor.pack && !inCompendium) {
-    const folder = await getAnimatedFolder();
-    const data = actor.toObject();
-    delete data._id;
-    data.folder = folder?.id;
-    npc = await Actor.create(data);
+    try {
+      const folder = await getAnimatedFolder();
+      const data = actor.toObject();
+      delete data._id;
+      data.folder = folder?.id;
+      npc = await Actor.create(data);
+    } catch (error) {
+      // A player without the right to create actors: the Referee links it
+      ui.notifications.warn(error?.message ?? String(error));
+      return;
+    }
+    if (!npc) return;
   }
 
   const s = npc.system;
