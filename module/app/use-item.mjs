@@ -1,5 +1,5 @@
 import { ItemType } from '../helpers/constants.mjs';
-import { resolveFormula } from '../helpers/formulas.mjs';
+import { resolveFormula, showSideDice } from '../helpers/formulas.mjs';
 import { lastChargeUpdate } from '../helpers/itemUtils.mjs';
 import { getUsesCounter, spendUsesUpdate, usesLeft } from '../helpers/itemUses.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
@@ -507,6 +507,7 @@ export async function useItem(item) {
   const rollFormula = async formula => {
     // Formulas can read counters and other values (@item.counters.doses.value)
     const roll = await new Roll(resolveFormula(formula, { item, actor }), actor.getRollData()).evaluate();
+    await showSideDice(roll);
     rollHtml += await roll.render();
     return Math.max(Number(roll.total) || 0, 0);
   };
