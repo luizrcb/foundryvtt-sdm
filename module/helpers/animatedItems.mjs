@@ -470,7 +470,7 @@ async function getAnimatedFolder() {
 
 /**
  * Referee: an NPC dropped on the Animation tab becomes the item's creature. Its table and stats
- * fill the tab (compendium NPCs are imported into the "Animated Items" folder first).
+ * fill the tab. The creature is a copy in the "Animated Items" folder (compendium and world NPCs alike).
  */
 export async function linkNpcToItem(item, actor) {
   if (!item?.isOwner || !isAnimatable(item) || actor?.type !== ActorType.NPC) return;
@@ -488,7 +488,10 @@ export async function linkNpcToItem(item, actor) {
   }
 
   let npc = actor;
-  if (actor.pack && !inCompendium) {
+  // A compendium NPC or a world NPC that isn't this item's creature yet: the item gets its own copy
+  // in "Animated Items" (the dropped NPC is never changed)
+  const ownCreature = !actor.pack && actor.getFlag('sdm', FLAG) === item.uuid;
+  if (!inCompendium && !ownCreature) {
     try {
       const folder = await getAnimatedFolder();
       const data = actor.toObject();
