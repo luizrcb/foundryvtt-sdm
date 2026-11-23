@@ -795,3 +795,9 @@ li.item {
     opacity: 0.45;
   }
 }
+
+// Caravan items header: the free space ("Livre: 24 sc + 7 mo") stays on one line
+.sdm-caravan-free {
+  white-space: nowrap;
+  flex: 0 0 auto;
+}

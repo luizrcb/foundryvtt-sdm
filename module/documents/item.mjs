@@ -759,7 +759,9 @@ export class SdmItem extends Item {
     const rangeLabel = `${$l10n('SDM.PowerRangeAbbr')}: ${powerData?.range}`;
     const targetLabel = `${$l10n('SDM.PowerTargetAbbr')}: ${powerData?.target}`;
     const durationLabel = `${$l10n('SDM.PowerDurationAbbr')}: ${powerData?.duration}`;
-    const overchargeLabel = `${$l10n('SDM.PowerOverchargeAbbr')}: ${powerData?.overcharge}`;
+    // The overcharge text is rich text: its paragraphs would open blank lines in the tooltip
+    const overchargeText = `${powerData?.overcharge ?? ''}`.replace(/<\/?p[^>]*>/gi, ' ').replace(/\s+/g, ' ').trim();
+    const overchargeLabel = `${$l10n('SDM.PowerOverchargeAbbr')}: ${overchargeText}`;
     let rollLabel = `${$l10n('SDM.PowerRollFormulaAbbr')}: ${powerData?.roll_formula}`;
 
     if (powerData?.default_ability) {
@@ -887,6 +889,8 @@ export class SdmItem extends Item {
       const excerpt = getDescriptionExcerpt(data.description);
       if (excerpt) title += `${title ? '<br><br>' : ''}<em>${excerpt}</em>`;
     }
+    // No blank lines piled up before the features (each part ends with its own breaks)
+    title = title.replace(/(\s*<br\s*\/?>)+\s*$/i, '');
     title += this.footerTitleFunction(this.system);
     return title;
   }
