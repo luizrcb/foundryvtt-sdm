@@ -21,6 +21,21 @@ export function applyDamageHtml(total) {
   );
 }
 
+/**
+ * Any other roll in the chat (/r 1d6, /r 3, a module's roll…): the same apply buttons, for whoever
+ * rolled and the Referee. The system's own cards (.sdm-card) decide their buttons themselves.
+ */
+export function addApplyToPlainRolls(message, html) {
+  if (!message.rolls?.length || !message.isContentVisible) return;
+  if (!(message.isAuthor || game.user.isGM)) return;
+  if (html.querySelector('.sdm-card, .sdm-apply-damage')) return;
+  const total = Math.round(Number(message.rolls[0]?.total) || 0);
+  const buttons = applyDamageHtml(total);
+  if (!buttons) return;
+  const content = html.querySelector('.message-content') ?? html;
+  content.insertAdjacentHTML('beforeend', buttons);
+}
+
 /** renderChatMessageHTML: the buttons act on the user's selected tokens. */
 export function bindApplyDamage(html) {
   html.querySelectorAll('[data-action="sdmApplyDamage"]').forEach(button =>

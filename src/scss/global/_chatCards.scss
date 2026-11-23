@@ -522,3 +522,18 @@
 .chat-card.item-card img.gold-icon[src$='.svg'] {
   filter: brightness(0) invert(0.3);
 }
+
+// Plain chat rolls (/r 1d6…): the same apply buttons under the roll
+.chat-message .message-content > .sdm-apply-damage {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  margin-top: 4px;
+
+  button {
+    margin: 0;
+    padding: 2px;
+    font-size: 12px;
+    line-height: 20px;
+  }
+}
