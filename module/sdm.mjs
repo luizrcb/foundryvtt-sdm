@@ -71,7 +71,7 @@ import { setupZones } from './helpers/zones.mjs';
 import { bindAttackFollowup } from './rolls/attackFollowup.mjs';
 import { bindAttackFeatures } from './rolls/attackFeatures.mjs';
 import { bindSacrifice, bindSaveAgainst, rerenderChangedSave, setupSaveAgainst } from './app/save-against.mjs';
-import { addApplyToPlainRolls, bindApplyDamage, bindHeroHeal, bindUndoDamage } from './rolls/ui/applyDamage.mjs';
+import { addApplyToPlainRolls, addVisibilityLabel, bindApplyDamage, bindHeroHeal, bindUndoDamage } from './rolls/ui/applyDamage.mjs';
 import { rememberCurrency } from './helpers/currency.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
 import { gm as gmMacros, player as playerMacros } from './macros/_module.mjs';
@@ -315,6 +315,7 @@ Hooks.on('renderChatMessageHTML', (message, html, data) => {
   bindTriggerApply(message, html);
   // Damage card: apply to the selected tokens (plain chat rolls get the same buttons)
   addApplyToPlainRolls(message, html);
+  addVisibilityLabel(message, html);
   bindApplyDamage(html);
   bindUndoDamage(message, html);
   bindHeroHeal(message, html);

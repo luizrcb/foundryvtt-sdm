@@ -537,3 +537,21 @@
     line-height: 20px;
   }
 }
+
+// Who can see a system card: blind, Referee only, private (public cards show nothing)
+.sdm-card .sdm-card-title .sdm-visibility {
+  margin-left: auto;
+  padding: 0 6px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--sdm-card-muted);
+  font-family: var(--font-primary);
+  font-size: 11px;
+  letter-spacing: 0;
+  white-space: nowrap;
+
+  &.sdm-visibility-blind {
+    background: #3a2f4a;
+    color: #fff;
+  }
+}

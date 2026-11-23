@@ -143,3 +143,23 @@ export function bindHeroHeal(message, html) {
     if (message.isOwner) await message.setFlag('sdm', 'heroHealed', true);
   });
 }
+
+/**
+ * The system's cards say who can see them: blind (only the Referee sees the result), Referee only
+ * (whispered to the Referees), or private (whispered to others). Public cards show nothing.
+ */
+export function addVisibilityLabel(message, html) {
+  if (!html.querySelector('.sdm-card') || html.querySelector('.sdm-visibility')) return;
+  const whisper = message.whisper ?? [];
+  let kind = '';
+  if (message.blind) kind = 'blind';
+  else if (whisper.length && whisper.every(id => game.users.get(id)?.isGM)) kind = 'gm';
+  else if (whisper.length) kind = 'private';
+  if (!kind) return;
+  const label = document.createElement('span');
+  label.className = `sdm-visibility sdm-visibility-${kind}`;
+  label.dataset.tooltip = game.i18n.localize(`SDM.Card.Visibility.${kind}Hint`);
+  label.innerHTML = `<i class="fa-solid ${kind === 'blind' ? 'fa-eye-slash' : 'fa-user-secret'}"></i> ${esc(game.i18n.localize(`SDM.Card.Visibility.${kind}`))}`;
+  const title = html.querySelector('.sdm-card .sdm-card-title');
+  if (title) title.append(label);
+}
