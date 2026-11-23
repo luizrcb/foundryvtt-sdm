@@ -9,6 +9,7 @@ import { $l10n, capitalizeFirstLetter, toPascalCase } from '../helpers/globalUti
 import { cardHeader, cardTag, cardWrap, marginText, resultStrip, rollBox } from './ui/cardParts.mjs';
 import { applyDamageHtml } from './ui/applyDamage.mjs';
 import { changeLifeOf } from '../app/use-item.mjs';
+import { awardNat20HeroDie } from '../helpers/heroDieOnNat20.mjs';
 
 /**
  * Set on an item when an attack made with it rolled its usage (the time): the damage / power that
@@ -256,6 +257,12 @@ export default class SDMRoll {
       } else if (luckySevenRule && is7) {
         tags.push(cardTag($l10n('SDM.LuckySeven'), { tone: 'good', icon: 'fa-solid fa-clover' }));
       }
+    }
+
+    // Optional: a natural 20 on an attack or ability check gives a hero die
+    if ((isAttack || isAbility) && isNat20) {
+      const heroTag = await awardNat20HeroDie(this.actor);
+      if (heroTag) tags.push(heroTag);
     }
 
     let extras = '';
