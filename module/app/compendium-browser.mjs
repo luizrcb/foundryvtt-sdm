@@ -1487,11 +1487,12 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
       }
     });
 
-    this.element.addEventListener('input', event => {
-      const target = event.target;
-      if (target.matches('search input[type="text"]')) {
-        this._debouncedSearch(event);
-      }
+    // Typing doesn't search (slow typing kept firing it): Enter, the search button, or leaving the field
+    this.element.addEventListener('change', event => {
+      const input = event.target;
+      if (!input.matches('search input[type="text"]')) return;
+      if ((this.#filters.name ?? '') === input.value) return;
+      CompendiumBrowser.#onSubmitSearch.call(this, event, input);
     });
 
     this.element.addEventListener('keydown', event => {
