@@ -2,6 +2,7 @@ import { $l10n, capitalizeFirstLetter, formatNumber } from '../helpers/globalUti
 import { convertSizeUnit } from '../helpers/itemUtils.mjs';
 import { SizeUnit } from '../helpers/constants.mjs';
 import { bindingLabel, currentBinding } from '../helpers/keybindingSettings.mjs';
+import { removeCashFromActor } from '../macros/gm/giveCash.mjs';
 
 const ApplicationV2 = foundry.applications?.api?.ApplicationV2;
 const HandlebarsApplicationMixin = foundry.applications?.api?.HandlebarsApplicationMixin;
@@ -462,11 +463,76 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
             if (!uuid) return;
             await this.#onSendToChat(uuid);
           }
+        },
+        {
+          label: 'SDM.CompendiumBrowser.AddToToken',
+          icon: '<i class="fa-solid fa-user-plus"></i>',
+          condition: () => game.user.isGM,
+          onClick: async (event, target) => {
+            const uuid = CompendiumBrowser.#contextCard(event, target)?.dataset.uuid;
+            if (uuid) await CompendiumBrowser.#addToSelectedToken(uuid);
+          }
         }
       ],
       // fixed: render the menu on the document body so result cards never cover it
       { jQuery: false, fixed: true }
     );
+  }
+
+  /**
+   * Referee: add the item to the selected token's actor. A dialog sets its name, image and the
+   * price charged to the actor (the item's cost, editable; empty or 0: free).
+   */
+  static async #addToSelectedToken(uuid) {
+    const actor = canvas?.tokens?.controlled?.[0]?.actor;
+    if (!actor) {
+      ui.notifications.warn($l10n('SDM.CompendiumBrowser.NoToken'));
+      return;
+    }
+    const source = await fromUuid(uuid);
+    if (source?.documentName !== 'Item') return;
+    const esc = text => foundry.utils.escapeHTML(String(text ?? ''));
+    const price = (Number(source.system?.cost) || 0) * (Number(source.system?.quantity) || 1);
+    const content = `
+      <div class="form-group"><label>${esc($l10n('SDM.FieldName'))}</label>
+        <input type="text" name="name" value="${esc(source.name)}" /></div>
+      <div class="form-group"><label>${esc($l10n('SDM.CompendiumBrowser.Image'))}</label>
+        <input type="text" name="img" value="${esc(source.img)}" /></div>
+      <div class="form-group"><label>${esc($l10n('SDM.CompendiumBrowser.Price'))} (${esc($l10n('SDM.CashSymbol'))})</label>
+        <input type="number" name="price" min="0" step="any" value="${price || ''}" /></div>`;
+    const result = await foundry.applications.api.DialogV2.prompt({
+      window: { title: `${$l10n('SDM.CompendiumBrowser.AddToToken')}: ${actor.name}`, icon: 'fa-solid fa-user-plus' },
+      content,
+      ok: {
+        label: 'SDM.CompendiumBrowser.Add',
+        callback: (event, button) => {
+          const form = button.form.elements;
+          return { name: form.name.value.trim(), img: form.img.value.trim(), price: Number(form.price.value) || 0 };
+        }
+      },
+      rejectClose: false
+    });
+    if (!result) return;
+
+    if (result.price > 0) {
+      const paid = await removeCashFromActor(actor, result.price);
+      if (paid === false) {
+        ui.notifications.warn(
+          game.i18n.format('SDM.CompendiumBrowser.NotEnoughCash', {
+            actor: actor.name,
+            price: `${$l10n('SDM.CashSymbol')}${formatNumber(result.price)}`
+          })
+        );
+        return;
+      }
+    }
+    const data = game.items.fromCompendium(source);
+    if (result.name) data.name = result.name;
+    if (result.img) data.img = result.img;
+    const [created] = await actor.createEmbeddedDocuments('Item', [data]);
+    if (created) {
+      ui.notifications.info(game.i18n.format('SDM.CompendiumBrowser.Added', { item: created.name, actor: actor.name }));
+    }
   }
 
   /** @override */
