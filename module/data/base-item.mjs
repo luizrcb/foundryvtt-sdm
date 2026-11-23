@@ -9,8 +9,12 @@ import NPCBaseDataModel from './npc-base-data.mjs';
 export default class SdmItemBase extends foundry.abstract.TypeDataModel {
   /** @inheritDoc */
   static migrateData(source) {
-    // Animation damage source: the automatic option used to be stored as a blank string
-    if (source?.animation && !source.animation.damageSource) source.animation.damageSource = 'auto';
+    // Animation damage source: the automatic option used to be stored as a blank string. Only a
+    // blank value is migrated: updates also pass through here, and an update of another animation
+    // field (filled, table…) has no damage source, which must not reset the one chosen to automatic
+    if (source?.animation && 'damageSource' in source.animation && !source.animation.damageSource) {
+      source.animation.damageSource = 'auto';
+    }
     // Triggers: "reaches its maximum" merged into "is full"
     if (Array.isArray(source?.triggers)) {
       for (const trigger of source.triggers) {
