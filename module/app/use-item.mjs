@@ -206,6 +206,12 @@ async function applyToActor({ actorUuid, restores = [], restore, effects }) {
   if (!actor) return;
   if (restore) restores = [restore]; // older clients
   for (const restore of restores) {
+    // A rest: the rest dialog for this actor (its owner, or the Referee for actors the user doesn't own)
+    if (restore?.kind === 'rest') {
+      const { restActor } = await import('./rest.mjs');
+      await restActor(actor);
+      continue;
+    }
     // Cures: remove the actor's own conditions (not those given by its items)
     if (restore?.kind === 'cure' && restore.statuses?.length) {
       const ids = actor.effects.filter(e => [...(e.statuses ?? [])].some(s => restore.statuses.includes(s))).map(e => e.id);
@@ -462,6 +468,7 @@ export function describeUse(item) {
   const always = [];
   if (use.harm?.trim()) always.push($fmt('SDM.Use.Tip.Harm', { formula: esc(use.harm) }));
   if (use.cures?.length) always.push($fmt('SDM.Use.ChatCures', { conditions: esc(statusNames(use.cures)) }));
+  if (use.rest) always.push($l10n('SDM.Use.ChatRest'));
   if (use.table) {
     const table = fromUuidSync(use.table);
     always.push($fmt('SDM.Use.Tip.Table', { table: esc(table?.name ?? $l10n('SDM.Trigger.Table')) }));
@@ -534,6 +541,8 @@ export async function useItem(item) {
   // Cures always happen too
   const cures = (use.cures ?? []).filter(id => CONFIG.statusEffects.some(s => s.id === id));
   if (cures.length) restores.push({ kind: 'cure', statuses: cures });
+  // A rest, every time (after the healing: the dialog then shows what is still missing)
+  if (use.rest) restores.push({ kind: 'rest' });
 
   // Effects last as long as the use says, unless the effect sets its own duration
   const duration = useDuration(use);
@@ -554,6 +563,7 @@ export async function useItem(item) {
     else if (restore.kind === 'temp_life') what.push($fmt('SDM.Use.ChatTempLife', { amount: restore.amount }));
     else if (restore.kind === 'harm') what.push($fmt('SDM.Use.ChatHarm', { amount: restore.amount }));
     else if (restore.kind === 'cure') what.push($fmt('SDM.Use.ChatCures', { conditions: esc(statusNames(restore.statuses)) }));
+    else if (restore.kind === 'rest') what.push($l10n('SDM.Use.ChatRest'));
     else what.push($fmt('SDM.Use.ChatAbility', { amount: restore.amount, ability: $l10n(CONFIG.SDM.abilities[restore.ability]) }));
   }
   if (effects.length) {

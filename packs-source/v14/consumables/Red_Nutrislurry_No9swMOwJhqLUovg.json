@@ -14,7 +14,9 @@
       "value": 2,
       "unit": "soaps"
     },
-    "features": [],
+    "features": [
+      "consumable"
+    ],
     "attributes": {
       "initiative": "",
       "level": 0,
@@ -77,7 +79,10 @@
     "categories": [
       "food",
       "rest"
-    ]
+    ],
+    "use": {
+      "rest": true
+    }
   },
   "effects": [],
   "sort": 0,

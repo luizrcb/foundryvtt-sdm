@@ -332,6 +332,10 @@
       <span class="v2-label">{{localize 'SDM.Use.CuresLabel'}}</span>
       <multi-select name="system.use.cures">{{selectOptions @root.useCureChoices selected=system.use.cures}}</multi-select>
     </label>
+    <label class="v2-field v2-check" data-tooltip="{{localize 'SDM.Use.RestHint'}}">
+      <input type="checkbox" name="system.use.rest" {{checked system.use.rest}} />
+      <span class="v2-label">{{localize 'SDM.Use.RestLabel'}}</span>
+    </label>
     <label class="v2-field">
       <span class="v2-label">{{localize 'SDM.Use.TableLabel'}}</span>
       <input class="sdm-trigger-table" type="text" name="system.use.table" value="{{system.use.table}}" placeholder="{{localize 'SDM.Trigger.TablePlaceholder'}}" data-tooltip="{{localize 'SDM.Use.TableHint'}}" />
