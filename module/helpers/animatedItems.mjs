@@ -551,7 +551,7 @@ export async function linkNpcToItem(item, actor) {
 /* -------------------------------------------- */
 
 /** Create (or reuse) the creature and place its token in the current scene. Referee only. */
-export async function animateItem(item, { app } = {}) {
+export async function animateItem(item, { app, placement = null } = {}) {
   if (!game.user.isGM || !isAnimatable(item) || item.pack) return;
   if (!canvas.scene) {
     ui.notifications.warn($l10n(textKey(item, 'NoScene')));
@@ -641,7 +641,11 @@ export async function animateItem(item, { app } = {}) {
 
   // Place its token first: right-click or Esc cancels the animation (nothing spent, nothing changed)
   const tokensData = [];
-  if (!canvas.scene.tokens.some(token => token.actorId === npc.id)) {
+  if (placement && !canvas.scene.tokens.some(token => token.actorId === npc.id)) {
+    // Placed already by the player who animated it
+    const tokenDocument = await npc.getTokenDocument(placement);
+    tokensData.push(tokenDocument.toObject());
+  } else if (!canvas.scene.tokens.some(token => token.actorId === npc.id)) {
     const restore = app && !app.minimized;
     if (restore) await app.minimize();
     try {
@@ -951,8 +955,46 @@ export function requestAnimation(item) {
     ui.notifications.warn($l10n('SDM.ErrorNoActiveGM'));
     return;
   }
+  // Players allowed to create and delete tokens animate it themselves: they place its token, the
+  // Referee's game makes the creature (no approval asked)
+  if (canAnimateWithoutApproval(game.user)) return animateAsPlayer(item);
   game.socket.emit(CHANNEL, { action: REQUEST_ACTION, userId: game.user.id, itemUuid: item.uuid });
   ui.notifications.info($fmt(textKey(item, 'RequestSent'), { name: item.name }));
+}
+
+/** Foundry's permissions to create and delete tokens: such players animate without the Referee's approval. */
+export function canAnimateWithoutApproval(user = game.user) {
+  return !!user && !user.isGM && user.can('TOKEN_CREATE') && user.can('TOKEN_DELETE');
+}
+
+/** The player places the token (a preview with the item's image), then the Referee's game animates it there. */
+async function animateAsPlayer(item) {
+  if (!canvas.scene) {
+    ui.notifications.warn($l10n(textKey(item, 'NoScene')));
+    return;
+  }
+  const npc = getLinkedNpc(item);
+  const preview = npc ?? new Actor.implementation({ name: item.name, type: ActorType.NPC, img: item.img });
+  if (!npc) preview.prototypeToken.updateSource({ texture: { src: item.img } });
+  let placements = [];
+  try {
+    placements = await TokenPlacement.place({ tokens: [preview.prototypeToken] });
+  } catch (error) {
+    console.error('SDM | Placing the animated item token failed', error);
+  }
+  const placed = placements[0];
+  if (!placed) {
+    ui.notifications.info($fmt(textKey(item, 'Cancelled'), { name: item.name }));
+    return;
+  }
+  const { prototypeToken, index, ...placement } = placed;
+  game.socket.emit(CHANNEL, {
+    action: REQUEST_ACTION,
+    userId: game.user.id,
+    itemUuid: item.uuid,
+    sceneId: canvas.scene.id,
+    placement
+  });
 }
 
 /**
@@ -1015,6 +1057,16 @@ async function onSocketMessage(message) {
       ride: isRideItem(item)
     });
   if (!user || !item || !item.testUserPermission(user, 'OWNER')) return respond(false);
+
+  // Placed by a player allowed to create and delete tokens: animated at once, on the player's scene
+  if (message.placement && canAnimateWithoutApproval(user)) {
+    if (message.sceneId && canvas.scene?.id !== message.sceneId) {
+      ui.notifications.warn($fmt('SDM.Animation.OtherScene', { user: user.name, name: item.name }));
+      return respond(false);
+    }
+    const npc = await animateItem(item, { placement: message.placement });
+    return respond(!!npc);
+  }
 
   const approved = await foundry.applications.api.DialogV2.confirm({
     window: { title: $l10n(textKey(item, 'RequestTitle')), icon: isRideItem(item) ? 'fa-solid fa-flag' : 'fa-solid fa-ghost' },

@@ -128,7 +128,7 @@
     {{#if blocked}}
     <span>{{localize blockHint}}</span>
     {{else}}
-    <button type="button" data-action="requestAnimation"><i class="fa-solid fa-hand"></i> {{localize 'SDM.Animation.Request'}}</button>
+    <button type="button" data-action="requestAnimation">{{#if animatesSelf}}<i class="fa-solid fa-ghost"></i> {{localize 'SDM.Animation.Animate'}}{{else}}<i class="fa-solid fa-hand"></i> {{localize 'SDM.Animation.Request'}}{{/if}}</button>
     {{/if}}
   </div>
   {{/if}}

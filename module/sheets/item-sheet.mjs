@@ -28,7 +28,8 @@ import {
   isRideItem,
   isWeaponItem,
   linkNpcToItem,
-  requestAnimation
+  requestAnimation,
+  canAnimateWithoutApproval
 } from '../helpers/animatedItems.mjs';
 import { ActorType, DEFAULT_PET_ICON, GearType, ItemStatusType, ItemType } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
@@ -617,7 +618,9 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
           canEdit: this.item.isOwner && !this.item.pack,
           // Players who own the item ask the Referee to animate it
           canRequest:
-            !game.user.isGM && this.item.isOwner && !this.item.system.animation?.active && !!this.item.parent
+            !game.user.isGM && this.item.isOwner && !this.item.system.animation?.active && !!this.item.parent,
+          // Players allowed to create and delete tokens animate it themselves
+          animatesSelf: canAnimateWithoutApproval()
         };
         break;
       }

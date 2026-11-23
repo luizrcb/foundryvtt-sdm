@@ -7,6 +7,7 @@
   "SDM.AlbumFull": "Álbum cheio",
   "SDM.Animation.LinkedToken": "Token vinculado",
   "SDM.Animation.LinkedTokenHint": "Desligado: cada token colocado é uma criatura própria",
+  "SDM.Animation.OtherScene": "{user} colocou {name} numa cena que você não está vendo: abra a cena e peça de novo.",
   "SDM.CompendiumBrowser.Add": "Adicionar",
   "SDM.CompendiumBrowser.AddToToken": "Adicionar ao token selecionado",
   "SDM.CompendiumBrowser.Added": "{item} adicionado a {actor}.",
