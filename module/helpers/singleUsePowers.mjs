@@ -58,10 +58,10 @@ export function addCatchHandle(message, html) {
     foundry.utils.setProperty(data, 'system.power.single_use', true);
     event.dataTransfer.setData('text/plain', JSON.stringify({ type: 'Item', data, sdmCaught: true }));
   });
-  // New cards: in the footer, on the left
-  const cardFoot = html.querySelector('.sdm-card .sdm-card-foot');
-  if (cardFoot) {
-    cardFoot.prepend(handle);
+  // New cards: at the end of the title line (the footer has no room beside the hero dice)
+  const cardTitle = html.querySelector('.sdm-card .sdm-card-title');
+  if (cardTitle) {
+    cardTitle.append(handle);
     return;
   }
   // On the flavor line ("[Power] … (cost: N)") so it never squeezes the card or the roll;
