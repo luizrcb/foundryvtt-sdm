@@ -276,7 +276,7 @@ export class SdmActor extends Actor {
     if (changed.system?.temporary_life?.value !== undefined) {
       if (changed.system?.temporary_life?.value > this.system.temporary_life.max) {
         await this.update({
-          'system.temporary_life.value': this.system.borrowed_life.max
+          'system.temporary_life.value': this.system.temporary_life.max
         });
       }
     }
