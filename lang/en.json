@@ -279,7 +279,7 @@
   "SDM.Trigger.AbilityAny": "any ability",
   "SDM.Trigger.AbilityHint": "Which ability's saves / checks fire it.",
   "SDM.Trigger.PowerPlaceholder": "any power",
-  "SDM.Trigger.PowerHint": "Album: the name of the power whose rolls fire it (blank: any).",
+  "SDM.Trigger.PowerHint": "Album: the name of the power whose rolls (or attacks) fire it (blank: any).",
   "SDM.Trigger.Option.success": "success",
   "SDM.Trigger.Option.failure": "failure",
   "SDM.Trigger.Condition.success": "success",

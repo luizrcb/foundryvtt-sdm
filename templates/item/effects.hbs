@@ -74,7 +74,7 @@
       {{else}}
       <input type="hidden" name="system.triggers.{{index}}.from_item" value="{{trigger.from_item}}" />
       {{/if}}
-      {{#if (and (eq trigger.roll 'power') (or (sdmHasAlbum @root.item) trigger.from))}}
+      {{#if (and (or (eq trigger.roll 'power') (eq trigger.roll 'attack')) (or (sdmHasAlbum @root.item) trigger.from))}}
       <input type="text" name="system.triggers.{{index}}.power" value="{{trigger.power}}" placeholder="{{localize 'SDM.Trigger.PowerPlaceholder'}}" data-tooltip="{{localize 'SDM.Trigger.PowerHint'}}" />
       {{else}}
       <input type="hidden" name="system.triggers.{{index}}.power" value="{{trigger.power}}" />

@@ -279,7 +279,7 @@
   "SDM.Trigger.AbilityAny": "qualquer atributo",
   "SDM.Trigger.AbilityHint": "Salvaguardas / testes de qual atributo o disparam.",
   "SDM.Trigger.PowerPlaceholder": "qualquer poder",
-  "SDM.Trigger.PowerHint": "Álbum: o nome do poder cujas rolagens o disparam (vazio: qualquer).",
+  "SDM.Trigger.PowerHint": "Álbum: o nome do poder cujas rolagens (ou ataques) o disparam (vazio: qualquer).",
   "SDM.Trigger.Option.success": "sucesso",
   "SDM.Trigger.Option.failure": "falha",
   "SDM.Trigger.Condition.success": "sucesso",

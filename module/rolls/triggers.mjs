@@ -103,6 +103,8 @@ export function actorTriggers(actor, rollKind, roll, { attack = '', ability = ''
       if (trigger.roll !== rollKind) continue;
       // Attacks: whose attack fires it ("From" — the item it is made with, chosen in the attack dialog)
       if (rollKind === 'attack' && !attackFromMatches(item, trigger, chosen)) continue;
+      // Attacks with an album: only with that power (by name), the album's selected one
+      if (rollKind === 'attack' && trigger.power && !albumPowerMatches(chosen, trigger.power)) continue;
       // An NPC's single attack ('attack') fires the triggers of any attack type (its weapon decides)
       if (rollKind === 'attack' && trigger.attack && attack && attack !== 'attack' && trigger.attack !== attack) continue;
       if (['save', 'ability'].includes(rollKind) && trigger.ability && ability && trigger.ability !== ability) continue;
@@ -110,6 +112,14 @@ export function actorTriggers(actor, rollKind, roll, { attack = '', ability = ''
     }
   }
   return fired;
+}
+
+/** An attack made with an album (or gear with the album feature) uses its selected power: is it `name`? */
+function albumPowerMatches(chosen, name) {
+  const powers = chosen?.system?.powers;
+  if (!Array.isArray(powers) || !powers.length) return false;
+  const current = powers[chosen.system.powers_current_index || 0] ?? powers[0];
+  return `${current?.name ?? ''}`.trim().toLowerCase() === `${name}`.trim().toLowerCase();
 }
 
 const isUnarmedItem = item =>
