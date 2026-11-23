@@ -622,12 +622,13 @@ export async function animateItem(item, { app } = {}) {
 
   // Glowing items shed light
   const light = lightFromItem(item, canvas.scene);
-  // Every animated creature is a linked token on its owner's side (also NPCs dropped on the tab)
+  // Every animated creature is on its owner's side (also NPCs dropped on the tab); its token is
+  // linked unless the Animation tab says otherwise
   await npc.update({
     'prototypeToken.light.bright': light.bright,
     'prototypeToken.light.dim': light.dim,
     'prototypeToken.disposition': dispositionFromItem(item),
-    'prototypeToken.actorLink': true
+    'prototypeToken.actorLink': item.system.animation.linked !== false
   });
   await syncFeatureTraits(item, npc);
   await syncEffectCopies(item, npc);
@@ -701,22 +702,27 @@ export async function animateItem(item, { app } = {}) {
 }
 
 /** Remove the creature's tokens and bring its state back to the item. Referee only. */
-export async function deanimateItem(item, { reason } = {}) {
+export async function deanimateItem(item, { reason, from = null } = {}) {
   if (!game.user.isGM || item?.pack) return;
   const npc = getLinkedNpc(item);
 
   if (npc) {
+    // An unlinked token keeps its own state: the item takes it back from that token
+    let state = from?.isToken ? from : npc;
     for (const scene of game.scenes) {
-      const ids = scene.tokens.filter(token => token.actorId === npc.id).map(token => token.id);
+      const tokens = scene.tokens.filter(token => token.actorId === npc.id);
+      const unlinked = tokens.find(token => !token.actorLink && token.actor);
+      if (unlinked && state === npc) state = unlinked.actor;
+      const ids = tokens.map(token => token.id);
       if (ids.length) await scene.deleteEmbeddedDocuments('Token', ids, { [SYNC_OPTION]: true });
     }
-    const s = npc.system;
+    const s = state.system;
     await item.update(
       {
         'system.attributes.life.value': s.life.value,
         'system.attributes.life.max': s.life.max,
         'system.attributes.morale': s.morale,
-        'system.attributes.defense': baseDefense(npc),
+        'system.attributes.defense': baseDefense(state),
         'system.attributes.bonus': s.bonus,
         'system.attributes.damage': s.damage,
         'system.attributes.initiative': s.initiative ?? '',
@@ -792,7 +798,7 @@ export async function deanimateFallenCreature(npc) {
   const item = getAnimatedSourceItem(npc);
   if (!item?.system.animation?.active) return;
   if ((Number(npc.system.life?.value) || 0) > 0) return;
-  await deanimateItem(item, { reason: 'SDM.Animation.Fell' });
+  await deanimateItem(item, { reason: 'SDM.Animation.Fell', from: npc });
 }
 
 /**

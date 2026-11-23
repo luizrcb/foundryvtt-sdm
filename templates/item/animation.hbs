@@ -28,6 +28,10 @@
     <input class="flex0" type="checkbox" name="system.animation.endWithCombat" {{checked @root.system.animation.endWithCombat}} />
     <span>{{localize 'SDM.Animation.EndWithCombat'}}</span>
   </label>
+  <label class="flexrow mt-6" data-tooltip="{{localize 'SDM.Animation.LinkedTokenHint'}}">
+    <input class="flex0" type="checkbox" name="system.animation.linked" {{checked @root.system.animation.linked}} />
+    <span>{{localize 'SDM.Animation.LinkedToken'}}</span>
+  </label>
   {{/if}}
 
   {{!-- Who it becomes --}}

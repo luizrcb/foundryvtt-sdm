@@ -5,6 +5,8 @@
   "DOCUMENT.Update": "Update {type}",
   "EFFECT.TabDuration": "Duration",
   "SDM.AlbumFull": "Album full",
+  "SDM.Animation.LinkedToken": "Linked token",
+  "SDM.Animation.LinkedTokenHint": "Off: each token placed is a creature of its own",
   "SDM.DuplicatePower": "Duplicate power",
   "SDM.AlbumDropHint": "Drag powers here.",
   "SDM.Counter.Title": "Counters",

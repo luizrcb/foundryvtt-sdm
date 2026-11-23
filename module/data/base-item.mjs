@@ -206,6 +206,8 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       active: new fields.BooleanField({ required: true, initial: false }),
       // Turn back into the item when the combat it fights in ends
       endWithCombat: new fields.BooleanField({ required: true, initial: false }),
+      // The creature's token is linked to its actor (unlinked: each token is a creature of its own)
+      linked: new fields.BooleanField({ required: true, initial: true }),
       // Charges spent each time the item is animated (0: animating is free)
       chargeCost: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 0, min: 0 }),
       // Items with replenish: each animation is a use (usage roll; running low: last use)

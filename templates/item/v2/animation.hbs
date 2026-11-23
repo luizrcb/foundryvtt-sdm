@@ -32,6 +32,10 @@
       <input type="checkbox" name="system.animation.endWithCombat" {{checked @root.system.animation.endWithCombat}} />
       <span class="v2-label">{{localize 'SDM.Animation.EndWithCombat'}}</span>
     </label>
+    <label class="v2-field v2-check" data-tooltip="{{localize 'SDM.Animation.LinkedTokenHint'}}">
+      <input type="checkbox" name="system.animation.linked" {{checked @root.system.animation.linked}} />
+      <span class="v2-label">{{localize 'SDM.Animation.LinkedToken'}}</span>
+    </label>
     {{/if}}
   </section>
 
