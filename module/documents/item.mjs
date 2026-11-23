@@ -474,6 +474,23 @@ export class SdmItem extends Item {
         change.type = 'override';
       }
 
+      // Slots: an item with no override takes its slots from its size; adding to or multiplying
+      // the override starts from those slots (Featherweight −1, a bulky mod ×2)
+      if (change.key === 'system.slots_override' && (change.type === 'add' || change.type === 'multiply')) {
+        let current = Number(currentVal);
+        if (currentVal === undefined || currentVal === null || currentVal === '' || !Number.isFinite(current) || current < 0) {
+          const saved = this.system.slots_override;
+          this.system.slots_override = undefined;
+          current = getSlotsTaken(this.system);
+          this.system.slots_override = saved;
+        }
+        const delta = Number(change.value);
+        if (!Number.isFinite(delta)) continue;
+        const next = change.type === 'add' ? current + delta : current * delta;
+        change.value = String(Math.max(Math.ceil(next), 0));
+        change.type = 'override';
+      }
+
       const applied = ActiveEffect.applyChange(this, change, { replacementData: rollData });
       Object.assign(overrides, applied);
     }
