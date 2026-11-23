@@ -2121,6 +2121,11 @@ input[type='radio']::after {
   cursor: grab;
 }
 
+// Combat tracker: temporary life next to life (same color as its segment on the token bar)
+.combat-tracker .sdm-temp-life {
+  color: #5fb3e8;
+}
+
 // Single-use power mark on chat cards (cast, or an attack made with it)
 .sdm-single-use-mark {
   flex: 0 0 auto;

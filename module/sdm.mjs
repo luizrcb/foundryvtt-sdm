@@ -59,6 +59,7 @@ import { setupAnimatedItems } from './helpers/animatedItems.mjs';
 import { getLightItems, getLitEffect, isLightSource, isLit, lightItem, putOutLight, setupLights, toggleLight } from './helpers/lights.mjs';
 import { restActor, setupRest } from './app/rest.mjs';
 import { setupHeroDieOnNat20 } from './helpers/heroDieOnNat20.mjs';
+import { setupTokenLifeBar } from './canvas/token-life-bar.mjs';
 import { bindTriggerApply, setupTriggers } from './rolls/triggers.mjs';
 import { setupNextRoll } from './app/next-roll.mjs';
 import { setupRideStats } from './helpers/rideStats.mjs';
@@ -813,6 +814,7 @@ Hooks.once('init', function () {
   setupLights();
   setupRest();
   setupHeroDieOnNat20();
+  setupTokenLifeBar();
   setupTriggers();
   setupEscalatorDiePositionBroadcast();
   //Preload Handlebars templates.

@@ -2122,6 +2122,10 @@ input[type=radio]::after {
   cursor: grab;
 }
 
+.combat-tracker .sdm-temp-life {
+  color: #5fb3e8;
+}
+
 .sdm-single-use-mark {
   flex: 0 0 auto;
   margin-left: 6px;
