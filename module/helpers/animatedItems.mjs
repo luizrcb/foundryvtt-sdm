@@ -582,9 +582,11 @@ export async function animateItem(item, { app } = {}) {
     // Every charge (or use) spent brings the creature back with full life
     system.life.value = system.life.max;
   } else {
-    // A notched or running-low item comes to life already worn: at most half its life
+    // Worn by its mode (walks: notched; energy: running low): it comes to life with at most half its life
     const worn =
-      item.system.status === ItemStatusType.NOTCHED || item.system.resources === 'running_low';
+      wearField(item) === 'status'
+        ? item.system.status === ItemStatusType.NOTCHED
+        : item.system.resources === 'running_low';
     if (worn) system.life.value = Math.min(system.life.value, Math.ceil(system.life.max / 2));
   }
   if (npc) {
@@ -747,9 +749,17 @@ const WEAR_SEVERITY = {
   resources: { '': 0, running_low: 1, run_out: 2 }
 };
 
-/** True when an update repairs or recharges the item (its integrity or resources get better). */
+/**
+ * The field the creature wears down, by mode: walks (and rides) wear the integrity
+ * (notched / broken), energy the resources (running low / run out). Never both.
+ */
+export function wearField(item) {
+  return isRideItem(item) || item.system.animation?.mode === 'walks' ? 'status' : 'resources';
+}
+
+/** True when an update repairs (walks) or recharges (energy) the item: the field its mode wears gets better. */
 export function isWearImproved(item, changes) {
-  for (const field of ['status', 'resources']) {
+  for (const field of [wearField(item)]) {
     const next = changes.system?.[field];
     if (next === undefined) continue;
     const before = WEAR_SEVERITY[field][item.system[field] ?? ''] ?? 0;
@@ -828,8 +838,8 @@ export async function applyAnimatedWear(npc) {
   const stage = value <= 0 ? 2 : max > 0 && value <= max / 2 ? 1 : 0;
   if (!stage) return;
 
-  const walks = item.system.animation?.mode === 'walks';
-  const field = walks ? 'status' : 'resources';
+  const field = wearField(item);
+  const walks = field === 'status';
   const steps = walks ? ['', ItemStatusType.NOTCHED, ItemStatusType.BROKEN] : ['', 'running_low', 'run_out'];
   const current = Math.max(steps.indexOf(item.system[field] ?? ''), 0);
   if (stage <= current) return;
