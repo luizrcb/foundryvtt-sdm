@@ -30,10 +30,13 @@ export function addApplyToPlainRolls(message, html) {
   if (!(message.isAuthor || game.user.isGM)) return;
   if (html.querySelector('.sdm-card, .sdm-apply-damage')) return;
   const total = Math.round(Number(message.rolls[0]?.total) || 0);
-  const buttons = applyDamageHtml(total);
+  const buttons = applyDamageHtml(total).replace('class="sdm-apply-damage"', 'class="sdm-apply-damage sdm-apply-plain"');
   if (!buttons) return;
-  const content = html.querySelector('.message-content') ?? html;
-  content.insertAdjacentHTML('beforeend', buttons);
+  // Right under the roll (above the hero dice button), as on the system's cards
+  const rolls = html.querySelectorAll('.message-content .dice-roll');
+  const last = rolls[rolls.length - 1];
+  if (last) last.insertAdjacentHTML('afterend', buttons);
+  else (html.querySelector('.message-content') ?? html).insertAdjacentHTML('beforeend', buttons);
 }
 
 /** renderChatMessageHTML: the buttons act on the user's selected tokens. */

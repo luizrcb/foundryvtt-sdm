@@ -4864,7 +4864,8 @@ a.sdm-proto-link.warn {
 }
 
 .application.sheet.sdm.sheet-v2 .v2-name .v2-title {
-  font-family: var(--sdm-font-primary);
+  font-family: var(--font-primary);
+  font-weight: 700;
   font-size: 28px;
   line-height: 1.1;
 }
@@ -6180,7 +6181,8 @@ a.sdm-proto-link.warn {
 }
 
 .application.sheet.sdm.sheet-v2 .v2-item-header .v2-name .v2-title {
-  font-family: var(--sdm-font-primary);
+  font-family: var(--font-primary);
+  font-weight: 700;
   font-size: 26px;
   line-height: 1.1;
 }
@@ -7954,6 +7956,41 @@ a.sdm-proto-link.warn {
   color: var(--sdm-c-dark);
 }
 
+.chat-card.item-card img.gold-icon[src$=".svg"] {
+  filter: brightness(0) invert(0.3);
+}
+
+.chat-message .message-content .sdm-apply-plain {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  margin: 6px 0;
+}
+
+.chat-message .message-content .sdm-apply-plain button {
+  margin: 0;
+  padding: 2px;
+  font-size: 12px;
+  line-height: 20px;
+}
+
+.sdm-card .sdm-card-title .sdm-visibility {
+  margin-left: auto;
+  padding: 0 6px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--sdm-card-muted);
+  font-family: var(--font-primary);
+  font-size: 11px;
+  letter-spacing: 0;
+  white-space: nowrap;
+}
+
+.sdm-card .sdm-card-title .sdm-visibility.sdm-visibility-blind {
+  background: #3a2f4a;
+  color: #fff;
+}
+
 .sdm :root {
   --sdm-font-primary: 'Baron Neue';
   --sdm-font-secondary: 'Alegreya', sans-serif;
@@ -8931,6 +8968,10 @@ a.sdm-proto-link.warn {
 .sdm .sdm-counters input::placeholder {
   font-style: italic;
   opacity: 0.45;
+}
+.sdm .sdm-caravan-free {
+  white-space: nowrap;
+  flex: 0 0 auto;
 }
 .sdm .sources {
   display: flex;

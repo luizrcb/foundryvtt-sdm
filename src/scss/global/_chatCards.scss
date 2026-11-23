@@ -524,11 +524,11 @@
 }
 
 // Plain chat rolls (/r 1d6…): the same apply buttons under the roll
-.chat-message .message-content > .sdm-apply-damage {
+.chat-message .message-content .sdm-apply-plain {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   gap: 4px;
-  margin-top: 4px;
+  margin: 6px 0;
 
   button {
     margin: 0;
