@@ -243,7 +243,9 @@ async function syncWeaponDamage(item, npc, { useCreatureDamage = false } = {}) {
     img: item.img,
     'system.type': GearType.WEAPON,
     'system.weapon.damage.base': damage.versatile,
-    'system.readied': true
+    'system.readied': true,
+    // Made for the creature: it takes no slots
+    'system.slots_override': 0
   };
   if (existing.length) {
     await existing[0].update(data);
@@ -254,7 +256,7 @@ async function syncWeaponDamage(item, npc, { useCreatureDamage = false } = {}) {
         name: data.name,
         img: data.img,
         type: ItemType.GEAR,
-        system: { type: GearType.WEAPON, readied: true, weapon: { damage: { base: damage.versatile } } },
+        system: { type: GearType.WEAPON, readied: true, slots_override: 0, weapon: { damage: { base: damage.versatile } } },
         flags: { sdm: { [VERSATILE_FLAG]: true } }
       }
     ], { sdmKeepReadied: true });
@@ -281,6 +283,8 @@ async function syncPowerCopy(item, npc) {
   data.system.features = features;
   data.system.readied = true;
   data.system.container = '';
+  // The creature's own copy: it takes no slots
+  data.system.slots_override = 0;
   if (data.system.animation) {
     data.system.animation.active = false;
     data.system.animation.actor = '';
