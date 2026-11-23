@@ -7991,6 +7991,14 @@ a.sdm-proto-link.warn {
   color: #fff;
 }
 
+.sdm-card .sdm-card-foot:has(> .hero-dice-btn:only-child) {
+  justify-content: center;
+}
+
+.sdm-card .sdm-card-foot > .hero-dice-btn:not(:only-child) {
+  margin-left: auto;
+}
+
 .sdm :root {
   --sdm-font-primary: 'Baron Neue';
   --sdm-font-secondary: 'Alegreya', sans-serif;

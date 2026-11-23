@@ -555,3 +555,14 @@
     color: #fff;
   }
 }
+
+// The hero dice button: centered when it is alone in the footer, on the right beside something else
+.sdm-card .sdm-card-foot {
+  &:has(> .hero-dice-btn:only-child) {
+    justify-content: center;
+  }
+
+  > .hero-dice-btn:not(:only-child) {
+    margin-left: auto;
+  }
+}

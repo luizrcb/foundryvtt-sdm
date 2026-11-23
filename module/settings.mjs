@@ -1019,10 +1019,10 @@ export function configureUseHeroDiceButton(message, html, data) {
 
   heroBtn.append(` ${$l10n('SDM.RollUseHeroDice')}`);
 
-  // New cards: in the footer, on the right; other messages: centered under the content
+  // New cards: in the footer (centered alone, on the right beside something else); other
+  // messages: centered under the content
   const cardFoot = html.querySelector('.sdm-card .sdm-card-foot');
   if (cardFoot) {
-    heroBtn.style.marginLeft = 'auto';
     cardFoot.appendChild(heroBtn);
   } else {
     const heroContainer = document.createElement('div');
