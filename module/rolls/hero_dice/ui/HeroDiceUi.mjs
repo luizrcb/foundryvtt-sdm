@@ -7,6 +7,7 @@ import { criticalMultiplier } from '../../sdmRoll.mjs';
 import { recheckTriggersAfterHeroDice, renderTriggers, runTriggerActions } from '../../triggers.mjs';
 import { recheckSaveAgainst, saveAgainstHtml, saveOutcome } from '../../../app/save-against.mjs';
 import { createChatMessage } from '../../../helpers/chatUtils.mjs';
+import { alteredRoll } from '../core/alteredRoll.mjs';
 import { $fmt, $l10n, capitalizeFirstLetter } from '../../../helpers/globalUtils.mjs';
 import { templatePath } from '../../../helpers/templates.mjs';
 import {
@@ -156,6 +157,8 @@ export class HeroDiceUI {
 
     heroResultRoll._evaluated = true;
     heroResultRoll._total = total;
+    // The dice as the hero dice left them: hero dice can be spent again on this result
+    const changedRoll = await alteredRoll(originalRoll, result);
 
     const flavor =
       `[${$l10n('SDM.FieldHeroDice')}]` +
@@ -259,6 +262,8 @@ export class HeroDiceUI {
         sdm: {
           isHeroResult: true,
           ...(flags?.sdm?.sourceMessage ? { heroOf: flags.sdm.sourceMessage } : {}),
+          // Spending hero dice again on this result: the dice now and the original roll's flags
+          ...(changedRoll ? { heroRoll: changedRoll.toJSON(), heroFlags: foundry.utils.deepClone(flags ?? {}) } : {}),
           ...(attackItem ? { attackItem } : {})
         }
       }

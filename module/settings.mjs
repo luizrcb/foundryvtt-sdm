@@ -992,25 +992,18 @@ export function configureUseHeroDiceButton(message, html, data) {
   const flags = message.flags;
   if (isRollTableMessage || isAbilityScoreRoll || noHeroDice) return;
 
-  // Remove existing buttons if the message is already a hero result
-  if (isHeroResult) {
-    $('button.hero-dice-btn').remove();
-    $('button.blood-dice-btn').remove();
-  }
-
-  // Find the most recent roll message in chat (same logic as before)
-  const lastRollMessage = [...game.messages.contents]
-    .reverse()
-    .find(m => m.isRoll || m?.getFlag('sdm', 'isHeroResult'));
-
-  if (lastRollMessage?.getFlag('sdm', 'isHeroResult')) {
-    $('button.hero-dice-btn').remove();
-    $('button.blood-dice-btn').remove();
-    return;
-  }
+  // The most recent roll in chat: a roll, or a hero dice result that hero dice can change again
+  // (the cards it re-renders — a save, a morale… — are not: the button stays on the hero dice card)
+  const canTakeHeroDice = m => !!m?.getFlag('sdm', 'heroRoll') || (m.isRoll && !m?.getFlag('sdm', 'isHeroResult'));
+  const lastRollMessage = [...game.messages.contents].reverse().find(canTakeHeroDice);
 
   // Only proceed if this is the most recent roll message
+  if (isHeroResult && !message.getFlag('sdm', 'heroRoll')) return;
   if (!lastRollMessage || message.id !== lastRollMessage.id) return;
+  // Only the latest roll has the buttons
+  document.querySelectorAll('button.hero-dice-btn, button.blood-dice-btn').forEach(button => {
+    if (button.dataset.messageId !== message.id) button.remove();
+  });
 
   // Get Actor from selected token, or default character for the Actor if none is.
   const actor = game.user?.character || canvas?.tokens?.controlled[0]?.actor;

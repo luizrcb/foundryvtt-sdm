@@ -46,7 +46,10 @@ export async function handleHeroDice(event, message, flags) {
     return;
   }
 
-  const originalRoll = message.rolls[0];
+  // A hero dice result: spent again on the dice as they are now, with the original roll's flags
+  const heroRoll = message.getFlag?.('sdm', 'heroRoll');
+  const originalRoll = heroRoll ? Roll.fromData(heroRoll) : message.rolls[0];
+  if (heroRoll) flags = message.getFlag('sdm', 'heroFlags') ?? {};
 
   const options = await _promptHeroOptions(actor, bonusHDPool);
   if (!options) return;
