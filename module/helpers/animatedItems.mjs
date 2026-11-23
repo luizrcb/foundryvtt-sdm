@@ -622,6 +622,29 @@ export async function animateItem(item, { app } = {}) {
   await npc.update({ [`flags.sdm.${DEFENSE_BONUS_FLAG}`]: 0 });
   await applyDefenseBonus(item, npc);
 
+  // Place its token first: right-click or Esc cancels the animation (nothing spent, nothing changed)
+  const tokensData = [];
+  if (!canvas.scene.tokens.some(token => token.actorId === npc.id)) {
+    const restore = app && !app.minimized;
+    if (restore) await app.minimize();
+    try {
+      const placements = await TokenPlacement.place({ tokens: [npc.prototypeToken] });
+      for (const placement of placements) {
+        delete placement.prototypeToken;
+        const tokenDocument = await npc.getTokenDocument(placement);
+        tokensData.push(tokenDocument.toObject());
+      }
+    } catch (error) {
+      console.error('SDM | Placing the animated item token failed', error);
+    } finally {
+      if (restore) await app.maximize();
+    }
+    if (!tokensData.length) {
+      ui.notifications.info($fmt(textKey(item, 'Cancelled'), { name: item.name }));
+      return null;
+    }
+  }
+
   const update = {
     'system.animation.actor': npc.uuid,
     'system.animation.active': true,
@@ -648,23 +671,13 @@ export async function animateItem(item, { app } = {}) {
   // A use of an item with replenish: usage roll, or its last use when running low
   if (animationSpendsUsage(item)) await item.spendUsage({ [SYNC_OPTION]: true });
 
-  // Place the token, unless the creature is already in this scene
-  if (canvas.scene.tokens.some(token => token.actorId === npc.id)) return npc;
-  const restore = app && !app.minimized;
-  if (restore) await app.minimize();
-  try {
-    const placements = await TokenPlacement.place({ tokens: [npc.prototypeToken] });
-    const tokensData = [];
-    for (const placement of placements) {
-      delete placement.prototypeToken;
-      const tokenDocument = await npc.getTokenDocument(placement);
-      tokensData.push(tokenDocument.toObject());
+  // The token placed above (none when the creature was already in this scene)
+  if (tokensData.length) {
+    try {
+      await canvas.scene.createEmbeddedDocuments('Token', tokensData, { sdmNoVariation: true });
+    } catch (error) {
+      console.error('SDM | Failed to place the animated item token', error);
     }
-    if (tokensData.length) await canvas.scene.createEmbeddedDocuments('Token', tokensData, { sdmNoVariation: true });
-  } catch (error) {
-    console.error('SDM | Failed to place the animated item token', error);
-  } finally {
-    if (restore) await app.maximize();
   }
 
   ui.notifications.info($fmt(textKey(item, 'Animated'), { name: item.name }));
@@ -895,6 +908,7 @@ async function onCombatEnded(combat) {
 const CHANNEL = 'system.sdm';
 const REQUEST_ACTION = 'animateItemRequest';
 const RESULT_ACTION = 'animateItemResult';
+const DEANIMATE_REQUEST_ACTION = 'deanimateItemRequest';
 
 /** A player asks the Referee to animate one of their items. */
 export function requestAnimation(item) {
@@ -911,13 +925,52 @@ export function requestAnimation(item) {
   ui.notifications.info($fmt(textKey(item, 'RequestSent'), { name: item.name }));
 }
 
+/**
+ * A player asks the Referee to turn an animated item back (or recall a ride) — for when they can't
+ * delete its token themselves. The Referee approves or declines.
+ */
+export function requestDeanimation(item) {
+  if (!item?.isOwner || !item.system?.animation?.active) return;
+  if (!game.users.activeGM) {
+    ui.notifications.warn($l10n('SDM.ErrorNoActiveGM'));
+    return;
+  }
+  game.socket.emit(CHANNEL, { action: DEANIMATE_REQUEST_ACTION, userId: game.user.id, itemUuid: item.uuid });
+  ui.notifications.info($fmt(textKey(item, 'DeanimateRequestSent'), { name: item.name }));
+}
+
+async function onDeanimateRequest(message) {
+  if (game.users.activeGM?.id !== game.user.id) return;
+  const user = game.users.get(message.userId);
+  const item = fromUuidSync(message.itemUuid);
+  const respond = approved =>
+    game.socket.emit(CHANNEL, {
+      action: RESULT_ACTION,
+      userId: message.userId,
+      approved,
+      itemName: item?.name,
+      ride: isRideItem(item),
+      deanimate: true
+    });
+  if (!user || !item?.system?.animation?.active || !item.testUserPermission(user, 'OWNER')) return respond(false);
+  const approved = await foundry.applications.api.DialogV2.confirm({
+    window: { title: $l10n(textKey(item, 'DeanimateRequestTitle')), icon: isRideItem(item) ? 'fa-solid fa-house-flag' : 'fa-solid fa-box' },
+    content: `<p>${$fmt(textKey(item, 'DeanimateRequestPrompt'), { user: user.name, name: item.name, actor: item.parent?.name ?? '' })}</p>`,
+    rejectClose: false
+  });
+  if (approved) await deanimateItem(item);
+  respond(!!approved);
+}
+
 async function onSocketMessage(message) {
   if (message?.action === RESULT_ACTION && message.userId === game.user.id) {
     const kind = message.ride ? 'SDM.Ride' : 'SDM.Animation';
-    const key = `${kind}.${message.approved ? 'RequestApproved' : 'RequestDenied'}`;
+    const prefix = message.deanimate ? 'DeanimateRequest' : 'Request';
+    const key = `${kind}.${prefix}${message.approved ? 'Approved' : 'Denied'}`;
     ui.notifications.info($fmt(key, { name: message.itemName ?? '' }));
     return;
   }
+  if (message?.action === DEANIMATE_REQUEST_ACTION) return onDeanimateRequest(message);
   if (message?.action !== REQUEST_ACTION) return;
   if (game.users.activeGM?.id !== game.user.id) return;
 
@@ -947,16 +1000,17 @@ async function onSocketMessage(message) {
 }
 
 function onRenderTokenHUD(hud, html) {
-  if (!game.user.isGM) return;
   const token = hud?.document ?? hud?.object?.document;
   const actor = token?.actor;
   const item = getAnimatedSourceItem(actor);
   if (!item) return;
+  // Players who own the item ask the Referee (they may not be allowed to delete the token)
+  if (!game.user.isGM && !(item.isOwner && item.system.animation?.active)) return;
 
   const root = html?.querySelectorAll ? html : html?.[0];
   if (!root || root.querySelector(`.${HUD_BUTTON_CLASS}`)) return;
 
-  const label = $l10n(textKey(item, 'Deanimate'));
+  const label = $l10n(textKey(item, game.user.isGM ? 'Deanimate' : 'DeanimateRequest'));
   const button = document.createElement('button');
   button.type = 'button';
   button.classList.add('control-icon', HUD_BUTTON_CLASS);
@@ -966,7 +1020,8 @@ function onRenderTokenHUD(hud, html) {
   button.addEventListener('click', async event => {
     event.preventDefault();
     event.stopPropagation();
-    await deanimateItem(item);
+    if (game.user.isGM) await deanimateItem(item);
+    else requestDeanimation(item);
   });
   (root.querySelector('.col.right') ?? root).append(button);
 }

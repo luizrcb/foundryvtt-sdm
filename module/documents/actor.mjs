@@ -51,7 +51,8 @@ import {
   isAnimatedNpc,
   isAnimationBlocked,
   isRideItem,
-  requestAnimation
+  requestAnimation,
+  requestDeanimation
 } from '../helpers/animatedItems.mjs';
 import { addCashToActor, removeCashFromActor } from '../macros/gm/giveCash.mjs';
 import { postDiceSummary } from '../macros/gm/giveHeroDice.mjs';
@@ -1581,6 +1582,25 @@ export class SdmActor extends Actor {
         onClick: async (event, target) => {
           await deanimateItem(this.sheet._getEmbeddedDocument(target));
         }
+      },
+      // Players who own an animated item (or a deployed ride) ask the Referee to turn it back
+      {
+        label: 'SDM.Animation.DeanimateRequest',
+        icon: '<i class="fa-solid fa-box"></i>',
+        visible: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          return !game.user.isGM && item?.isOwner && isAnimatable(item) && !isRideItem(item) && !!item.system.animation?.active;
+        },
+        onClick: async (event, target) => requestDeanimation(this.sheet._getEmbeddedDocument(target))
+      },
+      {
+        label: 'SDM.Ride.DeanimateRequest',
+        icon: '<i class="fa-solid fa-house-flag"></i>',
+        visible: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          return !game.user.isGM && item?.isOwner && isRideItem(item) && !!item.system.animation?.active;
+        },
+        onClick: async (event, target) => requestDeanimation(this.sheet._getEmbeddedDocument(target))
       },
       {
         label: 'SDM.Item.SplitItems',
