@@ -292,8 +292,13 @@ export function registerSystemSettings() {
     hint: 'SDM.SettingsHeroDieOnNat20Hint',
     scope: 'world',
     restricted: true,
-    type: Boolean,
-    default: false,
+    type: String,
+    choices: {
+      '': 'SDM.HeroDieNat20.Off',
+      roller: 'SDM.HeroDieNat20.Roller',
+      all: 'SDM.HeroDieNat20.All'
+    },
+    default: '',
     requiresReload: false
   });
 
