@@ -11,8 +11,8 @@
     "description": "<p>Common healing unguent, sold cheap in most towns. Restores [[/r 1d6]] life.</p>",
     "quantity": 1,
     "size": {
-      "value": 1,
-      "unit": "stones"
+      "value": 5,
+      "unit": "soaps"
     },
     "features": [
       "consumable"
