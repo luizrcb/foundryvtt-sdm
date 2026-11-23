@@ -27,7 +27,9 @@ export function registerHandlebarsHelpers() {
   $$('sdmCounterResetChoices', () => ({
     '': 'SDM.Counter.ResetEachNone',
     round: 'SDM.Counter.ResetEachRound',
-    turn: 'SDM.Counter.ResetEachTurn'
+    turn: 'SDM.Counter.ResetEachTurn',
+    rest: 'SDM.Counter.ResetEachRest',
+    day: 'SDM.Counter.ResetEachDay'
   }));
   $$('sdmIsLit', item => isLit(item));
   // A single-use power, or an album holding one

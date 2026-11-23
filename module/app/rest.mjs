@@ -1,6 +1,7 @@
 import { ActorType, ItemType } from '../helpers/constants.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 import { restoreAll } from './use-item.mjs';
+import { resetCountersOnRest } from '../helpers/counters.mjs';
 
 /**
  * Rest (one week): remove one affliction or insult —
@@ -157,6 +158,7 @@ function warnNothing(actor) {
 }
 
 async function postRest(actor, text, extra = '') {
+  await resetCountersOnRest(actor);
   await ChatMessage.create({
     speaker: ChatMessage.getSpeaker({ actor }),
     content: `<p><i class="fa-solid fa-bed"></i> ${$fmt('SDM.Rest.Chat', { actor: esc(actor.name) })}</p>${text ? `<p>${text}</p>` : ''}${extra}`
