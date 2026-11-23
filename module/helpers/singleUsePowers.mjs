@@ -44,6 +44,18 @@ export function powerCardData(item) {
   return data;
 }
 
+/** Cards of a single-use power (cast, or an attack made with it) show a mark on the title line. */
+export function addSingleUseMark(message, html) {
+  const single = message.getFlag?.('sdm', 'singleUse') || message.getFlag?.('sdm', 'power')?.system?.power?.single_use;
+  if (!single || html.querySelector('.sdm-single-use-mark')) return;
+  const mark = document.createElement('span');
+  mark.className = 'sdm-single-use-mark';
+  mark.dataset.tooltip = $l10n('SDM.SingleUse.Label');
+  mark.innerHTML = '<i class="fa-solid fa-hourglass-end"></i>';
+  const target = html.querySelector('.sdm-card .sdm-card-title') ?? html.querySelector('.message-header .flavor-text');
+  if (target) target.append(mark);
+}
+
 /** Chat cards of cast powers get a handle: drag it into an album to catch the power. */
 export function addCatchHandle(message, html) {
   const power = message.getFlag?.('sdm', 'power');

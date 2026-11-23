@@ -2121,6 +2121,14 @@ input[type='radio']::after {
   cursor: grab;
 }
 
+// Single-use power mark on chat cards (cast, or an attack made with it)
+.sdm-single-use-mark {
+  flex: 0 0 auto;
+  margin-left: 6px;
+  font-size: 11px;
+  opacity: 0.8;
+}
+
 // Token HUD: light from items (flame button + palette when several items can light)
 .sdm-light-hud {
   position: relative;

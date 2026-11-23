@@ -2122,6 +2122,13 @@ input[type=radio]::after {
   cursor: grab;
 }
 
+.sdm-single-use-mark {
+  flex: 0 0 auto;
+  margin-left: 6px;
+  font-size: 11px;
+  opacity: 0.8;
+}
+
 .sdm-light-hud {
   position: relative;
 }

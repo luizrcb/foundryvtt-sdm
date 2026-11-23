@@ -1,4 +1,4 @@
-import { addCatchHandle } from './helpers/singleUsePowers.mjs';
+import { addCatchHandle, addSingleUseMark } from './helpers/singleUsePowers.mjs';
 import SdmEffectsPanel from './app/effects-panel.mjs';
 import SdmActiveEffectConfig14 from './app/active-effect-config14.mjs';
 import {
@@ -303,6 +303,7 @@ Hooks.on('createChatMessage', message => rerenderChangedSave(message));
 
 Hooks.on('renderChatMessageHTML', (message, html, data) => {
   configureUseHeroDiceButton(message, html, data);
+  addSingleUseMark(message, html);
   addCatchHandle(message, html);
   configureChatListeners(html);
   // Attack card (and its hero dice result): roll the damage of the weapon / the power it was made with

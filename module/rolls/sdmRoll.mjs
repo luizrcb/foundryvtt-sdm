@@ -161,6 +161,12 @@ export default class SDMRoll {
     // A cast power's card carries the power, to catch it by dragging the card into an album
     const castPower = (isPower || isPowerAlbum) && this.item ? powerCardData(this.item) : null;
     if (castPower) flags.sdm = { ...(flags.sdm ?? {}), power: castPower };
+    // Cast or attacked with a single-use power: the card is marked
+    const usedItem = isPower || isPowerAlbum ? this.item : isAttack && this.attackItem?.id ? this.actor?.items?.get(this.attackItem.id) : null;
+    const usedPower = usedItem?.system?.powers?.length
+      ? usedItem.system.powers[usedItem.system.powers_current_index || 0]
+      : usedItem?.system?.power;
+    if (usedPower?.single_use) flags.sdm = { ...(flags.sdm ?? {}), singleUse: true };
 
     const attackMapping = {
       [AttackTarget.PHYSICAL]: {
