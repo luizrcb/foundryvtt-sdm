@@ -2121,6 +2121,24 @@ input[type='radio']::after {
   cursor: grab;
 }
 
+// Token HUD: temporary life input beside the life bar's (same blue as its segment)
+#token-hud .attribute.sdm-has-temp-life {
+  display: flex;
+  gap: 4px;
+
+  input:not(.sdm-temp-life-input) {
+    flex: 2 1 0;
+    min-width: 0;
+  }
+
+  .sdm-temp-life-input {
+    flex: 1 1 0;
+    min-width: 0;
+    color: #5fb3e8;
+    border-color: #5fb3e8;
+  }
+}
+
 // Combat tracker: temporary life next to life (same color as its segment on the token bar)
 .combat-tracker .sdm-temp-life {
   color: #5fb3e8;

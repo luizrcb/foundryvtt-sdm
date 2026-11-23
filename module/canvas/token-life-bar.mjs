@@ -68,7 +68,53 @@ function onRenderCombatTracker(app, html) {
   }
 }
 
+/** The actor can have temporary life (enabled, or some now / a maximum). */
+function hasTemporaryLife(actor) {
+  if (actor?.type !== ActorType.CHARACTER) return false;
+  const temp = actor.system?.temporary_life;
+  return !!temp && (temp.enabled || Number(temp.value) > 0 || Number(temp.max) > 0);
+}
+
+/**
+ * Token HUD: an input for temporary life next to the life bar's (when the bar shows life).
+ * "4" sets it, "+2" / "-2" changes it.
+ */
+function onRenderTokenHUD(hud, html) {
+  const actor = hud.document?.actor;
+  if (!hasTemporaryLife(actor)) return;
+  const root = html instanceof HTMLElement ? html : html?.[0];
+  for (const barKey of ['bar1', 'bar2']) {
+    if (hud.document.getBarAttribute(barKey)?.attribute !== 'life') continue;
+    const container = root?.querySelector(`.attribute.${barKey}`);
+    if (!container || container.querySelector('.sdm-temp-life-input')) continue;
+    const input = document.createElement('input');
+    input.type = 'text';
+    input.className = 'sdm-temp-life-input';
+    input.value = String(Number(actor.system.temporary_life.value) || 0);
+    input.dataset.tooltip = game.i18n.localize('SDM.TemporaryLife');
+    input.disabled = !actor.isOwner;
+    // Not part of the HUD's form: its own change, so core never reads it
+    for (const type of ['change', 'input', 'keydown']) input.addEventListener(type, event => event.stopPropagation());
+    input.addEventListener('focus', () => input.select());
+    input.addEventListener('change', async event => {
+      event.preventDefault();
+      const text = input.value.trim();
+      const current = Number(actor.system.temporary_life.value) || 0;
+      const number = Number(text);
+      if (text === '' || !Number.isFinite(number)) {
+        input.value = String(current);
+        return;
+      }
+      const next = Math.max(/^[+-]/.test(text) ? current + number : number, 0);
+      await actor.update({ 'system.temporary_life.value': next });
+    });
+    container.classList.add('sdm-has-temp-life');
+    container.append(input);
+  }
+}
+
 export function setupTokenLifeBar() {
+  Hooks.on('renderTokenHUD', onRenderTokenHUD);
   CONFIG.Token.objectClass = SdmToken;
   Hooks.on('updateActor', onActorUpdated);
   Hooks.on('renderCombatTracker', onRenderCombatTracker);

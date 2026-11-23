@@ -2122,6 +2122,23 @@ input[type=radio]::after {
   cursor: grab;
 }
 
+#token-hud .attribute.sdm-has-temp-life {
+  display: flex;
+  gap: 4px;
+}
+
+#token-hud .attribute.sdm-has-temp-life input:not(.sdm-temp-life-input) {
+  flex: 2 1 0;
+  min-width: 0;
+}
+
+#token-hud .attribute.sdm-has-temp-life .sdm-temp-life-input {
+  flex: 1 1 0;
+  min-width: 0;
+  color: #5fb3e8;
+  border-color: #5fb3e8;
+}
+
 .combat-tracker .sdm-temp-life {
   color: #5fb3e8;
 }
