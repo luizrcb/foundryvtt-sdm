@@ -458,6 +458,9 @@
       <span class="v2-label">{{localize 'SDM.Use.ForLabel'}}</span>
       <input type="text" name="system.use.for" value="{{system.use.for}}" />
     </label>
+    <div class="v2-span-2 sdm-use-actions sdm-triggers" data-tooltip="{{localize 'SDM.Use.ActionsHint'}}">
+      {{> ($$ "item/trigger-actions") trigger=system.use.actions index="use" prefix="system.use.actions."}}
+    </div>
     <div class="v2-field v2-span-2" data-tooltip="{{localize 'SDM.Use.OverdoseHint'}}">
       <span class="v2-label">{{localize 'SDM.Use.OverdoseLabel'}}</span>
       <div class="v2-pair">

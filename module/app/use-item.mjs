@@ -517,6 +517,7 @@ export function describeUse(item) {
   if (use.harm?.trim()) always.push($fmt('SDM.Use.Tip.Harm', { formula: esc(use.harm) }));
   if (use.cures?.length) always.push($fmt('SDM.Use.ChatCures', { conditions: esc(statusNames(use.cures)) }));
   if (use.rest) always.push($l10n('SDM.Use.ChatRest'));
+  if (hasUseActions(use.actions)) always.push($l10n('SDM.Use.Tip.Actions'));
   if (use.purge) always.push($l10n('SDM.Use.ChatPurge'));
   if (use.overdose?.status || use.overdose?.effect) always.push($l10n('SDM.Use.Tip.Overdose'));
   if (use.for?.trim()) always.push($fmt('SDM.Use.For', { for: esc(use.for.trim()) }));
@@ -618,7 +619,7 @@ export async function useItem(item) {
     duration && !(Number(data.duration?.value) > 0) ? { ...data, duration: { ...(data.duration ?? {}), ...duration } } : data
   );
   const table = use.table ? await fromUuid(use.table) : null;
-  if (!restores.length && !effects.length && !(areaSave && lingerEffects(item).length) && table?.documentName !== 'RollTable') {
+  if (!restores.length && !effects.length && !hasUseActions(use.actions) && !(areaSave && lingerEffects(item).length) && table?.documentName !== 'RollTable') {
     ui.notifications.warn($fmt('SDM.Use.Nothing', { item: item.name }));
     return;
   }
@@ -647,6 +648,8 @@ export async function useItem(item) {
   // their actions on the same targets
   const { itemRollTriggers, renderTriggers, runTriggerActions } = await import('../rolls/triggers.mjs');
   const fired = itemRollTriggers(item, 'use', { total: 0, dice: [] });
+  // The Use's own actions (the same list as triggers'), as if a trigger of this item fired
+  const useActions = hasUseActions(use.actions) ? [{ item, trigger: { ...use.actions, text: '' } }] : [];
   await ChatMessage.create({
     speaker: ChatMessage.getSpeaker({ actor }),
     content: `<p><i class="fa-solid fa-hand-holding-medical"></i> ${$fmt('SDM.Use.Chat', {
@@ -686,7 +689,7 @@ export async function useItem(item) {
   if (table?.documentName === 'RollTable') await table.draw();
 
   // Before it is spent (the last one deletes the item, whose triggers and effects the actions need)
-  if (fired.length) await runTriggerActions(fired, { actor, targets });
+  if (useActions.length || fired.length) await runTriggerActions([...useActions, ...fired], { actor, targets });
 
   await spend(item);
 }
@@ -721,6 +724,13 @@ export async function purgeConsumables(actor, except = '') {
   if (actor.isOwner) await applyToActor(payload);
   else if (game.users.activeGM) game.socket.emit(CHANNEL, { action: APPLY_ACTION, payload });
   else ui.notifications.warn($l10n('SDM.ErrorNoActiveGM'));
+}
+
+/** A Use's own actions (the trigger action list): any of them set. */
+export function hasUseActions(actions) {
+  if (!actions) return false;
+  return ['status', 'effect', 'wear', 'counter', 'cast', 'use', 'light', 'charges_mode', 'life_mode', 'ability_damage', 'purge', 'roll_formula', 'hero_dice', 'animate', 'table']
+    .some(key => !!`${actions[key] ?? ''}`.trim());
 }
 
 const DIFFICULTY_STEPS = ['veryEasy', 'easy', '', 'hard', 'veryHard'];

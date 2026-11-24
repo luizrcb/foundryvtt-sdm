@@ -333,6 +333,9 @@
             <label class='resource-label'>{{localize 'SDM.Use.ForLabel'}}</label>
             <div class='resource-content'><input type='text' name="system.use.for" value="{{system.use.for}}" /></div>
           </div>
+    <div class="v2-span-2 sdm-use-actions sdm-triggers" data-tooltip="{{localize 'SDM.Use.ActionsHint'}}">
+      {{> ($$ "item/trigger-actions") trigger=system.use.actions index="use" prefix="system.use.actions."}}
+    </div>
           <div class='resource' data-tooltip="{{localize 'SDM.Use.OverdoseHint'}}">
             <label class='resource-label'>{{localize 'SDM.Use.OverdoseLabel'}}</label>
             <div class='resource-content'>

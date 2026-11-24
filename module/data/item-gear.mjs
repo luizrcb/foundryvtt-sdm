@@ -98,6 +98,9 @@ export default class SdmGear extends SdmItemBase {
       cures: new fields.ArrayField(new fields.StringField({ blank: false }), { initial: [] }),
       // Every use is a rest for its targets (Red Nutrislurry): the rest dialog opens for each one
       rest: new fields.BooleanField({ required: true, initial: false }),
+      // More of what Use does: the trigger actions (a condition, light, cast, counters, charges…), on
+      // the Use's targets, every time
+      actions: defineTriggersField().element,
       // Who it is meant for (machines, pack animals…): a reminder in the Use dialog, not checked
       for: new fields.StringField({ required: true, blank: true, initial: '' }),
       // Purges the targets of other consumables: the effects they copied are removed
