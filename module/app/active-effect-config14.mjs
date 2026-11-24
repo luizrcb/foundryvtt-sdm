@@ -3,6 +3,7 @@ import { $l10n } from '../helpers/globalUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { featureEnabled } from '../helpers/features.mjs';
 import { bindTriggerDrops, triggerEditorContext } from '../sheets/item-sheet.mjs';
+import { visionModeChoices, visionSenseChoices } from '../helpers/vision.mjs';
 
 const { ActiveEffectConfig } = foundry.applications.sheets;
 const { renderTemplate } = foundry.applications.handlebars;
@@ -39,6 +40,7 @@ export default class SdmActiveEffectConfig14 extends ActiveEffectConfig {
       ...parts,
       triggers: { template: templatePath('app/active-effect/triggers'), scrollable: [''] },
       form: { template: templatePath('app/active-effect/form'), scrollable: [''] },
+      vision: { template: templatePath('app/active-effect/vision'), scrollable: [''] },
       footer
     };
   })();
@@ -50,7 +52,8 @@ export default class SdmActiveEffectConfig14 extends ActiveEffectConfig {
         tabs: [
           ...super.TABS.sheet.tabs,
           { id: 'triggers', icon: 'fa-solid fa-bolt', label: 'SDM.Trigger.Title' },
-          { id: 'form', icon: 'fa-solid fa-paw', label: 'SDM.Form.Title' }
+          { id: 'form', icon: 'fa-solid fa-paw', label: 'SDM.Form.Title' },
+          { id: 'vision', icon: 'fa-solid fa-eye', label: 'SDM.Vision.Title' }
         ]
       }
     },
@@ -60,6 +63,12 @@ export default class SdmActiveEffectConfig14 extends ActiveEffectConfig {
   /** A mod on an item (with roll triggers on): its triggers can be edited here. */
   get showsTriggers() {
     return this.document.parent?.documentName === 'Item' && !!this.document.system?.isItemMod && featureEnabled('triggers');
+  }
+
+  /** Vision: on any effect that can reach an actor (not item mods, not aura copies). */
+  get showsVision() {
+    const parent = this.document.parent;
+    return !this.document.system?.isItemMod && !this.document.getFlag('sdm', 'fromAura') && !!this.document.system?.schema?.fields?.vision && ['Actor', 'Item'].includes(parent?.documentName);
   }
 
   /** A form: on any effect that can reach an actor (not item mods, not aura copies). */
@@ -72,6 +81,7 @@ export default class SdmActiveEffectConfig14 extends ActiveEffectConfig {
     const parts = super._configureRenderParts(options);
     if (!this.showsTriggers) delete parts.triggers;
     if (!this.showsForm) delete parts.form;
+    if (!this.showsVision) delete parts.vision;
     return parts;
   }
 
@@ -79,6 +89,7 @@ export default class SdmActiveEffectConfig14 extends ActiveEffectConfig {
     const tabs = super._prepareTabs(group);
     if (group === 'sheet' && !this.showsTriggers) delete tabs.triggers;
     if (group === 'sheet' && !this.showsForm) delete tabs.form;
+    if (group === 'sheet' && !this.showsVision) delete tabs.vision;
     return tabs;
   }
 
@@ -106,6 +117,15 @@ export default class SdmActiveEffectConfig14 extends ActiveEffectConfig {
         item,
         editable: this.isEditable,
         isGM: game.user.isGM
+      });
+    }
+    if (partId === 'vision') {
+      const vision = this.document.system.vision ?? {};
+      Object.assign(context, {
+        tab: context.tabs?.vision,
+        vision,
+        visionModes: visionModeChoices(),
+        visionSenses: visionSenseChoices().map(sense => ({ ...sense, checked: !!vision.senses?.[sense.id] }))
       });
     }
     if (partId === 'form') {

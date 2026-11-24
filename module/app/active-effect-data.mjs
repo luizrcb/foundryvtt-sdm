@@ -92,6 +92,19 @@ export class SDMActiveEffectData extends foundry.data.ActiveEffectTypeDataModel 
           choices: () => ({ '': '', ...Object.fromEntries(Object.entries(CONFIG.Canvas.lightAnimations ?? {}).map(([key, value]) => [key, value.label ?? key])) })
         })
       }),
+      // Vision (helpers/vision.mjs): while on, its actor's tokens see this way (a vision mode, a sight
+      // range in spaces, extra senses); when no effect gives any, their own vision comes back
+      vision: new fields.SchemaField({
+        enabled: new fields.BooleanField({ required: true, initial: false }),
+        mode: new fields.StringField({ required: true, blank: true, initial: '' }),
+        range: new fields.NumberField({ required: true, nullable: true, min: 0, initial: null }),
+        senses: new fields.SchemaField({
+          feelTremor: new fields.BooleanField({ initial: false }),
+          senseInvisibility: new fields.BooleanField({ initial: false }),
+          seeAll: new fields.BooleanField({ initial: false }),
+          senseAll: new fields.BooleanField({ initial: false })
+        })
+      }),
       // A form (shapeshifting, helpers/forms.mjs): while on, its actor takes its look, its granted items
       // and its temporary life, and sets its own gear aside as the form says
       form: new fields.SchemaField({
@@ -119,7 +132,9 @@ export class SDMActiveEffectData extends foundry.data.ActiveEffectTypeDataModel 
           defense: new fields.BooleanField({ initial: true }),
           bonus: new fields.BooleanField({ initial: true }),
           damage: new fields.BooleanField({ initial: true }),
-          speed: new fields.BooleanField({ initial: true })
+          speed: new fields.BooleanField({ initial: true }),
+          // The NPC token's vision (helpers/vision.mjs)
+          vision: new fields.BooleanField({ initial: true })
         }),
         // Items added while it lasts (uuids), their uses fresh each time or remembered
         grants: new fields.ArrayField(new fields.StringField({ required: true, blank: false })),

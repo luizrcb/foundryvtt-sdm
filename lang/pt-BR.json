@@ -3558,5 +3558,14 @@
   "SDM.Form.StatsHint": "Os valores da própria forma, no lugar dos do usuário enquanto ela durar. Em branco: sem mudança. Atributos valem para personagens.",
   "SDM.Form.EndNamed": "Encerrar forma: {form}",
   "SDM.Form.TakeNamed": "Assumir forma: {form}",
-  "SDM.Counter.CoolingDown": "Recarregando: {name}"
+  "SDM.Counter.CoolingDown": "Recarregando: {name}",
+  "SDM.Vision.Title": "Visão",
+  "SDM.Vision.Enabled": "Dá visão",
+  "SDM.Vision.EnabledHint": "Enquanto estiver ligado, os tokens do ator enxergam assim; a visão deles volta quando acabar. Ver o invisível: a condição Vê o invisível.",
+  "SDM.Vision.Mode": "Modo de visão",
+  "SDM.Vision.Range": "Alcance (espaços)",
+  "SDM.Vision.RangeHint": "Até onde os tokens enxergam, em quadrados ou hexágonos. Em branco: o alcance deles; os sentidos então alcançam a cena toda. Vários efeitos: vale o maior alcance.",
+  "SDM.Vision.Senses": "Sentidos",
+  "SDM.Vision.SensesHint": "Outras formas de perceber, até o alcance.",
+  "SDM.Form.TakeVision": "visão"
 }

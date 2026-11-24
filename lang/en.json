@@ -3558,5 +3558,14 @@
   "SDM.Form.StatsHint": "The form's own values, replacing the user's while it lasts. Blank: unchanged. Ability scores apply to characters.",
   "SDM.Form.EndNamed": "End form: {form}",
   "SDM.Form.TakeNamed": "Take form: {form}",
-  "SDM.Counter.CoolingDown": "Cooling down: {name}"
+  "SDM.Counter.CoolingDown": "Cooling down: {name}",
+  "SDM.Vision.Title": "Vision",
+  "SDM.Vision.Enabled": "Gives vision",
+  "SDM.Vision.EnabledHint": "While it's on, its actor's tokens see this way; their own vision comes back when it ends. Seeing the invisible: the Sees invisible condition.",
+  "SDM.Vision.Mode": "Vision mode",
+  "SDM.Vision.Range": "Range (spaces)",
+  "SDM.Vision.RangeHint": "How far its tokens see, in squares or hexes. Blank: their own range; senses then reach the whole scene. Several effects: the longest range wins.",
+  "SDM.Vision.Senses": "Senses",
+  "SDM.Vision.SensesHint": "Extra ways to perceive, up to the range.",
+  "SDM.Form.TakeVision": "vision"
 }

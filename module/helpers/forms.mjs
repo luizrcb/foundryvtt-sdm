@@ -1,6 +1,7 @@
 import { rollAmount } from './formulas.mjs';
 import { $fmt, $l10n } from './globalUtils.mjs';
 import { ActorType, GearType, ItemType } from './constants.mjs';
+import { VISION_SENSES } from './vision.mjs';
 
 /**
  * Shapeshifting: a form is an effect marked Form (its Form tab) that changes what a creature is while
@@ -188,6 +189,16 @@ async function startForm(effect) {
     if (take.defense !== false && Number.isFinite(Number(creature.system?.defense))) numbers.defense = Number(creature.system.defense);
     if (take.speed !== false && Number.isFinite(Number(creature.system?.speed))) numbers.speed = Number(creature.system.speed);
     if (take.bonus !== false && actor.type === ActorType.NPC && Number.isFinite(Number(creature.system?.bonus))) numbers.bonus = Number(creature.system.bonus);
+    // Its token's vision (helpers/vision.mjs): mode, range (scene units) and extra senses
+    const sight = creature.prototypeToken?.sight;
+    if (take.vision !== false && sight?.enabled) {
+      const modes = creature.prototypeToken.detectionModes ?? {};
+      numbers.vision = {
+        mode: sight.visionMode || '',
+        range: Number(sight.range) || 0,
+        senses: VISION_SENSES.filter(id => modes[id]?.enabled)
+      };
+    }
   } else {
     // No NPC: the values typed on the form (blank: unchanged); ability scores only for characters
     const set = value => value !== null && value !== undefined && value !== '' && Number.isFinite(Number(value));

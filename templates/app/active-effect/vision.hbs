@@ -1,0 +1,27 @@
+{{! An effect's Vision tab: how its actor's tokens see while it is on (helpers/vision.mjs) }}
+<section class="tab scrollable sdm-vision-tab{{#if tab.active}} active{{/if}}" data-group="{{tab.group}}" data-tab="{{tab.id}}">
+  <div class="form-group">
+    <label>{{localize 'SDM.Vision.Enabled'}}</label>
+    <input type="checkbox" name="system.vision.enabled" {{checked vision.enabled}} />
+    <p class="hint">{{localize 'SDM.Vision.EnabledHint'}}</p>
+  </div>
+  {{#if vision.enabled}}
+  <div class="form-group">
+    <label>{{localize 'SDM.Vision.Mode'}}</label>
+    <select name="system.vision.mode">
+      <option value=""></option>
+      {{selectOptions visionModes selected=vision.mode localize=true}}
+    </select>
+  </div>
+  <div class="form-group" data-tooltip="{{localize 'SDM.Vision.RangeHint'}}">
+    <label>{{localize 'SDM.Vision.Range'}}</label>
+    <input type="number" name="system.vision.range" value="{{vision.range}}" min="0" step="any" data-dtype="Number" />
+  </div>
+  <div class="form-group sdm-vision-senses" data-tooltip="{{localize 'SDM.Vision.SensesHint'}}">
+    <label>{{localize 'SDM.Vision.Senses'}}</label>
+    {{#each visionSenses}}
+    <label class="checkbox"><input type="checkbox" name="system.vision.senses.{{this.id}}" {{checked this.checked}} /> {{localize this.label}}</label>
+    {{/each}}
+  </div>
+  {{/if}}
+</section>
