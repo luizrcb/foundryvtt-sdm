@@ -3534,7 +3534,7 @@
   "SDM.Counter.CooldownFrom.empty": "depois de esgotar",
   "SDM.Counter.CooldownLeftHint": "Rodadas ou turnos até voltar",
   "SDM.Use.ReplenishesLabel": "Reabastece",
-  "SDM.Use.ReplenishesHint": "Um reabastecedor de uso único: Usar recarrega um item acabando ou esgotado (escolhido na hora) — qualquer um, um item pequeno (1 pedra ou menos), uma arma ou uma máquina (veículos e oldtech).",
+  "SDM.Use.ReplenishesHint": "Um reabastecedor de uso único: Usar recarrega um item com algo a devolver — esgotado, acabando, cargas gastas, usos ou contadores que recarregam (escolhido na hora) — qualquer um, um item pequeno (1 pedra ou menos), uma arma ou uma máquina (veículos e oldtech).",
   "SDM.Use.Replenishes.none": "—",
   "SDM.Use.Replenishes.any": "qualquer coisa",
   "SDM.Use.Replenishes.small": "um item pequeno (1 pedra ou menos)",
@@ -3542,6 +3542,7 @@
   "SDM.Use.Replenishes.machine": "uma máquina",
   "SDM.Use.ReplenishPick": "Recarregar",
   "SDM.Use.ReplenishGo": "Recarregar",
-  "SDM.Use.ReplenishNone": "{item}: nada acabando ou esgotado que ele possa recarregar.",
-  "SDM.Use.ChatReplenish": "Recarrega {item}"
+  "SDM.Use.ReplenishNone": "{item}: nada que ele possa recarregar.",
+  "SDM.Use.ChatReplenish": "Recarrega {item}",
+  "SDM.Use.ReplenishSpent": "usado"
 }

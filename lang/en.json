@@ -3534,7 +3534,7 @@
   "SDM.Counter.CooldownFrom.empty": "after it runs out",
   "SDM.Counter.CooldownLeftHint": "Rounds or turns left until it is back",
   "SDM.Use.ReplenishesLabel": "Replenishes",
-  "SDM.Use.ReplenishesHint": "A single-use replenisher: Use recharges one item that is running low or run out (picked then) — anything, a small item (1 stone or less), a weapon, or a machine (vehicles and oldtech).",
+  "SDM.Use.ReplenishesHint": "A single-use replenisher: Use recharges one item that has something to give back — run out, running low, spent charges, uses, or counters that recharge (picked then) — anything, a small item (1 stone or less), a weapon, or a machine (vehicles and oldtech).",
   "SDM.Use.Replenishes.none": "—",
   "SDM.Use.Replenishes.any": "anything",
   "SDM.Use.Replenishes.small": "a small item (1 stone or less)",
@@ -3542,6 +3542,7 @@
   "SDM.Use.Replenishes.machine": "a machine",
   "SDM.Use.ReplenishPick": "Recharge",
   "SDM.Use.ReplenishGo": "Recharge",
-  "SDM.Use.ReplenishNone": "{item}: nothing running low or run out that it can recharge.",
-  "SDM.Use.ChatReplenish": "Recharges {item}"
+  "SDM.Use.ReplenishNone": "{item}: nothing it can recharge.",
+  "SDM.Use.ChatReplenish": "Recharges {item}",
+  "SDM.Use.ReplenishSpent": "used"
 }

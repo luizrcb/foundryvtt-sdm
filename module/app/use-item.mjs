@@ -4,7 +4,7 @@ import { createChatMessage } from '../helpers/chatUtils.mjs';
 import { cardHeader, cardWrap } from '../rolls/ui/cardParts.mjs';
 import { resolveFormula, showSideDice } from '../helpers/formulas.mjs';
 import { lastChargeUpdate } from '../helpers/itemUtils.mjs';
-import { getUsesCounter, spendUsesUpdate, usesLeft } from '../helpers/itemUses.mjs';
+import { canRefillUses, getUsesCounter, spendUsesUpdate, usesLeft } from '../helpers/itemUses.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 import { deleteEffects } from '../helpers/deleteEffects.mjs';
 import { getItemIdentifier } from '../helpers/effectReferences.mjs';
@@ -236,6 +236,9 @@ async function applyToActor({ actorUuid, restores = [], restore, effects }) {
       if (target?.actor === actor) {
         const { rechargeItem } = await import('../rolls/triggers.mjs');
         await rechargeItem(target);
+        // …and its counters that recharge back to their reset value
+        const counters = rechargeableCounters(target);
+        if (counters.length) await target.update(Object.fromEntries(counters.map(([key, counter]) => [`system.counters.${key}.value`, counter.reset_value ?? 0])));
       }
       continue;
     }
@@ -711,10 +714,34 @@ export async function useItem(item) {
   await spend(item);
 }
 
-/** Items a replenisher can recharge: running low or run out, of its kind. */
+/**
+ * Counters a replenisher gives back: those that recharge (reset each round / turn / rest / day /
+ * session, after combat, with a cooldown or a hero die) and are not at their reset value. Kill tallies
+ * and other plain counters are left alone.
+ */
+function rechargeableCounters(item) {
+  const usesKey = item.system?.uses?.counter;
+  return Object.entries(item.system?.counters ?? {}).filter(
+    ([key, counter]) =>
+      key !== usesKey &&
+      (counter.reset_each || counter.reset_on_combat_end || counter.hero_die || Number(counter.cooldown) > 0) &&
+      (Number(counter.value) || 0) !== (Number(counter.reset_value) || 0)
+  );
+}
+
+/** Something to give back: running low or run out, charges spent, its uses counter not full, a counter that recharges. */
+function needsRecharge(item) {
+  const system = item.system ?? {};
+  if (['running_low', 'run_out'].includes(system.resources)) return true;
+  if (system.features?.has?.('charges') && !system.features?.has?.('replenish') && (Number(system.charges?.value) || 0) < (Number(system.charges?.max) || 0)) return true;
+  if (canRefillUses(item)) return true;
+  return rechargeableCounters(item).length > 0;
+}
+
+/** Items a replenisher can recharge: something to give back, of its kind. */
 function replenishable(item, kind) {
   const system = item.system ?? {};
-  if (!['running_low', 'run_out'].includes(system.resources)) return false;
+  if (!needsRecharge(item)) return false;
   if (kind === 'small') {
     const cash = (Number(system.size?.value) || 0) * ({ soaps: 25, stones: 250, sacks: 2500 }[system.size?.unit] ?? 1);
     return cash <= 250;
@@ -734,7 +761,18 @@ async function pickReplenished(item, kind, targets) {
   if (candidates.length === 1) return candidates[0];
   const several = new Set(candidates.map(c => c.actor)).size > 1;
   const options = candidates
-    .map(c => `<option value="${esc(c.uuid)}">${esc(several ? `${c.actor.name}: ${c.name}` : c.name)} (${esc($l10n(c.system.resources === 'run_out' ? 'SDM.ItemStatusRunOut' : 'SDM.ItemStatusRunningLow'))})</option>`)
+    .map(c => {
+      // What it is short of: run out, running low, its charges, or what needs recharging
+      const state =
+        c.system.resources === 'run_out'
+          ? $l10n('SDM.ItemStatusRunOut')
+          : c.system.resources === 'running_low'
+            ? $l10n('SDM.ItemStatusRunningLow')
+            : c.system.features?.has?.('charges') && (Number(c.system.charges?.value) || 0) < (Number(c.system.charges?.max) || 0)
+              ? `${Number(c.system.charges.value) || 0}/${Number(c.system.charges.max) || 0}`
+              : $l10n('SDM.Use.ReplenishSpent');
+      return `<option value="${esc(c.uuid)}">${esc(several ? `${c.actor.name}: ${c.name}` : c.name)} (${esc(state)})</option>`;
+    })
     .join('');
   const uuid = await foundry.applications.api.DialogV2.prompt({
     window: { title: item.name },
