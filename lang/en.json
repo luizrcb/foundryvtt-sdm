@@ -3414,6 +3414,7 @@
   "SDM.AreaDrawSize": "Size",
   "SDM.AreaDrawPlace": "Place",
   "SDM.AreaDrawClear": "Remove drawn areas",
+  "SDM.AreaDrawColor": "Color",
   "SDM.AreaDrawNeedsToken": "Select a token: cones, lines and \"around the user\" start at it.",
   "SDM.AreaApplyAll": "Apply to all",
   "SDM.AreaHealAll": "Heal all",

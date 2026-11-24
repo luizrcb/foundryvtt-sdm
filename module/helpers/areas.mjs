@@ -516,7 +516,7 @@ function clippedLength(a, b, x, y, size) {
  */
 async function placePattern({ data, token, shape, length, scene }) {
   const size = scene.grid.size;
-  const color = game.user.color ?? 0x33bbff;
+  const color = data.color || (game.user.color ?? 0x33bbff);
   let last = canvas.mousePosition ?? tokenCenter(token);
   let free = false;
   const squaresNow = () => (free ? freeSquares(token, last, shape, length) : patternSquares(token, last, shape, length));
@@ -612,7 +612,7 @@ function areaShape(area, scene, origin, token = null) {
  * @returns {Promise<{areaId, tokens: TokenDocument[]}|false|null>} false when the user cancelled
  *   (right-click or Esc), null when it can't be placed (no scene, no token for a cone).
  */
-export async function placeArea({ actor = null, item = null, kind = '', area: given = null, token = null, name = '', hazard: givenHazard = null }) {
+export async function placeArea({ actor = null, item = null, kind = '', area: given = null, token = null, name = '', hazard: givenHazard = null, color: givenColor = '' }) {
   const area = given ?? itemArea(item, kind);
   const scene = canvas?.scene;
   if (!area || !scene || !canvas.ready) {
@@ -631,7 +631,8 @@ export async function placeArea({ actor = null, item = null, kind = '', area: gi
   const areaId = foundry.utils.randomID();
   const data = {
     name: item?.name ?? name,
-    color: game.user.color?.css,
+    // Its color: the one picked in Draw an area, else the user's
+    color: givenColor || game.user.color?.css,
     shapes: [areaShape(area, scene, origin, sourceToken)],
     restriction: { enabled: false },
     visibility: CONST.REGION_VISIBILITY.ALWAYS,
@@ -679,7 +680,7 @@ export async function placeArea({ actor = null, item = null, kind = '', area: gi
     if (!picked) return false;
     return finish(new CONFIG.Region.documentClass({ ...foundry.utils.deepClone(data), shapes: squareShapes(picked, scene) }, { parent: scene }), picked);
   }
-  const color = game.user.color ?? 0x33bbff;
+  const color = data.color || (game.user.color ?? 0x33bbff);
   const ring = area.shape === 'ring';
   // Cones and lines (gridless, hex): from the token toward the cursor; square grids: rings on the middle
   // of a square, the rest on the intersection nearest the cursor
@@ -865,9 +866,12 @@ export async function drawArea() {
   const lastSize = AREA_SIZES.includes(last.size) ? last.size : 'medium';
   const shapes = Object.entries(CONFIG.SDM.areaShapes).map(([key, label]) => option(key, label, key === lastShape)).join('');
   const sizes = AREA_SIZES.map(key => option(key, CONFIG.SDM.areaValues[key], key === lastSize)).join('');
+  // Its color: the last one picked, else the user's color
+  const lastColor = /^#[0-9a-f]{6}$/i.test(last.color ?? '') ? last.color : game.user.color?.css ?? '#ff6400';
   const content =
     `<div class="form-group"><label>${esc($l10n('SDM.AreaShape.Label'))}</label><select name="shape">${shapes}</select></div>` +
     `<div class="form-group"><label>${esc($l10n('SDM.AreaDrawSize'))}</label><select name="size">${sizes}</select></div>` +
+    `<div class="form-group"><label>${esc($l10n('SDM.AreaDrawColor'))}</label><color-picker name="color" value="${esc(lastColor)}"></color-picker></div>` +
     (game.user.isGM ? hazardFields() : '');
   const choice = await foundry.applications.api.DialogV2.wait({
     window: { title: 'SDM.AreaDraw', icon: 'fa-solid fa-draw-polygon' },
@@ -878,7 +882,12 @@ export async function drawArea() {
         label: 'SDM.AreaDrawPlace',
         icon: 'fa-solid fa-bullseye',
         default: true,
-        callback: (event, button) => ({ shape: button.form.elements.shape.value, size: button.form.elements.size.value, hazard: hazardFromForm(button.form) })
+        callback: (event, button) => ({
+          shape: button.form.elements.shape.value,
+          size: button.form.elements.size.value,
+          color: `${new foundry.applications.ux.FormDataExtended(button.form).object.color ?? ''}`,
+          hazard: hazardFromForm(button.form)
+        })
       },
       { action: 'clear', label: 'SDM.AreaDrawClear', icon: 'fa-solid fa-eraser', callback: () => 'clear' }
     ],
@@ -886,15 +895,16 @@ export async function drawArea() {
   });
   if (!choice) return;
   if (choice === 'clear') return clearDrawnAreas();
-  if (choice.shape !== last.shape || choice.size !== last.size) {
-    await game.user.setFlag('sdm', DRAW_AREA_FLAG, { shape: choice.shape, size: choice.size }).catch(() => {});
+  const color = /^#[0-9a-f]{6}$/i.test(choice.color) ? choice.color : '';
+  if (choice.shape !== last.shape || choice.size !== last.size || (color && color !== last.color)) {
+    await game.user.setFlag('sdm', DRAW_AREA_FLAG, { shape: choice.shape, size: choice.size, color: color || last.color || '' }).catch(() => {});
   }
   const area = { ...areaSize(choice.size, choice.shape), size: choice.size, shape: choice.shape, affects: 'everyone', linger: false, rounds: 0, follows: false, save: null, range: '' };
   const token = canvas.tokens.controlled[0]?.document ?? game.user.character?.getActiveTokens?.(false, true)?.find(t => t.parent === canvas.scene) ?? null;
   const label = `${$l10n(CONFIG.SDM.areaValues[choice.size])} ${$l10n(CONFIG.SDM.areaShapes[choice.shape]).toLowerCase()}`;
   const hazard = choice.hazard ? { ...choice.hazard, name: label } : null;
   if (hazard) foundry.utils.setProperty(hazard, 'flags.sdm.hazard.disposition', token?.disposition ?? null);
-  await placeArea({ area, token, name: label, hazard });
+  await placeArea({ area, token, name: label, hazard, color });
 }
 
 /** The Referee's hazard settings in "Draw an area" (none: no damage and no condition). */
