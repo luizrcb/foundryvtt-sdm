@@ -569,6 +569,8 @@
   "SDM.Animation.FillHint": "Substitui os atributos da criatura pelos valores da tabela no nível dela",
   "SDM.Animation.Folder": "Itens Animados",
   "SDM.Summon.Folder": "Invocações",
+  "SDM.Summon.RolledCount": "Quantas: {formula} = {total}",
+  "SDM.Summon.RolledLevel": "Nível: {formula} = {total}",
   "SDM.Summon.EffectName": "Invocada",
   "SDM.Summon.By": "Invocada por {actor} ({item})",
   "SDM.Summon.ByShort": "por {actor} ({item})",

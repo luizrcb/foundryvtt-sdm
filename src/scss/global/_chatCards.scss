@@ -409,24 +409,6 @@
     }
   }
 
-  // Summoned creatures: who came, how long, Target / Dismiss all
-  .sdm-summon-card {
-    .sdm-summon-lasts {
-      font-size: 12px;
-      opacity: 0.8;
-    }
-
-    .sdm-summon-buttons {
-      display: flex;
-      gap: 4px;
-
-      button {
-        flex: 1;
-        line-height: 24px;
-      }
-    }
-  }
-
   // Fired triggers and item feature notes: info / warn tags
   .sdm-roll-triggers {
     padding: 4px 7px;
@@ -592,5 +574,29 @@
 
   > .hero-dice-btn:not(:only-child) {
     margin-left: auto;
+  }
+}
+
+// Summoned creatures (a card of its own, not an .sdm-card): who came, how long, Target and Dismiss all
+// side by side
+.sdm-summon-card {
+  .sdm-summon-lasts,
+  .sdm-summon-rolls {
+    font-size: 12px;
+    opacity: 0.8;
+  }
+
+  .sdm-summon-buttons {
+    display: flex;
+    flex-direction: row;
+    gap: 4px;
+
+    button {
+      flex: 1 1 0;
+      width: auto;
+      margin: 0;
+      line-height: 24px;
+      white-space: nowrap;
+    }
   }
 }

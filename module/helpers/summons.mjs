@@ -72,7 +72,11 @@ export async function summonAction(holder, actor, trigger) {
     return ui.notifications.warn($fmt('SDM.Summon.Missing', { item: holder.name }));
   }
 
-  let count = Math.max((await rollAmount(trigger.summon_count, { item: holder, actor, fallback: 1 })).total, 0);
+  // The rolls (how many, level) are shown on the card
+  const rolled = [];
+  const countRoll = await rollAmount(trigger.summon_count, { item: holder, actor, fallback: 1 });
+  let count = Math.max(countRoll.total, 0);
+  if (countRoll.roll) rolled.push($fmt('SDM.Summon.RolledCount', { formula: countRoll.roll.formula, total: countRoll.total }));
   // Up to a number at once (of this item and summoner, on this scene)
   if (`${trigger.summon_limit ?? ''}`.trim()) {
     const max = Math.max((await rollAmount(trigger.summon_limit, { item: holder, actor })).total, 0);
@@ -92,7 +96,9 @@ export async function summonAction(holder, actor, trigger) {
   if (!creatures.length) return ui.notifications.warn($fmt('SDM.Summon.Missing', { item: holder.name }));
 
   const levelFormula = `${trigger.summon_level ?? ''}`.trim();
-  const level = levelFormula ? Math.max((await rollAmount(levelFormula, { item: holder, actor })).total, 0) : null;
+  const levelRoll = levelFormula ? await rollAmount(levelFormula, { item: holder, actor }) : null;
+  const level = levelRoll ? Math.max(levelRoll.total, 0) : null;
+  if (levelRoll?.roll) rolled.push($fmt('SDM.Summon.RolledLevel', { formula: levelRoll.roll.formula, total: level }));
 
   const placed = trigger.summon_place === 'manual' ? await placeByHand(creatures) : placeNearby(summonerToken, creatures);
   if (!placed.length) return ui.notifications.info($fmt('SDM.Summon.NoPlace', { item: holder.name }));
@@ -117,7 +123,7 @@ export async function summonAction(holder, actor, trigger) {
     console.error('SDM | Summoning failed', error);
   }
   if (!result?.tokens?.length) return ui.notifications.warn($fmt('SDM.Summon.Failed', { item: holder.name }));
-  await summonCard(actor, holder, result);
+  await summonCard(actor, holder, { ...result, rolled });
 }
 
 /** One creature from a roll table: the NPC of a drawn result (none: null). */
@@ -221,6 +227,7 @@ async function summonCard(actor, holder, result) {
   const content =
     `<div class="sdm-summon-card">` +
     `<p><i class="fa-solid fa-hand-sparkles"></i> ${$fmt('SDM.Summon.Chat', { actor: esc(actor.name), item: esc(holder.name), names })}</p>` +
+    (result.rolled?.length ? `<p class="sdm-summon-rolls"><i class="fa-solid fa-dice"></i> ${result.rolled.map(esc).join(' · ')}</p>` : '') +
     `<p class="sdm-summon-lasts">${esc(lasts)}${result.endsAtZero ? ` ${esc($l10n('SDM.Summon.EndsAtZeroNote'))}` : ''}</p>` +
     `<div class="sdm-summon-buttons">` +
     `<button type="button" data-action="sdmSummonTarget"><i class="fa-solid fa-crosshairs" inert></i> ${esc($l10n('SDM.Summon.Target'))}</button>` +

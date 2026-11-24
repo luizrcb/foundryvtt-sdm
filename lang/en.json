@@ -569,6 +569,8 @@
   "SDM.Animation.FillHint": "Replace the creature attributes with the table values for its level",
   "SDM.Animation.Folder": "Animated Items",
   "SDM.Summon.Folder": "Summons",
+  "SDM.Summon.RolledCount": "How many: {formula} = {total}",
+  "SDM.Summon.RolledLevel": "Level: {formula} = {total}",
   "SDM.Summon.EffectName": "Summoned",
   "SDM.Summon.By": "Summoned by {actor} ({item})",
   "SDM.Summon.ByShort": "by {actor} ({item})",
