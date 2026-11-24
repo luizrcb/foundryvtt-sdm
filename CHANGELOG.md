@@ -71,6 +71,8 @@
 - **NPC temporary life**: NPCs have temporary life like characters (on the sheet when on, in the token's life bar and HUD, taken before life), so consumables, Colonist's night and effects give it to them too
 - **Hazard rolls**: a hazard's damage is rolled to the chat for the Referee only (3D dice; reveal it from the message's menu)
 - **Splash preview**: before a splash is rolled its squares show on the map and a dialog lists who it reaches (hit, tie, miss) to confirm or cancel; the damage lands once the dice finish rolling
+- **Power cost on attacks**: an attack made with a power (chosen in *With*) casts it, so its cost is paid on the attack, hit or miss (the attack dialog shows the cost box while a power is chosen); the power rolled from the attack's card costs nothing more (overcharging pays only the difference)
+- **Visibility labels on every message**: blind, Referee only and private show in the header of messages that aren't the system's cards (plain rolls, summons, splashes, hazard rolls)
 - Fixed: "ActiveEffect … does not exist!" errors when two clients removed the same effect (aura sync, lights, rest, Use, next roll, area saves, conditions, animated items, generator)
 
 ## v1.11.0
