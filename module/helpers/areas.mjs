@@ -948,8 +948,14 @@ function rangeWarning(area, scene, origin, placed) {
   if (rangeIndex < 0) return '';
   const shape = placed.shapes[0];
   // Circles and squares (anchored at their middle) have their center at x, y
-  const pixels = Math.hypot(shape.x - origin.x, shape.y - origin.y);
-  const distance = (pixels / scene.dimensions.distancePixels) * metersPerUnit(scene);
+  // Measured as the other range checks are (Foundry's grid: the world's Grid Diagonals rule)
+  let units;
+  try {
+    units = scene.grid.measurePath([{ x: origin.x, y: origin.y }, { x: shape.x, y: shape.y }]).distance;
+  } catch {
+    units = Math.hypot(shape.x - origin.x, shape.y - origin.y) / scene.dimensions.distancePixels;
+  }
+  const distance = (Number(units) || 0) * metersPerUnit(scene);
   const band = bandForMeters(distance, sceneZoneLimits(scene));
   if (band <= rangeIndex) return '';
   const label = index => $l10n(CONFIG.SDM.rangeType?.[ZONE_BANDS[index]] ?? ZONE_BANDS[index]);
