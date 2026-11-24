@@ -245,11 +245,13 @@ export function bindHeroHeal(message, html) {
 }
 
 /**
- * The system's cards say who can see them: blind (only the Referee sees the result), Referee only
- * (whispered to the Referees), or private (whispered to others). Public cards show nothing.
+ * Every message says who can see it: blind (only the Referee sees the result), Referee only
+ * (whispered to the Referees), or private (whispered to others) — in the title of the system's cards,
+ * in the message's header for the others (plain rolls, summons, splashes, hazard rolls…). Public
+ * messages show nothing.
  */
 export function addVisibilityLabel(message, html) {
-  if (!html.querySelector('.sdm-card') || html.querySelector('.sdm-visibility')) return;
+  if (html.querySelector('.sdm-visibility')) return;
   const whisper = message.whisper ?? [];
   let kind = '';
   if (message.blind) kind = 'blind';
@@ -261,5 +263,8 @@ export function addVisibilityLabel(message, html) {
   label.dataset.tooltip = game.i18n.localize(`SDM.Card.Visibility.${kind}Hint`);
   label.innerHTML = `<i class="fa-solid ${kind === 'blind' ? 'fa-eye-slash' : 'fa-user-secret'}"></i> ${esc(game.i18n.localize(`SDM.Card.Visibility.${kind}`))}`;
   const title = html.querySelector('.sdm-card .sdm-card-title');
-  if (title) title.append(label);
+  if (title) return title.append(label);
+  const sender = html.querySelector('.message-header .message-sender');
+  if (sender) sender.after(label);
+  else html.querySelector('.message-header')?.prepend(label);
 }

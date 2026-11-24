@@ -8267,6 +8267,23 @@ a.sdm-proto-link.warn {
   color: #fff;
 }
 
+.message-header .sdm-visibility {
+  flex: 0 0 auto;
+  align-self: center;
+  margin: 0 4px;
+  padding: 0 6px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.08);
+  font-size: 11px;
+  line-height: 18px;
+  white-space: nowrap;
+}
+
+.message-header .sdm-visibility.sdm-visibility-blind {
+  background: #3a2f4a;
+  color: #fff;
+}
+
 .sdm-card .sdm-card-foot:has(> .hero-dice-btn:only-child) {
   justify-content: center;
 }

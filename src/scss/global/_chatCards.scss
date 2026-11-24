@@ -566,6 +566,24 @@
   }
 }
 
+// The same label in the header of messages that aren't the system's cards
+.message-header .sdm-visibility {
+  flex: 0 0 auto;
+  align-self: center;
+  margin: 0 4px;
+  padding: 0 6px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.08);
+  font-size: 11px;
+  line-height: 18px;
+  white-space: nowrap;
+
+  &.sdm-visibility-blind {
+    background: #3a2f4a;
+    color: #fff;
+  }
+}
+
 // The hero dice button: centered when it is alone in the footer, on the right beside something else
 .sdm-card .sdm-card-foot {
   &:has(> .hero-dice-btn:only-child) {
