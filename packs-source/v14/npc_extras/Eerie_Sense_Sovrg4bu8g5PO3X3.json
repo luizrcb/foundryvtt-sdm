@@ -35,7 +35,18 @@
       "_id": "NjZKpotpiSygWDx0",
       "type": "base",
       "system": {
-        "changes": []
+        "changes": [],
+        "vision": {
+          "enabled": true,
+          "mode": "",
+          "range": 6,
+          "senses": {
+            "feelTremor": false,
+            "senseInvisibility": false,
+            "seeAll": false,
+            "senseAll": true
+          }
+        }
       },
       "disabled": false,
       "duration": {

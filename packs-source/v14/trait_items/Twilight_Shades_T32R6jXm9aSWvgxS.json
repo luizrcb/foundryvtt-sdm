@@ -79,7 +79,55 @@
       "stealth"
     ]
   },
-  "effects": [],
+  "effects": [
+    {
+      "name": "Low-Light Vision",
+      "origin": null,
+      "img": "icons/svg/eye.svg",
+      "_id": "kOUDZ4UbYzVFQhu4",
+      "type": "base",
+      "system": {
+        "changes": [],
+        "vision": {
+          "enabled": true,
+          "mode": "lightAmplification",
+          "range": 12,
+          "senses": {
+            "feelTremor": false,
+            "senseInvisibility": false,
+            "seeAll": false,
+            "senseAll": false
+          }
+        }
+      },
+      "disabled": false,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!T32R6jXm9aSWvgxS.kOUDZ4UbYzVFQhu4"
+    }
+  ],
   "sort": 900000,
   "ownership": {
     "default": 0,
