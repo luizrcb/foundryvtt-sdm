@@ -103,7 +103,7 @@
       <input class="sdm-counter-label" type="text" name="system.triggers.{{index}}.text" value="{{trigger.text}}" placeholder="{{localize 'SDM.Trigger.TextPlaceholder'}}" />
       {{#if @root.editable}}<a data-action="removeTrigger" data-index="{{index}}" data-tooltip="{{localize 'SDM.Trigger.Remove'}}"><i class="fa-solid fa-trash"></i></a>{{/if}}
     </div>
-    <details class="sdm-trigger-actions" data-index="{{index}}" {{#if (or trigger.cost_resource trigger.table trigger.effect trigger.wear trigger.counter_scope trigger.counter trigger.cast trigger.use trigger.light trigger.charges_mode trigger.status trigger.life_mode trigger.roll_formula trigger.hero_dice trigger.animate)}}open{{/if}}>
+    <details class="sdm-trigger-actions" data-index="{{index}}" {{#if (or trigger.cost_resource trigger.table trigger.effect trigger.wear trigger.counter_scope trigger.counter trigger.cast trigger.use trigger.light trigger.charges_mode trigger.status trigger.life_mode trigger.purge trigger.roll_formula trigger.hero_dice trigger.animate)}}open{{/if}}>
       <summary>{{localize 'SDM.Trigger.Actions'}}</summary>
       <div class="sdm-counter-row">
         <label class="{{#if trigger.cost_resource}}filled{{/if}}" data-tooltip="{{localize 'SDM.Trigger.CostHint'}}">{{localize 'SDM.Trigger.Cost'}}
@@ -243,6 +243,8 @@
           <input type="hidden" name="system.triggers.{{index}}.life_amount" value="{{trigger.life_amount}}" />
           <input type="hidden" name="system.triggers.{{index}}.life_target" value="{{trigger.life_target}}" />
           {{/if}}</label>
+        <label class="{{#if trigger.purge}}filled{{/if}}" data-tooltip="{{localize 'SDM.Trigger.PurgeHint'}}">{{localize 'SDM.Trigger.Purge'}}
+          <select name="system.triggers.{{index}}.purge">{{selectOptions @root.triggerPurgeModes selected=trigger.purge localize=true}}</select></label>
         <label class="{{#if trigger.roll_formula}}filled{{/if}}" data-tooltip="{{localize 'SDM.Trigger.RollHint'}}">{{localize 'SDM.Trigger.RollFormula'}}
           <input class="sdm-trigger-amount" type="text" name="system.triggers.{{index}}.roll_formula" value="{{trigger.roll_formula}}" /></label>
         <label class="{{#if trigger.hero_dice}}filled{{/if}}" data-tooltip="{{localize 'SDM.Trigger.HeroDiceHint'}}">{{localize 'SDM.Trigger.HeroDice'}}

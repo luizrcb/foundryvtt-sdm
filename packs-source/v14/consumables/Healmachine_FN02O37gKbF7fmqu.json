@@ -82,7 +82,8 @@
     ],
     "use": {
       "life": "2d8",
-      "ability": ""
+      "ability": "",
+      "for": "machines"
     }
   },
   "effects": [],

@@ -448,6 +448,15 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
         '': 'SDM.Trigger.StatusSaveAbilityAuto',
         ...Object.fromEntries(['str', 'end', 'agi', 'cha', 'aur', 'tho'].map(key => [key, CONFIG.SDM.abilities[key]]))
       },
+      // A consumable's overdose: how long doses are counted, and the first save's difficulty
+      useOverduePeriods: { '': 'SDM.Use.OverdosePeriod.ever', days: 'SDM.Use.OverdosePeriod.days', weeks: 'SDM.Use.OverdosePeriod.weeks' },
+      useOverdoseDifficulties: {
+        veryEasy: 'SDM.SaveDifficulty.veryEasyStep',
+        easy: 'SDM.SaveDifficulty.easyStep',
+        '': 'SDM.SaveDifficulty.standard',
+        hard: 'SDM.SaveDifficulty.hardStep',
+        veryHard: 'SDM.SaveDifficulty.veryHardStep'
+      },
       triggerStatuses: Object.fromEntries([
         ['', ''],
         ...CONFIG.statusEffects
@@ -517,6 +526,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
         heal: 'SDM.Trigger.LifeMode.heal',
         damage: 'SDM.Trigger.LifeMode.damage'
       },
+      triggerPurgeModes: { '': 'SDM.Trigger.WearNone', targets: 'SDM.Trigger.EffectTargets', self: 'SDM.Trigger.EffectSelf' },
       triggerAnimateModes: {
         '': 'SDM.Trigger.WearNone',
         animate: 'SDM.Trigger.AnimateMode.animate',

@@ -7,6 +7,7 @@ import { lastChargeUpdate } from '../helpers/itemUtils.mjs';
 import { getUsesCounter, spendUsesUpdate, usesLeft } from '../helpers/itemUses.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 import { deleteEffects } from '../helpers/deleteEffects.mjs';
+import { getItemIdentifier } from '../helpers/effectReferences.mjs';
 
 /**
  * Using consumables (gear with the consumable feature) (separate from the caravan's Consume Supply).
@@ -142,7 +143,8 @@ async function chooseUse(use, effects) {
   const first = hasLife ? 'life' : hasAbility ? 'ability' : hasTemp ? 'tempLife' : 'effects';
   const box = (kind, label) =>
     `<label class="sdm-upgrade-choice"><input type="checkbox" name="${kind}" ${kind === first ? 'checked' : ''} /> ${label}</label>`;
-  const content = `<div class="sdm-upgrade">
+  const meantFor = use.for?.trim() ? `<p class="hint">${$fmt('SDM.Use.For', { for: esc(use.for.trim()) })}</p>` : '';
+  const content = `<div class="sdm-upgrade">${meantFor}
       ${hasLife ? box('life', isFullRestore(use.life) ? $l10n('SDM.Use.RestoreAllLife') : $fmt('SDM.Use.RestoreLife', { formula: esc(use.life) })) : ''}
       ${hasAbility ? box('ability', abilityLabel(use)) + (abilityFull ? '' : `<div class="sdm-upgrade-detail"><select name="abilityKey">${abilityOptions(use.ability_group)}</select></div>`) : ''}
       ${hasTemp ? box('tempLife', $fmt('SDM.Use.TempLife', { formula: esc(use.temp_life) })) : ''}
@@ -210,6 +212,16 @@ async function applyToActor({ actorUuid, restores = [], restore, effects }) {
   if (!actor) return;
   if (restore) restores = [restore]; // older clients
   for (const restore of restores) {
+    // Purge: the effects other consumables copied onto this actor go
+    if (restore?.kind === 'purge') {
+      await purgeEffectsOf(actor, restore.usedItem);
+      continue;
+    }
+    // Overdose: one more dose in the period; past the free ones, a save (harder each dose if escalating)
+    if (restore?.kind === 'overdose') {
+      await overdoseDose(actor, restore);
+      continue;
+    }
     // A rest: the rest dialog for this actor (its owner, or the Referee for actors the user doesn't own)
     if (restore?.kind === 'rest') {
       const { restActor } = await import('./rest.mjs');
@@ -487,6 +499,9 @@ export function describeUse(item) {
   if (use.harm?.trim()) always.push($fmt('SDM.Use.Tip.Harm', { formula: esc(use.harm) }));
   if (use.cures?.length) always.push($fmt('SDM.Use.ChatCures', { conditions: esc(statusNames(use.cures)) }));
   if (use.rest) always.push($l10n('SDM.Use.ChatRest'));
+  if (use.purge) always.push($l10n('SDM.Use.ChatPurge'));
+  if (use.overdose?.status || use.overdose?.effect) always.push($l10n('SDM.Use.Tip.Overdose'));
+  if (use.for?.trim()) always.push($fmt('SDM.Use.For', { for: esc(use.for.trim()) }));
   if (use.table) {
     const table = fromUuidSync(use.table);
     always.push($fmt('SDM.Use.Tip.Table', { table: esc(table?.name ?? $l10n('SDM.Trigger.Table')) }));
@@ -572,6 +587,12 @@ export async function useItem(item) {
   if (cures.length) restores.push({ kind: 'cure', statuses: cures });
   // A rest, every time (after the healing: the dialog then shows what is still missing)
   if (use.rest) restores.push({ kind: 'rest' });
+  // Purges other consumables, every time
+  if (use.purge) restores.push({ kind: 'purge', usedItem: item.uuid });
+  // Overdose: counted on each target, a save once there are too many doses
+  if (use.overdose?.status || use.overdose?.effect) {
+    restores.push({ kind: 'overdose', itemUuid: item.uuid, key: getItemIdentifier(item) || item.id, overdose: { ...use.overdose } });
+  }
 
   // Effects last as long as the use says, unless the effect sets its own duration
   const duration = useDuration(use);
@@ -583,8 +604,9 @@ export async function useItem(item) {
     ui.notifications.warn($fmt('SDM.Use.Nothing', { item: item.name }));
     return;
   }
-  // Chat card: who used what on whom, and what it did
+  // Chat card: who used what on whom, and what it did (and who it is meant for: a reminder)
   const what = [];
+  if (use.for?.trim()) what.push(`<i>${$fmt('SDM.Use.For', { for: esc(use.for.trim()) })}</i>`);
   for (const restore of restores) {
     if (restore.full && restore.kind === 'life') what.push($l10n('SDM.Use.RestoreAllLife'));
     else if (restore.full) what.push(abilityLabel(use));
@@ -593,6 +615,8 @@ export async function useItem(item) {
     else if (restore.kind === 'harm') what.push($fmt('SDM.Use.ChatHarm', { amount: restore.amount }));
     else if (restore.kind === 'cure') what.push($fmt('SDM.Use.ChatCures', { conditions: esc(statusNames(restore.statuses)) }));
     else if (restore.kind === 'rest') what.push($l10n('SDM.Use.ChatRest'));
+    else if (restore.kind === 'purge') what.push($l10n('SDM.Use.ChatPurge'));
+    else if (restore.kind === 'overdose') continue;
     else what.push($fmt('SDM.Use.ChatAbility', { amount: restore.amount, ability: $l10n(CONFIG.SDM.abilities[restore.ability]) }));
   }
   if (effects.length) {
@@ -647,6 +671,58 @@ export async function useItem(item) {
   if (fired.length) await runTriggerActions(fired, { actor, targets });
 
   await spend(item);
+}
+
+/** Remove from the actor the effects that consumables copied onto it (not those of `except`). */
+async function purgeEffectsOf(actor, except = '') {
+  const ids = actor.effects
+    .filter(e => {
+      const used = e.getFlag('sdm', 'usedItem');
+      if (!used || used === except) return false;
+      const source = fromUuidSync(used);
+      // A consumable (or one already used up and gone)
+      return !source || isUsable(source);
+    })
+    .map(e => e.id);
+  if (ids.length) await deleteEffects(actor, ids);
+}
+
+/** Purge an actor of consumables (a trigger action): here, or by the Referee's game. */
+export async function purgeConsumables(actor, except = '') {
+  if (!actor) return;
+  const payload = { actorUuid: actor.uuid, restores: [{ kind: 'purge', usedItem: except }], effects: [] };
+  if (actor.isOwner) await applyToActor(payload);
+  else if (game.users.activeGM) game.socket.emit(CHANNEL, { action: APPLY_ACTION, payload });
+  else ui.notifications.warn($l10n('SDM.ErrorNoActiveGM'));
+}
+
+const DIFFICULTY_STEPS = ['veryEasy', 'easy', '', 'hard', 'veryHard'];
+const PERIOD_SECONDS = { days: 86400, weeks: 604800 };
+
+/**
+ * Count a dose on the actor (flags.sdm.doses.<item>: how many and since when). Once the doses within
+ * the period are more than the free ones, the actor saves against the overdose condition (or effect);
+ * escalating, each dose beyond moves the difficulty one step up (easy → standard → hard → very hard).
+ */
+async function overdoseDose(actor, { itemUuid, key, overdose }) {
+  const now = game.time?.worldTime ?? 0;
+  const span = PERIOD_SECONDS[overdose.period] ?? 0;
+  const doses = actor.getFlag('sdm', 'doses')?.[key] ?? { count: 0, since: now };
+  const fresh = span && now - (Number(doses.since) || 0) >= span;
+  const count = (fresh ? 0 : Number(doses.count) || 0) + 1;
+  await actor.update({ [`flags.sdm.doses.${key}`]: { count, since: fresh || !doses.count ? now : doses.since } });
+
+  const beyond = count - (Number(overdose.after) || 0);
+  if (beyond < 1) return;
+  const start = Math.max(DIFFICULTY_STEPS.indexOf(overdose.difficulty ?? ''), 0);
+  const difficulty = DIFFICULTY_STEPS[Math.min(start + (overdose.escalate ? beyond - 1 : 0), DIFFICULTY_STEPS.length - 1)];
+  const item = fromUuidSync(itemUuid);
+  const save = { ability: overdose.ability ?? '', difficulty, source: item?.name ?? '' };
+  if (overdose.effect && item?.effects?.has(overdose.effect)) {
+    await applyItemEffectToTargets(item, overdose.effect, actor, { targets: [actor], save });
+  } else if (overdose.status) {
+    await applyStatusToTargets(overdose.status, actor, { targets: [actor], save });
+  }
 }
 
 /** "for 2 hours" */

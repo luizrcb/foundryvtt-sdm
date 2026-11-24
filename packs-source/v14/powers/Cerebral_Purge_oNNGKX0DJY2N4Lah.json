@@ -77,6 +77,14 @@
       "drug",
       "mental",
       "damage"
+    ],
+    "triggers": [
+      {
+        "roll": "power",
+        "condition": "always",
+        "purge": "targets",
+        "text": "Purged of drugs and mind-altering effects"
+      }
     ]
   },
   "effects": [],

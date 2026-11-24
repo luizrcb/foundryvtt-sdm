@@ -260,6 +260,7 @@ async function runActions(fired, { actor, targets = null } = {}) {
       if (trigger.use) await useAction(item, roller, trigger);
       if (trigger.cast) await castAction(item, roller, trigger);
       if (trigger.life_mode) await lifeAction(item, roller, trigger, targets, times);
+      if (trigger.purge) await purgeAction(item, roller, trigger, targets);
       if (`${trigger.roll_formula ?? ''}`.trim()) await rollAction(item, roller, trigger);
       if (`${trigger.hero_dice ?? ''}`.trim()) await heroDiceAction(item, roller, trigger, times);
       if (trigger.animate) await animateAction(item, roller, trigger);
@@ -345,6 +346,20 @@ async function lifeAction(holder, actor, trigger, targets, times = 1) {
     return;
   }
   for (const target of actors) await changeLifeOf(target, amount, { heal: trigger.life_mode === 'heal' });
+}
+
+/** Purge the targets (or the one who rolled) of consumables: the effects they copied go. */
+async function purgeAction(holder, actor, trigger, targets) {
+  const actors =
+    trigger.purge === 'self'
+      ? [actor].filter(Boolean)
+      : (targets ?? [...game.user.targets]).map(target => target?.actor ?? target).filter(Boolean);
+  if (!actors.length) {
+    ui.notifications.warn($fmt('SDM.Trigger.NoTargets', { item: holder.name }));
+    return;
+  }
+  const { purgeConsumables } = await import('../app/use-item.mjs');
+  for (const target of actors) await purgeConsumables(target, holder.uuid);
 }
 
 /** Roll a formula to chat (it can read counters and other values). */

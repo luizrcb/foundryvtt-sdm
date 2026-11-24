@@ -325,6 +325,28 @@
               <input type='checkbox' name="system.use.rest" {{checked system.use.rest}} />
             </div>
           </div>
+          <div class='resource' data-tooltip="{{localize 'SDM.Use.PurgeHint'}}">
+            <label class='resource-label'>{{localize 'SDM.Use.PurgeLabel'}}</label>
+            <div class='resource-content'><input type='checkbox' name="system.use.purge" {{checked system.use.purge}} /></div>
+          </div>
+          <div class='resource' data-tooltip="{{localize 'SDM.Use.ForHint'}}">
+            <label class='resource-label'>{{localize 'SDM.Use.ForLabel'}}</label>
+            <div class='resource-content'><input type='text' name="system.use.for" value="{{system.use.for}}" /></div>
+          </div>
+          <div class='resource' data-tooltip="{{localize 'SDM.Use.OverdoseHint'}}">
+            <label class='resource-label'>{{localize 'SDM.Use.OverdoseLabel'}}</label>
+            <div class='resource-content'>
+              <select name="system.use.overdose.status">{{selectOptions @root.triggerStatuses selected=system.use.overdose.status}}</select>
+              <select name="system.use.overdose.effect">{{selectOptions @root.triggerEffects selected=system.use.overdose.effect}}</select>
+              {{#if (or system.use.overdose.status system.use.overdose.effect)}}
+              <input type='number' min="0" step="1" name="system.use.overdose.after" value="{{system.use.overdose.after}}" data-dtype='Number' data-tooltip="{{localize 'SDM.Use.OverdoseAfterHint'}}" />
+              <select name="system.use.overdose.period">{{selectOptions @root.useOverduePeriods selected=system.use.overdose.period localize=true}}</select>
+              <select name="system.use.overdose.ability">{{selectOptions @root.triggerSaveAbilities selected=system.use.overdose.ability localize=true}}</select>
+              <select name="system.use.overdose.difficulty">{{selectOptions @root.useOverdoseDifficulties selected=system.use.overdose.difficulty localize=true}}</select>
+              <input type='checkbox' name="system.use.overdose.escalate" {{checked system.use.overdose.escalate}} data-tooltip="{{localize 'SDM.Use.OverdoseEscalateHint'}}" />
+              {{/if}}
+            </div>
+          </div>
           <div class='resource'>
             <label class='resource-label' for="system.use.table">{{localize 'SDM.Use.TableLabel'}}</label>
             <div class='resource-content'>

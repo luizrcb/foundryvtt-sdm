@@ -93,6 +93,21 @@ export default class SdmGear extends SdmItemBase {
       cures: new fields.ArrayField(new fields.StringField({ blank: false }), { initial: [] }),
       // Every use is a rest for its targets (Red Nutrislurry): the rest dialog opens for each one
       rest: new fields.BooleanField({ required: true, initial: false }),
+      // Who it is meant for (machines, pack animals…): a reminder in the Use dialog, not checked
+      for: new fields.StringField({ required: true, blank: true, initial: '' }),
+      // Purges the targets of other consumables: the effects they copied are removed
+      purge: new fields.BooleanField({ required: true, initial: false }),
+      // Overdose: after `after` doses within the period, each dose asks for a save against a condition
+      // (or one of the item's effects); escalating, the difficulty goes up one step per dose
+      overdose: new fields.SchemaField({
+        status: new fields.StringField({ required: true, blank: true, initial: '' }),
+        effect: new fields.StringField({ required: true, blank: true, initial: '' }),
+        after: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 1, min: 0 }),
+        period: new fields.StringField({ required: true, blank: true, initial: 'days', choices: ['', 'days', 'weeks'] }),
+        ability: new fields.StringField({ required: true, blank: true, initial: '' }),
+        difficulty: new fields.StringField({ required: true, blank: true, initial: 'easy', choices: ['', 'veryEasy', 'easy', 'hard', 'veryHard'] }),
+        escalate: new fields.BooleanField({ required: true, initial: true })
+      }),
       // A roll table drawn every time it is used (strange beliefs, vision dreams…)
       table: new fields.StringField({ required: true, blank: true, initial: '' }),
       // How long its effects last on the targets (when the effect sets no duration of its own)

@@ -450,6 +450,30 @@
       <input type="checkbox" name="system.use.rest" {{checked system.use.rest}} />
       <span class="v2-label">{{localize 'SDM.Use.RestLabel'}}</span>
     </label>
+    <label class="v2-field v2-check" data-tooltip="{{localize 'SDM.Use.PurgeHint'}}">
+      <input type="checkbox" name="system.use.purge" {{checked system.use.purge}} />
+      <span class="v2-label">{{localize 'SDM.Use.PurgeLabel'}}</span>
+    </label>
+    <label class="v2-field" data-tooltip="{{localize 'SDM.Use.ForHint'}}">
+      <span class="v2-label">{{localize 'SDM.Use.ForLabel'}}</span>
+      <input type="text" name="system.use.for" value="{{system.use.for}}" />
+    </label>
+    <div class="v2-field v2-span-2" data-tooltip="{{localize 'SDM.Use.OverdoseHint'}}">
+      <span class="v2-label">{{localize 'SDM.Use.OverdoseLabel'}}</span>
+      <div class="v2-pair">
+        <select name="system.use.overdose.status">{{selectOptions @root.triggerStatuses selected=system.use.overdose.status}}</select>
+        <select name="system.use.overdose.effect">{{selectOptions @root.triggerEffects selected=system.use.overdose.effect}}</select>
+      </div>
+      {{#if (or system.use.overdose.status system.use.overdose.effect)}}
+      <div class="v2-pair">
+        <input type="number" min="0" step="1" name="system.use.overdose.after" value="{{system.use.overdose.after}}" data-dtype="Number" data-tooltip="{{localize 'SDM.Use.OverdoseAfterHint'}}" />
+        <select name="system.use.overdose.period">{{selectOptions @root.useOverduePeriods selected=system.use.overdose.period localize=true}}</select>
+        <select name="system.use.overdose.ability">{{selectOptions @root.triggerSaveAbilities selected=system.use.overdose.ability localize=true}}</select>
+        <select name="system.use.overdose.difficulty">{{selectOptions @root.useOverdoseDifficulties selected=system.use.overdose.difficulty localize=true}}</select>
+        <label class="v2-check" data-tooltip="{{localize 'SDM.Use.OverdoseEscalateHint'}}"><input type="checkbox" name="system.use.overdose.escalate" {{checked system.use.overdose.escalate}} /> {{localize 'SDM.Use.OverdoseEscalate'}}</label>
+      </div>
+      {{/if}}
+    </div>
     <label class="v2-field">
       <span class="v2-label">{{localize 'SDM.Use.TableLabel'}}</span>
       <input class="sdm-trigger-table" type="text" name="system.use.table" value="{{system.use.table}}" placeholder="{{localize 'SDM.Trigger.TablePlaceholder'}}" data-tooltip="{{localize 'SDM.Use.TableHint'}}" />

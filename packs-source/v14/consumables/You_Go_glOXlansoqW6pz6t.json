@@ -83,7 +83,16 @@
     ],
     "use": {
       "life": "",
-      "ability": ""
+      "ability": "",
+      "overdose": {
+        "status": "petrified",
+        "effect": "",
+        "after": 1,
+        "period": "days",
+        "ability": "",
+        "difficulty": "easy",
+        "escalate": true
+      }
     }
   },
   "effects": [

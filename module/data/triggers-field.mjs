@@ -147,6 +147,8 @@ export function defineTriggersField() {
       life_mode: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'heal', 'damage'] }),
       life_amount: new fields.StringField({ required: true, blank: true, initial: '1d6' }),
       life_target: new fields.StringField({ required: true, blank: false, initial: 'targets', choices: ['targets', 'self'] }),
+      // Purge: remove the effects of consumables from the targets or the one who rolled ('' none)
+      purge: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'targets', 'self'] }),
       // Roll a formula to chat (blank: none)
       roll_formula: new fields.StringField({ required: true, blank: true, initial: '' }),
       // Hero dice the one who rolled gains (negative: loses), never above the maximum (blank: none)

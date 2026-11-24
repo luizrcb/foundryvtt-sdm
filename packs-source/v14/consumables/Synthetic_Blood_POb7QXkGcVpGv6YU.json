@@ -78,7 +78,10 @@
       "drink",
       "vampire",
       "food"
-    ]
+    ],
+    "use": {
+      "for": "vampires (or surgery)"
+    }
   },
   "effects": [],
   "sort": 0,
