@@ -525,6 +525,12 @@ function previewSquares(squares, color) {
 }
 const clearPreview = () => canvas.interface?.grid?.destroyHighlightLayer?.(PREVIEW_LAYER);
 
+/** A splash's squares shown on the map while its result is confirmed, and cleared after. */
+export function showSplashPreview(squares) {
+  if (squares?.length) previewSquares(squares, game.user.color?.css ?? '#ff6400');
+}
+export const clearSplashPreview = clearPreview;
+
 /* -------------------------------------------- */
 /*  Placing                                     */
 /* -------------------------------------------- */
@@ -1003,7 +1009,10 @@ export async function splashTokens({ splash, attackerToken, targetToken, name })
   if (splash.shape === 'around') {
     // Next to the target, with no wall between them
     const clear = reaches(tokenCenter(targetToken));
-    return candidates.filter(t => isAdjacent(targetToken, t) && clear(tokenCenter(t)));
+    const around = candidates.filter(t => isAdjacent(targetToken, t) && clear(tokenCenter(t)));
+    // The squares shown while confirming: those of whoever it reaches
+    if (squareGrid(scene)) around.squares = around.flatMap(t => tokenSquares(t));
+    return around;
   }
 
   const squares = squareGrid(scene);
@@ -1044,7 +1053,11 @@ export async function splashTokens({ splash, attackerToken, targetToken, name })
       const beyond = { x: target.x + (target.x - from.x), y: target.y + (target.y - from.y) };
       picked = patternSquares(targetToken, beyond, splash.shape === 'behind_line' ? 'line' : 'cone', size);
     }
-    return tokensOnSquares(picked.filter(square => !exclude.has(squareKey(square))), candidates);
+    const reachedSquares = picked.filter(square => !exclude.has(squareKey(square)));
+    const reached = tokensOnSquares(reachedSquares, candidates);
+    // The squares shown while confirming
+    reached.squares = reachedSquares;
+    return reached;
   }
   let region;
   if (splash.shape === 'cone') {

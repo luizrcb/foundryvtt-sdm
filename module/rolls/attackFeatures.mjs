@@ -15,7 +15,7 @@ import { ActorType, ItemType, RollMode } from '../helpers/constants.mjs';
 import { UnarmedDamageItem } from '../helpers/itemUtils.mjs';
 import { numberValue } from '../helpers/formulas.mjs';
 import { applyStatusToTargets, changeLifeOf } from '../app/use-item.mjs';
-import { splashTokens, tieButtons, weaponSplash } from '../helpers/areas.mjs';
+import { clearSplashPreview, showSplashPreview, splashTokens, tieButtons, weaponSplash } from '../helpers/areas.mjs';
 import { saveAgainst, saveDifficultyValue } from '../app/save-against.mjs';
 
 /**
@@ -242,6 +242,25 @@ export function bindAttackFeatures(html) {
     });
     const hits = results.filter(r => r.hit);
     const ties = results.filter(r => r.tie);
+    // What will happen, before anything is rolled: the squares on the map, and who it hits or misses
+    if (results.length) {
+      showSplashPreview(reached.squares);
+      let go = false;
+      try {
+        const rows = results
+          .map(r => `<li><b>${esc(r.token.name)}</b> (${esc(game.i18n.localize('SDM.FieldDefense'))} ${r.defense}): ${esc(game.i18n.localize(r.hit ? 'SDM.AttackFeature.SplashPreviewHit' : r.tie ? 'SDM.AttackFeature.SplashPreviewTie' : 'SDM.AttackFeature.SplashPreviewMiss'))}</li>`)
+          .join('');
+        go = await foundry.applications.api.DialogV2.confirm({
+          window: { title: game.i18n.format('SDM.AttackFeature.SplashPreviewTitle', { item }) },
+          content: `<p>${esc(game.i18n.format('SDM.AttackFeature.SplashPreviewText', { total: attackTotal }))}</p><ul class="sdm-splash-preview">${rows}</ul>`,
+          yes: { label: game.i18n.localize('SDM.AttackFeature.SplashPreviewGo'), icon: 'fa-solid fa-burst' },
+          rejectClose: false
+        });
+      } finally {
+        clearSplashPreview();
+      }
+      if (!go) return;
+    }
     // The splash damage: its formula, or the weapon's damage (all of it, or half rounded up)
     const formula = splash.damage === 'formula' ? splash.formula : weaponDamageFormula(weapon);
     const rolled = hits.length || ties.length ? await new Roll(formula || '0', attacker?.getRollData?.() ?? {}).evaluate() : null;
@@ -260,11 +279,13 @@ export function bindAttackFeatures(html) {
     const tieRows = roll ? ties.map(r => tieButtons({ kind: 'splash', actorUuid: r.token.actor.uuid, name: r.token.name, amount, reason: item })).join('') : '';
     const halfNote = roll && splash.damage === 'half' ? `<p>${esc(game.i18n.format('SDM.AttackFeature.SplashHalf', { amount }))}</p>` : '';
     if (roll) {
-      await ChatMessage.create({
+      const message = await ChatMessage.create({
         speaker,
         rolls: [roll],
         content: `<p>${esc(flavor)}</p>${await roll.render()}${halfNote}${tieRows}`
       });
+      // The damage lands once the dice have finished rolling
+      await game.dice3d?.waitFor3DAnimationByMessageID?.(message.id);
     } else await ChatMessage.create({ speaker, content: `<p>${esc(flavor)}</p>` });
     for (const r of hits) await changeLifeOf(r.token.actor, amount, { reason: item });
     button.disabled = true;
