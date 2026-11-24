@@ -849,11 +849,19 @@ async function onAreaDeleted(region) {
  * roll or card (cones, lines and "around the user" from the selected token). Also removes the areas
  * drawn this way (the user's own; the Referee's: everyone's on the scene).
  */
+// The user's last shape and size in "Draw an area" (a flag on the user: the same on every device)
+const DRAW_AREA_FLAG = 'drawArea';
+
 export async function drawArea() {
   if (!canvas?.ready || !canvas.scene) return ui.notifications.warn($l10n('SDM.AreaNoScene'));
   const option = (value, label, selected) => `<option value="${value}"${selected ? ' selected' : ''}>${esc($l10n(label))}</option>`;
-  const shapes = Object.entries(CONFIG.SDM.areaShapes).map(([key, label], index) => option(key, label, index === 0)).join('');
-  const sizes = AREA_SIZES.map(key => option(key, CONFIG.SDM.areaValues[key], key === 'medium')).join('');
+  // The shape and size this user picked last time (first time: the first shape, medium)
+  const last = game.user.getFlag('sdm', DRAW_AREA_FLAG) ?? {};
+  const shapeKeys = Object.keys(CONFIG.SDM.areaShapes);
+  const lastShape = shapeKeys.includes(last.shape) ? last.shape : shapeKeys[0];
+  const lastSize = AREA_SIZES.includes(last.size) ? last.size : 'medium';
+  const shapes = Object.entries(CONFIG.SDM.areaShapes).map(([key, label]) => option(key, label, key === lastShape)).join('');
+  const sizes = AREA_SIZES.map(key => option(key, CONFIG.SDM.areaValues[key], key === lastSize)).join('');
   const content =
     `<div class="form-group"><label>${esc($l10n('SDM.AreaShape.Label'))}</label><select name="shape">${shapes}</select></div>` +
     `<div class="form-group"><label>${esc($l10n('SDM.AreaDrawSize'))}</label><select name="size">${sizes}</select></div>` +
@@ -875,6 +883,9 @@ export async function drawArea() {
   });
   if (!choice) return;
   if (choice === 'clear') return clearDrawnAreas();
+  if (choice.shape !== last.shape || choice.size !== last.size) {
+    await game.user.setFlag('sdm', DRAW_AREA_FLAG, { shape: choice.shape, size: choice.size }).catch(() => {});
+  }
   const area = { ...areaSize(choice.size, choice.shape), size: choice.size, shape: choice.shape, affects: 'everyone', linger: false, rounds: 0, follows: false, save: null, range: '' };
   const token = canvas.tokens.controlled[0]?.document ?? game.user.character?.getActiveTokens?.(false, true)?.find(t => t.parent === canvas.scene) ?? null;
   const label = `${$l10n(CONFIG.SDM.areaValues[choice.size])} ${$l10n(CONFIG.SDM.areaShapes[choice.shape]).toLowerCase()}`;
