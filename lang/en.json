@@ -63,7 +63,7 @@
   "SDM.Trigger.LifeMode.heal": "heals",
   "SDM.Trigger.LightMode.flare": "flares",
   "SDM.Trigger.NoTargets": "{item}: target a token first.",
-  "SDM.Trigger.Roll": "Roll",
+  "SDM.Trigger.RollFormula": "Roll",
   "SDM.Trigger.RollHint": "A formula rolled to chat (1d6, @actor.level).",
   "SDM.Use.ChatRest": "Rests",
   "SDM.Use.RestHint": "Every use is a rest for its targets (the rest dialog opens).",

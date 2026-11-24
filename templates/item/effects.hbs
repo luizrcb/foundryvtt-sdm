@@ -243,7 +243,7 @@
           <input type="hidden" name="system.triggers.{{index}}.life_amount" value="{{trigger.life_amount}}" />
           <input type="hidden" name="system.triggers.{{index}}.life_target" value="{{trigger.life_target}}" />
           {{/if}}</label>
-        <label class="{{#if trigger.roll_formula}}filled{{/if}}" data-tooltip="{{localize 'SDM.Trigger.RollHint'}}">{{localize 'SDM.Trigger.Roll'}}
+        <label class="{{#if trigger.roll_formula}}filled{{/if}}" data-tooltip="{{localize 'SDM.Trigger.RollHint'}}">{{localize 'SDM.Trigger.RollFormula'}}
           <input class="sdm-trigger-amount" type="text" name="system.triggers.{{index}}.roll_formula" value="{{trigger.roll_formula}}" /></label>
         <label class="{{#if trigger.hero_dice}}filled{{/if}}" data-tooltip="{{localize 'SDM.Trigger.HeroDiceHint'}}">{{localize 'SDM.Trigger.HeroDice'}}
           <input class="sdm-trigger-amount" type="text" name="system.triggers.{{index}}.hero_dice" value="{{trigger.hero_dice}}" /></label>

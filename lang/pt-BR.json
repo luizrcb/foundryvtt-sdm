@@ -63,7 +63,7 @@
   "SDM.Trigger.LifeMode.heal": "cura",
   "SDM.Trigger.LightMode.flare": "clarão",
   "SDM.Trigger.NoTargets": "{item}: mire um token primeiro.",
-  "SDM.Trigger.Roll": "Rolar",
+  "SDM.Trigger.RollFormula": "Rolar",
   "SDM.Trigger.RollHint": "Uma fórmula rolada no chat (1d6, @actor.level).",
   "SDM.Use.ChatRest": "Descansa",
   "SDM.Use.RestHint": "Cada uso é um descanso para os alvos (abre o diálogo de descanso).",
