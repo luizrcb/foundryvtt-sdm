@@ -3280,7 +3280,7 @@
   "SDM.AreaLabel": "{size} {shape} (~{distance} {unit})",
   "SDM.AreaNoScene": "Open a scene to place the area.",
   "SDM.AreaNeedsToken": "{name} needs a token on this scene: cones and lines start at it.",
-  "SDM.AreaPlaceHint": "Place the area: click to drop it, right-click or Esc to cancel.",
+  "SDM.AreaPlaceHint": "Place the area: click to drop it, right-click or Esc to cancel. Hold Shift for free placement (any angle, no snapping).",
   "SDM.AreaNoGM": "The Referee must be online to place areas.",
   "SDM.AreaPlace": "Place area",
   "SDM.AreaTargetHits": "Target hits",

@@ -3280,7 +3280,7 @@
   "SDM.AreaLabel": "Área {size}, {shape} (~{distance} {unit})",
   "SDM.AreaNoScene": "Abra uma cena para posicionar a área.",
   "SDM.AreaNeedsToken": "{name} precisa de um token nesta cena: cones e linhas saem dele.",
-  "SDM.AreaPlaceHint": "Posicione a área: clique para soltar, botão direito ou Esc para cancelar.",
+  "SDM.AreaPlaceHint": "Posicione a área: clique para soltar, botão direito ou Esc para cancelar. Segure Shift para posicionar livremente (qualquer ângulo, sem encaixe).",
   "SDM.AreaNoGM": "O Mediador precisa estar online para posicionar áreas.",
   "SDM.AreaPlace": "Posicionar área",
   "SDM.AreaTargetHits": "Mirar os atingidos",

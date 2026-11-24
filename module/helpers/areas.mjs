@@ -380,6 +380,106 @@ function patternSquares(token, point, shape, length) {
 }
 
 /**
+ * A free cone or line (square grids, Shift): from where the aim leaves the user's token toward the
+ * point, at any angle. Returns { origin, angle (radians), rotation (degrees) }, or null on the token.
+ */
+function freeFrame(token, point) {
+  const size = token.parent.grid.size;
+  const center = tokenCenter(token);
+  const dx = point.x - center.x;
+  const dy = point.y - center.y;
+  if (Math.hypot(dx, dy) < 1) return null;
+  const halfW = (Math.max(1, token.width) * size) / 2;
+  const halfH = (Math.max(1, token.height) * size) / 2;
+  // How far along the aim the token's edge is
+  const t = Math.min(dx ? halfW / Math.abs(dx) : Infinity, dy ? halfH / Math.abs(dy) : Infinity);
+  const angle = Math.atan2(dy, dx);
+  return { origin: { x: center.x + dx * t, y: center.y + dy * t }, angle, rotation: Math.toDegrees(angle) };
+}
+
+/**
+ * The squares a free cone or line covers. A cone: more than half of a square, or its middle (as
+ * circles and squares). A line: every square its middle passes through, but not one it only grazes
+ * at a corner (so a diagonal line is a clean staircase at any angle).
+ */
+function freeSquares(token, point, shape, length) {
+  const frame = freeFrame(token, point);
+  if (!frame) return [];
+  const size = token.parent.grid.size;
+  const { origin, angle } = frame;
+  const reach = length * size;
+  const end = { x: origin.x + Math.cos(angle) * reach, y: origin.y + Math.sin(angle) * reach };
+  const i0 = Math.floor((Math.min(origin.y, end.y) - reach) / size);
+  const i1 = Math.ceil((Math.max(origin.y, end.y) + reach) / size);
+  const j0 = Math.floor((Math.min(origin.x, end.x) - reach) / size);
+  const j1 = Math.ceil((Math.max(origin.x, end.x) + reach) / size);
+  const center = tokenCenter(token);
+  const onToken = (i, j) => {
+    const ti = Math.round(token.y / size);
+    const tj = Math.round(token.x / size);
+    return i >= ti && i < ti + Math.max(1, Math.round(token.height)) && j >= tj && j < tj + Math.max(1, Math.round(token.width));
+  };
+  const squares = [];
+  if (shape === 'line') {
+    // Segment through the square's interior: clipped length more than a sliver
+    const minLength = size * 0.05;
+    for (let i = i0; i < i1; i++) {
+      for (let j = j0; j < j1; j++) {
+        if (onToken(i, j)) continue;
+        if (clippedLength(origin, end, j * size, i * size, size) > minLength) squares.push({ i, j });
+      }
+    }
+  } else {
+    const half = Math.toRadians(CONE_ANGLE / 2);
+    const inCone = p => {
+      const d = Math.hypot(p.x - origin.x, p.y - origin.y);
+      if (d > reach) return false;
+      if (d < 1e-6) return true;
+      let diff = Math.atan2(p.y - origin.y, p.x - origin.x) - angle;
+      diff = Math.atan2(Math.sin(diff), Math.cos(diff));
+      return Math.abs(diff) <= half + 1e-9;
+    };
+    for (let i = i0; i < i1; i++) {
+      for (let j = j0; j < j1; j++) {
+        if (onToken(i, j)) continue;
+        let inside = 0;
+        for (let a = 0; a < SAMPLES; a++) {
+          for (let b = 0; b < SAMPLES; b++) if (inCone({ x: (j + (b + 0.5) / SAMPLES) * size, y: (i + (a + 0.5) / SAMPLES) * size })) inside++;
+        }
+        if (inside * 2 > SAMPLES * SAMPLES || inCone({ x: (j + 0.5) * size, y: (i + 0.5) * size })) squares.push({ i, j });
+      }
+    }
+  }
+  // Line of effect from just inside the token
+  const nudge = 2 / Math.max(Math.hypot(center.x - origin.x, center.y - origin.y), 1);
+  const from = { x: origin.x + (center.x - origin.x) * nudge, y: origin.y + (center.y - origin.y) * nudge };
+  return reachedSquares(squares, from, size);
+}
+
+/** Length of the segment a→b inside the square at (x, y) of side `size` (Liang–Barsky). */
+function clippedLength(a, b, x, y, size) {
+  const dx = b.x - a.x;
+  const dy = b.y - a.y;
+  let t0 = 0;
+  let t1 = 1;
+  for (const [p, q] of [[-dx, a.x - x], [dx, x + size - a.x], [-dy, a.y - y], [dy, y + size - a.y]]) {
+    if (p === 0) {
+      if (q < 0) return 0;
+      continue;
+    }
+    const r = q / p;
+    if (p < 0) {
+      if (r > t1) return 0;
+      if (r > t0) t0 = r;
+    } else {
+      if (r < t0) return 0;
+      if (r < t1) t1 = r;
+    }
+  }
+  return Math.max(t1 - t0, 0) * Math.hypot(dx, dy);
+}
+
+/**
  * Point a cone or line (square grids) with Foundry's placement, so its outline and measurements show:
  * the guide turns to the nearest of eight directions around the token and the pattern's squares
  * light up; click places it, right-click or Esc cancels. Resolves to the squares, or false.
@@ -388,17 +488,21 @@ async function placePattern({ data, token, shape, length, scene }) {
   const size = scene.grid.size;
   const color = game.user.color ?? 0x33bbff;
   let last = canvas.mousePosition ?? tokenCenter(token);
+  let free = false;
+  const squaresNow = () => (free ? freeSquares(token, last, shape, length) : patternSquares(token, last, shape, length));
   const guide =
     shape === 'cone'
       ? { type: 'cone', x: 0, y: 0, radius: length * size, angle: CONE_ANGLE, rotation: 0, curvature: 'round', gridBased: false }
       : { type: 'line', x: 0, y: 0, length: length * size, width: size, rotation: 0, gridBased: false };
-  const onMove = ({ shape: current, position }) => {
+  const onMove = ({ shape: current, position, snap }) => {
     last = position;
-    const { origin, rotation } = patternFrame(token, position);
-    current.updateSource({ x: origin.x, y: origin.y, rotation });
+    // Shift (Foundry's "don't snap"): any angle, from where the aim leaves the token; otherwise the 8 directions
+    free = snap === false;
+    const frame = free ? freeFrame(token, last) : patternFrame(token, last);
+    if (frame) current.updateSource({ x: frame.origin.x, y: frame.origin.y, rotation: frame.rotation });
     return false;
   };
-  const onChange = () => previewSquares(patternSquares(token, last, shape, length), color);
+  const onChange = () => previewSquares(squaresNow(), color);
   let placed;
   try {
     placed = await canvas.regions.placeRegion({ ...data, shapes: [guide] }, { create: false, onMove, onChange, allowRotation: false });
@@ -406,7 +510,7 @@ async function placePattern({ data, token, shape, length, scene }) {
     clearPreview();
   }
   if (!placed) return false;
-  return patternSquares(token, last, shape, length);
+  return squaresNow();
 }
 
 /** Show the squares while placing (the grid's highlight), or clear them. */
@@ -541,20 +645,25 @@ export async function placeArea({ actor = null, item = null, kind = '', area: gi
   const ring = area.shape === 'ring';
   // Cones and lines (gridless, hex): from the token toward the cursor; square grids: rings on the middle
   // of a square, the rest on the intersection nearest the cursor
-  const onMove = ({ shape, position }) => {
+  const onMove = ({ shape, position, snap }) => {
     if (fromToken) {
       const aim = aimShape(sourceToken, position);
       if (aim) shape.updateSource(aim);
       return false;
     }
     if (!squares) return;
-    shape.updateSource(canvas.grid.getSnappedPoint(position, { mode: ring ? CONST.GRID_SNAPPING_MODES.CENTER : CONST.GRID_SNAPPING_MODES.VERTEX }));
+    // Shift: no snapping (anywhere on the map); otherwise intersections (rings: square middles)
+    const point = snap === false
+      ? position
+      : canvas.grid.getSnappedPoint(position, { mode: ring ? CONST.GRID_SNAPPING_MODES.CENTER : CONST.GRID_SNAPPING_MODES.VERTEX });
+    shape.updateSource({ x: point.x, y: point.y });
     return false;
   };
   const onChange = squares ? ({ document }) => previewSquares(areaSquares(area, document, scene), color) : undefined;
   let placed;
   try {
-    placed = await canvas.regions.placeRegion(data, { create: false, onMove, onChange, allowRotation: !fromToken && !squares });
+    // The wheel rotates squares (and, off the grid, everything placed freely); cones and lines aim
+    placed = await canvas.regions.placeRegion(data, { create: false, onMove, onChange, allowRotation: !fromToken && (!squares || area.shape === 'square') });
   } catch (error) {
     console.error('SDM | Placing the area failed', error);
     return null;
