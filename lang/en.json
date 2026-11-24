@@ -3555,5 +3555,7 @@
   "SDM.Form.TakeSpeed": "speed",
   "SDM.Form.NaturalAttack": "{creature}: natural attack",
   "SDM.Form.Stats": "Stats",
-  "SDM.Form.StatsHint": "The form's own values, replacing the user's while it lasts. Blank: unchanged. Ability scores apply to characters."
+  "SDM.Form.StatsHint": "The form's own values, replacing the user's while it lasts. Blank: unchanged. Ability scores apply to characters.",
+  "SDM.Form.EndNamed": "End form: {form}",
+  "SDM.Form.TakeNamed": "Take form: {form}"
 }

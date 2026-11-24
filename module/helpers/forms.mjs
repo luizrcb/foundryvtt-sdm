@@ -413,6 +413,7 @@ export function setupForms() {
   Hooks.on('deleteActiveEffect', onEffectDeleted);
   Hooks.on('updateActor', onUpdateActor);
   Hooks.on('renderActorSheetV2', onRenderActorSheet);
+  Hooks.on('renderTokenHUD', onRenderTokenHUD);
 }
 
 /* -------------------------------------------- */
@@ -434,21 +435,72 @@ export function itemFormOn(item) {
 /** Take one of the item's forms (picked when it has several): its effect is switched on. */
 export async function takeItemForm(item) {
   const forms = itemForms(item).filter(effect => effect.disabled || currentForm(item.actor) !== effect);
+  return takeOneForm(forms, item.name);
+}
+
+/** Switch on one of these form effects, picked in a small dialog when there are several. */
+async function takeOneForm(forms, title) {
   if (!forms.length) return;
   let effect = forms[0];
   if (forms.length > 1) {
-    const options = forms.map(f => `<option value="${esc(f.id)}">${esc(f.name)}</option>`).join('');
-    const id = await foundry.applications.api.DialogV2.prompt({
-      window: { title: item.name, icon: 'fa-solid fa-paw' },
+    const options = forms.map(f => `<option value="${esc(f.uuid)}">${esc(f.name)}</option>`).join('');
+    const uuid = await foundry.applications.api.DialogV2.prompt({
+      window: { title, icon: 'fa-solid fa-paw' },
       content: `<div class="form-group"><label>${esc($l10n('SDM.Form.Title'))}</label><select name="form">${options}</select></div>`,
       ok: { label: 'SDM.Form.Take', icon: 'fa-solid fa-paw', callback: (event, button) => button.form.elements.form.value },
       rejectClose: false
     });
-    if (!id) return;
-    effect = forms.find(f => f.id === id) ?? effect;
+    if (!uuid) return;
+    effect = forms.find(f => f.uuid === uuid) ?? effect;
   }
   if (!game.users.activeGM) return ui.notifications.warn($l10n('SDM.ErrorNoActiveGM'));
   await effect.update({ disabled: false });
+}
+
+/** The forms the actor can take now: its own switched-off form effects and those its items give. */
+function availableForms(actor) {
+  const forms = [];
+  for (const effect of actor?.allApplicableEffects?.() ?? []) {
+    if (isForm(effect) && effect.disabled && effect.isOwner) forms.push(effect);
+  }
+  return forms;
+}
+
+/* -------------------------------------------- */
+/*  Token HUD: end the form, or take one        */
+/* -------------------------------------------- */
+
+const HUD_CLASS = 'sdm-form-hud';
+
+function onRenderTokenHUD(hud, html) {
+  const token = hud?.document ?? hud?.object?.document;
+  const actor = token?.actor;
+  if (!actor?.isOwner) return;
+  const current = currentForm(actor);
+  const inForm = !!actor.getFlag('sdm', ACTIVE_FLAG);
+  const forms = inForm ? [] : availableForms(actor);
+  if (!inForm && !forms.length) return;
+  const root = html?.querySelectorAll ? html : html?.[0];
+  if (!root || root.querySelector(`.${HUD_CLASS}`)) return;
+
+  const label = inForm
+    ? $fmt('SDM.Form.EndNamed', { form: current?.name ?? actor.getFlag('sdm', ACTIVE_FLAG)?.name ?? '' })
+    : forms.length === 1 ? $fmt('SDM.Form.TakeNamed', { form: forms[0].name }) : $l10n('SDM.Form.Take');
+  const button = document.createElement('button');
+  button.type = 'button';
+  button.classList.add('control-icon', HUD_CLASS);
+  if (inForm) button.classList.add('active');
+  button.dataset.tooltip = label;
+  button.setAttribute('aria-label', label);
+  button.innerHTML = '<i class="fa-solid fa-paw" inert></i>';
+  button.addEventListener('click', async event => {
+    event.preventDefault();
+    event.stopPropagation();
+    hud.close?.();
+    if (inForm) await dismissForm(actor);
+    else await takeOneForm(forms, actor.name);
+  });
+  (root.querySelector('.col.right') ?? root).append(button);
 }
 
 /** Granted copies take no slots (itemUtils). */
