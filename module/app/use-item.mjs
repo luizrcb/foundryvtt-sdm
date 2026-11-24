@@ -230,6 +230,15 @@ async function applyToActor({ actorUuid, restores = [], restore, effects }) {
       });
       continue;
     }
+    // A replenisher: the item picked when it was used is recharged (it is this actor's)
+    if (restore?.kind === 'replenish') {
+      const target = fromUuidSync(restore.itemUuid ?? '');
+      if (target?.actor === actor) {
+        const { rechargeItem } = await import('../rolls/triggers.mjs');
+        await rechargeItem(target);
+      }
+      continue;
+    }
     // Purge: the effects other consumables copied onto this actor go
     if (restore?.kind === 'purge') {
       await purgeEffectsOf(actor, restore.usedItem);
@@ -519,6 +528,7 @@ export function describeUse(item) {
   if (use.rest) always.push($l10n('SDM.Use.ChatRest'));
   if (hasUseActions(use.actions)) always.push($l10n('SDM.Use.Tip.Actions'));
   if (use.purge) always.push($l10n('SDM.Use.ChatPurge'));
+  if (use.replenishes) always.push($l10n(`SDM.Use.Replenishes.${use.replenishes}`));
   if (use.overdose?.status || use.overdose?.effect) always.push($l10n('SDM.Use.Tip.Overdose'));
   if (use.for?.trim()) always.push($fmt('SDM.Use.For', { for: esc(use.for.trim()) }));
   if (use.table) {
@@ -608,6 +618,12 @@ export async function useItem(item) {
   if (use.rest) restores.push({ kind: 'rest' });
   // Purges other consumables, every time
   if (use.purge) restores.push({ kind: 'purge', usedItem: item.uuid });
+  // A replenisher: pick the item it recharges (none that fits: nothing is used up)
+  if (use.replenishes) {
+    const picked = await pickReplenished(item, use.replenishes, targets);
+    if (!picked) return;
+    restores.push({ kind: 'replenish', itemUuid: picked.uuid, name: picked.name });
+  }
   // Overdose: counted on each target, a save once there are too many doses
   if (use.overdose?.status || use.overdose?.effect) {
     restores.push({ kind: 'overdose', itemUuid: item.uuid, key: getItemIdentifier(item) || item.id, overdose: { ...use.overdose } });
@@ -635,6 +651,7 @@ export async function useItem(item) {
     else if (restore.kind === 'cure') what.push($fmt('SDM.Use.ChatCures', { conditions: esc(statusNames(restore.statuses)) }));
     else if (restore.kind === 'rest') what.push($l10n('SDM.Use.ChatRest'));
     else if (restore.kind === 'purge') what.push($l10n('SDM.Use.ChatPurge'));
+    else if (restore.kind === 'replenish') what.push($fmt('SDM.Use.ChatReplenish', { item: esc(restore.name) }));
     else if (restore.kind === 'overdose') continue;
     else what.push($fmt('SDM.Use.ChatAbility', { amount: restore.amount, ability: $l10n(CONFIG.SDM.abilities[restore.ability]) }));
   }
@@ -692,6 +709,40 @@ export async function useItem(item) {
   if (useActions.length || fired.length) await runTriggerActions([...useActions, ...fired], { actor, targets });
 
   await spend(item);
+}
+
+/** Items a replenisher can recharge: running low or run out, of its kind. */
+function replenishable(item, kind) {
+  const system = item.system ?? {};
+  if (!['running_low', 'run_out'].includes(system.resources)) return false;
+  if (kind === 'small') {
+    const cash = (Number(system.size?.value) || 0) * ({ soaps: 25, stones: 250, sacks: 2500 }[system.size?.unit] ?? 1);
+    return cash <= 250;
+  }
+  if (kind === 'weapon') return system.type === 'weapon' || !!system.features?.has?.('weapon');
+  if (kind === 'machine') return item.type === 'vehicle' || !!system.features?.has?.('oldtech');
+  return true;
+}
+
+/** Which item a replenisher recharges: the targets' items that fit, picked in a dialog (null: none or closed). */
+async function pickReplenished(item, kind, targets) {
+  const candidates = targets.flatMap(actor => (actor.items?.contents ?? []).filter(other => other !== item && replenishable(other, kind)));
+  if (!candidates.length) {
+    ui.notifications.warn($fmt('SDM.Use.ReplenishNone', { item: item.name }));
+    return null;
+  }
+  if (candidates.length === 1) return candidates[0];
+  const several = new Set(candidates.map(c => c.actor)).size > 1;
+  const options = candidates
+    .map(c => `<option value="${esc(c.uuid)}">${esc(several ? `${c.actor.name}: ${c.name}` : c.name)} (${esc($l10n(c.system.resources === 'run_out' ? 'SDM.ItemStatusRunOut' : 'SDM.ItemStatusRunningLow'))})</option>`)
+    .join('');
+  const uuid = await foundry.applications.api.DialogV2.prompt({
+    window: { title: item.name },
+    content: `<div class="form-group"><label>${esc($l10n('SDM.Use.ReplenishPick'))}</label><select name="item">${options}</select></div>`,
+    ok: { label: 'SDM.Use.ReplenishGo', icon: 'fa-solid fa-battery-full', callback: (event, button) => button.form.elements.item.value },
+    rejectClose: false
+  });
+  return uuid ? candidates.find(c => c.uuid === uuid) ?? null : null;
 }
 
 /** Remove from the actor the effects that consumables copied onto it (not those of `except`). */

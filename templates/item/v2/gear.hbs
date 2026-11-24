@@ -460,6 +460,10 @@
       <input type="checkbox" name="system.use.purge" {{checked system.use.purge}} />
       <span class="v2-label">{{localize 'SDM.Use.PurgeLabel'}}</span>
     </label>
+    <label class="v2-field" data-tooltip="{{localize 'SDM.Use.ReplenishesHint'}}">
+      <span class="v2-label">{{localize 'SDM.Use.ReplenishesLabel'}}</span>
+      <select name="system.use.replenishes">{{selectOptions (sdmReplenishChoices) selected=system.use.replenishes localize=true}}</select>
+    </label>
     <label class="v2-field" data-tooltip="{{localize 'SDM.Use.ForHint'}}">
       <span class="v2-label">{{localize 'SDM.Use.ForLabel'}}</span>
       <input type="text" name="system.use.for" value="{{system.use.for}}" />

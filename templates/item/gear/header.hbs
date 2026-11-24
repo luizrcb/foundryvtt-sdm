@@ -335,6 +335,10 @@
             <label class='resource-label'>{{localize 'SDM.Use.PurgeLabel'}}</label>
             <div class='resource-content'><input type='checkbox' name="system.use.purge" {{checked system.use.purge}} /></div>
           </div>
+          <div class='resource' data-tooltip="{{localize 'SDM.Use.ReplenishesHint'}}">
+            <label class='resource-label'>{{localize 'SDM.Use.ReplenishesLabel'}}</label>
+            <div class='resource-content'><select name="system.use.replenishes">{{selectOptions (sdmReplenishChoices) selected=system.use.replenishes localize=true}}</select></div>
+          </div>
           <div class='resource' data-tooltip="{{localize 'SDM.Use.ForHint'}}">
             <label class='resource-label'>{{localize 'SDM.Use.ForLabel'}}</label>
             <div class='resource-content'><input type='text' name="system.use.for" value="{{system.use.for}}" /></div>

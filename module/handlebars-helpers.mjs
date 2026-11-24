@@ -36,6 +36,14 @@ export function registerHandlebarsHelpers() {
   // Counters with a cooldown: counted in rounds or the owner's turns, from each use or from running out
   $$('sdmCooldownUnits', () => ({ round: 'SDM.Counter.CooldownUnit.round', turn: 'SDM.Counter.CooldownUnit.turn' }));
   $$('sdmCooldownFrom', () => ({ use: 'SDM.Counter.CooldownFrom.use', empty: 'SDM.Counter.CooldownFrom.empty' }));
+  // A replenisher's kind: what it can recharge ('' none)
+  $$('sdmReplenishChoices', () => ({
+    '': 'SDM.Use.Replenishes.none',
+    any: 'SDM.Use.Replenishes.any',
+    small: 'SDM.Use.Replenishes.small',
+    weapon: 'SDM.Use.Replenishes.weapon',
+    machine: 'SDM.Use.Replenishes.machine'
+  }));
   $$('sdmIsLit', item => isLit(item));
   $$('sdmOnceAbilityChoices', () => ({
     '': 'SDM.Trigger.WearNone',

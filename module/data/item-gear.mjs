@@ -105,6 +105,9 @@ export default class SdmGear extends SdmItemBase {
       for: new fields.StringField({ required: true, blank: true, initial: '' }),
       // Purges the targets of other consumables: the effects they copied are removed
       purge: new fields.BooleanField({ required: true, initial: false }),
+      // A single-use replenisher: Use recharges one item that is running low or run out, picked then,
+      // of a kind (any; small: 1 stone or less; a weapon; a machine)
+      replenishes: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'any', 'small', 'weapon', 'machine'] }),
       // Overdose: after `after` doses within the period, each dose asks for a save against a condition
       // (or one of the item's effects); escalating, the difficulty goes up one step per dose
       overdose: new fields.SchemaField({

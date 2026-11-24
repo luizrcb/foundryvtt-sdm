@@ -529,6 +529,11 @@ export async function castPowerFree(target, actor, powerName = '') {
   return sheet.constructor._onRoll.call(sheet, event, fakeTarget);
 }
 
+/** Recharge an item (the menu's Recharge): charges back to max unless replenish, running low / run out cleared. */
+export function rechargeItem(item) {
+  return wearItem(item, 'recharge');
+}
+
 async function wearItem(item, wear) {
   const system = item.system;
   // Repair one step (broken → notched → whole) or fully
