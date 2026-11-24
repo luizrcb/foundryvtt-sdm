@@ -16,6 +16,8 @@ const SUMMON_QUERY = 'sdm.summon';
 const DISMISS_QUERY = 'sdm.dismissSummons';
 const FLAG = 'summon';
 const SOURCE_FLAG = 'summonSource';
+// The source NPC's last change the copy was made from (a newer change refreshes the copy)
+const SYNC_FLAG = 'summonSynced';
 const CARD_FLAG = 'summonCard';
 const HUD_CLASS = 'sdm-dismiss-summon';
 // The effect a summoned creature carries (its token icon, Effects tab and effects panel)
@@ -247,17 +249,41 @@ async function summonActor(uuid, level) {
   // A copy already in the Summons folder is used as it is
   if (!source.pack && source.getFlag('sdm', SOURCE_FLAG) && level === null) return source;
   const key = `${uuid}|${level ?? ''}`;
-  const existing = game.actors.find(actor => actor.getFlag('sdm', SOURCE_FLAG) === key);
-  if (existing) return existing;
-  const folder = await summonsFolder();
+  // When the NPC was last changed: a copy made before that is brought up to date
+  const stamp = Number(source._stats?.modifiedTime) || 0;
   const data = source.pack ? game.actors.fromCompendium(source) : source.toObject();
   delete data._id;
-  data.folder = folder?.id ?? null;
-  foundry.utils.setProperty(data, `flags.sdm.${SOURCE_FLAG}`, key);
   foundry.utils.setProperty(data, 'prototypeToken.actorLink', false);
+  foundry.utils.setProperty(data, `flags.sdm.${SOURCE_FLAG}`, key);
+  foundry.utils.setProperty(data, `flags.sdm.${SYNC_FLAG}`, stamp);
+  const existing = game.actors.find(actor => actor.getFlag('sdm', SOURCE_FLAG) === key);
+  if (existing) {
+    if ((Number(existing.getFlag('sdm', SYNC_FLAG)) || 0) >= stamp) return existing;
+    return refreshCopy(existing, data, level);
+  }
+  const folder = await summonsFolder();
+  data.folder = folder?.id ?? null;
   const actor = await Actor.implementation.create(data);
   if (actor && level !== null && actor.type === ActorType.NPC && level !== actor.system.level) await actor.levelUpNpcTo(level);
   return actor;
+}
+
+/**
+ * The NPC changed since its copy was made: the copy takes its stats, token, items and effects again
+ * (then its level). Summoned tokens already on a scene follow their copy too (they keep their own
+ * changes, such as life lost).
+ */
+async function refreshCopy(copy, data, level) {
+  const { system, prototypeToken, name, img, flags } = data;
+  await copy.update({ name, img, system, prototypeToken, flags }, { diff: false, recursive: false });
+  for (const kind of ['Item', 'ActiveEffect']) {
+    const old = copy.getEmbeddedCollection(kind).map(doc => doc.id);
+    if (old.length) await copy.deleteEmbeddedDocuments(kind, old);
+  }
+  if (data.items?.length) await copy.createEmbeddedDocuments('Item', data.items.map(({ _id, ...item }) => item), { sdmKeepReadied: true });
+  if (data.effects?.length) await copy.createEmbeddedDocuments('ActiveEffect', data.effects.map(({ _id, ...effect }) => effect));
+  if (level !== null && copy.type === ActorType.NPC && level !== copy.system.level) await copy.levelUpNpcTo(level);
+  return copy;
 }
 
 /** Players who own the summoner own the creature too. */
