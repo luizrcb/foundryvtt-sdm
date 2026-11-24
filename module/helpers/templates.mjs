@@ -4,6 +4,7 @@ export const templatePath = $$;
 
 const templatesToLoad = [
   $$('counters'),
+  $$('item/triggers'),
   $$('actor/counter-chips'),
   $$('actor/proto-link'),
   $$('actor/speed'),

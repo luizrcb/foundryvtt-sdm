@@ -100,6 +100,7 @@
   "SDM.Trigger.LifeMode.damage": "causa dano",
   "SDM.Trigger.LifeMode.heal": "cura",
   "SDM.Trigger.LightMode.flare": "clarão",
+  "SDM.Trigger.ModHint": "Enquanto este mod estiver instalado, seus gatilhos funcionam como os do item (um mod de acerto funciona em qualquer arma em que for colocado).",
   "SDM.Trigger.NoTargets": "{item}: mire um token primeiro.",
   "SDM.Trigger.Purge": "Purgar",
   "SDM.Trigger.PurgeHint": "Remove os efeitos de consumíveis (drogas, poções…) dos alvos ou de você.",

@@ -1,0 +1,5 @@
+{{! Item mod's effect sheet: its roll triggers (they join its item's while installed) }}
+<section class="tab scrollable{{#if tab.active}} active{{/if}}" data-group="{{tab.group}}" data-tab="{{tab.id}}">
+  <p class="hint">{{localize 'SDM.Trigger.ModHint'}}</p>
+  {{> ($$ "item/triggers")}}
+</section>

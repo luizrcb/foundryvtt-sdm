@@ -100,6 +100,7 @@
   "SDM.Trigger.LifeMode.damage": "damages",
   "SDM.Trigger.LifeMode.heal": "heals",
   "SDM.Trigger.LightMode.flare": "flares",
+  "SDM.Trigger.ModHint": "While this mod is installed, its triggers work as its item's (an on-hit mod works on whatever weapon it is put on).",
   "SDM.Trigger.NoTargets": "{item}: target a token first.",
   "SDM.Trigger.Purge": "Purge",
   "SDM.Trigger.PurgeHint": "Remove the effects of consumables (drugs, potions…) from the targets or yourself.",

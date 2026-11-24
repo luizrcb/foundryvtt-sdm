@@ -104,6 +104,193 @@ function triggerConditionChoices(trigger) {
   return Object.fromEntries(list.map(condition => [condition, label(condition)]));
 }
 
+/**
+ * Item pickers of the triggers: this item and the owner's items (by identifier), for "From" and the
+ * use-a-power / use-a-consumable / light actions. Values not found (item on no actor, or removed)
+ * stay listed by their identifier so nothing is lost on save.
+ */
+function triggerItemChoices(item, triggers = item.system.triggers ?? []) {
+  const actorItems = (item.actor?.items ?? []).filter(other => other.id !== item.id);
+  const self = $l10n('SDM.Trigger.ThisItem');
+  const pick = (accept, { none = true, withSelf = true } = {}) => {
+    const choices = {};
+    if (none) choices[''] = '—';
+    if (withSelf && accept(item)) choices['@self'] = self;
+    for (const other of actorItems) {
+      if (!accept(other)) continue;
+      const id = getItemIdentifier(other);
+      if (id && !(id in choices)) choices[id] = other.name;
+    }
+    return choices;
+  };
+  const keep = (choices, values) => {
+    for (const value of values) if (value && !(value in choices)) choices[value] = value === '@self' ? self : value;
+    return choices;
+  };
+  return {
+    triggerSourceItems: keep(pick(other => other.type === ItemType.GEAR, { withSelf: false }), triggers.map(t => t.from_item)),
+    triggerCastItems: keep(pick(isCastable), triggers.map(t => t.cast)),
+    triggerUseItems: keep(pick(isUsable), triggers.map(t => t.use)),
+    triggerLightItems: keep(pick(isLightSource, { none: false }), triggers.map(t => t.light_item)),
+    triggerChargeItems: keep(pick(triggerHasCharges, { none: false }), triggers.map(t => t.charges_item)),
+    triggerAnimateItems: keep(pick(isAnimatableItem, { none: false }), triggers.map(t => t.animate_item))
+  };
+}
+
+
+/**
+ * The choices of the roll triggers editor (item Effects tab, item mod's effect sheet): rolls,
+ * conditions, actions and the item pickers, for `item` and these `triggers`.
+ */
+export function triggerEditorContext(item, triggers = []) {
+  return {
+      triggerRolls: {
+        attack: 'SDM.Trigger.Roll.attack',
+        damage: 'SDM.Trigger.Roll.damage',
+        power: 'SDM.Trigger.Roll.power',
+        usage: 'SDM.Trigger.Roll.usage',
+        use: 'SDM.Trigger.Roll.use',
+        save: 'SDM.Trigger.Roll.save',
+        ability: 'SDM.Trigger.Roll.ability',
+        defeat: 'SDM.Trigger.Roll.defeat',
+        counter: 'SDM.Trigger.Roll.counter',
+        charges: 'SDM.Trigger.Roll.charges'
+      },
+      triggerCounterModes: {
+        add: 'SDM.Trigger.CounterMode.add',
+        set: 'SDM.Trigger.CounterMode.set',
+        reset: 'SDM.Trigger.CounterMode.reset'
+      },
+      triggerAbilities: { '': 'SDM.Trigger.AbilityAny', ...CONFIG.SDM.abilities },
+      triggerEffectTargets: { targets: 'SDM.Trigger.EffectTargets', self: 'SDM.Trigger.EffectSelf' },
+      triggerAttacks: {
+        '': 'SDM.Trigger.AttackAny',
+        melee: 'SDM.AttackMelee',
+        ranged: 'SDM.AttackRanged',
+        fantascience: 'SDM.AttackFantascience',
+        oldtech: 'SDM.AttackOldtech'
+      },
+      // Each trigger lists only the conditions that fit its roll
+      triggerConditionChoices: triggers.map(trigger => triggerConditionChoices(trigger)),
+      triggerWear: {
+        '': 'SDM.Trigger.WearNone',
+        notch: 'SDM.Trigger.Wear.notch',
+        break: 'SDM.Trigger.Wear.break',
+        running_low: 'SDM.Trigger.Wear.running_low',
+        run_out: 'SDM.Trigger.Wear.run_out',
+        repair: 'SDM.Trigger.Wear.repair',
+        repair_full: 'SDM.Trigger.Wear.repair_full',
+        recharge: 'SDM.Trigger.Wear.recharge'
+      },
+      triggerEffects: Object.fromEntries([['', ''], ...item.effects.map(effect => [effect.id, effect.name])]),
+      // Conditions a trigger can put on its targets / self: the Token HUD's list
+      triggerStatusModes: { apply: 'SDM.Trigger.StatusApply', remove: 'SDM.Trigger.StatusRemove' },
+      // A condition with a save: the ability suggested to characters ('' = by the condition)
+      triggerSaveDifficulties: {
+        veryEasy: 'SDM.SaveDifficulty.veryEasyStep',
+        easy: 'SDM.SaveDifficulty.easyStep',
+        '': 'SDM.SaveDifficulty.standard',
+        hard: 'SDM.SaveDifficulty.hardStep',
+        veryHard: 'SDM.SaveDifficulty.veryHardStep',
+        target: 'SDM.SaveDifficulty.target'
+      },
+      triggerSaveAbilities: {
+        '': 'SDM.Trigger.StatusSaveAbilityAuto',
+        ...Object.fromEntries(['str', 'end', 'agi', 'cha', 'aur', 'tho'].map(key => [key, CONFIG.SDM.abilities[key]]))
+      },
+      // A consumable's overdose: how long doses are counted, and the first save's difficulty
+      useOverduePeriods: { '': 'SDM.Use.OverdosePeriod.ever', days: 'SDM.Use.OverdosePeriod.days', weeks: 'SDM.Use.OverdosePeriod.weeks' },
+      useOverdoseDifficulties: {
+        veryEasy: 'SDM.SaveDifficulty.veryEasyStep',
+        easy: 'SDM.SaveDifficulty.easyStep',
+        '': 'SDM.SaveDifficulty.standard',
+        hard: 'SDM.SaveDifficulty.hardStep',
+        veryHard: 'SDM.SaveDifficulty.veryHardStep'
+      },
+      triggerStatuses: Object.fromEntries([
+        ['', ''],
+        ...CONFIG.statusEffects
+          .map(status => [status.id, game.i18n.localize(status.name ?? status.label ?? status.id)])
+          .sort((a, b) => a[1].localeCompare(b[1], game.i18n.lang))
+      ]),
+      // A consumable's Use: the conditions it cures (same list, no blank)
+      useCureChoices: Object.fromEntries(
+        CONFIG.statusEffects
+          .map(status => [status.id, game.i18n.localize(status.name ?? status.label ?? status.id)])
+          .sort((a, b) => a[1].localeCompare(b[1], game.i18n.lang))
+      ),
+      triggerCounters: Object.fromEntries([
+        ['', ''],
+        ...Object.entries(item.system.counters ?? {}).map(([key, counter]) => [key, counter.label])
+      ]),
+      // The owner's counters (character, NPC); keys used by the triggers stay listed when missing
+      triggerActorCounters: Object.fromEntries([
+        ['', ''],
+        ...Object.entries(item.actor?.system?.counters ?? {}).map(([key, counter]) => [key, counter.label]),
+        ...triggers
+          .flatMap(t => [t.watch_scope === 'actor' ? t.watch : '', t.counter_scope === 'actor' ? t.counter : ''])
+          .filter(key => key && !item.actor?.system?.counters?.[key])
+          .map(key => [key, key])
+      ]),
+      triggerScopes: { '': 'SDM.Trigger.Scope.item', actor: 'SDM.Trigger.Scope.actor' },
+      triggerFrom: { '': 'SDM.Trigger.From.self', any: 'SDM.Trigger.From.any', item: 'SDM.Trigger.From.item' },
+      // Attack triggers: the item the attack is made with (attack dialog's "With"), or unarmed
+      triggerAttackFrom: {
+        '': 'SDM.Trigger.From.self',
+        any: 'SDM.Trigger.From.any',
+        item: 'SDM.Trigger.From.item',
+        unarmed: 'SDM.Trigger.From.unarmed'
+      },
+      // Consumables (Use)
+      // Nothing picked shows empty (any ability / until removed), not a default choice
+      useAbilityGroups: { '': '', physical: 'SDM.Use.Group.physical', mental: 'SDM.Use.Group.mental' },
+      useDurationUnits: {
+        '': '',
+        rounds: 'SDM.Use.DurationUnit.rounds',
+        minutes: 'SDM.Use.DurationUnit.minutes',
+        hours: 'SDM.Use.DurationUnit.hours',
+        days: 'SDM.Use.DurationUnit.days',
+        weeks: 'SDM.Use.DurationUnit.weeks'
+      },
+      triggerCostResources: {
+        '': 'SDM.Trigger.WearNone',
+        life: 'SDM.CostResource.Life',
+        ...CONFIG.SDM.abilities,
+        hero_die: 'SDM.CostResource.HeroDie'
+      },
+      triggerChargeModes: {
+        '': 'SDM.Trigger.WearNone',
+        spend: 'SDM.Trigger.ChargesMode.spend',
+        add: 'SDM.Trigger.ChargesMode.add',
+        set: 'SDM.Trigger.ChargesMode.set'
+      },
+      triggerLightModes: {
+        '': 'SDM.Trigger.WearNone',
+        light: 'SDM.Trigger.LightMode.light',
+        put_out: 'SDM.Trigger.LightMode.put_out',
+        toggle: 'SDM.Trigger.LightMode.toggle',
+        flare: 'SDM.Trigger.LightMode.flare'
+      },
+      triggerLifeModes: {
+        '': 'SDM.Trigger.WearNone',
+        heal: 'SDM.Trigger.LifeMode.heal',
+        damage: 'SDM.Trigger.LifeMode.damage'
+      },
+      triggerAbilityDamage: {
+        '': 'SDM.Trigger.WearNone',
+        choose: 'SDM.Trigger.AbilityDamageChooseOption',
+        ...Object.fromEntries(['str', 'end', 'agi', 'cha', 'aur', 'tho'].map(key => [key, CONFIG.SDM.abilities[key]]))
+      },
+      triggerPurgeModes: { '': 'SDM.Trigger.WearNone', targets: 'SDM.Trigger.EffectTargets', self: 'SDM.Trigger.EffectSelf' },
+      triggerAnimateModes: {
+        '': 'SDM.Trigger.WearNone',
+        animate: 'SDM.Trigger.AnimateMode.animate',
+        deanimate: 'SDM.Trigger.AnimateMode.deanimate'
+      },
+      ...triggerItemChoices(item, triggers)
+  };
+}
+
 export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemSheetV2) {
   constructor(options = {}) {
     super(options);
@@ -287,42 +474,6 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
 
   /* -------------------------------------------- */
 
-  /** @override */
-  /**
-   * Item pickers of the triggers: this item and the owner's items (by identifier), for "From" and the
-   * use-a-power / use-a-consumable / light actions. Values not found (item on no actor, or removed)
-   * stay listed by their identifier so nothing is lost on save.
-   */
-  _triggerItemChoices() {
-    const item = this.item;
-    const actorItems = (item.actor?.items ?? []).filter(other => other.id !== item.id);
-    const self = $l10n('SDM.Trigger.ThisItem');
-    const pick = (accept, { none = true, withSelf = true } = {}) => {
-      const choices = {};
-      if (none) choices[''] = '—';
-      if (withSelf && accept(item)) choices['@self'] = self;
-      for (const other of actorItems) {
-        if (!accept(other)) continue;
-        const id = getItemIdentifier(other);
-        if (id && !(id in choices)) choices[id] = other.name;
-      }
-      return choices;
-    };
-    const keep = (choices, values) => {
-      for (const value of values) if (value && !(value in choices)) choices[value] = value === '@self' ? self : value;
-      return choices;
-    };
-    const triggers = item.system.triggers ?? [];
-    return {
-      triggerSourceItems: keep(pick(other => other.type === ItemType.GEAR, { withSelf: false }), triggers.map(t => t.from_item)),
-      triggerCastItems: keep(pick(isCastable), triggers.map(t => t.cast)),
-      triggerUseItems: keep(pick(isUsable), triggers.map(t => t.use)),
-      triggerLightItems: keep(pick(isLightSource, { none: false }), triggers.map(t => t.light_item)),
-      triggerChargeItems: keep(pick(triggerHasCharges, { none: false }), triggers.map(t => t.charges_item)),
-      triggerAnimateItems: keep(pick(isAnimatableItem, { none: false }), triggers.map(t => t.animate_item))
-    };
-  }
-
   async _prepareContext(options) {
     const extendedSkillRanks = game.settings.get('sdm', 'extendedSkillRanks') || false;
     const defaultModifierStep = game.settings.get('sdm', 'skillModifierStep') || 3;
@@ -394,150 +545,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
         '': 'SDM.Light.NoAnimation',
         ...Object.fromEntries(Object.entries(CONFIG.Canvas.lightAnimations ?? {}).map(([key, cfg]) => [key, cfg.label]))
       },
-      triggerRolls: {
-        attack: 'SDM.Trigger.Roll.attack',
-        damage: 'SDM.Trigger.Roll.damage',
-        power: 'SDM.Trigger.Roll.power',
-        usage: 'SDM.Trigger.Roll.usage',
-        use: 'SDM.Trigger.Roll.use',
-        save: 'SDM.Trigger.Roll.save',
-        ability: 'SDM.Trigger.Roll.ability',
-        defeat: 'SDM.Trigger.Roll.defeat',
-        counter: 'SDM.Trigger.Roll.counter',
-        charges: 'SDM.Trigger.Roll.charges'
-      },
-      triggerCounterModes: {
-        add: 'SDM.Trigger.CounterMode.add',
-        set: 'SDM.Trigger.CounterMode.set',
-        reset: 'SDM.Trigger.CounterMode.reset'
-      },
-      triggerAbilities: { '': 'SDM.Trigger.AbilityAny', ...CONFIG.SDM.abilities },
-      triggerEffectTargets: { targets: 'SDM.Trigger.EffectTargets', self: 'SDM.Trigger.EffectSelf' },
-      triggerAttacks: {
-        '': 'SDM.Trigger.AttackAny',
-        melee: 'SDM.AttackMelee',
-        ranged: 'SDM.AttackRanged',
-        fantascience: 'SDM.AttackFantascience',
-        oldtech: 'SDM.AttackOldtech'
-      },
-      // Each trigger lists only the conditions that fit its roll
-      triggerConditionChoices: (this.item.system.triggers ?? []).map(trigger => triggerConditionChoices(trigger)),
-      triggerWear: {
-        '': 'SDM.Trigger.WearNone',
-        notch: 'SDM.Trigger.Wear.notch',
-        break: 'SDM.Trigger.Wear.break',
-        running_low: 'SDM.Trigger.Wear.running_low',
-        run_out: 'SDM.Trigger.Wear.run_out',
-        repair: 'SDM.Trigger.Wear.repair',
-        repair_full: 'SDM.Trigger.Wear.repair_full',
-        recharge: 'SDM.Trigger.Wear.recharge'
-      },
-      triggerEffects: Object.fromEntries([['', ''], ...this.item.effects.map(effect => [effect.id, effect.name])]),
-      // Conditions a trigger can put on its targets / self: the Token HUD's list
-      triggerStatusModes: { apply: 'SDM.Trigger.StatusApply', remove: 'SDM.Trigger.StatusRemove' },
-      // A condition with a save: the ability suggested to characters ('' = by the condition)
-      triggerSaveDifficulties: {
-        veryEasy: 'SDM.SaveDifficulty.veryEasyStep',
-        easy: 'SDM.SaveDifficulty.easyStep',
-        '': 'SDM.SaveDifficulty.standard',
-        hard: 'SDM.SaveDifficulty.hardStep',
-        veryHard: 'SDM.SaveDifficulty.veryHardStep',
-        target: 'SDM.SaveDifficulty.target'
-      },
-      triggerSaveAbilities: {
-        '': 'SDM.Trigger.StatusSaveAbilityAuto',
-        ...Object.fromEntries(['str', 'end', 'agi', 'cha', 'aur', 'tho'].map(key => [key, CONFIG.SDM.abilities[key]]))
-      },
-      // A consumable's overdose: how long doses are counted, and the first save's difficulty
-      useOverduePeriods: { '': 'SDM.Use.OverdosePeriod.ever', days: 'SDM.Use.OverdosePeriod.days', weeks: 'SDM.Use.OverdosePeriod.weeks' },
-      useOverdoseDifficulties: {
-        veryEasy: 'SDM.SaveDifficulty.veryEasyStep',
-        easy: 'SDM.SaveDifficulty.easyStep',
-        '': 'SDM.SaveDifficulty.standard',
-        hard: 'SDM.SaveDifficulty.hardStep',
-        veryHard: 'SDM.SaveDifficulty.veryHardStep'
-      },
-      triggerStatuses: Object.fromEntries([
-        ['', ''],
-        ...CONFIG.statusEffects
-          .map(status => [status.id, game.i18n.localize(status.name ?? status.label ?? status.id)])
-          .sort((a, b) => a[1].localeCompare(b[1], game.i18n.lang))
-      ]),
-      // A consumable's Use: the conditions it cures (same list, no blank)
-      useCureChoices: Object.fromEntries(
-        CONFIG.statusEffects
-          .map(status => [status.id, game.i18n.localize(status.name ?? status.label ?? status.id)])
-          .sort((a, b) => a[1].localeCompare(b[1], game.i18n.lang))
-      ),
-      triggerCounters: Object.fromEntries([
-        ['', ''],
-        ...Object.entries(this.item.system.counters ?? {}).map(([key, counter]) => [key, counter.label])
-      ]),
-      // The owner's counters (character, NPC); keys used by the triggers stay listed when missing
-      triggerActorCounters: Object.fromEntries([
-        ['', ''],
-        ...Object.entries(this.item.actor?.system?.counters ?? {}).map(([key, counter]) => [key, counter.label]),
-        ...(this.item.system.triggers ?? [])
-          .flatMap(t => [t.watch_scope === 'actor' ? t.watch : '', t.counter_scope === 'actor' ? t.counter : ''])
-          .filter(key => key && !this.item.actor?.system?.counters?.[key])
-          .map(key => [key, key])
-      ]),
-      triggerScopes: { '': 'SDM.Trigger.Scope.item', actor: 'SDM.Trigger.Scope.actor' },
-      triggerFrom: { '': 'SDM.Trigger.From.self', any: 'SDM.Trigger.From.any', item: 'SDM.Trigger.From.item' },
-      // Attack triggers: the item the attack is made with (attack dialog's "With"), or unarmed
-      triggerAttackFrom: {
-        '': 'SDM.Trigger.From.self',
-        any: 'SDM.Trigger.From.any',
-        item: 'SDM.Trigger.From.item',
-        unarmed: 'SDM.Trigger.From.unarmed'
-      },
-      // Consumables (Use)
-      // Nothing picked shows empty (any ability / until removed), not a default choice
-      useAbilityGroups: { '': '', physical: 'SDM.Use.Group.physical', mental: 'SDM.Use.Group.mental' },
-      useDurationUnits: {
-        '': '',
-        rounds: 'SDM.Use.DurationUnit.rounds',
-        minutes: 'SDM.Use.DurationUnit.minutes',
-        hours: 'SDM.Use.DurationUnit.hours',
-        days: 'SDM.Use.DurationUnit.days',
-        weeks: 'SDM.Use.DurationUnit.weeks'
-      },
-      triggerCostResources: {
-        '': 'SDM.Trigger.WearNone',
-        life: 'SDM.CostResource.Life',
-        ...CONFIG.SDM.abilities,
-        hero_die: 'SDM.CostResource.HeroDie'
-      },
-      triggerChargeModes: {
-        '': 'SDM.Trigger.WearNone',
-        spend: 'SDM.Trigger.ChargesMode.spend',
-        add: 'SDM.Trigger.ChargesMode.add',
-        set: 'SDM.Trigger.ChargesMode.set'
-      },
-      triggerLightModes: {
-        '': 'SDM.Trigger.WearNone',
-        light: 'SDM.Trigger.LightMode.light',
-        put_out: 'SDM.Trigger.LightMode.put_out',
-        toggle: 'SDM.Trigger.LightMode.toggle',
-        flare: 'SDM.Trigger.LightMode.flare'
-      },
-      triggerLifeModes: {
-        '': 'SDM.Trigger.WearNone',
-        heal: 'SDM.Trigger.LifeMode.heal',
-        damage: 'SDM.Trigger.LifeMode.damage'
-      },
-      triggerAbilityDamage: {
-        '': 'SDM.Trigger.WearNone',
-        choose: 'SDM.Trigger.AbilityDamageChooseOption',
-        ...Object.fromEntries(['str', 'end', 'agi', 'cha', 'aur', 'tho'].map(key => [key, CONFIG.SDM.abilities[key]]))
-      },
-      triggerPurgeModes: { '': 'SDM.Trigger.WearNone', targets: 'SDM.Trigger.EffectTargets', self: 'SDM.Trigger.EffectSelf' },
-      triggerAnimateModes: {
-        '': 'SDM.Trigger.WearNone',
-        animate: 'SDM.Trigger.AnimateMode.animate',
-        deanimate: 'SDM.Trigger.AnimateMode.deanimate'
-      },
-      ...this._triggerItemChoices(),
+      ...triggerEditorContext(this.item, this.item.system.triggers ?? []),
       boostResources: {
         life: 'SDM.CostResource.Life',
         ...CONFIG.SDM.abilities,
