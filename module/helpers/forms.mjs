@@ -123,9 +123,10 @@ async function startForm(effect) {
   const look = formLook(effect, form, creature);
 
   // The look: every token, the prototype token of a linked actor, and the portrait if asked
-  const saved = { tokens: {}, prototype: null, portrait: null };
+  // Tokens kept as a list: a uuid as a key would be split at its dots when the flag is saved
+  const saved = { tokens: [], prototype: null, portrait: null };
   for (const token of actorTokens(actor)) {
-    saved.tokens[token.uuid] = { src: token.texture.src, scaleX: token.texture.scaleX, scaleY: token.texture.scaleY, width: token.width, height: token.height, name: token.name };
+    saved.tokens.push({ uuid: token.uuid, src: token.texture.src, scaleX: token.texture.scaleX, scaleY: token.texture.scaleY, width: token.width, height: token.height, name: token.name });
     await token.update(lookUpdate(look), { sdmForm: true });
   }
   if (!actor.isToken) {
@@ -263,6 +264,22 @@ function lookUpdate(look) {
 /** A key for a form's remembered uses: its name (copies of the same form share it). */
 const formKey = effect => (effect?.name || 'form').slugify?.() ?? effect?.name ?? 'form';
 
+/**
+ * The saved token looks as [{ uuid, src, ... }]. Forms started before the list was used kept them
+ * by uuid, split at its dots ({ Scene: { id: { Token: { id: look } } } }): rebuilt from the path.
+ */
+function savedTokens(tokens) {
+  if (Array.isArray(tokens)) return tokens.filter(t => t?.uuid);
+  const found = [];
+  const walk = (node, path) => {
+    if (!node || typeof node !== 'object') return;
+    if ('src' in node) return found.push({ uuid: path.join('.'), ...node });
+    for (const [key, value] of Object.entries(node)) walk(value, [...path, key]);
+  };
+  walk(tokens, []);
+  return found;
+}
+
 async function endForm(actor) {
   const active = actor?.getFlag('sdm', ACTIVE_FLAG);
   if (!active) return;
@@ -270,7 +287,7 @@ async function endForm(actor) {
   const saved = active.saved ?? {};
 
   // The look back
-  for (const [uuid, look] of Object.entries(saved.tokens ?? {})) {
+  for (const { uuid, ...look } of savedTokens(saved.tokens)) {
     const token = fromUuidSync(uuid);
     if (!token) continue;
     await token.update({ 'texture.src': look.src, 'texture.scaleX': look.scaleX, 'texture.scaleY': look.scaleY, width: look.width, height: look.height, name: look.name }, { sdmForm: true });
