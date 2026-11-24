@@ -50,7 +50,7 @@ export async function applyToTokens(amount, multiplier = 1) {
 export function addApplyToPlainRolls(message, html) {
   if (!message.rolls?.length || !message.isContentVisible) return;
   // Not an initiative roll (nor a hero dice result on one)
-  if (message.getFlag('core', 'initiativeRoll') || message.getFlag('sdm', 'initiative') || message.getFlag('sdm', 'heroFlags')?.sdm?.initiative) return;
+  if (message.getFlag('sdm', 'hazardRoll') || message.getFlag('core', 'initiativeRoll') || message.getFlag('sdm', 'initiative') || message.getFlag('sdm', 'heroFlags')?.sdm?.initiative) return;
   if (!(message.isAuthor || game.user.isGM)) return;
   if (html.querySelector('.sdm-card, .sdm-apply-damage')) return;
   const total = Math.round(Number(message.rolls[0]?.total) || 0);

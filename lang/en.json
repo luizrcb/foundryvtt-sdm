@@ -3477,5 +3477,6 @@
   "SDM.Mod.MarkUpgrade": "Item mod (hallmark upgrade, no mod slot)",
   "SDM.Mod.Off": "off",
   "SDM.InitiativeHero.Changed": "Initiative {total}: {names}",
-  "SDM.InitiativeHero.Closed": "Too late: hero dice change initiative only until the round's first turn ends."
+  "SDM.InitiativeHero.Closed": "Too late: hero dice change initiative only until the round's first turn ends.",
+  "SDM.Hazard.RollFlavor": "{name}: damage to {target}"
 }

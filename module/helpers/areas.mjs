@@ -1636,6 +1636,16 @@ export async function hazardEvent(behavior, token, eventName = '') {
     try {
       const roll = await new Roll(resolveFormulaReferences(formula, { actor, item }), actor?.getRollData?.() ?? {}).evaluate();
       amount = Math.max((Number(roll.total) || 0) - areaDamageReduction(token.actor), 0);
+      // The roll goes to the Referee only (who can reveal it from the message's menu); applied already,
+      // so no apply buttons and no hero dice on it
+      await roll.toMessage(
+        {
+          speaker: ChatMessage.getSpeaker({ alias: behavior.name || behavior.region?.name || '' }),
+          flavor: $fmt('SDM.Hazard.RollFlavor', { name: behavior.name || behavior.region?.name || '', target: token.name }),
+          flags: { sdm: { hazardRoll: true, noHeroDice: true } }
+        },
+        { messageMode: 'gm' }
+      );
     } catch (error) {
       console.warn(`SDM | ${behavior.name}: "${formula}" could not be rolled`, error);
     }
