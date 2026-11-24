@@ -169,6 +169,32 @@
 - **Boatmaster**: crew members with Boatmaster add their level in sacks to the caravan's boats (at most each boat's capacity)
 - Glass Skull, Shrunken Head, Necrolexicon NEC and Tome of Metal B are now wards with the album feature (their ward bonus is their ward value), and the Scroll Disk Belt holds 3 powers
 - **Single-use powers** and **catching powers**: a power can be marked *single use* (with a warning on hover); after it is used you are asked to remove it (from the album, or the power item is deleted). The chat card of a cast power has a **Catch** handle: drag it into an item with an album to store that power, single use. The Dead God Tooth now has an album with one slot for caught powers
+- **Chat card fixes**: the Catch handle sits on the card's title line; titles read "Kind · Name" on every card ("Usage · Gear"); white SVG item icons are darker on item cards; the footer no longer shows the hero dice count (the Use Hero Dice button stays, centered when alone); a **Blind** / **GM only** / **Private** label on system cards
+- **Apply buttons on plain rolls**: `/r 1d6`, `/r 3`… get the −N, ½, ×2 and heal buttons in one row under the roll, for the roller and the Referee
+- **Hero dice again on a hero dice result**: the Use Hero Dice button stays on the latest hero dice card, and new hero dice act on the dice as the previous ones left them (bump a result again, by the same or another player)
+- **Hero die on a natural 20** (Core Rules, off by default): a character's natural 20 on an ability check, save or attack gives 1 hero die (up to the maximum) to **the roller** or to **all players** (each player's assigned character; the Referee's game adds them). The card says "+1 hero die" or "Hero dice full". Results changed by hero dice never award one
+- **Temporary life on tokens**: the life bar shows temporary life as a blue segment after life (the bar is scaled to max life + temporary life); the combat tracker shows "+N" next to life; the Token HUD has a small blue input for temporary life beside the life one (a number sets it, +N / −N changes it). Fixed: temporary life above its maximum was capped at the borrowed life maximum
+- **Single-use powers**: an hourglass on the inventory row of a single-use power (or an album holding one), and on the title of cards that cast it or attack with it
+- **Animated items**:
+  - A world NPC dropped on the Animation tab is copied into the *Animated Items* folder; the dropped NPC is never changed
+  - Wear follows the mode only: walking items get notched / broken, energy items running low / run out (also for coming to life at half life and for healing on repair or recharge)
+  - **Linked token** option (on by default): off, each token placed is a creature of its own; deanimating takes its state back from the token
+  - The creature's generated weapon (versatile damage) and power copies take no slots
+  - Fixed: the **Creature damage** choice went back to automatic after any other change
+  - The item's owner configures the Animation tab; placing the token can be cancelled (right-click or Esc) before anything is spent; players ask the Referee to deanimate (right-click, Token HUD)
+  - Players whose Foundry role can create and delete tokens **animate without approval**: they place the token and the Referee's game animates the item there
+- **Replenish**: an attack made with a replenish item rolls its usage once, with the attack; the damage or power that follows doesn't roll again and isn't blocked if the attack ran it out. Powers with no roll spend their item's use
+- **Consumables: Rest on use**: every use opens the rest dialog for its targets. Red Nutrislurry is usable and rests
+- **Trigger actions**: **Life** (heal or damage the targets or yourself, a number or formula), **Roll** (a formula to chat), **Hero dice** (gain, or lose with a negative number), **Light → flares** (lit for a set time, then out on its own) and **Animate** (animate or deanimate an animated item)
+- **Attack triggers with albums**: the power name picks one power of an album (the album's selected one when attacking)
+- **Counters**: *Also reset* can be **on rest** or **each day** (when the game date changes)
+- **Custom lights** set their animation speed and intensity (they were fixed at 5)
+- **Compendium Browser**: searches on Enter, the search button or leaving the field (not while typing). The Referee can right-click a result → **Add to selected token**: name, image and price (the item's cost, editable; empty or 0 is free) charged to the actor
+- **Slots in active effects**: adding to or multiplying an item's *slots override* starts from its slots by size
+- **Effect references**: an effect reading an actor value calculated after effects (defense, armor, ward, slots, wealth) gets a console warning: use what it is made from (abilities, defense bonus)
+- **Dice So Nice** shows side rolls (dice costs, consumable amounts, trigger amounts, burning)
+- Fixed: players' rerolled characters reset their XP and level; caravan crew abilities in order; "Free" on one line; album tooltip spacing; actor and item names in normal case (the title font has capitals only); pt-BR "Rola" → "Rolagem"
+- Compendium: Healing Unguent weighs 5 soaps (was 1 stone)
 
 ## v1.10.0
 
