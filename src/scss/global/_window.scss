@@ -2144,6 +2144,54 @@ input[type='radio']::after {
   color: #5fb3e8;
 }
 
+// Compendium Browser: give an item to the selected token (who gets what, charge or not)
+.sdm-give-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 8px;
+
+  .sdm-give-who {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    max-width: 140px;
+    text-align: center;
+    font-weight: bold;
+
+    img {
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+      border: none;
+    }
+  }
+
+  .sdm-give-arrow {
+    font-size: 18px;
+    opacity: 0.6;
+  }
+}
+
+.sdm-give-charge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  label {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  input[type='number'] {
+    flex: 0 0 90px;
+  }
+}
+
 // Single-use power mark on chat cards (cast, or an attack made with it)
 .sdm-single-use-mark {
   flex: 0 0 auto;

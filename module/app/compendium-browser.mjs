@@ -480,11 +480,12 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
   }
 
   /**
-   * Referee: add the item to the selected token's actor. A dialog sets its name, image and the
-   * price charged to the actor (the item's cost, editable; empty or 0: free).
+   * Referee: give the item to the selected token's actor. The dialog shows who gets what (the token's
+   * and the item's images and names) and asks whether to charge it (the item's cost, editable).
    */
   static async #addToSelectedToken(uuid) {
-    const actor = canvas?.tokens?.controlled?.[0]?.actor;
+    const token = canvas?.tokens?.controlled?.[0];
+    const actor = token?.actor;
     if (!actor) {
       ui.notifications.warn($l10n('SDM.CompendiumBrowser.NoToken'));
       return;
@@ -493,28 +494,33 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
     if (source?.documentName !== 'Item') return;
     const esc = text => foundry.utils.escapeHTML(String(text ?? ''));
     const price = (Number(source.system?.cost) || 0) * (Number(source.system?.quantity) || 1);
+    const tokenImg = token.document?.texture?.src || actor.img;
     const content = `
-      <div class="form-group"><label>${esc($l10n('SDM.FieldName'))}</label>
-        <input type="text" name="name" value="${esc(source.name)}" /></div>
-      <div class="form-group"><label>${esc($l10n('SDM.CompendiumBrowser.Image'))}</label>
-        <input type="text" name="img" value="${esc(source.img)}" /></div>
-      <div class="form-group"><label>${esc($l10n('SDM.CompendiumBrowser.Price'))} (${esc($l10n('SDM.CashSymbol'))})</label>
-        <input type="number" name="price" min="0" step="any" value="${price || ''}" /></div>`;
+      <div class="sdm-give-item">
+        <div class="sdm-give-who"><img src="${esc(tokenImg)}" alt="" /><span>${esc(actor.name)}</span></div>
+        <i class="fa-solid fa-arrow-left sdm-give-arrow"></i>
+        <div class="sdm-give-who"><img src="${esc(source.img)}" alt="" /><span>${esc(source.name)}</span></div>
+      </div>
+      <div class="form-group sdm-give-charge">
+        <label><input type="checkbox" name="charge" /> ${esc($l10n('SDM.CompendiumBrowser.Charge'))}</label>
+        <input type="number" name="price" min="0" step="any" value="${price || ''}" />
+        <span>${esc($l10n('SDM.CashSymbol'))}</span>
+      </div>`;
     const result = await foundry.applications.api.DialogV2.prompt({
-      window: { title: `${$l10n('SDM.CompendiumBrowser.AddToToken')}: ${actor.name}`, icon: 'fa-solid fa-user-plus' },
+      window: { title: 'SDM.CompendiumBrowser.AddToToken', icon: 'fa-solid fa-user-plus' },
       content,
       ok: {
         label: 'SDM.CompendiumBrowser.Add',
         callback: (event, button) => {
           const form = button.form.elements;
-          return { name: form.name.value.trim(), img: form.img.value.trim(), price: Number(form.price.value) || 0 };
+          return { charge: form.charge.checked, price: Number(form.price.value) || 0 };
         }
       },
       rejectClose: false
     });
     if (!result) return;
 
-    if (result.price > 0) {
+    if (result.charge && result.price > 0) {
       const paid = await removeCashFromActor(actor, result.price);
       if (paid === false) {
         ui.notifications.warn(
@@ -526,10 +532,7 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
         return;
       }
     }
-    const data = game.items.fromCompendium(source);
-    if (result.name) data.name = result.name;
-    if (result.img) data.img = result.img;
-    const [created] = await actor.createEmbeddedDocuments('Item', [data]);
+    const [created] = await actor.createEmbeddedDocuments('Item', [game.items.fromCompendium(source)]);
     if (created) {
       ui.notifications.info(game.i18n.format('SDM.CompendiumBrowser.Added', { item: created.name, actor: actor.name }));
     }
