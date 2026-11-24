@@ -7437,6 +7437,10 @@ a.sdm-proto-link.warn {
 }
 
 .sdm-card .sdm-card-badge {
+  flex: 0 0 auto;
+  align-self: flex-start;
+  margin-left: auto;
+  white-space: nowrap;
   padding: 0 6px;
   border-radius: 4px;
   background: var(--sdm-card-bad);

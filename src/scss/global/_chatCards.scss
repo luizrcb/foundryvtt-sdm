@@ -30,6 +30,11 @@
   }
 
   .sdm-card-badge {
+    // Never squeezed by a long title: stays on one line, at the right, beside the title's first line
+    flex: 0 0 auto;
+    align-self: flex-start;
+    margin-left: auto;
+    white-space: nowrap;
     padding: 0 6px;
     border-radius: 4px;
     background: var(--sdm-card-bad);
