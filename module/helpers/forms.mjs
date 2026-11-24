@@ -107,6 +107,15 @@ function itemsToSetAside(actor, form) {
 /*  Starting and ending (the Referee's game)    */
 /* -------------------------------------------- */
 
+/** Now, as an effect's start; in combat, counted on its user's turns (core takes whoever's turn it is). */
+function formStart(effect) {
+  const start = effect.constructor.getEffectStart();
+  const combat = game.combat?.started ? game.combat : null;
+  const combatant = combat?.getCombatantsByActor(effectActor(effect) ?? '')?.[0];
+  if (combatant) Object.assign(start, { combatant: combatant.id, initiative: combatant.initiative ?? null });
+  return start;
+}
+
 async function startForm(effect) {
   const actor = effectActor(effect);
   if (!actor) return;
@@ -118,6 +127,9 @@ async function startForm(effect) {
     await endForm(actor);
     if (old && old.uuid !== effect.uuid) await removeFormEffect(old);
   }
+  // Its duration counts from now (core sets a start only when an actor's own effect is created: a
+  // form from an item would never expire, and one taken again would count from long ago)
+  if (effect.isTemporary) await effect.update({ start: formStart(effect) });
   const form = effect.system.form;
   const creature = await formCreature(form);
   const look = formLook(effect, form, creature);
@@ -354,14 +366,23 @@ export async function dismissForm(actor) {
 /*  Hooks                                       */
 /* -------------------------------------------- */
 
-async function onEffectChanged(effect) {
+async function onEffectChanged(effect, changes) {
   if (!isActiveGM() || !isForm(effect)) return;
   const actor = effectActor(effect);
   if (!actor) return;
   const current = actor.getFlag('sdm', ACTIVE_FLAG)?.effect;
   try {
+    // Switched on again after it expired: no longer expired (the update starts the form)
+    if (changes && 'disabled' in changes && !effect.disabled && effect.duration?.expired && current !== effect.uuid) {
+      await effect.update({ 'duration.expired': false, start: formStart(effect) });
+      return;
+    }
     if (formIsOn(effect)) await startForm(effect);
-    else if (current === effect.uuid) await endForm(actor);
+    else if (current === effect.uuid) {
+      await endForm(actor);
+      // Its duration ran out: the effect goes too (one from an item is switched off, to be taken again)
+      if (effect.duration?.expired) await removeFormEffect(effect);
+    }
   } catch (error) {
     console.error('SDM | Form failed', error);
   }
@@ -425,7 +446,7 @@ function onRenderActorSheet(app, html) {
 export function setupForms() {
   Hooks.on('createActiveEffect', onEffectChanged);
   Hooks.on('updateActiveEffect', (effect, changes) => {
-    if ('disabled' in changes || foundry.utils.hasProperty(changes, 'system.form.enabled')) onEffectChanged(effect);
+    if ('disabled' in changes || foundry.utils.hasProperty(changes, 'system.form.enabled') || foundry.utils.hasProperty(changes, 'duration.expired')) onEffectChanged(effect, changes);
   });
   Hooks.on('deleteActiveEffect', onEffectDeleted);
   Hooks.on('updateActor', onUpdateActor);
