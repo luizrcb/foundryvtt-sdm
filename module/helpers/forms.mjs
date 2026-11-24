@@ -452,6 +452,26 @@ export function setupForms() {
   Hooks.on('updateActor', onUpdateActor);
   Hooks.on('renderActorSheetV2', onRenderActorSheet);
   Hooks.on('renderTokenHUD', onRenderTokenHUD);
+  Hooks.on('updateToken', onUpdateTokenLook);
+}
+
+/**
+ * A token's image or name changed (a form taken or ended): its combatants show the new one. Core
+ * takes them from the token only when the combatant is prepared; one with its own image or name
+ * set is left alone.
+ */
+function onUpdateTokenLook(token, changes) {
+  if (!foundry.utils.hasProperty(changes, 'texture.src') && !('name' in changes)) return;
+  let changed = false;
+  for (const combat of game.combats) {
+    for (const combatant of combat.combatants) {
+      if (combatant.tokenId !== token.id || combatant.sceneId !== token.parent?.id) continue;
+      if (combatant._source.img && combatant._source.name) continue;
+      combatant.reset();
+      changed = true;
+    }
+  }
+  if (changed) ui.combat?.render();
 }
 
 /* -------------------------------------------- */
