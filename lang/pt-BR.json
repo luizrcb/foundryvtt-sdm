@@ -3544,5 +3544,6 @@
   "SDM.Use.ReplenishGo": "Recarregar",
   "SDM.Use.ReplenishNone": "{item}: nada que ele possa recarregar.",
   "SDM.Use.ChatReplenish": "Recarrega {item}",
-  "SDM.Use.ReplenishSpent": "usado"
+  "SDM.Use.ReplenishSpent": "usado",
+  "SDM.Form.Take": "Assumir forma"
 }

@@ -12,6 +12,7 @@ import {
 } from './animatedItems.mjs';
 import { heroDieCounters, rechargeWithHeroDie } from './onceAbilities.mjs';
 import { isLit } from './lights.mjs';
+import { dismissForm, itemFormOn, itemForms, takeItemForm } from './forms.mjs';
 
 /**
  * Item actions besides rolling and Use, as the inventory's right-click menu offers them, for
@@ -63,6 +64,11 @@ export function itemActions(item) {
       else add('deanimate', ride ? 'SDM.Ride.DeanimateRequest' : 'SDM.Animation.DeanimateRequest', ride ? 'fa-solid fa-house-flag' : 'fa-solid fa-box', requestDeanimation);
     }
   }
+  // Forms it gives its bearer (a shapeshifter's trait, a hide): take one, or end the one in use
+  if (itemForms(item).length) {
+    if (itemForms(item).some(effect => effect.disabled)) add('takeForm', 'SDM.Form.Take', 'fa-solid fa-paw', takeItemForm);
+    if (itemFormOn(item)) add('endForm', 'SDM.Form.End', 'fa-solid fa-person-walking-arrow-loop-left', i => dismissForm(i.actor));
+  }
   // A hallmark's level-up upgrade waiting to be chosen
   if (system.is_hallmark && (Number(system.hallmark?.pending_upgrades) || 0) > 0) {
     add('upgrade', 'SDM.Upgrade.Confirm', 'fa-solid fa-star', async i => {
@@ -79,6 +85,7 @@ export function itemMarkers(item) {
   return {
     singleUse: !!system.power?.single_use || (system.powers ?? []).some(power => power?.single_use),
     lit: isLit(item),
-    upgrade: !!system.is_hallmark && (Number(system.hallmark?.pending_upgrades) || 0) > 0
+    upgrade: !!system.is_hallmark && (Number(system.hallmark?.pending_upgrades) || 0) > 0,
+    form: itemFormOn(item)
   };
 }

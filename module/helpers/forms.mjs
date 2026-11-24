@@ -338,6 +338,13 @@ function onRenderActorSheet(app, html) {
     const item = actor?.items?.get(row.dataset.itemId);
     if (!item) continue;
     if (item.getFlag('sdm', GRANT_FLAG)) row.classList.add('sdm-form-granted');
+    // The item whose form its bearer is in: a paw by its name
+    if (active && fromUuidSync(active.effect)?.parent === item && !row.querySelector('.sdm-form-source')) {
+      const mark = document.createElement('i');
+      mark.className = 'fa-solid fa-paw sdm-form-source';
+      mark.dataset.tooltip = $fmt('SDM.Form.Banner', { form: active.name ?? '' });
+      (row.querySelector('.item-name') ?? row).append(mark);
+    }
     if (item.getFlag('sdm', SET_ASIDE_FLAG)) row.classList.add('sdm-form-set-aside');
   }
 }
@@ -350,6 +357,42 @@ export function setupForms() {
   Hooks.on('deleteActiveEffect', onEffectDeleted);
   Hooks.on('updateActor', onUpdateActor);
   Hooks.on('renderActorSheetV2', onRenderActorSheet);
+}
+
+/* -------------------------------------------- */
+/*  Forms an item carries (a trait, a hide)     */
+/* -------------------------------------------- */
+
+/** The forms an item gives its bearer (its form effects applied to the bearer, switched off until taken). */
+export function itemForms(item) {
+  if (!item?.actor) return [];
+  return (item.effects?.contents ?? []).filter(effect => isForm(effect) && effect.transfer);
+}
+
+/** The bearer is in one of this item's forms now. */
+export function itemFormOn(item) {
+  const current = currentForm(item?.actor);
+  return !!current && current.parent === item;
+}
+
+/** Take one of the item's forms (picked when it has several): its effect is switched on. */
+export async function takeItemForm(item) {
+  const forms = itemForms(item).filter(effect => effect.disabled || currentForm(item.actor) !== effect);
+  if (!forms.length) return;
+  let effect = forms[0];
+  if (forms.length > 1) {
+    const options = forms.map(f => `<option value="${esc(f.id)}">${esc(f.name)}</option>`).join('');
+    const id = await foundry.applications.api.DialogV2.prompt({
+      window: { title: item.name, icon: 'fa-solid fa-paw' },
+      content: `<div class="form-group"><label>${esc($l10n('SDM.Form.Title'))}</label><select name="form">${options}</select></div>`,
+      ok: { label: 'SDM.Form.Take', icon: 'fa-solid fa-paw', callback: (event, button) => button.form.elements.form.value },
+      rejectClose: false
+    });
+    if (!id) return;
+    effect = forms.find(f => f.id === id) ?? effect;
+  }
+  if (!game.users.activeGM) return ui.notifications.warn($l10n('SDM.ErrorNoActiveGM'));
+  await effect.update({ disabled: false });
 }
 
 /** Granted copies take no slots (itemUtils). */

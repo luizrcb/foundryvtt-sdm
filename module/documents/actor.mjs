@@ -1,4 +1,5 @@
 import { applyNpcProfile, getNpcProfile } from '../helpers/npcVariability.mjs';
+import { dismissForm, itemFormOn, itemForms, takeItemForm } from '../helpers/forms.mjs';
 import { featureEnabled } from '../helpers/features.mjs';
 import { canLeaveLight, isLightSource, isLit, leaveLight, lightBlockedReason, lightItem, putOutLight } from '../helpers/lights.mjs';
 import { blockedReason, isDormantEffect, isUsable, useItem } from '../app/use-item.mjs';
@@ -1745,6 +1746,25 @@ export class SdmActor extends Actor {
         },
         onClick: async (event, target) => {
           await resetCounters(this.sheet._getEmbeddedDocument(target));
+        }
+      },
+      {
+        label: 'SDM.Form.Take',
+        icon: '<i class="fa-solid fa-paw"></i>',
+        visible: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          return this.isOwner && itemForms(item).some(effect => effect.disabled);
+        },
+        onClick: async (event, target) => {
+          await takeItemForm(this.sheet._getEmbeddedDocument(target));
+        }
+      },
+      {
+        label: 'SDM.Form.End',
+        icon: '<i class="fa-solid fa-person-walking-arrow-loop-left"></i>',
+        visible: target => this.isOwner && itemFormOn(this.sheet._getEmbeddedDocument(target)),
+        onClick: async () => {
+          await dismissForm(this);
         }
       },
       {
