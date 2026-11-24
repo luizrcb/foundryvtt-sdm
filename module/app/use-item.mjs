@@ -729,7 +729,7 @@ export async function purgeConsumables(actor, except = '') {
 /** A Use's own actions (the trigger action list): any of them set. */
 export function hasUseActions(actions) {
   if (!actions) return false;
-  return ['status', 'effect', 'wear', 'counter', 'cast', 'use', 'light', 'charges_mode', 'life_mode', 'ability_damage', 'purge', 'roll_formula', 'hero_dice', 'animate', 'table']
+  return ['status', 'effect', 'wear', 'counter', 'cast', 'use', 'light', 'charges_mode', 'life_mode', 'ability_damage', 'purge', 'roll_formula', 'hero_dice', 'animate', 'table', 'summon']
     .some(key => !!`${actions[key] ?? ''}`.trim());
 }
 

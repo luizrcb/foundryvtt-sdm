@@ -2560,6 +2560,20 @@ input[type=radio]::after {
   width: 12em;
 }
 
+.sdm-triggers .sdm-trigger-actions .sdm-trigger-summon-name {
+  display: inline-block;
+  min-width: 8em;
+  padding: 1px 6px;
+  border: 1px dashed var(--color-border-light-tertiary, #999);
+  border-radius: 3px;
+  white-space: nowrap;
+}
+
+.sdm-triggers .sdm-trigger-actions .sdm-trigger-summon-empty {
+  opacity: 0.7;
+  font-style: italic;
+}
+
 .sdm-triggers .sdm-trigger-actions input.sdm-trigger-cost {
   width: 4em;
 }
@@ -8055,6 +8069,21 @@ a.sdm-proto-link.warn {
   padding: 2px;
   font-size: 12px;
   line-height: 20px;
+}
+
+.sdm-card .sdm-summon-card .sdm-summon-lasts {
+  font-size: 12px;
+  opacity: 0.8;
+}
+
+.sdm-card .sdm-summon-card .sdm-summon-buttons {
+  display: flex;
+  gap: 4px;
+}
+
+.sdm-card .sdm-summon-card .sdm-summon-buttons button {
+  flex: 1;
+  line-height: 24px;
 }
 
 .sdm-card .sdm-roll-triggers {

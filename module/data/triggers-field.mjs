@@ -163,7 +163,17 @@ export function defineTriggersField() {
       // Charges: spend, add or set an item's charges (or the uses of its uses counter)
       charges_mode: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'spend', 'add', 'set'] }),
       charges_amount: new fields.StringField({ required: true, blank: true, initial: '1' }),
-      charges_item: new fields.StringField({ required: true, blank: true, initial: '@self' })
+      charges_item: new fields.StringField({ required: true, blank: true, initial: '@self' }),
+      // Summon: creatures (an NPC, or a roll table whose results are NPCs) next to the one who rolled
+      // (helpers/summons.mjs): how many, at what level (blank: their own), for how many rounds (0: until
+      // dismissed), up to how many at once (blank: no limit), placed nearby or by hand, gone at 0 life
+      summon: new fields.StringField({ required: true, blank: true, initial: '' }),
+      summon_count: new fields.StringField({ required: true, blank: true, initial: '1' }),
+      summon_level: new fields.StringField({ required: true, blank: true, initial: '' }),
+      summon_rounds: new fields.NumberField({ required: true, nullable: false, integer: true, min: 0, initial: 0 }),
+      summon_limit: new fields.StringField({ required: true, blank: true, initial: '' }),
+      summon_place: new fields.StringField({ required: true, blank: false, initial: 'auto', choices: ['auto', 'manual'] }),
+      summon_ends_at_zero: new fields.BooleanField({ required: true, initial: false })
     })
   );
 }

@@ -2,7 +2,7 @@ import { SdmActor } from '../documents/actor.mjs';
 import { $l10n } from '../helpers/globalUtils.mjs';
 import { templatePath } from '../helpers/templates.mjs';
 import { featureEnabled } from '../helpers/features.mjs';
-import { triggerEditorContext } from '../sheets/item-sheet.mjs';
+import { bindTriggerDrops, triggerEditorContext } from '../sheets/item-sheet.mjs';
 
 const { ActiveEffectConfig } = foundry.applications.sheets;
 const { renderTemplate } = foundry.applications.handlebars;
@@ -110,6 +110,12 @@ export default class SdmActiveEffectConfig14 extends ActiveEffectConfig {
     const context = await super._prepareContext(options);
 
     return context;
+  }
+
+  async _onRender(context, options) {
+    await super._onRender(context, options);
+    // Mod triggers: drops on the Table and Summon fields
+    bindTriggerDrops(this.element);
   }
 
   async _renderChange(context) {

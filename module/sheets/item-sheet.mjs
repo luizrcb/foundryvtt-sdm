@@ -287,8 +287,53 @@ export function triggerEditorContext(item, triggers = []) {
         animate: 'SDM.Trigger.AnimateMode.animate',
         deanimate: 'SDM.Trigger.AnimateMode.deanimate'
       },
+      triggerSummonPlaces: { auto: 'SDM.Trigger.SummonPlace.auto', manual: 'SDM.Trigger.SummonPlace.manual' },
+      // The creature or table each Summon action names (by uuid), for the editor
+      triggerSummonNames: Object.fromEntries(
+        [...triggers, item.system?.use?.actions]
+          .map(trigger => trigger?.summon)
+          .filter(Boolean)
+          .map(uuid => [uuid, fromUuidSync(uuid)?.name ?? uuid])
+      ),
       ...triggerItemChoices(item, triggers)
   };
+}
+
+/**
+ * Roll triggers editor: drops on its fields — a roll table on the Table action, an NPC or a roll
+ * table on the Summon action. The field changes and the form saves it.
+ */
+export function bindTriggerDrops(root) {
+  const fields = [
+    ['input.sdm-trigger-table', data => data?.type === 'RollTable'],
+    ['.sdm-trigger-summon', data => ['Actor', 'RollTable'].includes(data?.type)]
+  ];
+  for (const [selector, accepts] of fields) {
+    root?.querySelectorAll(selector).forEach(field => {
+      field.addEventListener('dragover', event => event.preventDefault());
+      field.addEventListener('drop', event => {
+        event.preventDefault();
+        event.stopPropagation();
+        const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event);
+        if (!accepts(data) || !data.uuid) return;
+        const input = field.matches('input') ? field : field.querySelector('input');
+        if (!input) return;
+        input.value = data.uuid;
+        input.dispatchEvent(new Event('change', { bubbles: true }));
+      });
+    });
+  }
+  // Summon: clear the creature
+  root?.querySelectorAll('.sdm-trigger-summon-clear').forEach(button =>
+    button.addEventListener('click', event => {
+      event.preventDefault();
+      event.stopPropagation();
+      const input = button.closest('.sdm-trigger-summon')?.querySelector('input[type="hidden"]');
+      if (!input) return;
+      input.value = '';
+      input.dispatchEvent(new Event('change', { bubbles: true }));
+    })
+  );
 }
 
 export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemSheetV2) {
@@ -822,18 +867,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       if (this._triggerActionsOpen.has(index)) details.open = this._triggerActionsOpen.get(index);
       details.addEventListener('toggle', () => this._triggerActionsOpen.set(index, details.open));
     });
-    // Roll triggers: drop a roll table on the table field
-    this.element.querySelectorAll('input.sdm-trigger-table').forEach(input => {
-      input.addEventListener('dragover', event => event.preventDefault());
-      input.addEventListener('drop', async event => {
-        event.preventDefault();
-        event.stopPropagation();
-        const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event);
-        if (data?.type !== 'RollTable' || !data.uuid) return;
-        input.value = data.uuid;
-        input.dispatchEvent(new Event('change', { bubbles: true }));
-      });
-    });
+    // Roll triggers: drop a roll table on the table field, an NPC or a table on the summon field
+    bindTriggerDrops(this.element);
     // You may want to add other special handling here
     // Foundry comes with a large number of utility classes, e.g. SearchFilter
     // That you may want to  implement yourself.

@@ -62,6 +62,7 @@ import { restActor, setupRest } from './app/rest.mjs';
 import { setupHeroDieOnNat20 } from './helpers/heroDieOnNat20.mjs';
 import { setupTokenLifeBar } from './canvas/token-life-bar.mjs';
 import { newSession, setupOnceAbilities } from './helpers/onceAbilities.mjs';
+import { setupSummons } from './helpers/summons.mjs';
 import { bindTriggerApply, setupTriggers } from './rolls/triggers.mjs';
 import { setupNextRoll } from './app/next-roll.mjs';
 import { setupRideStats } from './helpers/rideStats.mjs';
@@ -836,6 +837,7 @@ Hooks.once('init', function () {
   setupHeroDieOnNat20();
   setupTokenLifeBar();
   setupOnceAbilities();
+  setupSummons();
   setupTriggers();
   setupEscalatorDiePositionBroadcast();
   //Preload Handlebars templates.

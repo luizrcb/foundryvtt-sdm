@@ -409,6 +409,24 @@
     }
   }
 
+  // Summoned creatures: who came, how long, Target / Dismiss all
+  .sdm-summon-card {
+    .sdm-summon-lasts {
+      font-size: 12px;
+      opacity: 0.8;
+    }
+
+    .sdm-summon-buttons {
+      display: flex;
+      gap: 4px;
+
+      button {
+        flex: 1;
+        line-height: 24px;
+      }
+    }
+  }
+
   // Fired triggers and item feature notes: info / warn tags
   .sdm-roll-triggers {
     padding: 4px 7px;

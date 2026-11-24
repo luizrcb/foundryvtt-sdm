@@ -161,5 +161,25 @@
       {{else}}
       <input type="hidden" name="{{prefix}}animate_item" value="{{trigger.animate_item}}" />
       {{/if}}</label>
+    <label class="sdm-trigger-summon {{#if trigger.summon}}filled{{/if}}" data-tooltip="{{localize 'SDM.Trigger.SummonHint'}}">{{localize 'SDM.Trigger.Summon'}}
+      <input type="hidden" name="{{prefix}}summon" value="{{trigger.summon}}" />
+      {{#if trigger.summon}}
+      <span class="sdm-trigger-summon-name">{{lookup @root.triggerSummonNames trigger.summon}}</span>
+      <a class="sdm-trigger-summon-clear" data-tooltip="{{localize 'SDM.Trigger.SummonClear'}}"><i class="fa-solid fa-xmark" inert></i></a>
+      <input class="sdm-trigger-amount" type="text" name="{{prefix}}summon_count" value="{{trigger.summon_count}}" data-tooltip="{{localize 'SDM.Trigger.SummonCountHint'}}" />
+      <input class="sdm-trigger-amount" type="text" name="{{prefix}}summon_level" value="{{trigger.summon_level}}" data-tooltip="{{localize 'SDM.Trigger.SummonLevelHint'}}" />
+      <input class="sdm-trigger-amount" type="number" min="0" step="1" name="{{prefix}}summon_rounds" value="{{trigger.summon_rounds}}" data-tooltip="{{localize 'SDM.Trigger.SummonRoundsHint'}}" />
+      <input class="sdm-trigger-amount" type="text" name="{{prefix}}summon_limit" value="{{trigger.summon_limit}}" data-tooltip="{{localize 'SDM.Trigger.SummonLimitHint'}}" />
+      <select name="{{prefix}}summon_place">{{selectOptions @root.triggerSummonPlaces selected=trigger.summon_place localize=true}}</select>
+      <span class="sdm-trigger-check" data-tooltip="{{localize 'SDM.Trigger.SummonEndsAtZeroHint'}}"><input type="checkbox" name="{{prefix}}summon_ends_at_zero" {{checked trigger.summon_ends_at_zero}} /> {{localize 'SDM.Trigger.SummonEndsAtZero'}}</span>
+      {{else}}
+      <span class="sdm-trigger-summon-name sdm-trigger-summon-empty">{{localize 'SDM.Trigger.SummonDrop'}}</span>
+      <input type="hidden" name="{{prefix}}summon_count" value="{{trigger.summon_count}}" />
+      <input type="hidden" name="{{prefix}}summon_level" value="{{trigger.summon_level}}" />
+      <input type="hidden" name="{{prefix}}summon_rounds" value="{{trigger.summon_rounds}}" />
+      <input type="hidden" name="{{prefix}}summon_limit" value="{{trigger.summon_limit}}" />
+      <input type="hidden" name="{{prefix}}summon_place" value="{{trigger.summon_place}}" />
+      <input type="hidden" name="{{prefix}}summon_ends_at_zero" value="{{trigger.summon_ends_at_zero}}" data-dtype="Boolean" />
+      {{/if}}</label>
   </div>
 </details>

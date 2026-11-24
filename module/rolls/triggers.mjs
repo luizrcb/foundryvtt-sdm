@@ -10,6 +10,7 @@ import { hasPowerAlbum, UnarmedDamageItem } from '../helpers/itemUtils.mjs';
 import { payCost, resourceLabel } from './boost.mjs';
 import { numberValue, resolveFormula, rollAmount } from '../helpers/formulas.mjs';
 import { isLightSource, isLit, lightItem, putOutLight, toggleLight } from '../helpers/lights.mjs';
+import { summonAction } from '../helpers/summons.mjs';
 
 /**
  * Roll triggers of gear, highlighted on chat cards:
@@ -265,6 +266,7 @@ async function runActions(fired, { actor, targets = null } = {}) {
       if (`${trigger.roll_formula ?? ''}`.trim()) await rollAction(item, roller, trigger);
       if (`${trigger.hero_dice ?? ''}`.trim()) await heroDiceAction(item, roller, trigger, times);
       if (trigger.animate) await animateAction(item, roller, trigger);
+      if (trigger.summon) await summonAction(item, roller, trigger);
     } catch (error) {
       console.error('SDM | Trigger action failed', error);
     }
@@ -589,6 +591,7 @@ function actionSummary(item, trigger) {
     const effect = item.effects?.get?.(trigger.effect);
     if (effect) parts.push(`${effect.name}${trigger.effect_save ? save : ''}`);
   }
+  if (trigger.summon) parts.push(game.i18n.localize('SDM.Trigger.Summon'));
   return parts.join(', ');
 }
 

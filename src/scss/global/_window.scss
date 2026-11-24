@@ -2552,6 +2552,21 @@ input[type='radio']::after {
       width: 12em;
     }
 
+    // Summon: the dropped creature or table (drop zone while empty)
+    .sdm-trigger-summon-name {
+      display: inline-block;
+      min-width: 8em;
+      padding: 1px 6px;
+      border: 1px dashed var(--color-border-light-tertiary, #999);
+      border-radius: 3px;
+      white-space: nowrap;
+    }
+
+    .sdm-trigger-summon-empty {
+      opacity: 0.7;
+      font-style: italic;
+    }
+
     input.sdm-trigger-cost {
       width: 4em;
     }
