@@ -1524,7 +1524,8 @@ async function applyAreaSave(area, result) {
 /*  Hazards (region behavior)                   */
 /* -------------------------------------------- */
 
-export const HAZARD_TYPE = 'sdm.hazard';
+// A system's own subtype has no prefix (system.json documentTypes.RegionBehavior.hazard)
+export const HAZARD_TYPE = 'hazard';
 // A token is hit at most once per round (in combat) by each hazard
 const hazardHits = new Map();
 

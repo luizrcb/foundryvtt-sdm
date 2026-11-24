@@ -752,8 +752,8 @@ Hooks.once('init', function () {
     vehicle: models.SdmVehicle
   };
   // Region behaviors: Hazard (traps, burning ground, lingering areas' damage and conditions)
-  CONFIG.RegionBehavior.dataModels['sdm.hazard'] = HazardBehaviorData;
-  CONFIG.RegionBehavior.typeIcons['sdm.hazard'] = 'fa-solid fa-skull-crossbones';
+  CONFIG.RegionBehavior.dataModels.hazard = HazardBehaviorData;
+  CONFIG.RegionBehavior.typeIcons.hazard = 'fa-solid fa-skull-crossbones';
 
   _configureFonts();
 

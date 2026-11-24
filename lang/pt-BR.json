@@ -3409,7 +3409,7 @@
   "SDM.AreaHealAll": "Curar todos",
   "SDM.AreaHealApplied": "{amount} de cura em {target}",
   "SDM.ApplyNotOwned": "{count} token(s) que não são seus: o Mediador aplica neles.",
-  "TYPES.RegionBehavior.sdm.hazard": "Perigo",
+  "TYPES.RegionBehavior.hazard": "Perigo",
   "SDM.Hazard.FIELDS.damage.label": "Dano",
   "SDM.Hazard.FIELDS.damage.hint": "Uma fórmula (1d6, 2d4+1), rolada a cada vez que dispara. Em branco: sem dano.",
   "SDM.Hazard.FIELDS.condition.label": "Condição",

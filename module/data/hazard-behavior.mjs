@@ -1,5 +1,5 @@
 /**
- * Hazard: a region behavior (type "sdm.hazard") that hurts and/or puts a condition on the tokens in a
+ * Hazard: a region behavior (type "hazard") that hurts and/or puts a condition on the tokens in a
  * region when they enter it, start their turn in it or are in it when a round starts — traps, poison
  * gas, burning ground. The Referee adds it to any region (Regions layer); lingering areas of items
  * with damage or a condition each round get one too (helpers/areas.mjs). With a save, each one saves
