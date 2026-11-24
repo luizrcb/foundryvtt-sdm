@@ -150,6 +150,14 @@ export default class TokenPlacement {
       canvas.stage.on("mousedown", this.#events.confirm);
       canvas.app.view.oncontextmenu = this.#events.skip;
       canvas.app.view.onwheel = this.#events.rotate;
+      // Esc cancels too, like a right-click
+      this.#events.escape = event => {
+        if (event.key !== "Escape") return;
+        event.preventDefault();
+        event.stopPropagation();
+        this.#events.skip(event);
+      };
+      window.addEventListener("keydown", this.#events.escape, { capture: true });
     });
   }
 
@@ -164,6 +172,7 @@ export default class TokenPlacement {
     canvas.stage.off("mousedown", this.#events.confirm);
     canvas.app.view.oncontextmenu = null;
     canvas.app.view.onwheel = null;
+    if ( this.#events.escape ) window.removeEventListener("keydown", this.#events.escape, { capture: true });
   }
 
   /* -------------------------------------------- */

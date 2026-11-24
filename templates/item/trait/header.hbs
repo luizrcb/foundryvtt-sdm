@@ -175,6 +175,14 @@
         <label class='resource-label'>{{localize 'SDM.Light.Animation'}}</label>
         <div class='resource-content'><select name="system.light.animation">{{selectOptions @root.lightAnimations selected=system.light.animation localize=true}}</select></div>
       </div>
+      <div class='resource'>
+        <label class='resource-label'>{{localize 'SDM.Light.Speed'}}</label>
+        <div class='resource-content'><input type="number" name="system.light.speed" value="{{system.light.speed}}" min="0" max="10" step="1" /></div>
+      </div>
+      <div class='resource'>
+        <label class='resource-label'>{{localize 'SDM.Light.Intensity'}}</label>
+        <div class='resource-content'><input type="number" name="system.light.intensity" value="{{system.light.intensity}}" min="0" max="10" step="1" /></div>
+      </div>
       {{/if}}
       {{/if}}
 

@@ -1,6 +1,6 @@
 import { featureEnabled } from '../helpers/features.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
-import { resolveFormula } from '../helpers/formulas.mjs';
+import { resolveFormula, showSideDice } from '../helpers/formulas.mjs';
 
 /**
  * Damage boosts paid with a resource (Piezo Mace: spend 1d6 life for x2 damage; Noetic Blade:
@@ -67,6 +67,7 @@ export async function payCost(actor, { resource = 'life', cost = '1', item = nul
   // The cost can read counters and other values (@item.counters.kills.value)
   const formula = resolveFormula(`${cost}`.trim() || '1', { item, actor });
   const roll = await new Roll(formula, actor.getRollData()).evaluate();
+  await showSideDice(roll);
   const amount = Math.max(Number(roll.total) || 0, 0);
   const notEnough = () => {
     ui.notifications.warn($fmt('SDM.CostResource.NotEnough', { resource: resourceLabel(resource) }));

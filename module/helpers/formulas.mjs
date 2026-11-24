@@ -19,6 +19,19 @@ export function resolveFormula(formula, { item = null, actor = null } = {}) {
   return resolveFormulaReferences(`${formula ?? ''}`.trim(), context(item, actor));
 }
 
+/**
+ * Rolls made on the side, with no chat card of their own (a cost, a consumable's healing, a trigger's
+ * amount, burning damage): their dice still show in 3D with Dice So Nice.
+ */
+export async function showSideDice(roll) {
+  if (!roll?.dice?.length || !game.dice3d) return;
+  try {
+    await game.dice3d.showForRoll(roll, game.user, true);
+  } catch (error) {
+    console.warn('SDM | Dice So Nice could not show a roll', error);
+  }
+}
+
 /** Roll an amount (dice allowed). Blank: the fallback (no roll). */
 export async function rollAmount(formula, { item = null, actor = null, fallback = 0 } = {}) {
   const raw = `${formula ?? ''}`.trim();
@@ -26,6 +39,7 @@ export async function rollAmount(formula, { item = null, actor = null, fallback 
   if (NUMBER.test(raw)) return { total: Math.trunc(Number(raw)), roll: null };
   const owner = actor ?? item?.actor ?? null;
   const roll = await new Roll(resolveFormula(raw, { item, actor }), owner?.getRollData?.() ?? {}).evaluate();
+  await showSideDice(roll);
   return { total: Math.trunc(Number(roll.total) || 0), roll };
 }
 

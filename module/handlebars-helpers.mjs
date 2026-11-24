@@ -28,9 +28,16 @@ export function registerHandlebarsHelpers() {
   $$('sdmCounterResetChoices', () => ({
     '': 'SDM.Counter.ResetEachNone',
     round: 'SDM.Counter.ResetEachRound',
-    turn: 'SDM.Counter.ResetEachTurn'
+    turn: 'SDM.Counter.ResetEachTurn',
+    rest: 'SDM.Counter.ResetEachRest',
+    day: 'SDM.Counter.ResetEachDay'
   }));
   $$('sdmIsLit', item => isLit(item));
+  // A single-use power, or an album holding one
+  $$(
+    'sdmSingleUse',
+    item => !!item?.system?.power?.single_use || (item?.system?.powers ?? []).some(power => power?.single_use)
+  );
   // Can be lit now (a light source not lit, not blocked): the row shows the unlit flame to click
   // Can be animated now (the animated feature, not animated, nothing blocking it): the row's faded ghost
   $$('sdmCanAnimate', item => isAnimatable(item) && !item.system?.animation?.active && !isAnimationBlocked(item));

@@ -9,8 +9,12 @@ import NPCBaseDataModel from './npc-base-data.mjs';
 export default class SdmItemBase extends foundry.abstract.TypeDataModel {
   /** @inheritDoc */
   static migrateData(source) {
-    // Animation damage source: the automatic option used to be stored as a blank string
-    if (source?.animation && !source.animation.damageSource) source.animation.damageSource = 'auto';
+    // Animation damage source: the automatic option used to be stored as a blank string. Only a
+    // blank value is migrated: updates also pass through here, and an update of another animation
+    // field (filled, table…) has no damage source, which must not reset the one chosen to automatic
+    if (source?.animation && 'damageSource' in source.animation && !source.animation.damageSource) {
+      source.animation.damageSource = 'auto';
+    }
     // Triggers: "reaches its maximum" merged into "is full"
     if (Array.isArray(source?.triggers)) {
       for (const trigger of source.triggers) {
@@ -235,6 +239,8 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       active: new fields.BooleanField({ required: true, initial: false }),
       // Turn back into the item when the combat it fights in ends
       endWithCombat: new fields.BooleanField({ required: true, initial: false }),
+      // The creature's token is linked to its actor (unlinked: each token is a creature of its own)
+      linked: new fields.BooleanField({ required: true, initial: true }),
       // Charges spent each time the item is animated (0: animating is free)
       chargeCost: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 0, min: 0 }),
       // Items with replenish: each animation is a use (usage roll; running low: last use)

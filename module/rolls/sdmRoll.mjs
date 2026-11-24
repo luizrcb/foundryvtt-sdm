@@ -11,6 +11,32 @@ import { $l10n, capitalizeFirstLetter, toPascalCase } from '../helpers/globalUti
 import { cardHeader, cardTag, cardWrap, marginText, resultStrip, rollBox } from './ui/cardParts.mjs';
 import { applyDamageHtml } from './ui/applyDamage.mjs';
 import { changeLifeOf } from '../app/use-item.mjs';
+import { awardNat20HeroDie } from '../helpers/heroDieOnNat20.mjs';
+
+/**
+ * Set on an item when an attack made with it rolled its usage (the time): the damage / power that
+ * follows within a while is free. A new attack with it replaces the mark (a missed attack's mark
+ * never makes the next attack free).
+ */
+const USE_PAID_FLAG = 'usePaidByAttack';
+const USE_PAID_WINDOW = 30 * 60 * 1000;
+
+/**
+ * One use of an item with replenish (usage roll; running low: the last use, no roll). Nothing when
+ * the item has no replenish, or when the attack made with it already paid (the mark is cleared).
+ * A run-out item isn't rolled again. Returns true when a use was spent now.
+ */
+async function spendItemUse(item, { attack = false } = {}) {
+  if (!item?.actor || !item.system?.features?.has?.('replenish')) return false;
+  const paid = item.getFlag('sdm', USE_PAID_FLAG);
+  if (paid) {
+    await item.unsetFlag('sdm', USE_PAID_FLAG);
+    if (!attack && Date.now() - Number(paid) < USE_PAID_WINDOW) return false;
+  }
+  if (item.system.resources === 'run_out') return false;
+  await item.spendUsage();
+  return true;
+}
 
 export default class SDMRoll {
   constructor({
@@ -121,6 +147,8 @@ export default class SDMRoll {
         await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor: this.actor }), content: renderTriggers(fired) });
         await runTriggerActions(fired, { actor: this.actor });
       }
+      // Using the power is a use of its item, roll or not
+      await spendItemUse(this.triggerItem ?? (this.item?.id ? this.item : null));
       return sent;
     }
 
@@ -147,6 +175,12 @@ export default class SDMRoll {
     // A cast power's card carries the power, to catch it by dragging the card into an album
     const castPower = (isPower || isPowerAlbum) && this.item ? powerCardData(this.item) : null;
     if (castPower) flags.sdm = { ...(flags.sdm ?? {}), power: castPower };
+    // Cast or attacked with a single-use power: the card is marked
+    const usedItem = isPower || isPowerAlbum ? this.item : isAttack && this.attackItem?.id ? this.actor?.items?.get(this.attackItem.id) : null;
+    const usedPower = usedItem?.system?.powers?.length
+      ? usedItem.system.powers[usedItem.system.powers_current_index || 0]
+      : usedItem?.system?.power;
+    if (usedPower?.single_use) flags.sdm = { ...(flags.sdm ?? {}), singleUse: true };
 
     const attackMapping = {
       [AttackTarget.PHYSICAL]: {
@@ -238,6 +272,12 @@ export default class SDMRoll {
       } else if (luckySevenRule && is7) {
         tags.push(cardTag($l10n('SDM.LuckySeven'), { tone: 'good', icon: 'fa-solid fa-clover' }));
       }
+    }
+
+    // Optional: a natural 20 on an attack or ability check gives a hero die
+    if ((isAttack || isAbility) && isNat20) {
+      const heroTag = await awardNat20HeroDie(this.actor);
+      if (heroTag) tags.push(heroTag);
     }
 
     let extras = '';
@@ -444,21 +484,18 @@ export default class SDMRoll {
       }
     }
 
-    if (
-      isDamage &&
-      this.item &&
-      this.item?.system?.features?.has('replenish') &&
-      this.item.system.replenish?.on_attack !== false &&
-      this.item.system.resources !== 'run_out'
-    ) {
-      await this.item.spendUsage();
+    // Replenish: one usage roll per use of the item. An attack made with it is the use (rolled
+    // with the attack); the damage or power that follows that attack doesn't roll again, and isn't
+    // blocked if the attack ran it out. A damage roll or a cast on its own is a use too.
+    if (isAttack && this.attackItem?.id) {
+      const used = this.actor?.items?.get(this.attackItem.id);
+      if (used?.system?.replenish?.on_attack !== false && (await spendItemUse(used, { attack: true }))) {
+        await used.setFlag('sdm', USE_PAID_FLAG, Date.now());
+      }
     }
-
+    if (isDamage && this.item?.system?.replenish?.on_attack !== false) await spendItemUse(this.item);
     // Casting a power from an item with replenish uses it too (running low: last use, no roll)
-    const castFrom = isPowerAlbum ? this.triggerItem : isPower && this.item?.id ? this.item : null;
-    if (castFrom?.actor && castFrom.system?.features?.has?.('replenish')) {
-      await castFrom.spendUsage();
-    }
+    if (isPower || isPowerAlbum) await spendItemUse(isPowerAlbum ? this.triggerItem : this.item?.id ? this.item : null);
   }
 
   #buildDiceComponent() {

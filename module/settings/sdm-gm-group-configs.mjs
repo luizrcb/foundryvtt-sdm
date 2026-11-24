@@ -204,6 +204,7 @@ export class SDMCoreRulesSettingsConfig extends GroupBase {
   static LEGEND = 'SDM.Menu.CoreRules.Name';
   static KEYS = [
     'luckySevenRule',
+    'heroDieOnNat20',
     'defaultMaxPowers',
     'useHardLimitRule',
     'defaultHardLimitValue',

@@ -137,9 +137,23 @@ export function defineTriggersField() {
         required: true,
         blank: true,
         initial: '',
-        choices: ['', 'light', 'put_out', 'toggle']
+        choices: ['', 'light', 'put_out', 'toggle', 'flare']
       }),
       light_item: new fields.StringField({ required: true, blank: true, initial: '@self' }),
+      // Flare: lit for a while, then out on its own
+      light_duration: new fields.NumberField({ required: true, nullable: true, integer: true, initial: 1, min: 0 }),
+      light_duration_units: new fields.StringField({ required: true, blank: true, initial: 'rounds', choices: ['', 'rounds', 'minutes', 'hours', 'days', 'weeks'] }),
+      // Life: heal or damage the targets or the one who rolled (a number or a formula)
+      life_mode: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'heal', 'damage'] }),
+      life_amount: new fields.StringField({ required: true, blank: true, initial: '1d6' }),
+      life_target: new fields.StringField({ required: true, blank: false, initial: 'targets', choices: ['targets', 'self'] }),
+      // Roll a formula to chat (blank: none)
+      roll_formula: new fields.StringField({ required: true, blank: true, initial: '' }),
+      // Hero dice the one who rolled gains (negative: loses), never above the maximum (blank: none)
+      hero_dice: new fields.StringField({ required: true, blank: true, initial: '' }),
+      // Animate or deanimate an animated item ('@self' or an identifier)
+      animate: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'animate', 'deanimate'] }),
+      animate_item: new fields.StringField({ required: true, blank: true, initial: '@self' }),
       // Charges: spend, add or set an item's charges (or the uses of its uses counter)
       charges_mode: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'spend', 'add', 'set'] }),
       charges_amount: new fields.StringField({ required: true, blank: true, initial: '1' }),

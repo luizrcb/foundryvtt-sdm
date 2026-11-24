@@ -19,6 +19,9 @@
         <div class="stat-icon" data-tooltip="SDM.FieldHeroDice"><i class="fa-solid fa-dice-d6"></i><span>{{crewMember.system.hero_dice.value}}/{{crewMember.system.hero_dice.max}}</span></div>
         <div class="stat-icon" data-tooltip="SDM.FieldLifeMax"><i class="fa-solid fa-heart lime"></i><span>{{crewMember.system.life.value}}/{{crewMember.system.life.max}}</span></div>
         <div class="stat-icon" data-tooltip="SDM.FieldDefense"><i class="fa-solid fa-shield"></i><span>{{crewMember.system.defense}}</span></div>
+      </div>
+      {{!-- Abilities on their own rows: physical, then mental --}}
+      <div class="v2-crew-stats v2-crew-abilities">
         <div class="stat-icon" data-tooltip="SDM.AbilityStr"><i class="fa-solid fa-hand-fist rust"></i><span>{{crewMember.system.abilities.str.current}}</span></div>
         <div class="stat-icon" data-tooltip="SDM.AbilityEnd"><i class="fa-solid fa-heartbeat pumpkin"></i><span>{{crewMember.system.abilities.end.current}}</span></div>
         <div class="stat-icon" data-tooltip="SDM.AbilityAgi"><i class="fa-solid fa-person-running amber"></i><span>{{crewMember.system.abilities.agi.current}}</span></div>

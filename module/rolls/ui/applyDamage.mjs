@@ -43,6 +43,24 @@ export async function applyToTokens(amount, multiplier = 1) {
   await Promise.all(owned.map(token => token.actor.applyDamage(amount, multiplier)));
 }
 
+/**
+ * Any other roll in the chat (/r 1d6, /r 3, a module's roll…): the same apply buttons, for whoever
+ * rolled and the Referee. The system's own cards (.sdm-card) decide their buttons themselves.
+ */
+export function addApplyToPlainRolls(message, html) {
+  if (!message.rolls?.length || !message.isContentVisible) return;
+  if (!(message.isAuthor || game.user.isGM)) return;
+  if (html.querySelector('.sdm-card, .sdm-apply-damage')) return;
+  const total = Math.round(Number(message.rolls[0]?.total) || 0);
+  const buttons = applyDamageHtml(total).replace('class="sdm-apply-damage"', 'class="sdm-apply-damage sdm-apply-plain"');
+  if (!buttons) return;
+  // Right under the roll (above the hero dice button), as on the system's cards
+  const rolls = html.querySelectorAll('.message-content .dice-roll');
+  const last = rolls[rolls.length - 1];
+  if (last) last.insertAdjacentHTML('afterend', buttons);
+  else (html.querySelector('.message-content') ?? html).insertAdjacentHTML('beforeend', buttons);
+}
+
 /** renderChatMessageHTML: the buttons act on the targeted tokens, else the selected ones. */
 export function bindApplyDamage(html) {
   html.querySelectorAll('[data-action="sdmApplyDamage"]').forEach(button =>
@@ -222,4 +240,24 @@ export function bindHeroHeal(message, html) {
     // The message is the roller's: they (or the Referee) mark it healed; another owner just heals
     if (message.isOwner) await message.setFlag('sdm', 'heroHealed', true);
   });
+}
+
+/**
+ * The system's cards say who can see them: blind (only the Referee sees the result), Referee only
+ * (whispered to the Referees), or private (whispered to others). Public cards show nothing.
+ */
+export function addVisibilityLabel(message, html) {
+  if (!html.querySelector('.sdm-card') || html.querySelector('.sdm-visibility')) return;
+  const whisper = message.whisper ?? [];
+  let kind = '';
+  if (message.blind) kind = 'blind';
+  else if (whisper.length && whisper.every(id => game.users.get(id)?.isGM)) kind = 'gm';
+  else if (whisper.length) kind = 'private';
+  if (!kind) return;
+  const label = document.createElement('span');
+  label.className = `sdm-visibility sdm-visibility-${kind}`;
+  label.dataset.tooltip = game.i18n.localize(`SDM.Card.Visibility.${kind}Hint`);
+  label.innerHTML = `<i class="fa-solid ${kind === 'blind' ? 'fa-eye-slash' : 'fa-user-secret'}"></i> ${esc(game.i18n.localize(`SDM.Card.Visibility.${kind}`))}`;
+  const title = html.querySelector('.sdm-card .sdm-card-title');
+  if (title) title.append(label);
 }

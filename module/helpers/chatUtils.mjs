@@ -228,7 +228,7 @@ export const luberLinks = `<div class="intro-message">
                 <a href="https://github.com/luizrcb">Github</a>
               </div>
               <div class="outcome-description">
-                <a href="www.linkedin.com/in/luizbertoni">LinkedIn</a>
+                <a href="https://www.linkedin.com/in/luizbertoni">LinkedIn</a>
               </div>
             </div>
             <div>

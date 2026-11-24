@@ -11,6 +11,8 @@ export function defineLightField({ preset = '' } = {}) {
     bright: new fields.NumberField({ required: true, nullable: false, min: 0, initial: 4 }),
     dim: new fields.NumberField({ required: true, nullable: false, min: 0, initial: 8 }),
     color: new fields.StringField({ required: true, blank: true, initial: '#ff9329' }),
-    animation: new fields.StringField({ required: true, blank: true, initial: 'torch' })
+    animation: new fields.StringField({ required: true, blank: true, initial: 'torch' }),
+    speed: new fields.NumberField({ required: true, nullable: false, min: 0, max: 10, integer: true, initial: 5 }),
+    intensity: new fields.NumberField({ required: true, nullable: false, min: 0, max: 10, integer: true, initial: 5 })
   });
 }

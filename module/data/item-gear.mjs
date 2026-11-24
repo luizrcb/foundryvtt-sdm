@@ -91,6 +91,8 @@ export default class SdmGear extends SdmItemBase {
       harm: new fields.StringField({ required: true, blank: true, initial: '' }),
       // Conditions it removes from its targets, every time (a bandage stops bleeding, an antidote cures poison)
       cures: new fields.ArrayField(new fields.StringField({ blank: false }), { initial: [] }),
+      // Every use is a rest for its targets (Red Nutrislurry): the rest dialog opens for each one
+      rest: new fields.BooleanField({ required: true, initial: false }),
       // A roll table drawn every time it is used (strange beliefs, vision dreams…)
       table: new fields.StringField({ required: true, blank: true, initial: '' }),
       // How long its effects last on the targets (when the effect sets no duration of its own)

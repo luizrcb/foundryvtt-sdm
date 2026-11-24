@@ -2121,6 +2121,104 @@ input[type='radio']::after {
   cursor: grab;
 }
 
+// Token HUD: temporary life input beside the life bar's (same blue as its segment)
+#token-hud .attribute.sdm-has-temp-life {
+  display: flex;
+  gap: 4px;
+
+  input:not(.sdm-temp-life-input) {
+    flex: 2 1 0;
+    min-width: 0;
+  }
+
+  .sdm-temp-life-input {
+    flex: 1 1 0;
+    min-width: 0;
+    color: #5fb3e8;
+    border-color: #5fb3e8;
+  }
+}
+
+// Combat tracker: temporary life next to life (same color as its segment on the token bar)
+.combat-tracker .sdm-temp-life {
+  color: #5fb3e8;
+}
+
+// Compendium Browser: give an item to the selected token (who gets what, charge or not)
+.sdm-give-item {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  margin-bottom: 8px;
+
+  .sdm-give-who {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    max-width: 140px;
+    text-align: center;
+    font-weight: bold;
+
+    img {
+      width: 64px;
+      height: 64px;
+      object-fit: contain;
+      border: none;
+    }
+  }
+
+  .sdm-give-recipients {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 8px;
+    max-width: 320px;
+  }
+
+  // Several recipients: smaller portraits
+  .sdm-give-recipients .sdm-give-who:not(:only-child) {
+    max-width: 72px;
+    font-size: 12px;
+
+    img {
+      width: 48px;
+      height: 48px;
+    }
+  }
+
+  .sdm-give-arrow {
+    font-size: 18px;
+    opacity: 0.6;
+  }
+}
+
+.sdm-give-charge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+
+  label {
+    flex: 1 1 auto;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  input[type='number'] {
+    flex: 0 0 90px;
+  }
+}
+
+// Single-use power mark on chat cards (cast, or an attack made with it)
+.sdm-single-use-mark {
+  flex: 0 0 auto;
+  margin-left: 6px;
+  font-size: 11px;
+  opacity: 0.8;
+}
+
 // Token HUD: light from items (flame button + palette when several items can light)
 .sdm-light-hud {
   position: relative;

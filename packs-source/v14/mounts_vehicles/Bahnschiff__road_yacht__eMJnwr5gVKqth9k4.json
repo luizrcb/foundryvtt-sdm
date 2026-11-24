@@ -48,15 +48,15 @@
     ],
     "attributes": {
       "initiative": "",
-      "level": 0,
+      "level": 7,
       "life": {
-        "value": 1,
-        "max": 1
+        "value": 220,
+        "max": 220
       },
-      "morale": 2,
+      "morale": 11,
       "defense": 7,
-      "bonus": 1,
-      "damage": "1d4",
+      "bonus": 4,
+      "damage": "8d6",
       "capacity": 1
     },
     "is_hallmark": false,
@@ -68,7 +68,11 @@
     "supply": "1",
     "capacity": 8,
     "speed": 0,
-    "automatic": true
+    "automatic": true,
+    "animation": {
+      "table": "brick-bastions",
+      "filled": true
+    }
   },
   "effects": [],
   "sort": 0,

@@ -88,6 +88,11 @@
           <i class="fa-solid fa-battery-empty mr-3"></i>
         </div>
       {{/if}}
+      {{#if (sdmSingleUse item)}}
+        <div data-tooltip="{{localize 'SDM.SingleUse.Label'}}">
+          <i class="fa-solid fa-hourglass-end mr-3"></i>
+        </div>
+      {{/if}}
       {{#if (and
         (eq item.system.type 'pet')
         (ne item.system.pet '')

@@ -2,6 +2,7 @@ import { $l10n, capitalizeFirstLetter, formatNumber } from '../helpers/globalUti
 import { convertSizeUnit } from '../helpers/itemUtils.mjs';
 import { SizeUnit } from '../helpers/constants.mjs';
 import { bindingLabel, currentBinding } from '../helpers/keybindingSettings.mjs';
+import { removeCashFromActor } from '../macros/gm/giveCash.mjs';
 
 const ApplicationV2 = foundry.applications?.api?.ApplicationV2;
 const HandlebarsApplicationMixin = foundry.applications?.api?.HandlebarsApplicationMixin;
@@ -462,11 +463,91 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
             if (!uuid) return;
             await this.#onSendToChat(uuid);
           }
+        },
+        {
+          label: 'SDM.CompendiumBrowser.AddToToken',
+          icon: '<i class="fa-solid fa-user-plus"></i>',
+          condition: () => game.user.isGM,
+          onClick: async (event, target) => {
+            const uuid = CompendiumBrowser.#contextCard(event, target)?.dataset.uuid;
+            if (uuid) await CompendiumBrowser.#addToSelectedToken(uuid);
+          }
         }
       ],
       // fixed: render the menu on the document body so result cards never cover it
       { jQuery: false, fixed: true }
     );
+  }
+
+  /**
+   * Referee: give the item to every selected token's actor. The dialog shows who gets what (the
+   * tokens' and the item's images and names) and asks whether to charge it (the item's cost,
+   * editable; each one pays, and those who can't are skipped).
+   */
+  static async #addToSelectedToken(uuid) {
+    // One entry per actor (two tokens of the same linked actor get one copy)
+    const recipients = [];
+    for (const token of canvas?.tokens?.controlled ?? []) {
+      const actor = token.actor;
+      if (!actor || recipients.some(r => r.actor === actor)) continue;
+      recipients.push({ actor, img: token.document?.texture?.src || actor.img });
+    }
+    if (!recipients.length) {
+      ui.notifications.warn($l10n('SDM.CompendiumBrowser.NoToken'));
+      return;
+    }
+    const source = await fromUuid(uuid);
+    if (source?.documentName !== 'Item') return;
+    const esc = text => foundry.utils.escapeHTML(String(text ?? ''));
+    const price = (Number(source.system?.cost) || 0) * (Number(source.system?.quantity) || 1);
+    const who = recipients
+      .map(r => `<div class="sdm-give-who"><img src="${esc(r.img)}" alt="" /><span>${esc(r.actor.name)}</span></div>`)
+      .join('');
+    const content = `
+      <div class="sdm-give-item">
+        <div class="sdm-give-recipients">${who}</div>
+        <i class="fa-solid fa-arrow-left sdm-give-arrow"></i>
+        <div class="sdm-give-who"><img src="${esc(source.img)}" alt="" /><span>${esc(source.name)}</span></div>
+      </div>
+      <div class="form-group sdm-give-charge">
+        <label><input type="checkbox" name="charge" /> ${esc($l10n('SDM.CompendiumBrowser.Charge'))}</label>
+        <input type="number" name="price" min="0" step="any" value="${price || ''}" />
+        <span>${esc($l10n('SDM.CashSymbol'))}</span>
+      </div>`;
+    const result = await foundry.applications.api.DialogV2.prompt({
+      window: { title: 'SDM.CompendiumBrowser.AddToToken', icon: 'fa-solid fa-user-plus' },
+      content,
+      ok: {
+        label: 'SDM.CompendiumBrowser.Add',
+        callback: (event, button) => {
+          const form = button.form.elements;
+          return { charge: form.charge.checked, price: Number(form.price.value) || 0 };
+        }
+      },
+      rejectClose: false
+    });
+    if (!result) return;
+
+    const priceText = `${$l10n('SDM.CashSymbol')}${formatNumber(result.price)}`;
+    const given = [];
+    const skipped = [];
+    for (const { actor } of recipients) {
+      if (result.charge && result.price > 0) {
+        const paid = await removeCashFromActor(actor, result.price);
+        if (paid === false) {
+          skipped.push(actor.name);
+          continue;
+        }
+      }
+      const [created] = await actor.createEmbeddedDocuments('Item', [game.items.fromCompendium(source)]);
+      if (created) given.push(actor.name);
+    }
+    if (skipped.length) {
+      ui.notifications.warn(game.i18n.format('SDM.CompendiumBrowser.NotEnoughCash', { actor: skipped.join(', '), price: priceText }));
+    }
+    if (given.length) {
+      ui.notifications.info(game.i18n.format('SDM.CompendiumBrowser.Added', { item: source.name, actor: given.join(', ') }));
+    }
   }
 
   /** @override */
@@ -1487,11 +1568,12 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
       }
     });
 
-    this.element.addEventListener('input', event => {
-      const target = event.target;
-      if (target.matches('search input[type="text"]')) {
-        this._debouncedSearch(event);
-      }
+    // Typing doesn't search (slow typing kept firing it): Enter, the search button, or leaving the field
+    this.element.addEventListener('change', event => {
+      const input = event.target;
+      if (!input.matches('search input[type="text"]')) return;
+      if ((this.#filters.name ?? '') === input.value) return;
+      CompendiumBrowser.#onSubmitSearch.call(this, event, input);
     });
 
     this.element.addEventListener('keydown', event => {

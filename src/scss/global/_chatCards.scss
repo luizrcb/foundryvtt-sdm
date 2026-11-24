@@ -30,6 +30,11 @@
   }
 
   .sdm-card-badge {
+    // Never squeezed by a long title: stays on one line, at the right, beside the title's first line
+    flex: 0 0 auto;
+    align-self: flex-start;
+    margin-left: auto;
+    white-space: nowrap;
     padding: 0 6px;
     border-radius: 4px;
     background: var(--sdm-card-bad);
@@ -55,7 +60,7 @@
     white-space: nowrap;
   }
 
-  @each $name, $color in (rust: #cc2f00, pumpkin: #db6600, amber: #e39e00, sky: #006486, azure: #007cb5, royal: #465ab2, lime: #76b80d, pine: #007668, heart: #6d47b1, plum: #873b9c) {
+  @each $name, $color in ("rust": #cc2f00, "pumpkin": #db6600, "amber": #e39e00, "sky": #006486, "azure": #007cb5, "royal": #465ab2, "lime": #76b80d, "pine": #007668, "heart": #6d47b1, "plum": #873b9c) {
     .sdm-chip-#{$name} {
       border-color: $color;
       background: rgba($color, 0.1);
@@ -487,17 +492,87 @@
   }
 }
 
-// Dark theme: lighter muted text and backgrounds
+// Foundry's chat has no dark mode: cards keep the light theme's colors whatever the interface theme
 .theme-dark .sdm-card {
-  --sdm-card-line: rgba(255, 255, 255, 0.2);
-  --sdm-card-muted: rgba(255, 255, 255, 0.6);
+  --sdm-c-dark: #191813;
+  --sdm-c-faint: #c9c7b8;
+  --sdm-c-beige: #b5b3a4;
+  --sdm-c-tan: #444444;
+  --sdm-c-white: #ffffff;
+  --sdm-c-black: #000000;
+  --sdm-c-groove: #eeede0;
+  --sdm-c-border: rgb(51, 51, 51);
+  --sdm-c-font: rgb(102, 102, 102);
+  --sdm-c-ligh-border: #b5b3a4;
+  --sdm-c-violet: #7f00ff;
+  --sdm-c-ultraviolet: #b84eff;
+  --sdm-c-rust: #cc2f00;
+  --sdm-c-pumpkin: #db6600;
+  --sdm-c-amber: #e39e00;
+  --sdm-c-lime: #76b80d;
+  --sdm-c-pine: #007668;
+  --sdm-c-sky: #006486;
+  --sdm-c-azure: #007cb5;
+  --sdm-c-royal: #465ab2;
+  --sdm-c-heart: #6d47b1;
+  --sdm-c-plum: #873b9c;
+  --sdm-c-readied: #000000;
+  --sdm-c-not-readied: grey;
+  --sdm-c-highlight: var(--sdm-c-ultraviolet);
+  --sdm-c-accent: var(--sdm-c-plum);
 
-  .sdm-roll-box {
-    background: rgba(255, 255, 255, 0.06);
+  select option {
+    background: #ffffff;
+    color: var(--sdm-c-dark);
+  }
+}
+
+// Item cards in chat (a cast power's description…): white SVG icons (the default power icon) take
+// the sheets' darker tone instead of glaring on the light card
+.chat-card.item-card img.gold-icon[src$='.svg'] {
+  filter: brightness(0) invert(0.3);
+}
+
+// Plain chat rolls (/r 1d6…): the same apply buttons under the roll
+.chat-message .message-content .sdm-apply-plain {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 4px;
+  margin: 6px 0;
+
+  button {
+    margin: 0;
+    padding: 2px;
+    font-size: 12px;
+    line-height: 20px;
+  }
+}
+
+// Who can see a system card: blind, Referee only, private (public cards show nothing)
+.sdm-card .sdm-card-title .sdm-visibility {
+  margin-left: auto;
+  padding: 0 6px;
+  border-radius: 8px;
+  background: rgba(0, 0, 0, 0.08);
+  color: var(--sdm-card-muted);
+  font-family: var(--font-primary);
+  font-size: 11px;
+  letter-spacing: 0;
+  white-space: nowrap;
+
+  &.sdm-visibility-blind {
+    background: #3a2f4a;
+    color: #fff;
+  }
+}
+
+// The hero dice button: centered when it is alone in the footer, on the right beside something else
+.sdm-card .sdm-card-foot {
+  &:has(> .hero-dice-btn:only-child) {
+    justify-content: center;
   }
 
-  .sdm-die {
-    background: transparent;
-    border-color: rgba(255, 255, 255, 0.4);
+  > .hero-dice-btn:not(:only-child) {
+    margin-left: auto;
   }
 }

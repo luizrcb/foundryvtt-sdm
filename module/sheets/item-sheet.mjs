@@ -9,6 +9,7 @@ import { getHallmarkUpgradeSummary, openHallmarkUpgradeDialog } from '../app/lev
 import { makeNpcFriendly } from '../items/petItem.mjs';
 import { hasPowerAlbum } from '../helpers/itemUtils.mjs';
 import { isLightSource, LIGHT_PRESET_CHOICES, POWER_LIGHT_PRESET_CHOICES } from '../helpers/lights.mjs';
+import { isAnimatable as isAnimatableItem } from '../helpers/animatedItems.mjs';
 import { giveTemporaryLife, isUsable } from '../app/use-item.mjs';
 import { isSentientRide, refillRideStats, rideTable } from '../helpers/rideStats.mjs';
 import { getUsesCounter, USES_MODES } from '../helpers/itemUses.mjs';
@@ -28,7 +29,8 @@ import {
   isRideItem,
   isWeaponItem,
   linkNpcToItem,
-  requestAnimation
+  requestAnimation,
+  canAnimateWithoutApproval
 } from '../helpers/animatedItems.mjs';
 import { ActorType, DEFAULT_PET_ICON, GearType, ItemStatusType, ItemType } from '../helpers/constants.mjs';
 import { prepareActiveEffectCategories } from '../helpers/effects.mjs';
@@ -316,7 +318,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       triggerCastItems: keep(pick(isCastable), triggers.map(t => t.cast)),
       triggerUseItems: keep(pick(isUsable), triggers.map(t => t.use)),
       triggerLightItems: keep(pick(isLightSource, { none: false }), triggers.map(t => t.light_item)),
-      triggerChargeItems: keep(pick(triggerHasCharges, { none: false }), triggers.map(t => t.charges_item))
+      triggerChargeItems: keep(pick(triggerHasCharges, { none: false }), triggers.map(t => t.charges_item)),
+      triggerAnimateItems: keep(pick(isAnimatableItem, { none: false }), triggers.map(t => t.animate_item))
     };
   }
 
@@ -506,7 +509,18 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
         '': 'SDM.Trigger.WearNone',
         light: 'SDM.Trigger.LightMode.light',
         put_out: 'SDM.Trigger.LightMode.put_out',
-        toggle: 'SDM.Trigger.LightMode.toggle'
+        toggle: 'SDM.Trigger.LightMode.toggle',
+        flare: 'SDM.Trigger.LightMode.flare'
+      },
+      triggerLifeModes: {
+        '': 'SDM.Trigger.WearNone',
+        heal: 'SDM.Trigger.LifeMode.heal',
+        damage: 'SDM.Trigger.LifeMode.damage'
+      },
+      triggerAnimateModes: {
+        '': 'SDM.Trigger.WearNone',
+        animate: 'SDM.Trigger.AnimateMode.animate',
+        deanimate: 'SDM.Trigger.AnimateMode.deanimate'
       },
       ...this._triggerItemChoices(),
       boostResources: {
@@ -652,10 +666,14 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
             weapon: 'SDM.Animation.DamageWeapon',
             creature: 'SDM.Animation.DamageCreature'
           },
+          // Animating and deanimating are the Referee's; the item's owner configures the tab (for now)
           canManage: game.user.isGM,
+          canEdit: this.item.isOwner && !this.item.pack,
           // Players who own the item ask the Referee to animate it
           canRequest:
-            !game.user.isGM && this.item.isOwner && !this.item.system.animation?.active && !!this.item.parent
+            !game.user.isGM && this.item.isOwner && !this.item.system.animation?.active && !!this.item.parent,
+          // Players allowed to create and delete tokens animate it themselves
+          animatesSelf: canAnimateWithoutApproval()
         };
         break;
       }
@@ -1454,7 +1472,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
   }
 
   static async _onFillAnimationFromTable() {
-    if (!game.user.isGM) return;
+    if (!this.item.isOwner) return;
     await fillAttributesFromTable(this.item);
   }
 
@@ -1698,7 +1716,7 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       return this.item.setFlag('sdm', 'hexad', [...hexad, actor.uuid]);
     }
     // Animated items: the Referee drops the NPC the item turns into
-    if (isAnimatable(this.item) && game.user.isGM) {
+    if (isAnimatable(this.item)) {
       const actor = await fromUuid(data.uuid);
       if (actor?.type === ActorType.NPC) return linkNpcToItem(this.item, actor);
     }

@@ -400,6 +400,14 @@
         {{selectOptions @root.lightAnimations selected=system.light.animation localize=true}}
       </select>
     </label>
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.Light.Speed'}}</span>
+      <input type="number" name="system.light.speed" value="{{system.light.speed}}" min="0" max="10" step="1" />
+    </label>
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.Light.Intensity'}}</span>
+      <input type="number" name="system.light.intensity" value="{{system.light.intensity}}" min="0" max="10" step="1" />
+    </label>
     {{/if}}
     {{/if}}
   </div>
@@ -437,6 +445,10 @@
     <label class="v2-field" data-tooltip="{{localize 'SDM.Use.CuresHint'}}">
       <span class="v2-label">{{localize 'SDM.Use.CuresLabel'}}</span>
       <multi-select name="system.use.cures">{{selectOptions @root.useCureChoices selected=system.use.cures}}</multi-select>
+    </label>
+    <label class="v2-field v2-check" data-tooltip="{{localize 'SDM.Use.RestHint'}}">
+      <input type="checkbox" name="system.use.rest" {{checked system.use.rest}} />
+      <span class="v2-label">{{localize 'SDM.Use.RestLabel'}}</span>
     </label>
     <label class="v2-field">
       <span class="v2-label">{{localize 'SDM.Use.TableLabel'}}</span>

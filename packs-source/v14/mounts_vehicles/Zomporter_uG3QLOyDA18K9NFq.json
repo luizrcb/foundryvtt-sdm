@@ -48,15 +48,15 @@
     ],
     "attributes": {
       "initiative": "",
-      "level": 0,
+      "level": 2,
       "life": {
-        "value": 1,
-        "max": 1
+        "value": 18,
+        "max": 18
       },
-      "morale": 2,
-      "defense": 7,
-      "bonus": 1,
-      "damage": "1d4",
+      "morale": 5,
+      "defense": 6,
+      "bonus": 2,
+      "damage": "1d8",
       "capacity": 1
     },
     "is_hallmark": false,
@@ -69,7 +69,10 @@
     "capacity": 2,
     "speed": -2,
     "pull_vehicle_id": "",
-    "pull_mode": ""
+    "pull_mode": "",
+    "animation": {
+      "filled": true
+    }
   },
   "effects": [],
   "sort": 250000,

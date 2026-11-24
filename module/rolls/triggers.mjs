@@ -1,6 +1,6 @@
-import { applyItemEffectToTargets, applyStatusToTargets, durationData, isUsable, useItem } from '../app/use-item.mjs';
+import { applyItemEffectToTargets, applyStatusToTargets, changeLifeOf, durationData, isUsable, useItem } from '../app/use-item.mjs';
 import { saveDifficultyValue } from '../app/save-against.mjs';
-import { GearType, ItemStatusType, ItemType } from '../helpers/constants.mjs';
+import { ActorType, GearType, ItemStatusType, ItemType } from '../helpers/constants.mjs';
 import { resetCounters, stepCounter } from '../helpers/counters.mjs';
 import { getItemIdentifier } from '../helpers/effectReferences.mjs';
 import { getUsesCounter, refillUsesUpdate, setUsesLeftUpdate, usesLeft } from '../helpers/itemUses.mjs';
@@ -103,6 +103,8 @@ export function actorTriggers(actor, rollKind, roll, { attack = '', ability = ''
       if (trigger.roll !== rollKind) continue;
       // Attacks: whose attack fires it ("From" — the item it is made with, chosen in the attack dialog)
       if (rollKind === 'attack' && !attackFromMatches(item, trigger, chosen)) continue;
+      // Attacks with an album: only with that power (by name), the album's selected one
+      if (rollKind === 'attack' && trigger.power && !albumPowerMatches(chosen, trigger.power)) continue;
       // An NPC's single attack ('attack') fires the triggers of any attack type (its weapon decides)
       if (rollKind === 'attack' && trigger.attack && attack && attack !== 'attack' && trigger.attack !== attack) continue;
       if (['save', 'ability'].includes(rollKind) && trigger.ability && ability && trigger.ability !== ability) continue;
@@ -110,6 +112,14 @@ export function actorTriggers(actor, rollKind, roll, { attack = '', ability = ''
     }
   }
   return fired;
+}
+
+/** An attack made with an album (or gear with the album feature) uses its selected power: is it `name`? */
+function albumPowerMatches(chosen, name) {
+  const powers = chosen?.system?.powers;
+  if (!Array.isArray(powers) || !powers.length) return false;
+  const current = powers[chosen.system.powers_current_index || 0] ?? powers[0];
+  return `${current?.name ?? ''}`.trim().toLowerCase() === `${name}`.trim().toLowerCase();
 }
 
 const isUnarmedItem = item =>
@@ -249,6 +259,10 @@ async function runActions(fired, { actor, targets = null } = {}) {
       if (trigger.charges_mode) await chargesAction(item, roller, trigger, times);
       if (trigger.use) await useAction(item, roller, trigger);
       if (trigger.cast) await castAction(item, roller, trigger);
+      if (trigger.life_mode) await lifeAction(item, roller, trigger, targets, times);
+      if (`${trigger.roll_formula ?? ''}`.trim()) await rollAction(item, roller, trigger);
+      if (`${trigger.hero_dice ?? ''}`.trim()) await heroDiceAction(item, roller, trigger, times);
+      if (trigger.animate) await animateAction(item, roller, trigger);
     } catch (error) {
       console.error('SDM | Trigger action failed', error);
     }
@@ -309,8 +323,57 @@ async function lightAction(holder, actor, trigger) {
   const target = resolveTriggerItem(holder, actor, trigger.light_item || '@self', isLightSource);
   if (!target) return missingItem(holder, trigger.light_item || '@self');
   if (trigger.light === 'put_out') return putOutLight(target.actor, { itemId: target.id });
+  // Flare: lit for a while (it goes out on its own)
+  if (trigger.light === 'flare') {
+    return lightItem(target, { duration: durationData(trigger.light_duration, trigger.light_duration_units || 'rounds') });
+  }
   if (trigger.light === 'light') return isLit(target) ? null : lightItem(target);
   return toggleLight(target);
+}
+
+/** Heal or damage the targets (the user's targeted tokens) or the one who rolled. */
+async function lifeAction(holder, actor, trigger, targets, times = 1) {
+  const { total } = await rollAmount(trigger.life_amount || '1', { item: holder, actor, fallback: 1 });
+  const amount = total * times;
+  if (amount <= 0) return;
+  const actors =
+    trigger.life_target === 'self'
+      ? [actor].filter(Boolean)
+      : (targets ?? [...game.user.targets]).map(target => target?.actor ?? target).filter(Boolean);
+  if (!actors.length) {
+    ui.notifications.warn($fmt('SDM.Trigger.NoTargets', { item: holder.name }));
+    return;
+  }
+  for (const target of actors) await changeLifeOf(target, amount, { heal: trigger.life_mode === 'heal' });
+}
+
+/** Roll a formula to chat (it can read counters and other values). */
+async function rollAction(holder, actor, trigger) {
+  const owner = actor ?? holder.actor;
+  const roll = await new Roll(resolveFormula(trigger.roll_formula, { item: holder, actor: owner }), owner?.getRollData?.() ?? {}).evaluate();
+  await roll.toMessage({ speaker: ChatMessage.getSpeaker({ actor: owner }), flavor: holder.name });
+}
+
+/** The one who rolled gains hero dice (or loses them, negative), between 0 and the maximum. */
+async function heroDiceAction(holder, actor, trigger, times = 1) {
+  if (actor?.type !== ActorType.CHARACTER || !actor.isOwner) return;
+  const { total } = await rollAmount(trigger.hero_dice, { item: holder, actor, fallback: 0 });
+  const change = total * times;
+  if (!change) return;
+  const value = Number(actor.system.hero_dice?.value) || 0;
+  const max = Number(actor.system.hero_dice?.max) || 0;
+  const next = Math.min(Math.max(value + change, 0), max);
+  if (next !== value) await actor.update({ 'system.hero_dice.value': next });
+}
+
+/** Animate or deanimate an animated item: the Referee does it, a player asks (or animates, with token rights). */
+async function animateAction(holder, actor, trigger) {
+  const { animateItem, deanimateItem, isAnimatable, requestAnimation, requestDeanimation } = await import('../helpers/animatedItems.mjs');
+  const target = resolveTriggerItem(holder, actor, trigger.animate_item || '@self', isAnimatable);
+  if (!target) return missingItem(holder, trigger.animate_item || '@self');
+  const active = !!target.system.animation?.active;
+  if (trigger.animate === 'animate' && !active) return game.user.isGM ? animateItem(target) : requestAnimation(target);
+  if (trigger.animate === 'deanimate' && active) return game.user.isGM ? deanimateItem(target) : requestDeanimation(target);
 }
 
 /** Items whose charges a trigger can change: charges, or uses kept in a counter. */

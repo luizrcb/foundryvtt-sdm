@@ -68,8 +68,15 @@ export function normalizeNpcTable(table) {
   return NPC_TABLE_KEYS().includes(table) ? table : 'generic-synthesized-creature';
 }
 
+/** A ride with no table picked: vehicles are Brick Bastions, mounts the generic creature. */
+export function defaultRideTable(item) {
+  return item?.type === ItemType.VEHICLE ? 'brick-bastions' : 'generic-synthesized-creature';
+}
+
 export function getAnimationTable(item) {
-  return normalizeNpcTable(item.system.animation?.table);
+  const table = item.system.animation?.table;
+  if (!table && isRideItem(item)) return defaultRideTable(item);
+  return normalizeNpcTable(table);
 }
 
 export function getAnimationTableChoices() {
@@ -236,7 +243,9 @@ async function syncWeaponDamage(item, npc, { useCreatureDamage = false } = {}) {
     img: item.img,
     'system.type': GearType.WEAPON,
     'system.weapon.damage.base': damage.versatile,
-    'system.readied': true
+    'system.readied': true,
+    // Made for the creature: it takes no slots
+    'system.slots_override': 0
   };
   if (existing.length) {
     await existing[0].update(data);
@@ -247,7 +256,7 @@ async function syncWeaponDamage(item, npc, { useCreatureDamage = false } = {}) {
         name: data.name,
         img: data.img,
         type: ItemType.GEAR,
-        system: { type: GearType.WEAPON, readied: true, weapon: { damage: { base: damage.versatile } } },
+        system: { type: GearType.WEAPON, readied: true, slots_override: 0, weapon: { damage: { base: damage.versatile } } },
         flags: { sdm: { [VERSATILE_FLAG]: true } }
       }
     ], { sdmKeepReadied: true });
@@ -274,6 +283,8 @@ async function syncPowerCopy(item, npc) {
   data.system.features = features;
   data.system.readied = true;
   data.system.container = '';
+  // The creature's own copy: it takes no slots
+  data.system.slots_override = 0;
   if (data.system.animation) {
     data.system.animation.active = false;
     data.system.animation.actor = '';
@@ -464,10 +475,10 @@ async function getAnimatedFolder() {
 
 /**
  * Referee: an NPC dropped on the Animation tab becomes the item's creature. Its table and stats
- * fill the tab (compendium NPCs are imported into the "Animated Items" folder first).
+ * fill the tab. The creature is a copy in the "Animated Items" folder (compendium and world NPCs alike).
  */
 export async function linkNpcToItem(item, actor) {
-  if (!game.user.isGM || !isAnimatable(item) || actor?.type !== ActorType.NPC) return;
+  if (!item?.isOwner || !isAnimatable(item) || actor?.type !== ActorType.NPC) return;
   if (item.system.animation?.active) {
     ui.notifications.warn($l10n('SDM.Animation.LinkWhileActive'));
     return;
@@ -482,12 +493,22 @@ export async function linkNpcToItem(item, actor) {
   }
 
   let npc = actor;
-  if (actor.pack && !inCompendium) {
-    const folder = await getAnimatedFolder();
-    const data = actor.toObject();
-    delete data._id;
-    data.folder = folder?.id;
-    npc = await Actor.create(data);
+  // A compendium NPC or a world NPC that isn't this item's creature yet: the item gets its own copy
+  // in "Animated Items" (the dropped NPC is never changed)
+  const ownCreature = !actor.pack && actor.getFlag('sdm', FLAG) === item.uuid;
+  if (!inCompendium && !ownCreature) {
+    try {
+      const folder = await getAnimatedFolder();
+      const data = actor.toObject();
+      delete data._id;
+      data.folder = folder?.id;
+      npc = await Actor.create(data);
+    } catch (error) {
+      // A player without the right to create actors: the Referee links it
+      ui.notifications.warn(error?.message ?? String(error));
+      return;
+    }
+    if (!npc) return;
   }
 
   const s = npc.system;
@@ -531,7 +552,7 @@ export async function linkNpcToItem(item, actor) {
 /* -------------------------------------------- */
 
 /** Create (or reuse) the creature and place its token in the current scene. Referee only. */
-export async function animateItem(item, { app } = {}) {
+export async function animateItem(item, { app, placement = null } = {}) {
   if (!game.user.isGM || !isAnimatable(item) || item.pack) return;
   if (!canvas.scene) {
     ui.notifications.warn($l10n(textKey(item, 'NoScene')));
@@ -566,9 +587,11 @@ export async function animateItem(item, { app } = {}) {
     // Every charge (or use) spent brings the creature back with full life
     system.life.value = system.life.max;
   } else {
-    // A notched or running-low item comes to life already worn: at most half its life
+    // Worn by its mode (walks: notched; energy: running low): it comes to life with at most half its life
     const worn =
-      item.system.status === ItemStatusType.NOTCHED || item.system.resources === 'running_low';
+      wearField(item) === 'status'
+        ? item.system.status === ItemStatusType.NOTCHED
+        : item.system.resources === 'running_low';
     if (worn) system.life.value = Math.min(system.life.value, Math.ceil(system.life.max / 2));
   }
   if (npc) {
@@ -600,12 +623,13 @@ export async function animateItem(item, { app } = {}) {
 
   // Glowing items shed light
   const light = lightFromItem(item, canvas.scene);
-  // Every animated creature is a linked token on its owner's side (also NPCs dropped on the tab)
+  // Every animated creature is on its owner's side (also NPCs dropped on the tab); its token is
+  // linked unless the Animation tab says otherwise
   await npc.update({
     'prototypeToken.light.bright': light.bright,
     'prototypeToken.light.dim': light.dim,
     'prototypeToken.disposition': dispositionFromItem(item),
-    'prototypeToken.actorLink': true
+    'prototypeToken.actorLink': item.system.animation.linked !== false
   });
   await syncFeatureTraits(item, npc);
   await syncEffectCopies(item, npc);
@@ -615,6 +639,33 @@ export async function animateItem(item, { app } = {}) {
   // The NPC now has the base defense from the item: reset the bonus and add the current one
   await npc.update({ [`flags.sdm.${DEFENSE_BONUS_FLAG}`]: 0 });
   await applyDefenseBonus(item, npc);
+
+  // Place its token first: right-click or Esc cancels the animation (nothing spent, nothing changed)
+  const tokensData = [];
+  if (placement && !canvas.scene.tokens.some(token => token.actorId === npc.id)) {
+    // Placed already by the player who animated it
+    const tokenDocument = await npc.getTokenDocument(placement);
+    tokensData.push(tokenDocument.toObject());
+  } else if (!canvas.scene.tokens.some(token => token.actorId === npc.id)) {
+    const restore = app && !app.minimized;
+    if (restore) await app.minimize();
+    try {
+      const placements = await TokenPlacement.place({ tokens: [npc.prototypeToken] });
+      for (const placement of placements) {
+        delete placement.prototypeToken;
+        const tokenDocument = await npc.getTokenDocument(placement);
+        tokensData.push(tokenDocument.toObject());
+      }
+    } catch (error) {
+      console.error('SDM | Placing the animated item token failed', error);
+    } finally {
+      if (restore) await app.maximize();
+    }
+    if (!tokensData.length) {
+      ui.notifications.info($fmt(textKey(item, 'Cancelled'), { name: item.name }));
+      return null;
+    }
+  }
 
   const update = {
     'system.animation.actor': npc.uuid,
@@ -642,23 +693,13 @@ export async function animateItem(item, { app } = {}) {
   // A use of an item with replenish: usage roll, or its last use when running low
   if (animationSpendsUsage(item)) await item.spendUsage({ [SYNC_OPTION]: true });
 
-  // Place the token, unless the creature is already in this scene
-  if (canvas.scene.tokens.some(token => token.actorId === npc.id)) return npc;
-  const restore = app && !app.minimized;
-  if (restore) await app.minimize();
-  try {
-    const placements = await TokenPlacement.place({ tokens: [npc.prototypeToken] });
-    const tokensData = [];
-    for (const placement of placements) {
-      delete placement.prototypeToken;
-      const tokenDocument = await npc.getTokenDocument(placement);
-      tokensData.push(tokenDocument.toObject());
+  // The token placed above (none when the creature was already in this scene)
+  if (tokensData.length) {
+    try {
+      await canvas.scene.createEmbeddedDocuments('Token', tokensData, { sdmNoVariation: true });
+    } catch (error) {
+      console.error('SDM | Failed to place the animated item token', error);
     }
-    if (tokensData.length) await canvas.scene.createEmbeddedDocuments('Token', tokensData, { sdmNoVariation: true });
-  } catch (error) {
-    console.error('SDM | Failed to place the animated item token', error);
-  } finally {
-    if (restore) await app.maximize();
   }
 
   ui.notifications.info($fmt(textKey(item, 'Animated'), { name: item.name }));
@@ -666,22 +707,27 @@ export async function animateItem(item, { app } = {}) {
 }
 
 /** Remove the creature's tokens and bring its state back to the item. Referee only. */
-export async function deanimateItem(item, { reason } = {}) {
+export async function deanimateItem(item, { reason, from = null } = {}) {
   if (!game.user.isGM || item?.pack) return;
   const npc = getLinkedNpc(item);
 
   if (npc) {
+    // An unlinked token keeps its own state: the item takes it back from that token
+    let state = from?.isToken ? from : npc;
     for (const scene of game.scenes) {
-      const ids = scene.tokens.filter(token => token.actorId === npc.id).map(token => token.id);
+      const tokens = scene.tokens.filter(token => token.actorId === npc.id);
+      const unlinked = tokens.find(token => !token.actorLink && token.actor);
+      if (unlinked && state === npc) state = unlinked.actor;
+      const ids = tokens.map(token => token.id);
       if (ids.length) await scene.deleteEmbeddedDocuments('Token', ids, { [SYNC_OPTION]: true });
     }
-    const s = npc.system;
+    const s = state.system;
     await item.update(
       {
         'system.attributes.life.value': s.life.value,
         'system.attributes.life.max': s.life.max,
         'system.attributes.morale': s.morale,
-        'system.attributes.defense': baseDefense(npc),
+        'system.attributes.defense': baseDefense(state),
         'system.attributes.bonus': s.bonus,
         'system.attributes.damage': s.damage,
         'system.attributes.initiative': s.initiative ?? '',
@@ -718,9 +764,17 @@ const WEAR_SEVERITY = {
   resources: { '': 0, running_low: 1, run_out: 2 }
 };
 
-/** True when an update repairs or recharges the item (its integrity or resources get better). */
+/**
+ * The field the creature wears down, by mode: walks (and rides) wear the integrity
+ * (notched / broken), energy the resources (running low / run out). Never both.
+ */
+export function wearField(item) {
+  return isRideItem(item) || item.system.animation?.mode === 'walks' ? 'status' : 'resources';
+}
+
+/** True when an update repairs (walks) or recharges (energy) the item: the field its mode wears gets better. */
 export function isWearImproved(item, changes) {
-  for (const field of ['status', 'resources']) {
+  for (const field of [wearField(item)]) {
     const next = changes.system?.[field];
     if (next === undefined) continue;
     const before = WEAR_SEVERITY[field][item.system[field] ?? ''] ?? 0;
@@ -749,7 +803,7 @@ export async function deanimateFallenCreature(npc) {
   const item = getAnimatedSourceItem(npc);
   if (!item?.system.animation?.active) return;
   if ((Number(npc.system.life?.value) || 0) > 0) return;
-  await deanimateItem(item, { reason: 'SDM.Animation.Fell' });
+  await deanimateItem(item, { reason: 'SDM.Animation.Fell', from: npc });
 }
 
 /**
@@ -799,8 +853,8 @@ export async function applyAnimatedWear(npc) {
   const stage = value <= 0 ? 2 : max > 0 && value <= max / 2 ? 1 : 0;
   if (!stage) return;
 
-  const walks = item.system.animation?.mode === 'walks';
-  const field = walks ? 'status' : 'resources';
+  const field = wearField(item);
+  const walks = field === 'status';
   const steps = walks ? ['', ItemStatusType.NOTCHED, ItemStatusType.BROKEN] : ['', 'running_low', 'run_out'];
   const current = Math.max(steps.indexOf(item.system[field] ?? ''), 0);
   if (stage <= current) return;
@@ -889,6 +943,7 @@ async function onCombatEnded(combat) {
 const CHANNEL = 'system.sdm';
 const REQUEST_ACTION = 'animateItemRequest';
 const RESULT_ACTION = 'animateItemResult';
+const DEANIMATE_REQUEST_ACTION = 'deanimateItemRequest';
 
 /** A player asks the Referee to animate one of their items. */
 export function requestAnimation(item) {
@@ -901,17 +956,94 @@ export function requestAnimation(item) {
     ui.notifications.warn($l10n('SDM.ErrorNoActiveGM'));
     return;
   }
+  // Players allowed to create and delete tokens animate it themselves: they place its token, the
+  // Referee's game makes the creature (no approval asked)
+  if (canAnimateWithoutApproval(game.user)) return animateAsPlayer(item);
   game.socket.emit(CHANNEL, { action: REQUEST_ACTION, userId: game.user.id, itemUuid: item.uuid });
   ui.notifications.info($fmt(textKey(item, 'RequestSent'), { name: item.name }));
+}
+
+/** Foundry's permissions to create and delete tokens: such players animate without the Referee's approval. */
+export function canAnimateWithoutApproval(user = game.user) {
+  return !!user && !user.isGM && user.can('TOKEN_CREATE') && user.can('TOKEN_DELETE');
+}
+
+/** The player places the token (a preview with the item's image), then the Referee's game animates it there. */
+async function animateAsPlayer(item) {
+  if (!canvas.scene) {
+    ui.notifications.warn($l10n(textKey(item, 'NoScene')));
+    return;
+  }
+  const npc = getLinkedNpc(item);
+  const preview = npc ?? new Actor.implementation({ name: item.name, type: ActorType.NPC, img: item.img });
+  if (!npc) preview.prototypeToken.updateSource({ texture: { src: item.img } });
+  let placements = [];
+  try {
+    placements = await TokenPlacement.place({ tokens: [preview.prototypeToken] });
+  } catch (error) {
+    console.error('SDM | Placing the animated item token failed', error);
+  }
+  const placed = placements[0];
+  if (!placed) {
+    ui.notifications.info($fmt(textKey(item, 'Cancelled'), { name: item.name }));
+    return;
+  }
+  const { prototypeToken, index, ...placement } = placed;
+  game.socket.emit(CHANNEL, {
+    action: REQUEST_ACTION,
+    userId: game.user.id,
+    itemUuid: item.uuid,
+    sceneId: canvas.scene.id,
+    placement
+  });
+}
+
+/**
+ * A player asks the Referee to turn an animated item back (or recall a ride) — for when they can't
+ * delete its token themselves. The Referee approves or declines.
+ */
+export function requestDeanimation(item) {
+  if (!item?.isOwner || !item.system?.animation?.active) return;
+  if (!game.users.activeGM) {
+    ui.notifications.warn($l10n('SDM.ErrorNoActiveGM'));
+    return;
+  }
+  game.socket.emit(CHANNEL, { action: DEANIMATE_REQUEST_ACTION, userId: game.user.id, itemUuid: item.uuid });
+  ui.notifications.info($fmt(textKey(item, 'DeanimateRequestSent'), { name: item.name }));
+}
+
+async function onDeanimateRequest(message) {
+  if (game.users.activeGM?.id !== game.user.id) return;
+  const user = game.users.get(message.userId);
+  const item = fromUuidSync(message.itemUuid);
+  const respond = approved =>
+    game.socket.emit(CHANNEL, {
+      action: RESULT_ACTION,
+      userId: message.userId,
+      approved,
+      itemName: item?.name,
+      ride: isRideItem(item),
+      deanimate: true
+    });
+  if (!user || !item?.system?.animation?.active || !item.testUserPermission(user, 'OWNER')) return respond(false);
+  const approved = await foundry.applications.api.DialogV2.confirm({
+    window: { title: $l10n(textKey(item, 'DeanimateRequestTitle')), icon: isRideItem(item) ? 'fa-solid fa-house-flag' : 'fa-solid fa-box' },
+    content: `<p>${$fmt(textKey(item, 'DeanimateRequestPrompt'), { user: user.name, name: item.name, actor: item.parent?.name ?? '' })}</p>`,
+    rejectClose: false
+  });
+  if (approved) await deanimateItem(item);
+  respond(!!approved);
 }
 
 async function onSocketMessage(message) {
   if (message?.action === RESULT_ACTION && message.userId === game.user.id) {
     const kind = message.ride ? 'SDM.Ride' : 'SDM.Animation';
-    const key = `${kind}.${message.approved ? 'RequestApproved' : 'RequestDenied'}`;
+    const prefix = message.deanimate ? 'DeanimateRequest' : 'Request';
+    const key = `${kind}.${prefix}${message.approved ? 'Approved' : 'Denied'}`;
     ui.notifications.info($fmt(key, { name: message.itemName ?? '' }));
     return;
   }
+  if (message?.action === DEANIMATE_REQUEST_ACTION) return onDeanimateRequest(message);
   if (message?.action !== REQUEST_ACTION) return;
   if (game.users.activeGM?.id !== game.user.id) return;
 
@@ -927,6 +1059,16 @@ async function onSocketMessage(message) {
     });
   if (!user || !item || !item.testUserPermission(user, 'OWNER')) return respond(false);
 
+  // Placed by a player allowed to create and delete tokens: animated at once, on the player's scene
+  if (message.placement && canAnimateWithoutApproval(user)) {
+    if (message.sceneId && canvas.scene?.id !== message.sceneId) {
+      ui.notifications.warn($fmt('SDM.Animation.OtherScene', { user: user.name, name: item.name }));
+      return respond(false);
+    }
+    const npc = await animateItem(item, { placement: message.placement });
+    return respond(!!npc);
+  }
+
   const approved = await foundry.applications.api.DialogV2.confirm({
     window: { title: $l10n(textKey(item, 'RequestTitle')), icon: isRideItem(item) ? 'fa-solid fa-flag' : 'fa-solid fa-ghost' },
     content: `<p>${$fmt(textKey(item, 'RequestPrompt'), {
@@ -941,16 +1083,17 @@ async function onSocketMessage(message) {
 }
 
 function onRenderTokenHUD(hud, html) {
-  if (!game.user.isGM) return;
   const token = hud?.document ?? hud?.object?.document;
   const actor = token?.actor;
   const item = getAnimatedSourceItem(actor);
   if (!item) return;
+  // Players who own the item ask the Referee (they may not be allowed to delete the token)
+  if (!game.user.isGM && !(item.isOwner && item.system.animation?.active)) return;
 
   const root = html?.querySelectorAll ? html : html?.[0];
   if (!root || root.querySelector(`.${HUD_BUTTON_CLASS}`)) return;
 
-  const label = $l10n(textKey(item, 'Deanimate'));
+  const label = $l10n(textKey(item, game.user.isGM ? 'Deanimate' : 'DeanimateRequest'));
   const button = document.createElement('button');
   button.type = 'button';
   button.classList.add('control-icon', HUD_BUTTON_CLASS);
@@ -960,7 +1103,8 @@ function onRenderTokenHUD(hud, html) {
   button.addEventListener('click', async event => {
     event.preventDefault();
     event.stopPropagation();
-    await deanimateItem(item);
+    if (game.user.isGM) await deanimateItem(item);
+    else requestDeanimation(item);
   });
   (root.querySelector('.col.right') ?? root).append(button);
 }

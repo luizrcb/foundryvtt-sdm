@@ -99,6 +99,14 @@
       <span class="v2-label">{{localize 'SDM.Light.Animation'}}</span>
       <select name="system.light.animation">{{selectOptions @root.lightAnimations selected=system.light.animation localize=true}}</select>
     </label>
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.Light.Speed'}}</span>
+      <input type="number" name="system.light.speed" value="{{system.light.speed}}" min="0" max="10" step="1" />
+    </label>
+    <label class="v2-field">
+      <span class="v2-label">{{localize 'SDM.Light.Intensity'}}</span>
+      <input type="number" name="system.light.intensity" value="{{system.light.intensity}}" min="0" max="10" step="1" />
+    </label>
     {{/if}}
   </div>
 </section>

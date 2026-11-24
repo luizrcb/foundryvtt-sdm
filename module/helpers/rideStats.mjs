@@ -1,7 +1,7 @@
 /**
  * Ride stats (mounts and vehicles; the book's "Level and Non-Sentient Rides"): the level sets life,
  * defense, bonus and damage. Non-sentient rides use the book's ride table (more life, no morale,
- * lower defense and bonus); sentient rides (the *sentient* feature) are treated like any creature,
+ * lower defense and bonus; semi-sentient ones also get the generic table's morale); sentient rides (the *sentient* feature) are treated like any creature,
  * from an NPC table the Referee picks. The stats live in the item's creature attributes, so ride
  * mods change them like other item effects. They are filled when the ride is created and when its
  * level, its sentience or its table changes; the Referee can still edit them ("custom" table: never
@@ -9,7 +9,7 @@
  */
 import { ItemType } from './constants.mjs';
 import { getNPCDataByLevel, NPC_CUSTOM_TABLE } from './actorUtils.mjs';
-import { normalizeNpcTable } from './animatedItems.mjs';
+import { defaultRideTable, normalizeNpcTable } from './animatedItems.mjs';
 
 // Lvl, Life, Def, Bon, Dmg (the book's table, levels 0–13)
 const RIDE_TABLE = [
@@ -40,10 +40,19 @@ export function isSentientRide(item, features = item?.system?.features) {
   return featureSet(features).has('sentient');
 }
 
-/** The ride's table: the book's ride table (non-sentient), else its NPC table ("custom": none). */
+/** Semi-sentient rides (something of a brain): the ride table, with morale. */
+export function isSemiSentientRide(item, features = item?.system?.features) {
+  return featureSet(features).has('ride_semi_sentient');
+}
+
+/**
+ * The ride's table: the book's ride table (non-sentient), else its NPC table ("custom": none); with
+ * none picked, vehicles use Brick Bastions and mounts the generic creature.
+ */
 export function rideTable(item, { features, table } = {}) {
   if (!isSentientRide(item, features ?? item?.system?.features)) return 'ride';
-  return normalizeNpcTable(table ?? item?.system?.animation?.table);
+  const picked = table ?? item?.system?.animation?.table;
+  return picked ? normalizeNpcTable(picked) : defaultRideTable(item);
 }
 
 /** Life, defense, bonus, damage (and morale for sentient rides) at a level, or null ("custom"). */
@@ -52,7 +61,8 @@ export function rideStatsAt(item, level, options = {}) {
   const lvl = Math.max(Number(level) || 0, 0);
   if (table === 'ride') {
     const row = [...RIDE_TABLE].reverse().find(r => r[0] <= lvl) ?? RIDE_TABLE[0];
-    return { life: row[1], defense: row[2], bonus: row[3], damage: row[4], morale: 0 };
+    const morale = isSemiSentientRide(item, options.features ?? item?.system?.features) ? getNPCDataByLevel('generic-synthesized-creature', lvl)?.Mor ?? 0 : 0;
+    return { life: row[1], defense: row[2], bonus: row[3], damage: row[4], morale };
   }
   if (table === NPC_CUSTOM_TABLE) return null;
   const entry = getNPCDataByLevel(table, lvl);
@@ -93,7 +103,8 @@ function onPreUpdateRide(item, changes, options, userId) {
   const table = flat['system.animation.table'];
   if (level === undefined && features === undefined && table === undefined) return;
   const nextFeatures = features ?? item.system.features;
-  if (level === undefined && features !== undefined && isSentientRide(item) === isSentientRide(item, nextFeatures) && table === undefined) return;
+  const sameKind = isSentientRide(item) === isSentientRide(item, nextFeatures) && isSemiSentientRide(item) === isSemiSentientRide(item, nextFeatures);
+  if (level === undefined && features !== undefined && sameKind && table === undefined) return;
   const stats = rideStatsAt(item, level ?? item.system.level, { features: nextFeatures, table });
   if (!stats) return;
   // The sheet sends every stat field with each change: a field still at its current value is

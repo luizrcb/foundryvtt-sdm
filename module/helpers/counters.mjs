@@ -145,6 +145,25 @@ async function resetActorCounters(actor, each) {
   for (const item of actor.items) if (has(item)) await resetCounters(item, { each });
 }
 
+/** Its owner rested: the counters that reset on rest (the actor's and its items'). */
+export async function resetCountersOnRest(actor) {
+  if (!featureEnabled('counters')) return;
+  await resetActorCounters(actor, 'rest');
+}
+
+/** A new game day (the world date changed): the active Referee resets the "each day" counters. */
+async function onWorldTimeChanged(worldTime, delta) {
+  if (game.users.activeGM?.id !== game.user.id || !featureEnabled('counters') || !delta) return;
+  const calendar = game.time?.calendar;
+  const dayOf = time => {
+    const c = calendar?.timeToComponents?.(time);
+    if (c) return `${c.year}-${c.day}`;
+    return Math.floor(time / 86400);
+  };
+  if (dayOf(worldTime) === dayOf(worldTime - delta)) return;
+  for (const actor of game.actors) await resetActorCounters(actor, 'day');
+}
+
 /** New round: everyone's "each round" counters; new turn: the acting combatant's "each turn" counters. */
 async function onCombatAdvanced(combat, changed) {
   if (game.users.activeGM?.id !== game.user.id || !featureEnabled('counters')) return;
@@ -159,6 +178,7 @@ async function onCombatAdvanced(combat, changed) {
 export function setupCounters() {
   Hooks.on('deleteCombat', onCombatEnded);
   Hooks.on('updateCombat', onCombatAdvanced);
+  Hooks.on('updateWorldTime', onWorldTimeChanged);
   Hooks.on('preUpdateItem', onPreUpdateCounters);
   Hooks.on('preUpdateActor', onPreUpdateCounters);
   Hooks.on('updateItem', onCountersRenamed);

@@ -20,7 +20,15 @@ export function cardWrap(inner, { kind = '' } = {}) {
  * Title line with an icon, and chips under it. chips: [{ text, color?, tooltip? }] or strings;
  * color is an ability color class (rust, amber…) or a tone.
  */
+/** Card titles read "Kind · Name" everywhere: an old "[Kind] Name" label becomes that. */
+export function cardTitleText(title) {
+  const match = `${title ?? ''}`.trim().match(/^\[([^\]]+)\]\s*(.*)$/s);
+  if (!match) return `${title ?? ''}`;
+  return match[2] ? `${match[1]} · ${match[2]}` : match[1];
+}
+
 export function cardHeader({ icon = '', color = '', title = '', badge = '', chips = [] } = {}) {
+  title = cardTitleText(title);
   const chipHtml = (chips ?? [])
     .filter(Boolean)
     .map(chip => (typeof chip === 'string' ? { text: chip } : chip))

@@ -1,4 +1,5 @@
 import { ActorType, RollMode } from './constants.mjs';
+import { showSideDice } from './formulas.mjs';
 
 /**
  * WTF conditions. The game has no condition rules of its own: these are the conditions its texts
@@ -308,6 +309,7 @@ async function onCombatTurn(combat, changed) {
   }
   if (has(actor, 'burning')) {
     const roll = await new Roll('1d4').evaluate();
+    await showSideDice(roll);
     await actor.applyDamage(roll.total, 1, false, true);
     await note(actor, 'SDM.Condition.burning.Turn', { amount: roll.total });
   }

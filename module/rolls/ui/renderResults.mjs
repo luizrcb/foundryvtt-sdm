@@ -3,6 +3,8 @@ import { RollType } from '../../helpers/constants.mjs';
 import { $fmt, $l10n, toPascalCase } from '../../helpers/globalUtils.mjs';
 import { templatePath } from '../../helpers/templates.mjs';
 import { cardHeader, rollBox } from './cardParts.mjs';
+import { detectNat1OrNat20 } from '../sdmRoll.mjs';
+import { awardNat20HeroDie } from '../../helpers/heroDieOnNat20.mjs';
 
 const { renderTemplate } = foundry.applications.handlebars;
 
@@ -416,6 +418,12 @@ export async function renderSaveResult(
   };
 
   const flags = {};
+
+  // Optional: a natural 20 on the save gives a hero die (never on a result re-done by hero dice)
+  if (fromHeroDice !== true && detectNat1OrNat20(roll).isNat20) {
+    const actor = ChatMessage.getSpeakerActor(speaker);
+    extraHtml = `${await awardNat20HeroDie(actor)}${extraHtml}`;
+  }
 
   if (fromHeroDice === true) {
     flags['sdm.isHeroResult'] = true;

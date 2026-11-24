@@ -8,8 +8,9 @@ export function defineCountersField() {
       max: new fields.NumberField({ required: false, nullable: true, integer: true, initial: null, min: 0 }),
       reset_value: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 0, min: 0 }),
       reset_on_combat_end: new fields.BooleanField({ initial: false }),
-      // Also reset at the start of each combat round, or at the start of its owner's turn
-      reset_each: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'round', 'turn'] })
+      // Also reset at the start of each combat round, at the start of its owner's turn, when its
+      // owner rests, or when the game date changes (a new day)
+      reset_each: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'round', 'turn', 'rest', 'day'] })
     })
   );
 }

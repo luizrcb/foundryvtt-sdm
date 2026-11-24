@@ -234,8 +234,10 @@ $v2-wide: 1100px;
       border-bottom-color: var(--v2-accent-soft);
     }
 
+    // Names in normal case (the title font has capitals only, which made names hard to type)
     .v2-title {
-      font-family: var(--sdm-font-primary);
+      font-family: var(--font-primary);
+      font-weight: 700;
       font-size: 28px;
       line-height: 1.1;
     }
@@ -1530,7 +1532,8 @@ $v2-wide: 1100px;
     }
 
     .v2-name .v2-title {
-      font-family: var(--sdm-font-primary);
+      font-family: var(--font-primary);
+      font-weight: 700;
       font-size: 26px;
       line-height: 1.1;
     }

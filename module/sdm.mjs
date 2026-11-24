@@ -1,4 +1,4 @@
-import { addCatchHandle } from './helpers/singleUsePowers.mjs';
+import { addCatchHandle, addSingleUseMark } from './helpers/singleUsePowers.mjs';
 import SdmEffectsPanel from './app/effects-panel.mjs';
 import SdmActiveEffectConfig14 from './app/active-effect-config14.mjs';
 import {
@@ -58,6 +58,8 @@ import { blockedReason, isUsable, setupUseItem, useItem } from './app/use-item.m
 import { setupAnimatedItems } from './helpers/animatedItems.mjs';
 import { getLightItems, getLitEffect, isLightSource, isLit, lightItem, putOutLight, setupLights, toggleLight } from './helpers/lights.mjs';
 import { restActor, setupRest } from './app/rest.mjs';
+import { setupHeroDieOnNat20 } from './helpers/heroDieOnNat20.mjs';
+import { setupTokenLifeBar } from './canvas/token-life-bar.mjs';
 import { bindTriggerApply, setupTriggers } from './rolls/triggers.mjs';
 import { setupNextRoll } from './app/next-roll.mjs';
 import { setupRideStats } from './helpers/rideStats.mjs';
@@ -74,7 +76,7 @@ import HazardBehaviorData from './data/hazard-behavior.mjs';
 import { bindAttackFollowup } from './rolls/attackFollowup.mjs';
 import { bindAttackFeatures } from './rolls/attackFeatures.mjs';
 import { bindSacrifice, bindSaveAgainst, rerenderChangedSave, setupSaveAgainst } from './app/save-against.mjs';
-import { applyToTokens, bindApplyDamage, bindAreaApply, bindHeroHeal, bindUndoDamage, damageTokens } from './rolls/ui/applyDamage.mjs';
+import { addApplyToPlainRolls, addVisibilityLabel, applyToTokens, bindApplyDamage, bindAreaApply, bindHeroHeal, bindUndoDamage, damageTokens } from './rolls/ui/applyDamage.mjs';
 import { rememberCurrency } from './helpers/currency.mjs';
 import { setupItemTransferSocket } from './items/transfer.mjs';
 import { gm as gmMacros, player as playerMacros } from './macros/_module.mjs';
@@ -316,6 +318,7 @@ Hooks.on('createChatMessage', message => rerenderChangedSave(message));
 
 Hooks.on('renderChatMessageHTML', (message, html, data) => {
   configureUseHeroDiceButton(message, html, data);
+  addSingleUseMark(message, html);
   addCatchHandle(message, html);
   configureChatListeners(html);
   // Attack card (and its hero dice result): roll the damage of the weapon / the power it was made with
@@ -328,7 +331,9 @@ Hooks.on('renderChatMessageHTML', (message, html, data) => {
   bindSacrifice(message, html);
   // A trigger that fired with no target: apply its condition / effect to the tokens targeted now
   bindTriggerApply(message, html);
-  // Damage card: apply to the selected tokens
+  // Damage card: apply to the selected tokens (plain chat rolls get the same buttons)
+  addApplyToPlainRolls(message, html);
+  addVisibilityLabel(message, html);
   bindApplyDamage(html);
   // An area's damage, not applied automatically: a button per token hit
   bindAreaApply(message, html);
@@ -819,6 +824,8 @@ Hooks.once('init', function () {
   setupAnimatedItems();
   setupLights();
   setupRest();
+  setupHeroDieOnNat20();
+  setupTokenLifeBar();
   setupTriggers();
   setupEscalatorDiePositionBroadcast();
   //Preload Handlebars templates.

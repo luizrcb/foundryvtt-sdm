@@ -52,7 +52,8 @@ import {
   isAnimatedNpc,
   isAnimationBlocked,
   isRideItem,
-  requestAnimation
+  requestAnimation,
+  requestDeanimation
 } from '../helpers/animatedItems.mjs';
 import { addCashToActor, removeCashFromActor } from '../macros/gm/giveCash.mjs';
 import { postDiceSummary } from '../macros/gm/giveHeroDice.mjs';
@@ -119,8 +120,9 @@ export class SdmActor extends Actor {
     const result = await super._preUpdate(changes, options, user);
     if (result === false) return false;
 
-    // Only the Referee edits XP directly; players invest it (sdmInvestXp option)
-    if (!user.isGM && !options.sdmInvestXp && changes.system) {
+    // Only the Referee edits XP directly; players invest it (sdmInvestXp option) or reroll their
+    // character (sdmReroll: XP back to a new character's)
+    if (!user.isGM && !options.sdmInvestXp && !options.sdmReroll && changes.system) {
       for (const key of ['experience', 'player_experience']) {
         if (changes.system[key] !== undefined && `${changes.system[key]}` !== `${this.system[key]}`) {
           delete changes.system[key];
@@ -275,7 +277,7 @@ export class SdmActor extends Actor {
     if (changed.system?.temporary_life?.value !== undefined) {
       if (changed.system?.temporary_life?.value > this.system.temporary_life.max) {
         await this.update({
-          'system.temporary_life.value': this.system.borrowed_life.max
+          'system.temporary_life.value': this.system.temporary_life.max
         });
       }
     }
@@ -1592,6 +1594,25 @@ export class SdmActor extends Actor {
         onClick: async (event, target) => {
           await deanimateItem(this.sheet._getEmbeddedDocument(target));
         }
+      },
+      // Players who own an animated item (or a deployed ride) ask the Referee to turn it back
+      {
+        label: 'SDM.Animation.DeanimateRequest',
+        icon: '<i class="fa-solid fa-box"></i>',
+        visible: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          return !game.user.isGM && item?.isOwner && isAnimatable(item) && !isRideItem(item) && !!item.system.animation?.active;
+        },
+        onClick: async (event, target) => requestDeanimation(this.sheet._getEmbeddedDocument(target))
+      },
+      {
+        label: 'SDM.Ride.DeanimateRequest',
+        icon: '<i class="fa-solid fa-house-flag"></i>',
+        visible: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          return !game.user.isGM && item?.isOwner && isRideItem(item) && !!item.system.animation?.active;
+        },
+        onClick: async (event, target) => requestDeanimation(this.sheet._getEmbeddedDocument(target))
       },
       {
         label: 'SDM.Item.SplitItems',
