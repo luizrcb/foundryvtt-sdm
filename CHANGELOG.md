@@ -58,6 +58,7 @@
 - **Consumables**: **Overdose** (a condition or one of the item's effects, saved against once a target took more than the free doses per day or week; escalating makes each dose one step harder), **Purge** (removes other consumables' effects from the targets) and **Meant for** (a reminder of who it's for). You Go, Injectable Fodder, Healmachine and Synthetic Blood set up
 - **Trigger actions**: **Ability damage** (lower an ability of the targets or yourself; *choose* lets the attacker pick) and **Purge**. Cerebral Purge purges its targets
 - **Mods with triggers**: an item mod can carry roll triggers that work as its item's while installed. Atrophic, Stunning, Crippling and Saboteur now act on a hit (ability damage; stunned, slowed or prone with a save)
+- **Free area placement**: hold **Shift** while placing an area on a square grid — cones and lines aim at any angle from the edge of the user's token, circles, squares and rings go anywhere (no snapping; the wheel rotates squares). Free cones use the same squares rule as circles (more than half covered, or the middle); a free line takes every square its middle passes through, not those it only grazes at a corner. Without Shift nothing changes
 - Fixed: "ActiveEffect … does not exist!" errors when two clients removed the same effect (aura sync, lights, rest, Use, next roll, area saves, conditions, animated items, generator)
 
 ## v1.11.0
