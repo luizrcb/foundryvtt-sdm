@@ -1612,6 +1612,8 @@
   "SDM.PowerCostPay.TooMuch": "São {points} pontos de atributo para um custo de {cost}.",
   "SDM.PowerCostPay.NotEnoughAbility": "{ability} tem só {current} pontos.",
   "SDM.PowerCostPay.OverchargeNote": "(×2 ao sobrecarregar)",
+  "SDM.PowerCostPay.AttackNote": "(o ataque conjura o poder: paga acertando ou errando)",
+  "SDM.PowerCostPay.PaidOnAttack": "(pago no ataque; sobrecarregar paga a diferença)",
   "SDM.PowerCostPay.LifeNow": "Vida atual: {life}",
   "SDM.PowerCostPay.AbilityNow": "{ability} atual: {current}",
   "SDM.PowerCostPay.RestHint": "A vida paga o resto (vida temporária primeiro). Se a vida não bastar, o atributo cobre. A vida pode chegar a 0: rolagem de derrota.",

@@ -431,6 +431,17 @@ Hooks.on('renderDialogV2', (dialog, html) => {
 
   const costValue = html.querySelector('.sdm-power-cost-value');
   const payCost = html.querySelector('input[name="payPowerCost"]');
+  // Attack dialog: the cost box shows only for a power chosen in With, with that power's cost
+  const attackPowerCosts = dialog.options?.attackPowerCosts;
+  const withSelect = html.querySelector('#attackItem');
+  if (attackPowerCosts && withSelect) {
+    withSelect.addEventListener('change', () => {
+      const box = html.querySelector('.sdm-power-cost');
+      const casts = withSelect.value in attackPowerCosts;
+      if (box) box.hidden = !casts;
+      if (casts && costValue) costValue.textContent = attackPowerCosts[withSelect.value];
+    });
+  }
   const costAbilityRow = html.querySelector('.sdm-power-cost-ability');
   payCost?.addEventListener('change', () => {
     costAbilityRow?.classList.toggle('disabled', !payCost.checked);

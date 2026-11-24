@@ -1612,6 +1612,8 @@
   "SDM.PowerCostPay.TooMuch": "That's {points} ability points for a cost of {cost}.",
   "SDM.PowerCostPay.NotEnoughAbility": "{ability} has only {current} points.",
   "SDM.PowerCostPay.OverchargeNote": "(×2 when overcharged)",
+  "SDM.PowerCostPay.AttackNote": "(the attack casts the power: paid hit or miss)",
+  "SDM.PowerCostPay.PaidOnAttack": "(paid on the attack; overcharging pays the difference)",
   "SDM.PowerCostPay.LifeNow": "Current Life: {life}",
   "SDM.PowerCostPay.AbilityNow": "Current {ability}: {current}",
   "SDM.PowerCostPay.RestHint": "Life pays the rest (temporary life first). If life isn't enough, the ability covers it. Life can drop to 0: defeat roll.",

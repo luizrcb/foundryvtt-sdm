@@ -273,6 +273,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       powerIndex = 0,
       item = null,
       freeCast = false,
+      // The power was cast by the attack made with it (its card's button): the cost was paid then
+      castOnAttack = false,
       // Suggested damage multiplier (an attack's consecutive natural 20s, from its card's button)
       multiplier: suggestedMultiplier = '',
       // The target of the attack the damage follows (its card's button): it wins over the user's target
@@ -399,11 +401,28 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     // Damage boost paid with a resource (from the item)
     const boost = isDamage ? getBoost(item) : null;
 
+    // An attack made with a power casts it: its cost is paid on the attack (each power the attack can
+    // be made with, by its entry), and the power rolled from the attack's card costs nothing more
+    const attackPowerCosts = {};
+    if (isAttack && paysPowerCost(this.actor)) {
+      for (const entry of attackEntries) {
+        if (entry.kind !== 'power' && entry.kind !== 'album') continue;
+        const powerItem = this.actor.items.get(entry.itemId ?? entry.id);
+        const powers = powerItem?.system?.powers ?? [];
+        const data = entry.kind === 'power' ? powerItem?.system?.power : powers[powerItem?.system?.powers_current_index] ?? powers[0];
+        if (data) attackPowerCosts[entry.id] = getPowerCost(this.actor.system, data);
+      }
+    }
+    const attackCasts = isAttack && Object.keys(attackPowerCosts).length > 0;
     // Power cost: paid with life and/or ability points when casting
     const powerCost =
-      (isPower || isPowerAlbum) && paysPowerCost(this.actor)
+      ((isPower || isPowerAlbum) && paysPowerCost(this.actor)) || attackCasts
         ? {
-            cost: powerOptions?.[powerIndex]?.cost ?? 0,
+            // Cast by the attack: paid already (overcharging pays only the difference)
+            cost: attackCasts ? attackPowerCosts[suggestedAttackItem] ?? 0 : castOnAttack ? 0 : powerOptions?.[powerIndex]?.cost ?? 0,
+            attack: attackCasts,
+            castOnAttack: !!castOnAttack,
+            hidden: attackCasts && !(suggestedAttackItem in attackPowerCosts),
             life: Number(this.actor.system.life?.value) || 0,
             abilities: Object.keys(CONFIG.SDM.getOrderedAbilities(game.i18n.lang)).map(key => ({
               key,
@@ -594,7 +613,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         attack: isAttack ? attack : '',
         // The real item (an album-feature entry is "<id>:album"), what it rolls next and its name
         attackItem: plan.attackItem
-          ? { id: plan.attackItem.itemId ?? plan.attackItem.id, name: plan.attackItem.name, kind: plan.attackItem.kind }
+          ? { id: plan.attackItem.itemId ?? plan.attackItem.id, name: plan.attackItem.name, kind: plan.attackItem.kind, castOnAttack: !!plan.castOnAttack }
           : null
       };
       if (plan.formula) data.formula = plan.formula;
@@ -708,6 +727,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         // Choosing another item re-suggests the roll mode (out of range → disadvantage) and shows its image
         attackItemRollMode: isAttack ? rollModeWith : null,
         attackItemImage: isAttack ? attackItemImage : null,
+        // The power cost of each power the attack can be made with (the cost box follows the choice)
+        attackPowerCosts: attackCasts ? attackPowerCosts : null,
         content: template,
         position: {
           width: 400
@@ -763,13 +784,26 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
 
     // Pay the power's cost (life, and ability points by choice or when life isn't enough)
     let costPaid = null;
-    if (powerCost && item && !freeCast && (isShift || rollOptions.payPowerCost)) {
+    const wantsToPay = isShift || rollOptions?.payPowerCost;
+    // The form gives flat keys ("costFrom.agi"): expand them
+    const fromAbilities = () => foundry.utils.expandObject(rollOptions ?? {}).costFrom ?? {};
+    if (powerCost && item && !freeCast && !attackCasts && wantsToPay) {
       const castData = isPowerAlbum ? item.system.powers?.[powerIndex] : item.system.power;
-      const cost = getPowerCost(this.actor.system, castData, !!rollOptions.overcharge);
-      // The form gives flat keys ("costFrom.agi"): expand them
-      const fromAbilities = foundry.utils.expandObject(rollOptions ?? {}).costFrom ?? {};
-      costPaid = await payPowerCost(this.actor, cost, { fromAbilities });
-      if (!costPaid) return;
+      let cost = getPowerCost(this.actor.system, castData, !!rollOptions?.overcharge);
+      // Cast by its attack: paid then; overcharging now pays the difference
+      if (castOnAttack) cost -= getPowerCost(this.actor.system, castData);
+      if (cost > 0) {
+        costPaid = await payPowerCost(this.actor, cost, { fromAbilities: fromAbilities() });
+        if (!costPaid) return;
+      }
+    }
+    // An attack made with a power casts it: the cost is paid now (hit or miss)
+    if (attackCasts && plan.attackItem && plan.attackItem.id in attackPowerCosts) {
+      plan.castOnAttack = true;
+      if (!freeCast && wantsToPay) {
+        costPaid = await payPowerCost(this.actor, attackPowerCosts[plan.attackItem.id], { fromAbilities: fromAbilities() });
+        if (!costPaid) return;
+      }
     }
 
     const rollData = buildRollData(plan, { versatile: !!rollOptions.versatile });
@@ -1792,6 +1826,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       item: rollItem,
       // Free cast (a trigger's "free"): no dialog and no cost
       freeCast: dataset.freeCast === 'true',
+      castOnAttack: dataset.castOnAttack === 'true',
       multiplier: dataset.multiplier || '',
       targetUuid: dataset.targetUuid || '',
       // From an area card: the tokens it hit, each gets the damage
