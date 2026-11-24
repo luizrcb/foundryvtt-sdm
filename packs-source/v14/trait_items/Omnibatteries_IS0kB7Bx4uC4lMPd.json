@@ -19,7 +19,8 @@
     "features": [
       "area",
       "replenish",
-      "throwing"
+      "throwing",
+      "consumable"
     ],
     "attributes": {
       "initiative": "",
@@ -88,7 +89,10 @@
     "categories": [
       "noömagus",
       "recharge"
-    ]
+    ],
+    "use": {
+      "replenishes": "small"
+    }
   },
   "effects": [],
   "sort": 0,
