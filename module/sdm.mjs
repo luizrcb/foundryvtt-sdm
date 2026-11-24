@@ -63,6 +63,7 @@ import { setupHeroDieOnNat20 } from './helpers/heroDieOnNat20.mjs';
 import { setupTokenLifeBar } from './canvas/token-life-bar.mjs';
 import { newSession, setupOnceAbilities } from './helpers/onceAbilities.mjs';
 import { setupSummons } from './helpers/summons.mjs';
+import { setupInitiativeHeroDice } from './helpers/initiativeHeroDice.mjs';
 import { bindTriggerApply, setupTriggers } from './rolls/triggers.mjs';
 import { setupNextRoll } from './app/next-roll.mjs';
 import { setupRideStats } from './helpers/rideStats.mjs';
@@ -838,6 +839,7 @@ Hooks.once('init', function () {
   setupTokenLifeBar();
   setupOnceAbilities();
   setupSummons();
+  setupInitiativeHeroDice();
   setupTriggers();
   setupEscalatorDiePositionBroadcast();
   //Preload Handlebars templates.

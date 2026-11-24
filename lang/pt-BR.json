@@ -3475,5 +3475,7 @@
   "SDM.AreaDrawUses": "Usos (0: ilimitado)",
   "SDM.Mod.Mark": "Mod de item",
   "SDM.Mod.MarkUpgrade": "Mod de item (melhoria do emblemático, sem vaga de mod)",
-  "SDM.Mod.Off": "desligado"
+  "SDM.Mod.Off": "desligado",
+  "SDM.InitiativeHero.Changed": "Iniciativa {total}: {names}",
+  "SDM.InitiativeHero.Closed": "Tarde demais: dados de herói mudam a iniciativa só até o fim do primeiro turno da rodada."
 }

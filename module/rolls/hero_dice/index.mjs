@@ -6,6 +6,7 @@ import { HeroDiceEngine } from './core/HeroDiceEngine.mjs';
 import { HeroDiceUI } from './ui/HeroDiceUi.mjs';
 import { cardHeader, cardWrap, rollBox } from '../ui/cardParts.mjs';
 import { applyDamageHtml } from '../ui/applyDamage.mjs';
+import { applyInitiativeHeroDice, canSpendOnInitiative, initiativeData } from '../../helpers/initiativeHeroDice.mjs';
 
 export async function _promptHeroOptions(actor, bonusHeroDice = 0) {
   const defaultHeroDiceType = game.settings.get('sdm', 'defaultHeroDiceType');
@@ -46,6 +47,14 @@ export async function handleHeroDice(event, message, flags) {
     return;
   }
 
+  // An initiative card: only until the round's first turn ends
+  const initiative = initiativeData(message);
+  if (initiative && !canSpendOnInitiative(message)) {
+    ui.notifications.warn($l10n('SDM.InitiativeHero.Closed'));
+    event?.currentTarget?.remove?.();
+    return;
+  }
+
   // A hero dice result: spent again on the dice as they are now, with the original roll's flags
   const heroRoll = message.getFlag?.('sdm', 'heroRoll');
   const originalRoll = heroRoll ? Roll.fromData(heroRoll) : message.rolls[0];
@@ -70,6 +79,8 @@ export async function handleHeroDice(event, message, flags) {
   // The result remembers the message it changed (a save's sacrifice buttons go once it is changed)
   const withSource = foundry.utils.mergeObject(foundry.utils.deepClone(flags ?? {}), { sdm: { sourceMessage: message.id } });
   await HeroDiceUI.renderResultToChat(result, actor, withSource, bonusHDPool, heroMode, originalRoll);
+  // An initiative roll: the new total for everyone it set
+  if (initiative) await applyInitiativeHeroDice(initiative, result.total);
 }
 
 /**

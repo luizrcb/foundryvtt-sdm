@@ -8,6 +8,7 @@ import CompendiumBrowser from './app/compendium-browser.mjs';
 import { DEFAULT_CASH_ICON, DiceType } from './helpers/constants.mjs';
 import { $fmt, $l10n } from './helpers/globalUtils.mjs';
 import { handleHeroDice } from './rolls/hero_dice/index.mjs';
+import { canSpendOnInitiative, initiativeData, INITIATIVE_HERO_CLASS } from './helpers/initiativeHeroDice.mjs';
 
 export const BASE_REACTION_FORMULA = '2d6';
 export const BASE_DEFEAT_FORMULA = '2d6';
@@ -1001,13 +1002,19 @@ export function configureUseHeroDiceButton(message, html, data) {
   const canTakeHeroDice = m => !!m?.getFlag('sdm', 'heroRoll') || (m.isRoll && !m?.getFlag('sdm', 'isHeroResult'));
   const lastRollMessage = [...game.messages.contents].reverse().find(canTakeHeroDice);
 
-  // Only proceed if this is the most recent roll message
-  if (isHeroResult && !message.getFlag('sdm', 'heroRoll')) return;
-  if (!lastRollMessage || message.id !== lastRollMessage.id) return;
-  // Only the latest roll has the buttons
-  document.querySelectorAll('button.hero-dice-btn, button.blood-dice-btn').forEach(button => {
-    if (button.dataset.messageId !== message.id) button.remove();
-  });
+  // Initiative cards: every one of the current round keeps its button until the round's first turn
+  // ends (the newest hero dice result of a card takes its place); other rolls: only the most recent
+  const initiative = !!initiativeData(message);
+  if (initiative) {
+    if (!canSpendOnInitiative(message)) return;
+  } else {
+    if (isHeroResult && !message.getFlag('sdm', 'heroRoll')) return;
+    if (!lastRollMessage || message.id !== lastRollMessage.id) return;
+    // Only the latest roll has the buttons (initiative cards keep theirs)
+    document.querySelectorAll(`button.hero-dice-btn:not(.${INITIATIVE_HERO_CLASS}), button.blood-dice-btn`).forEach(button => {
+      if (button.dataset.messageId !== message.id) button.remove();
+    });
+  }
 
   // Get Actor from selected token, or default character for the Actor if none is.
   const actor = game.user?.character || canvas?.tokens?.controlled[0]?.actor;
@@ -1021,6 +1028,7 @@ export function configureUseHeroDiceButton(message, html, data) {
   // Create hero-dice button element
   const heroBtn = document.createElement('button');
   heroBtn.classList.add('hero-dice-btn');
+  if (initiative) heroBtn.classList.add(INITIATIVE_HERO_CLASS);
   heroBtn.dataset.messageId = message.id;
 
   const heroIcon = document.createElement('i');

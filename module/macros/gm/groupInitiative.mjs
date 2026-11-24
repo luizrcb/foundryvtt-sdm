@@ -143,7 +143,10 @@ export async function groupInitiative({ reroll = false } = {}) {
         console.error('No active combat after ensuring combatant.');
         return;
       }
-      await combat.rollInitiative([roller.combatant.id]);
+      // The card names the whole group (hero dice on it change everyone's initiative)
+      await combat.rollInitiative([roller.combatant.id], {
+        messageOptions: { flags: { sdm: { initiativeGroup: missing.map(token => token.id) } } }
+      });
       const rolled = roller.combatant.initiative;
       base = Math.floor(rolled);
 
