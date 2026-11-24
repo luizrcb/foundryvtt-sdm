@@ -4,7 +4,7 @@ import ArmorDataModel from './armor-data.mjs';
 import SdmItemBase from './base-item.mjs';
 import PowerDataModel from './power-data.mjs';
 import { defineLightField } from './light-field.mjs';
-import { defineTriggersField } from './triggers-field.mjs';
+import { defineTriggerSchema, defineTriggersField } from './triggers-field.mjs';
 import WardDataModel from './ward_data.mjs';
 import WeaponDataModel from './weapon-data.mjs';
 
@@ -100,7 +100,7 @@ export default class SdmGear extends SdmItemBase {
       rest: new fields.BooleanField({ required: true, initial: false }),
       // More of what Use does: the trigger actions (a condition, light, cast, counters, charges…), on
       // the Use's targets, every time
-      actions: defineTriggersField().element,
+      actions: defineTriggerSchema(),
       // Who it is meant for (machines, pack animals…): a reminder in the Use dialog, not checked
       for: new fields.StringField({ required: true, blank: true, initial: '' }),
       // Purges the targets of other consumables: the effects they copied are removed

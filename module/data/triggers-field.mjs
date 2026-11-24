@@ -9,9 +9,13 @@
  * name, as @items.<identifier> references use), so they keep working on copies and compendium items.
  */
 export function defineTriggersField() {
+  return new foundry.data.fields.ArrayField(defineTriggerSchema());
+}
+
+/** One trigger (its roll, condition and actions): a new field each call (a field has one parent). */
+export function defineTriggerSchema() {
   const fields = foundry.data.fields;
-  return new fields.ArrayField(
-    new fields.SchemaField({
+  return new fields.SchemaField({
       roll: new fields.StringField({
         required: true,
         blank: false,
@@ -174,6 +178,5 @@ export function defineTriggersField() {
       summon_limit: new fields.StringField({ required: true, blank: true, initial: '' }),
       summon_place: new fields.StringField({ required: true, blank: false, initial: 'auto', choices: ['auto', 'manual'] }),
       summon_ends_at_zero: new fields.BooleanField({ required: true, initial: false })
-    })
-  );
+    });
 }
