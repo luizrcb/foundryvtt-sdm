@@ -3200,6 +3200,45 @@ a.sdm-proto-link {
     opacity: 0.7;
   }
 }
+// Item mods: the mark in effect lists (a hallmark upgrade's is fainter) and the mods under the installed-mods track
+.sdm-mod-mark {
+  margin-left: 4px;
+  font-size: 0.8em;
+  color: var(--sdm-c-amber, #b07a1a);
+  &.is-upgrade {
+    opacity: 0.7;
+  }
+}
+.sdm-mod-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 3px;
+  margin: 3px 0 0;
+  padding: 0;
+  list-style: none;
+
+  .sdm-mod-chip {
+    display: inline-flex;
+    padding: 0 6px;
+    border: 1px solid var(--color-border-light-tertiary, #999);
+    border-radius: 10px;
+    font-size: 0.85em;
+    line-height: 1.6;
+
+    i {
+      color: var(--sdm-c-amber, #b07a1a);
+    }
+
+    &.is-upgrade {
+      border-style: dashed;
+    }
+
+    &.is-off {
+      opacity: 0.5;
+      text-decoration: line-through;
+    }
+  }
+}
 .sdm-aura-fields {
   margin: 4px 0;
   padding: 4px 8px;

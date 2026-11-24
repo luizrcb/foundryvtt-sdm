@@ -3469,5 +3469,8 @@
   "SDM.AreaDrawWhen": "Quando",
   "SDM.AreaDrawDamage": "Dano",
   "SDM.AreaDrawCondition": "Condição",
-  "SDM.AreaDrawUses": "Usos (0: ilimitado)"
+  "SDM.AreaDrawUses": "Usos (0: ilimitado)",
+  "SDM.Mod.Mark": "Mod de item",
+  "SDM.Mod.MarkUpgrade": "Mod de item (melhoria do emblemático, sem vaga de mod)",
+  "SDM.Mod.Off": "desligado"
 }

@@ -3469,5 +3469,8 @@
   "SDM.AreaDrawWhen": "When",
   "SDM.AreaDrawDamage": "Damage",
   "SDM.AreaDrawCondition": "Condition",
-  "SDM.AreaDrawUses": "Uses (0: unlimited)"
+  "SDM.AreaDrawUses": "Uses (0: unlimited)",
+  "SDM.Mod.Mark": "Item mod",
+  "SDM.Mod.MarkUpgrade": "Item mod (hallmark upgrade, no mod slot)",
+  "SDM.Mod.Off": "off"
 }

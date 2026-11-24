@@ -6,8 +6,17 @@
     <input type="radio" id="installed-mods-{{item.id}}-0" name="system.installed_mods" value="0" checked="checked" data-dtype='Radio' style="cursor:pointer;" disabled>
     {{#times_from 1 item.maxItemMods}}
     <input type="radio" id="installed-mods-{{../item.id}}-{{this}}" name="system.installed_mods" value="{{this}}" data-dtype='Radio' style="cursor:pointer;" disabled/>
-    <label class="radio-toggle" for="installed-mods-{{../item.id}}-{{this}}" style="cursor:pointer;" data-tooltip="{{this}}" disabled></label>
+    <label class="radio-toggle" for="installed-mods-{{../item.id}}-{{this}}" style="cursor:pointer;" data-tooltip="{{sdmModAt ../item this}}" disabled></label>
     {{/times_from}}
     {{/multiboxes}}
   </div>
+  {{#with (sdmItemMods item) as |mods|}}{{#if mods.length}}
+  <ul class="sdm-mod-list">
+    {{#each mods}}
+    <li class="effect sdm-mod-chip{{#if this.upgrade}} is-upgrade{{/if}}{{#if this.disabled}} is-off{{/if}}" data-effect-id="{{this.id}}" data-parent-id="{{this.parentId}}" data-tooltip="{{this.tooltip}}">
+      <a data-action="viewDoc" data-document-class="ActiveEffect"><i class="fa-solid fa-puzzle-piece" inert></i> {{this.name}}</a>
+    </li>
+    {{/each}}
+  </ul>
+  {{/if}}{{/with}}
 </div>

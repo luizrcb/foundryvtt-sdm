@@ -1,6 +1,6 @@
 import { SizeUnit } from './helpers/constants.mjs';
 import { $l10n, formatNumber, toPascalCase } from './helpers/globalUtils.mjs';
-import { convertToSacks, getRowRolls, getWealthFromItems, hasPowerAlbum } from './helpers/itemUtils.mjs';
+import { convertToSacks, getRowRolls, getWealthFromItems, hasPowerAlbum, itemMods, modTooltip } from './helpers/itemUtils.mjs';
 import { getHallmarkUpgradeSummary } from './app/level-upgrades.mjs';
 import { isLightSource, isLit, lightBlockedReason } from './helpers/lights.mjs';
 import { featureEnabled } from './helpers/features.mjs';
@@ -52,6 +52,12 @@ export function registerHandlebarsHelpers() {
   // Auras: an aura effect, and the source of a copy an aura gave ("Aura from Bob")
   $$('sdmIsAura', effect => isAura(effect));
   $$('sdmAuraSource', effect => auraSourceName(effect));
+  // Item mods: the mark in effect lists (its hover text), the mods on an item, and the name of the
+  // mod in a slot of the installed-mods track (its number when the slot is empty)
+  $$('sdmIsMod', effect => !!effect?.system?.isItemMod);
+  $$('sdmModTooltip', effect => modTooltip(effect));
+  $$('sdmItemMods', item => itemMods(item));
+  $$('sdmModAt', (item, index) => itemMods(item).filter(mod => !mod.upgrade)[Number(index) - 1]?.name ?? index);
   // Use icon tooltip: what using a consumable does and what it spends
   $$('sdmUseTooltip', item => describeUse(item));
 

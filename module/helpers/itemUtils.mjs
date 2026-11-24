@@ -504,3 +504,30 @@ export function getRowRolls(item, actorType, editable = true) {
   if (canAlbum && image !== 'power_album') icons.push('power_album');
   return { image, icons };
 }
+
+/* -------------------------------------------- */
+/*  Item mods: what they are, at a glance       */
+/* -------------------------------------------- */
+
+/** Hover text of an item mod: a mod (or a hallmark upgrade), off when switched off, and the start of its description. */
+export function modTooltip(effect) {
+  if (!effect?.system?.isItemMod) return '';
+  const kind = game.i18n.localize(effect.system.isHallmarkUpgrade ? 'SDM.Mod.MarkUpgrade' : 'SDM.Mod.Mark');
+  const off = effect.disabled ? game.i18n.localize('SDM.Mod.Off') : '';
+  return [[kind, off].filter(Boolean).join(' — '), getDescriptionExcerpt(effect.description)].filter(Boolean).join('<br>');
+}
+
+/** The mods on an item, installed ones first (those using a mod slot), then hallmark upgrades. */
+export function itemMods(item) {
+  const mods = (item?.effects?.contents ?? []).filter(effect => effect.system?.isItemMod);
+  return mods
+    .sort((a, b) => Number(!!a.system.isHallmarkUpgrade) - Number(!!b.system.isHallmarkUpgrade))
+    .map(effect => ({
+      id: effect.id,
+      parentId: item.id,
+      name: effect.name,
+      upgrade: !!effect.system.isHallmarkUpgrade,
+      disabled: !!effect.disabled,
+      tooltip: `<b>${foundry.utils.escapeHTML(effect.name)}</b><br>${modTooltip(effect)}`
+    }));
+}

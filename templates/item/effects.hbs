@@ -67,7 +67,7 @@
         data-drag="true">
         <div class='effect-name effect-name flexrow'>
           <img class='effect-image' src='{{effect.img}}' height="24" width="24" />
-          <div>{{effect.name}}{{#if (sdmIsAura effect)}} <i class="fa-solid fa-circle-nodes sdm-aura-mark" data-tooltip="{{localize 'SDM.Aura.Mark'}}"></i>{{/if}}{{#if (sdmAuraSource effect)}} <i class="fa-solid fa-circle-nodes sdm-aura-mark is-copy" data-tooltip="{{localize 'SDM.Aura.From' name=(sdmAuraSource effect)}}"></i>{{/if}}</div>
+          <div>{{effect.name}}{{#if (sdmIsAura effect)}} <i class="fa-solid fa-circle-nodes sdm-aura-mark" data-tooltip="{{localize 'SDM.Aura.Mark'}}"></i>{{/if}}{{#if (sdmAuraSource effect)}} <i class="fa-solid fa-circle-nodes sdm-aura-mark is-copy" data-tooltip="{{localize 'SDM.Aura.From' name=(sdmAuraSource effect)}}"></i>{{/if}}{{#if (sdmIsMod effect)}} <i class="fa-solid fa-puzzle-piece sdm-mod-mark{{#if effect.system.isHallmarkUpgrade}} is-upgrade{{/if}}" data-tooltip="{{sdmModTooltip effect}}"></i>{{/if}}</div>
         </div>
         <div class='effect-source'>{{effect.sourceName}}</div>
         <div class='effect-duration{{#if effect.duration.expired}} expired{{/if}}'>{{#if effect.duration.expired}}{{localize 'SDM.Effect.Expired'}}{{else}}{{effect.duration.label}}{{/if}}</div>

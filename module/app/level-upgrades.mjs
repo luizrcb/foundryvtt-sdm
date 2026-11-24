@@ -659,7 +659,7 @@ export function getHallmarkUpgradeSummary(item) {
   }
   for (const effect of item.effects) {
     if (effect.system?.isItemMod && effect.system?.isHallmarkUpgrade) {
-      list.push({ icon: 'fa-solid fa-gear', label: effect.name, tooltip: $l10n('SDM.Upgrade.ModUpgradeTooltip') });
+      list.push({ icon: 'fa-solid fa-puzzle-piece', label: effect.name, tooltip: $l10n('SDM.Upgrade.ModUpgradeTooltip'), description: effect.description || '' });
     } else if (effect.getFlag('sdm', HALLMARK_TRAIT_FLAG)) {
       list.push({ icon: 'fa-solid fa-star', label: effect.name, description: effect.description || '' });
     }

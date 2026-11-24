@@ -13,7 +13,7 @@
   <ul class="sdm-upgrade-notes">
     {{#each @root.hallmarkUpgrades}}
     {{#if this.description}}
-    <li class="has-description">
+    <li class="has-description" {{#if this.tooltip}}data-tooltip="{{this.tooltip}}"{{/if}}>
       <details>
         <summary><i class="{{this.icon}}"></i> {{this.label}}</summary>
         <div class="sdm-upgrade-description">{{{this.description}}}</div>

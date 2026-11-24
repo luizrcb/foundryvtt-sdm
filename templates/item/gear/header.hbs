@@ -464,7 +464,7 @@
               <input type="radio" id="installed-mods-{{item.id}}-0" name="system.installed_mods" value="0" checked="checked" data-dtype='Radio' style="cursor:pointer;" disabled>
               {{#times_from 1 (addOne system.hallmark.level)}}
                 <input type="radio" id="installed-mods-{{../item.id}}-{{this}}" name="system.installed_mods" value="{{this}}" data-dtype='Radio' style="cursor:pointer;" disabled/>
-                <label class="radio-toggle" for="installed-mods-{{../item.id}}-{{this}}" style="cursor:pointer;" data-tooltip="{{this}}" disabled></label>
+                <label class="radio-toggle" for="installed-mods-{{../item.id}}-{{this}}" style="cursor:pointer;" data-tooltip="{{sdmModAt ../item this}}" disabled></label>
               {{/times_from}}
             {{/multiboxes}}
           </div>
@@ -545,7 +545,7 @@
             <input type="radio" id="installed-mods-{{item.id}}-0" name="system.installed_mods" value="0" checked="checked" data-dtype='Radio' style="cursor:pointer;" disabled>
             {{#times_from 1 (addOne system.hallmark.level)}}
               <input type="radio" id="installed-mods-{{../item.id}}-{{this}}" name="system.installed_mods" value="{{this}}" data-dtype='Radio' style="cursor:pointer;" disabled/>
-              <label class="radio-toggle" for="installed-mods-{{../item.id}}-{{this}}" style="cursor:pointer;" data-tooltip="{{this}}" disabled></label>
+              <label class="radio-toggle" for="installed-mods-{{../item.id}}-{{this}}" style="cursor:pointer;" data-tooltip="{{sdmModAt ../item this}}" disabled></label>
             {{/times_from}}
           {{/multiboxes}}
         </div>
@@ -626,7 +626,7 @@
             <input type="radio" id="installed-mods-{{item.id}}-0" name="system.installed_mods" value="0" checked="checked" data-dtype='Radio' style="cursor:pointer;" disabled>
             {{#times_from 1 (addOne system.hallmark.level)}}
               <input type="radio" id="installed-mods-{{../item.id}}-{{this}}" name="system.installed_mods" value="{{this}}" data-dtype='Radio' style="cursor:pointer;" disabled/>
-              <label class="radio-toggle" for="installed-mods-{{../item.id}}-{{this}}" style="cursor:pointer;" data-tooltip="{{this}}" disabled></label>
+              <label class="radio-toggle" for="installed-mods-{{../item.id}}-{{this}}" style="cursor:pointer;" data-tooltip="{{sdmModAt ../item this}}" disabled></label>
             {{/times_from}}
           {{/multiboxes}}
         </div>
