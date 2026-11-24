@@ -2354,6 +2354,34 @@ input[type=radio]::after {
   flex-wrap: wrap;
 }
 
+.application.sdm-settings-menu nav.sheet-tabs > a:nth-child(1) > i {
+  color: #e0453a;
+}
+
+.application.sdm-settings-menu nav.sheet-tabs > a:nth-child(2) > i {
+  color: #ef8a2b;
+}
+
+.application.sdm-settings-menu nav.sheet-tabs > a:nth-child(3) > i {
+  color: #e8c12a;
+}
+
+.application.sdm-settings-menu nav.sheet-tabs > a:nth-child(4) > i {
+  color: #4fae4a;
+}
+
+.application.sdm-settings-menu nav.sheet-tabs > a:nth-child(5) > i {
+  color: #3b8fd9;
+}
+
+.application.sdm-settings-menu nav.sheet-tabs > a:nth-child(6) > i {
+  color: #5a5fd0;
+}
+
+.application.sdm-settings-menu nav.sheet-tabs > a:nth-child(7) > i {
+  color: #9a4fc8;
+}
+
 .application.sdm-settings-menu fieldset.sdm-config > legend {
   cursor: pointer;
   user-select: none;

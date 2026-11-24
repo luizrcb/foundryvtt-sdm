@@ -15,7 +15,6 @@ export function registerSDMGMSettingMenus() {
 
   game.settings.registerMenu('sdm', '01-world', {
     name: 'SDM.Menu.World.Name',
-    hint: 'SDM.Menu.World.Hint',
     label: 'SDM.Menu.World.Label',
     icon: 'fa-solid fa-gears',
     type: SDMWorldSettingsConfig,

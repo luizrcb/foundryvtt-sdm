@@ -2354,6 +2354,14 @@ input[type='radio']::after {
 
   nav.sheet-tabs {
     flex-wrap: wrap;
+
+    // World settings: tab icons in rainbow order
+    $rainbow: #e0453a, #ef8a2b, #e8c12a, #4fae4a, #3b8fd9, #5a5fd0, #9a4fc8;
+    @for $i from 1 through length($rainbow) {
+      > a:nth-child(#{$i}) > i {
+        color: nth($rainbow, $i);
+      }
+    }
   }
 
   fieldset.sdm-config > legend {
