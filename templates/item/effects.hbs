@@ -32,6 +32,11 @@
     <strong>{{localize 'SDM.Immunity.Title'}}</strong>
     <multi-select name="system.immunities">{{selectOptions @root.useCureChoices selected=system.immunities}}</multi-select>
   </label>
+  <label class="sdm-counters sdm-immunities" data-tooltip="{{localize 'SDM.DamageVs.Hint'}}">
+    <strong>{{localize 'SDM.DamageVs.Title'}}</strong>
+    <span class="flexrow">×<input type="number" min="1" step="1" name="system.damage_vs.multiplier" value="{{system.damage_vs.multiplier}}" data-dtype="Number" style="flex: 0 0 48px" />
+    <multi-select name="system.damage_vs.statuses">{{selectOptions @root.useCureChoices selected=system.damage_vs.statuses}}</multi-select></span>
+  </label>
   {{/if}}
 
   {{!-- Roll triggers shown on chat cards (gear, traits and burdens) --}}

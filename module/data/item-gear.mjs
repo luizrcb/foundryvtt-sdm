@@ -77,6 +77,11 @@ export default class SdmGear extends SdmItemBase {
 
     // Conditions its bearer can't get while it is readied (nasal filters: nausea)
     schema.immunities = new fields.ArrayField(new fields.StringField({ blank: false }), { initial: [] });
+    // Damage multiplied against a target with these conditions (Stabber: ×2 against surprised)
+    schema.damage_vs = new fields.SchemaField({
+      statuses: new fields.ArrayField(new fields.StringField({ blank: false }), { initial: [] }),
+      multiplier: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 2, min: 1 })
+    });
 
     // Consumables (feature "consumable"): what "Use" restores (formulas) on its targets;
     // its effects are copied onto them (and do not apply while it is only carried)

@@ -72,6 +72,11 @@ export default class SdmTrait extends SdmItemBase {
     schema.triggers = defineTriggersField();
     // Conditions its bearer can't get (a skeleton doesn't bleed)
     schema.immunities = new fields.ArrayField(new fields.StringField({ blank: false }), { initial: [] });
+    // Damage multiplied against a target with these conditions (Stabber: ×2 against surprised)
+    schema.damage_vs = new fields.SchemaField({
+      statuses: new fields.ArrayField(new fields.StringField({ blank: false }), { initial: [] }),
+      multiplier: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 2, min: 1 })
+    });
     // A trait can light its bearer's token (lit and put out by the player, free); none by default
     schema.light = defineLightField({ preset: 'none' });
     return schema;

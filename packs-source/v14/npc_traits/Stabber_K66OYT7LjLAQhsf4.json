@@ -25,7 +25,13 @@
   "_key": "!items!K66OYT7LjLAQhsf4",
   "system": {
     "description": "<p>Double damage to surprised opponents.</p>",
-    "type": ""
+    "type": "",
+    "damage_vs": {
+      "statuses": [
+        "surprised"
+      ],
+      "multiplier": 2
+    }
   },
   "effects": []
 }

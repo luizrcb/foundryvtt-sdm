@@ -106,6 +106,11 @@ const { performIntegerSort } = foundry.utils;
  * Extend the basic ActorSheet with some very simple modifications
  * @extends {ActorSheetV2}
  */
+/** The damage multipliers an actor's roll dialog offers (×2, ×4… from its base multiplier). */
+function damageMultiplierFor(actor) {
+  return CONFIG.SDM.getDamageMultiplier(actor?.system?.base_damage_multiplier || 2);
+}
+
 export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSheetV2) {
   constructor(options = {}) {
     super(options);
@@ -351,6 +356,22 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       isAttack,
       isAbility
     }).notes.concat(nextRoll.notes);
+    // Damage against a target with a condition (Stabber: ×2 against surprised): the multiplier is
+    // suggested (on top of a critical's), with a line saying why
+    if (isDamage && targetActor) {
+      for (const source of this.actor.items) {
+        const vs = source.system?.damage_vs;
+        if (!vs?.statuses?.length || (Number(vs.multiplier) || 1) <= 1) continue;
+        if (source.type === ItemType.GEAR && !source.system.readied) continue;
+        const status = vs.statuses.find(id => targetActor.statuses?.has(id));
+        if (!status) continue;
+        const current = Number(`${suggestedMultiplier ?? ''}`.replace('*', '')) || 1;
+        const next = `*${current * Number(vs.multiplier)}`;
+        if (next in damageMultiplierFor(this.actor)) suggestedMultiplier = next;
+        const name = game.i18n.localize(CONFIG.statusEffects.find(s => s.id === status)?.name ?? status);
+        tacticalNotes.push(game.i18n.format('SDM.DamageVs.Note', { item: source.name, multiplier: vs.multiplier, status: name.toLowerCase() }));
+      }
+    }
     // Attacks aren't tied to an item: pick the weapon, power or album power it is made with (the
     // attack's favorite, else a suggestion), or none — then it works as before. A chosen item gives the
     // range warning and the roll's title, and out of range by one zone suggests disadvantage.
