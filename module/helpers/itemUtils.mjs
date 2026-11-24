@@ -192,6 +192,8 @@ export function getSlotsTaken(itemSystem) {
   // An animated item that walked away does not weigh on its owner, nor a light left on the map
   if (itemSystem?.animation?.active && itemSystem.animation.mode === 'walks') return 0;
   if (itemSystem?.parent?.getFlag?.('sdm', 'lightLeft')) return 0;
+  // Granted by a form while it lasts (claws, a bite): no slots
+  if (itemSystem?.parent?.getFlag?.('sdm', 'fromForm')) return 0;
 
   if (itemSystem?.slots_override !== undefined && itemSystem?.slots_override >= 0) {
     return itemSystem?.slots_override;

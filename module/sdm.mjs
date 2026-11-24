@@ -64,6 +64,7 @@ import { setupTokenLifeBar } from './canvas/token-life-bar.mjs';
 import { newSession, setupOnceAbilities } from './helpers/onceAbilities.mjs';
 import { setupSummons } from './helpers/summons.mjs';
 import { setupInitiativeHeroDice } from './helpers/initiativeHeroDice.mjs';
+import { setupForms } from './helpers/forms.mjs';
 import { bindTriggerApply, setupTriggers } from './rolls/triggers.mjs';
 import { setupNextRoll } from './app/next-roll.mjs';
 import { setupRideStats } from './helpers/rideStats.mjs';
@@ -851,6 +852,7 @@ Hooks.once('init', function () {
   setupOnceAbilities();
   setupSummons();
   setupInitiativeHeroDice();
+  setupForms();
   setupTriggers();
   setupEscalatorDiePositionBroadcast();
   //Preload Handlebars templates.

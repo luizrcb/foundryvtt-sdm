@@ -3289,6 +3289,65 @@ a.sdm-proto-link.warn {
   gap: 2px;
 }
 
+.sdm-form-banner {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 6px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: rgba(122, 79, 181, 0.15);
+  border: 1px solid rgba(122, 79, 181, 0.5);
+}
+
+.sdm-form-banner img {
+  width: 32px;
+  height: 32px;
+  border: none;
+  object-fit: contain;
+}
+
+.sdm-form-banner .sdm-form-name {
+  flex: 1;
+  font-weight: bold;
+}
+
+.sdm-form-banner button {
+  flex: 0 0 auto;
+  width: auto;
+  line-height: 22px;
+}
+
+.sdm-form-granted {
+  box-shadow: inset 3px 0 0 rgba(122, 79, 181, 0.8);
+}
+
+.sdm-form-set-aside {
+  opacity: 0.45;
+}
+
+.sdm-form-tab .sdm-form-grants {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  min-height: 28px;
+  padding: 4px;
+  border: 1px dashed var(--color-border-light-tertiary, #999);
+  border-radius: 4px;
+}
+
+.sdm-form-tab .sdm-form-chip {
+  padding: 0 6px;
+  border: 1px solid var(--color-border-light-tertiary, #999);
+  border-radius: 10px;
+  white-space: nowrap;
+}
+
+.sdm-form-tab .sdm-form-drop {
+  opacity: 0.7;
+  font-style: italic;
+}
+
 .grid,
 .grid-2col {
   display: grid;

@@ -35,12 +35,25 @@ export default class SdmActiveEffectConfig14 extends ActiveEffectConfig {
       },
       { inplace: false }
     );
-    return { ...parts, triggers: { template: templatePath('app/active-effect/triggers'), scrollable: [''] }, footer };
+    return {
+      ...parts,
+      triggers: { template: templatePath('app/active-effect/triggers'), scrollable: [''] },
+      form: { template: templatePath('app/active-effect/form'), scrollable: [''] },
+      footer
+    };
   })();
 
   static TABS = foundry.utils.mergeObject(
     super.TABS,
-    { sheet: { tabs: [...super.TABS.sheet.tabs, { id: 'triggers', icon: 'fa-solid fa-bolt', label: 'SDM.Trigger.Title' }] } },
+    {
+      sheet: {
+        tabs: [
+          ...super.TABS.sheet.tabs,
+          { id: 'triggers', icon: 'fa-solid fa-bolt', label: 'SDM.Trigger.Title' },
+          { id: 'form', icon: 'fa-solid fa-paw', label: 'SDM.Form.Title' }
+        ]
+      }
+    },
     { inplace: false }
   );
 
@@ -49,15 +62,23 @@ export default class SdmActiveEffectConfig14 extends ActiveEffectConfig {
     return this.document.parent?.documentName === 'Item' && !!this.document.system?.isItemMod && featureEnabled('triggers');
   }
 
+  /** A form: on any effect that can reach an actor (not item mods, not aura copies). */
+  get showsForm() {
+    const parent = this.document.parent;
+    return !this.document.system?.isItemMod && !this.document.getFlag('sdm', 'fromAura') && !!this.document.system?.schema?.fields?.form && ['Actor', 'Item'].includes(parent?.documentName);
+  }
+
   _configureRenderParts(options) {
     const parts = super._configureRenderParts(options);
     if (!this.showsTriggers) delete parts.triggers;
+    if (!this.showsForm) delete parts.form;
     return parts;
   }
 
   _prepareTabs(group) {
     const tabs = super._prepareTabs(group);
     if (group === 'sheet' && !this.showsTriggers) delete tabs.triggers;
+    if (group === 'sheet' && !this.showsForm) delete tabs.form;
     return tabs;
   }
 
@@ -85,6 +106,20 @@ export default class SdmActiveEffectConfig14 extends ActiveEffectConfig {
         item,
         editable: this.isEditable,
         isGM: game.user.isGM
+      });
+    }
+    if (partId === 'form') {
+      const form = this.document.system.form ?? {};
+      const named = uuid => ({ uuid, name: fromUuidSync(uuid)?.name ?? uuid });
+      Object.assign(context, {
+        tab: context.tabs?.form,
+        form,
+        formGrants: (form.grants ?? []).map(named),
+        formCreature: form.creature ? named(form.creature) : null,
+        formKeeps: { everything: 'SDM.Form.Keeps.everything', mind: 'SDM.Form.Keeps.mind', nothing: 'SDM.Form.Keeps.nothing' },
+        formPowers: { usable: 'SDM.Form.Powers.usable', off: 'SDM.Form.Powers.off' },
+        formUses: { fresh: 'SDM.Form.Uses.fresh', remembered: 'SDM.Form.Uses.remembered' },
+        editable: this.isEditable
       });
     }
     if (partId === 'details') {
@@ -116,6 +151,40 @@ export default class SdmActiveEffectConfig14 extends ActiveEffectConfig {
     await super._onRender(context, options);
     // Mod triggers: drops on the Table and Summon fields
     bindTriggerDrops(this.element);
+    this.#bindFormDrops();
+  }
+
+  /** Form tab: items dropped on Grants join it, an NPC dropped on Creature becomes it; × removes them. */
+  #bindFormDrops() {
+    const root = this.element;
+    const drop = (selector, accepts, apply) =>
+      root.querySelectorAll(selector).forEach(zone => {
+        zone.addEventListener('dragover', event => event.preventDefault());
+        zone.addEventListener('drop', async event => {
+          event.preventDefault();
+          event.stopPropagation();
+          const data = foundry.applications.ux.TextEditor.implementation.getDragEventData(event);
+          if (!accepts(data) || !data.uuid) return;
+          await apply(data.uuid);
+        });
+      });
+    drop('.sdm-form-grants', data => data?.type === 'Item', async uuid => {
+      const grants = [...(this.document.system.form?.grants ?? [])];
+      if (!grants.includes(uuid)) grants.push(uuid);
+      await this.document.update({ 'system.form.grants': grants });
+    });
+    drop('.sdm-form-creature', data => data?.type === 'Actor', uuid => this.document.update({ 'system.form.creature': uuid }));
+    root.querySelectorAll('[data-form-remove-grant]').forEach(button =>
+      button.addEventListener('click', async event => {
+        event.preventDefault();
+        const grants = (this.document.system.form?.grants ?? []).filter(uuid => uuid !== button.dataset.formRemoveGrant);
+        await this.document.update({ 'system.form.grants': grants });
+      })
+    );
+    root.querySelector('[data-form-remove-creature]')?.addEventListener('click', async event => {
+      event.preventDefault();
+      await this.document.update({ 'system.form.creature': '' });
+    });
   }
 
   async _renderChange(context) {

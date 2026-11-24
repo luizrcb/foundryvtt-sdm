@@ -1,0 +1,73 @@
+{{! An effect's Form tab: shapeshifting (helpers/forms.mjs) }}
+<section class="tab scrollable sdm-form-tab{{#if tab.active}} active{{/if}}" data-group="{{tab.group}}" data-tab="{{tab.id}}">
+  <div class="form-group">
+    <label>{{localize 'SDM.Form.Enabled'}}</label>
+    <input type="checkbox" name="system.form.enabled" {{checked form.enabled}} />
+    <p class="hint">{{localize 'SDM.Form.EnabledHint'}}</p>
+  </div>
+  {{#if form.enabled}}
+  <fieldset>
+    <legend>{{localize 'SDM.Form.Look'}}</legend>
+    <div class="form-group">
+      <label>{{localize 'SDM.Form.Name'}}</label>
+      <input type="text" name="system.form.name" value="{{form.name}}" />
+    </div>
+    <div class="form-group">
+      <label>{{localize 'SDM.Form.Img'}}</label>
+      <file-picker name="system.form.img" type="image" value="{{form.img}}"></file-picker>
+    </div>
+    <div class="form-group">
+      <label>{{localize 'SDM.Form.Scale'}}</label>
+      <input type="number" name="system.form.scale" value="{{form.scale}}" min="0" step="any" data-dtype="Number" />
+      <label>{{localize 'SDM.Form.Size'}}</label>
+      <input type="number" name="system.form.size" value="{{form.size}}" min="0" step="any" data-dtype="Number" />
+    </div>
+    <div class="form-group">
+      <label>{{localize 'SDM.Form.Portrait'}}</label>
+      <input type="checkbox" name="system.form.portrait" {{checked form.portrait}} />
+    </div>
+    <div class="form-group sdm-form-creature" data-tooltip="{{localize 'SDM.Form.CreatureHint'}}">
+      <label>{{localize 'SDM.Form.Creature'}}</label>
+      {{#if formCreature}}
+      <span class="sdm-form-chip">{{formCreature.name}} {{#if editable}}<a data-form-remove-creature><i class="fa-solid fa-xmark" inert></i></a>{{/if}}</span>
+      {{else}}
+      <span class="sdm-form-drop">{{localize 'SDM.Form.CreatureDrop'}}</span>
+      {{/if}}
+    </div>
+  </fieldset>
+  <fieldset>
+    <legend>{{localize 'SDM.Form.Grants'}}</legend>
+    <div class="sdm-form-grants" data-tooltip="{{localize 'SDM.Form.GrantsHint'}}">
+      {{#each formGrants}}
+      <span class="sdm-form-chip">{{this.name}} {{#if ../editable}}<a data-form-remove-grant="{{this.uuid}}"><i class="fa-solid fa-xmark" inert></i></a>{{/if}}</span>
+      {{/each}}
+      <span class="sdm-form-drop">{{localize 'SDM.Form.GrantsDrop'}}</span>
+    </div>
+    <div class="form-group">
+      <label>{{localize 'SDM.Form.UsesLabel'}}</label>
+      <select name="system.form.uses">{{selectOptions formUses selected=form.uses localize=true}}</select>
+    </div>
+    <div class="form-group">
+      <label>{{localize 'SDM.Form.KeepsLabel'}}</label>
+      <select name="system.form.keeps">{{selectOptions formKeeps selected=form.keeps localize=true}}</select>
+    </div>
+    {{#if (eq form.keeps 'mind')}}
+    <div class="form-group">
+      <label>{{localize 'SDM.Form.PowersLabel'}}</label>
+      <select name="system.form.powers">{{selectOptions formPowers selected=form.powers localize=true}}</select>
+    </div>
+    {{/if}}
+  </fieldset>
+  <fieldset>
+    <legend>{{localize 'SDM.TemporaryLife'}}</legend>
+    <div class="form-group">
+      <label>{{localize 'SDM.Form.TempLifeLabel'}}</label>
+      <input type="text" name="system.form.tempLife" value="{{form.tempLife}}" data-tooltip="{{localize 'SDM.Form.TempLifeHint'}}" />
+    </div>
+    <div class="form-group">
+      <label>{{localize 'SDM.Form.EndsAtZero'}}</label>
+      <input type="checkbox" name="system.form.endsAtZero" {{checked form.endsAtZero}} />
+    </div>
+  </fieldset>
+  {{/if}}
+</section>

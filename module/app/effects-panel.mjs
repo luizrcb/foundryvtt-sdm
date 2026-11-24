@@ -55,6 +55,7 @@ export default class SdmEffectsPanel extends HandlebarsApplicationMixin(Applicat
       isAura(effect) ||
       isAuraCopy(effect) ||
       isSummonedEffect(effect) ||
+      !!effect.system?.form?.enabled ||
       effect.isTemporary ||
       !!effect.getFlag?.('sdm', 'temporary') ||
       effect.statuses?.size > 0 ||

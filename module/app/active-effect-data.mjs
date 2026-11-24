@@ -92,6 +92,28 @@ export class SDMActiveEffectData extends foundry.data.ActiveEffectTypeDataModel 
           choices: () => ({ '': '', ...Object.fromEntries(Object.entries(CONFIG.Canvas.lightAnimations ?? {}).map(([key, value]) => [key, value.label ?? key])) })
         })
       }),
+      // A form (shapeshifting, helpers/forms.mjs): while on, its actor takes its look, its granted items
+      // and its temporary life, and sets its own gear aside as the form says
+      form: new fields.SchemaField({
+        enabled: new fields.BooleanField({ required: true, initial: false }),
+        // The look: shown name, token image, scale and size in squares (blank / 0: unchanged), the portrait too
+        name: new fields.StringField({ required: true, blank: true, initial: '' }),
+        img: new fields.StringField({ required: true, blank: true, initial: '' }),
+        scale: new fields.NumberField({ required: true, nullable: true, min: 0, initial: null }),
+        size: new fields.NumberField({ required: true, nullable: true, min: 0, initial: null }),
+        portrait: new fields.BooleanField({ required: true, initial: false }),
+        // Becomes a creature: an NPC's look, and its attacks and traits when Grants is empty
+        creature: new fields.StringField({ required: true, blank: true, initial: '' }),
+        // Items added while it lasts (uuids), their uses fresh each time or remembered
+        grants: new fields.ArrayField(new fields.StringField({ required: true, blank: false })),
+        uses: new fields.StringField({ required: true, blank: false, initial: 'fresh', choices: ['fresh', 'remembered'] }),
+        // What of its own the user keeps: everything, the mind only (weapons, armor, wards set aside), nothing
+        keeps: new fields.StringField({ required: true, blank: false, initial: 'mind', choices: ['everything', 'mind', 'nothing'] }),
+        powers: new fields.StringField({ required: true, blank: false, initial: 'usable', choices: ['usable', 'off'] }),
+        // Temporary life (a formula on the user); ends when it runs out
+        tempLife: new fields.StringField({ required: true, blank: true, initial: '' }),
+        endsAtZero: new fields.BooleanField({ required: true, initial: false })
+      }),
       // Damage at the start of each combat round: to the tokens in its aura, or to the last foe its actor attacked
       roundDamage: new fields.SchemaField({
         formula: new fields.StringField({ required: true, blank: true, initial: '', label: $l10n('SDM.RoundDamage.Formula'), hint: $l10n('SDM.RoundDamage.FormulaHint') }),
