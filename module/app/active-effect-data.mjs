@@ -104,6 +104,14 @@ export class SDMActiveEffectData extends foundry.data.ActiveEffectTypeDataModel 
         portrait: new fields.BooleanField({ required: true, initial: false }),
         // Becomes a creature: an NPC's look, and its attacks and traits when Grants is empty
         creature: new fields.StringField({ required: true, blank: true, initial: '' }),
+        // Without an NPC: the form's own defense, speed and ability scores (blank: unchanged)
+        defense: new fields.NumberField({ required: true, nullable: true, integer: true, initial: null }),
+        speed: new fields.NumberField({ required: true, nullable: true, integer: true, initial: null }),
+        abilities: new fields.SchemaField(
+          Object.fromEntries(
+            Object.keys(CONFIG.SDM.abilities).map(key => [key, new fields.NumberField({ required: true, nullable: true, integer: true, initial: null })])
+          )
+        ),
         // What it takes from that NPC: its life (as temporary life, when none is set), defense, attack
         // bonus (NPCs in the form), its own damage (a natural attack) and speed
         take: new fields.SchemaField({

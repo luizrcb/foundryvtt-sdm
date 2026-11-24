@@ -3553,5 +3553,7 @@
   "SDM.Form.TakeBonus": "bônus de ataque",
   "SDM.Form.TakeDamage": "dano",
   "SDM.Form.TakeSpeed": "velocidade",
-  "SDM.Form.NaturalAttack": "{creature}: ataque natural"
+  "SDM.Form.NaturalAttack": "{creature}: ataque natural",
+  "SDM.Form.Stats": "Valores",
+  "SDM.Form.StatsHint": "Os valores da própria forma, no lugar dos do usuário enquanto ela durar. Em branco: sem mudança. Atributos valem para personagens."
 }

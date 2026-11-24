@@ -3353,6 +3353,23 @@ a.sdm-proto-link.warn {
   font-style: italic;
 }
 
+.sdm-form-tab .sdm-form-abilities {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 4px 8px;
+}
+
+.sdm-form-tab .sdm-form-abilities label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.sdm-form-tab .sdm-form-abilities input {
+  width: 4em;
+  margin-left: auto;
+}
+
 .grid,
 .grid-2col {
   display: grid;

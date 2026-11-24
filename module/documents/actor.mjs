@@ -1,5 +1,5 @@
 import { applyNpcProfile, getNpcProfile } from '../helpers/npcVariability.mjs';
-import { applyFormNumbers, dismissForm, itemFormOn, itemForms, takeItemForm } from '../helpers/forms.mjs';
+import { applyFormAbilities, applyFormNumbers, dismissForm, itemFormOn, itemForms, takeItemForm } from '../helpers/forms.mjs';
 import { featureEnabled } from '../helpers/features.mjs';
 import { canLeaveLight, isLightSource, isLit, leaveLight, lightBlockedReason, lightItem, putOutLight } from '../helpers/lights.mjs';
 import { blockedReason, isDormantEffect, isUsable, useItem } from '../app/use-item.mjs';
@@ -2065,10 +2065,12 @@ export class SdmActor extends Actor {
    */
   prepareDerivedData() {
     super.prepareDerivedData();
+    // In a form: its ability scores replace the character's own
+    if (this.type === ActorType.CHARACTER) applyFormAbilities(this);
     if (this.type === ActorType.CHARACTER) this._prepareCharacterData();
     if (this.type === ActorType.NPC) this._prepareNpcData();
     if (this.type === ActorType.CARAVAN) this._prepareCaravanData();
-    // In a form: the NPC's defense, speed and bonus it takes replace the actor's own
+    // In a form: its defense, speed and bonus (typed, or the NPC's) replace the actor's own
     if (this.type === ActorType.CHARACTER || this.type === ActorType.NPC) applyFormNumbers(this);
   }
 

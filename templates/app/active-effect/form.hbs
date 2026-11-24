@@ -45,6 +45,25 @@
     </div>
     {{/if}}
   </fieldset>
+  {{#unless formCreature}}
+  <fieldset class="sdm-form-stats" data-tooltip="{{localize 'SDM.Form.StatsHint'}}">
+    <legend>{{localize 'SDM.Form.Stats'}}</legend>
+    <div class="form-group">
+      <label>{{localize 'SDM.FieldDefense'}}</label>
+      <input type="number" name="system.form.defense" value="{{form.defense}}" step="1" data-dtype="Number" />
+      <label>{{localize 'SDM.FieldSpeed'}}</label>
+      <select name="system.form.speed" data-dtype="Number">
+        <option value=""></option>
+        {{selectOptions formSpeeds selected=form.speed localize=true}}
+      </select>
+    </div>
+    <div class="sdm-form-abilities">
+      {{#each formAbilities}}
+      <label>{{localize this.label}} <input type="number" name="system.form.abilities.{{this.key}}" value="{{this.value}}" step="1" data-dtype="Number" /></label>
+      {{/each}}
+    </div>
+  </fieldset>
+  {{/unless}}
   <fieldset>
     <legend>{{localize 'SDM.Form.Grants'}}</legend>
     <div class="sdm-form-grants" data-tooltip="{{localize 'SDM.Form.GrantsHint'}}">

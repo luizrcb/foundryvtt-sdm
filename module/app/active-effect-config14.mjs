@@ -119,6 +119,8 @@ export default class SdmActiveEffectConfig14 extends ActiveEffectConfig {
         formKeeps: { everything: 'SDM.Form.Keeps.everything', mind: 'SDM.Form.Keeps.mind', nothing: 'SDM.Form.Keeps.nothing' },
         formPowers: { usable: 'SDM.Form.Powers.usable', off: 'SDM.Form.Powers.off' },
         formUses: { fresh: 'SDM.Form.Uses.fresh', remembered: 'SDM.Form.Uses.remembered' },
+        formSpeeds: CONFIG.SDM.reverseSpeedValues,
+        formAbilities: Object.entries(CONFIG.SDM.abilities).map(([key, label]) => ({ key, label, value: form.abilities?.[key] ?? null })),
         editable: this.isEditable
       });
     }

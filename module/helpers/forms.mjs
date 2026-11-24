@@ -175,6 +175,15 @@ async function startForm(effect) {
     if (take.defense !== false && Number.isFinite(Number(creature.system?.defense))) numbers.defense = Number(creature.system.defense);
     if (take.speed !== false && Number.isFinite(Number(creature.system?.speed))) numbers.speed = Number(creature.system.speed);
     if (take.bonus !== false && actor.type === ActorType.NPC && Number.isFinite(Number(creature.system?.bonus))) numbers.bonus = Number(creature.system.bonus);
+  } else {
+    // No NPC: the values typed on the form (blank: unchanged); ability scores only for characters
+    const set = value => value !== null && value !== undefined && value !== '' && Number.isFinite(Number(value));
+    if (set(form.defense)) numbers.defense = Number(form.defense);
+    if (set(form.speed)) numbers.speed = Number(form.speed);
+    if (actor.type === ActorType.CHARACTER) {
+      const abilities = Object.fromEntries(Object.entries(form.abilities ?? {}).filter(([, v]) => set(v)).map(([k, v]) => [k, Number(v)]));
+      if (Object.keys(abilities).length) numbers.abilities = abilities;
+    }
   }
 
   // Temporary life (a formula, read on the user)
@@ -220,6 +229,16 @@ function naturalAttack(creature) {
     img: creature.img || 'icons/svg/claw.svg',
     system: { type: GearType.WEAPON, readied: true, weapon: { damage: { base: `${creature.system.damage}`.trim() } } }
   };
+}
+
+/** The ability scores the actor's form sets, applied before its data preparation (defense, slots, etc. use them). */
+export function applyFormAbilities(actor) {
+  const abilities = actor?.flags?.sdm?.[ACTIVE_FLAG]?.numbers?.abilities;
+  if (!abilities) return;
+  for (const [key, value] of Object.entries(abilities)) {
+    const ability = actor.system.abilities?.[key];
+    if (ability && Number.isFinite(value)) ability.current = value;
+  }
 }
 
 /** The numbers the actor's form sets (defense, speed, bonus), applied at the end of its data preparation. */

@@ -3359,4 +3359,21 @@ a.sdm-proto-link {
     opacity: 0.7;
     font-style: italic;
   }
+
+  .sdm-form-abilities {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px 8px;
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    input {
+      width: 4em;
+      margin-left: auto;
+    }
+  }
 }
