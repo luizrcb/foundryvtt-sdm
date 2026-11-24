@@ -13,7 +13,7 @@
   "SDM.CompendiumBrowser.Added": "{item} adicionado a {actor}.",
   "SDM.CompendiumBrowser.Charge": "Cobrar o preço",
   "SDM.CompendiumBrowser.NoToken": "Selecione um token primeiro.",
-  "SDM.CompendiumBrowser.NotEnoughCash": "{actor} não tem {price}.",
+  "SDM.CompendiumBrowser.NotEnoughCash": "Dinheiro insuficiente para {price}: {actor}.",
   "SDM.Counter.ResetEachDay": "a cada dia",
   "SDM.Counter.ResetEachRest": "ao descansar",
   "SDM.DuplicatePower": "Duplicar poder",

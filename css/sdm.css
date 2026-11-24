@@ -2168,6 +2168,24 @@ input[type=radio]::after {
   border: none;
 }
 
+.sdm-give-item .sdm-give-recipients {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 8px;
+  max-width: 320px;
+}
+
+.sdm-give-item .sdm-give-recipients .sdm-give-who:not(:only-child) {
+  max-width: 72px;
+  font-size: 12px;
+}
+
+.sdm-give-item .sdm-give-recipients .sdm-give-who:not(:only-child) img {
+  width: 48px;
+  height: 48px;
+}
+
 .sdm-give-item .sdm-give-arrow {
   font-size: 18px;
   opacity: 0.6;

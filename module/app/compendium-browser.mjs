@@ -480,13 +480,19 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
   }
 
   /**
-   * Referee: give the item to the selected token's actor. The dialog shows who gets what (the token's
-   * and the item's images and names) and asks whether to charge it (the item's cost, editable).
+   * Referee: give the item to every selected token's actor. The dialog shows who gets what (the
+   * tokens' and the item's images and names) and asks whether to charge it (the item's cost,
+   * editable; each one pays, and those who can't are skipped).
    */
   static async #addToSelectedToken(uuid) {
-    const token = canvas?.tokens?.controlled?.[0];
-    const actor = token?.actor;
-    if (!actor) {
+    // One entry per actor (two tokens of the same linked actor get one copy)
+    const recipients = [];
+    for (const token of canvas?.tokens?.controlled ?? []) {
+      const actor = token.actor;
+      if (!actor || recipients.some(r => r.actor === actor)) continue;
+      recipients.push({ actor, img: token.document?.texture?.src || actor.img });
+    }
+    if (!recipients.length) {
       ui.notifications.warn($l10n('SDM.CompendiumBrowser.NoToken'));
       return;
     }
@@ -494,10 +500,12 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
     if (source?.documentName !== 'Item') return;
     const esc = text => foundry.utils.escapeHTML(String(text ?? ''));
     const price = (Number(source.system?.cost) || 0) * (Number(source.system?.quantity) || 1);
-    const tokenImg = token.document?.texture?.src || actor.img;
+    const who = recipients
+      .map(r => `<div class="sdm-give-who"><img src="${esc(r.img)}" alt="" /><span>${esc(r.actor.name)}</span></div>`)
+      .join('');
     const content = `
       <div class="sdm-give-item">
-        <div class="sdm-give-who"><img src="${esc(tokenImg)}" alt="" /><span>${esc(actor.name)}</span></div>
+        <div class="sdm-give-recipients">${who}</div>
         <i class="fa-solid fa-arrow-left sdm-give-arrow"></i>
         <div class="sdm-give-who"><img src="${esc(source.img)}" alt="" /><span>${esc(source.name)}</span></div>
       </div>
@@ -520,21 +528,25 @@ export default class CompendiumBrowser extends HandlebarsApplicationMixin(Applic
     });
     if (!result) return;
 
-    if (result.charge && result.price > 0) {
-      const paid = await removeCashFromActor(actor, result.price);
-      if (paid === false) {
-        ui.notifications.warn(
-          game.i18n.format('SDM.CompendiumBrowser.NotEnoughCash', {
-            actor: actor.name,
-            price: `${$l10n('SDM.CashSymbol')}${formatNumber(result.price)}`
-          })
-        );
-        return;
+    const priceText = `${$l10n('SDM.CashSymbol')}${formatNumber(result.price)}`;
+    const given = [];
+    const skipped = [];
+    for (const { actor } of recipients) {
+      if (result.charge && result.price > 0) {
+        const paid = await removeCashFromActor(actor, result.price);
+        if (paid === false) {
+          skipped.push(actor.name);
+          continue;
+        }
       }
+      const [created] = await actor.createEmbeddedDocuments('Item', [game.items.fromCompendium(source)]);
+      if (created) given.push(actor.name);
     }
-    const [created] = await actor.createEmbeddedDocuments('Item', [game.items.fromCompendium(source)]);
-    if (created) {
-      ui.notifications.info(game.i18n.format('SDM.CompendiumBrowser.Added', { item: created.name, actor: actor.name }));
+    if (skipped.length) {
+      ui.notifications.warn(game.i18n.format('SDM.CompendiumBrowser.NotEnoughCash', { actor: skipped.join(', '), price: priceText }));
+    }
+    if (given.length) {
+      ui.notifications.info(game.i18n.format('SDM.CompendiumBrowser.Added', { item: source.name, actor: given.join(', ') }));
     }
   }
 
