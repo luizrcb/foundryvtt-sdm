@@ -57,6 +57,8 @@ const CONE_ANGLE = 60; // degrees: the guide while placing, and the cone on grid
 const LINE_WIDTH_METERS = SQUARE_METERS;
 const AREA_SIZES = ['small', 'medium', 'large'];
 const isAreaSize = size => AREA_SIZES.includes(size);
+/** A line's width or a ring's wall, in meters (0: one square), from a value in the world unit. */
+const areaWidth = value => (Number(value) > 0 ? metersForWorldUnits(Number(value)) : 0);
 
 /**
  * An area's size: meters (across, or length for cones and lines), the cone's angle, and the distance
@@ -114,6 +116,7 @@ export function itemArea(item, kind = '') {
       ...areaSize(power.area, shape, { across: power.area_across }),
       size: power.area,
       shape,
+      width: areaWidth(power.area_width),
       affects: power.area_affects || 'everyone',
       linger: kind !== 'album' && !!power.area_linger,
       rounds: Number(power.area_rounds) || 0,
@@ -135,6 +138,7 @@ export function itemArea(item, kind = '') {
     ...areaSize(size, shape, { vehicle: !!item.system.area.vehicle, across: item.system.area.across }),
     size,
     shape,
+    width: areaWidth(item.system.area.width),
     affects: item.system.area.affects || 'everyone',
     linger: !!item.system.area.linger,
     rounds: Number(item.system.area.rounds) || 0,
@@ -204,6 +208,9 @@ const squareGrid = scene => scene?.grid?.type === CONST.GRID_TYPES.SQUARE;
 const metersPerSquare = scene => scene.grid.distance / sceneUnitsForMeters(1, scene);
 const SAMPLES = 6; // 6 × 6 points per square: more than half of them inside counts it
 const squareKey = ({ i, j }) => `${i}.${j}`;
+
+/** A line's width or a ring's wall in the scene's squares (at least one). */
+const widthSquares = (area, scene) => (area?.width > 0 ? Math.max(1, Math.round(area.width / metersPerSquare(scene))) : 1);
 
 /** A size in the scene's squares (even for areas centered on an intersection, odd for those on a square). */
 function squaresOf(meters, scene, { even = false, odd = false } = {}) {
@@ -371,7 +378,17 @@ function diagonalLineSteps(scene, length) {
   return Math.max(steps, 1);
 }
 
-function patternSquares(token, point, shape, length) {
+/**
+ * The rows a band `width` squares wide takes around its middle row (offsets from it): centered when
+ * odd; when even, one more on the side of `side` (negative: before the middle, positive: after).
+ */
+function bandOffsets(width, side) {
+  const w = Math.max(1, Math.round(width));
+  const start = w % 2 ? -(w - 1) / 2 : side < 0 ? -w / 2 : -(w / 2 - 1);
+  return Array.from({ length: w }, (_, k) => start + k);
+}
+
+function patternSquares(token, point, shape, length, width = 1) {
   const { ti, tj, w, h, dx, dy, axis, origin: edge } = patternFrame(token, point);
   const size = token.parent.grid.size;
   // Line of effect from just inside the token: a wall along its side blocks the pattern
@@ -381,9 +398,13 @@ function patternSquares(token, point, shape, length) {
   const squares = [];
   if (!dx || !dy) {
     for (let k = 1; k <= length; k++) {
-      const width = shape === 'line' ? 1 : 2 * Math.floor(k / 2) + 1;
       const step = dx ? (dx > 0 ? tj + w - 1 + k : tj - k) : dy > 0 ? ti + h - 1 + k : ti - k;
-      for (let o = -(width - 1) / 2; o <= (width - 1) / 2; o++) squares.push(dx ? { i: axis + o, j: step } : { i: step, j: axis + o });
+      // A line: its width in rows (the cursor's side takes the extra row of an even width); a cone widens
+      const offsets =
+        shape === 'line'
+          ? bandOffsets(width, dx ? point.y / size - (axis + 0.5) : point.x / size - (axis + 0.5))
+          : Array.from({ length: 2 * Math.floor(k / 2) + 1 }, (_, n) => n - Math.floor(k / 2));
+      for (const o of offsets) squares.push(dx ? { i: axis + o, j: step } : { i: step, j: axis + o });
     }
     return reachedSquares(squares, origin, size);
   }
@@ -391,11 +412,17 @@ function patternSquares(token, point, shape, length) {
   const j0 = dx > 0 ? tj + w : tj - 1;
   // A diagonal line: as many steps as its length allows by the Grid Diagonals rule
   const steps = shape === 'line' ? diagonalLineSteps(token.parent, length) : length;
-  for (let a = 0; a < length; a++) {
-    for (let b = 0; b < length; b++) {
+  // A wider diagonal line: staircases side by side (a − b: which one), the extra one of an even width
+  // on the cursor's side; each as long as the line
+  // (a counts along x, b along y from the token's corner: a − b > 0 lies on the x side of the diagonal)
+  const cursorSide = dx * (point.x - edge.x) - dy * (point.y - edge.y);
+  const bands = shape === 'line' ? bandOffsets(width, cursorSide) : [0];
+  const extent = length + Math.max(...bands.map(Math.abs));
+  for (let a = 0; a < extent; a++) {
+    for (let b = 0; b < extent; b++) {
       const inside =
         shape === 'line'
-          ? a === b && a < steps
+          ? bands.includes(a - b) && a + b < 2 * steps
           : Math.abs(Math.toDegrees(Math.atan2(b + 0.5, a + 0.5)) - 45) <= CONE_ANGLE / 2 + 1e-6 && Math.hypot(a + 0.5, b + 0.5) <= length;
       if (inside) squares.push({ i: i0 + dy * b, j: j0 + dx * a });
     }
@@ -426,7 +453,7 @@ function freeFrame(token, point) {
  * circles and squares). A line: every square its middle passes through, but not one it only grazes
  * at a corner (so a diagonal line is a clean staircase at any angle).
  */
-function freeSquares(token, point, shape, length) {
+function freeSquares(token, point, shape, length, width = 1) {
   const frame = freeFrame(token, point);
   if (!frame) return [];
   const size = token.parent.grid.size;
@@ -450,7 +477,29 @@ function freeSquares(token, point, shape, length) {
     return i >= ti && i < ti + Math.max(1, Math.round(token.height)) && j >= tj && j < tj + Math.max(1, Math.round(token.width));
   };
   const squares = [];
-  if (shape === 'line') {
+  if (shape === 'line' && width > 1) {
+    // A wider line: a band that many squares wide along the aim; the squares it covers more than half
+    // of, or whose middle it covers (as circles)
+    const lengthPx = Math.hypot(end.x - origin.x, end.y - origin.y);
+    const ux = (end.x - origin.x) / (lengthPx || 1);
+    const uy = (end.y - origin.y) / (lengthPx || 1);
+    const half = (width * size) / 2;
+    const inBand = p => {
+      const t = (p.x - origin.x) * ux + (p.y - origin.y) * uy;
+      const n = Math.abs(-(p.x - origin.x) * uy + (p.y - origin.y) * ux);
+      return t >= 0 && t <= lengthPx && n <= half;
+    };
+    for (let i = i0 - width; i < i1 + width; i++) {
+      for (let j = j0 - width; j < j1 + width; j++) {
+        if (onToken(i, j)) continue;
+        let inside = 0;
+        for (let a = 0; a < SAMPLES; a++) {
+          for (let b = 0; b < SAMPLES; b++) if (inBand({ x: (j + (b + 0.5) / SAMPLES) * size, y: (i + (a + 0.5) / SAMPLES) * size })) inside++;
+        }
+        if (inside * 2 > SAMPLES * SAMPLES || inBand({ x: (j + 0.5) * size, y: (i + 0.5) * size })) squares.push({ i, j });
+      }
+    }
+  } else if (shape === 'line') {
     // Segment through the square's interior: clipped length more than a sliver
     const minLength = size * 0.05;
     for (let i = i0; i < i1; i++) {
@@ -514,18 +563,18 @@ function clippedLength(a, b, x, y, size) {
  * the guide turns to the nearest of eight directions around the token and the pattern's squares
  * light up; click places it, right-click or Esc cancels. Resolves to the squares, or false.
  */
-async function placePattern({ data, token, shape, length, scene }) {
+async function placePattern({ data, token, shape, length, scene, width = 1 }) {
   const size = scene.grid.size;
   const color = data.color || (game.user.color ?? 0x33bbff);
   let last = canvas.mousePosition ?? tokenCenter(token);
   let free = false;
-  const squaresNow = () => (free ? freeSquares(token, last, shape, length) : patternSquares(token, last, shape, length));
+  const squaresNow = () => (free ? freeSquares(token, last, shape, length, width) : patternSquares(token, last, shape, length, width));
   const guide =
     shape === 'cone'
       ? { type: 'cone', x: 0, y: 0, radius: length * size, angle: CONE_ANGLE, rotation: 0, curvature: 'round', gridBased: false }
       : // A line's guide is measured by the grid (its Grid Diagonals rule): it ends where its squares do
         // and shows its full length (18 m on the diagonal too)
-        { type: 'line', x: 0, y: 0, length: length * size, width: size, rotation: 0, gridBased: true };
+        { type: 'line', x: 0, y: 0, length: length * size, width: width * size, rotation: 0, gridBased: true };
   const onMove = ({ shape: current, position, snap }) => {
     last = position;
     // Shift (Foundry's "don't snap"): any angle, from where the aim leaves the token; otherwise the 8 directions
@@ -578,7 +627,8 @@ function areaShape(area, scene, origin, token = null) {
   const ring = area.shape === 'ring';
   const centered = !['cone', 'line', 'ring'].includes(area.shape);
   const across = squares ? squaresOf(area.meters, scene, { even: centered, odd: ring }) * scene.grid.size : area.meters * pixelsPerMeter(scene);
-  const width = squares ? scene.grid.size : LINE_WIDTH_METERS * pixelsPerMeter(scene);
+  // A line's width, a ring's wall: one square unless the area has its own
+  const width = squares ? widthSquares(area, scene) * scene.grid.size : (area.width > 0 ? area.width : LINE_WIDTH_METERS) * pixelsPerMeter(scene);
   switch (area.shape) {
     case 'cone':
       return { type: 'cone', x: origin.x, y: origin.y, radius: across, angle: area.angle ?? CONE_ANGLE, rotation: 0, curvature: 'round', gridBased };
@@ -586,10 +636,13 @@ function areaShape(area, scene, origin, token = null) {
       return { type: 'line', x: origin.x, y: origin.y, length: across, width, rotation: 0, gridBased };
     case 'square':
       return { type: 'rectangle', x: 0, y: 0, width: across, height: across, anchorX: 0.5, anchorY: 0.5, rotation: 0, gridBased };
-    case 'ring':
-      // A wall one square thick around a point: on square grids its outer squares make the size across
-      // (the wall's middle runs through their middles)
-      return { type: 'ring', x: 0, y: 0, radius: (squares ? across - width : across) / 2, innerWidth: width / 2, outerWidth: width / 2, gridBased };
+    case 'ring': {
+      // A wall around a point, one square thick unless it has its own: its outer edge makes the size
+      // across (on square grids the outer squares' outer side), and it grows inward
+      const outer = squares ? across / 2 : across / 2 + (LINE_WIDTH_METERS * pixelsPerMeter(scene)) / 2;
+      const wall = Math.min(width, outer);
+      return { type: 'ring', x: 0, y: 0, radius: outer - wall / 2, innerWidth: wall / 2, outerWidth: wall / 2, gridBased };
+    }
     case 'emanation': {
       // Around the user's token (a burst from its space): the area's size beyond its edge
       const source = token._source;
@@ -674,7 +727,7 @@ export async function placeArea({ actor = null, item = null, kind = '', area: gi
   if (squares && (area.shape === 'cone' || area.shape === 'line')) {
     let picked;
     try {
-      picked = await placePattern({ data, token: sourceToken, shape: area.shape, length: squaresOf(area.meters, scene), scene });
+      picked = await placePattern({ data, token: sourceToken, shape: area.shape, length: squaresOf(area.meters, scene), scene, width: area.shape === 'line' ? widthSquares(area, scene) : 1 });
     } catch (error) {
       console.error('SDM | Placing the area failed', error);
       return null;
@@ -873,6 +926,7 @@ export async function drawArea() {
   const content =
     `<div class="form-group"><label>${esc($l10n('SDM.AreaShape.Label'))}</label><select name="shape">${shapes}</select></div>` +
     `<div class="form-group"><label>${esc($l10n('SDM.AreaDrawSize'))}</label><select name="size">${sizes}</select></div>` +
+    `<div class="form-group" data-tooltip="${esc($l10n('SDM.AreaWidthHint'))}"><label>${esc($l10n('SDM.AreaWidth'))}</label><input type="number" name="width" min="0" step="any" value="${Number(last.width) > 0 ? Number(last.width) : ''}" /></div>` +
     `<div class="form-group"><label>${esc($l10n('SDM.AreaDrawColor'))}</label><color-picker name="color" value="${esc(lastColor)}"></color-picker></div>` +
     (game.user.isGM ? hazardFields() : '');
   const choice = await foundry.applications.api.DialogV2.wait({
@@ -887,6 +941,7 @@ export async function drawArea() {
         callback: (event, button) => ({
           shape: button.form.elements.shape.value,
           size: button.form.elements.size.value,
+          width: Math.max(Number(button.form.elements.width.value) || 0, 0),
           color: `${new foundry.applications.ux.FormDataExtended(button.form).object.color ?? ''}`,
           hazard: hazardFromForm(button.form)
         })
@@ -898,10 +953,10 @@ export async function drawArea() {
   if (!choice) return;
   if (choice === 'clear') return clearDrawnAreas();
   const color = /^#[0-9a-f]{6}$/i.test(choice.color) ? choice.color : '';
-  if (choice.shape !== last.shape || choice.size !== last.size || (color && color !== last.color)) {
-    await game.user.setFlag('sdm', DRAW_AREA_FLAG, { shape: choice.shape, size: choice.size, color: color || last.color || '' }).catch(() => {});
+  if (choice.shape !== last.shape || choice.size !== last.size || (color && color !== last.color) || choice.width !== (Number(last.width) || 0)) {
+    await game.user.setFlag('sdm', DRAW_AREA_FLAG, { shape: choice.shape, size: choice.size, color: color || last.color || '', width: choice.width }).catch(() => {});
   }
-  const area = { ...areaSize(choice.size, choice.shape), size: choice.size, shape: choice.shape, affects: 'everyone', linger: false, rounds: 0, follows: false, save: null, range: '' };
+  const area = { ...areaSize(choice.size, choice.shape), size: choice.size, shape: choice.shape, width: areaWidth(choice.width), affects: 'everyone', linger: false, rounds: 0, follows: false, save: null, range: '' };
   const token = canvas.tokens.controlled[0]?.document ?? game.user.character?.getActiveTokens?.(false, true)?.find(t => t.parent === canvas.scene) ?? null;
   const label = `${$l10n(CONFIG.SDM.areaValues[choice.size])} ${$l10n(CONFIG.SDM.areaShapes[choice.shape]).toLowerCase()}`;
   const hazard = choice.hazard ? { ...choice.hazard, name: label } : null;

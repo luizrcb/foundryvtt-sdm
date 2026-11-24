@@ -97,6 +97,12 @@
       <span class="v2-label">{{localize 'SDM.AreaAcross'}}</span>
       <input type="number" name="system.power.area_across" value="{{system.power.area_across}}" min="0" step="any" data-dtype="Number" />
     </label>
+    {{#if (or (eq system.power.area_shape 'line') (eq system.power.area_shape 'ring'))}}
+    <label class="v2-field" data-tooltip="{{localize 'SDM.AreaWidthHint'}}">
+      <span class="v2-label">{{localize 'SDM.AreaWidth'}}</span>
+      <input type="number" name="system.power.area_width" value="{{system.power.area_width}}" min="0" step="any" data-dtype="Number" />
+    </label>
+    {{/if}}
     {{/if}}
     <label class="v2-field">
       <span class="v2-label">{{localize 'SDM.PowerDuration'}}</span>

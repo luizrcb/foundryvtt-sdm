@@ -209,6 +209,12 @@
             <label class='resource-label'>{{localize 'SDM.AreaAcross'}}</label>
             <input type='number' name='system.area.across' value='{{system.area.across}}' min='0' step='any' data-dtype='Number' />
           </div>
+          {{#if (or (eq system.area.shape 'line') (eq system.area.shape 'ring'))}}
+          <div class='resource' data-tooltip="{{localize 'SDM.AreaWidthHint'}}">
+            <label class='resource-label'>{{localize 'SDM.AreaWidth'}}</label>
+            <input type='number' name='system.area.width' value='{{system.area.width}}' min='0' step='any' data-dtype='Number' />
+          </div>
+          {{/if}}
           <div class='resource' data-tooltip="{{localize 'SDM.AreaVehicleHint'}}">
             <label class='resource-label'>{{localize 'SDM.AreaVehicle'}}</label>
             <input type='checkbox' name='system.area.vehicle' {{checked system.area.vehicle}} />

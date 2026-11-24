@@ -107,6 +107,8 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       rounds: new fields.NumberField({ required: true, nullable: false, integer: true, min: 0, initial: 0 }),
       // A size of its own, across, in the world unit (0: by small / medium / large)
       across: new fields.NumberField({ required: true, nullable: false, min: 0, initial: 0 }),
+      // A line's width or a ring's wall, in the world unit (0: one square)
+      width: new fields.NumberField({ required: true, nullable: false, min: 0, initial: 0 }),
       // A lingering area that moves with its user's token
       follows: new fields.BooleanField({ required: true, initial: false }),
       // Resolved by an attack against each defense, or by a save of each one inside

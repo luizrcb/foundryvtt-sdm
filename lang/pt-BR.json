@@ -3371,6 +3371,8 @@
   "SDM.AreaAcross": "Diâmetro",
   "SDM.AreaAcrossHint": "Um tamanho próprio, de lado a lado, na unidade do mundo (pés ou metros); vazio ou 0: pelo tamanho pequena / média / grande. Dois quadrados numa grade de 1,5 m: 3.",
   "SDM.AreaAcrossBySize": "pelo tamanho",
+  "SDM.AreaWidth": "Largura",
+  "SDM.AreaWidthHint": "A largura de uma linha ou a parede de um anel, na unidade do mundo (pés ou metros); vazio ou 0: um quadrado. Dois quadrados numa grade de 1,5 m: 3.",
   "SDM.AreaFollows": "Segue o usuário",
   "SDM.AreaFollowsHint": "A área persistente se move com o token do usuário (uma bênção em volta de você).",
   "SDM.WeaponSplashFormula": "Fórmula do respingo",

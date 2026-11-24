@@ -3371,6 +3371,8 @@
   "SDM.AreaAcross": "Across",
   "SDM.AreaAcrossHint": "A size of its own, across, in the world unit (ft or m); empty or 0: by small / medium / large. Two squares on a 5 ft grid: 10.",
   "SDM.AreaAcrossBySize": "by size",
+  "SDM.AreaWidth": "Width",
+  "SDM.AreaWidthHint": "A line's width or a ring's wall, in the world unit (ft or m); empty or 0: one square. Two squares on a 5 ft grid: 10.",
   "SDM.AreaFollows": "Follows the user",
   "SDM.AreaFollowsHint": "The lingering area moves with its user's token (a blessing around you).",
   "SDM.WeaponSplashFormula": "Splash formula",
