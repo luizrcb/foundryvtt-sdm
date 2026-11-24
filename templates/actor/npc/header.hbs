@@ -54,6 +54,17 @@
             </div>
           </div>
 
+          {{#if system.temporary_life.enabled}}
+          <div class='resource'>
+            <label class='resource-label flex-start' data-tooltip="SDM.TemporaryLife">{{localize 'SDM.Temporary'}}</label>
+            <div class='resource-content flexrow flex-center flex-between flex-group-center'>
+              <input type='text' name='system.temporary_life.value' value='{{system.temporary_life.value}}' data-dtype='Number' />
+              <span> / </span>
+              <input type='text' name='system.temporary_life.max' value='{{system.temporary_life.max}}' disabled />
+            </div>
+          </div>
+          {{/if}}
+
           <div class='resource'{{#if @root.xpToNextLevel}} data-tooltip="{{@root.xpToNextLevel}} {{localize 'SDM.XPToLevelUP'}}"{{/if}}>
             <label class='resource-label'>
               {{localize 'SDM.FieldExperience'}}

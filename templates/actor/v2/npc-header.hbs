@@ -42,6 +42,13 @@
             data-tooltip="{{localize 'SDM.FieldLifeMax'}}" />
         </div>
         <div class="v2-bar"><div class="v2-bar-fill" style="width: {{v2.lifePct}}%"></div></div>
+        {{#if system.temporary_life.enabled}}
+        <div class="v2-subvital" data-tooltip="SDM.TemporaryLife">
+          <span class="v2-label">{{localize 'SDM.Temporary'}}</span>
+          <input type="text" name="system.temporary_life.value" value="{{system.temporary_life.value}}" data-dtype="Number" />
+          <span class="v2-max">/ {{system.temporary_life.max}}</span>
+        </div>
+        {{/if}}
       </div>
 
       <label class="v2-card v2-stat">

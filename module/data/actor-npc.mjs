@@ -21,6 +21,13 @@ export default class SdmNPC extends SdmActorBase {
       mental_defense_bonus: new fields.NumberField({ required: true, nullable: false, initial: 0 }),
       social_defense_bonus: new fields.NumberField({ required: true, nullable: false, initial: 0 }),
 
+      // Temporary life, as characters have it (consumables, Colonist's night, effects): taken before life
+      temporary_life: new fields.SchemaField({
+        enabled: new fields.BooleanField({ initial: false }),
+        value: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 }),
+        max: new fields.NumberField({ ...requiredInteger, initial: 0, min: 0 })
+      }),
+
       // npc wage
       cost: new fields.StringField({
         required: false,

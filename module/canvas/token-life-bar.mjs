@@ -4,7 +4,7 @@ const TEMP_LIFE_COLOR = 0x5fb3e8;
 
 /** The temporary life a token's actor has (0: none). */
 export function tokenTemporaryLife(actor) {
-  if (actor?.type !== ActorType.CHARACTER) return 0;
+  if (![ActorType.CHARACTER, ActorType.NPC].includes(actor?.type)) return 0;
   return Math.max(Number(actor.system?.temporary_life?.value) || 0, 0);
 }
 
@@ -70,7 +70,7 @@ function onRenderCombatTracker(app, html) {
 
 /** The actor can have temporary life (enabled, or some now / a maximum). */
 function hasTemporaryLife(actor) {
-  if (actor?.type !== ActorType.CHARACTER) return false;
+  if (![ActorType.CHARACTER, ActorType.NPC].includes(actor?.type)) return false;
   const temp = actor.system?.temporary_life;
   return !!temp && (temp.enabled || Number(temp.value) > 0 || Number(temp.max) > 0);
 }
