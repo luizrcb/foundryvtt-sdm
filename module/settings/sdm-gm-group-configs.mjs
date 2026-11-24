@@ -100,84 +100,143 @@ export class SDMClientSettingsConfig extends GroupBase {
   }
 }
 
-export class SDMCaravanSettingsConfig extends GroupBase {
-  static DEFAULT_OPTIONS = {
-    ...super.DEFAULT_OPTIONS,
-    window: {
-      ...super.DEFAULT_OPTIONS.window,
-      title: 'SDM.Menu.Caravan.Label',
-      icon: 'fa-solid fa-truck-monster'
-    }
-  };
-  static LEGEND = 'SDM.Menu.Caravan.Name';
-  static KEYS = ['countCrewWeight', 'seasonsStarsIntegration', 'automateCaravanTransport'];
-}
+/**
+ * Referee: every world setting in one window, by tab. Each tab lists its sections (a legend and the
+ * setting keys); Combat ends with the zone scales table and Systems with the light presets table.
+ * Setting keys are the same as before, so worlds keep their values.
+ */
+const WORLD_TABS = [
+  {
+    id: 'rules',
+    icon: 'fa-solid fa-book',
+    sections: [
+      { legend: 'SDM.Menu.CoreRules.Name', keys: ['luckySevenRule', 'heroDieOnNat20', 'defaultHeroDiceType', 'useHardLimitRule', 'defaultHardLimitValue', 'healingHouseRule', 'defaultMaxPowers'] },
+      { legend: 'SDM.Menu.Skills.Name', keys: ['skillModifierStep', 'extendedSkillRanks'] }
+    ]
+  },
+  {
+    id: 'characters',
+    icon: 'fa-solid fa-user',
+    sections: [
+      { legend: 'SDM.Menu.Baselines.Name', keys: ['defaultSaveValue', 'baseDefense', 'baseMentalDefense', 'baseSocialDefense', 'baseItemSlots', 'baseTraitSlots', 'baseBurdenSlots'] },
+      { legend: 'SDM.Menu.PlayerPermissions.Name', keys: ['canPlayerRerollCharacter', 'canPlayerDropPetOnCanvas'] },
+      { legend: 'SDM.Menu.AudioGM.Name', keys: ['levelUpSoundFx'] }
+    ]
+  },
+  {
+    id: 'combat',
+    icon: 'fa-solid fa-crosshairs',
+    sections: [
+      { legend: 'SDM.Menu.Combat.Name', keys: ['initiativeTieBreak', 'groupPlayersToFriendlyTokens', 'rerollInitiativeEveryRound', 'initiativeFormula', 'effectExpiryAction', 'automateConditions', 'autoApplyDamage'] },
+      { legend: 'SDM.Menu.Zones.Name', keys: ['distanceUnit', 'defaultZoneScale', 'zoneRangeCheck', 'freeAttackRulerWarning', 'freeAttackReminder', 'zoneRuler', 'zoneHighlight'] }
+    ]
+  },
+  {
+    id: 'npcs',
+    icon: 'fa-solid fa-masks-theater',
+    sections: [
+      { legend: 'SDM.Menu.NPC.Name', keys: ['baseMoraleFormula', 'baseReactionFormula', 'npcInitiativeFormula', 'npcExtraAttacksTable', 'npcExtraOdditiesTable', 'npcExtraPowersTable', 'npcExtraPossessionsTable'] },
+      { legend: 'SDM.Menu.World.NpcGenerator', keys: ['npcVariability', 'npcTokenVariability', 'npcTokenArchetype', 'enableNpcExtras', 'npcNaturalLight'] }
+    ]
+  },
+  {
+    id: 'systems',
+    icon: 'fa-solid fa-toggle-on',
+    sections: [
+      { legend: 'SDM.Menu.CoreRules.Optional', keys: ['automatePowerCost', 'enableTriggers', 'enableCounters', 'enableDamageBoost', 'enableItemLights', 'enableAuras'] }
+    ]
+  },
+  {
+    id: 'caravan',
+    icon: 'fa-solid fa-caravan',
+    sections: [
+      { legend: 'SDM.Menu.Caravan.Name', keys: ['countCrewWeight', 'seasonsStarsIntegration', 'automateCaravanTransport'] },
+      { legend: 'SDM.Menu.Economy.Name', keys: ['currencyName', 'currencyImage', 'currencyWeight'] }
+    ]
+  },
+  {
+    id: 'advanced',
+    icon: 'fa-solid fa-lock',
+    sections: [{ legend: 'SDM.Menu.SystemDev.Name', keys: ['displayItemCategoriesTab'] }]
+  }
+];
 
-export class SDMPlayerPermissionsSettingsConfig extends GroupBase {
-  static DEFAULT_OPTIONS = {
-    ...super.DEFAULT_OPTIONS,
-    window: {
-      ...super.DEFAULT_OPTIONS.window,
-      title: 'SDM.Menu.PlayerPermissions.Label',
-      icon: 'fa-solid fa-user-lock'
-    }
-  };
-  static LEGEND = 'SDM.Menu.PlayerPermissions.Name';
-  static KEYS = ['canPlayerRerollCharacter', 'canPlayerDropPetOnCanvas'];
-}
+/** Settings shown in a tab as tables (saved and reset with that tab). */
+const TAB_TABLE_KEYS = { combat: ['zoneScales'], systems: ['lightPresets'] };
 
-/* 1) Combat & Initiative */
-export class SDMCombatSettingsConfig extends GroupBase {
-  static DEFAULT_OPTIONS = {
-    ...super.DEFAULT_OPTIONS,
-    window: {
-      ...super.DEFAULT_OPTIONS.window,
-      title: 'SDM.Menu.Combat.Label',
-      icon: 'fa-solid fa-hand-fist'
-    }
-  };
-  static LEGEND = 'SDM.Menu.Combat.Name';
-  static KEYS = [
-    'initiativeTieBreak',
-    'groupPlayersToFriendlyTokens',
-    'rerollInitiativeEveryRound',
-    'effectExpiryAction',
-    'initiativeFormula',
-    'npcInitiativeFormula'
-  ];
-}
+const registered = key => game.settings.settings.has(`sdm.${key}`);
+const tabKeys = tab => [...tab.sections.flatMap(section => section.keys), ...(TAB_TABLE_KEYS[tab.id] ?? [])].filter(registered);
 
-/* Movement & range zones: the scales (table), the world default and the optional helpers */
-export class SDMZonesSettingsConfig extends GroupBase {
+export class SDMWorldSettingsConfig extends BaseSettingsConfig {
   static DEFAULT_OPTIONS = {
     ...super.DEFAULT_OPTIONS,
+    classes: [...super.DEFAULT_OPTIONS.classes, 'sdm-world-settings'],
     window: {
       ...super.DEFAULT_OPTIONS.window,
-      title: 'SDM.Menu.Zones.Label',
-      icon: 'fa-solid fa-ruler-combined'
+      title: 'SDM.Menu.World.Name',
+      icon: 'fa-solid fa-gears'
+    },
+    position: { width: 960, height: 760 }
+  };
+
+  static TABS = {
+    primary: {
+      tabs: WORLD_TABS.map(tab => ({ id: tab.id, icon: tab.icon, label: `SDM.Menu.World.Tab.${tab.id}` })),
+      initial: 'rules'
     }
   };
-  static LEGEND = 'SDM.Menu.Zones.Name';
-  static KEYS = ['distanceUnit', 'defaultZoneScale', 'zoneRangeCheck', 'freeAttackRulerWarning', 'freeAttackReminder', 'zoneRuler', 'zoneHighlight'];
+
   static PARTS = {
-    config: { template: 'systems/sdm/templates/settings/base-config.hbs' },
-    scales: { template: 'systems/sdm/templates/settings/zone-scales.hbs' },
+    tabs: { template: 'templates/generic/tab-navigation.hbs' },
+    ...Object.fromEntries(
+      WORLD_TABS.map(tab => [tab.id, { template: 'systems/sdm/templates/settings/world-tab.hbs', scrollable: [''] }])
+    ),
+    zoneScales: { template: 'systems/sdm/templates/settings/zone-scales.hbs' },
+    lightPresets: { template: 'systems/sdm/templates/settings/light-presets.hbs' },
     footer: { template: 'templates/generic/form-footer.hbs' }
   };
-  // Saved with the rest of the form (as an object); reset with "Reset" too
+
   static get ALL_KEYS() {
-    return [...this.KEYS, 'zoneScales'];
+    return WORLD_TABS.flatMap(tabKeys);
+  }
+
+  /** Reset: only the tab in view. */
+  get resetKeys() {
+    const tab = WORLD_TABS.find(t => t.id === this.tabGroups.primary) ?? WORLD_TABS[0];
+    return tabKeys(tab);
   }
 
   async _preparePartContext(partId, context, options) {
-    context = await super._preparePartContext(partId, context, options);
-    if (partId !== 'scales') return context;
-    context.unit = worldUnit();
-    context.scales = ZONE_SCALE_KEYS.map(key => ({
-      key,
-      label: game.i18n.localize(`SDM.Zones.Scale.${key}`),
-      ...getZoneScale(key)
-    }));
+    context = (await super._preparePartContext(partId, context, options)) ?? {};
+    const tab = WORLD_TABS.find(t => t.id === partId);
+    if (tab) {
+      context.tab = context.tabs?.[partId];
+      context.sections = tab.sections
+        .map(section => ({
+          legend: game.i18n.localize(section.legend),
+          fields: section.keys.filter(registered).map(key => this.createSettingField(key))
+        }))
+        .filter(section => section.fields.length);
+    } else if (partId === 'zoneScales') {
+      context.tab = context.tabs?.combat;
+      context.unit = worldUnit();
+      context.scales = ZONE_SCALE_KEYS.map(key => ({
+        key,
+        label: game.i18n.localize(`SDM.Zones.Scale.${key}`),
+        ...getZoneScale(key)
+      }));
+    } else if (partId === 'lightPresets') {
+      context.tab = context.tabs?.systems;
+      context.presets = LIGHT_PRESET_KEYS.map(key => ({
+        key,
+        label: game.i18n.localize(`SDM.Light.Preset.${key}`),
+        ...getLightPreset(key)
+      }));
+      context.animations = {
+        '': 'SDM.Light.NoAnimation',
+        ...Object.fromEntries(Object.entries(CONFIG.Canvas.lightAnimations ?? {}).map(([key, cfg]) => [key, cfg.label]))
+      };
+    }
     return context;
   }
 
@@ -189,183 +248,4 @@ export class SDMZonesSettingsConfig extends GroupBase {
     }
     return super._onCommitChanges(event, form, formData);
   }
-}
-
-/* 2) Core Rules (Limits & Hero Dice) */
-export class SDMCoreRulesSettingsConfig extends GroupBase {
-  static DEFAULT_OPTIONS = {
-    ...super.DEFAULT_OPTIONS,
-    window: {
-      ...super.DEFAULT_OPTIONS.window,
-      title: 'SDM.Menu.CoreRules.Label',
-      icon: 'fa-solid fa-book'
-    }
-  };
-  static LEGEND = 'SDM.Menu.CoreRules.Name';
-  static KEYS = [
-    'luckySevenRule',
-    'heroDieOnNat20',
-    'defaultMaxPowers',
-    'useHardLimitRule',
-    'defaultHardLimitValue',
-    'defaultHeroDiceType',
-    'healingHouseRule'
-  ];
-  // Second section: automations the GM can turn off
-  static OPTIONAL_KEYS = [
-    'automatePowerCost',
-    'enableTriggers',
-    'enableCounters',
-    'enableDamageBoost',
-    'enableItemLights',
-    'enableAuras',
-    'npcVariability',
-    'npcTokenVariability',
-    'npcTokenArchetype',
-    'enableNpcExtras',
-    'automateConditions',
-    'autoApplyDamage',
-    'npcNaturalLight'
-  ];
-  static PARTS = {
-    config: { template: 'systems/sdm/templates/settings/base-config.hbs' },
-    optional: { template: 'systems/sdm/templates/settings/optional-config.hbs' },
-    footer: { template: 'templates/generic/form-footer.hbs' }
-  };
-  static get ALL_KEYS() {
-    return [...this.KEYS, ...this.OPTIONAL_KEYS];
-  }
-
-  async _preparePartContext(partId, context, options) {
-    context = await super._preparePartContext(partId, context, options);
-    if (partId !== 'optional') return context;
-    context.optionalFields = this.constructor.OPTIONAL_KEYS.map(k => this.createSettingField(k));
-    context.optionalLegend = game.i18n.localize('SDM.Menu.CoreRules.Optional');
-    return context;
-  }
-}
-
-/* 3) Skills & Advancement */
-export class SDMSkillsSettingsConfig extends GroupBase {
-  static DEFAULT_OPTIONS = {
-    ...super.DEFAULT_OPTIONS,
-    window: {
-      ...super.DEFAULT_OPTIONS.window,
-      title: 'SDM.Menu.Skills.Label',
-      icon: 'fa-solid fa-layer-group'
-    }
-  };
-  static LEGEND = 'SDM.Menu.Skills.Name';
-  static KEYS = ['skillModifierStep', 'extendedSkillRanks'];
-}
-
-/* 4) System Baselines (Defs, Saves, Slots) */
-export class SDMBaselinesSettingsConfig extends GroupBase {
-  static DEFAULT_OPTIONS = {
-    ...super.DEFAULT_OPTIONS,
-    window: {
-      ...super.DEFAULT_OPTIONS.window,
-      title: 'SDM.Menu.Baselines.Label',
-      icon: 'fa-solid fa-sliders'
-    }
-  };
-  static LEGEND = 'SDM.Menu.Baselines.Name';
-  static PARTS = {
-    config: { template: 'systems/sdm/templates/settings/base-config.hbs' },
-    lights: { template: 'systems/sdm/templates/settings/light-presets.hbs' },
-    footer: { template: 'templates/generic/form-footer.hbs' }
-  };
-  // Saved with the rest of the form (as an object); reset with "Reset" too
-  static get ALL_KEYS() {
-    return [...this.KEYS, 'lightPresets'];
-  }
-
-  async _preparePartContext(partId, context, options) {
-    context = await super._preparePartContext(partId, context, options);
-    if (partId !== 'lights') return context;
-    context.presets = LIGHT_PRESET_KEYS.map(key => ({
-      key,
-      label: game.i18n.localize(`SDM.Light.Preset.${key}`),
-      ...getLightPreset(key)
-    }));
-    context.animations = {
-      '': 'SDM.Light.NoAnimation',
-      ...Object.fromEntries(Object.entries(CONFIG.Canvas.lightAnimations ?? {}).map(([key, cfg]) => [key, cfg.label]))
-    };
-    return context;
-  }
-
-  static KEYS = [
-    'defaultSaveValue',
-    'baseDefense',
-    'baseMentalDefense',
-    'baseSocialDefense',
-    'baseItemSlots',
-    'baseTraitSlots',
-    'baseBurdenSlots'
-  ];
-}
-
-/* 5) NPC Behavior (Morale & Reaction) */
-export class SDMNPCBehaviorSettingsConfig extends GroupBase {
-  static DEFAULT_OPTIONS = {
-    ...super.DEFAULT_OPTIONS,
-    window: {
-      ...super.DEFAULT_OPTIONS.window,
-      title: 'SDM.Menu.NPC.Label',
-      icon: 'fa-solid fa-masks-theater'
-    }
-  };
-  static LEGEND = 'SDM.Menu.NPC.Name';
-  static KEYS = [
-    'baseMoraleFormula',
-    'baseReactionFormula',
-    'npcInitiativeFormula',
-    'npcExtraAttacksTable',
-    'npcExtraOdditiesTable',
-    'npcExtraPowersTable',
-    'npcExtraPossessionsTable'
-  ];
-}
-
-/* 6) Economy & Currency */
-export class SDMEconomySettingsConfig extends GroupBase {
-  static DEFAULT_OPTIONS = {
-    ...super.DEFAULT_OPTIONS,
-    window: {
-      ...super.DEFAULT_OPTIONS.window,
-      title: 'SDM.Menu.Economy.Label',
-      icon: 'fa-solid fa-coins'
-    }
-  };
-  static LEGEND = 'SDM.Menu.Economy.Name';
-  static KEYS = ['currencyName', 'currencyImage', 'currencyWeight'];
-}
-
-/* 7) Audio (GM Assets) */
-export class SDMAudioGMSettingsConfig extends GroupBase {
-  static DEFAULT_OPTIONS = {
-    ...super.DEFAULT_OPTIONS,
-    window: {
-      ...super.DEFAULT_OPTIONS.window,
-      title: 'SDM.Menu.AudioGM.Label',
-      icon: 'fa-solid fa-music'
-    }
-  };
-  static LEGEND = 'SDM.Menu.AudioGM.Name';
-  static KEYS = ['levelUpSoundFx'];
-}
-
-/* 8) System DEV Setting */
-export class SDMSystemDevSettingsConfig extends GroupBase {
-  static DEFAULT_OPTIONS = {
-    ...super.DEFAULT_OPTIONS,
-    window: {
-      ...super.DEFAULT_OPTIONS.window,
-      title: 'SDM.Menu.SystemDev.Label',
-      icon: 'fa-solid fa-lock'
-    }
-  };
-  static LEGEND = 'SDM.Menu.SystemDev.Name';
-  static KEYS = ['displayItemCategoriesTab'];
 }

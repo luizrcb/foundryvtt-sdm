@@ -2346,6 +2346,14 @@ input[type=radio]::after {
   background-color: var(--sdm-settings-footer-bg, rgba(225, 222, 212, 0.97));
 }
 
+.application.sdm-settings-menu .sdm-settings-tab:not(.active) {
+  display: none;
+}
+
+.application.sdm-settings-menu nav.sheet-tabs {
+  flex-wrap: wrap;
+}
+
 .application.sdm-settings-menu fieldset.sdm-config > legend {
   cursor: pointer;
   user-select: none;

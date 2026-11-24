@@ -1,0 +1,17 @@
+{{! World settings: one tab, its sections (a legend and its settings) }}
+<section class="tab sdm-settings-tab {{tab.cssClass}}" data-group="primary" data-tab="{{tab.id}}">
+  {{#each sections as |section|}}
+  <fieldset class="sdm-config">
+    <legend>{{section.legend}}</legend>
+    {{#each section.fields}}
+    <div class="form-group">
+      <h6><strong>{{this.label}}</strong></h6>
+      <div class="form-fields">
+        {{{this.inputHTML}}}
+      </div>
+      {{#if this.hint}}<p class="hint">{{{this.hint}}}</p>{{/if}}
+    </div>
+    {{/each}}
+  </fieldset>
+  {{/each}}
+</section>

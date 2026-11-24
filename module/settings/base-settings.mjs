@@ -405,7 +405,8 @@ export default class BaseSettingsConfig extends HandlebarsApplicationMixin(Appli
 
     const cls = this.constructor;
     const ns = cls.NAMESPACE ?? 'sdm';
-    const keys = Array.isArray(cls.ALL_KEYS) ? cls.ALL_KEYS : [];
+    // A tabbed menu resets only the tab in view
+    const keys = Array.isArray(this.resetKeys) ? this.resetKeys : Array.isArray(cls.ALL_KEYS) ? cls.ALL_KEYS : [];
 
     const samePrim = (a, b) => a === b || (Number.isNaN(a) && Number.isNaN(b));
 

@@ -1,4 +1,5 @@
-<div class="sdm-light-presets-part">
+{{! World settings, Systems tab: the light presets table (its own part, shown with that tab) }}
+<section class="tab sdm-settings-tab sdm-light-presets-part {{tab.cssClass}}" data-group="primary" data-tab="systems">
 {{#if (sdmFeature 'lights')}}
 <fieldset class="sdm-config sdm-light-presets">
   <legend>{{localize 'SDM.SettingsLightPresets'}}</legend>
@@ -33,4 +34,4 @@
   </table>
 </fieldset>
 {{/if}}
-</div>
+</section>

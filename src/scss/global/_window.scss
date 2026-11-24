@@ -2347,6 +2347,15 @@ input[type='radio']::after {
     background-color: var(--sdm-settings-footer-bg, rgba(225, 222, 212, 0.97));
   }
 
+  // World settings: tabs (each tab's parts show together)
+  .sdm-settings-tab:not(.active) {
+    display: none;
+  }
+
+  nav.sheet-tabs {
+    flex-wrap: wrap;
+  }
+
   fieldset.sdm-config > legend {
     cursor: pointer;
     user-select: none;
