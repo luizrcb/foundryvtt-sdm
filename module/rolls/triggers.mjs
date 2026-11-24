@@ -514,6 +514,19 @@ async function castAction(holder, actor, trigger) {
   return sheet.constructor._onRoll.call(sheet, event, fakeTarget);
 }
 
+/** Cast a power item, or an album's power by name, for free (no cast dialog, no cost): Recast. */
+export async function castPowerFree(target, actor, powerName = '') {
+  const sheet = (actor ?? target.actor)?.sheet;
+  if (!sheet || !target.actor?.isOwner) return;
+  const isAlbum = target.system.type !== GearType.POWER;
+  const dataset = { type: isAlbum ? 'power_album' : 'power', powerName: powerName ?? '', freeCast: 'true' };
+  const row = { dataset: { documentClass: 'Item', itemId: target.id } };
+  const fakeTarget = { dataset, closest: () => row };
+  const noop = () => {};
+  const event = { preventDefault: noop, stopPropagation: noop, detail: 1, shiftKey: false, ctrlKey: false, currentTarget: fakeTarget, target: fakeTarget };
+  return sheet.constructor._onRoll.call(sheet, event, fakeTarget);
+}
+
 async function wearItem(item, wear) {
   const system = item.system;
   // Repair one step (broken → notched → whole) or fully

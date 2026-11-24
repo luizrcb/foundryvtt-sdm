@@ -57,6 +57,7 @@ import {
 } from '../helpers/animatedItems.mjs';
 import { addCashToActor, removeCashFromActor } from '../macros/gm/giveCash.mjs';
 import { postDiceSummary } from '../macros/gm/giveHeroDice.mjs';
+import { heroDieCounters, rechargeWithHeroDie, zeroLifeRescue } from '../helpers/onceAbilities.mjs';
 
 const { renderTemplate } = foundry.applications.handlebars;
 const { DialogV2 } = foundry.applications.api;
@@ -1725,6 +1726,17 @@ export class SdmActor extends Actor {
         }
       },
       {
+        label: 'SDM.Once.Recharge',
+        icon: '<i class="fa-solid fa-dice"></i>',
+        visible: target => {
+          const item = this.sheet._getEmbeddedDocument(target);
+          return this.isOwner && featureEnabled('counters') && heroDieCounters(item).length > 0;
+        },
+        onClick: async (event, target) => {
+          await rechargeWithHeroDie(this.sheet._getEmbeddedDocument(target));
+        }
+      },
+      {
         label: 'SDM.Counter.ResetAll',
         icon: '<i class="fa-solid fa-rotate-left"></i>',
         visible: target => {
@@ -2190,6 +2202,13 @@ export class SdmActor extends Actor {
       // If multiplier === 1 and some damage was applied (same visible as before), keep adding blood die
       if (multiplier === 1 && netAmount && bloodClad) {
         await this.addOneBloodDie();
+      }
+
+      // Falling to 0 life: Fake Out (the blow didn't connect) or Second Chance (1 life instead)
+      if (newLifeValue <= 0 && (Number(life.value) || 0) > 0 && this.type === ActorType.CHARACTER) {
+        const rescue = await zeroLifeRescue(this);
+        if (rescue?.ignore) return;
+        if (rescue?.life) newLifeValue = Math.min(rescue.life, life.max);
       }
 
       // Build update object (include temp only if the system has it)

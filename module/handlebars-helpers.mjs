@@ -30,9 +30,16 @@ export function registerHandlebarsHelpers() {
     round: 'SDM.Counter.ResetEachRound',
     turn: 'SDM.Counter.ResetEachTurn',
     rest: 'SDM.Counter.ResetEachRest',
-    day: 'SDM.Counter.ResetEachDay'
+    day: 'SDM.Counter.ResetEachDay',
+    session: 'SDM.Counter.ResetEachSession'
   }));
   $$('sdmIsLit', item => isLit(item));
+  $$('sdmOnceAbilityChoices', () => ({
+    '': 'SDM.Trigger.WearNone',
+    secondChance: 'SDM.Once.secondChance',
+    fakeOut: 'SDM.Once.fakeOut',
+    recast: 'SDM.Once.recast'
+  }));
   // A single-use power, or an album holding one
   $$(
     'sdmSingleUse',

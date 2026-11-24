@@ -266,6 +266,16 @@ export default class SdmItemBase extends foundry.abstract.TypeDataModel {
       filled: new fields.BooleanField({ required: true, initial: false })
     });
 
+    // Once-per-session abilities the system runs (with a counter of the item: used up at its max):
+    // Second Chance (fall to 1 life instead of 0), Fake Out (spend a hero die: the blow that took
+    // you to 0 didn't connect), Recast (cast the power again for free, from its chat card)
+    schema.once_ability = new fields.StringField({
+      required: true,
+      blank: true,
+      initial: '',
+      choices: ['', 'secondChance', 'fakeOut', 'recast']
+    });
+
     schema.is_hallmark = new fields.BooleanField({
       required: true,
       initial: false

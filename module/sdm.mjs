@@ -60,6 +60,7 @@ import { getLightItems, getLitEffect, isLightSource, isLit, lightItem, putOutLig
 import { restActor, setupRest } from './app/rest.mjs';
 import { setupHeroDieOnNat20 } from './helpers/heroDieOnNat20.mjs';
 import { setupTokenLifeBar } from './canvas/token-life-bar.mjs';
+import { newSession, setupOnceAbilities } from './helpers/onceAbilities.mjs';
 import { bindTriggerApply, setupTriggers } from './rolls/triggers.mjs';
 import { setupNextRoll } from './app/next-roll.mjs';
 import { setupRideStats } from './helpers/rideStats.mjs';
@@ -154,6 +155,8 @@ globalThis.sdm = {
     player: playerMacros,
     // Rest one week: game.sdm.api.rest(actorOrUuid, { choice: 'life' | 'ability' | 'burden', ability, burdenId })
     rest: restActor,
+    // Referee: a new session (counters that reset each session go back)
+    newSession,
     // Items: Use (consumables) and the rolls an inventory row offers ({ image, icons })
     items: {
       use: useItem,
@@ -826,6 +829,7 @@ Hooks.once('init', function () {
   setupRest();
   setupHeroDieOnNat20();
   setupTokenLifeBar();
+  setupOnceAbilities();
   setupTriggers();
   setupEscalatorDiePositionBroadcast();
   //Preload Handlebars templates.

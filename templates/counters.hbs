@@ -26,6 +26,9 @@
         <select name="system.counters.{{counter.key}}.reset_each">
           {{selectOptions (sdmCounterResetChoices) selected=counter.reset_each localize=true}}
         </select></label>
+      <label class="sdm-counter-combat" data-tooltip="{{localize 'SDM.Counter.HeroDieHint'}}">
+        <input type="checkbox" name="system.counters.{{counter.key}}.hero_die" {{checked counter.hero_die}} />
+        {{localize 'SDM.Counter.HeroDie'}}</label>
       <code class="sdm-counter-ref" data-tooltip="{{localize 'SDM.Counter.ReferenceHint' ref=(concat @root.counterScope '.counters.' counter.key '.value')}}">{{@root.counterScope}}.counters.{{counter.key}}.value</code>
       {{#if @root.editable}}
       <div class="sdm-counter-actions">
@@ -37,6 +40,12 @@
     {{else}}
     <p class="hint">{{localize 'SDM.Counter.None'}}</p>
     {{/each}}
+    {{#if (eq @root.counterScope '@item')}}
+    <div class="sdm-counter-row sdm-uses-row">
+      <label data-tooltip="{{localize 'SDM.Once.Hint'}}">{{localize 'SDM.Once.Label'}}
+        <select name="system.once_ability">{{selectOptions (sdmOnceAbilityChoices) selected=@root.item.system.once_ability localize=true}}</select></label>
+    </div>
+    {{/if}}
     {{#if (and (eq @root.counterScope '@item') (eq @root.item.type 'gear'))}}
     <div class="sdm-counter-row sdm-uses-row">
       <label data-tooltip="{{localize 'SDM.Uses.Hint'}}">{{localize 'SDM.Uses.Label'}}

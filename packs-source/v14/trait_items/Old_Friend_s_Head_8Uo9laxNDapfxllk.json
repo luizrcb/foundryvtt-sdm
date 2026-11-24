@@ -85,7 +85,7 @@
         "max": 1,
         "reset_value": 0,
         "reset_on_combat_end": false,
-        "reset_each": ""
+        "reset_each": "day"
       }
     }
   },

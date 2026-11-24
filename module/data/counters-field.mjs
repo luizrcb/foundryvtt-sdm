@@ -9,8 +9,10 @@ export function defineCountersField() {
       reset_value: new fields.NumberField({ required: true, nullable: false, integer: true, initial: 0, min: 0 }),
       reset_on_combat_end: new fields.BooleanField({ initial: false }),
       // Also reset at the start of each combat round, at the start of its owner's turn, when its
-      // owner rests, or when the game date changes (a new day)
-      reset_each: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'round', 'turn', 'rest', 'day'] })
+      // owner rests, when the game date changes (a new day) or when the Referee starts a new session
+      reset_each: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'round', 'turn', 'rest', 'day', 'session'] }),
+      // Can be reset by spending a hero die (Second Chance, Recast: "recharge with a hero die")
+      hero_die: new fields.BooleanField({ initial: false })
     })
   );
 }
