@@ -432,7 +432,13 @@ function freeSquares(token, point, shape, length) {
   const size = token.parent.grid.size;
   const { origin, angle } = frame;
   const reach = length * size;
-  const end = { x: origin.x + Math.cos(angle) * reach, y: origin.y + Math.sin(angle) * reach };
+  // A line ends where its length does by the world's Grid Diagonals rule (as Foundry's ruler and the
+  // lines aimed without Shift); a cone keeps its true distance
+  const grid = token.parent.grid;
+  const end =
+    shape === 'line'
+      ? grid.getTranslatedPoint(origin, Math.toDegrees(angle), length * (Number(grid.distance) || 1))
+      : { x: origin.x + Math.cos(angle) * reach, y: origin.y + Math.sin(angle) * reach };
   const i0 = Math.floor((Math.min(origin.y, end.y) - reach) / size);
   const i1 = Math.ceil((Math.max(origin.y, end.y) + reach) / size);
   const j0 = Math.floor((Math.min(origin.x, end.x) - reach) / size);
@@ -517,18 +523,15 @@ async function placePattern({ data, token, shape, length, scene }) {
   const guide =
     shape === 'cone'
       ? { type: 'cone', x: 0, y: 0, radius: length * size, angle: CONE_ANGLE, rotation: 0, curvature: 'round', gridBased: false }
-      : { type: 'line', x: 0, y: 0, length: length * size, width: size, rotation: 0, gridBased: false };
+      : // A line's guide is measured by the grid (its Grid Diagonals rule): it ends where its squares do
+        // and shows its full length (18 m on the diagonal too)
+        { type: 'line', x: 0, y: 0, length: length * size, width: size, rotation: 0, gridBased: true };
   const onMove = ({ shape: current, position, snap }) => {
     last = position;
     // Shift (Foundry's "don't snap"): any angle, from where the aim leaves the token; otherwise the 8 directions
     free = snap === false;
     const frame = free ? freeFrame(token, last) : patternFrame(token, last);
-    if (frame) {
-      const update = { x: frame.origin.x, y: frame.origin.y, rotation: frame.rotation };
-      // A line on a perfect diagonal: the guide ends where its staircase of squares ends
-      if (shape === 'line') update.length = !free && frame.dx && frame.dy ? diagonalLineSteps(scene, length) * Math.SQRT2 * size : length * size;
-      current.updateSource(update);
-    }
+    if (frame) current.updateSource({ x: frame.origin.x, y: frame.origin.y, rotation: frame.rotation });
     return false;
   };
   const onChange = () => previewSquares(squaresNow(), color);
