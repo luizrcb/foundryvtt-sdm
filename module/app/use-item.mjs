@@ -6,6 +6,7 @@ import { resolveFormula, showSideDice } from '../helpers/formulas.mjs';
 import { lastChargeUpdate } from '../helpers/itemUtils.mjs';
 import { getUsesCounter, spendUsesUpdate, usesLeft } from '../helpers/itemUses.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
+import { deleteEffects } from '../helpers/deleteEffects.mjs';
 
 /**
  * Using consumables (gear with the consumable feature) (separate from the caravan's Consume Supply).
@@ -218,13 +219,13 @@ async function applyToActor({ actorUuid, restores = [], restore, effects }) {
     // Cures: remove the actor's own conditions (not those given by its items)
     if (restore?.kind === 'cure' && restore.statuses?.length) {
       const ids = actor.effects.filter(e => [...(e.statuses ?? [])].some(s => restore.statuses.includes(s))).map(e => e.id);
-      if (ids.length) await actor.deleteEmbeddedDocuments('ActiveEffect', ids);
+      if (ids.length) await deleteEffects(actor, ids);
       continue;
     }
     // Effects by id (a Referee's next-roll modifier, used by a roll)
     if (restore?.kind === 'deleteEffects' && restore.ids?.length) {
       const ids = restore.ids.filter(id => actor.effects.has(id));
-      if (ids.length) await actor.deleteEmbeddedDocuments('ActiveEffect', ids);
+      if (ids.length) await deleteEffects(actor, ids);
       continue;
     }
     // An item's effect copied by a trigger, taken off again (hero dice turned its save around)
@@ -232,7 +233,7 @@ async function applyToActor({ actorUuid, restores = [], restore, effects }) {
       const ids = actor.effects
         .filter(e => e.getFlag('sdm', 'usedItem') === restore.usedItem && (!restore.name || e.name === restore.name))
         .map(e => e.id);
-      if (ids.length) await actor.deleteEmbeddedDocuments('ActiveEffect', ids);
+      if (ids.length) await deleteEffects(actor, ids);
       continue;
     }
     if (restore?.full) {

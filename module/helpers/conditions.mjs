@@ -1,5 +1,6 @@
 import { ActorType, RollMode } from './constants.mjs';
 import { showSideDice } from './formulas.mjs';
+import { deleteEffects } from './deleteEffects.mjs';
 
 /**
  * WTF conditions. The game has no condition rules of its own: these are the conditions its texts
@@ -340,7 +341,7 @@ async function onCombatEnded(combat) {
   if (!automated() || game.users.activeGM?.id !== game.user.id) return;
   for (const actor of new Set(combat.combatants.map(c => c.actor).filter(Boolean))) {
     const ids = actor.effects.filter(e => e.getFlag('sdm', 'untilCombatEnd')).map(e => e.id);
-    if (ids.length) await actor.deleteEmbeddedDocuments('ActiveEffect', ids);
+    if (ids.length) await deleteEffects(actor, ids);
   }
 }
 
@@ -412,7 +413,7 @@ async function clearExpiredConditions(combat) {
     const ids = actor.effects
       .filter(e => e.duration?.expired && [...(e.statuses ?? [])].some(id => CONDITION_IDS.has(id)))
       .map(e => e.id);
-    if (ids.length) await actor.deleteEmbeddedDocuments('ActiveEffect', ids).catch(() => null);
+    if (ids.length) await deleteEffects(actor, ids).catch(() => null);
   }
 }
 

@@ -2,6 +2,7 @@ import { resolveEffectReferences, resolveFormulaReferences } from './effectRefer
 import { $l10n } from './globalUtils.mjs';
 import { metersPerUnit, sceneZoneLimits } from './zones.mjs';
 import { buildChanges, getLightPreset, lightSettingsFrom } from './lights.mjs';
+import { deleteEffects } from './deleteEffects.mjs';
 
 /**
  * Auras: an active effect with its aura on radiates from its actor's tokens. Each source token gets
@@ -328,7 +329,7 @@ async function syncActorCopies(actor, copies) {
       toUpdate.push({ _id: current.id, name: data.name, img: data.img, 'system.changes': data.system.changes, [`flags.sdm.${SOURCE_FLAG}`]: data.flags.sdm[SOURCE_FLAG] });
     }
   }
-  if (toDelete.length) await actor.deleteEmbeddedDocuments('ActiveEffect', toDelete);
+  if (toDelete.length) await deleteEffects(actor, toDelete);
   if (toUpdate.length) await actor.updateEmbeddedDocuments('ActiveEffect', toUpdate);
   if (toCreate.length) await actor.createEmbeddedDocuments('ActiveEffect', toCreate);
 }
@@ -383,7 +384,7 @@ function lightData(actor, token) {
 async function syncActorLight(actor, data) {
   const existing = actor.effects.filter(e => e.getFlag('sdm', LIGHT_FLAG));
   const [current, ...extra] = existing;
-  if (extra.length || (current && !data)) await actor.deleteEmbeddedDocuments('ActiveEffect', (data ? extra : existing).map(e => e.id));
+  if (extra.length || (current && !data)) await deleteEffects(actor, (data ? extra : existing).map(e => e.id));
   if (!data) return;
   if (!current) return actor.createEmbeddedDocuments('ActiveEffect', [data]);
   const same =

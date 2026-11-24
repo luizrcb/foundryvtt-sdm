@@ -7,6 +7,7 @@ import { attackFollowupHtml, powerWithoutRoll } from '../rolls/attackFollowup.mj
 import { getItemIdentifier, resolveFormulaReferences } from './effectReferences.mjs';
 import { buildChanges, getLightPreset, lightConfig } from './lights.mjs';
 import { bandForMeters, metersForWorldUnits, metersPerUnit, sceneUnitsForMeters, sceneZoneLimits, worldUnit, worldUnitsForMeters, ZONE_BANDS } from './zones.mjs';
+import { deleteEffects } from './deleteEffects.mjs';
 
 /**
  * Areas (H7): an item with an area (small, medium, large) is placed on the map as a region, and the
@@ -692,7 +693,7 @@ async function onAreaDeleted(region) {
   if (lights.length) await scene.deleteEmbeddedDocuments('AmbientLight', lights);
   const actor = flag.light.actor ? fromUuidSync(flag.light.actor) : null;
   const effects = actor?.effects.filter(e => e.getFlag('sdm', LIGHT_KEY) === flag.id).map(e => e.id) ?? [];
-  if (effects.length) await actor.deleteEmbeddedDocuments('ActiveEffect', effects);
+  if (effects.length) await deleteEffects(actor, effects);
 }
 
 /* -------------------------------------------- */
@@ -1390,7 +1391,7 @@ async function applyAreaSave(area, result) {
     // What it gave before goes (hero dice may have changed the result), then what the result gives
     const key = `${message.id}|${area.token}`;
     const old = actor.effects.filter(e => e.getFlag('sdm', 'areaSave') === key).map(e => e.id);
-    if (old.length) await actor.deleteEmbeddedDocuments('ActiveEffect', old);
+    if (old.length) await deleteEffects(actor, old);
     const shorter = result === true && card.save.pass === 'shorter';
     if (result === false || shorter) {
       const data = lingerEffects(item).map(effect => {

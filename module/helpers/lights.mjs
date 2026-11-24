@@ -3,6 +3,7 @@ import { $fmt, $l10n } from './globalUtils.mjs';
 import { featureEnabled } from './features.mjs';
 import { lastChargeUpdate } from './itemUtils.mjs';
 import { getUsesCounter, spendUsesUpdate, usesLeft } from './itemUses.mjs';
+import { deleteEffects } from './deleteEffects.mjs';
 
 /**
  * Token light from items (light category or glowing feature).
@@ -185,7 +186,7 @@ export function powerCreatesLight(power) {
 export async function lightFromPower(actor, power) {
   if (!actor?.isOwner || actor.type === ActorType.CARAVAN || !powerCreatesLight(power)) return;
   const current = getLitEffect(actor);
-  if (current) await current.delete();
+  if (current) await deleteEffects(current.parent, [current.id]);
   await actor.createEmbeddedDocuments('ActiveEffect', [
     {
       name: $fmt('SDM.Light.EffectName', { name: power.name }),
@@ -237,7 +238,7 @@ export async function lightItem(item, { duration = null } = {}) {
     return;
   }
   const current = getLitEffect(actor);
-  if (current) await current.delete();
+  if (current) await deleteEffects(current.parent, [current.id]);
   const [created] = await actor.createEmbeddedDocuments('ActiveEffect', [
     {
       name: $fmt('SDM.Light.EffectName', { name: item.name }),
@@ -257,7 +258,7 @@ export async function putOutLight(actor, { itemId } = {}) {
   const effect = getLitEffect(actor);
   if (!effect) return;
   if (itemId && effect.getFlag('sdm', LIGHT_FLAG)?.itemId !== itemId) return;
-  await effect.delete();
+  await deleteEffects(effect.parent, [effect.id]);
 }
 
 export async function toggleLight(item) {
@@ -392,7 +393,7 @@ export async function relightLeft(item) {
   // it still burns); only a broken item doesn't come back lit
   if (!isLightSource(item) || isLit(item) || item.system.status === ItemStatusType.BROKEN) return;
   const current = getLitEffect(item.actor);
-  if (current) await current.delete();
+  if (current) await deleteEffects(current.parent, [current.id]);
   await item.actor.createEmbeddedDocuments('ActiveEffect', [
     {
       name: $fmt('SDM.Light.EffectName', { name: item.name }),
@@ -555,7 +556,7 @@ export async function putOutAllLights() {
   }
   for (const actor of actors) {
     const ids = actor.effects.filter(effect => effect.getFlag('sdm', LIGHT_FLAG)).map(effect => effect.id);
-    if (ids.length) await actor.deleteEmbeddedDocuments('ActiveEffect', ids);
+    if (ids.length) await deleteEffects(actor, ids);
   }
 }
 

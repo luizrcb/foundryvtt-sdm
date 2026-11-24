@@ -6,6 +6,7 @@ import { $fmt, $l10n } from './globalUtils.mjs';
 import { featureEnabled } from './features.mjs';
 import { hasPowerAlbum, lastChargeUpdate } from './itemUtils.mjs';
 import { getUsesCounter, spendUsesUpdate, usesLeft, usesResources } from './itemUses.mjs';
+import { deleteEffects } from './deleteEffects.mjs';
 
 /**
  * Animated items: an item with the "animated" feature can come to life as an NPC.
@@ -337,7 +338,7 @@ function lightFromItem(item, scene) {
  */
 async function syncEffectCopies(item, npc) {
   const existing = npc.effects.filter(e => e.getFlag('sdm', EFFECT_COPY_FLAG));
-  if (existing.length) await npc.deleteEmbeddedDocuments('ActiveEffect', existing.map(e => e.id));
+  if (existing.length) await deleteEffects(npc, existing.map(e => e.id));
   const copies = item.effects
     .filter(e => e.transfer && !e.system?.isItemMod && !e.getFlag('sdm', HALLMARK_UPGRADES_FLAG))
     .map(e => {

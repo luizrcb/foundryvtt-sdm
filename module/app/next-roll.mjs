@@ -7,6 +7,7 @@
  */
 import { RollMode } from '../helpers/constants.mjs';
 import { deleteEffectsOf } from './use-item.mjs';
+import { deleteEffects } from '../helpers/deleteEffects.mjs';
 
 export const NEXT_ROLL_STATUSES = { self: 'nextRoll', against: 'nextRollAgainst' };
 const VALUES = ['+1', '+3', '+6', '+1d6', '-1', '-3', '-6', '-1d6'];
@@ -64,7 +65,7 @@ export async function consumeNextRoll(advice) {
 /** Put a next-roll modifier on the actor (replacing the one it had for the same kind of roll). */
 async function setNextRoll(actor, who, { mode = '', modifier = '' }) {
   const old = nextRollEffects(actor, who).map(effect => effect.id);
-  if (old.length) await actor.deleteEmbeddedDocuments('ActiveEffect', old);
+  if (old.length) await deleteEffects(actor, old);
   if (!mode && !modifier) return;
   const bonus = mode === RollMode.ADVANTAGE || (!mode && !`${modifier}`.startsWith('-'));
   const status = CONFIG.statusEffects.find(s => s.id === NEXT_ROLL_STATUSES[who]);
@@ -132,7 +133,7 @@ async function openNextRollDialog(actor) {
       root?.querySelectorAll('[data-remove]').forEach(link =>
         link.addEventListener('click', async ev => {
           ev.preventDefault();
-          await actor.deleteEmbeddedDocuments('ActiveEffect', [link.dataset.remove]);
+          await deleteEffects(actor, [link.dataset.remove]);
           link.closest('li')?.remove();
         })
       );

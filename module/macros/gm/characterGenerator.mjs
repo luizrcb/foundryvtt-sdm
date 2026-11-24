@@ -4,6 +4,7 @@ import { ActorType } from '../../helpers/constants.mjs';
 import { $fmt, $l10n } from '../../helpers/globalUtils.mjs';
 import { UnarmedDamageItem } from '../../helpers/itemUtils.mjs';
 import { addCashToActor } from './giveCash.mjs';
+import { deleteEffects } from '../../helpers/deleteEffects.mjs';
 
 const { DialogV2 } = foundry.applications.api;
 
@@ -977,10 +978,10 @@ async function generateCharacterWithOptions(options = {}, existingActor) {
       // copies and lights): if one is already gone, delete those still there
       const effectIds = existingActor.effects.contents.map(effect => effect.id);
       try {
-        if (effectIds.length) await existingActor.deleteEmbeddedDocuments('ActiveEffect', effectIds);
+        if (effectIds.length) await deleteEffects(existingActor, effectIds);
       } catch {
         const left = effectIds.filter(id => existingActor.effects.has(id));
-        if (left.length) await existingActor.deleteEmbeddedDocuments('ActiveEffect', left);
+        if (left.length) await deleteEffects(existingActor, left);
       }
       await existingActor.unsetFlag('sdm', REPEAT_UPGRADE_FLAG);
       // A rerolled character starts a new progress history

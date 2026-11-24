@@ -2,6 +2,7 @@ import { ActorType, ItemType } from '../helpers/constants.mjs';
 import { $fmt, $l10n } from '../helpers/globalUtils.mjs';
 import { restoreAll } from './use-item.mjs';
 import { resetCountersOnRest } from '../helpers/counters.mjs';
+import { deleteEffects } from '../helpers/deleteEffects.mjs';
 
 /**
  * Rest (one week): remove one affliction or insult —
@@ -95,7 +96,7 @@ export async function restActor(actorOrUuid, { choice, ability, burdenId, clearC
     const effects = restConditions(actor);
     if (!effects.length) return '';
     const names = conditionNames(effects);
-    await actor.deleteEmbeddedDocuments('ActiveEffect', effects.map(effect => effect.id));
+    await deleteEffects(actor, effects.map(effect => effect.id));
     return `<p>${$fmt('SDM.Rest.ChatConditions', { conditions: esc(names) })}</p>`;
   };
 
