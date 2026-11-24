@@ -18,6 +18,9 @@ const FLAG = 'summon';
 const SOURCE_FLAG = 'summonSource';
 const CARD_FLAG = 'summonCard';
 const HUD_CLASS = 'sdm-dismiss-summon';
+// The effect a summoned creature carries (its token icon, Effects tab and effects panel)
+const EFFECT_FLAG = 'summoned';
+const EFFECT_ICON = 'icons/svg/portal.svg';
 // Rings of squares searched around the summoner for free places
 const MAX_RINGS = 12;
 
@@ -26,6 +29,18 @@ const esc = text => foundry.utils.escapeHTML(String(text ?? ''));
 /** The summon data of a token (null when it was not summoned). */
 export function summonOf(token) {
   return token?.getFlag?.('sdm', FLAG) ?? null;
+}
+
+/** "Summoned by Bob (Raise Dead)" for a summoned token's actor (its sheet, effects panel); '' otherwise. */
+export function summonedLabel(actor, { short = false } = {}) {
+  const data = summonOf(actor?.token);
+  if (!data) return '';
+  return $fmt(short ? 'SDM.Summon.ByShort' : 'SDM.Summon.By', { actor: data.summonerName || '?', item: data.itemName || '?' });
+}
+
+/** The marker effect of a summoned creature. */
+export function isSummonedEffect(effect) {
+  return !!effect?.getFlag?.('sdm', EFFECT_FLAG);
 }
 
 /** Summoned tokens of a scene, optionally only those of an item and summoner. */
@@ -286,7 +301,7 @@ async function createSummons({ sceneId, summonerUuid, summonerTokenId, itemUuid,
         rotation,
         actorLink: false,
         disposition,
-        flags: { sdm: { [FLAG]: { id, item: itemUuid, itemName, summoner: summonerUuid, until, endsAtZero: !!endsAtZero } } }
+        flags: { sdm: { [FLAG]: { id, item: itemUuid, itemName, summoner: summonerUuid, summonerName: summoner.name, until, endsAtZero: !!endsAtZero } } }
       },
       { parent: scene }
     );
@@ -294,6 +309,25 @@ async function createSummons({ sceneId, summonerUuid, summonerTokenId, itemUuid,
   }
   if (!tokensData.length) return null;
   const created = await scene.createEmbeddedDocuments('Token', tokensData);
+
+  // Marked as summoned: an effect with its own icon on the token, in the Effects tab and the effects panel
+  const lasts = until ? $fmt('SDM.Summon.LastsRounds', { rounds }) : $l10n('SDM.Summon.LastsUntilDismissed');
+  for (const token of created) {
+    try {
+      await token.actor?.createEmbeddedDocuments('ActiveEffect', [
+        {
+          name: $l10n('SDM.Summon.EffectName'),
+          img: EFFECT_ICON,
+          showIcon: CONST.ACTIVE_EFFECT_SHOW_ICON?.ALWAYS ?? 2,
+          // How long first (the effects panel shows the first line), then who
+          description: `<p>${esc(lasts)}</p><p>${$fmt('SDM.Summon.By', { actor: esc(summoner.name), item: esc(itemName) })}</p>`,
+          flags: { sdm: { [EFFECT_FLAG]: true } }
+        }
+      ]);
+    } catch (error) {
+      console.error('SDM | Could not mark a summoned creature', error);
+    }
+  }
 
   // A running fight: they join it and roll initiative
   if (combat && created.length) {

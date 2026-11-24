@@ -2946,6 +2946,12 @@ button.sdm-chromatype-dice {
   line-height: 1.6em;
 }
 
+.sdm-summoned-mark {
+  margin-left: 4px;
+  font-size: calc(0.8em + 2px);
+  color: var(--sdm-c-violet, #7a4fb5);
+}
+
 a.sdm-proto-link {
   margin-left: 4px;
   font-size: calc(0.8em + 2px);

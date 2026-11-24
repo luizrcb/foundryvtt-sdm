@@ -2958,6 +2958,13 @@ button.sdm-chromatype-dice {
 }
 
 // Actor sheet (Referee): prototype token linked / unlinked icon next to the name
+// A summoned creature, next to its name on the sheet
+.sdm-summoned-mark {
+  margin-left: 4px;
+  font-size: calc(0.8em + 2px);
+  color: var(--sdm-c-violet, #7a4fb5);
+}
+
 a.sdm-proto-link {
   margin-left: 4px;
   font-size: calc(0.8em + 2px);

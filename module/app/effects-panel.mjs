@@ -1,6 +1,7 @@
 import { conditionTooltip } from '../helpers/conditions.mjs';
 import { auraSourceName, isAura, isAuraCopy, listedEffects } from '../helpers/auras.mjs';
 import { templatePath } from '../helpers/templates.mjs';
+import { isSummonedEffect, summonedLabel } from '../helpers/summons.mjs';
 
 const { ApplicationV2, HandlebarsApplicationMixin } = foundry.applications.api;
 
@@ -53,6 +54,7 @@ export default class SdmEffectsPanel extends HandlebarsApplicationMixin(Applicat
     return (
       isAura(effect) ||
       isAuraCopy(effect) ||
+      isSummonedEffect(effect) ||
       effect.isTemporary ||
       !!effect.getFlag?.('sdm', 'temporary') ||
       effect.statuses?.size > 0 ||
@@ -85,7 +87,9 @@ export default class SdmEffectsPanel extends HandlebarsApplicationMixin(Applicat
       const onSelf = isAura(effect) && !!effect.system?.aura?.applyToSelf;
       const from = copy
         ? game.i18n.format('SDM.Aura.From', { name: auraSourceName(effect) })
-        : isAura(effect)
+        : isSummonedEffect(effect)
+          ? summonedLabel(actor, { short: true })
+          : isAura(effect)
           ? `${game.i18n.localize('SDM.Aura.Title')} — ${game.i18n.localize(onSelf ? 'SDM.Aura.OnSelf' : 'SDM.Aura.NotOnSelf')}`
           : '';
       // An aura: the start of its description too, on its own line
