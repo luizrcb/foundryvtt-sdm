@@ -9318,6 +9318,10 @@ a.sdm-proto-link.warn {
 .sdm .sdm-counter-chip:hover {
   background: rgba(0, 0, 0, 0.18);
 }
+.sdm .sdm-counter-chip .sdm-counter-cooldown {
+  margin-left: 2px;
+  opacity: 0.8;
+}
 .sdm .sdm-actor-counters {
   display: flex;
   flex-wrap: wrap;

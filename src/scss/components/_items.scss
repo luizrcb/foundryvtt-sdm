@@ -717,6 +717,12 @@ li.item {
   &:hover {
     background: rgba(0, 0, 0, 0.18);
   }
+
+  // Cooling down: rounds or turns left
+  .sdm-counter-cooldown {
+    margin-left: 2px;
+    opacity: 0.8;
+  }
 }
 
 .sdm-actor-counters {

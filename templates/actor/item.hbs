@@ -123,7 +123,7 @@
       {{#if (and (ne actorType 'caravan') (sdmFeature 'counters'))}}
       {{#each item.system.counters as |counter key|}}
         <a class="sdm-counter-chip mr-3" {{#if @root.editable}}data-action="stepItemCounter"{{/if}} data-key="{{key}}"
-          data-tooltip="{{localize 'SDM.Counter.RowHint' label=counter.label}}">{{counter.label}} {{counter.value}}</a>
+          data-tooltip="{{localize 'SDM.Counter.RowHint' label=counter.label}}">{{counter.label}} {{counter.value}}{{#if counter.cooldown_left}} <span class="sdm-counter-cooldown" data-tooltip="{{localize 'SDM.Counter.CooldownLeftHint'}}"><i class="fa-solid fa-hourglass-half"></i> {{counter.cooldown_left}}</span>{{/if}}</a>
       {{/each}}
       {{/if}}
       {{!-- A lit item left on the map (no Item Piles): picked up from the token's HUD next to it --}}

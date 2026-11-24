@@ -74,7 +74,7 @@
       {{#if (sdmFeature 'counters')}}
       {{#each trait.system.counters as |counter key|}}
         <a class="sdm-counter-chip ml-3" {{#if @root.editable}}data-action="stepItemCounter"{{/if}} data-key="{{key}}"
-          data-tooltip="{{localize 'SDM.Counter.RowHint' label=counter.label}}">{{counter.label}} {{counter.value}}</a>
+          data-tooltip="{{localize 'SDM.Counter.RowHint' label=counter.label}}">{{counter.label}} {{counter.value}}{{#if counter.cooldown_left}} <span class="sdm-counter-cooldown" data-tooltip="{{localize 'SDM.Counter.CooldownLeftHint'}}"><i class="fa-solid fa-hourglass-half"></i> {{counter.cooldown_left}}</span>{{/if}}</a>
       {{/each}}
       {{/if}}
     </div>
