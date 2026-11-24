@@ -715,18 +715,21 @@ export async function useItem(item) {
 }
 
 /**
- * Counters a replenisher gives back: those that recharge (reset each round / turn / rest / day /
- * session, after combat, with a cooldown or a hero die) and are not at their reset value. Kill tallies
- * and other plain counters are left alone.
+ * Counters a replenisher gives back (to their reset value): those that recharge (reset each round /
+ * turn / rest / day / session, after combat, with a cooldown or a hero die), and those that count down
+ * from full (reset value at their maximum) and are not full. Tallies that count up (kills) are left alone.
  */
 function rechargeableCounters(item) {
   const usesKey = item.system?.uses?.counter;
-  return Object.entries(item.system?.counters ?? {}).filter(
-    ([key, counter]) =>
-      key !== usesKey &&
-      (counter.reset_each || counter.reset_on_combat_end || counter.hero_die || Number(counter.cooldown) > 0) &&
-      (Number(counter.value) || 0) !== (Number(counter.reset_value) || 0)
-  );
+  return Object.entries(item.system?.counters ?? {}).filter(([key, counter]) => {
+    if (key === usesKey) return false;
+    const value = Number(counter.value) || 0;
+    const reset = Number(counter.reset_value) || 0;
+    if (value === reset) return false;
+    if (counter.reset_each || counter.reset_on_combat_end || counter.hero_die || Number(counter.cooldown) > 0) return true;
+    const hasMax = counter.max !== null && counter.max !== undefined;
+    return hasMax && reset >= Number(counter.max) && value < reset;
+  });
 }
 
 /** Something to give back: running low or run out, charges spent, its uses counter not full, a counter that recharges. */
