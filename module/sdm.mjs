@@ -54,7 +54,8 @@ import {
 import { setupCaravanTokenControls } from './canvas/caravan-tokens.mjs';
 import { setupInvestXp } from './app/invest-xp.mjs';
 import { getCounters, promptNewCounter, removeCounter, resetCounters, setupCounters, stepCounter } from './helpers/counters.mjs';
-import { blockedReason, isUsable, setupUseItem, useItem } from './app/use-item.mjs';
+import { blockedReason, describeUse, isUsable, setupUseItem, useItem } from './app/use-item.mjs';
+import { itemActions, itemMarkers } from './helpers/itemActions.mjs';
 import { setupAnimatedItems } from './helpers/animatedItems.mjs';
 import { getLightItems, getLitEffect, isLightSource, isLit, lightItem, putOutLight, setupLights, toggleLight } from './helpers/lights.mjs';
 import { restActor, setupRest } from './app/rest.mjs';
@@ -162,7 +163,12 @@ globalThis.sdm = {
       use: useItem,
       isUsable,
       useBlockedReason: blockedReason,
-      rolls: getRowRolls
+      rolls: getRowRolls,
+      // Item actions besides rolls and Use (usage roll, charges, recharge, animate…) and row markers
+      actions: itemActions,
+      markers: itemMarkers,
+      // What Use does (HTML, the Use icon's tooltip)
+      describeUse
     },
     // Token light from items (light category / glowing) and powers
     lights: {
