@@ -537,7 +537,9 @@ async function placePattern({ data, token, shape, length, scene }) {
   const onChange = () => previewSquares(squaresNow(), color);
   let placed;
   try {
-    placed = await canvas.regions.placeRegion({ ...data, shapes: [guide] }, { create: false, onMove, onChange, allowRotation: false });
+    // The guide is drawn as its outline only: the squares lit up are the pattern's (what it hits), not
+    // Foundry's coverage of the guide (a grid-measured line would light a band three squares wide)
+    placed = await canvas.regions.placeRegion({ ...data, highlightMode: 'shapes', shapes: [guide] }, { create: false, onMove, onChange, allowRotation: false });
   } finally {
     clearPreview();
   }
