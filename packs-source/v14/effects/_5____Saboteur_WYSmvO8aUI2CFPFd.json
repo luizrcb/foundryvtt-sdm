@@ -9,14 +9,25 @@
       {
         "key": "system.description",
         "type": "add",
-        "value": "<p>Instead of damage: target is tripped, slowed, shoved, or blocked (hard save). This is not automated.</p>",
+        "value": "<p>Instead of damage: target is tripped, slowed, shoved, or blocked (hard save).</p>",
         "priority": null,
         "phase": "initial"
       }
     ],
     "isItemMod": true,
     "modType": "weapon",
-    "modCost": 250
+    "modCost": 250,
+    "triggers": [
+      {
+        "roll": "attack",
+        "condition": "success",
+        "status": "prone",
+        "status_target": "targets",
+        "status_save": true,
+        "status_save_difficulty": "hard",
+        "text": "Instead of damage: tripped, slowed, shoved or blocked (hard save); prone by default"
+      }
+    ]
   },
   "disabled": false,
   "start": null,
@@ -26,7 +37,7 @@
     "expiry": null,
     "expired": false
   },
-  "description": "<p>Instead of damage: target is tripped, slowed, shoved, or blocked (hard save). This is not automated.</p><p><strong>Mod Cost</strong>: $250</p>",
+  "description": "<p>Instead of damage: target is tripped, slowed, shoved, or blocked (hard save).</p><p><strong>Mod Cost</strong>: $250</p>",
   "origin": null,
   "tint": "#ffffff",
   "transfer": false,

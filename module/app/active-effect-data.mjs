@@ -1,4 +1,5 @@
 import { $l10n } from '../helpers/globalUtils.mjs';
+import { defineTriggersField } from '../data/triggers-field.mjs';
 
 /** Aura reach: a zone band of the scene, or a distance of its own. */
 export const AURA_BANDS = {
@@ -33,6 +34,8 @@ export class SDMActiveEffectData extends foundry.data.ActiveEffectTypeDataModel 
     return {
       ...super.defineSchema(),
       isItemMod: new fields.BooleanField({ required: true, initial: false, label: $l10n('SDM.IsItemMod') }),
+      // A mod's roll triggers: they join its item's while it is installed (and enabled)
+      triggers: defineTriggersField(),
       modType: new fields.StringField({ blank: true, required: false, initial: '', choices: CONFIG.SDM.itemModType, label: $l10n('SDM.ItemModType') }),
       // A mod gained as a hallmark level upgrade: it does not use one of the item's mod slots
       isHallmarkUpgrade: new fields.BooleanField({

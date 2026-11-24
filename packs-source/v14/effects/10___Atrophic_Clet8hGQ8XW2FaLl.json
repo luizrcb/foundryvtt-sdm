@@ -9,14 +9,24 @@
       {
         "key": "system.description",
         "type": "add",
-        "value": "<p>Deals 1 ability damage per hit. Choose target ability (strength, agility, etc.). This is not automated.</p>",
+        "value": "<p>Deals 1 ability damage per hit. Choose target ability (strength, agility, etc.).</p>",
         "priority": null,
         "phase": "initial"
       }
     ],
     "isItemMod": true,
     "modType": "weapon",
-    "modCost": 600
+    "modCost": 600,
+    "triggers": [
+      {
+        "roll": "attack",
+        "condition": "success",
+        "ability_damage": "choose",
+        "ability_damage_amount": "1",
+        "ability_damage_target": "targets",
+        "text": "1 ability damage"
+      }
+    ]
   },
   "disabled": false,
   "start": null,
@@ -26,7 +36,7 @@
     "expiry": null,
     "expired": false
   },
-  "description": "<p>Deals 1 ability damage per hit. Choose target ability (strength, agility, etc.). This is not automated.</p><p><strong>Mod Cost</strong>: $600, <strong>Repeatable</strong></p>",
+  "description": "<p>Deals 1 ability damage per hit. Choose target ability (strength, agility, etc.).</p><p><strong>Mod Cost</strong>: $600, <strong>Repeatable</strong></p>",
   "origin": null,
   "tint": "#ffffff",
   "transfer": false,

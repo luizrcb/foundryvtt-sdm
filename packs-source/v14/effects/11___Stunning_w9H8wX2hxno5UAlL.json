@@ -9,14 +9,26 @@
       {
         "key": "system.description",
         "type": "add",
-        "value": "<p>Strikes with a flash or shocking roar. Target loses 1 action (save). This is not automated.</p>",
+        "value": "<p>Strikes with a flash or shocking roar. Target loses 1 action (save).</p>",
         "priority": null,
         "phase": "initial"
       }
     ],
     "isItemMod": true,
     "modType": "weapon",
-    "modCost": 850
+    "modCost": 850,
+    "triggers": [
+      {
+        "roll": "attack",
+        "condition": "success",
+        "status": "stun",
+        "status_target": "targets",
+        "status_save": true,
+        "status_duration": 1,
+        "status_duration_units": "rounds",
+        "text": "Loses 1 action (save)"
+      }
+    ]
   },
   "disabled": false,
   "start": null,
@@ -26,7 +38,7 @@
     "expiry": null,
     "expired": false
   },
-  "description": "<p>Strikes with a flash or shocking roar. Target loses 1 action (save). This is not automated.</p><p><strong>Mod Cost</strong>: $850</p>",
+  "description": "<p>Strikes with a flash or shocking roar. Target loses 1 action (save).</p><p><strong>Mod Cost</strong>: $850</p>",
   "origin": null,
   "tint": "#ffffff",
   "transfer": false,

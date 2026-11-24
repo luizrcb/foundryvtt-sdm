@@ -99,7 +99,7 @@ export function actorTriggers(actor, rollKind, roll, { attack = '', ability = ''
   if (!featureEnabled('triggers')) return fired;
   const chosen = rollKind === 'attack' && withItem ? actor.items.get(withItem) ?? null : null;
   for (const item of watchingItems(actor)) {
-    for (const trigger of item.system.triggers ?? []) {
+    for (const trigger of itemTriggers(item)) {
       if (trigger.roll !== rollKind) continue;
       // Attacks: whose attack fires it ("From" — the item it is made with, chosen in the attack dialog)
       if (rollKind === 'attack' && !attackFromMatches(item, trigger, chosen)) continue;
@@ -179,7 +179,7 @@ export function itemRollTriggers(item, rollKind, roll, { power = '', ...options 
   const holders = [item, ...watchingItems(item.actor).filter(other => other.id !== item.id)];
   const fired = [];
   for (const holder of holders) {
-    for (const trigger of holder.system?.triggers ?? []) {
+    for (const trigger of itemTriggers(holder)) {
       if (trigger.roll !== rollKind || !watchesItem(trigger, holder, item)) continue;
       if (rollKind === 'power' && trigger.power && name && trigger.power.trim().toLowerCase() !== name) continue;
       // A consumable's Use has no roll: it always fires
@@ -261,6 +261,7 @@ async function runActions(fired, { actor, targets = null } = {}) {
       if (trigger.cast) await castAction(item, roller, trigger);
       if (trigger.life_mode) await lifeAction(item, roller, trigger, targets, times);
       if (trigger.purge) await purgeAction(item, roller, trigger, targets);
+      if (trigger.ability_damage) await abilityDamageAction(item, roller, trigger, targets, times);
       if (`${trigger.roll_formula ?? ''}`.trim()) await rollAction(item, roller, trigger);
       if (`${trigger.hero_dice ?? ''}`.trim()) await heroDiceAction(item, roller, trigger, times);
       if (trigger.animate) await animateAction(item, roller, trigger);
@@ -300,6 +301,18 @@ async function payTriggerCost(item, trigger, actor) {
     return false;
   }
   return true;
+}
+
+/**
+ * An item's triggers: its own, then those of its installed mods (enabled mod effects with triggers),
+ * so a mod's "on hit" works on whatever item it is put on.
+ */
+export function itemTriggers(item) {
+  const own = item?.system?.triggers ?? [];
+  const mods = (item?.effects?.contents ?? [])
+    .filter(effect => effect.system?.isItemMod && !effect.disabled && effect.system.triggers?.length)
+    .flatMap(effect => effect.system.triggers);
+  return mods.length ? [...own, ...mods] : own;
 }
 
 /** An item picked in a trigger: '@self' (the item holding the trigger) or an identifier on the actor. */
@@ -346,6 +359,40 @@ async function lifeAction(holder, actor, trigger, targets, times = 1) {
     return;
   }
   for (const target of actors) await changeLifeOf(target, amount, { heal: trigger.life_mode === 'heal' });
+}
+
+/**
+ * Ability damage: lower one ability of the targets (or the one who rolled) by an amount, never
+ * below 0. 'choose': the roller picks the ability. Characters only (NPCs have no ability scores).
+ */
+async function abilityDamageAction(holder, actor, trigger, targets, times = 1) {
+  const actors = (
+    trigger.ability_damage_target === 'self'
+      ? [actor]
+      : (targets ?? [...game.user.targets]).map(target => target?.actor ?? target)
+  ).filter(target => target?.system?.abilities);
+  if (!actors.length) {
+    ui.notifications.warn($fmt('SDM.Trigger.NoTargets', { item: holder.name }));
+    return;
+  }
+  let ability = trigger.ability_damage;
+  if (ability === 'choose') {
+    const options = Object.entries(CONFIG.SDM.abilities)
+      .map(([key, label]) => `<option value="${key}">${esc($l10n(label))}</option>`)
+      .join('');
+    ability = await foundry.applications.api.DialogV2.prompt({
+      window: { title: holder.name },
+      content: `<p>${esc($l10n('SDM.Trigger.AbilityDamageChoose'))}</p><select name="ability">${options}</select>`,
+      ok: { label: $l10n('SDM.Trigger.AbilityDamage'), callback: (event, button) => button.form.elements.ability.value },
+      rejectClose: false
+    });
+    if (!ability) return;
+  }
+  const { total } = await rollAmount(trigger.ability_damage_amount || '1', { item: holder, actor, fallback: 1 });
+  const amount = total * times;
+  if (amount <= 0) return;
+  const { damageAbilityOf } = await import('../app/use-item.mjs');
+  for (const target of actors) await damageAbilityOf(target, ability, amount, holder.name);
 }
 
 /** Purge the targets (or the one who rolled) of consumables: the effects they copied go. */
@@ -539,7 +586,7 @@ function actionSummary(item, trigger) {
 function targetActionButton(item, trigger) {
   const onTargets = (trigger.status && trigger.status_target !== 'self') || (trigger.effect && trigger.effect_target !== 'self');
   if (!onTargets || !item?.uuid) return '';
-  const index = (item.system?.triggers ?? []).indexOf(trigger);
+  const index = itemTriggers(item).indexOf(trigger);
   if (index < 0) return '';
   const names = [];
   if (trigger.status && trigger.status_target !== 'self') {
@@ -581,7 +628,7 @@ export function bindTriggerApply(message, html) {
     button.addEventListener('click', async event => {
       event.preventDefault();
       const item = await fromUuid(button.dataset.itemUuid);
-      const trigger = item?.system?.triggers?.[Number(button.dataset.index)];
+      const trigger = item ? itemTriggers(item)[Number(button.dataset.index)] : null;
       if (!trigger) return;
       const targets = [...new Set([...(game.user.targets ?? [])].map(token => token.actor).filter(Boolean))];
       if (!targets.length) return ui.notifications.info(game.i18n.localize('SDM.Trigger.ApplyNoTarget'));
@@ -705,7 +752,7 @@ async function onUpdateItemCounters(item, changes, options, userId) {
   const charges = options?.sdmChargesBefore;
   if (!counters && charges === undefined) return;
   const fired = [];
-  for (const trigger of item.system.triggers ?? []) {
+  for (const trigger of itemTriggers(item)) {
     if (trigger.roll === 'counter' && counters && trigger.watch_scope !== 'actor' && trigger.watch in counters) {
       const now = item.system.counters?.[trigger.watch];
       if (!now) continue;
@@ -728,7 +775,7 @@ async function onUpdateActorCounters(actor, changes, options, userId) {
   if (!featureEnabled('triggers') || !featureEnabled('counters') || chainDepth >= MAX_CHAIN) return;
   const fired = [];
   for (const item of watchingItems(actor)) {
-    for (const trigger of item.system?.triggers ?? []) {
+    for (const trigger of itemTriggers(item)) {
       if (trigger.roll !== 'counter' || trigger.watch_scope !== 'actor' || !(trigger.watch in before)) continue;
       const now = actor.system.counters?.[trigger.watch];
       if (!now) continue;

@@ -9,14 +9,24 @@
       {
         "key": "system.description",
         "type": "add",
-        "value": "<p>Target is slowed (save). Second strike immobilizes for 1d6 rounds (save). This is not automated.</p>",
+        "value": "<p>Target is slowed (save). Second strike immobilizes for 1d6 rounds (save).</p>",
         "priority": null,
         "phase": "initial"
       }
     ],
     "isItemMod": true,
     "modType": "weapon",
-    "modCost": 200
+    "modCost": 200,
+    "triggers": [
+      {
+        "roll": "attack",
+        "condition": "success",
+        "status": "slowed",
+        "status_target": "targets",
+        "status_save": true,
+        "text": "Slowed (save); a second strike immobilizes for 1d6 rounds (save)"
+      }
+    ]
   },
   "disabled": false,
   "start": null,
@@ -26,7 +36,7 @@
     "expiry": null,
     "expired": false
   },
-  "description": "<p>Target is slowed (save). Second strike immobilizes for 1d6 rounds (save). This is not automated.</p><p><strong>Mod Cost</strong>: $200</p>",
+  "description": "<p>Target is slowed (save). Second strike immobilizes for 1d6 rounds (save).</p><p><strong>Mod Cost</strong>: $200</p>",
   "origin": null,
   "tint": "#ffffff",
   "transfer": false,

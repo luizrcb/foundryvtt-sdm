@@ -147,6 +147,10 @@ export function defineTriggersField() {
       life_mode: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'heal', 'damage'] }),
       life_amount: new fields.StringField({ required: true, blank: true, initial: '1d6' }),
       life_target: new fields.StringField({ required: true, blank: false, initial: 'targets', choices: ['targets', 'self'] }),
+      // Ability damage: lower an ability of the targets or the one who rolled ('choose': the roller picks)
+      ability_damage: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'choose', 'str', 'end', 'agi', 'cha', 'aur', 'tho'] }),
+      ability_damage_amount: new fields.StringField({ required: true, blank: true, initial: '1' }),
+      ability_damage_target: new fields.StringField({ required: true, blank: false, initial: 'targets', choices: ['targets', 'self'] }),
       // Purge: remove the effects of consumables from the targets or the one who rolled ('' none)
       purge: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'targets', 'self'] }),
       // Roll a formula to chat (blank: none)

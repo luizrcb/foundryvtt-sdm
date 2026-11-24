@@ -212,6 +212,24 @@ async function applyToActor({ actorUuid, restores = [], restore, effects }) {
   if (!actor) return;
   if (restore) restores = [restore]; // older clients
   for (const restore of restores) {
+    // Ability damage: the ability's current score drops (never below 0)
+    if (restore?.kind === 'abilityDamage' && restore.ability && restore.amount > 0) {
+      const current = Number(actor.system?.abilities?.[restore.ability]?.current);
+      if (!Number.isFinite(current)) continue;
+      const next = Math.max(current - restore.amount, 0);
+      if (next === current) continue;
+      await actor.update({ [`system.abilities.${restore.ability}.current`]: next });
+      await ChatMessage.create({
+        speaker: ChatMessage.getSpeaker({ actor }),
+        content: `<p><i class="fa-solid fa-heart-crack"></i> ${$fmt('SDM.Trigger.AbilityDamageChat', {
+          actor: esc(actor.name),
+          amount: current - next,
+          ability: esc($l10n(CONFIG.SDM.abilities[restore.ability])),
+          source: esc(restore.reason ?? '')
+        })}</p>`
+      });
+      continue;
+    }
     // Purge: the effects other consumables copied onto this actor go
     if (restore?.kind === 'purge') {
       await purgeEffectsOf(actor, restore.usedItem);
@@ -685,6 +703,15 @@ async function purgeEffectsOf(actor, except = '') {
     })
     .map(e => e.id);
   if (ids.length) await deleteEffects(actor, ids);
+}
+
+/** Lower an actor's ability score (a trigger action): here, or by the Referee's game. */
+export async function damageAbilityOf(actor, ability, amount, reason = '') {
+  if (!actor || !ability || !(amount > 0)) return;
+  const payload = { actorUuid: actor.uuid, restores: [{ kind: 'abilityDamage', ability, amount, reason }], effects: [] };
+  if (actor.isOwner) await applyToActor(payload);
+  else if (game.users.activeGM) game.socket.emit(CHANNEL, { action: APPLY_ACTION, payload });
+  else ui.notifications.warn($l10n('SDM.ErrorNoActiveGM'));
 }
 
 /** Purge an actor of consumables (a trigger action): here, or by the Referee's game. */

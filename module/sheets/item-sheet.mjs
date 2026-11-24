@@ -526,6 +526,11 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
         heal: 'SDM.Trigger.LifeMode.heal',
         damage: 'SDM.Trigger.LifeMode.damage'
       },
+      triggerAbilityDamage: {
+        '': 'SDM.Trigger.WearNone',
+        choose: 'SDM.Trigger.AbilityDamageChooseOption',
+        ...Object.fromEntries(['str', 'end', 'agi', 'cha', 'aur', 'tho'].map(key => [key, CONFIG.SDM.abilities[key]]))
+      },
       triggerPurgeModes: { '': 'SDM.Trigger.WearNone', targets: 'SDM.Trigger.EffectTargets', self: 'SDM.Trigger.EffectSelf' },
       triggerAnimateModes: {
         '': 'SDM.Trigger.WearNone',
