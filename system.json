@@ -358,7 +358,7 @@
     "type": 1,
     "distance": 5,
     "units": "ft",
-    "diagonals": 0
+    "diagonals": 4
   },
   "primaryTokenAttribute": "life",
   "secondaryTokenAttribute": "defense"
