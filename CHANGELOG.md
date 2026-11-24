@@ -52,6 +52,14 @@
 - Rerolling a character no longer fails ("ActiveEffect … does not exist!") when deleting its items also removed some of its effects (a light, an aura's)
 - Empty fields look empty: settings no longer show placeholders that read as values (formulas, numbers, colors); the hints that remain (drop a table, any power…) are italic and faded in every sheet and dialog
 - Auras: *Best by* is now *Best aura by*, and it and *Stacks* explain how auras with the same name compete
+- **World Settings**: the Referee's 11 settings menus are now one window with tabs (Rules, Characters, Combat & movement, NPCs, Systems, Caravan & money, Advanced; rainbow icons). Each tab has its sections; Save stores every tab, Reset only resets the tab in view. Setting values are kept. Client Settings (players) is unchanged
+- **Once abilities**: an item's *Once ability* is run by the system and used up by its *Used* counter — **Second Chance** (falling to 0 life, fall to 1 instead), **Fake Out** (falling to 0 life, the player may spend a hero die: the blow didn't connect) and **Recast** (a button on the character's power cards casts the power again for free). Compendium: Second Chance, Fake Out, Recast
+- **Counters**: *Also reset* **each session** (the Referee's **New session** button in the Actors sidebar, or `game.sdm.api.newSession()`); a counter marked **Hero die** is recharged by spending one (right-click the item). Personal Daimon, Informant and Legal Immunity reset each session; Hexad Member, Ducky and Old Friend's Head each day
+- **Consumables**: **Overdose** (a condition or one of the item's effects, saved against once a target took more than the free doses per day or week; escalating makes each dose one step harder), **Purge** (removes other consumables' effects from the targets) and **Meant for** (a reminder of who it's for). You Go, Injectable Fodder, Healmachine and Synthetic Blood set up
+- **Trigger actions**: **Ability damage** (lower an ability of the targets or yourself; *choose* lets the attacker pick) and **Purge**. Cerebral Purge purges its targets
+- **Mods with triggers**: an item mod can carry roll triggers that work as its item's while installed. Atrophic, Stunning, Crippling and Saboteur now act on a hit (ability damage; stunned, slowed or prone with a save)
+- Fixed: "ActiveEffect … does not exist!" errors when two clients removed the same effect (aura sync, lights, rest, Use, next roll, area saves, conditions, animated items, generator)
+
 ## v1.11.0
 
 - **Investing XP**: a new button next to Player XP on the character sheet lets players invest their Player XP in the character, in one of its hallmark items or in one of their pets, or donate it to another player's Player XP. The dialog shows how much XP each one needs to level up, and every investment is recorded in the chat
