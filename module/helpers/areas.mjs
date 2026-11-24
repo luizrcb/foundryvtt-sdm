@@ -1607,6 +1607,7 @@ function hazardAffects(behavior, token) {
  * round started. Once per round in combat; uses (when set) run out and switch it off.
  */
 export async function hazardEvent(behavior, token, eventName = '') {
+  if (!behaviorAlive(behavior)) return;
   // Not on those already down (0 life, defeated)
   const { isDown } = await import('./auras.mjs');
   if (!hazardAffects(behavior, token) || isDown(token.actor)) return;
@@ -1653,8 +1654,18 @@ export async function hazardEvent(behavior, token, eventName = '') {
   });
 }
 
+/**
+ * The behavior and its region are still there: deleting a region (Remove area, Remove drawn areas)
+ * makes the tokens inside "leave" it, after the server already deleted it.
+ */
+function behaviorAlive(behavior) {
+  const region = behavior?.parent;
+  return !!region?.parent?.regions?.has(region.id) && !!region.behaviors?.has(behavior.id);
+}
+
 /** A token leaving a hazard's region: from now on, coming back in counts as entering. */
 export async function hazardExit(behavior, token) {
+  if (!behaviorAlive(behavior)) return;
   const initial = behavior.getFlag('sdm', 'hazard')?.initial ?? [];
   if (initial.includes(token.uuid)) await behavior.setFlag('sdm', 'hazard', { initial: initial.filter(uuid => uuid !== token.uuid) });
 }
