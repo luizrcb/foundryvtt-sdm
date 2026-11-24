@@ -3525,5 +3525,12 @@
   "SDM.Form.TempLife": "+{amount} de vida temporária.",
   "SDM.Form.Ended": "{actor} volta de {form}.",
   "SDM.Form.Banner": "Em forma: {form}",
-  "SDM.Form.End": "Encerrar forma"
+  "SDM.Form.End": "Encerrar forma",
+  "SDM.Counter.Cooldown": "Recarga",
+  "SDM.Counter.CooldownHint": "Volta ao valor de reinício esse número de rodadas (ou turnos do dono) depois de cada uso ou depois de esgotar, em combate. Vazio: nenhuma. Quando o combate acaba, volta na hora.",
+  "SDM.Counter.CooldownUnit.round": "rodadas",
+  "SDM.Counter.CooldownUnit.turn": "turnos",
+  "SDM.Counter.CooldownFrom.use": "depois de cada uso",
+  "SDM.Counter.CooldownFrom.empty": "depois de esgotar",
+  "SDM.Counter.CooldownLeftHint": "Rodadas ou turnos até voltar"
 }

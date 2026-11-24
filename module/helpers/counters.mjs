@@ -29,10 +29,31 @@ export function counterKeyFor(label, existing = {}, ignore = null) {
  * (@item.counters.kills.value → @item.counters.foes.value). Runs before the update: moves the counter
  * to its new key and remembers the renames for onCountersRenamed.
  */
+/** A counter has run out at this value: down to 0 (it counts down from its reset value) or up to its maximum. */
+function counterRanOut(counter, value) {
+  if ((Number(counter.reset_value) || 0) > 0) return value <= 0;
+  return counter.max !== null && counter.max !== undefined && value >= counter.max;
+}
+
+/** A counter with a cooldown: used (or run out) starts it; back at its reset value stops it. */
+function startCooldowns(current, changed) {
+  for (const [key, change] of Object.entries(changed)) {
+    const counter = current[key];
+    if (!counter || !(Number(counter.cooldown) > 0) || change?.value === undefined || 'cooldown_left' in (change ?? {})) continue;
+    const value = Number(change.value) || 0;
+    const before = Number(counter.value) || 0;
+    if (value === (Number(counter.reset_value) || 0)) change.cooldown_left = 0;
+    else if (counter.cooldown_from === 'empty' ? counterRanOut(counter, value) && !counterRanOut(counter, before) : value !== before) {
+      change.cooldown_left = Number(counter.cooldown);
+    }
+  }
+}
+
 function onPreUpdateCounters(doc, changes, options) {
   const changed = foundry.utils.getProperty(changes, 'system.counters');
   const current = doc.system?.counters;
   if (!changed || !current || typeof changed !== 'object') return;
+  startCooldowns(current, changed);
   const renames = {};
   const taken = { ...current };
   for (const [oldKey, change] of Object.entries(changed)) {
@@ -130,10 +151,28 @@ async function onCombatEnded(combat) {
   if (game.users.activeGM?.id !== game.user.id || !featureEnabled('counters')) return;
   const actors = new Set(combat.combatants.map(combatant => combatant.actor).filter(Boolean));
   for (const actor of actors) {
+    // Cooldowns are timed in combat: the fight is over, they're done
+    await tickCooldowns(actor, '', { finish: true });
     if (Object.keys(actor.system?.counters ?? {}).length) await resetCounters(actor, { combatOnly: true });
     for (const item of actor.items) {
       if (Object.keys(item.system?.counters ?? {}).length) await resetCounters(item, { combatOnly: true });
     }
+  }
+}
+
+/** Counters cooling down on a round (or their owner's turn): one less; at 0 they're back to their reset value. */
+async function tickCooldowns(actor, unit, { finish = false } = {}) {
+  if (!actor) return;
+  for (const doc of [actor, ...actor.items]) {
+    const update = {};
+    for (const [key, counter] of Object.entries(doc.system?.counters ?? {})) {
+      const left = Number(counter.cooldown_left) || 0;
+      if (!left || (!finish && counter.cooldown_unit !== unit)) continue;
+      const next = finish ? 0 : left - 1;
+      update[`system.counters.${key}.cooldown_left`] = next;
+      if (!next) update[`system.counters.${key}.value`] = counter.reset_value ?? 0;
+    }
+    if (Object.keys(update).length) await doc.update(update);
   }
 }
 
@@ -170,9 +209,13 @@ async function onCombatAdvanced(combat, changed) {
   if (!('round' in changed) && !('turn' in changed)) return;
   if ('round' in changed) {
     const actors = new Set(combat.combatants.map(combatant => combatant.actor).filter(Boolean));
-    for (const actor of actors) await resetActorCounters(actor, 'round');
+    for (const actor of actors) {
+      await resetActorCounters(actor, 'round');
+      await tickCooldowns(actor, 'round');
+    }
   }
   await resetActorCounters(combat.combatant?.actor, 'turn');
+  await tickCooldowns(combat.combatant?.actor, 'turn');
 }
 
 export function setupCounters() {

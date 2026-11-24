@@ -26,6 +26,16 @@
         <select name="system.counters.{{counter.key}}.reset_each">
           {{selectOptions (sdmCounterResetChoices) selected=counter.reset_each localize=true}}
         </select></label>
+      <label data-tooltip="{{localize 'SDM.Counter.CooldownHint'}}">{{localize 'SDM.Counter.Cooldown'}}
+        <input type="number" min="0" step="1" name="system.counters.{{counter.key}}.cooldown" value="{{counter.cooldown}}" data-dtype="Number" /></label>
+      {{#if counter.cooldown}}
+      <select name="system.counters.{{counter.key}}.cooldown_unit">{{selectOptions (sdmCooldownUnits) selected=counter.cooldown_unit localize=true}}</select>
+      <select name="system.counters.{{counter.key}}.cooldown_from">{{selectOptions (sdmCooldownFrom) selected=counter.cooldown_from localize=true}}</select>
+      {{#if counter.cooldown_left}}<span class="sdm-counter-cooldown" data-tooltip="{{localize 'SDM.Counter.CooldownLeftHint'}}"><i class="fa-solid fa-hourglass-half"></i> {{counter.cooldown_left}}</span>{{/if}}
+      {{else}}
+      <input type="hidden" name="system.counters.{{counter.key}}.cooldown_unit" value="{{counter.cooldown_unit}}" />
+      <input type="hidden" name="system.counters.{{counter.key}}.cooldown_from" value="{{counter.cooldown_from}}" />
+      {{/if}}
       <label class="sdm-counter-combat" data-tooltip="{{localize 'SDM.Counter.HeroDieHint'}}">
         <input type="checkbox" name="system.counters.{{counter.key}}.hero_die" {{checked counter.hero_die}} />
         {{localize 'SDM.Counter.HeroDie'}}</label>

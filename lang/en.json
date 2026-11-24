@@ -3525,5 +3525,12 @@
   "SDM.Form.TempLife": "+{amount} temporary life.",
   "SDM.Form.Ended": "{actor} is back from {form}.",
   "SDM.Form.Banner": "In form: {form}",
-  "SDM.Form.End": "End form"
+  "SDM.Form.End": "End form",
+  "SDM.Counter.Cooldown": "Cooldown",
+  "SDM.Counter.CooldownHint": "Back to its reset value this many rounds (or its owner's turns) after each use or after it runs out, in combat. Empty: none. When the fight ends it is back at once.",
+  "SDM.Counter.CooldownUnit.round": "rounds",
+  "SDM.Counter.CooldownUnit.turn": "turns",
+  "SDM.Counter.CooldownFrom.use": "after each use",
+  "SDM.Counter.CooldownFrom.empty": "after it runs out",
+  "SDM.Counter.CooldownLeftHint": "Rounds or turns left until it is back"
 }

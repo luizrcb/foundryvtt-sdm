@@ -33,6 +33,9 @@ export function registerHandlebarsHelpers() {
     day: 'SDM.Counter.ResetEachDay',
     session: 'SDM.Counter.ResetEachSession'
   }));
+  // Counters with a cooldown: counted in rounds or the owner's turns, from each use or from running out
+  $$('sdmCooldownUnits', () => ({ round: 'SDM.Counter.CooldownUnit.round', turn: 'SDM.Counter.CooldownUnit.turn' }));
+  $$('sdmCooldownFrom', () => ({ use: 'SDM.Counter.CooldownFrom.use', empty: 'SDM.Counter.CooldownFrom.empty' }));
   $$('sdmIsLit', item => isLit(item));
   $$('sdmOnceAbilityChoices', () => ({
     '': 'SDM.Trigger.WearNone',
