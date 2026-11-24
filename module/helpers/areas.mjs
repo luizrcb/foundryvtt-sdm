@@ -349,6 +349,28 @@ function patternFrame(token, point) {
  * 1, 3, 3, 5, 5, 7…); a diagonal cone fans out from the corner, the squares within 30° of the
  * diagonal and its length.
  */
+/**
+ * How many squares a line of `length` squares covers on a perfect diagonal: as many diagonal steps as
+ * fit in its length by the world's Grid Diagonals rule (equidistant: all of them; exact: ÷ √2;
+ * alternating 1/2: about two thirds…), the same count as Foundry's ruler and movement.
+ */
+function diagonalLineSteps(scene, length) {
+  const grid = scene.grid;
+  const limit = length * (Number(grid.distance) || 1) + 1e-6;
+  let steps = 0;
+  for (let k = 1; k <= length; k++) {
+    let distance;
+    try {
+      distance = grid.measurePath([{ i: 0, j: 0 }, { i: k, j: k }]).distance;
+    } catch {
+      return length;
+    }
+    if (!(distance <= limit)) break;
+    steps = k;
+  }
+  return Math.max(steps, 1);
+}
+
 function patternSquares(token, point, shape, length) {
   const { ti, tj, w, h, dx, dy, axis, origin: edge } = patternFrame(token, point);
   const size = token.parent.grid.size;
@@ -367,11 +389,13 @@ function patternSquares(token, point, shape, length) {
   }
   const i0 = dy > 0 ? ti + h : ti - 1;
   const j0 = dx > 0 ? tj + w : tj - 1;
+  // A diagonal line: as many steps as its length allows by the Grid Diagonals rule
+  const steps = shape === 'line' ? diagonalLineSteps(token.parent, length) : length;
   for (let a = 0; a < length; a++) {
     for (let b = 0; b < length; b++) {
       const inside =
         shape === 'line'
-          ? a === b
+          ? a === b && a < steps
           : Math.abs(Math.toDegrees(Math.atan2(b + 0.5, a + 0.5)) - 45) <= CONE_ANGLE / 2 + 1e-6 && Math.hypot(a + 0.5, b + 0.5) <= length;
       if (inside) squares.push({ i: i0 + dy * b, j: j0 + dx * a });
     }
@@ -499,7 +523,12 @@ async function placePattern({ data, token, shape, length, scene }) {
     // Shift (Foundry's "don't snap"): any angle, from where the aim leaves the token; otherwise the 8 directions
     free = snap === false;
     const frame = free ? freeFrame(token, last) : patternFrame(token, last);
-    if (frame) current.updateSource({ x: frame.origin.x, y: frame.origin.y, rotation: frame.rotation });
+    if (frame) {
+      const update = { x: frame.origin.x, y: frame.origin.y, rotation: frame.rotation };
+      // A line on a perfect diagonal: the guide ends where its staircase of squares ends
+      if (shape === 'line') update.length = !free && frame.dx && frame.dy ? diagonalLineSteps(scene, length) * Math.SQRT2 * size : length * size;
+      current.updateSource(update);
+    }
     return false;
   };
   const onChange = () => previewSquares(squaresNow(), color);
