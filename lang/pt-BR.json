@@ -3557,5 +3557,6 @@
   "SDM.Form.Stats": "Valores",
   "SDM.Form.StatsHint": "Os valores da própria forma, no lugar dos do usuário enquanto ela durar. Em branco: sem mudança. Atributos valem para personagens.",
   "SDM.Form.EndNamed": "Encerrar forma: {form}",
-  "SDM.Form.TakeNamed": "Assumir forma: {form}"
+  "SDM.Form.TakeNamed": "Assumir forma: {form}",
+  "SDM.Counter.CoolingDown": "Recarregando: {name}"
 }

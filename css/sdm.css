@@ -7715,6 +7715,12 @@ a.sdm-proto-link.warn {
   border-style: solid;
 }
 
+#sdm-effects-panel .sdm-effects-panel-entry.cooldown img {
+  filter: grayscale(0.8);
+  opacity: 0.75;
+  border-style: dotted;
+}
+
 #sdm-effects-panel .sdm-effects-panel-duration {
   padding: 1px 6px;
   border-radius: 3px;

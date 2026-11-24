@@ -55,6 +55,13 @@
     &.aura.self img {
       border-style: solid;
     }
+
+    // An item (or counter) cooling down: faded until it is back
+    &.cooldown img {
+      filter: grayscale(0.8);
+      opacity: 0.75;
+      border-style: dotted;
+    }
   }
 
   .sdm-effects-panel-duration {

@@ -116,7 +116,32 @@ export default class SdmEffectsPanel extends HandlebarsApplicationMixin(Applicat
         canDelete: game.user.isGM && effect.parent === actor && !copy
       });
     }
+    context.effects.push(...SdmEffectsPanel.coolingDown(actor));
     return context;
+  }
+
+  /** Counters cooling down (the actor's and its items'): what is back in how many rounds or turns. */
+  static coolingDown(actor) {
+    const entries = [];
+    for (const doc of [actor, ...(actor.items?.contents ?? [])]) {
+      for (const counter of Object.values(doc.system?.counters ?? {})) {
+        const left = Number(counter?.cooldown_left) || 0;
+        if (left <= 0) continue;
+        const turns = counter.cooldown_unit === 'turn';
+        const rule = game.i18n.pluralRules.select(left);
+        const remaining = game.i18n.format(`EFFECT.DURATION.${turns ? 'TURNS' : 'ROUNDS'}.${rule}`, turns ? { turns: left } : { rounds: left });
+        const name = doc === actor ? counter.label : `${doc.name}: ${counter.label}`;
+        entries.push({
+          uuid: doc.uuid,
+          name,
+          img: doc.img || 'icons/svg/clockwork.svg',
+          remaining,
+          cooldown: true,
+          tooltip: [game.i18n.format('SDM.Counter.CoolingDown', { name }), remaining].join(' — ')
+        });
+      }
+    }
+    return entries;
   }
 
   async _onRender(context, options) {
@@ -163,6 +188,7 @@ export default class SdmEffectsPanel extends HandlebarsApplicationMixin(Applicat
   }
 
   static async #onOpenEffect(event, target) {
+    // An effect, or the item (or actor) whose counter is cooling down
     const effect = await fromUuid(target.closest('[data-uuid]')?.dataset.uuid);
     if (effect?.isOwner) effect.sheet.render(true);
   }
@@ -185,8 +211,12 @@ export default class SdmEffectsPanel extends HandlebarsApplicationMixin(Applicat
     for (const hook of ['createActiveEffect', 'updateActiveEffect', 'deleteActiveEffect']) {
       Hooks.on(hook, refreshIfRelevant);
     }
-    Hooks.on('updateItem', item => {
-      if (item.parent === panel.actor && item.effects.size) refresh();
+    Hooks.on('updateItem', (item, changes) => {
+      if (item.parent === panel.actor && (item.effects.size || foundry.utils.hasProperty(changes, 'system.counters'))) refresh();
+    });
+    // Counters cooling down
+    Hooks.on('updateActor', (actor, changes) => {
+      if (actor === panel.actor && foundry.utils.hasProperty(changes, 'system.counters')) refresh();
     });
     Hooks.on('updateUser', (user, changes) => {
       if (user.isSelf && 'character' in changes) refresh();

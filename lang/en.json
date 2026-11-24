@@ -3557,5 +3557,6 @@
   "SDM.Form.Stats": "Stats",
   "SDM.Form.StatsHint": "The form's own values, replacing the user's while it lasts. Blank: unchanged. Ability scores apply to characters.",
   "SDM.Form.EndNamed": "End form: {form}",
-  "SDM.Form.TakeNamed": "Take form: {form}"
+  "SDM.Form.TakeNamed": "Take form: {form}",
+  "SDM.Counter.CoolingDown": "Cooling down: {name}"
 }

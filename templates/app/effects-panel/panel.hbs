@@ -1,7 +1,7 @@
 <ol class="sdm-effects-panel-list">
   {{#each effects as |effect|}}
   <li
-    class="sdm-effects-panel-entry{{#if effect.expired}} expired{{/if}}{{#if effect.aura}} aura{{/if}}{{#if effect.auraSelf}} self{{/if}}"
+    class="sdm-effects-panel-entry{{#if effect.expired}} expired{{/if}}{{#if effect.aura}} aura{{/if}}{{#if effect.auraSelf}} self{{/if}}{{#if effect.cooldown}} cooldown{{/if}}"
     data-uuid="{{effect.uuid}}"
     {{#if effect.canDelete}}data-can-delete{{/if}}
     data-action="openEffect"
