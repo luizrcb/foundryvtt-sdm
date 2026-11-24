@@ -74,6 +74,7 @@
 - **Power cost on attacks**: an attack made with a power (chosen in *With*) casts it, so its cost is paid on the attack, hit or miss (the attack dialog shows the cost box while a power is chosen); the power rolled from the attack's card costs nothing more (overcharging pays only the difference)
 - **Visibility labels on every message**: blind, Referee only and private show in the header of messages that aren't the system's cards (plain rolls, summons, splashes, hazard rolls)
 - **Grid Diagonals**: the system's default for Foundry's *Grid Diagonals* is now **alternating 1 / 2 / 1** (worlds that picked a value keep it; relaunch the world). Lines on a perfect diagonal cover as many squares as their length allows by the rule set (3 / 8 / 16 with alternating, 4 / 12 / 24 with equidistant) and their guide ends where the squares end; the area range warning measures by the rule too, like the other range checks. Circles, squares, rings and cones keep their shapes
+- **Draw an area** remembers the shape and size each user picked last
 - Fixed: "ActiveEffect … does not exist!" errors when two clients removed the same effect (aura sync, lights, rest, Use, next roll, area saves, conditions, animated items, generator)
 
 ## v1.11.0
