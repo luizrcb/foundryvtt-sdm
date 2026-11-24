@@ -146,7 +146,10 @@ async function startForm(effect) {
   // Granted items: copies marked with the form (uses fresh or remembered)
   const remembered = form.uses === 'remembered' ? actor.getFlag('sdm', USES_FLAG)?.[formKey(effect)] ?? {} : {};
   const sources = await grantedSources(form, creature);
-  if (sources.length) {
+  const take = form.take ?? {};
+  // The NPC's own damage: a natural attack while in the form
+  const natural = creature && take.damage !== false && foundry.dice.Roll.validate(`${creature.system?.damage ?? ''}`.trim()) ? naturalAttack(creature) : null;
+  if (sources.length || natural) {
     const data = sources.map(source => {
       const copy = source.toObject();
       delete copy._id;
@@ -159,13 +162,27 @@ async function startForm(effect) {
       }
       return copy;
     });
+    if (natural) {
+      foundry.utils.setProperty(natural, `flags.sdm.${GRANT_FLAG}`, effect.uuid);
+      data.push(natural);
+    }
     await actor.createEmbeddedDocuments('Item', data, { sdmKeepReadied: true });
+  }
+  // The NPC's numbers while in the form (read in the actor's data preparation): defense, speed, its
+  // attack bonus (an NPC in the form)
+  const numbers = {};
+  if (creature) {
+    if (take.defense !== false && Number.isFinite(Number(creature.system?.defense))) numbers.defense = Number(creature.system.defense);
+    if (take.speed !== false && Number.isFinite(Number(creature.system?.speed))) numbers.speed = Number(creature.system.speed);
+    if (take.bonus !== false && actor.type === ActorType.NPC && Number.isFinite(Number(creature.system?.bonus))) numbers.bonus = Number(creature.system.bonus);
   }
 
   // Temporary life (a formula, read on the user)
   let tempLife = 0;
-  if (`${form.tempLife ?? ''}`.trim()) {
-    tempLife = Math.max((await rollAmount(form.tempLife, { actor })).total, 0);
+  // None set: the NPC's life, when the form takes it
+  const lifeFormula = `${form.tempLife ?? ''}`.trim() || (creature && take.life !== false ? `${Number(creature.system?.life?.max) || 0}` : '');
+  if (lifeFormula && lifeFormula !== '0') {
+    tempLife = Math.max((await rollAmount(lifeFormula, { actor })).total, 0);
     if (tempLife > 0 && actor.system?.temporary_life && 'enabled' in actor.system.temporary_life) {
       await actor.createEmbeddedDocuments('ActiveEffect', [
         {
@@ -187,12 +204,32 @@ async function startForm(effect) {
     }
   }
 
-  actorUpdate[`flags.sdm.${ACTIVE_FLAG}`] = { effect: effect.uuid, name: effect.name, img: look.img || effect.img, saved, endsAtZero: !!form.endsAtZero && tempLife > 0 };
+  actorUpdate[`flags.sdm.${ACTIVE_FLAG}`] = { effect: effect.uuid, name: effect.name, img: look.img || effect.img, saved, numbers, endsAtZero: !!form.endsAtZero && tempLife > 0 };
   await actor.update(actorUpdate, { sdmForm: true });
   await ChatMessage.create({
     speaker: ChatMessage.getSpeaker({ actor }),
     content: `<p><i class="fa-solid fa-paw"></i> ${$fmt('SDM.Form.Started', { actor: esc(saved.prototype?.name || actor.name), form: esc(effect.name) })}${tempLife ? ` ${esc($fmt('SDM.Form.TempLife', { amount: tempLife }))}` : ''}</p>`
   });
+}
+
+/** The NPC's own damage as a weapon while in the form ("Wolf: 1d6"), close range. */
+function naturalAttack(creature) {
+  return {
+    name: $fmt('SDM.Form.NaturalAttack', { creature: creature.name }),
+    type: ItemType.GEAR,
+    img: creature.img || 'icons/svg/claw.svg',
+    system: { type: GearType.WEAPON, readied: true, weapon: { damage: { base: `${creature.system.damage}`.trim() } } }
+  };
+}
+
+/** The numbers the actor's form sets (defense, speed, bonus), applied at the end of its data preparation. */
+export function applyFormNumbers(actor) {
+  const numbers = actor?.flags?.sdm?.[ACTIVE_FLAG]?.numbers;
+  if (!numbers) return;
+  const data = actor.system;
+  if (Number.isFinite(numbers.defense)) data.defense = numbers.defense;
+  if (Number.isFinite(numbers.speed)) data.speed = numbers.speed;
+  if (Number.isFinite(numbers.bonus)) data.bonus = numbers.bonus;
 }
 
 function lookUpdate(look) {

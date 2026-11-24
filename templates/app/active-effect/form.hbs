@@ -34,6 +34,16 @@
       <span class="sdm-form-drop">{{localize 'SDM.Form.CreatureDrop'}}</span>
       {{/if}}
     </div>
+    {{#if formCreature}}
+    <div class="form-group sdm-form-take" data-tooltip="{{localize 'SDM.Form.TakeHint'}}">
+      <label>{{localize 'SDM.Form.TakeLabel'}}</label>
+      <label class="checkbox"><input type="checkbox" name="system.form.take.life" {{checked form.take.life}} /> {{localize 'SDM.Form.TakeLife'}}</label>
+      <label class="checkbox"><input type="checkbox" name="system.form.take.defense" {{checked form.take.defense}} /> {{localize 'SDM.Form.TakeDefense'}}</label>
+      <label class="checkbox"><input type="checkbox" name="system.form.take.bonus" {{checked form.take.bonus}} /> {{localize 'SDM.Form.TakeBonus'}}</label>
+      <label class="checkbox"><input type="checkbox" name="system.form.take.damage" {{checked form.take.damage}} /> {{localize 'SDM.Form.TakeDamage'}}</label>
+      <label class="checkbox"><input type="checkbox" name="system.form.take.speed" {{checked form.take.speed}} /> {{localize 'SDM.Form.TakeSpeed'}}</label>
+    </div>
+    {{/if}}
   </fieldset>
   <fieldset>
     <legend>{{localize 'SDM.Form.Grants'}}</legend>

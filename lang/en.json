@@ -3545,5 +3545,13 @@
   "SDM.Use.ReplenishNone": "{item}: nothing it can recharge.",
   "SDM.Use.ChatReplenish": "Recharges {item}",
   "SDM.Use.ReplenishSpent": "used",
-  "SDM.Form.Take": "Take form"
+  "SDM.Form.Take": "Take form",
+  "SDM.Form.TakeLabel": "Takes its",
+  "SDM.Form.TakeHint": "What the form takes from the NPC: its life as temporary life (when the field below is empty), its defense and speed (instead of the user's), its attack bonus (an NPC in the form) and its own damage as a natural attack.",
+  "SDM.Form.TakeLife": "life",
+  "SDM.Form.TakeDefense": "defense",
+  "SDM.Form.TakeBonus": "attack bonus",
+  "SDM.Form.TakeDamage": "damage",
+  "SDM.Form.TakeSpeed": "speed",
+  "SDM.Form.NaturalAttack": "{creature}: natural attack"
 }

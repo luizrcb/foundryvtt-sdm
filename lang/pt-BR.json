@@ -3545,5 +3545,13 @@
   "SDM.Use.ReplenishNone": "{item}: nada que ele possa recarregar.",
   "SDM.Use.ChatReplenish": "Recarrega {item}",
   "SDM.Use.ReplenishSpent": "usado",
-  "SDM.Form.Take": "Assumir forma"
+  "SDM.Form.Take": "Assumir forma",
+  "SDM.Form.TakeLabel": "Pega sua",
+  "SDM.Form.TakeHint": "O que a forma pega do NPC: a vida como vida temporária (quando o campo abaixo está vazio), a defesa e a velocidade (no lugar das do usuário), o bônus de ataque (um NPC na forma) e o dano próprio como ataque natural.",
+  "SDM.Form.TakeLife": "vida",
+  "SDM.Form.TakeDefense": "defesa",
+  "SDM.Form.TakeBonus": "bônus de ataque",
+  "SDM.Form.TakeDamage": "dano",
+  "SDM.Form.TakeSpeed": "velocidade",
+  "SDM.Form.NaturalAttack": "{creature}: ataque natural"
 }
