@@ -221,10 +221,14 @@ async function spendForLight(item) {
   // Neither: lamps and glowing gear light for free
 }
 
-export async function lightItem(item) {
+export async function lightItem(item, { duration = null } = {}) {
   const actor = item?.actor;
   if (!actor?.isOwner || !isLightSource(item)) return;
-  if (isLit(item)) return;
+  if (isLit(item)) {
+    // A flare on a lit item: it now goes out when the flare ends
+    if (duration) await getLitEffect(actor)?.update({ duration });
+    return;
+  }
   const reason = lightBlockedReason(item);
   if (reason) {
     ui.notifications.warn($fmt(reason, { name: item.name }));
@@ -238,6 +242,7 @@ export async function lightItem(item) {
       img: item.img,
       origin: item.uuid,
       transfer: false,
+      ...(duration ? { duration } : {}),
       system: { changes: buildChanges(getLightSettings(item), gridDistance(actor)) },
       flags: { sdm: { [LIGHT_FLAG]: { itemId: item.id } } }
     }

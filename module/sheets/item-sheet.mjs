@@ -9,6 +9,7 @@ import { getHallmarkUpgradeSummary, openHallmarkUpgradeDialog } from '../app/lev
 import { makeNpcFriendly } from '../items/petItem.mjs';
 import { hasPowerAlbum } from '../helpers/itemUtils.mjs';
 import { isLightSource, LIGHT_PRESET_CHOICES, POWER_LIGHT_PRESET_CHOICES } from '../helpers/lights.mjs';
+import { isAnimatable as isAnimatableItem } from '../helpers/animatedItems.mjs';
 import { isUsable } from '../app/use-item.mjs';
 import { isSentientRide, refillRideStats, rideTable } from '../helpers/rideStats.mjs';
 import { getUsesCounter, USES_MODES } from '../helpers/itemUses.mjs';
@@ -301,7 +302,8 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
       triggerCastItems: keep(pick(isCastable), triggers.map(t => t.cast)),
       triggerUseItems: keep(pick(isUsable), triggers.map(t => t.use)),
       triggerLightItems: keep(pick(isLightSource, { none: false }), triggers.map(t => t.light_item)),
-      triggerChargeItems: keep(pick(triggerHasCharges, { none: false }), triggers.map(t => t.charges_item))
+      triggerChargeItems: keep(pick(triggerHasCharges, { none: false }), triggers.map(t => t.charges_item)),
+      triggerAnimateItems: keep(pick(isAnimatableItem, { none: false }), triggers.map(t => t.animate_item))
     };
   }
 
@@ -478,7 +480,18 @@ export class SdmItemSheet extends api.HandlebarsApplicationMixin(sheets.ItemShee
         '': 'SDM.Trigger.WearNone',
         light: 'SDM.Trigger.LightMode.light',
         put_out: 'SDM.Trigger.LightMode.put_out',
-        toggle: 'SDM.Trigger.LightMode.toggle'
+        toggle: 'SDM.Trigger.LightMode.toggle',
+        flare: 'SDM.Trigger.LightMode.flare'
+      },
+      triggerLifeModes: {
+        '': 'SDM.Trigger.WearNone',
+        heal: 'SDM.Trigger.LifeMode.heal',
+        damage: 'SDM.Trigger.LifeMode.damage'
+      },
+      triggerAnimateModes: {
+        '': 'SDM.Trigger.WearNone',
+        animate: 'SDM.Trigger.AnimateMode.animate',
+        deanimate: 'SDM.Trigger.AnimateMode.deanimate'
       },
       ...this._triggerItemChoices(),
       boostResources: {
