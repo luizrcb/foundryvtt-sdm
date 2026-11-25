@@ -27,5 +27,49 @@
     "description": "<p>Regains 1d6 life at the start of each of its turns, unless burned or soaked in acid.</p>",
     "type": ""
   },
-  "effects": []
+  "effects": [
+    {
+      "name": "Regenerates",
+      "origin": null,
+      "img": "icons/svg/regen.svg",
+      "_id": "ghhNNQAagCdfUktZ",
+      "type": "base",
+      "system": {
+        "changes": [],
+        "turnHeal": {
+          "formula": "1d6",
+          "blockedBy": [
+            "burning",
+            "corrode"
+          ]
+        }
+      },
+      "disabled": false,
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.367",
+        "systemId": "sdm",
+        "systemVersion": "1.11.0",
+        "lastModifiedBy": null
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": null,
+      "_key": "!items.effects!ToYYaiGcLJx1ToQD.ghhNNQAagCdfUktZ"
+    }
+  ]
 }
