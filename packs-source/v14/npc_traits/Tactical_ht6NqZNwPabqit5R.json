@@ -61,7 +61,7 @@
         "expiry": null,
         "expired": false
       },
-      "description": "<p>Turn on after being hit (against that attack type).</p>",
+      "description": "<p>Gained when hit (against that attack type).</p>",
       "tint": "#ffffff",
       "transfer": true,
       "statuses": [],
