@@ -1272,6 +1272,7 @@ async function onTieSacrifice(message, button) {
   const yes = button.dataset.yes === '1';
   const { kind, tokenUuid, actorUuid, name } = button.dataset;
   const flags = foundry.utils.deepClone(message.flags?.sdm ?? {});
+  let sacrificedPowerUse = null;
   const div = document.createElement('div');
   div.innerHTML = message.content;
   const row = [...div.querySelectorAll('.sdm-tie-row')].find(r => r.dataset.actorUuid === actorUuid);
@@ -1289,6 +1290,13 @@ async function onTieSacrifice(message, button) {
       if (damageButton) {
         damageButton.dataset.areaTargets = flags.attackItem.areaTargets.join(',');
         damageButton.dataset.areaExtra = flags.attackItem.sacrificed.join(',');
+      } else if (!powerWithoutRoll(flags.attackItem)) {
+        // Nobody was hit before the sacrifice: the card had no damage / power roll button yet
+        const actions = div.querySelector('.sdm-area-block .sdm-card-actions');
+        if (actions) actions.insertAdjacentHTML('afterbegin', attackFollowupHtml(flags.attackItem));
+      } else {
+        // A power that rolls nothing: used at once on the one sacrificed
+        sacrificedPowerUse = { ...flags.attackItem, areaTargets: [actorUuid] };
       }
     }
   }
@@ -1298,6 +1306,10 @@ async function onTieSacrifice(message, button) {
     if (actor) await changeLifeOf(actor, Number(button.dataset.amount) || 0, { reason: button.dataset.reason });
   }
   await message.update({ content: div.innerHTML, 'flags.sdm': flags });
+  if (sacrificedPowerUse) {
+    const { usePowerOnArea } = await import('../rolls/attackFollowup.mjs');
+    await usePowerOnArea(sacrificedPowerUse);
+  }
 }
 
 /** Each target's share of an area's damage: the total less its reduction (Bystander). */

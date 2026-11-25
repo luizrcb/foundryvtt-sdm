@@ -3292,6 +3292,26 @@ a.sdm-proto-link {
 .sdm-area-share {
   display: inline-flex;
   gap: 2px;
+
+  // Applied: the line and its Undo take the row, side by side (no empty space beside them)
+  &:has(> .sdm-card-tag) {
+    flex: 1 1 100%;
+  }
+
+  > .sdm-card-tag {
+    flex: 1 1 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 4px 8px;
+  }
+}
+
+// Apply to all and Heal all: side by side, on a row of their own
+.sdm-area-all {
+  display: flex;
+  flex: 1 1 100%;
+  gap: 4px;
 }
 
 // Shapeshifting: the form banner on the sheet, granted items marked, set-aside items faded, the Form tab

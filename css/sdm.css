@@ -3289,6 +3289,24 @@ a.sdm-proto-link.warn {
   gap: 2px;
 }
 
+.sdm-area-share:has(> .sdm-card-tag) {
+  flex: 1 1 100%;
+}
+
+.sdm-area-share > .sdm-card-tag {
+  flex: 1 1 auto;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 4px 8px;
+}
+
+.sdm-area-all {
+  display: flex;
+  flex: 1 1 100%;
+  gap: 4px;
+}
+
 .sdm-form-banner {
   display: flex;
   align-items: center;
