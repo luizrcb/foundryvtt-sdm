@@ -64,7 +64,7 @@ import { setupTokenLifeBar } from './canvas/token-life-bar.mjs';
 import { newSession, setupOnceAbilities } from './helpers/onceAbilities.mjs';
 import { setupSummons } from './helpers/summons.mjs';
 import { setupInitiativeHeroDice } from './helpers/initiativeHeroDice.mjs';
-import { setupForms } from './helpers/forms.mjs';
+import { availableForms, dismissForm, formNow, setupForms, takeOneForm } from './helpers/forms.mjs';
 import { setupVision } from './helpers/vision.mjs';
 import { bindTriggerApply, setupTriggers } from './rolls/triggers.mjs';
 import { setupNextRoll } from './app/next-roll.mjs';
@@ -176,6 +176,13 @@ globalThis.sdm = {
       markers: itemMarkers,
       // What Use does (HTML, the Use icon's tooltip)
       describeUse
+    },
+    // Shapeshifting (helpers/forms.mjs): the actor's form now, the forms it can take, take one, end it
+    forms: {
+      current: formNow,
+      available: availableForms,
+      take: effect => takeOneForm(effect ? [effect] : [], ''),
+      end: dismissForm
     },
     // Token light from items (light category / glowing) and powers
     lights: {

@@ -508,7 +508,7 @@ export async function takeItemForm(item) {
 }
 
 /** Switch on one of these form effects, picked in a small dialog when there are several. */
-async function takeOneForm(forms, title) {
+export async function takeOneForm(forms, title) {
   if (!forms.length) return;
   let effect = forms[0];
   if (forms.length > 1) {
@@ -527,7 +527,7 @@ async function takeOneForm(forms, title) {
 }
 
 /** The forms the actor can take now: its own switched-off form effects and those its items give. */
-function availableForms(actor) {
+export function availableForms(actor) {
   const forms = [];
   for (const effect of actor?.allApplicableEffects?.() ?? []) {
     if (isForm(effect) && effect.disabled && effect.isOwner) forms.push(effect);
@@ -570,6 +570,13 @@ function onRenderTokenHUD(hud, html) {
     else await takeOneForm(forms, actor.name);
   });
   (root.querySelector('.col.right') ?? root).append(button);
+}
+
+/** The actor's form now: { effect, name, img } (effect: null when its effect is gone), or null. */
+export function formNow(actor) {
+  const active = actor?.getFlag?.('sdm', ACTIVE_FLAG);
+  if (!active) return null;
+  return { effect: currentForm(actor), name: active.name ?? '', img: active.img ?? '' };
 }
 
 /** Granted copies take no slots (itemUtils). */
