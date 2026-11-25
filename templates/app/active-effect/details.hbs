@@ -56,6 +56,12 @@
     {{formGroup fields.roundDamage.target value=source.system.roundDamage.target localize=true rootId=rootId}}
     {{/if}}
     {{/if}}
+    {{#if fields.turnHeal}}
+    {{formGroup fields.turnHeal.formula value=source.system.turnHeal.formula rootId=rootId}}
+    {{#if source.system.turnHeal.formula}}
+    {{formGroup fields.turnHeal.blockedBy value=source.system.turnHeal.blockedBy options=statuses sort=true rootId=rootId classes="statuses"}}
+    {{/if}}
+    {{/if}}
 
     {{#if isActorEffect}}
     {{formGroup fields.origin value=source.origin rootId=rootId disabled=true}}

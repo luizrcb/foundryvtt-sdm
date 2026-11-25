@@ -150,6 +150,12 @@ export class SDMActiveEffectData extends foundry.data.ActiveEffectTypeDataModel 
       roundDamage: new fields.SchemaField({
         formula: new fields.StringField({ required: true, blank: true, initial: '', label: $l10n('SDM.RoundDamage.Formula'), hint: $l10n('SDM.RoundDamage.FormulaHint') }),
         target: new fields.StringField({ required: true, initial: 'inside', choices: ROUND_DAMAGE_TARGETS, label: $l10n('SDM.RoundDamage.Target') })
+      }),
+      // Life at the start of each of its actor's turns in combat (regeneration), unless it has one of
+      // these conditions (helpers/turn-heal.mjs)
+      turnHeal: new fields.SchemaField({
+        formula: new fields.StringField({ required: true, blank: true, initial: '', label: $l10n('SDM.TurnHeal.Formula'), hint: $l10n('SDM.TurnHeal.FormulaHint') }),
+        blockedBy: new fields.ArrayField(new fields.StringField({ blank: false }), { label: $l10n('SDM.TurnHeal.BlockedBy'), hint: $l10n('SDM.TurnHeal.BlockedByHint') })
       })
     };
   }

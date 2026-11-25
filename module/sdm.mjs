@@ -77,6 +77,7 @@ import { setupNpcVariability } from './helpers/npcVariability.mjs';
 import { configureConditions, localizeConditions, setupConditions } from './helpers/conditions.mjs';
 import { setupZones } from './helpers/zones.mjs';
 import { setupAuras } from './helpers/auras.mjs';
+import { setupTurnHeal } from './helpers/turn-heal.mjs';
 import { bindAreaButtons, drawArea, setupAreas } from './helpers/areas.mjs';
 import HazardBehaviorData from './data/hazard-behavior.mjs';
 import { bindAttackFollowup } from './rolls/attackFollowup.mjs';
@@ -835,6 +836,7 @@ Hooks.once('init', function () {
   setupConditions();
   setupZones();
   setupAuras();
+  setupTurnHeal();
   setupAreas();
   setupNextRoll();
   setupRideStats();

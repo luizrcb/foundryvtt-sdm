@@ -3567,5 +3567,10 @@
   "SDM.Vision.RangeHint": "How far its tokens see, in squares or hexes. Blank: their own range; senses then reach the whole scene. Several effects: the longest range wins.",
   "SDM.Vision.Senses": "Senses",
   "SDM.Vision.SensesHint": "Extra ways to perceive, up to the range. Sense invisibility, see all and sense all also take away an invisible or hidden creature's edge in attacks, either way (feel tremors doesn't).",
-  "SDM.Form.TakeVision": "vision"
+  "SDM.Form.TakeVision": "vision",
+  "SDM.TurnHeal.Formula": "Heal each turn",
+  "SDM.TurnHeal.FormulaHint": "Life at the start of each of its actor's turns in combat, e.g. 1d6 (not at 0 life).",
+  "SDM.TurnHeal.BlockedBy": "Not while",
+  "SDM.TurnHeal.BlockedByHint": "Conditions that stop it that turn (burning, corroded…).",
+  "SDM.TurnHeal.Blocked": "{effect}: no healing this turn ({conditions})."
 }
