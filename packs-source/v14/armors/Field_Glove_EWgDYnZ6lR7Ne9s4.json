@@ -8,14 +8,15 @@
     "readied": false,
     "cost": 15,
     "cost_frequency": "",
-    "description": "<p>Plastic and living-wire gauntlet with a small protective field.</p><p>Spend 1 life to boost defense by [[/r 1d6]] until the end of the next round (<em>edit active effect and toggle it to trigger the boost defense</em>)</p>",
+    "description": "<p>Plastic and living-wire gauntlet with a small protective field.</p><p>Spend 1 life to boost defense by [[/r 1d6]] until the end of the next round</p>",
     "quantity": 1,
     "size": {
       "value": 5,
       "unit": "soaps"
     },
     "features": [
-      "hands_free"
+      "hands_free",
+      "consumable"
     ],
     "attributes": {
       "initiative": "",
@@ -75,7 +76,12 @@
     "starting_kit": false,
     "packed_remaining_items": 10,
     "is_supply": false,
-    "supply_type": ""
+    "supply_type": "",
+    "use": {
+      "keep": true,
+      "self": true,
+      "harm": "1"
+    }
   },
   "effects": [
     {
@@ -88,21 +94,21 @@
         "changes": [
           {
             "key": "system.defense_bonus",
-            "value": 0,
+            "value": "1d6",
             "priority": null,
             "type": "add",
             "phase": "initial"
           }
         ]
       },
-      "disabled": true,
+      "disabled": false,
       "duration": {
-        "value": null,
-        "units": "seconds",
-        "expiry": null,
+        "value": 1,
+        "units": "rounds",
+        "expiry": "roundEnd",
         "expired": false
       },
-      "description": "<p>Spend 1 life to boost defense by [[/r 1d6]] until the end of the next round (<em>edit active effect and toggle it to trigger the boost defense</em>)</p>",
+      "description": "<p>+1d6 defense until the end of the next round (rolled when used).</p>",
       "tint": "#ffffff",
       "transfer": true,
       "statuses": [],
