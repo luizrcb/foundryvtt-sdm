@@ -6,7 +6,7 @@
     "description": "<p><em>Seka’s Spearcraft, Vorpalize</em></p><p>The wizard whispers to a weapon, imbuing it with cunning, lust, and humor. It deals +2 damage and can harm spirits, daemons and other intangibles for the spell’s duration.</p>",
     "type": "power",
     "power": {
-      "level": 1,
+      "level": 4,
       "range": "touch",
       "target": "edged weapon",
       "duration": "6 hours",

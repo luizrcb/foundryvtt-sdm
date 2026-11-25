@@ -6,7 +6,7 @@
     "description": "<p><em>Locksmith’s Lament, Seal of Hashoon</em></p><p>The wizard summons a fragment of consciousness into a target lock. Overjoyed, the dimly sentient object burbles at the edges of the wizard’s mind, begging to please. It unlocks or locks itself. Magical locks save with a bonus equal to their wizard’s Level.</p>",
     "type": "power",
     "power": {
-      "level": 1,
+      "level": 4,
       "range": "10m",
       "target": "lock",
       "duration": "permanent",

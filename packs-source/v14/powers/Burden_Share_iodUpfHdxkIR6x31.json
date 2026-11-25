@@ -12,7 +12,7 @@
       "duration": "several hours",
       "overcharge": "<p>The ritual takes several minutes, but inflicts [[/r 1d4]] damage to both parties.</p>",
       "roll_formula": "",
-      "overcharge_roll_formula": "",
+      "overcharge_roll_formula": "1d4",
       "img": "icons/svg/book.svg",
       "name": "",
       "description": "",

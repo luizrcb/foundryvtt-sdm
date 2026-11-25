@@ -12,7 +12,7 @@
       "duration": "instant",
       "overcharge": "<p>the first semi-real projectile to strike a target deals extra damage equal to your level plus the power’s price (2 + level).</p>",
       "roll_formula": "",
-      "overcharge_roll_formula": "",
+      "overcharge_roll_formula": "@level + 2",
       "img": "icons/svg/book.svg",
       "name": "",
       "description": "",

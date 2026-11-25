@@ -6,7 +6,7 @@
     "description": "<p><em>Universal Translation Protocol</em></p><p>There is a unified source code underlying reality. This spell lets the user communicate successfully with another entity: plant, animal, mineral, or data store. Entities without senses may have little to say.</p>",
     "type": "power",
     "power": {
-      "level": 1,
+      "level": 6,
       "range": "close",
       "target": "1 creature or object",
       "duration": "1 hour",

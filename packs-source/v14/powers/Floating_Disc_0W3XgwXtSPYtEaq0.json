@@ -6,7 +6,7 @@
     "description": "<p><em>Shield of the Righteous, Mage’s Mule</em></p><p>The wizard creates a concave disc of stuckforce 1m in diameter. The disc hovers, can be pushed at a walking pace, and can be tilted to create an almost impenetrable barrier. The disc vanishes if it is more than 30m from the wizard.</p>",
     "type": "power",
     "power": {
-      "level": 1,
+      "level": 2,
       "range": "30m",
       "target": "point",
       "duration": "1 hour",

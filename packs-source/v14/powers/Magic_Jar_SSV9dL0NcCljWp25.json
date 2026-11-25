@@ -6,7 +6,7 @@
     "description": "<p><em>Abned’s Bottled Ba, Crystalized Mind</em></p><p>The wizard transfers an unconscious creature’s personality into a delicate crystal worth €1,000. The procedure erases the original personality. The process takes 30 minutes.</p>",
     "type": "power",
     "power": {
-      "level": 1,
+      "level": 3,
       "range": "touch",
       "target": "creature",
       "duration": "permanent",

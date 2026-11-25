@@ -6,7 +6,7 @@
     "description": "<p><em>Necroflare, Ka-Theft</em></p><p>After a 1 hour ritual, the wizard calls back a creature’s soul, which erupts from the corpse as a coiling serpent of ectoplasmic fire. The soul can be captured in a golem, used to power obscene artifacts, or merely used for theatrical effect. This spell must be overcharged to call back the soul of any creature of worth and potency.</p>",
     "type": "power",
     "power": {
-      "level": 1,
+      "level": 2,
       "range": "touch",
       "target": "corpse",
       "duration": "0",

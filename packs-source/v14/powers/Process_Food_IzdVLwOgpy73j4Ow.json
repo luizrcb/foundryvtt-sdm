@@ -6,7 +6,7 @@
     "description": "<p><em>Generate Pink Slime, Maker’s Manna</em></p><p>After a 1 hour ritual, the wizard turns a sack of inedible organic material into nutritious food (1 sack of supplies). Causes magic cancer if consumed for a prolonged period.</p>",
     "type": "power",
     "power": {
-      "level": 1,
+      "level": 2,
       "range": "touch",
       "target": "raw matter",
       "duration": "permanent",
