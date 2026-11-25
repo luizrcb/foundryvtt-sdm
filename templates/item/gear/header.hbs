@@ -335,6 +335,14 @@
             <label class='resource-label'>{{localize 'SDM.Use.PurgeLabel'}}</label>
             <div class='resource-content'><input type='checkbox' name="system.use.purge" {{checked system.use.purge}} /></div>
           </div>
+          <div class='resource' data-tooltip="{{localize 'SDM.Use.SelfHint'}}">
+            <label class='resource-label'>{{localize 'SDM.Use.SelfLabel'}}</label>
+            <div class='resource-content'><input type='checkbox' name="system.use.self" {{checked system.use.self}} /></div>
+          </div>
+          <div class='resource' data-tooltip="{{localize 'SDM.Use.KeepHint'}}">
+            <label class='resource-label'>{{localize 'SDM.Use.KeepLabel'}}</label>
+            <div class='resource-content'><input type='checkbox' name="system.use.keep" {{checked system.use.keep}} /></div>
+          </div>
           <div class='resource' data-tooltip="{{localize 'SDM.Use.ReplenishesHint'}}">
             <label class='resource-label'>{{localize 'SDM.Use.ReplenishesLabel'}}</label>
             <div class='resource-content'><select name="system.use.replenishes">{{selectOptions (sdmReplenishChoices) selected=system.use.replenishes localize=true}}</select></div>

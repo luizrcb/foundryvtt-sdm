@@ -3576,5 +3576,10 @@
   "SDM.AreaOvercharge": "Overcharged",
   "SDM.AreaOverchargeHint": "The area when the power is overcharged: a bigger size, and/or its own across (blank: the same area).",
   "SDM.AreaOverchargeAcrossHint": "Across when overcharged, in the world unit (blank: the size's).",
-  "SDM.PowerCostPay.OverchargedCost": "Cast the power overcharged: costs {cost} life, its bigger area, its overcharged roll"
+  "SDM.PowerCostPay.OverchargedCost": "Cast the power overcharged: costs {cost} life, its bigger area, its overcharged roll",
+  "SDM.Use.SelfLabel": "On the user only",
+  "SDM.Use.SelfHint": "Use always works on its user, whoever is targeted (a glove, a stimulant).",
+  "SDM.Use.KeepLabel": "Not used up",
+  "SDM.Use.KeepHint": "Use spends only what it costs (Harm, a usage roll, charges or uses), never the item itself.",
+  "SDM.EffectDice.Rolled": "{effect}: rolled {total} ({formula})"
 }

@@ -460,6 +460,14 @@
       <input type="checkbox" name="system.use.purge" {{checked system.use.purge}} />
       <span class="v2-label">{{localize 'SDM.Use.PurgeLabel'}}</span>
     </label>
+    <label class="v2-field v2-check" data-tooltip="{{localize 'SDM.Use.SelfHint'}}">
+      <input type="checkbox" name="system.use.self" {{checked system.use.self}} />
+      <span class="v2-label">{{localize 'SDM.Use.SelfLabel'}}</span>
+    </label>
+    <label class="v2-field v2-check" data-tooltip="{{localize 'SDM.Use.KeepHint'}}">
+      <input type="checkbox" name="system.use.keep" {{checked system.use.keep}} />
+      <span class="v2-label">{{localize 'SDM.Use.KeepLabel'}}</span>
+    </label>
     <label class="v2-field" data-tooltip="{{localize 'SDM.Use.ReplenishesHint'}}">
       <span class="v2-label">{{localize 'SDM.Use.ReplenishesLabel'}}</span>
       <select name="system.use.replenishes">{{selectOptions (sdmReplenishChoices) selected=system.use.replenishes localize=true}}</select>

@@ -531,6 +531,8 @@ export function describeUse(item) {
   if (use.rest) always.push($l10n('SDM.Use.ChatRest'));
   if (hasUseActions(use.actions)) always.push($l10n('SDM.Use.Tip.Actions'));
   if (use.purge) always.push($l10n('SDM.Use.ChatPurge'));
+  if (use.self) always.push($l10n('SDM.Use.SelfLabel'));
+  if (use.keep) always.push($l10n('SDM.Use.KeepLabel'));
   if (use.replenishes) always.push($l10n(`SDM.Use.Replenishes.${use.replenishes}`));
   if (use.overdose?.status || use.overdose?.effect) always.push($l10n('SDM.Use.Tip.Overdose'));
   if (use.for?.trim()) always.push($fmt('SDM.Use.For', { for: esc(use.for.trim()) }));
@@ -573,7 +575,7 @@ export async function useItem(item) {
     if (!placed) return;
     areaTargets = [...new Set(placed.tokens.map(token => token.actor).filter(Boolean))];
   }
-  const targets = areaTargets ?? getTargets(actor);
+  const targets = areaTargets ?? (item.system.use?.self ? [actor] : getTargets(actor));
   // An area resolved by a save: its card asks everyone inside, and the harm and effects follow each save
   const areaSave = !!(areaTargets && itemArea(item)?.save);
   // A lingering area gives the item's effects to whoever stands in it: the Use doesn't copy them too
@@ -865,6 +867,8 @@ function describeDuration(use) {
 /** Replenish: usage roll (charges untouched). Uses counter: one use. Charges: one charge. Otherwise: one of its quantity. */
 async function spend(item) {
   const system = item.system;
+  // Not used up: a usage roll, charges or uses still go; the item itself never does
+  if (system.use?.keep && !system.features?.has?.('replenish') && !getUsesCounter(item) && !system.features?.has?.('charges')) return;
   if (system.features?.has?.('replenish')) {
     await item.spendUsage();
     return;
