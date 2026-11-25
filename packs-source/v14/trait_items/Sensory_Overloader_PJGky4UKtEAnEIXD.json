@@ -83,6 +83,18 @@
     "categories": [
       "manager",
       "blinding"
+    ],
+    "triggers": [
+      {
+        "roll": "attack",
+        "condition": "success",
+        "status": "stun",
+        "status_target": "targets",
+        "status_save": true,
+        "status_duration": 1,
+        "status_duration_units": "rounds",
+        "text": "Loses an action (save)"
+      }
     ]
   },
   "effects": [],

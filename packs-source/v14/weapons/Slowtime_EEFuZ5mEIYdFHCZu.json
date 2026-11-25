@@ -79,7 +79,15 @@
     "is_supply": false,
     "supply_type": "",
     "area": {
-      "value": "medium"
+      "value": "medium",
+      "shape": "circle",
+      "linger": true,
+      "rounds": 3,
+      "resolve": "save",
+      "save_pass": "avoid",
+      "round_condition": "slowed",
+      "round_condition_rounds": 1,
+      "round_enter": true
     }
   },
   "effects": [],

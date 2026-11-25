@@ -76,6 +76,18 @@
     "categories": [
       "petrification",
       "imobilization"
+    ],
+    "triggers": [
+      {
+        "roll": "power",
+        "condition": "always",
+        "status": "paralysis",
+        "status_target": "targets",
+        "status_save": true,
+        "status_duration": 1,
+        "status_duration_units": "hours",
+        "text": "Becomes as a log of wood (save)"
+      }
     ]
   },
   "effects": [],

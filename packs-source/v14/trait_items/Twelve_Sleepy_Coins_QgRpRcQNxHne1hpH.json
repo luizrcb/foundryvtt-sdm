@@ -17,7 +17,9 @@
       "unit": "soaps"
     },
     "features": [
-      "replenish"
+      "replenish",
+      "consumable",
+      "area"
     ],
     "attributes": {
       "initiative": "",
@@ -82,7 +84,19 @@
     "categories": [
       "trickster",
       "sleep"
-    ]
+    ],
+    "area": {
+      "value": "small",
+      "shape": "circle",
+      "affects": "everyone"
+    },
+    "use": {
+      "actions": {
+        "status": "sleep",
+        "status_target": "targets",
+        "status_save": true
+      }
+    }
   },
   "effects": [],
   "sort": 0,

@@ -34,5 +34,70 @@
       "animation": "torch"
     }
   },
-  "effects": []
+  "effects": [
+    {
+      "name": "Burning Aura",
+      "origin": null,
+      "img": "icons/svg/fire.svg",
+      "disabled": false,
+      "_id": "o5I8XnYwqxN9PFwD",
+      "type": "base",
+      "system": {
+        "changes": [],
+        "aura": {
+          "enabled": true,
+          "band": "close",
+          "distance": 0,
+          "disposition": "any",
+          "applyToSelf": false,
+          "canStack": true,
+          "bestFormula": "",
+          "evaluateOnSource": true,
+          "walls": true,
+          "combatOnly": false,
+          "showRadius": false,
+          "color": null,
+          "lightPreset": "none"
+        },
+        "roundDamage": {
+          "formula": "1d4",
+          "target": "inside"
+        }
+      },
+      "duration": {
+        "value": null,
+        "units": "seconds",
+        "expiry": null,
+        "expired": false
+      },
+      "description": "",
+      "tint": "#ffffff",
+      "transfer": true,
+      "statuses": [],
+      "sort": 0,
+      "flags": {},
+      "_stats": {
+        "compendiumSource": null,
+        "duplicateSource": null,
+        "exportSource": null,
+        "coreVersion": "14.353",
+        "systemId": "sdm",
+        "systemVersion": "0.4.5",
+        "createdTime": null,
+        "modifiedTime": null,
+        "lastModifiedBy": "XnQAppzUXfkn5LcX"
+      },
+      "showIcon": 1,
+      "folder": null,
+      "start": {
+        "combat": null,
+        "round": null,
+        "time": 0,
+        "turn": null,
+        "combatant": null,
+        "initiative": null
+      },
+      "_key": "!items.effects!XBXMvlGkB8wiZjQ2.o5I8XnYwqxN9PFwD"
+    }
+  ]
 }

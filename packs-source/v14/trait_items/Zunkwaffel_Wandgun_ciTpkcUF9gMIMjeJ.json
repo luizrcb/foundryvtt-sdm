@@ -82,6 +82,18 @@
     },
     "categories": [
       "orangelander"
+    ],
+    "triggers": [
+      {
+        "roll": "attack",
+        "condition": "success",
+        "status": "unconscious",
+        "status_target": "targets",
+        "status_save": true,
+        "status_duration": 1,
+        "status_duration_units": "minutes",
+        "text": "Knocked out for a minute (save; undead)"
+      }
     ]
   },
   "effects": [],

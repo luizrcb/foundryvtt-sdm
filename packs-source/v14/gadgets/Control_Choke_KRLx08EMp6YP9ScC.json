@@ -15,7 +15,8 @@
       "unit": "stones"
     },
     "features": [
-      "replenish"
+      "replenish",
+      "consumable"
     ],
     "attributes": {
       "initiative": "",
@@ -81,6 +82,14 @@
     ],
     "replenish": {
       "value": 19
+    },
+    "use": {
+      "actions": {
+        "status": "controlled",
+        "status_target": "targets",
+        "status_save": true,
+        "status_save_difficulty": "hard"
+      }
     }
   },
   "effects": [],
