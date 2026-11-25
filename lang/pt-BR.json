@@ -3575,5 +3575,6 @@
   "SDM.TurnHeal.Blocked": "{effect}: sem cura neste turno ({conditions}).",
   "SDM.AreaOvercharge": "Sobrecarregado",
   "SDM.AreaOverchargeHint": "A área quando o poder é sobrecarregado: um tamanho maior e/ou um diâmetro próprio (em branco: a mesma área).",
-  "SDM.AreaOverchargeAcrossHint": "Diâmetro quando sobrecarregado, na unidade do mundo (em branco: o do tamanho)."
+  "SDM.AreaOverchargeAcrossHint": "Diâmetro quando sobrecarregado, na unidade do mundo (em branco: o do tamanho).",
+  "SDM.PowerCostPay.OverchargedCost": "Lança o poder sobrecarregado: custa {cost} de vida, sua área maior, sua rolagem sobrecarregada"
 }

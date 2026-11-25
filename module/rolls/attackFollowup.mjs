@@ -15,7 +15,8 @@ export function attackItemFlag(actor, attackItem) {
   if (!actor) return null;
   if (attackItem?.id) {
     // A power the attack was made with was cast by it (its cost paid then)
-    return { id: attackItem.id, name: attackItem.name, kind: attackItem.kind, actor: actor.uuid, ...(attackItem.castOnAttack ? { castOnAttack: true } : {}) };
+    // ...and when it was cast overcharged, the power rolled from the card is the overcharged one
+    return { id: attackItem.id, name: attackItem.name, kind: attackItem.kind, actor: actor.uuid, ...(attackItem.castOnAttack ? { castOnAttack: true } : {}), ...(attackItem.overcharged ? { overcharged: true } : {}) };
   }
   if (actor.type === 'npc') return { id: '', name: `${actor.system?.damage || '1d4'}`, kind: 'npc', actor: actor.uuid };
   return null;
@@ -59,7 +60,7 @@ export async function usePowerOnArea(flag) {
   await actor.performHudAction(
     ROLL_KIND[flag.kind],
     item.id,
-    { label: item.name, areaTargets: flag.areaTargets.join(','), areaSaved: (flag.areaSaved ?? []).join(','), areaPass: flag.areaPass ?? '', castOnAttack: flag.castOnAttack ? 'true' : '' },
+    { label: item.name, areaTargets: flag.areaTargets.join(','), areaSaved: (flag.areaSaved ?? []).join(','), areaPass: flag.areaPass ?? '', castOnAttack: flag.castOnAttack ? 'true' : '', overchargedOnAttack: flag.overcharged ? 'true' : '' },
     true,
     false
   );
@@ -81,7 +82,7 @@ export function attackFollowupHtml(flag) {
   const esc = foundry.utils.escapeHTML;
   return (
     `<div class="sdm-attack-followup"><button type="button" class="sdm-primary" data-action="sdmAttackFollowup" data-kind="${kind}"` +
-    ` data-item-id="${esc(flag.id)}" data-actor-uuid="${esc(flag.actor)}" data-multiplier="${esc(flag.multiplier ?? '')}" data-target-uuid="${esc(flag.target ?? '')}" data-area-targets="${esc((flag.areaTargets ?? []).join(','))}" data-area-saved="${esc((flag.areaSaved ?? []).join(','))}" data-area-pass="${esc(flag.areaPass ?? '')}" data-cast-on-attack="${flag.castOnAttack ? 'true' : ''}"><i class="${icon}"></i><span>${esc(label)}</span>` +
+    ` data-item-id="${esc(flag.id)}" data-actor-uuid="${esc(flag.actor)}" data-multiplier="${esc(flag.multiplier ?? '')}" data-target-uuid="${esc(flag.target ?? '')}" data-area-targets="${esc((flag.areaTargets ?? []).join(','))}" data-area-saved="${esc((flag.areaSaved ?? []).join(','))}" data-area-pass="${esc(flag.areaPass ?? '')}" data-cast-on-attack="${flag.castOnAttack ? 'true' : ''}" data-overcharged-on-attack="${flag.overcharged ? 'true' : ''}"><i class="${icon}"></i><span>${esc(label)}</span>` +
     `${formula ? `<span class="sdm-followup-formula">${esc(formula)}</span>` : ''}</button></div>`
   );
 }
@@ -115,7 +116,7 @@ export function bindAttackFollowup(html) {
       await actor.performHudAction(
         button.dataset.kind,
         item.id,
-        { label: item.name, multiplier: button.dataset.multiplier, targetUuid: button.dataset.targetUuid, areaTargets: button.dataset.areaTargets ?? '', areaSaved: button.dataset.areaSaved ?? '', areaPass: button.dataset.areaPass ?? '', castOnAttack: button.dataset.castOnAttack ?? '' },
+        { label: item.name, multiplier: button.dataset.multiplier, targetUuid: button.dataset.targetUuid, areaTargets: button.dataset.areaTargets ?? '', areaSaved: button.dataset.areaSaved ?? '', areaPass: button.dataset.areaPass ?? '', castOnAttack: button.dataset.castOnAttack ?? '', overchargedOnAttack: button.dataset.overchargedOnAttack ?? '' },
         !!event.shiftKey,
         !!event.ctrlKey
       );

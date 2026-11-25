@@ -3575,5 +3575,6 @@
   "SDM.TurnHeal.Blocked": "{effect}: no healing this turn ({conditions}).",
   "SDM.AreaOvercharge": "Overcharged",
   "SDM.AreaOverchargeHint": "The area when the power is overcharged: a bigger size, and/or its own across (blank: the same area).",
-  "SDM.AreaOverchargeAcrossHint": "Across when overcharged, in the world unit (blank: the size's)."
+  "SDM.AreaOverchargeAcrossHint": "Across when overcharged, in the world unit (blank: the size's).",
+  "SDM.PowerCostPay.OverchargedCost": "Cast the power overcharged: costs {cost} life, its bigger area, its overcharged roll"
 }

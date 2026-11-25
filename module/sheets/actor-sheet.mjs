@@ -275,6 +275,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       freeCast = false,
       // The power was cast by the attack made with it (its card's button): the cost was paid then
       castOnAttack = false,
+      // ...and cast overcharged (the attack's Overcharge): its roll is the overcharged one
+      overchargedOnAttack = false,
       // Suggested damage multiplier (an attack's consecutive natural 20s, from its card's button)
       multiplier: suggestedMultiplier = '',
       // The target of the attack the damage follows (its card's button): it wins over the user's target
@@ -414,6 +416,18 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       }
     }
     const attackCasts = isAttack && Object.keys(attackPowerCosts).length > 0;
+    // Powers the attack can be made with that can be overcharged (the dialog's Overcharge then casts
+    // them overcharged: the overcharged cost, the bigger area, the overcharged roll on the card)
+    const attackOvercharge = {};
+    if (isAttack) {
+      for (const entry of attackEntries) {
+        if (entry.kind !== 'power' && entry.kind !== 'album') continue;
+        const powerItem = this.actor.items.get(entry.itemId ?? entry.id);
+        const powers = powerItem?.system?.powers ?? [];
+        const data = entry.kind === 'power' ? powerItem?.system?.power : powers[powerItem?.system?.powers_current_index] ?? powers[0];
+        if (data?.overcharge) attackOvercharge[entry.id] = getPowerCost(this.actor.system, data, true);
+      }
+    }
     // Power cost: paid with life and/or ability points when casting
     const powerCost =
       ((isPower || isPowerAlbum) && paysPowerCost(this.actor)) || attackCasts
@@ -513,7 +527,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       action: 'overcharge',
       class: 'overcharge',
       // hidden: !overchargeFormula,
-      style: { display: !canOvercharge ? 'none' : '' },
+      style: { display: !(isAttack ? suggestedAttackItem in attackOvercharge : canOvercharge) ? 'none' : '' },
       icon: 'fa-solid fa-hand-sparkles',
       label: $l10n('SDM.PowerOvercharge'),
       callback: (event, button) => ({
@@ -613,7 +627,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         attack: isAttack ? attack : '',
         // The real item (an album-feature entry is "<id>:album"), what it rolls next and its name
         attackItem: plan.attackItem
-          ? { id: plan.attackItem.itemId ?? plan.attackItem.id, name: plan.attackItem.name, kind: plan.attackItem.kind, castOnAttack: !!plan.castOnAttack }
+          ? { id: plan.attackItem.itemId ?? plan.attackItem.id, name: plan.attackItem.name, kind: plan.attackItem.kind, castOnAttack: !!plan.castOnAttack, overcharged: !!plan.castsOvercharged }
           : null
       };
       if (plan.formula) data.formula = plan.formula;
@@ -729,6 +743,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
         attackItemImage: isAttack ? attackItemImage : null,
         // The power cost of each power the attack can be made with (the cost box follows the choice)
         attackPowerCosts: attackCasts ? attackPowerCosts : null,
+        // Which of them can be cast overcharged (the Overcharge button follows the choice)
+        attackOvercharge: isAttack ? attackOvercharge : null,
         content: template,
         position: {
           width: 400
@@ -742,7 +758,13 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     }
 
     const { heroicQty = '0' } = rollOptions;
+    // An attack made with a power, overcharged: the power is cast overcharged (not the attack's roll)
+    const overchargeAttack = isAttack && !!rollOptions.overcharge;
+    if (isAttack) rollOptions.overcharge = false;
+    // A power cast overcharged by its attack: its roll is the overcharged one
+    if (overchargedOnAttack && (isPower || isPowerAlbum)) rollOptions.overcharge = true;
     const plan = planRoll(rollOptions, { useBoost: !!rollOptions.useBoost });
+    const castsOvercharged = overchargeAttack && !!plan.attackItem && (plan.attackItem.id in attackOvercharge);
     powerIndex = plan.powerIndex;
     selectedAbility = plan.selectedAbility;
     title = plan.title;
@@ -764,7 +786,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       const areaKind = isAttack ? plan.attackItem?.kind ?? '' : isPowerAlbum ? 'album' : 'power';
       if (areaItem && itemArea(areaItem, areaKind)) {
         // A power cast overcharged places its bigger area (when it has one)
-        const overcharged = !isAttack && !!rollOptions.overcharge;
+        const overcharged = isAttack ? castsOvercharged : !!rollOptions.overcharge;
         const placed = await placeArea({ actor: this.actor, item: areaItem, kind: areaKind, overcharged });
         if (placed === false) return;
         if (placed) areaPlaced = { placed, item: areaItem, kind: areaKind, overcharged };
@@ -792,8 +814,8 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     if (powerCost && item && !freeCast && !attackCasts && wantsToPay) {
       const castData = isPowerAlbum ? item.system.powers?.[powerIndex] : item.system.power;
       let cost = getPowerCost(this.actor.system, castData, !!rollOptions?.overcharge);
-      // Cast by its attack: paid then; overcharging now pays the difference
-      if (castOnAttack) cost -= getPowerCost(this.actor.system, castData);
+      // Cast by its attack: paid then (overcharged, if it was); overcharging now pays the difference
+      if (castOnAttack) cost -= getPowerCost(this.actor.system, castData, !!overchargedOnAttack);
       if (cost > 0) {
         costPaid = await payPowerCost(this.actor, cost, { fromAbilities: fromAbilities() });
         if (!costPaid) return;
@@ -803,11 +825,16 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
     if (attackCasts && plan.attackItem && plan.attackItem.id in attackPowerCosts) {
       plan.castOnAttack = true;
       if (!freeCast && wantsToPay) {
-        costPaid = await payPowerCost(this.actor, attackPowerCosts[plan.attackItem.id], { fromAbilities: fromAbilities() });
+        const attackCost = castsOvercharged ? attackOvercharge[plan.attackItem.id] : attackPowerCosts[plan.attackItem.id];
+        costPaid = await payPowerCost(this.actor, attackCost, { fromAbilities: fromAbilities() });
         if (!costPaid) return;
       }
     }
 
+    if (castsOvercharged) {
+      plan.castsOvercharged = true;
+      plan.title = title = `${title} (${$l10n('SDM.PowerOvercharge').toLowerCase()})`;
+    }
     const rollData = buildRollData(plan, { versatile: !!rollOptions.versatile });
     // The Referee's next-roll modifiers this roll used are gone
     if (nextRoll.used.length) await consumeNextRoll(nextRoll);
@@ -1829,6 +1856,7 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       // Free cast (a trigger's "free"): no dialog and no cost
       freeCast: dataset.freeCast === 'true',
       castOnAttack: dataset.castOnAttack === 'true',
+      overchargedOnAttack: dataset.overchargedOnAttack === 'true',
       multiplier: dataset.multiplier || '',
       targetUuid: dataset.targetUuid || '',
       // From an area card: the tokens it hit, each gets the damage

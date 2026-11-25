@@ -124,7 +124,7 @@ import {
   DEFAULT_WEAPON_ICON,
   GEAR_ICONS
 } from './helpers/constants.mjs';
-import { $l10n } from './helpers/globalUtils.mjs';
+import { $fmt, $l10n } from './helpers/globalUtils.mjs';
 import { addBonusPenalty, markRangePenalty } from './app/bonus-penalty.mjs';
 
 const { ActiveEffectConfig } = foundry.applications.sheets;
@@ -444,6 +444,16 @@ Hooks.on('renderDialogV2', (dialog, html) => {
       if (box) box.hidden = !casts;
       if (casts && costValue) costValue.textContent = attackPowerCosts[withSelect.value];
     });
+  }
+  // Attack dialog: Overcharge shows only for a power chosen in With that can be overcharged
+  const attackOvercharge = dialog.options?.attackOvercharge;
+  if (attackOvercharge && withSelect && overChargeButton) {
+    withSelect.addEventListener('change', () => {
+      overChargeButton.style.display = withSelect.value in attackOvercharge ? '' : 'none';
+      // The cost box shows the overcharged cost on hover of the button
+      overChargeButton.dataset.tooltip = withSelect.value in attackOvercharge ? $fmt('SDM.PowerCostPay.OverchargedCost', { cost: attackOvercharge[withSelect.value] }) : '';
+    });
+    if (withSelect.value in attackOvercharge) overChargeButton.dataset.tooltip = $fmt('SDM.PowerCostPay.OverchargedCost', { cost: attackOvercharge[withSelect.value] });
   }
   const costAbilityRow = html.querySelector('.sdm-power-cost-ability');
   payCost?.addEventListener('change', () => {
