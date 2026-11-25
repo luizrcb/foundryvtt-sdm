@@ -3,14 +3,14 @@
   "img": "icons/svg/fire.svg",
   "type": "gear",
   "system": {
-    "description": "<p><em>Arbor Sanctuary</em></p><p>Convince shrubberies, grasses, brambles, and other plants to form a hedge domehome, a sanctuary to rest and hide in. Enemies need at least one turn to pass through the hedge. They are vulnerable  while in the shrub wall. After a night or day, the plants return to their ordinary ways.</p>",
+    "description": "<p><em>Arbor Sanctuary</em></p><p>Convince shrubberies, grasses, brambles, and other plants to form a hedge domehome, a sanctuary to rest and hide in. Enemies need at least one turn to pass through the hedge. They are vulnerable while in the shrub wall. After a night or day, the plants return to their ordinary ways.</p>",
     "type": "power",
     "power": {
       "level": 1,
       "range": "nearby",
       "target": "a 7m diameter sphere",
       "duration": "a night or a day",
-      "overcharge": "<p>sculpt a thorny hedge wall measuring 200 meters square and 1 meter thick. Its thorns cut anyone forcing their way through like daggers ([[/r 1d4]] damage).</p>",
+      "overcharge": "<p>Sculpt a thorny hedge wall measuring 200 meters square and 1 meter thick. Its thorns cut anyone pushing through like daggers ([[/r 1d4]] damage).</p>",
       "roll_formula": "",
       "overcharge_roll_formula": "1d4",
       "img": "icons/svg/book.svg",

@@ -8,7 +8,7 @@
     "power": {
       "level": 6,
       "range": "touch, or as thrown",
-      "target": "10m diameter",
+      "target": "10m diameter sphere",
       "duration": "a day, then instant",
       "overcharge": "<p>the ball deals [[/r 10d6]] damage, or its fires keep for a month.</p>",
       "roll_formula": "5d6",

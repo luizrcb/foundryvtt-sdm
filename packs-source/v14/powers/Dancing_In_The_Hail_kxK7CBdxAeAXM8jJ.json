@@ -10,7 +10,7 @@
       "range": "self",
       "target": "self",
       "duration": "one round",
-      "overcharge": "<p>any ranged attacks that do hit only deal half damage.</p>",
+      "overcharge": "<p>Any ranged attacks that hit deal half damage.</p>",
       "roll_formula": "",
       "overcharge_roll_formula": "",
       "img": "icons/svg/book.svg",

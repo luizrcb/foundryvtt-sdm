@@ -10,7 +10,7 @@
       "range": "adjacent",
       "target": "all creatures",
       "duration": "one action",
-      "overcharge": "<p>no attack roll required. *subject to how much ammunition their anchor weapon holds.</p>",
+      "overcharge": "<p>No attack roll required.</p><p>*subject to how much ammo the anchor weapon holds.</p>",
       "roll_formula": "",
       "overcharge_roll_formula": "",
       "img": "icons/svg/book.svg",

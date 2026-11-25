@@ -3,12 +3,12 @@
   "img": "icons/svg/fire.svg",
   "type": "gear",
   "system": {
-    "description": "<p><em>Life’s End Made Present, Hadi’s Self-Immolation Binding</em></p><p>Between one step and the next, you flicker between existence and non-existence, you age a year and a creature you touch disappears into the nothing of wormspace for a year. No save.</p>",
+    "description": "<p><em>Life’s End Made Present, Hadi’s Self-Immolation Binding</em></p><p>Between one step and the next, you flicker between existence and non-existence, you age a year and a creature you touch disappears into the nothing of wormspace for a year. No save.</p><p><strong>Dangerous:</strong> No matter how powerful you are.</p>",
     "type": "power",
     "power": {
       "level": 8,
       "range": "touch",
-      "target": "a sentient target",
+      "target": "a sentient creature",
       "duration": "1 year",
       "overcharge": "<p> you age seven years and a kilometer diameter sphere, centered on your soul, disappears into the nothing of wormspace for a year. Overcharge again to remain behind and watch the sphere disappear (please have some form of levitation ready).</p>",
       "roll_formula": "",

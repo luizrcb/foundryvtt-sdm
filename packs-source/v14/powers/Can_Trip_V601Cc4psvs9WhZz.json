@@ -3,7 +3,7 @@
   "img": "icons/svg/fire.svg",
   "type": "gear",
   "system": {
-    "description": "<p><em>Two Left Foot Curse, Clumsy Cat-astrophe </em></p><p>You wish someone sprawled and humbled, and your muttered curse may make it so. The target’s shoelaces are suddenly undone or a stone or stick hops to trip them. They save or sprawl.</p>",
+    "description": "<p><em>Two Left Feet Curse, Clumsy Cat-astrophe</em></p><p>You wish someone sprawled and humbled, and your muttered curse may make it so. The target’s shoelaces are suddenly undone, or a stone or stick hops to trip them. They save or sprawl.</p>",
     "type": "power",
     "power": {
       "level": 1,
