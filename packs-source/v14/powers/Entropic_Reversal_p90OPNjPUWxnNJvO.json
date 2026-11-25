@@ -6,7 +6,7 @@
     "description": "<p><em>The Untiming Charm, Zundan’s Awakening of Aways</em></p><p>The wizard draws a 1 meter diameter chronomantic circle around the target object. When the drawing is complete, a flash of para-entropy restores the object to perfect function and decays everything else within the circle. The ritual takes 15 minutes.</p>",
     "type": "power",
     "power": {
-      "level": 5,
+      "level": 2,
       "range": "3m",
       "target": "object (tool or machine)",
       "duration": "0",

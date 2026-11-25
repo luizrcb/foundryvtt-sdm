@@ -6,7 +6,7 @@
     "description": "<p><em>Inner Beauty Manifest, Mind Over Body</em></p><p>The wizard’s mind resculpts their features. They can resemble a specific person, provided the wizard has studied them up close, or a general type.</p><p>No abilities are altered. Alternatively, the wizard can choose to gain gills, low-light vision, or another minor natural ability at the referee’s discretion.</p>",
     "type": "power",
     "power": {
-      "level": 4,
+      "level": 2,
       "range": "touch",
       "target": "self",
       "duration": "1 hour",

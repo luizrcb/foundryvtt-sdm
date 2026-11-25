@@ -6,7 +6,7 @@
     "description": "<p><em>Fey Slumber, Hard Reboot</em></p><p>The wizard dissolves a creature’s spirit, leaving an inert shell or pseudocorpse. After 1 day, the spirit ‘reboots’, wiped clean of spiritual parasites, daemons, code-worms, or mind-affecting spells.</p>",
     "type": "power",
     "power": {
-      "level": 4,
+      "level": 2,
       "range": "touch",
       "target": "a willing creature",
       "duration": "1 day",

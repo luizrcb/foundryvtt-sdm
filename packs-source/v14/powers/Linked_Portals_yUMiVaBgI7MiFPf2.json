@@ -6,7 +6,7 @@
     "description": "<p><em>Lesser Astral Voyage, Nilbreg’s Convenient Tunnel</em></p><p>The wizard draws two circles of 3 meter radius in the air. The circles are linked by an astral unreality bridge. Anything that enters one hoop exits the other unchanged, but with its vector of motion altered by the hoops’ position. Two hoops positioned above each other let an object fall to terminal velocity.</p>",
     "type": "power",
     "power": {
-      "level": 4,
+      "level": 2,
       "range": "touch",
       "target": "area",
       "duration": "30 minutes",

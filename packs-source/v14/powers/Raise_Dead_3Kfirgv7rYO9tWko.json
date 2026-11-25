@@ -6,7 +6,7 @@
     "description": "<p><em>The Seventh Abomination, The Dark Hakaba</em></p><p>After a 6-hour ritual, the wizard calls back a creature’s soul and binds it to its corpse, creating an undead abomination and a parody of life. If the creature has been dead for more than 24 hours, only echoes of its personality and memories (Ba) remain. This spell must be overcharged to call back the soul of any creature of worth and potency.</p>",
     "type": "power",
     "power": {
-      "level": 6,
+      "level": 2,
       "range": "touch",
       "target": "corpse",
       "duration": "permanent",

@@ -6,7 +6,7 @@
     "description": "<p><em>Turn Back the Wheel of Love and Death</em></p><p>The wizard sacrifices at least one sentient creature to restore one recently deceased creature to life. The total level of the target and the sacrifice(s) must be approximately equal. The ritual takes 1 hour per sacrifice and will go disastrously wrong if interrupted. The target is restored to life and a semblance of health for a year and a day.</p>",
     "type": "power",
     "power": {
-      "level": 3,
+      "level": 2,
       "range": "touch",
       "target": "corpse",
       "duration": "0",

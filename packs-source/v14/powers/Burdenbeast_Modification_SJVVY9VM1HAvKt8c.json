@@ -6,7 +6,7 @@
     "description": "<p><em>Art of Carriage, Usha’s Useful Mutation</em></p><p>The wizard modifies a human-sized or larger creature to carry an additional sack of goods. The ritual requires 6 hours and a sack of beast egg masses (€500). Unwilling targets get a save.</p>",
     "type": "power",
     "power": {
-      "level": 1,
+      "level": 2,
       "range": "touch",
       "target": "creature",
       "duration": "permanent",

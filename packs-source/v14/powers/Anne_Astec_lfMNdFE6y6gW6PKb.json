@@ -6,7 +6,7 @@
     "description": "<p><em>Iatric Priest Painkiller</em></p><p>Overrides a creature’s pain response, providing relief from pain and burdens. Wait, did the scribe mishear “anesthetic”?</p>",
     "type": "power",
     "power": {
-      "level": 1,
+      "level": 2,
       "range": "touch",
       "target": "1 creature",
       "duration": "a day",

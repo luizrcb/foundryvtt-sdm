@@ -6,7 +6,7 @@
     "description": "<p><em>Utilitarian Livingstone Bungalow, Rite of Coral Form</em> </p><p>Over 6 hours the wizard coaxes a livingstone brick (1 stone) to grow into a dryland coral form of any shape they want within the target area. Hemispheres are popular. Don’t forget a door.</p>",
     "type": "power",
     "power": {
-      "level": 1,
+      "level": 2,
       "range": "touch",
       "target": "5m diameter area",
       "duration": "permanent",

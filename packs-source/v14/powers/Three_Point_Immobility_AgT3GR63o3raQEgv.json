@@ -6,7 +6,7 @@
     "description": "<p><em>Celestial Ladder, Craft Floating Platform</em></p><p>The wizard manually tethers an object to three physical points with strands of stuckforce. Once tethered, the object is immobile—even if suspended in mid-air.</p>",
     "type": "power",
     "power": {
-      "level": 1,
+      "level": 2,
       "range": "touch",
       "target": "solid object",
       "duration": "1 hour",

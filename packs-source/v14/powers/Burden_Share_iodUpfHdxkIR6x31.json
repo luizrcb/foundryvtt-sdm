@@ -6,7 +6,7 @@
     "description": "<p><em>Sanator’s Empathy Ritual</em></p><p>The caster taps into a creature’s essence to transfer one of its burdens—fatigue, injury, anxiety, or other affliction. This burden transforms into a spiritual stone, a healer’s burden, which passes into another nearby creature. It has a slight negative impact on abilities, but causes no permanent damage and dissipates normally with rest.</p>",
     "type": "power",
     "power": {
-      "level": 1,
+      "level": 2,
       "range": "touch",
       "target": "1 creature",
       "duration": "several hours",

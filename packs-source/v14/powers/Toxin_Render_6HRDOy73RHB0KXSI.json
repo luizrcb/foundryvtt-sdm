@@ -6,7 +6,7 @@
     "description": "<p><em>Dwarf’s Diesel Distillation</em></p><p>The wizard uses a 1 hour ritual to convince ambient noösphere-linked animalcules to gather a sack’s worth of toxic waste and convert it into usable vehicle or golem fuel. Corrodes engines if used for prolonged periods.</p>",
     "type": "power",
     "power": {
-      "level": 1,
+      "level": 2,
       "range": "10m",
       "target": "toxic waste",
       "duration": "1 hour",

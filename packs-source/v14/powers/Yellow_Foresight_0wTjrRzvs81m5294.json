@@ -6,7 +6,7 @@
     "description": "<p><em>Visions of the Cautious Merchant</em></p><p>The wizard consumes a soap’s worth of saffron (€10) and meditates for 1 hour to scan auras in the target area. They get a general idea of the number of sentients and the general mood. If the sentients are very different from the wizard, reading the mood may be impossible.</p>",
     "type": "power",
     "power": {
-      "level": 1,
+      "level": 2,
       "range": "1km",
       "target": "100m diameter circle",
       "duration": "0",

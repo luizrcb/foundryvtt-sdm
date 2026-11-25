@@ -6,7 +6,7 @@
     "description": "<p><em>Artificial Post-Mortality</em></p><p>Wake the Shell In 1 hour, a target reasonably intact human-sized corpse rises as a post-mortal zombie.</p><p>The corpse is animated by a soul fragment and shreds of residual personality. It obeys simple orders given by the wizard, but must be reminded every 6 hours (or more frequently in a chaotic environment).</p><p>A wizard can control a number of post-mortals equal to their Level without risk of rebellion.</p>",
     "type": "power",
     "power": {
-      "level": 6,
+      "level": 2,
       "range": "touch",
       "target": "corpse",
       "duration": "permanent",

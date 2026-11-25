@@ -6,7 +6,7 @@
     "description": "<p><em>Echoes of the Mind, Necrophone</em></p><p>The echoes of personality trapped in a corpse answer three questions posed by the wizard. The corpse can lie.</p>",
     "type": "power",
     "power": {
-      "level": 6,
+      "level": 2,
       "range": "3m",
       "target": "corpse",
       "duration": "10 minutes",

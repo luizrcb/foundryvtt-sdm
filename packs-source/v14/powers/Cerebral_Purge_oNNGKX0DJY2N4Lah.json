@@ -6,7 +6,7 @@
     "description": "<p><em>Harsh Awakening, Reality’s Cold Knife</em></p><p>The wizard uses a telechronic wave to purify the target’s brain of any impurities—drugs or mind-altering spells. The target loses [[/r 1d6]] Life and their recent memories become fuzzy. Unwilling targets get a save.</p>",
     "type": "power",
     "power": {
-      "level": 1,
+      "level": 2,
       "range": "10m",
       "target": "creature",
       "duration": "0",
