@@ -10,7 +10,7 @@
     "resources": "",
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p><em>Creation Purpose, Chosen Ones and Quilted Greens</em></p><p>The light around you turns green and plant and hybrid creatures of level 1 spring forth.</p>",
+    "description": "<p>Turn lights green and spawn strange lifeforms (L1)—quilted plants, dreaming trees, mammalian insects, avian arachnids, fungoid gastropods.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -45,9 +45,9 @@
       "description": "",
       "level": 2,
       "range": "short",
-      "target": "one creature",
+      "target": "one",
       "duration": "instant",
-      "overcharge": "the creatures that arise are photosynthetic humans of level 2.",
+      "overcharge": "<p>Spawn photosynth ‘humans’ (L2).</p>",
       "roll_formula": "",
       "overcharge_roll_formula": "",
       "default_ability": ""

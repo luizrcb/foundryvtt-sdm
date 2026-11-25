@@ -10,7 +10,7 @@
     "resources": "",
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p><em>Devastate Purpose, Planes of Hidden Damage</em></p><p>Nearly invisible planes of force slice through the target for [[/r 2d4x]] damage, and may sever a limb or a head.</p>",
+    "description": "<p>Barely-visible planes of stuckforce deal [[/r 2d4x]] damage to creatures traversing a small area. 10+ damage: creature loses a limb. 20+ damage: loses a head.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -45,9 +45,9 @@
       "description": "",
       "level": 2,
       "range": "short",
-      "target": "one creature",
+      "target": "one",
       "duration": "instant",
-      "overcharge": "the planes cut a slightly larger area, dealing [[/r 4d4x]] damage.",
+      "overcharge": "<p>[[/r 4d4x]] damage in a slightly larger area.</p>",
       "roll_formula": "2d4x",
       "overcharge_roll_formula": "4d4x",
       "default_ability": ""

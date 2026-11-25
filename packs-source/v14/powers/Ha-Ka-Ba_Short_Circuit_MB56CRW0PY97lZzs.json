@@ -10,7 +10,7 @@
     "resources": "",
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p><em>Error Purpose, Abort/Retry/Fail</em></p><p>The target saves or its soul, mind, and body fall out of step for 1 round; attacks against its separate parts gain a bonus meanwhile.</p>",
+    "description": "<p>The target’s soul, mind, and body disconnect for one round (save). The parts cannot act in a coordinate fashion and attacks against any individual part gain a bonus.</p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -45,9 +45,9 @@
       "description": "",
       "level": 2,
       "range": "short",
-      "target": "one creature",
+      "target": "one",
       "duration": "instant",
-      "overcharge": "the short circuit lasts [[/r 1d4]] rounds.",
+      "overcharge": "<p>The disconnect lasts [[/r 1d4]] rounds.</p>",
       "roll_formula": "",
       "overcharge_roll_formula": "1d4",
       "default_ability": ""
