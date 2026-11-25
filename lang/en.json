@@ -3566,6 +3566,6 @@
   "SDM.Vision.Range": "Range (spaces)",
   "SDM.Vision.RangeHint": "How far its tokens see, in squares or hexes. Blank: their own range; senses then reach the whole scene. Several effects: the longest range wins.",
   "SDM.Vision.Senses": "Senses",
-  "SDM.Vision.SensesHint": "Extra ways to perceive, up to the range.",
+  "SDM.Vision.SensesHint": "Extra ways to perceive, up to the range. Sense invisibility, see all and sense all also take away an invisible or hidden creature's edge in attacks, either way (feel tremors doesn't).",
   "SDM.Form.TakeVision": "vision"
 }

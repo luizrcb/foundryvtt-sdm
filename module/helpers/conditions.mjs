@@ -1,6 +1,7 @@
 import { ActorType, RollMode } from './constants.mjs';
 import { showSideDice } from './formulas.mjs';
 import { deleteEffects } from './deleteEffects.mjs';
+import { perceivesUnseen } from './vision.mjs';
 
 /**
  * WTF conditions. The game has no condition rules of its own: these are the conditions its texts
@@ -107,8 +108,8 @@ const has = (actor, id) => !!actor?.statuses?.has?.(id);
  * The roll mode conditions suggest for a roll: disadvantage when the roller is blind, poisoned,
  * prone, confused or (physical abilities) nauseated; when attacking a target, advantage against a
  * paralyzed, unconscious, stunned, surprised or (melee) prone target, disadvantage against an
- * invisible, hidden or (ranged) prone one — unless the attacker sees invisible; an invisible or hidden
- * attacker has advantage, unless the target sees invisible. Advantage and disadvantage cancel out.
+ * invisible, hidden or (ranged) prone one — unless the attacker sees invisible (or senses it: vision);
+ * an invisible or hidden attacker has advantage, unless the target sees or senses it. Advantage and disadvantage cancel out.
  * Without the automation only the declared actions count (tacticalRollAdvice).
  */
 export function conditionRollMode(actor, options = {}) {
@@ -134,10 +135,12 @@ function automatedRollMode(actor, { attack = '', ability = '', target = null, is
       if (attack === 'melee') advantage = true;
       else disadvantage = true;
     }
-    // Unseen: invisible or hidden, unless the other one sees through it
+    // Unseen: invisible or hidden, unless the other one sees through it (Sees invisible, or a vision
+    // sense that perceives the invisible within its range)
     const unseen = actor => has(actor, 'invisible') || has(actor, 'hidden');
-    if (unseen(target) && !has(actor, 'seeInvisible')) disadvantage = true;
-    if (unseen(actor) && !has(target, 'seeInvisible')) advantage = true;
+    const sees = (viewer, other) => has(viewer, 'seeInvisible') || perceivesUnseen(viewer, other);
+    if (unseen(target) && !sees(actor, target)) disadvantage = true;
+    if (unseen(actor) && !sees(target, actor)) advantage = true;
   }
   if (advantage && !disadvantage) return RollMode.ADVANTAGE;
   if (disadvantage && !advantage) return RollMode.DISADVANTAGE;

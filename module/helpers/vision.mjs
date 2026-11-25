@@ -28,6 +28,43 @@ export function visionSenseChoices() {
   return VISION_SENSES.filter(id => CONFIG.Canvas.detectionModes?.[id]).map(id => ({ id, label: CONFIG.Canvas.detectionModes[id].label }));
 }
 
+// Senses that perceive the invisible and the hidden (feeling tremors doesn't: flying or still creatures)
+const PERCEIVES_UNSEEN = ['senseInvisibility', 'seeAll', 'senseAll'];
+
+/** The actor's token on the scene in view (a linked actor: its first one there), or null. */
+function tokenOnCanvas(actor) {
+  return actor?.getActiveTokens?.()?.[0] ?? null;
+}
+
+/**
+ * The viewer perceives the other one though it is invisible or hidden: one of its vision senses
+ * (sense invisibility, see all, sense all) reaches it — within the sense's range when both tokens are
+ * on the scene in view (blank range, or no tokens: any distance). For the rolls (helpers/conditions).
+ */
+export function perceivesUnseen(viewer, other) {
+  if (!viewer) return false;
+  const reaches = [];
+  for (const effect of viewer.allApplicableEffects?.() ?? []) {
+    if (!effect.active || !givesVision(effect)) continue;
+    const vision = effect.system.vision;
+    if (!PERCEIVES_UNSEEN.some(id => vision.senses?.[id])) continue;
+    reaches.push({ spaces: vision.range ?? null });
+  }
+  const formVision = viewer.flags?.sdm?.form?.numbers?.vision;
+  if (formVision?.senses?.some(id => PERCEIVES_UNSEEN.includes(id))) reaches.push({ units: Number(formVision.range) || null });
+  if (!reaches.length) return false;
+
+  const a = tokenOnCanvas(viewer);
+  const b = tokenOnCanvas(other);
+  if (!a || !b || !canvas?.grid) return true;
+  const distance = canvas.grid.measurePath([a.center, b.center]).distance;
+  const perSpace = Number(canvas.scene?.grid?.distance) || 1;
+  return reaches.some(({ spaces, units }) => {
+    const range = spaces !== null && spaces !== undefined ? Number(spaces) * perSpace : units;
+    return !range || distance <= range;
+  });
+}
+
 /** An effect that gives vision while it is on. */
 export function givesVision(effect) {
   return !!effect?.system?.vision?.enabled;

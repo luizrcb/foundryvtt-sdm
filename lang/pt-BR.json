@@ -3566,6 +3566,6 @@
   "SDM.Vision.Range": "Alcance (espaços)",
   "SDM.Vision.RangeHint": "Até onde os tokens enxergam, em quadrados ou hexágonos. Em branco: o alcance deles; os sentidos então alcançam a cena toda. Vários efeitos: vale o maior alcance.",
   "SDM.Vision.Senses": "Sentidos",
-  "SDM.Vision.SensesHint": "Outras formas de perceber, até o alcance.",
+  "SDM.Vision.SensesHint": "Outras formas de perceber, até o alcance. Sentir invisibilidade, ver tudo e sentir tudo também tiram a vantagem de uma criatura invisível ou escondida nos ataques, nos dois sentidos (sentir tremores não).",
   "SDM.Form.TakeVision": "visão"
 }
