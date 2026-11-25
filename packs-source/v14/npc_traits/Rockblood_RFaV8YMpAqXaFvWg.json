@@ -24,7 +24,7 @@
   },
   "_key": "!items!RFaV8YMpAqXaFvWg",
   "system": {
-    "description": "<p>Below half life, double defense.</p><p>(enable the <em>Below half life</em> effect)</p>",
+    "description": "<p>Below half life, double defense.</p>",
     "type": ""
   },
   "effects": [
@@ -43,9 +43,10 @@
             "type": "multiply",
             "phase": "initial"
           }
-        ]
+        ],
+        "activeWhile": "belowHalf"
       },
-      "disabled": true,
+      "disabled": false,
       "duration": {
         "value": null,
         "units": "seconds",

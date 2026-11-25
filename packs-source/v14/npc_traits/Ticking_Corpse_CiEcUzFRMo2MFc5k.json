@@ -25,7 +25,15 @@
   "_key": "!items!CiEcUzFRMo2MFc5k",
   "system": {
     "description": "<p>Deals double damage to all nearby 1d4 rounds after death (save to negate).</p>",
-    "type": ""
+    "type": "",
+    "triggers": [
+      {
+        "roll": "death",
+        "condition": "always",
+        "text": "Explodes in 1d4 rounds: double damage to all nearby (save to negate)",
+        "roll_formula": "1d4"
+      }
+    ]
   },
   "effects": []
 }

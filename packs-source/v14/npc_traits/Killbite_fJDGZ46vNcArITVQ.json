@@ -25,7 +25,14 @@
   "_key": "!items!fJDGZ46vNcArITVQ",
   "system": {
     "description": "<p>Gets free attack on death.</p>",
-    "type": ""
+    "type": "",
+    "triggers": [
+      {
+        "roll": "death",
+        "condition": "always",
+        "text": "A free attack as it dies"
+      }
+    ]
   },
   "effects": []
 }

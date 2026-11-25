@@ -25,7 +25,15 @@
   "_key": "!items!bkujRrmvn4WvpTIs",
   "system": {
     "description": "<p>It thrives on strange organs: after a kill it can spend a round feeding to regain 1d6 life.</p><p><em>From the corruption tables.</em></p>",
-    "type": ""
+    "type": "",
+    "triggers": [
+      {
+        "roll": "kill",
+        "condition": "always",
+        "text": "May spend a round feeding to regain 1d6 life",
+        "roll_formula": "1d6"
+      }
+    ]
   },
   "effects": []
 }

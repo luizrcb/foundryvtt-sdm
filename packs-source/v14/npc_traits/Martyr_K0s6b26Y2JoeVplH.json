@@ -25,7 +25,14 @@
   "_key": "!items!K0s6b26Y2JoeVplH",
   "system": {
     "description": "<p>On death, grants their bonus to nearby allies.</p>",
-    "type": ""
+    "type": "",
+    "triggers": [
+      {
+        "roll": "death",
+        "condition": "always",
+        "text": "Its bonus goes to nearby allies"
+      }
+    ]
   },
   "effects": []
 }

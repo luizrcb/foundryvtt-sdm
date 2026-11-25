@@ -24,8 +24,17 @@
   },
   "_key": "!items!ht6NqZNwPabqit5R",
   "system": {
-    "description": "<p>After being hit by an attack, gains +3 defense against that attack type.</p><p>(enable the <em>Adapted</em> effect after being hit)</p>",
-    "type": ""
+    "description": "<p>After being hit by an attack, gains +3 defense against that attack type.</p>",
+    "type": "",
+    "triggers": [
+      {
+        "roll": "hit",
+        "condition": "always",
+        "text": "Adapted: +3 defense against that attack type",
+        "effect": "s1O7jLPSjujOYIIk",
+        "effect_target": "self"
+      }
+    ]
   },
   "effects": [
     {

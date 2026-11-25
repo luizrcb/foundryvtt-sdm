@@ -25,7 +25,17 @@
   "_key": "!items!FXHdpkAkhAitTk4C",
   "system": {
     "description": "<p>On death, level x d4* dmg to all nearby.</p>",
-    "type": ""
+    "type": "",
+    "triggers": [
+      {
+        "roll": "death",
+        "condition": "always",
+        "text": "Shatters: level × d4* to all nearby",
+        "life_mode": "damage",
+        "life_amount": "(@level)d4x",
+        "life_target": "targets"
+      }
+    ]
   },
   "effects": []
 }

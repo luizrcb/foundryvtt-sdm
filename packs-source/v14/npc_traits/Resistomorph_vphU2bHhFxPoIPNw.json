@@ -25,7 +25,14 @@
   "_key": "!items!vphU2bHhFxPoIPNw",
   "system": {
     "description": "<p>After being hit by an attack, ignore that attack type for one round.</p>",
-    "type": ""
+    "type": "",
+    "triggers": [
+      {
+        "roll": "hit",
+        "condition": "always",
+        "text": "Ignores that attack type for one round"
+      }
+    ]
   },
   "effects": []
 }

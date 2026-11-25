@@ -10,7 +10,7 @@
     "resources": "",
     "cost": 0,
     "cost_frequency": "",
-    "description": "<p>You know everything about disassembling mortals. Also, track the enemies you kill in a battle. Every enemy killed gives you a cumulative +1 to attack rolls until the end of the battle. After the first kill, you growl and roar until the killing stops. Expert: the bonus is +2 per kill. Master: +3.</p><p><em>Add each kill to the <strong>Kills</strong> counter (click it in your inventory). It resets when the combat ends.</em></p>",
+    "description": "<p>You know everything about disassembling mortals. Also, track the enemies you kill in a battle. Every enemy killed gives you a cumulative +1 to attack rolls until the end of the battle. After the first kill, you growl and roar until the killing stops. Expert: the bonus is +2 per kill. Master: +3.</p><p><em>Each kill adds 1 to the <strong>Kills</strong> counter (also by hand: click it in your inventory). It resets when the combat ends.</em></p>",
     "quantity": 1,
     "size": {
       "value": 1,
@@ -70,7 +70,17 @@
         "reset_value": 0,
         "reset_on_combat_end": true
       }
-    }
+    },
+    "triggers": [
+      {
+        "roll": "kill",
+        "condition": "always",
+        "text": "+1 kill",
+        "counter": "kills",
+        "counter_mode": "add",
+        "counter_step": "1"
+      }
+    ]
   },
   "effects": [
     {

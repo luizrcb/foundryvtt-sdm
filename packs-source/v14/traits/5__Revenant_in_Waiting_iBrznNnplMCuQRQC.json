@@ -62,6 +62,13 @@
       "bearer",
       "relife",
       "undead"
+    ],
+    "triggers": [
+      {
+        "roll": "death",
+        "condition": "always",
+        "text": "Your weapon may revive you: lower one ability score by 1"
+      }
     ]
   },
   "effects": [],
