@@ -85,7 +85,11 @@ const TRIGGER_CONDITIONS_BY_ROLL = {
   usage: ['total', 'totalAtLeast', 'totalAtMost', 'runningLow', 'runOut'],
   use: ['always'],
   counter: ['total', 'totalAtLeast', 'totalAtMost', 'increases', 'decreases', 'changes', 'full', 'empty'],
-  charges: ['total', 'totalAtLeast', 'totalAtMost', 'increases', 'decreases', 'changes', 'full', 'empty']
+  charges: ['total', 'totalAtLeast', 'totalAtMost', 'increases', 'decreases', 'changes', 'full', 'empty'],
+  // Events (helpers/life-events.mjs): they happen or they don't
+  kill: ['always'],
+  death: ['always'],
+  hit: ['always']
 };
 
 /** The condition choices of one trigger: those of its roll (plus its current one, if it is not among them). */
@@ -154,7 +158,10 @@ export function triggerEditorContext(item, triggers = []) {
         ability: 'SDM.Trigger.Roll.ability',
         defeat: 'SDM.Trigger.Roll.defeat',
         counter: 'SDM.Trigger.Roll.counter',
-        charges: 'SDM.Trigger.Roll.charges'
+        charges: 'SDM.Trigger.Roll.charges',
+        kill: 'SDM.Trigger.Roll.kill',
+        death: 'SDM.Trigger.Roll.death',
+        hit: 'SDM.Trigger.Roll.hit'
       },
       triggerCounterModes: {
         add: 'SDM.Trigger.CounterMode.add',

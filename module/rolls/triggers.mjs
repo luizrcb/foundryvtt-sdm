@@ -115,6 +115,30 @@ export function actorTriggers(actor, rollKind, roll, { attack = '', ability = ''
   return fired;
 }
 
+/**
+ * Event triggers (helpers/life-events.mjs) of an actor's readied gear, traits and burdens: on a kill,
+ * on its death, when an attack hits it (filtered by the attack's kind: melee, ranged…).
+ */
+export function eventTriggers(actor, kind, { attack = '' } = {}) {
+  const fired = [];
+  if (!actor || !featureEnabled('triggers')) return fired;
+  for (const item of watchingItems(actor)) {
+    for (const trigger of itemTriggers(item)) {
+      if (trigger.roll !== kind) continue;
+      if (kind === 'hit' && trigger.attack && attack && attack !== 'attack' && trigger.attack !== attack) continue;
+      fired.push({ item, trigger });
+    }
+  }
+  return fired;
+}
+
+/** Post the fired event triggers on the chat and run their actions (`targets`: who they act on). */
+export async function fireEventTriggers(fired, actor, { targets = null } = {}) {
+  if (!fired.length) return;
+  await ChatMessage.create({ speaker: ChatMessage.getSpeaker({ actor }), content: renderTriggers(fired, { targets }) });
+  await runTriggerActions(fired, { actor, targets });
+}
+
 /** An attack made with an album (or gear with the album feature) uses its selected power: is it `name`? */
 function albumPowerMatches(chosen, name) {
   const powers = chosen?.system?.powers;
@@ -566,6 +590,7 @@ async function wearItem(item, wear) {
 
 export function describeCondition(trigger, item = null) {
   if (trigger.roll === 'use') return game.i18n.localize('SDM.Trigger.OnUse');
+  if (['kill', 'death', 'hit'].includes(trigger.roll)) return game.i18n.localize(`SDM.Trigger.On.${trigger.roll}`);
   const condition = trigger.condition === 'counterMax' ? 'full' : trigger.condition;
   // Counters and charges have a value, usage rolls a result
   const tracked = trigger.roll === 'counter' || trigger.roll === 'charges';

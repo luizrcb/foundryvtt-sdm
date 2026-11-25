@@ -10,7 +10,7 @@
     <div class="sdm-trigger">
     <div class="sdm-counter-row">
       <select name="system.triggers.{{index}}.roll">{{selectOptions @root.triggerRolls selected=trigger.roll localize=true}}</select>
-      {{#if (eq trigger.roll 'attack')}}
+      {{#if (or (eq trigger.roll 'attack') (eq trigger.roll 'hit'))}}
       <select name="system.triggers.{{index}}.attack" data-tooltip="{{localize 'SDM.Trigger.AttackHint'}}">{{selectOptions @root.triggerAttacks selected=trigger.attack localize=true}}</select>
       {{else}}
       <input type="hidden" name="system.triggers.{{index}}.attack" value="{{trigger.attack}}" />

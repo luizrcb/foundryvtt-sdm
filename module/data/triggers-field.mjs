@@ -20,7 +20,7 @@ export function defineTriggerSchema() {
         required: true,
         blank: false,
         initial: 'attack',
-        choices: ['attack', 'damage', 'power', 'usage', 'use', 'save', 'ability', 'defeat', 'counter', 'charges']
+        choices: ['attack', 'damage', 'power', 'usage', 'use', 'save', 'ability', 'defeat', 'counter', 'charges', 'kill', 'death', 'hit']
       }),
       // Item rolls (damage, power, usage): whose rolls fire it: this item (''), any item, or one item
       from: new fields.StringField({ required: true, blank: true, initial: '', choices: ['', 'any', 'item', 'unarmed'] }),

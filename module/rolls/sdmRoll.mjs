@@ -440,7 +440,10 @@ export default class SDMRoll {
           ability: this.ability ?? '',
           withItem: this.attackItem?.id ?? '',
           defense,
-          targetUuid: isAttack && this.targetActor ? this.targetActor.uuid : ''
+          targetUuid: isAttack && this.targetActor ? this.targetActor.uuid : '',
+          // Hit or miss against that target, and the defense it went against (helpers/life-events)
+          success: isAttack ? attackSuccess : null,
+          attackTarget: this.attackTarget ?? 'physical'
         }
       };
     }

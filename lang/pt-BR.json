@@ -3581,5 +3581,11 @@
   "SDM.Use.SelfHint": "Usar sempre age no próprio usuário, seja quem for o alvo (uma luva, um estimulante).",
   "SDM.Use.KeepLabel": "Não se gasta",
   "SDM.Use.KeepHint": "Usar gasta só o que custa (Dano ao usuário, rolagem de uso, cargas ou usos), nunca o próprio item.",
-  "SDM.EffectDice.Rolled": "{effect}: rolou {total} ({formula})"
+  "SDM.EffectDice.Rolled": "{effect}: rolou {total} ({formula})",
+  "SDM.Trigger.Roll.kill": "Abate",
+  "SDM.Trigger.Roll.death": "Morte",
+  "SDM.Trigger.Roll.hit": "Atingido por ataque",
+  "SDM.Trigger.On.kill": "ao abater",
+  "SDM.Trigger.On.death": "ao morrer",
+  "SDM.Trigger.On.hit": "quando atingido"
 }

@@ -3581,5 +3581,11 @@
   "SDM.Use.SelfHint": "Use always works on its user, whoever is targeted (a glove, a stimulant).",
   "SDM.Use.KeepLabel": "Not used up",
   "SDM.Use.KeepHint": "Use spends only what it costs (Harm, a usage roll, charges or uses), never the item itself.",
-  "SDM.EffectDice.Rolled": "{effect}: rolled {total} ({formula})"
+  "SDM.EffectDice.Rolled": "{effect}: rolled {total} ({formula})",
+  "SDM.Trigger.Roll.kill": "Kill",
+  "SDM.Trigger.Roll.death": "Death",
+  "SDM.Trigger.Roll.hit": "Hit by an attack",
+  "SDM.Trigger.On.kill": "on a kill",
+  "SDM.Trigger.On.death": "on death",
+  "SDM.Trigger.On.hit": "when hit"
 }

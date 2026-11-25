@@ -1344,6 +1344,15 @@ export function areaApplyButtonsHtml(shares, { heal = false, total = 0 } = {}) {
 }
 
 
+/** The actors an area attack card hit (each defense inside against the attack), for event triggers. */
+export function areaAttackHits(card) {
+  if (card?.mode !== 'attack' || card.save) return [];
+  const field = DEFENSE_FIELD[card.attackTarget] ?? 'defense';
+  return (card.inside ?? [])
+    .map(uuid => fromUuidSync(uuid)?.actor)
+    .filter(actor => actor && outcomeFor(Number(card.total) || 0, Number(actor.system?.[field] ?? actor.system?.defense) || 0, card.isNat1, card.isNat20).hit);
+}
+
 function outcomeFor(total, defense, isNat1, isNat20) {
   if (isNat1) return { hit: false, tone: 'bad', word: $l10n('SDM.CriticalFailure') };
   if (isNat20) return { hit: true, tone: 'crit', word: $l10n('SDM.CriticalSuccess') };

@@ -79,6 +79,7 @@ import { setupZones } from './helpers/zones.mjs';
 import { setupAuras } from './helpers/auras.mjs';
 import { setupTurnHeal } from './helpers/turn-heal.mjs';
 import { setupEffectDice } from './helpers/effect-dice.mjs';
+import { setupLifeEvents } from './helpers/life-events.mjs';
 import { bindAreaButtons, drawArea, setupAreas } from './helpers/areas.mjs';
 import HazardBehaviorData from './data/hazard-behavior.mjs';
 import { bindAttackFollowup } from './rolls/attackFollowup.mjs';
@@ -849,6 +850,7 @@ Hooks.once('init', function () {
   setupAuras();
   setupTurnHeal();
   setupEffectDice();
+  setupLifeEvents();
   setupAreas();
   setupNextRoll();
   setupRideStats();
