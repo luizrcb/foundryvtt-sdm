@@ -363,7 +363,9 @@ export default class SDMRoll {
           isNat20,
           attackTarget: this.attackTarget,
           multiplier: attackItem?.multiplier ?? '',
-          overcharged: areaOvercharged
+          overcharged: areaOvercharged,
+          castOnAttack: !!attackItem?.castOnAttack,
+          castOvercharged: !!attackItem?.overcharged
         })
       );
       extras += areaPlacedBlock.html;
@@ -386,7 +388,9 @@ export default class SDMRoll {
           isNat20,
           attackTarget: this.attackTarget,
           kind: this.attackItem.kind,
-          multiplier: attackItem?.multiplier ?? ''
+          multiplier: attackItem?.multiplier ?? '',
+          castOnAttack: !!attackItem?.castOnAttack,
+          castOvercharged: !!attackItem?.overcharged
         });
       }
     }

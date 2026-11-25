@@ -1232,11 +1232,12 @@ export async function splashTokens({ splash, attackerToken, targetToken, name })
 const DEFENSE_FIELD = { physical: 'defense', mental: 'mental_defense', social: 'social_defense' };
 
 /** The attack card's "Place area" button, when the attack was made with an item that has an area. */
-export function areaAttackButton({ actor, item, total, isNat1, isNat20, attackTarget, kind = 'weapon', multiplier = '' }) {
-  if (!itemArea(item, kind)) return '';
+export function areaAttackButton({ actor, item, total, isNat1, isNat20, attackTarget, kind = 'weapon', multiplier = '', castOnAttack = false, castOvercharged = false }) {
+  if (!itemArea(item, kind, { overcharged: castOvercharged })) return '';
   return (
     `<button type="button" data-action="sdmPlaceArea" data-actor-uuid="${esc(actor.uuid)}" data-item-id="${esc(item.id)}"` +
     ` data-kind="${esc(kind ?? 'weapon')}" data-multiplier="${esc(multiplier ?? '')}"` +
+    `${castOnAttack ? ' data-cast-on-attack="1"' : ''}${castOvercharged ? ' data-overcharged="1"' : ''}` +
     ` data-total="${Number(total) || 0}" data-nat1="${isNat1 ? 1 : 0}" data-nat20="${isNat20 ? 1 : 0}" data-attack-target="${esc(attackTarget ?? 'physical')}">` +
     `<i class="fa-solid fa-bullseye"></i> ${esc($l10n('SDM.AreaPlace'))} <span class="sdm-followup-formula">${esc(areaLabel(item, kind))}</span></button>`
   );
@@ -1370,7 +1371,7 @@ function outcomeFor(total, defense, isNat1, isNat20) {
  * mode: 'attack' (the attack against each defense, or their saves), 'power' (everyone inside gets the
  * roll) or 'use' (an item's Use resolved by a save: its harm, by each one's save).
  */
-export function areaState({ mode, actor, item, kind, placed, total = 0, isNat1 = false, isNat20 = false, attackTarget = 'physical', multiplier = '', overcharged = false }) {
+export function areaState({ mode, actor, item, kind, placed, total = 0, isNat1 = false, isNat20 = false, attackTarget = 'physical', multiplier = '', overcharged = false, castOnAttack = false, castOvercharged = false }) {
   const area = itemArea(item, kind, { overcharged });
   return {
     mode,
@@ -1393,7 +1394,10 @@ export function areaState({ mode, actor, item, kind, placed, total = 0, isNat1 =
     isNat1: !!isNat1,
     isNat20: !!isNat20,
     attackTarget: attackTarget || 'physical',
-    multiplier: multiplier || ''
+    multiplier: multiplier || '',
+    // An attack made with a power cast it (paid then, overcharged or not): its roll from the card is free
+    castOnAttack: !!castOnAttack,
+    castOvercharged: !!castOvercharged
   };
 }
 
@@ -1460,7 +1464,9 @@ export function areaBlock(state) {
         multiplier: state.multiplier || '',
         areaTargets: targets.map(a => a.uuid),
         areaSaved: savedActors,
-        areaPass: state.save.pass
+        areaPass: state.save.pass,
+        ...(state.castOnAttack ? { castOnAttack: true } : {}),
+        ...(state.castOvercharged ? { overcharged: true } : {})
       };
       // A power that rolls nothing is used at once after the attack (rolls/sdmRoll.mjs): no button
       if (targets.length && !powerWithoutRoll(attackItem)) actions += attackFollowupHtml(attackItem);
@@ -1502,7 +1508,9 @@ export function areaBlock(state) {
       kind: state.kind || 'weapon',
       actor: state.actor,
       multiplier: state.multiplier || '',
-      areaTargets: hits.map(t => t.actor.uuid)
+      areaTargets: hits.map(t => t.actor.uuid),
+      ...(state.castOnAttack ? { castOnAttack: true } : {}),
+      ...(state.castOvercharged ? { overcharged: true } : {})
     };
     if (hits.length && !powerWithoutRoll(attackItem)) actions += attackFollowupHtml(attackItem);
   } else {
@@ -1565,7 +1573,9 @@ async function onPlaceAreaFromCard(button, mode) {
       isNat20: button.dataset.nat20 === '1',
       attackTarget: button.dataset.attackTarget || 'physical',
       multiplier: button.dataset.multiplier || '',
-      overcharged
+      overcharged,
+      castOnAttack: button.dataset.castOnAttack === '1',
+      castOvercharged: mode === 'attack' && overcharged
     })
   );
   setTargets(block.hits);
