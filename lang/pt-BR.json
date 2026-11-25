@@ -3587,5 +3587,11 @@
   "SDM.Trigger.Roll.hit": "Atingido por ataque",
   "SDM.Trigger.On.kill": "ao abater",
   "SDM.Trigger.On.death": "ao morrer",
-  "SDM.Trigger.On.hit": "quando atingido"
+  "SDM.Trigger.On.hit": "quando atingido",
+  "SDM.ActiveWhile.Label": "Ativo enquanto",
+  "SDM.ActiveWhile.Hint": "Ligado só enquanto a vida do ator estiver assim; senão não se aplica (Sangrocha: abaixo de metade da vida).",
+  "SDM.ActiveWhile.always": "Sempre",
+  "SDM.ActiveWhile.hurt": "Ferido (abaixo da vida máxima)",
+  "SDM.ActiveWhile.belowHalf": "Abaixo de metade da vida",
+  "SDM.ActiveWhile.zero": "Com 0 de vida"
 }

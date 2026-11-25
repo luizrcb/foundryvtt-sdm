@@ -3587,5 +3587,11 @@
   "SDM.Trigger.Roll.hit": "Hit by an attack",
   "SDM.Trigger.On.kill": "on a kill",
   "SDM.Trigger.On.death": "on death",
-  "SDM.Trigger.On.hit": "when hit"
+  "SDM.Trigger.On.hit": "when hit",
+  "SDM.ActiveWhile.Label": "Active while",
+  "SDM.ActiveWhile.Hint": "On only while its actor's life is so; otherwise it doesn't apply (Rockblood: below half life).",
+  "SDM.ActiveWhile.always": "Always",
+  "SDM.ActiveWhile.hurt": "Hurt (below max life)",
+  "SDM.ActiveWhile.belowHalf": "Below half life",
+  "SDM.ActiveWhile.zero": "At 0 life"
 }

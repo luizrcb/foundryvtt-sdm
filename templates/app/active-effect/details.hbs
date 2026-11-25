@@ -56,6 +56,9 @@
     {{formGroup fields.roundDamage.target value=source.system.roundDamage.target localize=true rootId=rootId}}
     {{/if}}
     {{/if}}
+    {{#if fields.activeWhile}}
+    {{formGroup fields.activeWhile value=source.system.activeWhile localize=true rootId=rootId}}
+    {{/if}}
     {{#if fields.turnHeal}}
     {{formGroup fields.turnHeal.formula value=source.system.turnHeal.formula rootId=rootId}}
     {{#if source.system.turnHeal.formula}}

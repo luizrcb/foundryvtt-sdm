@@ -154,6 +154,7 @@ export default class SdmActiveEffectConfig14 extends ActiveEffectConfig {
       context.fields.aura = this.document.system.schema.fields.aura?.fields;
       context.fields.roundDamage = this.document.system.schema.fields.roundDamage?.fields;
       context.fields.turnHeal = this.document.system.schema.fields.turnHeal?.fields;
+      context.fields.activeWhile = this.document.system.schema.fields.activeWhile;
       const parent = this.document.parent;
       context.canAura = !!context.fields.aura && !this.document.getFlag('sdm', 'fromAura') && (parent?.documentName === 'Actor' || this.document.transfer);
       context.itemModTypes = Object.entries(CONFIG.SDM.itemModType).map(([k, value]) => ({

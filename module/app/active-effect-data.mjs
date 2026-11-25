@@ -28,6 +28,14 @@ export const AURA_DISPOSITIONS = {
   any: 'SDM.Aura.Any'
 };
 
+/** An effect that is on only while its actor's life is so (blank: always). */
+export const ACTIVE_WHILE = {
+  '': 'SDM.ActiveWhile.always',
+  hurt: 'SDM.ActiveWhile.hurt',
+  belowHalf: 'SDM.ActiveWhile.belowHalf',
+  zero: 'SDM.ActiveWhile.zero'
+};
+
 export class SDMActiveEffectData extends foundry.data.ActiveEffectTypeDataModel {
   static defineSchema() {
     const fields = foundry.data.fields;
@@ -156,7 +164,25 @@ export class SDMActiveEffectData extends foundry.data.ActiveEffectTypeDataModel 
       turnHeal: new fields.SchemaField({
         formula: new fields.StringField({ required: true, blank: true, initial: '', label: $l10n('SDM.TurnHeal.Formula'), hint: $l10n('SDM.TurnHeal.FormulaHint') }),
         blockedBy: new fields.ArrayField(new fields.StringField({ blank: false }), { label: $l10n('SDM.TurnHeal.BlockedBy'), hint: $l10n('SDM.TurnHeal.BlockedByHint') })
-      })
+      }),
+      // Only while its actor is hurt, below half life or at 0 life (Rockblood): otherwise it is off
+      activeWhile: new fields.StringField({ required: true, blank: true, initial: '', choices: ACTIVE_WHILE, label: $l10n('SDM.ActiveWhile.Label'), hint: $l10n('SDM.ActiveWhile.Hint') })
     };
+  }
+
+  /**
+   * Suppressed while its "Active while" doesn't hold (core: suppressed effects don't apply). Null when
+   * it has none, so core's expired state still decides.
+   */
+  get isSuppressed() {
+    const when = this.activeWhile;
+    if (!when) return null;
+    const actor = this.parent?.target;
+    const life = actor?.system?.life;
+    if (!life) return null;
+    const value = Number(life.value) || 0;
+    const max = Number(life.max) || 0;
+    const holds = when === 'hurt' ? value < max : when === 'belowHalf' ? value < max / 2 : when === 'zero' ? value <= 0 : true;
+    return holds ? null : true;
   }
 }
