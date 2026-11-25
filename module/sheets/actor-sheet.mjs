@@ -763,9 +763,11 @@ export class SdmActorSheet extends api.HandlebarsApplicationMixin(sheets.ActorSh
       const areaItem = isAttack ? this.actor.items.get(plan.attackItem?.itemId ?? plan.attackItem?.id ?? '') : item;
       const areaKind = isAttack ? plan.attackItem?.kind ?? '' : isPowerAlbum ? 'album' : 'power';
       if (areaItem && itemArea(areaItem, areaKind)) {
-        const placed = await placeArea({ actor: this.actor, item: areaItem, kind: areaKind });
+        // A power cast overcharged places its bigger area (when it has one)
+        const overcharged = !isAttack && !!rollOptions.overcharge;
+        const placed = await placeArea({ actor: this.actor, item: areaItem, kind: areaKind, overcharged });
         if (placed === false) return;
-        if (placed) areaPlaced = { placed, item: areaItem, kind: areaKind };
+        if (placed) areaPlaced = { placed, item: areaItem, kind: areaKind, overcharged };
       }
     }
 

@@ -3572,5 +3572,8 @@
   "SDM.TurnHeal.FormulaHint": "Life at the start of each of its actor's turns in combat, e.g. 1d6 (not at 0 life).",
   "SDM.TurnHeal.BlockedBy": "Not while",
   "SDM.TurnHeal.BlockedByHint": "Conditions that stop it that turn (burning, corroded…).",
-  "SDM.TurnHeal.Blocked": "{effect}: no healing this turn ({conditions})."
+  "SDM.TurnHeal.Blocked": "{effect}: no healing this turn ({conditions}).",
+  "SDM.AreaOvercharge": "Overcharged",
+  "SDM.AreaOverchargeHint": "The area when the power is overcharged: a bigger size, and/or its own across (blank: the same area).",
+  "SDM.AreaOverchargeAcrossHint": "Across when overcharged, in the world unit (blank: the size's)."
 }

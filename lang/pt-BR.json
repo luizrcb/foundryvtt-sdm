@@ -3572,5 +3572,8 @@
   "SDM.TurnHeal.FormulaHint": "Vida no início de cada turno do ator em combate, ex. 1d6 (não com 0 de vida).",
   "SDM.TurnHeal.BlockedBy": "Não enquanto",
   "SDM.TurnHeal.BlockedByHint": "Condições que a impedem naquele turno (em chamas, corroído…).",
-  "SDM.TurnHeal.Blocked": "{effect}: sem cura neste turno ({conditions})."
+  "SDM.TurnHeal.Blocked": "{effect}: sem cura neste turno ({conditions}).",
+  "SDM.AreaOvercharge": "Sobrecarregado",
+  "SDM.AreaOverchargeHint": "A área quando o poder é sobrecarregado: um tamanho maior e/ou um diâmetro próprio (em branco: a mesma área).",
+  "SDM.AreaOverchargeAcrossHint": "Diâmetro quando sobrecarregado, na unidade do mundo (em branco: o do tamanho)."
 }

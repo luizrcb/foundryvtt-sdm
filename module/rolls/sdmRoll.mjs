@@ -350,7 +350,7 @@ export default class SDMRoll {
     // The area was placed before the roll (an item with an area): the card shows each one inside
     let areaPlacedBlock = null;
     if (this.areaPlaced && (isAttack || isPower || isPowerAlbum)) {
-      const { placed, item: areaItem, kind } = this.areaPlaced;
+      const { placed, item: areaItem, kind, overcharged: areaOvercharged = false } = this.areaPlaced;
       areaPlacedBlock = areaBlock(
         areaState({
           mode: isAttack ? 'attack' : 'power',
@@ -362,7 +362,8 @@ export default class SDMRoll {
           isNat1,
           isNat20,
           attackTarget: this.attackTarget,
-          multiplier: attackItem?.multiplier ?? ''
+          multiplier: attackItem?.multiplier ?? '',
+          overcharged: areaOvercharged
         })
       );
       extras += areaPlacedBlock.html;
@@ -407,7 +408,7 @@ export default class SDMRoll {
     // follows an area attack: the area is placed already)
     if ((isPower || isPowerAlbum) && !areaPlacedBlock && !this.areaTargets.length) {
       const castItem = isPowerAlbum ? this.triggerItem : this.item?.id ? this.item : null;
-      actions += areaPowerButton({ actor: this.actor, item: castItem, kind: isPowerAlbum ? 'album' : 'power', total: this.roll.dice.length ? this.roll.total : 0 });
+      actions += areaPowerButton({ actor: this.actor, item: castItem, kind: isPowerAlbum ? 'album' : 'power', total: this.roll.dice.length ? this.roll.total : 0, overcharged: !!this.overcharged });
     }
     // Damage: apply it to the selected tokens (also in the card's right-click menu)
     // (not on an area's card: it has a button per token, and Apply to all)

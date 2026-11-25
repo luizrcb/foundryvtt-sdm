@@ -97,6 +97,11 @@
       <span class="v2-label">{{localize 'SDM.AreaAcross'}}</span>
       <input type="number" name="system.power.area_across" value="{{system.power.area_across}}" min="0" step="any" data-dtype="Number" />
     </label>
+    <label class="v2-field" data-tooltip="{{localize 'SDM.AreaOverchargeHint'}}">
+      <span class="v2-label">{{localize 'SDM.AreaOvercharge'}}</span>
+      <select name="system.power.area_overcharge">{{selectOptions @root.powerAreaValues localize=true selected=system.power.area_overcharge blank=''}}</select>
+      <input type="number" name="system.power.area_overcharge_across" value="{{#if system.power.area_overcharge_across}}{{system.power.area_overcharge_across}}{{/if}}" min="0" step="any" data-dtype="Number" data-tooltip="{{localize 'SDM.AreaOverchargeAcrossHint'}}" />
+    </label>
     {{#if (or (eq system.power.area_shape 'line') (eq system.power.area_shape 'ring'))}}
     <label class="v2-field" data-tooltip="{{localize 'SDM.AreaWidthHint'}}">
       <span class="v2-label">{{localize 'SDM.AreaWidth'}}</span>

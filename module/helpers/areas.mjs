@@ -108,13 +108,18 @@ function areaPower(item, kind) {
  * The item's area, or null (no area, or a single target): a power's area (power items and the
  * album's selected power, kind "power" / "album"), else the gear's area feature.
  */
-export function itemArea(item, kind = '') {
+export function itemArea(item, kind = '', { overcharged = false } = {}) {
   const power = areaPower(item, kind);
   if (power?.area && isAreaSize(power.area)) {
     const shape = power.area_shape || 'circle';
+    // Overcharged: its bigger area, when it has one (a size, its own across, or both)
+    const bigger = overcharged && ((power.area_overcharge && isAreaSize(power.area_overcharge)) || Number(power.area_overcharge_across) > 0);
+    const size = bigger && power.area_overcharge && isAreaSize(power.area_overcharge) ? power.area_overcharge : power.area;
+    const across = bigger ? (Number(power.area_overcharge_across) > 0 ? power.area_overcharge_across : power.area_overcharge ? 0 : power.area_across) : power.area_across;
     return {
-      ...areaSize(power.area, shape, { across: power.area_across }),
-      size: power.area,
+      ...areaSize(size, shape, { across }),
+      size,
+      overcharged: !!bigger,
       shape,
       width: areaWidth(power.area_width),
       affects: power.area_affects || 'everyone',
@@ -165,15 +170,15 @@ export function lingerEffects(item) {
 }
 
 /** "Lingers 3 rounds" / "Lingers" for a lingering area with effects, else ''. */
-function lingerLabel(item, kind) {
-  const area = itemArea(item, kind);
+function lingerLabel(item, kind, options = {}) {
+  const area = itemArea(item, kind, options);
   if (!area?.linger || !(lingerEffects(item).length || area.round)) return '';
   return area.rounds > 0 ? $fmt('SDM.AreaLingersRounds', { rounds: area.rounds }) : $l10n('SDM.AreaLingers');
 }
 
 /** "small circle (~10 ft)" in the world unit. */
-export function areaLabel(item, kind = '') {
-  const area = itemArea(item, kind);
+export function areaLabel(item, kind = '', options = {}) {
+  const area = itemArea(item, kind, options);
   if (!area) return '';
   return $fmt('SDM.AreaLabel', {
     size: $l10n(CONFIG.SDM.areaValues[area.size]).toLowerCase(),
@@ -667,8 +672,8 @@ function areaShape(area, scene, origin, token = null) {
  * @returns {Promise<{areaId, tokens: TokenDocument[]}|false|null>} false when the user cancelled
  *   (right-click or Esc), null when it can't be placed (no scene, no token for a cone).
  */
-export async function placeArea({ actor = null, item = null, kind = '', area: given = null, token = null, name = '', hazard: givenHazard = null, color: givenColor = '' }) {
-  const area = given ?? itemArea(item, kind);
+export async function placeArea({ actor = null, item = null, kind = '', area: given = null, token = null, name = '', hazard: givenHazard = null, color: givenColor = '', overcharged = false }) {
+  const area = given ?? itemArea(item, kind, { overcharged });
   const scene = canvas?.scene;
   if (!area || !scene || !canvas.ready) {
     if (area) ui.notifications.warn($l10n('SDM.AreaNoScene'));
@@ -1238,12 +1243,12 @@ export function areaAttackButton({ actor, item, total, isNat1, isNat20, attackTa
 }
 
 /** A power card's "Place area" (a power with an area): everyone inside takes the power's roll. */
-export function areaPowerButton({ actor, item, kind, total }) {
-  if (!actor || !item || !itemArea(item, kind)) return '';
+export function areaPowerButton({ actor, item, kind, total, overcharged = false }) {
+  if (!actor || !item || !itemArea(item, kind, { overcharged })) return '';
   return (
     `<button type="button" data-action="sdmPlacePowerArea" data-actor-uuid="${esc(actor.uuid)}" data-item-id="${esc(item.id)}"` +
-    ` data-kind="${esc(kind)}" data-total="${Number(total) || 0}">` +
-    `<i class="fa-solid fa-bullseye"></i> ${esc($l10n('SDM.AreaPlace'))} <span class="sdm-followup-formula">${esc(areaLabel(item, kind))}</span></button>`
+    ` data-kind="${esc(kind)}" data-total="${Number(total) || 0}"${overcharged ? ' data-overcharged="1"' : ''}>` +
+    `<i class="fa-solid fa-bullseye"></i> ${esc($l10n('SDM.AreaPlace'))} <span class="sdm-followup-formula">${esc(areaLabel(item, kind, { overcharged }))}</span></button>`
   );
 }
 
@@ -1356,15 +1361,17 @@ function outcomeFor(total, defense, isNat1, isNat20) {
  * mode: 'attack' (the attack against each defense, or their saves), 'power' (everyone inside gets the
  * roll) or 'use' (an item's Use resolved by a save: its harm, by each one's save).
  */
-export function areaState({ mode, actor, item, kind, placed, total = 0, isNat1 = false, isNat20 = false, attackTarget = 'physical', multiplier = '' }) {
-  const area = itemArea(item, kind);
+export function areaState({ mode, actor, item, kind, placed, total = 0, isNat1 = false, isNat20 = false, attackTarget = 'physical', multiplier = '', overcharged = false }) {
+  const area = itemArea(item, kind, { overcharged });
   return {
     mode,
     actor: actor?.uuid ?? '',
     itemId: item.id,
     itemName: item.name,
     kind: kind || (mode === 'attack' ? 'weapon' : mode === 'power' ? 'power' : ''),
-    chips: [areaLabel(item, kind), lingerLabel(item, kind)].filter(Boolean),
+    chips: [areaLabel(item, kind, { overcharged }), lingerLabel(item, kind, { overcharged })].filter(Boolean),
+    // Placed overcharged (its bigger area): Reposition places that one again
+    overcharged: !!area?.overcharged,
     save: area?.save ?? null,
     saves: {},
     lingers: !!area?.linger,
@@ -1534,7 +1541,8 @@ async function onPlaceAreaFromCard(button, mode) {
   const item = actor?.items?.get(button.dataset.itemId);
   if (!actor?.isOwner || !item) return;
   const kind = button.dataset.kind || (mode === 'attack' ? 'weapon' : 'power');
-  const placed = await placeArea({ actor, item, kind });
+  const overcharged = button.dataset.overcharged === '1';
+  const placed = await placeArea({ actor, item, kind, overcharged });
   if (!placed) return;
   const block = areaBlock(
     areaState({
@@ -1547,7 +1555,8 @@ async function onPlaceAreaFromCard(button, mode) {
       isNat1: button.dataset.nat1 === '1',
       isNat20: button.dataset.nat20 === '1',
       attackTarget: button.dataset.attackTarget || 'physical',
-      multiplier: button.dataset.multiplier || ''
+      multiplier: button.dataset.multiplier || '',
+      overcharged
     })
   );
   setTargets(block.hits);
@@ -1565,7 +1574,7 @@ async function onReposition(message, card) {
   const item = actor?.items?.get(card.itemId);
   if (!actor || !item) return;
   if (canvas.scene?.id !== card.sceneId) return ui.notifications.warn($l10n('SDM.AreaNoScene'));
-  const placed = await placeArea({ actor, item, kind: card.kind });
+  const placed = await placeArea({ actor, item, kind: card.kind, overcharged: !!card.overcharged });
   if (!placed) return;
   await removeArea(card.sceneId, card.areaId);
   const block = areaBlock({
