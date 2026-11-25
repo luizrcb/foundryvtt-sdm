@@ -365,7 +365,8 @@ export default class SDMRoll {
           multiplier: attackItem?.multiplier ?? '',
           overcharged: areaOvercharged,
           castOnAttack: !!attackItem?.castOnAttack,
-          castOvercharged: !!attackItem?.overcharged
+          castOvercharged: !!attackItem?.overcharged,
+          castUnpaid: !!attackItem?.unpaid
         })
       );
       extras += areaPlacedBlock.html;
@@ -390,7 +391,8 @@ export default class SDMRoll {
           kind: this.attackItem.kind,
           multiplier: attackItem?.multiplier ?? '',
           castOnAttack: !!attackItem?.castOnAttack,
-          castOvercharged: !!attackItem?.overcharged
+          castOvercharged: !!attackItem?.overcharged,
+          castUnpaid: !!attackItem?.unpaid
         });
       }
     }

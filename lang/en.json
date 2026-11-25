@@ -3593,5 +3593,6 @@
   "SDM.ActiveWhile.always": "Always",
   "SDM.ActiveWhile.hurt": "Hurt (below max life)",
   "SDM.ActiveWhile.belowHalf": "Below half life",
-  "SDM.ActiveWhile.zero": "At 0 life"
+  "SDM.ActiveWhile.zero": "At 0 life",
+  "SDM.PowerCostPay.NotPaidOnAttack": "(not paid on the attack)"
 }

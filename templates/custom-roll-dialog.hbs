@@ -66,11 +66,12 @@
         <i class="fa-solid fa-wand-magic-sparkles"></i> {{localize 'SDM.PowerCostPay.Legend'}}:
         <strong class="sdm-power-cost-value">{{powerCost.cost}}</strong> {{localize 'SDM.Boost.Life'}}
         {{#if powerCost.attack}}<span class="sdm-power-cost-note">{{localize 'SDM.PowerCostPay.AttackNote'}}</span>
+        {{else if powerCost.unpaid}}<span class="sdm-power-cost-note">{{localize 'SDM.PowerCostPay.NotPaidOnAttack'}}</span>
         {{else if powerCost.castOnAttack}}<span class="sdm-power-cost-note">{{localize 'SDM.PowerCostPay.PaidOnAttack'}}</span>
         {{else}}<span class="sdm-power-cost-note">{{localize 'SDM.PowerCostPay.OverchargeNote'}}</span>{{/if}}
       </legend>
       <div class="sdm-power-cost-row">
-        <input id="payPowerCost" type="checkbox" name="payPowerCost" checked data-tooltip="{{localize 'SDM.PowerCostPay.PayHint'}}" />
+        <input id="payPowerCost" type="checkbox" name="payPowerCost" {{#unless powerCost.unpaid}}checked{{/unless}} data-tooltip="{{localize 'SDM.PowerCostPay.PayHint'}}" />
         <span class="sdm-power-cost-label">{{localize 'SDM.PowerCostPay.Pay'}}</span>
         <span class="sdm-power-cost-life">{{localize 'SDM.PowerCostPay.LifeNow' life=powerCost.life}}</span>
       </div>

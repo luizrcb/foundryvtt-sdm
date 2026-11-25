@@ -2397,7 +2397,7 @@ export class SdmActor extends Actor {
         },
         item: {
           handler: '_onRoll',
-          dataset: { action: 'roll', type: actionType, label: args.label, tooltip: args.tooltip, multiplier: args?.multiplier ?? '', targetUuid: args?.targetUuid ?? '', areaTargets: args?.areaTargets ?? '', areaSaved: args?.areaSaved ?? '', areaPass: args?.areaPass ?? '', castOnAttack: args?.castOnAttack ?? '', overchargedOnAttack: args?.overchargedOnAttack ?? '' },
+          dataset: { action: 'roll', type: actionType, label: args.label, tooltip: args.tooltip, multiplier: args?.multiplier ?? '', targetUuid: args?.targetUuid ?? '', areaTargets: args?.areaTargets ?? '', areaSaved: args?.areaSaved ?? '', areaPass: args?.areaPass ?? '', castOnAttack: args?.castOnAttack ?? '', overchargedOnAttack: args?.overchargedOnAttack ?? '', unpaidOnAttack: args?.unpaidOnAttack ?? '' },
           closestReturn: { dataset: { documentClass: 'Item', itemId: actionKey } }
         },
         transferCash: {
