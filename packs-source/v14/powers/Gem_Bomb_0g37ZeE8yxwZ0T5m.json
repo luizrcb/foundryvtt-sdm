@@ -16,7 +16,11 @@
       "img": "icons/svg/book.svg",
       "name": "",
       "description": "",
-      "default_ability": ""
+      "default_ability": "",
+      "area": "small",
+      "area_shape": "circle",
+      "area_affects": "everyone",
+      "area_resolve": "attack"
     },
     "readied": false,
     "cost": 0,

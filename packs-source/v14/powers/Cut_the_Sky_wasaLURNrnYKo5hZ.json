@@ -50,7 +50,11 @@
       "overcharge": "<p>[[/r 4d4x]] damage in a slightly larger area.</p>",
       "roll_formula": "2d4x",
       "overcharge_roll_formula": "4d4x",
-      "default_ability": ""
+      "default_ability": "",
+      "area": "small",
+      "area_shape": "circle",
+      "area_affects": "everyone",
+      "area_resolve": "attack"
     },
     "powers_current_index": 0,
     "max_powers": 3,

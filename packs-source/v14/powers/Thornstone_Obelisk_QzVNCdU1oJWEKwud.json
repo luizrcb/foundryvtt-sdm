@@ -39,7 +39,11 @@
       "overcharge": "<p>the growth is even more violent, dealing [[/r 6d6]] damage to creatures in a small radius and scattering the ground with caltrop-like landcoral shards.</p>",
       "roll_formula": "2d6",
       "overcharge_roll_formula": "6d6",
-      "default_ability": ""
+      "default_ability": "",
+      "area": "small",
+      "area_shape": "ring",
+      "area_affects": "everyone",
+      "area_resolve": "attack"
     },
     "powers_current_index": 0,
     "max_powers": 3,
