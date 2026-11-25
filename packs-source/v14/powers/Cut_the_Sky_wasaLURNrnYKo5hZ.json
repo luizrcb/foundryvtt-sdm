@@ -54,7 +54,9 @@
       "area": "small",
       "area_shape": "circle",
       "area_affects": "everyone",
-      "area_resolve": "attack"
+      "area_resolve": "attack",
+      "area_overcharge": "",
+      "area_overcharge_across": 4.5
     },
     "powers_current_index": 0,
     "max_powers": 3,

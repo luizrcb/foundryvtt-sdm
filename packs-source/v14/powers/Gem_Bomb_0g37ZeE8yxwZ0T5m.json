@@ -20,7 +20,9 @@
       "area": "small",
       "area_shape": "circle",
       "area_affects": "everyone",
-      "area_resolve": "attack"
+      "area_resolve": "attack",
+      "area_overcharge": "medium",
+      "area_overcharge_across": 10
     },
     "readied": false,
     "cost": 0,
